@@ -1,0 +1,30 @@
+﻿<?php defined('KOOWA') or die('Restricted access');
+
+/** 
+ * LICENSE: ##LICENSE##
+ * 
+ * @category   Anahita
+ * @package    Mod_Nivoslider
+ * @author     Arash Sanieyan <ash@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
+ * @link       http://www.anahitapolis.com
+ */
+
+$user =& JFactory::getUser();
+$aid = $user->get('aid', 0);
+
+$articles = KService::get('repos:content.article', array('resources'=>'content'))
+            ->getQuery()
+            ->catid( $params->get('catid', null) )
+            ->state(1)
+            ->where('access', '<=', $aid)
+            ->order($params->get('ordering', 'title'))
+            ->fetchSet();
+
+
+print ModBaseView::getInstance('mod:nivoslider.html', array(
+	'params'=>$params
+))->articles($articles);

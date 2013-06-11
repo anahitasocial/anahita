@@ -1,0 +1,111 @@
+/*
+Skin Name: Pascal Theme
+Skin URI: http://nivo.dev7studios.com
+Skin Type: fixed
+Image Width: 630
+Image Height: 235
+Description: A nice, light skin for the Nivo Slider.
+Version: 1.0
+Author: Gilbert Pellegrom & Pascal Gartner
+Author URI: http://dev7studios.com
+*/
+
+.theme-pascal
+{
+    &.slider-wrapper 
+    {
+        background:url(../images/pascal/slider.png) no-repeat;
+        width:940px;
+        height:280px;
+        margin:0 auto;
+        padding-top:17px;
+        position:relative;
+    }
+    
+    .nivoSlider 
+    {
+        width:900px;
+        height:235px;
+        margin-left:19px;
+        background:url(../images/pascal/loading.gif) no-repeat 50% 50%;
+        
+        img 
+        {
+            width:900px; /* Make sure your images are the same size */
+            height:235px; /* Make sure your images are the same size */
+        }
+    }
+    
+    .nivo-controlNav 
+    {
+        background:url(../images/pascal/controlnav.png) no-repeat;
+        width:251px;
+        height:40px;
+        position:absolute;
+        left: 325px;
+        bottom:-42px;
+        padding:8px 0 0 82px;
+        z-index:20;
+        
+        a 
+        {
+            display:block;
+            width:22px;
+            height:22px;
+            background:url(../images/pascal/bullets.png) no-repeat;
+            text-indent:-9999px;
+            border:0;
+            margin-right:3px;
+            float:left;
+            
+            &.active 
+            {
+                background-position:0 -22px;
+            }
+        }
+    }
+    
+    .nivo-directionNav
+    {
+        a 
+        {
+            display:none;
+        }
+    }
+    
+    .nivo-caption 
+    {
+        bottom:40%;
+        left:auto;
+        right:0px;
+        width:auto;
+        max-width:630px;
+        overflow:hidden;
+        background: #fff;
+        text-shadow:none;
+        color: #000;
+        
+        p 
+        {
+            color: #333;
+            text-transform:uppercase;
+            
+            a
+            {
+                color: #333;
+            }
+        }
+        
+    }
+    
+    .ribbon 
+    {
+        background:url(../images/pascal/ribbon.png) no-repeat;
+        width:111px;
+        height:111px;
+        position:absolute;
+        top:-8px;
+        left:-8px;
+        z-index:300;
+    }
+}

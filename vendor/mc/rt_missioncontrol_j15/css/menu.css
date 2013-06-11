@@ -1,0 +1,93 @@
+/* CORE */
+.menutop .root > .item {font-weight:bold;cursor:pointer;}
+.menutop,.menutop * {margin:0;padding:0;}
+.menutop {float:left;position:relative;}
+.menutop li {list-style:none;position:relative;width:100%;height:25px;float:none;}
+.menutop li a.item {cursor:pointer;}
+.menutop li span.item {cursor:default;outline:none;}
+.menutop li .item {display:block;float:left;display:block;margin:0;height:25px;line-height:25px;}
+.menutop li li .item, 
+.menutop li .item, .menutop li.active li .item {display:block;margin:0;text-decoration:none;float:none;}
+.menutop li .fusion-submenu-wrapper, .menutop li ul {float: none;left: -999em;position: absolute;z-index: 1500;}
+.menutop li:hover li ul, .menutop li.sfHover li ul {top: -999em;}
+.menutop li:hover ul, .menutop li.sfHover ul {top: 0;}
+.menutop li li {position:relative;float:none;}
+.menutop ul, .menutop ul ul {padding-bottom:6px;}
+.menutop ul ul {padding-top:6px;}
+
+/* Drop Downs */
+.menutop ul {width:175px;position:relative;}
+
+/* Level 1 */
+.menutop li .item {text-decoration:none;display:block;padding:0 15px;text-decoration:none;}
+/*.level1 .f-mainparent-itemfocus .item {background:#ccc 100% 100% no-repeat;border-color:#ddd #bbb #bbb #ddd;border-style:solid;border-width:1px;}*/
+.menutop li.root > .item {margin-right:2px;}
+.menutop li:hover > .item {background-color:#666;}
+.menutop li:hover > .daddy:hover {background-image:url(../images/down-arrow.png);background-position: 100% 60%;}
+
+.menutop li.parent:hover a {color:#fff;}
+#mc-header .menutop li.parent:hover li a,
+#mc-header .menutop > li.parent:hover > span > span {color:#fff;}
+
+/* Level 2 */
+.menutop .level2 {background:#666}
+.menutop .level2 li > .item {background:#666;}
+.menutop .level2 li:hover > .daddy, .menutop .level2 li > .daddy {background-image:url(../images/right-arrow.png);background-position:100% 50%;background-repeat:no-repeat;}
+
+/*.menutop .level2 .f-menuparent-itemfocus .item, */.menutop .level2 li:hover .item {background:#4D4D4D;}
+/*.menutop .level2 .f-menuparent-itemfocus .daddy,*/ .menutop .level2 li:hover .daddy {background-image:url(../images/right-arrow.png);background-position:100% 50%;background-repeat:no-repeat;}
+
+
+/* Level 3 */
+.menutop .level3 {background:#4D4D4D}
+.menutop .level3 li > .item {background:#4D4D4D;}
+.menutop .level3 li:hover > .daddy, .menutop .level3 li > .daddy {background-image:url(../images/right-arrow.png);background-position:100% 50%;background-repeat:no-repeat;}
+
+
+/* regular hover */
+.menutop li:hover .daddy:hover, .menutop ul li.active:hover > .daddy:hover {background-image:url(../images/right-arrow.png);background-repeat: no-repeat;background-position: 100% 50%;}
+
+/* seperator */
+.menutop li.separator {background-color: #666;height:10px;padding:7px 0 0; }
+.menutop li.separator span {display: block;border-bottom:1px solid rgba(255,255,255,.1);border-top:1px solid rgba(0,0,0,.2);}
+
+/* span hover */
+.menutop li.root > span.daddy.item {padding-right:20px;}
+.menutop span.item:hover,
+.menutop li:hover span.item:hover {background-color:#666;color:#fff}
+
+
+
+/* disabled */
+.menutop.disabled .item span {opacity:0.8;}
+.menutop.disabled li.root > .daddy, .menutop.disabled li.root:hover > .daddy, .menutop.disabled li.root:hover > .daddy:hover {background-image: url(../images/down-bullet.png); background-position: 100% 60%; background-repeat: no-repeat;}
+.menutop.disabled li.root.active > .daddy, .menutop.disabled li.root.active:hover > .daddy {background-image:url(../images/down-bullet.png);background-position: 100% 60%;}
+
+
+
+/* Root Items */
+.menutop li.root {width:auto;float:left;height:27px;} 
+.menutop li.root > .item {float:left;width: auto;height:27px;line-height:29px;}
+
+.menutop li.root > .daddy, .menutop li.root:hover > .daddy, .menutop li.root:hover > .daddy:hover {background-image: url(../images/down-arrow.png); background-position: 100% 60%; background-repeat: no-repeat;}
+
+/* Active Items */
+
+.menutop li.parent.active:hover > .item {background-color:#666;}
+.menutop li.root.active > .daddy, .menutop li.root.active:hover > .daddy {background-image:url(../images/down-arrow.png);background-position: 100% 60%;}
+.menutop span.default {background:url(../images/bullet-star.png) 100% 100% no-repeat;display:inline-block;width:16px;height:16px;color:transparent;}
+
+
+/* No JS */
+.menutop li:hover > .fusion-submenu-wrapper, .menutop li:hover > ul {left:170px;top:0;}
+.menutop li.root:hover > .fusion-submenu-wrapper, .menutop li.root:hover > ul {top:27px;left:0;}
+.menutop li:hover ul, 
+.menutop li.sfHover ul {left: 0;top:32px;}
+.menutop ul {width:175px;}
+.menutop li li:hover > ul, .menutop li li.sfHover > ul {left:175px;top: -6px;}
+
+.menutop .level2 li {position:relative;float:left;width:100%;}
+
+/* Fusion JS */
+.fusion-js-container {display: block;height: 0;left: 0;overflow: visible;position: absolute;top: 0;z-index: 600000!important;background: transparent !important;}
+.fusion-js-subs {display: none;margin: 0;overflow: hidden;padding: 0;position: absolute;}

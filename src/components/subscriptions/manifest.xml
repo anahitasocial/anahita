@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="##BUILD_PLATFORM_VERSION##" social_app="1" method="upgrade">
+	<name>Subscriptions</name>
+	<author>Anahita Social Networking Project</author>
+	<copyright>(C) 2012 rmd Studio, PeerGlobe Technology</copyright>
+	<creationDate>##BUILD_DATE##</creationDate>
+	<license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
+	<authoremail>info@anahitapolis.com</authoremail>
+	<authorurl>www.Anahitapolis.com</authorurl>
+	<version>##BUILD_VERSION##</version>
+	<description>Create and offer paid membership plans to your members</description>
+	<install>
+		<sql>
+			<file charset="utf8" driver="mysql">install/install.mysql.utf8.sql</file>
+		</sql>
+	</install>
+	<uninstall>
+		<sql>
+			<file charset="utf8" driver="mysql">install/uninstall.mysql.utf8.sql</file>
+		</sql>
+	</uninstall>
+	<installfile>install/install.php</installfile>
+	<uninstallfile>install/uninstall.php</uninstallfile>
+	<administration>
+		<menu>Subscriptions</menu>
+		<languages folder="administrator/language">
+			<language tag="en-GB">en-GB.com_subscriptions.ini</language>
+		</languages>
+		<files folder="administrator/components/com_subscriptions">
+			<folder>controllers</folder>
+			<folder>install</folder>
+			<folder>templates</folder>
+			<folder>views</folder>
+			<file>config.xml</file>
+			<file>subscriptions.php</file>
+		</files>
+	</administration>
+	<libraries folder="libraries">
+		<folder>merchant</folder>
+	</libraries>
+	<bundles> 
+		<bundle>plugins/subscriptions/access</bundle>
+		<bundle>plugins/subscriptions/usertype</bundle>
+		<bundle>plugins/system</bundle>
+	</bundles>
+	<media folder="media" destination="com_subscriptions">
+		<folder>js</folder>
+	</media>
+	<languages folder="site/language">
+		<language tag="en-GB">en-GB.com_subscriptions.ini</language>
+	</languages>
+	<files folder="site/components/com_subscriptions">
+		<folder>controllers</folder>
+		<folder>domains</folder>
+		<folder>views</folder>
+		<file>subscriptions.php</file>
+	</files>
+</install>

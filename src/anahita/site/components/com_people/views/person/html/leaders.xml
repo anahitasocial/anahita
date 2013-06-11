@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Leaders">
+		<message>List of actors that the viewer is following.</message>
+		<url>
+			<param  name="get" value="graph" />
+			<param  name="type" value="leaders" />
+			<param  name="layout" value="" />
+		</url>
+	</layout>	
+</metadata>

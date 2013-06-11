@@ -1,0 +1,108 @@
+/*
+Skin Name: Orman Theme
+Skin URI: http://nivo.dev7studios.com
+Skin Type: fixed
+Image Width: 568
+Image Height: 268
+Description: A light and green skin for the Nivo Slider.
+Version: 1.0
+Author: Gilbert Pellegrom & Orman Clark
+Author URI: http://dev7studios.com
+*/
+
+.theme-orman
+{ 
+    &.slider-wrapper 
+    {
+        background:url(../images/orman/slider.png) no-repeat 0 0;
+        width: 940px;
+        height:320px;
+        margin:0 auto;
+        padding-top: 18px;
+        position:relative;
+    }
+    
+    .nivoSlider 
+    {
+        width:787px;
+        height:268px;
+        margin-left:77px;
+        background:url(../images/orman/loading.gif) no-repeat 50% 50%;
+        
+        img 
+        {
+            width:787px; /* Make sure your images are the same size */
+            height:268px; /* Make sure your images are the same size */
+        }
+    }
+    
+    .nivo-controlNav 
+    {
+        position:absolute;
+        left:50%;
+        bottom:-60px;
+        margin-left:-30px; /* Tweak this to center bullets */
+        
+        a 
+        {
+            display:block;
+            width:10px;
+            height:10px;
+            background:url(../images/orman/bullets.png) no-repeat;
+            text-indent:-9999px;
+            border:0;
+            margin-right:7px;
+            float:left;
+            
+            &.active {
+                background-position:0 -10px;
+            }
+        }
+    }
+    
+    .nivo-directionNav
+    {
+        a
+        {
+            display:block;
+            width:25px;
+            height:200px;
+            background:url(../images/orman/arrows.png) no-repeat 0% 50%;
+            text-indent:-9999px;
+            border:0;
+            top:40px;
+        }
+    }
+    
+    a.nivo-nextNav 
+    {
+        background-position:100% 50%;
+        right:-40px;
+        padding-right:20px;
+    }
+    
+    a.nivo-prevNav 
+    {
+        left:-40px;
+        padding-left:20px;
+    }
+    
+    .nivo-caption 
+    { 
+        p
+        {
+            padding-bottom: 8px;
+        }
+    }
+    
+    .ribbon 
+    {
+        background:url(../images/orman/ribbon.png) no-repeat;
+        width:111px;
+        height:111px;
+        position:absolute;
+        top:-3px;
+        left:56px;
+        z-index:300;
+    }
+}

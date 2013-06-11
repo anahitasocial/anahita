@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>	
+			
+		<param menu="hide" type="custom" label="Debug Mode">
+		<![CDATA[
+			<?php if (JDEBUG) : ?>
+				<strong>On</strong> <p>To turn off the debug mode, you need to turn of the system debug.
+				<a target="_blank" href="index.php?option=com_config">Change</a> configuration</p>
+				<p>When debug is on, the mails are only sentout the emails specified below</p>
+				<p>A copy of notification is also stored locally at</p>
+				<p><?=JFactory::getConfig()->getValue('tmp_path').'/emails.html';?></p>
+			<?php else : ?>
+				<strong>Off</strong> 					
+			<?php endif;		
+		]]>
+		</param>
+		<param name="redirect_email" size="60" type="custom" default="" label="Emails"  description="Redirect all mail notification to this email">
+		<![CDATA[
+			<input type="text" size="60" name="params[redirect_email]" value="<?=$value?>" <?=JDEBUG ? '' : 'disabled="disabled"'?>/>
+		]]>
+		</param>
+		
+		
+		 		
+	</params>
+</config>

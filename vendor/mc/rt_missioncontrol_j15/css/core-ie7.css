@@ -1,0 +1,16 @@
+
+/* Global */
+#mc-frame h1 {line-height: 110%;margin-top: -10px !important;}
+a img {border: 0;}
+.mc-pagination {display: inline;zoom: 1;}
+#mc-logo {margin-top: -10px;}
+#mc-logo #logo {margin-top: -10px;}
+#mc-status {position: relative;z-index: 1000;}
+fieldset#treeview {overflow: visible;}
+
+/* Menu */
+.menutop li.root > .item span {line-height:25px;}
+
+/* Dropdown */
+body #mc-status .mc-dropdown, body #toolbar .mc-dropdown {left: 0;z-index: 10000 !important;}
+body #mc-status .mc-dropdown li, body #toolbar .mc-dropdown li {width: 130px;}

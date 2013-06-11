@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<form>
+	<params>
+		<param name="admin_language" type="languages" client="administrator" default="" label="Back-end Language" description="paramAdminLanguage" />
+		<param name="language" type="languages" client="site" default="" label="Front-end Language" description="paramLanguage" />
+		<param name="editor" type="editors" default="" label="User Editor" description="WYSIWYG Editor for this User" />		
+		<param name="timezone" type="timezones" default="" label="Time Zone" description="Time Zone for this User" />
+	</params>
+</form>

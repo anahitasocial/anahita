@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="system" version="999999">
+    <name>Anahita</name>
+    <author>Anahita Social Networking Project</author>
+    <copyright>(C) 2012 rmd Studio, Peerglobe Technology</copyright>
+    <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>http://www.Anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <creationDate>##BUILD_DATE##</creationDate>    
+	<release>##BUILD_RELEASE##</release>
+</install>

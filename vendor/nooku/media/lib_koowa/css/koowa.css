@@ -1,0 +1,47 @@
+/**
+ * @version     $Id: default.php 2721 2010-10-27 00:58:51Z johanjanssens $
+ * @package     Nooku_Media
+ * @subpackage  Stylesheet
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ */
+
+.-koowa-overlay-status {
+    float: right;
+    background-color:#FFFFDD;
+    padding: 5px;
+}
+
+.-koowa-pagination .limit {
+    float: left;
+}
+
+.-koowa-pagination .count {
+    padding:3px 0 0 10px;
+    float: left;
+}
+
+.-koowa-pagination .pages {
+    margin:0px;
+    padding:3px 0 0 0;
+    float: left;
+}
+
+.-koowa-pagination .active {
+    font-weight: bold;
+}
+
+.-koowa-pagination li {
+    display:inline;
+    margin:0;
+    padding:4px;
+}
+
+.-koowa-asc .-koowa-grid-arrow  { background-image: url(../images/sort_asc.png); }
+.-koowa-desc .-koowa-grid-arrow { background-image: url(../images/sort_desc.png); }
+a.-koowa-asc  { background: url(../images/sort_asc.png) no-repeat right; padding-right: 10px;}
+a.-koowa-desc { background: url(../images/sort_desc.png) no-repeat right; padding-right: 10px;}
+.-koowa-asc a.-koowa-asc, .-koowa-desc a.-koowa-desc { background-image: none; }
+
+.submitable { cursor: pointer; }

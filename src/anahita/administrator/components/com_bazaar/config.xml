@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>
+		<param type="custom" label="Store">
+		<![CDATA[
+			<?php $value = get_config_value('bazaar.store', Anahita::isBirth() ? '' : 'embryo-releases') ?>
+			<select name="params[store]">
+				<?= @html('options', array('0'=>'Default','embryo-releases'=>'Embyo Packages'), $value)?>
+			</select>
+		]]>
+		</param>		
+		
+		<param type="text" name="host" label="Bazaar Server" size="60" />
+	</params>
+</config>
