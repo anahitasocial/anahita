@@ -54,46 +54,48 @@ $console
             
             config(realpath(__DIR__.'/site'));
         });    
-
-$console
-        ->register('install-component')
-        ->setDefinition(array(
-              new InputArgument('component', InputArgument::REQUIRED, 'component name'),
-              new InputOption('components-directory',null, InputOption::VALUE_OPTIONAL,'Components Directory',__DIR__.'/src/components'),                
-        ))
-        ->setDescription('setup an anahita installation')
-        ->setCode(function (InputInterface $input, OutputInterface $output) {
-               $target    = __DIR__.'/site'; 
-               $path      = $input->getOption('components-directory')
-                                   .'/'.$input->getArgument('component');
-               if ( !file_exists($path) ) {
-                   throw new InvalidArgumentException('Component '.$component.' doesn\'t exists');
-               }
-               shell_exec("php $target/cli/install.php $path");
-        });
         
 $console
             ->register('install-components')
-            ->setDefinition(array(                    
+            ->setDefinition(array(       
+                    new InputArgument('components', InputArgument::IS_ARRAY, 'Component names'),
+                    new InputOption('skip',null, InputOption::VALUE_OPTIONAL,'Components to skip'),                    
                     new InputOption('components-directory',null, InputOption::VALUE_OPTIONAL,'Components Directory',__DIR__.'/src/components'),
             ))
             ->setDescription('setup an anahita installation')
-            ->setCode(function (InputInterface $input, OutputInterface $output) {                
-                $target    = __DIR__.'/site';
-                $path      = $input->getOption('components-directory');
+            ->setCode(function (InputInterface $input, OutputInterface $output) {              
+                $target     = __DIR__.'/site';
+                $path       = $input->getOption('components-directory');
                 if ( !is_dir($path) ) {
                     throw new InvalidArgumentException('Components folder doest not exists');
                 }
-                $dirs = new DirectoryIterator($path.'/');
-                foreach($dirs as $dir) 
+                $dirs       = new DirectoryIterator($path.'/');
+                $components = array();
+                foreach($dirs as $dir)
                 {
-                    if ( !$dir->isDot() && $dir->isDir() ) 
-                    {
-                        $output->writeLn('Installing '.$dir);
-                        $path = $dir->getPath().'/'.$dir;
-                        shell_exec("php $target/cli/install.php $path");
-                    }    
-                }                
+                    if ( !$dir->isDot() && $dir->isDir() ){
+                        $components[] = $dir->getPath().'/'.$dir;
+                    }
+                }
+                $only   = $input->getArgument('components');
+                if ( !empty($only) ) 
+                {
+                    $components = array_filter($components, function($component) use($only) {
+                        $name = basename($component);
+                        return in_array($name, $only);
+                    });
+                }
+                
+                $skip = explode(',', $input->getOption('skip'));
+                $components = array_filter($components, function($component) use($skip) {
+                    $name = basename($component);
+                    return !in_array($name, $skip);
+                });  
+                foreach($components as $component) 
+                {
+                    $output->writeLn('Installing '.basename($component));
+                    shell_exec("php $target/cli/install.php $component");    
+                }
             });        
                 
 $console->run();    
