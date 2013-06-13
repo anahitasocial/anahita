@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="user" method="upgrade">
+    <name>User - Anahita Invites</name>
+    <author>Anahita</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>(C) 2013 rmd Studio, PeerGlobe Technology</copyright>
+    <license>GNU/GPLv3</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.Anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <description>Anahita Invites User Plugin</description>
+    <files>
+        <filename plugin="invites">invites.php</filename>
+    </files>
+</install>

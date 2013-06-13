@@ -12,7 +12,7 @@
 $session = $sessions->find(array('api'=>$api->getName()));
 if ( $session && !$session->validateToken() ) 
 {
-	$session->destroy();
+	$session->delete()->save();
     $session = null;
 }
 ?>

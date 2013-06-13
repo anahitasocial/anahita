@@ -72,6 +72,19 @@
      }
      
      /**
+      * Removes a key from a request
+      * 
+      * @param string $key
+      * 
+      * @return void
+      */
+     public function remove($key)
+     {
+         $this->offsetUnset($key);
+         return $this;
+     }
+     
+     /**
       * Return whether it has a key or not
       * 
       * @param string $key

@@ -66,6 +66,28 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 	}
 	
 	/**
+	 * Render the comments
+	 * 
+	 * @param KCommandContext $context
+	 * 
+	 * @return void
+	 */
+	protected function _actionGetcomments(KCommandContext $context)
+	{
+	    $this->getCommentController()
+	        ->getRequest()->remove('get');
+	    
+        $this->getCommentController()
+                ->limit($this->getRequest()->get('limit'))
+                ->start($this->getRequest()->get('start'))
+                ;
+	    
+	    $this->getCommentController()
+	        ->view('comments')
+	        ->execute('get', $context);
+	}
+	
+	/**
 	 * Adds a comment
 	 *
 	 * @param KCommandContext $context
