@@ -21,6 +21,7 @@ function install($src, $target, $configure = false)
     }
     
     IO\write("Symlinking files...");
+    $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
     $mapper->addCrawlMap('vendor/joomla', $patterns);
     $mapper->addCrawlMap('vendor/nooku',  $patterns);
     $mapper->addCrawlMap('src/anahita',   $patterns);

@@ -155,7 +155,7 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 					}
 				}
 			}
-			$content = "//".str_replace(JPATH_ROOT,$this->getService('application')->getRouter()->getBaseUrl(),$file)."\n".$content;
+			$content = "//".str_replace(JPATH_ROOT,'',$file)."\n".$content;
 			$this->_cache_data[$file] = array('data'=> $content,'imports' => $imports);
 		} else {
 			$content = $this->_cache_data[$file]['data'];
