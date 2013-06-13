@@ -1,0 +1,5 @@
+{
+    "require-dev": {
+        "symfony/console": "2.1.*"
+    }
+}
