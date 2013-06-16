@@ -17,16 +17,14 @@
     </administration>
     <install>
         <sql>
-            <file charset="utf8" driver="mysql">install/install.mysql.utf8.sql</file>
+            <file charset="utf8" driver="mysql">schemas/install.sql</file>
         </sql>
     </install>
     <uninstall>
         <sql>
-            <file charset="utf8" driver="mysql">install/uninstall.mysql.utf8.sql</file>
+            <file charset="utf8" driver="mysql">schemas/uninstall.sql</file>
         </sql>
     </uninstall>
-    <installfile>install/install.php</installfile>
-    <uninstallfile>install/uninstall.php</uninstallfile>
     <languages folder="site/language">
         <language tag="en-GB">en-GB.com_topics.ini</language>
     </languages>

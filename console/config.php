@@ -28,8 +28,7 @@ function install($src, $target, $configure = false)
     $mapper->symlink();
     $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
     
-    if ( file_exists($target.'/installation') ) 
-    {
+    if ( file_exists($target.'/installation') ) {
         $mapper->getMap('vendor/joomla/installation/index.php','installation/index.php')->copy();
     }
     
