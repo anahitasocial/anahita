@@ -28,11 +28,16 @@
 abstract class ComMigratorMigrationAbstract extends KObject
 {
     /**
+     * If set then it wil try to auto detect the schemas
+     */
+    const AUTO_DETECT_SCHEMA = -1; 
+    
+    /**
      * Array of table schmesa to dump into the install.sql
      * 
      * @var array
      */
-    protected $_schemas = array();
+    protected $_schemas = self::AUTO_DETECT_SCHEMA;
     
     /**
      * The name of the component
@@ -61,6 +66,21 @@ abstract class ComMigratorMigrationAbstract extends KObject
      * @var array
      */
     protected $_schema_sqls = array();
+    
+    
+    /**
+     * That path to the schema file
+     * 
+     * @var string
+     */
+    protected $_schema_file;
+    
+    /**
+     * That path to the uninstall file
+     *
+     * @var string
+     */
+    protected $_uninstall_file;    
     
     /**
      * Uninstall SQL
@@ -99,8 +119,11 @@ abstract class ComMigratorMigrationAbstract extends KObject
         $this->_component       = $config->component;        
         
         $this->_db      = $config->db;
-        settype($this->_schemas, 'array');
+        
         $config->mixer  = $this;                
+        
+        $this->_schema_file    = $config->schema_file;
+        $this->_uninstall_file = $config->uninstall_file;
         
         $this->mixin(new KMixinCommand($config));
     }
@@ -116,7 +139,11 @@ abstract class ComMigratorMigrationAbstract extends KObject
      */
     protected function _initialize(KConfig $config)
     {
-        $config->append(array(           
+        $path            = dirname($this->getIdentifier()->filepath);
+        
+        $config->append(array( 
+           'schema_file'       => $path.'/schema.sql',
+           'uninstall_file'    => $path.'/uninstall.sql',          
            'db'                => $this->getService('koowa:database.adapter.mysqli'),
            'command_chain'     => $this->getService('koowa:command.chain'),
            'event_dispatcher'  => $this->getService('koowa:event.dispatcher'),
@@ -196,8 +223,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
                         $versions[] = $matches[1];
                     }
                 }
-            }            
-            $versions[]         = 0;
+            }                        
             sort($versions);
             $this->_versions    = array_unique($versions);         
             $this->_max_version = array_pop($versions);
@@ -226,22 +252,19 @@ abstract class ComMigratorMigrationAbstract extends KObject
      */
     public function up($steps = PHP_INT_MAX)
     {            
-       $context = $this->getCommandContext();                     
-       
-       $versions = array();
-       
-       foreach($this->getVersions() as $version) 
-       {           
-           if ( $version > $this->getCurrentVersion() ) {
-               if ( $step++ >= $steps) {
-                   break;
-               }               
-               $versions[] = $version;
+       $context    = $this->getCommandContext();
+       $current    = $this->getCurrentVersion();
+       $versions = array_filter($this->getVersions(), 
+               function($version) use ($current) {
+                   return $version > $current;
            }
-       }
-
-       $context->versions = $versions;
+       );
        
+       sort($versions);
+       $versions = array_slice($versions, 0, $steps);
+       
+       $context->versions = $versions;
+              
        $this->getCommandChain()->run('before.migration', $context);
        
        foreach($versions as $version)
@@ -257,16 +280,6 @@ abstract class ComMigratorMigrationAbstract extends KObject
     }
     
     /**
-     * Rollsback
-     * 
-     * void
-     */
-    public function rollback()
-    {
-        return $this->down();
-    }
-    
-    /**
      * Migrate up
      *
      * @param int version Up the version upgrate the data to
@@ -275,37 +288,33 @@ abstract class ComMigratorMigrationAbstract extends KObject
      */
     public function down($steps = 1)
     {        
-       $context = $this->getCommandContext();                     
-       
-       $versions = array();
-       $step     = 0;
-       $v        = $this->getVersions();
-       rsort($v);
-       foreach($v as $version) 
-       {        
-           if ( $version <= $this->getCurrentVersion() ) 
-           {
-               $versions[] = $version;
-               if ( $step++ >= $steps) {
-                   break;
-               }               
+       $context    = $this->getCommandContext();
+       $current    = $this->getCurrentVersion();
+       $versions = array_filter($this->getVersions(), 
+               function($version) use ($current) {
+                   return $version <= $current;
            }
-       }
-   
-       $context->versions = $versions;
+       );
+       rsort($versions);
+       $versions = array_slice($versions, 0, $steps);
        
+       $context->versions = $versions;        
        $this->getCommandChain()->run('before.migration', $context);
-       
-       foreach($versions as $version)
+
+       foreach($versions as $version) 
        {
-           $context->version = $version;           
-           $this->getCommandChain()->run('before.version.down', $context);
-           $this->_run('down', $version);
-           $this->getCommandChain()->run('after.version.down', $context);
-           $this->setCurrentVersion($version);
+            $values = $this->getVersions();
+            $index  = array_search($version, $values);
+            $next   = $index == 0 ? 0 : $values[$index-1];            
+            $context->version = $next;
+            $this->getCommandChain()->run('before.version.down', $context);    
+            $this->_run('down', $version);
+            $this->getCommandChain()->run('after.migration', $context);
+            $this->setCurrentVersion($next);
        }
        
-       $this->getCommandChain()->run('after.migration', $context);                                
+       $this->getCommandChain()->run('after.migration', $context);
+                                       
     }    
     
     /**
@@ -385,13 +394,32 @@ abstract class ComMigratorMigrationAbstract extends KObject
      */
     public function createSchema()
     {
-        $version              = $this->getCurrentVersion();
-        foreach($this->_schemas as $schema)
+        if ( $this->_schemas == self::AUTO_DETECT_SCHEMA ) 
         {
-            $row = $this->_db->show('SHOW CREATE TABLE #__'.$schema,KDatabase::FETCH_ARRAY);
+            $tables  = $this->_db->show('SHOW TABLES',KDatabase::FETCH_FIELD_LIST);
+            $prefix  = $this->_db->getTablePrefix().$this->getIdentifier()->package.'_';
+            $schemas = array();
+            foreach($tables as $table) 
+            {
+                if ( strpos($table, $prefix) === 0 ) {
+                    $schemas[] = $table;
+                }
+            }
+        } else {
+            $schemas = $this->_schemas;
+            settype($schemas, 'array');
+            $prefix  = $this->_db->getTablePrefix();            
+            $schemas = array_map(function($table) use($prefix) {
+                return $prefix.$table;
+            },$schemas);
+        }        
+        $version = $this->getCurrentVersion();
+        foreach($schemas as $schema)
+        {
+            $row = $this->_db->show('SHOW CREATE TABLE '.$schema,KDatabase::FETCH_ARRAY);
             $sql = $row['Create Table'];
             $this->addSchemaQuery($sql);
-            $this->addUninstallQuery("DROP TABLE IF EXISTS `#__${schema}`");
+            $this->addUninstallQuery("DROP TABLE IF EXISTS `${schema}`");
         }
         $this->addSchemaQuery("UPDATE #__migrator_versions SET `version` = $version WHERE `component` = '{$this->_component}'");
         $this->addUninstallQuery("DELETE #__migrator_versions WHERE `component` = '{$this->_component}'");        
@@ -403,9 +431,13 @@ abstract class ComMigratorMigrationAbstract extends KObject
      * @return void
      */
     public function write()
-    {                
-        $path            = dirname($this->getIdentifier()->filepath);        
-        file_put_contents($path.'/schema.sql',    implode("\n\n", $this->_schema_sql));
-        file_put_contents($path.'/uninstall.sql', implode("\n\n", $this->_uninstall_sqls));
+    {
+        if ( !empty($this->_schema_sql) && $this->_schema_file ) {
+            file_put_contents($this->_schema_file,    implode("\n\n", $this->_schema_sql));
+        }
+        
+        if ( !empty($this->_uninstall_sqls) && $this->_uninstall_file ) {
+            file_put_contents($this->_uninstall_file, implode("\n\n", $this->_uninstall_sqls));
+        }
     }
 }

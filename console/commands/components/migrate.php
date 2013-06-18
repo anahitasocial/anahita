@@ -65,6 +65,17 @@ abstract class ComponentsMigrate extends ComponentsAbstract implements
     }
 
     /**
+     *
+     * @param \KEvent $event
+     */
+    public function onBeforeSchemaMigration(\KEvent $event)
+    {
+        if ( !count($event->versions) ) {
+            $this->_output->writeLn('<info>There are no migrations to run.</info>');
+        }
+    }
+
+    /**
      * 
      * @param \KEvent $event
      */
@@ -95,6 +106,7 @@ abstract class ComponentsMigrate extends ComponentsAbstract implements
             ->addEventListener('onBeforeSchemaVersionUp',   $this)
             ->addEventListener('onBeforeSchemaVersionDown', $this)
             ->addEventListener('onAfterSchemaMigration',    $this)
+            ->addEventListener('onBeforeSchemaMigration',    $this)
             ;
         foreach($this->_components as $component) 
         {
@@ -196,11 +208,10 @@ class ComponentsMigrateDown extends ComponentsMigrate
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        parent::execute($input, $output);
-  
+        parent::execute($input, $output);  
        
         foreach($this->_migrators as $migrator) {
-            $migrator->rollback();
+            $migrator->down();
         }
     }
 }
