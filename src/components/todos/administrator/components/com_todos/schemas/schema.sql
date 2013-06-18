@@ -23,4 +23,4 @@ CREATE TABLE `#__todos_todos` (
   UNIQUE KEY `node_id` (`node_id`)
 ) TYPE=InnoDB;
 
-UPDATE #__migrator_versions SET `version` = 0 WHERE `component` = 'todos';
+UPDATE #__migrator_versions SET `version` = 1 WHERE `component` = 'todos';
