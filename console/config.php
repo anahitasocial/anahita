@@ -2,7 +2,7 @@
 
 function install($src, $target, $configure = false)
 {
-    $mapper = new Installer\Mapper($src, $target);
+    $mapper = new \Installer\Mapper($src, $target);
     $patterns = array(
             '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
             '#^(components|modules|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',

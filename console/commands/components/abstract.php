@@ -30,7 +30,7 @@ abstract class ComponentsAbstract extends Command
     protected function configure()
     {
         $this->addArgument('components', InputArgument::IS_ARRAY, 'Component names');
-        $this->addOption('all-except','x', InputOption::VALUE_OPTIONAL,'Components to skip');      
+        //$this->addOption('all-except','x', InputOption::VALUE_OPTIONAL,'Components to skip');      
     }
 
     /**
@@ -56,6 +56,11 @@ abstract class ComponentsAbstract extends Command
             }
         }
         $only   = $input->getArgument('components');
+        
+        if ( empty($only) ) {
+            throw new \RuntimeException('No component is specified');
+        }
+        
         if ( !empty($only) )
         {
             $components = array_filter($components, function($component) use($only) {
@@ -63,12 +68,13 @@ abstract class ComponentsAbstract extends Command
                 return in_array($name, $only);
             });
         }
-        $skip = explode(',', $input->getOption('all-except'));
+        $this->_components = $components;
+        //$skip = explode(',', $input->getOption('all-except'));
         
-        $this->_components = array_filter($components, function($component) use($skip) {
-            $name = basename($component);
-            return !in_array($name, $skip);
-        });
+//         $this->_components = array_filter($components, function($component) use($skip) {
+//             $name = basename($component);
+//             return !in_array($name, $skip);
+//         });
     }    
 }
 ?>

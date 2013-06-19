@@ -120,6 +120,7 @@ class Mapper
         }        
         $crawler = new Crawler($root, $patterns);
         $paths   = $crawler->getPaths();
+
         foreach($paths as $path) {                        
             $this->addMap($src.'/'.$path, str_replace('site/','',$path));
         }
@@ -135,8 +136,7 @@ class Mapper
         if ( count($deadlinks) )
         {
             \IO\write('Deleting dead link :');
-            foreach($deadlinks as $link) 
-            {
+            foreach($deadlinks as $link) {
                 \IO\write(' '.$link);
                 @unlink($link);
             }
@@ -259,4 +259,39 @@ class Crawler
         return $paths;
     }
 }
+
+namespace Console\Command;
+
+class DirectoryIterator implements \Countable, \IteratorAggregate
+{
+    protected $_found = array();
+    
+    public function __construct($directories, $search_paths)
+    {
+        foreach($search_paths as $path) 
+        {
+            $iterator = new \DirectoryIterator($path);
+            
+            foreach($iterator as $file) 
+            {
+                if ( $file->isDot() || !$file->isDir() ) 
+                     continue;
+                if ( in_array((string)$file, $directories) ) {
+                    $this->_found[] = $file->getPathName();
+                }
+            }
+        }
+    }
+    
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->_found);
+    }
+    
+    public function count()
+    {
+        return count($this->_found);
+    }
+}
+
 ?>

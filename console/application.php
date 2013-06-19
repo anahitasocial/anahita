@@ -2,11 +2,7 @@
 
 namespace Console;
 
-require_once 'console/commands/create.php';
-require_once 'console/commands/components/abstract.php';
-require_once 'console/commands/components/install.php';
-require_once 'console/commands/components/migrate.php';
-
+require_once 'console/class.php';
 require_once 'console/config.php';
 
 
@@ -28,11 +24,22 @@ class Application extends \Symfony\Component\Console\Application
 
         parent::__construct($site);
 
-        $this->addCommands(array(new \Console\Command\Create()));
-        $this->addCommands(array(new \Console\Command\ComponentsInstall()));
+        /*
         $this->addCommands(array(new \Console\Command\ComponentsMigrateUp()));
         $this->addCommands(array(new \Console\Command\ComponentsMigrateDown()));
         $this->addCommands(array(new \Console\Command\ComponentsMigrateVersion()));
+        */
+    }
+    
+    public function load()
+    {        
+        if ( !defined('JPATH_BASE') )
+        {
+            define('JPATH_BASE', $this->getSitePath().'/administrator');
+            require_once ( JPATH_BASE.'/includes/framework.php' );
+            $_SERVER['HTTP_HOST'] = '';
+            \KService::get('com://admin/application.dispatcher')->load();            
+        }                
     }
 
     public function getSrcPath()

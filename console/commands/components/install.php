@@ -19,8 +19,8 @@ class ComponentsInstall extends ComponentsAbstract
     
         $this->addOption('from-directory',null, InputOption::VALUE_OPTIONAL,'Directory to install components from');
     
-        $this->setName('components:install')
-            ->setDescription('Install components');
+        $this->setName('install')
+            ->setDescription('Install components from a list of bundles');
     }
     
     /**
@@ -33,16 +33,24 @@ class ComponentsInstall extends ComponentsAbstract
         $this->_from_dir = $input->getOption('from-directory');
     
         if ( empty($this->_from_dir) ) {
-            $this->_from_dir  = $this->getApplication()->getSrcPath().'/src/components';
+            $this->_from_dir  = $this->getApplication()->getSrcPath().'/src/bundles';
         }
     
         parent::execute($input, $output);
     
         $target     = $this->getApplication()->getSitePath();
-        
-        foreach($this->_components as $component) {
-            $output->writeLn('Installing '.basename($component));
-            shell_exec("php $target/cli/install.php $component");
+               
+        foreach($this->_components as $component) 
+        {
+            $name   = ucfirst(basename($component));
+            $mapper = new \Installer\Mapper($component, $target);
+            $mapper->addCrawlMap('',  array(
+                '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',                    
+                '#CHANGELOG.php#'  => '',
+                '#migration#'     => '',
+                '#manifest.xml#'   => ''        
+            ));
+            $mapper->symlink();
         }
     }    
 }

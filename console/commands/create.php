@@ -57,4 +57,6 @@ class Create extends Command
     }
 }
 
+$console->addCommands(array(new \Console\Command\Create()));
+
 ?>

@@ -37,7 +37,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
      * 
      * @var array
      */
-    protected $_schemas = self::AUTO_DETECT_SCHEMA;
+    protected $_schemas;
     
     /**
      * The name of the component
@@ -124,7 +124,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
         
         $this->_schema_file    = $config->schema_file;
         $this->_uninstall_file = $config->uninstall_file;
-        
+        $this->_schemas        = Kconfig::unbox($config->schemas);
         $this->mixin(new KMixinCommand($config));
     }
         
@@ -142,6 +142,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
         $path            = dirname($this->getIdentifier()->filepath);
         
         $config->append(array( 
+           'schemas'           => self::AUTO_DETECT_SCHEMA,
            'schema_file'       => $path.'/schema.sql',
            'uninstall_file'    => $path.'/uninstall.sql',          
            'db'                => $this->getService('koowa:database.adapter.mysqli'),
@@ -413,15 +414,21 @@ abstract class ComMigratorMigrationAbstract extends KObject
                 return $prefix.$table;
             },$schemas);
         }        
-        $version = $this->getCurrentVersion();
+        $version = (int)$this->getMaxVersion();
+        $version = (int)$this->getCurrentVersion();
         foreach($schemas as $schema)
         {
             $row = $this->_db->show('SHOW CREATE TABLE '.$schema,KDatabase::FETCH_ARRAY);
-            $sql = $row['Create Table'];
+            $sql = $row['Create Table'];            
+            $sql = preg_replace('/ AUTO_INCREMENT=\d+/','', $sql);
+            $sql = preg_replace('/ TYPE=/','ENGINE=', $sql);
             $this->addSchemaQuery($sql);
             $this->addUninstallQuery("DROP TABLE IF EXISTS `${schema}`");
         }
-        $this->addSchemaQuery("UPDATE #__migrator_versions SET `version` = $version WHERE `component` = '{$this->_component}'");
+        //if ( $version > 0 ) 
+        {            
+            $this->addSchemaQuery("UPDATE #__migrator_versions SET `version` = $version WHERE `component` = '{$this->_component}'");
+        }        
         $this->addUninstallQuery("DELETE #__migrator_versions WHERE `component` = '{$this->_component}'");        
     }
     
