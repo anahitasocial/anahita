@@ -1,7 +1,8 @@
 {
     "packages": {
         "anahita/anahita": {
-            "dev-master": {                 
+            "dev-master": {           
+                "name" : "anahita/anahita",
                 "version": "3.1.7",
                 "dist" : {
                     "url": "https://github.com/anahitasocial/anahita-new.git",
