@@ -4,9 +4,9 @@
             "dev-master": {           
                 "name" : "anahita/anahita",
                 "version": "3.1.7",
-                "dist" : {
+                "repositories" : {
                     "url": "https://github.com/anahitasocial/anahita-new.git",
-                    "type": "git"
+                    "type": "vcs"
                 }                                
              }            
         }
