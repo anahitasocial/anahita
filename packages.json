@@ -1,10 +1,12 @@
 {
     "packages": {
         "anahita/anahita": {
-            "dev-master": { 
-                "require-dev": {
-                    "symfony/console": "2.1.*"
-                }                
+            "dev-master": {                 
+                "version": "3.1.7",
+                "dist" : {
+                    "url": "https://github.com/anahitasocial/anahita-new.git",
+                    "type": "git"
+                }                                
              }            
         }
     }
