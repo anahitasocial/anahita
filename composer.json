@@ -1,4 +1,6 @@
 {
+    "name": "anahita/anahita",
+    "type": "project",
     "require-dev": {
         "symfony/console": "2.1.*"
     }
