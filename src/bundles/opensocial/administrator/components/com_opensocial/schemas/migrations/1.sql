@@ -1,6 +1,3 @@
-<?php 
-
-dbexec("
 CREATE TABLE IF NOT EXISTS `#__opensocial_profiles` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `socialengine_actor_id` bigint(11) NOT NULL,
@@ -60,6 +57,4 @@ CREATE TABLE IF NOT EXISTS `#__opensocial_profiles` (
   KEY `relationship_status` (`relationship_status`),
   KEY `looking_for` (`looking_for`),
   KEY `socialengine_actor_id` (`socialengine_actor_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8");
-
-?>
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;

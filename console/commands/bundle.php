@@ -147,11 +147,12 @@ class Bundle extends Command
         if ( $component->isNew() ) {
             $schema = true;
         }         
-        $output->writeLn('<info>...installing component '.str_replace('com_','',$name).'</info>');        
+        $output->writeLn('<info>...installing '.str_replace('com_','',$name).' component</info>');        
         $component->saveEntity();
         if ( $schema &&
                 file_exists($path.'/schemas/schema.sql') ) 
         {
+             $output->writeLn('<info>...running schema for '.str_replace('com_','',$name).' component</info>');
              $queries = dbparse(file_get_contents($path.'/schemas/schema.sql'));
              foreach($queries as $query) {
                  \KService::get('koowa:database.adapter.mysqli')
