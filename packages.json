@@ -1,9 +1,11 @@
 {
     "packages": {
         "anahita/anahita": {
-            "dev-master": { @composer.json },
-            "0.0.1": { @composer.json },
-            "1.0.0": { @composer.json }
+            "dev-master": { 
+                "require-dev": {
+                    "symfony/console": "2.1.*"
+                }                
+             }            
         }
     }
 }
