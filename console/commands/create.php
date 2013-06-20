@@ -13,8 +13,8 @@ class Create extends Command
 {
     protected function configure()
     {
-        $this->setName('create')
-        ->setDescription('Create a new anahita installation')
+        $this->setName('init')
+        ->setDescription('Initializes an anahita installation')
         ->setDefinition(array(
                 new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
                 new InputOption('db-name',null, InputOption::VALUE_REQUIRED,'Database name'),

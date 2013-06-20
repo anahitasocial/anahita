@@ -234,6 +234,22 @@ abstract class ComMigratorMigrationAbstract extends KObject
     }
     
     /**
+     * Retunr the number of versions behind
+     * 
+     * @return int
+     */
+    public function getVersionsBehind()
+    {
+        $current  = $this->getCurrentVersion();
+        $versions = array_filter($this->getVersions(),
+                function($version) use ($current) {
+                    return $version > $current;
+                }
+        );
+        return count($versions);        
+    }
+    
+    /**
      * Return the max version
      * 
      * @return int
@@ -358,9 +374,20 @@ abstract class ComMigratorMigrationAbstract extends KObject
     protected function _getVersion()
     {    
         if ( !isset($this->_version) )
-        {
-             $this->_version = $this->getService('repos://admin/migrator.version')
-                        ->findOrAddNew(array('component'=>$this->_component));                        
+        {    
+               //if table doesn't exists
+                $this->_db->execute(<<<EOF
+CREATE TABLE IF NOT EXISTS `#__migrator_versions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `component` varchar(255) NOT NULL,
+  `version` text NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `component` (`component`)
+)ENGINE=InnoDB;
+EOF
+                );
+                $this->_version = $this->getService('repos://admin/migrator.version')
+                    ->findOrAddNew(array('component'=>$this->_component));
         }
         return $this->_version;
     }

@@ -132,25 +132,6 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
 }
 
 $console
-->register('db:migrate:version')
-->setDescription('Show the current migration versions')
-->setDefinition(array(
-    new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),
-))
-->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {         
-    $migrators  = new Migrators($console, 
-                $input->getArgument('component'));
-        
-    foreach($migrators as $migrator) 
-    {
-        $output->writeLn('<info>'.ucfirst($migrator->getComponent()).'</info>');
-        $output->writeLn('<info> current : '.$migrator->getCurrentVersion().'</info>');        
-        $output->writeLn('<info> max     : '.$migrator->getMaxVersion().'</info>');
-    }
-});
-;
-
-$console
 ->register('db:migrate:up')
 ->setDescription('Run the database migration for a component')
 ->setDefinition(array(
@@ -198,7 +179,11 @@ $console
         foreach($migrators as $migrator)
         {
             $component = $migrator->getComponent();
-            $output->writeLn('<info>- '.$component.'</info>');
+            $text = 'version '.$migrator->getCurrentVersion();
+            if ( $behind = $migrator->getVersionsBehind() > 0 ) {
+                $text .= ' behind '.$behind;
+            }
+            $output->writeLn('<info>'.$component.'</info> '.$text);            
         }
     });
 

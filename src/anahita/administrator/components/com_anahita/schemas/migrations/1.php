@@ -29,13 +29,23 @@ class ComAnahitaSchemaMigration1 extends ComMigratorMigrationVersion
 {
     public function up()
     {
-        anahita_20();
-        anahita_21();
-        anahita_22();
-        anahita_23();
-        anahita_24();
-        anahita_25();
-        anahita_26();
+//         anahita_20();
+//         anahita_21();
+//         anahita_22();
+//         anahita_23();
+//         anahita_24();
+//         anahita_25();
+//         anahita_26();
+
+        dbexec('INSERT IGNORE INTO #__migrator_versions (component,version) VALUES 
+                   ("connect",   1),
+                   ("opensocial",1),
+                   ("groups",0),
+                   ("photos",0),
+                   ("topics",1),
+                   ("subscriptions",1),
+                   ("todos",1)
+                   ');
     }
     
 }

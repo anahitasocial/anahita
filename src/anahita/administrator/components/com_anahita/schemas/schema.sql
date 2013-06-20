@@ -97,6 +97,7 @@ CREATE TABLE `#__anahita_nodes` (
   `person_time_zone` int(11) DEFAULT NULL,
   `person_language` varchar(100) DEFAULT NULL,
   `access` text,
+  `privacy_read_mode` varchar(15) NOT NULL DEFAULT 'graph',
   `permissions` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `person_username` (`person_username`),
@@ -211,14 +212,6 @@ CREATE TABLE `#__content_frontpage` (
   PRIMARY KEY (`content_id`)
 )ENGINE=MyISAM;
 
-CREATE TABLE `#__content_rating` (
-  `content_id` int(11) NOT NULL DEFAULT '0',
-  `rating_sum` int(11) unsigned NOT NULL DEFAULT '0',
-  `rating_count` int(11) unsigned NOT NULL DEFAULT '0',
-  `lastip` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`content_id`)
-)ENGINE=MyISAM;
-
 CREATE TABLE `#__core_acl_aro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `section_value` varchar(240) NOT NULL DEFAULT '0',
@@ -247,7 +240,7 @@ CREATE TABLE `#__core_acl_aro_groups` (
 CREATE TABLE `#__core_acl_aro_map` (
   `acl_id` int(11) NOT NULL DEFAULT '0',
   `section_value` varchar(230) NOT NULL DEFAULT '0',
-  `value` varchar(100) NOT NULL,
+  `value` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`acl_id`,`section_value`,`value`)
 )ENGINE=MyISAM;
 
@@ -449,6 +442,4 @@ CREATE TABLE `#__users` (
   KEY `email` (`email`)
 )ENGINE=MyISAM;
 
-UPDATE #__migrator_versions SET `version` = 2 WHERE `component` = 'anahita';
-
-UPDATE #__migrator_versions SET `version` = 0 WHERE `component` = 'anahita';
+UPDATE #__migrator_versions SET `version` = 1 WHERE `component` = 'anahita';

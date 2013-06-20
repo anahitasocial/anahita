@@ -43,7 +43,7 @@ class ComAnahitaSchemaMigration extends ComMigratorMigrationAbstract
             'schemas' => array(
                     'anahita_edges','anahita_nodes',
                     'categories','components','content',
-                    'content_frontpage','content_rating','core_acl_aro','core_acl_aro_groups',
+                    'content_frontpage','core_acl_aro','core_acl_aro_groups',
                     'core_acl_aro_map','core_acl_aro_sections','core_acl_groups_aro_map','core_log_items',
                     'core_log_searches','groups','menu','menu_types','migrator_versions','modules','modules_menu',
                     'plugins','sections','session','stats_agents','templates_menu','users'
