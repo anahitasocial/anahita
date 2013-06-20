@@ -329,19 +329,24 @@ abstract class ComMigratorMigrationAbstract extends KObject
         {
             $path = dirname($this->getIdentifier()->filepath).'/migrations';
             
-            if ( method_exists($this, '_'.$method.$version) ) {
-                $this->{'_'.$method.$version}();
+            if ( file_exists($path."/$version.php") ) 
+            {
+                $this->getService('koowa:loader')->loadFile($path."/$version.php");  
+                $class = 'Com'.ucfirst($this->getIdentifier()->package).'SchemaMigration'.$version;
+            } 
+            else {
+                $class = 'ComMigratorMigrationVersion';
             }
             
-            if ( $method == 'up' ) {
-                $path = $path.'/'.$version.'.sql';
-            } else {
-                $path = $path.'/'.$version.'.down.sql';
-            }
-            
-            if ( file_exists($path) ) {
-                dbexecfile($path);
-            }            
+            $config = array(
+              'db' => $this->_db,
+              'version'            => $version,
+              'service_container'  => $this->getService(),
+              'service_identifier' => $this->getIdentifier(
+                      'com://admin/'.$this->getIdentifier()->package.'.schema.migration.'.$version)
+            );
+            $migrator = new $class(new KConfig($config));
+            $migrator->$method();                      
         }
     }
     

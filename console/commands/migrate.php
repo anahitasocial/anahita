@@ -141,8 +141,11 @@ $console
     $migrators  = new Migrators($console, 
                 $input->getArgument('component'));
         
-    foreach($migrators as $migrator) {
-        $output->writeLn('<info>'.ucfirst($migrator->getComponent()).' '.$migrator->getCurrentVersion().'</info>');
+    foreach($migrators as $migrator) 
+    {
+        $output->writeLn('<info>'.ucfirst($migrator->getComponent()).'</info>');
+        $output->writeLn('<info> current : '.$migrator->getCurrentVersion().'</info>');        
+        $output->writeLn('<info> max     : '.$migrator->getMaxVersion().'</info>');
     }
 });
 ;
