@@ -14,8 +14,8 @@ class Bundle extends Command
     {
         $this->addArgument('bundles', InputArgument::IS_ARRAY, 'Name of the bundle');
         $this->addOption('schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
-        $this->setName('bundle:link')
-            ->setDescription('Link a bundle into the site');
+        $this->setName('bundle:install')
+            ->setDescription('Install a bundle into the site');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -59,7 +59,7 @@ class Bundle extends Command
                $xml     = new \SimpleXMLElement(file_get_contents($file));
                $install = array_pop($xml->xpath('/install'));               
                if ( $install && 
-                       in_array($install['type'], array('component','plugin')) ) 
+                       in_array($install['type'], array('component','plugin','module')) ) 
                {
                    $manifests[dirname($file)] = $install;
                }
@@ -72,6 +72,12 @@ class Bundle extends Command
             $name     = (string)$manifest->name[0].' '.$type;            
             $this->$method($manifest, $output, $dir, $schema);            
         }                        
+    }
+    
+    protected function _installModule($manifest, $output)
+    {
+        $name     = strtolower((string)$manifest->name[0]);
+        $output->writeLn("<info>...installing module $name</info>");
     }
     
     protected function _installPlugin($manifest, $output)
