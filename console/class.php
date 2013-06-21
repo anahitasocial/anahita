@@ -126,6 +126,21 @@ class Mapper
         }
     }
     
+    public function unlink()
+    {
+        foreach($this->_maps as $map) {
+            $map->unlink();
+        }
+        $deadlinks = explode("\n", trim(`find -L {$this->_target_root} -type l -lname '*'`));
+        $deadlinks = array_filter($deadlinks);
+        if ( count($deadlinks) )
+        {
+            foreach($deadlinks as $link) {         
+                @unlink($link);
+            }
+        }
+    }
+        
     public function symlink()
     {
         foreach($this->_maps as $map) {            
@@ -135,9 +150,7 @@ class Mapper
         $deadlinks = array_filter($deadlinks);
         if ( count($deadlinks) )
         {
-            \IO\write('Deleting dead link :');
-            foreach($deadlinks as $link) {
-                \IO\write(' '.$link);
+            foreach($deadlinks as $link) {         
                 @unlink($link);
             }
         }        
@@ -166,6 +179,11 @@ class Map
            }
         }
         exec("cp -r {$this->_src} {$this->_target}");
+    }
+    
+    public function unlink()
+    {        
+         unlink($this->_target);   
     }
     
     public function symlink()

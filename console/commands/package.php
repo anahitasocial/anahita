@@ -169,6 +169,38 @@ class Package extends Command
 }
 
 
+$console
+->register('package:uninstall')
+->setDescription('Uninstalls a package')
+->setDefinition(array(
+        new InputArgument('package', InputArgument::IS_ARRAY, 'Name of the package'),
+))
+->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+
+        $packages       = $input->getArgument('package');                
+        $directories    = new \Console\Command\DirectoryIterator($packages, 
+                        $console->getPackagePaths());
+        
+        if ( !count($directories) ) {
+            throw new \RuntimeException('No valid package is specified');
+        }
+        
+        foreach($directories as $dir)
+        {                            
+            $name   = ucfirst(basename($dir));
+            $mapper = new \Installer\Mapper($dir, $console->getSitePath());
+            $mapper->addCrawlMap('',  array(
+                    '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                    '#CHANGELOG.php#'  => '',
+                    '#^migration.*#'     => '',
+                    '#manifest.xml#'   => ''
+            ));
+            $output->writeLn("<info>Unlinking $name Package</info>");
+            $mapper->unlink();
+        }
+});
+;
+
 $console->addCommands(array(new \Console\Command\Package()));
 $console
     ->register('package:list')
@@ -185,7 +217,8 @@ $console
                 }
             }            
         }        
-    });
+    })
+    ;
 ;
 
 

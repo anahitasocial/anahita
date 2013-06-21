@@ -23,7 +23,7 @@ class Application extends \Symfony\Component\Console\Application
         $this->src  = $src;
         $this->site = $site;
         settype($package_paths, 'array');
-        $this->package_paths = $package_paths;
+        $this->package_paths   = $package_paths;
         $this->package_paths[] = $src.'/src/packages';
 
         parent::__construct($site);
