@@ -17,9 +17,7 @@ foreach($files as $file)
 }
 
 require_once 'console/application.php';
-
-$console = new Console\Application(ROOT,ROOT.'/site');
-
+$console = new Console\Application(realpath(__DIR__.'/../'),ROOT.'/www');
 require_once 'console/commands/create.php';
 require_once 'console/commands/bundle.php';
 require_once 'console/commands/migrate.php';
