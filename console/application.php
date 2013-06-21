@@ -23,21 +23,14 @@ class Application extends \Symfony\Component\Console\Application
         $this->site = $site;
 
         parent::__construct($site);
-
-        /*
-        $this->addCommands(array(new \Console\Command\ComponentsMigrateUp()));
-        $this->addCommands(array(new \Console\Command\ComponentsMigrateDown()));
-        $this->addCommands(array(new \Console\Command\ComponentsMigrateVersion()));
-        */
     }
     
-    public function load()
+    public function loadFramework()
     {        
         if ( !defined('JPATH_BASE') )
         {
             define('JPATH_BASE', $this->getSitePath().'/administrator');
             require_once ( JPATH_BASE.'/includes/framework.php' );
-            $_SERVER['HTTP_HOST'] = '';
             \KService::get('com://admin/application.dispatcher')->load();            
         }                
     }

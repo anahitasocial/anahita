@@ -23,7 +23,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
     
     public function __construct($console, $components)
     {
-        $console->load();
+        $console->loadFramework();
         
         $components = array_map(function($item){
             return 'com_'.str_replace('com_','',$item);
