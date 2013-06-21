@@ -136,10 +136,13 @@ function config($target)
     {
         IO\write("Please login-in with the following credentials");
         IO\write(array(
-        'username' => 'admin',
-        'password' => $admin_passwd
+            'username' => 'admin',
+            'password' => $admin_passwd
         ));
     }    
+    return array(
+        'database' => $database        
+    );
 }
 
 function write_config($target, $config)
