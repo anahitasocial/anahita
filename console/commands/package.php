@@ -13,6 +13,7 @@ class Package extends Command
     protected function configure()
     {
         $this->addArgument('package', InputArgument::IS_ARRAY, 'Name of the package');
+        $this->addOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development');        
         $this->addOption('schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
         $this->setName('package:install')
             ->setDescription('Install a package into the site');
@@ -20,7 +21,17 @@ class Package extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $packages       = $input->getArgument('package');                
+        $this->getApplication()->setEnv($input->getOption('config-env'));
+        
+        $config   = pick($this->getApplication()->getConfig()->packages, array());
+        $config   = \KConfig::unbox($config);
+        
+        $packages = $input->getArgument('package');
+        
+        if ( empty($packages) ) {
+            $packages = $config;
+        } 
+                        
         $directories    = new \Console\Command\DirectoryIterator($packages, 
                         $this->getApplication()->getPackagePaths());
         
@@ -31,9 +42,10 @@ class Package extends Command
         \KService::get('koowa:loader')
             ->loadIdentifier('com://admin/migrator.helper');
         foreach($directories as $dir)
-        {                            
-            $name   = ucfirst(basename($dir));
-            $mapper = new \Installer\Mapper($dir, $this->getApplication()->getSitePath());
+        {             
+            $config[] = basename($dir);
+            $name     = ucfirst(basename($dir));
+            $mapper   = new \Installer\Mapper($dir, $this->getApplication()->getSitePath());
             $mapper->addCrawlMap('',  array(
                     '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#CHANGELOG.php#'  => '',
@@ -44,6 +56,10 @@ class Package extends Command
             $mapper->symlink();
             $this->_installExtensions($dir, $output, $input->getOption('schema'));
         }
+        $config = array_unique($config);
+        $this->getApplication()->addConfig(array(
+            'packages' => $packages      
+        ));
     }
 
     protected function _installExtensions($dir, $output, $schema = false)

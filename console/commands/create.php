@@ -16,6 +16,7 @@ class Create extends Command
         $this->setName('init')
         ->setDescription('Initializes an anahita installation. By default the config.yaml file is read')
         ->setDefinition(array(
+                new InputOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development'),
                 new InputOption('no-config',null, InputOption::VALUE_NONE,'If set then it won\'t try to load the config file'),
                 new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
                 new InputOption('db-name',null, InputOption::VALUE_REQUIRED,'Database name'),
@@ -38,7 +39,7 @@ class Create extends Command
 
         install($this->getApplication()->getSrcPath(),
         $this->getApplication()->getSitePath(), !$only_symlink);
-
+        $this->getApplication()->setEnv($input->getOption('config-env'));
         if ( $only_symlink )
             return;
 
@@ -67,7 +68,7 @@ class Create extends Command
         );
             
         $config = config($this->getApplication()->getSitePath());
-        $this->getApplication()->addConfig('development', $config);
+        $this->getApplication()->addConfig($config);        
     }
 }
 

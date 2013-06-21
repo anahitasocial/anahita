@@ -52,7 +52,7 @@ class Application extends \Symfony\Component\Console\Application
          return new \KConfig($config);
     }
     
-    public function addConfig($env = null, $config = array())
+    public function addConfig($config = array(), $env = null)
     {
         if ( !$env ) {
             $env = $this->env;
@@ -60,6 +60,11 @@ class Application extends \Symfony\Component\Console\Application
         $this->config->append(array(
                 $env => $config
         ));        
+    }
+    
+    public function setEnv($env)
+    {
+        $this->env = $env;
     }
     
     public function loadFramework()
@@ -70,7 +75,7 @@ class Application extends \Symfony\Component\Console\Application
             $_SERVER['HTTP_HOST'] = '';
             require_once ( JPATH_BASE.'/includes/framework.php' );            
             \KService::get('com://admin/application.dispatcher')->load();            
-        }                
+        }
     }
     
     public function getPackagePaths()
