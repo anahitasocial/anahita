@@ -3,6 +3,7 @@
     "name": "anahita/anahita",
     "keywords" : ["social platform"],
     "description": "Anahita Social Networking Platform",
+    "bin": ["bin/anahita.php"],    
     "require-dev": {
         "php": ">=5.3",
         "symfony/console": "2.1.*"        
