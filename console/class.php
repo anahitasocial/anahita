@@ -277,10 +277,11 @@ class DirectoryIterator implements \Countable, \IteratorAggregate
                 if ( $file->isDot() || !$file->isDir() ) 
                      continue;
                 if ( in_array((string)$file, $directories) ) {
-                    $this->_found[] = $file->getPathName();
+                    $this->_found[$file->getFilename()] = $file->getPathName();
                 }
             }
         }
+        $this->_found = array_values($this->_found);
     }
     
     public function getIterator()

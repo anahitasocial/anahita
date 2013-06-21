@@ -16,11 +16,15 @@ class Application extends \Symfony\Component\Console\Application
 {
     protected $site;
     protected $src;
-
-    public function __construct($src, $site)
+    protected $packages_paths;
+    
+    public function __construct($src, $site, $package_paths = array())
     {
         $this->src  = $src;
         $this->site = $site;
+        settype($package_paths, 'array');
+        $this->package_paths = $package_paths;
+        $this->package_paths[] = $src.'/src/packages';
 
         parent::__construct($site);
     }
@@ -30,9 +34,15 @@ class Application extends \Symfony\Component\Console\Application
         if ( !defined('JPATH_BASE') )
         {
             define('JPATH_BASE', $this->getSitePath().'/administrator');
-            require_once ( JPATH_BASE.'/includes/framework.php' );
+            $_SERVER['HTTP_HOST'] = '';
+            require_once ( JPATH_BASE.'/includes/framework.php' );            
             \KService::get('com://admin/application.dispatcher')->load();            
         }                
+    }
+    
+    public function getPackagePaths()
+    {
+        return $this->package_paths;
     }
 
     public function getSrcPath()

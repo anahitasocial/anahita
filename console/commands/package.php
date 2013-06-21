@@ -8,27 +8,26 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
-class Bundle extends Command
+class Package extends Command
 {
     protected function configure()
     {
-        $this->addArgument('bundles', InputArgument::IS_ARRAY, 'Name of the bundle');
+        $this->addArgument('package', InputArgument::IS_ARRAY, 'Name of the package');
         $this->addOption('schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
-        $this->setName('bundle:install')
-            ->setDescription('Install a bundle into the site');
+        $this->setName('package:install')
+            ->setDescription('Install a package into the site');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundles        = $input->getArgument('bundles');
-        $search_paths[] = $this->getApplication()->getSrcPath().'/src/bundles';
-        
-        $directories = new \Console\Command\DirectoryIterator($bundles, $search_paths);
+        $packages       = $input->getArgument('package');                
+        $directories    = new \Console\Command\DirectoryIterator($packages, 
+                        $this->getApplication()->getPackagePaths());
         
         if ( !count($directories) ) {
-            throw new \RuntimeException('No valid bundle is specified');
+            throw new \RuntimeException('No valid package is specified');
         }
-        $this->getApplication()->load();
+        $this->getApplication()->loadFramework();
         \KService::get('koowa:loader')
             ->loadIdentifier('com://admin/migrator.helper');
         foreach($directories as $dir)
@@ -41,7 +40,7 @@ class Bundle extends Command
                     '#^migration.*#'     => '',
                     '#manifest.xml#'   => ''
             ));
-            $output->writeLn("<info>Linking $name Bundle</info>");
+            $output->writeLn("<info>Linking $name Package</info>");
             $mapper->symlink();
             $this->_installExtensions($dir, $output, $input->getOption('schema'));
         }
@@ -170,18 +169,22 @@ class Bundle extends Command
 }
 
 
-$console->addCommands(array(new \Console\Command\Bundle()));
+$console->addCommands(array(new \Console\Command\Package()));
 $console
-    ->register('bundle:list')
-    ->setDescription('List the bundles')
+    ->register('package:list')
+    ->setDescription('List of packages')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-        $dirs = new \DirectoryIterator($console->getSrcPath().'/src/bundles');
-        foreach($dirs as $dir) 
+        
+        foreach($console->getPackagePaths() as $path) 
         {
-            if ( $dir->isDir() && !$dir->isDot() ) {
-                $output->writeLn("<info>".ucfirst($dir)."</info>");
-            }
-        }
+            $dirs = new \DirectoryIterator($path);
+            foreach($dirs as $dir)
+            {
+                if ( $dir->isDir() && !$dir->isDot() ) {
+                    $output->writeLn("<info>- ".$dir."</info>");
+                }
+            }            
+        }        
     });
 ;
 

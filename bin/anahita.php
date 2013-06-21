@@ -11,15 +11,16 @@ foreach($files as $file)
     if ( file_exists($file) ) 
     {
         require_once($file);
-        define('VENDOR_DIR', realpath(dirname($file)));
-        define('ROOT', realpath(dirname($file).'/../'));
+        define('COMPOSER_VENDOR_DIR', realpath(dirname($file)));
+        define('COMPOSER_ROOT', realpath(dirname($file).'/../'));
     }
 }
 
 require_once 'console/application.php';
-$console = new Console\Application(realpath(__DIR__.'/../'), ROOT.'/www');
+$console = new Console\Application(realpath(__DIR__.'/../'), COMPOSER_ROOT.'/www', COMPOSER_ROOT.'/packages');
+
 require_once 'console/commands/create.php';
-require_once 'console/commands/bundle.php';
+require_once 'console/commands/package.php';
 require_once 'console/commands/migrate.php';
 
 $console->run();
