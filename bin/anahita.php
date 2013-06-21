@@ -1,5 +1,6 @@
 <?php 
-
+print __FILE__;
+die;
 require_once 'vendor/autoload.php';
 
 require_once 'console/application.php';
