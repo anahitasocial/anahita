@@ -21,24 +21,29 @@ class Application extends \Symfony\Component\Console\Application
     protected $site;
     protected $src;
     protected $packages_paths;
-    protected $config;
-    protected $config_path;
+    protected $configs;
+    protected $config_dir;
     protected $env;
     
-    public function __construct($src, $site, $package_paths = array(), $config_path)
+    public function __construct($src, $site, $package_paths = array(), $config_dir)
     {
         $this->src  = $src;
         $this->site = $site;
         settype($package_paths, 'array');
         $this->package_paths   = $package_paths;
         $this->package_paths[] = $src.'/src/packages';
-        $config = array();
-        if ( file_exists($config_path) ) {
-            $config = Yaml::parse($config_path);            
+        $this->configs         = new \KConfig();    
+        $this->config_dir      = $config_dir;
+        foreach(new \DirectoryIterator($this->config_dir) as $file) 
+        {
+            if ( $file->getExtension() == 'yaml' ) {
+                $data = Yaml::parse($file->getPathname());
+                settype($data, 'array');                                
+                $this->configs->
+                        {strtolower($file->getBasename('.yaml'))} = $data; 
+            }
         }
-        $this->config      = new \KConfig($config);
-        $this->config_path = $config_path;
-        $this->env         = 'development';
+        $this->env             = 'development';
         parent::__construct($site);
     }
     
@@ -47,7 +52,7 @@ class Application extends \Symfony\Component\Console\Application
          if ( !$env ) {
              $env = $this->env;
          }
-         $config = \KConfig::unbox($this->config->$env);
+         $config = \KConfig::unbox($this->configs->$env);
          settype($config, 'array');
          return new \KConfig($config);
     }
@@ -56,9 +61,9 @@ class Application extends \Symfony\Component\Console\Application
     {
         if ( !$env ) {
             $env = $this->env;
-        }        
-        $this->config->append(array(
-                $env => $config
+        }
+        $this->configs->append(array(
+            $env => $config
         ));        
     }
     
@@ -94,8 +99,11 @@ class Application extends \Symfony\Component\Console\Application
     }
     
     public function __destruct()
-    {
-        file_put_contents($this->config_path, Yaml::dump($this->config->toArray(), 10));
+    {     
+        $configs = \KConfig::unbox($this->configs);
+        foreach($configs as $env => $config) {           
+            file_put_contents($this->config_dir.'/'.$env.'.yaml', Yaml::dump($config, 10));
+        }        
     }
 }
 

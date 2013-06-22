@@ -20,7 +20,7 @@ foreach($files as $file)
 
 require_once 'console/application.php';
 
-$console = new Console\Application(realpath(__DIR__.'/../'), COMPOSER_ROOT.'/www', COMPOSER_ROOT.'/packages',COMPOSER_ROOT.'/config.yaml');
+$console = new Console\Application(realpath(__DIR__.'/../'), COMPOSER_ROOT.'/www', COMPOSER_ROOT.'/packages',COMPOSER_ROOT.'/config');
 
 require_once 'console/commands/create.php';
 require_once 'console/commands/package.php';
