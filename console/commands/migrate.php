@@ -138,8 +138,21 @@ $console
         new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-    $migrators  = new Migrators($console,
-            $input->getArgument('component'));
+    
+    $components = $input->getArgument('component');
+    if ( empty($components) )
+    {
+        $dirs       = new \DirectoryIterator($console->getSitePath().'/administrator/components');
+        $components = array();
+        foreach($dirs as $dir) {
+            if ( $dir->isDir() && !$dir->isDot() )
+                $components[] = basename($dir);
+        }
+    } else {
+        $components = $input->getArgument('component'); 
+    }
+    
+    $migrators  = new Migrators($console, $components);        
 
     $migrators->setOutput($output);
     foreach($migrators as $migrator) {
@@ -205,5 +218,15 @@ $console
             $output->writeLn('<info>Dump database schema for com_'.$migrator->getComponent().'</info>');
         }
     });
+    
+$console
+        ->register('db:import')
+        ->setDescription('Imports data from a sql file into the database')
+        ->setDefinition(array(
+                new InputArgument('file', InputArgument::REQUIRED, 'Path to to the sql file'),
+        ))
+        ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+            
+        });    
 
 ?>

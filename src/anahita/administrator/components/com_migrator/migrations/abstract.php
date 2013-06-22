@@ -213,17 +213,20 @@ abstract class ComMigratorMigrationAbstract extends KObject
             
             if ( file_exists($path) ) 
             {
-                $files = new DirectoryIterator($path.'/migrations');
-                foreach($files as $file) 
+                if ( file_exists($path.'/migrations') )
                 {
-                    $matches = array();                    
-                    if ( preg_match('/(\d+)\.sql/', (string)$file, $matches)) {
-                        $versions[] = $matches[1];
-                    }
-                    elseif ( preg_match('/(\d+)\.php/', (string)$file, $matches)) {
-                        $versions[] = $matches[1];
-                    }
-                }
+                    $files = new DirectoryIterator($path.'/migrations');
+                    foreach($files as $file)
+                    {
+                        $matches = array();
+                        if ( preg_match('/(\d+)\.sql/', (string)$file, $matches)) {
+                            $versions[] = $matches[1];
+                        }
+                        elseif ( preg_match('/(\d+)\.php/', (string)$file, $matches)) {
+                            $versions[] = $matches[1];
+                        }
+                    }                    
+                }                
             }                        
             sort($versions);
             $this->_versions    = array_unique($versions);         
