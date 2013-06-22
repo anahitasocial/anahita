@@ -220,13 +220,16 @@ $console
     });
     
 $console
-        ->register('db:import')
-        ->setDescription('Imports data from a sql file into the database')
+        ->register('db:load')
+        ->setDescription('Load data from a sql file into the database')
         ->setDefinition(array(
                 new InputArgument('file', InputArgument::REQUIRED, 'Path to to the sql file'),
         ))
         ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-            
+                $file = $input->getArgument('file');
+                if ( !is_readable($file) ) {
+                    throw new \Exception('Invalid SQL data file');
+                }
         });    
 
 ?>
