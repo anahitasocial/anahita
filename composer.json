@@ -6,6 +6,7 @@
     "bin": ["bin/anahita.php"],      
     "require-dev": {
         "php": ">=5.3",
-        "symfony/console": "2.1.*"        
+        "symfony/console": "2.1.*",
+        "dg/mysql-dump": "dev-master"        
     }
 }
