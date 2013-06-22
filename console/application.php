@@ -31,7 +31,7 @@ class Application extends \Symfony\Component\Console\Application
         $this->site = $site;
         settype($package_paths, 'array');
         $this->package_paths   = $package_paths;
-        $this->package_paths[] = $src.'/src/packages';
+        $this->package_paths['Core'] = $src.'/src/packages';
         $this->configs         = new \KConfig();    
         $this->config_dir      = $config_dir;
         foreach(new \DirectoryIterator($this->config_dir) as $file) 
@@ -101,6 +101,7 @@ class Application extends \Symfony\Component\Console\Application
     public function __destruct()
     {     
         $configs = \KConfig::unbox($this->configs);
+        settype($configs, 'array');
         foreach($configs as $env => $config) {           
             file_put_contents($this->config_dir.'/'.$env.'.yaml', Yaml::dump($config, 10));
         }        

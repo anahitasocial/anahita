@@ -286,6 +286,7 @@ class DirectoryIterator implements \Countable, \IteratorAggregate
     
     public function __construct($directories, $search_paths)
     {
+        $search_paths = array_reverse($search_paths);
         foreach($search_paths as $path) 
         {
             $iterator = new \DirectoryIterator($path);

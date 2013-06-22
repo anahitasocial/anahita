@@ -60,7 +60,7 @@ class Create extends Command
                 'db_password' => pick($db->password, $input->getOption('db-password')),
                 'db_host' => pick($db->host, $input->getOption('db-host')),
                 'db_port' => pick($db->port, $input->getOption('db-port')),
-                'db_prefix' => pick($db->prefix, $input->getOption('db-prefix')),
+                'db_prefix' => str_replace('_','', pick($db->prefix, $input->getOption('db-prefix'))),
                 'drop_db'   => $input->getOption('drop-db') ? 1 : 0,
                 'admin_password' => $input->getOption('admin-password'),
                 'admin_email'    => $input->getOption('admin-email'),
@@ -68,6 +68,7 @@ class Create extends Command
         );
             
         $config = config($this->getApplication()->getSitePath());
+        $config['database']['prefix'] = str_replace('_', '', $config['database']['prefix']);
         $this->getApplication()->addConfig($config);        
     }
 }

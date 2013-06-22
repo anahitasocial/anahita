@@ -223,13 +223,14 @@ $console
     ->setDescription('List of packages')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
         
-        foreach($console->getPackagePaths() as $path) 
+        foreach($console->getPackagePaths() as $name => $path) 
         {
             $dirs = new \DirectoryIterator($path);
+            $output->writeLn("<info>".$name."</info>");
             foreach($dirs as $dir)
             {
                 if ( $dir->isDir() && !$dir->isDot() ) {
-                    $output->writeLn("<info>- ".$dir."</info>");
+                    $output->writeLn(' - '.(string)$dir);
                 }
             }            
         }        
