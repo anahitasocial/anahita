@@ -21,8 +21,12 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
     
     protected $_output;
     
+    protected $_console;
+    
     public function __construct($console, $components)
     {
+        $this->_console = $console;
+        
         $console->loadFramework();
         
         $components = array_map(function($item){
@@ -126,8 +130,52 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
      */
     public function onAfterSchemaMigration(\KEvent $event)
     {
-        $event->caller->createSchema();
-        $event->caller->write();
+        if ( $event->caller->getComponent() == 'anahita' )
+        {
+            $path = $this->_console->getSrcPath().'/vendor/joomla/installation/sql';            
+            $event->caller->setOutputPath($path);
+        }
+        $tables          = $event->caller->getTables();
+        $schema_file     = $event->caller->getOutputPath().'/schema.sql';
+        $uninstall_file  = $event->caller->getOutputPath().'/uninstall.sql';      
+        $schema          = fopen($schema_file, 'w');
+        $uninstall       = fopen($uninstall_file, 'w');
+        $dump = new \MySQLDump($event->caller->getDatabaseAdapter()->getConnection());
+        $prefix_replace = array();        
+        foreach($tables as $table) 
+        {
+            $prefix_replace[$table] = str_replace($event->caller
+                            ->getDatabaseAdapter()->getTablePrefix(),'#__', $table);
+            $dump->tables[$table] = \MySQLDump::CREATE; 
+            $dump->dumpTable($schema, $table);
+            $dump->tables[$table] = \MySQLDump::DROP;
+            $dump->dumpTable($uninstall, $table);
+        }
+        
+        $version     = $event->caller->getCurrentVersion();
+        $component   = $event->caller->getComponent();
+        fwrite($schema, "INSERT INTO #__migrator_versions (`version`,`component`) ".
+            "VALUES($version, '$component') ON DUPLICATE KEY UPDATE `version` = $version;");
+        
+        
+        fwrite($uninstall, "DELETE #__migrator_versions  WHERE `component` = '$component';");
+        
+        fclose($schema);
+        fclose($uninstall);
+        
+        //fix the prefix
+        foreach(array($schema_file, $uninstall_file) as $file) 
+        {
+            $content    = file_get_contents($file);
+            $content    = str_replace(array_keys($prefix_replace),
+                    array_values($prefix_replace), $content);
+            file_put_contents($file, $content);            
+        }
+ 
+        //fix the auto increment
+        file_put_contents($schema_file,
+            preg_replace('/ AUTO_INCREMENT=\w+/', '', file_get_contents($schema_file))
+        );
     }   
 }
 
@@ -220,16 +268,20 @@ $console
     });
     
 $console
-        ->register('db:load')
+        ->register('db:dump')
         ->setDescription('Load data from a sql file into the database')
         ->setDefinition(array(
                 new InputArgument('file', InputArgument::REQUIRED, 'Path to to the sql file'),
         ))
         ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
                 $file = $input->getArgument('file');
-                if ( !is_readable($file) ) {
-                    throw new \Exception('Invalid SQL data file');
-                }
+                $console->loadFramework();
+                $db = \KService::get('koowa:database.adapter.mysqli');
+                //$dump = new MySQLDump($db->getConnection();
+                print class_exists('MySQLDump');
+//                 if ( !is_readable($file) ) {
+//                     throw new \Exception('Invalid SQL data file');
+//                 }
         });    
 
 ?>

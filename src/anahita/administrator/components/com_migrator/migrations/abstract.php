@@ -30,14 +30,14 @@ abstract class ComMigratorMigrationAbstract extends KObject
     /**
      * If set then it wil try to auto detect the schemas
      */
-    const AUTO_DETECT_SCHEMA = -1; 
+    const AUTO_DETECT_TABLES = -1; 
     
     /**
      * Array of table schmesa to dump into the install.sql
      * 
      * @var array
      */
-    protected $_schemas;
+    protected $_tables;
     
     /**
      * The name of the component
@@ -59,35 +59,13 @@ abstract class ComMigratorMigrationAbstract extends KObject
      * @var int
      */
     protected $_max_version;
-    
+
     /**
-     * Schema SQLs
-     * 
-     * @var array
-     */
-    protected $_schema_sqls = array();
-    
-    
-    /**
-     * That path to the schema file
+     * The output path to the schema file in
      * 
      * @var string
      */
-    protected $_schema_file;
-    
-    /**
-     * That path to the uninstall file
-     *
-     * @var string
-     */
-    protected $_uninstall_file;    
-    
-    /**
-     * Uninstall SQL
-     *
-     * @var array
-     */
-    protected $_uninstall_sqls = array();    
+    protected $_output_path;
     
     /**
      * Database adapter
@@ -119,12 +97,13 @@ abstract class ComMigratorMigrationAbstract extends KObject
         $this->_component       = $config->component;        
         
         $this->_db      = $config->db;
-        
+                
         $config->mixer  = $this;                
         
-        $this->_schema_file    = $config->schema_file;
-        $this->_uninstall_file = $config->uninstall_file;
-        $this->_schemas        = Kconfig::unbox($config->schemas);
+        $this->_output_path   = $config->output_path;
+                
+        $this->_tables        = Kconfig::unbox($config->tables);
+        
         $this->mixin(new KMixinCommand($config));
     }
         
@@ -142,9 +121,8 @@ abstract class ComMigratorMigrationAbstract extends KObject
         $path            = dirname($this->getIdentifier()->filepath);
         
         $config->append(array( 
-           'schemas'           => self::AUTO_DETECT_SCHEMA,
-           'schema_file'       => $path.'/schema.sql',
-           'uninstall_file'    => $path.'/uninstall.sql',          
+           'output_path'       => $path,
+           'tables'            => self::AUTO_DETECT_TABLES,          
            'db'                => $this->getService('koowa:database.adapter.mysqli'),
            'command_chain'     => $this->getService('koowa:command.chain'),
            'event_dispatcher'  => $this->getService('koowa:event.dispatcher'),
@@ -162,6 +140,19 @@ abstract class ComMigratorMigrationAbstract extends KObject
     public function getComponent()
     {
         return $this->_component;
+    }
+    
+    /**
+     * Set the component of the migration
+     * 
+     * @param string $component Component name
+     * 
+     * @return void
+     */
+    public function setComponent($component)
+    {
+        $this->_component = $component;
+        return $this;
     }
     
     /**
@@ -394,92 +385,91 @@ EOF
         }
         return $this->_version;
     }
-    
-    /**
-     * Add a query that's added to the schema.sql
-     * 
-     * @param string $query
-     * 
-     * @return void
-     */
-    public function addSchemaQuery($query)
-    {
-        $query = str_replace($this->_db->getTablePrefix(), '#__', $query);
-        $this->_schema_sql[$query] = $query.';';  
-        return $this;
-    }
-    
-    /**
-     * Add a query that's added to the uninstall.sql
-     * 
-     * @param string $query
-     * 
-     * @return void
-     */
-    public function addUninstallQuery($query)
-    {
-        $query = str_replace($this->_db->getTablePrefix(), '#__', $query);
-        $this->_uninstall_sqls[$query] = $query.';';
-        return $this;
-    }
 
     /**
-     * Creates the schema
+     * Return an array of table names
      * 
-     * @return void
+     * @return array
      */
-    public function createSchema()
+    public function getTables()
     {
-        if ( $this->_schemas == self::AUTO_DETECT_SCHEMA ) 
+        if ( $this->_tables == self::AUTO_DETECT_TABLES )
         {
             $tables  = $this->_db->show('SHOW TABLES',KDatabase::FETCH_FIELD_LIST);
             $prefix  = $this->_db->getTablePrefix().$this->getIdentifier()->package.'_';
             $schemas = array();
-            foreach($tables as $table) 
+            foreach($tables as $table)
             {
                 if ( strpos($table, $prefix) === 0 ) {
                     $schemas[] = $table;
                 }
             }
         } else {
-            $schemas = $this->_schemas;
+            $schemas = $this->_tables;
             settype($schemas, 'array');
-            $prefix  = $this->_db->getTablePrefix();            
+            $prefix  = $this->_db->getTablePrefix();
             $schemas = array_map(function($table) use($prefix) {
                 return $prefix.$table;
             },$schemas);
-        }        
-        $version = (int)$this->getMaxVersion();
-        $version = (int)$this->getCurrentVersion();
-        foreach($schemas as $schema)
-        {
-            $row = $this->_db->show('SHOW CREATE TABLE '.$schema,KDatabase::FETCH_ARRAY);
-            $sql = $row['Create Table'];            
-            $sql = preg_replace('/ AUTO_INCREMENT=\d+/','', $sql);
-            $sql = preg_replace('/ TYPE=/','ENGINE=', $sql);
-            $this->addSchemaQuery($sql);
-            $this->addUninstallQuery("DROP TABLE IF EXISTS `${schema}`");
         }
-        //if ( $version > 0 ) 
-        {            
-            $this->addSchemaQuery("UPDATE #__migrator_versions SET `version` = $version WHERE `component` = '{$this->_component}'");
-        }        
-        $this->addUninstallQuery("DELETE #__migrator_versions WHERE `component` = '{$this->_component}'");        
+        return $schemas;
     }
     
     /**
-     * Write the schema and uninstall queries
+     * Return the directory that we want the schema to be outputed to
+     * 
+     * @return string
+     */
+    public function getOutputPath()
+    {
+        return $this->_output_path;
+    }
+    
+    /**
+     * Set the output path
+     * 
+     * @param string $path output path
      * 
      * @return void
      */
-    public function write()
+    public function setOutputPath($path)
     {
-        if ( !empty($this->_schema_sql) && $this->_schema_file ) {
-            file_put_contents($this->_schema_file,    implode("\n\n", $this->_schema_sql));
-        }
-        
-        if ( !empty($this->_uninstall_sqls) && $this->_uninstall_file ) {
-            file_put_contents($this->_uninstall_file, implode("\n\n", $this->_uninstall_sqls));
-        }
+        $this->_output_path = $path;
+        return $this;
+    }
+    
+    /**
+     * Set the migration tables
+     * 
+     * @param array $tables
+     * 
+     * @return void
+     */
+    public function setTables($tables)
+    {
+        $this->_tables = $tables;
+        return $this;
+    }
+    
+    /**
+     * Return the database adapter
+     * 
+     * @return KDatabaseAdapterAbstract
+     */
+    public function getDatabaseAdapter()
+    {
+         return $this->_db;       
+    }
+    
+    /**
+     * Set the database adapter
+     * 
+     * @param KDatabaseAdapterAbstract $adapter Database adapter
+     * 
+     * @return void
+     */
+    public function setDatabaseAdapter($adapter)
+    {
+         $this->_db = $adapter;       
     }
 }

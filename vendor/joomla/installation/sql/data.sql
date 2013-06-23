@@ -1,0 +1,1 @@
+INSERT INTO `#__categories` VALUES(1, 0, 'Anahita  Lingo', '', 'anahita-lingo', '', '1', 'left', '<p>Learn the Anahita Lingo</p>', 1, 0, '0000-00-00 00:00:00', NULL, 1, 0, 0, '');

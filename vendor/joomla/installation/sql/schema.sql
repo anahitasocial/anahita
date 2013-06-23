@@ -1,3 +1,5 @@
+-- --------------------------------------------------------
+
 CREATE TABLE `#__anahita_edges` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
@@ -19,7 +21,9 @@ CREATE TABLE `#__anahita_edges` (
   KEY `node_b_id` (`node_b_id`),
   KEY `start_date` (`start_date`),
   KEY `end_date` (`end_date`)
-)ENGINE=InnoDB;
+) TYPE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__anahita_nodes` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -122,7 +126,9 @@ CREATE TABLE `#__anahita_nodes` (
   KEY `type_created_on` (`type`,`created_on`),
   KEY `type_status_update_time` (`type`,`status_update_time`),
   KEY `type_default` (`type`,`is_default`)
-)ENGINE=InnoDB;
+) TYPE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -146,7 +152,9 @@ CREATE TABLE `#__categories` (
   KEY `cat_idx` (`section`,`published`,`access`),
   KEY `idx_access` (`access`),
   KEY `idx_checkout` (`checked_out`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__components` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -164,7 +172,9 @@ CREATE TABLE `#__components` (
   `enabled` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent_option` (`parent`,`option`(32))
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__content` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -204,13 +214,17 @@ CREATE TABLE `#__content` (
   KEY `idx_state` (`state`),
   KEY `idx_catid` (`catid`),
   KEY `idx_createdby` (`created_by`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__content_frontpage` (
   `content_id` int(11) NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`content_id`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_acl_aro` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -220,10 +234,12 @@ CREATE TABLE `#__core_acl_aro` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `hidden` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `#__section_value_value_aro` (`section_value`(100),`value`(100)),
-  KEY `#__gacl_hidden_aro` (`hidden`),
+  UNIQUE KEY `jos_section_value_value_aro` (`section_value`(100),`value`(100)),
+  KEY `jos_gacl_hidden_aro` (`hidden`),
   KEY `value` (`value`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_acl_aro_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -233,16 +249,20 @@ CREATE TABLE `#__core_acl_aro_groups` (
   `rgt` int(11) NOT NULL DEFAULT '0',
   `value` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `#__gacl_parent_id_aro_groups` (`parent_id`),
-  KEY `#__gacl_lft_rgt_aro_groups` (`lft`,`rgt`)
-)ENGINE=MyISAM;
+  KEY `jos_gacl_parent_id_aro_groups` (`parent_id`),
+  KEY `jos_gacl_lft_rgt_aro_groups` (`lft`,`rgt`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_acl_aro_map` (
   `acl_id` int(11) NOT NULL DEFAULT '0',
   `section_value` varchar(230) NOT NULL DEFAULT '0',
   `value` varchar(100) NOT NULL DEFAULT '',
   PRIMARY KEY (`acl_id`,`section_value`,`value`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_acl_aro_sections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -251,9 +271,11 @@ CREATE TABLE `#__core_acl_aro_sections` (
   `name` varchar(230) NOT NULL DEFAULT '',
   `hidden` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `#__gacl_value_aro_sections` (`value`),
-  KEY `#__gacl_hidden_aro_sections` (`hidden`)
-)ENGINE=MyISAM;
+  UNIQUE KEY `jos_gacl_value_aro_sections` (`value`),
+  KEY `jos_gacl_hidden_aro_sections` (`hidden`)
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_acl_groups_aro_map` (
   `group_id` int(11) NOT NULL DEFAULT '0',
@@ -262,25 +284,33 @@ CREATE TABLE `#__core_acl_groups_aro_map` (
   UNIQUE KEY `group_id_aro_id_groups_aro_map` (`group_id`,`section_value`,`aro_id`),
   KEY `group_id` (`group_id`),
   KEY `aro_id` (`aro_id`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_log_items` (
   `time_stamp` date NOT NULL DEFAULT '0000-00-00',
   `item_table` varchar(50) NOT NULL DEFAULT '',
   `item_id` int(11) unsigned NOT NULL DEFAULT '0',
   `hits` int(11) unsigned NOT NULL DEFAULT '0'
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__core_log_searches` (
   `search_term` varchar(128) NOT NULL DEFAULT '',
   `hits` int(11) unsigned NOT NULL DEFAULT '0'
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__groups` (
   `id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__menu` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -307,7 +337,9 @@ CREATE TABLE `#__menu` (
   PRIMARY KEY (`id`),
   KEY `componentid` (`componentid`,`menutype`,`published`,`access`),
   KEY `menutype` (`menutype`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__menu_types` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -316,7 +348,9 @@ CREATE TABLE `#__menu_types` (
   `description` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `menutype` (`menutype`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__migrator_versions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -324,7 +358,9 @@ CREATE TABLE `#__migrator_versions` (
   `version` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `component` (`component`)
-)ENGINE=InnoDB;
+) TYPE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__modules` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -346,13 +382,17 @@ CREATE TABLE `#__modules` (
   PRIMARY KEY (`id`),
   KEY `published` (`published`,`access`),
   KEY `newsfeeds` (`module`,`published`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__modules_menu` (
   `moduleid` int(11) NOT NULL DEFAULT '0',
   `menuid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`moduleid`,`menuid`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__plugins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -369,7 +409,9 @@ CREATE TABLE `#__plugins` (
   `params` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_folder` (`published`,`client_id`,`access`,`folder`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__sections` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -389,7 +431,9 @@ CREATE TABLE `#__sections` (
   `params` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_scope` (`scope`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__session` (
   `username` varchar(150) DEFAULT '',
@@ -405,20 +449,26 @@ CREATE TABLE `#__session` (
   KEY `whosonline` (`guest`,`usertype`),
   KEY `userid` (`userid`),
   KEY `time` (`time`)
-)ENGINE=InnoDB;
+) TYPE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__stats_agents` (
   `agent` varchar(255) NOT NULL DEFAULT '',
   `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `hits` int(11) unsigned NOT NULL DEFAULT '1'
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__templates_menu` (
   `template` varchar(255) NOT NULL DEFAULT '',
   `menuid` int(11) NOT NULL DEFAULT '0',
   `client_id` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menuid`,`client_id`,`template`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -440,6 +490,6 @@ CREATE TABLE `#__users` (
   KEY `gid_block` (`gid`,`block`),
   KEY `username` (`username`),
   KEY `email` (`email`)
-)ENGINE=MyISAM;
+) TYPE=MyISAM;
 
-UPDATE #__migrator_versions SET `version` = 1 WHERE `component` = 'anahita';
+INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'anahita') ON DUPLICATE KEY UPDATE `version` = 1;

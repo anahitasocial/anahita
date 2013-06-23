@@ -1,6 +1,8 @@
+-- --------------------------------------------------------
+
 CREATE TABLE `#__opensocial_profiles` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
-  `socialengine_actor_id` bigint(11) NOT NULL,
+  `socialengine_actor_id` bigint(11) NOT NULL DEFAULT '0',
   `honorific_prefix` varchar(250) DEFAULT NULL,
   `honorific_suffix` varchar(250) DEFAULT NULL,
   `build` varchar(250) DEFAULT NULL,
@@ -57,6 +59,6 @@ CREATE TABLE `#__opensocial_profiles` (
   KEY `relationship_status` (`relationship_status`),
   KEY `looking_for` (`looking_for`),
   KEY `socialengine_actor_id` (`socialengine_actor_id`)
-)ENGINE=InnoDB;
+) TYPE=InnoDB;
 
-UPDATE #__migrator_versions SET `version` = 1 WHERE `component` = 'opensocial';
+INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'opensocial') ON DUPLICATE KEY UPDATE `version` = 1;

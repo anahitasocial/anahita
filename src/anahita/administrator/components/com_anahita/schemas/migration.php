@@ -39,8 +39,7 @@ class ComAnahitaSchemaMigration extends ComMigratorMigrationAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'uninstall_file' => null,
-            'schemas' => array(
+            'tables' => array(
                     'anahita_edges','anahita_nodes',
                     'categories','components','content',
                     'content_frontpage','core_acl_aro','core_acl_aro_groups',
