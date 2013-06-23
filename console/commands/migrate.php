@@ -277,11 +277,10 @@ $console
                 $file = $input->getArgument('file');
                 $console->loadFramework();
                 $db = \KService::get('koowa:database.adapter.mysqli');
-                //$dump = new MySQLDump($db->getConnection();
-                print class_exists('MySQLDump');
-//                 if ( !is_readable($file) ) {
-//                     throw new \Exception('Invalid SQL data file');
-//                 }
+                $dump = new \MySQLDump($db->getConnection());
+                $file = fopen($file, 'w');
+                $dump->write($file);
+                fclose($file);
         });    
 
 ?>
