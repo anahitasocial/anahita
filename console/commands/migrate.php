@@ -281,6 +281,6 @@ $console
                 $file = fopen($file, 'w');
                 $dump->write($file);
                 fclose($file);
-        });    
+        });
 
 ?>
