@@ -269,18 +269,36 @@ $console
     
 $console
         ->register('db:dump')
-        ->setDescription('Load data from a sql file into the database')
+        ->setDescription('Dump data to a sql file')
         ->setDefinition(array(
-                new InputArgument('file', InputArgument::REQUIRED, 'Path to to the sql file'),
+                new InputArgument('file', InputArgument::OPTIONAL, 'The output file'),
         ))
         ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
                 $file = $input->getArgument('file');
                 $console->loadFramework();
-                $db = \KService::get('koowa:database.adapter.mysqli');
-                $dump = new \MySQLDump($db->getConnection());
-                $file = fopen($file, 'w');
-                $dump->write($file);
-                fclose($file);
+                $config = new \JConfig();
+                if  ($file)  {
+                    @mkdir(dirname($file), 0755, true);
+                    system("mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db} > $file");
+                } else {
+                    passthru("mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db}");
+                }
         });
+        
+$console
+            ->register('db:load')
+            ->setDescription('Load data from a sql file into the database')
+            ->setDefinition(array(
+                    new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
+            ))
+            ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+                $file = $input->getArgument('file');
+                if ( !file_exists($file) ) {
+                    throw new \Exception("File '$file' doesn't exists");
+                }
+                $console->loadFramework();                
+                $config = new \JConfig();
+                system("mysql -u {$config->user} -p{$config->password} -h{$config->host} {$config->db} < $file");                
+            });
 
 ?>
