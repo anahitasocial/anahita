@@ -11,6 +11,6 @@
         "dg/mysql-dump": "dev-master"        
     },
     "autoload": {
-        "psr-0": { "Task\\": "tasks/" }
+        "classmap": ["tasks/"]
     }
 }
