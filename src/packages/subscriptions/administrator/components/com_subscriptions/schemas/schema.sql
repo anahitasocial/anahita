@@ -8,7 +8,7 @@ CREATE TABLE `#__subscriptions_coupons` (
   `usage` int(11) DEFAULT NULL,
   `expires_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -20,7 +20,7 @@ CREATE TABLE `#__subscriptions_packages` (
   `recurring` tinyint(1) NOT NULL,
   `billing_period` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -45,7 +45,7 @@ CREATE TABLE `#__subscriptions_transactions` (
   `recurring` tinyint(1) NOT NULL,
   `billing_period` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -54,6 +54,6 @@ CREATE TABLE `#__subscriptions_vats` (
   `country` varchar(255) NOT NULL,
   `data` text,
   PRIMARY KEY (`id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'subscriptions') ON DUPLICATE KEY UPDATE `version` = 1;

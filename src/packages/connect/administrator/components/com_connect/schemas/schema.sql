@@ -12,6 +12,6 @@ CREATE TABLE `#__connect_sessions` (
   `profile_id` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `owner_id_and_profile_id_and_service_id` (`owner_id`,`profile_id`,`api`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'connect') ON DUPLICATE KEY UPDATE `version` = 1;

@@ -178,11 +178,12 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
             '/ AUTO_INCREMENT=\w+/' => ''
          );
         //fix the auto increment
-        file_put_contents($schema_file, 
-            array_keys($replace),
-            array_values($replace),
-            file_get_contents($schema_file)
-        ); 
+        $content = preg_replace( 
+                array_keys($replace),
+                array_values($replace),
+                file_get_contents($schema_file)
+        );
+        file_put_contents($schema_file, $content); 
     }   
 }
 
@@ -284,11 +285,12 @@ $console
                 $file = $input->getArgument('file');
                 $console->loadFramework();
                 $config = new \JConfig();
+                $cmd    = "mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db}";
                 if  ($file)  {
                     @mkdir(dirname($file), 0755, true);
-                    system("mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db} > $file");
+                    system("$cmd > $file");
                 } else {
-                    passthru("mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db}");
+                    passthru($cmd);
                 }
         });
         
@@ -297,14 +299,25 @@ $console
             ->setDescription('Load data from a sql file into the database')
             ->setDefinition(array(
                     new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
+                    new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
             ))
-            ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+            ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {                
                 $file = $input->getArgument('file');
                 if ( !file_exists($file) ) {
                     throw new \Exception("File '$file' doesn't exists");
                 }
-                $console->loadFramework();                
+                $console->loadFramework();
+                if ( $input->getOption('drop-tables') ) 
+                {
+                    $db = \KService::get('koowa:database.adapter.mysqli');
+                    $tables = $db->select('SHOW TABLES', \KDatabase::FETCH_FIELD_LIST);
+                    $output->writeLn('Dropping tables...');
+                    foreach($tables as $table) {
+                        $db->execute('DROP TABLE '.$table);
+                    }                    
+                }
                 $config = new \JConfig();
+                $output->writeLn('Loading data. This may take a while...');
                 system("mysql -u {$config->user} -p{$config->password} -h{$config->host} {$config->db} < $file");                
             });
 

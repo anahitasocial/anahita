@@ -5,7 +5,7 @@ CREATE TABLE `#__todos_milestones` (
   `node_id` bigint(11) NOT NULL,
   `todolists_count` int(11) DEFAULT NULL,
   PRIMARY KEY (`todos_milestone_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -16,7 +16,7 @@ CREATE TABLE `#__todos_todolists` (
   `open_todos_count` int(11) NOT NULL,
   PRIMARY KEY (`todos_todolist_id`),
   UNIQUE KEY `node_id` (`node_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
@@ -27,6 +27,6 @@ CREATE TABLE `#__todos_todos` (
   `open_status_change_by` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`todos_todo_id`),
   UNIQUE KEY `node_id` (`node_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'todos') ON DUPLICATE KEY UPDATE `version` = 1;

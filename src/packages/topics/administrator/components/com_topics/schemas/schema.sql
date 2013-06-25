@@ -7,7 +7,7 @@ CREATE TABLE `#__topics_boards` (
   `params` text NOT NULL,
   PRIMARY KEY (`topics_board_id`),
   KEY `node_id` (`node_id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -19,6 +19,6 @@ CREATE TABLE `#__topics_topics` (
   `meta` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `node_id` (`node_id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'topics') ON DUPLICATE KEY UPDATE `version` = 1;

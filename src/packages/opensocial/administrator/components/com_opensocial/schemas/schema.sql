@@ -59,6 +59,6 @@ CREATE TABLE `#__opensocial_profiles` (
   KEY `relationship_status` (`relationship_status`),
   KEY `looking_for` (`looking_for`),
   KEY `socialengine_actor_id` (`socialengine_actor_id`)
-) TYPE=InnoDB;
+) ENGINE=InnoDB;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'opensocial') ON DUPLICATE KEY UPDATE `version` = 1;
