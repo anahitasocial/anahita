@@ -172,10 +172,17 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
             file_put_contents($file, $content);            
         }
  
+        $content = file_get_contents($schema_file);
+        $replace = array(
+            '/ TYPE=/' => ' ENGINE=',
+            '/ AUTO_INCREMENT=\w+/' => ''
+         );
         //fix the auto increment
-        file_put_contents($schema_file,
-            preg_replace('/ AUTO_INCREMENT=\w+/', '', file_get_contents($schema_file))
-        );
+        file_put_contents($schema_file, 
+            array_keys($replace),
+            array_values($replace),
+            file_get_contents($schema_file)
+        ); 
     }   
 }
 
