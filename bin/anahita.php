@@ -8,17 +8,21 @@ $files = array(
         __DIR__ . '/../vendor/autoload.php',
         __DIR__ . '/../../../autoload.php'
 );
+
+global $composerLoader;
+
 foreach($files as $file) 
 {
     if ( file_exists($file) ) 
     {
-        require_once($file);
+        $composerLoader = require_once($file);
         define('COMPOSER_VENDOR_DIR', realpath(dirname($file)));
         define('COMPOSER_ROOT', realpath(dirname($file).'/../'));
+        break;
     }
 }
 
-require_once 'console/application.php';
+$composerLoader->add('Console\\', __DIR__.'../console');
 
 $console = new Console\Application(realpath(__DIR__.'/../'), COMPOSER_ROOT.'/www', array('Custom'=>COMPOSER_ROOT.'/packages'),COMPOSER_ROOT.'/config');
 

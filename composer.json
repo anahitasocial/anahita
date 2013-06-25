@@ -9,8 +9,5 @@
         "symfony/console": "2.1.*",
         "symfony/yaml": "2.3.*",
         "dg/mysql-dump": "dev-master"        
-    },
-    "autoload": {
-        "psr-0": { "Console\\": "" }
     }
 }
