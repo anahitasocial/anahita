@@ -1,3 +1,5 @@
+-- --------------------------------------------------------
+
 CREATE TABLE `#__subscriptions_coupons` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `discount` float NOT NULL,
@@ -5,18 +7,22 @@ CREATE TABLE `#__subscriptions_coupons` (
   `limit` int(11) DEFAULT NULL,
   `usage` int(11) DEFAULT NULL,
   `expires_on` datetime DEFAULT NULL,
-  `package_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+) ENGINE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__subscriptions_packages` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `node_id` bigint(20) NOT NULL,
   `duration` bigint(11) NOT NULL,
   `price` float NOT NULL,
-  `currency` varchar(10) NOT NULL,
+  `recurring` tinyint(1) NOT NULL,
+  `billing_period` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+) ENGINE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__subscriptions_transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -35,14 +41,17 @@ CREATE TABLE `#__subscriptions_transactions` (
   `duration` int(11) DEFAULT NULL,
   `method` varchar(100) DEFAULT NULL,
   `created_on` datetime NOT NULL,
+  `upgrade` tinyint(1) NOT NULL DEFAULT '0',
+  `recurring` tinyint(1) NOT NULL,
+  `billing_period` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
+) ENGINE=InnoDB;
+
+-- --------------------------------------------------------
 
 CREATE TABLE `#__subscriptions_vats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `country` varchar(255) NOT NULL,
   `data` text,
   PRIMARY KEY (`id`)
-)ENGINE=InnoDB;
-
-UPDATE #__migrator_versions SET `version` = 1 WHERE `component` = 'subscriptions';
+) ENGINE=InnoDB;
