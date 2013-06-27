@@ -162,6 +162,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
         
         fclose($schema);
         fclose($uninstall);
+
         
         //fix the prefix
         foreach(array($schema_file, $uninstall_file) as $file) 
@@ -184,6 +185,11 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
                 file_get_contents($schema_file)
         );
         file_put_contents($schema_file, $content); 
+
+        //delete uninsall file for anahita
+        if ( $event->caller->getComponent() == 'anahita' ) {
+            unlink($uninstall_file);
+        }        
     }   
 }
 

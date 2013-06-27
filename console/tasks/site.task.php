@@ -170,7 +170,7 @@ class Create extends Command
             \JInstallationHelper::createDatabase($db, $database['name'],true);
             $db->select($database['name']);
         
-            $sql_files = array(JPATH_ROOT."/installation/sql/mysql/schema.sql",JPATH_ROOT."/installation/sql/mysql/install.sql");
+            $sql_files = array(JPATH_ROOT."/installation/sql/schema.sql",JPATH_ROOT."/installation/sql/data.sql");
             $output->writeLn('<info>Populating database...</info>');
             array_walk($sql_files, function($file) use($db) {
                 \JInstallationHelper::populateDatabase($db, $file, $errors);

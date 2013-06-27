@@ -14,7 +14,7 @@ class Package extends Command
     {
         $this->addArgument('package', InputArgument::IS_ARRAY, 'Name of the package');
         $this->addOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development');        
-        $this->addOption('schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
+        $this->addOption('create-schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
         $this->setName('package:install')
             ->setDescription('Install a package into the site');
     }
@@ -54,7 +54,7 @@ class Package extends Command
             ));
             $output->writeLn("<info>Linking $name Package</info>");
             $mapper->symlink();
-            $this->_installExtensions($dir, $output, $input->getOption('schema'));
+            $this->_installExtensions($dir, $output, $input->getOption('create-schema'));
         }
         $config = array_unique($config);
         $this->getApplication()->addConfig(array(
