@@ -2,6 +2,7 @@
 
 CREATE TABLE `#__connect_sessions` (
   `id` bigint(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL,
   `component` varchar(255) NOT NULL,
   `owner_id` bigint(11) NOT NULL,
   `owner_type` varchar(100) NOT NULL,

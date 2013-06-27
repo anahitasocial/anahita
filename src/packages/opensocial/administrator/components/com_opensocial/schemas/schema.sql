@@ -2,7 +2,7 @@
 
 CREATE TABLE `#__opensocial_profiles` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
-  `socialengine_actor_id` bigint(11) NOT NULL DEFAULT '0',
+  `socialengine_actor_id` bigint(11) NOT NULL,
   `honorific_prefix` varchar(250) DEFAULT NULL,
   `honorific_suffix` varchar(250) DEFAULT NULL,
   `build` varchar(250) DEFAULT NULL,
