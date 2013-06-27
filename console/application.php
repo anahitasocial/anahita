@@ -12,6 +12,7 @@ require_once __DIR__.'/../src/anahita/libraries/anahita/functions.php';
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
 use \Symfony\Component\Console\Input\InputArgument;
+use \Symfony\Component\Console\Input\ArgvInput;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 use \Symfony\Component\Yaml\Yaml;
@@ -128,6 +129,13 @@ class Application extends \Symfony\Component\Console\Application
             }            
         }                 
         
+    }
+    
+    public function runCommand($command)
+    {            
+        $argv  = explode(' ','application '.$command);         
+        $input = new ArgvInput($argv);
+        $this->run($input);
     }
     
     public function getPackagePaths()
