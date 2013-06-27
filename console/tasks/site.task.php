@@ -18,9 +18,7 @@ class Create extends Command
         $this->setName('site:init')
         ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
         ->setDefinition(array(
-                new InputOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development'),
-                new InputOption('no-config',null, InputOption::VALUE_NONE,'If set then it won\'t try to load the config file'),
-                new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
+                //new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
                 new InputOption('non-interactive',null, InputOption::VALUE_NONE,'Don\'t prompt for missing values'),
                 new InputOption('database-name',null, InputOption::VALUE_REQUIRED,'Database name'),
                 new InputOption('database-user',null, InputOption::VALUE_REQUIRED,'Database username'),
@@ -28,7 +26,7 @@ class Create extends Command
                 new InputOption('database-host',null, InputOption::VALUE_OPTIONAL,'Database host'),
                 new InputOption('database-port',null, InputOption::VALUE_OPTIONAL,'Database port'),
                 new InputOption('database-prefix',null, InputOption::VALUE_OPTIONAL,'Database prefix'),
-                new InputOption('drop-database',null, InputOption::VALUE_NONE,'Drop existing database'),
+                new InputOption('drop-database',null, InputOption::VALUE_NONE,'Drop existing database. <error>Use this command with care, as it will wipe off all exsiting data</error>'),
                 new InputOption('admin-password',null, InputOption::VALUE_OPTIONAL,'The admin password. This is only done for the first time installation'),
                 new InputOption('admin-email',null, InputOption::VALUE_OPTIONAL,'The admin email. This is only done for the first time installation')
         ))
@@ -38,11 +36,9 @@ class Create extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {        
         $this->_input = $input; $this->_output = $output;
-        $only_symlink = $input->getOption('only-symlink');
-        $this->_symlink(!$only_symlink);
-        if ( !$only_symlink ) {
-            $this->_configure();
-        }
+        //$only_symlink = $input->getOption('only-symlink');
+        $this->_symlink(true);
+        $this->_configure();
     }
     
     protected function _symlink($configure = false)
