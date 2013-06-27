@@ -132,7 +132,8 @@ class Application extends \Symfony\Component\Console\Application
     }
     
     public function runCommand($command)
-    {            
+    {          
+        $this->setAutoExit(false);  
         $argv  = explode(' ','application '.$command);         
         $input = new ArgvInput($argv);
         $this->run($input);
