@@ -1,6 +1,6 @@
 <?php 
 
-namespace Console\Command;
+namespace Console;
 
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
@@ -32,7 +32,7 @@ class Package extends Command
             $packages = $config;
         } 
                         
-        $directories    = new \Console\Command\DirectoryIterator($packages, 
+        $directories    = new DirectoryFilter($packages, 
                         $this->getApplication()->getPackagePaths());
         
         if ( !count($directories) ) {
@@ -194,7 +194,7 @@ $console
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
 
         $packages       = $input->getArgument('package');                
-        $directories    = new \Console\Command\DirectoryIterator($packages, 
+        $directories    = new DirectoryFilter($packages, 
                         $console->getPackagePaths());
         
         if ( !count($directories) ) {
@@ -217,7 +217,7 @@ $console
 });
 ;
 
-$console->addCommands(array(new \Console\Command\Package()));
+$console->addCommands(array(new Package()));
 $console
     ->register('package:list')
     ->setDescription('List of packages')
