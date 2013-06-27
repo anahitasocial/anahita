@@ -198,9 +198,9 @@ class Crawler
     }
 }
 
-namespace Console\Command;
+namespace Console;
 
-class DirectoryIterator implements \Countable, \IteratorAggregate
+class DirectoryFilter implements \Countable, \IteratorAggregate
 {
     protected $_found = array();
     

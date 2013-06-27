@@ -1,6 +1,6 @@
 <?php 
 
-namespace Console\Command;
+namespace Console;
 
 
 use \Symfony\Component\Console\Command\Command;
@@ -33,7 +33,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
             return 'com_'.str_replace('com_','',$item);
         }, $components);      
 
-        $paths = new DirectoryIterator($components, 
+        $paths = new DirectoryFilter($components, 
                 array($console->getSitePath().'/administrator/components'));
         
         $this->_event_dispatcher = \KService::get('koowa:event.dispatcher');
@@ -322,9 +322,10 @@ $console
                         $db->execute('DROP TABLE '.$table);
                     }                    
                 }
-                $config = new \JConfig();
+                $config     = new Config($console->getSitePath());
+                $config     = new \KConfig($config->getDatabaseInfo());
                 $output->writeLn('Loading data. This may take a while...');
-                system("mysql -u {$config->user} -p{$config->password} -h{$config->host} {$config->db} < $file");                
+                system("mysql -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name} < $file");                
             });
 
 ?>
