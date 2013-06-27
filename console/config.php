@@ -46,6 +46,7 @@ class Config
             'debug_lang'   => 0,
             'mailer'       => 'mail',
             'mailfrom'     => '',
+            'fromname'     => '',
             'sendmail'     => '/usr/sbin/sendmail',
             'smtpauth'     => '0',
             'smtpuser'     => '',
@@ -63,8 +64,8 @@ class Config
            'secret'           => '',
            'offline'          => 0,
            'enable_debug'     => 0,
-           'cache_duration'   => 15,
-           'session_duration' => 15,
+           'cache_lifetime'   => 15,
+           'session_lifetime' => 15,
            'error_reporting' => 0,
            'enable_caching'  => 1,
            'url_rewrite'     => 0,
@@ -88,6 +89,11 @@ class Config
             }                      
         }
         $this->database_type = 'mysqli';
+    }
+    
+    public function isConfigured()
+    {
+        return file_exists($this->_configuration_file );
     }
     
     public function enableDebug()

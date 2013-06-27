@@ -16,7 +16,7 @@ class Create extends Command
     protected function configure()
     {
         $this->setName('site:init')
-        ->setDescription('Initializes the site. By default the config.yaml file is read')
+        ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
         ->setDefinition(array(
                 new InputOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development'),
                 new InputOption('no-config',null, InputOption::VALUE_NONE,'If set then it won\'t try to load the config file'),
@@ -213,7 +213,7 @@ $console->addCommands(array(new Create()));
 
 $console
     ->register('site:config')
-    ->setDescription('Sets a configuration')
+    ->setDescription('Provides the ability to set some of the site configuration through command line')
     ->setDefinition(array(            
             new InputOption('session-handler','', InputOption::VALUE_REQUIRED, 'What session handler use'),
             new InputOption('cache-handler','',   InputOption::VALUE_REQUIRED, 'What cache handler use'),
@@ -226,6 +226,11 @@ $console
     ))
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
         $config = new Config($console->getSitePath());
+        if ( !$config->isConfigured() ) 
+        {
+            $output->writeLn("<error>You need to initialize the site first by typing php anahita.php site:init</error>");
+            exit(1);
+        }
         $set    = function($name) use ($console, $config, $input) 
         {
             $args = func_get_args();

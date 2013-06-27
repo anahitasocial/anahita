@@ -74,6 +74,11 @@ class Application extends \Symfony\Component\Console\Application
         $this->env = $env;
     }
     
+    public function getConfiguration()
+    {
+        
+    }
+    
     public function loadFramework()
     {        
         if ( !defined('JPATH_BASE') )
