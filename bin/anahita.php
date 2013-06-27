@@ -22,7 +22,10 @@ foreach($files as $file)
     }
 }
 
+$composerLoader->add('', COMPOSER_ROOT.'/tasks');
 $composerLoader->add('Console\\', __DIR__.'/..');
+
+//check the tasks folder for any class
 
 $console = new Console\Application(realpath(__DIR__.'/../'), COMPOSER_ROOT.'/www', array('Custom'=>COMPOSER_ROOT.'/packages'),COMPOSER_ROOT.'/config');
 
