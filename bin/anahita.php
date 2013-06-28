@@ -40,7 +40,7 @@ function include_tasks($directory)
     }
 }
 
-include_tasks(__DIR__.'/../console/tasks');
+include_tasks(__DIR__.'/../Console/tasks');
 include_tasks(COMPOSER_ROOT.'/tasks');
 
 $console->run();
