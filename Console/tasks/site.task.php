@@ -147,7 +147,7 @@ class Create extends Command
         $output->writeLn('<info>connecting to database...</info>');
         $errors   = array();
         $database = $config->getDatabaseInfo();        
-        $db       = \JInstallationHelper::getDBO('mysqli',$database['host'],$database['user'],$database['password'],$database['name'],$database['prefix'],false);        
+        $db       = \JInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],false);        
         if ( $db instanceof \JException ) {
             $output->writeLn('<error>'.$db->toString().'</error>');
             exit(1);                     
