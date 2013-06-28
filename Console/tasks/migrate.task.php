@@ -23,7 +23,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
     
     protected $_console;
     
-    public function __construct($console, $components)
+    public function __construct($console, $components, $check_max_version = true)
     {
         $this->_console = $console;
         
@@ -45,7 +45,8 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
             register_default(array('identifier'=>$identifier,'default'=>'ComMigratorMigrationDefault'));
             $migrator   = \KService::get($identifier, 
                         array('event_dispatcher'=>$this->_event_dispatcher));
-            if ( $migrator->getMaxVersion() > 0 ) {
+            if ( ($check_max_version && $migrator->getMaxVersion() > 0) 
+                    || !$check_max_version ) {
                 $this->_migrators[] = $migrator;
             }
         }
@@ -261,6 +262,22 @@ $console
             $output->writeLn('<info>'.$component.'</info> '.$text);            
         }
     });
+    
+$console
+        ->register('db:generate:migration')
+        ->setDescription('Generate a migration for a component')
+        ->setDefinition(array(
+                new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),                
+        ))
+        ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+            $migrators  = new Migrators($console,
+                    $input->getArgument('component'),false);
+            
+            $migrators->setOutput($output);
+            foreach($migrators as $migrator) {
+                $migrator->generateMigration();                
+            }
+        });    
 
 $console
     ->register('db:schema:dump')

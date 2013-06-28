@@ -329,6 +329,64 @@ abstract class ComMigratorMigrationAbstract extends KObject
     }    
     
     /**
+     * Generates a migration. If no version is set then version is created
+     * based on max version
+     * 
+     * @return void
+     */
+    public function generateMigration($version = null)
+    {
+        $path = dirname($this->getIdentifier()->filepath).'/migrations';
+        $next = $this->getMaxVersion() + 1;
+        $migration_file = "$path/$next.php";
+        if ( !file_exists($migration_file) ) 
+        {
+            //create the directory
+            if ( !file_exists(dirname($migration_file)) ) {
+                mkdir(dirname($migration_file), 0755, true);
+            }
+            $class_name = 'Com'.ucfirst($this->getComponent()).'SchemaMigration'.$next;
+            $component  = ucfirst($this->getComponent());
+            $content    = <<<EOF
+<?php
+
+/** 
+ * LICENSE: ##LICENSE##
+ * 
+ * @package    Com_{$component}
+ * @subpackage Schema_Migration
+ */
+
+/**
+ * Schema Migration
+ *
+ * @package    Com_{$component}
+ * @subpackage Schema_Migration
+ */
+class $class_name extends ComMigratorMigrationVersion
+{
+   /**
+    * Called when migrating up
+    */
+    public function up()
+    {
+        //add your migration here
+    }
+
+   /**
+    * Called when rolling back a migration
+    */        
+    public function down()
+    {
+        //add your migration here        
+    }
+}
+EOF;
+        file_put_contents($migration_file, $content);
+        }
+    }
+    
+    /**
      * 
      * @param string $method
      * @param int $version
