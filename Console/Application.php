@@ -2,8 +2,8 @@
 
 namespace Console;
 
-require_once 'console/class.php';
-require_once 'console/config.php';
+require_once 'Console/class.php';
+require_once 'Console/Config.php';
 
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/interface.php';
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/config.php';
