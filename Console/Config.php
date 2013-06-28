@@ -57,15 +57,26 @@ class Config
             'tmp_path'     => $site_path.'/tmp',
             'offline_message' => 'This site is down for maintenance.<br /> Please check back again soon.',
             'sitename'        => 'Anahita',
-            'editor'          => 'tinymce'     
+            'editor'          => 'tinymce',
+            //'memcache_settings' => array(),                
+            'list_limit'        => 20,
+            'gzip'              => 0,
+            'xmlrpc_server'     => '',
+            'ftp_enable'        => 0,
+            'offset'            => 0,
+            'MetaAuthor'        => '',
+            'MetaTitle'         => '',
+            'sef'               => '',
+            'sef_suffix'        => '',
+            'feed_limit'        => 10                       
         );
         
         $this->set(array(
            'secret'           => '',
            'offline'          => 0,
            'enable_debug'     => 0,
-           'cache_lifetime'   => 15,
-           'session_lifetime' => 15,
+           'cache_lifetime'   => 60,
+           'session_lifetime' => 1440,           
            'error_reporting' => 0,
            'enable_caching'  => 1,
            'url_rewrite'     => 0,
@@ -209,6 +220,7 @@ class Config
         $write_group(array('caching','cachetime','cache_handler'), 'Cache Settings');
         $write_group(array('debug','debug_db','debug_lang'), 'Debug Settings');
         $write_group(array('sef_rewrite'), 'Route Settings');
+        $write_group(array('list_limit','gzip','xmlrpc_server','ftp_enable','offset','MetaAuthor','MetaTitle','sef','sef_suffix','feed_limit'),'Legacy. Will be removed');
         $file->fwrite("}");
     }
 }
