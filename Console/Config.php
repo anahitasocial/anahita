@@ -92,7 +92,7 @@ class Config
             $content   = str_replace('JConfig', $classname, $content);
             $content   = str_replace(array('<?php',''), '', $content);            
             $classname = '\\'.$classname;
-            $return = eval($content);  
+            $return = @eval($content);  
             if ( class_exists($classname) ) 
             {
                 $config = new $classname;
@@ -146,11 +146,15 @@ class Config
     
     public function __set($key , $value)
     {
-        if ( isset($this->_key_map[$key]) )
-        {
-            $key = $this->_key_map[$key];
-            $this->_data[$key] = $value;
+        $matches = array();
+        if ( preg_match('/^\[(.*?)\]$/', $value, $matches) ) {
+            $value = explode(',', $matches[1]);            
         }
+        
+        if ( isset($this->_key_map[$key]) ){
+            $key = $this->_key_map[$key];            
+        }
+        $this->_data[$key] = $value;
     }
     
     public function setDatabaseInfo($data)
@@ -189,28 +193,56 @@ class Config
         $file   = new \SplFileObject($this->_configuration_file, 'w');
         $file->fwrite("<?php\n");
         $file->fwrite("class JConfig {\n\n");
-        $write = function($data) use($file) 
+        $print_array = function($array) use (&$print_array) {  
+            if ( is_array($array) ) 
+            {
+                $values = array();
+                $hash   = !is_numeric(key($array));
+                foreach($array as $key => $value) 
+                {
+                    if ( !is_numeric($key) ) {
+                        $key = "'".addslashes($key)."'";
+                    }
+                    if ( !is_numeric($value) ) {
+                        $value = "'".addslashes($value)."'";
+                    }
+                    $values[] = $hash ? "$key=>$value" : $value;
+                }
+                return 'array('.implode(',', $values).')';
+            }
+        };
+        $write = function($data) use($file, $print_array) 
         {
             foreach($data as $key => $value)
             {
-                if ( !is_numeric($value) ) {
+                if ( is_array($value) ) {
+                    $value = $print_array($value);
+                }
+                elseif ( !is_numeric($value) ) {
                     $value = "'".addslashes($value)."'";
                 }
                 $file->fwrite("   var \$$key = $value;\n");
             }
         };
         $write_group = function($keys, $comment = null)
-             use ($data, $file, $write) 
-        {
-            if ( !empty($comment) ) {
-                $file->fwrite("   /*$comment*/\n");
-            }
+             use (&$data, $file, $write) 
+        {            
             $values = array();
-            foreach($keys as $key) {
-                $values[$key] = $data[$key];
+            foreach($keys as $key) 
+            {
+                if (isset($data[$key])) {
+                    $values[$key] = $data[$key];
+                    unset($data[$key]);                    
+                }
             }
-            $write($values);
-            $file->fwrite("\n");
+            if ( !empty($values) ) 
+            {
+                if ( !empty($comment) ) {
+                    $file->fwrite("   /*$comment*/\n");
+                }            
+                $write($values);
+                $file->fwrite("\n");
+            }            
         };
         $write_group(array('offline','offline_message','sitename','editor'), 'Site Settings');
         $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
@@ -221,6 +253,7 @@ class Config
         $write_group(array('debug','debug_db','debug_lang'), 'Debug Settings');
         $write_group(array('sef_rewrite'), 'Route Settings');
         $write_group(array('list_limit','gzip','xmlrpc_server','ftp_enable','offset','MetaAuthor','MetaTitle','sef','sef_suffix','feed_limit'),'Legacy. Will be removed');
+        $write_group(array_keys($data),'Other configurations');
         $file->fwrite("}");
     }
 }

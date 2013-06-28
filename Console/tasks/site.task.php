@@ -208,9 +208,9 @@ class Create extends Command
 $console->addCommands(array(new Create()));
 
 $console
-    ->register('site:config')
+    ->register('site:configuration')
     ->setDescription('Provides the ability to set some of the site configuration through command line')
-    ->setDefinition(array(            
+    ->setDefinition(array(                        
             new InputOption('session-handler','', InputOption::VALUE_REQUIRED, 'What session handler use'),
             new InputOption('cache-handler','',   InputOption::VALUE_REQUIRED, 'What cache handler use'),
             new InputOption('use-apc','',   InputOption::VALUE_NONE, 'If set then both cache handler and session handle will use apc'),
@@ -218,6 +218,7 @@ $console
             //new InputOption('offline-message','',   InputOption::VALUE_REQUIRED, 'offline message to use'),
             new InputOption('debug','',   InputOption::VALUE_REQUIRED, 'Turn on or off the debug'),
             new InputOption('url-rewrite','',   InputOption::VALUE_REQUIRED, 'Enable or disable url rewrite'),
+            new InputOption('--set-value','s', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Setting key value pair',array()),
    
     ))
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
@@ -250,6 +251,18 @@ $console
             $config->enableDebug();            
         } else {
             $config->disableDebug();
+        }
+        if ( $input->getOption('set-value') )
+        {
+            $values = $input->getOption('set-value');            
+            foreach($values as $value) 
+            {
+                $parts = explode('=',$value);
+                $parts = array_map('trim', $parts);                
+                if ( count($parts) == 2 ) {
+                    $config->set($parts[0], $parts[1]);
+                }
+            }
         }
                 
         $config->save();
