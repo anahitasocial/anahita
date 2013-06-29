@@ -4,6 +4,8 @@
 
 set_include_path(get_include_path() . PATH_SEPARATOR . __DIR__.'/../');
 
+define('ANAHITA_ROOT', realpath(__DIR__.'/../'));
+
 $files = array(
         __DIR__ . '/../vendor/autoload.php',
         __DIR__ . '/../../../autoload.php'
