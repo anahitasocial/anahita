@@ -14,11 +14,11 @@ Requirements
 
 - APC (not required but recommended) 
 
-How to Install Anahita for Developers
+How to Install Anahita (Recommended) 
 =========================================
 If you are a developer and comfortable using development tools (git, IDE, shell, composer) then go to the [Anahita Standard](https://github.com/anahitasocial/anahita-standard) to get started.
 
-How to Install Anahita for Non-Developers 
+How to Install Anahita using a zip package
 =========================================
 1 - Download a copy of Anahita from http://GetAnahita.com/
 
