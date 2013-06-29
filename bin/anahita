@@ -1,3 +1,4 @@
+#!/usr/bin/env php
 <?php 
 
 //@TODO teribble. should use autoload
