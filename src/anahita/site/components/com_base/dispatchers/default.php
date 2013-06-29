@@ -117,6 +117,11 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
         $view     = $this->getController()->getView();
         $document = JFactory::getDocument();
         
+        //@TODO temporary fix
+        if ( $document->getTitle() ) {
+            return;
+        }
+                
         $item     = $this->getController()->getState()->getItem();
         $actorbar = $this->getController()->actorbar;
         
