@@ -11,7 +11,6 @@
      <li class="dropdown">
         <a href="#" class="dropdown-toggle">
             <?= @avatar(get_viewer(), 'square', false) ?>&nbsp;
-            <?= get_viewer()->name ?>
              <b class="caret"></b>           
          </a>
          <ul class="dropdown-menu">
