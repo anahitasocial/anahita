@@ -45,6 +45,10 @@ class ModMenuHtml extends ModBaseHtml
 			if ( $item->access >= 1 && 
 						!$user->id)
 				continue;
+
+			//do not display the home link
+			if($item->home == 1 && $this->_state->home_menuitem == 0)
+			    continue;
 						
 			//check if it has any children. then claim them
 			if ( isset($children[$item->id]) ) {
