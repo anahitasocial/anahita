@@ -36,7 +36,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
      */ 
     public function __construct(KConfig $config)
     {
-        parent::__construct($config);
+        parent::__construct($config);;
     }
         
     /**
@@ -51,7 +51,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => 'com://site/mailer.controller.behavior.mailer'
+            'behaviors' => array('com://site/mailer.controller.behavior.mailer')
         ));
     
         parent::_initialize($config);
@@ -99,6 +99,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 				}							
 			}
 		}
+		$this->setMessage('COM-INVITES-EMAIL-INVITES-SENT','info', false);
 	}
 	
 	/**
