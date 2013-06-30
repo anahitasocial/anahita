@@ -109,7 +109,8 @@ class Package extends Command
                 $plugin = $plugins->findOrAddNew(array(
                      'element' => $name,
                      'folder'  => $group 
-                ), array('data'=>array('params'=>'','published'=>true,'name'=>(string)$manifest->name)));                
+                ), array('data'=>array('params'=>'','published'=>true)));
+                $plugin->name = (string)$manifest->name;                
                 $plugin->saveEntity();                
                 $output->writeLn("<info>...installing $group plugin $name</info>");
                 return;

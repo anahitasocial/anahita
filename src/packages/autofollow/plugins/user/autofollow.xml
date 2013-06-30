@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="user" method="upgrade">
-    <name>User - Anahita ™ Auto Follow Actor</name>
+    <name>User - Anahita Auto Follow Actor</name>
     <author>Anahita Social Networking Project</author>
     <creationDate>##BUILD_DATE##</creationDate>
     <copyright>(C) 2008 - 2011 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.</copyright>
