@@ -22,7 +22,7 @@ MessageHandler.Element = new Class({
 			msg = new Element('div',{'class':'alert alert-'+message.type}).set('html', message.text);
 			document.id(this.container).empty().adopt(msg);
 		} else {
-			new MessageHandler.Alert(message); 
+			new MessageHandler.Alert().handle(message); 
 		}		
 	}
 });
