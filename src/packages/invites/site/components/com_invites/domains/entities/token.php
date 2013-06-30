@@ -39,6 +39,7 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
 	{
 		$config->append(array(
 			'attributes' => array(
+			    'id'          => array('key'=>true), 
 				'serviceName' => array('required'=>true, 'column'=>'service'),
 				'value'   => array('required'=>true,'unique'=>true,'column'=>'token'),
 				'used'	  => array('default'=>'0')

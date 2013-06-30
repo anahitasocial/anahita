@@ -25,7 +25,7 @@
  * @link       http://www.anahitapolis.com
  */
 class ComInvitesControllerToken extends ComBaseControllerService
-{	
+{	    
 	/**
 	 * Return a token
 	 *
@@ -33,8 +33,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
 	 */
 	protected function _actionGet(KCommandContext $context)
 	{
-		if ( $this->token ) 
-		{
+		if ( $this->token ) {
 			$this->execute('validate', $context);
 		} 
 		else 
@@ -56,25 +55,23 @@ class ComInvitesControllerToken extends ComBaseControllerService
 	 */	
 	protected function _actionValidate(KCommandContext $context)
 	{
-		$token = $this->getRepository()->getQuery()->fetch(array('value'=>$this->token));
+		$token = $this->getRepository()->find(array('value'=>$this->token));
 		
-		if ( $token && ($token->used == 0 || $token->serviceName == 'facebook')) 
+		if ( $token && ($token->used == 0 || 
+		        $token->serviceName == 'facebook')) 
 		{
-			if(is_guest(get_viewer()))
+			if( $this->viewer->guest() )
 			{
 				KRequest::set('session.invite_token', $token->value);
-				$this->setRedirect('index.php?option=com_user&view=register');
+				$context->response->setRedirect(JRoute::_('option=people&view=person&layout=add'));
 			}
-			else 
-				$this->setRedirect($token->inviter->getURL());
+			else {
+			    $context->response->setRedirect(JRoute::_($token->inviter->getURL()));
+			}
 		} 
 		else 
 		{
-			$context->setError(new KHttpException(
-                    'Looks like you have an invalid invitation', KHttpResponse::NOT_FOUND
-			));
-			
-			return false;			
+		    throw new LibBaseControllerExceptionNotFound('Token not found');					
 		}
 	}
 }

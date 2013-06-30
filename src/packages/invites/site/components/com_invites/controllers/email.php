@@ -27,6 +27,36 @@
 
 class ComInvitesControllerEmail extends ComInvitesControllerDefault
 {		
+    /** 
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     * 
+     * @return void
+     */ 
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+    }
+        
+    /**
+     * Initializes the default configuration for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     *
+     * @return void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'behaviors' => 'com://site/mailer.controller.behavior.mailer'
+        ));
+    
+        parent::_initialize($config);
+    } 
+    
 	/**
 	 * Read
 	 * 
@@ -49,24 +79,24 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 				$token = $this->getService('repos://site/invites.token')->getEntity(array(
 					'data'=> array(
 						'inviter' => get_viewer(),
-						'service' => 'email' 
+						'serviceName' => 'email' 
 					)
 				));
-								
-				$message = $this->getView()
-								->inviteUrl($token->getURL())
-								->siteName($siteConfig->getValue('sitename'))
-								->sender($this->viewer)
-								->layout('_message');
 
-		        $mailer = JFactory::getMailer();
-				$mailer->isHTML(true);
-		        $mailer->addRecipient($email);
-		        $mailer->setSubject(JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')));	
-				$mailer->setBody($message);
-				$mailer->addReplyTo(array($siteConfig->getValue('mailfrom'), $siteConfig->getValue('sitename')));
-				$mailer->send();
-				$token->save();
+				if ( $token->save() ) 
+				{
+				    $this->mail(array(
+				            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+				            'to'       => $email,
+				            'layout'   => false,
+				            'template' => 'invite',
+				            'data'     => array(
+				                    'invite_url' => $token->getURL(),
+				                    'site_name'  => $siteConfig->getValue('sitename'),
+				                    'sender'     => $this->viewer
+				            )
+				    ));				    
+				}							
 			}
 		}
 	}
