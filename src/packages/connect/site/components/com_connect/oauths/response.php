@@ -107,6 +107,6 @@ class ComConnectOauthResponse extends KConfig
 	 */
 	public function __toString()
 	{
-		return $this->_text;
+		return pick($this->_text, ' ');
 	}
 }
