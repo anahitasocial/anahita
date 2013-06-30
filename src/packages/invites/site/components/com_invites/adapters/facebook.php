@@ -66,6 +66,22 @@ class ComInvitesAdapterFacebook extends ComInvitesAdapterAbstract
    	} 
 	
    	/**
+   	 * Return the app info
+   	 * 
+   	 * @return array
+   	 */
+   	public function getApp()
+   	{
+   	    $cache = JFactory::getCache((string) $this->getIdentifier());   	     
+   	    $cache->setLifeTime(5*100);   	     
+   	    $data = $cache->get(function($session) {
+   	        $info = $session->api->get('/app');   	            
+   	        return $info;
+   	    }, array($this->_session) , '/app'.md5($this->_session->id));
+   	    return $data;   
+   	}
+   	
+   	/**
    	 * Return an array of oauth users 
    	 * 
    	 * @return ComConnectOauthUsers
@@ -79,7 +95,7 @@ class ComInvitesAdapterFacebook extends ComInvitesAdapterAbstract
 	    $data = $cache->get(function($session) {	        
 	        $friends = $session->api->get('/me/friends');
 	        return $friends['data'];
-	    }, array($this->_session) , md5($this->_session->id));
+	    }, array($this->_session) , '/me/friends'.($this->_session->id));
 	    	  
 		$users   = $this->getService('com://site/connect.oauth.users');		
 		
