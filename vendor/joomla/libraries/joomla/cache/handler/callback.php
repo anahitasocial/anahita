@@ -60,7 +60,7 @@ class JCacheCallback extends JCache
 	function get( $callback, $args, $id=false )
 	{
 		// Normalize callback
-		if (is_array( $callback )) {
+		if (is_array( $callback ) || $callback instanceof Closure) {
 			// We have a standard php callback array -- do nothing
 		} elseif (strstr( $callback, '::' )) {
 			// This is shorthand for a static method callback classname::methodname
