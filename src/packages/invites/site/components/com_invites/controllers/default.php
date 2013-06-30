@@ -43,7 +43,7 @@ class ComInvitesControllerDefault extends ComBaseControllerResource
             'language'      => 'com_'.$this->getIdentifier()->package ,
             'toolbars'      => array($this->getIdentifier()->name,'menubar','actorbar'),
             'request'       => array(
-                'limit'     => 100000,
+                'limit'     => 100,
                 'offset'    => 0                
             ) 
 		));     

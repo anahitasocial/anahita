@@ -68,21 +68,28 @@ class ComInvitesAdapterFacebook extends ComInvitesAdapterAbstract
    	/**
    	 * Return an array of oauth users 
    	 * 
-   	 * @return multitype:ComConnectOauthUser
+   	 * @return ComConnectOauthUsers
    	 */
 	public function getInvitables()
 	{
-		$friends = $this->_session->api->get('/me/friends');
+	    $cache = JFactory::getCache((string) $this->getIdentifier());
+	    
+	    $cache->setLifeTime(5*100);
+	    
+	    $data = $cache->get(function($session) {	        
+	        $friends = $session->api->get('/me/friends');
+	        return $friends['data'];
+	    }, array($this->_session) , md5($this->_session->id));
+	    	  
+		$users   = $this->getService('com://site/connect.oauth.users');		
 		
-		$users = array();
-		
-		foreach($friends['data'] as $friend)
+		foreach($data as $friend)
 		{
 			$user = new ComConnectOauthUser();
 			$user->id = $friend['id'];
 			$user->name = $friend['name'];
 			$user->thumb_avatar = 'https://graph.facebook.com/'.$friend['id'].'/picture';
-			$users[] = $user;
+			$users->insert($user);
 		}
 		
 		return $users;

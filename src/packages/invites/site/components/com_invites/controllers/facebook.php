@@ -27,6 +27,22 @@
 
 class ComInvitesControllerFacebook extends ComInvitesControllerDefault
 {
+    /**
+     * Read
+     *
+     * @param KCommandContext $contxt
+     *
+     * @return void
+     */
+    protected function _actionRead($context)
+    {
+        parent::_actionRead($context);
+        
+        $this->users = $this->adapter->getInvitables()
+                            ->filter('name', $this->q)
+                            ->limit($this->start, $this->limit);
+    }    
+    
 	/**
 	 * Invite
 	 * 
@@ -49,9 +65,9 @@ class ComInvitesControllerFacebook extends ComInvitesControllerDefault
 		
 		$token = $this->getService('repos://site/invites.token')->getEntity(array(
 			'data'=> array(
-				'value'	  => $value,
-				'inviter' => get_viewer(),
-				'service' => 'facebook' 
+				'value'	      => $value,
+				'inviter'     => get_viewer(),
+				'serviceName' => 'facebook' 
 			)
 		));
 

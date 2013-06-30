@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<script src="com_invites/js/email.js" />
+<script src="media://com_invites/js/email.js" />
 
 <module position="sidebar-b" style="simple"></module>
 

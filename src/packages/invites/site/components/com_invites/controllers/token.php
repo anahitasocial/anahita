@@ -25,28 +25,28 @@
  * @link       http://www.anahitapolis.com
  */
 class ComInvitesControllerToken extends ComBaseControllerService
-{	    
-	/**
-	 * Return a token
-	 *
-	 * @return string
-	 */
-	protected function _actionGet(KCommandContext $context)
-	{
-		if ( $this->token ) {
-			$this->execute('validate', $context);
-		} 
-		else 
-		{
-			$token = $this->getRepository()->getEntity()->reset();		
-			KRequest::set('session.invite_token', $token->value);
-			$this->getView()
-				->url(JRoute::_('index.php?'.$token->getURL()))
-				->value($token->value);
-				
-			return $this->getView()->display();
-		}
-	}
+{	
+    /**
+     * Token Read
+     * 
+     * @param KCommandContext $context
+     */   
+    protected function _actionRead(KCommandContext $context)
+    { 
+        if ( $this->token ) {
+            $this->execute('validate', $context);
+        }
+        else
+        {
+            $token = $this->getRepository()->getEntity()->reset();
+            KRequest::set('session.invite_token', $token->value);
+            $this->getView()
+                ->url((string)JRoute::_($token->getURL()))
+                ->value($token->value);
+        
+            return $this->getView()->display();
+        }
+    }
 	
 	/**
 	 * Validates a token
