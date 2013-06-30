@@ -48,6 +48,7 @@ class Package extends Command
             $mapper   = new \Installer\Mapper($dir, $this->getApplication()->getSitePath());
             $mapper->addCrawlMap('',  array(
                     '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                    '#^(media)/([^/]+)/.+#' => '\1/\2',
                     '#CHANGELOG.php#'  => '',
                     '#^migration.*#'     => '',
                     '#manifest.xml#'   => ''
