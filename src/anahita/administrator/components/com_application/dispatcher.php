@@ -148,6 +148,11 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
            return $matches[1].'="'.KRequest::base().'/templates/';
         }, $content);
         
+        $content = preg_replace_callback('#(src|href)="/(media|administrator)/#',function($matches){
+            return $matches[1].'="'.KRequest::root().'/'.$matches[2].'/';
+        }, $content); 
+               
+        
         $content = preg_replace_callback('#action="index.php"#',function($matches){
             return 'action="'.JRoute::_('index.php?').'"';
         }, $content);
