@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params addpath="/administrator/components/com_content/elements">		
+    	<param menu="hide"  name="login" type="text" label="PAYPAL-LOGIN" description="" size="60"/>
+		<param menu="hide"  name="password" type="text" label="PAYPAL-PASSWORD" description="" size="40"/>	
+		<param menu="hide"  name="signature" type="text" label="PAYPAL-SIGNATURE" description="" size="60"/>
+		<param menu="hide"  name="test_mode" type="list" default="20" label="TEST-MODE" description="">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>	
+		<param menu="hide"  name="renew_notice" type="text" label="RENEW-NOTICE" description="RENEW-NOTICE-DESC" size="10"/>
+		<param menu="hide"  name="use_ssl" type="list" default="20" label="USE-SSL" description="">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+		</param>
+		<param  menu="hide"  name="currency" type="list" label="CURRENCY" description="" default="US">
+			<option value="AFA">AFA</option><option value="AWG">AWG</option><option value="AUD">AUD</option><option value="ARS">ARS</option><option value="AZN">AZN</option><option value="BSD">BSD</option><option value="BDT">BDT</option><option value="BBD">BBD</option><option value="BYR">BYR</option><option value="BOB">BOB</option><option value="BRL">BRL</option><option value="GBP">GBP</option><option value="BGN">BGN</option><option value="KHR">KHR</option><option value="CAD">CAD</option><option value="KYD">KYD</option><option value="CLP">CLP</option><option value="CNY">CNY</option><option value="COP">COP</option><option value="CRC">CRC</option><option value="HRK">HRK</option><option value="CPY">CPY</option><option value="CZK">CZK</option><option value="DKK">DKK</option><option value="DOP">DOP</option><option value="XCD">XCD</option><option value="EGP">EGP</option><option value="ERN">ERN</option><option value="EEK">EEK</option><option value="EUR">EUR</option><option value="GEL">GEL</option><option value="GHC">GHC</option><option value="GIP">GIP</option><option value="GTQ">GTQ</option><option value="HNL">HNL</option><option value="HKD">HKD</option><option value="HUF">HUF</option><option value="ISK">ISK</option><option value="INR">INR</option><option value="IDR">IDR</option><option value="ILS">ILS</option><option value="JMD">JMD</option><option value="JPY">JPY</option><option value="KZT">KZT</option><option value="KES">KES</option><option value="KWD">KWD</option><option value="LVL">LVL</option><option value="LBP">LBP</option><option value="LTL">LTL</option><option value="MOP">MOP</option><option value="MKD">MKD</option><option value="MGA">MGA</option><option value="MYR">MYR</option><option value="MTL">MTL</option><option value="BAM">BAM</option><option value="MUR">MUR</option><option value="MXN">MXN</option><option value="MZM">MZM</option><option value="NPR">NPR</option><option value="ANG">ANG</option><option value="TWD">TWD</option><option value="NZD">NZD</option><option value="NIO">NIO</option><option value="NGN">NGN</option><option value="KPW">KPW</option><option value="NOK">NOK</option><option value="OMR">OMR</option><option value="PKR">PKR</option><option value="PYG">PYG</option><option value="PEN">PEN</option><option value="PHP">PHP</option><option value="QAR">QAR</option><option value="RON">RON</option><option value="RUB">RUB</option><option value="SAR">SAR</option><option value="CSD">CSD</option><option value="SCR">SCR</option><option value="SGD">SGD</option><option value="SKK">SKK</option><option value="SIT">SIT</option><option value="ZAR">ZAR</option><option value="KRW">KRW</option><option value="LKR">LKR</option><option value="SRD">SRD</option><option value="SEK">SEK</option><option value="CHF">CHF</option><option value="TZS">TZS</option><option value="THB">THB</option><option value="TTD">TTD</option><option value="TRY">TRY</option><option value="AED">AED</option><option value="USD">USD</option><option value="UGX">UGX</option><option value="UAH">UAH</option><option value="UYU">UYU</option><option value="UZS">UZS</option><option value="VEB">VEB</option><option value="VND">VND</option><option value="AMK">AMK</option><option value="ZWD">ZWD</option>		
+		</param>									
+		<param menu="hide"  name="tos_article_id" type="article" label="TOS-ARTICLE" description="" size="20"/>		
+		<param menu="hide"  name="welcome_article_id" type="article" label="WELCOME-ARTICLE" description="" size="20"/>
+		<param menu="hide"  name="tos_confirmation_checkbox1" type="textarea" label="TOS-CHECKBOX-1" description="" cols="100" rows="5"/>
+		<param menu="hide"  name="tos_confirmation_checkbox2" type="textarea" label="TOS-CHECKBOX-2" description="" cols="100" rows="5"/>
+				
+	</params>
+</config>

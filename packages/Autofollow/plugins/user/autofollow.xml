@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="user" method="upgrade">
+    <name>User - Anahita Auto Follow Actor</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>(C) 2008 - 2011 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.htmlL</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>http://www.anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <description>
+    <![CDATA[
+    	Anahita ™ Auto Follow Actor plugins allows a site administrator to set a list of actors
+    	to be automatically followed by the new registered members
+    ]]>
+    </description>
+    <params>
+       <param name="actor_ids" type="textarea" rows="3" cols="40" default="" label="Actor IDs" description="Enter a comma seperated list of actor ids!" />
+    </params>
+    <files>
+        <filename plugin="autofollow">autofollow.php</filename>
+    </files>
+</install>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<view title="Viewer's Groups">
+        <message>Groups that the viewer is administering or following. If allowed, the viewer can create groups as well.</message>
+    </view>
+</metadata>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="##BUILD_PLATFORM_VERSION##" enforce="1" method="upgrade">
+    <name>nivoslider</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>Copyright (C) 2012 Anahitapolis.com, Dev7Studios.com</copyright>
+    <license>GPL3, MIT</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <release>##BUILD_RELEASE##</release>  
+    <description>
+    <![CDATA[
+    Nivo Slider for Anahita: Create a category with a list of articles. Each article can contain an <img src="" alt="" title=""/>. 
+    The content of title attributes are displayed as image captions. Use module parameters to further customize your image slider animation.
+    ]]>
+    </description>
+    <media folder="media" destination="mod_nivoslider">
+        <folder>js</folder>
+        <folder>css</folder>
+        <folder>images</folder>
+    </media>
+    <languages folder="languages">
+        <language tag="en-GB">en-GB.mod_nivoslider.ini</language>
+    </languages>
+    <files>
+        <folder>html</folder>
+        <filename module="mod_nivoslider">mod_nivoslider.php</filename>
+        <filename>mod_nivoslider.xml</filename>
+    </files>
+     <params>
+        <param name="catid" type="category" default="" label="MOD-NIVOSLIDER-ANAHITA-CATEGORY" description="" />
+        
+        <param name="ordering" type="list" default="ordering" label="MOD-NIVOSLIDER-ORDER-BY" description="">
+          <option value="title">Title</option>
+          <option value="created">Creation Date</option>
+          <option value="ordering">Ordering</option>
+        </param>
+        
+        <param name="css-theme" type="list" default="default" label="MOD-NIVOSLIDER-CSS-THEME" description="">
+            <option value="">Default</option>
+            <option value="orman">Orman</option>
+            <option value="pascal">Pascal</option>
+        </param>
+        
+        <param name="show-ribbon" type="radio" default="1" label="MOD-NIVOSLIDER-SHOW-RIBBON" description="">
+            <option value="0">Hide</option>
+            <option value="1">Show</option>
+        </param>
+        
+        <param name="moduleclass_sfx" type="text" default="" label="MOD-NIVOSLIDER-MODULE-CLASS-SUFFIX" description="" />
+        
+         <param name="option-effect" type="list" default="random" label="MOD-NIVOSLIDER-ANIMATION-EFFECT" description="">
+            <option value="sliceDown">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLIDE-DOWN</option>
+            <option value="sliceDownLeft">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLIDE-DOWN-LEFT</option>
+            <option value="sliceUp">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLICE-UP</option>
+            <option value="sliceUpLeft">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLICE-UP-LEFT</option>
+            <option value="sliceUpDown">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLICE-UP-DOWN</option>
+            <option value="sliceUpDownLeft">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLICE-UP-DOWN-LEFT</option>
+            <option value="fold">MOD-NIVOSLIDER-ANIMATION-EFFECT-FOLD</option>
+            <option value="fade">MOD-NIVOSLIDER-ANIMATION-EFFECT-FADE</option>
+            <option value="random">MOD-NIVOSLIDER-ANIMATION-EFFECT-RANDOM</option>
+            <option value="slideInRight">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLIDE-IN-RIGHT</option>
+            <option value="slideInLeft">MOD-NIVOSLIDER-ANIMATION-EFFECT-SLIDE-IN-LEFT</option>
+            <option value="boxRandom">MOD-NIVOSLIDER-ANIMATION-EFFECT-BOX-RANDOM</option>
+            <option value="boxRain">MOD-NIVOSLIDER-ANIMATION-EFFECT-BOX-RAIN</option>
+            <option value="boxRainReverse">MOD-NIVOSLIDER-ANIMATION-EFFECT-BOX-RAIN-REVERSE</option>
+            <option value="boxRainGrow">MOD-NIVOSLIDER-ANIMATION-EFFECT-BOX-RAIN-GROW</option>
+            <option value="boxRainGrowReverse">MOD-NIVOSLIDER-ANIMATION-EFFECT-BOX-RAIN-GROW-REVERSE</option>
+        </param>
+        
+        <param name="option-slices" type="text" default="15" size="3" label="MOD-NIVOSLIDER-SLICES" description="" />
+        <param name="option-box-cols" type="text" default="8" size="3" label="MOD-NIVOSLIDER-BOX-COLUMNS" description="" />
+        <param name="option-box-rows" type="text" default="4" size="3" label="MOD-NIVOSLIDER-BOX-ROWS" description="" />
+        <param name="option-anim-speed" type="text" default="500" size="15" label="MOD-NIVOSLIDER-ANIMATION-SPEED" description="" />
+        <param name="option-pause-time" type="text" default="3000" size="15" label="MOD-NIVOSLIDER-PAUSE-TIME" description="" />
+        
+        <param name="option-direction-nav" type="radio" default="1" label="MOD-NIVOSLIDER-NEXT-PREV-NAV" description="">
+            <option value="0">Hide</option>
+            <option value="1">Show</option>
+        </param>
+        
+        <param name="option-direction-nav-hide" type="radio" default="1" label="MOD-NIVOSLIDER-ONLY-SHOW-ON-HOVER" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+        
+        <param name="option-control-nav" type="radio" default="1" label="MOD-NIVOSLIDER-123-NAVIGATION" description="">
+            <option value="0">Hide</option>
+            <option value="1">Show</option>
+        </param>
+        
+         <param name="option-control-nav-thumbs" type="radio" default="1" label="MOD-NIVOSLIDER-USE-THUMBNAILS-FOR-CONTROL-NAV" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+        
+         <param name="option-control-nav-thumbs-from-rel" type="radio" default="0" label="MOD-NIVOSLIDER-USE-IMAGE-REL-FOR-THUMBS" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+        
+        <param name="option-control-nav-thumbs-search" type="text" default=".jpg" label="MOD-NIVOSLIDER-REPLACE-THIS-STRING" description="" />
+        
+        <param name="option-control-nav-thumbs-replace" type="text" default="_thumb.jpg" label="MOD-NIVOSLIDER-WITH-THIS-STRING-IN-THUMB-IMAGE-SRC" description="" />
+        
+        <param name="option-keyboard-nav" type="radio" default="1" label="MOD-NIVOSLIDER-USE-ARROW-KEYS-FOR-NEXT-PREV" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+        
+        <param name="option-pause-on-hover" type="radio" default="1" label="MOD-NIVOSLIDER-STOP-ANIMATION-WHILE-HOVERING" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+        
+        <param name="option-manual-advance" type="radio" default="0" label="MOD-NIVOSLIDER-FORCE-MANUAL-TRANSITIONS" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+        
+        <param name="option-caption-opacity" type="text" default="0.8" size="5" label="MOD-NIVOSLIDER-CAPTIONS-OPACITY" description="" />
+        
+        <param name="option-prev-text" type="text" default="Prev" label="MOD-NIVOSLIDER-PREV-LABEL" description="" />
+        
+        <param name="option-next-text" type="text" default="Next" label="MOD-NIVOSLIDER-NEXT-LABEL" description="" />
+        
+        <param name="option-random-start" type="radio" default="0" label="MOD-NIVOSLIDER-START-A-RANDOM-SLIDE" description="">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </param>
+    </params>
+</install>

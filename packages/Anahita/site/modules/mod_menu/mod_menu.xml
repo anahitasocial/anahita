@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="##BUILD_PLATFORM_VERSION##" enforce="1" method="upgrade">
+    <name>Menu</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>Copyright (C) 2012 rmdStudio Inc. and Peerglobe Technology All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.htmlL</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>	
+    <description>Renders a menu</description>
+    <files>
+        <filename module="mod_menu">mod_menu.php</filename>
+    </files>
+    <params>
+        <param name="menutype" type="mos_menu" default="" label="Menu Name" description="The name of the menu (default is mainmenu)" />
+        <param name="menustyle" type="list" default="" label="Menu Style" description="Select the style of menu (default is Navbar)">
+            <option value="">Navbar</option>
+            <option value="nav-pills">Pills</option>
+            <option value="nav-pills nav-stacked">Stacked Pills</option>
+            <option value="nav-tabs nav-stacked">Stacked Tabs</option>
+            <option value="mobile">Mobile</option>
+        </param>
+        <param name="home_menuitem" type="list" default="0" label="Home Menu Item" description="Hide or display the home menu item">
+            <option value="1">Show</option>
+            <option value="0">Hide</option>
+        </param>        
+        <param name="cache" type="list" default="0" label="Caching" description="Select whether to cache the content of this module">
+            <option value="1">Use global</option>
+            <option value="0">No caching</option>
+        </param>
+        <param name="@spacer" type="spacer" default="" label="" description="" />
+        <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
+    </params>			    
+</install>

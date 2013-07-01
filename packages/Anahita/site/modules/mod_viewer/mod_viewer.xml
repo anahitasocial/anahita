@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="##BUILD_PLATFORM_VERSION##" enforce="1" method="upgrade">
+    <name>Viewer</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>Copyright (C) 2012 rmdStudio Inc. and Peerglobe Technology All rights reserved.</copyright>
+    <license>http://www.gnu.org/licenses/gpl-3.0.htmlL</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>	
+    <description>Module to display the viewer related information (such as avatar, menus and etc)</description>
+    <files>
+        <folder>html</folder>
+        <file>html.php</file>
+        <filename module="mod_viewer">mod_viewer.php</filename>
+    </files>
+	<params>
+		<param name="menutype" type="mos_menu" default="" label="Menu Name" description="The viewer menu" />		
+	</params>		    
+</install>
