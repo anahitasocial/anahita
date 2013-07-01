@@ -29,8 +29,9 @@ $composerLoader->add('Console\\', __DIR__.'/..');
 
 //check the tasks folder for any class
 
-$console = new Console\Application(realpath(__DIR__.'/../'), COMPOSER_ROOT.'/www', array('Custom'=>COMPOSER_ROOT.'/packages'),COMPOSER_ROOT.'/config');
-
+$console = new Console\Application(ANAHITA_ROOT, COMPOSER_ROOT);
+print $console;
+die;
 function include_tasks($directory) 
 {
     global $console;    
