@@ -194,7 +194,11 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
 	    $conditions  = "IF($conditions, IF($subscribed,$true,$false),$true)";
 	    if ( $is_actor ) 
 	    {
-	       $query->select(array('access'=>$conditions));	       
+	       if ( isset($query->operation['type']) && 
+	               $query->operation['type'] == AnDomainQuery::QUERY_SELECT_DEFAULT  
+	               ) {
+	           $query->select(array('access'=>$conditions));
+	       }
 	    } 
 	    else 
 	    {
