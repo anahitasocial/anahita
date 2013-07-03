@@ -205,6 +205,10 @@ class Create extends Command
 
 $console->addCommands(array(new Create()));
 
+if ( !$console->isInitialized() ) {
+    return;
+}
+
 $console
     ->register('site:configuration')
     ->setDescription('Provides the ability to set some of the site configuration through command line')

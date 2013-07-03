@@ -2,6 +2,9 @@
 
 namespace Console;
 
+if ( !$console->isInitialized() ) {
+    return;
+}
 
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
