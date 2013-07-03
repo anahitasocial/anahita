@@ -218,7 +218,8 @@ $console
             new InputOption('use-apc','',   InputOption::VALUE_NONE, 'If set then both cache handler and session handle will use apc'),
             new InputOption('offline','',   InputOption::VALUE_REQUIRED, 'set a site offline or online'),
             //new InputOption('offline-message','',   InputOption::VALUE_REQUIRED, 'offline message to use'),
-            new InputOption('debug','',   InputOption::VALUE_REQUIRED, 'Turn on or off the debug'),
+            new InputOption('enable-debug','',   InputOption::VALUE_NONE, 'Turn on the debug'),
+            new InputOption('disable-debug','',   InputOption::VALUE_NONE, 'Turn off the debug'),
             new InputOption('url-rewrite','',   InputOption::VALUE_REQUIRED, 'Enable or disable url rewrite'),
             new InputOption('--set-value','s', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Setting key value pair',array()),
    
@@ -248,12 +249,13 @@ $console
             $config->set(array('session_handler'=>'apc','cache_handler'=>'apc'));
         }
         
-        if ( $input->getOption('debug') ) 
-        {
+        if ( $input->getOption('enable-debug') ) {
             $config->enableDebug();            
-        } else {
+        }         
+        elseif ( $input->getOption('disable-debug') ) {
             $config->disableDebug();
         }
+        
         if ( $input->getOption('set-value') )
         {
             $values = $input->getOption('set-value');            
