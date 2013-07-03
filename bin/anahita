@@ -40,12 +40,15 @@ $console = new Console\Application();
 function include_tasks($directory) 
 {
     global $console;
-    $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
-    foreach($files as $file) {
-        if ( strpos($file, '.task.php') ) {
-           require_once $file->getPathName();
-        }
-    };    
+    if ( is_dir($directory) )
+    {
+        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
+        foreach($files as $file) {
+            if ( strpos($file, '.task.php') ) {
+               require_once $file->getPathName();
+            }
+        };    
+    }       
 }
 
 
