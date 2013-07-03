@@ -2,10 +2,25 @@
 
 namespace Console;
 
+/**
+ * Config class.
+ * 
+ * Provides a way to manipulate the site configuration file
+ */
 class Config
 {
+    /**
+     * Site path
+     * 
+     * @var string
+     */
     protected $_site_path;
     
+    /**
+     * Configuration key map
+     * 
+     * @var array
+     */
     protected $_key_map = array(        
         'database_type'      => 'dbtype',
         'database_host'      => 'host',
@@ -25,10 +40,25 @@ class Config
         'cache_handler'
     );
     
+    /**
+     * Configuration data
+     * 
+     * @var array
+     */
     protected $_data = array();
     
+    /**
+     * Configuration file
+     * 
+     * @var string
+     */
     protected $_configuration_file;
     
+    /**
+     * Creates a configuration from a configuration.php file
+     * 
+     * @param string $site_path
+     */
     public function __construct($site_path)
     {
         $this->_site_path = $site_path;
@@ -102,11 +132,19 @@ class Config
         $this->database_type = 'mysqli';
     }
     
+    /**
+     * Check if the configuation file exist
+     * 
+     * @return boolean
+     */
     public function isConfigured()
     {
         return file_exists($this->_configuration_file );
     }
     
+    /**
+     * Sets the keys that make the debug on for a site
+     */
     public function enableDebug()
     {
         $this->set(array(
@@ -115,6 +153,9 @@ class Config
         ));    
     }
     
+    /**
+     * Disable debug
+     */
     public function disableDebug()
     {
         $this->set(array(
@@ -123,6 +164,14 @@ class Config
         ));
     }
     
+    /**
+     * Set a configuration key/value
+     * 
+     * @param string|array $key
+     * @param string $value
+     * 
+     * @return void.
+     */
     public function set($key ,$value = null)
     {
         if ( is_array($key) ) 
@@ -135,6 +184,13 @@ class Config
         }
     }
     
+    /**
+     * Return a configuraiton value
+     * 
+     * @param string $key
+     * 
+     * @return Ambigous <NULL, multitype:>
+     */
     public function __get($key)
     {           
         if ( isset($this->_key_map[$key]) )
@@ -144,6 +200,12 @@ class Config
         return isset($this->_data[$key]) ? $this->_data[$key] : null;
     }
     
+    /**
+     * Set a configuration value. For setting array. We can use [val1,val2]
+     * 
+     * @param string $key
+     * @param string $value
+     */
     public function __set($key , $value)
     {
         $matches = array();
@@ -157,6 +219,13 @@ class Config
         $this->_data[$key] = $value;
     }
     
+    /**
+     * Set configuration database info
+     * 
+     * @param array $data
+     * 
+     * @return void
+     */
     public function setDatabaseInfo($data)
     {
         $data['host'] = $data['host'].':'.$data['port'];
@@ -168,6 +237,11 @@ class Config
         $this->set($data);
     }
     
+    /**
+     * Get the database info
+     * 
+     * @return array
+     */
     public function getDatabaseInfo()
     {                
         $parts = explode(':', $this->database_host);
@@ -182,11 +256,21 @@ class Config
         );
     }
     
+    /**
+     * Retunr the data
+     * 
+     * @return arary
+     */
     public function toData()
     {
          return $this->_data;   
     }
     
+    /**
+     * Save the configuration into the file
+     * 
+     * @return string
+     */
     public function save()
     {
         $data   = $this->toData();

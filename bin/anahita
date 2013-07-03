@@ -24,24 +24,30 @@ foreach($files as $file)
     }
 }
 
+define('WWW_ROOT', COMPOSER_ROOT.'/www');
+
+if ( !file_exists(WWW_ROOT) ) {
+    mkdir(WWW_ROOT, 0755);
+}   
+
 $composerLoader->add('', COMPOSER_ROOT.'/tasks');
 $composerLoader->add('Console\\', __DIR__.'/..');
 
 //check the tasks folder for any class
 
-$console = new Console\Application(ANAHITA_ROOT, COMPOSER_ROOT);
-print $console;
-die;
+$console = new Console\Application();
+
 function include_tasks($directory) 
 {
-    global $console;    
-    $files = new \DirectoryIterator($directory);
+    global $console;
+    $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
     foreach($files as $file) {
         if ( strpos($file, '.task.php') ) {
-            require_once $file->getPathName();
+           require_once $file->getPathName();
         }
-    }
+    };    
 }
+
 
 include_tasks(__DIR__.'/../Console/tasks');
 include_tasks(COMPOSER_ROOT.'/tasks');

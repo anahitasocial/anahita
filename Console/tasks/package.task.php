@@ -8,11 +8,11 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
-class Package extends Command
+class PackageCommand extends Command
 {
     protected function configure()
     {
-        $this->addArgument('package', InputArgument::IS_ARRAY, 'Name of the package');
+        $this->addArgument('package', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Name of the package');
         $this->addOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development');        
         $this->addOption('create-schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
         $this->setName('package:install')
@@ -21,31 +21,24 @@ class Package extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getApplication()->setEnv($input->getOption('config-env'));
-        
-        $config   = pick($this->getApplication()->getConfig()->packages, array());
-        $config   = \KConfig::unbox($config);
-        
         $packages = $input->getArgument('package');
+
+        $packages = $this->getApplication()
+             ->getExtensionPackages()
+             ->findPackages($packages)             
+            
+        ;
         
-        if ( empty($packages) ) {
-            $packages = $config;
-        } 
-                        
-        $directories    = new DirectoryFilter($packages, 
-                        $this->getApplication()->getPackagePaths());
-        
-        if ( !count($directories) ) {
-            throw new \RuntimeException('No valid package is specified');
+        if ( !count($packages) ) {
+            throw new \RuntimeException('Invalid Packages');
         }
+        
         $this->getApplication()->loadFramework();
         \KService::get('koowa:loader')
             ->loadIdentifier('com://admin/migrator.helper');
-        foreach($directories as $dir)
-        {             
-            $config[] = basename($dir);
-            $name     = ucfirst(basename($dir));
-            $mapper   = new \Installer\Mapper($dir, $this->getApplication()->getSitePath());
+        foreach($packages as $package)
+        {
+            $mapper   = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
             $mapper->addCrawlMap('',  array(
                     '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#^(media)/([^/]+)/.+#' => '\1/\2',
@@ -53,14 +46,10 @@ class Package extends Command
                     '#^migration.*#'     => '',
                     '#manifest.xml#'   => ''
             ));
-            $output->writeLn("<info>Linking $name Package</info>");
+            $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
             $mapper->symlink();
-            $this->_installExtensions($dir, $output, $input->getOption('create-schema'));
+            $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
-        $config = array_unique($config);
-        $this->getApplication()->addConfig(array(
-            'packages' => $packages      
-        ));
     }
 
     protected function _installExtensions($dir, $output, $schema = false)
@@ -206,7 +195,7 @@ $console
         foreach($directories as $dir)
         {                            
             $name   = ucfirst(basename($dir));
-            $mapper = new \Installer\Mapper($dir, $console->getSitePath());
+            $mapper = new \Installer\Mapper($dir, WWW_ROOT);
             $mapper->addCrawlMap('',  array(
                     '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#CHANGELOG.php#'  => '',
@@ -219,23 +208,23 @@ $console
 });
 ;
 
-$console->addCommands(array(new Package()));
+$console->addCommands(array(new PackageCommand()));
 $console
     ->register('package:list')
     ->setDescription('List of packages')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
         
-        foreach($console->getPackagePaths() as $name => $path) 
+        $vendros = array_group_by($console->getExtensionPackages(), function($package) {
+                return $package->getVendor();
+        });
+        
+        foreach($vendros as $vendor => $packages)
         {
-            $dirs = new \DirectoryIterator($path);
-            $output->writeLn("<info>".$name."</info>");
-            foreach($dirs as $dir)
-            {
-                if ( $dir->isDir() && !$dir->isDot() ) {
-                    $output->writeLn(' - '.(string)$dir);
-                }
-            }            
-        }        
+            $output->writeLn("<info>".$vendor."</info>");
+            foreach($packages as $package) {
+                $output->writeLn("<info> - ".$package->getName()."</info>");
+            }
+        }
     })
     ;
 ;

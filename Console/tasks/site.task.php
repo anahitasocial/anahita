@@ -36,16 +36,14 @@ class Create extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {        
         $this->_input = $input; $this->_output = $output;
-        //$only_symlink = $input->getOption('only-symlink');
         $this->_symlink(true);
         $this->_configure();
     }
     
     protected function _symlink($configure = false)
     {
-        $target = $this->getApplication()->getSitePath();
-        $mapper = new \Installer\Mapper($this->getApplication()->getSrcPath(), 
-                    $target);
+        $target = WWW_ROOT;
+        $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
         
         $patterns = array(
                 '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
@@ -70,7 +68,7 @@ class Create extends Command
         $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
         $mapper->addCrawlMap('vendor/joomla', $patterns);
         $mapper->addCrawlMap('vendor/nooku',  $patterns);
-        $mapper->addCrawlMap('src/anahita',   $patterns);
+        $mapper->addCrawlMap('packages/Anahita/src',   $patterns);
         $mapper->symlink();
         $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
         $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
@@ -118,7 +116,7 @@ class Create extends Command
             return $result;             
         };
         
-        $config = new Config($this->getApplication()->getSitePath());
+        $config = new Config(WWW_ROOT);
         $info   = $config->getDatabaseInfo();   
         $config->setDatabaseInfo(array(
             'name'     => $prompt('database-name', 'Enter the name of the database? ',@$info['name'],'Please enter the database name'),
@@ -130,7 +128,7 @@ class Create extends Command
         ));
         define('DS', DIRECTORY_SEPARATOR);
         define( '_JEXEC', 1 );
-        define('JPATH_BASE',           $this->getApplication()->getSitePath());
+        define('JPATH_BASE',           WWW_ROOT);
         define('JPATH_ROOT',           JPATH_BASE );
         define('JPATH_SITE',           JPATH_ROOT );
         define('JPATH_CONFIGURATION',  JPATH_ROOT );
@@ -222,7 +220,7 @@ $console
    
     ))
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-        $config = new Config($console->getSitePath());
+        $config = new Config(WWW_ROOT);
         if ( !$config->isConfigured() ) 
         {
             $output->writeLn("<error>You need to initialize the site first by typing php anahita.php site:init</error>");

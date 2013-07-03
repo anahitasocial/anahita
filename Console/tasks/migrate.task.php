@@ -34,7 +34,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
         }, $components);      
 
         $paths = new DirectoryFilter($components, 
-                array($console->getSitePath().'/administrator/components'));
+                array(WWW_ROOT.'/administrator/components'));
         
         $this->_event_dispatcher = \KService::get('koowa:event.dispatcher');
         
@@ -133,7 +133,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
     {
         if ( $event->caller->getComponent() == 'anahita' )
         {
-            $path = $this->_console->getSrcPath().'/vendor/joomla/installation/sql';            
+            $path = ANAHITA_ROOT.'/vendor/joomla/installation/sql';            
             $event->caller->setOutputPath($path);
         }
         $tables          = $event->caller->getTables();
@@ -205,7 +205,7 @@ $console
     $components = $input->getArgument('component');
     if ( empty($components) )
     {
-        $dirs       = new \DirectoryIterator($console->getSitePath().'/administrator/components');
+        $dirs       = new \DirectoryIterator(WWW_ROOT.'/administrator/components');
         $components = array();
         foreach($dirs as $dir) {
             if ( $dir->isDir() && !$dir->isDot() )
@@ -244,7 +244,7 @@ $console
     ->register('db:migrate:list')
     ->setDescription('list available migrations')
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-        $dirs       = new \DirectoryIterator($console->getSitePath().'/administrator/components');
+        $dirs       = new \DirectoryIterator(WWW_ROOT.'/administrator/components');
         $components = array();
         foreach($dirs as $dir) {
             if ( $dir->isDir() && !$dir->isDot() )
@@ -339,7 +339,7 @@ $console
                         $db->execute('DROP TABLE '.$table);
                     }                    
                 }
-                $config     = new Config($console->getSitePath());
+                $config     = new Config(WWW_ROOT);
                 $config     = new \KConfig($config->getDatabaseInfo());
                 $output->writeLn('Loading data. This may take a while...');
                 system("mysql -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name} < $file");                
