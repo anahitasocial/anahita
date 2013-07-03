@@ -18,8 +18,6 @@ class Create extends Command
         $this->setName('site:init')
         ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
         ->setDefinition(array(
-                //new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
-                //new InputOption('no-interaction','n', InputOption::VALUE_NONE,'Don\'t prompt for missing values'),
                 new InputOption('database-name',null, InputOption::VALUE_REQUIRED,'Database name'),
                 new InputOption('database-user',null, InputOption::VALUE_REQUIRED,'Database username'),
                 new InputOption('database-password',null, InputOption::VALUE_REQUIRED,'Database password'),
