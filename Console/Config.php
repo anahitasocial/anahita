@@ -216,6 +216,9 @@ class Config
         if ( isset($this->_key_map[$key]) ){
             $key = $this->_key_map[$key];            
         }
+        if ( $key == 'dbprefix' ) {
+            $value = str_replace('_', '', $value).'_';
+        }
         $this->_data[$key] = $value;
     }
     
