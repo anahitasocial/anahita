@@ -68,7 +68,7 @@ class Create extends Command
         $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
         $mapper->addCrawlMap('vendor/joomla', $patterns);
         $mapper->addCrawlMap('vendor/nooku',  $patterns);
-        $mapper->addCrawlMap('packages/Anahita/src',   $patterns);
+        $mapper->addCrawlMap('src',   $patterns);
         $mapper->symlink();
         $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
         $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
