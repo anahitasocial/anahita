@@ -7,7 +7,7 @@ require_once 'Console/Config.php';
 
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/interface.php';
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/config.php';
-require_once __DIR__.'/../packages/Anahita/src/libraries/anahita/functions.php';
+require_once __DIR__.'/../src/libraries/anahita/functions.php';
 
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
@@ -79,6 +79,16 @@ class Application extends \Symfony\Component\Console\Application
     public function registerBefore($name, $callback)
     {
         $this->_callbacks['before'][$name][] = $callback;                    
+    }
+    
+    /**
+     * Return if the application is initialized
+     * 
+     * @return boolean
+     */
+    public function isInitialized()
+    {
+        return file_exists(WWW_ROOT.'/configuration.php');
     }
     
     /**
