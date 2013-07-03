@@ -1,0 +1,102 @@
+// STORIES
+#com-composer-container
+{    
+    padding:  10px 10px 0 10px;
+    .border-radius(@baseBorderRadius);
+    
+    .tab-content
+    {
+        overflow: hidden;
+    }
+    
+    form
+    {
+        fieldset
+        {
+            margin: 0;
+        }
+        
+        .actions
+        {
+           margin-bottom: 0;
+           .clearfix;
+           
+           .btn
+           {
+               float: right;
+           }
+        }
+    }
+}
+
+.an-story
+{	   
+    .story-container
+    {
+       .entity-container;
+        
+        h4.story-title
+        {
+            font-size: @baseFontSize;
+            font-weight: normal;
+            a
+            {
+                font-weight: bold;
+            }
+        }
+        
+        .story-body
+        {
+            .clearfix;
+            .entity-body;
+            
+            a.actor-name
+           {
+                float: left;
+                margin-right: 3px;
+           }
+           
+           .media-grid
+		    {   
+		        .clearfix;
+		        margin: -5px;
+		                              
+		        img
+		        {
+		           margin: 5px;
+		           .square(87px);
+		           
+		           &.actor-avatar
+		           {
+		              .square(55px);
+                   }
+                }
+		    }           
+        }
+    }
+    
+    .an-code
+    {
+       pre 
+       {
+          .hide;
+       }
+    }
+}
+
+.an-stories
+{
+    .an-comment-form 
+    {
+        .hide;
+        padding-left: 20px;
+    }
+    
+    .an-comment
+    {
+        &.an-entity
+        {
+            padding: 0;
+        }
+    }	
+}

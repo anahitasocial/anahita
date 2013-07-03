@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="subscriptions" method="upgrade">
+    <name>Actor Access</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>rmd Studio/Peerglobe Technology</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authoremail />
+    <authorurl>Anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <description>Anahita ™ Subscriptions Plugins</description>
+    <params group="package">
+		<param menu="hide"  name="limited_actor_ids" type="textarea" cols="30" rows="5" class="text_area" label="Related actor ids" description="List of actor ids restricted to this package." ></param>
+		<param menu="hide"  name="open_actor_ids" type="textarea" cols="30" rows="5" class="text_area" label="All but these actor ids" description="All actors are restricted to this package, except this list of actor ids" ></param>	
+    </params>
+    <files>
+        <filename plugin="access">access.php</filename>
+    </files>
+</install>

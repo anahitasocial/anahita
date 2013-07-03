@@ -1,0 +1,55 @@
+// GADGET
+.an-gadget 
+{	
+	h2.gadget-title
+	{
+		font-size: @baseFontSize + 3;
+		margin: 2px 0;
+		padding: 10px 0;
+		
+		.gadget-action
+		{
+		   float: right;
+		   font-size: @baseFontSize;
+		   font-weight: bold;
+		   margin-top: 2px;
+        }
+	}
+	
+	.gadget-content
+	{
+		.clearfix;
+		min-height: 40px;
+		
+		.alert
+		{
+			&.alert-block
+			{
+				margin: 5px;
+			}
+		}
+		
+		.alert
+		{
+		  &.alert-block
+		  {
+		       margin-top: 10px;
+		  }
+		}
+	}
+	
+	.gadget-app-url
+	{
+		margin: 10px 0;
+		
+		a
+		{
+			display: block;
+			padding: 5px 0;
+			width: 100%;
+			font-weight: bold;
+			text-align: right;
+			font-size: @baseFontSize + 1;
+		}
+	}
+}

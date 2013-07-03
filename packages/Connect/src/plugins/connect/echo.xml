@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="connect" method="upgrade">
+    <name>Connect - Echo</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>(C) 2010 rmd Studio, PeerGlobe Technology</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.Anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <description>Anahita ™ Connect Echo Plugin</description>
+    <files>
+        <filename plugin="echo">echo.php</filename>
+    </files>
+</install>

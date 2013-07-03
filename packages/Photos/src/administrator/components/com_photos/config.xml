@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+	<params addpath="/administrator/components/com_photos/elements">
+		<param menu="hide"  name="uploadlimit" type="uploadlimit" default="2" label="Upload Limit (MB)" description=""/>
+	</params>
+</config>
