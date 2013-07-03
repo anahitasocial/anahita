@@ -25,7 +25,7 @@ class JInstallationHelper
 	/**
 	 * @return string A guess at the db required
 	 */
-	function detectDB()
+	static public function detectDB()
 	{
 		$map = array ('mysql_connect' => 'mysql', 'mysqli_connect' => 'mysqli', 'mssql_connect' => 'mssql');
 		foreach ($map as $f => $db)
@@ -42,7 +42,7 @@ class JInstallationHelper
 	 * @param array
 	 * @return string
 	 */
-	function errors2string(& $errors)
+	static public function errors2string(& $errors)
 	{
 		$buffer = '';
 		foreach ($errors as $error)
@@ -59,7 +59,7 @@ class JInstallationHelper
 	 * @param string Selected collation
 	 * @return boolean success
 	 */
-	function createDatabase(& $db, $DBname, $DButfSupport)
+	static public function createDatabase(& $db, $DBname, $DButfSupport)
 	{
 		if ($DButfSupport)
 		{
@@ -90,7 +90,7 @@ class JInstallationHelper
 	 * @param string Selected collation
 	 * @return boolean success
 	 */
-	function setDBCharset(& $db, $DBname)
+	static public function setDBCharset(& $db, $DBname)
 	{
 		if ($db->hasUTF())
 		{
@@ -110,7 +110,7 @@ class JInstallationHelper
 	 * @param object Database connector
 	 * @param array An array of errors encountered
 	 */
-	function backupDatabase(& $db, $DBname, $DBPrefix, & $errors)
+	static public function backupDatabase(& $db, $DBname, $DBPrefix, & $errors)
 	{
 		// Initialize backup prefix variable
 		// TODO: Should this be user-defined?
@@ -151,7 +151,7 @@ class JInstallationHelper
 	 * @param object Database connector
 	 * @param array An array of errors encountered
 	 */
-	function deleteDatabase(& $db, $DBname, $DBPrefix, & $errors)
+	static public function deleteDatabase(& $db, $DBname, $DBPrefix, & $errors)
 	{
 		$query = "SHOW TABLES FROM `$DBname`";
 		$db->setQuery($query);
@@ -179,7 +179,7 @@ class JInstallationHelper
 	/**
 	 *
 	 */
-	function populateDatabase(& $db, $sqlfile, & $errors, $nexttask='mainconfig')
+	static public function populateDatabase(& $db, $sqlfile, & $errors, $nexttask='mainconfig')
 	{
 		if( !($buffer = file_get_contents($sqlfile)) )
 		{
@@ -207,7 +207,7 @@ class JInstallationHelper
 	 * @param string
 	 * @return array
 	 */
-	function splitSql($sql)
+	static public function splitSql($sql)
 	{
 		$sql = trim($sql);
 		$sql = preg_replace("/\n\#[^\n]*/", '', "\n".$sql);
@@ -248,7 +248,7 @@ class JInstallationHelper
 	/**
 	 * Calculates the file/dir permissions mask
 	 */
-	function getFilePerms($input, $type = 'file')
+	static public function getFilePerms($input, $type = 'file')
 	{
 		$perms = '';
 		if (JArrayHelper::getValue($input, $type.'PermsMode', 0))
@@ -262,7 +262,7 @@ class JInstallationHelper
 	/**
 	 * Creates the admin user
 	 */
-	function createAdminUser(& $vars)
+	static public function createAdminUser(& $vars)
 	{
 		$DBtype		= JArrayHelper::getValue($vars, 'DBtype', 'mysqli');
 		$DBhostname	= JArrayHelper::getValue($vars, 'DBhostname', '');
@@ -347,7 +347,7 @@ class JInstallationHelper
         KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
         KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
         KService::setAlias('anahita:domain.space',          'com:base.domain.space');
-        KService::set('koowa:database.adapter.mysqli', KService::get('koowa:database.adapter.mysqli', array('connection'=>$db->_resource)));
+        KService::set('koowa:database.adapter.mysqli', KService::get('koowa:database.adapter.mysqli', array('connection'=>$db->_resource, 'table_prefix'=>$DBPrefix)));
         KService::set('anahita:domain.store.database', KService::get('anahita:domain.store.database', array('adapter'=>KService::get('koowa:database.adapter.mysqli'))));
         KService::set('plg:storage.default', new KObject());
         $person = KService::get('repos://site/people')
@@ -391,7 +391,7 @@ class JInstallationHelper
 		return true;
 	}
 
-	function & getDBO($driver, $host, $user, $password, $database, $prefix, $select = true)
+	static public function & getDBO($driver, $host, $user, $password, $database, $prefix, $select = true)
 	{
 		static $db;
 
@@ -412,7 +412,7 @@ class JInstallationHelper
 	 * @return	boolean	True if correct permissions exist
 	 * @since	1.5
 	 */
-	function fsPermissionsCheck()
+	static public function fsPermissionsCheck()
 	{
 		if(!is_writable(JPATH_ROOT.DS.'tmp')) {
 			return false;
@@ -444,7 +444,7 @@ class JInstallationHelper
 	 * @return	string	Filesystem root for given FTP user
 	 * @since 1.5
 	 */
-	function findFtpRoot($user, $pass, $host='127.0.0.1', $port='21')
+	static public function findFtpRoot($user, $pass, $host='127.0.0.1', $port='21')
 	{
 		jimport('joomla.client.ftp');
 		$ftpPaths = array();
@@ -525,7 +525,7 @@ class JInstallationHelper
 	 * @return	mixed	Boolean true on success or JError object on fail
 	 * @since	1.5
 	 */
-	function FTPVerify($user, $pass, $root, $host='127.0.0.1', $port='21')
+	static public function FTPVerify($user, $pass, $root, $host='127.0.0.1', $port='21')
 	{
 		jimport('joomla.client.ftp');
 		$ftp = & JFTP::getInstance($host, $port);
@@ -618,7 +618,7 @@ class JInstallationHelper
 	 * @return boolean True on success
 	 * @since 1.5
 	 */
-	function setDirPerms($dir, &$srv)
+	static public function setDirPerms($dir, &$srv)
 	{
 		jimport('joomla.filesystem.path');
 
@@ -681,7 +681,7 @@ class JInstallationHelper
 		return $ret;
 	}
 
-	function findMigration( &$args ) {
+	static public function findMigration( &$args ) {
 		print_r($args); jexit();
 	}
 
@@ -694,7 +694,7 @@ class JInstallationHelper
 	 * @return string Success or error messages
 	 * @since 1.5
 	 */
-	function uploadSql( &$args, $migration = false, $preconverted = false )
+	static public function uploadSql( &$args, $migration = false, $preconverted = false )
 	{
 		global $mainframe;
 		$archive = '';
@@ -863,7 +863,7 @@ class JInstallationHelper
 	 * @return unpacked filename on success, False on error
 	 * @since 1.5
 	 */
-	function unpack($p_filename, &$vars) {
+	static public function unpack($p_filename, &$vars) {
 
 		/*
 		 * Initialize variables
@@ -906,7 +906,7 @@ class JInstallationHelper
 
 	}
 
-	function return_bytes($val) {
+	static public function return_bytes($val) {
 		$val = trim($val);
 		$last = strtolower($val{strlen($val)-1});
 		switch($last) {
@@ -922,7 +922,7 @@ class JInstallationHelper
 		return $val;
 	}
 
-	function replaceBuffer(&$buffer, $oldPrefix, $newPrefix, $srcEncoding) {
+	static public function replaceBuffer(&$buffer, $oldPrefix, $newPrefix, $srcEncoding) {
 
 			$buffer = str_replace( $oldPrefix, $newPrefix, $buffer );
 
@@ -940,7 +940,7 @@ class JInstallationHelper
 			}
 	}
 
-	function appendFile(&$buffer, $filename) {
+	static public function appendFile(&$buffer, $filename) {
 		$fh = fopen($filename, 'a');
 		fwrite($fh, $buffer);
 		fclose($fh);
@@ -955,7 +955,7 @@ class JInstallationHelper
 	 * @return converted filename on success, False on error
 	 * @since 1.5
 	 */
-	function preMigrate( $scriptName, &$args, $db )
+	static public function preMigrate( $scriptName, &$args, $db )
 	{
 		$maxread = 0;
 		jimport('joomla.filesystem.file');
@@ -1046,7 +1046,7 @@ class JInstallationHelper
 	 * @return error count
 	 * @since 1.5
 	 */
-	function postMigrate( $db, & $errors, & $args ) {
+	static public function postMigrate( $db, & $errors, & $args ) {
 
 		$newPrefix = $args['DBPrefix'];
 
@@ -1425,7 +1425,7 @@ class JInstallationHelper
 		return count( $errors );
 	}
 
-	function isValidItem ( $link, $lookup )
+	static public function isValidItem ( $link, $lookup )
 	{
 		foreach( $lookup as $component )
 		{
@@ -1437,7 +1437,7 @@ class JInstallationHelper
 		return false;
 	}
 
-	function getDBErrors( & $errors, $db )
+	static public function getDBErrors( & $errors, $db )
 	{
 		if ($db->getErrorNum() > 0)
 		{
@@ -1451,7 +1451,7 @@ class JInstallationHelper
 	 *
 	 * @param array The post values
 	 */
-	function setFTPCfg( $vars )
+	static public function setFTPCfg( $vars )
 	{
 		global $mainframe;
 		$arr = array();
@@ -1465,7 +1465,7 @@ class JInstallationHelper
 		$mainframe->setCfg( $arr, 'config' );
 	}
 
-	function _chmod( $path, $mode )
+	static public function _chmod( $path, $mode )
 	{
 		global $mainframe;
 		$ret = false;
@@ -1507,7 +1507,7 @@ class JInstallationHelper
 	}
 
 	/** Borrowed from http://au.php.net/manual/en/ini.core.php comments */
-	function let_to_num($v){ //This function transforms the php.ini notation for numbers (like '2M') to an integer (2*1024*1024 in this case)
+	static public function let_to_num($v){ //This function transforms the php.ini notation for numbers (like '2M') to an integer (2*1024*1024 in this case)
 		$l = substr($v, -1);
 		$ret = substr($v, 0, -1);
 		switch(strtoupper($l)){
