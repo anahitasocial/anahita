@@ -19,7 +19,7 @@ class Create extends Command
         ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
         ->setDefinition(array(
                 //new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
-                new InputOption('non-interactive',null, InputOption::VALUE_NONE,'Don\'t prompt for missing values'),
+                //new InputOption('no-interaction','n', InputOption::VALUE_NONE,'Don\'t prompt for missing values'),
                 new InputOption('database-name',null, InputOption::VALUE_REQUIRED,'Database name'),
                 new InputOption('database-user',null, InputOption::VALUE_REQUIRED,'Database username'),
                 new InputOption('database-password',null, InputOption::VALUE_REQUIRED,'Database password'),
@@ -97,7 +97,7 @@ class Create extends Command
             $result = $input->getOption($key);
                         
             if ( empty($result) && 
-                    !$input->getOption('non-interactive') ) 
+                    !$input->getOption('no-interaction') ) 
             {
                 if ( !empty($default) ) {
                     $text .= '(default: '.$default.') ';
@@ -149,22 +149,20 @@ class Create extends Command
         if ( $db instanceof \JException ) {
             $output->writeLn('<error>'.$db->toString().'</error>');
             exit(1);                     
-        }       
-        $db_exists = $db->select($database['name']);
-        if ( $db_exists )
-        {           
-            $drop_db = $input->getOption('drop-database');            
-            if ( $drop_db )
-            {
-                $output->writeLn('<fg=red>Dropping existing database...</fg=red>');
-                \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
-                $db_exists = false;
-            }
-        }       
-         
+        }
+
+        $db_exists = \JInstallationHelper::databaseExists($db, $database['name']);                                    
+        
+        if ( $db_exists && $input->getOption('drop-database') )
+        {
+            $output->writeLn('<fg=red>Dropping existing database...</fg=red>');
+            \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
+            $db_exists = false;
+        }
+        
         if ( !$db_exists )
         {
-            $output->writeLn('<info>Creating new database...</info>');
+            $output->writeLn('<info>Creating new database...</info>');            
             \JInstallationHelper::createDatabase($db, $database['name'],true);
             $db->select($database['name']);
         

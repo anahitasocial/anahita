@@ -146,6 +146,36 @@ class JInstallationHelper
 
 		return count($errors);
 	}
+	
+	/**
+	 * Return whether the any tables exists or not
+	 * 
+	 * @param object $db
+	 * 
+	 * @return boolean
+	 */
+	static public function databaseExists(&$db, $name)
+	{	    
+	    if ( !$db->select($name) ) {
+	        return false;
+	    }
+
+	    $query = "SHOW TABLES FROM `$name`";
+		$db->setQuery($query);
+		$errors = array ();
+		if ($tables = $db->loadResultArray())
+		{
+			foreach ($tables as $table)
+			{
+				if (strpos($table, $db->getPrefix()) === 0)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	/**
 	 * Deletes all database tables
 	 * @param object Database connector
