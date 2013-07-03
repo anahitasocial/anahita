@@ -1,9 +1,0 @@
-{
-    "type": "project",    
-    "name": "anahita/anahita",
-    "keywords" : ["anahita project"],
-    "description": "",       
-    "require": {
-        "php": ">=5.3"                         
-    }
-}
