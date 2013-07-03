@@ -1,0 +1,11 @@
+{
+    "name": "anahita/installer",
+    "type": "composer-installer",
+    "license": "MIT",
+    "autoload": {
+        "files": ["src/Installer.php"]
+    },
+    "extra": {
+        "class": "Console\\Composer\\AnahitaInstaller"
+    }
+}
