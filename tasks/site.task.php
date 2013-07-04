@@ -18,8 +18,6 @@ class Create extends Command
         $this->setName('site:init')
         ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
         ->setDefinition(array(
-                //new InputOption('only-symlink',null, InputOption::VALUE_NONE,'Only performs a symlink'),
-                new InputOption('non-interactive',null, InputOption::VALUE_NONE,'Don\'t prompt for missing values'),
                 new InputOption('database-name',null, InputOption::VALUE_REQUIRED,'Database name'),
                 new InputOption('database-user',null, InputOption::VALUE_REQUIRED,'Database username'),
                 new InputOption('database-password',null, InputOption::VALUE_REQUIRED,'Database password'),
@@ -36,16 +34,14 @@ class Create extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {        
         $this->_input = $input; $this->_output = $output;
-        //$only_symlink = $input->getOption('only-symlink');
         $this->_symlink(true);
         $this->_configure();
     }
     
     protected function _symlink($configure = false)
     {
-        $target = $this->getApplication()->getSitePath();
-        $mapper = new \Installer\Mapper($this->getApplication()->getSrcPath(), 
-                    $target);
+        $target = WWW_ROOT;
+        $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
         
         $patterns = array(
                 '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
@@ -70,7 +66,7 @@ class Create extends Command
         $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
         $mapper->addCrawlMap('vendor/joomla', $patterns);
         $mapper->addCrawlMap('vendor/nooku',  $patterns);
-        $mapper->addCrawlMap('src/anahita',   $patterns);
+        $mapper->addCrawlMap('src',   $patterns);
         $mapper->symlink();
         $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
         $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
@@ -99,7 +95,7 @@ class Create extends Command
             $result = $input->getOption($key);
                         
             if ( empty($result) && 
-                    !$input->getOption('non-interactive') ) 
+                    !$input->getOption('no-interaction') ) 
             {
                 if ( !empty($default) ) {
                     $text .= '(default: '.$default.') ';
@@ -118,7 +114,7 @@ class Create extends Command
             return $result;             
         };
         
-        $config = new Config($this->getApplication()->getSitePath());
+        $config = new Config(WWW_ROOT);
         $info   = $config->getDatabaseInfo();   
         $config->setDatabaseInfo(array(
             'name'     => $prompt('database-name', 'Enter the name of the database? ',@$info['name'],'Please enter the database name'),
@@ -130,7 +126,7 @@ class Create extends Command
         ));
         define('DS', DIRECTORY_SEPARATOR);
         define( '_JEXEC', 1 );
-        define('JPATH_BASE',           $this->getApplication()->getSitePath());
+        define('JPATH_BASE',           WWW_ROOT);
         define('JPATH_ROOT',           JPATH_BASE );
         define('JPATH_SITE',           JPATH_ROOT );
         define('JPATH_CONFIGURATION',  JPATH_ROOT );
@@ -151,22 +147,20 @@ class Create extends Command
         if ( $db instanceof \JException ) {
             $output->writeLn('<error>'.$db->toString().'</error>');
             exit(1);                     
-        }       
-        $db_exists = $db->select($database['name']);
-        if ( $db_exists )
-        {           
-            $drop_db = $input->getOption('drop-database');            
-            if ( $drop_db )
-            {
-                $output->writeLn('<fg=red>Dropping existing database...</fg=red>');
-                \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
-                $db_exists = false;
-            }
-        }       
-         
+        }
+
+        $db_exists = \JInstallationHelper::databaseExists($db, $database['name']);                                    
+        
+        if ( $db_exists && $input->getOption('drop-database') )
+        {
+            $output->writeLn('<fg=red>Dropping existing database...</fg=red>');
+            \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
+            $db_exists = false;
+        }
+        
         if ( !$db_exists )
         {
-            $output->writeLn('<info>Creating new database...</info>');
+            $output->writeLn('<info>Creating new database...</info>');            
             \JInstallationHelper::createDatabase($db, $database['name'],true);
             $db->select($database['name']);
         
@@ -207,6 +201,10 @@ class Create extends Command
 
 $console->addCommands(array(new Create()));
 
+if ( !$console->isInitialized() ) {
+    return;
+}
+
 $console
     ->register('site:configuration')
     ->setDescription('Provides the ability to set some of the site configuration through command line')
@@ -216,13 +214,14 @@ $console
             new InputOption('use-apc','',   InputOption::VALUE_NONE, 'If set then both cache handler and session handle will use apc'),
             new InputOption('offline','',   InputOption::VALUE_REQUIRED, 'set a site offline or online'),
             //new InputOption('offline-message','',   InputOption::VALUE_REQUIRED, 'offline message to use'),
-            new InputOption('debug','',   InputOption::VALUE_REQUIRED, 'Turn on or off the debug'),
+            new InputOption('enable-debug','',   InputOption::VALUE_NONE, 'Turn on the debug'),
+            new InputOption('disable-debug','',   InputOption::VALUE_NONE, 'Turn off the debug'),
             new InputOption('url-rewrite','',   InputOption::VALUE_REQUIRED, 'Enable or disable url rewrite'),
             new InputOption('--set-value','s', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Setting key value pair',array()),
    
     ))
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-        $config = new Config($console->getSitePath());
+        $config = new Config(WWW_ROOT);
         if ( !$config->isConfigured() ) 
         {
             $output->writeLn("<error>You need to initialize the site first by typing php anahita.php site:init</error>");
@@ -246,12 +245,13 @@ $console
             $config->set(array('session_handler'=>'apc','cache_handler'=>'apc'));
         }
         
-        if ( $input->getOption('debug') ) 
-        {
+        if ( $input->getOption('enable-debug') ) {
             $config->enableDebug();            
-        } else {
+        }         
+        elseif ( $input->getOption('disable-debug') ) {
             $config->disableDebug();
         }
+        
         if ( $input->getOption('set-value') )
         {
             $values = $input->getOption('set-value');            

@@ -7,7 +7,7 @@ require_once 'Console/Config.php';
 
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/interface.php';
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/config.php';
-require_once __DIR__.'/../src/anahita/libraries/anahita/functions.php';
+require_once __DIR__.'/../src/libraries/anahita/functions.php';
 
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;
@@ -15,92 +15,99 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\ArgvInput;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
-use \Symfony\Component\Yaml\Yaml;
 
+/**
+ * Main Anahita Console Application
+ * 
+ * Provides anahtia related methods
+ * 
+ */
 class Application extends \Symfony\Component\Console\Application
 {
-    protected $site;
-    protected $src;
-    protected $packages_paths;
-    protected $configs;
-    protected $config_dir;
-    protected $env;
+    /**
+     * Installable Anahtia extension package
+     * 
+     * @var Extension\Pacckages
+     */
+    protected $_packages;    
+    
+    /**
+     * Provide task callbacks. $applicatio->registerBefore('task', function(){});
+     * 
+     * @var array
+     */
     protected $_callbacks;
     
-    public function __construct($src, $site, $package_paths = array(), $config_dir)
-    {
-        $this->src  = $src;
-        $this->site = $site;
-        $this->_callbacks = array('before'=>array(),'after'=>array());
-        settype($package_paths, 'array');
-        $this->package_paths   = $package_paths;
-        $this->package_paths['Core'] = $src.'/src/packages';
-        $this->configs         = new \KConfig();    
-        $this->config_dir      = $config_dir;
-        foreach(new \DirectoryIterator($this->config_dir) as $file) 
-        {
-            if ( $file->getExtension() == 'yaml' ) {
-                $data = Yaml::parse($file->getPathname());
-                settype($data, 'array');                                
-                $this->configs->
-                        {strtolower($file->getBasename('.yaml'))} = $data; 
-            }
-        }
-        $this->env             = 'development';
-        parent::__construct($site);
-    }
-    
-    public function getConfig($env = null)
-    {
-         if ( !$env ) {
-             $env = $this->env;
-         }
-         $config = \KConfig::unbox($this->configs->$env);
-         settype($config, 'array');
-         return new \KConfig($config);
-    }
-    
-    public function addConfig($config = array(), $env = null)
-    {
-        if ( !$env ) {
-            $env = $this->env;
-        }
-        $this->configs->append(array(
-            $env => $config
-        ));        
-    }
-    
-    public function setEnv($env)
-    {
-        $this->env = $env;
-    }
-    
-    public function getConfiguration()
-    {
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {        
+        $this->_callbacks  = array('before'=>array(),'after'=>array()); 
+        $this->_packages   = new Extension\Packages();
+                
+        $this->_packages->addPackageFromComposerFiles(COMPOSER_ROOT.'/composer.json');
         
-    }
+        $this->_packages->addPackageFromComposerFiles(
+                Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));        
+             
+        parent::__construct();
+    }   
     
+    /**
+     * Loads the Anahita Framework
+     */
     public function loadFramework()
     {        
         if ( !defined('JPATH_BASE') )
         {
-            define('JPATH_BASE', $this->getSitePath().'/administrator');
+            define('JPATH_BASE', WWW_ROOT.'/administrator');
             $_SERVER['HTTP_HOST'] = '';
             require_once ( JPATH_BASE.'/includes/framework.php' );            
             \KService::get('com://admin/application.dispatcher')->load();            
         }
     }    
     
+    /**
+     * Register a task before callback
+     * 
+     * @param string $name
+     * @param mixed $callback
+     * 
+     * @return void
+     */
     public function registerBefore($name, $callback)
     {
         $this->_callbacks['before'][$name][] = $callback;                    
     }
     
+    /**
+     * Return if the application is initialized
+     * 
+     * @return boolean
+     */
+    public function isInitialized()
+    {
+        return file_exists(WWW_ROOT.'/configuration.php');
+    }
+    
+    /**
+     * Register a task after callback
+     *
+     * @param string $name
+     * @param mixed $callback
+     *
+     * @return void
+     */        
     public function registerAfter($name, $callback)
     {
         $this->_callbacks['name'][$name][] = $callback;
     }   
 
+    /**
+     * (non-PHPdoc)
+     * @see \Symfony\Component\Console\Application::doRun()
+     */
     public function doRun($input, $output)
     {
         $name      = $this->getCommandName($input);
@@ -131,37 +138,32 @@ class Application extends \Symfony\Component\Console\Application
         
     }
     
+    /**
+     * Return a set of extension packages
+     * 
+     * @return Exension/Packages
+     */
+    public function getExtensionPackages()
+    {
+         return $this->_packages;   
+    }
+    
+    /**
+     * Runs a command.
+     * 
+     * This method provides a way to run a command during the excution of another command 
+     * 
+     * @param string $command
+     * 
+     * @return void
+     */
     public function runCommand($command)
     {          
         $this->setAutoExit(false);  
         $argv  = explode(' ','application '.$command);         
         $input = new ArgvInput($argv);
         $this->run($input);
-    }
-    
-    public function getPackagePaths()
-    {
-        return $this->package_paths;
-    }
-
-    public function getSrcPath()
-    {
-        return $this->src;
-    }
-
-    public function getSitePath()
-    {
-        return $this->site;
-    }
-    
-    public function __destruct()
-    {     
-        $configs = \KConfig::unbox($this->configs);
-        settype($configs, 'array');
-        foreach($configs as $env => $config) {           
-            file_put_contents($this->config_dir.'/'.$env.'.yaml', Yaml::dump($config, 10));
-        }        
-    }
+    }       
 }
 
 ?>
