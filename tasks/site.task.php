@@ -236,11 +236,12 @@ $console
             //new InputOption('offline-message','',   InputOption::VALUE_REQUIRED, 'offline message to use'),
             new InputOption('enable-debug','',   InputOption::VALUE_NONE, 'Turn on the debug'),
             new InputOption('disable-debug','',   InputOption::VALUE_NONE, 'Turn off the debug'),
+            new InputOption('new-secret','',   InputOption::VALUE_NONE, 'Generates a new secret'),
             new InputOption('url-rewrite','',   InputOption::VALUE_REQUIRED, 'Enable or disable url rewrite'),
-            new InputOption('--set-value','s', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Setting key value pair',array()),
+            new InputOption('set-value','s', InputOption::VALUE_OPTIONAL | InputOption::VALUE_IS_ARRAY, 'Setting key value pair',array()),
    
-    ))
-    ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+    ))    
+    ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {        
         $config = new Config(WWW_ROOT);
         if ( !$config->isConfigured() ) 
         {
@@ -272,6 +273,12 @@ $console
             $config->disableDebug();
         }
         
+        if ( $input->getOption('new-secret') ) {
+            $console->loadFramework();
+            jimport('joomla.user.helper');
+            $config->set('secret', \JUserHelper::genRandomPassword(32));
+        }
+                
         if ( $input->getOption('set-value') )
         {
             $values = $input->getOption('set-value');            
