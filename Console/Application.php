@@ -45,8 +45,11 @@ class Application extends \Symfony\Component\Console\Application
     {        
         $this->_callbacks  = array('before'=>array(),'after'=>array()); 
         $this->_packages   = new Extension\Packages();
-                
+                                
         $this->_packages->addPackageFromComposerFiles(COMPOSER_ROOT.'/composer.json');
+                        
+        $this->_packages->addPackageFromComposerFiles(
+                Extension\Helper::getComposerFiles(COMPOSER_ROOT.'/packages'));
         
         $this->_packages->addPackageFromComposerFiles(
                 Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));        
