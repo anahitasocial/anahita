@@ -8,6 +8,64 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
+class Symlink extends Command
+{    
+    protected function configure()
+    {
+        $this->setName('site:symlink')
+            ->setDescription('Symlinks the site');
+    }
+        
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {   
+        $output->writeLn("<info>Linking files...</info>");
+        $this->symlink(false);
+    }
+        
+    public function symlink($configure = false)
+    {
+        $target = WWW_ROOT;
+        $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
+        
+        $patterns = array(
+                '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                '#^(components|modules|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',
+                '#^(cli)/.+#'    => 'cli',
+                '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
+                '#^(administrator/)?(images)/.+#' => '\1\2',
+                '#^(site|administrator)/includes/.+#' => '\1/includes',
+                '#^(vendors|migration)/.+#'    => '',
+                '#^configuration\.php-dist#'   => '',
+                '#^htaccess.txt#'   => '',
+        );
+        
+        if ( file_exists($target.'/configuration.php') &&
+                !$configure )
+        {
+            $patterns['#^installation/.+#'] = '';
+        }
+        
+        $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
+        $mapper->addCrawlMap('vendor/joomla', $patterns);
+        $mapper->addCrawlMap('vendor/nooku',  $patterns);
+        $mapper->addCrawlMap('src',   $patterns);
+        $mapper->symlink();
+        $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
+        $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
+        
+        if ( file_exists($target.'/installation') ) {
+            $mapper->getMap('vendor/joomla/installation/index.php','installation/index.php')->copy();
+        }
+        
+        $mapper->getMap('vendor/joomla/administrator/index.php','administrator/index.php')->copy();
+        
+        @mkdir($target.'/tmp',   0755);
+        @mkdir($target.'/cache', 0755);
+        @mkdir($target.'/log',   0755);
+        @mkdir($target.'/administrator/cache',   0755);        
+    }
+}
+
 class Create extends Command
 {
     protected $_input;
@@ -40,47 +98,9 @@ class Create extends Command
     
     protected function _symlink($configure = false)
     {
-        $target = WWW_ROOT;
-        $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
-        
-        $patterns = array(
-                '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
-                '#^(components|modules|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',
-                '#^(cli)/.+#'    => 'cli',
-                '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
-                '#^(administrator/)?(images)/.+#' => '\1\2',
-                '#^(site|administrator)/includes/.+#' => '\1/includes',
-                '#^(vendors|migration)/.+#'    => '',
-                '#^configuration\.php-dist#'   => '',
-                '#^htaccess.txt#'   => '',
-        );
-        
-        if ( file_exists($target.'/configuration.php') &&
-                !$configure )
-        {
-            $patterns['#^installation/.+#'] = '';
-        }
-        
         $this->_output->writeLn("<info>Linking files...</info>");
-        
-        $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
-        $mapper->addCrawlMap('vendor/joomla', $patterns);
-        $mapper->addCrawlMap('vendor/nooku',  $patterns);
-        $mapper->addCrawlMap('src',   $patterns);
-        $mapper->symlink();
-        $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
-        $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
-        
-        if ( file_exists($target.'/installation') ) {
-            $mapper->getMap('vendor/joomla/installation/index.php','installation/index.php')->copy();
-        }
-        
-        $mapper->getMap('vendor/joomla/administrator/index.php','administrator/index.php')->copy();
-        
-        @mkdir($target.'/tmp',   0755);
-        @mkdir($target.'/cache', 0755);
-        @mkdir($target.'/log',   0755);
-        @mkdir($target.'/administrator/cache',   0755);        
+        $symlink = new Symlink();
+        $symlink->configure($configure);
     }
     
     protected function _configure()
