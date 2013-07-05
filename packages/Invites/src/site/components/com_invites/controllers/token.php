@@ -33,8 +33,27 @@ class ComInvitesControllerToken extends ComBaseControllerService
      */   
     protected function _actionRead(KCommandContext $context)
     { 
-        if ( $this->token ) {
-            $this->execute('validate', $context);
+        if ( $this->token ) 
+        {
+            $token = $this->getRepository()->find(array('value'=>$this->token));
+            $this->getToolbar('menubar')->setTitle(null);
+            if ( $token && ($token->used == 0 ||
+                    $token->serviceName == 'facebook'))
+            {
+                if( $this->viewer->guest() )
+                {
+                    KRequest::set('session.invite_token', $token->value);
+                    //$context->response->setRedirect(JRoute::_('option=people&view=person&layout=add'));
+                }
+                else {
+                    //$context->response->setRedirect(JRoute::_($token->inviter->getURL()));
+                }
+            }
+            else
+            {
+                throw new LibBaseControllerExceptionNotFound('Token not found');
+            } 
+            $this->setItem($token);           
         }
         else
         {
@@ -47,31 +66,4 @@ class ComInvitesControllerToken extends ComBaseControllerService
             return $this->getView()->display();
         }
     }
-	
-	/**
-	 * Validates a token
-	 *
-	 * @return string
-	 */	
-	protected function _actionValidate(KCommandContext $context)
-	{
-		$token = $this->getRepository()->find(array('value'=>$this->token));
-		
-		if ( $token && ($token->used == 0 || 
-		        $token->serviceName == 'facebook')) 
-		{
-			if( $this->viewer->guest() )
-			{
-				KRequest::set('session.invite_token', $token->value);
-				$context->response->setRedirect(JRoute::_('option=people&view=person&layout=add'));
-			}
-			else {
-			    $context->response->setRedirect(JRoute::_($token->inviter->getURL()));
-			}
-		} 
-		else 
-		{
-		    throw new LibBaseControllerExceptionNotFound('Token not found');					
-		}
-	}
 }

@@ -48,7 +48,7 @@ class ComSearchControllerBehaviorSearchable extends KControllerBehaviorAbstract
 	 */
 	protected function _afterControllerGet()
 	{
-		if ( $this->_mixer->isIdentifiable() ) 
+		if ( $this->_mixer->isIdentifiable() && !$this->isDispatched() ) 
 		{			
 			$scope = $this->_mixer->getIdentifier()->package.'.'.$this->_mixer->getIdentifier()->name;
 			$scope = $this->getService('com://site/search.domain.entityset.scope')->find($scope);
