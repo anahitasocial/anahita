@@ -42,10 +42,7 @@ class PackageCommand extends Command
         $this->getApplication()->loadFramework();
         \KService::get('koowa:loader')
             ->loadIdentifier('com://admin/migrator.helper');
-        
-        $composer_run = function($comamnd) {
-            passthru("composer --working-dir=".COMPOSER_ROOT." ".$comamnd)."\n";
-        };
+ 
                 
         $helper = $this->getHelperSet();
         $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
@@ -68,21 +65,14 @@ class PackageCommand extends Command
                     '#manifest.xml#'   => ''
             ));
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
-            $mapper->symlink();
-
-            $requires = $get_composer($package->getRoot())->createComposer($io)
-                ->getPackage()->getRequires();
-            $arg = "";
-            foreach($requires as $require) {
-                $arg .= $require->getTarget().":".$require->getPrettyConstraint()." ";
-            }
-            $composer_run("require $arg");            
+            $mapper->symlink();           
             
-            /*
-            $root     = $get_composer(COMPOSER_ROOT);
+            
+            $root     = $get_composer(COMPOSER_ROOT)->createComposer($io);
+            $app      = $get_composer($package->getRoot())->createComposer($io);
             $requires = $root->getPackage()->getRequires();
             
-            foreach($get_composer($package->getRoot())->getPackage()->getRequires() as $require) {
+            foreach($root->getPackage()->getRequires() as $require) {
                 $require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
                 $requires[] = $require;
             }
@@ -92,12 +82,11 @@ class PackageCommand extends Command
             
             $installer->setDryRun(true);
             $installer->setUpdate(true);
-            $installer->setDevMode(true);
+            //$installer->setDevMode(true);
             $installer->run();
-            */
+            
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
-        }
-        //$composer_run('update');
+        }        
     }
 
     protected function _installExtensions($dir, $output, $schema = false)
