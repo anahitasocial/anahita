@@ -102,7 +102,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
         $this->output = pick($this->output, '');
         
         if (!is_string($this->output)) {
-            $this->output = json_encode($this->output);
+            $this->output = json_encode($this->_toArray(KConfig::unbox($this->output)));
         }
 
         //Handle JSONP
@@ -225,4 +225,28 @@ class LibBaseViewJson extends LibBaseViewAbstract
         
         return $result;
     }
+    
+    /**
+     * Return an array representation of the data. It iteratates through the data if an element
+     * implements toSerializableArray it will call it
+     *
+     * @param array $data
+     */
+    protected function _toArray($data)
+    {
+        $array = array();
+        foreach ($data as $key => $value)
+        {
+            if ( is($value, 'AnDomainBehaviorSerializable') ) {
+                $array[$key] = $value->toSerializableArray();
+            }
+            elseif ( is_array($value) ) {
+                $array[$key] = $this->_toArray($value); 
+            }
+            else {
+                $array[$key] = $value;
+            }
+        }
+        return $array;
+    }    
 }
