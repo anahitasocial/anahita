@@ -44,8 +44,7 @@ class PackageCommand extends Command
             ->loadIdentifier('com://admin/migrator.helper');
         
         $composer_run = function($comamnd) {
-            exec("composer --working-dir=".COMPOSER_ROOT." ".$comamnd)."\n";
-            //exec(COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." ".$comamnd)."\n";
+            passthru("composer --working-dir=".COMPOSER_ROOT." ".$comamnd)."\n";
         };
                 
         $helper = $this->getHelperSet();

@@ -5,8 +5,6 @@
     "description": "",     
     "extension-source" : "src",     
     "require": {
-        "php": ">=5.3",
-        "anahita/anahita": "*",
         "twig/twig": "1.13.*@dev"           
     }
 }
