@@ -11,6 +11,7 @@
 //@depends libs/Submit.js
 //@depends libs/Request.Message.js
 //@depends libs/Comment.js
+//@depends libs/ElementInsert.js
  
 
 
