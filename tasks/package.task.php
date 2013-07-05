@@ -44,7 +44,8 @@ class PackageCommand extends Command
             ->loadIdentifier('com://admin/migrator.helper');
         
         $composer_run = function($comamnd) {
-            exec(COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." ".$comamnd);
+            exec("composer --working-dir=".COMPOSER_ROOT." ".$comamnd)."\n";
+            //exec(COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." ".$comamnd)."\n";
         };
                 
         $helper = $this->getHelperSet();
@@ -97,7 +98,7 @@ class PackageCommand extends Command
             */
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
-        $composer_run('update');
+        //$composer_run('update');
     }
 
     protected function _installExtensions($dir, $output, $schema = false)
