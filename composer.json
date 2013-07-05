@@ -8,7 +8,6 @@
      "require": {
         "php": ">=5.3",
         "symfony/console": "2.1.*",        
-        "dg/mysql-dump": "dev-master"
-        /*"dflydev/embedded-composer" :  "1.0.*@dev"*/      
+        "dg/mysql-dump": "dev-master"           
     }
 }
