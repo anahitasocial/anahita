@@ -37,20 +37,10 @@ class ComInvitesControllerToken extends ComBaseControllerService
         {
             $token = $this->getRepository()->find(array('value'=>$this->token));
             $this->getToolbar('menubar')->setTitle(null);
-            if ( $token && ($token->used == 0 ||
-                    $token->serviceName == 'facebook'))
-            {
-                if( $this->viewer->guest() )
-                {
-                    KRequest::set('session.invite_token', $token->value);
-                    //$context->response->setRedirect(JRoute::_('option=people&view=person&layout=add'));
-                }
-                else {
-                    //$context->response->setRedirect(JRoute::_($token->inviter->getURL()));
-                }
+            if ( $token && $this->viewer->guest()  ) {
+                KRequest::set('session.invite_token', $token->value);                               
             }
-            else
-            {
+            elseif ( !$token ) {
                 throw new LibBaseControllerExceptionNotFound('Token not found');
             } 
             $this->setItem($token);           
