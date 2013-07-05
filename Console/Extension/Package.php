@@ -33,6 +33,13 @@ class Package
     protected $_name;
     
     /**
+     * Return the composer file
+     * 
+     * @var string
+     */
+    protected $_composer_file;
+    
+    /**
      * Creates a package using the data
      * 
      * @param array $data
@@ -41,9 +48,30 @@ class Package
      */
     public function __construct(array $data)
     {     
-        $this->_name        = $data['name'];
-        $this->_vendor      = $data['vendor'];
-        $this->_source_path = $data['source'];
+        $this->_name          = $data['name'];
+        $this->_vendor        = $data['vendor'];
+        $this->_source_path   = $data['source'];
+        $this->_composer_file = $data['composer_file'];
+    }
+    
+    /**
+     * Return the root
+     * 
+     * @return string
+     */
+    public function getRoot()
+    {
+        return dirname($this->_composer_file);    
+    }
+    
+    /**
+     * Return the composer file
+     * 
+     * @return string
+     */
+    public function getComposerFile()
+    {
+         return $this->_composer_file;   
     }
     
     /**

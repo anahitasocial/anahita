@@ -98,9 +98,10 @@ class Packages extends \ArrayObject
                     $name    = strtolower(pick(@$parts[1], basename(dirname($file))));
                     $vendor  = strtolower(pick(@$parts[0], $name));                    
                     $this[]  = new Package(array(
-                        'name'     => $name,
-                        'vendor'   => $vendor,
-                        'source'   => $data['extension-source']      
+                        'composer_file' => $file,
+                        'name'          => $name,
+                        'vendor'        => $vendor,
+                        'source'        => $data['extension-source']      
                     ));                    
                 }
             }
