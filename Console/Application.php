@@ -64,10 +64,14 @@ class Application extends \Symfony\Component\Console\Application
     {        
         if ( !defined('JPATH_BASE') )
         {
+            $_composerLoader = $GLOBALS['composerLoader'];
             define('JPATH_BASE', WWW_ROOT.'/administrator');
             $_SERVER['HTTP_HOST'] = '';
             require_once ( JPATH_BASE.'/includes/framework.php' );            
-            \KService::get('com://admin/application.dispatcher')->load();            
+            \KService::get('com://admin/application.dispatcher')->load();
+            global $composerLoader, $console;
+            $composerLoader = $_composerLoader;
+            $console = $this;
         }
     }    
     
