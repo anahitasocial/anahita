@@ -70,7 +70,7 @@ class PackageCommand extends Command
             foreach($requires as $require) {
                 $arg .= $require->getTarget().":".$require->getPrettyConstraint()." ";
             }
-            $command = COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." require=$arg";
+            $command = COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." require $arg";            
             exec($command);
             
             /*
