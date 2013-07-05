@@ -8,7 +8,7 @@
 
 <form data-behavior="FormValidator" id="email-invites" action="<?= @route() ?>" method="post">
 	<?php for($i=0; $i<$num_emails; $i++): ?>
-	<div id="flash-message"></div>
+	
 	<div class="control-group">
 		<div class="controls">
 			<div class="input-prepend">

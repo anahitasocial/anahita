@@ -57,6 +57,17 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
         parent::_initialize($config);
     } 
     
+    /**
+     * Calls the invite action
+     * 
+     * (non-PHPdoc)
+     * @see ComInvitesControllerDefault::_actionPost()
+     */
+    protected function _actionPost($context)
+    {
+        return $this->execute('invite', $context); 
+    }
+    
 	/**
 	 * Read
 	 * 
@@ -68,37 +79,42 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 	{	
 		$data = $context->data;		
 		$siteConfig	= JFactory::getConfig();
-		
-		$emails = KConfig::unbox($data['email']);
-		settype($emails, 'array');
-		
+		$filter = $this->getService('koowa:filter.email');
+		$emails = array_filter((array)$data['email'], function($email) use($filter) {
+		    return $filter->validate($email);
+		});
+		$payloads = array();
 		foreach($emails as $email) 
 		{
-			if($email)
-			{
-				$token = $this->getService('repos://site/invites.token')->getEntity(array(
+		    $token = $this->getService('repos://site/invites.token')->getEntity(array(
 					'data'=> array(
 						'inviter' => get_viewer(),
 						'serviceName' => 'email' 
 					)
-				));
-
-				if ( $token->save() ) 
-				{
-				    $this->mail(array(
-				            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
-				            'to'       => $email,
-				            'layout'   => false,
-				            'template' => 'invite',
-				            'data'     => array(
-				                    'invite_url' => $token->getURL(),
-				                    'site_name'  => $siteConfig->getValue('sitename'),
-				                    'sender'     => $this->viewer
-				            )
-				    ));				    
-				}							
+			));
+		    $person  = $this->getService('repos://site/people')->find(array('email'=>$email));
+		    $payload = array('email'=>$email, 'sent'=>false);
+			if ( !$person && $token->save()  ) 
+			{			    
+			    $payload['sent']  = true;
+// 			    $this->mail(array(
+// 			            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+// 			            'to'       => $email,
+// 			            'layout'   => false,
+// 			            'template' => 'invite',
+// 			            'data'     => array(
+// 			                    'invite_url' => $token->getURL(),
+// 			                    'site_name'  => $siteConfig->getValue('sitename'),
+// 			                    'sender'     => $this->viewer
+// 			            )
+// 			    ));				    
+			} else {
+			    $payload['person'] = $person;
 			}
+			$payloads[] = $payload;
 		}
+		$content = $this->getView()->set(array('data'=>$payloads))->display();
+		$context->response->setContent($content);
 		$this->setMessage('COM-INVITES-EMAIL-INVITES-SENT','info', false);
 	}
 	
