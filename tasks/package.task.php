@@ -71,8 +71,9 @@ class PackageCommand extends Command
             $root     = $get_composer(COMPOSER_ROOT)->createComposer($io);
             $app      = $get_composer($package->getRoot())->createComposer($io);
             $requires = $root->getPackage()->getRequires();
-            
-            foreach($root->getPackage()->getRequires() as $require) {
+            $requires = array();
+            foreach($app->getPackage()->getRequires() as $require) {
+                print $require."\n";
                 $require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
                 $requires[] = $require;
             }
@@ -82,7 +83,6 @@ class PackageCommand extends Command
             
             $installer->setDryRun(true);
             $installer->setUpdate(true);
-            //$installer->setDevMode(true);
             $installer->run();
             
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
