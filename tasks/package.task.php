@@ -42,6 +42,21 @@ class PackageCommand extends Command
         $this->getApplication()->loadFramework();
         \KService::get('koowa:loader')
             ->loadIdentifier('com://admin/migrator.helper');
+        
+        $composer_run = function($comamnd) {
+            exec(COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." ".$comamnd);
+        };
+                
+        $helper = $this->getHelperSet();
+        $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
+        $get_composer = function($root) use($input, $output, $helper,$io) {
+            global $composerLoader;
+            $embeddedComposerBuilder = new EmbeddedComposerBuilder($composerLoader, $root);
+            $embeddedComposer = $embeddedComposerBuilder->build();
+            $composer = $embeddedComposer;
+            return $composer;
+        };
+                
         foreach($packages as $package)
         {
             $mapper   = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
@@ -53,16 +68,7 @@ class PackageCommand extends Command
                     '#manifest.xml#'   => ''
             ));
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
-            $mapper->symlink();            
-            $helper = $this->getHelperSet();
-            $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
-            $get_composer = function($root) use($input, $output, $helper,$io) {
-                global $composerLoader;
-                $embeddedComposerBuilder = new EmbeddedComposerBuilder($composerLoader, $root);
-                $embeddedComposer = $embeddedComposerBuilder->build();
-                $composer = $embeddedComposer;
-                return $composer;
-            };
+            $mapper->symlink();
 
             $requires = $get_composer($package->getRoot())->createComposer($io)
                 ->getPackage()->getRequires();
@@ -70,8 +76,7 @@ class PackageCommand extends Command
             foreach($requires as $require) {
                 $arg .= $require->getTarget().":".$require->getPrettyConstraint()." ";
             }
-            $command = COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." require $arg";            
-            exec($command);
+            $composer_run("require $arg");            
             
             /*
             $root     = $get_composer(COMPOSER_ROOT);
@@ -92,6 +97,7 @@ class PackageCommand extends Command
             */
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
+        $composer_run('update');
     }
 
     protected function _installExtensions($dir, $output, $schema = false)
