@@ -41,7 +41,7 @@ class PackageCommand extends Command
         \KService::get('koowa:loader')
             ->loadIdentifier('com://admin/migrator.helper');
  
-                
+        /*        
         $helper = $this->getHelperSet();
         $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
         $get_composer = function($root) use($input, $output, $helper,$io) {
@@ -49,6 +49,7 @@ class PackageCommand extends Command
             $embeddedComposerBuilder = new \Dflydev\EmbeddedComposer\Core\EmbeddedComposerBuilder($composerLoader, $root);
             return $embeddedComposerBuilder->build();            
         };
+        */
                 
         foreach($packages as $package)
         {
