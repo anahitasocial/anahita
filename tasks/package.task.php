@@ -66,10 +66,12 @@ class PackageCommand extends Command
 
             $requires = $get_composer($package->getRoot())->createComposer($io)
                 ->getPackage()->getRequires();
+            $arg = "";
             foreach($requires as $require) {
-                print $require."\n";
+                $arg .= $require->getTarget().":".$require->getPrettyConstraint()." ";
             }
-            die;
+            $command = COMPOSER_ROOT."/vendor/bin/composer --working-dir=".COMPOSER_ROOT." require=$arg";
+            exec($command);
             
             /*
             $root     = $get_composer(COMPOSER_ROOT);
