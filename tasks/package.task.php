@@ -12,8 +12,6 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
-use Dflydev\EmbeddedComposer\Core\EmbeddedComposerBuilder;
-
 class PackageCommand extends Command
 {
     protected function configure()
@@ -48,10 +46,8 @@ class PackageCommand extends Command
         $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
         $get_composer = function($root) use($input, $output, $helper,$io) {
             global $composerLoader;
-            $embeddedComposerBuilder = new EmbeddedComposerBuilder($composerLoader, $root);
-            $embeddedComposer = $embeddedComposerBuilder->build();
-            $composer = $embeddedComposer;
-            return $composer;
+            $embeddedComposerBuilder = new \Dflydev\EmbeddedComposer\Core\EmbeddedComposerBuilder($composerLoader, $root);
+            return $embeddedComposerBuilder->build();            
         };
                 
         foreach($packages as $package)
@@ -68,22 +64,24 @@ class PackageCommand extends Command
             $mapper->symlink();           
             
             
-            $root     = $get_composer(COMPOSER_ROOT)->createComposer($io);
-            $app      = $get_composer($package->getRoot())->createComposer($io);
-            $requires = $root->getPackage()->getRequires();
-            $requires = array();
-            foreach($app->getPackage()->getRequires() as $require) {
-                print $require."\n";
-                $require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
-                $requires[] = $require;
-            }
-
-            $root->getPackage()->setRequires($requires);
-            $installer = \Composer\Installer::create($io, $root);            
+//             $root     = $get_composer(COMPOSER_ROOT)->createComposer($io);
+//             $app      = $get_composer($package->getRoot())->createComposer($io);
+                        
+//             $requires = $root->getPackage()->getRequires();
             
-            $installer->setDryRun(true);
-            $installer->setUpdate(true);
-            $installer->run();
+//             foreach($app->getPackage()->getRequires() as $require) 
+//             {
+//                 $output->writeLn((string)$require);
+//                 //$require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
+//                 $requires[] = $require;
+//             }
+
+//             $root->getPackage()->setRequires($requires);
+//             $installer = \Composer\Installer::create($io, $root);            
+            
+//             $installer->setDryRun(true);
+//             $installer->setUpdate(true);
+//             $installer->run();
             
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }        

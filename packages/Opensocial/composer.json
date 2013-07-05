@@ -3,8 +3,8 @@
     "name": "anahita/opensocial",
     "keywords" : ["anahita extension"],
     "description": "",     
-    "extension-source" : "src",     
+    "extension-source" : "src",        
     "require": {
-        "twig/twig": "1.13.*@dev"           
+        "oyatel/amazon-s3-php-class": "dev-master"    
     }
 }
