@@ -65,14 +65,16 @@ class PackageCommand extends Command
                 return $composer;
             };
                                                 
-            $app  = $get_composer($package->getRoot());
-            $root = $get_composer(COMPOSER_ROOT);
-            $root->getPackage()->setRequires(array_merge(
-                    $root->getPackage()->getRequires(),
-                    $app->getPackage()->getRequires()
-            ));
+            $app      = $get_composer($package->getRoot());
+            $root     = $get_composer(COMPOSER_ROOT);
+            $requires = $root->getPackage()->getRequires();
+            foreach($app->getPackage()->getRequires() as $require) {
+                $requires[] = $require;
+            }
+            $root->getPackage()->setRequires($requires);
             $installer = \Composer\Installer::create($io, $root);
-            $installer->run();            
+            $installer->setDryRun(true);            
+            $installer->run();
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
     }
