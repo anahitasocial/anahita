@@ -6,6 +6,7 @@
     "extension-source" : "src",     
     "require": {
         "php": ">=5.3",
-        "anahita/anahita": "*"                 
+        "anahita/anahita": "*",
+        "twig/twig" : "*"           
     }
 }

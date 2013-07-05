@@ -12,6 +12,8 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
+use Dflydev\EmbeddedComposer\Core\EmbeddedComposerBuilder;
+
 class PackageCommand extends Command
 {
     protected function configure()
@@ -51,7 +53,26 @@ class PackageCommand extends Command
                     '#manifest.xml#'   => ''
             ));
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
-            $mapper->symlink();
+            $mapper->symlink();            
+            $helper = $this->getHelperSet();
+            $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
+            $get_composer = function($root) use($input, $output, $helper,$io) {
+                global $composerLoader;
+                $embeddedComposerBuilder = new EmbeddedComposerBuilder($composerLoader,$root);
+                $embeddedComposer = $embeddedComposerBuilder->build();
+                
+                $composer = $embeddedComposer->createComposer($io);
+                return $composer;
+            };
+                                                
+            $app  = $get_composer($package->getRoot());
+            $root = $get_composer(COMPOSER_ROOT);
+            $root->getPackage()->setRequires(array_merge(
+                    $root->getPackage()->getRequires(),
+                    $app->getPackage()->getRequires()
+            ));
+            $installer = \Composer\Installer::create($io, $root);
+            $installer->run();            
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
     }
