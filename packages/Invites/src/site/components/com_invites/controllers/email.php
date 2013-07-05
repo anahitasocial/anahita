@@ -97,17 +97,17 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 			if ( !$person && $token->save()  ) 
 			{			    
 			    $payload['sent']  = true;
-// 			    $this->mail(array(
-// 			            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
-// 			            'to'       => $email,
-// 			            'layout'   => false,
-// 			            'template' => 'invite',
-// 			            'data'     => array(
-// 			                    'invite_url' => $token->getURL(),
-// 			                    'site_name'  => $siteConfig->getValue('sitename'),
-// 			                    'sender'     => $this->viewer
-// 			            )
-// 			    ));				    
+			    $this->mail(array(
+			            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+			            'to'       => $email,
+			            'layout'   => false,
+			            'template' => 'invite',
+			            'data'     => array(
+			                    'invite_url' => $token->getURL(),
+			                    'site_name'  => $siteConfig->getValue('sitename'),
+			                    'sender'     => $this->viewer
+			            )
+			    ));				    
 			} else {
 			    $payload['person'] = $person;
 			}
