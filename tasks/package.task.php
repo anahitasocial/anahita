@@ -60,10 +60,18 @@ class PackageCommand extends Command
                 global $composerLoader;
                 $embeddedComposerBuilder = new EmbeddedComposerBuilder($composerLoader, $root);
                 $embeddedComposer = $embeddedComposerBuilder->build();
-                $composer = $embeddedComposer->createComposer($io);
+                $composer = $embeddedComposer;
                 return $composer;
             };
-                                                
+
+            $requires = $get_composer($package->getRoot())->createComposer($io)
+                ->getPackage()->getRequires();
+            foreach($requires as $require) {
+                print $require."\n";
+            }
+            die;
+            
+            /*
             $root     = $get_composer(COMPOSER_ROOT);
             $requires = $root->getPackage()->getRequires();
             
@@ -71,11 +79,15 @@ class PackageCommand extends Command
                 $require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
                 $requires[] = $require;
             }
+
             $root->getPackage()->setRequires($requires);
-            $installer = \Composer\Installer::create($io, $root);
+            $installer = \Composer\Installer::create($io, $root);            
+            
             $installer->setDryRun(true);
             $installer->setUpdate(true);
+            $installer->setDevMode(true);
             $installer->run();
+            */
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
     }

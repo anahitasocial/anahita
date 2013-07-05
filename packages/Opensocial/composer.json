@@ -7,6 +7,6 @@
     "require": {
         "php": ">=5.3",
         "anahita/anahita": "*",
-        "twig/twig" : "*"           
+        "twig/twig": "1.13.*@dev"           
     }
 }
