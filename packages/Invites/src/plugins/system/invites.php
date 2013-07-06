@@ -54,7 +54,7 @@ class plgSystemInvites extends JPlugin
 		        exit(0);
 		    } 
 		    catch(KException $excetpion) {
-
+                return;
 		    }		    
 		}
 		
