@@ -47,9 +47,19 @@ class Application extends \Symfony\Component\Console\Application
         $this->_packages   = new Extension\Packages();
                                 
         $this->_packages->addPackageFromComposerFiles(COMPOSER_ROOT.'/composer.json');
-                        
+
         $this->_packages->addPackageFromComposerFiles(
                 Extension\Helper::getComposerFiles(COMPOSER_ROOT.'/packages'));
+                
+        //@TODO very bad way of doing it.
+        //should read composer.lock or installed.json file
+        foreach(new \DirectoryIterator(COMPOSER_VENDOR_DIR) as $dir) {
+            if ( $dir->isDir() && !$dir->isDot() ) 
+            {
+                $this->_packages->addPackageFromComposerFiles(
+                    Extension\Helper::getComposerFiles($dir->getPathName()));
+            }
+        }        
         
         $this->_packages->addPackageFromComposerFiles(
                 Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));        
