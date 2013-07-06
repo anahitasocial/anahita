@@ -28,6 +28,7 @@ define('JPATH_PLUGINS',        JPATH_ROOT.'/plugins');
 define('JPATH_INSTALLATION',   JPATH_ROOT.'/installation');
 define('JPATH_THEMES',         JPATH_BASE.'/templates');
 define('JPATH_CACHE',		   JPATH_BASE.DS.'cache' );
+define('JPATH_VENDOR',          JPATH_BASE.'/vendor');
 
 /*
  * Installation check, and check on removal of the install directory.
@@ -84,6 +85,11 @@ KServiceIdentifier::addLocator( KService::get('anahita:service.locator.template'
 KService::setAlias('koowa:database.adapter.mysqli', 'com://admin/default.database.adapter.mysqli');
 KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
 KService::setAlias('anahita:domain.space',          'com:base.domain.space');
+
+//make sure for the autoloader to be reigstered after nooku
+$autoloader = require_once( JPATH_VENDOR.'/autoload.php' );
+$autoloader->unregister();
+$autoloader->register();
 
 KLoader::loadIdentifier('com://site/application.aliases');
 ?>
