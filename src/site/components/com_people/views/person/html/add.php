@@ -56,7 +56,7 @@
 	<?php endif;?>	
 	        
 	<div class="form-actions">
-		<button type="submit" class="btn"><?= @text('LIB-AN-ACTION-SAVE') ?></button>
+		<button type="submit" class="btn"><?= @text('COM-PEOPLE-ACTION-REGISTER') ?></button>
 	</div>
         
 </form>
