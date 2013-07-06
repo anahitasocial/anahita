@@ -64,7 +64,8 @@ class ComInvitesControllerDefault extends ComBaseControllerResource
 	 */
 	public function canRead()
 	{
-	    return !$this->getService('com:people.viewer')->guest();
+	    return $this->getAdapter() &&
+	            !$this->getService('com:people.viewer')->guest();
 	}
 	
 	/**
@@ -96,14 +97,19 @@ class ComInvitesControllerDefault extends ComBaseControllerResource
 	 * 
 	 * @return mixed
 	 */	
-	protected function getAdapter()
+	public function getAdapter()
 	{
 		if ( !isset($this->_adapter) ) 
 		{
 			$session = $this->getService('repos://site/connect.session')
 						->fetch(array('owner'=>$this->viewer, 'api'=>$this->getIdentifier()->name));
 			
-			$this->_adapter = $this->getService('com://site/invites.adapter.'.$this->getIdentifier()->name, array('session'=>$session));			
+			if ( !empty($session) ) {
+			    $this->_adapter = $this->getService('com://site/invites.adapter.'.$this->getIdentifier()->name, array('session'=>$session));
+			}	
+			else {
+			    $this->_adapter = false;
+			}
 		}
 		
 		return $this->_adapter;

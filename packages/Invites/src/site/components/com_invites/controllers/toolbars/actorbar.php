@@ -56,8 +56,9 @@ class ComInvitesControllerToolbarActorbar extends ComBaseControllerToolbarActorb
 								JText::_('COM-INVITES-LINK-EMAIL'),
 								array('option'=>'com_invites', 'view'=>'email', 'oid'=>$actor->id),
 								$name == 'email');
-			
-		$this->addNavigation('facebook', 
+
+		if ( $this->getService('com://site/invites.controller.facebook')->getAdapter() )
+		    $this->addNavigation('facebook', 
 								JText::_('COM-INVITES-LINK-FACEBOOK'), 
 								array('option'=>'com_invites', 'view'=>'facebook','oid'=>$actor->id), 
 								$name == 'facebook');

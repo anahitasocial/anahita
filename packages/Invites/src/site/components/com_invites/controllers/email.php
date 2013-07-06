@@ -84,6 +84,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 		    return $filter->validate($email);
 		});
 		$payloads = array();
+		$sent_one = false;
 		foreach($emails as $email) 
 		{
 		    $token = $this->getService('repos://site/invites.token')->getEntity(array(
@@ -97,6 +98,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 			if ( !$person && $token->save()  ) 
 			{			    
 			    $payload['sent']  = true;
+			    $sent_one         = true;
 			    $this->mail(array(
 			            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
 			            'to'       => $email,
@@ -115,7 +117,9 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 		}
 		$content = $this->getView()->set(array('data'=>$payloads))->display();
 		$context->response->setContent($content);
-		$this->setMessage('COM-INVITES-EMAIL-INVITES-SENT','info', false);
+		if ( $sent_one ) {
+		    $this->setMessage('COM-INVITES-EMAIL-INVITES-SENT','info', false);
+		}
 	}
 	
 	/**
@@ -123,7 +127,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 	 * 
 	 * @return mixed
 	 */	
-	protected function getAdapter()
+	public function getAdapter()
 	{
 		if ( !isset($this->_adapter) ) {
 			$this->_adapter = $this->getService('com://site/invites.adapter.email');			
