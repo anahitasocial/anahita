@@ -41,18 +41,20 @@ class plgSystemInvites extends JPlugin
 		if ( $mainframe->isAdmin() ) 
 			return;	
 			
-		if ( $invite_token =
-		         KRequest::get('get.token','string') ) 
-		{
-            KRequest::set('session.invite_token', $invite_token);		    
+		if ( ($invite_token =
+		         KRequest::get('get.token','string')) && 
+		         KRequest::get('get.option','cmd') != 'com_invites' ) 
+		{		    
+		    $response = KService::get('application.dispatcher')->getResponse();
+		    $response->setRedirect(JRoute::_('option=com_invites&view=token&token='.$invite_token));
+		    $response->send();
+		    exit(0);
 		}
 		
 		$invite_token = KRequest::get('session.invite_token', 'string', null);
 		
-		if(!$invite_token) {
-		    KRequest::set('session.invite_token', null);
-			return false;
-		}
+		if(!$invite_token)
+			return;
 			
 		$token = KService::get('repos:invites.token')->fetch(array('value'=>$invite_token));
 		
