@@ -22,7 +22,7 @@
 <?= @text('COM-INVITES-LOGIN')?>
 </a>
 
-<a class="btn btn-large btn-primary" data-trigger="BS.showPopup" data-bs-showpopup-url="<?=@route('option=people&view=person&layout=add&return='.base64_encode(@route('token='.$token->value)))?>" >
+<a class="btn btn-large btn-primary" data-trigger="BS.showPopup" data-bs-showpopup-url="<?=@route('option=people&view=person&modal=1&layout=add&return='.base64_encode(@route('token='.$token->value)))?>" >
 <?= @text('COM-INVITES-SIGN-UP')?>
 </a>
 <?php endif;?>
