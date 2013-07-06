@@ -220,26 +220,26 @@ $console
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
 
-        $packages       = $input->getArgument('package');                
-        $directories    = new DirectoryFilter($packages, 
-                        $console->getPackagePaths());
+        $packages = $input->getArgument('package');
         
-        if ( !count($directories) ) {
-            throw new \RuntimeException('No valid package is specified');
+        $packages = $console->getExtensionPackages()
+                ->findPackages($packages);
+        
+        if ( !count($packages) ) {
+            throw new \RuntimeException('Specify a valid package');
         }
-        
-        foreach($directories as $dir)
-        {                            
-            $name   = ucfirst(basename($dir));
-            $mapper = new \Installer\Mapper($dir, WWW_ROOT);
+        foreach($packages as $package) 
+        {
+            $mapper = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
             $mapper->addCrawlMap('',  array(
                     '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
-                    '#CHANGELOG.php#'  => '',
+                    '#^(media)/([^/]+)/.+#' => '\1/\2',
+                    '#CHANGELOG.php#'    => '',
                     '#^migration.*#'     => '',
-                    '#manifest.xml#'   => ''
-            ));
-            $output->writeLn("<info>Unlinking $name Package</info>");
-            $mapper->unlink();
+                    '#manifest.xml#'     => ''
+            ));            
+            $output->writeLn("<info>Unlinking {$package->getFullName()} Package</info>");
+            $mapper->unlink();           
         }
 });
 ;
