@@ -18,7 +18,7 @@ new FacebookInvite({
 	'appId'    : <?= $adapter->getApp()->id?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
-    'link'     : '<?= $url?>',
+    'appURL'   : '<?= $url?>',
     'picture'  : '<?= $viewer->getPortraitURL() ?>',
 });
 
