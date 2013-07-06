@@ -16,18 +16,22 @@ class Helper
      * 
      * @return multitype:string
      */
-    public static function getComposerFiles($path)
+    public static function getComposerFiles($paths)
     {
-        $dirs      = new \DirectoryIterator($path);
+        settype($paths, 'array');
         $composers = array();
-        foreach($dirs as $dir)
+        foreach($paths as $path)
         {
-            if ( $dir->isDot() || $dir->isFile() )
-                continue;
-            $composer_file = $dir->getPathName().'/composer.json';
-            if ( is_readable($composer_file) ) {
-                $composers[] = $composer_file;
-            }
+            $dirs      = new \DirectoryIterator($path);
+            foreach($dirs as $dir)
+            {
+                if ( $dir->isDot() || $dir->isFile() )
+                    continue;
+                $composer_file = $dir->getPathName().'/composer.json';
+                if ( is_readable($composer_file) ) {
+                    $composers[] = $composer_file;
+                }
+            }            
         }
         return $composers;        
     }
