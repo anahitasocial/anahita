@@ -44,24 +44,15 @@ class plgSystemInvites extends JPlugin
 		if ( $invite_token =
 		         KRequest::get('get.token','string') ) 
 		{
-		    $controller = KService::get('com://site/invites.controller.token', array(
-		        'response' => KService::get('application.dispatcher')->getResponse() 
-		    ));
-		    try 
-		    {
-		        $controller->token($invite_token)->validate();		        
-		        $controller->getResponse()->send();
-		        exit(0);
-		    } 
-		    catch(KException $excetpion) {
-                return;
-		    }		    
+            KRequest::set('session.invite_token', $invite_token);		    
 		}
 		
 		$invite_token = KRequest::get('session.invite_token', 'string', null);
 		
-		if(!$invite_token)
-			return;
+		if(!$invite_token) {
+		    KRequest::set('session.invite_token', null);
+			return false;
+		}
 			
 		$token = KService::get('repos:invites.token')->fetch(array('value'=>$invite_token));
 		
