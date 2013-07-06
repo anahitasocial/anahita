@@ -1,9 +1,11 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<script data-inline src="media://com_invites/js/facebook.js"></script>
+<script data-inline src="media://com_invites/js/facebook.js"></script>
 
 <div id="fb-root"></div>
 
-<script data-inline src="media://com_invites/js/facebook.js"></script>
+
 <?php
     $url = @route()->getURl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT );    
 ?>
@@ -18,7 +20,7 @@ new FacebookInvite({
 	'appId'    : <?= $adapter->getApp()->id?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
-    'appURL'   : '<?= $url?>',
+    'link'     : '<?= $url?>',
     'picture'  : '<?= $viewer->getPortraitURL() ?>',
 });
 
