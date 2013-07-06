@@ -42,7 +42,7 @@ class plgSystemInvites extends JPlugin
 			return;	
 			
 		if ( $invite_token =
-		         KRequest::get('get.invite_token','string') ) 
+		         KRequest::get('get.token','string') ) 
 		{
 		    $controller = KService::get('com://site/invites.controller.token', array(
 		        'response' => KService::get('application.dispatcher')->getResponse() 

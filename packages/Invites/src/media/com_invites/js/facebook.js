@@ -15,12 +15,13 @@ var FacebookInvite = new Class({
 			onSuccess : this.openDialog.bind(this)
 		}).get();
 	},
-	openDialog : function(token) {	
+	openDialog : function(token) {		
+		var msgLink = this.options.appURL + '?token='+token.value;
 		FB.ui({
 				display: 'iframe',
 				method:	'send',
 				name: 'Anahita',
-				link: this.options.appURL + '?invite_token='+token.value,
+				link: msgLink,
 				picture: this.options.picture,				
 				to: this.fbid,
 				name: this.options.subject,
