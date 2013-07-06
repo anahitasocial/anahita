@@ -62,8 +62,8 @@ class Application extends \Symfony\Component\Console\Application
         }        
         
         $this->_packages->addPackageFromComposerFiles(
-                Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));        
-             
+                Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));
+        
         parent::__construct();
     }   
     

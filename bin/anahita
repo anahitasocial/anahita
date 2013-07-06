@@ -39,21 +39,33 @@ $console = new Console\Application();
 
 function include_tasks($directory) 
 {
-    global $console;
-    if ( is_dir($directory) )
+    static $_includes_tasks;
+    if ( !$_includes_tasks ) {
+        $_includes_tasks = array();
+    }
+    if ( !isset($_includes_tasks[$directory]) )
     {
-        $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
-        foreach($files as $file) {
-            if ( strpos($file, '.task.php') ) {
-               require_once $file->getPathName();
-            }
-        };    
-    }       
+        global $console;
+        if ( is_dir($directory) )
+        {
+            $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
+            foreach($files as $file) {
+                if ( strpos($file, '.task.php') ) {
+                   require_once $file->getPathName();
+                }
+            };    
+        }
+        $_includes_tasks[$directory] = true;
+    }
 }
-
 
 include_tasks(__DIR__.'/../tasks');
 include_tasks(COMPOSER_ROOT.'/tasks');
+
+//include all tasks
+foreach($console->getExtensionPackages() as $package) {
+    include_tasks($package->getRoot().'/tasks');
+}
 
 $console->run();
 exit(0);
