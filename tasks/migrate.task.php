@@ -15,6 +15,14 @@ use \Symfony\Component\Console\Output\OutputInterface;
 require_once 'vendor/nooku/libraries/koowa/event/subscriber/interface.php';
 require_once 'vendor/nooku/libraries/koowa/object/handlable.php';
 
+function ask_for_component($input, $output, $console) {
+    $component = $input->getArgument('component');
+    if ( empty($component) ) {
+        $component = $console->getHelperSet()->get('dialog')
+            ->ask($output, "<info>Enter the name of a component ? ");
+    }
+    return (array)$component;
+}
 
 class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObjectHandlable
 {
@@ -234,8 +242,9 @@ $console
         new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+    $component = ask_for_component($input, $output, $console);
     $migrators  = new Migrators($console,
-            $input->getArgument('component'));
+            $component,false);
 
     $migrators->setOutput($output);
     foreach($migrators as $migrator) {
@@ -267,14 +276,16 @@ $console
     });
     
 $console
-        ->register('db:generate:migration')
+        ->register('db:migrate:new')
         ->setDescription('Generate a migration for a component')
         ->setDefinition(array(
                 new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),                
         ))
         ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+                        
+            $component = ask_for_component($input, $output, $console);
             $migrators  = new Migrators($console,
-                    $input->getArgument('component'),false);
+                    $component,false);
             
             $migrators->setOutput($output);
             foreach($migrators as $migrator) {
@@ -289,8 +300,10 @@ $console
             new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),
     ))
     ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+        
+        $component = ask_for_component($input, $output, $console);
         $migrators  = new Migrators($console,
-                $input->getArgument('component'));
+                $component,false);
     
         $migrators->setOutput($output);
         foreach($migrators as $migrator) 
