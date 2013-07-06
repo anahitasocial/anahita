@@ -16,8 +16,7 @@ var FacebookInvite = new Class({
 		}).get();
 	},
 	openDialog : function(token) {		
-		var msgLink = this.options.appURL.replace('www.','');
-		msgLink    = 'http://anahitapolis.com';
+		var msgLink = this.options.appURL;
 		msgLink    += '?token='+token.value;
 		console.log(msgLink);
 		FB.ui({
