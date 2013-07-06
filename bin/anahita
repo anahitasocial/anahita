@@ -45,15 +45,29 @@ function include_tasks($directory)
     }
     if ( !isset($_includes_tasks[$directory]) )
     {
-        global $console;
         if ( is_dir($directory) )
         {
             $files = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory));
-            foreach($files as $file) {
+            $tasks      = array();
+            $bootstraps = array();
+            foreach($files as $file) {            
                 if ( strpos($file, '.task.php') ) {
-                   require_once $file->getPathName();
+                   $tasks[]  = $file->getPathName();
+                }
+                elseif ( basename($file) == 'bootstrap.php' ) {
+                    $bootstraps[] = $file->getPathName();
                 }
             };    
+            
+            array_walk($bootstraps, function($file) {
+                global $console;            
+                include_once $file;
+            });
+            
+            array_walk($tasks, function($file) {
+                global $console;            
+                include_once $file;
+            });
         }
         $_includes_tasks[$directory] = true;
     }
