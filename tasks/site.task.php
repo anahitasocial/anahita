@@ -19,10 +19,10 @@ class Symlink extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {   
         $output->writeLn("<info>Linking files...</info>");
-        $this->symlink(false);
+        $this->symlink();
     }
         
-    public function symlink($configure = false)
+    public function symlink()
     {
         $target = WWW_ROOT;
         $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
@@ -38,13 +38,8 @@ class Symlink extends Command
                 '#^configuration\.php-dist#'   => '',
                 '#^htaccess.txt#'   => '',
         );
-        
-        if ( file_exists($target.'/configuration.php') &&
-                !$configure )
-        {
-            $patterns['#^installation/.+#'] = '';
-        }
-        
+               
+        $patterns['#^installation/.+#'] = '';
         $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
         $mapper->addCrawlMap('vendor/joomla', $patterns);
         $mapper->addCrawlMap('vendor/nooku',  $patterns);
@@ -53,17 +48,13 @@ class Symlink extends Command
         $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
         $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
         
-        if ( file_exists($target.'/installation') ) {
-            $mapper->getMap('vendor/joomla/installation/index.php','installation/index.php')->copy();
-        }
-        
         $mapper->getMap('vendor/joomla/administrator/index.php','administrator/index.php')->copy();
         
         @mkdir($target.'/tmp',   0755);
         @mkdir($target.'/cache', 0755);
         @mkdir($target.'/log',   0755);
         @mkdir($target.'/administrator/cache',   0755);
-        link(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor') ;       
+        @symlink(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor') ;       
     }
 }
 
@@ -185,9 +176,10 @@ class Create extends Command
             \JInstallationHelper::createDatabase($db, $database['name'],true);
             $db->select($database['name']);
         
-            $sql_files = array(JPATH_ROOT."/installation/sql/schema.sql",JPATH_ROOT."/installation/sql/data.sql");
+            $sql_files = array("schema.sql","data.sql");
             $output->writeLn('<info>Populating database...</info>');
             array_walk($sql_files, function($file) use($db) {
+                $file = ANAHITA_ROOT."/vendor/joomla/installation/sql/$file";
                 \JInstallationHelper::populateDatabase($db, $file, $errors);
             });
             $vars = array(
