@@ -106,6 +106,25 @@ class ComInvitesSocialinviterDefault extends KObject
      */
     public function getInvitables()
     {
+//         //$this->_oauth_session->getApi()->get('/me/friends');
+//         array(, 'get','/me/friends');
+        $api   = $this->_oauth_session->getApi();
+        $users = $this->getService('com://site/connect.oauth.users', array(
+               'connections_callback' =>  function() use($api) {
+                   $data = $api->get('/me/friends');
+                   return $data['data'];                    
+               },
+               'mapper_callback'      =>  function($user) {
+                   $data           = array();
+                   $data['id']     = $user['id'];
+                   $data['name']   = $user['name'];
+                   $data['avatar'] = 'https://graph.facebook.com/'.$user['id'].'/picture';
+                   return $data;               
+               }
+        ));
+        print $users;
+        die;
+        die;
         $this->getConnections();
         die;
         if ( $this->getInvite() ) 
