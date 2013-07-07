@@ -159,7 +159,7 @@ class Create extends Command
         define('JPATH_THEMES',         JPATH_BASE.'/templates');
         define('JPATH_CACHE',		   JPATH_BASE.'/cache' );
         include_once (JPATH_LIBRARIES . '/joomla/import.php');
-        include_once (JPATH_BASE."/installation/installer/helper.php");
+        require_once 'Console/Installer/Helper.php';
         
         $output->writeLn('<info>connecting to database...</info>');
         $errors   = array();
