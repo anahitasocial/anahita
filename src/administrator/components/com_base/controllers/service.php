@@ -80,7 +80,7 @@ class ComBaseControllerService extends ComBaseControllerResource
 	protected function _actionPost($context)
 	{
 	    if ( $context->action == 'save' )
-	        $context->response->setRedirect('option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name));
+	        $context->response->setRedirect(JRoute::_('option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name)));
 	
 	    $data = $context->data;
 	
