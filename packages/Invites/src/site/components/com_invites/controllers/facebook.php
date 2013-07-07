@@ -25,7 +25,7 @@
  * @link       http://www.anahitapolis.com
  */
 
-class ComInvitesControllerFacebook extends ComInvitesControllerDefault
+class ComInvitesControllerFacebook extends ComBaseControllerResource
 {
     /**
      * Read
@@ -36,13 +36,22 @@ class ComInvitesControllerFacebook extends ComInvitesControllerDefault
      */
     protected function _actionRead($context)
     {
-        parent::_actionRead($context);
-        
+       
+        $socialInviter = $this->getService('com://site/invites.socialinviter.facebook', array(
+                'inviter' => get_viewer()
+        ));
+        foreach($socialInviter->getInvitables() as $user) 
+        {
+              print $user;  
+        }
+        //print $socialInviter;
+        die;
+        die; 
         $this->users = $this->adapter->getInvitables()
                             ->filter('name', $this->q)
                             ->limit($this->start, $this->limit);
     }    
-    
+        
 	/**
 	 * Invite
 	 * 

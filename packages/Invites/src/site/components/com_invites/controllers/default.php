@@ -39,19 +39,8 @@ class ComInvitesControllerDefault extends ComBaseControllerResource
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-            'viewer'        => get_viewer(),
-            'language'      => 'com_'.$this->getIdentifier()->package ,
-            'toolbars'      => array($this->getIdentifier()->name,'menubar','actorbar'),
-            'request'       => array(
-                'limit'     => 100,
-                'offset'    => 0                
-            ) 
-		));     
-
-		$config->append(array(
-            'behaviors' => array(
-                'ownable' => array('default'=>get_viewer()),  
-        )));
+            'toolbars' => array($this->getIdentifier()->name,'menubar','actorbar'), 
+		));
         
         parent::_initialize($config);
 	}
@@ -64,54 +53,53 @@ class ComInvitesControllerDefault extends ComBaseControllerResource
 	 */
 	public function canRead()
 	{
-	    return $this->getAdapter() &&
-	            !$this->getService('com:people.viewer')->guest();
+	    return !$this->getService('com:people.viewer')->guest();
 	}
 	
-	/**
-	 * Read
-	 * 
-	 * @param KCommandContext $contxt
-	 * 
-	 * @return void
-	 */
-	protected function _actionRead($context)
-	{
-		$this->adapter = $this->getAdapter();
-	}
+// 	/**
+// 	 * Read
+// 	 * 
+// 	 * @param KCommandContext $contxt
+// 	 * 
+// 	 * @return void
+// 	 */
+// 	protected function _actionRead($context)
+// 	{
+// 		$this->adapter = $this->getAdapter();
+// 	}
 	
-	/**
-	 * Read
-	 * 
-	 * @param KCommandContext $contxt
-	 * 
-	 * @return void
-	 */	
-	protected function _actionPost($context)
-	{
-		$this->execute('invite', $context);		
-	}
+// 	/**
+// 	 * Read
+// 	 * 
+// 	 * @param KCommandContext $contxt
+// 	 * 
+// 	 * @return void
+// 	 */	
+// 	protected function _actionPost($context)
+// 	{
+// 		$this->execute('invite', $context);		
+// 	}
 	
-	/**
-	 * Return the email adapter
-	 * 
-	 * @return mixed
-	 */	
-	public function getAdapter()
-	{
-		if ( !isset($this->_adapter) ) 
-		{
-			$session = $this->getService('repos://site/connect.session')
-						->fetch(array('owner'=>$this->viewer, 'api'=>$this->getIdentifier()->name));
+// 	/**
+// 	 * Return the email adapter
+// 	 * 
+// 	 * @return mixed
+// 	 */	
+// 	public function getAdapter()
+// 	{
+// 		if ( !isset($this->_adapter) ) 
+// 		{
+// 			$session = $this->getService('repos://site/connect.session')
+// 						->fetch(array('owner'=>$this->viewer, 'api'=>$this->getIdentifier()->name));
 			
-			if ( !empty($session) ) {
-			    $this->_adapter = $this->getService('com://site/invites.adapter.'.$this->getIdentifier()->name, array('session'=>$session));
-			}	
-			else {
-			    $this->_adapter = false;
-			}
-		}
+// 			if ( !empty($session) ) {
+// 			    $this->_adapter = $this->getService('com://site/invites.adapter.'.$this->getIdentifier()->name, array('session'=>$session));
+// 			}	
+// 			else {
+// 			    $this->_adapter = false;
+// 			}
+// 		}
 		
-		return $this->_adapter;
-	}
+// 		return $this->_adapter;
+// 	}
 }
