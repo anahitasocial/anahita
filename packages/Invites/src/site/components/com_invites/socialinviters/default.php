@@ -124,40 +124,31 @@ class ComInvitesSocialinviterDefault extends KObject
         $cache = JFactory::getCache((string) $this->getIdentifier(), '');
         $key   = 'connections_'.$this->_oauth_session->id;
         $data  = $cache->get($key);
-        if ( !$data || true ) 
+        if ( !$data ) 
         {
-            print_r($data);
-            die;
-            //$data = $this->_getConnections();    
-            //$cache->store($data, $key);
+            $data = $this->_getConnections();                
+            $ids     = array();
+            $users   = array();
             foreach($data as $i => $user) {
-                $data[$i] = $this->_mapAttributes($user);
+                $user   = $this->_mapAttributes($user);
+                $ids[]  = $user['id'];
+                $users[$user['id']] = $user;
             }
-            print $data;
-            die;            
-        }
-        print_r();
-        die;
-//         print 'd';
-//         die;
-//         $cache->setLifeTime(5*100);
-//         $cache->get(array($this,'_somethin'));
-         
-//         $data = $cache->get(function($session) {
-           
-//             return $friends['data'];
-//         }, array($this->_session) , '/me/friends'.($this->_session->id));
-        
-//             $users   = $this->getService('com://site/connect.oauth.users');
-        
-//             foreach($data as $friend)
-//             {
-//                 $user = new ComConnectOauthUser();
-//                 $user->id = $friend['id'];
-//                 $user->name = $friend['name'];
-//                 $user->thumb_avatar = 'https://graph.facebook.com/'.$friend['id'].'/picture';
-//                 $users->insert($user);
-//             }        
+            $sessions = $this->getService('repos://site/connect.session')
+                ->getQuery()
+                        ->where(array(
+                            'profileId'=> $ids,
+                            'api'      => $this->_service_name))
+                        ->fetchSet()
+                ;
+            foreach($sessions as $session) {
+                unset($users[$session->profileId]);
+            } 
+            $array = array();
+            $array['actor_ids'] = $sessions->owner->id;
+            $array['users']     = array_values($users); 
+            $cache->store($array, $key);
+        }        
     }
         
     /**
@@ -167,7 +158,8 @@ class ComInvitesSocialinviterDefault extends KObject
      */
     protected function _getConnections()
     {        
-        return $this->_oauth_session->getApi()->get('/me/friends');
+        $data = $this->_oauth_session->getApi()->get('/me/friends');
+        return $data['data'];
     }
     
     /**
@@ -176,8 +168,12 @@ class ComInvitesSocialinviterDefault extends KObject
      * @return array
      */
     protected function _mapAttributes($user)
-    {
-        
+    {        
+        $data           = array();
+        $data['id']     = $user['id'];
+        $data['name']   = $user['name'];
+        $data['avatar'] = 'https://graph.facebook.com/'.$user['id'].'/picture';
+        return $data;
     }
     
 
