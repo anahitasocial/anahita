@@ -109,9 +109,7 @@ class Map
     public function symlink()
     {
         //check if the parent directory exits
-        $parts = array_filter(explode('/', $this->_target));
-        $file  = array_pop($parts);
-        $path  = '/'.implode('/', $parts);
+        $path = dirname($this->_target);
         if ( !file_exists($path) ) {
             mkdir($path, 0755, true);
         }
