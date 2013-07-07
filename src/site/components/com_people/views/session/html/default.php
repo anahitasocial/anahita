@@ -4,15 +4,9 @@
 
 <div class="row">
 	<div class="offset3 span6">	
-		<form action="<?=@route()?>" method="post" class="well">
+		<form action="<?=@route()?>" method="post">
 		<fieldset>
 			<legend><?= @text('COM-PEOPLE-SESSION-TITLE') ?></legend>
-			<?php if ( KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ): ?>
-			<div class="connect-service-actions">
-			<?= $this->renderHelper('com://site/connect.template.helper.service.renderLogins')?>			
-			</div>
-						           
-            <?php endif ?>
          
             <?= @flash_message ?>
          
@@ -41,15 +35,31 @@
     		<?php endif;?>
     					
 			<div class="form-actions">
-				<button type="submit" name="Submit" class="btn btn-large btn-primary"/>
+				<?php if ( KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ): ?>
+				<?= $this->renderHelper('com://site/connect.template.helper.service.renderLogins')?>			         
+            	<?php endif ?>
+			
+				<button type="submit" name="Submit" class="btn btn-large btn-primary pull-right"/>
 					<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
 				</button>
 			</div>
 		</fieldset>
 
-		<a href="<?= @route('view=token') ?>">
-		<?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
-		</a>
+		<ul class="unstyled">
+			<li>
+				<a href="<?= @route('view=token') ?>">
+					<?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
+				</a>
+			</li>
+		
+			<?php if ( @service('com://site/people.controller.person')->permission->canRegister() ) : ?>
+     		<li>
+     			<a href="" data-trigger="BS.showPopup" data-bs-showpopup-url="<?=@route('option=com_people&view=person&layout=add&modal=1'.(!empty($return) ? "&return=$return" : ''))?>">
+       				<?= @text('COM-PEOPLE-ACTION-SIGNUP-NEW-ACCOUNT')?>
+     			</a>
+     		</li>
+     		<?php endif;?>
+		</ul>
 		
 		<?php if ( !empty($this->return) ) : ?>
 		<input type="hidden" name="return" value="<?= $this->return; ?>" />
