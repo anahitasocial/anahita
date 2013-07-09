@@ -48,7 +48,7 @@ class ComConnectOauthUsers extends KObject implements Iterator
      * 
      * @var array
      */
-    protected $_users;
+    protected $_users;   
     
     /** 
      * Constructor.
@@ -61,9 +61,9 @@ class ComConnectOauthUsers extends KObject implements Iterator
     {
         parent::__construct($config);
         
-        $this->_connections_callback = KConfig::unbox($config->connections_callback);        
+        $this->_connections_callback = KConfig::unbox($config->connections_callback);
         $this->_mapper_callback      = KConfig::unbox($config->mapper_callback);
-        
+            
         $this->_loadUsers();
     }
         
@@ -79,6 +79,7 @@ class ComConnectOauthUsers extends KObject implements Iterator
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
+            'users'    => null,
             'connections_callback' => function()  {return array();},
             'mapper_callback'      => function($user) {return $user;} 
         ));
@@ -164,7 +165,15 @@ class ComConnectOauthUsers extends KObject implements Iterator
      */
     public function current()
     {
-        return current($this->_users);
+        $key  = key($this->_users);
+        $user = current($this->_users);
+        if ( is_array($user) ) 
+        {
+            $attributes = invoke_callback($this->_mapper_callback, array($user));
+            $user       = new ComConnectOauthUser($attributes);
+            $this->_users[0] = $user;
+        }
+        return $user;
     }
 
     /**
@@ -178,41 +187,43 @@ class ComConnectOauthUsers extends KObject implements Iterator
     } 
 
     /**
+     * Retunr an array of IDs
+     * 
+     * @return array
+     */
+    public function getIds()
+    {
+        $ids = array();
+        foreach($this->_users as $user) 
+        {
+            if ( $user instanceof ComConnectOauthUser ) {
+                $ids[]      = $user->id;
+            } else {
+                $attributes = invoke_callback($this->_mapper_callback, array($user));
+                $ids[] = $attributes['id'];
+            }
+        }
+        return $ids;
+    }
+    
+    /**
      * Loads the users and caches the data
      * 
      * @return void
      */
     protected function _loadUsers()
     {
-        $cache = JFactory::getCache((string) $this->getIdentifier(), '');
-        $key   = 'connections_';
-        $data  = $cache->get($key);
-        if ( !$data )
+        if ( !isset($this->_users) )
         {
-            $data    = invoke_callback(array('static::DD'));
-            //$this->_connections_callback
-            die;
-            $ids     = array();
-            $users   = array();
-            foreach($data as $i => $user) {
-                $user   = $this->_mapAttributes($user);
-                $ids[]  = $user['id'];
-                $users[$user['id']] = $user;
+            $cache = JFactory::getCache((string) $this->getIdentifier(), '');
+            $key   = 'connections_';
+            $data  = $cache->get($key);
+            if ( !$data  )
+            {
+                $data    = invoke_callback($this->_connections_callback);
+                $cache->store($data, $key);
             }
-            $sessions = $this->getService('repos://site/connect.session')
-            ->getQuery()
-            ->where(array(
-                    'profileId'=> $ids,
-                    'api'      => $this->_service_name))
-                    ->fetchSet()
-                    ;
-                    foreach($sessions as $session) {
-                        unset($users[$session->profileId]);
-                    }
-                    $array = array();
-                    $array['actor_ids'] = $sessions->owner->id;
-                    $array['users']     = array_values($users);
-                    $cache->store($array, $key);
-        }        
+            $this->_users = $data;            
+        }
     }
 }
