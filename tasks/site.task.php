@@ -84,15 +84,15 @@ class Create extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {        
         $this->_input = $input; $this->_output = $output;
-        $this->_symlink(true);
+        $this->_symlink();
         $this->_configure();
     }
     
-    protected function _symlink($configure = false)
+    protected function _symlink()
     {
         $this->_output->writeLn("<info>Linking files...</info>");
         $symlink = new Symlink();
-        $symlink->configure($configure);
+        $symlink->symlink();
     }
     
     protected function _configure()
