@@ -56,7 +56,7 @@ class ComStoriesDomainRepositoryStory extends AnDomainRepositoryDefault
 	protected function _beforeRepositoryFetch(KCommandContext $context)
 	{
 		$query = $context->query;
-				
+		$query->where('@col(comment.id) IS NULL');
 		$query->where('IF(@col(target.enabled) IS NULL, 1, @col(target.enabled) <> 0) AND IF(@col(subject.enabled) IS NULL, 1, @col(subject.enabled) <> 0)')
 		      ->link('target', array('type'=>'weak','bind_type'=>false))
             ;
