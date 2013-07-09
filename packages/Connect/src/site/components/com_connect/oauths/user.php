@@ -26,8 +26,22 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComConnectOauthUser implements KObjectHandlable
+class ComConnectOauthUser
 {
+    /**
+     * Instantiate an oauth user using the its attributes
+     * 
+     * @param array $attributes
+     * 
+     * @return void
+     */
+    public function __construct($attributes)
+    {
+         foreach($attributes as $key => $value) {
+             $this->$key = $value;
+         }
+    }
+    
 	/** 
 	 * Profile URL
 	 * 
@@ -83,13 +97,4 @@ class ComConnectOauthUser implements KObjectHandlable
 	 * @var string
 	 */
 	public $thumb_avatar;
-
-	/**
-	 * (non-PHPdoc)
-	 * @see KObjectHandlable::getHandle()
-	 */
-	public function getHandle()
-	{
-	    return spl_object_hash($this);
-	}
 }
