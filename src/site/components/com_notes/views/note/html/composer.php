@@ -38,7 +38,7 @@
                 ?>    	        
     			<?php if ( count($sessions) > 0 ) : ?>
     				<?php foreach($sessions as $session) : ?>
-    				<a class="btn" data-trigger="Checkbox" data-checkbox-toggle-element="i" data-checkbox-name="channels[]" data-checkbox-value="<?=$session->getName() ?>" data-behavior="BS.Twipsy" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
+    				<a class="btn btn-<?= $session->api->getName() ?>" data-trigger="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?=$session->getName() ?>" data-behavior="BS.Twipsy" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
     					<?= @helper('com://site/connect.template.helper.service.icon', $session->api->getName())?>    			            			         
     			    </a>
     				<?php endforeach;?>
