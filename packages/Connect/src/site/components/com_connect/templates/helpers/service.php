@@ -68,7 +68,7 @@
  		
  		return $html->link($config->html, null, $config->attributes)
  		    ->dataSubmitUrl($config->url)
- 		    ->class('btn btn-large btn-socialmedia-'.$service)
+ 		    ->class('btn btn-large btn-'.$service)
  		    ->dataTrigger('Submit')->title($service);
  	}
 
