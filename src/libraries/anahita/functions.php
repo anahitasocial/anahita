@@ -367,13 +367,14 @@ function invoke_callback($callback, array $arguments = array())
     switch(count($arguments))
     {
         case 0 :
-            $result = $object ? $object->$method() : $method;
+            $result = $object ? $object->$method() : $method();
             break;
         case 1 :
             $result = $object ? $object->$method($arguments[0]) : $method($arguments[0]);
             break;
         case 2:
-            $result = $object ? $object->$method($arguments[0], $arguments[1]) : $method($arguments[0], $arguments[1]);
+            $result = $object ? $object->$method($arguments[0], $arguments[1]) : 
+                $method($arguments[0], $arguments[1]);
             break;
         case 3:
             $result = $object ? $object->$method($arguments[0], $arguments[1], $arguments[2]) : $method($arguments[0], $arguments[1], $arguments[2]);
@@ -384,7 +385,7 @@ function invoke_callback($callback, array $arguments = array())
         default:
             // Resort to using call_user_func_array for many segments
             $callback = $object ? array($object, $method) : $method;
-            $result = call_user_func_array($callback, $arguments);
+            $result   = call_user_func_array($callback, $arguments);
     }
     return $result;
 }
