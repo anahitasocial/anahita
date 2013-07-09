@@ -47,6 +47,13 @@ class ComInvitesSocialinviterDefault extends KObject
      */
     protected $_oauth_session;
     
+    /**
+     * Users
+     * 
+     * @var ComConnectOauthUsers
+     */
+    protected $_users;
+    
     /** 
      * Constructor.
      *
@@ -68,6 +75,31 @@ class ComInvitesSocialinviterDefault extends KObject
         
         $this->_oauth_session = $this->getService('repos://site/connect.session')
                     ->fetch(array('owner'=>$this->_inviter, 'api'=>$this->_service_name));
+                
+        $api = $this->_oauth_session->getApi();
+        
+        $this->_users = $this->getService('com://site/connect.oauth.users', array(
+                'connections_callback' =>  function() use($api) {
+                    $data = $api->get('/me/friends');
+                    return $data['data'];
+                },
+                'mapper_callback'      =>  function($user) {
+                    $data           = array();
+                    $data['id']     = $user['id'];
+                    $data['name']   = $user['name'];
+                    $data['avatar'] = 'https://graph.facebook.com/'.$user['id'].'/picture';
+                    return $data;
+                }
+        ));
+        
+        $this->_people = $this->getService('repos://site/people')
+            ->getQuery(true)
+            ->select('@col(sessions.profileId)')
+            ->where(array(
+                'sessions.profileId'=> $this->_users->getIds(),
+                'sessions.api'      => $this->_service_name))
+            ->toEntitySet();
+            ;
     }
         
     /**
@@ -104,41 +136,21 @@ class ComInvitesSocialinviterDefault extends KObject
      * 
      * @return array
      */
-    public function getInvitables()
+    public function getUsers()
     {
-//         //$this->_oauth_session->getApi()->get('/me/friends');
-//         array(, 'get','/me/friends');
-        $api   = $this->_oauth_session->getApi();
-        $users = $this->getService('com://site/connect.oauth.users', array(
-               'connections_callback' =>  function() use($api) {
-                   $data = $api->get('/me/friends');
-                   return $data['data'];                    
-               },
-               'mapper_callback'      =>  function($user) {
-                   $data           = array();
-                   $data['id']     = $user['id'];
-                   $data['name']   = $user['name'];
-                   $data['avatar'] = 'https://graph.facebook.com/'.$user['id'].'/picture';
-                   return $data;               
-               }
-        ));
-        print $users;
-        die;
-        die;
-        $this->getConnections();
-        die;
-        if ( $this->getInvite() ) 
-        {
-            
-        }
-        return array('d','d');
+        $this->_users;
+    }
+    
+    public function getPeople()
+    {
+        return $this->_people;    
     }
     
     /**
      * 
      * @return 
      */
-    protected function getConnections()
+    protected function gedtPeople()
     {
         $cache = JFactory::getCache((string) $this->getIdentifier(), '');
         $key   = 'connections_'.$this->_oauth_session->id;
@@ -167,33 +179,7 @@ class ComInvitesSocialinviterDefault extends KObject
             $array['actor_ids'] = $sessions->owner->id;
             $array['users']     = array_values($users); 
             $cache->store($array, $key);
-        }        
+        }
     }
-        
-    /**
-     * Return an array of data
-     *
-     * @return array
-     */
-    protected function _getConnections()
-    {        
-        $data = $this->_oauth_session->getApi()->get('/me/friends');
-        return $data['data'];
-    }
-    
-    /**
-     * Maps the serivce user attribures into oatuh user attributes
-     * 
-     * @return array
-     */
-    protected function _mapAttributes($user)
-    {        
-        $data           = array();
-        $data['id']     = $user['id'];
-        $data['name']   = $user['name'];
-        $data['avatar'] = 'https://graph.facebook.com/'.$user['id'].'/picture';
-        return $data;
-    }
-    
 
 }

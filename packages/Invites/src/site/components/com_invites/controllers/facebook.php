@@ -35,11 +35,13 @@ class ComInvitesControllerFacebook extends ComBaseControllerResource
      * @return void
      */
     protected function _actionRead($context)
-    {
-       
-        $socialInviter = $this->getService('com://site/invites.socialinviter.facebook', array(
+    {       
+        $this->social_inviter = $this->getService('com://site/invites.socialinviter.facebook', array(
                 'inviter' => get_viewer()
         ));
+//         $context->response->setContent('dadfas');
+        return;
+         
         foreach($socialInviter->getInvitables() as $user) 
         {
               print $user;  
