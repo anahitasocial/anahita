@@ -74,6 +74,8 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
     */
     protected function _initialize(KConfig $config)
     {        
+        $params = '';
+        
         if ( is_readable($file = JPATH_THEMES.'/'.$this->getIdentifier()->package.'/params.ini') ) {
             $params = file_get_contents($file);
         }

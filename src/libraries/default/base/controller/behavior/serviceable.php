@@ -154,7 +154,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         //do some sorting
         if ( $this->sort )
         {
-            $this->_state->append(array(
+            $this->getState()->append(array(
                 'direction' => 'ac'
             ));
             
