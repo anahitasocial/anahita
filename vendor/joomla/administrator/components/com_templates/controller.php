@@ -210,26 +210,14 @@ class TemplatesController
 		$file = $client->path.DS.'templates'.DS.$template.DS.'params.ini';
 
 		jimport('joomla.filesystem.file');
-		if (JFile::exists($file) && count($params))
+		if ( count($params) )
 		{
 			$registry = new JRegistry();
 			$registry->loadArray($params);
-			$txt = $registry->toString();
-
-			// Try to make the params file writeable
-			if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
-				JError::raiseNotice('SOME_ERROR_CODE', JText::_('Could not make the template parameter file writable'));
-			}
-
-			$return = JFile::write($file, $txt);
-
-			// Try to make the params file unwriteable
-			if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
-				JError::raiseNotice('SOME_ERROR_CODE', JText::_('Could not make the template parameter file unwritable'));
-			}
-
+			$txt    = $registry->toString();
+			$return = file_put_contents($file, $txt);
 			if (!$return) {
-				$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::sprintf('Failed to open file for writing.', $file));
+				$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::sprintf('Failed to open file for writing.', $file));		
 			}
 		}
 
