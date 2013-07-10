@@ -139,7 +139,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	public function getPortraitFile($size)
 	{
 	    $filename = $this->filename;
-	
+
 	    //remove the extension
 	    $extension = JFile::getExt($filename);
 	    $name      = JFile:: stripExt($filename);
