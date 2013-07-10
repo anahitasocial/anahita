@@ -20,18 +20,32 @@ new FacebookInvite({
 	'appId'    :  <?= $social_inviter->getAppId()?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
-    'appURL'   : '<?= $url?>',
+    'appURL'   : '<?= 'http://anahitapolis.com'?>',
     'picture'  : '<?= $viewer->getPortraitURL() ?>',
 });
 
 </script>
 
-<?= @helper('ui.filterbox', @route('layout=list')) ?>
-
-	
+<a href="#" data-trigger="Invite" class="btn-facebook btn-large">
+    <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
+</a>  
+<h3>
+    <?= @text('COM-INVITES-ACTION-FB-FIND-FRIENDS') ?>
+</h3>
+<style>
+#block {
+    display:none;
+}
+</style>
+<module position="sidebar-b" style="none"></module>	
 <div class="an-entities-wrapper">	
-	<?= @template('list') ?>
+<?php 
+$controller = @service('com://site/people.controller.person', array('request'=>array('view'=>'people')));                
+$controller->getState()->setList($social_inviter->getPeople());
+?>
+<?= $controller->getView()->layout('list')->display() ?>
 </div>
+
 
 
 

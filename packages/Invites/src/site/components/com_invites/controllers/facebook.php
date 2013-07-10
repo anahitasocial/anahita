@@ -71,8 +71,7 @@ class ComInvitesControllerFacebook extends ComInvitesControllerDefault
                 'offset'  => $this->start,
                 'name'    => $this->q
         );
-        $this->users = $this->getInviter()->getUsers($config);
-        return $this->users;        
+        $this->getInviter()->getPeople()->limit($this->limit, $this->offset);
     }    
         
 	/**

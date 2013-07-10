@@ -120,35 +120,35 @@ class ComInvitesSocialinviterFacebook extends KObject
         return !empty($this->_oauth_session);
     }
     
-    /**
-     * Return an array of connections
-     * 
-     * @param array $config Users configuration
-     * 
-     * @return array
-     */
-    public function getUsers($config)
-    {
-        $this->_load();
-        $config = new KConfig($config);
-        $users  = $this->_users;
+//     /**
+//      * Return an array of connections
+//      * 
+//      * @param array $config Users configuration
+//      * 
+//      * @return array
+//      */
+//     public function getUsers($config)
+//     {
+//         $this->_load();
+//         $config = new KConfig($config);
+//         $users  = $this->_users;
 
-        if ( $config->name )
-        {
-            $name = $config->name;
-            foreach($users as $i => $user)
-            {
-                if ( strpos(strtolower($user['name']), $name) === false ) {
-                    unset($users[$i]);
-                }
-            }
-        }
+//         if ( $config->name )
+//         {
+//             $name = $config->name;
+//             foreach($users as $i => $user)
+//             {
+//                 if ( strpos(strtolower($user['name']), $name) === false ) {
+//                     unset($users[$i]);
+//                 }
+//             }
+//         }
         
-        $users =
-            array_slice($users, $config->get('offset', 0), $config->get('limit', 20));;        
+//         $users =
+//             array_slice($users, $config->get('offset', 0), $config->get('limit', 20));;        
                 
-        return $users;
-    }
+//         return $users;
+//     }
     
     /**
      * Set of people who are friends with the inviter
@@ -215,7 +215,7 @@ class ComInvitesSocialinviterFacebook extends KObject
                 $cache->store($data, $key);
             }
             
-            $this->_people = $get_people_query($data['ids']);
+            $this->_people = $get_people_query($data['ids'])->toEntitySet();
             $this->_users  = $data['data'];            
         }
     }

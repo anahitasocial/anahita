@@ -25,7 +25,7 @@ var FacebookInvite = new Class({
 				name: 'Anahita',
 				link: msgLink,
 				picture: this.options.picture,				
-				to: this.fbid,
+				/*to: this.fbid,*/
 				name: this.options.subject,
 				description: this.options.body
 			},
