@@ -25,8 +25,38 @@
  * @link       http://www.anahitapolis.com
  */
 
-class ComInvitesControllerFacebook extends ComBaseControllerResource
+class ComInvitesControllerFacebook extends ComInvitesControllerDefault
 {
+    /** 
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     * 
+     * @return void
+     */ 
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+    }
+        
+    /**
+     * Initializes the default configuration for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     *
+     * @return void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'request' => array('limit'=>50,'offset'=>0,'q'=>null)
+        ));
+    
+        parent::_initialize($config);
+    } 
+    
     /**
      * Read
      *
@@ -36,22 +66,13 @@ class ComInvitesControllerFacebook extends ComBaseControllerResource
      */
     protected function _actionRead($context)
     {       
-        $this->social_inviter = $this->getService('com://site/invites.socialinviter.facebook', array(
-                'inviter' => get_viewer()
-        ));
-//         $context->response->setContent('dadfas');
-        return;
-         
-        foreach($socialInviter->getInvitables() as $user) 
-        {
-              print $user;  
-        }
-        //print $socialInviter;
-        die;
-        die; 
-        $this->users = $this->adapter->getInvitables()
-                            ->filter('name', $this->q)
-                            ->limit($this->start, $this->limit);
+        $config = array(
+                'limit'   => $this->limit,
+                'offset'  => $this->start,
+                'name'    => $this->q
+        );
+        $this->users = $this->getInviter()->getUsers($config);
+        return $this->users;        
     }    
         
 	/**

@@ -17,7 +17,7 @@ $body    = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @na
 ?>
 
 new FacebookInvite({
-	'appId'    : <?= $adapter->getApp()->id?>,
+	'appId'    :  <?= $social_inviter->getAppId()?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
     'appURL'   : '<?= $url?>',

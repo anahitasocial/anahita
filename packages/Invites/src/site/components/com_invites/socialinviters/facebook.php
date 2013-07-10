@@ -54,6 +54,13 @@ class ComInvitesSocialinviterFacebook extends KObject
      */
     protected $_users;
     
+    /**
+     * People
+     * 
+     * @var AnDomainEntitysetDefault
+     */
+    protected $_people;
+    
     /** 
      * Constructor.
      *
@@ -75,10 +82,7 @@ class ComInvitesSocialinviterFacebook extends KObject
         
         $this->_oauth_session = $this->getService('repos://site/connect.session')
                     ->fetch(array('owner'=>$this->_inviter, 'api'=>$this->_service_name));
-                
-        $api = $this->_oauth_session->getApi();
-        
-        $this->_loadUsers($config->users);
+                                
     }
         
     /**
@@ -119,11 +123,31 @@ class ComInvitesSocialinviterFacebook extends KObject
     /**
      * Return an array of connections
      * 
+     * @param array $config Users configuration
+     * 
      * @return array
      */
-    public function getUsers()
+    public function getUsers($config)
     {
-        return $this->_users;
+        $this->_load();
+        $config = new KConfig($config);
+        $users  = $this->_users;
+
+        if ( $config->name )
+        {
+            $name = $config->name;
+            foreach($users as $i => $user)
+            {
+                if ( strpos(strtolower($user['name']), $name) === false ) {
+                    unset($users[$i]);
+                }
+            }
+        }
+        
+        $users =
+            array_slice($users, $config->get('offset', 0), $config->get('limit', 20));;        
+                
+        return $users;
     }
     
     /**
@@ -133,6 +157,7 @@ class ComInvitesSocialinviterFacebook extends KObject
      */
     public function getPeople()
     {
+        $this->_load();
         return $this->_people;    
     }
     
@@ -153,14 +178,11 @@ class ComInvitesSocialinviterFacebook extends KObject
     }
     
     /**
-     * Loads the users and caches the data
-     *
-     * @param KConfig $config Config option to load with keys
-     * :limit, :offset and :name 
+     * Loads the data
      * 
      * @return void
      */
-    protected function _loadUsers($config)
+    protected function _load()
     {
         if ( !isset($this->_users) )
         {
@@ -175,41 +197,26 @@ class ComInvitesSocialinviterFacebook extends KObject
                 ->select('@col(sessions.profileId)')
                 ->where(array(
                         'sessions.profileId'=> $ids,
-                        'sessions.api'      => $service_name))                       
-                ;
+                        'sessions.api'      => $service_name))
+                        ;
             };
             if ( !$data )
             {
-//                 $data  = $this->_oauth_session->getApi()->get('/me/friends?fields=picture.type(large)');
-                $data  = KConfig::unbox($data);                
+                $data  = $this->_oauth_session->getApi()->get('/me/friends');
+                $data  = KConfig::unbox($data);
                 $data['ids'] = array_map(function($user){
                     return $user['id'];
                 }, $data['data']);
-                $profile_ids  = $get_people_query($data['ids'])->fetchValues('sessions.profileId');                
-                $data['data'] = array_filter($data['data'], function($user) 
-                            use ($profile_ids) {
+                $profile_ids  = $get_people_query($data['ids'])->fetchValues('sessions.profileId');
+                $data['data'] = array_filter($data['data'], function($user)
+                        use ($profile_ids) {
                     return !in_array($user['id'], $profile_ids);
                 });
                 $cache->store($data, $key);
             }
-
-            $this->_people = $get_people_query($data['ids']);
-                        
-            $users = $data['data'];
             
-            if ( $config->name ) 
-            {
-                $name = $config->name;
-                foreach($users as $i => $user) 
-                {
-                    if ( strpos(strtolower($user['name']), $name) === false ) {
-                        unset($users[$i]);
-                    }
-                }
-            }
-                        
-            $this->_users = 
-                array_slice($users, $config->get('offset', 0), $config->get('limit', 20));;
+            $this->_people = $get_people_query($data['ids']);
+            $this->_users  = $data['data'];            
         }
     }
 }
