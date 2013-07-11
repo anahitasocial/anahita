@@ -57,7 +57,11 @@ class ComInvitesMixinFacebook extends KMixinAbstract
         {
             $data   = $this->_mixer->get('/me/friends');
             $data   = KConfig::unbox($data);
-            $data   = array_map(function($user) {return $user['id'];}, $data['data']);
+            if ( !empty($data) ) {
+                $data = array_map(function($user) {return $user['id'];}, $data['data']);
+            } else {
+               $data  = array(-1);   
+            }
             $cache->store($data, $key);
         }    
         
