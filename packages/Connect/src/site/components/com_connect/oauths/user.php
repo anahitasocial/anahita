@@ -35,7 +35,7 @@ class ComConnectOauthUser
      * 
      * @return void
      */
-    public function __construct($attributes)
+    public function __construct($attributes = array())
     {
          foreach($attributes as $key => $value) {
              $this->$key = $value;
