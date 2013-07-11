@@ -162,8 +162,33 @@ class KObject implements KObjectHandlable, KObjectServiceable
      * @param   KMixinInterface  $object An object that implements KMinxInterface
      * @return  KObject
      */
-    public function mixin(KMixinInterface $object)
+    public function mixin($object, $config = array())
     {
+        if ( !$object instanceof KMixinInterface )
+        {
+            if ( !$object instanceof KServiceIdentifier ) 
+            {
+                //Create the complete identifier if a partial identifier was passed
+                if (is_string($object) && strpos($object, '.') === false)
+                {
+                    $identifier = clone $this->getIdentifier();
+                    $identifier->path = 'mixin';
+                    $identifier->name = $object;
+                }
+                else $identifier = $this->getIdentifier($object);                
+            }
+            else  $identifier = $object;
+
+            $config = new KConfig($config);
+            $config->mixer = $this;
+            $object = new $identifier->classname($config);
+            if(!$object instanceof KMixinInterface)
+            {
+                throw new \UnexpectedValueException(
+                        'Mixin: '.get_class($mixin).' does not implement KMixinInterface'
+                );
+            }
+        }
         $methods = $object->getMixableMethods($this);
 
         foreach($methods as $method) {            
