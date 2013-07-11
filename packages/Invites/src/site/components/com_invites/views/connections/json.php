@@ -25,7 +25,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.Json>
  * @link       http://www.anahitapolis.com
  */
-class ComInvitesViewFacebookJson extends ComBaseViewJson
+class ComInvitesViewConnectionsJson extends ComBaseViewJson
 {       
     /**
      * (non-PHPdoc)

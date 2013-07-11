@@ -57,15 +57,9 @@ class plgSystemInvites extends JPlugin
 		
 		$invite_token = KRequest::get('session.invite_token', 'string', null);
 		
-		if(!$invite_token)
-			return;
-			
-		$token = KService::get('repos:invites.token')->fetch(array('value'=>$invite_token));
-		
-		if($token)
-		{
-			$usersConfig = &JComponentHelper::getParams( 'com_users' );
-			$usersConfig->set( 'allowUserRegistration', true );
-		}
+		if( $invite_token ) {
+		    $usersConfig = &JComponentHelper::getParams( 'com_users' );
+		    $usersConfig->set( 'allowUserRegistration', true );		    
+		}		  						
 	}
 }

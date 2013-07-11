@@ -46,19 +46,22 @@ class ComInvitesControllerToolbarActorbar extends ComBaseControllerToolbarActorb
 		$actor	= $viewer;
 		$layout = pick($this->getController()->layout, 'default');
 		$name	= $this->getController()->getIdentifier()->name;
-		
+		if ( $name == 'connection' ) {
+		    $name = $this->getController()->service; 
+		}    
+		    
 		$this->setTitle(JText::sprintf('COM-INVITES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
 			
 		//create navigations
 		$this->addNavigation('email',
 								JText::_('COM-INVITES-LINK-EMAIL'),
-								array('option'=>'com_invites', 'view'=>'email', 'oid'=>$actor->id),
+								'option=com_invites&view=email',
 								$name == 'email');
 
 
         $this->addNavigation('facebook', 
 								JText::_('COM-INVITES-LINK-FACEBOOK'), 
-								array('option'=>'com_invites', 'view'=>'facebook','oid'=>$actor->id), 
+								'option=com_invites&view=connections&service=facebook', 
 								$name == 'facebook');
     }
 }

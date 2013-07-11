@@ -11,7 +11,7 @@ var FacebookInvite = new Class({
 		event.stop();		
 		this.fbid = api.get('fbid');
 		new Request.JSON({
-			url : 'index.php/invites/token',
+			url : 'index.php/invites/token/facebook',
 			onSuccess : this.openDialog.bind(this)
 		}).get();
 	},
@@ -33,8 +33,8 @@ var FacebookInvite = new Class({
 				if(response.success) {
 					new Request.JSON({
 							method: 'post',
-							url : 'index.php/invites/facebook',
-							data: 'action=invite&token=' + token.value
+							url : 'index.php/invites/token/facebook',
+							data: {value:token.value}
 					}).send();
 				}				
 			}.bind(this)	
