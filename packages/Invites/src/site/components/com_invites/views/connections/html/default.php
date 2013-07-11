@@ -30,7 +30,7 @@ new FacebookInvite({
 
 </script>
 
-<a href="#" data-trigger="Invite" class="btn btn-facebook">
+<a href="#" data-trigger="Invite" class="btn btn-primary">
     + <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
 </a>  
 <style>
