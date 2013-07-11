@@ -71,8 +71,10 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 		$this->getAPI()->requestAccessToken($this->getRequest());
 		$token		= (array) $this->getAPI()->getToken();
 		$consumer	= (array)$this->_consumer;
-		KRequest::set('session.oauth', array('api'=>$this->getAPI()->getName(),'token'=>$token, 'consumer'=>$consumer));		
-		$context->referrer = KRequest::get('session.referrer','raw', null);
+		KRequest::set('session.oauth', array('api'=>$this->getAPI()->getName(),'token'=>$token, 'consumer'=>$consumer));
+		$return = KRequest::get('session.return','raw', null);;
+		if ( $return )
+		    $context->append(array('data'=>array('return'=>$return)));
 	}
 		
 	/**
@@ -82,8 +84,9 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 	 * @return void
 	 */
 	protected function _actionOauthorize($context)
-	{
-		KRequest::set('session.referrer', (string)KRequest::referrer());
+	{	
+	    $data = $context->data;
+	    KRequest::set('session.return', (string)$data->return);
 		KRequest::set('session.oauth', null);
 		$view = $this->_mixer->getIdentifier()->name;		
 		$this->getAPI()->setToken(null);		
