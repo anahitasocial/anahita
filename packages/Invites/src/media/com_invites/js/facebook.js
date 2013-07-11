@@ -30,6 +30,7 @@ var FacebookInvite = new Class({
 				description: this.options.body
 			},
 			function(response){
+				"Invitations Sent".alert('info');
 				if(response.success) {
 					new Request.JSON({
 							method: 'post',
