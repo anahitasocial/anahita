@@ -37,7 +37,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-                'toolbars' => null,
+            'toolbars' => null,
         ));
     
         parent::_initialize($config);

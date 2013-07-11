@@ -25,7 +25,24 @@
  * @link       http://www.anahitapolis.com
  */
 class ComInvitesMixinFacebook extends KMixinAbstract
-{    
+{   
+    /**
+     * Return the APPID
+     * 
+     * @return int
+     */ 
+    public function getAppID()
+    {        
+        $key   = md5($this->_mixer->getToken());
+        $cache = JFactory::getCache((string) 'ComInvitesMixinFacebook', '');
+        $cache->setLifeTime(5*1000);
+        $data = $cache->get(function($session) {
+            $info = $session->api->get('/app');
+            return $info;
+        }, array($this->_mixer) , '/app'.$key);
+        return $data['id'];        
+    }
+    
     /**
      * Return a set of people who are fb friends
      * 

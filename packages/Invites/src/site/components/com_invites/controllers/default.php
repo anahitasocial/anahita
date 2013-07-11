@@ -51,7 +51,7 @@ class ComInvitesControllerDefault extends ComBaseControllerResource
 	 * 
 	 * @return boolean
 	 */
-	public function canRead()
+	public function canGet()
 	{
 	    return !$this->getService('com:people.viewer')->guest();
 	}

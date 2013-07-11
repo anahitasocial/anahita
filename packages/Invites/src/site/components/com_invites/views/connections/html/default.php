@@ -1,5 +1,9 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if ( !isset($service) ) : ?>
+<?= @template('add') ?>
+<?php return;?>
+<?php endif; ?>
 <script data-inline src="http://connect.facebook.net/en_US/all.js"></script>
 <script data-inline src="media://com_invites/js/facebook.js"></script>
 
