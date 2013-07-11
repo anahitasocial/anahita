@@ -32,7 +32,7 @@
      * 
      * @return array
      */
-    public function getServices()
+    static public function getServices()
     {
         $avail_services = array('facebook','twitter','linkedin');
         $services = array();
@@ -52,7 +52,7 @@
  	 * @param  string $api
  	 * @return ComConnectOauthConsumer
  	 */
- 	public function getConsumer($api)
+ 	static public function getConsumer($api)
  	{
         $api      = strtolower($api);
 		$key  	  = get_config_value('com_connect.'.$api.'_key');
@@ -72,7 +72,7 @@
  	 * 
  	 * @return ComConnectOauthApiAbstract
  	 */
- 	public function getAPI($service)
+ 	static public function getAPI($service)
  	{
         $service    = strtolower($service);
         $identifier = 'com://site/connect.oauth.service.'.$service;
@@ -81,7 +81,7 @@
             $config   = array();
             $config['consumer'] = self::getConsumer($service);
             $config['enabled']  = self::enabled($service);
-            KService::set($identifier, $this->getService($identifier, $config));            
+            KService::set($identifier, KService::get($identifier, $config));            
         }
 		return 	KService::get($identifier);
  	}
@@ -93,7 +93,7 @@
      * 
      * @return bool 
      */
-    public function enabled($service)
+    static public function enabled($service)
     {
         $service = strtolower($service);
         return get_config_value('connect.'.$service.'_enable', true) && 

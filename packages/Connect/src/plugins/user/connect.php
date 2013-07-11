@@ -128,7 +128,7 @@ class PlgUserConnect extends JPlugin
             if ( isset($post['oauth_token']) &&
                  isset($post['oauth_handler']))
             {
-                    $api = KService::get('com://site/connect.helper.api')->getApi($post['oauth_handler']);
+                    $api = ComConnectHelperApi::getApi($post['oauth_handler']);
                     $api->setToken($post['oauth_token'], isset($post['oauth_secret']) ? $post['oauth_secret'] : '');
             } 
             
