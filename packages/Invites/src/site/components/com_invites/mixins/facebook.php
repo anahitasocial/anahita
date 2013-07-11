@@ -55,13 +55,17 @@ class ComInvitesMixinFacebook extends KMixinAbstract
         $data  = $cache->get($key);
         if ( !$data  )
         {
-            $data   = $this->_mixer->get('/me/friends');
-            $data   = KConfig::unbox($data);
-            if ( !empty($data) ) {
-                $data = array_map(function($user) {return $user['id'];}, $data['data']);
-            } else {
-               $data  = array(-1);   
+            try {
+                $data   = $this->_mixer->get('/me/friends');
+            } catch(Exception $e) {
+                throw new \LogicException("Can't get connections from facebook");
             }
+            if ( $data->error ) {
+                throw new \LogicException("Can't get connections from facebook");
+            }            
+            $data   = KConfig::unbox($data);
+            $data   = array_map(function($user) {return $user['id'];}, $data['data']);
+            $data['data'][] = '-1'; 
             $cache->store($data, $key);
         }    
         
