@@ -51,7 +51,7 @@ class ComInvitesMixinFacebook extends KMixinAbstract
     public function getConnections()
     {
         $cache = JFactory::getCache((string) 'ComInvitesMixinFacebook', '');
-        $key   = md5($this->_mixer->getToken());
+        $key   = 'ids_'.md5($this->_mixer->getToken());
         $data  = $cache->get($key);
         if ( !$data  )
         {
