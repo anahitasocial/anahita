@@ -254,8 +254,11 @@ Class.refactor(Form.Validator.Inline, {
 			
 			return remoteValidator.getErrorMsg();		    
 		},
-		test 	: function(element, props) 
-		{
+		test 	: function(element, props) {
+			if ( Form.Validator.getValidator('IsEmpty').test(element) ) {
+				return true;
+			}
+			
 			var remoteValidator = element
 				.set('remoteValidator', props)
 				.get('remoteValidator');
