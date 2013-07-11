@@ -109,7 +109,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 	{	
 		$this->getItem()->addPhoto($this->photo);
 		
-		$context->response->setRedirect($this->getItem()->getURL());
+		$context->response->setRedirect(JRoute::_($this->getItem()->getURL()));
 		
 		return $this->getItem();
 	}
