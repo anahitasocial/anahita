@@ -5,10 +5,10 @@
 
 <div id="fb-root"></div>
 
-
 <?php
     $url = @route()->getURl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT );    
 ?>
+
 <script>
 
 <?php
@@ -17,7 +17,8 @@ $body    = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @na
 ?>
 
 new FacebookInvite({
-	'appId'    :  <?= $social_inviter->getAppId()?>,
+	'appId'    :  <?= @service('com://site/invites.helper.facebook')
+                        ->getFacebookAppId($viewer) ?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
     'appURL'   : '<?= 'http://anahitapolis.com'?>',
@@ -26,12 +27,9 @@ new FacebookInvite({
 
 </script>
 
-<a href="#" data-trigger="Invite" class="btn-facebook btn-large">
-    <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
+<a href="#" data-trigger="Invite" class="btn btn-facebook">
+    + <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
 </a>  
-<h3>
-    <?= @text('COM-INVITES-ACTION-FB-FIND-FRIENDS') ?>
-</h3>
 <style>
 #block {
     display:none;
@@ -41,7 +39,7 @@ new FacebookInvite({
 <div class="an-entities-wrapper">	
 <?php 
 $controller = @service('com://site/people.controller.person', array('request'=>array('view'=>'people')));                
-$controller->getState()->setList($social_inviter->getPeople());
+$controller->getState()->setList($items);
 ?>
 <?= $controller->getView()->layout('list')->display() ?>
 </div>

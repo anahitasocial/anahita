@@ -51,7 +51,7 @@ class ComInvitesControllerFacebook extends ComInvitesControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'request' => array('limit'=>50,'offset'=>0,'q'=>null)
+            'request' => array('limit'=>50,'offset'=>0)
         ));
     
         parent::_initialize($config);
@@ -65,14 +65,14 @@ class ComInvitesControllerFacebook extends ComInvitesControllerDefault
      * @return void
      */
     protected function _actionRead($context)
-    {       
-        $config = array(
-                'limit'   => $this->limit,
-                'offset'  => $this->start,
-                'name'    => $this->q
-        );
-        $this->getInviter()->getPeople()->limit($this->limit, $this->offset);
-    }    
+    {
+        $fbfriends = $this->getService('com://site/invites.domain.entityset.fbfriend', 
+                    array('actor'=>$this->viewer));
+        
+        $fbfriends->limit($this->limit, $this->offset);
+        
+        $this->_state->setList($fbfriends);
+    }
         
 	/**
 	 * Invite
