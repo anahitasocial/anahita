@@ -34,10 +34,10 @@ class ComInvitesMixinFacebook extends KMixinAbstract
     public function getAppID()
     {        
         $key   = md5($this->_mixer->getToken());
-        $cache = JFactory::getCache((string) 'ComInvitesMixinFacebook', '');
+        $cache = JFactory::getCache((string) 'ComInvitesMixinFacebook');
         $cache->setLifeTime(5*1000);
         $data = $cache->get(function($session) {
-            $info = $session->api->get('/app');
+            $info = $session->get('/app');
             return $info;
         }, array($this->_mixer) , '/app'.$key);
         return $data['id'];        
