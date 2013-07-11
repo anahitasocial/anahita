@@ -54,12 +54,15 @@ class ComInvitesControllerToken extends ComBaseControllerService
         {
             $token = $this->getRepository()->find(array('value'=>$this->token));
             $this->getToolbar('menubar')->setTitle(null);
-            if ( $token && $this->viewer->guest()  ) {
+            
+            if ( !$token || !isset($token->inviter)) {
+                throw new LibBaseControllerExceptionNotFound('Token not found');
+            }
+                        
+            if ( $this->viewer->guest()  ) {
                 KRequest::set('session.invite_token', $token->value);                               
             }
-            elseif ( !$token ) {
-                throw new LibBaseControllerExceptionNotFound('Token not found');
-            } 
+
             $this->setItem($token);           
         }
         else
