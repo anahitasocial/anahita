@@ -19,7 +19,7 @@ if ( !$user ) :
 	    <div class="controls">
 	    	<div class="input-prepend">
 	    		<span class="add-on"><i class="icon-user"></i></span>
-	    		<input data-validators="required" type="text" id="name" name="name" value="<?= @$name ?>" maxlength="25" />
+	    		<input data-validators="required" type="text" id="name" name="name" value="<?= empty($name) ? '' : $name ?>" maxlength="25" />
 	    	</div>
 	    </div>
 	</div>
@@ -31,7 +31,7 @@ if ( !$user ) :
 	    <div class="controls">
 	    	<div class="input-prepend">
 	    		<span class="add-on"><i class="icon-user"></i></span>
-	    		<input data-validators="required validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= @$username ?>" maxlength="25" />
+	    		<input data-validators="required validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= empty($username) ? '' : $username ?>" maxlength="25" />
 	    	</div>
 	    </div>
 	</div>
@@ -43,7 +43,7 @@ if ( !$user ) :
 	    <div class="controls">
 	    	<div class="input-prepend">
 	    		<span class="add-on"><i class="icon-envelope"></i></span>
-	    		<input data-validators="required validate-email validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="email" name="email" value="<?= @$email ?>" maxlength="100" />
+	    		<input data-validators="required validate-email validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="email" name="email" value="<?= empty($email) ? '' : $email ?>" maxlength="100" />
 	    	</div>
 	    </div>
 	</div>
