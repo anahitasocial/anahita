@@ -10,13 +10,6 @@
 		
 			<fieldset>
 				<legend><?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?></legend>
-	
-				<?php if ( KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ): ?>
-				<p class="lead"><?= @text('COM-PEOPLE-SOCIALMEDIA-LOGIN') ?></p>
-		         	<p><?= $this->renderHelper('com://site/connect.template.helper.service.renderLogins') ?></p>
-				<hr/>
-				<p class="lead"><?= @text('LIB-AN-OR') ?></p>
-		         	<?php endif ?>
 		
 				<div class="control-group">
 					<label class="control-label"  for="username">
