@@ -9,6 +9,8 @@
 	    	<input type="hidden" name="return" value="<?= $return; ?>" />
 	    	<?php endif;?>
 		
+			<?= @flash_message ?>
+		
 			<fieldset>
 				<legend>
 					<?= @text('COM-PEOPLE-SESSION-TITLE') ?>
@@ -28,8 +30,6 @@
 				<hr/>
 				<p class="lead"><?= @text('LIB-AN-OR') ?></p>
 	         	<?php endif ?>
-	         
-	            <?= @flash_message ?>
          
 				<div class="control-group">			
 					<div class="controls">
@@ -52,7 +52,7 @@
 				</div>
 			</fieldset>
 			
-			<div class="clearfix">
+			<div class="form-actions">
 				<button type="submit" name="Submit" class="btn btn-large btn-primary pull-right"/>
 					<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
 				</button>
