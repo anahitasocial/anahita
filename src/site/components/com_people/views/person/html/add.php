@@ -49,7 +49,9 @@
 			</fieldset>
 			        
 			<div class="form-actions">
-				<button type="submit" class="btn btn-primary btn-large pull-right"><?= @text('COM-PEOPLE-ACTION-REGISTER') ?></button>
+				<button type="submit" class="btn btn-primary btn-large pull-right">
+					<?= @text('COM-PEOPLE-ACTION-REGISTER') ?>
+				</button>
 			</div>
 		</form>
 	</div>
