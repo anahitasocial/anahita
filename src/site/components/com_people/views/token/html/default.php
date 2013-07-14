@@ -14,7 +14,7 @@
 			</div>
 		
 			<div class="form-actions">
-				<button data-trigger="Request" type="submit" class="btn btn-large">
+				<button data-trigger="Request" type="submit" class="btn btn-large pull-right">
 					<?= @text('COM-PEOPLE-ACTION-RESET-PASSWORD'); ?>
 				</button>
 			</div>

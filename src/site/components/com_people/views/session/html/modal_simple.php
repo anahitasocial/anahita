@@ -17,7 +17,7 @@
 	<div class="control-group">				
 		<div class="controls">
 			<input class="input-block-level" type="password" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-PASSWORD')?>" id="passwd" name="password" size="18" alt="password" /> 
-			<a href="<?= @route('view=token') ?>">
+			<a class="pull-right" href="<?= @route('view=token') ?>">
 			<?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
 			</a>
 		</div>
