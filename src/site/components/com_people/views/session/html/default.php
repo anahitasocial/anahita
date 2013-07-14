@@ -50,13 +50,13 @@
 						<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>
 					</label>
 				</div>
-	    					
-				<div class="clearfix">
-					<button type="submit" name="Submit" class="btn btn-large btn-primary pull-right"/>
-						<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
-					</button>
-				</div>
 			</fieldset>
+			
+			<div class="clearfix">
+				<button type="submit" name="Submit" class="btn btn-large btn-primary pull-right"/>
+					<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
+				</button>
+			</div>
 		</form>
 	</div>
 </div>
