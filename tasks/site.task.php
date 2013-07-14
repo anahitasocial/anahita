@@ -192,7 +192,7 @@ class Create extends Command
                     'adminPassword' => $prompt('admin-password', 'You need to enter an admin password? ', 'mysite'),
                     'adminEmail'    => $prompt('admin-email', 'You need to enter an admin email? ', 'admin@example.com')
             );           
-            if ( !\JInstallationHelper::createAdminUser($vars) )
+            if ( false && !\JInstallationHelper::createAdminUser($vars) )
             {            
                 $output->writeLn('<error>'."Counldn't create an admin user. Make sure you have entered a correct email".'</error>');
                 exit(1);              
@@ -205,9 +205,10 @@ class Create extends Command
         $output->writeLn("<info>Congradulation you're done.</info>");
         if ( !$db_exists )
         {
-            $output->writeLn("<info>Please login-in with the following credentials</info>");
-            $output->writeLn("<info>  username: admin</info>");
-            $output->writeLn("<info>  password: ".$vars['adminPassword']."</info>");            
+            $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");
+            //$output->writeLn("<info>Please login-in with the following credentials</info>");
+            //$output->writeLn("<info>  username: admin</info>");
+            //$output->writeLn("<info>  password: ".$vars['adminPassword']."</info>");            
         }
     }
 }
