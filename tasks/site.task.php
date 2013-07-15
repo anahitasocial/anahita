@@ -25,16 +25,7 @@ class Symlink extends Command
     public function symlink()
     {
         $applicationLinker = new \Console\Linker\ApplicationLinker(WWW_ROOT, ANAHITA_ROOT);
-        $applicationLinker->linkMirror(ANAHITA_ROOT.'/vendor/joomla');
-        $applicationLinker->linkMirror(ANAHITA_ROOT.'/Core/application');
-        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/mc/rt_missioncontrol_j15',
-                'administrator/templates/rt_missioncontrol_j15'
-                )->symlink();
-        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/administrator/index.php','administrator/index.php')->copy();        
-        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/index.php','index.php')->copy();
-        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/htaccess.txt','.htaccess')->copy();
-        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/robots.txt','.htaccess')->copy();
-        $applicationLinker->linkComponents(ANAHITA_ROOT.'/Core/components');        
+        $applicationLinker->link();
     }
 }
 

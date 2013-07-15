@@ -12,21 +12,25 @@ class ComponentLinker extends AbstractLinker
      * Links a component into a site directory
      * 
      * @param string $site_path
-     * @param string $component_path
+     * @param string $name
      */
-    public function __construct($site_path, \Console\Extension\Component $component)
+    public function __construct($site_path, $component_path, $name = null)
     {    
-        $component_path = $component->getPath();
-        $name      = $component->getName();
+        parent::__construct($site_path);
+        
+        if ( empty($name) ) {
+            $name = basename($component_path);
+        }
+        
         $com_name  = 'com_'.$name;
         $paths     = Helper::getSymlinkPaths($component_path, array(
                 '#^(component|admin|site)/.+#' => '\1',
                 '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
         ),array(
-                '#^admin#' => $site_path.'/administrator/components/'.$com_name,
-                '#^site#'  => $site_path.'/components/'.$com_name,
-                '#^component#'  => $site_path.'/libraries/default/'.$name,
-                '#^plugins#'    => $site_path.'/plugins'
+                '#^admin#' => '/administrator/components/'.$com_name,
+                '#^site#'  => '/site/components/'.$com_name,
+                '#^component#'  => '/libraries/default/'.$name,
+                '#^plugins#'    => '/plugins'
         ));
         
         foreach($paths as $source => $target)
@@ -36,9 +40,9 @@ class ComponentLinker extends AbstractLinker
         
         foreach(array('site', 'admin') as $app)
         {
-            $target = $site_path;
+            $target = $app;
             if ( $app == 'admin' ) {
-                $target = $site_path.'/administrator';
+                $target = 'administrator';
             }
             $paths = Helper::getSymlinkPaths($component_path.'/'.$app.'/resources/language',array(),array(
                     '#^([a-zA-Z-]+)\.ini#' => $target."/language/$1/$1.$com_name.ini",
@@ -51,9 +55,9 @@ class ComponentLinker extends AbstractLinker
         }
         foreach(array('site', 'admin') as $app)
         {
-            $target = $site_path;
+            $target = $app;
             if ( $app == 'admin' ) {
-                $target = $site_path.'/administrator';
+                $target = 'administrator';
             }
             $paths = Helper::getSymlinkPaths($component_path.'/'.$app.'/modules',array(
                     '#(.*?)/(.*)#' => '\1',
@@ -68,12 +72,12 @@ class ComponentLinker extends AbstractLinker
         
         foreach(array('site', 'admin') as $app)
         {
-            $target = $site_path;
+            $target = '';
             if ( $app == 'admin' ) {
-                $target = $site_path.'/administrator';
+                $target = 'administrator';
             }
             $source   = $component_path.'/'.$app.'/resources/media';
-            $target   = $target.'/media/'.$com_name;
+            $target   = $target.'/media/'.$com_name;            
             if ( file_exists($source) )
             {
                 $this->addLink($source, $target);                
@@ -81,9 +85,9 @@ class ComponentLinker extends AbstractLinker
         }
         foreach(array('site', 'admin') as $app)
         {
-            $target = $site_path;
+            $target = $app;
             if ( $app == 'admin' ) {
-                $target = $site_path.'/administrator';
+                $target = 'administrator';
             }
             $target   = $target.'/templates/'.$name;
             $source   = $component_path.'/'.$app.'/theme';
@@ -91,5 +95,5 @@ class ComponentLinker extends AbstractLinker
                 $this->addLink($source, $target);
             }
         }        
-    } 
+    }    
 }

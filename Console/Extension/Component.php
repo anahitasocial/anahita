@@ -81,8 +81,8 @@ class Component
      */
     public function install($site, $output, $options)
     {
-        $linker = new \Console\Linker\ComponentLinker($site, $this);
-        //$linker->link();        
+        $linker = new \Console\Linker\ComponentLinker($site, $this->getPath(), $this->getName());
+        $linker->link();        
         $options = array_merge(array('schema'=>false), $options);
         print_r($options);
         die;

@@ -7,16 +7,23 @@ namespace Console\Linker;
  * 
  *
  */
-class ApplicationLinker
+class ApplicationLinker extends AbstractLinker
 {
     /**
      * The target
      * 
      * @var string
      */
-    protected  $_target;
+    protected $_target;
+
+    /**
+     * Anahtia ROOT
+     * 
+     * @var string
+     */
+    protected $_anahita_root;
     
-   /**
+    /**
     * Creates a application
     * 
     * @param string $destination The path where the site is being created
@@ -24,14 +31,10 @@ class ApplicationLinker
     * 
     * @return void
     */
-    public function __construct($destination)
+    public function __construct($target, $anahita_root)
     { 
-        $this->_target = $destination;
-        
-        @mkdir($this->_target.'/tmp',   0755);
-        @mkdir($this->_target.'/cache', 0755);
-        @mkdir($this->_target.'/log',   0755);
-        @mkdir($this->_target.'/administrator/cache',   0755);      
+        parent::__construct($target);                
+        $this->_anahtia_root = $anahita_root;
     }
     
     /**
@@ -60,9 +63,11 @@ class ApplicationLinker
         foreach($dirs as $dir) 
         {
             if ( $dir->isDir() && !$dir->isDot() ) {
-                $this->linkComponent($dir->getPathname());
+               $linker = new ComponentLinker($this->getRoot(), $dir->getPathname());
+               $linker->link();
             }        
         }
+        die;
     }
     
     /**
@@ -75,42 +80,48 @@ class ApplicationLinker
     public function linkMirror($path)
     {        
         $paths = Helper::getSymlinkPaths($path, array(
-                '#^(site|administrator)/includes/.+#' => '\1/includes',                
-                '#^(administrator)/([^/]+)/([^/]+)/.+#' => '\1/\2/\3',
-                '#^(components|modules|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',
-                '#^(site)/(.*)#' => '\2',
+                '#^(site|administrator)/(includes)/.+#' => '\1/\2',                
+                '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',                
+                '#^(media|libraries)/([^/]+)/.+#' => '\1/\2',
+                '#^(site|administrator)/(images)/.+#' => '',                
                 '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
-                '#^(administrator/)?(images)/.+#' => '\1\2',
                 '#^(vendors|migration|installation)/.+#'    => '',
                 '#^configuration\.php-dist#'   => '',
                 '#^htaccess.txt#'   => '',
                 '#^robots.txt#'   => '',
                 '#^administrator/index.php#'    => '',
                 '#^index.php#'    => '',                
-        ));
-                        
-        foreach($paths as $source => $target)
-        {
-            $target = $this->_target.'/'.$target;
-            $linker = new PathLinker($source, $target);
-            $linker->symlink();
+        ));                       
+        foreach($paths as $source => $target) {
+            $this->addLink($source, $target, true);
         }   
            
     }
     
     /**
-     * Reutnr path linker for a single file or directory
-     * 
-     * @param string $source
-     * @param string $path
-     * 
-     * @return PathLinker
+     * (non-PHPdoc)
+     * @see \Console\Linker\AbstractLinker::link()
      */
-    public function getPathLinker($source, $path)
+    public function link()
     {
-        $target = $this->_target.'/'.$path;
-        $linker = new PathLinker($source, $target);
-        return $linker;
+        @mkdir($this->getRoot().'/tmp',   0755);
+        @mkdir($this->getRoot().'/log',   0755);
+        @mkdir($this->getRoot().'/site/cache', 0755, true);
+        @mkdir($this->getRoot().'/administrator/cache',   0755, true);
+        $this->linkMirror($this->_anahtia_root.'/vendor/joomla');
+        $this->linkMirror($this->_anahtia_root.'/vendor/nooku');
+        $this->linkMirror($this->_anahtia_root.'/Core/application');
+        parent::link();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/mc/rt_missioncontrol_j15',
+                'administrator/templates/rt_missioncontrol_j15'
+        )->symlink();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/administrator/index.php','administrator/index.php')->copy();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/administrator/images','/administrator/images')->copy();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/site/images','/site/images')->copy();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/index.php','index.php')->copy();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/htaccess.txt','.htaccess')->copy();
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/robots.txt','.htaccess')->copy();
+        $this->linkComponents($this->_anahtia_root.'/Core/components');        
     }
     
     /**
