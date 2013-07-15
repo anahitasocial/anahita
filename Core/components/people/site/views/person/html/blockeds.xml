@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="Blocked">
+		<message>List of people who have been blocked by the viewer</message>
+		<url>
+			<param  name="get" value="graph" />
+			<param  name="type" value="blockeds" />
+			<param  name="layout" value="" />
+		</url>
+	</layout>
+</metadata>

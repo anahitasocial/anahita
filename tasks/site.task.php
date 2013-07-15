@@ -23,38 +23,21 @@ class Symlink extends Command
     }
         
     public function symlink()
-    {
-        $target = WWW_ROOT;
-        $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
-        
-        $patterns = array(
-                '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
-                '#^(components|modules|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',
-                '#^(cli)/.+#'    => 'cli',
-                '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
-                '#^(administrator/)?(images)/.+#' => '\1\2',
-                '#^(site|administrator)/includes/.+#' => '\1/includes',
-                '#^(vendors|migration)/.+#'    => '',
-                '#^configuration\.php-dist#'   => '',
-                '#^htaccess.txt#'   => '',
-        );
-               
-        $patterns['#^installation/.+#'] = '';
-        $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
-        $mapper->addCrawlMap('vendor/joomla', $patterns);
-        $mapper->addCrawlMap('vendor/nooku',  $patterns);
-        $mapper->addCrawlMap('src',   $patterns);
-        $mapper->symlink();
-        $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
-        $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
-        
-        $mapper->getMap('vendor/joomla/administrator/index.php','administrator/index.php')->copy();
-        
-        @mkdir($target.'/tmp',   0755);
-        @mkdir($target.'/cache', 0755);
-        @mkdir($target.'/log',   0755);
-        @mkdir($target.'/administrator/cache',   0755);
-        @symlink(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor') ;       
+    {        
+        $applicationLinker = new \Console\Linker\ApplicationLinker(WWW_ROOT, ANAHITA_ROOT);
+        $applicationLinker->linkMirror(ANAHITA_ROOT.'/vendor/joomla');
+        $applicationLinker->linkMirror(ANAHITA_ROOT.'/Core/application');
+        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/mc/rt_missioncontrol_j15',
+                'administrator/templates/rt_missioncontrol_j15'
+                )->symlink();
+        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/administrator/index.php','administrator/index.php')->copy();        
+        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/index.php','index.php')->copy();
+        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/htaccess.txt','.htaccess')->copy();
+        $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/robots.txt','.htaccess')->copy();
+//         $applicationLinker->linkComponent(ANAHITA_ROOT.'/Core/components/application');
+        $applicationLinker->linkComponents(ANAHITA_ROOT.'/Core/components');
+        die;
+        //@symlink(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor') ;
     }
 }
 

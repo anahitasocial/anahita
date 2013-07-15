@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="contentfilter" method="upgrade">
+    <name>Content Filter - Syntax</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>rmd Studio/Peerglobe Technology</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authoremai />
+    <authorurl>Anahitapolis.com</authorurl>
+   	<version>##BUILD_VERSION##</version>
+	<release>##BUILD_RELEASE##</release>
+    <description>Synaxt Highlight Content Filter Plugin</description>
+    <params />
+    <files>
+        <filename plugin="syntax">syntax.php</filename>        
+    </files>
+</install>

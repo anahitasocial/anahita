@@ -101,7 +101,6 @@ CREATE TABLE `#__anahita_nodes` (
   `person_time_zone` int(11) DEFAULT NULL,
   `person_language` varchar(100) DEFAULT NULL,
   `access` text,
-  `privacy_read_mode` varchar(15) NOT NULL DEFAULT 'graph',
   `permissions` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `person_username` (`person_username`),
@@ -258,7 +257,7 @@ CREATE TABLE `#__core_acl_aro_groups` (
 CREATE TABLE `#__core_acl_aro_map` (
   `acl_id` int(11) NOT NULL DEFAULT '0',
   `section_value` varchar(230) NOT NULL DEFAULT '0',
-  `value` varchar(100) NOT NULL DEFAULT '',
+  `value` varchar(100) NOT NULL,
   PRIMARY KEY (`acl_id`,`section_value`,`value`)
 ) ENGINE=MyISAM;
 

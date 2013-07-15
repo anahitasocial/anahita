@@ -1,0 +1,157 @@
+// Actor Avatar
+img.actor-avatar
+{ 
+	.border-radius(@baseBorderRadius);
+	
+	&.square
+	{
+		.square(50px);
+	}
+	 
+	&.default
+	{
+		width: 50px;
+	}
+	
+	&.medium
+	{
+		width: 140px;
+	}
+}
+
+#actor-avatar
+{
+    .medium
+    {
+        margin: 0;
+    }	
+}
+
+
+// ACTOR PROFILE
+.actor-profile-toolbar
+{
+    .clearfix;
+    
+    &.btn-toolbar
+    {
+        margin: 0 0 10px 0;
+        padding: 0;
+    }
+}
+
+
+#actor-profile
+{
+	font-size: @baseFontSize;
+	
+	h2#actor-name
+	{
+		margin: 5px 0;
+		font-size: @baseFontSize + 3; 
+	}
+	
+	#actor-description
+	{
+		padding: 5px 0;
+	}
+	
+	#com-composer-container
+	{
+	   margin-top: 15px;
+	}
+}
+
+// ACTOR GADGET SOCIALGRAPH
+.an-socialgraph-stat
+{
+	.clearfix;
+	margin:  20px 0;
+	
+	.stat-count
+	{ 
+		list-style: none;
+		float: left;
+		overflow: hidden;
+		min-width: 73px;
+		
+		display: block;
+		font-weight: bold;
+		line-height: 1;
+		font-size: @baseFontSize + 3;
+		
+		.stat-name
+		{
+			.clearfix;
+			display: block;
+			padding: 5px 0;
+			font-size: @baseFontSize;
+			font-weight: normal;
+		}
+	}
+}
+
+// ACTOR GADGET GRID
+.an-gadget-socialgraph
+{	
+	h4
+	{
+		font-size: @baseFontSize;
+	}
+	
+	.media-grid
+	{
+		margin: -5px;
+		> div
+		{ 
+			float: left;
+			img 
+			{ 
+				.square(34px);
+				margin: 5px;
+			}
+		}
+	}
+}
+
+//ACTOR SETTINGS
+.actor-settings
+{
+    padding: 0 10px;
+    
+    h3
+    {
+        margin: 10px 0;
+    }	
+}
+
+.actors-popover
+{
+	.popover-content 
+	{
+		overflow:hidden;
+		max-height:250px;
+	}
+}
+
+//Popup
+.popup-body
+{    
+    .an-entity
+    {
+        padding: 0;
+        
+        .entity-portrait-square
+        {
+            img
+            {
+                .square(30px);
+            }
+        }
+        
+        .entity-container
+        {
+            padding-left: 40px;
+        }
+    }
+}
