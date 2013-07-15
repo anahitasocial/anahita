@@ -16,8 +16,7 @@ class PackageCommand extends Command
 {
     protected function configure()
     {
-        $this->addArgument('package', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Name of the package');
-        $this->addOption('config-env',null, InputOption::VALUE_OPTIONAL,'The config enviornment to use.','development');        
+        $this->addArgument('package', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Name of the package');               
         $this->addOption('create-schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
         $this->setName('package:install')
             ->setDescription('Install a package into the site');
@@ -32,14 +31,13 @@ class PackageCommand extends Command
              ->findPackages($packages)             
             
         ;
-        
         if ( !count($packages) ) {
             throw new \RuntimeException('Invalid Packages');
         }
         
-        $this->getApplication()->loadFramework();
-        \KService::get('koowa:loader')
-            ->loadIdentifier('com://admin/migrator.helper');
+//         $this->getApplication()->loadFramework();
+//         \KService::get('koowa:loader')
+//             ->loadIdentifier('com://admin/migrator.helper');
  
         /*        
         $helper = $this->getHelperSet();
@@ -53,14 +51,11 @@ class PackageCommand extends Command
                 
         foreach($packages as $package)
         {
-            $mapper   = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
-            $mapper->addCrawlMap('',  array(
-                    '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
-                    '#^(media)/([^/]+)/.+#' => '\1/\2',
-                    '#CHANGELOG.php#'  => '',
-                    '#^migration.*#'     => '',
-                    '#manifest.xml#'   => ''
-            ));
+            foreach($package->getComponents() as $component)
+            {
+                $linker = new \Console\Linker\ComponentLinker(WWW_ROOT, $component);
+                $linker->link();
+            }
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
             $mapper->symlink();           
             

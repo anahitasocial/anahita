@@ -86,24 +86,15 @@ class Packages extends \ArrayObject
             if ( isset($data['type']) && 
                         $data['type'] == 'anahita-extension') 
             {
-                if ( !isset($data['extension-source']) ) {
-                    $data['extension-source'] = 'src'; 
-                }
-                
-                $data['extension-source'] = realpath(dirname($file).'/src');
+                $parts   = array_filter(explode('/', @$data['name']));
+                $name    = strtolower(pick(@$parts[1], basename(dirname($file))));
+                $vendor  = strtolower(pick(@$parts[0], $name));
                                 
-                if ( is_readable($data['extension-source']) ) 
-                {
-                    $parts   = array_filter(explode('/', @$data['name']));                    
-                    $name    = strtolower(pick(@$parts[1], basename(dirname($file))));
-                    $vendor  = strtolower(pick(@$parts[0], $name));                    
-                    $this[]  = new Package(array(
-                        'composer_file' => $file,
-                        'name'          => $name,
-                        'vendor'        => $vendor,
-                        'source'        => $data['extension-source']      
-                    ));                    
-                }
+                $this[] = new Package(array(
+                    'composer_file'  => $file,                    
+                    'name'           => $name,
+                    'vendor'         => $vendor            
+                ));                
             }
         }
     }

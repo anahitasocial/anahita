@@ -24,7 +24,7 @@ class ApplicationLinker
     * 
     * @return void
     */
-    public function __construct($destination, $anahita_root = null)
+    public function __construct($destination)
     { 
         $this->_target = $destination;
         
@@ -43,85 +43,7 @@ class ApplicationLinker
      */
     public function linkComponent($path)
     {
-        $name  = 'com_'.basename($path);
-        $paths = Helper::getSymlinkPaths($path, array(
-            '#^(component|admin|site)/.+#' => '\1',
-            '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',                
-        ),array(
-            '#^admin#' => $this->_target.'/administrator/components/'.$name,
-            '#^site#'  => $this->_target.'/components/'.$name,
-            '#^component#'  => $this->_target.'/libraries/default/'.basename($path),
-            '#^plugins#'    => $this->_target.'/plugins'                
-        ));          
-        
-        foreach($paths as $source => $target)
-        {
-            $linker = new PathLinker($source, $target);
-            $linker->symlink();
-        }
-        
-        foreach(array('site', 'admin') as $app)
-        {   
-            $target = $this->_target;
-            if ( $app == 'admin' ) {
-                $target = $this->_target.'/administrator';
-            }
-            $paths = Helper::getSymlinkPaths($path.'/'.$app.'/resources/language',array(),array(
-                    '#^([a-zA-Z-]+)\.ini#' => $target."/language/$1/$1.$name.ini",
-                    '#^([a-zA-Z-]+)\.(\w+)\.ini#' => $target."/language/$1/$1.$2.ini"
-            ));
-            foreach($paths as $source => $target) 
-            {
-                $linker = new PathLinker($source, $target);
-                $linker->symlink();
-            }
-        }
-        foreach(array('site', 'admin') as $app)
-        {
-            $target = $this->_target;
-            if ( $app == 'admin' ) {
-                $target = $this->_target.'/administrator';
-            }
-            $paths = Helper::getSymlinkPaths($path.'/'.$app.'/modules',array(
-                    '#(.*?)/(.*)#' => '\1',
-                    ),array(
-                    '#(\w+)#' => $target.'/modules/mod_\1'
-            ));
-            foreach($paths as $source => $target)
-            {
-                $linker = new PathLinker($source, $target);
-                $linker->symlink();
-            }
-        }
-                
-        foreach(array('site', 'admin') as $app)
-        {
-            $target = $this->_target;
-            if ( $app == 'admin' ) {
-                $target = $this->_target.'/administrator';
-            }
-            $source   = $path.'/'.$app.'/resources/media';
-            $target   = $target.'/media/'.$name;
-            if ( file_exists($source) ) 
-            {
-                $linker = new PathLinker($source, $target);
-                $linker->symlink();
-            }            
-        }
-        foreach(array('site', 'admin') as $app)
-        {
-            $target = $this->_target;
-            if ( $app == 'admin' ) {
-                $target = $this->_target.'/administrator';
-            }
-            $target   = $target.'/templates/'.str_replace('com_','',$name);
-            $source   = $path.'/'.$app.'/theme';
-            if ( file_exists($source) )
-            {
-                $linker = new PathLinker($source, $target);
-                $linker->symlink();
-            }
-        }        
+              
 
     }
     

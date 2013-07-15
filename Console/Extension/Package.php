@@ -5,19 +5,11 @@ namespace Console\Extension;
 /**
  * Package class. Represents an anahita extension as a composer package.
  * 
- * At the time, an extension package can contains multiple components but later
- * this a package <==> component
+ * A package can contain multiple related components
  *
  */
 class Package 
-{       
-    /**
-     * Package source path
-     * 
-     * @var string
-     */
-    protected $_source_path;
-    
+{           
     /**
      * Package vendor name
      * 
@@ -33,11 +25,11 @@ class Package
     protected $_name;
     
     /**
-     * Return the composer file
+     * Array of components
      * 
-     * @var string
+     * @var array
      */
-    protected $_composer_file;
+    protected $_components;
     
     /**
      * Creates a package using the data
@@ -50,8 +42,33 @@ class Package
     {     
         $this->_name          = $data['name'];
         $this->_vendor        = $data['vendor'];
-        $this->_source_path   = $data['source'];
         $this->_composer_file = $data['composer_file'];
+
+        $package_root = $this->getRoot();
+        $components   = array();
+        if ( file_exists($package_root.'/src') ) {
+            $components[] = $package_root.'/src';
+        }
+        if ( file_exists($package_root.'/components') )
+        {
+            foreach(new \DirectoryIterator($package_root.'/components') as $dir)
+            {
+                if ( $dir->isDir() && !$dir->isDot() ) {
+                    $components[] = $dir->getPathname();
+                }
+            }
+        }
+        $this->_components    = $components;
+    }
+    
+    /**
+     * Return the components
+     * 
+     * @return array
+     */
+    public function getComponents()
+    {
+        return $this->_components;
     }
     
     /**
@@ -82,16 +99,6 @@ class Package
     public function getFullName()
     {
         return $this->getVendor().'/'.$this->getName();    
-    }
-    
-    /**
-     * Return the package source path
-     * 
-     * @return string
-     */
-    public function getSourcePath()
-    {
-        return $this->_source_path;
     }
     
     /**

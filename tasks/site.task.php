@@ -23,7 +23,7 @@ class Symlink extends Command
     }
         
     public function symlink()
-    {        
+    {
         $applicationLinker = new \Console\Linker\ApplicationLinker(WWW_ROOT, ANAHITA_ROOT);
         $applicationLinker->linkMirror(ANAHITA_ROOT.'/vendor/joomla');
         $applicationLinker->linkMirror(ANAHITA_ROOT.'/Core/application');
@@ -34,10 +34,7 @@ class Symlink extends Command
         $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/index.php','index.php')->copy();
         $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/htaccess.txt','.htaccess')->copy();
         $applicationLinker->getPathLinker(ANAHITA_ROOT.'/vendor/joomla/robots.txt','.htaccess')->copy();
-//         $applicationLinker->linkComponent(ANAHITA_ROOT.'/Core/components/application');
-        $applicationLinker->linkComponents(ANAHITA_ROOT.'/Core/components');
-        die;
-        //@symlink(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor') ;
+        $applicationLinker->linkComponents(ANAHITA_ROOT.'/Core/components');        
     }
 }
 
