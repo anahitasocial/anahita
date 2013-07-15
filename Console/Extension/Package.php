@@ -58,7 +58,10 @@ class Package
                 }
             }
         }
-        $this->_components    = $components;
+        foreach($components as $component) 
+        {
+            $this->_components[] = new Component($component);
+        }
     }
     
     /**

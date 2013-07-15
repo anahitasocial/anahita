@@ -53,8 +53,10 @@ class PackageCommand extends Command
         {
             foreach($package->getComponents() as $component)
             {
-                $linker = new \Console\Linker\ComponentLinker(WWW_ROOT, $component);
-                $linker->link();
+                $component->install(WWW_ROOT, $output, array(
+                    'schema' => $input->getOption('create-schema')
+                ));
+                die;
             }
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
             $mapper->symlink();           

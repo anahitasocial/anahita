@@ -6,36 +6,18 @@ namespace Console\Linker;
  * Component Link
  *
  */
-class ComponentLinker
+class ComponentLinker extends AbstractLinker
 {
-    /**
-     * Links
-     * 
-     * @var array
-     */
-    protected $_links = array();
-    
     /**
      * Links a component into a site directory
      * 
      * @param string $site_path
      * @param string $component_path
      */
-    public function __construct($site_path, $component_path)
+    public function __construct($site_path, \Console\Extension\Component $component)
     {    
-        //find a the manifest file
-        $manifest = $component_path.'/admin/manifest.xml';
-        if ( file_exists($manifest) ) 
-        {
-            $xml       = new \SimpleXMLElement(file_get_contents($manifest));
-            $install   = array_pop($xml->xpath('/install'));
-            if ( @$install['type'] == 'component') {
-                $name  = preg_replace('/[^a-zA-Z]/', '', strtolower((string)@$install->name[0]));
-            }
-        }
-        if ( empty($name) ) {
-            $name = basename($component_path);
-        }
+        $component_path = $component->getPath();
+        $name      = $component->getName();
         $com_name  = 'com_'.$name;
         $paths     = Helper::getSymlinkPaths($component_path, array(
                 '#^(component|admin|site)/.+#' => '\1',
@@ -49,7 +31,7 @@ class ComponentLinker
         
         foreach($paths as $source => $target)
         {
-            $this->_links[] = new PathLinker($source, $target);            
+            $this->addLink($source, $target);                        
         }
         
         foreach(array('site', 'admin') as $app)
@@ -64,7 +46,7 @@ class ComponentLinker
             ));
             foreach($paths as $source => $target)
             {
-                $this->_links[] = new PathLinker($source, $target);
+                $this->addLink($source, $target);                
             }
         }
         foreach(array('site', 'admin') as $app)
@@ -80,7 +62,7 @@ class ComponentLinker
             ));
             foreach($paths as $source => $target)
             {
-                $this->_links[]= new PathLinker($source, $target);                
+                $this->addLink($source, $target);                
             }
         }
         
@@ -94,7 +76,7 @@ class ComponentLinker
             $target   = $target.'/media/'.$com_name;
             if ( file_exists($source) )
             {
-                $this->_links[] = new PathLinker($source, $target);                
+                $this->addLink($source, $target);                
             }
         }
         foreach(array('site', 'admin') as $app)
@@ -106,20 +88,8 @@ class ComponentLinker
             $target   = $target.'/templates/'.$name;
             $source   = $component_path.'/'.$app.'/theme';
             if ( file_exists($source) ) {
-                $this->_links[] = new PathLinker($source, $target);
+                $this->addLink($source, $target);
             }
         }        
-    }
-    
-    /**
-     * Performs a link
-     * 
-     * @return void
-     */
-    public function link()
-    {
-        foreach($this->_links as $link) {
-            $link->symlink();
-        }
-    }
+    } 
 }
