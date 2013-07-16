@@ -188,53 +188,17 @@ class Create extends Command
             $output->writeLn('<info>Populating database...</info>');
             array_walk($sql_files, function($file) use($db) {               
                 \JInstallationHelper::populateDatabase($db, $file, $errors);
-            });
-            if ( !$dump_file )
-            {
-                $vars = array(
-                        'DBhostname' => $database['host'],
-                        'DBuserName' => $database['user'],
-                        'DBpassword' => $database['password'],
-                        'DBname' 	 => $database['name'],
-                        'DBPrefix'   => $database['prefix'],
-                        'adminName'  => 'Admin',
-                        'adminPassword' => $prompt('admin-password', 'You need to enter an admin password? ', 'mysite'),
-                        'adminEmail'    => $prompt('admin-email', 'You need to enter an admin email? ', 'admin@example.com')
-                );
-                if ( false && !\JInstallationHelper::createAdminUser($vars) )
-                {
-                    $output->writeLn('<error>'."Counldn't create an admin user. Make sure you have entered a correct email".'</error>');
-                    exit(1);
-                }
-            $vars = array(
-                    'DBhostname' => $database['host'],
-                    'DBuserName' => $database['user'],
-                    'DBpassword' => $database['password'],
-                    'DBname' 	 => $database['name'],
-                    'DBPrefix'   => $database['prefix'],
-                    'adminName'  => 'Admin',
-                    'adminPassword' => $prompt('admin-password', 'You need to enter an admin password? ', 'mysite'),
-                    'adminEmail'    => $prompt('admin-email', 'You need to enter an admin email? ', 'admin@example.com')
-            );
-            if ( false && !\JInstallationHelper::createAdminUser($vars) )
-            {            
-                $output->writeLn('<error>'."Counldn't create an admin user. Make sure you have entered a correct email".'</error>');
-                exit(1);
-            }
+            });            
         }
         jimport('joomla.user.helper');
         $config->secret = \JUserHelper::genRandomPassword(32);
         //exec("rm -rf ".JPATH_ROOT."/installation");
         $config->save();
         $output->writeLn("<info>Congradulation you're done.</info>");
-        if ( !$db_exists && !$dump_file )
-        {
-            $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");
-            //$output->writeLn("<info>Please login-in with the following credentials</info>");
-            //$output->writeLn("<info>  username: admin</info>");
-            //$output->writeLn("<info>  password: ".$vars['adminPassword']."</info>");            
+        if ( !$db_exists && !$dump_file ) {
+            $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");            
         }
-    }
+    }    
 }
 
 $console->addCommands(array(new Create()));
