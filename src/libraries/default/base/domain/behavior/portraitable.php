@@ -81,9 +81,10 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'attributes' 	=> array(
-				'filename' => array('write'=>'protected'),
-			),
+			'attributes' 	=> to_hash(array(
+				'filename'  => array('write'=>'protected'),
+			    'mimetype'
+			)),
 		    'keep_original' => true,
 		    'sizes' => array(
 		        'large'  => '1024xauto',	            
