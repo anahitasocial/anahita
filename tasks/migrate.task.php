@@ -61,9 +61,6 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
                 $this->_migrators[] = $migrator;
             }
         }
-        
-        $this->_event_dispatcher
-            ->addEventListener('onAfterSchemaMigration',    $this);
     }
     
     public function setOutput($output)
@@ -210,6 +207,7 @@ $console
 ->setDescription('Run the database migration for a component')
 ->setDefinition(array(
         new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),
+        new InputOption('create-schema','c', InputOption::VALUE_NONE, 'After running the migration, create the schema for the component'),
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
     
@@ -226,8 +224,13 @@ $console
         $components = $input->getArgument('component'); 
     }
     
-    $migrators  = new Migrators($console, $components);        
-
+    $migrators  = new Migrators($console, $components);
+    
+    if ( $input->getOption('create-schema') ) 
+    {
+        $migrators->getEventDispatcher()
+        ->addEventListener('onAfterSchemaMigration',    $migrators);        
+    }        
     $migrators->setOutput($output);
     foreach($migrators as $migrator) {
         $migrator->up();
