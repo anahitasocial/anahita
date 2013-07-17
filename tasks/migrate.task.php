@@ -326,8 +326,9 @@ $console
         ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
                 $file = $input->getArgument('file');
                 $console->loadFramework();
-                $config = new \JConfig();
-                $cmd    = "mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db}";
+                $config     = new Config(WWW_ROOT);
+                $config     = new \KConfig($config->getDatabaseInfo());
+                $cmd    = "mysqldump -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->db}";
                 if  ($file)  {
                     @mkdir(dirname($file), 0755, true);
                     system("$cmd > $file");
