@@ -57,8 +57,7 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
 		$config->append(array(
 			'attributes' 	=> array('mimetype'),
 			'behaviors'		=> array(
-				'portraitable',
-				'hittable'
+				'portraitable',			
 			),
 			'relationships'	=> array(
 				'sets' => array('through'=>'edge')
