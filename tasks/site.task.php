@@ -219,6 +219,13 @@ if ( !$console->isInitialized() ) {
     return;
 }
 
+// $console
+// ->register('site:update')
+// ->setDescription('Provides one command that performs updading all the packages, running migrations and re-linking all the files')
+// ->setDefinition(array())
+// ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+    
+// });
 $console
     ->register('site:configuration')
     ->setDescription('Provides the ability to set some of the site configuration through command line')
