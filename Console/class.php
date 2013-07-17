@@ -66,12 +66,12 @@ class Mapper
         foreach($this->_maps as $map) {            
             $map->symlink();
         }
-        $deadlinks = explode("\n", trim(`find -L {$this->_target_root} -type l -lname '*'`));
-        $deadlinks = array_filter($deadlinks);
-        if ( count($deadlinks) )
+        $files     = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->_target_root));
+        //deleting deadlinks
+        foreach($files as $file) 
         {
-            foreach($deadlinks as $link) {         
-                @unlink($link);
+            if ( is_link($file) && !file_exists(realpath($file))) {
+                unlink($file);
             }
         }        
     }
