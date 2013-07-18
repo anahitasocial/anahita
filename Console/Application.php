@@ -125,7 +125,7 @@ class Application extends \Symfony\Component\Console\Application
      * (non-PHPdoc)
      * @see \Symfony\Component\Console\Application::doRun()
      */
-    public function doRun($input, $output)
+    public function doRun(InputInterface $input, OutputInterface $output)
     {
         $name      = $this->getCommandName($input);
         $result    = true;
