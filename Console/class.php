@@ -116,7 +116,7 @@ class Map
         if ( file_exists($this->_target) )
         {
             if ( is_link($this->_target) ) {
-        
+                unlink($this->_target);
             }
             elseif (is_dir($this->_target)) {
                 exec("rm -rf {$this->_target}");
