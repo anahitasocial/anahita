@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -27,27 +31,6 @@
  */
 class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 {
-    /**
-     * A property whose value can be used as scope
-     * 
-     * @var array
-     */
-    protected $_scopes;
-    
-    /** 
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     * 
-     * @return void
-     */ 
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
-        
-        $this->_scopes = $config['scopes'];
-    }
-    
 	/**
 	 * Initializes the default configuration for the object
 	 *
@@ -60,8 +43,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-		    'scopes'      => array(),
-			'attributes'  => array(
+			'attributes' => array(
 				'ordering'=>array('default'=>0)
 			),
 			'aliases' => array(
@@ -80,11 +62,11 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	 */
 	protected function _beforeEntityUpdate(KCommandContext $context)
 	{
-		if ( $this->getModifiedData()->ordering ) {
+		if ( $this->modifications()->ordering ) {
 			
 			$store    = $this->getRepository()->getStore();
-			$query	  = $this->getScopedQuery($context->entity);
-			$change   = $this->getModifiedData()->ordering;
+			$query	  = $this->getRepository()->getQuery();
+			$change   = $this->modifications()->ordering;
 		
 			if( $change->new - $change->old < 0 ) 
 			{
@@ -111,7 +93,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	public function reorder()
 	{
 		$store    = $this->getRepository()->getStore();
-		$query 	  = $this->getScopedQuery($this->_mixer);
+		$query 	  = $this->getRepository()->getQuery();
 		$store->execute('SET @order = 0');
 		$query->update('@col(ordering) = (@order := @order + 1)')->order('ordering', 'ASC');
 		$store->execute($query);
@@ -125,8 +107,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	 */
 	protected function _beforeEntityInsert(KCommandContext $context)
 	{
-		$max = $this->getScopedQuery($context->entity)
-		        ->fetchValue('MAX(@col(ordering))');
+		$max = $this->getRepository()->getQuery()->fetchValue('MAX(@col(ordering))');
 		$this->ordering = $max + 1;
 	}
 	
@@ -138,7 +119,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	 */
 	protected function _afterEntityUpdate(KCommandContext $context)
 	{
-		if ( $this->getModifiedData()->ordering )
+		if ( $this->modifications()->ordering )
 			$this->reorder();
 	}
 	
@@ -151,29 +132,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	protected function _afterEntityDelete(KCommandContext $context)
 	{
 		$this->reorder();
-	}
-
-	/**
-	 * Return the query after applying the scope
-	 * 
-	 * @param AnDomainEntityAbstract $entity The  entity 
-	 * 
-	 * @return AnDomainQuery
-	 */
-	public function getScopedQuery($entity)
-	{
-	    $query = $this->getRepository()->getQuery();
-	    
-	    foreach($this->_scopes as $key => $value)
-	    {
-	        if ( is_numeric($key) ) {
-	             $key   = $value;
-	             $value = $entity->$key;   
-	        }
-	        $query->where($key,'=',$value);
-	    }
-	    return $query;	    
-	}
+	}	
 }
 
 ?>

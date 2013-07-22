@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Helper
@@ -25,12 +29,6 @@
  */
 class AnHelperDate extends KObject 
 {	
-    /**
-     * Scientific values of each time unit
-     */
-    const YEAR_IN_SECONDS  = 3.15569e7;
-    const MONTH_IN_SECONDS = 2.62974e6; 
-    
 	/**
 	 * Converts the $minute into seconds
 	 * 
@@ -83,7 +81,7 @@ class AnHelperDate extends KObject
 	 */
 	static function monthToSeconds($month = 1)
 	{
-		return self::MONTH_IN_SECONDS * $month;
+		return self::dayToSeconds($month * 31);
 	}	
 	
 	/**
@@ -94,7 +92,7 @@ class AnHelperDate extends KObject
 	 */
 	static function yearToSeconds($year = 1)
 	{
-        return self::YEAR_IN_SECONDS * $year;
+		return self::monthToSeconds($month * 12);
 	}
 
 	/**

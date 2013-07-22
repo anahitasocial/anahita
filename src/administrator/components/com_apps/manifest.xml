@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install type="component" version="2.2" method="upgrade">
+	<name>Apps</name>
+	<author>Anahita Social Networking Project</author>
+	<copyright>(C) 2011 rmd Studio, PeerGlobe Technology</copyright>
+	<license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
+	<authoremail>info@anahitapolis.com</authoremail>
+	<authorurl>www.Anahitapolis.com</authorurl>
+    <version>2.2.4</version>
+    <creationDate>January 22, 2013</creationDate>    
+	<release>Birth</release>
+    <codename></codename>
+	<description>Manages Anahita Apps</description>
+	<administration>
+		<menu>Apps</menu>
+		<languages folder="languages/admin">
+			<language tag="en-GB">en-GB.com_apps.ini</language>
+		</languages>
+		<files folder="admin">
+			<folder>controllers</folder>
+			<folder>views</folder>
+			<file>apps.php</file>
+		</files>
+	</administration>
+</install>

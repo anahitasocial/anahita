@@ -12,8 +12,8 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
-require_once 'vendor/nooku/libraries/koowa/event/subscriber/interface.php';
-require_once 'vendor/nooku/libraries/koowa/object/handlable.php';
+require_once 'src/libraries/koowa/event/subscriber/interface.php';
+require_once 'src/libraries/koowa/object/handlable.php';
 
 function ask_for_component($input, $output, $console) {
     $component = $input->getArgument('component');
@@ -56,6 +56,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
             register_default(array('identifier'=>$identifier,'default'=>'ComMigratorMigrationDefault'));
             $migrator   = \KService::get($identifier, 
                         array('event_dispatcher'=>$this->_event_dispatcher));
+            
             if ( ($check_max_version && $migrator->getMaxVersion() > 0) 
                     || !$check_max_version ) {
                 $this->_migrators[] = $migrator;

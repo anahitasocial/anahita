@@ -1,1 +1,0 @@
-<li><a href="<?= @route($item) ?>"><?= $item->name ?></a></li>

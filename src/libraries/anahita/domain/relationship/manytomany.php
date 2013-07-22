@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -64,17 +68,11 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 	 */
 	public function setConfig(KConfig $config)
 	{
-	    $identifier = $config->description->getRepository()->getIdentifier();
-	    
 		$config->child 	= $config->through;
 		
-		parent::setConfig($config);
+		parent::setConfig($config);		
 		
 		$this->_target  = KService::getIdentifier($config->target);
-		
-		if ( !$this->_target->application ) {
-		    $this->_target->application  = $identifier->application;
-		}
 		
 		$this->_target_child_key  = $config->target_child_key;
 		
@@ -210,7 +208,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 	/**
 	 * Instantiate an aggregated entity set from a root object
 	 * 
-	 * @return AnDomainDecoratorManytomany
+	 * @return AnDomainEntitysetOnetomany
 	 */	
 	public function getSet($root)
 	{
@@ -226,9 +224,9 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 			'target_property'	=> $this->getTargetChildKey(), 
 			'child'		=> $this->getChildRepository()
 		);
+
+		$set =  new AnDomainEntitysetManytomany(new KConfig($options));
 		
-		$set = KService::get('anahita:domain.entityset.decorator.manytomany', $options);
-        
 		return $set;							
 	}
 }

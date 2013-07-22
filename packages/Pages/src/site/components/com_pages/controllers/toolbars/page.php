@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Pages
@@ -99,7 +103,7 @@ class ComPagesControllerToolbarPage extends ComMediumControllerToolbarDefault
 		    ->href($url);
 		
 		if ( $ajax ) {
-			$command->setAttribute('href', 'layout=list&filter=','&');
+			$command->setAttribute('href', 'reset=1&layout=list&filter=','&');
 			$command->setAttribute('data-trigger','Request')->setAttribute('data-request-options',"{method:'post',replace:'!.an-entity'}");
 		} else {
 			$command->setAttribute('data-trigger','Submit');

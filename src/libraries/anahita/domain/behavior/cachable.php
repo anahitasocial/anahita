@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -26,20 +30,20 @@
  * @link       http://www.anahitapolis.com
  */
 class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
-{           
+{   
+    /**
+     * Counter. Caching only works if the counter is 0
+     * 
+     * @var int
+     */ 
+    static $_counter = 0;
+    
     /**
      * The repository cache
      * 
-     * @var ArrayObject
+     * @var AnDomainRepositoryCache
      */
     protected $_cache;
-    
-    /**
-     * Turn off/on cache
-     * 
-     * @var boolean
-     */
-    protected $_enable;
     
     /**
      * Constructor.
@@ -51,8 +55,8 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-        $this->_cache  = $config->cache;
-        $this->_enable = $config->enable;     
+        
+        $this->_cache = $config->cache;
     }
         
     /**
@@ -67,132 +71,72 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'enable'     => true,
             'priority'   => KCommand::PRIORITY_LOWEST,
             'cache'      => new ArrayObject()
         ));
     
         parent::_initialize($config);
     }
-    
-    /**
-     * Check the object cache see if the data has already been retrieved
-     * 
-     * This cache is only persisted throughout a request 
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
-     */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
-    {
-        if ( $this->_enable )
-        {
-            $key = $this->_getCacheKey($context->query);
-            
-            if ( $this->_cache->offsetExists($key) )
-            {
-                $context->data = $this->_cache->offsetGet($key);
-                return false;
-            }            
-        }
-    }
-    
-    /**
-     * Stores the objects in the cache. This cache is persisted during the
-     * request life cycle
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
-     */
-    protected function _afterRepositoryFetch(KCommandContext $context)
-    {
-        if ( $this->_enable )
-        {
-            $key = $this->_getCacheKey($context->query);
-            $this->_cache->offsetSet($key, $context->data);            
-        }
-    }    
-    
-    /**
-     * Clean and disable the cahce before insert
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
-     */
-    protected function _beforeEntityInsert(KCommandContext $context)
-    {
-        $this->_cache->exchangeArray(array());
-    }    
-    
-    /**
-     * Clean and disable the cahce before delete
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
-     */
-    protected function _beforeEntityDelete(KCommandContext $context)
-    {
-        $this->_cache->exchangeArray(array());
-    }    
 
     /**
-     * Clean and disable the cahce before update
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
+     * @{inheritdoc}
      */
-    protected function _beforeEntityUpdate(KCommandContext $context)
-    {
-        $this->_cache->exchangeArray(array());
-    }      
-    
+    public function getMixableMethods(KObject $mixer = null)
+    {                        
+        return parent::getMixableMethods($mixer);
+    }
+        
     /**
-     * Enables the cache
-     * 
-     * @return void
+     * Command handler
+     *
+     * @param   string      The command name
+     * @param   object      The command context
+     * @return  boolean     Can return both true or false.
      */
-    public function enableCache()
+    public function execute( $name, KCommandContext $context)
     {
-        $this->_enable = true;
+        $operation = $context->operation;
+        $cache	   = $this->_cache;
+        $parts     = explode('.', $name);
+        if ( $operation & AnDomain::OPERATION_FETCH && self::$_counter == 0 )
+        {            
+            $key	 	 = (string)$context->query;
+            
+            if ( $parts[0] == 'before' ) 
+            {
+                if ( $cache->offsetExists($key) ) 
+                {
+                    $context->data = $cache->offsetGet($key);
+                    return false;
+                }
+            }
+            else
+            {
+                $cache->offsetSet($key, $context->data);
+            }
+        } elseif ( $operation && count($parts) == 2 )
+        {
+             //empty cache first
+            if ( count($this->_cache) ) 
+            {
+                $this->_cache->exchangeArray(array());
+            }
+            if ( $parts[0] == 'before' ) {
+                self::$_counter++;
+            } else {
+                self::$_counter--;
+            }
+        }
     }
     
     /**
-     * Disable the cache
+     * Return the cache object 
      *
-     * @return void
+     * @return ArrayObject
      */
-    public function disableCache()
+    public function getCache()
     {
-        $this->_enable = false;
-    }    
-    
-    /**
-     * Empty the cache
-     * 
-     * @param AnDomainQuery $query
-     * 
-     * @return void
-     */
-    public function emptyCache($query)
-    {
-    	$this->_cache->offsetSet($this->_getCacheKey($query), null);    	
-    }
-    
-    /**
-     * Returns a key to use for cache 
-     * 
-     * @param AnDomainQuery $query
-     * 
-     * @return string
-     */
-    protected function _getCacheKey($query)
-    {
-    	return (string)$query;
+        return $this->_cache;
     }
     
     /**

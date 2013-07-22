@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package	   Com_Todos
@@ -40,7 +44,7 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
         parent::__construct($config);
 
         $this->registerCallback(array('before.enable','before.disable'), array($this,'setLastChanger'));
-        $this->registerCallback(array('after.enable','after.disable'), array($this,'createStoryCallback'));
+        $this->registerCallback(array('after.enable','after.disable'), array($this,'createStory'));
     }
     
     /**
@@ -87,7 +91,7 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
 	{		
 		$todos = parent::_actionBrowse($context);
 
-		if($this->getRequest()->get('layout') == 'gadget')
+		if($this->layout == 'gadget')
 			$todos->where('open', '=', 1);
 		else 
 			$todos->order('open', 'DESC');

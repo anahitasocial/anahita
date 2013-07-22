@@ -271,137 +271,104 @@ class JInstallationHelper
 		}
 		return $perms;
 	}
-
+	
 	/**
 	 * Creates the admin user
 	 */
-	static public function createAdminUser(& $vars)
+	public static function createAdminUser(& $vars)
 	{
-		$DBtype		= JArrayHelper::getValue($vars, 'DBtype', 'mysqli');
-		$DBhostname	= JArrayHelper::getValue($vars, 'DBhostname', '');
-		$DBuserName	= JArrayHelper::getValue($vars, 'DBuserName', '');
-		$DBpassword	= JArrayHelper::getValue($vars, 'DBpassword', '');
-		$DBname		= JArrayHelper::getValue($vars, 'DBname', '');
-		$DBPrefix	= JArrayHelper::getValue($vars, 'DBPrefix', '');
-
-		$adminPassword	= JArrayHelper::getValue($vars, 'adminPassword', '');
-		$adminEmail		= JArrayHelper::getValue($vars, 'adminEmail', '');
-
-		jimport('joomla.user.helper');
-
-		// Create random salt/password for the admin user
-		$salt = JUserHelper::genRandomPassword(32);
-		$crypt = JUserHelper::getCryptedPassword($adminPassword, $salt);
-		$cryptpass = $crypt.':'.$salt;		
-
-		$db = & JInstallationHelper::getDBO($DBtype, $DBhostname, $DBuserName, $DBpassword, $DBname, $DBPrefix);
-
-
-		$vars = array_merge(array('adminLogin'=>'admin', 'adminName'=>'Administrator'), $vars);
-		
-		$adminLogin = $vars['adminLogin'];
-		$adminName  = $vars['adminName'];
-				
-		// create the admin user
-		$installdate 	= date('Y-m-d H:i:s');
-		$nullDate 		= $db->getNullDate();
-		$query = "INSERT INTO #__users VALUES (62, '$adminName', '$adminLogin', ".$db->Quote($adminEmail).", ".$db->Quote($cryptpass).", 'Super Administrator', 0, 1, 25, '$installdate', '$nullDate', '', '')";
-		$db->setQuery($query);
-		if (!$db->query())
-		{
-			// is there already and existing admin in migrated data
-			if ( $db->getErrorNum() == 1062 )
-			{
-				$vars['adminLogin'] = JText::_('Admin login in migrated content was kept');
-				$vars['adminPassword'] = JText::_('Admin password in migrated content was kept');
-				return;
-			}
-			else
-			{
-				echo $db->getErrorMsg();
-				return;
-			}
-		}
-
-		// add the ARO (Access Request Object)
-		$query = "INSERT INTO #__core_acl_aro VALUES (10,'users','62',0,'Administrator',0)";
-		$db->setQuery($query);
-		if (!$db->query())
-		{
-			echo $db->getErrorMsg();
-			return;
-		}
-
-		// add the map between the ARO and the Group
-		$query = "INSERT INTO #__core_acl_groups_aro_map VALUES (25,'',10)";
-		$db->setQuery($query);
-		if (!$db->query())
-		{
-			echo $db->getErrorMsg();
-			return;
-		}
-		
-		//Anahita Installation
-		
-        require_once( JPATH_LIBRARIES.'/anahita/anahita.php');        
-        
-        //instantiate anahita and nooku
-        Anahita::getInstance(array(
-            'cache_prefix'  => uniqid(),
-            'cache_enabled' => false
-        ));
-        
-        KServiceIdentifier::setApplication('site' , JPATH_SITE);
-        KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
-        
-        KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath'=>JPATH_BASE)));
-        KServiceIdentifier::addLocator( KService::get('anahita:service.locator.component') );
-
-        KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
-        KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
-        KService::setAlias('anahita:domain.space',          'com:base.domain.space');
-        KService::set('koowa:database.adapter.mysqli', KService::get('koowa:database.adapter.mysqli', array('connection'=>$db->_resource, 'table_prefix'=>$DBPrefix)));
-        KService::set('anahita:domain.store.database', KService::get('anahita:domain.store.database', array('adapter'=>KService::get('koowa:database.adapter.mysqli'))));
-        KService::set('plg:storage.default', new KObject());
-        $person = KService::get('repos://site/people')
-            ->getEntity()
-            ->setData(array(
-                'name'     => $adminName,
-                'userId'   => 62,
-                'username' => $adminLogin,
-                'userType' => 'Super Administrator',
-                'email'    => $adminEmail
-            ));
-            
-        $note = KService::get('repos://site/notes')
-            ->getEntity()
-            ->setData(array(
-                'author' => $person,
-                'owner'  => $person,
-                'body'   => 'Welcome to Anahita!'
-            ));
-            
-        $comment = $note->addComment(array(
-            'author'    => $person ,
-            'body'      => 'The best Social Platform there is',
-            'component' => 'com_notes'
-        ));
-        
-        $story   = KService::get('repos://site/stories')->getEntity()
-                ->setData(array(
-                    'component' => 'com_notes',
-                    'name'      => 'note_comment',
-                    'object'    => $note,
-                    'comment'   => $comment,
-                    'target'    => $person,
-                    'owner'     => $person,
-                    'subject'   => $person                      
-                ));
-        
-        $entities = array();
-        $comment->save($entities);
-        
-		return true;
+	    $DBtype		= JArrayHelper::getValue($vars, 'DBtype', 'mysqli');
+	    $DBhostname	= JArrayHelper::getValue($vars, 'DBhostname', '');
+	    $DBuserName	= JArrayHelper::getValue($vars, 'DBuserName', '');
+	    $DBpassword	= JArrayHelper::getValue($vars, 'DBpassword', '');
+	    $DBname		= JArrayHelper::getValue($vars, 'DBname', '');
+	    $DBPrefix	= JArrayHelper::getValue($vars, 'DBPrefix', '');
+	
+	    $adminPassword	= JArrayHelper::getValue($vars, 'adminPassword', '');
+	    $adminEmail		= JArrayHelper::getValue($vars, 'adminEmail', '');
+	
+	    jimport('joomla.user.helper');
+	
+	    // Create random salt/password for the admin user
+	    $salt = JUserHelper::genRandomPassword(32);
+	    $crypt = JUserHelper::getCryptedPassword($adminPassword, $salt);
+	    $cryptpass = $crypt.':'.$salt;
+	
+	    $db = & JInstallationHelper::getDBO($DBtype, $DBhostname, $DBuserName, $DBpassword, $DBname, $DBPrefix);
+	
+	
+	    $vars = array_merge(array('adminLogin'=>'admin', 'adminName'=>'Administrator'), $vars);
+	
+	    $adminLogin = $vars['adminLogin'];
+	    $adminName  = $vars['adminName'];
+	
+	    $vars['adminLogin'] = 'admin';
+	
+	    // create the admin user
+	    $installdate 	= date('Y-m-d H:i:s');
+	    $nullDate 		= $db->getNullDate();
+	    $query = "INSERT INTO #__users VALUES (62, '$adminName', '$adminLogin', ".$db->Quote($adminEmail).", ".$db->Quote($cryptpass).", 'Super Administrator', 0, 1, 25, '$installdate', '$nullDate', '', '')";
+	    $db->setQuery($query);
+	    if (!$db->query())
+	    {
+	        // is there already and existing admin in migrated data
+	        if ( $db->getErrorNum() == 1062 )
+	        {
+	            $vars['adminLogin'] = JText::_('Admin login in migrated content was kept');
+	            $vars['adminPassword'] = JText::_('Admin password in migrated content was kept');
+	            return;
+	        }
+	        else
+	        {
+	            echo $db->getErrorMsg();
+	            return;
+	        }
+	    }
+	
+	    // add the ARO (Access Request Object)
+	    $query = "INSERT INTO #__core_acl_aro VALUES (10,'users','62',0,'Administrator',0)";
+	    $db->setQuery($query);
+	    if (!$db->query())
+	    {
+	        echo $db->getErrorMsg();
+	        return;
+	    }
+	
+	    // add the map between the ARO and the Group
+	    $query = "INSERT INTO #__core_acl_groups_aro_map VALUES (25,'',10)";
+	    $db->setQuery($query);
+	    if (!$db->query())
+	    {
+	        echo $db->getErrorMsg();
+	        return;
+	    }
+	
+	    //Anahita Installation
+	    	
+	    $now     = gmdate('Y-m-d H:i:s');
+	    $email   = $db->Quote($adminEmail);
+	    $queries = array();
+	
+	    $queries[] = "INSERT INTO `#__anahita_nodes` VALUES
+	    (1, 'ComActorsDomainEntityActor,ComPeopleDomainEntityPerson,com:people.domain.entity.person', 'com_people', 'admin', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, '[]', NULL, NULL, NULL, NULL, NULL, '$now', NULL, '$now', NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, '', '', '', '', NULL, NULL, NULL, NULL, '', '', '', 0, 0, '', '', NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 62, 'admin', 'Super Administrator', $email, '$now', 'admin', '', NULL, 0, '', 'public', '[]'),
+	    (2, 'ComAppsDomainEntityApp,com:apps.domain.entity.app', 'com_stories', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+	    (3, 'ComMediumDomainEntityMedium,ComStoriesDomainEntityStory,com:stories.domain.entity.story', 'com_people', 'story_add', 'story_add', 'Hello World', NULL, NULL, 'com:people.domain.entity.person', 1, 1, 1, 4, 1, '$now', NULL, NULL, NULL, '[]', NULL, NULL, NULL, NULL, NULL, '$now', 1, '$now', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, '1', NULL, NULL, NULL, 0, 0, '', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'public', '[]'),
+	    (4, 'ComBaseDomainEntityComment,com:stories.domain.entity.comment', 'com_people', NULL, NULL, 'Hello Universe', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 3, 'com:stories.domain.entity.story', NULL, NULL, '$now', 1, '$now', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);";
+	
+	    $queries[] = "INSERT INTO `#__anahita_edges` (`id`, `type`, `node_a_id`, `node_a_type`, `node_b_id`, `node_b_type`, `meta`, `created_on`, `created_by`, `modified_on`, `modified_by`, `ordering`, `start_date`, `end_date`) VALUES
+	    (1, 'ComBaseDomainEntitySubscription,com:base.domain.entity.subscription', 1, 'com:people.domain.entity.person', 3, 'com:stories.domain.entity.story', NULL, '$now', 1, '$now', 1, NULL, NULL, NULL);";
+	
+	    foreach($queries as $query)
+	    {
+	        $db->setQuery($query);
+	        if (!$db->query())
+	        {
+	            echo $db->getErrorMsg();
+	            return;
+	        }
+	    }
+	
+	    return true;
 	}
 
 	static public function & getDBO($driver, $host, $user, $password, $database, $prefix, $select = true)

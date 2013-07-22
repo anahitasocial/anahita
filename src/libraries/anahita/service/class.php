@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Service
@@ -90,7 +94,6 @@ class AnServiceClass
 	static function setDefaultClass($identifier, $classname)
 	{
 	    self::$_defaults[(string)$identifier] = $classname;
-	    unset(self::$_identifiers[(string)$identifier]);
 	}	
 	
     /**
@@ -126,10 +129,6 @@ class AnServiceClass
          }
          
          self::$_identifiers[$strIdentifier] = $config;
-         
-         if ( isset(self::$_defaults[$strIdentifier]) ) {
-             unset(self::$_defaults[$strIdentifier]);
-         }
     }
     
     /**
@@ -154,7 +153,7 @@ class AnServiceClass
         }
         
         $classbase = 'Lib'.ucfirst($identifier->package).KInflector::implode($identifier->path);
-        $loader    = KService::get('koowa:loader');
+        
         $classname = $classbase.ucfirst($identifier->name);
         
         if ( !class_exists($classname) )
@@ -185,13 +184,10 @@ class AnServiceClass
                        $classes[] = $config['fallback'];                      
                    }
                }
+               
                foreach($classes as $class) 
                {
-                   //make sure to find  path first
-                   //then try to load it 
-                   if ( $loader->findPath($class, $identifier->basepath) &&                                                      
-                        $loader->loadClass($class, $identifier->basepath)                             
-                           )
+                   if ( class_exists($class) )
                    {
                        $classname = $class;
                        break;
@@ -286,9 +282,4 @@ function get_prefix($object, $config = array())
 function register_default($config)
 {
     AnServiceClass::registerDefault($config);
-}
-
-function unregister_default($identifier)
-{
-    AnServiceClass::setDefaultClass($identifier, null);
 }

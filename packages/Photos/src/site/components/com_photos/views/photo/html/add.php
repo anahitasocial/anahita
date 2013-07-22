@@ -4,7 +4,7 @@
 <script  src="lib_anahita/js/uploader.js" />
 <script  src="com_photos/js/upload.js" />
 
-<module position="sidebar-b" style="none"></module>
+<module position="sidebar-b" style="simple"></module>
 
 <?php 
 //check if flash uploader can work
@@ -12,7 +12,7 @@ $use_flash = ini_get('session.use_cookies') && !ini_get('session.use_only_cookie
 ?>
 
 <div data-behavior="PhotoUploader" data-photouploader-max-file-size="<?=get_config_value('photos.uploadlimit',4)?>mb" data-photouploader-form="form" data-photouploader-plugin-url='<?=@route('view=sets&oid='.$actor->id.'&layout=add_photos')?>'>
-    <form class="upload-form" action="<?= @route( 'view=photo&format=json&oid='.$actor->id ) ?>" method="post" enctype="multipart/form-data">
+    <form class="upload-form" action="<?= @route( 'view=photo&format=json&oid='.$actor->id.'&reset=1' ) ?>" method="post" enctype="multipart/form-data">
     	<div class="file-list">
     	    <?= @message(@text('COM-PHOTOS-UPLOAD-NO-IMAGE-FILES-SELECTED')) ?>
     	</div>

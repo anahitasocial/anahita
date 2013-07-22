@@ -1,0 +1,136 @@
+// STORIES
+#com-composer-container
+{    
+    padding:  10px 10px 0 10px;
+    .border-radius(@baseBorderRadius);
+    
+    .tab-content
+    {
+        overflow: hidden;
+    }
+    
+    form
+    {
+        fieldset
+        {
+            margin: 0;
+        }
+        
+        .actions
+        {
+           margin-bottom: 0;
+           .clearfix;
+           
+           .btn
+           {
+               float: right;
+           }
+        }
+    }
+}
+
+#story-composer 
+{ 
+    .clearfix;
+    
+    form
+    {
+        padding: 0;
+        textarea 
+        { 
+           min-height: 50px;
+        }
+        
+        .story-actions
+        {
+          .clearfix;
+          .story-action
+          {
+              label
+              {
+                  white-space: nowrap; 
+              }
+              
+              &.pull-right
+              {
+                label
+                {
+                    margin-right: 20px;
+                }
+              }
+          }
+        }
+    }
+}
+
+.an-story
+{	   
+    .story-container
+    {
+       .entity-container;
+        
+        h4.story-title
+        {
+            font-size: @baseFontSize;
+            font-weight: normal;
+            a
+            {
+                font-weight: bold;
+            }
+        }
+        
+        .story-body
+        {
+            .clearfix;
+            .entity-body;
+            
+            a.actor-name
+           {
+                float: left;
+                margin-right: 3px;
+           }
+           
+           .media-grid
+		    {   
+		        .clearfix;
+		        margin: -5px;
+		                              
+		        img
+		        {
+		           margin: 5px;
+		           .square(87px);
+		           
+		           &.actor-avatar
+		           {
+		              .square(55px);
+                   }
+                }
+		    }           
+        }
+    }
+    
+    .an-code
+    {
+       pre 
+       {
+          .hide;
+       }
+    }
+}
+
+.an-stories
+{
+    .an-comment-form 
+    {
+        .hide;
+        padding-left: 20px;
+    }
+    
+    .an-comment
+    {
+        &.an-entity
+        {
+            padding: 0;
+        }
+    }	
+}

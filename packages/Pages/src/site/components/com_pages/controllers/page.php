@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Pages
@@ -63,34 +67,16 @@ class ComPagesControllerPage extends ComMediumControllerDefault
 	}
 	
 	/**
-	 * Redirect after edit
-	 * 
-	 * (non-PHPdoc)
-	 * @see ComBaseControllerService::_actionEdit()
-	 */
-	protected function _actionEdit(KCommandContext $context)
-	{
-	    $result = parent::_actionEdit($context);
-	    $this->registerCallback('after.edit', array($this, 'redirect'));
-	}
-	
-	/**
 	 * Page post action
 	 * 
 	 * @param KCommandContext $context Context parameter
 	 * 
 	 * @return void
 	 */
-	public function redirect(KCommandContext $context)
-	{
-	    if ( $context->action == 'edit' ||
-	         $context->action == 'add'	             
-	            )	    
-	    {
-	        $context->response->setRedirect(JRoute::_($this->getItem()->getURL().'&layout=edit'));
-	        
-	    } else {
-	        return parent::redirect($context);
-	    }
+	protected function _actionPost($context)
+	{		
+		$result = parent::_actionPost($context);		
+        $this->setRedirect($this->getItem()->getURL().'&layout=edit');        				
+		return $result;
 	}
 }

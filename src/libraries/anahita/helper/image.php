@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Helper
@@ -24,28 +28,7 @@
  * @link       http://www.anahitapolis.com
  */
 class AnHelperImage extends KObject
-{   
-    /**
-     * Parses a string based size convention to width and height
-     * 
-     * @param string|array $size
-     * 
-     * @return array
-     */ 
-    static function parseSize($size)
-    {
-        $height = null;
-        $width  = null;
-        
-        if ( count((array) $size) == 2 || strpos($size,'x') ) {
-            list($width,$height) = is_array($size) ? $size : explode('x',$size);
-        } else {
-            $size =  (array) $size;
-            $width = (int) $size[0];
-        }
-        return array($width,$height);
-    }
-    
+{    
 	/**
 	 * Resizes an image using the passed size and return the resized image resource
 	 * 
@@ -60,7 +43,15 @@ class AnHelperImage extends KObject
 			return false;
         }
 		
-        list($width, $height) = self::parseSize($size);
+		$height = null;
+		$width  = null;
+		
+		if ( strpos($size,'x') || count((array) $size) == 2 ) {
+			list($width,$height) = is_array($size) ? $size : explode('x',$size); 
+		} else {
+			$size =  (array) $size;
+			$width = (int) $size[0];
+		}
 		
 		if ($height == 'auto' && $width == 'auto' )
 			return false;

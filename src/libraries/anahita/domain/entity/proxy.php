@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -167,7 +171,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
  	 * 
  	 * @return mixed
 	 */
-	public function get($key = null, $default = null)
+	public function get($key, $default = null)
 	{
 		if ( !isset($this->_object) && $key == $this->_property ) 		
 			return $this->_value;
@@ -180,7 +184,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
  	 * 
  	 * @return class instance
 	 */
-	public function set($key = null, $value = null)
+	public function set($key, $value)
 	{
 		$this->getObject()->set($key, $value);
 		return $this;
@@ -246,7 +250,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 				$query = $repository->getQuery()->where($condition)->limit(1);
 				
 				if ( $repository->hasBehavior('cachable') ) {
-				    $repository->emptyCache($query);
+				    $repository->getCache()->offsetSet((string)$query, null);
 				}
 				
 				$this->_object = false;
@@ -277,7 +281,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 	 * @param  array  	The function arguments
 	 * @return mixed The result of the function
 	 */
-	public function __call($method,  $arguments)
+	public function __call($method, array $arguments)
 	{
 	    $object = $this->getObject();
 	    if ( $object ) {

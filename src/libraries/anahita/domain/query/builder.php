@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -304,10 +308,7 @@ class AnDomainQueryBuilder extends KObject
 			
 			if ( $link['bind_type'] )
 			{
-			    $type = $this->_inheritanceTree($description);
-			    if ( !empty($type) && $type != '%' ) {
-			        $conditions[] = $link['bind_type'].' LIKE \''.$this->_inheritanceTree($description).'\'';
-			    }
+			    $conditions[] = $link['bind_type'].' LIKE \''.$this->_inheritanceTree($description).'\'';
 			}
 			
 			$name      = $this->_store->quoteName($link['resource_name']);
@@ -361,30 +362,25 @@ class AnDomainQueryBuilder extends KObject
 		$clauses	 = array();
 		if ( $description->getInheritanceColumn() && $type_check ) 
 		{
+			$array 		= array();
+			//get the main resource name
 			$resource 	= $description->getInheritanceColumn()->resource->getAlias();
-			//the table type column name
-			$type_column_name = $resource.'.'.$description->getInheritanceColumn()->name;
-								
-			$scopes 	= KConfig::unbox($query->instance_of);
-			if ( empty($scopes) ) {
-				$scopes = array($description);
-			} else {
-				if ( !is_array($scopes) ) {
-					$scopes = array($scopes);
-				}
+			$scope		= (array)KConfig::unbox($query->instance_of);
+			if ( !empty($scope) ) 
+			{
+				foreach($scope as $scope)
+					$array[] = $scope;
 			}
-            
-			foreach($scopes as $index => $scope) {
-			    $inheritance_type = $this->_inheritanceTree($scope);
-			    if ( !empty($inheritance_type) && $inheritance_type != '%' ) {
-                    $scopes[$index] = $type_column_name.' LIKE \''.$inheritance_type.'\'';;
-			    } else {
-			        unset($scopes[$index]);
-			    }
+			else $array[] = $description;
+			
+			foreach($array as $key => $description) 
+			{
+			    $inheritance = $this->_inheritanceTree($description);
+			    $inheritance = $resource.'.'.$description->getInheritanceColumn()->name.' LIKE \''.$inheritance.'\'';
+			    $array[$key] = $inheritance;
 			}
-			if ( !empty($scopes) ) {
-                $clauses[] = '('.implode(' OR ', $scopes).')';
-			}
+						
+            $clauses[] = '('.implode(' OR ', $array).')';
 		}
 		
 		if ( !empty($query->where) )
@@ -641,16 +637,6 @@ class AnDomainQueryBuilder extends KObject
 		$string = implode(' ', $parts);		
 		$string = $this->parseMethods($query, $string);
 		$string = str_replace('@MYSQL_JOIN_PLACEHOLDER', $this->join($query), $string);
-		$string = $this->parseMethods($query, $string);
-
-		if ( count($query->binds) ) {
-			foreach($query->binds as $key => $value) {
-				$key    = ':'.$key;
-				$value  = $this->_store->quoteValue($value);
-				$string = str_replace($key, $value, $string);
-			}
-		}
-		
         $string = str_replace('@DISTINCT', $query->distinct ? 'DISTINCT' : '', $string);
 				
 		return 	$string;
@@ -666,31 +652,15 @@ class AnDomainQueryBuilder extends KObject
 	 */
 	protected function _inheritanceTree($description)
 	{
-        $inheritance = '';
-        
-	    if ( $description instanceof KServiceIdentifier || 
-	    		(is_string($description) && strpos($description, '.') && !strpos($description, ',')) 	    		
-	    		) {
+	    if ( is_string($description) && strpos($description, '.') ) {
 	        $description = KService::get($description)->getRepository()->getDescription();
 	    }
 	    
-        else if ( $description instanceof AnDomainRepositoryAbstract ) {
-        	$description = $description->getDescription();
-        }
-         	    
-        if ( $description instanceof AnDomainDescriptionAbstract ) 
-        {
-            $inheritance = (string) $description->getInheritanceColumnValue();
-            
-            if ( $description->isAbstract() ) {
-                $inheritance .= '%';
-            }
-            
-        } 
+        $inheritance = (string) $description->getInheritanceColumnValue();
         
-        elseif ( is_string($description) ) {
-            $inheritance = strpos($description,'.') ? $description : $description.'%';
-        }        
+        if ( $description->isAbstract() ) {
+            $inheritance .= '%';
+        }
         
         return $inheritance;
 	}
@@ -802,7 +772,15 @@ class AnDomainQueryBuilder extends KObject
                 $string = str_replace($matches[0],$replaces,$string);
             }
         }        
-                        
+                
+        if ( count($query->binds) ) {
+            foreach($query->binds as $key => $value) {
+                $key    = ':'.$key;
+                $value  = $this->_store->quoteValue($value);
+                $string = str_replace($key, $value, $string);                               
+            }
+        }
+        
 	    return $string;	    
 	}
 }

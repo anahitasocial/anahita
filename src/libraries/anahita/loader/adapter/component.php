@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Loader
@@ -50,20 +54,8 @@ class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
 	public function findPath($classname, $basepath = null)
 	{
 		$path = false;
-		
-		/*
-		 * Exception rule for Exception classes
-		*
-		* Transform class to lower case to always load the exception class from the /exception/ folder.
-		*/
-		if($pos = strpos($classname, 'Exception'))
-		{
-		    $filename       = substr($classname, $pos + strlen('Exception'));
-		    $classname      = str_replace($filename, ucfirst(strtolower($filename)), $classname);
-		}
-		
+
 		$word  = strtolower(preg_replace('/(?<=\\w)([A-Z])/', ' \\1', $classname));
-		
 		$parts = explode(' ', $word);
 
 		if (array_shift($parts) == 'com')
@@ -75,7 +67,7 @@ class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
 
 		    $component = 'com_'.strtolower(array_shift($parts));
 			$file 	   = array_pop($parts);
-            $path      = null;
+
 			if(count($parts))
 			{
 			    if($parts[0] != 'view')
@@ -85,33 +77,26 @@ class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
 				    }
 			    }
 			    else $parts[0] = KInflector::pluralize($parts[0]);
-				$path = implode('/', $parts);
-			}			
 
-			$path = '/components/'.$component.'/'.$path;
-			
-			$filepath  = $path.'/'.$file.'.php';
-			$basepath  = $this->_basepath;
-			
-			if ( array_value($parts, -1) == 'exceptions' )
-			{
-                if ( !file_exists($basepath.$filepath) ) {
-                    $filepath = $path.'/default.php';
-                }
+				$path = implode('/', $parts).'/'.$file;
 			}
+			else $path = $file;
+
+			$path     = '/components/'.$component.'/'.$path.'.php';
+			$basepath = $this->_basepath;
 			
 			if ( count($parts) == 2 && $parts[0] == 'domains' )
 			{
 			    if ( $parts[1] == 'entities' && JPATH_SITE != $this->_basepath )
 			    {
 			        //set the basepath of entities to the site
-			        if ( !file_exists($basepath.$filepath) ) {			            
+			        if ( !file_exists($basepath.$path) ) {			            
 			            $basepath = JPATH_SITE;
 			        }
 			    }
 			}			    			
 
-			$path = $basepath.$filepath;
+			$path = $basepath.$path;
 		}
 
 		return $path;

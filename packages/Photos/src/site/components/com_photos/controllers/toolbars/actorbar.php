@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Photos
@@ -28,7 +32,7 @@
 class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActorbar
 {
     /**
-     * Before controller action
+     * Before _actionGet controller event
      *
      * @param  KEvent $event Event object 
      * 
@@ -40,7 +44,7 @@ class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActor
 
 		$viewer = $this->getController()->viewer;
 		$actor	= pick($this->getController()->actor, $viewer);
-		$layout = pick($this->getController()->getRequest()->layout, 'default');
+		$layout = pick($this->getController()->layout, 'default');
 		
 		$name	= $this->getController()->getIdentifier()->name;
 		$filter = $this->getController()->filter;
@@ -59,19 +63,19 @@ class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActor
 		//create navigations
 		$this->addNavigation( 'photos',
 					JText::_('COM-PHOTOS-LINKS-PHOTOS'),
-					array('option'=>'com_photos', 'view'=>'photos', 'oid'=>$actor->uniqueAlias),
+					array('option'=>'com_photos', 'view'=>'photos', 'oid'=>$actor->id),
 					$name == 'photo' && (in_array($layout, array('default', 'add', 'masonry'))) && $filter == '');
 
 		if($actor->photos->getTotal() > 0)			
 			$this->addNavigation('sets', JText::_('COM-PHOTOS-LINKS-SETS'), 
-						array('option'=>'com_photos', 'view'=>'sets','oid'=>$actor->uniqueAlias), 
+						array('option'=>'com_photos', 'view'=>'sets','oid'=>$actor->id), 
 						$name == 'set' && in_array($layout, array('default', 'add', 'edit')));
 		
 		if( $viewer->eql($actor) )
 		{
 				$this->addNavigation('leaders', 
 					JText::_('COM-PHOTOS-LINKS-LEADERS'), 
-					array('option'=>'com_photos', 'view'=>'photos', 'filter'=>'leaders', 'oid'=>$actor->uniqueAlias),
+					array('option'=>'com_photos', 'view'=>'photos', 'filter'=>'leaders', 'oid'=>$actor->id),
 					$name == 'photo' && in_array($layout, array('default', 'masonry')) && $filter == 'leaders');
 		}
     }    

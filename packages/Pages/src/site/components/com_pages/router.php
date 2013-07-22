@@ -1,10 +1,14 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
- * @package    Com_Topics
+ * @package    Com_Pages
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
@@ -13,4 +17,36 @@
  * @link       http://www.anahitapolis.com
  */
 
-class ComPagesRouter extends ComMediumRouterDefault {}
+function PagesBuildRoute( &$query ) {
+	
+	$segments = array();
+	
+	if ( isset($query['view']) ) {
+		$segments[] = $query['view'];
+		unset($query['view']);
+	} 
+
+	if ( isset($query['id']) ) {
+		$segments[] = $query['id'];
+		unset($query['id']);		
+	}	
+	
+	if ( isset($query['alias']) ) {
+		$segments[] = $query['alias'];
+		unset($query['alias']);		
+	}
+
+	return $segments;
+}
+
+function PagesParseRoute( $segments ) {
+	
+	$vars = array();
+	
+	$vars['view']   = array_shift($segments);
+	
+	if ( count($segments) )
+		$vars['id'] = array_shift($segments);
+				
+	return $vars;
+}

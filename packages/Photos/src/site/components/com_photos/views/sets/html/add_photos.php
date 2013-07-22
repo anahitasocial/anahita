@@ -1,10 +1,10 @@
 <?php defined('KOOWA') or die ?>
 
 <form id="set-select-form" data-behavior="FormValidator" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
+	<input type="hidden" value="addphoto" name="action" />
 	<?php foreach($photos as $photo): ?>
 	<input type="hidden" name="photo_id[]" value="<?= $photo->id ?>" />
 	<?php endforeach; ?>
-	<input type="hidden" value="addphoto" name="action" />
 	
 	<?= @message(@text('COM-PHOTOS-SET-SELECT-SIMPLE-INSTRUCTIONS')) ?>
 		
@@ -12,7 +12,7 @@
 	<div class="clearfix">
 		<label><?= @text('COM-PHOTOS-SET-SELECT-ONE') ?></label>
 		<div class="input">
-			<select id="set-selector" name="id" class="input-xlarge">
+			<select id="set" name="id" class="input-xlarge">
 				<option value=""><?= @text('COM-PHOTOS-SET-SELECT-NO-SET-IS-SELECTED') ?></option>
 				<?php foreach($actor->sets as $set): ?>
 				<option value="<?= $set->id ?>"><?= @escape($set->title) ?></option>
@@ -43,11 +43,11 @@ Delegator.register('click', {
 	
 	'add-photos-to-set' : function(event, el, api){
 		event.stop();
-		
+
 		if(el.form.id.selectedIndex > 0)
 			el.form.submit();
 
-		else if(el.form.title && el.form.get('validator').validate())
+		if(el.form.title && el.form.get('validator').validate())
 			el.form.submit();
 	}
 	

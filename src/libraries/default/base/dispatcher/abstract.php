@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -25,22 +29,8 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
+abstract class LibBaseDispatcherAbstract extends KDispatcherAbstract
 {
-    /**
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
-                
-		$this->_controller = $config->controller;
-    }
-    
     /**
      * Initializes the options for the object
      *
@@ -51,98 +41,137 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
      */
     protected function _initialize(KConfig $config)
     {
-        $config->append(array(
-            'response'   => 'com:base.dispatcher.response',
-            'controller' => $this->getIdentifier()->package,
-            'request'	 => array(),
+        parent::_initialize($config);
+        
+        $config->request->append(array(
+        	'format'	=> KRequest::format()        	
         ));
-    
-        parent::_initialize($config);        
-    
-        //prevent rendering layouts starting with _
+        
         if ( strpos($config->request->layout, '_') === 0 ) {
-            unset($config->request->layout);
+			unset($config->request->layout);
         }
-    }       
+        
+        //Force the controller to the information found in the request
+        if($config->request->view) {
+            $config->controller = $config->request->view;
+        }
+    }
+        
+    /**
+     * @see KDispatcherAbstract::_actionDispatch()
+     */
+    protected function _actionDispatch(KCommandContext $context)
+    {
+        //Set the controller to the view passed in
+        $data = KConfig::unbox($context->data);
+        
+        if( !empty($data) ) 
+        	$this->setController($context->data);
 
-    /**
-     * Method to get a controller object
-     *
-     * @return	KControllerAbstract
-     */
-    public function getController()
-    {
-        if(!($this->_controller instanceof KControllerAbstract))
+        //Redirect if no view information can be found in the request
+        if(!KRequest::has('get.view')) 
         {
-            //Make sure we have a controller identifier
-            if(!($this->_controller instanceof KServiceIdentifier)) {
-                $this->setController($this->_controller);
-            }
-    
-            $config = array(
-                'response'     => $this->getResponse(),
-                'request' 	   => $this->_request,
-                'dispatched'   => true
-            );
-    
-            $this->_controller = $this->getService($this->_controller, $config);
+            $url = clone(KRequest::url());
+            $url->query['view'] = $context->data ? $context->data : $this->getController()->getIdentifier()->name;            
+            JFactory::getApplication()->redirect($url);
+            return;
         }
-    
-        return $this->_controller;
+    		    			 
+	    $action = KRequest::get('post.action', 'cmd', strtolower(KRequest::method()));
+	    
+	    $context->data = new KConfig();
+	    	    
+	    if(KRequest::method() != KHttpRequest::GET) {
+            $context->data = KRequest::get(strtolower(KRequest::method()), 'raw', array());
+        }
+        
+        $result = $this->getController()->execute($action, $context);
+        	    
+    	return $result;
     }
     
-    /**
-     * Set the request of the response
-     * 
-     * (non-PHPdoc)
-     * @see LibBaseControllerAbstract::getResponse()
-     */
-    public function getResponse()
-    {
-       if ( !$this->_response instanceof LibBaseDispatcherResponse )
-       { 
-           $this->_response = parent::getResponse();
-           
-           if ( !$this->_response instanceof LibBaseDispatcherResponse ) {
-               throw new InvalidArgumentException(
-                       'Response: '.get_class($this->_response).' must be an intance of LibBaseDispatcherResponse');
-           }
-           
-           $this->_response->setRequest($this->getRequest());
-       }
-       return $this->_response;
-    }
-    
-    /**
-     * Method to set a controller object attached to the dispatcher
-     *
-     * @param	mixed	An object that implements KObjectServiceable, KServiceIdentifier object
-     * 					or valid identifier string
-     * @throws	KDispatcherException	If the identifier is not a controller identifier
-     * @return	KDispatcherAbstract
-     */
-    public function setController($controller)
-    {
-        if(!($controller instanceof KControllerAbstract))
-        {
-            if(is_string($controller) && strpos($controller, '.') === false )
-            {
-                // Controller names are always singular
-                if(KInflector::isPlural($controller)) {
-                    $controller = KInflector::singularize($controller);
-                }
-    
-                $identifier			= clone $this->getIdentifier();
-                $identifier->path	= array('controller');
-                $identifier->name	= $controller;
-            }
-            else $identifier = $this->getIdentifier($controller);            
-                        
-            $controller = $identifier;
-        }
-    
-        $this->_controller = $controller;
-    
-        return $this;
-    }	
+	/**
+	 * Set the default controller to LibBaseControllerResource
+	 * 
+	 * @see KDispatcherAbstract::setController()
+	 */
+	public function setController($controller)
+	{
+		parent::setController($controller);
+		
+		if ( !$this->_controller instanceof KControllerAbstract ) {
+			register_default(array('identifier'=>$this->_controller, 'default'=>'LibBaseControllerService'));
+		}
+	}
+		
+	/**
+	 *  In Default App the forward condition is set to
+	 * 	if context->result is a string or false don't forward
+	 *  if request is HTTP or AJAX with context->redirect_ajax is set then redirect
+	 *  ignore AJAX reuqest (in socialengien we never forward an ajax request)
+	 * 
+	 */
+	public function _actionForward(KCommandContext $context)
+	{		
+	    //wierd bug in nooku. need to call request referere one
+	    //time before using it
+	    KRequest::referrer();
+	    
+		$redirect = $this->getController()->getRedirect();
+		
+		if ( $context->status_message ) {
+			$redirect->message = $context->status_message;
+		}
+		
+		if ( $context->getError() ) {
+			$redirect->type = 'error';
+		}
+		
+
+		if ( !isset($redirect['type']) ) {
+			$redirect['type'] = 'success';	
+		}
+		
+		if ( empty($redirect->url) ) {		  
+			$redirect['url'] = KRequest::referrer();
+		}
+		
+		//if a the result of disatched is string then
+		//dispaly the returned value	
+		if ( is_string($context->result) ) 
+		{
+			if ( KRequest::type() == 'HTTP') {
+				JFactory::getApplication()->enqueueMessage($redirect['message'], $redirect['type']);
+			} else {
+				//set the redirect message in the header
+				JResponse::setHeader('Redirect-Message', 	   $redirect['message']);
+				JResponse::setHeader('Redirect-Message-Type',  $redirect['type']);				
+			}
+			//set the status to ok if there's a result
+			$context->status = KHttpResponse::OK;
+			return $context->result;
+		}
+				
+		if (KRequest::type() == 'HTTP') {
+			JFactory::getApplication()
+					->redirect($redirect['url'], $redirect['message'], $redirect['type']);
+		} else {
+			JResponse::setHeader('Redirect-Message', 	   $redirect['message']);
+			JResponse::setHeader('Redirect-Message-Type',  $redirect['type']);			
+		}
+	}
+
+	/**
+	 * Renders a controller view
+	 * 
+	 * @return string
+	 */
+	protected function _actionRender(KCommandContext $context)
+	{
+		if ( $context->result === false )
+			return false;
+			
+		return parent::_actionRender($context);
+	}
+	
 }

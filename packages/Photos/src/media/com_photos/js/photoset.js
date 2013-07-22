@@ -47,7 +47,7 @@ var PhotoSet = new Class({
 		
 		this.form.ajaxRequest({
 			method : 'post',
-			url : this.form.get('action') + '?layout=selector_list&reset=1',
+			url : this.form.get('action') + '&layout=selector_list&reset=1',
 			data : this.form,
 			inject : {
 				element : document.getElement('#' + this.options.sets + ' .an-entities'),

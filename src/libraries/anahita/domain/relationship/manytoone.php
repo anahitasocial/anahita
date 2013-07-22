@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -110,7 +114,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 			if  ( $entity instanceof KMixinAbstract )
 					$entity = $entity->getMixer();
 			
-			$data[(string)$this->_type_column] = $entity ? (string)$entity->getEntityDescription()->getInheritanceColumnValue()->getIdentifier() : null;
+			$data[(string)$this->_type_column] = $entity ? (string)$entity->description()->getInheritanceColumnValue()->getIdentifier() : null;
 		}
 
 		return $data;
@@ -198,16 +202,6 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 	}
 		
 	/**
-	 * (non-PHPdoc)
-	 * @see AnDomainPropertyAbstract::isMaterializable()
-	 */
-	public function isMaterializable(array $data)
-	{
-	    $child_key =  $this->_child_column->key();
-	    return array_key_exists($child_key, $data);
-	}
-		
-	/**
 	 * Materialize a many-to-one relationship for the entity and the data from 
 	 * the database
 	 * 
@@ -217,17 +211,17 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 	 * @return AnDomainProxyEntity
 	 */
 	public function materialize(array $data, $instance)
-	{
+	{	
 		if ( empty($data) ) {
 			return null;
-		}	
+		}
+		
+		$child_key =  $this->_child_column->key();
 			
-		if ( !$this->isMaterializable($data) ) {
+		if ( !array_key_exists($child_key, $data) ) {
 			throw new AnDomainExceptionMapping($this->getName().' Mapping Failed');
 		}
 
-		$child_key =  $this->_child_column->key();
-		
 		//get parent value
 		$parent_value = $data[$child_key];
 		
@@ -238,12 +232,6 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 		{
 			$key   	= $this->_type_column->key();
 			$parent	= isset($data[$key]) ? $data[$key] : null;
-			if ( $parent ) {
-			    $parent = KService::getIdentifier($parent);
-			    if ( !$parent->application ) {
-			        $parent->application = $this->_child->application;
-			    }
-			}
 		} 
 		else $parent = $this->_parent;
 
@@ -257,8 +245,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 		$config['relationship'] = $this;
 		$config['value']        = $parent_value;
 		$config['property']     = $this->_parent_key;
-		$config['service_identifier']   = AnDomain::getRepository($parent)
-					->getDescription()->getEntityIdentifier();
+		$config['service_identifier']   = AnDomain::getRepository($parent)->getDescription()->getEntityIdentifier();
 				
 		return new AnDomainEntityProxy(new KConfig($config));		
 	}		

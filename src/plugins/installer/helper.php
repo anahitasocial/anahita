@@ -107,7 +107,7 @@ class PlgInstallerHelper
                 foreach($files as $file)
                 {
                     $path = $base.'/'.$file;
-                    $migrator = KService::get('com://cli/migrator.controller.default', array('path'=>$path));
+                    $migrator = KService::get('com://cli/migrator.controller', array('path'=>$path));
                     if ( !JDEBUG )
                         capture();
                     $migrator->up();

@@ -7,7 +7,7 @@
 </ul>
 </module>
 
-<module position="sidebar-b">
+<module position="sidebar-b" style="simple">
 <?= @helper('ui.gadget', LibBaseTemplateObject::getInstance('revisions', array(
     'title' => @text('COM-PAGES-PAGE-REVISIONS'),
     'url'   => 'view=revisions&layout=gadget&pid='.$revision->page->id.'&oid='.$actor->id

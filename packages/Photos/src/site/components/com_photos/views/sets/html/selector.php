@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<form id="set-form" data-behavior="FormValidator" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
+<form id="set-form" data-behavior="FormValidator" method="post" action="<?= @route(array('view'=>'set', 'oid'=>$actor->id)) ?>">
 	<input type="hidden" name="action" value="addphoto" />
 	<input type="hidden" name="photo_id" value="<?= $photo->top()->id ?>" />
 	

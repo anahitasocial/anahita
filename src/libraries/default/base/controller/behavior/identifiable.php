@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -141,25 +145,10 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
     /**
      * Return the controller identifiable item
      * 
-     * @param boolean $create Return an entity if there's none  
-     * 
      * @return mixed
      */
-    public function getItem($create = false)
+    public function getItem()
     {
-    	$item = $this->_mixer->getState()->getItem();
-    	
-    	if ( $item  == null && $this->_mixer->getState()->isUnique()	
-    			) {
-    		
-    		$item = $this->fetchEntity(new KCommandContext()); 
-    	}
-    	
-    	//create an new entity
-    	if ( $item == null && $create ) {
-    		$this->_mixer->getState()->setItem( $this->getRepository()->getEntity() );
-    	}
-    	
         return $this->_mixer->getState()->getItem();
     }
     
@@ -236,26 +225,14 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
             else
                 $mode = AnDomain::FETCH_ENTITY;
                    
-            $query  = $this->getRepository()->getQuery();
-            $query->where($scope);
-            
-            $entity = $this->getRepository()->fetch($query, $mode);
+            $entity = $this->getRepository()->fetch($scope, $mode);
             
             if ( empty($entity) || !count($entity)) 
             {
-                $exception = new LibBaseControllerExceptionNotFound('Resource Not Found');
-                
-                //see if the entity exits or not
-                if ( $query->disableChain()->fetch() ) 
-                {
-                    if ( $this->viewer && !$this->viewer->guest() ) {
-                        $exception = new  LibBaseControllerExceptionForbidden('Forbidden');
-                    } else {
-                        $exception = new  LibBaseControllerExceptionUnauthorized('Not authorized');
-                    }
-                }
-                
-                throw $exception;
+                $context->setError(new KHttpException(
+                    'Resource Not Found', KHttpResponse::NOT_FOUND
+                ));
+                return false;                       
             }
             
             $this->setItem($entity);

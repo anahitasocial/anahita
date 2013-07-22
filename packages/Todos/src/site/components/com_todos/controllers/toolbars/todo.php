@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package	   Com_Todos
@@ -79,7 +83,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 		
 		$command
 		->append(array('label'=>JText::_('COM-TODOS-TOOLBAR-TODO-NEW')))
-		->href('option=com_todos&view=todo&layout=add')
+		->href('view=todo&layout=add')
 		->setAttribute('data-trigger','ReadForm');
 	} 
 	
@@ -96,7 +100,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	    	    
 	    $label 	= JText::_('COM-TODOS-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
 	
-	    $url = $entity->getURL().'&action='.($entity->enabled ? 'disable' : 'enable');
+	    $url = $entity->getURL().'&reset=1&&action='.($entity->enabled ? 'disable' : 'enable');
 	    
 	    $command->append(array('label'=>$label));
 	           

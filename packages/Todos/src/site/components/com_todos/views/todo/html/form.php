@@ -48,7 +48,7 @@
 		<div class="form-actions">
 			<?php if($todo->persisted()): ?>
 				<?php if(KRequest::type() == 'AJAX'): ?>
-				<button data-trigger="Request"  type="button" class="btn"  name="cancel"  data-request-options="{method:'get',url:'<?=@route($todo->getURL().'&layout=list')?>',replace:this.getParent('form')}">
+				<button data-trigger="Request"  type="button" class="btn"  name="cancel"  data-request-options="{method:'get',url:'<?=@route($todo->getURL().'&layout=list')?>',replace:this.getParent('form')}"/>
 					<?= @text('LIB-AN-ACTION-CANCEL') ?>
 				</button>
 				<button class="btn btn-primary" data-trigger="Request" data-request-options="EditEntityOptions" >
@@ -63,7 +63,7 @@
 				</button>
 				<?php endif;?>
 			<?php else : ?>
-			<button data-trigger="CancelAdd"  type="button" class="btn small"  name="cancel">
+			<button data-trigger="CancelAdd"  type="button" class="btn small"  name="cancel"/>
 				<?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</button> 
 			<button data-trigger="Add" class="btn btn-primary">

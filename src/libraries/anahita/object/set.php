@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Object
@@ -41,26 +45,6 @@
  */
 class AnObjectSet extends KObjectSet
 {
-    /**
-     * Constructor
-     *
-     * @param KConfig|null $config  An optional KConfig object with configuration options
-     * @return \KObjectSet
-     */
-    public function __construct(KConfig $config = null)
-    {
-        //If no config is passed create it
-        if(!isset($config)) $config = new KConfig();
-
-        parent::__construct($config);
-                    
-        if ( $config->data ) {
-            foreach($config->data as $object) 
-                $this->insert($object);
-        }
-        
-    }
-        
     /**
      * Individually set the column value of each object
      *

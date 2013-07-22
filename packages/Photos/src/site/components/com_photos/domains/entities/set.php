@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Photos
@@ -131,14 +135,6 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 	 */
 	public function reorder($photo_ids)
 	{		
-		if(count($photo_ids) == 1)
-		{
-			if($edge = $this->getService('repos://site/photos.edge')->fetch(array('set'=>$this,'photo.id'=>$photo_ids[0])))
-				$edge->ordering = $this->photos->getTotal();
-				
-			return;
-		}
-		
 		foreach($photo_ids as $index=>$photo_id)
 		{
 			if($edge = $this->getService('repos://site/photos.edge')->fetch(array('set'=>$this,'photo.id'=>$photo_id)))

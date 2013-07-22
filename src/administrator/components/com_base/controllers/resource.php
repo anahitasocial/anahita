@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Base
@@ -59,31 +63,5 @@ class ComBaseControllerResource extends LibBaseControllerResource
 				
 		parent::_initialize($config);
 		
-	}	
-
-	/**
-	 * Enqueus a message
-	 * 
-	 * @param string $message
-	 * @param string $type
-	 */
-	public function setMessage($message, $type = 'message')
-	{	    
-	    $session =& JFactory::getSession();
-	    $session->set('application.queue', array(array('message'=>$message, 'type'=>$type)));
 	}
-	
-	/**
-	 * Cancel action
-	 *
-	 * This function will unlock the row(s) and set the redirect to the referrer
-	 *
-	 * @param	KCommandContext	A command context object
-	 * @return 	KDatabaseRow	A row object containing the data of the cancelled object
-	 */
-	protected function _actionCancel(KCommandContext $context)
-	{
-	    //Create the redirect
-	    $context->response->setRedirect(JRoute::_('option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name)));
-	}	
 }

@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -197,25 +201,6 @@ function is()
 }
 
 /**
- * When __toString throws error it's a headahce for debuggin
- * this method safely converts an object to string that if it
- * throws an error it can be caught 
- * 
- * @param mixed $object
- */
-function to_str($object)
-{
-    if ( is_object($object) && 
-            is_callable(array($object, '__toString') ))
-    {
-        $string = $object->__toString();
-    } else 
-        $string = (string)$object;
-            
-    return $string;
-}
-
-/**
  * Check if a value is within range of $min, $max
  *
  * @param int $value         An integer value
@@ -308,8 +293,6 @@ function translate($texts, $force = true)
  * @param array  $arguments An array of arugments to be passed to method
  *
  * @return mixed
- * 
- * @deprecated Use invoke_callback instead
  */
 function call_object_method($object, $method, array $arguments)
 {
@@ -332,60 +315,6 @@ function call_object_method($object, $method, array $arguments)
             // Resort to using call_user_func_array for many segments
             $callback = $object ? array($object, $method) : $method;
         $result = call_user_func_array($callback, $arguments);
-    }
-    return $result;
-}
-
-/**
- * Calls a valid callback. Optimized version of call_user_function
- *
- * @param callable $callback  A valid callback
- * @param array    $arguments An array of arugments to be passed
- *
- * @return mixed
- */
-function invoke_callback($callback, array $arguments = array())
-{
-    if ( is_array($callback) ) 
-    {
-        $arguments = array_merge($callback, $arguments);
-        if ( count($arguments) < 2 ) {
-            throw new \InvalidArgumentException('Not a valid callback');
-        }
-        $object = array_shift($arguments);
-        $method = array_shift($arguments);
-    }
-    elseif ( is_string($callback) || $callback instanceof \Closure )
-    {
-        $object = null;
-        $method = $callback;    
-    } else {
-        throw new \InvalidArgumentException('Not a valid callback');
-    }
-    
-    // Call_user_func_array is ~3 times slower than direct method calls.
-    switch(count($arguments))
-    {
-        case 0 :
-            $result = $object ? $object->$method() : $method();
-            break;
-        case 1 :
-            $result = $object ? $object->$method($arguments[0]) : $method($arguments[0]);
-            break;
-        case 2:
-            $result = $object ? $object->$method($arguments[0], $arguments[1]) : 
-                $method($arguments[0], $arguments[1]);
-            break;
-        case 3:
-            $result = $object ? $object->$method($arguments[0], $arguments[1], $arguments[2]) : $method($arguments[0], $arguments[1], $arguments[2]);
-            break;
-        case 4:
-                $result = $object ? $object->$method($arguments[0], $arguments[1], $arguments[2], $arguments[3]) : $method($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
-                break;            
-        default:
-            // Resort to using call_user_func_array for many segments
-            $callback = $object ? array($object, $method) : $method;
-            $result   = call_user_func_array($callback, $arguments);
     }
     return $result;
 }
@@ -783,145 +712,4 @@ function print_query($query)
     print str_replace('#__','jos_', $query)."\G";
 }
 
-function trace_mark($message)
-{
-    global $_checkpoints;
-    
-    if ( !$_checkpoints ) {
-        $_checkpoints = array();
-    }
-    
-    $traces = debug_backtrace();
-    array_shift($traces);
-    $trace = array_shift($traces);
-    $called_method = '';
-    if ( isset($trace['class']) ) {
-        $called_method = $trace['class'].'::';
-    }
-    if ( isset($trace['function']))
-        $called_method .= $trace['function'].'()';
-
-    $trace = array_shift($traces);
-
-    $calling_method = '';
-    
-    if ( isset($trace['object']) ) {
-        $calling_method = get_class($trace['object']).'::';
-    }
-    elseif ( isset($trace['class']) ) {
-        $calling_method = $trace['class'].'::';
-    }
-
-    if ( isset($trace['function']) && $trace['function'] != 'include') {
-        $calling_method .= $trace['function'].'()';
-    }
-    if ( empty($calling_method) && isset($trace['file']) ) {
-        if ( isset($trace['function']) && $trace['function'] == 'include') {
-            $calling_method = $trace['args'][0];
-        } else
-            $calling_method = $trace['file'];
-    }
-
-    if ( isset($trace['line']) )
-        $calling_method = $calling_method.' line:'.$trace['line'];
-    $index = count($_checkpoints) + 1;
-    $message =  $index.' - '.$calling_method.' '.$message;     
-    array_push($_checkpoints,$message);
-}
-
-function get_marked_traces()
-{
-    global $_checkpoints;
-    return pick($_checkpoints, array());
-}
-
-
-
-if (!function_exists('fastcgi_finish_request'))
-{
-    function fastcgi_finish_request()
-    {
-        if (PHP_SAPI !== 'cli')
-        {
-            for ($i = 0; $i < ob_get_level(); $i++) {
-                ob_end_flush();
-            }
-        
-            flush();
-        }        
-    }
-}
-
-/**
- * Return if an arary is a hash array
- *
- * @param array $array
- *
- * @return boolean
- */
-function is_hash_array($array)
-{
-    $count = count($array);   
-    foreach($array as $key => $value) 
-    {
-        if ( !is_int($key) || $key >= $count ) {
-            return true;
-        }
-    }
-    return false;    
-}
-
-/**
- * Return the value of an array at $index or null of not found. A negative number
- * can be passed to return the value from am index counting from the end of the 
- * array
- * 
- * @param array $array The array
- * @param int   $index The index
- */
-function array_value($array, $index)
-{
-    $index = (int)$index;
-    if ( $index < 0 ) {
-        $index = count($array) + $index;
-    }
-    return isset($array[$index]) ? $array[$index] : null;
-}
-
-/**
- * Fix config bug when hash array and list array are mixed together
- * 
- * @param array $array
- * 
- * @return array
- */
-function to_hash($array, $default = array())
-{
-    $array     = (array)$array;
-    $new_array = array();
-    foreach($array as $key => $value) 
-    {
-        if ( is_int($key) ) {
-            $key   = $value;
-            $value = $default;
-        }
-        $new_array[$key] = $value;
-    }
-    return $new_array;
-}
-
-/**
- * Return an array group by the value returned by the callback
- * 
- * @param array $array
- * @param mixed $callback
- */
-function array_group_by($array, $callback)
-{
-   $group = array();
-   foreach($array as $item) {
-       $group[$callback($item)][] = $item;
-   }
-   return $group;
-}
 ?>

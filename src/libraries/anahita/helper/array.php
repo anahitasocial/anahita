@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Helper
@@ -12,8 +16,6 @@
  * @version    SVN: $Id$
  * @link       http://www.anahitapolis.com
  */
-
-define('PHP_INT_MIN', ~PHP_INT_MAX); 
 
 /**
  * Array Helper
@@ -27,12 +29,6 @@ define('PHP_INT_MIN', ~PHP_INT_MAX);
  */
 class AnHelperArray extends KHelperArray
 {			
-	/**
-	 * Index flags
-	 */
-	const LAST_INDEX  = PHP_INT_MAX;
-	const FIRST_INDEX = PHP_INT_MIN;
-		
 	/**
 	 * Index an object (or an array) using one of it's attribute
 	 * 
@@ -251,29 +247,6 @@ class AnHelperArray extends KHelperArray
 			$object = array($object);
 			
 		return $object;
-	}
-	
-	/**
-	 * Get the value at an index. The index can be an integer or 'first' or 'last'. If the
-	 * index doesn't exists it returns null
-	 * 
-	 * @param array $array
-	 * @param mixed $index
-	 * 
-	 * @return null or value
-	 */
-	public function getValueAtIndex($array, $index)
-	{
-		$value = null;
-		
-		if ( abs((int)$index) == self::LAST_INDEX ) {
-			$index == self::LAST_INDEX ? end($array) : reset($array);
-			$value = current($array);
-		} else if ( isset($array[$index]) ) {
-			$value = $array[$index];
-		}
-		
-		return $value;
 	}
 	
 	/**

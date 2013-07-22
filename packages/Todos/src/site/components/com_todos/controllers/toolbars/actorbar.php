@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Todos
@@ -13,10 +17,10 @@
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
  * @link       http://www.anahitapolis.com
  */
- 
+
 /**
  * Actorbar. 
- * 
+ *
  * @category   Anahita
  * @package    Com_Todos
  * @subpackage Controller_Toolbar
@@ -28,7 +32,7 @@
 class ComTodosControllerToolbarActorbar extends ComMediumControllerToolbarActorbar
 {
     /**
-     * Before controller action
+     * Before _actionGet controller event
      *
      * @param  KEvent $event Event object 
      * 

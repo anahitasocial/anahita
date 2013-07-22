@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE install PUBLIC "-//Joomla! 1.5//DTD template 1.0//EN" "http://www.joomla.org/xml/dtd/1.5/template-install.dtd">
+<install type="template" version="1.5.0" client="administrator" method="upgrade">
+	<name>RT_MissionControl_J15</name>
+	<creationDate>June 9, 2011</creationDate>
+	<author>RocketTheme, LLC</author>
+	<authorEmail>support@rockettheme.com</authorEmail>
+	<authorUrl>http://www.rockettheme.com</authorUrl>
+	<copyright>(C) 2005 - 2011 RocketTheme, LLC. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<version>1.5.2</version>
+	<description>
+	<![CDATA[
+	<img src="templates/rt_missioncontrol_j15/images/mc-logo.png" /><br /><br />
+	MissionControl focuses on usability by optimizing layout, reducing clutter and improving visual appeal. <br /><br /><img src="templates/rt_missioncontrol_j15/template_thumbnail.png" /><br /><br />
+	]]>
+	</description>
+	<files>
+		<filename>index.php</filename>
+		<filename>component.php</filename>
+		<filename>cpanel.php</filename>
+		<filename>login.php</filename>
+        <filename>params.ini</filename>
+        <filename>template_thumbnail.png</filename>
+        <folder>ajax-models/</folder>
+		<folder>css/</folder>
+        <folder>elements/</folder>
+		<folder>html/</folder>
+		<folder>images/</folder>
+		<folder>js/</folder>
+        <folder>lib/</folder>
+		<folder>overrides/</folder>
+	</files>
+    <exceptions>
+        <filename type="noreplace">params.ini</filename>
+    </exceptions>
+	<positions>
+		<position>menu</position>
+		<position>submenu</position>
+		<position>toolbar</position>
+		<position>title</position>
+		<position>status</position>
+		<position>icon</position>
+		<position>cp_shell</position>
+		<position>cpanel</position>
+		<position>dashboard</position>
+		<position>sidebar</position>
+		<position>debug</position>
+	</positions>
+    <administration>
+        <languages>
+            <language tag="en-GB">en-GB.tpl_rt_missioncontrol_j15.ini</language>
+        </languages>
+    </administration>
+	<params addpath="/administrator/templates/rt_missioncontrol_j15/elements">
+        <!-- 
+        <param name="updatecheck" label="Update Check" type="updatecheck" />
+         -->
+        <param name="logoupload" type="logoupload" label="Header Logo" description="The image must be PNG, GIF, or JPEG and will be resized to fit" />
+		<param name="adminTitle" size="50" type="text" default="Welcome to Anahita administration!" label="Admin Title" description="Choose your Custom Administrator title" />
+		<param name="templateWidth" type="list" default="1080" label="Template Width" description="Choose the width of the MissionControl Template">
+			<option value="960">Normal - 960px</option>
+			<option value="1080">Wide - 1080px</option>
+		    <option value="1200">X-Wide - 1200px</option>
+		    <option value="variable">Variable</option>
+		</param>
+		<param name="dashboard" type="textarea" rows="10" cols="30" default="" label="Dashboard Text" description="Text to show on Dashboard" />
+		<!-- 
+		<param name="enableGravatar" type="radio" default="1" label="Enable Gravatar" description="Enable or Disable Gravatar based Avatar icon in header">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		 -->
+        <param name="enableTransitions" type="radio" default="enabled" label="Enable Transitions" description="Enable or Disable CSS based Transitions">
+			<option value="disabled">No</option>
+			<option value="enabled">Yes</option>
+		</param>
+		<param name="enableQuickEditor" type="radio" default="1" label="Enable QuickEditor" description="Enable or Disable Quick Editor selection">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param name="enableViewSite" type="radio" default="1" label="Enable View Site" description="Enable or Disable View Site option">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+        <param name="enableFancyHeaders" type="radio" default="fancy" label="Enable Fancy Headers" description="Enable or Disable @FontFace TTF Headers">
+			<option value="simple">No</option>
+			<option value="fancy">Yes</option>
+		</param>
+		<param name="extendmenu" type="radio" default="off" label="Wide Extend Menu" description="Enable or disable the 'double-wide' Extend menu. Useful when you have lots of extensions.">
+			<option value="off">No</option>
+			<option value="on">Yes</option>
+		</param>
+        <param name="body_text_color" type="colorchooser" default="#333333" label="Body Text" description="Choose the Body Text Color" />
+		<param name="body_link_color" type="colorchooser" default="#4486BA" label="Body Link" description="Choose the Body Link Color" />
+		<param name="header_bg_color" type="colorchooser" default="#333333" label="Header BG" description="Choose the Header Background Color" />
+		<param name="header_text_color" type="colorchooser" default="#CCCCCC" label="Header Text" description="Choose the Header Text Color" />
+		<param name="header_link_color" type="colorchooser" default="#FFFFFF" label="Header Link" description="Choose the Header Link Color" />
+		<param name="header_shadow_color" type="colorchooser" default="#000000" label="Header Shadow" description="Choose the Header Shadow Color" />
+		<param name="tab_bg_color" type="colorchooser" default="#4D4D4D" label="Tab BG" description="Choose the Tab Background Color" />
+		<param name="tab_text_color" type="colorchooser" default="#FFFFFF" label="Tab Text" description="Choose the Tab Text Color" />
+		<param name="special_bg_color" type="colorchooser" default="#C62D2D" label="Special BG" description="Choose the Special Background Color" />
+		<param name="special_text_color" type="colorchooser" default="#FFFFFF" label="Special Text" description="Choose the Special Text Color" />
+		<param name="active_bg_color" type="colorchooser" default="#4F9BD8" label="Active BG" description="Choose the Active Background Color" />
+		<param name="active_text_color" type="colorchooser" default="#FFFFFF" label="Active Text" description="Choose the Active Text Color" />
+		<param name="hover_bg_color" type="colorchooser" default="#88B719" label="Hover BG" description="Choose the Hover Background Color" />
+		<param name="hover_text_color" type="colorchooser" default="#FFFFFF" label="Hover Text" description="Choose the Hover Text Color" />
+		<!-- 
+        <param name="updater_dl_method" type="list" default="0" label="Updater Download" description="Choose between FOPen and CURL depending on your server configuration">
+			<option value="0">FOpen</option>
+			<option value="1">CURL</option>
+		</param>
+        <param name="updater_extract_method" type="list" default="0" label="Updater Extraction" description="Choose between Joomla 1.6, Joomla 1.5, and PEAR library">
+			<option value="0">Joomla 1.6</option>
+			<option value="1">Joomla 1.5</option>
+            <option value="2">PEAR</option>
+		</param>
+        <param name="@spacer" type="spacer" default="" label="" description="" />
+        <param name="patching" type="patcher" default="0" label="Blacklist Patch" description="Experimental patching of Joomla required for Extensions Blacklist support">
+			<option value="0">Disable</option>
+			<option value="1">Enable</option>
+		</param>
+		 -->
+		<!-- 
+        <param name="blacklist" type="componentblacklist" label="Blacklist Components"/>
+         -->
+    </params>
+</install>
+
+        

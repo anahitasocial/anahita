@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -115,9 +119,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 		//now set the attributes and relationships
 		$this->_description->setAttribute( KConfig::unbox($config->attributes) );
 		$this->_description->setRelationship( KConfig::unbox($config->relationships) );
-						
-		$this->_query = $this->getService($config->query, $config->toArray());
-		
+				
+		$this->_query  = new AnDomainQuery($config);
+				
 		// Mixin the behavior interface
 		$config->mixer = $this;
 		
@@ -157,12 +161,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 		$description->path = array('domain','description');
 		register_default(array('identifier'=>$description, 'prefix'=>$config->prototype));
 
-		$query     = clone $this->getIdentifier();
-		$query->path = array('domain','query');
-		register_default(array('identifier'=>$query, 'prefix'=>$config->prototype));
-		
 		$config->append(array(
-			'query'		   => $query,
 		    'space'        => $this->getService('anahita:domain.space'),
 		    'store'        => $this->getService('anahita:domain.store.database'),
 			'entityset'	        => $entityset ,
@@ -228,12 +227,12 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	public function validate($entity)
 	{
 	    //reset the error message
-        $context           = $this->getCommandContext();
-        $context->entity   = $entity;
-        if ( $entity->isValidatable() ) {
-            $entity->resetErrors();
+        $context = $this->getCommandContext();
+        $context['entity'] = $entity;
+        $result = $this->getCommandChain()->run('before.validate', $context);
+        if ( $result === false && !$entity->getError() ) {
+            $entity->setError(sprintf('validation failed for %s', $entity->getIdentifier()->name));
         }
-        $result = $this->getCommandChain()->run('on.validate', $context);
         return $result !== false;
 	}
 	 
@@ -246,7 +245,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
      */
 	public function commit($entity)
 	{
-		switch($entity->getEntityState())
+		switch($entity->state())
 		{
 			case AnDomain::STATE_NEW :
 				$operation  = AnDomain::OPERATION_INSERT;
@@ -287,10 +286,12 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 				case(AnDomain::OPERATION_DELETE) :
 					$keys = $this->_description->getIdentityProperty()->serialize($entity->getIdentityId());
 					$keys = array($this->_description->getIdentityProperty()->getName() => $entity->getIdentityId());
-					if ( $operation & AnDomain::OPERATION_UPDATE) {
-						$context->result = count($context->data) ? $this->update($context->data, $keys) : true;
-					} else {
-						$context->result = $this->destroy($keys);
+					if ( $operation & AnDomain::OPERATION_UPDATE) 
+					{
+						$context->result = count($context->data) ? $store->update($this, $keys, $context->data) : true;
+					} else 
+					{
+						$context->result = $store->delete($this, $keys);
 					}
 			}
 			
@@ -301,54 +302,42 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	}
 	
 	/**
-	 * Destroy all the entities from a repository withouth instantiating them.
+	 * Destroy all the entities from a repository withouth instantiating them using the passed
+	 * $criteria
 	 * 
-	 * This method disables the chain in order to ensure the query is not modified by the
-	 * behaviors for unexpected results 
-	 * 
-	 * If a boolean value true is passed as condition then all the records within the repository is 
-	 * updated 
-	 *  
-	 * @param array|AnDomainQuery|boolean A condition object. Can be an array or domain query object
+	 * @param mixed $condition A condition object. Can be an array or domain query object
 	 * 
 	 * @return boolean
 	 */
-	public function destroy($conditions)
-	{	    
-	    $result = false;
-	    if ( !empty($conditions) ) 
-	    {
-	        $this->getCommandChain()->disable();
-	        $result = $this->getStore()->delete($this, $conditions);
-	        $this->getCommandChain()->enable();	        
-	    }
-	    return $result;
+	public function destroy($condition)
+	{
+		if ( empty($condition) ) {
+			$condition = array($this->getDescription()->getIdentityProperty()->getName()=>array());	
+		}
+        
+        $context = $this->getCommandContext();
+        $context->operation = AnDomain::OPERATION_DESTROY;        
+        $context->query     = AnDomainQuery::getInstance($this, $condition);
+                
+		if( $this->getCommandChain()->run('before.destroy', $context) !== false )
+        {
+		   $this->getStore()->delete($this, $context->query);
+           
+           $this->getCommandChain()->run('after.destroy', $context);           
+        }
 	}
 	
 	/**
-	 * Updates a set of entities without instantiating them. 
-	 * 
-	 * This method disables the chain in order to ensure the query is not modified by the
-	 * behaviors for unexpected results 
-	 * 
-	 * If a boolean value true is passed as condition then all the records within the repository is 
-	 * updated 
+	 * Updates a set of entities without instantiating them 
 	 *
-	 * @param array|string                $values     The update values. Can be an array of key/value pairs or just an update string
-	 * @param array|AnDomainQuery|boolean $conditions An array of conditions or a domain query or a boolean vaule.
-	 * 
+	 * @param array|string        $values     The update values. Can be an array of key/value pairs or just an update string
+	 * @param array|AnDomainQuery $conditions An array of conditions or a domain query
 	 * @return void
 	 */
-	public function update($values, $conditions)
+	public function update($values, $conditions = array())
 	{
-	    $result = false;
-	    if ( !empty($conditions) )
-	    {
-	        $this->getCommandChain()->disable();
-	        $result = $this->getStore()->update($this, $conditions, $values);
-	        $this->getCommandChain()->enable();
-	    }
-	    return $result;
+	    $query  = AnDomainQuery::getInstance($this, $conditions)->update($values);
+	    $this->getStore()->execute($query);
 	}
 	
 	/**
@@ -381,7 +370,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 		
 		if( $this->getCommandChain()->run('before.fetch', $context) !== false )
 		{
-			$result 		 = $context->result ? $context['result'] : $this->_fetchResult($context->query, $mode);
+			$result 		 = $this->_fetchResult($context->query, $mode);
 			$context->result = $result;
 			switch($mode)
 			{
@@ -505,26 +494,11 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	/**
 	 * Return the repostiroy query object 
 	 * 
-	 * @param boolean $disable_chain If set to to true then the chain is disabled for
-	 * the query instance           
-	 * 
-	 * @param array $condition A default condition to set for the query
-	 * 
 	 * @return AnDomainQuery
 	 */
-	public function getQuery($disable_chain = false, $condition = array())
+	public function getQuery()
 	{
-	    $query = clone $this->_query;
-	    
-	    if ( $disable_chain ) {
-	        $query->disableChain();
-	    }
-	     
-	    if ( !empty($condition) ) {
-	        $query->where($condition);    
-	    }
-	    
-	    return $query; 		
+	    return clone $this->_query;		
 	}
 	
 	/**
@@ -565,10 +539,10 @@ abstract class AnDomainRepositoryAbstract extends KCommand
  	public function extract($entity)
  	{
  		if ( $entity->persisted() ) {
- 			$entity->delete()->save();
+ 			$entity->destroy();
  		}
  		
- 		$this->_space->extractEntity($entity);
+ 		$this->_space->extract($entity);
  	}
  	
  	/**
@@ -582,19 +556,15 @@ abstract class AnDomainRepositoryAbstract extends KCommand
  	 */
  	public function find($needle, $fetch = true)
  	{
- 	    if ( empty($needle) ) {
- 	        throw new InvalidArgumentException('No condition pased to the repository::find');
- 	    }
- 	    
  		if ( !is_array($needle) ) {
  			$needle = array($this->_description->getIdentityProperty()->getName()=>$needle); 			
  		}
  		 		
  		$found = null;
  		//there's a key in the needle then it must be a unique entity
- 		if ( count(array_intersect_key($this->_description->getIdentifyingProperties(), $needle)) > 0 ) 
+ 		if ( count(array_intersect_key($this->_description->getKeys(), $needle)) > 0 ) 
  		{
-	 		$found = $this->_space->findEntity($this->_description, $needle);
+	 		$found = $this->_space->findIdentity($this->_description, $needle);
  		} 
  		else 
  		{
@@ -621,7 +591,14 @@ abstract class AnDomainRepositoryAbstract extends KCommand
  	 */
  	public function getEntities()
  	{
-	 	return $this->_space->getEntities($this);	 	
+	 	$entities = $this->_space->getEntities();
+	 	$data	  = new AnDomainEntityset(new KConfig(array('repository'=>$this)));
+	 	foreach($entities as $entity)
+	 	{
+	 		if ( $entity->getRepository() === $this )
+	 			$data->insert($entity);
+	 	}
+	 	return $data;
  	}
  	
  	 /**
@@ -633,17 +610,14 @@ abstract class AnDomainRepositoryAbstract extends KCommand
  	 * 
  	 * @return AnDomainEntityAbstract|null
  	 */
- 	public function findOrAddNew($data, $config = array())
+ 	public function findOrCreate($data, $config = array())
  	{
  		$entity = $this->find($data);
  		
  		//if not found an entity
  		//or found one but it' either delete or destroyed
  		//create a new entity
- 		if ( !$entity ||
- 		         ($entity->getEntityState() & AnDomain::STATE_DELETED || 
- 		          $entity->getEntityState() &  AnDomain::STATE_DESTROYED )) 
- 		{
+ 		if ( !$entity || ($entity->state() & AnDomain::STATE_DELETED || $entity->state() &  AnDomain::STATE_DESTROYED )) {
  			$config = new KConfig($config);
  			$config->append(array(
  				'data' => $data
@@ -715,10 +689,10 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 		$keys 	  	  = array();
 		$description  = $this->_description;
 
-		$keys   = $description->getIdentifyingValues($data);
-		
-		if ( empty($keys) ) {
-		    throw new AnDomainRepositoryException('Trying to create an entity witout any identiftying keys');
+		$keys   = array();
+
+		foreach($description->getKeys() as $key) {
+			$keys[$key->getName()] = $key->materialize($data, null);
 		}
 				
 		//if an entity found with them same key already
@@ -732,20 +706,18 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
 		$inheritance_column 	= $description->getInheritanceColumn();
 		
-		if ( $inheritance_column && 
-		        isset($data[$inheritance_column->key()]) )
+		if ( $inheritance_column )
 		{
 		    $identifier = $data[$inheritance_column->key()];
 		    $identifier = substr($identifier, strrpos($identifier,',') + 1);
 		}
-		else { 
+		else 
 		    $identifier = $this->_prototype->getIdentifier();
-		}
 		  
 		$entity	= $this->_instantiateEntity($identifier, $data);
 
 		//insert the identity
-		$this->_space->insertEntity($entity, $keys);
+		$this->_space->insertIdentity($entity, $keys);
 		
 		$context 	   = new KCommandContext();
 		$context->data = $data;
@@ -850,7 +822,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	{
 	    $entity = $context->entity;
 	    
-	    $this->getSpace()->setEntityState($entity, AnDomain::STATE_NEW);
+	    $this->getSpace()->setState($entity, AnDomain::STATE_NEW);
 	
 	    //set the entity default valuees
 	    $attributes = $this->getDescription()->getAttributes();
@@ -881,7 +853,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	    $id     =  $this->getDescription()->getIdentityProperty()->getName();
 	
 	    //insert the entity into the space
-	    $this->getSpace()->insertEntity($entity, array($id=>$context['result']));
+	    $this->getSpace()->insertIdentity($entity, array($id=>$context['result']));
 	
 	    //set the identity proeprty value
 	    $entity->set($id, $context->result);
@@ -893,7 +865,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	            unset($entity->{$relation->getName()});
 	    }
 	
-	    $this->getSpace()->setEntityState($entity, AnDomain::STATE_INSERTED);
+	    $this->getSpace()->setState($entity, AnDomain::STATE_INSERTED);
 	    
 	    //entity is now persisted
 	    $entity->setPersisted(true);
@@ -908,7 +880,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	 */
 	protected function _afterEntityUpdate(KCommandContext $context)
 	{
-	    $this->getSpace()->setEntityState($context->entity, AnDomain::STATE_UPDATED);
+	    $this->getSpace()->setState($context->entity, AnDomain::STATE_UPDATED);
 	}
 	
 	/**
@@ -920,6 +892,6 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 	 */
 	protected function _afterEntityDelete(KCommandContext $context)
 	{
-	    $this->getSpace()->setEntityState($context->entity, AnDomain::STATE_DESTROYED);
-	}
+	    $this->getSpace()->setState($context->entity, AnDomain::STATE_DESTROYED);
+	}	
 }

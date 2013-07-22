@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -36,12 +40,10 @@ class LibBaseTemplateFilterAlias extends KTemplateFilterAlias
 	{
 		parent::__construct($config);
 
-		$this->_alias_read = array_merge($this->_alias_read, array(
-		    '@title('       => 'JFactory::getDocument()->setTitle(',
-		    '@description(' => 'JFactory::getDocument()->setDescription(',			
+		$this->_alias_read = array_merge($this->_alias_read, array(			
 			'@controller(' 	=> '$this->renderHelper(\'controller.getController\',',
 			'@view('	   	=> '$this->renderHelper(\'controller.getView\',',
-			'@previous('   	=> '$this->getHelper(\'previous\')->load(',
+			'@previous('   	=> '$this->loadParent(',
 			'@template('   	=> '$this->getView()->load(',
 			'@route('	   	=> '$this->getView()->getRoute(',
 			'@html(\''     	=> '$this->renderHelper(\'com:base.template.helper.html.',

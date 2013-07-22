@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -32,7 +36,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 	 * 
 	 * @var array
 	 */
-	protected $_columns = array();
+	protected $_columns;
 	
 	/**
 	 * Database adapter  
@@ -142,8 +146,8 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 		if($this->getCommandChain()->run('before.fetch', $context) !== false)
 		{
 		    $modes = array(
-		            AnDomain::FETCH_ROW 	    	=> KDatabase::FETCH_ARRAY,
-		            AnDomain::FETCH_ROW_LIST   		=> KDatabase::FETCH_ARRAY_LIST,
+		            AnDomain::FETCH_DATA 	    	=> KDatabase::FETCH_ARRAY,
+		            AnDomain::FETCH_DATA_LIST   	=> KDatabase::FETCH_ARRAY_LIST,
 		            AnDomain::FETCH_ENTITY			=> KDatabase::FETCH_ARRAY,
 		            AnDomain::FETCH_ENTITY_SET		=> KDatabase::FETCH_ARRAY_LIST,
 		            AnDomain::FETCH_ENTITY_LIST		=> KDatabase::FETCH_ARRAY_LIST,
@@ -153,7 +157,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 		    
 		    $mode = $modes[$mode];
 
-		    $context['data'] = $this->_adapter->select(to_str($query), $mode);
+		    $context['data'] = $this->_adapter->select((string)$query, $mode);
 		    
 		    $this->getCommandChain()->run('after.fetch', $context);
 		}
@@ -294,7 +298,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 		
 		if($this->getCommandChain()->run('before.execute', $context) !== false)
 		{
-			$context->result = $this->_adapter->execute(to_str($context->query));
+			$context->result = $this->_adapter->execute($context->query);
 			$this->getCommandChain()->run('after.execute', $context);
 		}
 		
@@ -325,9 +329,6 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 				$column->name		= $field['Field'];
 				$column->type 		= isset($this->_typemap[$type]) ? $this->_typemap[$type] : 'string';
 				$column->default    = $field['Default'];
-                $column->required   = $field['Null'] == 'NO';
-                $column->primary    = $field['Key'] == 'PRI';
-                $column->unique     = $field['Key'] == 'UNI';
 				$columns[$column->name]	= $column;
 			}
 

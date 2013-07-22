@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -25,7 +29,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class AnDomainResourceSet extends KObject implements IteratorAggregate, Countable
+class AnDomainResourceSet extends KObject implements IteratorAggregate
 {
 	/**
 	 * Resources
@@ -94,23 +98,6 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 		$this->_resources[$resource->getAlias()] = $resource; 
 		
 		return $this;
-	}
-	
-	/**
-	 * Return the resource with name
-	 * 
-	 * @param string $name The name of the resource
-	 * 
-	 * @return AnDomainResource
-	 */
-	public function getResource($name)
-	{
-	    foreach($this->_resources as $resource) 
-	    {
-	        if ( $resource->getName() == $name ) {
-	            return $resource;
-	        }
-	    }
 	}
 	
 	/**
@@ -184,16 +171,6 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 		}
 		
 		//throw new KException('Column '.$name.' doesn\'t exists');
-	}
-	
-	/**
-	 * Return the count of the resources
-	 * 
-	 * @return int
-	 */
-	public function count()
-	{
-	    return count($this->_resources);
 	}
 	
 	/**

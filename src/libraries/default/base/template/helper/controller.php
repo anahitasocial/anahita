@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -68,16 +72,33 @@ class LibBaseTemplateHelperController extends KTemplateHelperAbstract
        
 	    if ( !isset(self::$_controllers['controller.'.$name]) )
 	    {
-	        if ( strpos($name,'.') == false ) {
+	        if ( strpos($name,'.') == false )
+	        {
 	            $identifier = clone $this->getIdentifier();
 	            $identifier->name = $name;
 	            $identifier->path = array('controller');	            
 	        } 
-	        else { 
-	            $identifier = $this->getIdentifier($name);
+	        else $identifier = $this->getIdentifier($name);
+	        
+	        $entity = clone $identifier;
+	        $entity->path = array('domain','entity');
+            
+	        try
+	        {
+	            $repository = AnDomain::getRepository($entity);
+	            $entity     = $repository->getClone();
+                $default    = array('prefix'=>$entity, 'fallback'=>'ComBaseControllerService'); 	            
 	        }
-            	        
-            $controller = $this->getService($identifier, array('request' => array()));
+	        catch(Exception $e)
+	        {
+                $default = array('default'=>'ComBaseControllerResource');
+	        }
+	        
+            $default['identifier'] = $identifier;
+            register_default($default);
+            	        	        
+	        $controller = $this->getService($identifier, array('request' => array()));
+	        
 	        self::$_controllers['controller.'.$name] = $controller;
 	    }
 	    

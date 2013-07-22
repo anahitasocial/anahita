@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Base
@@ -68,7 +72,7 @@ class ComBaseControllerToolbarDefault extends ComDefaultControllerToolbarDefault
     {
         $name = ucfirst($this->getController()->getIdentifier()->name);
         
-        if( $this->getController()->getState()->isUnique() )
+        if( $this->getController()->getItem() )
         {
             $saveable = $this->getController()->canEdit();
             $title    = 'Edit '.$name;
@@ -96,7 +100,7 @@ class ComBaseControllerToolbarDefault extends ComDefaultControllerToolbarDefault
      */
     public function onAfterControllerBrowse(KEvent $event)
     {        
-        if( $this->getController()->canAdd() )
+        if( $this->getController()->isExecutable() && $this->getController()->canAdd() )
         {
             $identifier = $this->getController()->getIdentifier();
             $config     = array('attribs' => array(

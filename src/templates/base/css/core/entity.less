@@ -1,0 +1,196 @@
+//Anahita ENTITIES
+
+.entity-portrait-square
+{        
+    float: left;    
+    margin: 10px 0;
+}
+
+.entity-title,
+.entity-name
+{
+   line-height: @baseLineHeight;
+   margin: 10px 0;
+}
+
+h1.entity-title,
+h1.entity-name
+{
+    font-size: @baseFontSize + 6;
+}
+
+h2.entity-title,
+h2.entity-name
+{ 
+    font-size: @baseFontSize + 3;
+}
+
+h3.entity-title,
+h3.entity-name
+{ 
+    font-size: @baseFontSize + 2;
+}
+
+h4.entity-title,
+h4.entity-name
+{ 
+    font-size: @baseFontSize + 1;
+}
+
+.entity-description,
+.entity-body
+{
+    font-size: @baseFontSize;
+    word-wrap: break-word;
+    margin: 10px 0;
+    
+    ol,ul
+    {
+       padding-left: 30px;
+    }
+    
+    code 
+    { 
+        padding: 10px; 
+    }
+    
+    h1 { font-size: @baseFontSize + 7 }
+    h2 { font-size: @baseFontSize + 3 }
+    h3 { font-size: @baseFontSize + 2 }
+    h4 { font-size: @baseFontSize + 1 }
+}
+
+.entity-excerpt
+{
+    margin: 10px 0;	
+}
+
+.entity-meta
+{ 
+    font-size: @baseFontSize - 1;
+    margin: 10px 0;
+}
+
+.entity-actions
+{
+    margin: 10px 0;    
+}
+
+.entity-author,
+.entity-editor
+{
+    margin: 10px 0;	
+}
+
+.entity-container
+{
+   padding-left: 60px;
+}
+
+.an-entity
+{
+    .clearfix;
+    margin: 20px 0;
+    padding: 0 10px;
+    .border-radius(@baseBorderRadius);
+    
+    &.an-entity-select-option
+    {
+        cursor: pointer;
+        
+        &:hover
+        {
+            .an-highlight;
+        }
+    }
+    
+    .entity-portrait-square
+	{        	        
+	    img
+	    {           
+	        .square(50px);
+	    }
+	}
+    
+    .entity-portrait-medium
+     {   
+         margin: 10px 0;
+         
+         img
+         {
+             margin: 0;
+             .border-bottom-left-radius(0px);
+             .border-bottom-right-radius(0px);
+         }
+     }
+	
+	dl
+    {   
+        .clearfix;
+        font-size: @baseFontSize;
+            
+        dt
+        {
+            float: left;
+        }
+        dd
+        {
+            padding-left: 120px;
+        }
+    }
+}
+
+.an-entities
+{
+	.an-entity
+	{
+	   &:first-child
+	    {
+	       border-top: 0;
+	    }
+	    
+	    &:last-child
+	    {
+	       border-bottom: 0;
+	    }
+    }
+	
+	
+	.media-grid
+    {
+       img.thumbnail
+       {
+          .square(98px);
+       }
+    }
+    
+    &.masonry
+    {
+        .an-entity
+        {                            
+            .entity-portrait-medium
+            {   
+                margin: 0 -10px;
+            }
+            
+            .entity-actions
+            {
+                .hide;
+                margin: 0 0 0 -10px;
+                padding: 10px;
+                position: absolute;
+                .border-top-left-radius(@baseBorderRadius);
+                .border-bottom-right-radius(@baseBorderRadius);
+            }
+            
+            &:hover
+            {
+                .entity-actions
+                {
+                    .show;
+                }
+            }
+        }
+    }
+    
+}

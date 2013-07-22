@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -25,7 +29,24 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class LibBaseDispatcherDefault extends LibBaseDispatcherComponent
+class LibBaseDispatcherDefault extends LibBaseDispatcherAbstract
 {
-	
+	/**
+	 * Return a dispatcher object
+	 * 
+	 * @param array $config Configuration
+	 * 
+	 * @return LibBaseDispatcherAbstract
+	 */	
+	static public function getInstance($config = array())
+	{
+		$config = new KConfig($config);
+		$config->append(array(
+	        'component' 	=> substr(KRequest::get('get.option', 'cmd'), 4)
+		));
+		$identifier = KService::getIdentifier('com:'.$config->component.'.dispatcher');		
+		$identifier->application = JFactory::getApplication()->isAdmin() ? 'admin' : 'site';
+		register_default(array('identifier'=>$identifier, 'default'=>'ComBaseDispatcher'));
+		return KService::get($identifier, KConfig::unbox($config));
+	}
 }

@@ -1,0 +1,6 @@
+/* Transitions */
+.transitions-enabled a, .transitions-enabled .item, .transitions-enabled #mc-status li, .transitions-enabled .mc-dropdown li, .transitions-enabled table.admintable input[type=text], .transitions-enabled table.admintable input[type=password], .transitions-enabled table.adminform input[type=text], .transitions-enabled table.adminform input[type=password], .transitions-enabled table.mc-filter-table input[type=text], .transitions-enabled #mc-login #form-login .inputbox {-o-transition: background .2s ease-out;}
+.mc-list-table tbody tr:hover td {-o-transition: background .3s ease-out;}
+table.admintable textarea, table.admintable select, table.adminform textarea, table.adminform select, table.mc-filter-table input[type=text], .mc-search-form .inputbox {padding: 2px 5px;}
+.mc-toolbar a {padding: 3px 10px 2px 10px;}
+#help.mc-toolbar a {padding: 3px 6px 1px 6px;}

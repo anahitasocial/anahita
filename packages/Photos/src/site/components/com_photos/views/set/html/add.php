@@ -4,8 +4,8 @@
 
 <module position="sidebar-b" style="none"></module>
 
-<form data-behavior="FormValidator" id="set-form" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
-	<input type="hidden" value="addphoto" name="action" />
+<form data-behavior="FormValidator" id="set-form" method="post" action="<?= @route(array('view'=>'set', 'oid'=>$actor->id)) ?>">
+	<input type="hidden" name="action" value="addphoto" />
 	<fieldset>
 		<legend><?= @text('COM-PHOTOS-SET-ADD') ?></legend>
 		<div class="control-group">

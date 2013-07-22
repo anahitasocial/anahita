@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Loader
@@ -62,19 +66,16 @@ class AnLoaderAdapterTemplate extends KLoaderAdapterAbstract
 			
 				$file 	   = array_pop($parts);
 				
-                if(count($parts))
-                {
-                    if($parts[0] != 'view')
-                    {
-                        foreach($parts as $key => $value) {
-                            $parts[$key] = KInflector::pluralize($value);
-                        }
-                    }
-                    else $parts[0] = KInflector::pluralize($parts[0]);
-    
-                    $path = implode('/', $parts).'/'.$file;
-                }
-                else $path = $file;
+				if(count($parts)) 
+				{
+					foreach($parts as $key => $value) {
+						$parts[$key] = KInflector::pluralize($value);												
+					}
+					
+					$path = implode('/', $parts);
+					$path = $path.'/'.$file;
+				} 
+				else $path = $file;
 							
 				$path = $this->_basepath.'/templates/'.$name.'/'.$path.'.php';
 			}

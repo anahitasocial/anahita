@@ -21,13 +21,13 @@ Delegator.register('click', {
 });
 </script>
 
-<module position="sidebar-b">
+<module position="sidebar-b" style="simple">
 	<a href="#" class="btn btn-primary" data-trigger="Slideshow" title="<?= @escape($set->title) ?>">
 	<?= @text('COM-PHOTOS-ACTION-SLIDESHOW') ?>
 	</a>
 </module>
 
-<module position="sidebar-b">
+<module position="sidebar-b" style="simple">
 	<div class="an-entity an-photos-set">
 		<?php if($set->hasCover()): ?>
 		<div id="set-cover-wrapper">

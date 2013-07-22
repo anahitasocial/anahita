@@ -883,7 +883,7 @@ provides: [Delegator]
 					}
 				}
 			} else {
-			//	this.fireEvent('error', 'Could not find a trigger with the name ' + name + ' for event: ' + event.type);
+				this.fireEvent('error', 'Could not find a trigger with the name ' + name + ' for event: ' + event.type);
 			}
 			return this;
 		},

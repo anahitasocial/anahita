@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -48,20 +52,6 @@ class LibBaseDomainStoreDatabase extends AnDomainStoreDatabase implements KServi
     }
     
     /**
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
-        
-        $this->_columns = $this->getService('application.registry');
-    }    
-    
-    /**
      * Initializes the default configuration for the object
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -73,18 +63,9 @@ class LibBaseDomainStoreDatabase extends AnDomainStoreDatabase implements KServi
     protected function _initialize(KConfig $config)
     {
         $config->append(array(               
-            'adapter'  => $this->getService('koowa:database.adapter.mysqli'),           
+            'adapter' => $this->getService('koowa:database.adapter.mysqli')
         ));
         
         parent::_initialize($config);
     }    
-    
-    /**
-     * (non-PHPdoc)
-     * @see AnDomainStoreDatabase::getColumns()
-     */
-    public function getColumns($table)
-    {
-        return parent::getColumns($table); 
-    }
 }

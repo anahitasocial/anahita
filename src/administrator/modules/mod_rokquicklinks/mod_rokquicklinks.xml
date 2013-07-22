@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="module" version="1.5.0" method="upgrade" client="administrator">
+	<name>RokQuickLinks</name>
+	<creationDate>April 28, 2011</creationDate>
+	<author>RocketTheme, LLC</author>
+	<authorEmail>support@rockettheme.com</authorEmail>
+	<authorUrl>http://www.rockettheme.com</authorUrl>
+	<copyright>(C) 2005 - 2011 RocketTheme, LLC. All rights reserved.</copyright>
+	<license>http://www.gnu.org/copyleft/gpl.html GNU/GPL</license>
+	<version>1.5.1</version>
+	<description>This module provides a configurable quicklink panel</description>
+	<files>
+		<filename module="mod_rokquicklinks">mod_rokquicklinks.php</filename>
+		<filename>helper.php</filename>
+		<filename>index.html</filename>
+		<folder>tmpl</folder>
+		<folder>elements</folder>
+		<folder>admin</folder>
+	</files>
+	<params addpath="/administrator/modules/mod_rokquicklinks/elements">
+		<param name="quickfields" type="rokquickfields" label="" default="[{'icon':'anahita.png','link':'index.php?option=com_bazaar','title':'Bazaar'},{'icon':'application_view_icons.png','link':'index.php?option=com_socialengine&amp;view=applications','title':'Social Apps'},{'icon':'brick.png','link':'index.php?option=com_plugins','title':'Plugins'},{'icon':'brick.png','link':'index.php?option=com_modules','title':'Modules'},{'icon':'color_management.png','link':'index.php?option=com_templates','title':'Templates'},{'icon':'package.png','link':'index.php?option=com_installer','title':'Extend'},{'icon':'cog.png','link':'index.php?option=com_config','title':'Configuration'}]" directory="/administrator/modules/mod_rokquicklinks/tmpl/icons/" />
+	</params>
+</install>

@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -46,13 +50,6 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     protected $_validator;
     
     /**
-     * Tracks entities errors
-     * 
-     * @var AnObjectArray
-     */
-    protected $_errors;
-        
-    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -64,8 +61,6 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
         parent::__construct($config);
         
         $this->_validator = $config->validator;
-        
-        $this->_errors    = $this->getService('anahita:object.array');
     }
         
     /**
@@ -88,57 +83,6 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     }
     
     /**
-     * Adds an error object for 
-     * 
-     * @param AnError|array|string $error Error object
-     * 
-     * @return AnDomainBehaviorValidatable
-     */
-    public function addError($error)
-    {
-        if ( is_string($error) ) {
-            $error = array('message'=>$error);
-        }
-        
-        if ( is_array($error) ) {
-            $error = new AnError($error);
-        }
-        
-        if ( !isset($this->_errors[$this->_mixer]) ) {
-            $this->_errors[$this->_mixer] = new KObjectSet();
-        }
-        
-        $this->_errors[$this->_mixer]->insert($error);
-        
-        return $this;
-    } 
-    
-    /**
-     * Return a set of entity errors
-     * 
-     * @return AnObjectSet
-     */
-    public function getErrors()
-    {                
-        if ( !isset($this->_errors[$this->_mixer]) ) {
-            $this->_errors[$this->_mixer] = new AnObjectSet();
-        }
-        
-        return clone $this->_errors[$this->_mixer];
-    }
-    
-    /**
-     * Only validate the entity and return true or false if the entity 
-     * passed the validation
-     *
-     * @return boolean
-     */    
-    public function validateEntity()
-    {
-    	return $this->getValidator()->validateEntity($this->_mixer);
-    }
-    
-    /**
      * Validates an entity properties values using the passed validations.
      * If no validations are passed, the properties are validated using their
      * default validations
@@ -155,7 +99,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
                         ->validateData($this->_mixer, $property, $value, $validations);
                         
        return $ret !== false;
-    }    
+    }
     
     /**
      * Sanitizes an entity properties values using the passed validations.
@@ -230,6 +174,26 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     
         return $this;
     }
+        
+    /**
+     * Return an array of data that should be validatable. If an array is in the new state then
+     * its all of the properties, if it's in in the updated state it's only the modified data
+     *
+     * @return array
+     */
+    public function getValidatableProperties()
+    {
+        $description = $this->_mixer->getRepository()->getDescription();
+    
+        $entity      = $this->_mixer;
+    
+        if ( $entity->state() == AnDomain::STATE_NEW )
+            $property = $description->getProperty();
+        else
+            $property = array_intersect_key($description->getProperty(), KConfig::unbox($entity->modifications()));
+    
+        return $property;
+    }
             
     /**
      * Called before a property value is set. This method will try to invoke _sanitize[Property Name]
@@ -241,19 +205,8 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      */
     protected function _beforeEntitySetdata($context)
     {
-       $context['value'] = $this->_repository->getValidator()
+       $context['value'] = $context->entity->getValidator()
                         ->sanitizeData($context->entity, $context->property, $context->value);
-    }
-    
-    /**
-     * Reset the entity errors
-     * 
-     * @return void
-     */
-    public function resetErrors()
-    {
-        //reset the errors
-        unset($this->_errors[$this->_mixer]);
     }
     
     /**
@@ -263,8 +216,25 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      * 
      * @return boolean
      */
-    protected function _onEntityValidate($context)
+    protected function _beforeEntityValidate($context)
     {
-        return $this->_repository->getValidator()->validateEntity($context->entity);        
+        $entity     = $context->entity;
+        $properties = $this->getValidatableProperties();
+        
+        foreach($properties as $property)
+        {
+            $value  = $entity->get($property->getName());
+            $result = $entity->getValidator()->validateData($entity, $property, $value);
+            
+            if ( $result === false ) 
+            {
+                if ( !$entity->getError() ) {
+                    $entity->setError('Validation failed for '.$entity->getIdentifier()->name);
+                }
+                return false;
+            }
+        }
+        
+        return true;       
     }
 }

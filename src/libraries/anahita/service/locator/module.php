@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Service
@@ -51,37 +55,7 @@ class AnServiceLocatorModule extends KServiceLocatorModule
 		    $classname = AnServiceClass::findDefaultClass($identifier);
 		    
 		    if ( !$classname ) {
-		    	
-		    	$classpath = $identifier->path;
-		    	$classtype = !empty($classpath) ? array_shift($classpath) : 'view';
-		    		
-		    	//Create the fallback path and make an exception for views
-		    	$com_path = ($classtype != 'view') ? ucfirst($classtype).KInflector::camelize(implode('_', $classpath)) : ucfirst($classtype);
-		    	$mod_path = ($classtype != 'view') ? ucfirst($classtype).KInflector::camelize(implode('_', $classpath)) : '';
-		    			    	
-		    	if(class_exists('Mod'.ucfirst($identifier->package).$mod_path.ucfirst($identifier->name))) {
-		    		$classname = 'Mod'.ucfirst($identifier->package).$mod_path.ucfirst($identifier->name);
-		    	} elseif(class_exists('Mod'.ucfirst($identifier->package).$mod_path.'Default')) {
-		    		$classname = 'Mod'.ucfirst($identifier->package).$mod_path.'Default';
-		    	} elseif(class_exists('ModBase'.$mod_path.ucfirst($identifier->name))) {
-		    		$classname = 'ModBase'.$mod_path.ucfirst($identifier->name);
-		    	} elseif(class_exists('ModBase'.$mod_path.'Default')) {
-		    		$classname = 'ModBase'.$mod_path.'Default';
-		    	} elseif(class_exists('ComBase'.$com_path.ucfirst($identifier->name))) {
-		    		$classname = 'ComBase'.$com_path.ucfirst($identifier->name);
-		    	} elseif(class_exists('ComBase'.$com_path.'Default')) {
-		    		$classname = 'ComBase'.$com_path.'Default';
-	    		} elseif(class_exists('LibBase'.$com_path.ucfirst($identifier->name))) {
-	    			$classname = 'LibBase'.$com_path.ucfirst($identifier->name);
-	    		} elseif(class_exists('LibBase'.$com_path.'Default')) {
-	    			$classname = 'LibBase'.$com_path.'Default';		    				    		
-		    	} elseif(class_exists( 'K'.$com_path.ucfirst($identifier->name))) {
-		    		$classname = 'K'.$com_path.ucfirst($identifier->name);
-		    	} elseif(class_exists('K'.$com_path.'Default')) {
-		    		$classname = 'K'.$com_path.'Default';
-		    	} else {
-		    		$classname = false;
-		    	}
+		        $classname = parent::findClass($identifier);		        
 		    }
 		}
 		

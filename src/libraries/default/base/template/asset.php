@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -163,9 +167,9 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
 		settype($paths, 'array'); //force to array
 		
 		$this->_urls[$url] = null;
-				
-		$base      = $this->getService('application')->getRouter()
-                        ->getBaseUrl();
+		
+		$base	   = pick(JFactory::getConfig()->getValue('config.site_url'), JURI::root(true));
+		
 		$file_path = null;
 		$path	   = null;
 		
@@ -193,12 +197,13 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
 		}	
 			
 		if ( $file_path ) {
-			$path	= $base.'/'.$path;
+			$path	= $base.'/'.$path;			
 			$this->_urls[$url]		  = $path;
 			$this->_urls[$path]		  = $path;
 			$this->_file_paths[$url]  = $file_path;
 			$this->_file_paths[$path] = $file_path;
 		}
+				
 
 		$filepath = $this->getFilePath($url);
 		

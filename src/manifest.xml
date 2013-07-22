@@ -6,7 +6,7 @@
     <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
     <authoremail>info@anahitapolis.com</authoremail>
     <authorurl>http://www.Anahitapolis.com</authorurl>
-    <version>##BUILD_VERSION##</version>
-    <creationDate>##BUILD_DATE##</creationDate>    
-	<release>##BUILD_RELEASE##</release>
+    <version>2.2.4</version>
+    <creationDate>January 22, 2013</creationDate>    
+	<release>Birth</release>
 </install>

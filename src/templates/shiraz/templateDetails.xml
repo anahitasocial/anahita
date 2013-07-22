@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="2.2" type="template" method="upgrade">
+    <name>Shiraz</name>
+    <version>2.2.4</version>
+    <creationDate>January 22, 2013</creationDate>
+    <author>Anahitapolis.com</author>
+    <authorEmail>info@anahitapolis.com</authorEmail>
+    <authorUrl>http://www.anahitapolis.com</authorUrl>
+    <copyright>Copyright 2010 - rmdStudio Inc. and Peerglobe Technology Inc.</copyright>
+    <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <description>
+       <![CDATA[
+			<b>Shiraz [ʃiːˈrɒːz]</b> Named after the ancient city of poets, mathematicians, flowers, and wine 
+			in south of Persia which dates back to 4000 BCE.
+			
+			<br/>
+			<br/>
+			
+			This template is developed for the Anahita® social networking platform and framework and the Anahita®  
+			social apps by <a href="http://www.anahitapolis.com" target="_blank">Anahitapolis.com</a>. 
+			It is available to you under the <a href="http://gplv3.fsf.org/" target="_blank">GPL3</a> license.
+			
+			<br/>
+			<br/>
+			
+			This template provides styling for the following social apps:
+			<ol>
+				<li>Topics</li>
+				<li>Photos</li>
+				<li>Groups</li>
+				<li>Connect</li>
+				<li>Todos</li>
+				<li>Pages</li>
+			</ol>
+			
+			The Anahita® Shiraz template is developed by extending the <a target="_blank" href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> library.
+			]]>			
+    </description>
+    <exceptions>
+        <filename type="noreplace">params.ini</filename>
+    </exceptions>
+    <positions>
+            <position>header-a</position>
+            <position>header-b</position>
+            <position>header-c</position>
+            <position>header-d</position>
+            <position>showcase-a</position>
+            <position>showcase-b</position>
+            <position>showcase-c</position>
+            <position>showcase-d</position>
+            <position>utility-a</position>
+            <position>utility-b</position>
+            <position>utility-c</position>
+            <position>utility-d</position>
+            <position>maintop-a</position>
+            <position>maintop-b</position>
+            <position>maintop-c</position>
+            <position>maintop-d</position>
+            <position>navigation</position>
+            <position>viewer</position>
+            <position>mobile</position>
+            <position>sidebar-a</position>
+            <position>sidebar-b</position>
+            <position>mainbottom-a</position>
+            <position>mainbottom-b</position>
+            <position>mainbottom-c</position>
+            <position>mainbottom-d</position>
+            <position>bottom-a</position>
+            <position>bottom-b</position>
+            <position>bottom-c</position>
+            <position>bottom-d</position>
+            <position>footer-a</position>
+            <position>footer-b</position>
+            <position>footer-c</position>
+            <position>footer-d</position>
+        </positions>
+     
+        <params addpath="/templates/shiraz/elements">
+            <param name="cssStyle" type="list" default="style1" label="Style">
+                <option value="style1">Style 1</option>
+                <option value="style2">Custom</option>
+            </param>
+            <param name="compilestyle" type="list" default="0" description="Flag to when compile the less style file" label="Compile Style">
+                <option value="0">Never (good for production)</option>
+                <option value="1">Only if changed (good for development)</option>
+            </param>
+            <param name="compresstyle" type="list" default="0" description="Compress the output style" label="Compress Style">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </param>
+            <param name="favicon" type="text" default="favicon.ico" label="Favicon" description="Favicon file name" />                        
+            <param name="navbarInverse" type="list" default="0" label="Navbar Theme">
+                <option value="0">Light</option>
+                <option value="1">Dark</option>
+            </param>
+            <param name="brandName" type="text" default="Anahita" label="Brand Name" description="Enter the name of your brand" />
+            <param name="showLogo" type="list" default="1" label="Display Logo">
+                <option value="0">Hide</option>
+                <option value="1">Show</option>
+            </param>
+            <param name="copyright" type="text" default="" label="Copyright" description="Enter your copyright notice here." />
+            <param name="poweredby" type="list" default="1" label="Powered By Anahita">
+                <option value="0">Hide</option>
+                <option value="1">Show</option>
+            </param>
+            <param name="analytics" type="text" default="" label="Analytics ID" description="Enter your google analytics tracking ID which is in the format of UA-XXXXX-Y or UA-XXXXX-YY." />
+            <param name="@spacer" type="spacer" default="Row Column Ratios" />
+            <param name="header" type="row" default="4,4,4" label="Header" description="Select the number of columns and their ratio from the list for this row." />
+            <param name="showcase" type="row" default="12" label="Showcase" description="Select the number of columns and their ratio from the list for this row." />
+            <param name="feature" type="row" default="12" label="Feature" description="Select the number of columns and their ratio from the list for this row." />
+            <param name="utility" type="row" default="12" label="Utility" description="Select the number of columns and their ratio from the list for this row." />
+            <param name="maintop" type="row" default="4,4,4" label="Main Top" description="Select the number of columns and their ratio from the list for this row." />
+            <param name="mainbottom" type="row" default="6,6" label="Main Bottom" description="Select the number of columns and their ratio from the list for this row." />    
+            <param name="bottom" type="row" default="4,4,4" label="Bottom" description="Select the number of columns and their ratio from the list for this row." /> 
+            <param name="footer" type="row" default="4,4,4" label="Footer" description="Select the number of columns and their ratio from the list for this row." />
+        </params>
+    
+    <files>
+        <folder>css</folder>
+        <folder>elements</folder>
+        <folder>html</folder>
+        <file>params.ini.tmp</file>
+        <file>template_thumbnail.png</file>
+    </files>
+</install>

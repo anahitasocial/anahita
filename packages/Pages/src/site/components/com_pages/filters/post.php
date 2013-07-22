@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Pages
@@ -39,7 +43,7 @@ class ComPagesFilterPost extends ComMediumFilterPost
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'tag_list'   => array('img', 'a', 'blockquote', 'strong', 'em', 'ul', 'ol', 'li', 'code', 'h2', 'h3', 'h4'),
+            'tag_list'   => array('p', 'img', 'a', 'blockquote', 'strong', 'em', 'ul', 'ol', 'li', 'code', 'h2', 'h3', 'h4'),
             'tag_method' => 0
         ));   
 

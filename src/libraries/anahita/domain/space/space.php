@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -54,7 +58,7 @@ class AnDomainSpace extends KObject
 	 * 
 	 * @var array
 	 */	
-	protected $_identity_map = array();
+	protected $_identity_map;
 	
 	/**
 	 * Constructor.
@@ -65,76 +69,109 @@ class AnDomainSpace extends KObject
 	{
 		parent::__construct($config);
 				
+		$this->_identity_map = array();
+				
 		$this->_state_machine	 	 = new AnDomainSpaceState();
-		$this->_entities 			 = $this->getService('anahita:domain.space.queue');
+		$this->_entities 			 = new KObjectQueue();
 		$this->_states				 = new AnObjectArray();
+		
+		//set the mixer
+		$config->mixer = $this;
+		
+		$this->mixin(new KMixinCommand($config));
+		
+		//call the validation before commit
+		$this->registerCallback('before.commit', array($this, 'validate'));
 	}
 	
-    /**
-     * Validates all the entities in the space. Return true if all the entities
-     * pass the validation or a set of entities that failed the validation.If a $failed variable
-     * is passed by reference, then a set of failed entities will be returend
-     * 
-     * @param mixed &$failed Return the failed set
-     * 
-     * @return boolean Return if all the entities passed the validations
-     */
-    public function validateEntities(&$failed = null)
-    {
-        $restult  = true;
-        $failed   = new AnObjectSet();
-        
-        foreach($this->getCommitables() as $entity)
-        {
-            $restult = $entity->getRepository()->validate($entity);
-               
-            if ( $restult === false ) {
-               $failed->insert($entity);
-            }
-        }
-        
-        return $failed->count() === 0;
-    }
-        
-    /**
-     * Commits all the entities in the space. Return true if all the entities
-     * commit succesfully or a set of entities that failed the commit. If a $failed variable
-     * is passed by reference, then a set of failed entities will be returend
-     * 
-     * @param mixed &$failed Return the failed set
-     * 
-     * @return boolean Return if all the entities passed the validations
-     */
-    public function commitEntities(&$failed = null)
-    {                
-        $result  = $this->validateEntities($failed);
-        
-        while($result && count($entities = $this->getCommitables()))
-        {
-            foreach($entities as $entity)
-            {
-                $result = $entity->getRepository()->commit($entity);
-                
-                if ( $result === false ) {
-                   $failed->insert($entity);
-                }
-            }
-        }
-                
-        return $failed->count() === 0;             
-    }
+	/**
+	 * Initializes the default configuration for the object
+	 *
+	 * Called from {@link __construct()} as a first step of object instantiation.
+	 *
+	 * @param KConfig $config An optional KConfig object with configuration options.
+	 *
+	 * @return void
+	 */
+	protected function _initialize(KConfig $config)
+	{
+	    $config->append(array(
+            'command_chain'     => $this->getService('koowa:command.chain'),
+	        'enable_callbacks'	=> true,
+            'dispatch_events'   => false,
+            'event_dispatcher'  => null	                        
+	    ));
+	
+	    parent::_initialize($config);
+	}
+	
+	/**
+	 * Validates all the entities wihtin the space
+	 *
+	 * @param  KCommandContext $context Context parameter
+	 * 
+	 * @return boolean
+	 */
+	public function validate(KCommandContext $context = null)
+	{
+	    $context 		  = pick($context, new KCommandContext());
+		$entities         = $this->getCommitables();
+		$result           = true;
+        foreach($entities as $entity)
+		{
+		    $entity->setError(null);
+		    $result = $entity->getRepository()->validate($entity);
+			if ( $result === false ) 
+			{
+			    $context->setError($entity->getError());
+			    $context['invalid_entity'] = $entity;
+				break;
+			}
+		}
+		return $result !== false;
+	}
+	
+	/**
+	 * Commits all the commitable in the space into the store
+	 * 
+	 * @param  KCommandContext $context Context parameter
+	 * 
+	 * @return boolean
+	 */
+	public function commit(KCommandContext $context = null)
+	{
+		$context 		      = pick($context, new KCommandContext());
+		$context->space       = $this;
+		if ( $context->result = $this->getCommandChain()->run('before.commit', $context) !== false )
+		{
+			while( $context->result !== false && count($this->getCommitables()) )
+			{
+				$entities = $this->getCommitables();
+				foreach($entities as $entity)
+				{
+					$context->result = $entity->getRepository()->commit($entity);
+					if ( $context->result === false ) {
+					    $context->setError( $entity->getError() );
+					    break;
+					}
+				}
+			}
+			$context['entities'] = $this->getEntities();
+			$this->getCommandChain()->run('after.commit', $context);			
+		}
+		return $context->result !== false;			
+	}
 
 	/**
 	 * Set an entity state return whether if the state change was succesful 
 	 * 
-	 * @param AnDomainEntityAbstract $entity Domain entity
-	 * @param int                    $new    New state
-     * 
-	 * @return boolean Return whether the state for the entity has been set sucesfully
+	 * @param AnDomainEntityAbstract $entity
+	 * @param int $new
+	 * @return boolean
 	 */
-	public function setEntityState($entity, $new)
+	public function setState($entity, $new)
 	{
-		$current = $this->getEntityState($entity);
+		$current = $this->getState($entity);
 		
 		if ( $this->_state_machine->stateChanged($entity, $current, $new) === true) 
 		{
@@ -142,7 +179,7 @@ class AnDomainSpace extends KObject
 				unset($this->_states[$entity]);
 			} else {
 				$this->_states[$entity] = $new;
-				$this->insertEntity($entity);
+				$this->_insert($entity);
 			}
 			return true;			
 		}
@@ -153,11 +190,10 @@ class AnDomainSpace extends KObject
 	/**
 	 * Return an entity state 
 	 * 
-	 * @param AnDomainEntityAbstract $entity Domain entity
-     * 
+	 * @param AnDomainEntityAbstract $entity
 	 * @return boolean
 	 */
-	public function getEntityState($entity)
+	public function getState($entity)
 	{
 		if ( isset($this->_states[$entity]) )
 			return $this->_states[$entity];
@@ -166,27 +202,22 @@ class AnDomainSpace extends KObject
 	}
 
 	/**
-	 * Set the save order 
+	 * Switch priority of $child and $parent if the $child_priority is higher than $parent_priority
 	 * 
-	 * @param AnDomainEntityAbstract $entity1 Lower priorty index (Higher) domain entity
-	 * @param AnDomainEntityAbstract $entity2 Higher priorty index (Lower) domain entity
-     * 
+	 * @param AnDomainEntityAbstract $child
+	 * @param AnDomainEntityAbstract $parent
 	 * @return void
 	 */
-	public function setSaveOrder($entity1, $entity2)
+	public function setDependent($child, $parent)
 	{
-        //lower priorty index means it's saved first (higher priorty)
-        //so if $entity1 has lower priorty index (higher priority) than $entity2
-        //then $entity1 is saved before $entity2
-
-        //higher prioriry index means lower priority
-        $lower_priority  = max($this->_entities->getPriority($entity1), $this->_entities->getPriority($entity2));
-        
-        //lower priority index means higher priority
-        $higher_priority = min($this->_entities->getPriority($entity1), $this->_entities->getPriority($entity2));
-        
-        $this->_entities->setPriority($entity1,  $higher_priority);
-        $this->_entities->setPriority($entity2,  $lower_priority);
+		$child_priority 	=  $this->_entities->getPriority($child);
+		$parent_priority	=  $this->_entities->getPriority($parent);
+		//if child is saved before the parent
+		if ( $child_priority < $parent_priority ) 
+		{
+			$this->_entities->setPriority($parent, $child_priority);			
+			$this->_entities->setPriority($child,  $parent_priority);
+		}
 	}
 	
 	/**
@@ -200,7 +231,7 @@ class AnDomainSpace extends KObject
 		
 		foreach($this->_entities as $entity)
 		{
-			if ( $entity->getEntityState() & AnDomain::STATE_COMMITABLE )
+			if ( $entity->state() & AnDomain::STATE_COMMITABLE )
 				$data[] = $entity;
 		}
 				
@@ -210,41 +241,37 @@ class AnDomainSpace extends KObject
 	/**
 	 * Inserts an entity into the identity map. It uses the keys to uniquely identifies an entity
 	 * 
-	 * @param AnDomainEntityAbstract $entity      The entity to insert
-	 * @param array                  $identifiers An array of identifiying keys that uniquely identifies an entity
+	 * @param AnDomainEntityAbstract $entity The entity to insert
+	 * @param array                  $keys   The keys that uniquely identifies an entity
 	 * 
 	 * @return void
 	 */
-	public function insertEntity($entity, $identifiers = array())
+	public function insertIdentity($entity, $keys)
 	{
-        //check if an entity has already been added
-        //if not then add it to the bottom
-		if ( !$this->_entities->getPriority($entity) ) {
-            $priority = count($this->_entities);
-            $this->_entities->enqueue($entity, $priority);            
-        }
+		if ( empty($keys) )
+			return;
+
+		$this->_insert($entity);
 		
 		//get all the entity parent classes		
-		$classes        = $entity->getEntityDescription()->getUniqueIdentifiers();
-		$description	= $entity->getEntityDescription();
-        
-		foreach($identifiers as $key => $value)
+		$classes        = $entity->description()->getUniqueIdentifiers();
+		$description	= $entity->description();
+		foreach($keys as $key => $value)
 		{
-			if ( empty($value) ) 
-                continue;
-                
+			if ( empty($value) ) continue;
 			$property = $description->getProperty($key);
 			$value = $property->serialize($value);
 			$value = implode('', $value);
             
             //use the identifier application as the unique context
-			$key   = $entity->getIdentifier()->application.$key.$value;
+			$key   = $entity->getIdentifier()->application.','.$key.','.$value;
             
 			foreach($classes as $class)
 			{
 				if ( !isset($this->_identity_map[$class]) ) 
+				{
 					$this->_identity_map[$class] = array();
-                    
+				}				
 				$this->_identity_map[$class][$key] = $entity;
 			}
 		}
@@ -256,43 +283,31 @@ class AnDomainSpace extends KObject
 	 * null
 	 * 
 	 * @param AnDomainDescriptionAbstract $description The entity description
-	 * @param array                       $identifiers The keys that uniquely identifies the entity
+	 * @param array                       $keys        The keys that uniquely identifies the entity
 	 * 
 	 * @return AnDomainEntityAbstract
 	 */
-	public function findEntity($description, $identifiers)
+	public function findIdentity($description, $keys)
 	{
 		$classes  = $description->getUniqueIdentifiers();
 		
 		foreach($classes as $class)
 		{
-		    foreach($identifiers as $key => $value)
+		    foreach($keys as $key => $value)
 		    {
 		        $property = $description->getProperty($key);
 		        $value = $property->serialize($value);
 		        $value = implode('', $value);
                                 
                 //use the identifier application as the unique context
-		        $key   = $description->getEntityIdentifier()->application.$key.$value;
+		        $key   = $description->getEntityIdentifier()->application.','.$key.','.$value;
                 
 		        if ( isset($this->_identity_map[$class][$key]) )
-                {
+		        {
                     //found an entity
 		            $entity = $this->_identity_map[$class][$key];
-
 		            //only return an entity if it's still within the space
-		            if ( !$this->_entities->contains($entity) ) {
-		            	return null;
-		            }		            
-		            
-		            //if the description we are using is the parent of the found entity
-		            //if not then we must have found a different entity with the common parent
-		            //as the caller repository
-		            if ( !is_a($entity, $description->getEntityIdentifier()->classname) ) {
-		            	return null;
-		            }
-		            
-		            return $entity;
+		            return $this->_entities->contains($entity) ? $entity : null;
 		        }
 		    }
 		}					
@@ -302,27 +317,41 @@ class AnDomainSpace extends KObject
  	/**
  	 * Extracts an entity from the space all together
  	 * 
- 	 * @param AnDomainEntityAbstract $entity Extracts an entity from the domain space
-     * 
+ 	 * @param  AnDomainEntityAbstract
  	 * @return void
  	 */
- 	public function extractEntity($entity)
+ 	public function extract($entity)
  	{
  		$this->_entities->dequeue($entity);
  		unset($this->_states[$entity]);
  	}
  	
 	/**
-	 * Return an array of entities. If the repository is set then return entities for the 
-	 * repository
+	 * Return an array of entities
 	 * 
-	 * @param AnDomainRepositoryAbstract $repository If the repository is set then return the entities
-	 * 												 for the $repository
-	 * @return KObjectQeueue
+	 * @return array
 	 */
-	public function getEntities($repository = null)
+	public function getEntities()
 	{
-		return $repository ? $this->_entities->getRepositoryEntities($repository) : 
-					$this->_entities;
+		return $this->_entities;
+	}
+	
+	/**
+	 * Insert an entity to the list of entites. The priortiy of an entity is set to the 
+	 * the current total of entities in the queue
+	 *
+	 * @param AnDomainEntityAbstract $entity
+	 * 
+	 * @return void
+	 */
+	protected function _insert($entity)
+	{
+		//only enqueu if the it hasn't been enqueued before		
+		if ( !$this->_entities->getPriority($entity) ) 
+		{
+			//add the entity to the bottom			
+			$priority = count($this->_entities);
+			$this->_entities->enqueue($entity, $priority);
+		}
 	}
 }

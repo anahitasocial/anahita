@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -25,7 +29,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class LibBaseViewTemplate extends LibBaseViewAbstract
+abstract class LibBaseViewTemplate extends LibBaseViewAbstract
 {
     /**
      * Template identifier (APP::com.COMPONENT.template.NAME)
@@ -86,7 +90,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         }
         
         // Add default template paths
-        $this->getTemplate()->addSearchPath(KConfig::unbox($config->template_paths));        
+        $this->getTemplate()->addPath(KConfig::unbox($config->template_paths));        
          
         //Add alias filter for media:// namespace
         $this->getTemplate()->getFilter('alias')->append(
@@ -211,11 +215,10 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
 	 * 
 	 * @return void
 	 */
-	public function load($template, array $data = array())
+	final public function load($template, array $data = array())
 	{
-		if ( method_exists($this, '_beforeLayout') ) {
+		if ( method_exists($this, '_beforeLayout') )
 			$this->_beforeLayout($template);
-		}
 					
 		$method = '_layout'.KInflector::camelize($template);
 		

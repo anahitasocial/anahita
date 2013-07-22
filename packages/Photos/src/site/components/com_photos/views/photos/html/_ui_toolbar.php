@@ -5,7 +5,7 @@
         <?= @helper('ui.commands', $toolbar->getCommands()->class('btn btn-primary')) ?>
     </div>
     
-    <?php $layout = $toolbar->getController()->getRequest()->layout ?>
+    <?php $layout = $toolbar->getController()->layout ?>
     <div class="pull-right btn-group">
         <a class="btn <?= ($layout != 'masonry') ? 'disabled' : '' ?>" href="<?= @route('layout=default') ?>">
             <i class="icon-list"></i>

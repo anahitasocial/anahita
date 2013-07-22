@@ -1,0 +1,326 @@
+html
+{   
+    margin-bottom: 1px;
+    height: 100%;
+    overflow-y: scroll;
+    letter-spacing: 0;
+}
+
+@media(min-width: 980px)
+{
+	body
+	{
+	    padding-top: 60px;
+	    
+	    &#tmpl-component
+	    {
+	        padding-top: 0;
+	    }	
+	}
+}
+
+img
+{
+    .border-radius(@baseBorderRadius);  
+}
+
+a:hover
+{
+    text-decoration: none;  
+}
+
+// Template Grid
+.container
+{
+    .block
+    {
+        padding: 10px 0;
+    }
+    
+    .hero-unit
+    {
+        .border-radius(@baseBorderRadius);
+        margin-bottom: 20px;
+    }
+}
+
+// BRAND
+.navbar
+{ 
+    a.brand
+    {            
+        &.brand-logo
+        {
+           padding: 12px 10px 12px 60px;
+           background: url(images/logo.png) 10px 5px no-repeat transparent;
+        }
+    }
+    
+    ul.nav
+    {
+        >li
+        {
+           >a
+           {
+               padding: 12px 10px;
+           }
+        }
+    }
+    
+    span.viewer
+    {
+        float: right;
+        img.actor-avatar
+        {
+            margin: -15px 0;
+            .square(30px);
+        }
+    }
+}
+
+#mobile-main-menu
+{
+    ul
+    {
+        float: none;
+        
+        li
+        {
+            float: none;
+        }
+    }
+}
+
+// NAVPILLS
+// Links rendered as pills
+.nav-pills > li > a {
+  .border-radius(3px);
+}
+
+.nav-pills
+{
+    .nav-header
+    {
+        padding: 10px;
+    }   
+}
+
+// NOTIFICATION POPOVER
+.popover
+{ 
+    &.notifications-popover
+    {
+        width: 320px;
+    }
+    
+    .popover-content
+    {
+        max-height: 350px;
+        overflow:hidden;    
+    }
+}
+
+#bottom-wrapper,
+#footer-wrapper
+{
+    .clearfix;
+    .container
+    {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        
+        .module-title
+        {
+            border-bottom: 0;
+            margin-bottom: 0;
+            margin-top: 0;
+        }
+    }
+}
+
+#copyright-wrapper
+{
+    padding: 15px 0;
+}
+
+.module-border
+{
+    padding: 10px;
+    .border-radius(@baseBorderRadius);
+}
+
+// MODULES
+.module-title
+{
+	font-size: @baseFontSize + 3;
+	margin: 0 0 10px 0;
+	padding-bottom: 10px;
+}
+
+.module-content
+{   
+    ul
+    {
+        margin: 0;
+        padding-left: 15px;
+        
+        &.nav
+        {
+            padding: 0;
+        }
+    }
+    
+    ol
+    {
+        margin: 0;
+        padding-left: 20px;
+    }
+    
+    h1,h2,h3,h4
+    {
+        margin: 10px 0;
+    }
+    
+    .alert
+    {
+        margin: 0;
+    }
+    
+    form
+    {
+        padding: 5px 0;
+        margin: 5px 0;
+        
+        .form-actions
+        {
+            padding: 10px;
+        }
+        
+        .an-privacy-select-box
+        {
+            margin: 5px 0;
+        }
+        
+        &.inline-edit;
+    }
+    
+    img
+    {
+        margin: 10px 0;
+    }
+       
+    .actions
+    {
+        margin-bottom: 0;
+        padding: 10px;
+        ul.an-actions
+        {
+            padding: 0;
+        }
+    }
+    
+    .media-grid
+    {
+        margin: 0 -5px;
+        
+        > div
+        {
+            img 
+            {
+               .square(47px);
+               margin: 5px;
+            }
+        }
+    }
+    
+    .an-entity
+    {
+       padding: 0;
+       margin: 0;
+       
+       .entity-portrait-square
+       {
+            img
+            {
+                margin: 0;
+            }
+       }
+    }
+}
+
+// MODULE ICONS
+.download h2.module-title
+{
+    padding-left: 25px;
+    background:url("images/icon-download.png") no-repeat scroll 0 10px transparent;
+}
+
+.feed h2.module-title
+{
+    padding-left: 25px;
+    background:url("images/icon-rss.png") no-repeat scroll 0 10px transparent;
+}
+
+.promo-premium h2.module-title
+{
+    padding-left: 25px;
+    background:url("images/icon-star.png") no-repeat scroll 0 10px transparent;
+}
+
+.promo-basic h2.module-title
+{
+    padding-left: 25px;
+    background:url("images/icon-star-bw.png") no-repeat scroll 0 10px transparent;
+}
+
+// LOGIN MODULE
+.login-module
+{   
+    form
+    {   
+        .controls
+        {
+            input
+            {
+                width: 97%;
+            }
+        }
+    }
+    
+    .login-avatar
+    {
+        float: left;
+        
+        img.actor-avatar
+        {
+            .square(30px);
+            margin: 0;
+        }
+    }
+    
+    .login-greeting
+    {
+        padding-left: 40px;
+    }
+}
+
+// NAVIGATION MODULE
+#sidebar-a,
+#sidebar-b
+{
+    ul.menu
+    {
+        li
+        {
+            line-height: @baseLineHeight + 2;
+            
+            &.active
+            {
+                a
+                {
+                   text-decoration: underline;
+                }
+            }
+        }
+    }
+}

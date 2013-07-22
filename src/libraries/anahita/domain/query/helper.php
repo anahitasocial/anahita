@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -58,7 +62,7 @@ class AnDomainQueryHelper
      * @param $columns
      * @return array 
      */
-    static public function parseColumns($query, $columns)
+    public function parseColumns($query, $columns)
     {
     	if (  $columns instanceof AnDomainResourceColumn )
     	{
@@ -76,10 +80,8 @@ class AnDomainQueryHelper
     		 elseif ( !is_array($cols) )
     		 	 $array[$key] = $cols;
     		 else {
-    		     $key = 10000;
-    		     foreach($cols as $col) {
-    		         $array[$key++] = $col;
-    		     }
+    		 	foreach($cols as $col)
+    		 		$array[] = $col;
     		 }
     	}
     	return $array;

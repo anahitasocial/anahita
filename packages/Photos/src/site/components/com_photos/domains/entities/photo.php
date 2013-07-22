@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Photos
@@ -57,7 +61,8 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
 		$config->append(array(
 			'attributes' 	=> array('mimetype'),
 			'behaviors'		=> array(
-				'portraitable',			
+				'portraitable',
+				'hittable'
 			),
 			'relationships'	=> array(
 				'sets' => array('through'=>'edge')
@@ -102,6 +107,44 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
 		$this->__sets = $this->sets->fetchSet();
 		parent::delete();
 	}
+    
+    /**
+     * Return the portrait file for a size. Override the Portriable behavior due 
+     * to some legacy
+     * 
+     * @see LibBaseDomainBehaviorPortraitable
+     * 
+     * @return string
+     */
+    public function getPortraitFile($size)
+    {        
+        $filename = $this->filename;
+        
+        //remove the extension 
+        $extension = JFile::getExt($filename);
+        $name      = JFile:: stripExt($filename);
+       
+        $filename = $name.'_'.$size.'.'.$extension;
+        
+        return $filename;
+    } 
+    
+    /**
+     * Return the filename
+     * 
+     * @return string
+     */
+    public function getFilename()
+    {  
+        $filename = $this->get('filename');
+        
+        //@legacy. some of the file names weren't saved
+        if ( empty($filename) && $this->persisted() ) {
+            $filename = md5($this->getIdentityId()).'.jpg';
+        }        
+        
+        return $filename;      
+    }
 	
     /**
      * Track the filename
@@ -142,5 +185,42 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
 				}
 			}
 		}
-	}	
+	}
+
+	/**
+	 * Before an image is stored for a photo
+	 *
+	 * @param  KCommandContext $context Context parameter
+     * 
+	 * @return void
+	 */
+	protected function _beforeEntityStoreimage($context)
+	{
+		$image = $context->image;
+
+		$sizes = array();
+		
+		$width  = imagesx($image);		
+		$height = imagesy($image);
+
+		$sizes[ComPhotosDomainEntityPhoto::SIZE_ORIGINAL] = $width.'x'.$height;
+		
+		if($width > 1024)
+			$sizes[ComPhotosDomainEntityPhoto::SIZE_LARGE] = '1024x1024';
+		
+		if($width >= 640)
+			$sizes[ComPhotosDomainEntityPhoto::SIZE_MEDIUM] = '640xauto';
+		else
+			$sizes[ComPhotosDomainEntityPhoto::SIZE_MEDIUM] = $sizes[ComPhotosDomainEntityPhoto::SIZE_ORIGINAL];
+		
+		if($width >= 240)	
+			$sizes[ComPhotosDomainEntityPhoto::SIZE_SMALL] = '240x240';
+		else
+			$sizes[ComPhotosDomainEntityPhoto::SIZE_SMALL] = $sizes[ComPhotosDomainEntityPhoto::SIZE_ORIGINAL];
+		
+		$sizes[ComPhotosDomainEntityPhoto::SIZE_THUMBNAIL] = '100x100';
+		$sizes[ComPhotosDomainEntityPhoto::SIZE_SQUARE] = '100';
+		 
+		$context->sizes = $sizes;
+	}
 }

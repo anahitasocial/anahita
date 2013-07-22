@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="content" method="upgrade">
+<install version="2.2" type="plugin" group="content" method="upgrade">
     <name>Content - Anahita Social ™ Photos</name>
     <author>Anahita Social Networking Project</author>
-    <creationDate>##BUILD_DATE##</creationDate>
+    <creationDate>January 20, 2013</creationDate>
     <copyright>(C) 2008 - 2011 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.htmlL</license>
     <authoremail>info@anahitapolis.com</authoremail>
     <authorurl>http://www.anahitapolis.com</authorurl>
-    <version>##BUILD_VERSION##</version>
+    <version>2.2.3</version>
     <description>
     <![CDATA[
     	<p>

@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -61,15 +65,13 @@ abstract class LibBaseDomainAuthorizerAbstract extends KObject
 	{
 		$method = '_'.KInflector::variablize('authorize.'.$action);
 		
-		$result = self::AUTH_NOT_IMPLEMENTED;
-		
 		if ( method_exists($this, $method) ) 
 		{
 			$this->_entity = $context->mixer;
 			$this->_viewer = $context->viewer;
-			$result = $this->$method($context);
+			return $this->$method($context);
 		}
 		
-		return $result;
+		return self::AUTH_NOT_IMPLEMENTED;
 	}
 }

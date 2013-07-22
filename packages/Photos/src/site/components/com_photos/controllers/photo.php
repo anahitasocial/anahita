@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Photos
@@ -27,45 +31,6 @@
  */
 class ComPhotosControllerPhoto extends ComMediumControllerDefault
 {
-    /**
-     * The max upload limit
-     * 
-     * @var int
-     */
-    protected $_max_upload_limit;
-    
-    /**
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
-        
-        $this->_max_upload_limit = $config->max_upload_zie;
-    }
-        
-    /**
-     * Initializes the default configuration for the object
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-            'max_upload_zie' => get_config_value('photos.uploadlimit',4)
-        ));
-    
-        parent::_initialize($config);
-    }
-        
 	/**
 	 * Browse Photos
 	 * 
@@ -108,31 +73,45 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
 	{		
 		$data 			= $context->data;			
 		$file    		= KRequest::get('files.file', 'raw');
+		$filesize		= $file['size'];
 		$content 		= @file_get_contents($file['tmp_name']);
-		$filesize		= strlen($content);
-		$uploadlimit 	=  $this->_max_upload_limit * 1024 * 1024; 
+		
+		$uploadlimit 	= get_config_value('photos.uploadlimit',4) * 1024 * 1024; 
 		
 		$exif = (function_exists('exif_read_data')) ? @exif_read_data($file['tmp_name']) : array();
 		
-		if( $filesize == 0 ) {
-		    throw new LibBaseControllerExceptionBadRequest('File is missing');			
-		}
+		if(strlen($content) == 0)
+			return false;
 		
-		if( $filesize > $uploadlimit ) {
-		    throw new LibBaseControllerExceptionBadRequest('Exceed maximum size');			
+		if($filesize > $uploadlimit)
+		{
+			$context->setError(new KControllerException('Maximum file size exceeded!', KHttpResponse::NOT_ACCEPTABLE));
+			return false;
 		}
 		
 		$orientation = 0;
+		if(!empty($exif) && isset($exif['Orientation']) )
+			$orientation = $exif['Orientation'];
 		
-		if(!empty($exif) && isset($exif['Orientation']) ) 
-			$orientation = $exif['Orientation'];		
-		
-		$data['portrait']  = array('data'=>$content,'rotation'=>$orientation,'mimetype'=>isset($file['type']) ? $file['type'] : null);				
-		$photo = $this->actor->photos->addNew($data);	
+		$photo = $this->actor->photos->create();		
+        $ret   = $photo->setPortraitImage(array(
+                'data'     => $content, 
+                'rotation' => $orientation,
+                'mimetype' => $file['type']
+            ));
+        
+        if ( $ret === false ) {
+        	return false;
+        }
+        
 		$photo->setExifData($exif);
-		$photo->save();
-		$this->setItem($photo);
-		$this->getResponse()->status = KHttpResponse::CREATED;
+        
+        $this->setItem($photo);
+        
+        unset($data['name']);
+        
+        $photo->setData($data);
+        
         if ( $photo->body && preg_match('/\S/',$photo->body) )
             $context->append(array(                
                 'story' => array('body'=>$photo->body)

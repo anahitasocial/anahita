@@ -23,8 +23,7 @@
 	
 	<div data-behavior="Mediabox">
 		<div class="media-grid">	
-			<?php $photos = $object->photos->order('photoSets.ordering'); ?>
-			<?php foreach( $photos as $i=>$photo ): ?>
+		<?php foreach( $object->photos as $i=>$photo ): ?>
 			<?php 
 			$rel = 'lightbox[actor-set-'.$photo->owner->id.' 900 900]';
 		

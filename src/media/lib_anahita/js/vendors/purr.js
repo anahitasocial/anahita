@@ -90,17 +90,7 @@ var Purr = new Class({
 		} else {
 			this.wrapper.setStyle('bottom', (window.innerHeight / 2) - (this.getWrapperCoords().height / 2));			
 		}
-		var parent = document.id(document.body)
-		if ( document.getElement('.modal') && document.getElement('.modal').isVisible() ) 
-		{			
-			var popup = document.getElement('.modal').retrieve('Bootstrap.Popup');
-			if ( popup ) {
-				popup.addEvent('hide', function(){
-					this.wrapper.hide();
-				}.bind(this));				
-			}
-		}
-		parent.grab(this.wrapper);
+		document.id(document.body).grab(this.wrapper);
 		this.positionWrapper(this.options.position);
 	},
 
@@ -134,9 +124,9 @@ var Purr = new Class({
 
 	'getWrapperCoords': function(){
 		this.wrapper.setStyle('visibility', 'hidden');
-		//var measurer = this.alert('need something in here to measure');
+		var measurer = this.alert('need something in here to measure');
 		var coords = this.wrapper.getCoordinates();
-//		measurer.destroy();
+		measurer.destroy();
 		this.wrapper.setStyle('visibility','');
 		return coords;
 	},
@@ -196,7 +186,7 @@ var Purr = new Class({
 		}
 
 		this.wrapper.grab(alert, (this.options.mode == 'top') ? 'bottom' : 'top');
-		this.positionWrapper(this.options.position);
+
 		var fx = $merge(this.options.alert.fx, options.fx);
 		var alertFx = new Fx.Morph(alert, fx);
 		alert.store('fx', alertFx);

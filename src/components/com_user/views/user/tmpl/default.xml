@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metadata>
+	<layout title="DEFAULT USER LAYOUT">
+		<message>
+			<![CDATA[DEFAULT USER LAYOUT DESC]]>
+		</message>
+	</layout>
+	<state>
+		<name>DEFAULT USER LAYOUT</name>
+		<description>DEFAULT USER LAYOUT DESC</description>
+		<params>
+				<param name="welcome_desc" type="textarea" default="" label="Welcome Description" rows="10" cols="50" description="PARAMWELCOMEDESC" />
+		</params>
+	</state>
+</metadata>

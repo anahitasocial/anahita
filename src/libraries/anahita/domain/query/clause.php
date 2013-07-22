@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -108,35 +112,6 @@ class AnDomainQueryClause extends KObject implements IteratorAggregate, Countabl
 	public function getIterator() 
 	{
 		return new ArrayIterator($this->_internal_query->where);
-	}
-	
-	/**
-	 * Passthrough the bind
-	 * 
-	 * @param string $key   Bind key
-	 * @param string $value Bind value
-	 * 
-	 * @return AnDomainQueryClause
-	 */
-	public function bind($key, $value = null)
-	{
-		$this->_parent_query->bind($key, $value);
-		return $this;
-	}
-	
-	/**
-	 * Manually ends the clause. This is useful for when using in chain method calls
-	 * For example
-	 * $query->where($condition1)
-	 *  ->clause()
-	 * 	->where($subcondition)
-	 *  ->end()
-	 *  ->where($condition2)
-	 * 
-	 */
-	public function end()
-	{
-		return $this->_parent_query;
 	}
 	
 	/**

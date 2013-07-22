@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -47,19 +51,15 @@ class LibBaseDomainBehaviorParentable extends AnDomainBehaviorAbstract
 		//if parent is set, then set the base parent
 		if ( isset($config['parent']) ) 
 		{
-		    if ( strpos($config['parent'], '.') === false )
-		    {
-		        $identifier 	   = clone $config->service_identifier;
-		        $identifier->path  = array('domain','entity');
-		        $identifier->name  = $config['parent'];		        
-		    } else {
-		        $identifier        = $this->getService($config['parent']);
-		    }			    		
+			$identifier 	   = clone $config->service_identifier;
+			$identifier->path  = array('domain','entity');
+			$identifier->name  = $config['parent'];
 			$relationship['parent'] = $identifier;
 			unset($config['parent']);
 			$config->append(array(
 			    'aliases' => array($identifier->name => 'parent')       
             ));
+			
 		}
 
 		$config->append(array(

@@ -8,9 +8,6 @@ Behavior.addGlobalFilter('ComposerForm', {
         {
             (function(el){
                 var submitted = false;
-                var action = el.get('action').toURI();
-                action.setData({'format':'raw'});
-                el.set('action', action);
                 new Element('input',{type:'hidden','name':'composed','value':'true'}).inject(el);
                 new Element('input',{type:'hidden','name':'format','value':'raw'}).inject(el);
                 var iframe = new IFrame().hide().inject(el);

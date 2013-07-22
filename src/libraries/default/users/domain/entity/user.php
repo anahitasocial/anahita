@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Users
@@ -39,29 +43,9 @@ class LibUsersDomainEntityUser extends AnDomainEntityDefault
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'resources'   => array('users'),
-            'attributes'  => array(
-                'params'     => array('required'=>false, 'default'=>''),
-                'activation' => array('required'=>false, 'default'=>''),                
-            ),
-            'auto_generate' => true            
+			'resources'   => array('users')
 		));
 		
 		return parent::_initialize($config);
-	}	
-	
-	/**
-	 * Automatically sets the activation token for the user 
-	 * 
-	 * @return LibUsersDomainEntityUser
-	 */
-	public function requiresActivation()
-	{
-		jimport('joomla.user.helper');
-		$token = JUtility::getHash(JUserHelper::genRandomPassword());
-		$salt  = JUserHelper::getSalt('crypt-md5');
-		$hashedToken = md5($token.$salt).':'.$salt;
-		$this->activation = $hashedToken;
-		return $this;		
 	}
 }

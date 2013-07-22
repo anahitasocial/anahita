@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -33,15 +37,8 @@ class LibBaseControllerAbstract extends KControllerAbstract
      * 
      * @var KConfigState
      */
-    protected $_state;    
-
-    /**
-     * response object
-     *
-     * @var LibBaseControllerResponseAbstract
-     */
-    protected $_response;
-        
+    protected $_state;
+    
     /**
      * Constructor.
      *
@@ -49,9 +46,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function __construct( KConfig $config)
     {
-        parent::__construct($config);  
-        
-        $this->_response = $config->response;
+        parent::__construct($config);                        
     }
               
     /**
@@ -64,11 +59,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      * @return void
      */
     protected function _initialize(KConfig $config)
-    {         
-        $config->append(array(
-            'response' => 'com:base.controller.response'   
-        ));
-        
+    {        
         parent::_initialize($config);    
     }
             
@@ -95,7 +86,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function setRequest(array $request)
     {
-        $this->_request = new LibBaseControllerRequest();
+        $this->_request = new KConfig();
         
         foreach($request as $key => $value) {
             $this->_request->$key = $value;
@@ -144,94 +135,20 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function __call($method, $args)
     {
-        //omit anything that starts with underscore 
-        if ( strpos($method, '_') === false )
+        //Handle action alias method
+        if(!in_array($method, $this->getActions()) && count($args) )
         {
-            if ( count($args) == 1
-                    && !isset($this->_mixed_methods[$method])
-                    && !in_array($method, $this->getActions())
-            )
-            {
-                $this->{KInflector::underscore($method)} = $args[0];
+            //Check first if we are calling a mixed in method.
+            //This prevents the model being loaded durig object instantiation.
+            if(!isset($this->_mixed_methods[$method]))
+            {                
+                $this->{KInflector::underscore($method)} = $args[0];            
+            
                 return $this;
             }
         }
-        elseif ( strpos($method, '_action') === 0 ) 
-        {
-            //if the missing method is _action[Name] but
-            //method exists, then that means the action
-            //has been called on the object parent i.e.
-            //parent::_action[Name] but since the parent is 
-            //not implementing the action it falls back to
-            //__call. 
-            //we need to check if a behavior implement this
-            //method            
-            if ( method_exists($this, $method) ) 
-            {
-                $action = strtolower(substr($method, 7));
-                
-                if ( isset($this->_mixed_methods[$action]) ) 
-                {
-                    return $this->_mixed_methods[$action]
-                        ->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
-                }
-                else {
-                    //we need to throw this 
-                    //because if it goes to parent::__call it will causes
-                    //infinite recursion                    
-                    throw new BadMethodCallException('Call to undefined method :'.$method);
-                }
-            }
-        }    
         
         return parent::__call($method, $args);
-    }
-
-    /**
-     * Return the response object
-     *
-     * @return LibBaseControllerResponseAbstract
-     */
-    public function getResponse()
-    {
-        if(!$this->_response instanceof LibBaseControllerResponse)
-        {
-            $this->_response = $this->getService($this->_response);
-            
-            if ( !$this->_response instanceof LibBaseControllerResponse ) {
-                throw new 
-                    UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');    
-            }
-        }
-    
-        return $this->_response;
-    }
-    
-    /**
-     * Set the response object
-     *
-     * @param mixed $response
-     *
-     * @return LibBaseControllerResource
-     */
-    public function setResponse($response)
-    {
-        $this->_response = $response;    
-        return $this;
-    }
-        
-    /**
-     * Sets the context response
-     *
-     * @return KCommandContext
-     */
-    public function getCommandContext()
-    {        
-        $context = parent::getCommandContext();
-        $context->response = $this->getResponse();
-        $context->request  = $this->getRequest();        
-         
-        return $context;
     }
         
     /**
@@ -257,9 +174,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
                 $behavior = $identifier;
             }
         }
-        
-        return parent::getBehavior($behavior, $config);        
+       
+        return parent::__call('getBehavior', array($behavior, $config));
     }
-    
-   
 }

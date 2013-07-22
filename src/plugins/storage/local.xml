@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="storage" method="upgrade">
+<install version="2.2" type="plugin" group="storage" method="upgrade">
     <name>Storage - Local</name>
     <author>Anahita Social Networking Project</author>
-    <creationDate>##BUILD_DATE##</creationDate>
+    <creationDate>January 22, 2013</creationDate>
     <copyright>rmd Studio/Peerglobe Technology</copyright>
     <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
     <authoremai />
     <authorurl>Anahitapolis.com</authorurl>
-   	<version>##BUILD_VERSION##</version>
-	<release>##BUILD_RELEASE##</release>
+   	<version>2.2.4</version>
+	<release>Birth</release>
     <description>Local storage</description>
     <params>
     	<param type="text" name="folder" label="The folder to store the data" default="assets" />

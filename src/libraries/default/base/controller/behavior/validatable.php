@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -147,12 +151,20 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
         $output    = $this->getValidator()->getMessage();
 		if ( $result === false ) 
 		{
-			$context->response->status     = KHttpResponse::PRECONDITION_FAILED;
+			$context->status = KHttpResponse::PRECONDITION_FAILED;
 			if ( is_string($output)  ) 
 			    $output = array('errorMsg'=>$output);
-			$context->response->validation = json_encode($output);			
+			$context->append(array(
+				'headers' => array(
+					'Validation'  => $output
+				)
+			));
 		} else {
-		    $context->response->validation = json_encode($output);;
+			$context->append(array(
+				'headers' => array(
+					'Validation' => $output,					
+				)
+			));			
 		}
 	}	
 }

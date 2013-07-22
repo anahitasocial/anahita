@@ -5,15 +5,30 @@
 //@depends vendors/Scrollable.js
 //@depends vendors/purr.js
 //@depends anahita.js
-//@depends libs/Popup.js
-//@depends libs/Popover.js
-//@depends libs/Alert.js
-//@depends libs/Submit.js
-//@depends libs/Request.Message.js
-//@depends libs/Comment.js
-//@depends libs/ElementInsert.js
  
-
+/**
+ * Handling displaying ajax message notifications
+ */
+Class.refactor(Request.HTML, 
+{	
+	//check the header
+	onSuccess: function() {
+		var message 	= this.xhr.getResponseHeader('Redirect-Message');
+		var messageType = this.xhr.getResponseHeader('Redirect-Message-Type') || 'success';
+		if  ( message ) {
+			message.alert(messageType);
+		}
+		return this.previous.apply(this, arguments);
+	},
+	onFailure: function() {
+		var message 	= this.xhr.getResponseHeader('Redirect-Message');
+		var messageType = this.xhr.getResponseHeader('Redirect-Message-Type') || 'error';
+		if  ( message ) {
+			message.alert(messageType);
+		}
+		return this.previous.apply(this, arguments);
+	}
+});
 
 /**
  * String Alert using Purr
@@ -28,8 +43,309 @@ String.implement({
 				]
 		};
 		return new Bootstrap.Popup.from(options).show();	
+	},
+	alert  : function(type) {
+		var div = new Element('div',{html:this});
+		div.set('data-alert-type', type);
+		window.behavior.applyFilter(div, Behavior.getFilter('Alert'));
 	}
 });
+
+(function(){
+	Class.refactor(Bootstrap.Popup, {	
+		_animationEnd: function(){
+			if (Browser.Features.getCSSTransition()) this.element.removeEventListener(Browser.Features.getCSSTransition(), this.bound.animationEnd);
+			this.animating = false;
+			if (this.visible){
+				this.fireEvent('show', this.element);
+			} else {
+				this.fireEvent('hide', this.element);
+				if (!this.options.persist){
+					this.destroy();
+				} else {
+					this.element.addClass('hide');
+					this._mask.dispose();
+				}
+			}
+		},
+	});	
+	Bootstrap.Popup.from = function(data) 
+	{
+		Object.set(data, {buttons:[], header:''});
+		var html = '';
+		if ( data.header )
+			html += '<div class="modal-header">' + 
+//						'<a href="#" class="close dismiss stopEvent">x</a>' + 
+						'<h3>'+data.header+'</h3>' +
+					'</div>';
+					
+		html +=	'<div class="modal-body"><p>' + data.body  + '</p>' + 
+					'</div>' +
+					'<div class="modal-footer">' +
+					'</div>';			
+		element = new Element('div', {'html':html,'class':'modal fade'});
+		
+		data.buttons = data.buttons.map(function(button) {
+			Object.set(button, {
+				click 	: Function.from(),
+				type	: ''
+			});
+			var btn  = new Element('button', {
+				html	: button.name, 
+				'class' : 'btn'
+			});
+			
+			btn.addClass(button.type);
+			
+			btn.addEvent('click', button.click.bind(this));
+			
+			if ( button.dismiss ) {
+				btn.addClass('dismiss stopEvent');
+			} 
+			
+			return btn;
+		});
+		 
+		element.getElement('.modal-footer').adopt(data.buttons);
+		element.inject(document.body, 'bottom');
+		
+		return new Bootstrap.Popup(element, data.options || {});	
+	}
+})();
+
+Behavior.addGlobalFilter('Alert', {
+	defaults : {
+		mode 		: 'bottom',
+		position	: 'right',
+		highlight   : false,
+		hide 		: true,
+		alert		: {
+			
+		}
+	},
+	returns	: Purr,
+	setup 	: function(el, api) 
+	{
+		el.dispose();
+		var options = api._getOptions();
+		if ( api.getAs(Boolean, 'hide') === false) {			
+			options.alert['hideAfter'] = false;
+		}
+		if ( !this._purr ) {
+			this._purr = new Purr(options);
+		}
+		var wrapper = new Element('div',{'class':'alert alert-'+api.get('type')}).set('html', el.get('html'));		
+		this._purr.alert(wrapper, api._getOptions() || {});
+		return this._purr;
+	}
+});
+
+Class.refactor(Bootstrap.Popover, {
+        
+   initialize : function(el, options)
+   {             
+       return this.previous(el, options);       
+   },
+   _makeTip: function() 
+   {
+	  if ( !this.tip ) 
+	  {
+		 this.previous();
+		 if ( this.options.tipclass )
+			 this.tip.addClass(this.options.tipclass);
+   	  }
+   	  return this.tip;
+   }, 
+   _attach: function(method) 
+   {
+       this.parent(method);
+       this.bound.event = this._handleEvent.bind(this);
+       method = method || 'addEvents';
+       if (this.options.trigger == 'click') 
+       {		
+       		[document,this.element].invoke(method,{
+       			 click: this.bound.event
+       		});
+       }
+       else if (this.options.trigger == 'hover')
+       {
+           this.options.delayOut = Math.max(50, this.options.delayOut);
+           
+           if ( this.tip )
+           {
+               this.tip[method]({
+                   mouseover  : this.bound.enter,
+                   mouseleave : this.bound.leave
+               });               
+           }
+       }
+   },
+   _complete: function() 
+   {
+       if ( this.visible )
+       {
+           if ( this.options.trigger == 'hover' )
+               this.tip['addEvents']({
+                   mouseover  : this.bound.enter,
+                   mouseleave : this.bound.leave
+               }); 
+       }
+       return this.parent();       
+   },
+   _handleEvent : function(event)
+   {
+		var el = event.target;
+		var contains = el == this.element || this.element.contains(el) || (this.tip && this.tip.contains(el));
+		if ( !contains ) {
+           this.bound.leave();
+           clearTimeout(this.repositioner);
+           this.repositioner = null;
+		}
+        else {
+           this.bound.enter();
+           if ( !this.repositioner ) {
+           		this.repositioner = (function(){
+           			this._reposition();
+           		}).periodical(10, this);
+           }
+		}
+   },
+   _reposition : function()
+   {
+   		if ( !this.tip || !this.visible )
+   			return;
+		var pos, edge, offset = {x: 0, y: 0};
+		switch(this.options.location){
+			case 'below': case 'bottom':
+				pos = 'centerBottom';
+				edge = 'centerTop';
+				offset.y = this.options.offset;
+				break;
+			case 'left':
+				pos = 'centerLeft';
+				edge = 'centerRight';
+				offset.x = this.options.offset;
+				break;
+			case 'right':
+				pos = 'centerRight';
+				edge = 'centerLeft';
+				offset.x = this.options.offset;
+				break;
+			default: //top
+				pos = 'centerTop';
+				edge = 'centerBottom';
+				offset.y = this.options.offset;
+		}
+		if (typeOf(this.options.offset) == "object") offset = this.options.offset;
+		this.tip.position({			
+			relativeTo: this.element,
+			position: pos,
+			edge: edge,
+			offset: offset
+		});
+   }
+   
+});
+
+Behavior.addGlobalPlugin('BS.Popover','Popover', {
+    setup : function(el, api, instance)
+    {
+    	instance.options.tipclass = api.getAs(String,'tipclass');    	
+    /*
+        var getContent   = instance.options.getContent;
+        instance.options = Object.merge(instance.options,{
+           getContent : function() {
+               var content = getContent();
+               //check if it's a selector
+               if ( element = el.getElement(content) ) {
+                   element.dispose();
+                   return element.get('html');
+               }
+               return content;
+           }
+        });
+        */
+        if ( instance.options.trigger == 'click')
+            instance._leave();
+    }
+
+});
+
+Behavior.addGlobalFilter('RemotePopover', {
+    defaults : {
+        title   : '.popover-title',
+        content : '.popover-content',       
+        delay   : 0
+    },
+    setup : function(el, api) 
+    {
+        el.addEvent('click', function(e){e.stop()});
+        var getData = function(popover) 
+        {
+            var req = new Request.HTML({
+                method : 'get',
+                async  : true,
+                url    : url,
+                onSuccess : function() {
+					var html    = req.response.text.parseHTML();
+            		var title   = html.getElement(api.get('title'));
+           			var content = html.getElement(api.get('content'));
+            		if ( content )
+                		content = content.get('html');
+            		if ( title )
+                		title   = title.get('html');
+                	if ( popover.tip )
+                	{
+                		if ( title )
+				            popover.tip.getElement('.popover-title').set('html',   title);
+			            popover.tip.getElement('.popover-content').set('html', content);
+                	}
+		        }
+			}).send();
+        }
+        var clone = Object.clone(Bootstrap.Popover.prototype);
+        Class.refactor(Bootstrap.Popover, {
+            _leave : function()
+            {
+                (function()
+                {
+                    if ( !this.visible ) {
+                        this.data = null;
+                        if ( this.tip )
+                            this.tip.dispose();
+                        this.tip = null;                        
+                    }
+                }).delay(100,this);
+                this.previous();
+            },
+            _enter : function()
+            {
+                if ( !this.data ) {
+                	getData(this);
+                	data  = {
+                		title   : this.element.get(this.options.title)   || 'Prompt.loading'.translate(),
+                		content : this.element.get(this.options.content) || '<p class="uiActivityIndicator">&nbsp;</p>'
+                	}
+                    this.data = data;
+                }
+                if ( !this.data.content )
+                    this._leave();
+                else
+                {
+                    this.options.getContent = Function.from(this.data.content);
+                    this.options.getTitle   = Function.from(this.data.title);
+                    this.previous();
+                }
+            }
+        });
+        
+        window.behavior.applyFilter(el, Behavior.getFilter('BS.Popover'));
+        var instance = el.getBehaviorResult('BS.Popover'),
+            url      = api.getAs(String, 'url');
+        
+        Bootstrap.Popover.prototype = clone;
+    }
+});   
 
 /**
  * Editable Behavior
@@ -228,6 +544,29 @@ Delegator.register('click', {
 		}
 		else submit();		
 	},
+	'Submit' : function(event, el, api) {
+		event.stop();
+		if ( el.hasClass('disabled') )
+		{
+		    return false;
+		}
+		data = el.get('href').toURI().getData();
+		var form = Element.Form({action:el.get('href'), data:data});
+		if ( el.get('target') ) {
+			form.set('target', el.get('target'));
+		}
+		var submit = function(){
+			el.spin();
+			form.inject(document.body, 'bottom');
+			form.submit();			
+		}
+		if ( api.get('promptMsg') ) {
+			api.get('promptMsg').prompt({onConfirm:submit});
+		}		
+		else {			
+			submit();
+		}
+	},
 	'VoteLink' : function(event, el, api) {
 		event.stop();
 		el.ajaxRequest({
@@ -250,7 +589,49 @@ Delegator.register('click', {
 	}
 });
 
+(function(){
+	Delegator.register('click', 'BS.showPopup', {
+		handler: function(event, link, api) {
+			var target, url;	
+			event.preventDefault();
+			if ( api.get('target') ) {
+				target = link.getElement(api.get('target'));
+			} 
+			if ( api.get('url') ) {			
+				url	   = api.get('url');
+			}
+			if ( !url && !target ) {
+				api.fail('Need either a url to the content or can\'t find the target element');
+			}
+						
+			if ( target )								
+				target.getBehaviorResult('BS.Popup').show();
+			else {
+				var popup = Bootstrap.Popup.from({
+					header : 'Prompt.loading'.translate(),
+					body   : '<div class="uiActivityIndicator">&nbsp;</div>',
+					buttons : [{name: 'Action.close'.translate(), dismiss:true}]
+				});
+				popup.show();			
+				var req = new Request.HTML({
+					url : url,
+					onSuccess : function(nodes, tree, html) { 
+					    var title = html.parseHTML().getElement('.popup-header');
+					    var body  = html.parseHTML().getElement('.popup-body');
+					    if ( title ) {
+					    	popup.element.getElement('.modal-header').empty().adopt(title);
+					    }
+					    if ( body ) {
+					    	popup.element.getElement('.modal-body').empty().adopt(body);
+					    }
+					}
+				}).get();
+			}
+		}
 
+	}, true);
+
+})();
 
 Request.Options = {};
 
@@ -707,38 +1088,14 @@ Class.refactor(Bootstrap.Dropdown, {
     }
 });
 
-Delegator.register(['click'],'Checkbox', {
-	defaults : {
-		'toggle-element' : null,
-		'toggle-class'	 : 'selected'
-	},
-	handler  : function(event, el, api) 
-	{		
-		var target = el;
-		if ( api.get('toggle-element') ) {
-			target = el.getElement(api.get('toggle-element'));
-		}				
-		if ( !el.retrieve('checkbox') ) 
-		{			
-			var checkbox = new Element('input',{
-				type   : 'checkbox',
-				value  : api.getAs(String,'value'),
-				name   : api.getAs(String,'name')
-			});			
-			el.adopt(checkbox);
-			checkbox.hide();
-			if ( checkbox.form ) {
-				checkbox.form.addEvent('reset', function(){
-					target.removeClass(api.get('toggle-class'));
-				});
-			}
-			el.store('checkbox', checkbox);
-		}
-
-		var checkbox 	   = el.retrieve('checkbox');
-		checkbox.checked   = !checkbox.checked;
-		target.toggleClass(api.get('toggle-class'));
-		el.fireEvent('check');
+Delegator.register(['click'],'Comment', {
+	handler  : function(event, el, api) {
+		event.stop();
+		var textarea = el.form.getElement('textarea');
+		if ( textarea.setContentFromEditor )
+			textarea.setContentFromEditor();
+		if ( Form.Validator.getValidator('required').test(el.form.getElement('textarea')) )
+			window.delegator.trigger('Request',el,'click');
 	}
 });
 
@@ -791,8 +1148,7 @@ var EditEntityOptions = function() {
 	return {
 		replace : this.getParent('form'),
 		url		: function() {
-			var url = this.form.get('action').toURI().setData({layout:'list'}).toString();
-			return url;
+			return this.form.get('action') + '&layout=list&reset=1';
 		}
 	}
 }
@@ -814,10 +1170,9 @@ var EntityHelper = new Class({
 		if(this.form.title.value.clean().length < 3)
 			return false;
 		
-		var url = this.form.get('action').toURI().setData({layout:'list'}).toString();
 		this.form.ajaxRequest({
 			method : 'post',
-			url  : url,
+			url : this.form.get('action') + '&layout=list&reset=1',
 			data : this.form,
 			inject : {
 				element : document.getElement('.an-entities'),

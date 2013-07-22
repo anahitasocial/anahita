@@ -1,0 +1,15 @@
+.paramlist.admintable {display: none;}
+.quicklinkstable {width: 100%;}
+#quicklinks-admin {position:relative;}
+.quicklinks-block {padding:10px 0;border-bottom: 1px solid #e3e3e3;position:relative;}
+.quicklinks-block span {color:#666;margin-right:5px;}
+#quicklinks-admin .quicklinks-block:last-child {border-bottom: 0;}
+.quicklinks-icon {float: left;margin:15px 25px 60px;}
+.quicklinks-title, .quicklinks-link {margin: 10px;}
+.quicklinks-title input, .quicklinks-link input {width: 55%;}
+
+.quicklinks-controls {position: absolute; right: 10px; bottom: 10px;cursor:pointer;}
+.quicklinks-add, .quicklinks-remove {width: 16px; height: 16px;float: right;}
+.quicklinks-add {background: url(../images/add.png) no-repeat;}
+.quicklinks-remove {background: url(../images/delete.png) no-repeat;margin-right:5px;}
+.quicklinks-move {background: url(../images/move.png) no-repeat;width: 16px;height: 16px;position:absolute;top: 10px; right: 10px;cursor:move;}

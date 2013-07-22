@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -144,16 +148,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 		$this->_entityset  = $entityset;
 		return $this;
 	}
-
-	/**
-	 * (non-PHPdoc)
-	 * @see AnDomainPropertyAbstract::isMaterializable()
-	 */
-	public function isMaterializable(array $data)
-	{
-	    return false;
-	}
-	
+		
 	/**
 	 * Materialize a relationship for the parent entity 
 	 * 
@@ -211,7 +206,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 	/**
 	 * Instantiate an aggregated entity set from a root object
 	 * 
-	 * @return AnDomainDecoratorManytomany
+	 * @return AnDomainEntitysetOnetomany
 	 */
 	public function getSet($root)
 	{
@@ -224,8 +219,8 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 			'root'		 => $root,
 			'property'	 => $this->_child_key		
 		);
-        
-        $set = KService::get('anahita:domain.entityset.decorator.onetomany', $options);        
+
+		$set =  new AnDomainEntitysetOnetomany(new KConfig($options));
 		return $set;				
 	}
 }

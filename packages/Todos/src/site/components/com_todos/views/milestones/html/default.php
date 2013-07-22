@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<module position="sidebar-b" style="none"></module>
+<module position="sidebar-b" style="simple"></module>
 
 <div class="an-entities-wrapper">
 <?= @template('list') ?>

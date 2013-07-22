@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Pages
@@ -41,10 +45,11 @@ class ComPagesDomainAuthorizerPage extends ComMediumDomainAuthorizerDefault
 		if( $ret === false )
 		{
 			if ( $this->_entity->isOwnable() )
-			{
-				if( $this->_entity->owner->allows( $this->_viewer, 'com_pages:page:edit' ) ) {
+			{						
+				$resource = $this->_entity->component.':'.KInflector::pluralize($this->_entity->getIdentifier()->name);
+				
+				if( $this->_entity->owner->allows( $this->_viewer, 'com_pages:edit:pages' ) )
 					return true; 			
-				}
 			}
 		}
 		

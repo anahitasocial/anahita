@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -65,18 +69,9 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 	 */
 	public function setConfig(KConfig $config)
 	{
-	    $identifier = $config->description->getRepository()->getIdentifier();
-	    
-		if ( $config->parent ) 
-		{
+		if ( $config->parent )
 			$this->_parent = KService::getIdentifier($config->parent);
-			
-			//adopt the child application
-			if ( !$this->_parent->application ) {
-			    $this->_parent->application  = $identifier->application;
-			}
-		}
-				
+					
 		parent::setConfig($config);
 
 		if ( $config->child ) 
@@ -88,10 +83,6 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 				$config->child 	  = $identifier;				
 			}
 			$this->_child  = KService::getIdentifier($config->child);
-			//adopt the parent application 
-			if ( !$this->_child->application ) {			    
-			    $this->_child->application  = $identifier->application;
-			}
 		}
 			
 		$this->_parent_key    = $config->parent_key;

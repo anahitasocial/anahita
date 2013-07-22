@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -28,13 +32,45 @@
  * @link       http://www.anahitapolis.com
  */
 class AnDomainEntitysetDefault extends AnDomainEntityset
-{	
+{
+	/**
+	 * Check if data has been loaded into the set
+	 *  
+	 * @var boolean
+	 */
+	protected $_loaded = false;
+	
 	/**
 	 * The query that represents this entity set
 	 * 
 	 * @var AnDomainQuery
 	 */
-	protected $_set_query;	
+	protected $_set_query;
+	
+	/**
+	 * Query Object
+	 * 
+	 * @var AnDomainQuery
+	 */
+	protected $_query;
+	
+	/**
+	 * Constructor.
+	 *
+	 * @param 	object 	An optional KConfig object with configuration options
+	 */
+	public function __construct(KConfig $config)
+	{
+		$this->_query = $config->query;
+				
+		parent::__construct($config);
+		
+		//if a data is passed then add the data		
+		if ( $config->data ) {
+			$this->_loaded = true;
+			foreach($config->data as $entity) $this->insert($entity);
+		}
+	}
 	
     /**
      * Initializes the options for the object
@@ -68,11 +104,10 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 	 * query is returned
 	 * 
 	 * @param boolean $clone If set to true then it will return a new clone instance of entityset
-	 * @param boolean $disable_chain Disable the chain
 	 * 
 	 * @return AnDomainQuery
 	 */
-	public function getQuery($clone = false, $disable_chain = false)
+	public function getQuery($clone = false)
 	{
 		if ( !isset($this->_set_query) || $clone ) 
 		{
@@ -88,9 +123,6 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 			
 			//if clone is set, then return the qury object 
 			if  ( $clone ) {
-			    if ( $disable_chain ) {
-			        $query->disableChain();
-			    }
 			    return $query;
 			}
 			//if not then set the entity query object    
@@ -109,7 +141,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 	{
         $query = clone $this->getQuery();
         $query->order = null;
-        return $query->fetchValue('count(*)');
+        return $query->fetchCount();
 	}
 	
 	/**
@@ -137,7 +169,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 	 * 
 	 * @see KObject::__call()
 	 */
-    public function __call($method, $arguments)
+    public function __call($method, array $arguments)
     {
         $parts = KInflector::explode($method);
         
@@ -159,17 +191,178 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
     	    $result = parent::__call($method, $arguments);
     	}
     	return $result;
-    }    	 	
-
+    }
     
+	/**
+	 * Get an aggregated set of values from the entityset
+	 * 
+	 * @param  string $column 
+	 * @param  mixed  $value
+	 * @return mixed
+	 */
+	public function __get($column)
+	{			
+		$this->_load();
+		return parent::__get($column);
+	}
+	
+	/**
+	 * Set a property for each individual entity
+	 * 
+	 * @param  string $column 
+	 * @param  mixed  $value
+	 * @return AnDomainEntitysetDefault
+	 */
+	public function __set($column, $value)
+	{
+		$this->_load();
+		return parent::__set($column, $value);	
+	}
+	
+	/**
+	 * Count Data
+	 * 
+	 * @return int
+	 */
+    public function count()
+    {
+    	$this->_load();		
+    	return parent::count();
+    }
+    
+ 	/**
+     * Rewind the Iterator to the first element
+     *
+     * @return	void
+     */
+	public function rewind() 
+	{
+		$this->_load();
+		return parent::rewind();
+	} 
+	
+	/**
+     * Checks if current position is valid
+     *
+     * @return	boolean
+     */
+	public function valid() 
+	{
+		$this->_load();
+		return parent::valid();
+	} 
+	
+	/**
+     * Return the key of the current element
+     *
+     * @return	scalar
+     */
+	public function key() 
+	{
+		$this->_load();
+		return parent::key();
+	} 
+	
+	/**
+     * Return the current element
+     *
+     * @return	mixed
+     */
+	public function current() 
+	{
+		$this->_load();
+		return parent::current();
+	} 
+	
+	/**
+     * Move forward to next element
+     *
+     * @return	void
+     */
+	public function next() 
+	{
+		$this->_load();
+		return parent::next();
+	}	
+	
+	/**
+	 * Load the entities before getting an entity of offset
+	 * @return 
+	 * @param $offset Object
+	 */
+	public function offsetGet($offset)
+	{
+        $this->_load();
+        return parent::offsetGet($offset);
+	}	
+	
+	
+	/**
+	 * Returns the iterator
+	 * 
+	 * @return ArrayIterator
+	 */
+	public function getIterator()
+	{	
+		$this->_load();
+		return parent::getIterator();
+	}  
+	
+	/**
+	 * Destroy a collection of entities
+	 * 
+	 * @return void
+	 */
+	public function destroy()
+	{
+		$this->delete();
+		return $this->_repository->getSpace()->commit();
+	}
+	
+	/**
+	 * Deletes all the entities
+	 * 
+	 * @return void
+	 */
+	public function delete()
+	{
+		return parent::__call('delete');
+	}	
+
+	/**
+     * Return an associative array of the data.
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+		$this->_load();
+		return parent::toArray();
+    }
+    		
 	/**
 	 * Loads the data into the object set using the query if not already loaded
 	 * 
 	 * @return void
 	 */
-	protected function _getData()
+	protected function _load()
 	{
-		$data = $this->getRepository()->fetch($this->getQuery(), AnDomain::FETCH_ENTITY_LIST);		
-		return $data;			
+		if ( $this->_loaded )
+			return;
+			
+		if ( isset($this->_object_set) && $this->_object_set->count() > 0 ) {
+			$this->_loaded = true;
+			return;
+		}
+		
+		$this->_loaded = true;
+		
+		$repository = $this->_repository;
+		
+		//get an array list instead of another entityset
+		$data		= $repository->fetch($this->getQuery(), AnDomain::FETCH_ENTITY_LIST);
+		if ( !$data ) 
+			$data = array();
+		$this->_object_set = new ArrayObject($data);		
 	}
 }

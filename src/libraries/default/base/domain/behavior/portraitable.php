@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -32,43 +36,15 @@ jimport('joomla.filesystem.file');
 class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable 
 {
 	/**
-	 * An arary of sizes to resize a portrait to
-	 * 
-	 * @var array
-	 */
-	protected $_sizes;
-	
-	/**
-	 * A boolearn flag to whether to keep the orignal file or not. By default set to true
-	 * 
-	 * @var boolean
-	 */
-	protected $_keep_original;
-	
-	/**
-	 * Pending files to be stored for an entity
-	 * 
-	 * @var AnObjectArray
-	 */
-	protected $_pending_files;
-	
-	/**
-	 * Constructor.
-	 *
-	 * @param KConfig $config An optional KConfig object with configuration options.
-	 *
-	 * @return void
-	 */
-	public function __construct(KConfig $config)
+	 * Return an array of avatar sizes with its respective dimension
+	 *  
+	 * @return array 
+	 */		
+	static public function getDefaultSizes()
 	{
-	    parent::__construct($config);
-	    
-	    $this->_sizes         = $config['sizes'];	        
-	    $this->_keep_original = $config['keep_original'];
-	    
-	    $this->_pending_files = $this->getService('anahita:object.array');
+		return array('small'=>'80xauto', 'medium' => '160xauto', 'large' => '480xauto', 'square' => 56);
 	}
-		
+				
     /**
 	 * Initializes the default configuration for the object
 	 *
@@ -81,20 +57,142 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'attributes' 	=> to_hash(array(
-				'filename'  => array('write'=>'protected'),
-			    'mimetype'
-			)),
-		    'keep_original' => true,
-		    'sizes' => array(
-		        'large'  => '1024xauto',	            
-		        'medium' => '640xauto',		        
-		        'small'  => '240xauto', 	             
-	            'square' => 100
-		     )
+			'attributes' 	=> array(
+				'filename' => array('write'=>'protected'),
+			)
 		));
 		
 		parent::_initialize($config);
+	}
+	
+	/**
+	 * Persist the data of a photo into the storage 
+	 * 
+	 * @param array $options An array of options
+	 * 
+	 * @return boolean
+	 */
+	public function setPortraitImage($config = array())
+	{				
+		$config = new KConfig($config);
+		
+		$config->append(array(
+			'rotation' => 0,	
+			'mimetype' => 'image/jpeg'
+		));
+        
+		if ( $config->url ) {
+			$config->append(array(
+				'data' => file_get_contents($config->url)
+			));
+		}
+        
+        $config->mimetype = strtolower($config->mimetype);
+        
+        //the allowed mimetypes
+        $mimetypes = array('image/jpeg'=>'jpg','image/png'=>'png','image/gif'=>'gif');
+        
+        //force mimetype to jpeg if invalid
+        //@TODO is this wise ??
+        if ( !isset($mimetypes[$config->mimetype]) ) {
+            $config->mimetype = 'image/jpeg';   
+        }
+        
+        //first remove the existing avatar. 
+        //only remove exisitng if the entity hasn't been
+        //just inserted
+        if ( $this->state() != AnDomain::STATE_INSERTED && 
+        	 $this->state() != AnDomain::STATE_NEW ) {            
+            //remove existing portrait image
+            $this->removePortraitImage();            
+        }
+
+        if ( $config->data ) {
+        	
+        	$data = $config->data;
+        	
+        	//if data is null or mimetype is invalid then
+        	//existing avatar is deleted
+        	if ( empty($data) ) {
+        		if ( $this->state() == AnDomain::STATE_NEW) {
+        			$this->reset();
+        		}
+        		return false;
+        	}
+        	
+        	$config->append(array(
+        		'image' => 	imagecreatefromstring($data)
+        	));        	
+        }
+		
+        $image = $config->image;
+				
+		if ( empty($image) ) {
+			if ( $this->state() == AnDomain::STATE_NEW) {
+				$this->reset();
+			}
+			return false;	
+		}	
+		
+		if ( $this->state() == AnDomain::STATE_NEW ) {
+			$config['image'] = $image;
+			unset($config['data']);
+			unset($config['url']);
+			$this->__image_options = $config;
+			return $this;
+		}
+		
+		$rotation  = $config->rotation;
+		
+		switch($rotation)
+		{
+			case 3:$rotation=180;break;
+			case 6:$rotation=-90;break;
+			case 8:$rotation=90 ;break;
+			default :
+				$rotation = 0;
+		}
+		
+		if($rotation != 0 ) {
+			$image = imagerotate($image, $rotation, 0);
+		}		
+                    
+        $extension = $mimetypes[$config->mimetype];
+        
+        $filename  = md5(time()).'.'.$extension;
+        
+		$context = new KCommandContext();
+		
+		$context->append(array( 
+			'image' => $image,			
+			'sizes' => array()
+		));
+        
+		$this->_mixer->execute('before.storeimage', $context);
+
+        $sizes   = KConfig::unbox($context->sizes);
+        
+        if ( empty($sizes) ) {
+            $sizes = self::getDefaultSizes();
+        }
+        
+		$this->_mixer->setData(array(
+			'filename'  => $filename,
+		), AnDomain::ACCESS_PROTECTED);
+		                
+		foreach($sizes as $size => $dimension )
+		{
+            $data = AnHelperImage::resize($image, $dimension);
+            $data = AnHelperImage::output($data, $config->mimetype);
+			$filename = $this->_mixer->getPortraitFile($size);
+			$this->_mixer->writeData($filename, $data);
+		}
+		
+		$this->_mixer->setValue('sizes', $sizes);
+		
+		imagedestroy($image);
+        unset($this->__image_options);        
+		return $this->_mixer;
 	}
 
 	/**
@@ -114,41 +212,30 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	public function removePortraitImage()
 	{
-		$sizes   = $this->_mixer->getValue('sizes');
+		$sizes   = $this->_mixer->getPortraitSizes();
         
 		if ( empty($sizes) ) {
 			$sizes = explode(' ','original large medium small thumbnail square');
 		} else
 			$sizes = array_keys($sizes);
 				
-		foreach($sizes as $size) 
-		{
+		foreach($sizes as $size) {
 			$file = $this->_mixer->getPortraitFile($size);
 			$this->_mixer->deletePath($file);
 		}
-		$this->set('filename', null);
+		$this->filename = null;
 	}	
 	
-	/**
-	 * Return the portrait file for a size. Override the Portriable behavior due
-	 * to some legacy
-	 *
-	 * @see LibBaseDomainBehaviorPortraitable
-	 *
-	 * @return string
-	 */
-	public function getPortraitFile($size)
-	{
-	    $filename = $this->filename;
-
-	    //remove the extension
-	    $extension = JFile::getExt($filename);
-	    $name      = JFile:: stripExt($filename);
-	     
-	    $filename = $name.'_'.$size.'.'.$extension;
-	
-	    return $filename;
-	}	
+    /**
+     * Return the portrait file for a size
+     * 
+     * @return string
+     */
+    public function getPortraitFile($size)
+    {
+        //returns [SIZE].[Filename].[extension];
+        return $size.$this->filename;
+    }
 	
 	/**
 	 * Return the URL to the portrait
@@ -169,171 +256,9 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	public function getPortraitSizes()
 	{
-        $sizes  = $this->getValue('sizes');
-        if ( empty($sizes) ) {
-            $sizes = $this->_sizes;
-        }
-		return $sizes;
+		return $this->getValue('sizes', array());
 	}
-	
-	/**
-	 * After an entity is instantaited
-	 * 
-	 * @param KCommandContext $context
-	 * 
-	 * @return void
-	 */
-	protected function _afterEntityInstantiate(KCommandContext $context)
-	{
-	    $data = $context->data;
-	    
-	    if ( $data->portrait ) {
-	        $this->setPortrait($data->portrait);
-	    }
-	}
-
-	/**
-	 * Set the portrait
-	 * 
-	 * @param array $config The portrait options [data,orientation,mimetype]
-	 * 
-	 * @return void
-	 */
-	public function setPortrait($config)
-	{
-	    $config = new KConfig($config);
-	    
-	    $config->append(array(
-	            'rotation' => 0,
-	            'mimetype' => 'image/jpeg'
-	    ));
-	    
-	    if ( $config->url ) 
-	    {
-	        $config->append(array(
-                'data' => file_get_contents($config->url)
-	        ));
-	    }
-	    
-	    $config->mimetype = strtolower($config->mimetype);
-	    
-	    //the allowed mimetypes
-	    $mimetypes = array('image/jpeg'=>'jpg','image/png'=>'png','image/gif'=>'gif');
-	    
-	    //force mimetype to jpeg if invalid
-	    //@TODO is this wise ??
-	    if ( !isset($mimetypes[$config->mimetype]) ) {
-	        $config->mimetype = 'image/jpeg';
-	    }
-	    
-	    if ( $config->data ) 
-	    {
-	        $data = $config->data;
-
-	        if ( empty($data) ) {
-	            return false; 
-	        }
-	        
-	        $config->append(array(
-                'image' => 	imagecreatefromstring($data)
-	        ));
-	    }
-	    
-	    $image = $config->image;
-	    
-	    if ( empty($image) ) {
-	        return false;
-	    }
-	    
-	    $rotation  = $config->rotation;
-	     
-	    switch($rotation)
-	    {
-	        case 3:$rotation=180;break;
-	        case 6:$rotation=-90;break;
-	        case 8:$rotation=90 ;break;
-	        default :
-	            $rotation = 0;
-	    }
-	     
-	    if($rotation != 0 ) {
-	        $image = imagerotate($image, $rotation, 0);
-	    }
-
-	    if ( $this->persisted() ) {
-	        $this->_mixer->removePortraitImage();     
-	    }
-	    	    
-	    $images          = $this->_mixer->resizePortraitImage($image);	    
-	    $this->_mixer->set('filename', md5(time().uniqid()).'.'.$mimetypes[$config->mimetype]);
-	    $this->_mixer->set('mimetype', $config->mimetype);
-	    $sizes           = array();
-	    $files           = array();
-	    foreach($images as $key => $value) 
-	    {
-	        $filename         = $this->_mixer->getPortraitFile($key);
-	        $sizes[$key]      = $value['size'];	        
-	        $files[$filename] = AnHelperImage::output($value['data'], $config->mimetype);	        
-	    }
-	    imagedestroy($image);
-	    $this->_mixer->setValue('sizes', $sizes);
-	    $this->_pending_files[$this->_mixer] = $files;
-	    return true;	    
-	}
-	
-	/**
-	 * Return a resizes verion of the image
-	 * 
-	 * @param resource $image
-	 * 
-	 * @return array 
-	 */
-	public function resizePortraitImage($image)
-	{
-	    $images = array();
-	    $original_width  = imagesx($image);
-	    $originl_height  = imagesy($image);	    
-	    foreach($this->_sizes as $name => $size)
-	    {
-	        if ( !is_int($size) )
-	        {
-	            list($width,$height) = AnHelperImage::parseSize($size);
-	            if ( $original_width < $width ) {
-	                $size  = array($original_width, $originl_height);
-	            } else {
-	                $size  = array($width, 'auto');
-	            }
-	        }
-	        $data    = AnHelperImage::resize($image, $size);
-	        $width   = imagesx($data);
-	        $height  = imagesy($data);	        
-	        $images[$name]  = array('size'=>$width.'x'.$height,'data'=>$data);
-	    }
-	    if ( $this->_keep_original ) {
-	        $images['original'] = array('size'=>$original_width.'x'.$originl_height, 'data'=>$image);
-	    }
-	    return $images;
-	}
-	
-	/**
-	 * Called after the entity is updated
-	 * 
-	 * @param KCommandContext $context
-	 * 
-	 * @return void
-	 */
-	protected function _afterEntityUpdate(KCommandContext $context)
-	{
-	    if ( isset($this->_pending_files[$this->_mixer]) )
-	    {
-	        $files = $this->_pending_files[$this->_mixer];
-	        foreach($files as $filename => $data) {
-	            $this->_mixer->writeData($filename, $data);
-	        }
-	        unset($this->_pending_files[$this->_mixer]);
-	    }
-	}
-	
+		
 	/**
 	 * Called after inserting the entity
 	 *
@@ -343,14 +268,9 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	protected function _afterEntityInsert(KCommandContext $context)
 	{
-	    if ( isset($this->_pending_files[$this->_mixer]) )
-	    {
-	        $files = $this->_pending_files[$this->_mixer];
-	        foreach($files as $filename => $data) {
-	            $this->_mixer->writeData($filename, $data);
-	        }
-	        unset($this->_pending_files[$this->_mixer]);
-	    }
+		if ( !empty($this->__image_options) ) {
+			$this->_mixer->setPortraitImage($this->__image_options);
+        }
 	}
 	
 	/**

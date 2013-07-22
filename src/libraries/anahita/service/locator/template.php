@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Service
@@ -50,24 +54,16 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
             
 	        if ( !$classname )
 	        {
-                //$path      = KInflector::implode($identifier->path);
-                $classpath = $identifier->path;
-                $classtype = !empty($classpath) ? array_shift($classpath) : '';
-                        
-                //Create the fallback path and make an exception for views
-                $path = ($classtype != 'view') ? ucfirst($classtype).KInflector::camelize(implode('_', $classpath)) : ucfirst($classtype);
-
-                $classes[] = 'Tmpl'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
-                $classes[] = 'Tmpl'.ucfirst($identifier->package).$path.'Default';
-                $classes[] = 'ComApplication'.$path.ucfirst($identifier->name);
-                $classes[] = 'ComApplication'.$path.'Default';                
-                $classes[] = 'LibApplication'.$path.ucfirst($identifier->name);
-                $classes[] = 'LibApplication'.$path.'Default';                
+                $path      = KInflector::implode($identifier->path);
+                $classes[] = 'TmplBase'.$path.ucfirst($identifier->name);
+                $classes[] = 'TmplBase'.$path.ucfirst($identifier->name).'Default';
+                $classes[] = 'LibTheme'.$path.ucfirst($identifier->name);
+                $classes[] = 'LibTheme'.$path.ucfirst($identifier->name).'Default';                
                 $classes[] = 'LibBase'.$path.ucfirst($identifier->name);
-                $classes[] = 'LibBase'.$path.'Default';
+                $classes[] = 'LibBase'.$path.ucfirst($identifier->name).'Default';
 	            $classes[] = 'K'.$path.ucfirst($identifier->name);
-                $classes[] = 'K'.$path.'Default';            
-
+                $classes[] = 'K'.$path.ucfirst($identifier->name).'Default';            
+                  
 	            foreach($classes as $class)
 	            {
 	                if ( $this->getService('koowa:loader')->loadClass($class,  $identifier->basepath)) {

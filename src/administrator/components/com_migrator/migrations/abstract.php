@@ -439,7 +439,7 @@ CREATE TABLE IF NOT EXISTS `#__migrator_versions` (
 EOF
                 );
                 $this->_version = $this->getService('repos://admin/migrator.version')
-                    ->findOrAddNew(array('component'=>$this->_component));
+                    ->findOrCreate(array('component'=>$this->_component));
         }
         return $this->_version;
     }

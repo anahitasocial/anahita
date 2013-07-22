@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Service
@@ -41,80 +45,48 @@ class AnServiceLocatorComponent extends KServiceLocatorComponent
 	 * @return string|false  Return object on success, returns FALSE on failure
 	 */
 	public function findClass(KServiceIdentifier $identifier)
-	{	        
+	{
 	    $path      = KInflector::camelize(implode('_', $identifier->path));
+	        
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
-        $loader    = $this->getService('koowa:loader');
+        
       	//Manually load the class to set the basepath
-		if (!$loader->loadClass($classname, $identifier->basepath))
+		if (!$this->getService('koowa:loader')->loadClass($classname, $identifier->basepath))
 		{
 		    //the default can be in either in the default folder
 		    //be a registered default class
 		    $classname = AnServiceClass::findDefaultClass($identifier);
-		    //hack
-		    if ( $classname == 'AnDomainBehaviorDefault' ) {
-		        $classname = null;
+		    
+		    if ( !$classname ) 
+		    {
+		        //let koowa try guess the default class
+		        //for the domain objects it won't be able to find 
+		        //anything unless
+		        $classname = parent::findClass($identifier);
 		    }
-		    if ( !$classname ) {
-		        $classname = $this->_findClass($identifier);	        
+		    
+		    //special case for the domain classes
+		    if   ( ($classname === false || $classname == 'AnDomainBehaviorDefault' ) && strpos($path, 'Domain') === 0 ) 
+		    {
+	            foreach(array('ComBase','LibBase','An') as $prefix)
+	            {
+	                foreach(array(ucfirst($identifier->name), 'Default') as $name)
+	                {
+	                    $classname = $prefix.$path.$name;
+	                    	                    
+	                    if ( $this->getService('koowa:loader')->loadClass($classname, $identifier->basepath) ) {
+	                        break;  
+	                    }
+	                    
+	                    $classname = false;
+	                }
+	                
+	                if ( $classname )
+	                     break;
+	            }
 		    }
 		}
 		
 		return $classname;
 	}
-	
-	/**
-	 * Find a class
-	 * 
-	 * @param KServiceIdentifier $identifier
-	 * 
-	 * @return string
-	 */
-	protected function _findClass($identifier)
-	{
-	    $loader    = $this->getService('koowa:loader');
-	    $classname = null;
-	    //Create the fallback path and make an exception for views
-	    $classpath = $identifier->path;
-	    $classtype = !empty($classpath) ? array_shift($classpath) : '';
-	    $paths   = array();
-	    $paths[] = ucfirst($classtype).KInflector::camelize(implode('_', $classpath));
-	    if ($classtype == 'view' ) {
-	        $paths[] = ucfirst($classtype);
-	    }
-	    
-	    $paths   = array_unique($paths);
-	     
-	    $namespaces = array();
-	    $namespaces[] = 'Com'.ucfirst($identifier->package);
-	    $namespaces[] = 'Lib'.ucfirst($identifier->package);
-	    $namespaces[] = 'ComBase';
-	    $namespaces[] = 'LibBase';
-	    $namespaces[] = 'ComDefault';
-	    $namespaces[] = 'An';
-	    $namespaces[] = 'K';
-	    $namespaces = array_unique($namespaces);
-	    $classes    = array();
-	    foreach($namespaces as $namespace)
-	    {
-	        foreach($paths as $path)
-	        {
-	            $names = array();
-	            $names[] = ucfirst($identifier->name);
-	            $names[] = empty($path) ? ucfirst($identifier->name).'Default' : 'Default';
-	            foreach($names as $name)
-	            {
-	                $class     = $namespace.$path.$name;
-	                $classes[] = $class;
-	                if ( $loader->findPath($class, $identifier->basepath) &&
-	                     $loader->loadClass($class, $identifier->basepath) ) {
-	                    $classname = $class;
-	                    break 3;
-	                }
-	            }
-	        }
-	    }
-	    return $classname;
-	}
-	
 }

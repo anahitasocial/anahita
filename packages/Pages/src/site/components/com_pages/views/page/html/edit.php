@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<module position="sidebar-b" style="none">
+<module position="sidebar-b" style="simple">
 <?php if ($actor->authorize('administration') ) : ?>
  
 <?= @helper('ui.gadget', LibBaseTemplateObject::getInstance('revisions', array(

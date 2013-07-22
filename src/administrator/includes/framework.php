@@ -1,48 +1,72 @@
 <?php
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- * @link       http://www.anahitapolis.com
- */
+/**
+* @version		$Id: framework.php 19340 2010-11-03 15:00:55Z ian $
+* @package		Joomla
+* @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
+* @license		GNU/GPL, see LICENSE.php
+* Joomla! is free software. This version may have been modified pursuant
+* to the GNU General Public License, and as distributed it includes or
+* is derivative of works licensed under the GNU General Public License or
+* other free or open source software licenses.
+* See COPYRIGHT.php for copyright notices and details.
+*/
+
 // no direct access
-defined( 'JPATH_BASE' ) or die( 'Restricted access' );
+defined( '_JEXEC' ) or die( 'Restricted access' );
 
-defined( '_JEXEC' ) or define('_JEXEC', 1);
+/*
+ * Joomla! system checks
+ */
 
-define( 'DS', DIRECTORY_SEPARATOR );
-
-$parts = explode( DS, JPATH_BASE );
-array_pop( $parts );
-define( 'JPATH_ROOT',           implode( DS, $parts ) );
-
-define( 'JPATH_SITE',           JPATH_ROOT );
-define( 'JPATH_CONFIGURATION',  JPATH_ROOT );
-define( 'JPATH_ADMINISTRATOR',  JPATH_ROOT.DS.'administrator' );
-define( 'JPATH_XMLRPC',         JPATH_ROOT.DS.'xmlrpc' );
-define( 'JPATH_LIBRARIES',      JPATH_ROOT.DS.'libraries' );
-define( 'JPATH_PLUGINS',        JPATH_ROOT.DS.'plugins'   );
-define( 'JPATH_INSTALLATION',   JPATH_ROOT.DS.'installation' );
-define( 'JPATH_THEMES',         JPATH_BASE.DS.'templates' );
-define( 'JPATH_CACHE',          JPATH_BASE.DS.'cache' );
+@set_magic_quotes_runtime( 0 );
+@ini_set('zend.ze1_compatibility_mode', '0');
 
 /*
  * Installation check, and check on removal of the install directory.
  */
-if (!file_exists( JPATH_CONFIGURATION.'/configuration.php' ) || (filesize( JPATH_CONFIGURATION.'/configuration.php' ) < 10) ) {
-    echo 'No configuration file found. Exciting...';
-    exit();
+if (!file_exists( JPATH_CONFIGURATION . DS . 'configuration.php' ) || (filesize( JPATH_CONFIGURATION . DS . 'configuration.php' ) < 10) || file_exists( JPATH_INSTALLATION . DS . 'index.php' )) {
+	header( 'Location: ../installation/index.php' );
+	exit();
 }
 
-// Joomla : setup
-require_once(JPATH_LIBRARIES . '/joomla/import.php');
+/*
+ * Joomla! system startup
+ */
 
-jimport( 'joomla.application.application' );
+// System includes
+require_once( JPATH_LIBRARIES		.DS.'joomla'.DS.'import.php');
+
+// Pre-Load configuration
+require_once( JPATH_CONFIGURATION	.DS.'configuration.php' );
+
+// System configuration
+$CONFIG = new JConfig();
+
+if (@$CONFIG->error_reporting === 0) {
+	error_reporting( 0 );
+} else if (@$CONFIG->error_reporting > 0) {
+	error_reporting( $CONFIG->error_reporting );
+	ini_set( 'display_errors', 1 );
+}
+
+define( 'JDEBUG', $CONFIG->debug );
+
+unset( $CONFIG );
+
+/*
+ * Joomla! framework loading
+ */
+
+// Include object abstract class
+require_once(JPATH_SITE.DS.'libraries'.DS.'joomla'.DS.'utilities'.DS.'compat'.DS.'compat.php');
+
+// System profiler
+if (JDEBUG) {
+	jimport( 'joomla.error.profiler' );
+	$_PROFILER =& JProfiler::getInstance( 'Application' );
+}
+
+// Joomla! library imports
 jimport( 'joomla.application.menu' );
 jimport( 'joomla.user.user');
 jimport( 'joomla.environment.uri' );
@@ -54,33 +78,4 @@ jimport( 'joomla.event.dispatcher');
 jimport( 'joomla.language.language');
 jimport( 'joomla.utilities.string' );
 
-require_once JPATH_CONFIGURATION . '/configuration.php';
-
-require_once( JPATH_LIBRARIES.'/anahita/anahita.php');
-
-$config = new JConfig();
-
-//instantiate anahita and nooku
-Anahita::getInstance(array(           
-    'cache_prefix'  => md5($config->secret).'-cache-koowa',
-    'cache_enabled' => $config->caching
-));
-
-KServiceIdentifier::setApplication('site' , JPATH_SITE);
-KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
-        
-KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath'=>JPATH_BASE)));
-KServiceIdentifier::addLocator( KService::get('anahita:service.locator.component') );
-
-KLoader::addAdapter(new KLoaderAdapterModule(array('basepath' => JPATH_BASE)));
-KServiceIdentifier::addLocator( KService::get('anahita:service.locator.module') );
-
-KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
-KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
-
-KService::setAlias('koowa:database.adapter.mysqli', 'com://admin/default.database.adapter.mysqli');
-KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
-KService::setAlias('anahita:domain.space',          'com:base.domain.space');
-
-KLoader::loadIdentifier('com://admin/application.aliases');
 ?>

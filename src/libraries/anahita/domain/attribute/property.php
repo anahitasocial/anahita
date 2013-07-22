@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -145,17 +149,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 	{
 		return $this->_type;
 	}
-    
-    /**
-     * Set the attribute type
-     * 
-     * @return void
-     */
-    public function setType($type)
-    {
-        $this->_type = $type;
-    }
-    
+		
 	/**
 	 * Clones the default value or create a new one if a type is given
 	 * 
@@ -191,16 +185,6 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 	}	
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see AnDomainPropertyAbstract::isMaterializable()
-	 */
-	public function isMaterializable(array $data)
-	{
-	    $key  	 = $this->getColumn()->key();
-	    return array_key_exists($key, $data);
-	}
-	
-	/**
 	 * Materialize the database value into attribute values for an entity
 	 *
 	 * @param array                  $data   The raw data of the domain entity
@@ -212,7 +196,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 	{
 	    $key  	 = $this->getColumn()->key();
 	    $value	 = null;
-	    if ( $this->isMaterializable($data) )
+	    if ( array_key_exists($key, $data) )
 	    {	
 	        //only set the value type if it's not null
 	        if ( $data[$key] !== null ) 

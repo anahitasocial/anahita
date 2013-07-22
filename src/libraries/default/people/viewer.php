@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_People
@@ -48,8 +52,10 @@ class LibPeopleViewer extends KObject implements KServiceInstantiatable
                 $viewer->getRepository()->extract($viewer);
             }
             else
-            {   
-                $viewer = $container->get('repos://site/people.person')->find(array('userId'=>$id));                                
+            {
+                $container->get('repos://site/people.person')->getStore()->getCommandChain()->disable();
+                $viewer = $container->get('repos://site/people.person')->getQuery()->disableChain()->userId($id)->fetch();
+                $container->get('repos://site/people.person')->getStore()->getCommandChain()->enable();
                 
                 if ( !$viewer ) {
                     $viewer	 = $container->get('com://site/people.helper.person')->createFromUser( JFactory::getUser() );

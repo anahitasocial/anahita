@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -55,29 +59,29 @@ class AnDomainSpaceState extends KObject
 		//the entity itself throught its reset/delete/update API
 		$this->_machine = array(
 		//clean
-			$clean.'=>'.$deleted      => array('validateId',	'validateDelete'),
-			$clean.'=>'.$modified     => array('validateId',	'validateChange'),
+			$clean.'=>'.$deleted  => array('validateId',	'validateDelete'),
+			$clean.'=>'.$modified  => array('validateId',	'validateChange'),
 		//new
-			$new.'=>'.$clean          => array('resetrelationships'),
-			$new.'=>'.$deleted        => array('reset', false),
-			$new.'=>'.$modified       => array(false),						
+			$new.'=>'.$clean       => array('resetrelationships'),
+			$new.'=>'.$deleted     => array('reset', false),
+			$new.'=>'.$modified     => array(false),						
 		//modified
-			$modified.'=>'.$deleted   => array('validateDelete'),
+			$modified.'=>'.$deleted  => array('validateDelete'),
 			$modified.'=>'.$modified  => array('validateChange'),
 		//inserted
-			$inserted.'=>'.$deleted   => array('validateDelete'),
+			$inserted.'=>'.$deleted  => array('validateDelete'),
 			$inserted.'=>'.$modified  => array('validateChange'),			
 		//updated
-			$updated.'=>'.$deleted    => array('validateDelete'),
-			$updated.'=>'.$modified   => array('validateChange'),
+			$updated.'=>'.$deleted  => array('validateDelete'),
+			$updated.'=>'.$modified  => array('validateChange'),
 		//deleted
-			$deleted.'=>'.$clean 	  => array(false),
-			$deleted.'=>'.$modified   => array(false),
-//			$deleted.'=>'.$deleted 	  => array(false),	
+			$deleted.'=>'.$clean 	=> array(false),
+			$deleted.'=>'.$modified 	=> array(false),
+//			$deleted.'=>'.$deleted 	=> array(false),	
 		//destoryed
-			$destroyed.'=>'.$clean    => array(false),
-			$destroyed.'=>'.$modified => array(false),
-			$destroyed.'=>'.$deleted  => array(false)	
+			$destroyed.'=>'.$clean 		=> array(false),
+			$destroyed.'=>'.$modified 	=> array(false),
+			$destroyed.'=>'.$deleted 	=> array(false)	
 		);
 	}
 	
@@ -134,7 +138,7 @@ class AnDomainSpaceState extends KObject
 		{
 			if ( $child->eql($entity) ) continue;
 			
-			$relationships = $child->getEntityDescription()->getRelationships();
+			$relationships = $child->description()->getRelationships();
 			
 			foreach($relationships as $relationship) 
 			{
@@ -159,7 +163,7 @@ class AnDomainSpaceState extends KObject
 	 */
 	protected function _validateId($entity)
 	{
-	    return $entity->persisted();
+	    return !is_null($entity->getIdentityId());
 	}	
 		
 	/**
@@ -169,7 +173,7 @@ class AnDomainSpaceState extends KObject
 	 */
 	protected function _validateChange($entity)
 	{
-		return count($entity->getModifiedData()) > 0;		
+		return count($entity->modified()) > 0;
 	}
 
 	/**
@@ -179,7 +183,7 @@ class AnDomainSpaceState extends KObject
 	 */
 	protected function _validateDelete($entity)
 	{
-		$relationships = $entity->getEntityDescription()->getRelationships();
+		$relationships = $entity->description()->getRelationships();
 	
 		foreach($relationships as $name => $relationship) 
 		{

@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<module position="sidebar-b">
+<module position="sidebar-b" style="simple">
 <ul class="nav nav-pills nav-stacked">
 	<li class="nav-header">
        <?= @text('COM-PAGES-ORDERING') ?>
@@ -17,6 +17,8 @@
 	</li>
 </ul>
 </module>
+
+<?= @helper('ui.searchbox', @route('layout=list')) ?>
 
 <div class="an-entities-wrapper" id="an-entities-main-wrapper">
 <?= @template('list') ?>

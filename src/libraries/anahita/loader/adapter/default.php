@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Loader
@@ -51,17 +55,6 @@ class AnLoaderAdapterDefault extends KLoaderAdapterAbstract
 	{
 		$path = false;
         
-		/*
-		 * Exception rule for Exception classes
-		*
-		* Transform class to lower case to always load the exception class from the /exception/ folder.
-		*/
-		if($pos = strpos($classname, 'Exception'))
-		{
-		    $filename       = substr($classname, $pos + strlen('Exception'));
-		    $classname      = str_replace($filename, ucfirst(strtolower($filename)), $classname);		    
-		}
-				
 		$word  = strtolower(preg_replace('/(?<=\\w)([A-Z])/', ' \\1', $classname));
 		
 		$parts = explode(' ', $word);

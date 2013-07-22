@@ -1,0 +1,191 @@
+//INLINE EDIT
+form.inline-edit
+{
+    .form-actions
+    {
+        margin: 0;
+        border: 0;
+        background-color: transparent;
+        padding: 0 0 10px 0;
+    }	
+}
+
+.media-grid
+{
+    margin: 0 -10px;
+    .clearfix;
+    
+    > div 
+    {
+        float: left;
+        
+        a
+        {
+            display: block;
+        }
+        
+        img
+        {
+            margin: 10px;
+        }
+    }
+}
+
+.an-read-more,
+.an-read-less
+{
+    display: block;
+    font-size: @baseFontSize;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.an-meta
+{ 
+    font-size: @baseFontSize - 1;
+    line-height: @baseLineHeight + 2;
+}
+
+.uiActivityIndicator 
+{ 
+    background:url(images/spinner.gif) center center no-repeat; 
+}
+
+.defaultSkin .mceProgress 
+{ 
+    background:url(images/spinner.gif) center center no-repeat !important; 
+}
+
+ul.an-navigations
+{
+    li
+	{
+	   line-height: @baseLineHeight + 2;
+	       
+	   &.tabSelected a
+	   {
+	       text-decoration: underline;
+	   }
+    }  
+}
+
+.form-placeholder,
+.comment-overtext-box
+{
+    span
+    {
+        padding: 5px 10px;
+        display: block;
+        width: 100%;
+        font-size: @baseFontSize;
+    }
+    
+    .border-radius(3px);
+    margin: 10px 0;
+    
+    &:hover
+    {
+        cursor: text;
+    }	
+}
+
+.actions
+{
+    .form-actions;
+    padding: 10px;	
+}
+
+.well
+{
+    margin: 15px 0;	
+}
+
+form
+{
+    legend
+    {
+        margin-bottom: 20px;
+    }	
+}
+
+// vote button adjustment
+a.vote-action
+{
+    &.btn
+    {
+       margin-bottom: 1px;
+    }
+}
+
+.an-actions
+{
+    a
+    {
+        cursor: pointer; 
+    }	
+}
+
+// ACTIONS
+ul.an-actions
+{
+    list-style: none;
+    font-size: @baseFontSize + 1;
+    padding: 0;
+    margin: 0;
+    
+    li
+    { 
+        display: inline; 
+        margin-right: 10px;
+        
+        a
+        {
+            font-size: @baseFontSize;
+        }
+    }
+}
+
+//Scrollbar CSS
+.scrollbar 
+{
+    width: 21px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1011;
+    
+    .knob 
+    {
+	    background: @gray;
+	    width: 5px;
+	    height: 50px;
+	    margin: 0 10px;
+	    .border-radius(@baseBorderRadius);
+	    cursor: pointer;
+	    -moz-opacity: 0.75;
+	    opacity: 0.75;
+	    
+	    &:hover {
+		    -moz-opacity: 1;
+		    opacity: 1;    
+		}
+	}
+}
+
+.dropdown-menu
+{
+    a:hover
+    {
+        cursor: pointer;
+    }	
+}
+
+.modal
+{
+    .an-entity
+    {
+        margin: 0;
+    }   
+}

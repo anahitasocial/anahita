@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Anahita_Domain
@@ -30,11 +34,11 @@
 abstract class AnDomainDescriptionAbstract 
 {
     /**
-     * Return whether the entity is abstract or not
+     * The abstract identifier
      * 
-     * @var boolean
+     * @var string
      */
-    protected $_is_abstract = false;
+    protected $_abstract_identifier;
     
 	/**
 	 * Property Description
@@ -76,7 +80,7 @@ abstract class AnDomainDescriptionAbstract
 	 * 
 	 * @var array
 	 */
-	protected $_identifying_properties = array();
+	protected $_keys = array();
 	
 	/**
 	 * Entity identifier
@@ -98,7 +102,7 @@ abstract class AnDomainDescriptionAbstract
 	 * 
 	 * @var array
 	 */
-	protected $_class_alias = array();
+	protected $_class_alias;
 	
 	/**
 	 * Repository
@@ -130,73 +134,39 @@ abstract class AnDomainDescriptionAbstract
 				$this->setAlias($property, $alias);
 		
 		$this->_entity_identifier   = $config->entity_identifier;
-		$this->_repository          = $config->repository;
+		$this->_repository   = $config->repository;
+		$this->_inheritance_column  = $config->inheritance_column;
+		$this->_class_alias         = $config->class_alias;
 		
 		if ( !$this->_repository ) {
 		    throw new AnDomainDescriptionException("repository [AnDomainRepositoryAbstract] option is required");
-		}		
-		
-		if ( $config->inheritance ) 
-		{
-		    $this->_inheritance_column  = $config->inheritance->column;
-
-		    //an object can only be abstract if it's
-		    //supports single table inheritance		    
-		    $this->_is_abstract = $config->inheritance->abstract;
-		    if ( $config->inheritance->ignore ) 
-		    {
-		        $ignore = (array)$config->inheritance['ignore'];
-		        foreach($ignore as $class) {
-		            $this->_class_alias[$class] = '';
-		        }
-		    }
 		}
-		    
-		if ( is_string($this->_inheritance_column) ) {
-		    $this->_inheritance_column = $this->_repository->getResources()->getColumn($this->_inheritance_column);
-		}		
-				
-		$this->_entity_identifier       = $this->_repository->getIdentifier($config->entity_identifier);		
-
-		if ( !$config->identity_property )
-		{
-		    $columns = $this->_repository->getResources()->main()->getColumns();
-		    foreach($columns as $column)
-		    {
-		        if ( $column->primary ) {
-		            $config->identity_property = KInflector::variablize($column->name);
-		            break;
-		        }
-		    }
-		}
-				
-		$this->_identity_property       = $config->identity_property;
 		
-		//try to generate some of the propreties
-        //from the database columns
+		if ( is_string($config->inheritance_column) ) {
+		    $config->inheritance_column = $this->_repository->getResources()->getColumn($config->inheritance_column);		   
+		}
+
+		$this->_inheritance_column      = $config->inheritance_column;		
+		$this->_identity_property       = $config->identity_property;		
+		$this->_entity_identifier       = $this->_repository->getIdentifier($config->entity_identifier);
+		
+		//an object can only be abstract if it's 
+		//supports single table inheritance
+		if ( $this->_inheritance_column ) {
+		    $this->_abstract_identifier = $config->abstract_identifier;
+		}
+		
+		//if there's no propoerty set
+		//then set the properties automatically from the its columns
 		if ( $config->auto_generate )
 		{
-            //if auto generate default set the identity property with the primary key 
-            $config->append(array(
-                'attributes' => array(
-                    $this->_identity_property => array('key'=>true)
-                )
-            ));
-            
-		    $attributes = $config['attributes'];
-            
+		    $attributes = array();
+		    $attributes[$this->_identity_property] = array('key'=>true);		    
 		    $columns = $this->_repository->getResources()->main()->getColumns();
-            
-		    foreach($columns as $column) 
-            {
-                $name    = KInflector::variablize($column->name);
-                //merge the existing attributes
-		        $attributes[$name] = array_merge(
-                        array('required'=>$column->required, 'column'=>$column, 'type'=>$column->type, 'default'=>$column->default),
-                        isset($attributes[$name]) ? $attributes[$name] : array());
+		    foreach($columns as $column) {
+		        $attributes[KInflector::variablize($column->name)] = array('required'=>$column->required, 'column'=>$column, 'type'=>$column->type, 'default'=>$column->default);
 		    }
-		    
-            $config['attributes'] = $attributes;
+		    $config['attributes'] = $attributes;
 		}
 	}
 	
@@ -214,9 +184,9 @@ abstract class AnDomainDescriptionAbstract
    	    	   
 		$config->append(array(
 		    'auto_generate'            => false,
-			'identity_property'        => null,
+			'identity_property'        => 'id',
 			'aliases'	 		       => array()
-		));
+		));		
 	}	
 
 	/**
@@ -227,18 +197,8 @@ abstract class AnDomainDescriptionAbstract
 	 */
 	public function isAbstract()
 	{
-	    return $this->_is_abstract;
+	    return is_null($this->getInheritanceColumnValue()->getIdentifier());
 	}
-    
-    /**
-     * Return if the entity is inheritable
-     * 
-     * @return boolean
-     */
-    public function isInheritable()
-    {
-       return !is_null($this->getInheritanceColumnValue()); 
-    }
 	
 	/**
 	 * Set a property description
@@ -250,15 +210,6 @@ abstract class AnDomainDescriptionAbstract
 	public function setProperty($property)
 	{
 		$this->_properties[$property->getName()] = $property;
-        
-        //if property name is the same as the identity property
-        //then set the identity property
-        if ( is_string($this->_identity_property) && 
-             $property->getName() == $this->_identity_property ) 
-        {             
-             $this->setIdentityProperty($property);   
-        }
-		
 		return $this;
 	}
 	
@@ -337,35 +288,21 @@ abstract class AnDomainDescriptionAbstract
 	}
 
 	/**
-	 * Add a property that can uniquely identifies a property. This property is
-	 * set to required and its value be unique
+	 * Set a property as a key
 	 *
 	 * @param AnDomainPropertyKeyable $property The property to be used as the key
 	 * 
 	 * @return void
 	 */
-	public function addIdentifyingProperty($property)
+	public function setKey($property)
 	{
 		if ( $property->isSerializable() )
-			$this->_identifying_properties[$property->getName()] = $property;
+			$this->_keys[$property->getName()] = $property;
 			
 		//the proeprty as required
 		$property->setRequired(true);
 		
 		return $this;
-	}
-	
-	/**
-	 * Removes a proeprty as key
-	 *
-	 * @param AnDomainPropertyKeyable $property The property to be used as the key
-	 *
-	 * @return void
-	 */	
-	public function removeIdentifyingProperty($property)
-	{
-	    unset($this->_identifying_properties[$property->getName()]);
-	    return $this;
 	}
 	
 	/**
@@ -379,34 +316,13 @@ abstract class AnDomainDescriptionAbstract
 	}
 	
 	/**
-	 * Materialize an array of identifying values from a row data
-	 * 
-	 * @param array $data Row data
-	 * 
-	 * @return array
-	 */
-	public function getIdentifyingValues(array $data)
-	{
-	    $keys   = array();
-	    
-	    foreach($this->getIdentifyingProperties() as $key)
-	    {
-	        if ( $key->isMaterializable($data) ) {
-	            $keys[$key->getName()] = $key->materialize($data, null);
-	        }
-	    }
-	    
-	    return $keys;
-	}
-	
-	/**
 	 * Return an array of properties that uniquely define an entity
 	 * 
 	 * @return array
 	 */
-	public function getIdentifyingProperties()
-	{        
-		return $this->_identifying_properties;		
+	public function getKeys()
+	{
+		return $this->_keys;		
 	}
 	
 	/**
@@ -417,23 +333,18 @@ abstract class AnDomainDescriptionAbstract
 	 */
 	public function setIdentityProperty($property)
 	{
-	    $this->_identity_property = null;
-	    
 		if ( is_string($property) ) {
-			$property = $this->getProperty($property);			
+			$property = $this->getProperty($property);
+			if ( !$property )
+				return;
 		}
 		
-		if ( $property )
-		{
-		    //an identitying property can be used as 
-		    //an identifying property
-		    $this->addIdentifyingProperty($property);
-		    
-		    //don't allow direct write
-		    $property->setWriteAccess(AnDomain::ACCESS_PRIVATE);
-		    
-		    $this->_identity_property = $property;
-		}
+		$this->setKey($property);
+		
+		//don't allow direct write
+		$property->setWriteAccess(AnDomain::ACCESS_PRIVATE);
+		
+		$this->_identity_property = $property;
 				
 		return $this;
 	}
@@ -487,7 +398,8 @@ abstract class AnDomainDescriptionAbstract
 	        
 	        $identifier = clone $this->getEntityIdentifier();
 	        $identifier->application = null;
-	        $this->_inheritance_column_value = new AnDomainDescriptionInheritance($classes, $this->_is_abstract ? null : $identifier);	        
+	        $abstract   = (string) $identifier == $this->_abstract_identifier;
+	        $this->_inheritance_column_value = new AnDomainDescriptionInheritance($classes, $abstract ? null : $identifier);	        
 	    }
 	    
 	    return $this->_inheritance_column_value;

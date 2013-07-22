@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Lib_Base
@@ -98,11 +102,8 @@ class LibBaseViewJson extends LibBaseViewAbstract
             $this->output = $this->_getItem();
         }
       
-        //if null then return empty string
-        $this->output = pick($this->output, '');
-        
         if (!is_string($this->output)) {
-            $this->output = json_encode($this->_toArray(KConfig::unbox($this->output)));
+            $this->output = json_encode($this->output);
         }
 
         //Handle JSONP
@@ -127,30 +128,22 @@ class LibBaseViewJson extends LibBaseViewAbstract
             $name = KInflector::singularize($this->getName());
              
             foreach($items as $item) 
-            {               
-               $this->_state->setItem($item);
-               $name = null; 
-               $item = $this->_serializeToArray($item, $name);                              
-               
-               if ( count($commands = $this->getToolbarCommands('list')) ) {
-                    $item['commands'] = $commands;
-               }
-               
-               $data[] = $item; 
+            {                
+               $id = $item->getIdentityProperty();
+            
+               $data[] = array_merge(array(
+                      'href'    => (string) $this->getRoute('view='.$name.'&id='.$item->{$id}),
+                    ), $item->toSerializableArray());
             }
             
             $data = array(
-                'data' => $data                
-            );
-            
-            if ( is($items, 'AnDomainEntitysetAbstract') )
-            {
-                $data['pagination'] = array(
-                        'offset' => (int) $items->getOffset(),
-                        'limit'  => (int) $items->getLimit(),
-                        'total'  => (int) $items->getTotal(),                
-                );
-            }
+                $this->getName() => $data,
+                'pagination'     => array(
+                    'offset' => (int) $items->getOffset(),
+                    'limit'  => (int) $items->getLimit(),
+                    'total'  => (int) $items->getTotal(),                
+                )
+            );            
         }
         
         return $data;
@@ -163,90 +156,12 @@ class LibBaseViewJson extends LibBaseViewAbstract
      */
     protected function _getItem()
     {
-        $item = null;
-
-        if ( $item = $this->_state->getItem() ) 
-        {
-           $item     = $this->_serializeToArray($item);
-           $commands = $this->getToolbarCommands('toolbar');
-           if ( !empty($commands) ) {
-                $item['commands'] = $commands;
-           }
+        $data = array(); 
+        
+        if ( $item = $this->_state->getItem() ) {
+            $data = $item->toSerializableArray();   
         }
         
-        return $item;
+        return $data;
     }
-    
-    /**
-     * Serializes an item into an array
-     * 
-     * @return array
-     */
-    protected function _serializeToArray($item)
-    {
-        $result = array();
-        
-        if ( is($item, 'AnDomainBehaviorSerializable') )
-            $result = $item->toSerializableArray();
-        else {
-            $result = (array)$item;
-        }
-        
-        return $result;         
-    }
-    
-    /**
-     * Gets the toolbar commands. This method checks if the view state has 
-     * a toolbar 
-     * 
-     * @param string $name The name of the commands
-     * 
-     * @return array Return an array of commands
-     */
-    public function getToolbarCommands($name)
-    {
-        $result = array();
-        
-        if ( $this->_state->toolbar instanceof KControllerToolbarAbstract ) 
-        {
-            $this->_state->toolbar->reset();
-            $method  = 'add'.ucfirst($name).'Commands';
-            
-            if ( method_exists($this->_state->toolbar, $method) ) {
-                $this->_state->toolbar->$method();
-            }
-        
-            $commands = $this->_state->toolbar->getCommands();
-            
-            foreach($commands as $command) {
-                $result[] =$command->getname();
-            }
-        }
-        
-        return $result;
-    }
-    
-    /**
-     * Return an array representation of the data. It iteratates through the data if an element
-     * implements toSerializableArray it will call it
-     *
-     * @param array $data
-     */
-    protected function _toArray($data)
-    {
-        $array = array();
-        foreach ($data as $key => $value)
-        {
-            if ( is($value, 'AnDomainBehaviorSerializable') ) {
-                $array[$key] = $value->toSerializableArray();
-            }
-            elseif ( is_array($value) ) {
-                $array[$key] = $this->_toArray($value); 
-            }
-            else {
-                $array[$key] = $value;
-            }
-        }
-        return $array;
-    }    
 }

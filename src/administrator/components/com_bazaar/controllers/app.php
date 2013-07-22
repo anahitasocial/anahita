@@ -44,7 +44,7 @@ class ComBazaarControllerApp extends ComBaseControllerResource
                 
         $ret = $installer->install();
         
-        $context->response->setRedirect('option=com_bazaar&view=apps', $installer->getMessage(), $ret === false ? 'error' : null);
+        $this->setRedirect('view=apps', $installer->getMessage(), $ret === false ? 'error' : null);
     }
     
     /**

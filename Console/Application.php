@@ -5,8 +5,8 @@ namespace Console;
 require_once 'Console/class.php';
 require_once 'Console/Config.php';
 
-require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/interface.php';
-require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/config.php';
+require_once __DIR__.'/../src/libraries/koowa/config/interface.php';
+require_once __DIR__.'/../src/libraries/koowa/config/config.php';
 require_once __DIR__.'/../src/libraries/anahita/functions.php';
 
 use \Symfony\Component\Console\Command\Command;
@@ -73,12 +73,84 @@ class Application extends \Symfony\Component\Console\Application
     public function loadFramework()
     {        
         if ( !defined('JPATH_BASE') )
-        {
+        {                                    
             $_composerLoader = $GLOBALS['composerLoader'];
             define('JPATH_BASE', WWW_ROOT.'/administrator');
+            define('DS', DIRECTORY_SEPARATOR);
+            $parts = explode( DS, JPATH_BASE );
+            array_pop( $parts );
+            
+            //Defines
+            define( 'JPATH_ROOT',			implode( DS, $parts ) );
+            define( '_JEXEC', 1);
+            define( 'JPATH_SITE',			JPATH_ROOT );
+            define( 'JPATH_CONFIGURATION', 	JPATH_ROOT );
+            define( 'JPATH_ADMINISTRATOR', 	JPATH_ROOT.DS.'administrator' );
+            define( 'JPATH_XMLRPC', 		JPATH_ROOT.DS.'xmlrpc' );
+            define( 'JPATH_LIBRARIES',	 	JPATH_ROOT.DS.'libraries' );
+            define( 'JPATH_PLUGINS',		JPATH_ROOT.DS.'plugins'   );
+            define( 'JPATH_INSTALLATION',	JPATH_ROOT.DS.'installation' );
+            define( 'JPATH_THEMES',			JPATH_BASE.DS.'templates' );
+            define( 'JPATH_CACHE',			JPATH_BASE.DS.'cache' );
+
+            require_once( JPATH_LIBRARIES		.DS.'joomla'.DS.'import.php');
+            
+            // Pre-Load configuration
+            require_once( JPATH_CONFIGURATION	.DS.'configuration.php' );
+            
+            // System configuration
+            $CONFIG = new \JConfig();
+            
+            $config =& \JFactory::getConfig();
+            $registry = new \JRegistry('config');
+            $registry->loadObject($CONFIG);
+            $config = $registry;
+            
+            error_reporting( E_ALL );
+            ini_set( 'display_errors', 1 );            
+            
+            
+            /*
+             * Joomla! framework loading
+            */
+            
+            // Joomla! library imports                        
+            \jimport( 'joomla.application.menu' );
+            \jimport( 'joomla.user.user');
+            \jimport( 'joomla.environment.uri' );
+            \jimport( 'joomla.html.html' );
+            \jimport( 'joomla.html.parameter' );
+            \jimport( 'joomla.utilities.utility' );
+            \jimport( 'joomla.event.event');
+            \jimport( 'joomla.event.dispatcher');
+            \jimport( 'joomla.language.language');
+            \jimport( 'joomla.utilities.string' );
+            
             $_SERVER['HTTP_HOST'] = '';
-            require_once ( JPATH_BASE.'/includes/framework.php' );            
-            \KService::get('com://admin/application.dispatcher')->load();
+
+            require_once( JPATH_LIBRARIES.'/anahita/anahita.php');
+            
+            //instantiate anahita and nooku
+            \Anahita::getInstance(array(
+            'cache_prefix'  => uniqid(),
+            'cache_enabled' => false
+            ));
+            
+            \KServiceIdentifier::setApplication('site' , JPATH_SITE);
+            \KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
+            
+            \KLoader::addAdapter(new \AnLoaderAdapterComponent(array('basepath'=>JPATH_BASE)));
+            \KServiceIdentifier::addLocator( \KService::get('anahita:service.locator.component') );
+
+            \KLoader::addAdapter(new \KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
+            \KServiceIdentifier::addLocator(\KService::get('koowa:service.locator.plugin'));
+            \KService::setAlias('anahita:domain.space',          'com:base.domain.space');
+            \KService::set('koowa:database.adapter.mysqli', \KService::get('koowa:database.adapter.mysqli', array('connection'=>\JFactory::getDBO()->_resource, 'table_prefix'=>$CONFIG->dbprefix)));
+            \KService::set('anahita:domain.store.database', \KService::get('anahita:domain.store.database', array('adapter'=>\KService::get('koowa:database.adapter.mysqli'))));
+            \KService::set('plg:storage.default', new \KObject());
+                        
+            
+            
             global $composerLoader, $console;
             $composerLoader = $_composerLoader;
             $console = $this;

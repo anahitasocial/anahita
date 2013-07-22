@@ -1,7 +1,11 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: Anahita is free software. This version may have been modified pursuant
+ * to the GNU General Public License, and as distributed it includes or
+ * is derivative of works licensed under the GNU General Public License or
+ * other free or open source software licenses.
+ * See COPYRIGHT.php for copyright notices and details.
  * 
  * @category   Anahita
  * @package    Com_Photos
@@ -56,7 +60,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
         
       	$sets->order('updateTime', 'DESC');
         
-        if($this->photo_id && $this->getRequest()->get('layout') != 'selector')
+        if($this->photo_id && $this->layout != 'selector')
         	$sets->where('photos.id', '=', $this->photo_id);
 		
 		return $sets;
@@ -109,7 +113,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 	{	
 		$this->getItem()->addPhoto($this->photo);
 		
-		$context->response->setRedirect(JRoute::_($this->getItem()->getURL()));
+		$this->setRedirect($this->getItem()->getURL());
 		
 		return $this->getItem();
 	}
@@ -128,7 +132,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
         
 		if($lastPhoto)
 		{
-			$this->getResponse()->status = 205;
+			$context->status = 205;
 			return;
 		}
 		else
