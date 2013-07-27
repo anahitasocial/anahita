@@ -185,7 +185,7 @@ class KService implements KServiceInterface
     {
         settype($mixins, 'array');
 
-        $objIdentifier = self::getIdentfier($identifier);
+        $objIdentifier = self::getIdentifier($identifier);
         $strIdentifier = (string) $objIdentifier;
 
         if (!isset(self::$_mixins[$strIdentifier]) ) {
@@ -351,10 +351,8 @@ class KService implements KServiceInterface
         if(isset(self::$_mixins[$identifier]) && $instance instanceof KObject)
         {
             $mixins = self::$_mixins[$identifier];
-            foreach($mixins as $mixin)
-            {
-                $mixin = self::get($mixin, array('mixer'=> $instance));
-                $instance->mixin($mixin);
+            foreach($mixins as $mixin) {
+                $instance->mixin($mixin, self::getConfig($mixin));
             }
         }
     }

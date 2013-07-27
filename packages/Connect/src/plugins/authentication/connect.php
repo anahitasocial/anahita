@@ -56,7 +56,7 @@ class PlgAuthenticationConnect extends JPlugin
                 }
                 
                 //lets get the api
-                $api = KService::get('com://site/connect.helper.api')->getApi($oauth_handler);
+                $api = ComConnectHelperApi::getApi($oauth_handler);
                 $api->setToken($oauth_token, $oauth_secret);
                 //if we can get the logged in user then
                 //the user is authenticated

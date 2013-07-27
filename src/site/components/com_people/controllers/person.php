@@ -137,25 +137,39 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $person->reset();
         
+        $firsttime  = !(bool)$this->getService('repos://site/users')->getQuery(true)->fetchValue('id');
         $user       = clone JFactory::getUser();
         $authorize  =& JFactory::getACL();
-        
-        $user->set('id', 0);
+                
+        if ( $firsttime ) {
+            $datbase = $this->getService('koowa:database.adapter.mysqli');
+            //joomla legacy. don't know what happens if it's set to 1
+            $query = "INSERT INTO #__users VALUES (62, 'admin', 'admin', 'admin@example.com', '', 'Super Administrator', 0, 1, 25, '', '', '', '')";
+            $datbase->execute($query);
+            $query = "INSERT INTO #__core_acl_aro VALUES (10,'users','62',0,'Administrator',0)";
+            $datbase->execute($query);
+            $query = "INSERT INTO #__core_acl_groups_aro_map VALUES (25,'',10)";
+            $datbase->execute($query);
+            $user  =& JFactory::getUser();
+            $user  = JUser::getInstance(62);
+        } else {
+            $user->set('id', 0);
+            $user->set('usertype', 'Registered');
+            $user->set('gid', $authorize->get_group_id( '', 'Registered', 'ARO' ));
+            if ( !$this->activationRequired() )
+            {
+                jimport('joomla.user.helper');
+                $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()) );
+                $user->set('block', '1');
+            }
+        }
+
         $user->set('name', $person->name);
         $user->set('username', $person->username);
         $user->set('email', $person->email);
         $user->set('password', $person->getPassword(true));
-        $user->set('usertype', 'Registered');
-        $user->set('gid', $authorize->get_group_id( '', 'Registered', 'ARO' ));
         $date =& JFactory::getDate();
-        $user->set('registerDate', $date->toMySQL());
-        
-        if ( $this->activationRequired() ) 
-        {
-            jimport('joomla.user.helper');
-            $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()) );
-            $user->set('block', '1');            
-        }
+        $user->set('registerDate', $date->toMySQL());        
         
         $user->save();
         $person = $this->getRepository()->find(array('userId'=>$user->id));

@@ -394,7 +394,11 @@ class TemplatesView
 			<fieldset class="adminform">
 				<legend><?php echo JText::_( 'Parameters' ); ?></legend>
 				<?php $templatefile = DS.'templates'.DS.$template.DS.'params.ini';
-				echo is_writable($client->path.$templatefile) ? JText::sprintf('PARAMSWRITABLE', $templatefile):JText::sprintf('PARAMSUNWRITABLE', $templatefile); ?>
+				$file = $client->path.$templatefile;
+				if ( file_exists($file) && !is_writable($client->path.$templatefile) ) {
+                      print 'params.ini file is not wriable';
+                }  
+                ?>            
 				<table class="admintable">
 				<tr>
 					<td>

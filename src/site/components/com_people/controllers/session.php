@@ -203,7 +203,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     protected function _actionAdd(KCommandContext $context)
     {
         $data     = $context->data;
-        $url      = base64_decode($data->return);
         
         //if there's a sign up then 
         //change the redirect url

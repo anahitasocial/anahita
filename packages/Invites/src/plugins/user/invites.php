@@ -28,6 +28,21 @@ jimport('joomla.plugin.plugin');
  */
 class plgUserInvites extends JPlugin 
 {
+    
+    /**
+     * This method should handle any login logic and report back to the subject
+     *
+     * @access	public
+     * @param   array   holds the user data
+     * @param 	array   array holding options (remember, autoregister, group)
+     * @return	boolean	True on success
+     * @since	1.5
+     */
+    public function onLoginUser($user, $options = array())
+    {
+        KRequest::set('session.invite_token', null);
+    }
+    
 	/**
 	 * store user method
 	 *

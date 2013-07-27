@@ -41,8 +41,11 @@ class ComPeopleRouter extends ComActorsRouterDefault
     public function parse(&$segments)
     {
     	$query = array();
-    	
-    	if ( count($segments) && !is_numeric($segments[0]) && 
+    	$path  = implode('/', $segments);
+    	if ( $path == 'signup' ) {
+    	    return array('view'=>'person','layout'=>'add');
+    	}
+    	elseif ( count($segments) && !is_numeric($segments[0]) && 
     			!in_array(KInflector::singularize($segments[0]), array('person','session','token'))) 
     	{
     		$query['username'] = $segments[0];
@@ -55,8 +58,7 @@ class ComPeopleRouter extends ComActorsRouterDefault
     	}
     	
     	else 
-    	{
-    	    $path  = implode('/', $segments);
+    	{    	
     	    if ( preg_match('/tokens\/.*/',$path) ) 
     	    {
     	        $query['view'] = 'token';

@@ -308,6 +308,8 @@ function translate($texts, $force = true)
  * @param array  $arguments An array of arugments to be passed to method
  *
  * @return mixed
+ * 
+ * @deprecated Use invoke_callback instead
  */
 function call_object_method($object, $method, array $arguments)
 {
@@ -330,6 +332,60 @@ function call_object_method($object, $method, array $arguments)
             // Resort to using call_user_func_array for many segments
             $callback = $object ? array($object, $method) : $method;
         $result = call_user_func_array($callback, $arguments);
+    }
+    return $result;
+}
+
+/**
+ * Calls a valid callback. Optimized version of call_user_function
+ *
+ * @param callable $callback  A valid callback
+ * @param array    $arguments An array of arugments to be passed
+ *
+ * @return mixed
+ */
+function invoke_callback($callback, array $arguments = array())
+{
+    if ( is_array($callback) ) 
+    {
+        $arguments = array_merge($callback, $arguments);
+        if ( count($arguments) < 2 ) {
+            throw new \InvalidArgumentException('Not a valid callback');
+        }
+        $object = array_shift($arguments);
+        $method = array_shift($arguments);
+    }
+    elseif ( is_string($callback) || $callback instanceof \Closure )
+    {
+        $object = null;
+        $method = $callback;    
+    } else {
+        throw new \InvalidArgumentException('Not a valid callback');
+    }
+    
+    // Call_user_func_array is ~3 times slower than direct method calls.
+    switch(count($arguments))
+    {
+        case 0 :
+            $result = $object ? $object->$method() : $method();
+            break;
+        case 1 :
+            $result = $object ? $object->$method($arguments[0]) : $method($arguments[0]);
+            break;
+        case 2:
+            $result = $object ? $object->$method($arguments[0], $arguments[1]) : 
+                $method($arguments[0], $arguments[1]);
+            break;
+        case 3:
+            $result = $object ? $object->$method($arguments[0], $arguments[1], $arguments[2]) : $method($arguments[0], $arguments[1], $arguments[2]);
+            break;
+        case 4:
+                $result = $object ? $object->$method($arguments[0], $arguments[1], $arguments[2], $arguments[3]) : $method($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+                break;            
+        default:
+            // Resort to using call_user_func_array for many segments
+            $callback = $object ? array($object, $method) : $method;
+            $result   = call_user_func_array($callback, $arguments);
     }
     return $result;
 }

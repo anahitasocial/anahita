@@ -121,18 +121,4 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 		    $this->setMessage('COM-INVITES-EMAIL-INVITES-SENT','info', false);
 		}
 	}
-	
-	/**
-	 * Return the email adapter
-	 * 
-	 * @return mixed
-	 */	
-	public function getAdapter()
-	{
-		if ( !isset($this->_adapter) ) {
-			$this->_adapter = $this->getService('com://site/invites.adapter.email');			
-		}
-		
-		return $this->_adapter;
-	}	
 }

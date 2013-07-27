@@ -36,31 +36,32 @@ class ComInvitesControllerToolbarActorbar extends ComBaseControllerToolbarActorb
      * @return string
      */
     public function onBeforeControllerGet(KEvent $event)
-    {
+    {            
+        $this->setActor(get_viewer());
         
-       if ( $this->getController()->isOwnable() && !$this->getController()->actor )
-            $this->setActor(get_viewer());
-    	
     	parent::onBeforeControllerGet($event);
     
         $data 	= $event->data;
 		$viewer = get_viewer();
-		$actor	= pick($this->getController()->actor, $viewer);
+		$actor	= $viewer;
 		$layout = pick($this->getController()->layout, 'default');
 		$name	= $this->getController()->getIdentifier()->name;
-		
+		if ( $name == 'connection' ) {
+		    $name = $this->getController()->service; 
+		}    
+		    
 		$this->setTitle(JText::sprintf('COM-INVITES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
 			
 		//create navigations
 		$this->addNavigation('email',
 								JText::_('COM-INVITES-LINK-EMAIL'),
-								array('option'=>'com_invites', 'view'=>'email', 'oid'=>$actor->id),
+								'option=com_invites&view=email',
 								$name == 'email');
 
-		if ( $this->getService('com://site/invites.controller.facebook')->getAdapter() )
-		    $this->addNavigation('facebook', 
+		if ( ComConnectHelperApi::enabled('facebook') )
+            $this->addNavigation('facebook', 
 								JText::_('COM-INVITES-LINK-FACEBOOK'), 
-								array('option'=>'com_invites', 'view'=>'facebook','oid'=>$actor->id), 
+								'option=com_invites&view=connections&service=facebook', 
 								$name == 'facebook');
-    }    
+    }
 }

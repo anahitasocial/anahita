@@ -27,6 +27,23 @@
 class ComInvitesControllerToken extends ComBaseControllerService
 {	
     /**
+     * Initializes the options for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param 	object 	An optional KConfig object with configuration options.
+     * @return 	void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'toolbars' => null,
+        ));
+    
+        parent::_initialize($config);
+    }
+        
+    /**
      * Token Read
      * 
      * @param KCommandContext $context
@@ -37,23 +54,57 @@ class ComInvitesControllerToken extends ComBaseControllerService
         {
             $token = $this->getRepository()->find(array('value'=>$this->token));
             $this->getToolbar('menubar')->setTitle(null);
-            if ( $token && $this->viewer->guest()  ) {
+            
+            if ( !$token || !isset($token->inviter)) {
+                throw new LibBaseControllerExceptionNotFound('Token not found');
+            }
+                        
+            if ( $this->viewer->guest()  ) {
                 KRequest::set('session.invite_token', $token->value);                               
             }
-            elseif ( !$token ) {
-                throw new LibBaseControllerExceptionNotFound('Token not found');
-            } 
+
             $this->setItem($token);           
         }
         else
         {
-            $token = $this->getRepository()->getEntity()->reset();
+            $service = pick($this->service, 'facebook');                        
+            $token   = $this->getRepository()->getEntity()->reset();
             KRequest::set('session.invite_token', $token->value);
-            $this->getView()
-                ->url((string)JRoute::_($token->getURL()))
+            $this->getView()                
                 ->value($token->value);
         
             return $this->getView()->display();
+        }
+    }
+    
+    /**
+     * Store a token for a service
+     * 
+     * @param KCommandContext $context
+     * 
+     * @return void
+     */
+    protected function _actionAdd(KCommandContext $context)
+    {
+        $data  = $context->data;
+        $value = KRequest::get('session.invite_token', 'string', null);
+        
+        if( empty($data->value) || $value != $data->value) {
+            throw new LibBaseControllerExceptionBadRequest('Invalid token signature');
+        }
+        
+        KRequest::set('session.invite_token', null);
+        
+        $token = $this->getRepository()->getEntity(array(
+                'data'=> array(
+                        'value'	      => $value,
+                        'inviter'     => get_viewer(),
+                        'serviceName' => 'facebook'
+                )
+        ));
+        
+        if ( !$token->save() ) {
+            throw new LibBaseControllerExceptionInternal();
         }
     }
 }

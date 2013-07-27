@@ -76,7 +76,8 @@ class ComConnectControllerSetting extends ComBaseControllerResource
 	 */
 	protected function _actionGetaccesstoken(KCommandContext $context)
 	{
-		$this->getBehavior('oauthorizable')->execute('action.getaccesstoken', $context);
+	    $data = $context->data;
+		$this->getBehavior('oauthorizable')->execute('action.getaccesstoken', $context);				
 		$user	 = $this->getAPI()->getUser();
 		$session = $this->getService('repos://site/connect.session')->findOrAddNew(array('profileId'=>$user->id,'api'=>$this->getAPI()->getName()));
         $token   = $this->getAPI()->getToken();
@@ -87,7 +88,11 @@ class ComConnectControllerSetting extends ComBaseControllerResource
                 'owner'     => $this->actor
             ))->setToken($token)->save();
         }
-		$context->response->setRedirect( JRoute::_($this->actor->getURL().'&get=settings&edit=connect') );
+        $route = JRoute::_($this->actor->getURL().'&get=settings&edit=connect');
+        if ( $data->return ) {
+            $route = base64_decode($data->return);
+        }
+		$context->response->setRedirect($route);
 	}
 	
 	/**

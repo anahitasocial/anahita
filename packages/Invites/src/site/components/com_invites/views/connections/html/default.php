@@ -1,14 +1,18 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if ( !isset($service) ) : ?>
+<?= @template('add') ?>
+<?php return;?>
+<?php endif; ?>
 <script data-inline src="http://connect.facebook.net/en_US/all.js"></script>
 <script data-inline src="media://com_invites/js/facebook.js"></script>
 
 <div id="fb-root"></div>
 
-
 <?php
     $url = @route()->getURl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT );    
 ?>
+
 <script>
 
 <?php
@@ -17,21 +21,32 @@ $body    = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @na
 ?>
 
 new FacebookInvite({
-	'appId'    : <?= $adapter->getApp()->id?>,
+	'appId'    :  <?= $service->getAppID() ?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
-    'appURL'   : '<?= $url?>',
+    'appURL'   : '<?= 'http://anahitapolis.com'?>',
     'picture'  : '<?= $viewer->getPortraitURL() ?>',
 });
 
 </script>
 
-<?= @helper('ui.filterbox', @route('layout=list')) ?>
-
-	
+<a href="#" data-trigger="Invite" class="btn btn-primary">
+    + <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
+</a>  
+<style>
+#block {
+    display:none;
+}
+</style>
+<module position="sidebar-b" style="none"></module>	
 <div class="an-entities-wrapper">	
-	<?= @template('list') ?>
+<?php 
+$controller = @service('com://site/people.controller.person', array('request'=>array('view'=>'people')));                
+$controller->getState()->setList($items);
+?>
+<?= $controller->getView()->layout('list')->display() ?>
 </div>
+
 
 
 

@@ -577,6 +577,7 @@ tinymce.create('tinymce.util.Dispatcher', {
 
 			// Parse URL (Credits goes to Steave, http://blog.stevenlevithan.com/archives/parseuri)
 			u = u.replace(/@@/g, '(mce_at)'); // Zope 3 workaround, they use @@something
+			u = u.replace(/([^\/]\/)@/g, '$1(mce_bt)'); // Anahita workaround, they use /@something
 			u = /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*):?([^:@]*))?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/.exec(u);
 			each(["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"], function(v, i) {
 				var s = u[i];
@@ -584,6 +585,10 @@ tinymce.create('tinymce.util.Dispatcher', {
 				// Zope 3 workaround, they use @@something
 				if (s)
 					s = s.replace(/\(mce_at\)/g, '@@');
+				
+				// Anahita workaround, they use /@something
+				if (s)
+					s = s.replace(/\(mce_bt\)/g, '@');
 
 				t[v] = s;
 			});

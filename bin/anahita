@@ -29,7 +29,11 @@ define('WWW_ROOT', COMPOSER_ROOT.'/www');
 if ( !file_exists(WWW_ROOT) ) {
     mkdir(WWW_ROOT, 0755);
 }   
-
+chmod(WWW_ROOT, 0755);
+if ( !is_writable(WWW_ROOT) ) {
+    print('PHP does not have write access to '.WWW_ROOT.'. Makre sure the permissions are set correctly');
+    exit(1);
+}
 $composerLoader->add('', COMPOSER_ROOT.'/tasks');
 $composerLoader->add('Console\\', __DIR__.'/..');
 

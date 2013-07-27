@@ -82,10 +82,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         require_once 'less/compiler.php';
         
         $config = new KConfig($config);
-        
         $config->append(array(
             'parse_urls'   => true,
-            'style'        => $this->_params->cssStyle,
+            'style'        => pick($this->_params->cssStyle, 'style1'),
             'compile'      => pick((int)$this->_params->compilestyle,0),
             'compress'     => pick((int)$this->_params->compresstyle,0),
         ));
