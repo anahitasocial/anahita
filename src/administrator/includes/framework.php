@@ -17,9 +17,7 @@ defined( '_JEXEC' ) or define('_JEXEC', 1);
 
 define( 'DS', DIRECTORY_SEPARATOR );
 
-$parts = explode( DS, JPATH_BASE );
-array_pop( $parts );
-define( 'JPATH_ROOT',           implode( DS, $parts ) );
+define( 'JPATH_ROOT',           dirname(JPATH_BASE));
 
 define( 'JPATH_SITE',           JPATH_ROOT );
 define( 'JPATH_CONFIGURATION',  JPATH_ROOT );
