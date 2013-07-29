@@ -63,7 +63,7 @@ class plgSystemSubscriptions extends JPlugin
 			elseif ( $timeleft > 0 ) {
 				$message  = sprintf(JText::_('AN-SB-PACKAGE-ABOUT-TO-EXPIRE'),$subscription->package->name, $timeleft.' '.JText::_('Days'), $url);				
 			} elseif ( $timeleft < 0 ) {
-				$message  = sprintf(JText::_('AN-SB-PACKAGE-HAS-EXPIRED'),$subscription->subscription->package->name, $url);
+				$message  = sprintf(JText::_('AN-SB-PACKAGE-HAS-EXPIRED'),$subscription->->package->name, $url);
 			}
 			
 			if ( empty($message) )
