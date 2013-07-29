@@ -65,7 +65,7 @@ class AnFilePathfinder extends KObject
     {       
         parent::_initialize($config);
     }
-        
+    
     /**
      * Adds an array of search dirs to search for a path
      * 
@@ -82,10 +82,10 @@ class AnFilePathfinder extends KObject
         foreach ($dirs as $dir)
         {
             // no surrounding spaces allowed!
-            $dir = trim($dir);
+            $dir = $this->_unifyPath(trim($dir));
 
             // remove trailing slash
-            if (substr($dir, -1) == DIRECTORY_SEPARATOR) {
+            if (substr($dir, -1) == DS) {
                 $dir = substr_replace($dir, '', -1);
             }
 
@@ -129,6 +129,7 @@ class AnFilePathfinder extends KObject
      */
     protected function _findPath($path)
     {
+    	$path = $this->_unifyPath($path);
         $dirs = $this->_dirs;
         
         $file = null;
@@ -143,6 +144,17 @@ class AnFilePathfinder extends KObject
         
         return $file;       
     }    
+    
+    /**
+     * Unify directory separator to one used by environemnt OS
+     * 
+     * @param string $path
+     * @return string
+     */
+    protected function _unifyPath($path)
+    {
+    	return preg_replace('%[/\\\\]%', DS, $path);
+    }
 }
 
 ?>
