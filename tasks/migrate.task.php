@@ -317,18 +317,26 @@ $console
         }
     });
     
+if (strtoupper(substr(PHP_OS, 0, 3)) != 'WIN') 
+{
+
 $console
         ->register('db:dump')
         ->setDescription('Dump data to a sql file')
         ->setDefinition(array(
                 new InputArgument('file', InputArgument::OPTIONAL, 'The output file'),
+                new InputOption('replace-prefix', null, InputOption::VALUE_NONE)
         ))
-        ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+        ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {                
                 $file = $input->getArgument('file');
                 $console->loadFramework();
                 $config     = new Config(WWW_ROOT);
-                $config     = new \KConfig($config->getDatabaseInfo());                
-                $cmd    = "mysqldump --compact --add-drop-table --add-locks --skip-comments -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name}";
+                $config     = new \KConfig($config->getDatabaseInfo());                     
+                $cmd    = "mysqldump --add-drop-table --extended-insert=FALSE --add-locks --skip-comments -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name}";
+                if ( $input->getOption('replace-prefix') ) {
+                     $cmd .= " | sed -e 's/`{$config->prefix}/`#__/'";   
+                }          
+                
                 if  ($file)  {
                     @mkdir(dirname($file), 0755, true);
                     system("$cmd > $file");
@@ -336,7 +344,7 @@ $console
                     passthru($cmd);
                 }
         });
-        
+}        
 $console
             ->register('db:load')
             ->setDescription('Load data from a sql file into the database')
