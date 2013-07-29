@@ -180,8 +180,10 @@ class AnDomainQueryHelper
 			
 		if ( !$relationship->getParent() ) 
 			throw new AnDomainQueryException('Query Building Failed. Unkown Parent');				
-		elseif($relationship->isPolymorphic())
-			$columns = array(array_shift(array_keys($columns)) => array_shift(array_values($columns)));
+		elseif($relationship->isPolymorphic()) {
+			reset($columns);
+			$columns = array(key($columns) => current($columns));
+		}
 							
 		$parent 		= $relationship->getParentRepository();
 		$parent_query 	= $parent->getQuery();

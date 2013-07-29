@@ -112,7 +112,8 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
             ));
         }
         
-        return '<link rel="stylesheet" href="'.str_replace(JPATH_ROOT.DS,'base://',$css).'" type="text/css"/>';
+        $cssHref = str_replace('\\', '/', str_replace(JPATH_ROOT.DS, 'base://', $css));
+        return '<link rel="stylesheet" href="'.$cssHref.'" type="text/css" />';
     }
     
     /**

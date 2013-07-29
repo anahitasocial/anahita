@@ -47,11 +47,10 @@ class ComHtmlControllerContent extends ComBaseControllerResource
 
         $this->_base_path = $config->base_path;
 
-        if ( strpos($this->_base_path,'/') !== 0 )
-        {
+        if ( ! preg_match('%^(\w:)?[/\\\\]%', $this->_base_path)) {
             $this->_base_path = realpath(JPATH_ROOT.'/'.$this->_base_path);
         }
-                    
+        
         $this->setView($config->view);
         
         if ( $this->_base_path )

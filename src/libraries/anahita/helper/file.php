@@ -37,7 +37,7 @@ class AnHelperFile extends KObject
     {
         $from     = explode(DS, $from);
         $to       = explode(DS, $to);
-                
+         
         $relPath  = $to;
         
         foreach($from as $depth => $dir) 
@@ -46,7 +46,7 @@ class AnHelperFile extends KObject
             if($dir === $to[$depth]) {
                 // ignore this directory
                 array_shift($relPath);
-            } else {;
+            } else {
                 // get number of remaining dirs to $from
                 $remaining = count($from) - ($depth - 1);               
                 if($remaining > 1) {

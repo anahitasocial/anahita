@@ -49,7 +49,7 @@ class ComBaseControllerToolbarComment extends ComBaseControllerToolbarDefault
 			
 			$this->addCommand('editcomment', JText::_('LIB-AN-ACTION-EDIT'))
 			    ->getCommand('editcomment')
-			    ->href($url)
+			    ->href(JRoute::_($url))
 				->setAttribute('data-trigger','Request')
 				->setAttribute('data-request-options',"{replace:'!.an-comment'}");
 		}
@@ -58,7 +58,7 @@ class ComBaseControllerToolbarComment extends ComBaseControllerToolbarDefault
 		{
 			$this->addCommand('deletecomment', JText::_('LIB-AN-ACTION-DELETE'))
 			    ->getCommand('deletecomment')
-			    ->href($comment->getURL().'&_action=deletecomment')
+			    ->href(JRoute::_($comment->getURL().'&_action=deletecomment'))
 				->setAttribute('data-trigger','Remove');
 		}
 	}	
