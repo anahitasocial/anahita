@@ -46,32 +46,20 @@ class ComHtmlControllerContent extends ComBaseControllerResource
         parent::__construct($config);
 
         $this->_base_path = $config->base_path;
-
-        if ( ! preg_match('%^(\w:)?[/\\\\]%', $this->_base_path)) {
-            $this->_base_path = realpath(JPATH_ROOT.'/'.$this->_base_path);
-        }
         
         $this->setView($config->view);
+        $this->getService()->set('com:html.controller', $this);
         
         if ( $this->_base_path )
         {
-            $this->getService()->set('com:html.controller', $this);
-            $this->getService('koowa:loader')->loadFile($this->_base_path.'/_bootstrap.php');
+            if ( ! preg_match('%^(\w:)?[/\\\\]%', $this->_base_path)) {
+                $this->_base_path = realpath(JPATH_ROOT.'/'.$this->_base_path);
+            }
+                        
             $this->getService()->setConfig($this->_view, array(
                     'template_paths' => array($this->_base_path)
             ));            
         }
-    }
-    
-    /**
-     * Checkes the path
-     * 
-     * @return boolean
-     */
-    public function canGet()
-    {
-        $found = (bool)$this->getView()->getTemplate()->findTemplate($this->getRequest()->get('layout','default'));
-        return $found;
     }
         
     /**
@@ -85,12 +73,11 @@ class ComHtmlControllerContent extends ComBaseControllerResource
     protected function _initialize(KConfig $config)
     {        
         $base_path = get_config_value('com_html.content_path', 
-                JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/html'
+                JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/content'
                 );
         
         $config->append(array(
-            'request'   => array('layout'=>'default'),
-            'base_path' => $base_path         
+            'request'   => array('layout'=>'default')              
         ));
         
         parent::_initialize($config);
