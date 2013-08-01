@@ -1,0 +1,102 @@
+.icon-americanexpress, 
+.icon-discover, 
+.icon-mastercard, 
+.icon-paypal, 
+.icon-visa
+{
+	background: url("images/icon-payments.png") no-repeat;
+    padding: 6px 16px;
+    margin: 4px;
+}
+
+.icon-americanexpress
+{
+	background-position: -144px 0;
+}
+
+.icon-discover
+{
+	background-position: -107px 0;
+}
+
+.icon-mastercard
+{
+	background-position: -71px 0;
+}
+
+.icon-paypal
+{
+	background-position: -35px 0;
+}
+
+.icon-visa
+{
+	background-position: 0 0;
+}
+
+#sub-tos
+{
+	.entity-description
+	{
+		margin: 10px 0;
+		padding: 10px;
+		height: 320px;
+		overflow: auto;
+		.border-radius(@baseBorderRadius);
+	}
+}
+
+#payment-selector
+{
+	padding: 10px;
+}
+
+#payment-methods-container
+{
+	.paypal-express
+	{
+		.icon-paypal;
+		width: 100px;
+	}
+	
+	.icon-creditcards
+	{	
+		.clearfix;
+		margin: 20px 0;
+		width: 100%;
+		
+		.visa
+		{
+			.icon-visa;
+		}
+		
+		.mastercard
+		{
+			.icon-mastercard;
+		}
+		
+		.american-express
+		{
+			.icon-americanexpress;
+		}
+		
+		.discover
+		{
+			.icon-discover;
+		}
+	}
+}
+
+ol.sub-steps
+{
+	margin: 20px 0;
+	.clearfix;
+	
+	> li
+	{
+		display: inline;
+		padding: 5px 10px;
+		margin-right: 10px;
+		.border-radius(@baseBorderRadius);
+	}
+}

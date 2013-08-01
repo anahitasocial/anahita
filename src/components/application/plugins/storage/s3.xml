@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="storage" method="upgrade">
+    <name>Storage - Amazon S3</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>rmd Studio/Peerglobe Technology</copyright>
+    <license>http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL</license>
+    <authoremai />
+    <authorurl>Anahitapolis.com</authorurl>
+   	<version>##BUILD_VERSION##</version>
+	<release>##BUILD_RELEASE##</release>
+    <description>Amazon S3 Storage</description>
+    <params>
+    		<param type="text" name="folder" label="The folder to store the data" default="assets" />
+		    <param name="bucket" type="text" label="Bucket" description="" size="40"/>
+		    <param name="access_key" type="text" label="Access  Key" description="" size="40"/>
+			<param name="secret_key" type="text" label="Secret Key" description="" size="60"/>				
+    </params>
+    <files>
+        <filename plugin="s3">s3.php</filename>
+        <filename>s3lib.php</filename>        
+    </files>
+</install>

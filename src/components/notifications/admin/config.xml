@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>	
+		<param menu="hide" type="list" name="use_cron" label="Use Cron">
+			<option value="0">No</option>
+			<option value="1">Yes</option>
+		</param>
+		<param menu="hide" type="custom" label="Cron Path">
+		<![CDATA[
+			<?=JPATH_SITE?>/components/com_notifications/process.php <br/>
+		]]>
+		</param>
+		<param menu="hide" type="custom" label="Cron URL">
+		<![CDATA[
+			<?=str_replace('administrator/','',JURI::base())?>components/com_notifications/process.php <br/>
+		]]>
+		</param>		
+		 		
+	</params>
+</config>

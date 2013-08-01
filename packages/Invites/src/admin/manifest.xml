@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="##BUILD_PLATFORM_VERSION##" enforce="1" social_app="1" method="upgrade">
+    <name>Invites</name>
+    <author>Anahita Social Networking Project</author>
+    <copyright>(C) 2013 rmdStudio, Peerglobe Technology</copyright>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.Anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <release>##BUILD_RELEASE##</release>
+    <description>Enables people to invite their friends and followers from other social networks or find the ones who have already joined this social network.</description>
+    <install>
+        <sql>
+            <file charset="utf8" driver="mysql">install/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file charset="utf8" driver="mysql">install/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <installfile>install/install.php</installfile>
+    <uninstallfile>install/uninstall.php</uninstallfile>
+    <administration>
+    <menu>Invites</menu>
+    <files folder="administrator/components/com_invites">
+        <folder>install</folder>
+        <file>config.xml</file>
+        <file>invite.php</file>
+    </files>
+    </administration> 
+    <languages folder="site/language">
+        <language tag="en-GB">en-GB.com_invites.ini</language>
+    </languages>
+    <media folder="media" destination="com_invites">
+        <folder>js</folder>
+    </media>
+    <bundles>
+        <bundle>plugins/system</bundle>
+        <bundle>plugins/user</bundle>
+    </bundles>
+    <files folder="site/components/com_invites">
+        <folder>controllers</folder>
+        <folder>domains</folder>
+        <folder>views</folder>
+        <file>invites.php</file>
+        <file>delegate.php</file>
+        <file>router.php</file>
+    </files>
+</install>

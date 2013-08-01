@@ -1,0 +1,48 @@
+ul.autocompleter-choices
+{
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	text-align: left;
+	 #font > .shorthand(normal, @baseFontSize + 4, 20px);
+	z-index: 50;
+//	background-color: @grayLight;
+//	color: @white;
+//	border: 1px solid @grayLighter;
+	.border-radius(3px);
+	
+	li
+	{
+		position: relative;
+		margin: -2px 0 0 0;
+		padding: 10px;
+		display: block;
+		float: none !important; 
+		cursor: pointer;
+		font-weight: normal;
+		white-space: nowrap;
+		font-size: @baseFontSize;
+		line-height: @baseLineHeight;
+		
+		&.autocompleter-selected
+		{
+//			background-color: @grayDark;
+//			color: @white;
+			
+			span.autocompleter-queried
+			{
+//				color: @linkColor;
+			}
+		}
+	}
+	
+	span.autocompleter-queried
+	{
+		display: inline;
+		float: none;
+		font-weight: bold;
+		margin: 0;
+		padding: 0;
+	}
+}

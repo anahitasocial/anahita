@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>
+		<param name="spacer" type="spacer" default="&lt;h3&gt;Facebook Connect&lt;h3/&gt;&lt;hr/&gt;"  description="" />
+		
+		<param menu="hide"  name="facebook_enable" type="radio" default="0" label="Enable Service" description="Enable Facebook Service">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+  		</param>		
+		<param name="facebook_key" size="60" type="text" default="" label="Consumer Key"  description="Facebook Client Id" />
+		<param name="facebook_secret" size="60"  type="text" default="" label="Consumer Secret"  description="Facebook Client Secret" />
+		
+		<param name="spacer" type="spacer" default=" " description="" />
+		<param name="spacer" type="spacer" default="&lt;h3&gt;Twitter Connect &lt;h3/&gt;&lt;hr/&gt;" description="" />
+		
+		<param menu="hide"  name="twitter_enable" type="radio" default="0" label="Enable Service" description="Enable Twitter Service">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+  		</param>		
+		<param name="twitter_key" size="60" type="text" default="" label="Consumer Key"  description="Twitter Client Id" />
+		<param name="twitter_secret" size="60"  type="text" default="" label="Consumer Secret"  description="Twitter Client Secret" />
+		
+		<param name="spacer" type="spacer" default=" " description="" />
+		<param name="spacer" type="spacer" default="&lt;h3&gt;LinkedIn Connect &lt;h3/&gt;&lt;hr/&gt;" description="" />
+						
+		<param menu="hide"  name="linkedin_enable" type="radio" default="0" label="Enable Service" description="Enable LinkedIn Service">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+  		</param>  		
+		<param name="linkedin_key" size="60" type="text" default="" label="Consumer Key"  description="LinkedIn Client Id" />
+		<param name="linkedin_secret" size="60"  type="text" default="" label="Consumer Secret"  description="LinkedIn Client Secret" />
+		
+		<param name="spacer" type="spacer" default=" " description="" />
+		
+		<!-- 		
+		<param menu="hide"  name="yahoo_enable" type="radio" default="0" label="Enable Service" description="Enable Yahoo Service">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+  		</param>		
+		<param name="yahoo_key" size="60" type="text" default="" label="Consumer Key"  description="Yahoo Client Id" />
+		<param name="yahoo_secret" size="60"  type="text" default="" label="Consumer Secret"  description="Yahoo Client Secret" />					
+		 
+		 <param name="spacer" type="spacer" default="&lt;h3&gt;Google+ Connect &lt;h3/&gt;&lt;hr/&gt;" description="" />
+		<param menu="hide"  name="google_enable" type="radio" default="0" label="Enable Service" description="Enable Google Service">
+			<option value="0">NO</option>
+			<option value="1">YES</option>
+  		</param>		
+		<param name="google_key" size="60" type="text" default="" label="Google Consumer Key"  description="Google Client Id" />
+		<param name="google_secret" size="60"  type="text" default="" label="Google Consumer Secret"  description="Google Client Secret" />					
+		-->
+
+	</params>
+</config>

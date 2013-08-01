@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<params>	
+					
+		<param name="content_path" size="60" type="text" default="" label="Content Path"  description="Content Path">
+		
+		</param>
+		
+		
+		 		
+	</params>      
+</config>

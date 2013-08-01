@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>  
+<install type="component" version="##BUILD_PLATFORM_VERSION##" enforce="1" social_app="1" method="upgrade">
+    <name>Topics</name>
+    <author>Anahita Social Networking Project</author>
+    <copyright>(C) 2012 rmdStudio, Peerglobe Technology</copyright>
+    <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>http://www.Anahitapolis.com</authorurl>
+    <version>##BUILD_VERSION##</version>
+    <creationDate>##BUILD_DATE##</creationDate>    
+    <release>##BUILD_RELEASE##</release>
+    <description>Topics app for Anahita</description>
+    <administration>
+        <files folder="administrator/components/com_topics">
+            <folder>install</folder> 
+        </files>
+    </administration>
+    <install>
+        <sql>
+            <file charset="utf8" driver="mysql">install/install.mysql.utf8.sql</file>
+        </sql>
+    </install>
+    <uninstall>
+        <sql>
+            <file charset="utf8" driver="mysql">install/uninstall.mysql.utf8.sql</file>
+        </sql>
+    </uninstall>
+    <installfile>install/install.php</installfile>
+    <uninstallfile>install/uninstall.php</uninstallfile>
+    <languages folder="site/language">
+        <language tag="en-GB">en-GB.com_topics.ini</language>
+    </languages>
+    <files folder="site/components/com_topics">
+        <folder>controllers</folder>
+        <folder>domains</folder>        
+        <folder>templates</folder>
+        <folder>views</folder>
+        <file>delegate.php</file>
+        <file>topics.php</file>
+        <file>router.php</file>
+    </files>
+</install>

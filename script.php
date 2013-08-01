@@ -83,11 +83,12 @@ $copy_r('src/media/lib_anahita',$anahita_base.'/components/application/site/reso
 $copy_r('src/site/templates/base'  ,$anahita_base.'/components/application/site/theme');
 $copy_r('src/site/templates/shiraz',$anahita_base.'/components/shiraz/site/theme');
 $copy_r('src/site/language/en-GB/en-GB.tpl_shiraz.ini',$anahita_base.'/components/shiraz/site/resources/language');
-$copy_r('src/site/language/en-GB/en-GB.tpl_shiraz.ini',$anahita_base.'/components/shiraz/site/resources/language');
+$copy_r('src/site/language/en-GB/en-GB.lib_anahita.ini',$anahita_base.'/components/application/site/resources/language');
+$copy_r('src/site/language/en-GB/en-GB.lib_anahita.js',$anahita_base.'/components/application/site/resources/language');
 $copy_r('src/plugins',$anahita_base.'/components/application/plugins');
 $copy_r('src/site/modules/mod_base',$anahita_base.'/components/base/site/modules/base');
 $copy_r('src/site/modules/mod_menu',$anahita_base.'/components/menu/site/modules/menu');
-$copy_r('src/site/modules/mod_menu',$anahita_base.'/components/search/site/modules/search');
+$copy_r('src/site/modules/mod_search',$anahita_base.'/components/search/site/modules/search');
 $copy_r('src/site/modules/mod_viewer',$anahita_base.'/components/people/site/modules/viewer');
 
 //$comp_path = '/Users/asanieyan/Sites/anahitapolis/master/anahita_src/packages2';
