@@ -110,3 +110,6 @@ $componets = explode(" ",'photos pages topics todos html autofollow connect grou
 foreach($componets as $component) {
     $copy_component($component);
 }
+
+exec('patch -p1 < patchfile.patch');
+
