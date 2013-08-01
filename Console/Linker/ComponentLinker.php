@@ -80,7 +80,7 @@ class ComponentLinker extends AbstractLinker
                 $target = '';
             }
             $source   = $component_path.'/'.$app.'/resources/media';
-            $target   = $target.'/media/'.$com_name;            
+            $target   = $target.'/media/'.str_replace('com_','', $com_name);            
             if ( file_exists($source) )
             {
                 $this->addLink($source, $target);                
