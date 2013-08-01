@@ -62,28 +62,20 @@ class PathLinker
      * Symlinks
      */
     public function symlink()
-    {
+    {        
         //check if the parent directory exits
         $path = dirname($this->_target);
         if ( !file_exists($path) ) {
             mkdir($path, 0755, true);
         }
-        if ( file_exists($this->_target) )
-        {
-            if ( is_link($this->_target) ) {
-
-            }
-            elseif (is_dir($this->_target)) {
-                exec("rm -rf {$this->_target}");
-            }
+        elseif ( is_link($this->_target) ) {
+            unlink($this->_target);
         }
-        print $this->_src."\n";
-        //print $this->_target."\n";
-        print find_relative_path($this->_target, $this->_src)."\n";        
-        print "------------------------------------------------------------\n";
-        die;
-        symlink(find_relative_path($this->_target, $this->_src), $this->_target);
-        die;
+        elseif (is_dir($this->_target)) {
+            exec("rm -rf {$this->_target}");
+        }
+        
+        @symlink($this->_src, $this->_target);        
     }
 
     /**

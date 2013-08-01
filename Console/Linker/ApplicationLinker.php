@@ -104,6 +104,15 @@ class ApplicationLinker extends AbstractLinker
      */
     public function link()
     {
+        $files     = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->getRoot()));
+        //deleting deadlinks
+        foreach($files as $file)
+        {
+            if ( is_link($file) && !file_exists(realpath($file))) {
+                unlink($file);
+            }
+        }
+                
         @mkdir($this->getRoot().'/tmp',   0755);
         @mkdir($this->getRoot().'/log',   0755);
         @mkdir($this->getRoot().'/site/cache', 0755, true);
