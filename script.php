@@ -117,4 +117,5 @@ foreach($componets as $component) {
 }
 
 //exec('patch --dry-run -p1 < patchfile.patch');
+//patch -p1 < patchfile.patch
 
