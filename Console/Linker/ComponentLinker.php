@@ -45,8 +45,8 @@ class ComponentLinker extends AbstractLinker
                 $target = 'administrator';
             }
             $paths = Helper::getSymlinkPaths($component_path.'/'.$app.'/resources/language',array(),array(
-                    '#^([a-zA-Z-]+)\.ini#' => $target."/language/$1/$1.$com_name.ini",
-                    '#^([a-zA-Z-]+)\.(\w+)\.ini#' => $target."/language/$1/$1.$2.ini"
+                    '#^([a-zA-Z-]+)\.(ini|js)#' => $target."/language/$1/$1.$com_name.$2",
+                    '#^([a-zA-Z-]+)\.(\w+)\.(ini|js)#' => $target."/language/$1/$1.$2.$3"
             ));
             foreach($paths as $source => $target)
             {
