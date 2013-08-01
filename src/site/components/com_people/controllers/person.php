@@ -142,6 +142,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $authorize  =& JFactory::getACL();
                 
         if ( $firsttime ) {
+            
+            //for now lets make the com_notes assigable to always
+            $component = $this->getService('repos://site/components')
+                    ->find(array('component'=>'com_notes'));
+            if ( $component ) {
+                $component
+                    ->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
+            }
             $datbase = $this->getService('koowa:database.adapter.mysqli');
             //joomla legacy. don't know what happens if it's set to 1
             $query = "INSERT INTO #__users VALUES (62, 'admin', 'admin', 'admin@example.com', '', 'Super Administrator', 0, 1, 25, '', '', '', '')";

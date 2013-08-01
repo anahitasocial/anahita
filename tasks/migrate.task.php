@@ -61,9 +61,6 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
                 $this->_migrators[] = $migrator;
             }
         }
-        
-        $this->_event_dispatcher
-            ->addEventListener('onAfterSchemaMigration',    $this);
     }
     
     public function setOutput($output)
@@ -210,6 +207,7 @@ $console
 ->setDescription('Run the database migration for a component')
 ->setDefinition(array(
         new InputArgument('component', InputArgument::IS_ARRAY, 'Name of the components'),
+        new InputOption('create-schema','c', InputOption::VALUE_NONE, 'After running the migration, create the schema for the component'),
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
     
@@ -226,8 +224,13 @@ $console
         $components = $input->getArgument('component'); 
     }
     
-    $migrators  = new Migrators($console, $components);        
-
+    $migrators  = new Migrators($console, $components);
+    
+    if ( $input->getOption('create-schema') ) 
+    {
+        $migrators->getEventDispatcher()
+        ->addEventListener('onAfterSchemaMigration',    $migrators);        
+    }        
     $migrators->setOutput($output);
     foreach($migrators as $migrator) {
         $migrator->up();
@@ -314,17 +317,26 @@ $console
         }
     });
     
+if (strtoupper(substr(PHP_OS, 0, 3)) != 'WIN') 
+{
+
 $console
         ->register('db:dump')
         ->setDescription('Dump data to a sql file')
         ->setDefinition(array(
                 new InputArgument('file', InputArgument::OPTIONAL, 'The output file'),
+                new InputOption('replace-prefix', null, InputOption::VALUE_NONE)
         ))
-        ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+        ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {                
                 $file = $input->getArgument('file');
                 $console->loadFramework();
-                $config = new \JConfig();
-                $cmd    = "mysqldump -u {$config->user} -p{$config->password} -h{$config->host} {$config->db}";
+                $config     = new Config(WWW_ROOT);
+                $config     = new \KConfig($config->getDatabaseInfo());                     
+                $cmd    = "mysqldump --add-drop-table --extended-insert=FALSE --add-locks --skip-comments -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name}";
+                if ( $input->getOption('replace-prefix') ) {
+                     $cmd .= " | sed -e 's/`{$config->prefix}/`#__/'";   
+                }          
+                
                 if  ($file)  {
                     @mkdir(dirname($file), 0755, true);
                     system("$cmd > $file");
@@ -332,33 +344,34 @@ $console
                     passthru($cmd);
                 }
         });
-        
+}        
 $console
             ->register('db:load')
             ->setDescription('Load data from a sql file into the database')
             ->setDefinition(array(
                     new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
-                    new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
+                    //new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
             ))
             ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {                
-                $file = $input->getArgument('file');
+                $file = realpath($input->getArgument('file'));
                 if ( !file_exists($file) ) {
                     throw new \Exception("File '$file' doesn't exists");
                 }
+                require_once 'Console/Installer/Helper.php';
                 $console->loadFramework();
-                if ( $input->getOption('drop-tables') ) 
-                {
-                    $db = \KService::get('koowa:database.adapter.mysqli');
-                    $tables = $db->select('SHOW TABLES', \KDatabase::FETCH_FIELD_LIST);
-                    $output->writeLn('Dropping tables...');
-                    foreach($tables as $table) {
-                        $db->execute('DROP TABLE '.$table);
-                    }                    
+                $config = new Config(WWW_ROOT);
+                $database = $config->getDatabaseInfo();
+                $errors   = array();
+                $db       = \JInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],true);
+                if ( $db instanceof \JException ) {
+                    $output->writeLn('<error>'.$db->toString().'</error>');
+                    exit(1);
                 }
-                $config     = new Config(WWW_ROOT);
-                $config     = new \KConfig($config->getDatabaseInfo());
-                $output->writeLn('Loading data. This may take a while...');
-                system("mysql -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name} < $file");                
+                if ( true || $input->getOption('drop-tables') )  {
+                    \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);                                        
+                }
+                $output->writeLn('<info>Loading data. This may take a while...</info>');
+                \JInstallationHelper::populateDatabase($db, $file, $errors);
             });
 
 ?>

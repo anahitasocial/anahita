@@ -58,27 +58,11 @@ class ComBaseTemplateHelperDate extends LibBaseTemplateHelperDate
 			}
 		}
 		
-		if ( is_object($date) && $date->inherits('KDate') ) 
-		{
-			//@TODO apply offset
-			return $this->humanize($date, array('format'=>$format, 'relative'=>$relative, 'offset'=>$offset));
+		if ( ! (is_object($date) && $date->inherits('KDate'))) {
+			$date = new KDate(new KConfig(array('date' => $date)));
 		}
 		
-		if ( ! $format ) 
-		{
-			$format = JText::_('DATE_FORMAT_LC1');
-		}
-
-		if(is_null($offset))
-		{
-			$config = JFactory::getConfig();
-			$offset = $config->getValue('config.offset');
-		}
-
-		$instance = new KDate(array('date'=>$date));
-		$instance->setOffset($offset);
-
-		return $instance->toFormat($format);
+		return $this->humanize($date, array('format' => $format, 'relative' => $relative, 'offset' => $offset));
 	}
 }
 ?>

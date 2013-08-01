@@ -115,6 +115,9 @@ class JAuthentication extends JObservable
 			$className = 'plg'.$plugin->type.$plugin->name;
 			if (class_exists( $className )) {
 				$plugin = new $className($this, (array)$plugin);
+			} else {
+			    //the plugin class doesn't exists then skip
+			    continue;
 			}
 
 			// Try to authenticate

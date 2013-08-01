@@ -39,6 +39,7 @@ class Create extends Command
         $this->setName('site:init')
         ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
         ->setDefinition(array(
+                new InputOption('database-dump',null, InputOption::VALUE_OPTIONAL,'Use a database dump to initilaize the data'),
                 new InputOption('database-name',null, InputOption::VALUE_REQUIRED,'Database name'),
                 new InputOption('database-user',null, InputOption::VALUE_REQUIRED,'Database username'),
                 new InputOption('database-password',null, InputOption::VALUE_REQUIRED,'Database password'),
@@ -132,7 +133,11 @@ class Create extends Command
             exit(1);                     
         }
 
-        $db_exists = \JInstallationHelper::databaseExists($db, $database['name']);                                    
+        $db_exists = \JInstallationHelper::databaseExists($db, $database['name']);
+        $dump_file = null;                                            
+        if ( $input->getOption('database-dump') ) {
+            $dump_file = realpath($input->getOption('database-dump'));            
+        }
         
         if ( $db_exists && $input->getOption('drop-database') )
         {
@@ -145,43 +150,26 @@ class Create extends Command
         {
             $output->writeLn('<info>Creating new database...</info>');            
             \JInstallationHelper::createDatabase($db, $database['name'],true);
-            $db->select($database['name']);
-        
-            $sql_files = array("schema.sql","data.sql");
+            $db->select($database['name']);            
+            $sql_files = $dump_file ? array($dump_file) : 
+                    array_map(function($file){
+                        return $file = ANAHITA_ROOT."/vendor/joomla/installation/sql/$file";
+                    }, array("schema.sql","data.sql"));
+            ;
             $output->writeLn('<info>Populating database...</info>');
-            array_walk($sql_files, function($file) use($db) {
-                $file = ANAHITA_ROOT."/vendor/joomla/installation/sql/$file";
+            array_walk($sql_files, function($file) use($db) {               
                 \JInstallationHelper::populateDatabase($db, $file, $errors);
-            });
-            $vars = array(
-                    'DBhostname' => $database['host'],
-                    'DBuserName' => $database['user'],
-                    'DBpassword' => $database['password'],
-                    'DBname' 	 => $database['name'],
-                    'DBPrefix'   => $database['prefix'],
-                    'adminName'  => 'Admin',
-                    'adminPassword' => $prompt('admin-password', 'You need to enter an admin password? ', 'mysite'),
-                    'adminEmail'    => $prompt('admin-email', 'You need to enter an admin email? ', 'admin@example.com')
-            );           
-            if ( false && !\JInstallationHelper::createAdminUser($vars) )
-            {            
-                $output->writeLn('<error>'."Counldn't create an admin user. Make sure you have entered a correct email".'</error>');
-                exit(1);              
-            }
+            });            
         }
         jimport('joomla.user.helper');
         $config->secret = \JUserHelper::genRandomPassword(32);
-        exec("rm -rf ".JPATH_ROOT."/installation");
+        //exec("rm -rf ".JPATH_ROOT."/installation");
         $config->save();
         $output->writeLn("<info>Congradulation you're done.</info>");
-        if ( !$db_exists )
-        {
-            $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");
-            //$output->writeLn("<info>Please login-in with the following credentials</info>");
-            //$output->writeLn("<info>  username: admin</info>");
-            //$output->writeLn("<info>  password: ".$vars['adminPassword']."</info>");            
+        if ( !$db_exists && !$dump_file ) {
+            $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");            
         }
-    }
+    }    
 }
 
 $console->addCommands(array(new Create()));
@@ -190,6 +178,13 @@ if ( !$console->isInitialized() ) {
     return;
 }
 
+// $console
+// ->register('site:update')
+// ->setDescription('Provides one command that performs updading all the packages, running migrations and re-linking all the files')
+// ->setDefinition(array())
+// ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
+    
+// });
 $console
     ->register('site:configuration')
     ->setDescription('Provides the ability to set some of the site configuration through command line')

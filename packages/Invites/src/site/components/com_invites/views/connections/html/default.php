@@ -24,7 +24,7 @@ new FacebookInvite({
 	'appId'    :  <?= $service->getAppID() ?>,
     'subject'  : '<?= $subject ?>',
     'body'     : '<?= $body?>',
-    'appURL'   : '<?= 'http://anahitapolis.com'?>',
+    'appURL'   : '<?= $url?>',
     'picture'  : '<?= $viewer->getPortraitURL() ?>',
 });
 

@@ -16,7 +16,7 @@ class PackageCommand extends Command
 {
     protected function configure()
     {
-        $this->addArgument('package', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Name of the package');               
+        $this->addArgument('package', InputArgument::REQUIRED | InputArgument::IS_ARRAY, 'Name of the package');                
         $this->addOption('create-schema', null, InputOption::VALUE_NONE, 'If set then it tries to run the database schema if found');
         $this->setName('package:install')
             ->setDescription('Install a package into the site');
