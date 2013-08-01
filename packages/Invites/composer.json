@@ -1,0 +1,11 @@
+{
+    "type": "anahita-extension",    
+    "name": "anahita/invites",
+    "keywords" : ["anahita extension"],
+    "description": "",     
+    "extension-source" : "src",     
+    "require": {
+        "php": ">=5.3",
+        "anahita/anahita": "*"                 
+    }
+}

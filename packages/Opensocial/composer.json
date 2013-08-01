@@ -1,0 +1,10 @@
+{
+    "type": "anahita-extension",    
+    "name": "anahita/opensocial",
+    "keywords" : ["anahita extension"],
+    "description": "",     
+    "extension-source" : "src",        
+    "require": {
+        "oyatel/amazon-s3-php-class": "dev-master"    
+    }
+}
