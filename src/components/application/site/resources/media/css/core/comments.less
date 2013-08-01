@@ -1,0 +1,63 @@
+.an-comment
+{    
+    &.an-entity
+    {
+        margin: 1px 0 1px 20px;
+        .entity-portrait-square
+	    {                   
+	        img
+	        {           
+	            .square(30px);
+	        }
+	    }
+	    
+	    .entity-container
+	    {
+	       padding-left: 40px;
+	    }
+    }	
+}
+
+.an-comments
+{
+    .border-radius(@baseBorderRadius);
+}
+
+// COMMENT FORM
+.an-comment-form
+{	
+	.clearfix;
+	margin: 10px 0;
+	padding: 0 10px 0 30px;
+	
+	
+	.comment-form-avatar
+	{
+	   
+	   margin: 10px 0;
+	   
+	   float: left;
+	   
+       img
+       {
+           .square(30px);    
+       }
+	}
+	
+	.comment-form-container
+	{
+		padding: 10px 0 0 40px;
+		
+		textarea
+		{
+		   min-height: 120px;
+		}
+		
+		.comment-actions
+		{
+			.entity-actions;
+			margin-right: 10px;
+			float: right;
+		}
+	}
+}

@@ -1,0 +1,88 @@
+// PAGE HEADER
+h1.an-page-header
+{
+	
+	font-size: @baseFontSize + 7;
+	
+	ul.toolbar
+	{
+		margin: 10px 5px 5px 5px;
+		list-style: none;
+		font-size: @baseFontSize + 1;
+		
+		li
+		{
+			display: inline;
+			margin-right: 10px;
+			
+			> a.active
+            {
+                text-decoration: underline;
+            }
+		}
+	}
+}
+
+// MEDIA HEADER
+.an-media-header
+{
+	padding: 5px;
+	margin-bottom: 20px;
+    .border-radius(@baseBorderRadius);  
+	.clearfix;
+	
+	h2.title
+	{
+		font-size: @baseFontSize + 3;
+		line-height: @baseLineHeight;
+		margin: 5px;
+	}
+	
+	.avatar
+	{ 
+		float: left; 
+		img
+		{
+			.square(30px);
+		 	margin: 8px 5px;
+		 }
+	}
+
+	.info 
+	{ 
+		padding-left: 50px;
+		.clearfix;
+	}
+
+	.description 
+	{
+		font-size: @baseFontSize;
+		margin: 5px;
+	}
+	
+	ul.toolbar
+	{
+		padding: 5px;
+		margin: 0;
+		font-size: @baseFontSize + 1;
+		list-style: none;
+		.clearfix;
+
+		> li
+		{
+			display: inline;
+			margin-right: 10px;
+            
+            &.profile
+	        {
+	            float: right;
+	            margin-right: 0;
+	        }
+	        
+	        a.active
+		    {
+		       text-decoration: underline;
+		    }
+		}
+	}
+}

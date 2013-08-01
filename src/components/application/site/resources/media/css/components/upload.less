@@ -1,0 +1,61 @@
+.upload-form 
+{
+    .file-list 
+    {
+        max-height:300px;
+        overflow-y:auto;
+        margin-bottom: 20px;
+    }
+    
+    .file 
+    {
+       .alert;
+       padding: 10px !important;
+       margin: 5px !important;
+       
+       .close 
+       {
+         cursor : pointer;
+         float: right;
+         margin-top: -2px;
+         color: @black;
+         font-size: 20px;
+         font-weight: bold;
+         text-shadow: 0 1px 0 rgba(255,255,255,1);
+         .opacity(20);
+         &:hover 
+         {
+           color: @black;
+           text-decoration: none;
+           .opacity(40);
+         }
+      }
+           
+      &.error,
+      &.error:hover,
+      &.success,
+      &.success:hover 
+      {
+        color: @white
+      }
+      
+      // Danger and error appear as red
+      &.danger,
+      &.error 
+      {
+        .gradientBar(#ee5f5b, #c43c35);
+      }
+      
+      // Success appears as green
+      &.success 
+      {
+        .gradientBar(#62c462, #57a957);
+      }
+      
+      .progress 
+      {            
+         .gradientBar(#62c462, #57a957);
+         width: 1px;
+       }                            
+   }        
+}
