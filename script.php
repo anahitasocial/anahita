@@ -71,7 +71,7 @@ foreach(array('src/site/language/en-GB','src/administrator/language/en-GB')
                 $component = ucfirst($matches[1]);
                 $component = strtolower($component);
                 $target    = $anahita_base."/components/$component/$app/resources/language";
-                $copy_r($path.'/'.$file, $target);                
+                $copy_r($path.'/'.$file, $target.'/en-GB.ini');                
             }
         }
     }    
