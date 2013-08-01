@@ -70,11 +70,14 @@ class ComponentLinker extends AbstractLinker
             }
         }
         
-        foreach(array('site', 'admin') as $app)
+        foreach(array('site', 'admin','component') as $app)
         {
-            $target = '';
+            $target = $app;
             if ( $app == 'admin' ) {
                 $target = 'administrator';
+            }
+            elseif ( $app == 'component' ) {
+                $target = '';
             }
             $source   = $component_path.'/'.$app.'/resources/media';
             $target   = $target.'/media/'.$com_name;            
