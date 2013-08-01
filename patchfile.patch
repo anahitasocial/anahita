@@ -520,6 +520,19 @@ index ce59123..aead3ab 100644
          $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
          $config->append(array(
              'template_paths' => $paths,                      
+diff --git a/src/components/base/component/template/helper/javascript/javascript.php b/src/components/base/component/template/helper/javascript/javascript.php
+index a0292f9..c59df93 100644
+--- a/src/components/base/component/template/helper/javascript/javascript.php
++++ b/src/components/base/component/template/helper/javascript/javascript.php
+@@ -59,7 +59,7 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
+         
+         $scripts  = '';               
+         $tag      = JFactory::getLanguage()->getTag();
+-        $base     = JLanguage::getLanguagePath( JPATH_ROOT, $tag);
++        $base     = JLanguage::getLanguagePath( JPATH_BASE, $tag);
+         foreach($langs as $lang)
+         {
+             $path        = $base.'/'.$tag.'.'.$lang.'.js';            
 diff --git a/src/components/composer/site/templates/helpers/ui/_ui_composers.php b/src/components/composer/site/templates/helpers/ui/_ui_composers.php
 index 8d933b2..80005f0 100644
 --- a/src/components/composer/site/templates/helpers/ui/_ui_composers.php
@@ -577,6 +590,37 @@ index f8e04f9..14b1c0c 100644
  
  <?php 
  $url = array('layout'=>'list');
+diff --git a/vendor/joomla/libraries/joomla/application/helper.php b/vendor/joomla/libraries/joomla/application/helper.php
+index 5f715c9..0ca4390 100644
+--- a/vendor/joomla/libraries/joomla/application/helper.php
++++ b/vendor/joomla/libraries/joomla/application/helper.php
+@@ -57,16 +57,16 @@ class JApplicationHelper
+ 			$clients[1] = clone($obj);
+ 
+ 			// Installation Client
+-			$obj->id		= 2;
+-			$obj->name	= 'installation';
+-			$obj->path	= JPATH_INSTALLATION;
+-			$clients[2] = clone($obj);
+-
+-			// XMLRPC Client
+-			$obj->id		= 3;
+-			$obj->name	= 'xmlrpc';
+-			$obj->path	= JPATH_XMLRPC;
+-			$clients[3] = clone($obj);
++// 			$obj->id		= 2;
++// 			$obj->name	= 'installation';
++// 			$obj->path	= JPATH_INSTALLATION;
++// 			$clients[2] = clone($obj);
++
++// 			// XMLRPC Client
++// 			$obj->id		= 3;
++// 			$obj->name	= 'xmlrpc';
++// 			$obj->path	= JPATH_XMLRPC;
++// 			$clients[3] = clone($obj);
+ 		}
+ 
+ 		//If no client id has been passed return the whole array
 diff --git a/vendor/joomla/libraries/joomla/html/html/behavior.php b/vendor/joomla/libraries/joomla/html/html/behavior.php
 index 637cf3e..97d76bb 100644
 --- a/vendor/joomla/libraries/joomla/html/html/behavior.php
