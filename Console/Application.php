@@ -7,7 +7,7 @@ require_once 'Console/Config.php';
 
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/interface.php';
 require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/config.php';
-require_once __DIR__.'/../src/libraries/anahita/functions.php';
+require_once __DIR__.'/../src/application/libraries/anahita/functions.php';
 
 use \Symfony\Component\Console\Command\Command;
 use \Symfony\Component\Console\Input\InputInterface;

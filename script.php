@@ -105,7 +105,7 @@ $copy_component = function($name) use ($copy_r, $package_path)
     $copy_r("$source/plugins", "$target/plugins");
     $copy_r("$name/composer.json", "$name");
 };
-$componets = explode(" ",'photos pages topics');
+$componets = explode(" ",'photos pages topics todos html autofollow connect groups invites opensocial subscriptions');
 foreach($componets as $component) {
     $copy_component($component);
 }

@@ -67,7 +67,6 @@ class ApplicationLinker extends AbstractLinker
                $linker->link();
             }        
         }
-        die;
     }
     
     /**
@@ -119,7 +118,7 @@ class ApplicationLinker extends AbstractLinker
         @mkdir($this->getRoot().'/administrator/cache',   0755, true);
         $this->linkMirror($this->_anahtia_root.'/vendor/joomla');
         $this->linkMirror($this->_anahtia_root.'/vendor/nooku');
-        $this->linkMirror($this->_anahtia_root.'/Core/application');
+        $this->linkMirror($this->_anahtia_root.'/src/application');
         parent::link();
         $this->getPathLinker($this->_anahtia_root.'/vendor/mc/rt_missioncontrol_j15',
                 'administrator/templates/rt_missioncontrol_j15'
@@ -129,8 +128,8 @@ class ApplicationLinker extends AbstractLinker
         $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/site/images','/site/images')->copy();
         $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/index.php','index.php')->copy();
         $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/htaccess.txt','.htaccess')->copy();
-        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/robots.txt','.htaccess')->copy();
-        $this->linkComponents($this->_anahtia_root.'/Core/components');        
+        $this->getPathLinker($this->_anahtia_root.'/vendor/joomla/robots.txt','robots.txt')->copy();
+        $this->linkComponents($this->_anahtia_root.'/src/components');        
     }
     
     /**
