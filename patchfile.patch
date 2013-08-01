@@ -11,8 +11,111 @@ index 1413df2..6394637 100644
  
  <div id="fb-root"></div>
  
+diff --git a/src/application/administrator/includes/framework.php b/src/application/administrator/includes/framework.php
+index d361230..53635f5 100644
+--- a/src/application/administrator/includes/framework.php
++++ b/src/application/administrator/includes/framework.php
+@@ -10,49 +10,48 @@
+  * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
+  * @link       http://www.anahitapolis.com
+  */
+-// no direct access
+-defined( 'JPATH_BASE' ) or die( 'Restricted access' );
+ 
+-defined( '_JEXEC' ) or define('_JEXEC', 1);
+ 
+-define( 'DS', DIRECTORY_SEPARATOR );
++// no direct access
++defined('JPATH_BASE') or die('Restricted access');
++defined('_JEXEC') or define('_JEXEC', 1);
++
++define('DS', DIRECTORY_SEPARATOR );
+ 
+-$parts = explode( DS, JPATH_BASE );
+-array_pop( $parts );
+-define( 'JPATH_ROOT',           implode( DS, $parts ) );
++define( 'JPATH_ROOT',           realpath(JPATH_BASE.'/..'));
+ 
+-define( 'JPATH_SITE',           JPATH_ROOT );
++define( 'JPATH_SITE',           JPATH_ROOT.'/site' );
++define( 'JPATH_ADMINISTRATOR',  JPATH_ROOT.'/administrator' );
+ define( 'JPATH_CONFIGURATION',  JPATH_ROOT );
+-define( 'JPATH_ADMINISTRATOR',  JPATH_ROOT.DS.'administrator' );
+-define( 'JPATH_XMLRPC',         JPATH_ROOT.DS.'xmlrpc' );
+-define( 'JPATH_LIBRARIES',      JPATH_ROOT.DS.'libraries' );
+-define( 'JPATH_PLUGINS',        JPATH_ROOT.DS.'plugins'   );
+-define( 'JPATH_INSTALLATION',   JPATH_ROOT.DS.'installation' );
+-define( 'JPATH_THEMES',         JPATH_BASE.DS.'templates' );
+-define( 'JPATH_CACHE',          JPATH_BASE.DS.'cache' );
++define( 'JPATH_LIBRARIES',      JPATH_ROOT.'/libraries' );
++define( 'JPATH_PLUGINS',        JPATH_ROOT.'/plugins'   );
++define( 'JPATH_THEMES',         JPATH_BASE.'/templates' );
++define( 'JPATH_CACHE',          JPATH_BASE.'/cache' );
+ 
+ /*
+  * Installation check, and check on removal of the install directory.
+  */
+-if (!file_exists( JPATH_CONFIGURATION.'/configuration.php' ) || (filesize( JPATH_CONFIGURATION.'/configuration.php' ) < 10) ) {
+-    echo 'No configuration file found. Exciting...';
+-    exit();
++if (!file_exists( JPATH_CONFIGURATION.'/configuration.php') || (filesize( JPATH_CONFIGURATION.'/configuration.php') < 10) ) {
++	echo 'No configuration file found. Exiting...';
++	exit();
+ }
+ 
+ // Joomla : setup
+ require_once(JPATH_LIBRARIES . '/joomla/import.php');
+ 
+-jimport( 'joomla.application.application' );
+-jimport( 'joomla.application.menu' );
+-jimport( 'joomla.user.user');
+-jimport( 'joomla.environment.uri' );
+-jimport( 'joomla.html.html' );
+-jimport( 'joomla.html.parameter' );
+-jimport( 'joomla.utilities.utility' );
+-jimport( 'joomla.event.event');
+-jimport( 'joomla.event.dispatcher');
+-jimport( 'joomla.language.language');
+-jimport( 'joomla.utilities.string' );
++jimport('joomla.application.application');
++jimport('joomla.application.router');
++jimport('joomla.application.menu');
++jimport('joomla.user.user');
++jimport('joomla.environment.uri');
++jimport('joomla.html.html');
++jimport('joomla.html.parameter');
++jimport('joomla.utilities.utility');
++jimport('joomla.event.event');
++jimport('joomla.event.dispatcher');
++jimport('joomla.language.language');
++jimport('joomla.utilities.string');
++jimport('joomla.plugin.helper');
+ 
+ require_once JPATH_CONFIGURATION . '/configuration.php';
+ 
+@@ -78,9 +77,18 @@ KServiceIdentifier::addLocator( KService::get('anahita:service.locator.module')
+ KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
+ KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
+ 
++KLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath'=>JPATH_BASE)));
++KServiceIdentifier::addLocator( KService::get('anahita:service.locator.template') );
++
+ KService::setAlias('koowa:database.adapter.mysqli', 'com://admin/default.database.adapter.mysqli');
+ KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
+ KService::setAlias('anahita:domain.space',          'com:base.domain.space');
+ 
++//make sure for the autoloader to be reigstered after nooku
++// $autoloader = require_once( JPATH_VENDOR.'/autoload.php' );
++// $autoloader->unregister();
++// $autoloader->register();
++
+ KLoader::loadIdentifier('com://admin/application.aliases');
+-?>
++
++?>
+\ No newline at end of file
 diff --git a/src/application/site/includes/framework.php b/src/application/site/includes/framework.php
-index 3f30cf5..f82a260 100644
+index 3f30cf5..1516406 100644
 --- a/src/application/site/includes/framework.php
 +++ b/src/application/site/includes/framework.php
 @@ -18,17 +18,15 @@ defined('_JEXEC') or define('_JEXEC', 1);
@@ -32,13 +135,13 @@ index 3f30cf5..f82a260 100644
 -define('JPATH_VENDOR',          JPATH_BASE.'/vendor');
 +define( 'JPATH_ROOT',           realpath(JPATH_BASE.'/..'));
 +
-+define( 'JPATH_SITE',           JPATH_BASE );
-+define( 'JPATH_CONFIGURATION',  JPATH_ROOT );
++define( 'JPATH_SITE',           JPATH_ROOT.'/site' );
 +define( 'JPATH_ADMINISTRATOR',  JPATH_ROOT.'/administrator' );
++define( 'JPATH_CONFIGURATION',  JPATH_ROOT );
 +define( 'JPATH_LIBRARIES',      JPATH_ROOT.'/libraries' );
 +define( 'JPATH_PLUGINS',        JPATH_ROOT.'/plugins'   );
-+define( 'JPATH_THEMES',         JPATH_SITE.'/templates' );
-+define( 'JPATH_CACHE',          JPATH_SITE.'/cache' );
++define( 'JPATH_THEMES',         JPATH_BASE.'/templates' );
++define( 'JPATH_CACHE',          JPATH_BASE.'/cache' );
  
  /*
   * Installation check, and check on removal of the install directory.
@@ -417,20 +520,6 @@ index ce59123..aead3ab 100644
          $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
          $config->append(array(
              'template_paths' => $paths,                      
-diff --git a/src/components/components/admin/domains/sets/assignablecomponent.php b/src/components/components/admin/domains/sets/assignablecomponent.php
-index abc8dd6..2089cdd 100644
---- a/src/components/components/admin/domains/sets/assignablecomponent.php
-+++ b/src/components/components/admin/domains/sets/assignablecomponent.php
-@@ -41,7 +41,8 @@ class ComComponentsDomainSetAssignableComponent extends KObject implements KServ
- 							->getQuery();
- 			
- 			$registry = $container->get('application.registry');
--			$cached   = $registry->offsetExists('assignable-components'); 
-+			$cached   = $registry->offsetExists('assignable-components');
-+			$cached   = false;
- 			if ( $cached ) {
- 				$query->component($registry->offsetGet('assignable-components'));
- 			}
 diff --git a/src/components/composer/site/templates/helpers/ui/_ui_composers.php b/src/components/composer/site/templates/helpers/ui/_ui_composers.php
 index 8d933b2..80005f0 100644
 --- a/src/components/composer/site/templates/helpers/ui/_ui_composers.php
