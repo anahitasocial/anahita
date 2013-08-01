@@ -107,7 +107,7 @@ $copy_component = function($name) use ($copy_r, $package_path)
     $copy_r("$source/site/language/en-GB/en-GB.com_$name.ini", "$target/site/resources/language/en-GB.ini");
     $copy_r("$source/media/com_$name", "$target/site/resources/media");
     $copy_r("$source/plugins", "$target/plugins");
-    $copy_r("$name/composer.json", "$name");
+    $copy_r('packages/'.ucfirst($name)."/composer.json", "$name");
 };
 $componets = explode(" ",'photos pages topics todos html autofollow connect groups invites opensocial subscriptions');
 foreach($componets as $component) {

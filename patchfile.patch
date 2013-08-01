@@ -1,3 +1,16 @@
+diff --git a/packages/Invites/src/site/views/connections/html/default.php b/packages/Invites/src/site/views/connections/html/default.php
+index 1413df2..6394637 100644
+--- a/packages/Invites/src/site/views/connections/html/default.php
++++ b/packages/Invites/src/site/views/connections/html/default.php
+@@ -5,7 +5,7 @@
+ <?php return;?>
+ <?php endif; ?>
+ <script data-inline src="http://connect.facebook.net/en_US/all.js"></script>
+-<script data-inline src="media://com_invites/js/facebook.js"></script>
++<script data-inline src="media://site/invites/js/facebook.js"></script>
+ 
+ <div id="fb-root"></div>
+ 
 diff --git a/src/application/site/includes/framework.php b/src/application/site/includes/framework.php
 index 3f30cf5..f82a260 100644
 --- a/src/application/site/includes/framework.php
@@ -45,6 +58,51 @@ index 3f30cf5..f82a260 100644
 +
 +?>
 \ No newline at end of file
+diff --git a/src/components/actors/site/views/settings/html/admins.php b/src/components/actors/site/views/settings/html/admins.php
+index dd959ee..b643237 100644
+--- a/src/components/actors/site/views/settings/html/admins.php
++++ b/src/components/actors/site/views/settings/html/admins.php
+@@ -1,5 +1,5 @@
+ <?php defined('KOOWA') or die('Restricted access');?>
+-<script src="lib_anahita/js/groupadmin.js" />
++<script src="base://site/media/js/js/groupadmin.js" />
+ 
+ <h3><?= @text('COM-ACTORS-PROFILE-EDIT-ADMINS') ?></h3>
+ 
+diff --git a/src/components/application/component/template/helper/render.php b/src/components/application/component/template/helper/render.php
+index 9377ead..1cebb9e 100644
+--- a/src/components/application/component/template/helper/render.php
++++ b/src/components/application/component/template/helper/render.php
+@@ -90,9 +90,10 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
+         ));
+ 
+         $paths = array(
+-            JPATH_ROOT.DS.'media'.DS.'lib_anahita'.DS.'css',
+-            JPATH_THEMES.DS.'base'.DS.'css',
+-            $css_folder = JPATH_ROOT.DS.'templates'.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style
++            JPATH_ROOT."/media/bootstrap/css",
++            JPATH_ROOT."/media/".$this->getIdentifier()->package."/css",                
++            JPATH_BASE."/media/application/css",
++            $css_folder = JPATH_BASE."/media/".$this->getIdentifier()->package."/css",
+         );
+         
+         $finder = $this->getService('anahita:file.pathfinder');
+diff --git a/src/components/application/plugins/system/anahita.php b/src/components/application/plugins/system/anahita.php
+index 10d79a0..8caa2e8 100755
+--- a/src/components/application/plugins/system/anahita.php
++++ b/src/components/application/plugins/system/anahita.php
+@@ -155,9 +155,8 @@ class PlgSystemAnahita extends JPlugin
+         }
+         
+ 		KService::get('plg:storage.default');
+-        
+-        JFactory::getLanguage()->load('overwrite',   JPATH_ROOT);
+-		JFactory::getLanguage()->load('lib_anahita', JPATH_ROOT);
++                
++		JFactory::getLanguage()->load('lib_anahita', JPATH_SITE);
+         
+         parent::__construct($subject, $config);
+ 	}
 diff --git a/src/components/application/site/controllers/default.php b/src/components/application/site/controllers/default.php
 index 7e15a1d..87bd26e 100644
 --- a/src/components/application/site/controllers/default.php
@@ -58,6 +116,26 @@ index 7e15a1d..87bd26e 100644
          ));
          
          $config->append(array(
+diff --git a/src/components/application/site/theme/html/tmpl/js.php b/src/components/application/site/theme/html/tmpl/js.php
+index 744b327..ce1baf0 100644
+--- a/src/components/application/site/theme/html/tmpl/js.php
++++ b/src/components/application/site/theme/html/tmpl/js.php
+@@ -1,9 +1,9 @@
+ <?php if(defined('JDEBUG') && JDEBUG ) : ?>
+ 	<?php @helper('javascript.combine', array(
+-  				'file'   => JPATH_ROOT.'/media/lib_anahita/js/site.js',
+-  				'output' => JPATH_ROOT.'/media/lib_anahita/js/production/site.uncompressed.js'
+-  			)) ?>
+-<script src="media://lib_anahita/js/production/site.uncompressed.js"></script>
++  				'file'   => JPATH_BASE.'/media/lib_anahita/js/site.js',
++  				'output' => JPATH_BASE.'/media/lib_anahita/js/production/site.uncompressed.js'
++  			)) ?>  			
++<script src="base://site/media/application/js/production/site.uncompressed.js"></script>
+ <?php else : ?>
+-<script src="media://lib_anahita/js/production/site.js"></script>
++<script src="base://site/media/application/js/production/site.js"></script>
+ <?php endif; ?>
+\ No newline at end of file
 diff --git a/src/components/application/site/views/html.php b/src/components/application/site/views/html.php
 index ce59123..aead3ab 100644
 --- a/src/components/application/site/views/html.php
@@ -71,3 +149,60 @@ index ce59123..aead3ab 100644
          $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
          $config->append(array(
              'template_paths' => $paths,                      
+diff --git a/src/components/composer/site/templates/helpers/ui/_ui_composers.php b/src/components/composer/site/templates/helpers/ui/_ui_composers.php
+index 8d933b2..80005f0 100644
+--- a/src/components/composer/site/templates/helpers/ui/_ui_composers.php
++++ b/src/components/composer/site/templates/helpers/ui/_ui_composers.php
+@@ -1,6 +1,6 @@
+ <?php if ( count($composers) ) : ?>
+ 
+-<script src="com_composer/js/composer.js" />
++<script src="base://site/media/composer/js/composer.js" />
+ <div id="com-composer-container">   
+     <div class="clearfix" data-behavior="ComposerTabs">
+         <div class="btn-group pull-right">
+diff --git a/src/components/search/site/views/searches/html/default.php b/src/components/search/site/views/searches/html/default.php
+index 24239f7..3ee2c53 100644
+--- a/src/components/search/site/views/searches/html/default.php
++++ b/src/components/search/site/views/searches/html/default.php
+@@ -1,7 +1,7 @@
+ <?php defined('KOOWA') or die; ?>
+ 
+ <?php if(!empty($keywords)) : ?>
+-<script src="com_search/js/search_request.js" />
++<script src="base://site/media/search/js/search_request.js" />
+ <?php endif;?>
+ <module position="sidebar-a" style="none">
+ <?php if ( !empty($keywords)) : ?>
+diff --git a/src/components/shiraz/site/resources/language/en-GB.tpl_shiraz.ini b/src/components/shiraz/site/resources/language/en-GB.tpl_shiraz.ini
+index 5003609..8a89541 100755
+--- a/src/components/shiraz/site/resources/language/en-GB.tpl_shiraz.ini
++++ b/src/components/shiraz/site/resources/language/en-GB.tpl_shiraz.ini
+@@ -15,4 +15,10 @@ TMPL-ERROR-DEFAULT-TITLE=Opps something went wrong!
+ TMPL-ERROR-DEFAULT-DESC=Looks like something went wrong. Please try again.
+ 
+ TMPL-SEARCH-PLACEHOLDER=Search ...
+-TMPL-SEARCH-PLACEHOLDER-OWNER=Search %s...
+\ No newline at end of file
++TMPL-SEARCH-PLACEHOLDER-OWNER=Search %s...
++
++MOD-VIEWER-MENU-PROFILE=Profile
++MOD-VIEWER-MENU-EDIT-PROFILE=Edit Profile
++MOD-VIEWER-MENU-LOGOUT=Logout
++MOD-VIEWER-NOTIFICATIONS=Notifications
++MOD-VIEWER-LOGIN=Login
+\ No newline at end of file
+diff --git a/src/components/stories/site/views/stories/html/default.php b/src/components/stories/site/views/stories/html/default.php
+index f8e04f9..14b1c0c 100644
+--- a/src/components/stories/site/views/stories/html/default.php
++++ b/src/components/stories/site/views/stories/html/default.php
+@@ -1,7 +1,7 @@
+ <?php defined('KOOWA') or die ?>
+ 
+-<script src="com_stories/js/stories.js" />
+-<script src="lib_anahita/js/vendors/mediabox.js" />
++<script src="base://site/media/stories/js/stories.js" />
++<script src="base://site/media/application/js/vendors/mediabox.js" />
+ 
+ <?php 
+ $url = array('layout'=>'list');
