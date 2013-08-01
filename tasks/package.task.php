@@ -25,7 +25,7 @@ class PackageCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $packages = $input->getArgument('package');
-
+        $this->getApplication()->loadFramework();
         $packages = $this->getApplication()
              ->getExtensionPackages()
              ->findPackages($packages)             
@@ -33,21 +33,7 @@ class PackageCommand extends Command
         ;
         if ( !count($packages) ) {
             throw new \RuntimeException('Invalid Packages');
-        }
-        
-//         $this->getApplication()->loadFramework();
-//         \KService::get('koowa:loader')
-//             ->loadIdentifier('com://admin/migrator.helper');
- 
-        /*        
-        $helper = $this->getHelperSet();
-        $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
-        $get_composer = function($root) use($input, $output, $helper,$io) {
-            global $composerLoader;
-            $embeddedComposerBuilder = new \Dflydev\EmbeddedComposer\Core\EmbeddedComposerBuilder($composerLoader, $root);
-            return $embeddedComposerBuilder->build();            
-        };
-        */
+        }       
                 
         foreach($packages as $package)
         {
@@ -56,32 +42,8 @@ class PackageCommand extends Command
                 $component->install(WWW_ROOT, $output, array(
                     'schema' => $input->getOption('create-schema')
                 ));
-                die;
+                
             }
-            $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
-            $mapper->symlink();           
-            
-            
-//             $root     = $get_composer(COMPOSER_ROOT)->createComposer($io);
-//             $app      = $get_composer($package->getRoot())->createComposer($io);
-                        
-//             $requires = $root->getPackage()->getRequires();
-            
-//             foreach($app->getPackage()->getRequires() as $require) 
-//             {
-//                 $output->writeLn((string)$require);
-//                 //$require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
-//                 $requires[] = $require;
-//             }
-
-//             $root->getPackage()->setRequires($requires);
-//             $installer = \Composer\Installer::create($io, $root);            
-            
-//             $installer->setDryRun(true);
-//             $installer->setUpdate(true);
-//             $installer->run();
-            
-            $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }        
     }
 

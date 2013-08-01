@@ -85,6 +85,8 @@ $copy_r('src/media/lib_anahita/js',$anahita_base.'/components/application/site/r
 $copy_r('src/site/templates/base/css'  ,$anahita_base.'/components/application/site/resources/media/css');
 $copy_r('src/site/templates/base/html'  ,$anahita_base.'/components/application/site/theme/html');
 $copy_r('src/site/templates/shiraz',$anahita_base.'/components/shiraz/site/theme');
+$copy_r('src/site/templates/shiraz/css',$anahita_base.'/components/shiraz/site/resources/media/css');
+$rm_r($anahita_base.'/components/shiraz/site/theme/css');
 $copy_r('src/site/language/en-GB/en-GB.tpl_shiraz.ini',$anahita_base.'/components/shiraz/site/resources/language');
 $copy_r('src/site/language/en-GB/en-GB.lib_anahita.ini',$anahita_base.'/components/application/site/resources/language');
 $copy_r('src/site/language/en-GB/en-GB.lib_anahita.js',$anahita_base.'/components/application/site/resources/language');
@@ -107,12 +109,12 @@ $copy_component = function($name) use ($copy_r, $package_path)
     $copy_r("$source/site/language/en-GB/en-GB.com_$name.ini", "$target/site/resources/language/en-GB.ini");
     $copy_r("$source/media/com_$name", "$target/site/resources/media");
     $copy_r("$source/plugins", "$target/plugins");
-    $copy_r('packages/'.ucfirst($name)."/composer.json", "$name");
+    $copy_r("$source/../composer.json", "$target/../");    
 };
 $componets = explode(" ",'photos pages topics todos html autofollow connect groups invites opensocial subscriptions');
 foreach($componets as $component) {
     $copy_component($component);
 }
 
-//exec('patch -p1 < patchfile.patch');
+//exec('patch --dry-run -p1 < patchfile.patch');
 
