@@ -1,0 +1,73 @@
+diff --git a/src/application/site/includes/framework.php b/src/application/site/includes/framework.php
+index 3f30cf5..f82a260 100644
+--- a/src/application/site/includes/framework.php
++++ b/src/application/site/includes/framework.php
+@@ -18,17 +18,15 @@ defined('_JEXEC') or define('_JEXEC', 1);
+ 
+ define('DS', DIRECTORY_SEPARATOR );
+ 
+-define('JPATH_ROOT',           JPATH_BASE );
+-define('JPATH_SITE',           JPATH_ROOT );
+-define('JPATH_CONFIGURATION',  JPATH_ROOT );
+-define('JPATH_ADMINISTRATOR',  JPATH_ROOT.'/administrator');
+-define('JPATH_XMLRPC',         JPATH_ROOT.'/xmlrpc');
+-define('JPATH_LIBRARIES',      JPATH_ROOT.'/libraries');
+-define('JPATH_PLUGINS',        JPATH_ROOT.'/plugins');
+-define('JPATH_INSTALLATION',   JPATH_ROOT.'/installation');
+-define('JPATH_THEMES',         JPATH_BASE.'/templates');
+-define('JPATH_CACHE',		   JPATH_BASE.DS.'cache' );
+-define('JPATH_VENDOR',          JPATH_BASE.'/vendor');
++define( 'JPATH_ROOT',           realpath(JPATH_BASE.'/..'));
++
++define( 'JPATH_SITE',           JPATH_BASE );
++define( 'JPATH_CONFIGURATION',  JPATH_ROOT );
++define( 'JPATH_ADMINISTRATOR',  JPATH_ROOT.'/administrator' );
++define( 'JPATH_LIBRARIES',      JPATH_ROOT.'/libraries' );
++define( 'JPATH_PLUGINS',        JPATH_ROOT.'/plugins'   );
++define( 'JPATH_THEMES',         JPATH_SITE.'/templates' );
++define( 'JPATH_CACHE',          JPATH_SITE.'/cache' );
+ 
+ /*
+  * Installation check, and check on removal of the install directory.
+@@ -87,9 +85,10 @@ KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.datab
+ KService::setAlias('anahita:domain.space',          'com:base.domain.space');
+ 
+ //make sure for the autoloader to be reigstered after nooku
+-$autoloader = require_once( JPATH_VENDOR.'/autoload.php' );
+-$autoloader->unregister();
+-$autoloader->register();
++// $autoloader = require_once( JPATH_VENDOR.'/autoload.php' );
++// $autoloader->unregister();
++// $autoloader->register();
+ 
+ KLoader::loadIdentifier('com://site/application.aliases');
+-?>
++
++?>
+\ No newline at end of file
+diff --git a/src/components/application/site/controllers/default.php b/src/components/application/site/controllers/default.php
+index 7e15a1d..87bd26e 100644
+--- a/src/components/application/site/controllers/default.php
++++ b/src/components/application/site/controllers/default.php
+@@ -71,7 +71,7 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
+     protected function _initialize(KConfig $config)
+     {
+         $config->append(array(
+-            'theme' => 'base'   
++            'theme' => 'application'   
+         ));
+         
+         $config->append(array(
+diff --git a/src/components/application/site/views/html.php b/src/components/application/site/views/html.php
+index ce59123..aead3ab 100644
+--- a/src/components/application/site/views/html.php
++++ b/src/components/application/site/views/html.php
+@@ -38,7 +38,7 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
+     {
+         $identifier = clone $this->getIdentifier();        
+         $identifier->path = array();
+-        $paths[] = JPATH_THEMES.'/base/'.$this->getFormat();
++        $paths[] = JPATH_THEMES.'/application/'.$this->getFormat();
+         $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
+         $config->append(array(
+             'template_paths' => $paths,                      
