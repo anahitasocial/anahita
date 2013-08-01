@@ -79,7 +79,9 @@ foreach(array('src/site/language/en-GB','src/administrator/language/en-GB')
 $copy_r('src/media/com_composer',$anahita_base.'/components/composer/site/resources/media');
 $copy_r('src/media/com_stories',$anahita_base.'/components/stories/site/resources/media');
 $copy_r('src/media/com_search',$anahita_base.'/components/search/site/resources/media');
-$copy_r('src/media/lib_anahita',$anahita_base.'/components/application/component/resources/media');
+$copy_r('src/media/lib_anahita/css',$anahita_base.'/components/bootstrap/component/resources/media/css');
+$copy_r('src/media/lib_anahita/images',$anahita_base.'/components/bootstrap/component/resources/media/images');
+$copy_r('src/media/lib_anahita/js',$anahita_base.'/components/application/site/resources/media/js');
 $copy_r('src/site/templates/base/css'  ,$anahita_base.'/components/application/site/resources/media/css');
 $copy_r('src/site/templates/base/html'  ,$anahita_base.'/components/application/site/theme/html');
 $copy_r('src/site/templates/shiraz',$anahita_base.'/components/shiraz/site/theme');
