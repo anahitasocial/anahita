@@ -1,21 +1,22 @@
 <?php
-define("BASE", '/Users/asanieyan/Sites/anahitapolis/master/anahita_src');
-$anahita_base = 'src2';
-$rm_r   = function($target, $base = BASE)
+define("SOURCE", '/Users/asanieyan/Sites/anahitapolis/anahita');
+define("TARGET", '/Users/asanieyan/Sites/anahitapolis/master/anahita_src');
+$anahita_base = 'src';
+$rm_r   = function($target)
 { 
-    $target = $base .'/'.$target;
+    $target = TARGET .'/'.$target;
     exec("rm -rf $target");
 };
-$copy_r = function($src, $target, $base = BASE)
+$copy_r = function($src, $target)
 {
-    $src    = $base ? $base.'/'.$src : $src;
+    $src    = SOURCE.'/'.$src;
     if ( !file_exists($src) ) {
         return;
     }
     if ( is_dir($src) ) {
         $src = $src.'/*';
     }
-    $target = $base ? $base.'/'.$target : $target;
+    $target = TARGET.'/'.$target;
     $dir    = $target;
     if ( strpos(basename($dir), '.') ) {
         $dir = dirname($dir);
@@ -33,7 +34,7 @@ foreach(array('src/site/components','src/administrator/components','src/librarie
             as $path
         )
 {
-    $dirs = new DirectoryIterator(BASE.'/'.$path);
+    $dirs = new DirectoryIterator(SOURCE.'/'.$path);
     foreach($dirs as $dir)
     {
         if ( $dir->isDot() || $dir->isFile() ) 
@@ -52,12 +53,12 @@ foreach(array('src/site/components','src/administrator/components','src/librarie
         $copy_r($source, $target);
     }
 }
-
+ 
 foreach(array('src/site/language/en-GB','src/administrator/language/en-GB')
         as $path
 )
 {
-    $dirs = new DirectoryIterator($path);
+    $dirs = new DirectoryIterator(SOURCE.'/'.$path);
     $app  = strpos($path, 'admin') ? 'admin' : 'site';
     foreach($dirs as $dir)
     {
@@ -90,7 +91,7 @@ $copy_r('src/site/modules/mod_menu',$anahita_base.'/components/search/site/modul
 $copy_r('src/site/modules/mod_viewer',$anahita_base.'/components/people/site/modules/viewer');
 
 //$comp_path = '/Users/asanieyan/Sites/anahitapolis/master/anahita_src/packages2';
-$package_path = 'packages2';
+$package_path = 'packages';
 $rm_r($package_path);
 $copy_component = function($name) use ($copy_r, $package_path)
 {  
