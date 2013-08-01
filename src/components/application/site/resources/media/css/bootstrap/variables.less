@@ -20,11 +20,11 @@
 
 // Accent colors
 // -------------------------
-@blue:                  #049cdb;
-@blueDark:              #0064cd;
+@blue:                  #098ED1;
+@blueDark:              darken(@blue, 10);
 @green:                 #46a546;
 @red:                   #9d261d;
-@yellow:                #ffc40d;
+@yellow:                #ffffdd;
 @orange:                #f89406;
 @pink:                  #c3325f;
 @purple:                #7a43b6;
@@ -32,13 +32,13 @@
 
 // Scaffolding
 // -------------------------
-@bodyBackground:        @white;
+@bodyBackground:        lighten( @grayLighter, 2%);
 @textColor:             @grayDark;
 
 
 // Links
 // -------------------------
-@linkColor:             #08c;
+@linkColor:             @blue;
 @linkColorHover:        darken(@linkColor, 15%);
 
 
@@ -48,15 +48,14 @@
 @serifFontFamily:       Georgia, "Times New Roman", Times, serif;
 @monoFontFamily:        Monaco, Menlo, Consolas, "Courier New", monospace;
 
-@baseFontSize:          14px;
+@baseFontSize:          13px;
 @baseFontFamily:        @sansFontFamily;
-@baseLineHeight:        20px;
+@baseLineHeight:        19px;
 @altFontFamily:         @serifFontFamily;
 
 @headingsFontFamily:    inherit; // empty to use BS default, @baseFontFamily
 @headingsFontWeight:    bold;    // instead of browser default, bold
 @headingsColor:         inherit; // empty to use BS default, @textColor
-
 
 // Component sizing
 // -------------------------
@@ -70,10 +69,9 @@
 @paddingSmall:          2px 10px;  // 26px
 @paddingMini:           0 6px;   // 22px
 
-@baseBorderRadius:      4px;
-@borderRadiusLarge:     6px;
+@baseBorderRadius:      3px;
+@borderRadiusLarge:     3px;
 @borderRadiusSmall:     3px;
-
 
 // Tables
 // -------------------------
@@ -82,6 +80,7 @@
 @tableBackgroundHover:              #f5f5f5; // for hover
 @tableBorder:                       #ddd; // table and cell border
 
+
 // Buttons
 // -------------------------
 @btnBackground:                     @white;
@@ -89,7 +88,7 @@
 @btnBorder:                         #bbb;
 
 @btnPrimaryBackground:              @linkColor;
-@btnPrimaryBackgroundHighlight:     spin(@btnPrimaryBackground, 20%);
+@btnPrimaryBackgroundHighlight:     darken(@btnPrimaryBackground, 10%);
 
 @btnInfoBackground:                 #5bc0de;
 @btnInfoBackgroundHighlight:        #2f96b4;
@@ -136,7 +135,6 @@
 // COMPONENT VARIABLES
 // --------------------------------------------------
 
-
 // Z-index master list
 // -------------------------
 // Used for a bird's eye view of components dependent on the z-axis
@@ -151,8 +149,8 @@
 
 // Sprite icons path
 // -------------------------
-@iconSpritePath:          "../img/glyphicons-halflings.png";
-@iconWhiteSpritePath:     "../img/glyphicons-halflings-white.png";
+@iconSpritePath:          "images/glyphicons-halflings.png";
+@iconWhiteSpritePath:     "images/glyphicons-halflings-white.png";
 
 
 // Input placeholder text color
@@ -164,15 +162,13 @@
 // -------------------------
 @hrBorder:                @grayLighter;
 
-
 // Horizontal forms & lists
 // -------------------------
 @horizontalComponentOffset:       180px;
 
-
 // Wells
 // -------------------------
-@wellBackground:                  #f5f5f5;
+@wellBackground:                 lighten( #f5f5f5, 1%);
 
 
 // Navbar
@@ -185,14 +181,14 @@
 @navbarBackground:                darken(@navbarBackgroundHighlight, 5%);
 @navbarBorder:                    darken(@navbarBackground, 12%);
 
-@navbarText:                      #777;
-@navbarLinkColor:                 #777;
-@navbarLinkColorHover:            @grayDark;
+@navbarText:                      darken(@grayLight, 5%);
+@navbarLinkColor:                 darken(@grayLight, 5%);
+@navbarLinkColorHover:            @grayDarker;
 @navbarLinkColorActive:           @gray;
 @navbarLinkBackgroundHover:       transparent;
 @navbarLinkBackgroundActive:      darken(@navbarBackground, 5%);
 
-@navbarBrandColor:                @navbarLinkColor;
+@navbarBrandColor:                @grayDark;
 
 // Inverted navbar
 @navbarInverseBackground:                #111111;

@@ -79,8 +79,9 @@ foreach(array('src/site/language/en-GB','src/administrator/language/en-GB')
 $copy_r('src/media/com_composer',$anahita_base.'/components/composer/site/resources/media');
 $copy_r('src/media/com_stories',$anahita_base.'/components/stories/site/resources/media');
 $copy_r('src/media/com_search',$anahita_base.'/components/search/site/resources/media');
-$copy_r('src/media/lib_anahita',$anahita_base.'/components/application/site/resources/media');
-$copy_r('src/site/templates/base'  ,$anahita_base.'/components/application/site/theme');
+$copy_r('src/media/lib_anahita',$anahita_base.'/components/application/component/resources/media');
+$copy_r('src/site/templates/base/css'  ,$anahita_base.'/components/application/site/resources/media/css');
+$copy_r('src/site/templates/base/html'  ,$anahita_base.'/components/application/site/theme/html');
 $copy_r('src/site/templates/shiraz',$anahita_base.'/components/shiraz/site/theme');
 $copy_r('src/site/language/en-GB/en-GB.tpl_shiraz.ini',$anahita_base.'/components/shiraz/site/resources/language');
 $copy_r('src/site/language/en-GB/en-GB.lib_anahita.ini',$anahita_base.'/components/application/site/resources/language');
@@ -111,5 +112,5 @@ foreach($componets as $component) {
     $copy_component($component);
 }
 
-exec('patch -p1 < patchfile.patch');
+//exec('patch -p1 < patchfile.patch');
 
