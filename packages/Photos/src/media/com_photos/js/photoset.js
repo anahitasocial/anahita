@@ -86,7 +86,7 @@ var PhotoSet = new Class({
 			data	: 'action=removephoto',
 			onSuccess : function()
 			{
-				if(this.status == 205)
+				if(this.status == 204)
 					entity.destroy();
 				else
 				{

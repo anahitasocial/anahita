@@ -128,7 +128,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
         
 		if($lastPhoto)
 		{
-			$this->getResponse()->status = 205;
+			$this->getResponse()->status = 204;
 			return;
 		}
 		else
