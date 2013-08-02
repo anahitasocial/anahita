@@ -132,7 +132,7 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
         {            
 			foreach($this->__sets as $set)
 			{
-				$count = $set->photos->reset()->getTotal();
+				$count = $set->photos->getTotal();
 				if( $count == 0 )
 					$set->delete();
 				else 

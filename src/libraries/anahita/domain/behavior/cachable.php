@@ -28,11 +28,11 @@
 class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
 {           
     /**
-     * The repository cache
+     * Global Query Cache.
      * 
      * @var ArrayObject
      */
-    protected $_cache;
+    static protected $_cache;
     
     /**
      * Turn off/on cache
@@ -51,7 +51,11 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-        $this->_cache  = $config->cache;
+        
+        if ( !self::$_cache ) {
+            self::$_cache = new ArrayObject();
+        }
+        
         $this->_enable = $config->enable;     
     }
         
@@ -68,8 +72,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     {
         $config->append(array(
             'enable'     => true,
-            'priority'   => KCommand::PRIORITY_LOWEST,
-            'cache'      => new ArrayObject()
+            'priority'   => KCommand::PRIORITY_LOWEST
         ));
     
         parent::_initialize($config);
@@ -90,9 +93,9 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
         {
             $key = $this->_getCacheKey($context->query);
             
-            if ( $this->_cache->offsetExists($key) )
+            if ( self::$_cache->offsetExists($key) )
             {
-                $context->data = $this->_cache->offsetGet($key);
+                $context->data = self::$_cache->offsetGet($key);
                 return false;
             }            
         }
@@ -111,7 +114,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
         if ( $this->_enable )
         {
             $key = $this->_getCacheKey($context->query);
-            $this->_cache->offsetSet($key, $context->data);            
+            self::$_cache->offsetSet($key, $context->data);            
         }
     }    
     
@@ -124,7 +127,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      */
     protected function _beforeEntityInsert(KCommandContext $context)
     {
-        $this->_cache->exchangeArray(array());
+        self::$_cache->exchangeArray(array());
     }    
     
     /**
@@ -136,7 +139,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      */
     protected function _beforeEntityDelete(KCommandContext $context)
     {
-        $this->_cache->exchangeArray(array());
+        self::$_cache->exchangeArray(array());
     }    
 
     /**
@@ -148,7 +151,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      */
     protected function _beforeEntityUpdate(KCommandContext $context)
     {
-        $this->_cache->exchangeArray(array());
+        self::$_cache->exchangeArray(array());
     }      
     
     /**
@@ -180,7 +183,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      */
     public function emptyCache($query)
     {
-    	$this->_cache->offsetSet($this->_getCacheKey($query), null);    	
+    	self::$_cache->offsetSet($this->_getCacheKey($query), null);    	
     }
     
     /**
