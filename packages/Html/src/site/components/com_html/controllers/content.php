@@ -71,12 +71,9 @@ class ComHtmlControllerContent extends ComBaseControllerResource
      * @return 	void
      */
     protected function _initialize(KConfig $config)
-    {        
-        $base_path = get_config_value('com_html.content_path', 
-                JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/content'
-                );
-        
+    {                
         $config->append(array(
+			'base_path' => get_config_value('com_html.content_path'),
             'request'   => array('layout'=>'default')              
         ));
         
