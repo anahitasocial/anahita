@@ -101,7 +101,6 @@ CREATE TABLE `#__anahita_nodes` (
   `person_time_zone` int(11) DEFAULT NULL,
   `person_language` varchar(100) DEFAULT NULL,
   `access` text,
-  `privacy_read_mode` varchar(15) NOT NULL DEFAULT 'graph',
   `permissions` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `person_username` (`person_username`),
@@ -288,22 +287,6 @@ CREATE TABLE `#__core_acl_groups_aro_map` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__core_log_items` (
-  `time_stamp` date NOT NULL DEFAULT '0000-00-00',
-  `item_table` varchar(50) NOT NULL DEFAULT '',
-  `item_id` int(11) unsigned NOT NULL DEFAULT '0',
-  `hits` int(11) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__core_log_searches` (
-  `search_term` varchar(128) NOT NULL DEFAULT '',
-  `hits` int(11) unsigned NOT NULL DEFAULT '0'
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__groups` (
   `id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -453,14 +436,6 @@ CREATE TABLE `#__session` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__stats_agents` (
-  `agent` varchar(255) NOT NULL DEFAULT '',
-  `type` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `hits` int(11) unsigned NOT NULL DEFAULT '1'
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__templates_menu` (
   `template` varchar(255) NOT NULL DEFAULT '',
   `menuid` int(11) NOT NULL DEFAULT '0',
@@ -492,4 +467,4 @@ CREATE TABLE `#__users` (
   KEY `email` (`email`)
 ) ENGINE=MyISAM;
 
-INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'anahita') ON DUPLICATE KEY UPDATE `version` = 1;
+INSERT INTO #__migrator_versions (`version`,`component`) VALUES(2, 'anahita') ON DUPLICATE KEY UPDATE `version` = 2;
