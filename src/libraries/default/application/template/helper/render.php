@@ -70,6 +70,36 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         return '<a class="brand'.$showLogo.'" href="'.$config->url.'">'.$config->name.'</a>';
     }
     
+	/**
+     * Renders the favicon tag
+     * 
+     * @param $config Configuration
+     * 
+     * @return string
+     */
+    public function favicon($config = array())
+    {
+        $config = new KConfig($config);
+        
+        $config->append(array(
+            'favicon'	=> $this->_params->favicon,
+        	'type'		=> 'image/png',
+            'url'       => 'base://'
+        ));
+        
+        $paths = array(
+            JPATH_THEMES.DS.'base'.DS.'css'.DS.'images',
+            JPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.'images'
+        );
+        
+        $finder = $this->getService('anahita:file.pathfinder');
+        $finder->addSearchDirs($paths);
+        
+        $path = str_replace('\\', '/', str_replace(JPATH_ROOT.DS, 'base://', $finder->getPath('favicon.ico')));
+        
+        return '<link rel="icon" type="'.$config->type.'" href="'.$path.'" />';
+    }
+    
     /**
      * Renders the template style
      * 
