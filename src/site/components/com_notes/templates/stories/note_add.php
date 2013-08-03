@@ -2,7 +2,10 @@
 
 <data name="title">
 <?php if ( $type != 'notification' && ($target->id == $subject->id || $target->eql($actor))) : ?>
-	<?=@name($subject)?>	
+	<?= @name($subject) ?> 
+	<?php if( $object->access != 'public' ): ?>
+    <span class="label pull-right"><?= @text('COM-NOTES-PRIVATE-NOTE') ?></span> 
+    <?php endif; ?>
 <?php else :?>
     <?php if ( $type == 'notification' ) : ?>	
 	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'),@name($subject), @route($object->getURL()), @possessive($target))?>

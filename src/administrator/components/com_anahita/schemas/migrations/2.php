@@ -27,6 +27,8 @@ class ComAnahitaSchemaMigration2 extends ComMigratorMigrationVersion
         try {
             dbexec('alter table jos_anahita_nodes drop column `privacy_read_mode`');
         } catch(Exception $e) {}
+        
+        dbexec('DROP TABLE IF EXISTS `jos_core_log_items`, `jos_core_log_searches`, `jos_stats_agents`, `jos_tagmeta`, `jos_migration_backlinks`, `jos_migrations`');
     }
 
    /**

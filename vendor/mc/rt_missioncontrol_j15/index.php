@@ -22,11 +22,11 @@ $mctrl->addStyle("menu.css");
 $mctrl->addStyle("colors.css.php");
 $mctrl->addScript('MC.js');
 $mctrl->addOverrideStyles();
-
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $mctrl->language; ?>" lang="<?php echo $mctrl->language; ?>" dir="<?php echo $mctrl->direction; ?>">
 	<head>
+		<link rel="icon" type="image/png" href="<?php print $mctrl->templateUrlAbsolute ?>/images/favicon.ico" />
 		<jdoc:include type="head" />
 	</head>
 	<body id="mc-standard" class="<?php $mctrl->displayBodyTags(); ?>">
