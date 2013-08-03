@@ -81,7 +81,7 @@ class RTMenuHelper {
 		$menu->addChild(new JMenuNode(JText::_('Section Manager'), 'index.php?option=com_sections&scope=content', 'section'));
 		$menu->addChild(new JMenuNode(JText::_('Category Manager'), 'index.php?option=com_categories&section=com_content', 'category'));
 		$menu->addSeparator();
-		$menu->addChild(new JMenuNode(JText::_('Frontpage Manager'), 'index.php?option=com_frontpage', 'frontpage'));
+		//$menu->addChild(new JMenuNode(JText::_('Frontpage Manager'), 'index.php?option=com_frontpage', 'frontpage'));
 
 		$menu->getParent();
 		
