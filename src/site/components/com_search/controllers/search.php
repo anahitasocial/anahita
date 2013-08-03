@@ -86,7 +86,8 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         
     	JFactory::getLanguage()->load('com_actors');
 		
-    	$this->keywords 		= array_filter(explode(' ',urldecode($this->term)));
+    	$this->term = urldecode($this->term);
+    	$this->keywords 		= array_filter(explode(' ', $this->term));
     	$this->scopes			= $this->getService('com://site/search.domain.entityset.scope');
 		$this->current_scope	= $this->scopes->find($this->scope);
 		

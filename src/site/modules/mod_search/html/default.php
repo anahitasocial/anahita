@@ -16,7 +16,7 @@ if ( $actor ) {
 
 ?>
 <form data-trigger="SearchRequest" action="<?=@route($url)?>" class="navbar-search pull-left">
-	<input type="text" name="term" value="<?= KRequest::get('get.term','cmd') ?>" class="search-query"  placeholder="<?= $label ?>">
+	<input type="text" name="term" value="<?= urldecode(KRequest::get('get.term','raw')) ?>" class="search-query"  placeholder="<?= $label ?>">
 	<?php if ($actor && false) : ?>
 	<input type="hidden" name="oid" value="<?=$actor->id?>" />
 	<?php endif;?>
