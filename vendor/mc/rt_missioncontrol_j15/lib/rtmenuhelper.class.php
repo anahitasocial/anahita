@@ -127,7 +127,7 @@ class RTMenuHelper {
 		if ($installModules)
 		{
 			//$menu->addChild(new JMenuNode(JText::_('Anahita Bazaar'), 'index.php?option=com_socialengine&view=bazaar', 'install'));
-			$menu->addChild(new JMenuNode(JText::_('Install/Uninstall'), 'index.php?option=com_installer', 'install'));
+			//$menu->addChild(new JMenuNode(JText::_('Install/Uninstall'), 'index.php?option=com_installer', 'install'));
 			$menu->addSeparator();
 			if ($editAllModules) {
 				$menu->addChild(new JMenuNode(JText::_('Module Manager'), 'index.php?option=com_modules', 'module'),true);
