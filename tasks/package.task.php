@@ -176,8 +176,7 @@ class PackageCommand extends Command
         if ( $site_menu )
         {
             $component->setData(array(
-                'link'      => 'option='.$name,
-                'adminMenuLink' => 'option='.$name
+                'link'      => 'option='.$name
             ));
         }
         elseif ( $admin_menu )
