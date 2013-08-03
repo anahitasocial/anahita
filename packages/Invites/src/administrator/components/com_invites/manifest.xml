@@ -22,8 +22,7 @@
     </uninstall>
     <installfile>install/install.php</installfile>
     <uninstallfile>install/uninstall.php</uninstallfile>
-    <administration>
-    <menu>Invites</menu>
+    <administration>    
     <files folder="administrator/components/com_invites">
         <folder>install</folder>
         <file>config.xml</file>
@@ -33,6 +32,7 @@
     <languages folder="site/language">
         <language tag="en-GB">en-GB.com_invites.ini</language>
     </languages>
+    <menu>true</menu>
     <media folder="media" destination="com_invites">
         <folder>js</folder>
     </media>
