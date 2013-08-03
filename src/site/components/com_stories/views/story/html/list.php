@@ -1,11 +1,13 @@
 <?php defined('KOOWA') or die ?>
-<div class="an-story an-entity an-record an-removable">
+<div class="an-story an-entity an-record an-removable <?= ( $item->object && strpos($item->object->access, ',')) ? 'an-highlight' : ''; /* This is temporary */ ?>">
     <div class="entity-portrait-square">
         <?= is_array($subject) ? @avatar(array_shift($subject)) : @avatar($subject)?>
     </div>     
      
     <div class="story-container"> 
-        <h4 class="story-title"><?= $title ?></h4>
+        <h4 class="story-title">
+        	<?= $title ?>
+        </h4>
         <?php if ( !empty($body) ) : ?>
         <div class="story-body">
             <?= $body ?>
@@ -13,7 +15,7 @@
         <?php endif; ?>
         
         <div class="entity-meta">
-            <?= @date($timestamp) ?>
+        	<?= @date($timestamp) ?>
             
             <?php
                $votable_item = null;               
