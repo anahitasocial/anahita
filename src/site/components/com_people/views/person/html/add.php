@@ -36,7 +36,7 @@
 						<?php print JText::_('COM-PEOPLE-ADD-USERNAME'); ?>
 				    </label>
 				    <div class="controls">
-				    	<input class="input-block-level" data-validators="required validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= empty($username) ? '' : $username ?>" maxlength="25" />
+				    	<input class="input-block-level" data-validators="required validate-username validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= empty($username) ? '' : $username ?>" maxlength="25" />
 				    </div>
 				</div>
 				        
