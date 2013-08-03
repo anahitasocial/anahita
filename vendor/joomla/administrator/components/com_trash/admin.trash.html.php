@@ -153,7 +153,7 @@ class HTML_trash
 			}
 		}
 		</script>
-		<form action="index.php?option=com_trash&amp;task=viewMenu" method="post" name="adminForm">
+		<form action="index.php?option=com_trash" method="post" name="adminForm">
 
 		<table>
 		<tr>
