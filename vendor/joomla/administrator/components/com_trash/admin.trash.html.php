@@ -29,7 +29,7 @@ class HTML_trash
 	function showListContent( $option, &$contents, &$pageNav, &$lists )
 	{
 		?>
-		<form action="index.php?option=com_trash&amp;task=viewContent" method="post" name="adminForm">
+		<form action="index.php?" method="post" name="adminForm">
 
 		<table>
 		<tr>
@@ -252,7 +252,7 @@ class HTML_trash
 	*/
 	function showDelete( $option, $cid, $items, $type, $return ) {
 	?>
-		<form action="index.php?option=com_trash&amp;task=<?php echo $return; ?>" method="post" name="adminForm">
+		<form action="index.php?option=com_trash" method="post" name="adminForm">
 
 		<table class="adminform">
 		<tr>
@@ -288,7 +288,7 @@ class HTML_trash
 		<br /><br />
 
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
-		<input type="hidden" name="task" value="" />
+		<input type="hidden" name="task" value="<?php $return?>" />
 		<input type="hidden" name="boxchecked" value="1" />
 		<input type="hidden" name="type" value="<?php echo $type; ?>" />
 		<input type="hidden" name="return" value="<?php echo $return;?>" />
