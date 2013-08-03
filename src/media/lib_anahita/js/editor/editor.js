@@ -113,10 +113,7 @@ var AnEditor = new Class({
 					   if ( event.request ) 
 					   {
 					   		event.request.addEvent('success', emptyContent)
-					   } else 
-					   {
-					   	 	emptyContent.delay(1000)
-					   }
+					   } 
 				   }
 				}
 			});
