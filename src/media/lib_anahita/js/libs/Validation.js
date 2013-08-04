@@ -244,7 +244,7 @@ Class.refactor(Form.Validator.Inline, {
 			return 'Username can only contain letters and numbers'.translate();
 		},
 		test 	: function(element, props) {
-			return element.value.match(/^[A-Za-z][A-Za-z0-9_]*$/);			
+			return element.value.match(/^[A-Za-z0-9][A-Za-z0-9_-]*$/);			
 		}
 	});	
 	Form.Validator.add('validate-remote', {
