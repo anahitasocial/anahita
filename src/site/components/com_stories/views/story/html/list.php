@@ -1,5 +1,5 @@
 <?php defined('KOOWA') or die ?>
-<div class="an-story an-entity an-record an-removable <?= ( $item->object && strpos($item->object->access, ',')) ? 'an-highlight' : ''; /* This is temporary */ ?>">
+<div class="an-story an-entity an-record an-removable">
     <div class="entity-portrait-square">
         <?= is_array($subject) ? @avatar(array_shift($subject)) : @avatar($subject)?>
     </div>     
