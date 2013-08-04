@@ -37,7 +37,7 @@ class ComPeopleFilterUsername extends KFilterCmd
 	protected function _validate($value)
 	{
 		$value = trim($value);
-		$pattern = '/^[A-Za-z][A-Za-z0-9_]*$/';
+		$pattern = '/^[A-Za-z0-9][A-Za-z0-9_-]*$/';
 		return (is_string($value) && (preg_match($pattern, $value)) == 1);		
 	}	
 	

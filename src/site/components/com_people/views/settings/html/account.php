@@ -23,7 +23,7 @@
 	    <div class="controls">
 	    	<div class="input-prepend">
 	    		<span class="add-on"><i class="icon-user"></i></span>
-	    		<input data-validators="required validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= $item->username ?>" maxlength="25" />
+	    		<input data-validators="required validate-username validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= $item->username ?>" maxlength="25" />
 	    	</div>
 	    </div>
 	</div>

@@ -19734,6 +19734,14 @@ Class.refactor(Form.Validator.Inline, {
 			return value.match(/(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/);
 		}
 	});
+	Form.Validator.add('validate-username', {
+		errorMsg : function(element, props) {
+			return 'Username can only contain letters and numbers'.translate();
+		},
+		test 	: function(element, props) {
+			return element.value.match(/^[A-Za-z0-9][A-Za-z0-9_-]*$/);			
+		}
+	});	
 	Form.Validator.add('validate-remote', {
 		successMsg : function(element, props) {
 			var remoteValidator = element

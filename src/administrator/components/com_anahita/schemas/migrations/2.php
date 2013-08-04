@@ -29,6 +29,18 @@ class ComAnahitaSchemaMigration2 extends ComMigratorMigrationVersion
         } catch(Exception $e) {}
         
         dbexec('DROP TABLE IF EXISTS `jos_core_log_items`, `jos_core_log_searches`, `jos_stats_agents`, `jos_tagmeta`, `jos_migration_backlinks`, `jos_migrations`');
+        $people = dbfetch('select id,person_username AS username,person_userid AS userid from jos_anahita_nodes where type like "ComActorsDomainEntityActor,ComPeopleDomainEntityPerson,com:people.domain.entity.person" and person_username NOT REGEXP "^[A-Za-z0-9][A-Za-z0-9_-]*$"');        
+        foreach($people as $person) 
+        {    
+            $username = $person['username'];
+            $clean    = $username = preg_replace('/(\s|\.|(@\w+))+/','',$username);
+            //add a randome number until the username becomes unique
+            while ( dbexists("select id from jos_users where username like '$username'") ) {
+                $username = $clean.rand(0, 100);
+            }
+            dbexec("update jos_anahita_nodes set person_username = '$username' where id = {$person['id']}");            
+            dbexec("update jos_users set username = '$username' where id = {$person['userid']}");
+        }
     }
 
    /**
