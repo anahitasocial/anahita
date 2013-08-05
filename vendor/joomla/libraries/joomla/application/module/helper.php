@@ -221,9 +221,10 @@ class JModuleHelper
 	/**
 	 * Adds a dynamic module
 	 * 
-	 * @param array $module
+	 * @param array   $module
+	 * @param boolean $append 
 	 */
-	static public function addDynamicModule(array $module)
+	static public function addDynamicModule(array $module, $append = false)
 	{	    
 	    $modules =& JModuleHelper::_load();
 	    $module  = array_merge(array(
@@ -240,7 +241,7 @@ class JModuleHelper
             'module'    => 'mod_dynamic'	            
         ), $module);
 	    $module    = (object) $module;
-	    $modules[] = $module;
+	    $append ? $modules[] = $module : array_unshift($modules, $module);
 	    return $module;
 	}
 	
