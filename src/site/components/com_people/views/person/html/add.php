@@ -1,6 +1,5 @@
 <?php defined('KOOWA') or die; ?>
 
-
 <div class="row">
 	<div class="offset3 span6">	
         <?php 
