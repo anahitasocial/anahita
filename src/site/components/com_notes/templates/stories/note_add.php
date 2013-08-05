@@ -4,7 +4,7 @@
 <?php if ( $type != 'notification' && ($target->id == $subject->id || $target->eql($actor))) : ?>
 	<?= @name($subject) ?> 
 	<?php if( $object->access != 'public' ): ?>
-    <span class="label pull-right"><?= @text('COM-NOTES-PRIVATE-NOTE') ?></span> 
+    <i class="icon-lock pull-right"></i>  
     <?php endif; ?>
 <?php else :?>
     <?php if ( $type == 'notification' ) : ?>	

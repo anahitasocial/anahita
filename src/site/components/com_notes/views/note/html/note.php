@@ -8,6 +8,9 @@
 	<div class="entity-container">
 		<h3 class="entity-title">
 			<?= @name($note->author) ?>
+			<?php if( $note->access != 'public' ): ?>
+    		<i class="icon-lock pull-right"></i>  
+    		<?php endif; ?>
 		</h3>
 	
 		<div class="entity-description">

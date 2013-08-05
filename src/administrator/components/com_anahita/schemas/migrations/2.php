@@ -28,7 +28,15 @@ class ComAnahitaSchemaMigration2 extends ComMigratorMigrationVersion
             dbexec('alter table jos_anahita_nodes drop column `privacy_read_mode`');
         } catch(Exception $e) {}
         
-        dbexec('DROP TABLE IF EXISTS `jos_core_log_items`, `jos_core_log_searches`, `jos_stats_agents`, `jos_tagmeta`, `jos_migration_backlinks`, `jos_migrations`');
+        $query = 	'DROP TABLE IF EXISTS `jos_core_log_items`, `jos_core_log_searches`, '.
+        			'`jos_stats_agents`, `jos_tagmeta`, `jos_migration_backlinks`, `jos_migrations`, '.
+        			'';
+        
+        dbexec($query);
+        
+        dbexec("DELETE FROM `jos_modules_menu` WHERE `moduleid` IN (SELECT `id` FROM `jos_modules` WHERE `module` IN ('mod_bazaar','mod_footer','mod_login','mod_rokquicklinks'))");
+        dbexec("DELETE FROM `jos_modules` WHERE `module` IN ('mod_bazaar','mod_footer','mod_login','mod_rokquicklinks')");
+        
         $people = dbfetch('select id,person_username AS username,person_userid AS userid from jos_anahita_nodes where type like "ComActorsDomainEntityActor,ComPeopleDomainEntityPerson,com:people.domain.entity.person" and person_username NOT REGEXP "^[A-Za-z0-9][A-Za-z0-9_-]*$"');        
         foreach($people as $person) 
         {    
