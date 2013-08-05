@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="user" method="upgrade">
+    <name>Profile - Opensocial</name>
+    <author>Anahita Social Networking Project</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>rmdStudio, Peerglobe Technology</copyright>
+    <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
+    <authoremail>info@anahitapolis.com</authoremail>
+    <authorurl>www.Anahitapolis.com</authorurl>
+   	<version>##BUILD_VERSION##</version>
+	<release>##BUILD_RELEASE##</release>
+    <description>Opensocial Profile Plugin</description>
+	<languages>
+		<language tag="en-GB">en-GB.plg_profile_opensocial.ini</language>
+	</languages>    
+    <files>
+        <filename plugin="opensocial">opensocial.php</filename>
+    </files>
+    
+    <params>
+        <param name="@spacer" type="spacer" default="GROUP-ACTIVITIES-AND-INTERESTS" label="Activities and Interests" description="" />
+        <param name="activities" type="radio" default="1" label="ACTIVITIES" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="interests" type="radio" default="1" label="INTERESTS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="jobInterests" type="radio" default="1" label="JOB-INTERESTS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="books" type="radio" default="1" label="BOOKS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="quotes" type="radio" default="1" label="QUOTES" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="heroes" type="radio" default="1" label="HEROES" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="music" type="radio" default="1" label="MUSIC" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="tvShows" type="radio" default="1" label="TV-SHOWS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="movies" type="radio" default="1" label="MOVIES" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="sports" type="radio" default="1" label="SPORTS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="food" type="radio" default="1" label="FOOD" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="cars" type="radio" default="1" label="CARS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="humor" type="radio" default="1" label="HUMOR" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        <param name="fashion" type="radio" default="1" label="FASHION" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="drinker" type="radio" default="1" label="DRINKER" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="smoker" type="radio" default="1" label="SMOKER" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="@spacer" type="spacer" default="GROUP-PERSONAL" label="GROUP-PERSONAL" description="" />
+        
+        <param name="livingArrangement" type="radio" default="1" label="LIVING-ARRANGEMENT" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="dateOfBirth" type="radio" default="1" label="DATE-OF-BIRTH" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="dateOfBirthFormat" type="text" default="%e %B %Y" label="DATE-OF-BIRTH-FORMAT" description="" />
+        
+        <param name="children" type="radio" default="1" label="CHILDREN" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="scaredOf" type="radio" default="1" label="SCARED-OF" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="happiestWhen" type="radio" default="1" label="HAPPIEST-WHEN" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="religion" type="radio" default="1" label="RELIGION" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="politicalViews" type="radio" default="1" label="POLITICAL-VIEWS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="@spacer" type="spacer" default="GROUP-RELATIONSHIP" label="GROUP-RELATIONSHIP" description="" />
+        
+        <param name="relationshipStatus" type="radio" default="1" label="RELATIONSHIP-STATUS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="lookingFor" type="radio" default="1" label="LOOKING-FOR" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="rommance" type="radio" default="1" label="ROMANCE" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="ethnicity" type="radio" default="1" label="ETHNICITY" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="sexualOrientation" type="radio" default="1" label="SEXUAL-ORIENTATION" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="turnOns" type="radio" default="1" label="TURN-ONS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+        
+        <param name="turnOffs" type="radio" default="1" label="TURN-OFFS" description="">
+            <option value="0">Off</option>
+            <option value="1">On</option>
+        </param>
+    </params>
+</install>
