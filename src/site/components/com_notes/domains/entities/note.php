@@ -40,7 +40,7 @@ class ComNotesDomainEntityNote extends ComMediumDomainEntityMedium
     {
         $config->append(array(
 			'attributes' => array(
-				'body'			=> array('required'=>true)
+				'body'			=> array('required'=>AnDomain::VALUE_NOT_EMPTY)
 			)
         ));
     
