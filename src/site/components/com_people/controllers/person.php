@@ -164,7 +164,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $user->set('id', 0);
             $user->set('usertype', 'Registered');
             $user->set('gid', $authorize->get_group_id( '', 'Registered', 'ARO' ));
-            if ( !$this->activationRequired() )
+            if ( $this->activationRequired() )
             {
                 jimport('joomla.user.helper');
                 $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()) );
