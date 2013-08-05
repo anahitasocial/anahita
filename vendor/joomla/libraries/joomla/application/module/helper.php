@@ -28,6 +28,13 @@ jimport('joomla.application.component.helper');
  */
 class JModuleHelper
 {
+    /**
+     * Dynamic modules
+     * 
+     * @var array
+     */
+    static $_dynamic_modules = array();
+    
 	/**
 	 * Get module by name (real, eg 'Breadcrumbs' or folder, eg 'mod_breadcrumbs')
 	 *
@@ -39,7 +46,7 @@ class JModuleHelper
 	static function &getModule($name, $title = null )
 	{
 		$result		= null;
-		$modules	=& JModuleHelper::_load();
+		$modules    = array_merge(self::$_dynamic_modules, JModuleHelper::_load());
 		$total		= count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -85,8 +92,7 @@ class JModuleHelper
 		$position	= strtolower( $position );
 		$result		= array();
 
-		$modules =& JModuleHelper::_load();
-
+		$modules = array_merge(self::$_dynamic_modules, JModuleHelper::_load());		
 		$total = count($modules);
 		for($i = 0; $i < $total; $i++) {
 			if($modules[$i]->position == $position) {
@@ -222,11 +228,9 @@ class JModuleHelper
 	 * Adds a dynamic module
 	 * 
 	 * @param array   $module
-	 * @param boolean $append 
 	 */
-	static public function addDynamicModule(array $module, $append = false)
-	{	    
-	    $modules =& JModuleHelper::_load();
+	static public function addDynamicModule(array $module)
+	{	    	   	    
 	    $module  = array_merge(array(
             'id'        => uniqid(),
 	        'style' 	=> 'none',	            
@@ -241,7 +245,7 @@ class JModuleHelper
             'module'    => 'mod_dynamic'	            
         ), $module);
 	    $module    = (object) $module;
-	    $append ? $modules[] = $module : array_unshift($modules, $module);
+	    self::$_dynamic_modules[] = $module;
 	    return $module;
 	}
 	
@@ -257,7 +261,7 @@ class JModuleHelper
 	    
 		global $mainframe, $Itemid;
 
-		if (isset($modules)) {
+		if (isset($modules)) {		   
 			return $modules;
 		}
 
