@@ -124,10 +124,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
 		    
 		    if ( $keywords )
 		    {
-		        if ( strpos($keywords,'#') === 0 ) {
-		            $keywords  = explode(',', substr($keywords,1));
-		        }
-		        elseif ( strpos($keywords,' OR ') ) {
+		        if ( strpos($keywords,' OR ') ) {
 		            $keywords  = explode(' OR ',$keywords);
 		            $operation = 'OR';
 		        } else {
