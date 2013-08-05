@@ -17,7 +17,7 @@
 
 <?php if ( $type == 'story') : ?>
 <data name="body">
-	<?= @content($object->body) ?>
+	<?= @helper('text.truncate', @content($object->body), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
 </data>
 <?php else : ?>
 <data name="email_body">
