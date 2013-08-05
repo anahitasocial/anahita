@@ -293,7 +293,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     				'template'	=> 'account_activate'
 		));
 		$context->response->setHeader('X-User-Activation-Required', true);
-		$this->setMessage(JText::_('COM-PEOPLE-ACTIVATION-LINK-SENT'),'success');
+		$this->setMessage(JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $this->user->name),'success');
 		$context->response->setRedirect(JRoute::_('option=com_people&view=session'));
     }
     
