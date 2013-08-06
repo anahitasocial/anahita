@@ -112,26 +112,7 @@ class Anahita
      */
     public function getVersion()
     {
-   	    $manifest = self::getManifest();
-   	    
-   	    if ( $manifest )
-   	        return $manifest->getElementByPath('version')->data();
-    }
-    
-    /**
-     * Return whether the release is birth or not
-     * 
-     * @return boolean
-     */
-    public function isBirth()
-    {
-        $manifest = self::getManifest();
-        
-        if ( $manifest ) {
-            return trim(strtolower($manifest->getElementByPath('release')->data())) == 'birth';
-        }   
-        
-        return false;     
+   	   return '3.0.0';
     }
     
     /**
@@ -140,24 +121,5 @@ class Anahita
     public function getPath()
     {
         return $this->_path;
-    }
-    
-    /**
-     * Returns the Anahita Manifest
-     *
-     * @return SimpleXML
-     */
-    public static function getManifest()
-    {
-        static $_manifest;
-    
-        if ( !$_manifest )
-        {
-            $_manifest = new JSimpleXML();
-            $_manifest->loadFile(JPATH_ROOT.DS.'manifest.xml');
-            $_manifest = $_manifest->document;
-        }
-    
-        return $_manifest;
     }    
 }
