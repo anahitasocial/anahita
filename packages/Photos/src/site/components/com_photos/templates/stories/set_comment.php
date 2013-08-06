@@ -19,7 +19,7 @@
 <?php endif;?>
 
 <?php if ($type == 'notification') :?>
-<?php $commands->insert('viewcomment', array('label'=>@text('LIB-AN-VIEW-COMMENT')))->href(@route($object->getURL().'&permalink='.$comment->id)) ?>
+<?php $commands->insert('viewcomment', array('label'=>@text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id) ?>
 <data name="email_body">	
     <table cellspacing="0" cellpadding="0">
         <tr>

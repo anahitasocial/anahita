@@ -14,7 +14,7 @@
 			(($object->title && $object->description) ? ' :: ' : '').
 			@helper('text.script', $object->description);			 
 		?>
-		<a rel="<?= $rel ?>" href="<?= $object->getPortraitURL('medium') ?>" title="<?= $caption ?>">
+		<a rel="<?= $rel ?>" href="<?= @route($object->getPortraitURL('medium')) ?>" title="<?= $caption ?>">
 			<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
 		</a>
 	</div>
@@ -22,7 +22,7 @@
 <?php endif;?>
 
 <?php if ($type == 'notification') :?>
-<?php $commands->insert('viewcomment', array('label'=>@text('LIB-AN-VIEW-COMMENT')))->href(@route($object->getURL().'&permalink='.$comment->id))?>
+<?php $commands->insert('viewcomment', array('label'=>@text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id)?>
 <data name="email_body">	
     <table cellspacing="0" cellpadding="0">
         <tr>

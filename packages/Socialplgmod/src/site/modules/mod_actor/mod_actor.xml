@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="module" version="##BUILD_PLATFORM_VERSION##" enforce="1" method="upgrade">
     <name>Actor</name>
-    <author>Anahita Social Networking Project</author>
-    <creationDate>##BUILD_DATE##</creationDate>
-    <copyright>Copyright (C) 2012 rmdStudio Inc. and Peerglobe Technology All rights reserved.</copyright>
+    <author>Anahita Social Networking Platform and Framework</author>
+    <copyright>Copyright (C) 2013 rmdStudio Inc. and Peerglobe Technology All rights reserved.</copyright>
     <license>http://www.gnu.org/licenses/gpl-3.0.htmlL</license>
     <authoremail>info@anahitapolis.com</authoremail>
-    <authorurl>www.anahitapolis.com</authorurl>
-    <version>##BUILD_VERSION##</version>	
+    <authorurl>www.anahitapolis.com</authorurl>	
     <description>Module to display an Actor's information.</description>
     <params>
         <param name="actor_id" type="text" size="11" default="" label="MOD-ACTOR-ID" />
@@ -28,12 +26,4 @@
         </param>
         <param name="moduleclass_sfx" type="text" default="" label="Module Class Suffix" description="PARAMMODULECLASSSUFFIX" />
     </params>
-    <languages folder="languages">
-        <language tag="en-GB">en-GB.mod_actor.ini</language>
-    </languages>
-    <files>
-        <folder>html</folder>
-        <file>html.php</file>
-        <filename module="mod_actor">mod_actor.php</filename>
-    </files>
 </install>
