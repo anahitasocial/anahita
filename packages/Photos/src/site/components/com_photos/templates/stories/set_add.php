@@ -34,7 +34,7 @@
 			?>
 			<?php if ( $i > 12 ) break; ?>
 			<div class="entity-portrait">
-				<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('medium') ?>">
+				<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($photo->getPortraitURL('medium')) ?>">
 					<img src="<?= $photo->getPortraitURL('square') ?>" />
 				</a>
 			</div>
