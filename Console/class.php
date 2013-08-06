@@ -118,9 +118,27 @@ class Map
         }
         elseif (is_dir($this->_target)) {
             exec("rm -rf {$this->_target}");
-        }
+        }        
+        //print $this->_src."\n".$this->_target."\n";        
+        @symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
+    }
+    
+    /**
+     * Find from to to
+     * 
+     * @param string $from
+     * @param string $to
+     */
+    protected function _findRelativePath($from, $to)
+    {
+        $path  = dirname($from);
+        $to    = str_replace(COMPOSER_ROOT.DIRECTORY_SEPARATOR, '', $to);
+        while($path != COMPOSER_ROOT) {
+            $path = dirname($path);
+            $to   = '..'.DIRECTORY_SEPARATOR.$to;
+        };
         
-        @symlink($this->_src, $this->_target);        
+        return $to;
     }
     
     public function __get($key)
@@ -229,5 +247,7 @@ class DirectoryFilter implements \Countable, \IteratorAggregate
         return count($this->_found);
     }
 }
+
+    
 
 ?>
