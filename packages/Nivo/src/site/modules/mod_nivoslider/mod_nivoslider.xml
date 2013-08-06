@@ -1,33 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="module" version="##BUILD_PLATFORM_VERSION##" enforce="1" method="upgrade">
     <name>nivoslider</name>
-    <author>Anahita Social Networking Project</author>
-    <creationDate>##BUILD_DATE##</creationDate>
-    <copyright>Copyright (C) 2012 Anahitapolis.com, Dev7Studios.com</copyright>
+    <author>Anahita Social Networking Platform and Framework</author>
+    <copyright>Copyright (C) 2013 Anahitapolis.com, Dev7Studios.com</copyright>
     <license>GPL3, MIT</license>
     <authoremail>info@anahitapolis.com</authoremail>
-    <authorurl>www.anahitapolis.com</authorurl>
-    <version>##BUILD_VERSION##</version>
-    <release>##BUILD_RELEASE##</release>  
+    <authorurl>www.anahitapolis.com</authorurl> 
     <description>
     <![CDATA[
     Nivo Slider for Anahita: Create a category with a list of articles. Each article can contain an <img src="" alt="" title=""/>. 
     The content of title attributes are displayed as image captions. Use module parameters to further customize your image slider animation.
     ]]>
     </description>
-    <media folder="media" destination="mod_nivoslider">
-        <folder>js</folder>
-        <folder>css</folder>
-        <folder>images</folder>
-    </media>
-    <languages folder="languages">
-        <language tag="en-GB">en-GB.mod_nivoslider.ini</language>
-    </languages>
-    <files>
-        <folder>html</folder>
-        <filename module="mod_nivoslider">mod_nivoslider.php</filename>
-        <filename>mod_nivoslider.xml</filename>
-    </files>
      <params>
         <param name="catid" type="category" default="" label="MOD-NIVOSLIDER-ANAHITA-CATEGORY" description="" />
         

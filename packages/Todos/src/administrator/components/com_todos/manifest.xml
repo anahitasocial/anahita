@@ -1,46 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <install type="component" version="##BUILD_PLATFORM_VERSION##" social_app="1" method="upgrade">
     <name>Todos</name>
-    <author>Anahita Social Networking Project</author>
-    <copyright>(C) 2012 rmd Studio, Peerglobe Technology</copyright>
-    <creationDate>##BUILD_DATE##</creationDate>
+    <author>Anahita Social Networking Platform and Framework</author>
+    <copyright>(C) 2013 rmd Studio, Peerglobe Technology</copyright>
     <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
     <authoremail>info@anahitapolis.com</authoremail>
     <authorurl>http://www.Anahitapolis.com</authorurl>
-    <version>##BUILD_VERSION##</version>
-    <release>##BUILD_RELEASE##</release>
     <description>Create and manage list of to-dos</description>
-    <administration>        
-        <files folder="administrator/components/com_todos">
-            <folder>install</folder>
-        </files>
-    </administration>
-	<install>
-	    <sql>
-	        <file charset="utf8" driver="mysql">install/install.mysql.utf8.sql</file>
-	    </sql>
-	</install>
-	<uninstall>
-	    <sql>
-	        <file charset="utf8" driver="mysql">install/uninstall.mysql.utf8.sql</file>
-	    </sql>
-	</uninstall>
-	<installfile>install/install.php</installfile>
-	<uninstallfile>install/uninstall.php</uninstallfile>
-    <media folder="media" destination="com_todos">
-        <folder>js</folder>
-    </media>
-    <languages folder="site/language">
-        <language tag="en-GB">en-GB.com_todos.ini</language>
-    </languages>
     <menu>true</menu>
-    <files folder="site/components/com_todos">
-        <folder>controllers</folder>
-        <folder>domains</folder>        
-        <folder>templates</folder>
-        <folder>views</folder>
-        <file>delegate.php</file>
-        <file>router.php</file>        
-        <file>todos.php</file>
-    </files>
 </install>

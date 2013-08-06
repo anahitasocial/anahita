@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>  
 <install type="component" version="##BUILD_PLATFORM_VERSION##" enforce="1" method="upgrade">
     <name>Opensocial</name>
-    <author>Anahita Social Networking Project</author>
-    <copyright>(C) 2012 rmdStudio, Peerglobe Technology</copyright>
-    <creationDate>##BUILD_DATE##</creationDate>
+    <author>Anahita Social Networking Platform and Framework</author>
+    <copyright>(C) 2013 rmdStudio, Peerglobe Technology</copyright>
     <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
     <authoremail>info@anahitapolis.com</authoremail>
     <authorurl>http://www.Anahitapolis.com</authorurl>
-    <version>##BUILD_VERSION##</version>
-    <release>##BUILD_RELEASE##</release>
     <description>Opensocial Profile</description>
-    <administration>
-        <files folder="administrator/components/com_opensocial">
-            <folder>install</folder>
-        </files>
-    </administration>
-    <installfile>install/install.php</installfile>
-    <uninstallfile>install/uninstall.php</uninstallfile>
-    <bundles>
-    	<bundle>plugins/profile</bundle>
-    </bundles>
-    <files folder="site/components/com_opensocial">        
-        <folder>domains</folder>
-    </files>
 </install>
