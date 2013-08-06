@@ -54,7 +54,8 @@ class Symlink extends Command
         @mkdir($target.'/cache', 0755);
         @mkdir($target.'/log',   0755);
         @mkdir($target.'/administrator/cache',   0755);
-        @symlink(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor') ;       
+        $vendorLink = new \Installer\Map(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor');
+        $vendorLink->symlink();              
     }
 }
 
