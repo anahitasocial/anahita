@@ -32,6 +32,13 @@ require_once JPATH_LIBRARIES.'/anahita/functions.php';
 class Anahita
 {
     /**
+     * Version
+     * 
+     * @var string
+     */
+    static protected $_version = '3.0.0';
+    
+    /**
      * Path to Anahita libraries
      * 
      * @var string
@@ -110,9 +117,9 @@ class Anahita
      * 
      * @return string
      */
-    public function getVersion()
+    static public function getVersion()
     {
-   	   return '3.0.0';
+   	   return self::$_version;
     }
     
     /**
