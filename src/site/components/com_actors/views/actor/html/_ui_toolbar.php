@@ -14,17 +14,15 @@
 <?php endif; ?>
 <?php if ( $commands->count() > 0 || !$viewer->eql($item) ) : ?>
     <div class="btn-group pull-right">
-        <?php if ( !$viewer->eql($item) && $item->authorize('access') ) : ?>
-        <?php JFactory::getLanguage()->load('com_notifications');  ?>
-        <a data-trigger="BS.showPopup" data-bs-showpopup-target="!body #notification-modal" class="btn small notification">
+        <?php if ( !$viewer->eql($item) && $item->authorize('access') ) : ?>        
+        <a data-trigger="BS.showPopup" data-bs-showpopup-url="<?= @route('option=notifications&view=settings&layout=modal&oid='.$item->id)?>" class="btn small notification">
             <i class="icon-exclamation-sign"></i>
-             <?= @text('COM-NOTIFICATIONS-EDIT-BUTTON')?>
+             <?= @text('COM-ACTORS-NOTIFICATIONS-EDIT-BUTTON')?>
             </a>
         <?php endif; ?>
         <?= @helper('ui.dropdown', $commands)?>           
     </div>
 <?php endif;?>
 
-<?= @template('_notification_modal')?>
 </div>
 <?php endif; ?>

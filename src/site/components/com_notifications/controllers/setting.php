@@ -40,7 +40,8 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('ownable')
+            'behaviors'  => array('ownable'),
+            'toolbars'   => array('actorbar',' setting')
         ));
         
         parent::_initialize($config);
@@ -67,6 +68,16 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
         $setting->setValue('posts', null, $data->email);
         
         $setting->save();
+    }
+    
+    /**
+     * Authorizes a get, only if the viewer is already following the owner
+     * 
+     * @return boolean
+     */
+    public function canGet()
+    {
+        return $this->canPost();
     }
     
     /**
