@@ -1,9 +1,10 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if (  is_array($object) ) : ?>
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTOS'), @name($subject), @possessive($target), @route('option=com_photos&view=photos&oid='.$target->id)) ?>
+	<?= @text('COM-PHOTOS-STORY-NEW-PHOTOS') ?>
 </data>
-
+<?php endif;?>
 <?php if ( $type != 'notification') : ?>
 <data name="body">
 	<div data-behavior="Mediabox">

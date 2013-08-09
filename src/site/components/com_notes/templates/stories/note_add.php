@@ -1,16 +1,13 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
-<?php if ( $type != 'notification' && ($target->id == $subject->id || $target->eql($actor))) : ?>
-	<?= @name($subject) ?> 
+<?php if ( $type != 'notification' && ($target->id == $subject->id || $target->eql($actor))) : ?>	
 	<?php if( $object->access != 'public' ): ?>
     <i class="icon-lock pull-right"></i>  
     <?php endif; ?>
 <?php else :?>
     <?php if ( $type == 'notification' ) : ?>	
-	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'),@name($subject), @route($object->getURL()), @possessive($target))?>
-    <?php else : ?>
-    <?=sprintf(@text('COM-NOTES-ADD-NOTE'),@name($subject), @possessive($target))?>
+	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'),@name($subject), @route($object->getURL()), @possessive($target))?>    
     <?php endif; ?>
 <?php endif; ?>
 </data>

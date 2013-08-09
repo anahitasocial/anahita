@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTO-COMMENT'), @name($subject), @possessive($target), @route($object->getURL())) ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTO-COMMENT'), @route($object->getURL())) ?>
 </data>
 
 <?php if ($type != 'notification') :?>

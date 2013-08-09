@@ -1,14 +1,22 @@
 <?php defined('KOOWA') or die ?>
+<?php
+    $other_subjects  = is_array($subject) ? array_slice($subject, 1) : array(); 
+    $subject         = is_array($subject) ? array_shift($subject) : $subject; 
+    
+?>
 <div class="an-story an-entity an-record an-removable">
 	<div class="clearfix">
 	    <div class="entity-portrait-square">
-	        <?= is_array($subject) ? @avatar(array_shift($subject)) : @avatar($subject)?>
+	        <?= @avatar($subject) ?>
 	    </div>     
     
     	<div class="entity-container">
     		<h4 class="entity-author">
-    			<?= is_array($subject) ? @name(array_shift($subject)) : @name($subject)?>
-    		</h4>
+    			<?= @name($subject) ?>
+    		</h4>    		
+    		<?php if ( count($other_subjects) > 0 ) : ?>
+    		    <?= sprintf('%s others', count($other_subjects))?>
+    		<?php endif;?>
     		<div class="story-time"><?= @date($timestamp) ?></div>
     	</div>
     </div>

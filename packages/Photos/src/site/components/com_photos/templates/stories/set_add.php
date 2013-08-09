@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET'), @name($subject), @route($object->getURL()), @possessive($target)) ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET'),@route($object->getURL())) ?>
 </data>
 
 <data name="body">
