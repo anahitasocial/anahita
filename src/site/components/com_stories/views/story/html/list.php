@@ -1,40 +1,47 @@
 <?php defined('KOOWA') or die ?>
 <div class="an-story an-entity an-record an-removable">
-    <div class="entity-portrait-square">
-        <?= is_array($subject) ? @avatar(array_shift($subject)) : @avatar($subject)?>
-    </div>     
-     
-    <div class="story-container"> 
-        <h4 class="story-title">
-        	<?= $title ?>
-        </h4>
-        <?php if ( !empty($body) ) : ?>
-        <div class="story-body">
-            <?= $body ?>
+	<div class="clearfix">
+	    <div class="entity-portrait-square">
+	        <?= is_array($subject) ? @avatar(array_shift($subject)) : @avatar($subject)?>
+	    </div>     
+    
+    	<div class="entity-container">
+    		<h4 class="entity-author">
+    			<?= is_array($subject) ? @name(array_shift($subject)) : @name($subject)?>
+    		</h4>
+    		<div class="story-time"><?= @date($timestamp) ?></div>
+    	</div>
+    </div>
+    
+    <p class="lead"><?= $title ?></p>
+    
+    <?php if ( !empty($body) ) : ?>
+    <div class="story-body">
+    	<?= $body ?>
+    </div>
+    <?php endif; ?>
+        
+    <div class="entity-meta">
+        
+    	<?php
+           $votable_item = null;               
+           if ( !$item->aggregated() && $item->object && $item->object->isVotable() ) { 
+                $votable_item = $item->object;
+           }
+        ?>
+        
+        <?php if ( $votable_item ) : ?> 
+        <div class="vote-count-wrapper" id="vote-count-wrapper-<?= $votable_item->id ?>">
+            <?= @helper('ui.voters', $votable_item); ?>
         </div>
         <?php endif; ?>
-        
-        <div class="entity-meta">
-        	<?= @date($timestamp) ?>
-            
-            <?php
-               $votable_item = null;               
-               if ( !$item->aggregated() && $item->object && $item->object->isVotable() ) { 
-                    $votable_item = $item->object;
-               }
-            ?>
-            <?php if ( $votable_item ) : ?> 
-            <div class="vote-count-wrapper" id="vote-count-wrapper-<?= $votable_item->id ?>">
-            <?= @helper('ui.voters', $votable_item); ?>
-            </div>
-            <?php endif; ?>
-        </div>
-        
-        <div class="entity-actions">    
-        <?php $can_comment = $commands->offsetExists('comment') ?>
-        <?= @helper('ui.commands', $commands)?>
-        </div>      
     </div>
+        
+    <div class="entity-actions">    
+    	<?php $can_comment = $commands->offsetExists('comment') ?>
+        <?= @helper('ui.commands', $commands)?>
+    </div>      
+   
     
     <div id="<?= 'story-comments-'.$item->id?>" class="story-comments an-comments">
 		<?php if ( !empty($comments) || $can_comment ) : ?>

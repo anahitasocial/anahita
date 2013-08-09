@@ -30,49 +30,50 @@
 }
 
 .an-story
-{	   
-    .story-container
+{	           
+    .story-title
     {
-       .entity-container;
+        font-size: @baseFontSize + 1;
+        font-weight: normal;
+    }
+    
+    .story-time
+    {
+        margin: 10px 0;
+    }
+    
+    .story-target
+    {
+       margin: 10px 0; 
+    }
         
-        h4.story-title
-        {
-            font-size: @baseFontSize;
-            font-weight: normal;
-            a
-            {
-                font-weight: bold;
-            }
-        }
-        
-        .story-body
-        {
-            .clearfix;
-            .entity-body;
+    .story-body
+    {
+       .clearfix;
+       .entity-body;
             
-            a.actor-name
-           {
-                float: left;
-                margin-right: 3px;
-           }
-           
-           .media-grid
-		    {   
-		        .clearfix;
-		        margin: -5px;
-		                              
-		        img
-		        {
-		           margin: 5px;
-		           .square(87px);
-		           
-		           &.actor-avatar
-		           {
-		              .square(55px);
-                   }
-                }
-		    }           
+        a.actor-name
+        {
+            float: left;
+            margin-right: 3px;
         }
+           
+        .media-grid
+		{   
+            .clearfix;
+            margin: -5px;
+                              
+            img
+            {
+                margin: 5px;
+                .square(87px);
+           
+                &.actor-avatar
+                {
+                    .square(55px);
+                }
+            }
+	   }           
     }
     
     code  
