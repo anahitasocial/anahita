@@ -1,8 +1,10 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 <?php if ( !$viewer->eql($item) ) : ?>
-<h2><?= @name($item) ?></h2>
 
-<h3><?= @text('COM-ACTORS-EDIT-NOTIFICATION-SETTINGS') ?></h3>
+<?php 
+$actorbar->setTitle(@text('COM-ACTORS-EDIT-NOTIFICATION-SETTINGS'));
+$actorbar->setActor($item);
+?>
 
 <?php if ( $item->authorize('subscribe') ) : ?>
 <form action="<?=@route($item->getURL())?>" method="post">
