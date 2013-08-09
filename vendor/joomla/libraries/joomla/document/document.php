@@ -82,7 +82,7 @@ class JDocument extends JObject
 	 * @var		string
 	 * @access	public
 	 */
-	 var $_generator = 'Anahita 2.0 - Open Source Social Networking Platform And Framework';
+	 var $_generator = 'Anahita 3.0 - Open Source Social Networking Platform And Framework';
 
 	/**
 	 * Document modified date
