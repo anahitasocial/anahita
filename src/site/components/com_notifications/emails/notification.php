@@ -62,8 +62,11 @@ EOF;
                       </tbody>
                 </table>
 		      </td>
-		   </tr>		    
-			<?php if ( $commands && count($commands) > 0 ) : ?>
+		   </tr>			   
+		   <?php if ( $commands && count($commands) > 0 ) : ?>
+		   <?php 
+		       $setting_command = $commands->extract('notification_setting');		       
+		   ?>
 			<tr>
 				<td style="<?= $well?>">
 					<?php foreach($commands as $command) :  ?>						
@@ -72,6 +75,18 @@ EOF;
 				</td>
 			</tr>			
 			<?php endif;?>
+			<tr>
+    			<td>
+    			<small>
+        			<?php if ( !empty($setting_command) ) : ?>
+        			    <?= sprintf(@text('COM-NOTIFICATIONS-SETTING-URL'), 
+        			            @route($setting_command->actor->getURL().'&layout=notifications'),
+        			            @route($setting_command->actor->getURL()),
+        			            $setting_command->actor->name)?>
+        			<?php endif;?>
+    			</small>
+    			</td>
+			</tr>
 		</tbody>
 	</table>
 </td>

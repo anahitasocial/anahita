@@ -156,14 +156,17 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
              
             $notification->owner = $person;
             $data = new KConfig($this->_parser->parse($notification));
-    
             $data->append(array(
                     'email_subject' => $data->title,
                     'email_title'	=> pick($data->email_subject, $data->title),
                     'email_body' 	=> $data->body,
                     'notification'	=> $notification
-            ));            
-    
+            ));
+            if ( $notification->target && !$notification->target->eql($person)) 
+            {
+                $data->commands->insert('notification_setting', 
+                    array('actor'=>$notification->target));
+            }            
             $body = $this->renderMail(array(
                     'layout'   => false,
                     'template' => 'notification',
