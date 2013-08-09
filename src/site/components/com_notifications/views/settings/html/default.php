@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
-<?php if ( !$viewer->eql($actor) ) : ?>
 
+<module position="sidebar-b"></module>
 <?php 
 $actorbar->setTitle(@text('COM-NOTIFICATIONS-ACTOR-EDIT-NOTIFICATION-SETTINGS'));
 $actorbar->setActor($actor);
@@ -28,4 +28,3 @@ $actorbar->setActor($actor);
 		<?= $viewer->email?><a href="<?=@route($viewer->getURL().'&get=settings&edit=account')?>" class="btn-mini"><?= @text('COM-NOTIFICATIONS-ACTOR-NOTIFICATION-CHANGE-EMAIL') ?></a>
 	</label>
 </form>
-<?php endif; ?>
