@@ -117,10 +117,10 @@ class ComStoriesControllerStory extends ComBaseControllerService
             $query->clause()->where('subject.id','IN', (array)KConfig::unbox($this->subject));   
         }
         
-        $query
+//        $query
 //         ->where('@col(comment.id) IS NOT NULL')
 //         ->component('com_photos')
-        ->name('todo_add');
+//        ->name('todo_add');
 
         return $this->setList($query->toEntitySet())
                     ->getList();
