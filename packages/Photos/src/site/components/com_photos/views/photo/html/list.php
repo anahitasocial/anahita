@@ -1,6 +1,19 @@
 <?php defined('KOOWA') or die; ?>
 
 <div class="an-entity an-entity-portraiable an-record an-removable">
+	<div class="clearfix">
+		<div class="entity-portrait-square">
+			<?= @avatar($photo->author) ?>
+		</div>
+		
+		<div class="entity-container">
+			<h4 class="author-name"><?= @name($photo->author) ?></h4>
+			<div class="an-meta">
+				<?= @date($photo->creationTime) ?>
+			</div>
+		</div>
+	</div>
+	
 	
 	<div class="entity-portrait-medium">
 		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">			
@@ -27,20 +40,14 @@
 		</div>
 		<?php endif; ?>
 		
-		<div class="an-meta">
-			<?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($photo->creationTime), @name($photo->author)) ?>
-		</div>
+		<ul class="an-meta inline">
+			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
+			<?php if($photo->lastCommenter): ?>
+			<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
+			<?php endif; ?>
+		</ul>
 		
-		<?php if($photo->numOfComments): ?>
-		<div class="an-meta">
-		(<?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>) 
-		<?php if($photo->lastCommenter): ?>
-		- <?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?>
-		<?php endif; ?>
-		</div>
-		<?php endif; ?>
-		
-		<div class="vote-count-wrapper" id="vote-count-wrapper-<?= $photo->id ?>">
+		<div class="vote-count-wrapper an-meta" id="vote-count-wrapper-<?= $photo->id ?>">
 			<?= @helper('ui.voters', $photo); ?>
 		</div>
 	</div>
