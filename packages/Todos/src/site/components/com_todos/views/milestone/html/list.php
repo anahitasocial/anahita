@@ -6,6 +6,20 @@ $highlight = ($milestone->endDate->getDate(DATE_FORMAT_UNIXTIME) >= $current_tim
 ?>
 
 <div class="an-entity an-record an-removable <?= $highlight ?>">
+	<div class="clearfix">
+		<div class="entity-portrait-square">
+			<?= @avatar($milestone->author) ?>
+		</div>
+		
+		<div class="entity-container">
+			<h4 class="author-name"><?= @name($milestone->author) ?></h4>
+			<div class="an-meta">
+				<?= @date($milestone->creationTime) ?> - 
+				<?= sprintf(@text('COM-TODOS-MILESTONE-META-END-DATE'), @date($milestone->endDate)) ?>
+			</div>
+		</div>
+	</div>
+
 	<h3 class="entity-title">
 		<a href="<?= @route($milestone->getURL()) ?>">
 		<?= @escape($milestone->title) ?>
@@ -19,24 +33,13 @@ $highlight = ($milestone->endDate->getDate(DATE_FORMAT_UNIXTIME) >= $current_tim
 	<?php endif; ?>
 	
 	<div class="entity-meta">
-		<div class="an-meta">
-		<?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($milestone->creationTime), @name($milestone->author)) ?> 
-		</div>
-
-		<?php if(isset($milestone->editor)) : ?>
-		<div class="an-meta">
-		<?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($milestone->updateTime), @name($milestone->editor)) ?> 
-		</div>
-		<?php endif; ?>
-		
-		<div class="an-meta">
-		<?= sprintf(@text('COM-TODOS-MILESTONE-META-END-DATE'), @date($milestone->endDate)) ?>
-		</div>
-		
-		<div class="an-meta">
-		<?= sprintf( @text('COM-TODOS-MILESTONE-NUMBER-OF-TODOS'), $milestone->numOfTodolists) ?> - 
-		<?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $milestone->numOfComments) ?>
-		</div>
+		<ul class="an-meta inline">
+			<li><?= sprintf( @text('COM-TODOS-MILESTONE-NUMBER-OF-TODOS'), $milestone->numOfTodolists) ?></li>
+			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $milestone->numOfComments) ?></li>
+			<?php if(isset($milestone->editor)) : ?>
+			<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($milestone->updateTime), @name($milestone->editor)) ?></li>
+			<?php endif; ?>
+		</ul>
 		
 		<div class="an-meta" class="vote-count-wrapper" id="vote-count-wrapper-<?= $milestone->id ?>">
 			<?= @helper('ui.voters', $milestone); ?>

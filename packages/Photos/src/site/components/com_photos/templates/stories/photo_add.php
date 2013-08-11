@@ -20,7 +20,7 @@
 		<?= @content($story->body) ?>
 		<?php endif;?>
 		<div class="entity-portrait-medium">
-			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($object->getPortraitURL('medium')); ?>">
+			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= $object->getPortraitURL('medium'); ?>">
 				<img src="<?= $object->getPortraitURL('medium') ?>" />
 			</a>
 		</div>
@@ -36,7 +36,7 @@
 			@helper('text.script', $photo->description); 
 		?>
 		<div class="entity-portrait">
-			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($photo->getPortraitURL('medium')) ?>">
+			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('medium') ?>">
 				<img src="<?= $photo->getPortraitURL('square') ?>" />
 			</a>
 		</div>

@@ -7,7 +7,7 @@
     <?php endif; ?>
 <?php else :?>
     <?php if ( $type == 'notification' ) : ?>	
-	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'),@name($subject), @route($object->getURL()), @possessive($target))?>    
+	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'), @name($subject), @route($object->getURL()), @possessive($target))?>    
     <?php endif; ?>
 <?php endif; ?>
 </data>

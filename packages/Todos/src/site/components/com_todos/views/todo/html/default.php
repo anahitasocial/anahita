@@ -2,7 +2,6 @@
 
 <module position="sidebar-b" title="<?= @text('LIB-AN-META') ?>">	
 	<ul class="an-meta">
-		<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($todo->creationTime), @name($todo->author)) ?></li>
 		<?php if(isset($todo->editor)) : ?>
 		<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($todo->updateTime), @name($todo->editor)) ?></li>
 		<?php endif; ?>

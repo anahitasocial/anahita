@@ -15,22 +15,6 @@
 <?php endif; ?>
 </module>
 
-<module position="sidebar-b" title="<?= @text('LIB-AN-META') ?>">
-<ul class="an-meta">
-	<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($milestone->creationTime), @name($milestone->author)) ?></li>
-	<?php if(isset($photo->editor)) : ?>
-	<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($milestone->updateTime), @name($milestone->editor)) ?></li>
-	<?php endif; ?>
-	<li><?= sprintf(@text('COM-TODOS-MILESTONE-META-END-DATE'), @date($milestone->endDate)) ?></li>
-	<li><?= sprintf(@text('COM-TODOS-MILESTONE-NUMBER-OF-TODOLISTS'), (int) $milestone->numOfTodolists) ?></li>
-	
-	<?php if ( $milestone->numOfComments ) : ?>
-	<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $milestone->numOfComments) ?></li>
-	<li><?= sprintf(@text('COM-TODOS-MEDIUM-LAST-COMMENT-BY-X-ON-DATETIME'),@name($milestone->lastCommenter), @date($milestone->lastCommentTime)) ?></li>
-	<?php endif; ?>
-</ul>
-</module>
-
 <?= @template('milestone') ?>
 
 <?= @helper('ui.comments', $milestone, array('pagination'=>true)) ?>

@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
-	<?=sprintf(@text('COM-TODOS-STORY-NEW-TODO-LIST'), @name($subject), @link($object),  @possessive($target))?>
+	<?=sprintf(@text('COM-TODOS-STORY-NEW-TODO-LIST'), @link($object))?>
 </data>
 
 <data name="body">

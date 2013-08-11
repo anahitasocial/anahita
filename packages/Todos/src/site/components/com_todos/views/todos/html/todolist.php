@@ -4,7 +4,7 @@
 <?= @view('todo')->layout('form')->actor($actor) ?>
 </div>
 
-<?= @helper('ui.searchbox',@route('layout=list')) ?>
+<?= @helper('ui.filterbox',@route('layout=list')) ?>
 
 <div class="an-entities" id="an-entities-main">
 <?= @template('list') ?>

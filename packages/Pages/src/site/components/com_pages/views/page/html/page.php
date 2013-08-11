@@ -6,7 +6,20 @@
 <?= @message(@text('COM-PAGES-PAGE-IS-UNPUBLISHED'), array('type'=>'warning')) ?>
 <?php endif; ?>
 
-<div class="an-entity an-page-main">
+<div class="an-entity">
+	<div class="clearfix">
+		<div class="entity-portrait-square">
+			<?= @avatar($page->author) ?> 
+		</div>
+		
+		<div class="entity-container">
+			<h4 class="author-name"><?= @name($page->author) ?></h4>
+			<div class="an-meta">
+				<?= @date($page->creationTime) ?> 
+			</div>
+		</div>
+	</div>
+	
 	<h1 class="entity-title">
 		<?= @escape($page->title) ?>
 	</h1>

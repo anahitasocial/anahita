@@ -51,14 +51,10 @@
 			<?php endif; ?>
 				
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $topic->numOfComments) ?></li>
-			
-			<?php if($topic->voteUpCount): ?>
-			<li>
-				<div class="vote-count-wrapper" id="vote-count-wrapper-<?= $topic->id ?>">
-					<?= @helper('ui.voters', $topic); ?>
-				</div> 
-			</li>
-			<?php endif; ?>
 		</ul>
+		
+		<div class="an-meta vote-count-wrapper" id="vote-count-wrapper-<?= $topic->id ?>">
+			<?= @helper('ui.voters', $topic); ?>
+		</div>
 	</div>
 </div>

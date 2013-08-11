@@ -1,12 +1,11 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
-	<?= sprintf( @text('COM-TODOS-STORY-NEW-TODO-COMMENT'), @name($subject), @link($object),  @possessive($target)) ?>
+	<?= sprintf( @text('COM-TODOS-STORY-NEW-TODO-COMMENT'), @link($object)) ?>
 </data>
 
-<data name="body">	
-	<?= @name($object->author) ?> 
-	<?= @helper('text.truncate',  @content($object->body, array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
+<data name="body">
+    <?= @helper('text.truncate',  @content($object->body, array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
 </data>
 
 <?php if ($type == 'notification') :?>

@@ -14,14 +14,20 @@
     		<h4 class="entity-author">
     			<?= @name($subject) ?>
     		</h4>    		
-    		<?php if ( count($other_subjects) > 0 ) : ?>
-    		    <?= sprintf('%s others', count($other_subjects))?>
-    		<?php endif;?>
-    		<div class="story-time"><?= @date($timestamp) ?></div>
+    		<div class="an-meta">
+    			<?php if ( false && count($other_subjects) > 0 ) : ?>
+    		    	<?= sprintf('and %s others', count($other_subjects))?> 
+    			<?php endif;?>
+    			<?= @date($timestamp) ?>
+    		</div>
     	</div>
     </div>
     
-    <p class="lead"><?= $title ?></p>
+    <?php if( !empty($title)): ?>
+    <div class="story-title">
+    	<p class="lead"><?= $title ?></p>
+    </div>
+    <?php endif; ?>
     
     <?php if ( !empty($body) ) : ?>
     <div class="story-body">

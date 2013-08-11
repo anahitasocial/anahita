@@ -5558,12 +5558,6 @@ h4.entity-name {
   word-wrap: break-word;
   margin: 10px 0;
 }
-.entity-description ol,
-.entity-description ul,
-.entity-body ol,
-.entity-body ul {
-  padding-left: 30px;
-}
 .entity-description code,
 .entity-body code {
   padding: 10px;
@@ -5861,9 +5855,6 @@ img.actor-avatar.medium {
   overflow-x: auto;
   font-family: "Courier New";
 }
-.an-comment.an-entity {
-  margin: 1px 0 1px 20px;
-}
 .an-comment.an-entity .entity-portrait-square img {
   width: 30px;
   height: 30px;
@@ -5879,7 +5870,7 @@ img.actor-avatar.medium {
 .an-comment-form {
   *zoom: 1;
   margin: 10px 0;
-  padding: 0 10px 0 30px;
+  padding: 0 10px;
 }
 .an-comment-form:before,
 .an-comment-form:after {
@@ -6547,6 +6538,9 @@ ul.autocompleter-choices span.autocompleter-queried {
   font-size: 14px;
   font-weight: normal;
 }
+.an-story .story-title .lead {
+  margin-bottom: 5px;
+}
 .an-story .story-time {
   margin: 10px 0;
 }
@@ -6566,10 +6560,6 @@ ul.autocompleter-choices span.autocompleter-queried {
 }
 .an-story .story-body:after {
   clear: both;
-}
-.an-story .story-body ol,
-.an-story .story-body ul {
-  padding-left: 30px;
 }
 .an-story .story-body code {
   padding: 10px;
@@ -6611,12 +6601,12 @@ ul.autocompleter-choices span.autocompleter-queried {
 }
 .an-story .story-body .media-grid img {
   margin: 5px;
-  width: 87px;
-  height: 87px;
+  width: 80px;
+  height: 80px;
 }
 .an-story .story-body .media-grid img.actor-avatar {
-  width: 55px;
-  height: 55px;
+  width: 40px;
+  height: 40px;
 }
 .an-story code {
   display: none;
@@ -6626,7 +6616,6 @@ ul.autocompleter-choices span.autocompleter-queried {
 }
 .an-stories .an-comment-form {
   display: none;
-  padding-left: 20px;
 }
 .an-stories .an-comment.an-entity {
   padding: 0;
