@@ -1,20 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
 <div class="an-entity an-entity-portraiable an-record an-removable">
-	<div class="clearfix">
-		<div class="entity-portrait-square">
-			<?= @avatar($photo->author) ?>
-		</div>
-		
-		<div class="entity-container">
-			<h4 class="author-name"><?= @name($photo->author) ?></h4>
-			<div class="an-meta">
-				<?= @date($photo->creationTime) ?>
-			</div>
-		</div>
-	</div>
-	
-	
 	<div class="entity-portrait-medium">
 		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />

@@ -1,11 +1,18 @@
 <?php defined('KOOWA') or die; ?>
 
 <div class="an-entity an-record an-removable"">
-	<?php if( $photo->authorize('edit') ) : ?>
-	<div class="entity-actions">
-		<?= @helper('ui.commands', @commands('list')) ?>
+	<div class="clearfix">
+		<div class="entity-portrait-square">
+			<?= @avatar($photo->author) ?>
+		</div>
+		
+		<div class="entity-container">
+			<h4 class="author-name"><?= @name($photo->author) ?></h4>
+			<div class="an-meta">
+				<?= @date($photo->creationTime) ?>
+			</div>
+		</div>
 	</div>
-	<?php endif; ?>
 	
 	<div class="entity-portrait-medium" data-behavior="Mediabox">
 		<?php 
@@ -33,37 +40,30 @@
 	<?= @helper('text.truncate', strip_tags($photo->description), array('length'=>200, 'read_more'=>true)); ?>
 	</div>
 	<?php endif; ?>
-	
-	<div class="clearfix">
-		<div class="entity-portrait-square">
-			<?= @avatar($photo->author) ?>
-		</div>
 		
-		<div class="entity-container">
-			<div class="entity-meta">
-				<?php if($filter == 'leaders'): ?>
-				<div class="an-meta">
-				<?= sprintf(@text('LIB-AN-MEDIUM-OWNER'), @name($photo->owner)) ?>
-				</div>
-				<?php endif; ?>
-			
-				<div class="an-meta">
-				<?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($photo->creationTime), @name($photo->author)) ?> 
-				</div>
-				
-				<div class="an-meta">
+	<div class="entity-meta">
+		<ul class="an-meta inline">
+			<?php if($filter == 'leaders'): ?>
+			<li><?= sprintf(@text('LIB-AN-MEDIUM-OWNER'), @name($photo->owner)) ?></li>
+			<?php endif; ?>
+			<li>
 				<a href="<?= @route($photo->getURL()) ?>">
-					<?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
+				<?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
 				</a>
-				<?php if($photo->lastCommenter): ?>
-				 - <?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?>
-				<?php endif; ?>
-				</div>
-				
-				<div class="vote-count-wrapper" id="vote-count-wrapper-<?= $photo->id ?>">
-					<?= @helper('ui.voters', $photo); ?>
-				</div>
-			</div>
+			</li>
+			<?php if($photo->lastCommenter): ?>
+		 	<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
+			<?php endif; ?>
+		</ul>
+		
+		<div class="vote-count-wrapper an-meta" id="vote-count-wrapper-<?= $photo->id ?>">
+			<?= @helper('ui.voters', $photo); ?>
 		</div>
 	</div>
+	
+	<?php if( $photo->authorize('edit') ) : ?>
+	<div class="entity-actions">
+		<?= @helper('ui.commands', @commands('list')) ?>
+	</div>
+	<?php endif; ?>
 </div>

@@ -2,8 +2,7 @@
 
 <?php @commands('toolbar') ?>
 
-<div id="an-photos-photo" class="an-entity">
-	
+<div id="an-photos-photo" class="an-entity">	
 	<div class="entity-portrait-medium">
 	<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 	</div>

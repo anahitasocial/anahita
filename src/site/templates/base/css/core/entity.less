@@ -115,13 +115,6 @@ h4.entity-name,
     .entity-portrait-medium
      {   
          margin: 10px 0;
-         
-         img
-         {
-             margin: 0;
-             .border-bottom-left-radius(0px);
-             .border-bottom-right-radius(0px);
-         }
      }
 	
 	dl
@@ -167,31 +160,13 @@ h4.entity-name,
     
     &.masonry
     {
-        .an-entity
-        {                                        
-            .entity-portrait-medium
-		    {   
-		         margin: 0 -10px;
-		    }
-            
-            .entity-actions
+        .entity-portrait-medium
+        {
+            margin: 0 -10px;
+            img
             {
-                .hide;
-                margin: 0 0 0 -10px;
-                padding: 10px;
-                position: absolute;
-                .border-top-left-radius(@baseBorderRadius);
-                .border-bottom-right-radius(@baseBorderRadius);
-            }
-            
-            &:hover
-            {
-                .entity-actions
-                {
-                    .show;
-                }
+                .border-radius(0);
             }
         }
     }
-    
 }
