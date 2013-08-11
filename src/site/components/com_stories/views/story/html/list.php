@@ -1,8 +1,7 @@
 <?php defined('KOOWA') or die ?>
 <?php
     $other_subjects  = is_array($subject) ? array_slice($subject, 1) : array(); 
-    $subject         = is_array($subject) ? array_shift($subject) : $subject; 
-    
+    $subject         = is_array($subject) ? array_shift($subject) : $subject;     
 ?>
 <div class="an-story an-entity an-record an-removable">
 	<div class="clearfix">
@@ -14,12 +13,20 @@
     		<h4 class="entity-author">
     			<?= @name($subject) ?>
     		</h4>    		
-    		<div class="an-meta">
+    		<ul class="an-meta inline">
+    			
     			<?php if ( false && count($other_subjects) > 0 ) : ?>
     		    	<?= sprintf('and %s others', count($other_subjects))?> 
     			<?php endif;?>
-    			<?= @date($timestamp) ?>
-    		</div>
+    			
+    			<li><?= @date($timestamp) ?></li> 
+    			
+    			<?php if( !$item->aggregated() && $item->target->id != $item->subject->id ): ?>
+				<li>
+					<a href="<?= @route($item->target->getURL()) ?>"><?= @name($item->target) ?></a>
+				</li>
+				<?php endif; ?>
+    		</ul>
     	</div>
     </div>
     

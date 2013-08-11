@@ -4,7 +4,12 @@
 <data name="title">
 	<?= @text('COM-PHOTOS-STORY-NEW-PHOTOS') ?>
 </data>
+<?php else: ?>
+<data name="title">
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTO'), @route($object->getURL()) ); ?>
+</data>
 <?php endif;?>
+
 <?php if ( $type != 'notification') : ?>
 <data name="body">
 	<div data-behavior="Mediabox">
