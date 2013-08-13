@@ -190,7 +190,7 @@ Delegator.register('click', {
 			
 			if ( parent ) 
 			{
-				parent.ajaxRequest({url:url, data:data,onSuccess:function(){parent.destroy()}}).post();
+				parent.ajaxRequest({url:url, data:data,onSuccess:function(){parent.destroy();}}).post();
 			} 
 			else 
 			{
@@ -217,7 +217,7 @@ Delegator.register('click', {
 					body    : '<h3>' + options.confirmMsg + '</h3>',
 					buttons : [
 					   {name: 'Action.cancel'.translate(), dismiss:true},
-					   {name: 'Action.delete'.translate(), dismiss:true, click:function(){submit()}, type: 'btn-danger'}					   
+					   {name: 'Action.delete'.translate(), dismiss:true, click:function(){submit();}, type: 'btn-danger'}					   
 					]
 			};
 			if ( !handle.retrieve('modal') ) {
@@ -236,9 +236,8 @@ Delegator.register('click', {
 				el.getParent().hide();
 				document.id(api.get('toggle')).getParent().show();
 				var box = document.id('vote-count-wrapper-' + api.get('object')) ||
-				          el.getElement('!.an-actions ~ .story-comments  .vote-count-wrapper ')
-				if ( box ) 
-				{
+				          el.getElement('!.an-actions ~ .story-comments  .vote-count-wrapper ');
+				if ( box ) {
 					box.set('html', this.response.html);
 					if ( this.response.html.match(/an-hide/) )
 						box.hide();
@@ -357,19 +356,16 @@ Request.Options = {};
     	Implements : [Options, Events],
     	
     	options : {
-    		resultHandler : null,
-    		/*
-    		onPageReady   : $empty
-    		*/
-    	},
+	    	// onPageReady   : fn,
+	    	resultHandler : null
+	    },
     	
     	/**
     	 * Initializes a paginator 
     	 * 
     	 * Hash options {}
     	 */
-    	initialize : function(options) 
-    	{
+    	initialize : function(options) {
     		this.setOptions(options);
     		this.spinner   = options.spinner;    		
     		this.pages     = new Paginator.Pages(options.url, options);
@@ -380,14 +376,18 @@ Request.Options = {};
     	/**
     	 * Shows the next page
     	 */
-    	showNextPage : function() 
-    	{
-    		this.pages.get(this.nextPage, function(page) {    			
-    			//console.log('handling results for page ' + page.number)
-    			this.fireEvent('pageReady',[page]);
-        		this.nextPage++;
-    		}.bind(this));
-    	},
+    	showNextPage : function() {
+    		if ( ! this.pages.stopPagination) {
+	    		this.pages.get(this.nextPage, function(page) {    			
+	    			// console.log('handling results for page ' + page.number);
+	        		this.nextPage++;
+	    			this.fireEvent('pageReady', [page]);
+	    		}.bind(this));
+	    		return true;
+    		} else {
+    			return false;
+    		}
+    	}
     });
     
     Paginator.Pages = new Class({
@@ -415,37 +415,28 @@ Request.Options = {};
          * String  url   pages base url
          * int     limit limit per page
          */
-        initialize : function(url, options) 
-        {
-        	//console.log('create pages for base url ' + url);
+        initialize : function(url, options) {
+        	// console.log('create pages for base url ' + url);
         	this.url 	 = new URI(url);
         	this.setOptions(options);        	
         	this.requests = new Request.Queue({
-        		concurrent : this.options.batchSize
+        		concurrent : 1
         	});
         	this.limit    = this.options.limit;
         	this.resultSelector  = this.options.resultSelector;
-        	this.currentBatch = 0;
-        	if ( this.options.startImmediatly )
-        		this._getBatch();
         },
         
-        get  : function(number, onsuccess) 
-        {
+        get  : function(number, onsuccess) {
         	var page = this._getPage(number);
         	
-        	if ( onsuccess ) 
-        	{
+        	if ( onsuccess ) {
         		//if the request is still running then add a success event
-        		if ( page.request.isRunning() ) 
-        		{
+        		if ( page.request.isRunning() ) {
         			if ( !page.request.registered ) {
         				page.request.addEvent('success', onsuccess.bind(null,[this.pages[number]]));
         				page.request.registered = true;
         			}
-            	}
-        		else 
-        		{
+            	} else {
         			//if the request has finished running and hasn't been registered
         			//then call on onsuccess
         			if ( !page.request.registered ) {
@@ -458,29 +449,12 @@ Request.Options = {};
         },
         
         /**
-         * Gets a next batch
-         */
-        _getBatch : function()
-        {
-        	var start = (this.options.batchSize * this.currentBatch) + 1;
-        	var end = start + this.options.batchSize;
-        	//console.log('getting a batch ' + start + ' to ' + end, this.options.batchSize, this.currentBatch);
-        	//always create a batch of pages
-        	for(i=start;i<=end;i++) {
-        		this._getPage(i);
-        	}
-        },
-        
-        /**
          * Creates a page using a number. 
          *  
          */
-        _getPage : function(number)
-        {
+        _getPage : function(number) {
         	//if a page doesn't exists then queue batchSize of pages
-        	if ( !this.pages[number] ) 
-        	{        		
-        		
+        	if ( !this.pages[number] ) {        		
         		var self  = this;
         		var page  = {
             		number   : number,
@@ -493,12 +467,12 @@ Request.Options = {};
                 			if ( self.pages[number].entities.length < self.limit ) {
                 				self.stopPagination = true;
                 			}
-                	//		console.log('fetched page ' + number + ' with ' + self.pages[number].entities.length + ' entities');
+                			// console.log('fetched page ' + number + ' with ' + self.pages[number].entities.length + ' entities');
                 		}
                 	})
             	};
         		this.pages[number] = page;
-        		//console.log('fetching page ' + number );
+        		// console.log('fetching page ' + number );
         		if ( !this.stopPagination ) {
         			this.requests.addRequest(number, page.request).send(number);
         		}
@@ -518,8 +492,7 @@ Request.Options = {};
     		fixedheight : false
     	},
     	
-    	setup : function(el, api)
-    	{    		
+    	setup : function(el, api) {    		
     		var masonry = new MasonryLayout({
     			container  : el,
     			numColumns : api.getAs(Number, 'numColumns'),
@@ -529,23 +502,24 @@ Request.Options = {};
     		//only instantiate a paginator if
     		//if the current number of entities > limit
     		if ( masonry.getEntities().length < api.getAs(Number, 'limit') )
-    			return null
+    			return null;
     			
     		var paginator = new Paginator({
     			resultSelector 	  : api.get('record'),
     			url		  		  : api.get('url'),
-    			limit			  : api.getAs(Number, 'limit'),
-    			startImmediatly   : el.isVisible()
+    			limit			  : api.getAs(Number, 'limit')
     		});
-    		    		    		
+    		
     		paginator.addEvent('pageReady', function(page){
     			this.add(page.entities);
+    			api.get('scrollable').fireEvent('scroll');
     		}.bind(masonry));
     		
     		this.resizeTo = null;
     		window.addEvent('resize', function(){
-    			if(this.resizeTo)
+    			if(this.resizeTo) {
     				clearTimeout(this.resizeTo);
+    			}
     			
     			this.resizeTo = setTimeout(function(){
     				masonry.update();
@@ -556,17 +530,18 @@ Request.Options = {};
     		el.store('masonry', masonry);
     		
     		var scroller = new ScrollLoader({
-                scrollable : api.get('scrollable'),
-                fixedheight: api.get('fixedheight'),
-                onScroll   : function() {
-                	if ( this.isVisible() ) {
-                		this.retrieve('paginator').showNextPage();	
-                	}
-                }.bind(el)
-            });
+    			scrollable: api.get('scrollable'),
+    			fixedheight: api.get('fixedheight'),
+    			onScroll: function() {
+	    			if (this.isVisible()) {
+	    				this.retrieve('paginator').showNextPage();	
+	    			}
+	    		}.bind(el)
+    		});
+    		api.get('scrollable').fireEvent('scroll');
     	}
     });
-})()
+})();
 
 Behavior.addGlobalFilter('Pagination', {
 	defaults: {
@@ -611,7 +586,7 @@ Behavior.addGlobalFilter('Pagination', {
 					var scrollTop = new Fx.Scroll(window).toTop();
 				}
 			}).send();
-		})
+		});
 	}
 });
 
@@ -747,43 +722,41 @@ var ScrollLoader = new Class({
     Implements: [Options, Events],
 
     options: {
-    //     onScroll: fn,
+        // onScroll: fn,
         mode: 'vertical',
         fixedheight: 0,
         scrollable : window
     },
-    initialize: function(options) 
-    {
+    initialize: function(options) {
         this.setOptions(options);
         this.scrollable = document.id(this.options.scrollable) || window; 
         this.bounds     = {
             scroll : this.scroll.bind(this)
-        }
+        };
         this.attach();
     },
-    attach: function() 
-    {
+    attach: function() {
         this.scrollable.addEvent('scroll', this.bounds.scroll);
         return this;
     },
-    detach: function()
-    {
+    detach: function() {
         this.scrollable.removeEvent('scroll', this.bounds.scroll);
         return this;
     },
-    scroll: function()
-    {
+    scroll: function() {
     	var orientation = ( this.options.mode == 'vertical' ) ? 'y' : 'x';
     	var scroll 		= this.scrollable.getScroll()[orientation];
     	var scrollSize	= this.scrollable.getScrollSize()[orientation];
+    	var scrollWin   = this.scrollable.getSize()[orientation];
     	
-    	//console.log('scroll size: ' + scrollSize);
-    	//console.log('fire :' + Math.floor(scrollSize * 0.6));
-    	//console.log('scroll: ' + scroll);
-    	//console.log('---');
+    	// console.log('scroll size: ' + scrollSize);
+    	// console.log('fire: ' + Math.max(scrollSize - scrollWin * 2, 0));
+    	// console.log('scroll: ' + scroll);
+    	// console.log('---');
     	
-    	if( (this.options.fixedheight && scroll < scrollSize) || scroll > Math.floor(scrollSize * 0.6) )
+    	if( (this.options.fixedheight && scroll < scrollSize) || (scroll > scrollSize - scrollWin * 2) ) {
     		this.fireEvent('scroll');
+    	}
     }
 });
 
@@ -794,8 +767,8 @@ var EditEntityOptions = function() {
 			var url = this.form.get('action').toURI().setData({layout:'list'}).toString();
 			return url;
 		}
-	}
-}
+	};
+};
 
 
 var EntityHelper = new Class({
@@ -831,17 +804,16 @@ var EntityHelper = new Class({
 	}
 });
 
-Behavior.addGlobalFilter('Scrollable',{
+Behavior.addGlobalFilter('Scrollable', {
 	defaults : {
 	
 	},
 	returns : Scrollable,
-    setup   : function(el, api)
-    {
+    setup   : function(el, api) {
     	var container = el;
     	if ( api.getAs(String,'container') ) {
     		container = el.getElement(api.getAs(String,'container'));
     	}
 		return new Scrollable(container);    
     }
-})
+});
