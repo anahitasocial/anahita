@@ -6,6 +6,8 @@ Out of the box, it only provides the minimum essentials needed to launch a socia
 
 Requirements
 ============
+- Linux or Unix operating system
+
 - PHP v5.3.3+ with MySQLi support 
 
 - Apache or NGINX WebServer
