@@ -2,11 +2,11 @@
 
 <?php if (  is_array($object) ) : ?>
 <data name="title">
-	<?= @text('COM-PHOTOS-STORY-NEW-PHOTOS') ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTOS'), @name($subject)) ?>
 </data>
 <?php else: ?>
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTO'), @route($object->getURL()) ); ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTO'), @name($subject), @route($object->getURL()) ); ?>
 </data>
 <?php endif;?>
 

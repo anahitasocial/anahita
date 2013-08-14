@@ -120,7 +120,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
 //        $query
 //         ->where('@col(comment.id) IS NOT NULL')
 //         ->component('com_photos')
-//        ->name('todo_add');
+//        ->name('todolist_add');
 
         return $this->setList($query->toEntitySet())
                     ->getList();

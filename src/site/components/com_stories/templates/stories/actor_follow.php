@@ -2,9 +2,9 @@
 
 <data name="title">
 <?php if ( $type != 'notification' ) : ?>
-<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY'), @name($target, 2))?>
+<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY'), @name($subject), @name($target, 2))?>
 <?php else : ?>
-<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY-NOTIFICATION'),@name($subject),@possessive($target))?>
+<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY-NOTIFICATION'), @name($subject),@possessive($target))?>
 <?php endif; ?>
 </data>
 

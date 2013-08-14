@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">     
-    <?= sprintf(@text('COM-NOTES-STORY-COMMENT'), @route($object->getURL())) ?> 
+    <?= sprintf(@text('COM-NOTES-STORY-COMMENT'), @name($subject), @route($object->getURL())) ?> 
     <?php if( $object->access != 'public' ): ?>
     <i class="icon-lock pull-right"></i> 
     <?php endif; ?>

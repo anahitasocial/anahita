@@ -10,9 +10,16 @@
 	    </div>     
     
     	<div class="entity-container">
+    		<?php if( !empty($title)): ?>
+    		<h4 class="story-title">
+    			<?= $title ?>
+    		</h4>    		
+    		<?php else: ?>
     		<h4 class="entity-author">
     			<?= @name($subject) ?>
-    		</h4>    		
+    		</h4>
+    		<?php endif; ?>
+
     		<ul class="an-meta inline">
     			
     			<?php if ( false && count($other_subjects) > 0 ) : ?>
@@ -30,10 +37,12 @@
     	</div>
     </div>
     
-    <?php if( !empty($title)): ?>
-    <div class="story-title">
-    	<p class="lead"><?= $title ?></p>
-    </div>
+    <?php if( !empty($item->object->title)): ?>
+    <h3 class="entity-title">
+    	<a href="<?= @route($item->object->getURL()) ?>">
+    		<?= $item->object->title ?>
+    	</a>
+    </h3>
     <?php endif; ?>
     
     <?php if ( !empty($body) ) : ?>

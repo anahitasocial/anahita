@@ -5,7 +5,7 @@
 	<?php if( $object->access != 'public' && ($target->id == $subject->id || $target->eql($actor)) ): ?>
     <i class="icon-lock pull-right"></i>  
     <?php endif; ?>
-    <?= sprintf(@text('COM-NOTES-STORY-ADD'), @route($object->getURL())) ?>
+    <?= sprintf(@text('COM-NOTES-STORY-ADD'), @name($subject), @route($object->getURL())) ?>
 <?php else: ?>
     <?php if ( $type == 'notification' ) : ?>	
 	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'), @name($subject), @route($object->getURL()), @possessive($target))?>    

@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">		
-	<?= sprintf(@text('COM-TOPICS-STORY-COMMENT'), @link($object)) ?>
+	<?= sprintf(@text('COM-TOPICS-STORY-COMMENT'), @name($subject)) ?>
 </data>
 
 <data name="body">	 

@@ -5642,6 +5642,9 @@ h4.entity-name {
 .an-entity dl dd {
   padding-left: 120px;
 }
+.an-entity ul.inline {
+  margin: 0 -5px;
+}
 .an-entities .an-entity:first-child {
   border-top: 0;
 }

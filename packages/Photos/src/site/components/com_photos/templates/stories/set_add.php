@@ -1,14 +1,10 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET'), @route($object->getURL())) ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET'),  @name($subject), @route($object->getURL())) ?>
 </data>
 
 <data name="body">
-	<?php if($object->title): ?>
-	<h3 class="entity-title"><?= @escape($object->title) ?></h3>
-	<?php endif; ?>
-	
 	<?php if($object->description): ?>
 	<div class="entity-description"><?= @content($object->description) ?></div>
 	<?php endif; ?>

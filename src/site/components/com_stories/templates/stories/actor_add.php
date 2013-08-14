@@ -5,7 +5,7 @@
         $label[] = 'COM-STORIES-STORY-ACTOR-ADD';
         $label[] = str_replace('_','-',strtoupper($target->component)).'-STORY-ACTOR-ADD';
     ?>
-    <?= sprintf(translate($label), @name($target) ); ?>
+    <?= sprintf(translate($label), @name($subject), @name($target) ); ?>
 </data>
 <data name="body">
     <?= @escape($target->body) ?>
