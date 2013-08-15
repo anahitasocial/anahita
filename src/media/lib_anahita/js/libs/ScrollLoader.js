@@ -43,7 +43,7 @@ var ScrollLoader = new Class({
     	 */
     	if( (this.options.fixedheight && scroll < scrollSize)
     				|| scroll > scrollSize - scrollWin * 2 ) { 
-    		console.log(scroll,scrollSize,scrollWin,scrollSize - scrollWin * 2);
+    		//console.log(scroll,scrollSize,scrollWin,scrollSize - scrollWin * 2);
     		this.fireEvent('scroll');
     	}
     		
