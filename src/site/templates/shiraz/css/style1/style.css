@@ -5846,6 +5846,10 @@ img.actor-avatar.medium {
 .an-comment.an-entity .entity-container {
   padding-left: 40px;
 }
+.an-comment.an-entity .entity-container .author-name {
+  font-weight: normal;
+  margin: 7px 0 0 0;
+}
 .an-comments {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
@@ -6521,8 +6525,9 @@ ul.autocompleter-choices span.autocompleter-queried {
 .an-story .story-title {
   font-size: 14px;
   font-weight: normal;
+  margin-bottom: 5px;
 }
-.an-story .story-title .lead {
+.an-story .author-name {
   margin-bottom: 5px;
 }
 .an-story .story-time {
@@ -6530,6 +6535,9 @@ ul.autocompleter-choices span.autocompleter-queried {
 }
 .an-story .story-target {
   margin: 10px 0;
+}
+.an-story ul.an-meta {
+  margin: 0;
 }
 .an-story .story-body {
   *zoom: 1;

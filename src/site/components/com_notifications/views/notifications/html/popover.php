@@ -12,7 +12,7 @@
 		<div class="entity-portrait-square">
 			<?= @avatar($notification->subject) ?>
 		</div>
-
+		
 		<div class="entity-container">
 	        <div class="entity-description">
 			<?php $data = @helper('parser.parse', $notification, $actor)?>
@@ -21,8 +21,8 @@
 	        
 	        <div class="entity-meta">
 	        <?= @date($notification->creationTime)?>
-	        </div>
-        </div>
+		        </div>
+        	</div>
     </div>
     <?php endforeach;?>
     </div>

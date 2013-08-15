@@ -7,18 +7,22 @@ $dates = @helper('notifications.group', $notifications);
 <div id="com-notifications-list-" class="an-entities">
     <?php foreach($notifications as $notification) : ?>
     <div class="an-entity an-record an-removable">
-    	<div class="entity-portrait-square">
-    		<?= @avatar($notification->subject) ?>
+    	<div class="clearfix">
+	    	<div class="entity-portrait-square">
+	    		<?= @avatar($notification->subject) ?>
+	    	</div>
+	    	
+	    	<div class="entity-container">	
+	    		<p class="entity-title">
+	    			<?php $data = @helper('parser.parse', $notification, $actor)?>
+        			<?= $data['title']?>
+	    		</p>
+	    	
+	    		<div class="entity-meta">
+                	<?= $notification->creationTime->format('%l:%M %p')?>
+        		</div>
+	    	</div>
     	</div>
-    	<div class="entity-container">	        
-	        <div class="entity-description">
-	        <?php $data = @helper('parser.parse', $notification, $actor)?>
-	        <?= $data['title']?>
-        	</div>
-        	<div class="entity-meta">
-                <?= $notification->creationTime->format('%l:%M %p')?>
-        	</div>
-        </div>
     </div>
     <?php endforeach;?>
 </div>
