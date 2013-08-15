@@ -9,7 +9,7 @@ if ( strlen($gadget->url) ) {
 ?>
 <?php $id = uniqid() ?>
 
-<div data-behavior="Load"  data-load-options="{<?=$url?>'element':'.gadget-content'}" class="an-gadget <?=$gadget->id?>">
+<div data-behavior="Load"  data-load-options="{<?=$url?>'element':'.gadget-content','event':'visible','useSpinner':true}" class="an-gadget <?=$gadget->id?>">
     <?php if ( $gadget->show_title !== false) : ?>     
     	<?php if (strlen($gadget->title) ) : ?>
     	<h2 class="gadget-title">
