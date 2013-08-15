@@ -21246,14 +21246,9 @@ var ScrollLoader = new Class({
 //    	console.log('scroll: ' + scroll);
 //    	console.log('---');    	
     	
-    	/*@TODO this line added @kulbakin 
-    	 * 
-    	 * it works for some views but for stories in the dashboard view it doesn't work
-    	 * scroll > scrollSize - scrollWin * 2
-    	 */
     	if( (this.options.fixedheight && scroll < scrollSize)
     				|| scroll > scrollSize - scrollWin * 2 ) { 
-    		//console.log(scroll,scrollSize,scrollWin,scrollSize - scrollWin * 2);
+    		//scroll > Math.floor(scrollSize * 0.6)
     		this.fireEvent('scroll');
     	}
     		
