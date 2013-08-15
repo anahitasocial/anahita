@@ -20146,31 +20146,76 @@ Elements.implement({
 /**
  * Load Behavior. Loads a URL through ajax an update an element
  */
-Behavior.addGlobalFilter('Load',{
-	defaults : {
-		useSpinner : false
-	},
-	setup : function(el, api) 
-	{
-		if ( !api.get('url') )
-				return;
-		
-		var options = {
-			url : api.get('url'),
-			useSpinner : api.getAs(Boolean,'useSpinner')
-		};
-		
-		if ( api.get('element') )
-			options.update = el.getElement(api.get('element'));		
-		
-		var request = el.ajaxRequest(options);		
-		request 	= request.get.bind(request);		
-		if ( api.get('event') ) {
-			el.addEvent(api.get('event'), request);
+(function(){
+	var elements = [];
+	Object.append(elements, {
+		timer : null,
+		cycle : function() 
+		{
+			this.each(function(el){
+				if ( el.isVisible() ) {
+					this.remove(el);
+					el.fireEvent('visible');
+				}
+			}.bind(this));
+		},
+		startTimer : function() 
+		{			
+			if ( this.length == 0 ) {
+				//stop timer
+				clearInterval(this.timer);
+				this.timer = null;
+			} else if (!this.timer) {
+				//start timer
+				this.timer = this.cycle.bind(this).periodical(100);
+			}
+		},
+		add : function(el) {
+			this.include(el);
+			this.startTimer();
+		},
+		remove : function(el) {
+			this.erase(el);
+			this.startTimer();
 		}
-		else request.apply();
+	});
+	Element.Events.visible = {	    	   
+		onAdd    : function() {
+			if ( !this.isVisible() ) {
+				elements.add(this);	
+			}
+		},
+		onRemove: function() {
+			elements.remove(this);
+		}
 	}
-});
+	Behavior.addGlobalFilter('Load',{
+		defaults : {
+			useSpinner : false
+		},
+		setup : function(el, api) 
+		{			
+			if ( !api.get('url') ) {
+				return;
+			}
+			
+			var options = {
+				url : api.get('url'),
+				useSpinner : api.getAs(Boolean,'useSpinner')
+			};
+			
+			if ( api.get('element') )
+				options.update = el.getElement(api.get('element'));		
+			
+			var request = el.ajaxRequest(options);		
+			request 	= request.get.bind(request);		
+			if ( api.get('event') ) {				
+				el.addEvent(api.get('event')+':once', request);					
+			}
+			else request.apply();
+		}
+	});	
+})();
 
 /**
  * Hide Behavior. Hides an element 
@@ -21191,10 +21236,16 @@ var ScrollLoader = new Class({
 //    	console.log('fire :' + Math.floor(scrollSize * 0.6));
 //    	console.log('fire: ' + Math.max(scrollSize - scrollWin * 2, 0));
 //    	console.log('scroll: ' + scroll);
-//    	console.log('---');    	    	
+//    	console.log('---');    	
+    	
+    	/*@TODO this line added @kulbakin 
+    	 * 
+    	 * it works for some views but for stories in the dashboard view it doesn't work
+    	 * scroll > scrollSize - scrollWin * 2
+    	 */
     	if( (this.options.fixedheight && scroll < scrollSize)
-    				|| scroll > Math.floor(scrollSize * 0.6) ) { 
-    		console.log(this.scrollable.getScroll(),this.scrollable.getScrollSize());
+    				|| scroll > scrollSize - scrollWin * 2 ) { 
+    		console.log(scroll,scrollSize,scrollWin,scrollSize - scrollWin * 2);
     		this.fireEvent('scroll');
     	}
     		
