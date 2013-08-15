@@ -1,3 +1,5 @@
+* Moved the HTML component to the core that way the basic installation anahita can use the HTML component
+for building landing pages. After updating you need to resymlink the site using the command `php anahita site:init -n`
 * Prevent having dot in username. A migration has been added to remove all the dots in the username. A username
 can only contain ^[A-Za-z0-9][A-Za-z0-9_-]*$. The migration will replace all the . with the work dot. If you want a different
 strategy you need to rewrite this migration and add your own policy - Arash Sanieyan

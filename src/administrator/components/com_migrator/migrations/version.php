@@ -25,7 +25,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComMigratorMigrationVersion extends KObject            
+class ComMigratorMigrationVersion extends KObject implements ArrayAccess           
 {
     /**
      * Database Adapter
@@ -110,5 +110,48 @@ class ComMigratorMigrationVersion extends KObject
         if ( file_exists($file) ) {
             dbexecfile($file);
         }
+    }
+    
+     /**
+     *
+     * @param   int   $offset
+     * @return  bool
+     */
+    public function offsetExists($offset)
+    {
+        return true;
+    }
+    
+    /**
+     *
+     *
+     * @param   int     $offset
+     * @return  mixed The item from the array
+     */
+    public function offsetGet($offset)
+    {
+        return null;
+    }
+    
+    /**
+     * Executes a query
+     * @param   int     $offset
+     * @param   mixed   $value
+     * @return  mixed
+     */
+    public function offsetSet($offset, $value)
+    {
+        dbexec($value);
+        return $this;
+    }
+    
+    /**
+     *
+     * @param   int     $offset
+     * @return  mixed
+     */
+    public function offsetUnset($offset)
+    {
+        return $this;
     }
 }
