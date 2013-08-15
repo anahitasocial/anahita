@@ -133,6 +133,19 @@ class AnRegistry extends ArrayObject
     }
     
     /**
+     * 
+     * (non-PHPdoc)
+     * @see ArrayObject::offsetUnset()
+     */
+    public function offsetUnset ($offset) 
+    {
+        if($this->_cache) {
+            apc_delete($this->_cache_prefix.'-'.$offset);
+        }
+        return parent::offsetUnset($offset);
+    }
+    
+    /**
      * Load all the existing key/value into the memory
      * 
      * @return void

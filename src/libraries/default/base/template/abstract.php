@@ -220,6 +220,9 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 		$path = $this->findTemplate($template);
 		 
 		if ( !$path ) {
+		    //@TODO a hack to prevent caching the 
+		    //paths that are not found
+		    unset($this->_paths[$template.'.php']);
 	    	throw new KTemplateException($template.' template not found for '.$this->getIdentifier());
 	    }
 	    	    
