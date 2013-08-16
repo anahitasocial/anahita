@@ -3,7 +3,7 @@
 <data name="title">
 <?php if ( $type != 'notification') : ?>	
 	<?php if( $object->access != 'public' && ($target->id == $subject->id || $target->eql($actor)) ): ?>
-    <i class="icon-lock pull-right"></i>  
+    <i class="icon-lock"></i>  
     <?php endif; ?>
     <?= sprintf(@text('COM-NOTES-STORY-ADD'), @name($subject), @route($object->getURL())) ?>
 <?php else: ?>
