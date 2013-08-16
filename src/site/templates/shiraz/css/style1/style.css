@@ -215,7 +215,7 @@ body {
   font-size: 13px;
   line-height: 19px;
   color: #333;
-  background-color: #eee;
+  background-color: #ebebeb;
 }
 a {
   color: #098ED1;
@@ -1692,7 +1692,7 @@ table {
   border-top: 2px solid #ddd;
 }
 .table .table {
-  background-color: #eee;
+  background-color: #ebebeb;
 }
 .table-condensed th,
 .table-condensed td {
@@ -3369,7 +3369,7 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
   color: #555;
-  background-color: #eee;
+  background-color: #ebebeb;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -7025,7 +7025,7 @@ hr {
   border-right: #eee;
 }
 .an-comments .an-comment {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ebebeb;
 }
 dl dt {
   color: #999;
@@ -7034,10 +7034,10 @@ dl dt {
   border-bottom: 1px solid #d5d5d5;
 }
 .popover-content .an-entity {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ebebeb;
 }
 .modal-body .an-entity {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ebebeb;
 }
 a.btn-primary.disabled {
   color: #fff;
@@ -7074,10 +7074,10 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
   color: #999;
 }
 .an-story .an-comments {
-  background-color: #f6f6f6;
+  background-color: #f8f8f8;
 }
 .an-story .an-comments .an-comment {
-  border-top: 1px solid #eee;
+  border-top: 1px solid #ebebeb;
   background-color: transparent;
 }
 #sub-tos .entity-description {
