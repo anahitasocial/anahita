@@ -1,7 +1,8 @@
 * Removed the com_content, com_section, com_categories. If you have existing aricles you can migrate them into
 html and use it within the com_html. Read https://github.com/anahitasocial/article-exporter/blob/master/README.md
 After updating you need to resymlink the site using the command `php anahita site:init -n`
-* Removed some back-end components com_checking,com_admin 
+* Removed  back-end components: com_checking,com_admin and unused libraires (SimplePIE, DOMit).
+If you are using these libriares in your apps then use the composer to install them  
 * Moved the HTML component to the core that way the basic installation anahita can use the HTML component
 for building landing pages. After updating you need to resymlink the site using the command `php anahita site:init -n`
 * Prevent having dot in username. A migration has been added to remove all the dots in the username. A username

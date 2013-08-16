@@ -320,57 +320,12 @@ class JFactory
 	 * @return object Parsed XML document object
 	 */
 
-	 static public function &getXMLParser( $type = 'DOM', $options = array())
+	 static public function &getXMLParser( $type = 'simple', $options = array())
 	 {
 		$doc = null;
 
-		switch (strtolower( $type ))
-		{
-			case 'rss' :
-			case 'atom' :
-			{
-				if (!is_null( $options['rssUrl'] ))
-				{
-					jimport ('simplepie.simplepie');
-					if(!is_writable(JPATH_BASE.DS.'cache')) {
-						$options['cache_time'] = 0;
-					}
-					$simplepie = new SimplePie(
-						$options['rssUrl'],
-						JPATH_BASE.DS.'cache',
-						isset( $options['cache_time'] ) ? $options['cache_time'] : 0
-					);
-					$simplepie->force_feed(true);
-					$simplepie->handle_content_type();
-					if ($simplepie->init()) {
-						$doc = $simplepie;
-					} else {
-						JError::raiseWarning( 'SOME_ERROR_CODE', JText::_('ERROR LOADING FEED DATA') );
-					}
-				}
-			}	break;
-
-			case 'simple' :
-			{
-				jimport('joomla.utilities.simplexml');
-				$doc = new JSimpleXML();
-			}	break;
-
-			case 'dom'  :
-			default :
-			{ 
-				if (!isset($options['lite']) || $options['lite'])
-				{
-					jimport('domit.xml_domit_lite_include');
-					$doc = new DOMIT_Lite_Document();
-				}
-				else
-				{
-					jimport('domit.xml_domit_include');
-					$doc = new DOMIT_Document();
-				}
-			}
-		}
+    	jimport('joomla.utilities.simplexml');
+    	$doc = new JSimpleXML();
 
 		return $doc;
 	}
