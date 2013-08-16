@@ -7083,6 +7083,9 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
   border-top: 1px solid #ebebeb;
   background-color: transparent;
 }
+.an-story .an-comments .an-comment:last-child {
+  border-bottom: 1px solid #ebebeb;
+}
 #sub-tos .entity-description {
   border: 1px solid #eee;
 }
