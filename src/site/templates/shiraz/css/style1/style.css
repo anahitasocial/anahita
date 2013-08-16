@@ -6261,7 +6261,12 @@ ul.autocompleter-choices span.autocompleter-queried {
 .btn-linkedin .icon-twitter,
 .btn-linkedin .icon-googleplus,
 .btn-linkedin .icon-feed,
-.btn-linkedin .icon-linkedin {
+.btn-linkedin .icon-linkedin,
+.btn-pinterest .icon-facebook,
+.btn-pinterest .icon-twitter,
+.btn-pinterest .icon-googleplus,
+.btn-pinterest .icon-feed,
+.btn-pinterest .icon-linkedin {
   background-image: url('../../../base/css/images/icon-socialmedia-white.png');
   color: #fff;
 }
@@ -6269,7 +6274,8 @@ ul.autocompleter-choices span.autocompleter-queried {
 .btn-twitter.selected,
 .btn-googleplus.selected,
 .btn-feed.selected,
-.btn-linkedin.selected {
+.btn-linkedin.selected,
+.btn-pinterest.selected {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #424242;
@@ -6310,7 +6316,12 @@ ul.autocompleter-choices span.autocompleter-queried {
 .btn-linkedin.selected:active,
 .btn-linkedin.selected.active,
 .btn-linkedin.selected.disabled,
-.btn-linkedin.selected[disabled] {
+.btn-linkedin.selected[disabled],
+.btn-pinterest.selected:hover,
+.btn-pinterest.selected:active,
+.btn-pinterest.selected.active,
+.btn-pinterest.selected.disabled,
+.btn-pinterest.selected[disabled] {
   color: #fff;
   background-color: #333;
   *background-color: #262626;
@@ -6324,7 +6335,9 @@ ul.autocompleter-choices span.autocompleter-queried {
 .btn-feed.selected:active,
 .btn-feed.selected.active,
 .btn-linkedin.selected:active,
-.btn-linkedin.selected.active {
+.btn-linkedin.selected.active,
+.btn-pinterest.selected:active,
+.btn-pinterest.selected.active {
   background-color: #1a1a1a \9;
 }
 .btn-facebook {
@@ -6476,6 +6489,36 @@ ul.autocompleter-choices span.autocompleter-queried {
 .btn-linkedin:active,
 .btn-linkedin.active {
   background-color: #13648f \9;
+}
+.btn-pinterest {
+  color: #fff;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #d83238;
+  background-image: -moz-linear-gradient(top,#e03e43,#cb2026);
+  background-image: -webkit-gradient(linear,0 0,0 100%,from(#e03e43),to(#cb2026));
+  background-image: -webkit-linear-gradient(top,#e03e43,#cb2026);
+  background-image: -o-linear-gradient(top,#e03e43,#cb2026);
+  background-image: linear-gradient(to bottom,#e03e43,#cb2026);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00e03d43', endColorstr='#00cb2026', GradientType=0);
+  border-color: #cb2026 #cb2026 #89161a;
+  border-color: rgba(0,0,0,0.1) rgba(0,0,0,0.1) rgba(0,0,0,0.25);
+  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  *background-color: #cb2026;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+}
+.btn-pinterest:hover,
+.btn-pinterest:active,
+.btn-pinterest.active,
+.btn-pinterest.disabled,
+.btn-pinterest[disabled] {
+  color: #fff;
+  background-color: #cb2026;
+  *background-color: #b51d22;
+}
+.btn-pinterest:active,
+.btn-pinterest.active {
+  background-color: #9f191e \9;
 }
 #com-composer-container .composer-button-title {
   margin: 0 5px;
