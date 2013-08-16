@@ -143,4 +143,22 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
         $this->setAttribute($attribute, $arguments[0], isset($arguments[1]) ? $arguments[1] : null);
         return $this;
     }   
+    
+    /**
+     * Retur the attributes in key="value" spaced
+     * 
+     * (non-PHPdoc)
+     * @see KConfig::__toString()
+     */
+    public function __toString()
+    {
+        $attributes = array();
+        foreach($this->getAttributes() as $key => $value) 
+        {
+            $value        = is_string($value) ? '"'.addslashes($value).'"' : json_encode($value);
+            $attributes[] = $key.'='.$value;
+        }
+        
+        return implode(' ', $attributes);
+    }
 }
