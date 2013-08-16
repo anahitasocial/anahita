@@ -5136,9 +5136,6 @@ a:hover {
   max-height: 350px;
   overflow: hidden;
 }
-.module-border.well {
-  padding: 5px 10px;
-}
 .module-title {
   font-size: 16px;
   margin: 0 0 10px 0;
@@ -5159,14 +5156,13 @@ a:hover {
 .module-content h2,
 .module-content h3,
 .module-content h4 {
-  margin: 10px 0;
+  margin: 10px;
 }
 .module-content .alert {
   margin: 0;
 }
 .module-content form {
-  padding: 5px 0;
-  margin: 5px 0;
+  margin: 10px;
 }
 .module-content form .form-actions {
   padding: 10px;
@@ -5193,7 +5189,6 @@ a:hover {
   margin: 5px;
 }
 .module-content .an-entity {
-  padding: 0;
   margin: 0;
 }
 .module-content .an-entity .entity-portrait-square img {
@@ -5424,7 +5419,7 @@ ul.an-navigations li.tabSelected a {
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
-  margin: 10px 0;
+  margin: -10px 10px 10px 10px;
 }
 .form-placeholder span,
 .comment-overtext-box span {
@@ -5524,18 +5519,14 @@ ul.an-actions li a {
   font-size: 13px;
   line-height: 19px;
 }
-.entity-title,
-.entity-name {
-  margin: 10px 0;
-}
 .entity-portrait-square {
   float: left;
-  margin: 10px 0;
+  margin: 10px;
 }
 .entity-title,
 .entity-name {
   line-height: 19px;
-  margin: 10px 0;
+  margin: 10px;
 }
 h1.entity-title,
 h1.entity-name {
@@ -5556,7 +5547,7 @@ h4.entity-name {
 .entity-description,
 .entity-body {
   word-wrap: break-word;
-  margin: 10px 0;
+  margin: 10px;
 }
 .entity-description code,
 .entity-body code {
@@ -5579,16 +5570,16 @@ h4.entity-name {
   font-size: 14px;
 }
 .entity-excerpt {
-  margin: 10px 0;
+  margin: 10px;
 }
 .entity-meta {
   font-size: 12px;
   font-weight: normal;
   color: #999;
-  margin: 10px 0;
+  margin: 10px;
 }
 .entity-actions {
-  margin: 10px 0;
+  margin: 10px;
 }
 .entity-container {
   padding-left: 60px;
@@ -5596,7 +5587,6 @@ h4.entity-name {
 .an-entity {
   *zoom: 1;
   margin: 20px 0;
-  padding: 0 10px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
@@ -5656,7 +5646,7 @@ h4.entity-name {
   height: 98px;
 }
 .an-entities.masonry .entity-portrait-medium {
-  margin: 0 -10px;
+  margin: 0;
 }
 .an-entities.masonry .entity-portrait-medium img {
   -webkit-border-radius: 0;
@@ -5853,15 +5843,9 @@ img.actor-avatar.medium {
   font-weight: normal;
   margin: 7px 0 0 0;
 }
-.an-comments {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-}
 .an-comment-form {
   *zoom: 1;
-  margin: 10px 0;
-  padding: 0 10px;
+  margin: 0 10px;
 }
 .an-comment-form:before,
 .an-comment-form:after {
@@ -5887,7 +5871,7 @@ img.actor-avatar.medium {
   min-height: 120px;
 }
 .an-comment-form .comment-form-container .comment-actions {
-  margin: 10px 0;
+  margin: 10px;
   margin-right: 10px;
   float: right;
 }
@@ -6488,6 +6472,9 @@ ul.autocompleter-choices span.autocompleter-queried {
 #com-composer-container .composer-button-title {
   margin: 0 5px;
 }
+#com-composer-container .form-placeholder {
+  margin: 10px 0;
+}
 #com-composer-container form {
   margin-top: 10px;
 }
@@ -6545,7 +6532,7 @@ ul.autocompleter-choices span.autocompleter-queried {
 .an-story .story-body {
   *zoom: 1;
   word-wrap: break-word;
-  margin: 10px 0;
+  margin: 10px;
 }
 .an-story .story-body:before,
 .an-story .story-body:after {
@@ -6609,11 +6596,11 @@ ul.autocompleter-choices span.autocompleter-queried {
 .an-story .an-code pre {
   display: none;
 }
-.an-stories .an-comment-form {
+.an-story .an-comment-form {
   display: none;
 }
-.an-stories .an-comment.an-entity {
-  padding: 0;
+.an-story .an-comments {
+  margin: 20px 0;
 }
 .an-photos-highlight img {
   opacity: 0.4;
@@ -7034,7 +7021,7 @@ hr {
 .entity-body blockquote {
   border-right: #eee;
 }
-.an-comment {
+.an-comments .an-comment {
   border-top: 1px solid #f3f3f3;
 }
 dl dt {
@@ -7082,6 +7069,13 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
 }
 .an-story .story-title {
   color: #999;
+}
+.an-story .an-comments {
+  background-color: #eee;
+}
+.an-story .an-comments .an-comment {
+  background-color: transparent;
+  border-top: 1px solid #fff;
 }
 #sub-tos .entity-description {
   border: 1px solid #eee;

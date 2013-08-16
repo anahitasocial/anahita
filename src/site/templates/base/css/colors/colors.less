@@ -92,9 +92,9 @@ hr
 
 .module-content
 {
-    .an-entity
-    {
-        background-color: transparent;
+	.an-entity
+	{
+	   background-color: transparent;
     }
 }
 
@@ -137,7 +137,7 @@ hr
 
 .an-entity
 {
-    background-color: @white; 
+    background-color: @white;
 }
 
 .entity-title,
@@ -156,10 +156,15 @@ hr
     }
 }
 
-.an-comment
-{
-    border-top: 1px solid @bodyBackground;
+.an-comments
+{    
+    .an-comment
+	{
+	    border-top: 1px solid @bodyBackground;
+	}
 }
+
+
 
 //datalist
 dl
@@ -264,6 +269,16 @@ ul.autocompleter-choices
     {
         color: @grayLight;
     }	
+
+    .an-comments
+    {
+        background-color: @grayLighter;
+        .an-comment
+        {
+            background-color: transparent;
+            border-top: 1px solid @white;
+        }
+    }
 }
 
 // SUBSCRIPTIONS
