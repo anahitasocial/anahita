@@ -46,13 +46,12 @@ class LibApplicationViewJson extends LibBaseViewJson
         //handle               
         if ( $this->content instanceof Exception )
         {
-            $data   = array();          
-            $errors = array($this->content);
+            $data   = array(); 
+            $data['code']     = $this->content->getCode();
+            $data['message']  = (string)$this->content->getMessage();                    
             if ( $this->content instanceof AnErrorException ) {
-                $errors  = $this->content->getErrors();
-            }
-            $data['errors'] = $this->_toData($errors);
-                        
+                $data['errors']  = $this->_toData($this->content->getErrors());
+            }                        
            //Encode data
             $this->output = json_encode($data);            
         }
