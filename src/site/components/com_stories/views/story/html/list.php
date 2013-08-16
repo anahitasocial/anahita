@@ -38,11 +38,11 @@
     </div>
     
     <?php if( !empty($item->object->title)): ?>
-    <h3 class="entity-title">
+    <h4 class="entity-title">
     	<a href="<?= @route($item->object->getURL()) ?>">
     		<?= $item->object->title ?>
     	</a>
-    </h3>
+    </h4>
     <?php endif; ?>
     
     <?php if ( !empty($body) ) : ?>

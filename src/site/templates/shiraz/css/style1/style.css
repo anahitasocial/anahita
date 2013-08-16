@@ -5156,7 +5156,7 @@ a:hover {
 .module-content h2,
 .module-content h3,
 .module-content h4 {
-  margin: 10px;
+  margin: 10px 0;
 }
 .module-content .alert {
   margin: 0;
@@ -5190,9 +5190,14 @@ a:hover {
 }
 .module-content .an-entity {
   margin: 0;
+  padding: 0;
 }
 .module-content .an-entity .entity-portrait-square img {
   margin: 0;
+}
+.module-content .an-entity .entity-body,
+.module-content .an-entity .entity-description {
+  margin: 10px 0;
 }
 .text-left {
   text-align: left;
