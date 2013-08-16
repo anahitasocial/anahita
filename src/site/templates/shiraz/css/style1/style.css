@@ -215,7 +215,7 @@ body {
   font-size: 13px;
   line-height: 19px;
   color: #333;
-  background-color: #f3f3f3;
+  background-color: #eee;
 }
 a {
   color: #098ED1;
@@ -1692,7 +1692,7 @@ table {
   border-top: 2px solid #ddd;
 }
 .table .table {
-  background-color: #f3f3f3;
+  background-color: #eee;
 }
 .table-condensed th,
 .table-condensed td {
@@ -3369,7 +3369,7 @@ input[type="submit"].btn.btn-mini {
 .nav-tabs > .active > a,
 .nav-tabs > .active > a:hover {
   color: #555;
-  background-color: #f3f3f3;
+  background-color: #eee;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
   cursor: default;
@@ -5635,6 +5635,9 @@ h4.entity-name {
 .an-entity ul.inline li:first-child {
   padding-left: 0;
 }
+.an-entity i.pull-right {
+  margin-right: 10px;
+}
 .an-entities .an-entity:first-child {
   border-top: 0;
 }
@@ -5830,7 +5833,7 @@ img.actor-avatar.medium {
   font-family: "Courier New";
 }
 .an-comment.an-entity {
-  margin: 0 0 1px 0;
+  margin: 1px 0 0 0;
 }
 .an-comment.an-entity .entity-portrait-square img {
   width: 30px;
@@ -7022,7 +7025,7 @@ hr {
   border-right: #eee;
 }
 .an-comments .an-comment {
-  border-top: 1px solid #f3f3f3;
+  border-top: 1px solid #eee;
 }
 dl dt {
   color: #999;
@@ -7031,10 +7034,10 @@ dl dt {
   border-bottom: 1px solid #d5d5d5;
 }
 .popover-content .an-entity {
-  border-top: 1px solid #f3f3f3;
+  border-top: 1px solid #eee;
 }
 .modal-body .an-entity {
-  border-top: 1px solid #f3f3f3;
+  border-top: 1px solid #eee;
 }
 a.btn-primary.disabled {
   color: #fff;
@@ -7071,11 +7074,11 @@ ul.autocompleter-choices li.autocompleter-selected span.autocompleter-queried {
   color: #999;
 }
 .an-story .an-comments {
-  background-color: #eee;
+  background-color: #f6f6f6;
 }
 .an-story .an-comments .an-comment {
+  border-top: 1px solid #eee;
   background-color: transparent;
-  border-top: 1px solid #fff;
 }
 #sub-tos .entity-description {
   border: 1px solid #eee;
