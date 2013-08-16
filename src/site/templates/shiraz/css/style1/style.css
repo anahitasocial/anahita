@@ -5611,7 +5611,7 @@ h4.entity-name {
   height: 50px;
 }
 .an-entity .entity-portrait-medium {
-  margin: 10px 0;
+  margin: 10px;
 }
 .an-entity dl {
   *zoom: 1;
@@ -6570,6 +6570,9 @@ ul.autocompleter-choices span.autocompleter-queried {
 .an-story .story-body a.actor-name {
   float: left;
   margin-right: 3px;
+}
+.an-story .story-body .entity-portrait-medium {
+  margin: 10px 0;
 }
 .an-story .story-body .media-grid {
   *zoom: 1;
