@@ -56,7 +56,8 @@ INSERT INTO `#__modules` (`id`, `title`, `content`, `ordering`, `position`, `che
 
 INSERT INTO `#__modules_menu` (`moduleid`, `menuid`) VALUES
 (1, 0),
-(27, 0);
+(27, 0),
+(28, 0);
 
 INSERT INTO `#__templates_menu` (`template`, `menuid`, `client_id`) VALUES
 ('shiraz', 0, 0),
