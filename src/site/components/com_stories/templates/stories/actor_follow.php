@@ -2,22 +2,14 @@
 
 <data name="title">
 <?php if ( $type != 'notification' ) : ?>
-<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY'), @name($subject), @name($target, 2))?>
+<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY'), @name($subject), @name($target))?>
 <?php else : ?>
 <?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-ACTIVITY-NOTIFICATION'), @name($subject),@possessive($target))?>
 <?php endif; ?>
 </data>
 
 <?php if ( $type == 'story') : ?>
-<data name="body">
-<div class="media-grid">
-<?php 
-	$targets = is_array($target) ? $target : array($target);	
-	foreach($targets as $target) : ?>
-	<div><?= @avatar($target) ?></div>	
-<?php endforeach; ?>
-</div>
-</data>
+
 <?php else : ?>
 <?php
 $commands->insert('follow', array('label'=>sprintf(@text('COM-ACTORS-VIEW-PROFILE'), $subject->name)))->href($subject->getURL())
