@@ -29,11 +29,11 @@
 </data>
 
 <data name="body">
-    <h1 class="entity-title">
+    <h4 class="entity-title">
     	<a href="<?= @route($object->getURL()) ?>">
     		<?= $object->title ?>
     	</a>
-    </h1>
+    </h4>
     <div class="entity-body">
 	    <?= @helper('text.truncate', @content(strip_tags($object->body), array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
 	</div>	

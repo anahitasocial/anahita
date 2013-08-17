@@ -5,6 +5,14 @@
 </data>
 
 <data name="body">
+	<?php if( !empty($object->title) ): ?>
+	<h4 class="entity-title">
+    	<a href="<?= @route($object->getURL()) ?>">
+    		<?= $object->title ?>
+    	</a>
+    </h4>
+	<?php endif; ?>
+
 	<?php if($object->description): ?>
 	<div class="entity-description"><?= @content($object->description) ?></div>
 	<?php endif; ?>

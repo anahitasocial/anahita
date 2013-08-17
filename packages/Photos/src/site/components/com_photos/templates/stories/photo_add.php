@@ -21,9 +21,21 @@
 			(($object->title && $object->description) ? ' :: ' : '').
 			@helper('text.script', $object->description);			 
 		?>
+		
+		<?php if( !empty($object->title) ): ?>
+		<h4 class="entity-title">
+    		<a href="<?= @route($object->getURL()) ?>">
+    			<?= $object->title ?>
+    		</a>
+    	</h4>
+		<?php endif; ?>
+		
 		<?php if ( $story->body ) : ?>
-		<?= @content($story->body) ?>
+		<div class="entity-description">
+			<?= @content($story->body) ?>
+		</div>
 		<?php endif;?>
+		
 		<div class="entity-portrait-medium">
 			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= $object->getPortraitURL('medium'); ?>">
 				<img src="<?= $object->getPortraitURL('medium') ?>" />

@@ -6,6 +6,14 @@
 
 <?php if ($type != 'notification') :?>
 <data name="body">
+	<?php if( !empty($object->title) ): ?>
+	<h4 class="entity-title">
+    	<a href="<?= @route($object->getURL()) ?>">
+    		<?= $object->title ?>
+    	</a>
+    </h4>
+	<?php endif; ?>
+
 	<div data-behavior="Mediabox">
 		<?php 
 			$rel = 'lightbox[actor-'.$object->owner->id.' 900 900]';
