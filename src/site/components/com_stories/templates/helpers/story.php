@@ -52,9 +52,16 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 			        $name = $last_actor;
 				return $name;
 			}
+			$others = array_splice($actors, $truncate_after+1);
+			
+			$ids    = array_map(function($actor) use($others) {
+			    return 'ids[]='.$actor->id;
+			}, $others);
+			$ids = implode('&', $ids);
+			
 			$actors = array_splice($actors, 0, $truncate_after);
 			$actors = implode(', ',array_map(array($helper, 'name'), $actors));
-			$actors = sprintf(JTEXT::_('COM-STORIES-AND-OTHERS'), $actors, JText::_($left_over));	
+			$actors = sprintf(JTEXT::_('COM-STORIES-AND-OTHERS'), $actors, JRoute::_('option=com_actors&layout=modal&view=actors&'.$ids), JText::_($left_over));	
 			return   $actors;
 		}
 		 
