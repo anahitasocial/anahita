@@ -33,21 +33,26 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 	 * @param  ComActorsDomainEntityActor|array $actor
 	 * @return string
 	 */
-	public function actorName($actor, $truncate_after = false)
+	public function actorName($actor, $truncate_after = 1)
 	{
 		$helper = KService::get('com:actors.template.helper');
 			
 		if ( is_array($actor) )
 		{
-			$data = $actor;
-			if ( !$truncate_after || count($data) <= $truncate_after )
-				return implode(', ',array_map(array($helper, 'name'), $data));
-			
-			$left_over = count($data) - $truncate_after;
-			if ( $left_over == 1 ) //just show it
-				return implode(', ',array_map(array($helper, 'name'), $data));
-			
-			$actors = array_splice($data, 0, $truncate_after);
+			$actors    = $actor;
+			$left_over = count($actors) - $truncate_after;
+			if ( !$truncate_after 
+			        || $left_over <= 1		        
+			        ) {
+			    $last_actor = $helper->name(array_pop($actors));
+			    if ( !empty($actors) ) {
+			        $name = implode(', ', array_map(array($helper, 'name'), $actors));
+			        $name = sprintf(JText::_('COM-STORIES-AND-ACTOR'), $name, $last_actor);
+			    } else 
+			        $name = $last_actor;
+				return $name;
+			}
+			$actors = array_splice($actors, 0, $truncate_after);
 			$actors = implode(', ',array_map(array($helper, 'name'), $actors));
 			$actors = sprintf(JTEXT::_('COM-STORIES-AND-OTHERS'), $actors, JText::_($left_over));	
 			return   $actors;

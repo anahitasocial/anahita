@@ -118,9 +118,9 @@ class ComStoriesControllerStory extends ComBaseControllerService
         }
         
 //        $query
-//         ->where('@col(comment.id) IS NOT NULL')
-        //->component('com_photos')
-       //->name('topic_add');
+//             ->where('@col(comment.id) IS NOT NULL')
+//             //->component('com_photos')
+//             ->name('todo_comment');
 
         return $this->setList($query->toEntitySet())
                     ->getList();
