@@ -6582,8 +6582,7 @@ ul.autocompleter-choices span.autocompleter-queried {
 }
 .an-story .story-body {
   *zoom: 1;
-  word-wrap: break-word;
-  margin: 10px;
+  margin: 0 10px;
 }
 .an-story .story-body:before,
 .an-story .story-body:after {
@@ -6594,30 +6593,17 @@ ul.autocompleter-choices span.autocompleter-queried {
 .an-story .story-body:after {
   clear: both;
 }
-.an-story .story-body code {
-  padding: 10px;
-}
-.an-story .story-body h1 {
-  font-size: 20px;
-}
-.an-story .story-body h2 {
-  font-size: 16px;
-}
-.an-story .story-body h3 {
-  font-size: 15px;
-}
-.an-story .story-body h4 {
-  font-size: 14px;
-}
-.an-story .story-body.editable:hover {
-  background-color: #ffffdd;
-}
-.an-story .story-body blockquote {
-  border-right: #eee;
-}
 .an-story .story-body a.actor-name {
   float: left;
   margin-right: 3px;
+}
+.an-story .story-body .entity-title,
+.an-story .story-body .entity-name {
+  margin: 10px 0;
+}
+.an-story .story-body .entity-description,
+.an-story .story-body .entity-body {
+  margin: 10px 0;
 }
 .an-story .story-body .entity-portrait-medium {
   margin: 10px 0;

@@ -5,9 +5,9 @@
 </data>
 
 <data name="body">
-    <h1 class="entity-title">
+    <h4 class="entity-title">
     	<?= @link($object)?>
-    </h1>
+    </h4>
     <div class="entity-body">
 	    <?= @helper('text.truncate', @htmlspecialchars($object->excerpt, ENT_QUOTES), array('length'=>200)); ?>
 	</div>	
