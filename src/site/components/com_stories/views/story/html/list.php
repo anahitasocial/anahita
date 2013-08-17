@@ -13,21 +13,15 @@
     		<?php if( !empty($title)): ?>
     		<h4 class="story-title">
     			<?= $title ?>
-    		</h4>    		
+    		</h4>
     		<?php else: ?>
     		<h4 class="author-name">
     			<?= @name($subject) ?>
     		</h4>
     		<?php endif; ?>
 
-    		<ul class="an-meta inline">
-    			
-    			<?php if ( false && count($other_subjects) > 0 ) : ?>
-    		    	<?= sprintf('and %s others', count($other_subjects))?> 
-    			<?php endif;?>
-    			
-    			<li><?= @date($timestamp) ?></li> 
-    			
+    		<ul class="an-meta inline">   			
+    			<li><?= @date($timestamp) ?></li>     			
     			<?php if( !$item->aggregated() && $item->target->id != $item->subject->id ): ?>
 				<li>
 					<a href="<?= @route($item->target->getURL()) ?>"><?= @name($item->target) ?></a>
@@ -37,13 +31,7 @@
     	</div>
     </div>
     
-    <?php if( !empty($item->object->title)): ?>
-    <h4 class="entity-title">
-    	<a href="<?= @route($item->object->getURL()) ?>">
-    		<?= $item->object->title ?>
-    	</a>
-    </h4>
-    <?php endif; ?>
+
     
     <?php if ( !empty($body) ) : ?>
     <div class="story-body">

@@ -25,7 +25,12 @@
 </data>
 <?php else : ?>
 <data name="title">
-	<?=sprintf(@text('COM-TODOS-STORY-TODO-CLOSED'), @name($subject))?>
+	<?=sprintf(@text('COM-TODOS-STORY-TODO-CLOSED'), @name($subject), @route($object->getURL()))?>
+</data>
+<data name="body">
+    <div>
+		<?= @link($object) ?> 			
+	</div>
 </data>
 <?php endif; ?>
 

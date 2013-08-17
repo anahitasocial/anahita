@@ -24,7 +24,7 @@
 </data>
 <?php else : ?>
 <data name="title">
-	<?= sprintf(@text('COM-TODOS-STORY-TODO-OPENED'), @name($subject))?>
+	<?= sprintf(@text('COM-TODOS-STORY-TODO-OPENED'), @name($subject), @route($object->getURL()))?>
 </data>
 <data name="body">	
 	<?php

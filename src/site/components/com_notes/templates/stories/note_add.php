@@ -8,13 +8,13 @@
     <?= sprintf(@text('COM-NOTES-STORY-ADD'), @name($subject), @route($object->getURL())) ?>
 <?php else: ?>
     <?php if ( $type == 'notification' ) : ?>	
-	<?=sprintf(@text('COM-NOTES-ADD-NOTE-NOTIFICATION'), @name($subject), @route($object->getURL()), @possessive($target))?>    
+	<?= sprintf(@text('COM-NOTES-STORY-ADD'), @name($subject), @route($object->getURL())) ?>    
     <?php endif; ?>
 <?php endif; ?>
 </data>
 
 <?php if ( $type == 'story') : ?>
-<data name="body">
+<data name="body">    
 	<?= @helper('text.truncate', @content($object->body), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
 </data>
 <?php else : ?>
