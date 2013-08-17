@@ -57,7 +57,7 @@ class ComHtmlControllerContent extends ComBaseControllerResource
             }
                         
             $this->getService()->setConfig($this->_view, array(
-                    'template_paths' => array($this->_base_path)
+                    'template_paths' => $this->_base_path
             ));            
         }
     }
