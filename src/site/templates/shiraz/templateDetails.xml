@@ -83,7 +83,7 @@
                 <option value="0">Never (good for production)</option>
                 <option value="1">Only if changed (good for development)</option>
             </param>
-            <param name="compresstyle" type="list" default="0" description="Compress the output style" label="Compress Style">
+            <param name="compresstyle" type="list" default="1" description="Compress the output style" label="Compress Style">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </param>
