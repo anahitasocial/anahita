@@ -19570,7 +19570,7 @@ Class.refactor(Form.Validator.Inline, {
 					this.validationSuccess  = function() {
 						this.element.submit();
 					}.bind(this);
-					this.validationComplete = function() {						
+					this.validationComplete = function() {
 						this.element.removeEvent('validationSuccessful', this.validationSuccess);
 					}.bind(this);
 				}
@@ -19589,8 +19589,7 @@ Class.refactor(Form.Validator.Inline, {
 			return result;
 		}
 	});
-	Element.Properties.remoteValidators = 
-	{
+	Element.Properties.remoteValidators = {
 		get  : function() {
 			if ( !this.retrieve('remoteValidators') ) {
 				var validators = new Array();
@@ -19598,7 +19597,7 @@ Class.refactor(Form.Validator.Inline, {
 				Object.merge(validators, {
 					isSuccess   : function() {
 						return this.length == 0 || this.every(function(validator){
-							return validator.isSuccess()
+							return validator.isSuccess();
 						});
 					},
 					validate  : function() {
@@ -19608,7 +19607,7 @@ Class.refactor(Form.Validator.Inline, {
 					},
 					isPending : function() {						
 						return this.some(function(validator){
-							return validator.isPending()
+							return validator.isPending();
 						});
 					},
 					add : function(validator) {
@@ -19625,17 +19624,16 @@ Class.refactor(Form.Validator.Inline, {
 								}
 								element.fireEvent('validationComplete');
 							}
-						})
+						});
 					}
 				});
 				this.store('remoteValidators', validators);
 			}
 			return this.retrieve('remoteValidators');
 		}
-	}
+	};
 
-	Element.Properties.remoteValidator = 
-	{
+	Element.Properties.remoteValidator = {
 		get  : function() {
 			if ( !this.retrieve('remoteValidator') ) {
 				this.set('remoteValidator', {});
@@ -19643,13 +19641,15 @@ Class.refactor(Form.Validator.Inline, {
 			return this.retrieve('remoteValidator');
 		},
 		set : function(props) {
-			if ( !this.retrieve('remoteValidator') ) {				
+			if ( ! this.retrieve('remoteValidator') ) {
 				this.store('remoteValidator', new RemoteValidator(this, props));
 				this.form.get('remoteValidators').add(this.retrieve('remoteValidator'));				
+			} else {
+				this.retrieve('remoteValidator').props = props;
 			}
 			return this;
 		}
-	}
+	};
 	var RemoteValidatorResponse = new Class({
 		initialize : function(value, type, msg) {
 			this.value = value;
@@ -19664,7 +19664,6 @@ Class.refactor(Form.Validator.Inline, {
 			this.props 	 = props || {};
 			this.status  = null;
 			this.result  = {};
-			this.requestUrl  = this.props.url || this.element.form.get('action');
 			this.responses	 = {};
 		},
 		isPending : function() {
@@ -19676,17 +19675,21 @@ Class.refactor(Form.Validator.Inline, {
 		isFailed  : function() {
 			return this.status == 'error';
 		},
-		validate  : function() {			
+		validate  : function() {
 			var self    = this;
+			var requestUrl  = this.props.url || this.element.form.get('action');
 			var value   = this.element.get('value');
-			if ( this.responses[value] ) {
-				this.result = this.responses[value];
+			var hash    = value + ' @ ' + requestUrl + ' @ ' + JSON.stringify(this.props);
+			
+			if ( this.responses[hash] ) {
+				this.result = this.responses[hash];
 				this.status = this.result.status;
 				return;
-			}			
+			}
+			
 			this.status  = 'pending';
 			this.request = new Request({
-				url    : this.requestUrl,
+				url    : requestUrl,
 				method : 'post',
 				data   : {action:'validate','key':this.props.key || this.element.get('name'),'value':value},
 				onFailure  : function() {
@@ -19696,7 +19699,7 @@ Class.refactor(Form.Validator.Inline, {
 						errorMsg : self.props.errorMsg
 					});
 					self.result.status	  = self.status;
-					self.responses[value] = self.result;
+					self.responses[hash]  = self.result;
 					self.fireEvent('validationComplete');
 				},
 				onSuccess : function() {
@@ -19705,8 +19708,8 @@ Class.refactor(Form.Validator.Inline, {
 					Object.add(self.result,{
 						successMsg : self.props.successMsg
 					});					
-					self.result.status	   = self.status;					
-					self.responses[value]  = self.result;					
+					self.result.status	   = self.status;
+					self.responses[hash]   = self.result;
 					self.fireEvent('validationComplete');
 				},
 				async : true
@@ -19748,14 +19751,14 @@ Class.refactor(Form.Validator.Inline, {
 			.set('remoteValidator', props)
 			.get('remoteValidator');
 			
-			return remoteValidator.getSuccessMsg();			
+			return remoteValidator.getSuccessMsg();
 		},	
 		errorMsg: function(element, props) {
 			var remoteValidator = element
 				.set('remoteValidator', props)
 				.get('remoteValidator');
 			
-			return remoteValidator.getErrorMsg();		    
+			return remoteValidator.getErrorMsg();
 		},
 		test 	: function(element, props) {
 			if ( Form.Validator.getValidator('IsEmpty').test(element) ) {
