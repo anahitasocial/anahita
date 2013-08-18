@@ -60,7 +60,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         $config = new KConfig($config);
         
         $config->append(array(
-            'show_logo' => pick((int) $this->_params->showLogo, 1),
+            'show_logo' => pick($this->_params->showLogo, 1),
             'name'      => pick($this->_params->brandName, 'Anahita'),
             'url'       => 'base://'
         ));
@@ -115,8 +115,8 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         $config->append(array(
             'parse_urls'   => true,
             'style'        => pick($this->_params->cssStyle, 'style1'),
-            'compile'      => pick((int)$this->_params->compilestyle, 0),
-            'compress'     => pick((int)$this->_params->compresstyle, 1),
+            'compile'      => pick($this->_params->compilestyle, 0),
+            'compress'     => pick($this->_params->compresstyle, 1),
         ));
 
         $paths = array(
