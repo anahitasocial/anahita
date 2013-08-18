@@ -430,7 +430,7 @@ Elements.implement({
 			if ( !api.get('url') ) {
 				return;
 			}
-			
+			var event = api.get('event') ;
 			var options = {
 				url : api.get('url'),
 				useSpinner : api.getAs(Boolean,'useSpinner')
@@ -438,11 +438,15 @@ Elements.implement({
 			
 			if ( api.get('element') )
 				options.update = el.getElement(api.get('element'));		
-			
+			if ( event == 'visible' && el.isVisible() ) {
+				event = null;
+			} else if ( event ) {
+				options.useSpinner = true;
+			}
 			var request = el.ajaxRequest(options);		
 			request 	= request.get.bind(request);		
-			if ( api.get('event') ) {				
-				el.addEvent(api.get('event')+':once', request);					
+			if ( event ) {				
+				el.addEvent(event+':once', request);					
 			}
 			else request.apply();
 		}
