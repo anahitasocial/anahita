@@ -75,7 +75,8 @@ class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
         if ( is_array($cache) )
         {
             foreach($config['import'] as $path) {
-                if  ( filemtime($path) > $cache['updated'] ) {
+                if  ( is_readable($path) && 
+                        filemtime($path) > $cache['updated'] ) {
                     $force = true;
                     break;
                 }
@@ -96,7 +97,10 @@ class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
             //store the cache
             file_put_contents($cache_file, serialize($new_cache));
             //store the compiled file
-            
+            //create a directory if 
+            if ( !file_exists(dirname($config->output)) ) {
+                 mkdir(dirname($config->output), 0755);
+            }
             file_put_contents($config->output, $new_cache['compiled']);
         }
     }
