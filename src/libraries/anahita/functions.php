@@ -878,14 +878,14 @@ function is_hash_array($array)
  * 
  * @param array $array The array
  * @param int   $index The index
+ * @param mixed[optional] $default Value to return if index is not found
  */
-function array_value($array, $index)
+function array_value($array, $index, $default = null)
 {
-    $index = (int)$index;
-    if ( $index < 0 ) {
+    if ((int)$index == $index and $index < 0) {
         $index = count($array) + $index;
     }
-    return isset($array[$index]) ? $array[$index] : null;
+    return isset($array[$index]) ? $array[$index] : $default;
 }
 
 /**
