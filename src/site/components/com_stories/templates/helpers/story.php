@@ -51,12 +51,10 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 			    } else 
 			        $name = $last_actor;
 				return $name;
-			}
-			$others = array_splice($actors, $truncate_after+1);
-			
-			$ids    = array_map(function($actor) use($others) {
+			}			
+			$ids    = array_map(function($actor) {
 			    return 'ids[]='.$actor->id;
-			}, $others);
+			}, $actors);
 			$ids = implode('&', $ids);
 			
 			$actors = array_splice($actors, 0, $truncate_after);

@@ -1,7 +1,12 @@
 <?php defined('KOOWA') or die ?>
 <?php
-    $other_subjects  = is_array($subject) ? array_slice($subject, 1) : array(); 
-    $subject         = is_array($subject) ? array_shift($subject) : $subject;     
+    $subject             = is_array($subject) ? array_shift($subject) : $subject;
+    $target_to_show      = null;
+    if ( isset($item->object) && 
+            !is_array($item->target) && 
+            !$item->target->eql($item->subject) ) {
+        $target_to_show = $item->target;        
+    }
 ?>
 <div class="an-story an-entity an-record an-removable">
 	<div class="clearfix">
@@ -22,12 +27,9 @@
 
     		<ul class="an-meta inline">   			
     			<li><?= @date($timestamp) ?></li>     			
-    			<?php if( isset($item->object)     && 
-    			        !is_array($item->target)   && 			        
-    			        $item->target->id != $item->subject->id     			         
-    			        ): ?>
+    			<?php if( $target_to_show ): ?>
 				<li>
-					<a href="<?= @route($item->target->getURL()) ?>"><?= @name($item->target) ?></a>
+					<a href="<?= @route($target_to_show->getURL()) ?>"><?= @name($target_to_show) ?></a>
 				</li>
 				<?php endif; ?>
     		</ul>
