@@ -195,13 +195,13 @@ var AnEditor = new Class({
 		  switch (type) 
 		  {
 		   case "get_from_editor":
-			// content  = content.replace(/<br>/gi,"\n").replace(/<br\s*\/>/gi, "\n");			 
+			 content  = content.replace(/<br>/gi,"\n").replace(/<br\s*\/>/gi, "\n");			 
 			 content  = this._formatText(content, type);
 			 content  = Encoder.htmlDecode(content);
 		     break;
 		   case "insert_to_editor":					 
 			 content  = this._formatText(content, type);			
-		//	 content  = content.replace(/\n/gi,'<br />');
+			 content  = content.replace(/\n/gi,'<br />');
 		     break;
 		  }
 		 return content;
