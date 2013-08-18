@@ -1,9 +1,14 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
-	<?= sprintf(@text('COM-PAGES-STORY-PAGE-ADD'), @name($subject), @link($object), @possessive($target));?>
+	<?= sprintf(@text('COM-PAGES-STORY-PAGE-ADD'), @name($subject), @route($object->getURL())) ?>
 </data>
 
 <data name="body">
-	<?= @helper('text.truncate', @htmlspecialchars($object->excerpt, ENT_QUOTES), array('length'=>200)); ?>
+    <h4 class="entity-title">
+    	<?= @link($object)?>
+    </h4>
+    <div class="entity-body">
+	    <?= @helper('text.truncate', @htmlspecialchars($object->excerpt, ENT_QUOTES), array('length'=>200)); ?>
+	</div>	
 </data>

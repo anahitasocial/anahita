@@ -115,7 +115,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
         
         if ( $this->subject ) {    
             $query->clause()->where('subject.id','IN', (array)KConfig::unbox($this->subject));   
-        }        
+        }
 
         return $this->setList($query->toEntitySet())
                     ->getList();

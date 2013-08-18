@@ -277,6 +277,9 @@ class Config
     public function save()
     {
         $data   = $this->toData();
+        if ( !is_writable($this->_configuration_file) ) {
+            chmod($this->_configuration_file,0755);
+        }
         $file   = new \SplFileObject($this->_configuration_file, 'w');
         $file->fwrite("<?php\n");
         $file->fwrite("class JConfig {\n\n");

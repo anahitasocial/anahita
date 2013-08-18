@@ -1,16 +1,20 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET'), @name($subject), @route($object->getURL()), @possessive($target)) ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET'),  @name($subject), @route($object->getURL())) ?>
 </data>
 
 <data name="body">
-	<?php if($object->title): ?>
-	<h3 class="entity-title"><?= htmlspecialchars($object->title, ENT_QUOTES) ?></h3>
+	<?php if( !empty($object->title) ): ?>
+	<h4 class="entity-title">
+    	<a href="<?= @route($object->getURL()) ?>">
+    		<?= $object->title ?>
+    	</a>
+    </h4>
 	<?php endif; ?>
-	
+
 	<?php if($object->description): ?>
-	<div class="entity-description"><?= htmlspecialchars($object->description, ENT_QUOTES) ?></div>
+	<div class="entity-description"><?= @content($object->description) ?></div>
 	<?php endif; ?>
 	
 	<?php if ( $object->hasCover() ) : ?>
@@ -23,7 +27,7 @@
 	
 	<div data-behavior="Mediabox">
 		<div class="media-grid">	
-			<?php $photos = $object->photos->order('photoSets.ordering'); ?>
+			<?php $photos = $object->photos->order('photoSets.ordering')->limit(15)->fetchSet(); ?>
 			<?php foreach( $photos as $i=>$photo ): ?>
 			<?php 
 			$rel = 'lightbox[actor-set-'.$photo->owner->id.' 900 900]';

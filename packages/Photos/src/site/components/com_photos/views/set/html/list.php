@@ -1,6 +1,18 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <div class="an-entity an-entity-portraiable an-entity-tiled">
+	<div class="clearfix">
+		<div class="entity-portrait-square">
+			<?= @avatar($set->author) ?>
+		</div>
+		
+		<div class="entity-container">
+			<h4 class="author-name"><?= @name($set->author) ?></h4>
+			<div class="an-meta">
+				<?= @date($set->creationTime) ?>
+			</div>
+		</div>
+	</div>
 	
 	<?php if($set->hasCover()): ?>
 	<div class="entity-portrait-medium">

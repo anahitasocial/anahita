@@ -2,7 +2,7 @@
 	
 <?php if(count($todos)) :?>
 	<?php foreach( $todos as $todo) : ?>
-	<?= @view('todo')->layout('gadget')->todo($todo)->filter($filter) ?>
+	<?= @view('todo')->layout('list')->todo($todo)->filter($filter) ?>
 	<?php endforeach; ?>
 <?php else: ?>
 <?= @message(@text('COM-TODOS-EMPTY-LIST-MESSAGE')) ?>

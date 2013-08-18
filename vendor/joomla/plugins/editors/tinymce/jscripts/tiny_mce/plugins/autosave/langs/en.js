@@ -1,1 +1,0 @@
-// EN lang variables

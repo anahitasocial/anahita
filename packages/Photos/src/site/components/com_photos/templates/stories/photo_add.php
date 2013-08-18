@@ -1,8 +1,14 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if (  is_array($object) ) : ?>
 <data name="title">
-	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTOS'), @name($subject), @possessive($target), @route('option=com_photos&view=photos&oid='.$target->id)) ?>
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTOS'), @name($subject)) ?>
 </data>
+<?php else: ?>
+<data name="title">
+	<?= sprintf(@text('COM-PHOTOS-STORY-NEW-PHOTO'), @name($subject), @route($object->getURL()) ); ?>
+</data>
+<?php endif;?>
 
 <?php if ( $type != 'notification') : ?>
 <data name="body">
@@ -15,11 +21,23 @@
 			(($object->title && $object->description) ? ' :: ' : '').
 			@helper('text.script', $object->description);			 
 		?>
+		
+		<?php if( !empty($object->title) ): ?>
+		<h4 class="entity-title">
+    		<a href="<?= @route($object->getURL()) ?>">
+    			<?= $object->title ?>
+    		</a>
+    	</h4>
+		<?php endif; ?>
+		
 		<?php if ( $story->body ) : ?>
-		<?= @content($story->body) ?>
+		<div class="entity-description">
+			<?= @content($story->body) ?>
+		</div>
 		<?php endif;?>
+		
 		<div class="entity-portrait-medium">
-			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($object->getPortraitURL('medium')); ?>">
+			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= $object->getPortraitURL('medium'); ?>">
 				<img src="<?= $object->getPortraitURL('medium') ?>" />
 			</a>
 		</div>
@@ -35,7 +53,7 @@
 			@helper('text.script', $photo->description); 
 		?>
 		<div class="entity-portrait">
-			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($photo->getPortraitURL('medium')) ?>">
+			<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('medium') ?>">
 				<img src="<?= $photo->getPortraitURL('square') ?>" />
 			</a>
 		</div>

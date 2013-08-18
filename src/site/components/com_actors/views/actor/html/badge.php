@@ -7,16 +7,13 @@
 	
 	<div class="module-content">
 		<div class="an-entity">
-			<div class="entity-portrait-square">
-				<?= @avatar($item) ?>
-			</div>
-			
-			<div class="entity-container">
-				<div class="entity-description">
-					<?= @helper('text.truncate', strip_tags($item->description), array('length'=>200)); ?>
+			<div class="clearfix">
+				<div class="entity-portrait-square">
+					<?= @avatar($item) ?>
 				</div>
 				
-				<div class="entity-meta">
+				<div class="entity-container">
+					<div class="entity-meta">
 					<?= $item->followerCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span> 
 					
@@ -25,6 +22,11 @@
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
 					<?php endif; ?>
 				</div>
+				</div>
+			</div>
+			
+			<div class="entity-description">
+				<?= @helper('text.truncate', strip_tags($item->description), array('length'=>200)); ?>
 			</div>
 		</div>
 		

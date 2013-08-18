@@ -78,7 +78,7 @@ var AnEditor = new Class({
 			).inject(element,'before');
 			toggle.setStyles({				
 				'position': 'absolute',
-				'width'   : this.container.getSize().x - 15
+				'width'   : this.container.getSize().x - 25
 			});
 			this.htmlBtn.addEvent('click',   switchui);
 			this.visualBtn.addEvent('click', switchui);			

@@ -72,18 +72,18 @@ class RTMenuHelper {
 		/*
 		 * Content SubMenu
 		 */
-		$menu->addChild(new JMenuNode(JText::_('Articles')), true);
-		$menu->addChild(new JMenuNode(JText::_('Article Manager'), 'index.php?option=com_content', 'article'));
-		if ($manageTrash) {
-			$menu->addChild(new JMenuNode(JText::_('Article Trash'), 'index.php?option=com_trash&task=viewContent', 'trash'));
-		}
-		$menu->addSeparator();
-		$menu->addChild(new JMenuNode(JText::_('Section Manager'), 'index.php?option=com_sections&scope=content', 'section'));
-		$menu->addChild(new JMenuNode(JText::_('Category Manager'), 'index.php?option=com_categories&section=com_content', 'category'));
-		$menu->addSeparator();
-		//$menu->addChild(new JMenuNode(JText::_('Frontpage Manager'), 'index.php?option=com_frontpage', 'frontpage'));
+// 		$menu->addChild(new JMenuNode(JText::_('Articles')), true);
+// 		$menu->addChild(new JMenuNode(JText::_('Article Manager'), 'index.php?option=com_content', 'article'));
+// 		if ($manageTrash) {
+// 			$menu->addChild(new JMenuNode(JText::_('Article Trash'), 'index.php?option=com_trash&task=viewContent', 'trash'));
+// 		}
+// 		$menu->addSeparator();
+// 		$menu->addChild(new JMenuNode(JText::_('Section Manager'), 'index.php?option=com_sections&scope=content', 'section'));
+// 		$menu->addChild(new JMenuNode(JText::_('Category Manager'), 'index.php?option=com_categories&section=com_content', 'category'));
+// 		$menu->addSeparator();
+// 		//$menu->addChild(new JMenuNode(JText::_('Frontpage Manager'), 'index.php?option=com_frontpage', 'frontpage'));
 
-		$menu->getParent();
+// 		$menu->getParent();
 		
 		/*
 		 * Menus SubMenu

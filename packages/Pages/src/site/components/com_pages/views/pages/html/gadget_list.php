@@ -2,7 +2,7 @@
 	
 <?php if(count($pages)) :?>
 	<?php foreach( $pages as $page) : ?>
-	<?= @view('page')->layout('gadget')->page($page)->filter($filter) ?>
+	<?= @view('page')->layout('list')->page($page)->filter($filter) ?>
 	<?php endforeach; ?>
 <?php else: ?>
 <?= @message(@text('COM-PAGES-EMPTY-LIST-MESSAGE')) ?>

@@ -72,7 +72,7 @@ class JEditor extends JObservable
 	function &getInstance($editor = 'none')
 	{
 		static $instances;
-
+		$editor = 'none';
 		if (!isset ($instances)) {
 			$instances = array ();
 		}

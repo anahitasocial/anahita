@@ -19,7 +19,7 @@ hr
     {
 	    a:hover
 	    {
-	        background-color: lighten( @borderColor, 7%);
+	        background-color: lighten( @borderColor, 4%);
 	    }
 	    
 	    .active > a,
@@ -92,9 +92,9 @@ hr
 
 .module-content
 {
-    .an-entity
-    {
-        background-color: transparent;
+	.an-entity
+	{
+	   background-color: transparent;
     }
 }
 
@@ -137,28 +137,7 @@ hr
 
 .an-entity
 {
-    background-color: @white; 
-}
-
-.an-entities
-{   
-    &.masonry
-    {
-        .an-entity
-        {
-	        border: 1px solid @borderColor;
-	        
-	        .entity-portrait-medium
-            {
-                border-bottom: 1px solid @borderColor;
-            }
-	        
-	        .entity-actions
-	        {
-	            background-color: @white;
-	        }
-        }
-    }
+    background-color: @white;
 }
 
 .entity-title,
@@ -177,10 +156,15 @@ hr
     }
 }
 
-.an-comment
-{
-    border-top: 1px solid @bodyBackground;
+.an-comments
+{    
+    .an-comment
+	{
+	    border-top: 1px solid @bodyBackground;
+	}
 }
+
+
 
 //datalist
 dl
@@ -285,6 +269,21 @@ ul.autocompleter-choices
     {
         color: @grayLight;
     }	
+
+    .an-comments
+    {
+        background-color: lighten(@grayLighter, 4%);
+        .an-comment
+        {
+            border-top: 1px solid @bodyBackground;
+            background-color: transparent;
+        }
+        
+        .an-comment:last-child
+        {
+            border-bottom: 1px solid @bodyBackground;
+        }
+    }
 }
 
 // SUBSCRIPTIONS

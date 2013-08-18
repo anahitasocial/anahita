@@ -36,16 +36,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
 				<input class="text_area" type="text" name="sitename" size="50" value="<?php echo $row->sitename; ?>" />
 			</td>
 		</tr>
-		<tr>
-			<td class="key">
-				<span class="editlinktip hasTip" title="<?php echo JText::_( 'Default WYSIWYG Editor' ); ?>::<?php echo JText::_( 'TIPDEFWYSIWYG' ); ?>">
-			<?php echo JText::_( 'Default WYSIWYG Editor' ); ?>
-			</span>
-			</td>
-			<td>
-				<?php echo $lists['editor']; ?>
-			</td>
-		</tr>
+		
 	</tbody>
 	</table>
 </fieldset>

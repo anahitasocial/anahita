@@ -210,6 +210,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         
         if ( $debug ) 
         {
+            $recipients = array();
             foreach($mails as $i => $mail)
             {
                 $recipients[] = $mail['to'];

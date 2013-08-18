@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
-<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-REQUEST-NOTIFICATION'),@name($subject),@route($target->getURL().'&get=settings&edit=requests'),@possessive($target))?>
+<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-REQUEST-NOTIFICATION'), @name($subject), @route($target->getURL().'&get=settings&edit=requests'),@possessive($target))?>
 </data>
 
 <?php

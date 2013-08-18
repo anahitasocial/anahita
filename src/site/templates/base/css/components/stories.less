@@ -30,49 +30,78 @@
 }
 
 .an-story
-{	   
-    .story-container
+{	           
+    .story-title
     {
-       .entity-container;
+        font-size: @baseFontSize + 1;
+        font-weight: normal;
+        margin-bottom: 5px;
+    }
+    
+    .author-name
+    {
+        margin-bottom: 5px;
+    }
+    
+    .story-time
+    {
+        margin: 10px 0;
+    }
+    
+    .story-target
+    {
+       margin: 10px 0; 
+    }
+    
+    ul.an-meta
+    {
+        margin: 0;
+    }
         
-        h4.story-title
-        {
-            font-size: @baseFontSize;
-            font-weight: normal;
-            a
-            {
-                font-weight: bold;
-            }
-        }
-        
-        .story-body
-        {
-            .clearfix;
-            .entity-body;
+    .story-body
+    {
+       .clearfix;
+       margin: 0 10px;
             
-            a.actor-name
-           {
-                float: left;
-                margin-right: 3px;
-           }
-           
-           .media-grid
-		    {   
-		        .clearfix;
-		        margin: -5px;
-		                              
-		        img
-		        {
-		           margin: 5px;
-		           .square(87px);
-		           
-		           &.actor-avatar
-		           {
-		              .square(55px);
-                   }
-                }
-		    }           
+        a.actor-name
+        {
+            float: left;
+            margin-right: 3px;
         }
+        
+        .entity-title,
+        .entity-name
+        {
+            margin: 10px 0;
+        }
+        
+        .entity-description,
+        .entity-body
+        {
+            margin: 10px 0;
+        }
+        
+        .entity-portrait-medium
+	     {   
+	         margin: 10px 0;
+	     }
+           
+        .media-grid
+		{   
+            .clearfix;
+            margin: -5px;
+                              
+            img
+            {
+                margin: 5px;
+                .square(80px);
+           
+                &.actor-avatar
+                {
+                    .square(40px);
+                }
+            }
+	   }           
     }
     
     code  
@@ -86,21 +115,19 @@
           .hide;
        }
     }
-}
-
-.an-stories
-{
+    
     .an-comment-form 
     {
         .hide;
-        padding-left: 20px;
     }
     
-    .an-comment
+    .an-comments
     {
-        &.an-entity
+        margin: 20px 0;
+        
+        .an-comment
         {
-            padding: 0;
+            border-radius(0);
         }
-    }	
+    }
 }

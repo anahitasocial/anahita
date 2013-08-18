@@ -28,7 +28,7 @@ Delegator.register('click', {
 </module>
 
 <module position="sidebar-b">
-	<div class="an-entity an-photos-set">
+	<div class="an-entity an-photos-set">		
 		<?php if($set->hasCover()): ?>
 		<div id="set-cover-wrapper">
 			<?= @template('cover') ?>

@@ -1,16 +1,22 @@
 //Anahita ENTITIES
+.author-name,
+.editor-name
+{
+   font-size: @baseFontSize; 	
+   line-height: @baseLineHeight;
+}
 
 .entity-portrait-square
 {        
-    float: left;    
-    margin: 10px 0;
+    float: left;
+    margin: 10px;
 }
 
 .entity-title,
 .entity-name
 {
    line-height: @baseLineHeight;
-   margin: 10px 0;
+   margin: 10px;
 }
 
 h1.entity-title,
@@ -32,7 +38,7 @@ h3.entity-name
 }
 
 h4.entity-title,
-h4.entity-name
+h4.entity-name,
 { 
     font-size: @baseFontSize + 2;
 }
@@ -41,12 +47,7 @@ h4.entity-name
 .entity-body
 {
     word-wrap: break-word;
-    margin: 10px 0;
-    
-    ol,ul
-    {
-       padding-left: 30px;
-    }
+    margin: 10px;
     
     code 
     { 
@@ -61,24 +62,18 @@ h4.entity-name
 
 .entity-excerpt
 {
-    margin: 10px 0;	
+    margin: 10px;	
 }
 
 .entity-meta
 { 
     .an-meta;
-    margin: 10px 0;
+    margin: 10px;
 }
 
 .entity-actions
 {
-    margin: 10px 0;    
-}
-
-.entity-author,
-.entity-editor
-{
-    margin: 10px 0;	
+    margin: 10px;    
 }
 
 .entity-container
@@ -90,7 +85,6 @@ h4.entity-name
 {
     .clearfix;
     margin: 20px 0;
-    padding: 0 10px;
     .border-radius(@baseBorderRadius);
     
     &.an-entity-select-option
@@ -113,14 +107,7 @@ h4.entity-name
     
     .entity-portrait-medium
      {   
-         margin: 10px 0;
-         
-         img
-         {
-             margin: 0;
-             .border-bottom-left-radius(0px);
-             .border-bottom-right-radius(0px);
-         }
+         margin: 10px;
      }
 	
 	dl
@@ -136,6 +123,19 @@ h4.entity-name
         {
             padding-left: 120px;
         }
+    }
+    
+    ul.inline
+    {
+        li:first-child
+        {
+            padding-left: 0;
+        }
+    }
+    
+    i.pull-right
+    {
+        margin-right: 10px;
     }
 }
 
@@ -166,31 +166,14 @@ h4.entity-name
     
     &.masonry
     {
-        .an-entity
-        {                                        
-            .entity-portrait-medium
-		    {   
-		         margin: 0 -10px;
-		    }
+        .entity-portrait-medium
+        {            
+            margin: 0;
             
-            .entity-actions
+            img
             {
-                .hide;
-                margin: 0 0 0 -10px;
-                padding: 10px;
-                position: absolute;
-                .border-top-left-radius(@baseBorderRadius);
-                .border-bottom-right-radius(@baseBorderRadius);
-            }
-            
-            &:hover
-            {
-                .entity-actions
-                {
-                    .show;
-                }
+                .border-radius(0);
             }
         }
     }
-    
 }

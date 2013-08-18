@@ -2,9 +2,10 @@
 
 <?php if ( is_array($object) ) : ?>
 <data name="title">	
-	<?= sprintf(@text('COM-TODOS-STORY-TODOS-OPENED'), @name($subject), count($object), @possessive($target))?>
+	<?= sprintf(@text('COM-TODOS-STORY-TODOS-OPENED'), @name($subject)) ?>
 </data>
 <data name="body">	
+<ol>
 	<?php foreach($object as $obj) : ?>
 	<?php
 		$priority = '';
@@ -17,14 +18,13 @@
 			default : $priority = @text('COM-TODOS-TODO-PRIORITY-LOWEST');break;
 		}
 	?>	
-	<div>
-		<?= @link($obj) ?> <span class="an-meta"> - (<?= @text('COM-TODOS-TODO-PRIORITY') ?>: <?=$priority?>)</span>			
-	</div>
+	<li><?= @link($obj) ?> <span class="an-meta"> - (<?= @text('COM-TODOS-TODO-PRIORITY') ?>: <?=$priority?>)</span></li>
 	<?php endforeach; ?>
+</ol>
 </data>
 <?php else : ?>
 <data name="title">
-	<?= sprintf(@text('COM-TODOS-STORY-TODO-OPENED'), @link($subject), @name($object),  @possessive($target))?>
+	<?= sprintf(@text('COM-TODOS-STORY-TODO-OPENED'), @name($subject), @route($object->getURL()))?>
 </data>
 <data name="body">	
 	<?php
