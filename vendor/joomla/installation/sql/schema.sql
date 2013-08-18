@@ -129,32 +129,6 @@ CREATE TABLE `#__anahita_nodes` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__categories` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) NOT NULL DEFAULT '0',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `image` varchar(255) NOT NULL DEFAULT '',
-  `section` varchar(50) NOT NULL DEFAULT '',
-  `image_position` varchar(30) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `published` tinyint(1) NOT NULL DEFAULT '0',
-  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `editor` varchar(50) DEFAULT NULL,
-  `ordering` int(11) NOT NULL DEFAULT '0',
-  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `count` int(11) NOT NULL DEFAULT '0',
-  `params` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `cat_idx` (`section`,`published`,`access`),
-  KEY `idx_access` (`access`),
-  KEY `idx_checkout` (`checked_out`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__components` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL DEFAULT '',
@@ -171,56 +145,6 @@ CREATE TABLE `#__components` (
   `enabled` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent_option` (`parent`,`option`(32))
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__content` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `title_alias` varchar(255) NOT NULL DEFAULT '',
-  `introtext` mediumtext NOT NULL,
-  `fulltext` mediumtext NOT NULL,
-  `state` tinyint(3) NOT NULL DEFAULT '0',
-  `sectionid` int(11) unsigned NOT NULL DEFAULT '0',
-  `mask` int(11) unsigned NOT NULL DEFAULT '0',
-  `catid` int(11) unsigned NOT NULL DEFAULT '0',
-  `created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `created_by` int(11) unsigned NOT NULL DEFAULT '0',
-  `created_by_alias` varchar(255) NOT NULL DEFAULT '',
-  `modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `modified_by` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `publish_up` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `publish_down` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `images` text NOT NULL,
-  `urls` text NOT NULL,
-  `attribs` text NOT NULL,
-  `version` int(11) unsigned NOT NULL DEFAULT '1',
-  `parentid` int(11) unsigned NOT NULL DEFAULT '0',
-  `ordering` int(11) NOT NULL DEFAULT '0',
-  `metakey` text NOT NULL,
-  `metadesc` text NOT NULL,
-  `access` int(11) unsigned NOT NULL DEFAULT '0',
-  `hits` int(11) unsigned NOT NULL DEFAULT '0',
-  `metadata` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_section` (`sectionid`),
-  KEY `idx_access` (`access`),
-  KEY `idx_checkout` (`checked_out`),
-  KEY `idx_state` (`state`),
-  KEY `idx_catid` (`catid`),
-  KEY `idx_createdby` (`created_by`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__content_frontpage` (
-  `content_id` int(11) NOT NULL DEFAULT '0',
-  `ordering` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`content_id`)
 ) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
@@ -392,28 +316,6 @@ CREATE TABLE `#__plugins` (
   `params` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_folder` (`published`,`client_id`,`access`,`folder`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__sections` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `image` text NOT NULL,
-  `scope` varchar(50) NOT NULL DEFAULT '',
-  `image_position` varchar(30) NOT NULL DEFAULT '',
-  `description` text NOT NULL,
-  `published` tinyint(1) NOT NULL DEFAULT '0',
-  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `ordering` int(11) NOT NULL DEFAULT '0',
-  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `count` int(11) NOT NULL DEFAULT '0',
-  `params` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_scope` (`scope`)
 ) ENGINE=MyISAM;
 
 -- --------------------------------------------------------

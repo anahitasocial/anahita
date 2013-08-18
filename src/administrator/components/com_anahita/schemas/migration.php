@@ -41,11 +41,11 @@ class ComAnahitaSchemaMigration extends ComMigratorMigrationAbstract
         $config->append(array(
             'tables' => array(
                     'anahita_edges','anahita_nodes',
-                    'categories','components','content',
-                    'content_frontpage','core_acl_aro','core_acl_aro_groups',
+                    'components',
+                    'core_acl_aro','core_acl_aro_groups',
                     'core_acl_aro_map','core_acl_aro_sections','core_acl_groups_aro_map',
                     'groups','menu','menu_types','migrator_versions','modules','modules_menu',
-                    'plugins','sections','session','templates_menu','users'
+                    'plugins','session','templates_menu','users'
             )
         ));
     
