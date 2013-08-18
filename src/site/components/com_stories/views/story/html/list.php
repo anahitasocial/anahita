@@ -22,9 +22,9 @@
 
     		<ul class="an-meta inline">   			
     			<li><?= @date($timestamp) ?></li>     			
-    			<?php if( !$item->aggregated() && 
-    			        $item->target->id != $item->subject->id &&
-    			        isset($item->object) 
+    			<?php if( isset($item->object)     && 
+    			        !is_array($item->target)   && 			        
+    			        $item->target->id != $item->subject->id     			         
     			        ): ?>
 				<li>
 					<a href="<?= @route($item->target->getURL()) ?>"><?= @name($item->target) ?></a>
