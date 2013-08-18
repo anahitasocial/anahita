@@ -8,7 +8,9 @@
 </data>
 
 <data name="body">
+	<div class="entity-body">
     <?= @helper('text.truncate', @content($object->body, array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
+    </div>
 </data>
 
 <?php if ($type == 'notification') :?>
