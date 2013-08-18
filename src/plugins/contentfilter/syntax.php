@@ -12,8 +12,6 @@
  * @link       http://www.anahitapolis.com
  */
 
-jimport('geshi.geshi');
-
 /**
  * Syntax highlighter content filter 
  * 

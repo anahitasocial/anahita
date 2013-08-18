@@ -248,7 +248,7 @@ class MissionControl extends RTCore {
 
         // display editors
         if ($this->params->get('enableQuickEditor')) {
-        	$output[] = array($this->_renderEditorSelect(), 'dropdown quickedit');
+        	//$output[] = array($this->_renderEditorSelect(), 'dropdown quickedit');
 		}
 		
 		echo $this->_listify($output,$disabled_class);

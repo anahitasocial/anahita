@@ -18,6 +18,7 @@ INSERT INTO `#__components` VALUES(38, 'People', 'option=com_people', 0, 0, '', 
 INSERT INTO `#__components` VALUES(39, 'Stories', '', 0, 0, '', 'Stories', 'com_stories', 0, '', 1, '', 1);
 INSERT INTO `#__components` VALUES(40, 'Notifications', 'option=com_notifications', 0, 0, 'option=com_notifications', 'Notifications', 'com_notifications', 0, 'js/ThemeOffice/component.png', 1, '', 1);
 INSERT INTO `#__components` VALUES(41, 'Notes', 'option=com_notes', 0, 0, '', 'Notes', 'com_notes', 0, '', 1, '', 1);
+INSERT INTO `#__components` VALUES(42, 'Html', 'option=com_html', 0, 0, 'option=com_html', 'Html', 'com_html', 0, 'js/ThemeOffice/component.png', 1, '', 1);
 
 INSERT INTO `#__plugins` VALUES (1, 'Authentication - Joomla', 'joomla', 'authentication', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', '');
 INSERT INTO `#__plugins` VALUES (5, 'User - Joomla!', 'joomla', 'user', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', 'autoregister=1\n\n');

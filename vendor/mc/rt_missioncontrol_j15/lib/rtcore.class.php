@@ -480,8 +480,8 @@ class RTCore
             $tools = array();
             
             if ($canCheckin) {
-                $tools[] = $this->_addListItem(JText::_('Global Checkin'), 'checkin', 'index.php?option=com_checkin');
-				$tools[] = $this->_addListItem('___');
+                //$tools[] = $this->_addListItem(JText::_('Global Checkin'), 'checkin', 'index.php?option=com_checkin');
+				//$tools[] = $this->_addListItem('___');
             }
 
             $tools[] = $this->_addListItem(JText::_('Cache Manager'), 'config', 'index.php?option=com_cache');
