@@ -12,7 +12,7 @@ var OrderPagesOption = function() {
 	var el = this;
 	return {
 		   method: 'get',
-		   update: 'an-entities-main-wrapper',
+		   update: document.id('an-entities-main-wrapper'),
 		   onSuccess : function() 
 		   {			   
 			   document.getElements('.page-ordering').removeClass('active');

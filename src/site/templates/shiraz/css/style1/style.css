@@ -5614,6 +5614,9 @@ h4.entity-name {
 .an-entity .entity-portrait-square img {
   width: 50px;
   height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
 }
 .an-entity .entity-portrait-medium {
   margin: 10px;
@@ -5702,6 +5705,9 @@ img.actor-avatar {
 img.actor-avatar.square {
   width: 50px;
   height: 50px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 25px;
 }
 img.actor-avatar.default {
   width: 50px;
@@ -5843,6 +5849,9 @@ img.actor-avatar.medium {
 .an-comment.an-entity .entity-portrait-square img {
   width: 30px;
   height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
 }
 .an-comment.an-entity .entity-container {
   padding-left: 40px;
@@ -5871,6 +5880,9 @@ img.actor-avatar.medium {
 .an-comment-form .comment-form-avatar img {
   width: 30px;
   height: 30px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  border-radius: 15px;
 }
 .an-comment-form .comment-form-container {
   padding: 10px 0 0 40px;
