@@ -17,7 +17,7 @@
 	<?php foreach($actorbar->getCommands() as $command) : ?>
 		<li><?= @helper('ui.command', $command) ?></li>
 	<?php endforeach; ?>
-		<li class="profile">
+		<li class="profile visible-desktop">
 			<a href="<?=@route($actorbar->getActor()->getURL())?>">
 			<?= @text('COM-ACTORS-BACK-TO-PROFILE') ?>
 			</a>

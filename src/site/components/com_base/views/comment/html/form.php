@@ -27,7 +27,7 @@ if ( $editor ) {
 				<?php if ( $editor ) : ?>			
 				<?php $id   = isset($comment) ? $comment->id   : time() ?>
 				<?php $body = isset($comment) ? $comment->getBody() : ''?>
-				<?= @editor(array('name'=>'body', 'content'=>$body, 'html'=>array('cols'=>50, 'rows'=>5, 'class'=>'input-xxlarge','data-validators'=>'required maxLength:5000', 'id'=>'an-comment-body-'.$id)))?>
+				<?= @editor(array('name'=>'body', 'content'=>$body, 'html'=>array('cols'=>50, 'rows'=>5, 'class'=>'input-block-level','data-validators'=>'required maxLength:5000', 'id'=>'an-comment-body-'.$id)))?>
 				<?php else : ?>
 				<textarea name="body" cols="50" rows="3" class="input-block-level" data-validators="required maxLength:5000"><?= isset($comment) ? stripslashes($comment->getBody()) : ''?></textarea>
 				<?php endif;?>
