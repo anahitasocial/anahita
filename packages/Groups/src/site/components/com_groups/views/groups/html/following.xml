@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-	<layout title="Following">
+	<layout title="Viewer Following">
 		<message>Groups that the viewer is following.</message>
 		<url>
 			<param name="oid" value="viewer" />
