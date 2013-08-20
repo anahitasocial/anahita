@@ -5369,6 +5369,9 @@ a:hover {
 .feed ul >li {
   padding: 0 0 10px 0;
 }
+form.inline-edit {
+  margin: 0 10px;
+}
 form.inline-edit .form-actions {
   margin: 0;
   border: 0;
@@ -5844,7 +5847,7 @@ img.actor-avatar.medium {
   font-family: "Courier New";
 }
 .an-comment.an-entity {
-  margin: 1px 0 0 0;
+  margin: 0;
 }
 .an-comment.an-entity .entity-portrait-square img {
   width: 30px;
