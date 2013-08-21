@@ -304,10 +304,11 @@ class JEditor extends JObservable
 
 		// Get the plugin
 		$plugin   =& JPluginHelper::getPlugin('editors', $this->_name);
-		$params   = new JParameter($plugin->params);
-		$params->loadArray($config);
-		$plugin->params = $params;
-
+		if ( $plugin ) {
+		    $params   = new JParameter($plugin->params);
+		    $params->loadArray($config);
+		    $plugin->params = $params;
+		}
 		// Build editor plugin classname
 		$name = 'plgEditor'.$this->_name;
 		if($this->_editor = new $name ($this, (array)$plugin))
