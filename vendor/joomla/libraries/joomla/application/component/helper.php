@@ -112,7 +112,7 @@ class JComponentHelper
         $identifier->application = $mainframe->isAdmin()  ? 'admin' : 'site';        
         $lang =& JFactory::getLanguage();
         $lang->load($name);
-        KLoader::loadIdentifier($identifier);
+        KLoader::getInstance()->loadIdentifier($identifier);
         
         //new way of doing it
         if ( !file_exists($path) ) 

@@ -91,5 +91,5 @@ $autoloader = require_once( JPATH_VENDOR.'/autoload.php' );
 $autoloader->unregister();
 $autoloader->register();
 
-KLoader::loadIdentifier('com://site/application.aliases');
+KLoader::getInstance()->loadIdentifier('com://site/application.aliases');
 ?>
