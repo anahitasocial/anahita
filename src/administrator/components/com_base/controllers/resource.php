@@ -85,5 +85,16 @@ class ComBaseControllerResource extends LibBaseControllerResource
 	{
 	    //Create the redirect
 	    $context->response->setRedirect(JRoute::_('option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name)));
+	}		
+
+	/**
+	 * Saves redirecs back to the collection view
+	 *
+	 * @param KCommandContext $context
+	 */
+	protected function _actionSave(KCommandContext $context)
+	{
+	    $this->execute('post', $context);
+	    $context->response->setRedirect(JRoute::_('option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name)));
 	}	
 }
