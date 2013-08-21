@@ -25,8 +25,18 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComBaseControllerToolbarMenubar extends ComDefaultControllerToolbarMenubar
+class ComBaseControllerToolbarMenubar extends KControllerToolbarAbstract
 {
+    /**
+     * Push the menubar into the view
+     * .
+     * @param	KEvent	A event object
+     */
+    public function onBeforeControllerGet(KEvent $event)
+    {
+        $event->caller->getView()->menubar = $this;
+    }
+        
     /**
      * Push the toolbar into the view
      * .
@@ -71,5 +81,48 @@ class ComBaseControllerToolbarMenubar extends ComDefaultControllerToolbarMenubar
                 }
             }
         }
-    }    
+    }
+
+    /**
+     * Get the list of commands
+     *
+     * Will attempt to use information from the xml manifest if possible
+     *
+     * @return  array
+     */
+    public function getCommands()
+    {
+        $name     = $this->getController()->getIdentifier()->name;
+        $package  = $this->getIdentifier()->package;
+        $manifest = JPATH_ADMINISTRATOR.'/components/com_'.$package.'/manifest.xml';
+    
+        if(file_exists($manifest))
+        {
+            $xml = simplexml_load_file($manifest);
+             
+            if(isset($xml->administration->submenu))
+            {
+                foreach($xml->administration->submenu->children() as $menu)
+                {
+                    $view = (string)$menu['view'];
+                     
+                    if(!isset($menu['href'])) {
+                        $menu['href'] = 'index.php?option=com_'.$package.'&view='.$view;
+                    }
+    
+                    if(!isset($menu['active'])) {
+                        $menu['active'] = ($name == KInflector::singularize($view));
+                    }
+                     
+                    $this->addCommand(JText::_((string)$menu), array(
+                            'href'   => JRoute::_($menu['href']),
+                            'active' => (string) $menu['active']
+                    ));
+                }
+            }
+        }
+    
+        return parent::getCommands();
+    }
+      
 }
