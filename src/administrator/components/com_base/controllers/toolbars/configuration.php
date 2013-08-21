@@ -25,7 +25,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComBaseControllerToolbarConfiguration extends ComDefaultControllerToolbarDefault
+class ComBaseControllerToolbarConfiguration extends ComBaseControllerToolbarDefault
 {
     /**
      * Push the toolbar into the view
