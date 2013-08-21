@@ -1,7 +1,18 @@
 #!/usr/bin/env php
 <?php 
 
-//@TODO teribble. should use autoload
-$console = require_once(__DIR__.'/../Console/Loader.php');
-$console->run();
-exit(0);
+$loaders[] = __DIR__.'/../Console/Loader.php';
+$loaders[] = getcwd().'/vendor/anahita/anahita/Console/Loader.php';
+
+foreach($loaders as $loader) 
+{
+    if ( file_exists($loader) ) {
+        $console = require_once($loader);
+        $console->run();
+        exit(0);
+    }
+}
+
+echo "Can't find the Loader file. Please make sure to run Anahita command in an Anahita installation";
+echo "\n";
+exit(1);
