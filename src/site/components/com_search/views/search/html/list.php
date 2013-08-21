@@ -26,6 +26,9 @@
 			<ul class="an-meta inline">
 				<?php if($item->inherits('ComMediumDomainEntityMedium')): ?>
 				<li><?= @date($item->creationTime) ?></li>
+					<?php if(!$item->owner->eql($item->author)): ?>
+					<li><?= @name($item->owner) ?></li>
+					<?php endif; ?>
 				<?php endif; ?>
 				
 				<?php if($item->inherits('ComActorsDomainEntityActor')): ?>
