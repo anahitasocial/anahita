@@ -277,7 +277,8 @@ class Config
     public function save()
     {
         $data   = $this->toData();
-        if ( !is_writable($this->_configuration_file) ) {
+        if ( file_exists($this->_configuration_file) &&
+                !is_writable($this->_configuration_file) ) {
             chmod($this->_configuration_file,0755);
         }
         $file   = new \SplFileObject($this->_configuration_file, 'w');
