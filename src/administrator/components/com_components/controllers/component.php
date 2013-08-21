@@ -35,8 +35,7 @@ class ComComponentsControllerComponent extends ComBaseControllerService
 	public function __construct(KConfig $config)
 	{
 		parent::__construct($config);
-		
-		$this->_action_map['save'] = 'post';
+				
 		$this->_action_map['edit'] = 'order';
 		
 		$this->getToolbar('component')->setTitle('Assignable Components');
