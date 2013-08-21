@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <metadata>
-    <view title="Todos">
-        <message>Viewer's Todos</message>
+    <view title="Viewer's Todos">
+        <message></message>
     </view>
 </metadata>

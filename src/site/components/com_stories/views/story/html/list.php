@@ -43,22 +43,21 @@
     	<?= $body ?>
     </div>
     <?php endif; ?>
+         
+    <?php
+    	$votable_item = null;               
+        if ( !$item->aggregated() && $item->object && $item->object->isVotable() ) { 
+           $votable_item = $item->object;
+        }
+    ?>
         
+    <?php if ( $votable_item ) : ?> 
     <div class="entity-meta">
-        
-    	<?php
-           $votable_item = null;               
-           if ( !$item->aggregated() && $item->object && $item->object->isVotable() ) { 
-                $votable_item = $item->object;
-           }
-        ?>
-        
-        <?php if ( $votable_item ) : ?> 
-        <div class="vote-count-wrapper" id="vote-count-wrapper-<?= $votable_item->id ?>">
-            <?= @helper('ui.voters', $votable_item); ?>
-        </div>
-        <?php endif; ?>
-    </div>
+	    <div class="vote-count-wrapper" id="vote-count-wrapper-<?= $votable_item->id ?>">
+        <?= @helper('ui.voters', $votable_item); ?>
+	     </div>
+   	</div>
+    <?php endif; ?>
         
     <div class="entity-actions">    
     	<?php $can_comment = $commands->offsetExists('comment') ?>
