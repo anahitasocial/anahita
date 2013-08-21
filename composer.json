@@ -13,7 +13,7 @@
      "require": {
         "php": ">=5.3",
         "symfony/console": "2.1.*",        
-        "dg/mysql-dump": "dev-master",
+        "dg/mysql-dump": "1.1.0",
         "easybook/geshi": "dev-master"           
     }
 }
