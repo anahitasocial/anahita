@@ -118,9 +118,14 @@ class Map
         }
         elseif (is_dir($this->_target)) {
             exec("rm -rf {$this->_target}");
-        }        
-        //print $this->_src."\n".$this->_target."\n";        
-        @symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
+        }
+        
+        if (stristr(PHP_OS, 'WIN')) {
+        	// Windows doesn't support relative symlinking so use absolute ones
+        	@symlink($this->_src, $this->_target);
+        } else {
+        	@symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
+        }
     }
     
     /**
