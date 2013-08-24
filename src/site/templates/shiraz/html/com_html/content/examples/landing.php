@@ -17,7 +17,7 @@
 	</div>
 	
 	<div class="span4">
-	<?php $actors = KService::get('repos:actors.actor')->getQuery()->disableChain()->where('id', 'IN', array(1))->fetchSet(); ?>
+	<?php $actors = KService::get('repos:actors.actor')->getQuery()->disableChain()->limit(2)->fetchSet(); ?>
 	<ul class="thumbnails">
 	<?php foreach($actors as $actor): ?>
 	<li><?= @avatar($actor) ?></li>
