@@ -29,7 +29,7 @@
 					<i class="icon-googleplus"></i>
 				</a>
 				
-				<a title="Blog" class="btn btn-feed" href="http://blog.anahitapolis.com" target="_blank">
+				<a title="Blog" class="btn btn-feed" href="http://blog.getanahita.com" target="_blank">
 					<i class="icon-feed"></i>
 				</a> 
 				
