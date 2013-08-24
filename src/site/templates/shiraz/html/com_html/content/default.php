@@ -1,4 +1,5 @@
-<div class="heredoc">
+<?php defined('KOOWA') or die('Restricted access'); ?>
+
 <?php @title('Anahita Social Networking Platform and Framework')?>
 <?php @description('A remarkable social networking platform for building apps and services that connect people, places, and things.')?>
 
