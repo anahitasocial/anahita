@@ -36,43 +36,23 @@ class plgSystemSubscriptions extends JPlugin
 	 */
 	public function onAfterRoute()
 	{
-		global $mainframe;
-		
-		if ( $mainframe->isAdmin() ) return;
-		
-		JPluginHelper::importPlugin('system','anahita');
-		
-        
-		JPluginHelper::importPlugin('subscriptions', null, true);
-		
-		$viewer = get_viewer();
-		
+		global $mainframe;		
+		if ( $mainframe->isAdmin() ) return;		
+		$person = get_viewer();		
 		KService::get('repos://site/subscriptions.package');
-		
-		if ( $viewer->hasSubscription() ) 
-		{
-			$renewTime = get_config_value('subscriptions.renew_notice', 5);
-			
-			JFactory::getLanguage()->load('com_subscriptions');
-			$subscription = $viewer->subscription;
-			$url 	  = JRoute::_('index.php?option=com_subscriptions&view=packages');			
-			$timeleft = ceil(AnHelperDate::secondsTo('day', $viewer->subscription->getTimeLeft()));
-			
-			if ( $timeleft > $renewTime )
-				return;
-			elseif ( $timeleft > 0 ) {
-				$message  = sprintf(JText::_('AN-SB-PACKAGE-ABOUT-TO-EXPIRE'),$subscription->package->name, $timeleft.' '.JText::_('Days'), $url);				
-			} elseif ( $timeleft < 0 ) {
-				$message  = sprintf(JText::_('AN-SB-PACKAGE-HAS-EXPIRED'),$subscription->package->name, $url);
-			}
-			
-			if ( empty($message) )
-			        return;
-			$message  = '<div class="alert-message warning"><p>'.$message.'</p></div>';
-			$message  = '<module position="maintop-a">'.$message.'</module>';
-			
-			JFactory::getDocument()->setBuffer($message,'component','subscription-notice');
+		if ( !$person ) {
+		    return;
 		}
-	}
-	
+		JPluginHelper::importPlugin('subscriptions', null, true, KService::get('anahita:event.dispatcher'));
+		//if subscribe then unsubsribe 
+		if ( isset($person->subscription) &&
+		        $person->subscription->getTimeLeft() < 0
+		) {
+		    dispatch_plugin('subscriptions.onAfterExpire',
+		    array('subscription'=>$person->subscription));
+		    $subscription->person->subscription = null;
+		    KService::get('anahita:domain.space')
+		    ->commitEntities();		    
+		}
+	}	
 }

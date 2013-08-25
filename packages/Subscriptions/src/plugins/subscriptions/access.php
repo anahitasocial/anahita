@@ -98,6 +98,32 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
 	}	
 	
 	/**
+	 * After subscription purchase
+	 *
+	 * @param  KEvent $event
+	 * @return void
+	 */
+	public function onAfterExpire($event)
+	{
+	    $subscription = $event->subscription;	    
+	    //unfollow from the groups
+	    $access   = new KConfig($subscription->package->getPluginValues('access'));
+	    $ids      = array();
+	    if ( $access->limited_actor_ids ) {
+	        $ids = explode(',', $access->limited_actor_ids);
+	        $ids = array_unique(array_filter($ids));
+	    }    	    
+	    $actors   = KService::get('repos://site/actors')
+	                ->getQuery(true)
+	                ->id($ids)->fetchSet();
+	    
+	    foreach($actors as $actor) {	        	        
+            $actor->removeFollower($subscription->person);
+	    }
+	        
+	}	
+	
+	/**
 	 * Query
 	 *
 	 * @param KEvent               $evnet  Original Event

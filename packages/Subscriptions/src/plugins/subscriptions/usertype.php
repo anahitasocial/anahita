@@ -24,12 +24,12 @@ class PlgSubscriptionsUsertype extends PlgKoowaDefault
 	 * @param  KEvent $event
 	 * @return void
 	 */	
-	public function onAfterExpires($event)
+	public function onAfterExpire($event)
 	{
 		//change the usertype to registered
 		$subscription = $event->subscription;
 		$config		  = new KConfig($subscription->package->getPluginValues('usertype'));
-		if ( $subscription && $config->change_gid && $subscription->person->userType != 'Registered') {			
+		if ( $subscription ) {			
 			$this->_changeUserType($subscription->person, 'Registered');
 		}
 	}
