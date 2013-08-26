@@ -15,13 +15,13 @@ Requirements
 
 - APC (not required but recommended) 
 
-How to Install Anahita 
+Getting Started
 =========================================
-If you are a developer and comfortable using development tools (git, IDE, shell, composer) then go to the [Anahita Standard](https://github.com/anahitasocial/anahita-standard) to get started.
+To install and get started on Anahita please read the guide at [Getting Started](https://github.com/anahitasocial/anahita/wiki/Getting-started)
 
 Changelogs
 =========================================
-Read <a href="src/CHANGELOG.md">Anahita</a> Changelog
+Read [Anahita](src/CHANGELOG.md) Changelog
 
 Get Help
 ========
