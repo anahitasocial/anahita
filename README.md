@@ -4,17 +4,6 @@ Anahita is a remarkable social networking platform and framework for building ap
 Out of the box, it only provides the minimum essentials needed to launch a social network plus a powerful framework for extending and customizing. 
 Anahita is open source and it is available under the GPL3 license. 
 
-
-Requirements
-============
-- PHP v5.3.3+ with MySQLi support 
-
-- Apache or NGINX WebServer
-
-- MySQL 
-
-- APC (not required but recommended) 
-
 Getting Started
 =========================================
 To install and get started on Anahita please read the guide at [Getting Started](https://github.com/anahitasocial/anahita/wiki/Getting-started)
