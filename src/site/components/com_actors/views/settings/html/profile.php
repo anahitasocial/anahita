@@ -32,7 +32,7 @@
 				<?= @text('COM-ACTORS-BODY') ?>
 			</label>
 			<div class="controls">
-				<textarea data-validators="required maxLength:1000" class="input-block-level" name="body" rows="5" cols="5"><?= $item->body?></textarea>
+				<textarea class="input-block-level" name="body" rows="5" cols="5"><?= $item->body?></textarea>
 			</div>
 		</div>
 		
