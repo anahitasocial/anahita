@@ -120,7 +120,7 @@ class Map
             exec("rm -rf {$this->_target}");
         }
         
-        if (stristr(PHP_OS, 'WIN')) {
+        if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
         	// Windows doesn't support relative symlinking so use absolute ones
         	@symlink($this->_src, $this->_target);
         } else {
