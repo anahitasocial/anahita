@@ -1,8 +1,9 @@
 What's Anahita
 ============== 
-Anahita is an open source social networking platform for developing and launching your next social web app. 
+Anahita is a remarkable social networking platform and framework for building apps and services that connect people, places, and things. 
+Out of the box, it only provides the minimum essentials needed to launch a social network plus a powerful framework for extending and customizing. 
+Anahita is open source and it is available under the GPL3 license. 
 
-Out of the box, it only provides the minimum essentials needed to launch a social network plus a powerful framework for extending and customizing Anahita.
 
 Requirements
 ============
