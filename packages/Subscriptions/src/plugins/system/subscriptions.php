@@ -27,7 +27,7 @@ jimport('joomla.plugin.plugin');
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class plgSystemSubscriptions extends JPlugin 
+class PlgSystemSubscriptions extends JPlugin 
 {	
 	/**
 	 * onAfterRender handler
@@ -50,9 +50,17 @@ class plgSystemSubscriptions extends JPlugin
 		) {
 		    dispatch_plugin('subscriptions.onAfterExpire',
 		    array('subscription'=>$person->subscription));
-		    $subscription->person->subscription = null;
-		    KService::get('anahita:domain.space')
-		    ->commitEntities();		    
+		    $person->subscription = null;
+		    if ( KService::get('anahita:domain.space')
+		        ->commitEntities() )
+		    {
+		        //redirect
+		        $url = (string)KRequest::url();
+		        KService::get('application.dispatcher')
+		        ->getResponse()->setRedirect($url)->send();
+		        ;
+		        exit(0);		        
+		    }
 		}
 	}	
 }
