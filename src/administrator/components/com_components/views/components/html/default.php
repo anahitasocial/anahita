@@ -7,8 +7,7 @@ $direction = '';
 	<table class="adminlist" style="clear: both;">
 		<thead>
 			<tr>
-				<th width="1%"><?= @text('NUM'); ?></th>
-				<th width="1%"><input name="checkall" type="checkbox" class="-koowa-grid-checkall" /></th>
+				<th width="1%"><?= @text('NUM'); ?></th>				
 				<th width="80%"><?= @text('Name')?></th>
 				<th width="1%"><?= @helper('grid.sort', array('column'=>'order', 	  'sort'=>$sort,   'direction'=>$direction)); ?></th>
 				<th width="1%"><?= @text('ID')?></th>				
@@ -19,8 +18,7 @@ $direction = '';
 			<?php $i = 0?>
 			<? foreach ($components as $component) : ?>			
 			<tr class="-koowa-grid-checkbox">
-				<td align="center"><?= ++$i; ?></td>
-				<td align="center"><?= @helper('grid.checkbox', array('row'=>$component)); ?></td>
+				<td align="center"><?= ++$i; ?></td>				
 				<td>
 					<span class="editlinktip hasTip" title="<?= @escape($component->getName()); ?>">
 						<a href="<?= @route('view=component&id='.$component->id.'&hidemainmenu=1')?>">
