@@ -80,9 +80,9 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		$config->append(array(
 		    'base_url'      => KRequest::url(),
 		    'test_options'  => array(
-		        'enabled'   => JDEBUG,
+		        'enabled'   => get_config_value('mailer.debug', false),
 		        'email'     => get_config_value('mailer.redirect_email'),
-		        'log'       => JFactory::getConfig()->getValue('tmp_path').'/emails.html'       
+		        'log'       => JFactory::getConfig()->getValue('tmp_path').'/emails/'       
             ),		    
 	        'template_view'  => null
 		));
@@ -217,7 +217,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		$config->append(array(		    
 		    'is_html' => true        
         ));
-		
+		$subject = KService::get('koowa:filter.string')->sanitize($config->subject);
 		//@TODO what the hell is this. use template filter 
 		//also what if the mailer is not HTML ??
 		if ( !empty($emails) )
@@ -226,7 +226,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		    //Supposed to fix the random exclamation points
 		    $output = wordwrap($output,900,"\n");
 		    $mailer = JFactory::getMailer();		    
-		    $mailer->setSubject(KService::get('koowa:filter.string')->sanitize($config->subject));
+		    $mailer->setSubject($subject);
 		    $mailer->setBody($output);
 		    $mailer->isHTML($config->is_html);
 		    $mailer->addRecipient($emails);
@@ -235,7 +235,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		
 		if ( $this->_test_options->enabled && 
 		        $this->_test_options->log ) {
-		    file_put_contents($this->_test_options->log, $output);
+		    $file = $this->_test_options->log.'/'.$subject.'.'.time();
+		    if ( !file_exists(dirname($file)) ) {
+		        mkdir(dirname($file),0755);
+		    }
+		    file_put_contents($file, $output);
 		}
 	}
 }
