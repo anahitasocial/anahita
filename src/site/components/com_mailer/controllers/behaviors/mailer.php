@@ -236,7 +236,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		
 		if ( $this->_test_options->enabled && 
 		        $this->_test_options->log ) {
-		    $subject = KService::get('koowa:filter.cmd')->sanitize($config->subject);
+		    $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ','_',$config->subject));
 		    $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
 		    if ( !file_exists(dirname($file)) ) {
 		        mkdir(dirname($file),0755);
