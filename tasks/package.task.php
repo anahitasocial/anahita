@@ -94,7 +94,7 @@ class PackageCommand extends Command
         foreach($files as $file) 
         {
            if ( $file->isFile() && 
-                   pathinfo($info->getFilename(), PATHINFO_EXTENSION) == 'xml' )                     
+                   pathinfo($file->getFilename(), PATHINFO_EXTENSION) == 'xml' )                     
            {             
                $xml     = new \SimpleXMLElement(file_get_contents($file));
                $install = array_pop($xml->xpath('/install'));               
