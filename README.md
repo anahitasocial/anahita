@@ -8,10 +8,6 @@ Getting Started
 =========================================
 To install and get started on Anahita please read the guide at [Getting Started](https://github.com/anahitasocial/anahita/wiki/Getting-started)
 
-Changelogs
-=========================================
-Read [Anahita](src/CHANGELOG.md) Changelog
-
 Get Help
 ========
 If you need any help with the Anahita installation or have general question about Anahita. You visit http://GetAnahita.com or follow the Anahita project group at http://www.anahitapolis.com/groups/group/42242-anahita
