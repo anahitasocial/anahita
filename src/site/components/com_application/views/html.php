@@ -95,7 +95,7 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
             
             $html = $this->getTemplate()
             ->renderHelper('ui.message', $message['message'], $config);
-            
+            jimport('joomla.application.module.helper');
             $module  = JModuleHelper::addDynamicModule(array(
                     'content'   => $html,
                     'position'  => 'messages',
