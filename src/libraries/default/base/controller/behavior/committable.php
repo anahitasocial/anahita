@@ -81,8 +81,8 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
             $result  = $this->commit();
             $type    = $result === false ? 'error' : 'success';             
             $message = $this->_makeStatusMessage($context->action, $type);
-            if ( $message ) {
-                $this->setMessage($message, $type);    
+            if ( $message ) {                
+                $this->setMessage($message, $type, true);    
             }
             if ( $result === false ) 
             {
