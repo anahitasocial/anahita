@@ -368,6 +368,8 @@ class MenusModelList extends JModel
 
 	function toTrash($items)
 	{
+	    $this->delete($items);
+	    return;
 		$db		=& $this->getDBO();
 		$nd		= $db->getNullDate();
 		$state	= -2;
