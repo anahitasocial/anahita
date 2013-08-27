@@ -217,11 +217,12 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		$config->append(array(		    
 		    'is_html' => true        
         ));
-		$subject = KService::get('koowa:filter.string')->sanitize($config->subject);
+		
 		//@TODO what the hell is this. use template filter 
 		//also what if the mailer is not HTML ??
 		if ( !empty($emails) )
 		{
+		    $subject = KService::get('koowa:filter.string')->sanitize($config->subject);
 		    //$output = nl2br($output);
 		    //Supposed to fix the random exclamation points
 		    $output = wordwrap($output,900,"\n");
@@ -235,7 +236,8 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		
 		if ( $this->_test_options->enabled && 
 		        $this->_test_options->log ) {
-		    $file = $this->_test_options->log.'/'.$subject.'.'.time();
+		    $subject = KService::get('koowa:filter.cmd')->sanitize($config->subject);
+		    $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
 		    if ( !file_exists(dirname($file)) ) {
 		        mkdir(dirname($file),0755);
 		    }

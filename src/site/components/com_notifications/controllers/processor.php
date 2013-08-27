@@ -226,7 +226,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             $bodies[] = 'Sending out '.count($mails).' notification mail(s)';
             $bodies[] = '<br /><br />'.implode('<br />',$recipients);            
             $mails    = array(array(
-                 'subject'  => 'Sending out '.count($mails).' notification mail(s)',
+                 'subject'  => $notification->name,
                  'body'     => implode('<hr />', $bodies)     
             ));
         }
