@@ -160,6 +160,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $datbase->execute($query);
             $user  =& JFactory::getUser();
             $user  = JUser::getInstance(62);
+            $this->unregisterCallback('after.add', array($this, 'notifyAdminsNewUser'));
         } else {
             $user->set('id', 0);
             $user->set('usertype', 'Registered');
@@ -309,7 +310,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $person = $context->result;
         $this->user = $person->getUserObject();
         $this->mailAdmins(array(            				
-            'subject'	=> JText::_('COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT'),
+            'subject'	=> JText::sprintf('COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT', $this->user->name),
             'template'	=> 'new_user'
         ));
     }

@@ -96,7 +96,10 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         
         //render if it's only an HTML
         //otherwise just send back the request
-        if ( !$context->response->isRedirect() && 
+        //@TODO arash. For some reason the line below Need to fix the line below
+        //not working properly
+        //$redirect = $context->response->isRedirect()
+        if ( !$context->response->getHeader('Location') && 
               $context->request->getFormat() == 'html' &&
              !$context->request->isAjax()
                 )

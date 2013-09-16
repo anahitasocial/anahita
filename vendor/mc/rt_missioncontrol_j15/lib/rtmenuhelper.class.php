@@ -92,9 +92,9 @@ class RTMenuHelper {
 		if ($manageMenuMan) {
 			$menu->addChild(new JMenuNode(JText::_('Menu Manager'), 'index.php?option=com_menus', 'menu'));
 		}
-		if ($manageTrash) {
-			$menu->addChild(new JMenuNode(JText::_('Menu Trash'), 'index.php?option=com_trash&task=viewMenu', 'trash'));
-		}
+// 		if ($manageTrash) {
+// 			$menu->addChild(new JMenuNode(JText::_('Menu Trash'), 'index.php?option=com_trash&task=viewMenu', 'trash'));
+// 		}
 
 		if($manageTrash || $manageMenuMan) {
 			$menu->addSeparator();
@@ -225,11 +225,11 @@ class RTMenuHelper {
 		/*
 		 * Help SubMenu
 		 */
-		$menu->addChild(new JMenuNode(JText::_('Help')), true);
-		$menu->addChild(new JMenuNode(JText::_('Anahita Help'), 'http://www.anahitapolis.com', 'help'));
-		$menu->addChild(new JMenuNode(JText::_('System Info'), 'index.php?option=com_admin&task=sysinfo', 'info'));
+// 		$menu->addChild(new JMenuNode(JText::_('Help')), true);
+// 		$menu->addChild(new JMenuNode(JText::_('Anahita Help'), 'http://www.anahitapolis.com', 'help'));
+// 		$menu->addChild(new JMenuNode(JText::_('System Info'), 'index.php?option=com_admin&task=sysinfo', 'info'));
 
-		$menu->getParent();
+		//$menu->getParent();
 
 		$menu->renderMenu('mctrl-menu', 'menutop level1');
 	}

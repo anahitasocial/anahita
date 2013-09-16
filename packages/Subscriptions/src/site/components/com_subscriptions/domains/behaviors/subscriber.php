@@ -96,7 +96,8 @@
 	 */
 	public function hasSubscription()
 	{
-		return isset($this->_mixer->subscription);
+		return isset($this->_mixer->subscription) && 
+		    $this->_mixer->subscription->getTimeLeft() > 0;
 	}
 	
 	/**

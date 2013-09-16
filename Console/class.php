@@ -51,12 +51,12 @@ class Mapper
         foreach($this->_maps as $map) {
             $map->unlink();
         }
-        $deadlinks = explode("\n", trim(`find -L {$this->_target_root} -type l -lname '*'`));
-        $deadlinks = array_filter($deadlinks);
-        if ( count($deadlinks) )
+        $files     = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->_target_root));
+        //deleting deadlinks
+        foreach($files as $file) 
         {
-            foreach($deadlinks as $link) {         
-                @unlink($link);
+            if ( is_link($file) && !file_exists(realpath($file))) {
+                unlink($file);
             }
         }
     }
@@ -118,9 +118,14 @@ class Map
         }
         elseif (is_dir($this->_target)) {
             exec("rm -rf {$this->_target}");
-        }        
-        //print $this->_src."\n".$this->_target."\n";        
-        @symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
+        }
+        
+        if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
+        	// Windows doesn't support relative symlinking so use absolute ones
+        	@symlink($this->_src, $this->_target);
+        } else {
+        	@symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
+        }
     }
     
     /**

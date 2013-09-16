@@ -57,6 +57,19 @@ class ComHtmlViewContentHtml extends ComBaseViewHtml
     }
     
     /**
+     * If the current layout points to a folder then set the layout to folder/default.php
+     * 
+     * @return void
+     */
+    public function display()
+    {
+        if ( is_dir($this->getTemplate()->findPath($this->getLayout())) ) {
+            $this->setLayout($this->getLayout().'/default');
+        }
+        return parent::display();
+    }
+    
+    /**
      * Initializes the configuration for the object
      *
      * Called from {@link __construct()} as a first step of object instantiation.

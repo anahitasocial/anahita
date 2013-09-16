@@ -145,7 +145,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$gadgets    = $event->gadgets;
 		$composers  = $event->composers;
 		$this->_setGadgets($actor, $gadgets, 'dashboard');
-		$this->_setComposers($actor, $composers, 'dashboard');			
+		if ( $this->activeForActor($actor) ) {
+		    $this->_setComposers($actor, $composers, 'dashboard');
+		}			
 	}	
 		
 	/**
