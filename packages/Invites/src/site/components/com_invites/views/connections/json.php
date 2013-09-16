@@ -27,16 +27,5 @@
  */
 class ComInvitesViewConnectionsJson extends ComBaseViewJson
 {       
-    /**
-     * (non-PHPdoc)
-     * @see LibBaseViewJson::_getItem()
-     */
-    protected function _getItem()
-    {
-        $data['data'] = $this->_state->social_inviter->getUsers();
-        $data['pagination'] = array(
-                    'limit'  => (int)$this->_state->get('limit'),
-                    'offset' => (int)$this->_state->get('start'));
-        return $data;  
-    }    
+      
 }

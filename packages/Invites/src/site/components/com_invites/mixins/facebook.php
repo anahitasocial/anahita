@@ -52,7 +52,7 @@ class ComInvitesMixinFacebook extends KMixinAbstract
     {
         $cache = JFactory::getCache((string) 'ComInvitesMixinFacebook', '');
         $key   = 'ids_'.md5($this->_mixer->getToken());
-        $data  = $cache->get($key);
+        $data  = $cache->get($key);        
         if ( !$data  )
         {
             try {
@@ -64,10 +64,12 @@ class ComInvitesMixinFacebook extends KMixinAbstract
                 throw new \LogicException("Can't get connections from facebook");
             }            
             $data   = KConfig::unbox($data);
-            $data   = array_map(function($user) {return $user['id'];}, $data['data']);
-            $data['data'][] = '-1'; 
-            $cache->store($data, $key);
-        }    
+            $data   = array_map(function($user) {return $user['id'];}, $data['data']);            
+            $data[] = '-1'; 
+            $cache->store(json_encode($data), $key);
+        } else {
+            $data = json_decode($data);
+        }
         
         $query = $this->getService('repos://site/people')->getQuery(true)
         ->where(array(
