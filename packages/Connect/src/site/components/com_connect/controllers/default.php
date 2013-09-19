@@ -73,7 +73,30 @@ class ComConnectControllerDefault extends ComBaseControllerResource
             
         $this->api = $api;
     }
-        
+
+    /**
+     * Return whether can delete or not
+     * 
+     * @return boolean
+     */
+    public function canDelete()
+    {
+        return $this->canGet();
+    }
+    
+    /**
+     * Deletes a session
+     * 
+     * @param KCommandContext $context
+     */
+    protected function _actionDelete(KCommandContext $context)
+    {        
+        $session = $this->actor->sessions->find(array('api'=>$this->getIdentifier()->name));
+        if ( $session ) {
+            $session->delete()->save();
+        }
+    }
+    
     /**
      * Dispatches a call to the oauth handler
      * 

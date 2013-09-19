@@ -47,10 +47,6 @@ class PlgUserConnect extends JPlugin
 	 */
 	public function onAfterStoreUser($user, $isnew, $succes, $msg)
 	{		
-        //if a user is not new then we don't care 
-		if ( !$isnew )
-             return;
-	     
 		$this->_createToken($user['username']);
 		$userId = $user['id'];
 		if ( $this->_person ) 
