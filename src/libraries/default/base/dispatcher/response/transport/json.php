@@ -121,6 +121,7 @@
         //@TODO when returning the location header during 
         //test it fetches the new location even though the 
         //code is not redirect
+        $this->getResponse()->setContentType('application/json');
         $headers =& $this->getResponse()->getHeaders();
         if ( isset($headers['Location']) ) 
         {
