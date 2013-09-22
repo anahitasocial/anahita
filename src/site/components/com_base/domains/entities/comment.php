@@ -73,7 +73,7 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
      * 
      * @return void
      */
-    protected function _beforeEntityValidate(KCommandContext $context)
+    protected function _onEntityValidate(KCommandContext $context)
     {
         $this->parent->getRepository()->getBehavior('commentable')
             ->sanitizeComments(array($this));
