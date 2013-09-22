@@ -43,7 +43,7 @@ function dbexec($queries, $force = true)
     $db      = KService::get('koowa:database.adapter.mysqli');
     foreach($queries as $sql)
     {
-        $queries = str_replace('jos_','#__',$sql);
+        $sql = str_replace('jos_','#__',$sql);
         try
         {
             $then = microtime();
