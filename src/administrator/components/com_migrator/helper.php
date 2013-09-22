@@ -46,9 +46,9 @@ function dbexec($queries, $force = true)
         $sql = str_replace('jos_','#__',$sql);
         try
         {
-            $then = microtime();
+            $then = microtime(true);
             $db->execute($sql);
-            $diff = microtime() - $then;
+            $diff = microtime(true) - $then;
             dboutput("QUERY: ".$sql." ($diff)"."\n");
         } catch(Exception $e)
         {
