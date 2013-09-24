@@ -12,6 +12,9 @@
     	to be automatically followed by the new registered members
     ]]>
     </description>
+    <files>
+       <filename plugin="autofollow">autofollow.php</filename>
+    </files>
     <params>
        <param name="actor_ids" type="textarea" rows="3" cols="40" default="" label="Actor IDs" description="Enter a comma seperated list of actor ids!" />
     </params>
