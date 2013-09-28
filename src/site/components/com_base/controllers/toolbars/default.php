@@ -117,8 +117,8 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
         $voted  = $entity->votedUp(get_viewer());
                 
-        $btn_1_id   = uniqid();
-        $btn_2_id   = uniqid();
+        $btn_1_id   = uniqid('v');
+        $btn_2_id   = uniqid('u');
 
         $action_key     = '_action';
         
