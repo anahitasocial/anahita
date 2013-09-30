@@ -102,10 +102,7 @@ class AnFilterSlug extends KFilterSlug
 		}
 	
 		$value = strtolower($value);
-		$value = preg_replace('/&.+?;/', '', $value); // kill entities
-		$value = str_replace('.', '-', $value);
-		$value = preg_replace('/[^%a-z0-9 _-]/', '', $value);
-		$value = preg_replace('/\s+/', '-', $value);
+		$value = preg_replace('/&.+?;|[^%a-z0-9_-]/', '-', $value); // replace entities and non-alpahnum with dashes
 		$value = preg_replace('|-+|', '-', $value);
 		$value = trim($value, '-');
 		return $value;
