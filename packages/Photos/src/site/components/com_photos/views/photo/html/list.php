@@ -1,6 +1,22 @@
 <?php defined('KOOWA') or die; ?>
 
 <div class="an-entity an-entity-portraiable an-record an-removable">
+	<div class="clearfix">
+		<div class="entity-portrait-square">
+			<?= @avatar($photo->author) ?>
+		</div>
+		
+		<div class="entity-container">
+			<h4 class="author-name"><?= @name($photo->author) ?></h4>
+			<ul class="an-meta inline">
+				<li><?= @date($photo->creationTime) ?></li>
+				<?php if(!$photo->owner->eql($viewer)): ?>
+				<li><?= @name($photo->owner) ?></li>
+				<?php endif; ?>
+			</ul>
+		</div>
+	</div>
+
 	<div class="entity-portrait-medium">
 		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
@@ -19,13 +35,7 @@
 		</div>
 	</div>
 	
-	<div class="entity-meta">
-		<?php if($filter == 'leaders'): ?>
-		<div class="an-meta">
-		<?= sprintf(@text('LIB-AN-MEDIUM-OWNER'), @name($photo->owner)) ?>
-		</div>
-		<?php endif; ?>
-		
+	<div class="entity-meta">		
 		<ul class="an-meta inline">
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
 			<?php if($photo->lastCommenter): ?>
