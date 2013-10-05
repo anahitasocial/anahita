@@ -145,6 +145,7 @@ var AnEditor = new Class({
 		var switchui = this.switchUI.bind(this);
 		var options  = {
 			  "apply_source_formatting" : false,
+			  "relative_urls" : false,
 			  "theme": "advanced",
 			  "mode": "exact",
 			  "elements": this.elementId,
