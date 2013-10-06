@@ -181,6 +181,11 @@ Class.refactor(Form.Validator.Inline, {
 			return this.status == 'error';
 		},
 		validate  : function() {
+			if ( Form.Validator.getValidator('IsEmpty').test(this.element) ) {
+				this.status = 'success';
+				return true;
+			}
+			
 			var self    = this;
 			var requestUrl  = this.props.url || this.element.form.get('action');
 			var value   = this.element.get('value');
@@ -266,10 +271,6 @@ Class.refactor(Form.Validator.Inline, {
 			return remoteValidator.getErrorMsg();
 		},
 		test 	: function(element, props) {
-			if ( Form.Validator.getValidator('IsEmpty').test(element) ) {
-				return true;
-			}
-			
 			var remoteValidator = element
 				.set('remoteValidator', props)
 				.get('remoteValidator');
