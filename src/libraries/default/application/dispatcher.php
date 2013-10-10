@@ -202,6 +202,10 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         KRequest::url()->format = 'json';
         KRequest::url()->setQuery($_GET);
         
+        jimport('joomla.plugin.helper');
+        JPluginHelper::importPlugin('cli');
+        $this->_application->triggerEvent('onCli');
+        
         //if there's a file then just load the file and exit
         if ( !empty($file) ) 
         {
