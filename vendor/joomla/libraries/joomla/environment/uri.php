@@ -233,7 +233,7 @@ class JURI extends JObject
 				$uri =& JURI::getInstance($live_site);
 				$base['prefix'] = $uri->toString( array('scheme', 'host', 'port'));
 				$base['path'] = rtrim($uri->toString( array('path')), '/\\');
-				if(JPATH_BASE == JPATH_ADMINISTRATOR) {
+				if(str_replace('\\', '/', JPATH_BASE) == str_replace('\\', '/', JPATH_ADMINISTRATOR)) {
 					$base['path'] .= '/administrator';
 				}
 			} else {
