@@ -26,9 +26,8 @@ var Paginator = new Class({
 	showNextPage : function() {
 		if ( ! this.pages.stopPagination) {
 			this.pages.get(this.nextPage, function(page) {    			
-				//console.log('handling results for page ' + page.number)
+				this.nextPage++;
 				this.fireEvent('pageReady',[page]);
-	    		this.nextPage++;
 			}.bind(this));
 		}
 	}
@@ -58,7 +57,6 @@ Paginator.Pages = new Class({
      * int     limit limit per page
      */
     initialize : function(url, options) {
-    	//console.log('create pages for base url ' + url);
     	this.url 	 = new URI(url);
     	this.setOptions(options);
     	this.requests = new Request.Queue({
@@ -108,12 +106,10 @@ Paginator.Pages = new Class({
     					if ( self.pages[number].entities.length < self.limit ) {
     						self.stopPagination = true;
     					}
-    					//console.log('fetched page ' + number + ' with ' + self.pages[number].entities.length + ' entities');
     				}
 				})
     		};
     		this.pages[number] = page;
-    		//console.log('fetching page ' + number );
     		if ( ! this.stopPagination ) {
     			this.requests.addRequest(number, page.request).send(number);
     		}

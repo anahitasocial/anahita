@@ -30,6 +30,7 @@ Behavior.addGlobalFilter('InfinitScroll', {
 		
 		paginator.addEvent('pageReady', function(page){
 			this.add(page.entities);
+			api.get('scrollable').fireEvent('scroll');
 		}.bind(masonry));
 		
 		this.resizeTo = null;
