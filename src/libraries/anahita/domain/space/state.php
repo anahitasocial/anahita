@@ -215,12 +215,12 @@ class AnDomainSpaceState extends KObject
 					if ( $relationship->isOneToOne() )
 						$entities = array($entities);
 						
-					foreach($entities as $entity) 
+					foreach($entities as $ent) 
 					{
 						//if the cascading fails for the related entities then
 						//nullify the property in the failed entity 
-						if ( !$entity->delete() ) 
-							$entity->set($relationship->getChildKey(), null);
+						if ( !$ent->delete() ) 
+							$ent->set($relationship->getChildKey(), null);
 					}
 				}
 				
