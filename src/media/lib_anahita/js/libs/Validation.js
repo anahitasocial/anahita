@@ -99,10 +99,11 @@ Class.refactor(Form.Validator.Inline, {
 			if ( !this.retrieve('remoteValidators') ) {
 				var validators = new Array();
 				var element    = this;
+				var options = this.get('validator').options;
 				Object.merge(validators, {
 					isSuccess   : function() {
 						return this.length == 0 || this.every(function(validator){
-							return validator.isSuccess();
+							return options.ignoreHidden && ! validator.element.isVisible() || options.ignoreDisabled && validator.element.get('disabled') || validator.isSuccess();
 						});
 					},
 					validate  : function() {
