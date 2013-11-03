@@ -98,7 +98,7 @@ CREATE TABLE `#__anahita_nodes` (
   `person_given_name` varchar(255) DEFAULT NULL,
   `person_family_name` varchar(255) DEFAULT NULL,
   `person_network_presence` varchar(255) DEFAULT NULL,
-  `person_time_zone` int(11) DEFAULT NULL,
+  `person_time_zone` varchar(100) DEFAULT NULL,
   `person_language` varchar(100) DEFAULT NULL,
   `access` text,
   `permissions` text,
