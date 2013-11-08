@@ -10,6 +10,5 @@ To install and get started on Anahita please read the guide at [Getting Started]
 
 Get Help
 ========
-If you need any help with the Anahita installation or have general question about Anahita. You visit http://GetAnahita.com or follow the Anahita project group at http://www.anahitapolis.com/groups/group/42242-anahita
-
-You can also check out Anahita API at http://anahitapolis.com/api
+If you need any help with the Anahita installation or have general question about Anahita. 
+You visit http://GetAnahita.com or follow the Anahita project group at http://www.anahitapolis.com/groups/group/42242-anahita
