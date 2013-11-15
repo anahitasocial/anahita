@@ -24,8 +24,7 @@ Behavior.addGlobalFilter('InfinitScroll', {
 		var paginator = new Paginator({
 			resultSelector 	  : api.get('record'),
 			url		  		  : api.get('url'),
-			limit			  : api.getAs(Number, 'limit'),
-			startImmediatly   : el.isVisible()
+			limit			  : api.getAs(Number, 'limit')
 		});
 		
 		paginator.addEvent('pageReady', function(page){
