@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
+<?php @service('application.dispatcher')->getRequest()->tmpl = 'component' ?>
+
 <div class="row">
 	<div class="offset3 span6">	
         <?php 
