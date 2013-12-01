@@ -138,6 +138,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
 	 */
 	public function humanize($date, $config=array())
 	{	
+		$date = clone $date; // prevent function from modifying input parameter
 		$config   = new KConfig($config);
 		
 		$config->append(array(
