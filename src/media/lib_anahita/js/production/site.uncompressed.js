@@ -20897,14 +20897,12 @@ Delegator.register(['click'],'Comment', {
 });
 ///media/lib_anahita/js/libs/ElementInsert.js
 Behavior.addGlobalFilter('Element.Inject', {
-	defaults : {
-		where  		: 'bottom',
+	defaults: {
+		where: 'bottom'
 	},
-	setup : function(el, api)
-	{		
+	setup: function (el, api) {		
 		var container = document.getElement(api.get('container'));
-		console.log(container);
-		if  ( container ) {
+		if (container) {
 			el.inject(container, api.get('where'));
 		}
 	}

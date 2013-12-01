@@ -1,31 +1,22 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php $highlight = ($topic->isSticky && $filter != 'leaders') ? 'an-highlight' : '' ?>
+<?php $author = ($topic->lastComment) ? $topic->lastCommenter : $topic->author; ?>
 <div class="an-entity <?= $highlight ?>">
 	<div class="clearfix">
-		<?php if( $topic->lastComment ) : ?>
 		<div class="entity-portrait-square">
-			<?= @avatar($topic->lastCommenter) ?>
+			<?= @avatar($author) ?>
 		</div>
 		
 		<div class="entity-container">
-			<h4 class="author-name"><?= @name($topic->lastCommenter) ?></h4>
-			<div class="an-meta">
-				<?= @date($topic->lastCommentTime) ?> 
-			</div>
+			<h4 class="author-name"><?= @name($author) ?></h4>
+			<ul class="an-meta inline">
+				<li><?= @date($topic->creationTime) ?></li>
+				<?php if(!$topic->owner->eql($topic->author)): ?>
+				<li><?= @name($topic->owner) ?></li>
+				<?php endif; ?>
+			</ul>
 		</div>
-		<?php else : ?>
-		<div class="entity-portrait-square">
-			<?= @avatar($topic->author) ?>
-		</div>
-		
-		<div class="entity-container">
-			<h4><?= @name($topic->author) ?></h4>
-			<div class="an-meta">
-				<?= @date($topic->creationTime) ?> 
-			</div>
-		</div>
-		<?php endif; ?>
 	</div>
 	
 	<h3 class="entity-title">
@@ -45,11 +36,7 @@
 	</div>
 	
 	<div class="entity-meta">
-		<ul class="an-meta inline">
-			<?php if($filter == 'leaders'): ?>
-			<li><?= sprintf(@text('LIB-AN-MEDIUM-OWNER'), @name($topic->owner)) ?></li>
-			<?php endif; ?>
-				
+		<ul class="an-meta inline">	
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $topic->numOfComments) ?></li>
 		</ul>
 		

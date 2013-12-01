@@ -9,14 +9,12 @@
 		
 		<div class="entity-container">
 			<h4 class="author-name"><?= @name($page->author) ?></h4>
-			<div class="an-meta">
-				<?= @date($page->creationTime) ?>  
-				<?php if(!$page->published): ?>
-				<span class="label label-warning">
-					<?= @text('COM-PAGES-PAGE-IS-UNPUBLISHED') ?>
-				</span>
+			<ul class="an-meta inline">
+				<li><?= @date($page->creationTime) ?></li>
+				<?php if(!$page->owner->eql($page->author)): ?>
+				<li><?= @name($page->owner) ?></li>
 				<?php endif; ?>
-			</div>
+			</ul>
 		</div>
 	</div>
 
@@ -33,6 +31,12 @@
 	<?php endif; ?>
 	
 	<div class="entity-meta">
+		<?php if(!$page->published): ?>
+		<p class="label label-warning">
+			<?= @text('COM-PAGES-PAGE-IS-UNPUBLISHED') ?>
+		</p>
+		<?php endif; ?>
+		
 		<ul class="an-meta inline">
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $page->numOfComments) ?></li>
 			<?php if(isset($page->editor)) : ?>

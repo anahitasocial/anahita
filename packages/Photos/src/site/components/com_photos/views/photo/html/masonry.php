@@ -8,9 +8,12 @@
 		
 		<div class="entity-container">
 			<h4 class="author-name"><?= @name($photo->author) ?></h4>
-			<div class="an-meta">
-				<?= @date($photo->creationTime) ?>
-			</div>
+			<ul class="an-meta inline">
+				<li><?= @date($photo->creationTime) ?></li>
+				<?php if(!$photo->owner->eql($photo->author)): ?>
+				<li><?= @name($photo->owner) ?></li>
+				<?php endif; ?>
+			</ul>
 		</div>
 	</div>
 	
@@ -43,9 +46,6 @@
 		
 	<div class="entity-meta">
 		<ul class="an-meta inline">
-			<?php if($filter == 'leaders'): ?>
-			<li><?= sprintf(@text('LIB-AN-MEDIUM-OWNER'), @name($photo->owner)) ?></li>
-			<?php endif; ?>
 			<li>
 				<a href="<?= @route($photo->getURL()) ?>">
 				<?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
