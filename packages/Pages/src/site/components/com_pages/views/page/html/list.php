@@ -11,7 +11,7 @@
 			<h4 class="author-name"><?= @name($page->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($page->creationTime) ?></li>
-				<?php if(!$page->owner->eql($viewer)): ?>
+				<?php if(!$page->owner->eql($page->author)): ?>
 				<li><?= @name($page->owner) ?></li>
 				<?php endif; ?>
 			</ul>

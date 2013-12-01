@@ -10,7 +10,7 @@
 			<h4 class="author-name"><?= @name($photo->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($photo->creationTime) ?></li>
-				<?php if(!$photo->owner->eql($viewer)): ?>
+				<?php if(!$photo->owner->eql($photo->author)): ?>
 				<li><?= @name($photo->owner) ?></li>
 				<?php endif; ?>
 			</ul>

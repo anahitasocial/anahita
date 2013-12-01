@@ -11,7 +11,7 @@
 			<h4 class="author-name"><?= @name($todo->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($todo->creationTime) ?></li>
-				<?php if(!$todo->owner->eql($viewer)): ?>
+				<?php if(!$todo->owner->eql($todo->author)): ?>
 				<li><?= @name($todo->owner) ?></li>
 				<?php endif; ?>
 			</ul>

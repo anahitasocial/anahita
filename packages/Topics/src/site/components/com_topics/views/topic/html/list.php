@@ -12,7 +12,7 @@
 			<h4 class="author-name"><?= @name($author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($topic->creationTime) ?></li>
-				<?php if(!$topic->owner->eql($viewer)): ?>
+				<?php if(!$topic->owner->eql($topic->author)): ?>
 				<li><?= @name($topic->owner) ?></li>
 				<?php endif; ?>
 			</ul>
