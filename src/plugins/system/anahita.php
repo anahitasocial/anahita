@@ -201,16 +201,15 @@ class PlgSystemAnahita extends JPlugin
 	}	
     
 	/**
-	 * store user method
+	 * delete user method
 	 *
 	 * Method is called before user data is deleted from the database
 	 *
 	 * @param 	array		holds the user data
 	 */
 	public function onBeforeDeleteUser($user)
-	{
-	    $person = KService::get('repos://site/people.person')
-	        ->find(array('userId'=>$user['id']));
+	{	
+		$person = KService::get('repos://site/people.person')->find(array('userId'=>$user['id']));
 	    
 	    if ( $person )
 	    {
@@ -221,8 +220,7 @@ class PlgSystemAnahita extends JPlugin
 	        KService::get('anahita:event.dispatcher')
 	            ->dispatchEvent('onDeleteActor', array('actor_id'=>$person->id));
 
-            $person->delete()->save();
-	        	        	           
+            $person->delete()->save();  	           
 	    }
 	}
 }

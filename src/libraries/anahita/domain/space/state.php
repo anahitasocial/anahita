@@ -219,7 +219,7 @@ class AnDomainSpaceState extends KObject
 					{
 						//if the cascading fails for the related entities then
 						//nullify the property in the failed entity 
-						if ( !$entity->delete() ) 
+						if ( !$entity->delete() && $entity->getObject() ) 
 							$entity->set($relationship->getChildKey(), null);
 					}
 				}
