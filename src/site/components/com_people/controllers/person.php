@@ -59,7 +59,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 		parent::_initialize($config);
 		
 		AnHelperArray::unsetValues($config->behaviors, 'ownable');
-        
+		
         //if it's a person view , set the default id to person
         if ( $config->request->view == 'person' )
         {
@@ -95,14 +95,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        parent::_actionDelete($context);
+    	parent::_actionDelete($context);
         
         $this->commit();        
         
-        JFactory::getUser($this->getItem()->userId)->delete();  
-
-        $this->getService('com://site/people.controller.session')
-            ->execute('delete', $context);                       
+        $userId = $this->getItem()->userId;
+        
+        JFactory::getUser($userId)->delete();  
+		JFactory::getApplication()->logout($userId);                  
     }
     
     /**
