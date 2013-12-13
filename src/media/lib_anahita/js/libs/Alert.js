@@ -7,8 +7,8 @@ String.implement({
 });
 Behavior.addGlobalFilter('Alert', {
 	defaults : {
-		mode 		: 'top',
-		position	: 'center',
+		mode 		: 'bottom',
+		position	: 'right',
 		highlight   : false,
 		hide 		: true,
 		alert		: {
