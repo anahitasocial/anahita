@@ -21118,7 +21118,6 @@ Behavior.addGlobalFilter('InfinitScroll', {
     			}
     		}.bind(el)
 		});
-		api.get('scrollable').fireEvent('scroll');
 	}
 });
 ///media/lib_anahita/js/libs/MasonryLayout.js

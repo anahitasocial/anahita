@@ -275,7 +275,7 @@ class ConfigControllerApplication extends ConfigController
 		$config_array['offline']	= JRequest::getVar('offline', 0, 'post', 'int');
 		$config_array['editor']		= JRequest::getVar('editor', 'tinymce', 'post', 'cmd');
 		$config_array['list_limit']	= JRequest::getVar('list_limit', 20, 'post', 'int');
-		$config_array['helpurl']	= JRequest::getVar('helpurl', 'http://help.joomla.org', 'post', 'string');
+		$config_array['helpurl']	= JRequest::getVar('helpurl', 'http://www.GetAnahita.com', 'post', 'string');
 
 		// DEBUG
 		$config_array['debug']		= JRequest::getVar('debug', 0, 'post', 'int');
