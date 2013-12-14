@@ -46,18 +46,11 @@
 	});
 	
 	document.addEvents({
-		'click:relay(.an-actions .comment)' : open,
-		'click:relay(.action-comment-overtext)' : open		
+        'click:relay(.an-actions .comment)' : open,
+        'click:relay(.comment-overtext-box .action-comment-overtext)' : open                
 	});
+	
 }).apply();
-
-/*
-Behavior.addGlobalFilter('ShowMoreComments',{
-	setup : function(el, api) {
-		var comments = el.getElements('.an-comment');
-	}
-});
-*/
 
 Delegator.register(['click'], 'Share', function(event, el, api) {
 	event.stop();

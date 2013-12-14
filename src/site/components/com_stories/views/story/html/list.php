@@ -72,9 +72,9 @@
 	    
 	    <?php if( !empty($comments) && $can_comment ): ?>
 	    <div class="comment-overtext-box">  
-	    	<span class="action-comment-overtext" storyid="<?=$item->id?>">
+	    	<a class="action-comment-overtext" storyid="<?= $item->id ?>" href="<?= @route($item->object->getURL()) ?>">
 	        	<?= @text('COM-STORIES-ADD-A-COMMENT') ?>
-	        </span>
+	        </a>
 	    </div>
 	    <?php endif; ?>
 	</div>

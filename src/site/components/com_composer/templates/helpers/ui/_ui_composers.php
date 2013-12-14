@@ -1,6 +1,7 @@
 <?php if ( count($composers) ) : ?>
 
 <script src="com_composer/js/composer.js" />
+
 <div id="com-composer-container">   
     <div class="clearfix" data-behavior="ComposerTabs">
         <div class="btn-group pull-right">
@@ -24,7 +25,9 @@
     <?php $i = 0; ?>
     <?php foreach($composers as $index=>$composer) : ?>
         <div data-behavior="PlaceHolder"  data-placeholder-element=".form-placeholder" data-placeholder-area="!#com-composer-container" data-trigger="LoadComposerTab" data-loadcomposertab-index="<?= $i++ ?>" data-content-url="<?=@route($composer->url)?>">
-            <div class="form-placeholder"><span><?= $composer->placeholder ?></span></div>
+            <a class="form-placeholder" href="#">
+            	<?= $composer->placeholder ?>
+            </a>
         </div>
     <?php endforeach;?>
     </div>
