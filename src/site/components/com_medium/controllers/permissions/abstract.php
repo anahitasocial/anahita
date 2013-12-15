@@ -33,18 +33,21 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 * @return boolean
 	 */
 	public function canBrowse()
-	{
+	{	
 		$viewer = get_viewer();
-	
-		if ( $this->isOwnable() && $this->actor )
+		
+		if( $viewer->id )
 		{
-			//a viewer can't see  ownable items coming from another actor's leaders
-			if ( $this->filter == 'leaders' ) {
-				if ( $viewer->id != $this->actor->id )
-					return false;
-			}
+			if($this->filter == 'leaders' && $viewer->id == $this->actor->id)
+				return true;
+			elseif ($this->actor->id)
+				return true;
+			
 		}
-		return true;
+		elseif( $this->actor->id )
+			return true;
+		
+		return false;	
 	}
 	
 	/**
