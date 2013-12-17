@@ -25,7 +25,7 @@
     <?php $i = 0; ?>
     <?php foreach($composers as $index=>$composer) : ?>
         <div data-behavior="PlaceHolder"  data-placeholder-element=".form-placeholder" data-placeholder-area="!#com-composer-container" data-trigger="LoadComposerTab" data-loadcomposertab-index="<?= $i++ ?>" data-content-url="<?=@route($composer->url)?>">
-            <a class="form-placeholder" href="#">
+            <a class="form-placeholder" onclick="return false;">
             	<?= $composer->placeholder ?>
             </a>
         </div>
