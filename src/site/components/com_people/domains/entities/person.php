@@ -58,7 +58,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 				'administratingIds' => array('type'=>'set', 'default'=>'set'),				
 				'userId' 	 => array('column'=>'person_userid',	 	 'key'=>true, 'type'=>'integer'),
 				'username'	 => array('column'=>'person_username',	 	 'key'=>true, 'format'=>'username'),
-				'userType'	 => array('column'=>'person_usertype'),
+				'userType'	 => array('column'=>'person_usertype', 'write'=>'protected'),
 				'email'		 => array('column'=>'person_useremail',	 	 'key'=>true, 'format'=>'email'),
 				'givenName'  => array('column'=>'person_given_name',  'format'=>'string'),
 				'familyName' => array('column'=>'person_family_name', 'format'=>'string'),
