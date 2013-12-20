@@ -72,7 +72,7 @@ class PlgSubscriptionsUsertype extends PlgKoowaDefault
 				 		
  		$data	   = array('gid'=>$gid);
  		$user->bind($data);
- 		$person->userType = $user->usertype;		
+ 		$person->set('userType', $user->usertype);		
  		$user->save();
 	}
 }
