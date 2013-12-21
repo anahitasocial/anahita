@@ -265,7 +265,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	    }
 	    	    
 	    $images          = $this->_mixer->resizePortraitImage($image);	    
-	    $this->_mixer->set('filename', md5(time().uniqid()).'.'.$mimetypes[$config->mimetype]);
+	    $this->_mixer->set('filename', md5(uniqid('', true)).'.'.$mimetypes[$config->mimetype]);
 	    $this->_mixer->set('mimetype', $config->mimetype);
 	    $sizes           = array();
 	    $files           = array();
