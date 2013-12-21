@@ -9,7 +9,7 @@
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
-	    <?= @helper('text.truncate', @htmlspecialchars($object->excerpt, ENT_QUOTES), array('length'=>200)); ?>
+	    <?= @helper('text.truncate', @escape($object->excerpt), array('length'=>200)); ?>
 	</div>
 </data>
 

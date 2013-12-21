@@ -6,11 +6,13 @@
 
 <data name="body">
     <h4 class="entity-title">
-    	<?= @link($object)?>
+    	<a href="<?= @route($object->getURL()) ?>">
+    		<?= $object->title ?>
+    	</a>
     </h4>
     <div class="entity-body">
-	    <?= $comment->body ?>
-	</div>
+	    <?= @helper('text.truncate', @content(strip_tags($object->body), array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
+	</div>	
 </data>
 
 <?php if ($type == 'notification') :?>
