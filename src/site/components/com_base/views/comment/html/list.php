@@ -16,18 +16,19 @@
 			</div>
 		</div>
 	</div>
+		
+	<?php $body = $comment->body ?>	
+
+	<?php if(empty($strip_tags)): ?>
+	<?php $body = strip_tags($body) ?>
+	<?php endif; ?>
 	
-    <?php $body = $comment->body; ?>  
-	<?php $body = @content($body) ?>
-	<?php if (empty($truncate_body) ) : ?>
-	<?php $body =  stripslashes( $body ) ?>
-	<?php else : ?>
-	<?php $body = @helper('text.truncate', stripslashes( $body ), is_bool($truncate_body) ? array() : $truncate_body) ?>	
+	<?php if (!empty($truncate_body) ) : ?>
+	<?php $body = @helper('text.truncate', $body, $truncate_body) ?>	
 	<?php endif;?>
 	
-
 	<div class="entity-body"> 
-		<?= $body ?>
+		<?= @content($body) ?>
 	</div>
 		
 	<div class="entity-meta">
