@@ -17,9 +17,8 @@
 		</div>
 	</div>
 		
-	<?php $body = $comment->body ?>	
-
-	<?php if(empty($strip_tags)): ?>
+	<?php $body = $comment->body ?>
+	<?php if(!empty($strip_tags)): ?>
 	<?php $body = strip_tags($body) ?>
 	<?php endif; ?>
 	
