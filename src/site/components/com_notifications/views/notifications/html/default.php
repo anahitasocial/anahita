@@ -2,7 +2,7 @@
 
 <module position="sidebar-b" style="none"></module>
 
-<div id="an-entities-wrapper">
+<div id="an-entities-wrapper" id="an-entities-main-wrapper">
     <?= @template('list') ?>
 </div>
 
