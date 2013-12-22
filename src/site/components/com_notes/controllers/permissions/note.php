@@ -33,6 +33,9 @@ class ComNotesControllerPermissionNote extends ComMediumControllerPermissionDefa
 	 */
 	public function canBrowse()
 	{
+		if( $this->getRequest()->format == 'json' )
+			return true;
+			
 		return false;	
 	}
 }
