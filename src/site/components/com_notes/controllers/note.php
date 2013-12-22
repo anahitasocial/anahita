@@ -37,13 +37,25 @@ class ComNotesControllerNote extends ComMediumControllerDefault
      * @return void
      */
     protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-           'behaviors' => array('com://site/shares.controller.behavior.sharable')
+    {	
+    	$config->append(array(
+    		'behaviors' => array('com://site/shares.controller.behavior.sharable')
         ));
     
         parent::_initialize($config);
     }
+    
+/**
+	 * Browse Notes
+	 * 
+	 * @param KCommandContext $context Context parameter
+	 * 
+	 * @return void
+	 */
+	protected function _actionBrowse($context)
+	{
+		return parent::_actionBrowse($context)->order('creationTime', 'DESC');
+	}
             
     /**
      * Adds a new post
@@ -88,4 +100,22 @@ class ComNotesControllerNote extends ComMediumControllerDefault
         
         return $entity;
     }
+    
+	/**
+	 * Page post action
+	 * 
+	 * @param KCommandContext $context Context parameter
+	 * 
+	 * @return void
+	 */
+	public function redirect(KCommandContext $context)
+	{
+	    if ( $context->action == 'delete')	    
+	    {
+	        $context->response->setRedirect(JRoute::_($this->getItem()->owner->getURL()));
+	        
+	    } else {
+	        return parent::redirect($context);
+	    }
+	}
 }
