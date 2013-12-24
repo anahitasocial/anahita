@@ -158,7 +158,7 @@ abstract class KControllerAbstract extends KObject
      * @param   object  An object that implements KMinxInterface
      * @return  KObject
      */
-    public function mixin(KMixinInterface $object)
+    public function mixin(KMixinInterface $object, $config = array())
     {
         if($object instanceof KControllerBehaviorAbstract) 
         {
@@ -172,7 +172,7 @@ abstract class KControllerAbstract extends KObject
             $this->_actions = array_unique(array_merge($this->_actions, array_keys($this->_action_map)));
         }
         
-        return parent::mixin($object);   
+        return parent::mixin($object, $config);   
     }
     
     /**

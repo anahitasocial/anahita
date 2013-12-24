@@ -111,7 +111,7 @@ class JAdministrator extends JApplication
 	 * @return	JRouter.
 	 * @since	1.5
 	 */
-	function &getRouter()
+	function &getRouter($name = NULL, $options = Array())
 	{
 	    if ( !isset($this->_router) ) {
 	        $router = KService::get('com://admin/application.router');    

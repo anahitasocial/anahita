@@ -32,23 +32,6 @@ class JObject
 	var		$_errors		= array();
 
 	/**
-	 * A hack to support __construct() on PHP 4
-	 *
-	 * Hint: descendant classes have no PHP4 class_name() constructors,
-	 * so this constructor gets called first and calls the top-layer __construct()
-	 * which (if present) should call parent::__construct()
-	 *
-	 * @access	public
-	 * @return	Object
-	 * @since	1.5
-	 */
-	function JObject()
-	{
-		$args = func_get_args();
-		call_user_func_array(array(&$this, '__construct'), $args);
-	}
-
-	/**
 	 * Class constructor, overridden in descendant classes.
 	 *
 	 * @access	protected

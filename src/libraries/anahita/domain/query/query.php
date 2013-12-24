@@ -693,7 +693,7 @@ class AnDomainQuery extends KObject implements KCommandInterface
 	 * If not of the above then KInflector::underscore($method) will be inserted as a state 
 	 * 
 	 */
-    public function __call($method, array $arguments)
+    public function __call($method, $arguments = array())
     {
         $match = array();
         
