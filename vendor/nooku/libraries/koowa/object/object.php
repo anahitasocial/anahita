@@ -162,7 +162,7 @@ class KObject implements KObjectHandlable, KObjectServiceable
      * @param   KMixinInterface  $object An object that implements KMinxInterface
      * @return  KObject
      */
-    public function mixin($object, $config = array())
+    public function mixin(KMixinInterface $object, $config = array())
     {
         if ( !$object instanceof KMixinInterface )
         {
