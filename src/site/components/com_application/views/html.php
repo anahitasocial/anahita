@@ -64,7 +64,7 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
      * (non-PHPdoc)
      * @see LibBaseViewAbstract::getRoute()
      */
-    public function getRoute($route)
+    public function getRoute( $route = '', $fqr = true)
     {
     	if ( strpos($route, 'index.php?') === false ) {
     		$route .= 'index.php?'.$route;

@@ -91,9 +91,9 @@ class ComMenuRouter extends ComBaseRouterDefault
     
     /**
      * (non-PHPdoc)
-     * @see ComBaseRouterAbstract::build()
+     * @see ComBaseRouterAbstract::parse()
      */
-    public function parse($segments)
+    public function parse(&$segments)
     {
         $vars = array();
         $menu = &JSite::getMenu();
