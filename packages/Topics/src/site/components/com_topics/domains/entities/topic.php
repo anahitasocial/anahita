@@ -36,7 +36,7 @@ class ComTopicsDomainEntityTopic extends ComMediumDomainEntityMedium
 	 *
 	 * @return void
 	 */
-	protected function _initialize($config)
+	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
 			'resources'		=> array('topics_topics'),
