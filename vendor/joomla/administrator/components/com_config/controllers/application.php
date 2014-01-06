@@ -106,7 +106,7 @@ class ConfigControllerApplication extends ConfigController
 
 		// SERVER SETTINGS
 		$lists['gzip'] 			= JHTML::_('select.booleanlist', 'gzip', 'class="inputbox"', $row->gzip);
-		$errors 				= array (JHTML::_('select.option', -1, JText::_('System Default')), JHTML::_('select.option', 0, JText::_('None')), JHTML::_('select.option', E_ERROR | E_WARNING | E_PARSE, JText::_('Simple')), JHTML::_('select.option', E_ALL, JText::_('Maximum')));
+		$errors 				= array (JHTML::_('select.option', -1, JText::_('System Default')), JHTML::_('select.option', 0, JText::_('None')), JHTML::_('select.option', E_ERROR | E_WARNING | E_PARSE, JText::_('Simple')), JHTML::_('select.option', E_ALL ^ E_STRICT, JText::_('Maximum')));
 		$lists['xmlrpc_server'] = JHTML::_('select.booleanlist', 'xmlrpc_server', 'class="inputbox"', $row->xmlrpc_server);
 		$lists['error_reporting'] = JHTML::_('select.genericlist',  $errors, 'error_reporting', 'class="inputbox" size="1"', 'value', 'text', $row->error_reporting);
 		$lists['enable_ftp'] 	= JHTML::_('select.booleanlist', 'ftp_enable', 'class="inputbox"', intval($row->ftp_enable));
