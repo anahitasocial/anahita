@@ -117,7 +117,7 @@ class JApplication extends JObject
 	 * @return	JApplication	The appliction object.
 	 * @since	1.5
 	 */
-	function &getInstance($client, $config = array(), $prefix = 'J')
+	static public function &getInstance($client, $config = array(), $prefix = 'J')
 	{
 		static $instances;
 
@@ -685,7 +685,7 @@ class JApplication extends JObject
 	 * @return object JPathway.
 	 * @since 1.5
 	 */
-	function &getPathway($name = null, $options = array())
+	public function &getPathway($name = null, $options = array())
 	{
 		if(!isset($name)) {
 			$name = $this->_name;
@@ -708,7 +708,7 @@ class JApplication extends JObject
 	 * @return object JMenu.
 	 * @since 1.5
 	 */
-	function &getMenu($name = null, $options = array())
+	public function &getMenu($name = null, $options = array())
 	{
 		if(!isset($name)) {
 			$name = $this->_name;

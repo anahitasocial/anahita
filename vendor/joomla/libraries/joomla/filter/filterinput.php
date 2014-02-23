@@ -105,7 +105,7 @@ class JFilterInput extends JObject
 	 * @since	1.5
 	 * @static
 	 */
-	public function clean($source, $type='string')
+	public static function clean($source, $type='string')
 	{
 		// Handle the type constraint
 		switch (strtoupper($type))
@@ -183,11 +183,11 @@ class JFilterInput extends JObject
 
 			default :
 				// Check for static usage and assign $filter the proper variable
-				if(is_object($this) && get_class($this) == 'JFilterInput') {
-					$filter =& $this;
-				} else {
+				//if(is_object($this) && get_class($this) == 'JFilterInput') {
+				//	$filter =& $this;
+				//} else {
 					$filter =& JFilterInput::getInstance();
-				}
+				//}
 				// Are we dealing with an array?
 				if (is_array($source)) {
 					foreach ($source as $key => $value)

@@ -58,7 +58,7 @@ class ComSearchRouter extends ComBaseRouterDefault
      * @param   array   The segments of the URL to parse.
      * @return  array   The URL attributes to be used by the application.
      */
-    public function parse($segments)
+    public function parse(&$segments)
     {
         $vars = array();   
         

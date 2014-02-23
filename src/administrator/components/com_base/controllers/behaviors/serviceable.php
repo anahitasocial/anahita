@@ -52,7 +52,7 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionAdd($context)
+    protected function _actionAdd(KCommandContext $context)
     {
         $entity = parent::_actionAdd($context);       
         $data 	= $context->data;    
@@ -72,7 +72,7 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionEdit($context)
+    protected function _actionEdit( KCommandContext $context)
     {
         $entity = parent::_actionEdit($context);
         $data   = $context->data;    
@@ -93,7 +93,7 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
      *
      * @return AnDomainEntitysetAbstract
      */
-    protected function _actionBrowse($context)
+    protected function _actionBrowse(KCommandContext $context)
     {
         $data  = $context->data;
     

@@ -123,7 +123,7 @@ class JURI extends JObject
 	 * @return	JURI  The URI object.
 	 * @since	1.5
 	 */
-	function &getInstance($uri = 'SERVER')
+	public static function &getInstance($uri = 'SERVER')
 	{
 		static $instances = array();
 
@@ -220,7 +220,7 @@ class JURI extends JObject
 	 * @return	string	The base URI string
 	 * @since	1.5
 	 */
-	function base($pathonly = false)
+	public static function base($pathonly = false)
 	{
 		static $base;
 
@@ -266,7 +266,7 @@ class JURI extends JObject
 	 * @return	string	The root URI string
 	 * @since	1.5
 	 */
-	function root($pathonly = false, $path = null)
+	public static function root($pathonly = false, $path = null)
 	{
 		static $root;
 

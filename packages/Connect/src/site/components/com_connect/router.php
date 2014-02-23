@@ -48,7 +48,7 @@ class ComConnectRouter extends ComBaseRouterDefault
      * (non-PHPdoc)
      * @see ComBaseRouterAbstract::parse()
      */
-    public function parse($segments)
+    public function parse(&$segments)
     {        
         $path  = implode('/', $segments);
         $query = array();

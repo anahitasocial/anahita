@@ -26,7 +26,7 @@ class ComNotificationsRouter extends ComBaseRouterDefault
 	 * (non-PHPdoc)
 	 * @see ComBaseRouterAbstract::parse()
 	 */
-	public function parse($segments)
+	public function parse(&$segments)
 	{
 		$query = array();
 		$path  = implode('/', $segments);
