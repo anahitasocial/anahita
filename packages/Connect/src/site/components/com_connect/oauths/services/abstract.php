@@ -397,10 +397,11 @@ abstract class ComConnectOauthServiceAbstract extends KObject
 	/**
 	 * Make a GET request
 	 *
+	 * @param  string resource name
 	 * @param  array $data
 	 * @return mixed
 	 */
-	public function get($resource, $data=array())
+	public function get($resource=null, $data=array())
 	{
 		return $this->call($resource, KHttpRequest::GET, $data);
 	}

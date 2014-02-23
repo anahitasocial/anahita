@@ -194,9 +194,8 @@ class JSite extends JApplication
      *
      * @return JMenu
      */
-    public function &getMenu()
+    public function &getMenu($name = null, $options = array())
     {
-        $options = array();
         $menu =& parent::getMenu('site', $options);
         return $menu;
     }
@@ -206,7 +205,7 @@ class JSite extends JApplication
      * 
      * @return JPathway
      */
-    public function &getPathWay()
+    public function &getPathway($name = null, $options = array())
     {
         $options = array();
         $pathway =& parent::getPathway('site', $options);
@@ -231,7 +230,7 @@ class JSite extends JApplication
      *
      * @return  JRouter
      */
-    public function &getRouter()
+    function &getRouter($name = null, $options = array())
     {
         if ( !isset($this->_router) )
         {

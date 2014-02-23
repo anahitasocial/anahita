@@ -31,7 +31,7 @@ class ComSubscriptionsRouter extends ComBaseRouterDefault
      * (non-PHPdoc)
      * @see ComBaseRouterAbstract::parse()
      */
-    public function parse($segments)
+    public function parse(&$segments)
     {
         if ( empty($segments) ) {
             $segments[] = 'packages';

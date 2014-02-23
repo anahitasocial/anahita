@@ -144,7 +144,7 @@ class AnDomainQueryClause extends KObject implements IteratorAggregate, Countabl
 	 * 
 	 * @see KObject::__call()
 	 */
-    public function __call($method, array $arguments)
+    public function __call($method, $arguments)
     {
 		if ( isset($arguments[0]) && $this->_parent_query->getRepository()->getDescription()->getProperty($method) )
     	{

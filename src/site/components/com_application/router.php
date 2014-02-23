@@ -32,7 +32,7 @@ class ComApplicationRouter extends LibApplicationRouter
      * 
      * @return void
      */
-	public function parse($url)
+	public function parse(&$url)
 	{
 	    $this->_fixUrlForParsing($url);
 	    

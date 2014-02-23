@@ -78,7 +78,7 @@ class JTable extends JObject
 	 * @return database A database object
 	 * @since 1.5
 	*/
-	function &getInstance( $type, $prefix = 'JTable', $config = array() )
+	public static function &getInstance( $type, $prefix = 'JTable', $config = array() )
 	{
 		$false = false;
 
@@ -833,7 +833,7 @@ class JTable extends JObject
 	 * @return	array	An array with directory elements
 	 * @since 1.5
 	 */
-	function addIncludePath( $path=null )
+	public static function addIncludePath( $path=null )
 	{
 		static $paths;
 

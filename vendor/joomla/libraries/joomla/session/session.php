@@ -146,7 +146,7 @@ class JSession extends JObject
 	 * @return	JSession	The Session object.
 	 * @since	1.5
 	 */
-	function & getInstance($handler, $options)
+	public static function &getInstance($handler, $options)
 	{
 		static $instance;
 
@@ -338,7 +338,7 @@ class JSession extends JObject
 	 * @param  string 	$namespace 	Namespace to use, default to 'default'
 	 * @return mixed  Old value of a variable
 	 */
-	function set($name, $value, $namespace = 'default')
+	function set($name, $value = null, $namespace = 'default')
 	{
 		$namespace = '__'.$namespace; //add prefix to namespace to avoid collisions
 

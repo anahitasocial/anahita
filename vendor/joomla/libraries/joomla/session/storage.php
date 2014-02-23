@@ -46,7 +46,7 @@ class JSessionStorage extends JObject
 	 * @return database A JSessionStorage object
 	 * @since 1.5
 	 */
-	function &getInstance($name = 'none', $options = array())
+	public static function &getInstance($name = 'none', $options = array())
 	{
 		static $instances;
 

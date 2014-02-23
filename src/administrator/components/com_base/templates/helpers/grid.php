@@ -33,15 +33,10 @@
 	 * @param 	array 	An optional array with configuration options
 	 * @return	string	Html
 	 */
-	public function order($entity, $config = array())
+	public function order($config = array())
 	{
 		$config = new KConfig($config);
 		
-		$config->append(array(
-			'row' 	=> $entity			
-		));
-
-		$config = new KConfig($config);
 		$config->append(array(
 			'row'  		=> null,
 		    'total'		=> null,
@@ -52,10 +47,10 @@
 		$up   = 'media://lib_koowa/images/arrow_up.png';
 		$down = 'media://lib_koowa/images/arrow_down.png';
 		
-		$config->data->ordering = $entity->ordering -1;
+		$config->data->ordering = $config->row->ordering -1;
 		$updata   = str_replace('"', '&quot;', $config->data);
 		
-		$config->data->ordering = $entity->ordering +1;
+		$config->data->ordering = $config->row->ordering +1;
 		$downdata = str_replace('"', '&quot;', $config->data);
 		
 		$html = '';
@@ -71,24 +66,7 @@
 	    }
 
 		return $html;		
-	} 	
-	
- 	/**
-	 * Render an enable field
-	 *
-	 * @param 	array 	An optional array with configuration options
-	 * @return	string	Html
-	 */
-	public function enable($entity, $config = array())
-	{		
-		$config = new KConfig($config);
-		
-		$config->append(array(
-			'row' 	=> $entity			
-		));
-		
-		return parent::enable($config);
-	} 	
+	} 		
 	
  	/**
 	 * Render a checkbox field

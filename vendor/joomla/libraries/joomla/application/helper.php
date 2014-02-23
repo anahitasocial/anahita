@@ -35,7 +35,7 @@ class JApplicationHelper
 	 * @return	mixed	Object describing the client or false if not known
 	 * @since	1.5
 	 */
-	function &getClientInfo($id = null, $byName = false)
+	public static function &getClientInfo($id = null, $byName = false)
 	{
 		static $clients;
 

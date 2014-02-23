@@ -124,5 +124,3 @@ class ComComponentsControllerComponent extends ComBaseControllerService
         return false;
     }
 }
-
-?>

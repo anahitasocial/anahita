@@ -77,7 +77,7 @@ class ComBaseControllerService extends ComBaseControllerResource
 	 *
 	 * @return AnDomainEntitysetAbstract
 	 */
-	protected function _actionPost($context)
+	protected function _actionPost(KCommandContext $context)
 	{
 	    if ( $context->action == 'save' )
 	        $context->response->setRedirect(JRoute::_('option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name)));

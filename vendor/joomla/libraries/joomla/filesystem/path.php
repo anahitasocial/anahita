@@ -229,7 +229,7 @@ class JPath
 	 * @return	mixed	The full path and file name for the target file, or boolean false if the file is not found in any of the paths.
 	 * @since	1.5
 	 */
-	function find($paths, $file)
+	public static function find($paths, $file)
 	{
 		settype($paths, 'array'); //force to array
 
