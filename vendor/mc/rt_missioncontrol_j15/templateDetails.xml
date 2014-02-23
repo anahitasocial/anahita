@@ -56,7 +56,11 @@
         <!-- 
         <param name="updatecheck" label="Update Check" type="updatecheck" />
          -->
+        
+        <!--
         <param name="logoupload" type="logoupload" label="Header Logo" description="The image must be PNG, GIF, or JPEG and will be resized to fit" />
+		-->
+		
 		<param name="adminTitle" size="50" type="text" default="Welcome to Anahita administration!" label="Admin Title" description="Choose your Custom Administrator title" />
 		<param name="templateWidth" type="list" default="1080" label="Template Width" description="Choose the width of the MissionControl Template">
 			<option value="960">Normal - 960px</option>
