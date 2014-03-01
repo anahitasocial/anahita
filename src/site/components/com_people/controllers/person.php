@@ -163,8 +163,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $this->unregisterCallback('after.add', array($this, 'notifyAdminsNewUser'));
         } else {
             $user->set('id', 0);
-            $user->set('usertype', 'Registered');
-            $user->set('gid', $authorize->get_group_id( '', 'Registered', 'ARO' ));
+            $config = &JComponentHelper::getParams( 'com_users' );
+            $newgrp = $config->get( 'new_usertype' );
+            $user->set('usertype', $newgrp);
+            $user->set('gid', $authorize->get_group_id( '', $newgrp, 'ARO' ));
             if ( $this->activationRequired() )
             {
                 jimport('joomla.user.helper');
