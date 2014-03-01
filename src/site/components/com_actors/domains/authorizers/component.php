@@ -43,16 +43,18 @@ class ComActorsDomainAuthorizerComponent extends LibBaseDomainAuthorizerDefault
 	 */
 	protected function _authorizeAdd(KCommandContext $context)
 	{
-        $can_publish = get_config_value($this->_entity->component,'can_publish', self::CAN_ADD_ALL);
+        $can_publish = get_config_value($this->_entity->component,'can_publish', self::CAN_ADD_ADMIN);
         
         switch($can_publish)
         {
             case self::CAN_ADD_ADMIN :
                 return $this->_viewer->admin();
             case self::CAN_ADD_SPECIAL :
-                return $this->_viewer->userType != 'Registered';                    
-            default :
+                return $this->_viewer->userType != 'Registered' && !$this->_viewer->guest();     
+            case self::CAN_ADD_ALL :
                 return !$this->_viewer->guest();
+            default :
+                return false;
         }
 	}
 }
