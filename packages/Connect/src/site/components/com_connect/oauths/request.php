@@ -99,7 +99,7 @@ class ComConnectOauthRequest extends KObject
 			'options' 	 => array(
 				'timeout'	 => 30	   ,
 				'connection_timeout' => 30,
-				'ssl'		 => false  ,
+				'ssl'		 => true  ,
 				'useragent'  => 'com_connect'		
 			)
 		));
