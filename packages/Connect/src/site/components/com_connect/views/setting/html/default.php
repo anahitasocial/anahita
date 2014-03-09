@@ -36,11 +36,11 @@ if ( $session && !$session->validateToken() )
             ?>
 		<div class="entity-actions">
 			<?php if ( !$session ) : ?>		
-			<a class="btn btn-primary" data-trigger="Submit" href="<?= @route(array('scroll'=>'','option'=>'com_connect','view'=>'setting','oid'=>$actor->uniqueAlias, 'get'=>'accesstoken', 'server'=>$api->getName()))?>">
+			<a class="btn btn-primary" data-trigger="Submit" href="<?= @route(array('option'=>'com_connect','view'=>'setting','oid'=>$actor->uniqueAlias, 'get'=>'accesstoken', 'server'=>$api->getName()))?>">
 				<?= @text('LIB-AN-ACTION-ENABLE')?>
 			</a>
 			<?php else : ?>
-			<a class="btn" data-trigger="Submit" href="<?= @route(array('scroll'=>'','option'=>'com_connect','view'=>'setting','oid'=>$actor->uniqueAlias, '_action'=>'delete', 'server'=>$api->getName()))?>">
+			<a class="btn" data-trigger="Submit" href="<?= @route(array('option'=>'com_connect','view'=>'setting','oid'=>$actor->uniqueAlias, '_action'=>'delete', 'server'=>$api->getName()))?>">
 				<?= @text('LIB-AN-ACTION-DISABLE')?>
 			</a>				
 			<?php endif;?>
