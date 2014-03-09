@@ -72,7 +72,7 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 		$token		= (array) $this->getAPI()->getToken();
 		$consumer	= (array)$this->_consumer;
 		KRequest::set('session.oauth', array('api'=>$this->getAPI()->getName(),'token'=>$token, 'consumer'=>$consumer));
-		$return = KRequest::get('session.return','raw', null);;
+		$return = KRequest::get('session.return','raw', null);
 		if ( $return )
 		    $context->append(array('data'=>array('return'=>$return)));
 	}
