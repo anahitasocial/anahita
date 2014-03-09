@@ -4,10 +4,6 @@
 
 <div class="an-entities">
 <?php foreach($apis as $api) : ?>
-    <?php 
-    $session = $sessions->find(array('api'=>$api->getName()));
-    ?>	
-
 <?php 
 $session = $sessions->find(array('api'=>$api->getName()));
 if ( $session && !$session->validateToken() ) 
