@@ -44,23 +44,25 @@ class ComInvitesControllerConnection extends ComInvitesControllerDefault
        
        $this->getService('repos://site/connect.session');
        
+       $service = $this->viewer->sessions->$service;
+       
        if ( !empty($service) ) 
        {
-          try 
-          {
-              $this->_state->setList($this->viewer->sessions->getConnections());
-          } 
-          catch( Exception $e ) 
-          {
-              $session = $this->viewer->sessions->find(array('api'=>'facebook'));
+       		try 
+          	{
+              $this->_state->setList($service->getFriends());
+          	} 
+          	catch( Exception $e ) 
+         	{
+            	$session = $this->viewer->sessions->find(array('api'=>'facebook'));
               
-              if ( $session ) 
-              	$session->delete()->save();
+            	if ( $session ) 
+              		$session->delete()->save();
               
               $service = null;
           }
-          
-          $this->service = $service;
        }
+       
+       $this->service = $service;
     }
 }
