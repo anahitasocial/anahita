@@ -87,7 +87,7 @@ class AnServiceLocatorRepository extends KServiceLocatorAbstract implements KSer
      * 
      * @return KServiceIdentifier
      */
-    protected function _identifier(KServiceIdentifier $identifier)
+    protected static function _identifier(KServiceIdentifier $identifier)
     {
         $identifier = clone $identifier;
         

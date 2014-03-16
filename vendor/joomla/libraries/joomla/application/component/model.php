@@ -100,7 +100,7 @@ class JModel extends JObject
 	 * @return	mixed	A model object, or false on failure
 	 * @since	1.5
 	*/
-	function &getInstance( $type, $prefix = '', $config = array() )
+	public static function &getInstance( $type, $prefix = '', $config = array() )
 	{
 		$type		= preg_replace('/[^A-Z0-9_\.-]/i', '', $type);
 		$modelClass	= $prefix.ucfirst($type);
@@ -217,7 +217,7 @@ class JModel extends JObject
 	 * @return	object	The table
 	 * @since	1.5
 	 */
-	function &getTable($name='', $prefix='Table', $options = array())
+	public static function &getTable($name='', $prefix='Table', $options = array())
 	{
 		if (empty($name)) {
 			$name = $this->getName();
@@ -228,8 +228,8 @@ class JModel extends JObject
 		}
 
 		JError::raiseError( 0, 'Table ' . $name . ' not supported. File not found.' );
-		$null = null;
-        return $null;
+
+        return;
 	}
 
 	/**
@@ -241,7 +241,7 @@ class JModel extends JObject
 	 * @return	array	An array with directory elements
 	 * @since	1.5
 	 */
-	function addIncludePath( $path='' )
+	public static function addIncludePath( $path='' )
 	{
 		static $paths;
 
@@ -262,7 +262,7 @@ class JModel extends JObject
 	 * @param	string|array The directory (-ies) to add.
 	 * @return	void
 	 */
-	function addTablePath($path)
+	public static function addTablePath($path)
 	{
 		jimport('joomla.database.table');
 		JTable::addIncludePath($path);
@@ -294,7 +294,7 @@ class JModel extends JObject
 	 * @access	protected
 	 * @since	1.5
 	 */
-	function _getListCount( $query )
+	private static function _getListCount( $query )
 	{
 		$this->_db->setQuery( $query );
 		$this->_db->query();
@@ -311,7 +311,7 @@ class JModel extends JObject
 	 * @return	mixed	Model object or boolean false if failed
 	 * @since	1.5
 	 */
-	function &_createTable( $name, $prefix = 'Table', $config = array())
+	private static function &_createTable( $name, $prefix = 'Table', $config = array())
 	{
 		$result = null;
 
@@ -337,7 +337,7 @@ class JModel extends JObject
 	 * @return	string The filename
 	 * @since	1.5
 	 */
-	function _createFileName($type, $parts = array())
+	private static function _createFileName($type, $parts = array())
 	{
 		$filename = '';
 

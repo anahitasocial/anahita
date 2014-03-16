@@ -28,7 +28,7 @@ class JHTMLMenu
 	/**
 	* Build the select list for Menu Ordering
 	*/
-	function ordering( &$row, $id )
+	public static function ordering( &$row, $id )
 	{
 		$db =& JFactory::getDBO();
 
@@ -121,7 +121,7 @@ class JHTMLMenu
 		return $mitems;
 	}
 
-	function treerecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 )
+	public static function treerecurse( $id, $indent, $list, &$children, $maxlevel=9999, $level=0, $type=1 )
 	{
 		if (@$children[$id] && $level <= $maxlevel)
 		{

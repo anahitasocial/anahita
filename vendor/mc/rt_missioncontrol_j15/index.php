@@ -14,7 +14,7 @@ JHTML::script('lib_anahita/js/admin.js',   'media/');
 require_once('lib/missioncontrol.class.php');
 
 global $mctrl;
-$mctrl =& MissionControl::getInstance();
+$mctrl = MissionControl::getInstance();
 $mctrl->processAjax();
 $mctrl->initRenderer();
 $mctrl->addStyle("core.css");

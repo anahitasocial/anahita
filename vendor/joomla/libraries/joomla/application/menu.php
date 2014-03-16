@@ -79,7 +79,7 @@ class JMenu extends JObject
 	 * @return JMenu 	A menu object.
 	 * @since	1.5
 	 */
-	function &getInstance($client, $options = array())
+	public static function &getInstance($client, $options = array())
 	{
 		static $instances;
 
@@ -90,9 +90,10 @@ class JMenu extends JObject
 		if (empty($instances[$client]))
 		{
 			//Load the router object
-			$info =& JApplicationHelper::getClientInfo($client, true);
-
+			$info = JApplicationHelper::getClientInfo($client, true);
+			
 			$path = $info->path.DS.'includes'.DS.'menu.php';
+			
 			if(file_exists($path))
 			{
 				require_once $path;

@@ -29,7 +29,7 @@ class JHTMLGrid
 	 * @param	string	The selected ordering
 	 * @param	string	An optional task override
 	 */
-	function sort( $title, $order, $direction = 'asc', $selected = 0, $task=NULL )
+	public static function sort( $title, $order, $direction = 'asc', $selected = 0, $task=NULL )
 	{
 		$direction	= strtolower( $direction );
 		$images		= array( 'sort_asc.png', 'sort_desc.png' );
@@ -53,7 +53,7 @@ class JHTMLGrid
 	*
 	* @return string
 	*/
-	function id( $rowNum, $recId, $checkedOut=false, $name='cid' )
+	public static function id( $rowNum, $recId, $checkedOut=false, $name='cid' )
 	{
 		if ( $checkedOut ) {
 			return '';
@@ -62,7 +62,7 @@ class JHTMLGrid
 		}
 	}
 
-	function access( &$row, $i, $archived = NULL )
+	public static function access( &$row, $i, $archived = NULL )
 	{
 		if ( !$row->access )  {
 			$color_access = 'style="color: green;"';
@@ -90,7 +90,7 @@ class JHTMLGrid
 		return $href;
 	}
 
-	function checkedOut( &$row, $i, $identifier = 'id' )
+	public static function checkedOut( &$row, $i, $identifier = 'id' )
 	{
 		$user   =& JFactory::getUser();
 		$userid = $user->get('id');
@@ -112,7 +112,7 @@ class JHTMLGrid
 		return $checked;
 	}
 
-	function published( &$row, $i, $imgY = 'tick.png', $imgX = 'publish_x.png', $prefix='' )
+	public static function published( &$row, $i, $imgY = 'tick.png', $imgX = 'publish_x.png', $prefix='' )
 	{
 		$img 	= $row->published ? $imgY : $imgX;
 		$task 	= $row->published ? 'unpublish' : 'publish';
@@ -127,7 +127,7 @@ class JHTMLGrid
 		return $href;
 	}
 
-	function state( $filter_state='*', $published='Published', $unpublished='Unpublished', $archived=NULL, $trashed=NULL )
+	public static function state( $filter_state='*', $published='Published', $unpublished='Unpublished', $archived=NULL, $trashed=NULL )
 	{
 		$state[] = JHTML::_('select.option',  '', '- '. JText::_( 'Select State' ) .' -' );
 		//Jinx : Why is this used ?
@@ -146,7 +146,7 @@ class JHTMLGrid
 		return JHTML::_('select.genericlist',   $state, 'filter_state', 'class="inputbox" size="1" onchange="submitform( );"', 'value', 'text', $filter_state );
 	}
 
-	function order( $rows, $image='filesave.png', $task="saveorder" )
+	public static function order( $rows, $image='filesave.png', $task="saveorder" )
 	{
 		$image = JHTML::_('image.administrator',  $image, '/images/', NULL, NULL, JText::_( 'Save Order' ) );
 		$href = '<a href="javascript:saveorder('.(count( $rows )-1).', \''.$task.'\')" title="'.JText::_( 'Save Order' ).'">'.$image.'</a>';
@@ -154,7 +154,7 @@ class JHTMLGrid
 	}
 
 
-	function _checkedOut( &$row, $overlib = 1 )
+	private static function _checkedOut( &$row, $overlib = 1 )
 	{
 		$hover = '';
 		if ( $overlib )

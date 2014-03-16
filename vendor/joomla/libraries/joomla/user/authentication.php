@@ -67,7 +67,7 @@ class JAuthentication extends JObservable
 	 * @return object The global JAuthentication object
 	 * @since 1.5
 	 */
-	function & getInstance()
+	public static function & getInstance()
 	{
 		static $instances;
 

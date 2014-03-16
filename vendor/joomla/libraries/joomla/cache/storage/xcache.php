@@ -44,11 +44,10 @@ class JCacheStorageXCache extends JCacheStorage
 	 * @access	public
 	 * @param	string	$id			The cache data id
 	 * @param	string	$group		The cache data group
-	 * @param	boolean	$checkTime	True to verify cache time expiration threshold
 	 * @return	mixed	Boolean false on failure or a cached data string
 	 * @since	1.5
 	 */
-	function get($id, $group, $checkTime)
+	function get($id, $group=null)
 	{
 		$cache_id = $this->_getCacheId($id, $group);
 

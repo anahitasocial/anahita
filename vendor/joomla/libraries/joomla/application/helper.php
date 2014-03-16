@@ -103,7 +103,7 @@ class JApplicationHelper
 	* @return string The requested path
 	* @since 1.0
 	*/
-	function getPath( $varname, $user_option=null )
+	public static function getPath( $varname, $user_option=null )
 	{
 		// check needed for handling of custom/new module xml file loading
 		$check = ( ( $varname == 'mod0_xml' ) || ( $varname == 'mod1_xml' ) );
@@ -205,7 +205,7 @@ class JApplicationHelper
 		return $result;
 	}
 
-	function parseXMLInstallFile($path)
+	public static function parseXMLInstallFile($path)
 	{
 		// Read the file to see if it's a valid component XML file
 		$xml = & JFactory::getXMLParser('Simple');
@@ -259,7 +259,7 @@ class JApplicationHelper
 		return $data;
 	}
 
-	function parseXMLLangMetaFile($path)
+	public static function parseXMLLangMetaFile($path)
 	{
 		// Read the file to see if it's a valid component XML file
 		$xml = & JFactory::getXMLParser('Simple');
@@ -320,7 +320,7 @@ class JApplicationHelper
 	 * @param integer 	$checkAdmin		0 to check site only, 1 to check site and admin, -1 to check admin only
 	 * @since 1.5
 	 */
-	function _checkPath( $path, $checkAdmin=1 )
+	private static function _checkPath( $path, $checkAdmin=1 )
 	{
 		$file = JPATH_SITE . $path;
 		if ($checkAdmin > -1 && file_exists( $file )) {

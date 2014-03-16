@@ -37,7 +37,7 @@ class JFolder
 	 * @return	mixed	JError object on failure or boolean True on success.
 	 * @since	1.5
 	 */
-	function copy($src, $dest, $path = '', $force = false)
+	public static function copy($src, $dest, $path = '', $force = false)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -136,7 +136,7 @@ class JFolder
 	 * @return boolean True if successful.
 	 * @since 1.5
 	 */
-	function create($path = '', $mode = 0755)
+	public static function create($path = '', $mode = 0755)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -250,7 +250,7 @@ class JFolder
 	 * @return boolean True on success.
 	 * @since 1.5
 	 */
-	function delete($path)
+	public static function delete($path)
 	{
 		// Sanity check
 		if (!$path) {
@@ -336,7 +336,7 @@ class JFolder
 	 * @return mixed Error message on false or boolean true on success.
 	 * @since 1.5
 	 */
-	function move($src, $dest, $path = '')
+	public static function move($src, $dest, $path = '')
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -387,7 +387,7 @@ class JFolder
 	 * @return boolean True if path is a folder
 	 * @since 1.5
 	 */
-	function exists($path)
+	public static function exists($path)
 	{
 		return is_dir(JPath::clean($path));
 	}
@@ -405,7 +405,7 @@ class JFolder
 	 * @return	array	Files in the given folder.
 	 * @since 1.5
 	 */
-	function files($path, $filter = '.', $recurse = false, $fullpath = false, $exclude = array('.svn', 'CVS'))
+	public static function files($path, $filter = '.', $recurse = false, $fullpath = false, $exclude = array('.svn', 'CVS'))
 	{
 		// Initialize variables
 		$arr = array();
@@ -466,7 +466,7 @@ class JFolder
 	 * @return	array	Folders in the given folder.
 	 * @since 1.5
 	 */
-	function folders($path, $filter = '.', $recurse = false, $fullpath = false, $exclude = array('.svn', 'CVS'))
+	public static function folders($path, $filter = '.', $recurse = false, $fullpath = false, $exclude = array('.svn', 'CVS'))
 	{
 		// Initialize variables
 		$arr = array();
@@ -527,7 +527,7 @@ class JFolder
 	 * @return	array	Folders in the given folder.
 	 * @since	1.5
 	 */
-	function listFolderTree($path, $filter, $maxLevel = 3, $level = 0, $parent = 0)
+	public static function listFolderTree($path, $filter, $maxLevel = 3, $level = 0, $parent = 0)
 	{
 		$dirs = array ();
 		if ($level == 0) {
@@ -561,7 +561,7 @@ class JFolder
 	 * @return	string The sanitised string.
 	 * @since	1.5
 	 */
-	function makeSafe($path)
+	public static function makeSafe($path)
 	{
 		$ds = (DS == '\\') ? '\\' . DS : DS;
 		$regex = array('#[^A-Za-z0-9:\_\-' . $ds . ' ]#');

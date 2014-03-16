@@ -351,19 +351,6 @@ class JController extends JObject
 		{
 			// task is a reserved state
 			$model->setState( 'task', $this->_task );
-
-			// Lets get the application object and set menu information if its available
-			$app	= &JFactory::getApplication();
-			$menu	= &$app->getMenu();
-			if (is_object( $menu ))
-			{
-				if ($item = $menu->getActive())
-				{
-					$params	=& $menu->getParams($item->id);
-					// Set Default State Data
-					$model->setState( 'parameters.menu', $params );
-				}
-			}
 		}
 		return $model;
 	}

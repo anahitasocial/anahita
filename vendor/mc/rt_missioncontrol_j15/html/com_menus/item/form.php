@@ -5,7 +5,7 @@ defined('_JEXEC') or die('Restricted access');
 
 class RokNavMenusHelper extends MenusHelper {
 	
-	function Target( &$row )
+	public static function Target( &$row )
 	{
 		$click[] = JHTML::_('select.option',  '0', JText::_( 'Parent Window With Browser Navigation' ) );
 		$click[] = JHTML::_('select.option',  '1', JText::_( 'New Window With Browser Navigation' ) );
@@ -17,7 +17,7 @@ class RokNavMenusHelper extends MenusHelper {
 		return $target;
 	}
 	
-	function getPluginParams(&$item) {
+	public static function getPluginParams(&$item) {
 		JPluginHelper::importPlugin('roknavmenu');
 		$param_files = array();
 		$param_sets = array();

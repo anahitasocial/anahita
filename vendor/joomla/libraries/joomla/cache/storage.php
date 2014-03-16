@@ -58,7 +58,7 @@ class JCacheStorage extends JObject
 	 * @return	object	A JCacheStorageHandler object
 	 * @since	1.5
 	 */
-	function &getInstance($handler = 'file', $options = array())
+	public static function &getInstance($handler = 'file', $options = array())
 	{
 		static $now = null;
 		if(is_null($now)) {
@@ -88,11 +88,10 @@ class JCacheStorage extends JObject
 	 * @access	public
 	 * @param	string	$id			The cache data id
 	 * @param	string	$group		The cache data group
-	 * @param	boolean	$checkTime	True to verify cache time expiration threshold
 	 * @return	mixed	Boolean false on failure or a cached data string
 	 * @since	1.5
 	 */
-	function get($id, $group, $checkTime)
+	function get($id, $group = null)
 	{
 		return;
 	}

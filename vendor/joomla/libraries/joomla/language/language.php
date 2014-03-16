@@ -127,7 +127,7 @@ class JLanguage extends JObject
 	 * @return	JLanguage  The Language object.
 	 * @since	1.5
 	 */
-	function & getInstance($lang)
+	public static function & getInstance($lang)
 	{
 		$instance = new JLanguage($lang);
 		$reference = & $instance;
@@ -242,7 +242,7 @@ class JLanguage extends JObject
 	 * @return	boolean True if the language exists
 	 * @since	1.5
 	 */
-	function exists($lang, $basePath = JPATH_BASE)
+	public static function exists($lang, $basePath = JPATH_BASE)
 	{
 		static	$paths	= array();
 
@@ -648,7 +648,7 @@ class JLanguage extends JObject
 	 * @return	array	key/value pair with the language file and real name
 	 * @since	1.5
 	 */
-	function getKnownLanguages($basePath = JPATH_BASE)
+	public static function getKnownLanguages($basePath = JPATH_BASE)
 	{
 		$dir = JLanguage::getLanguagePath($basePath);
 		$knownLanguages = JLanguage::_parseLanguageFiles($dir);
@@ -665,7 +665,7 @@ class JLanguage extends JObject
 	 * @return	string	language related path or null
 	 * @since	1.5
 	 */
-	function getLanguagePath($basePath = JPATH_BASE, $language = null )
+	public static function getLanguagePath($basePath = JPATH_BASE, $language = null )
 	{
 		$dir = $basePath.DS.'language';
 		if (!empty($language)) {
@@ -684,7 +684,7 @@ class JLanguage extends JObject
 	 * @return	string	Previous value
 	 * @since	1.5
 	 */
-	function setLanguage($lang)
+	public function setLanguage($lang)
 	{
 		$previous			= $this->_lang;
 		$this->_lang		= $lang;
@@ -704,7 +704,7 @@ class JLanguage extends JObject
 	 * @return	array	Array holding the found languages as filename => real name pairs
 	 * @since	1.5
 	 */
-	function _parseLanguageFiles($dir = null)
+	private static function _parseLanguageFiles($dir = null)
 	{
 		jimport('joomla.filesystem.folder');
 
@@ -727,7 +727,7 @@ class JLanguage extends JObject
 	 * @return	array	Array holding the found languages as filename => metadata array
 	 * @since	1.5
 	 */
-	function _parseXMLLanguageFiles($dir = null)
+	private static function _parseXMLLanguageFiles($dir = null)
 	{
 		if ($dir == null) {
 			return null;
@@ -755,7 +755,7 @@ class JLanguage extends JObject
 	 * @return	array	Array holding the found metadata as a key => value pair
 	 * @since	1.5
 	 */
-	function _parseXMLLanguageFile($path)
+	private static function _parseXMLLanguageFile($path)
 	{
 		$xml = & JFactory::getXMLParser('Simple');
 
