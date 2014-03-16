@@ -12,7 +12,7 @@ defined( '_JEXEC' ) or die( 'Restricted index access' );
 require_once('lib/missioncontrol.class.php');
 
 global $mctrl;
-$mctrl =& MissionControl::getInstance();
+$mctrl = MissionControl::getInstance();
 $mctrl->storeRedirect();
 
 $mctrl->addStyle("core.css");

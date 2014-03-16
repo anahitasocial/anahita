@@ -45,7 +45,7 @@ class JPane extends JObject
 	 * @param	array 	$params		Associative array of values
 	 * @return	object
 	 */
-	function &getInstance( $behavior = 'Tabs', $params = array())
+	public static function &getInstance( $behavior = 'Tabs', $params = array())
 	{
 		$classname = 'JPane'.$behavior;
 		$instance = new $classname($params);

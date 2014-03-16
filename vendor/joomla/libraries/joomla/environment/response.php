@@ -63,7 +63,7 @@ class JResponse
 	 * @param string 	$value
 	 * @param boolean 	$replace
 	 */
-	function setHeader($name, $value, $replace = false)
+	public static function setHeader($name, $value, $replace = false)
 	{
 		$name	= (string) $name;
 		$value	= (string) $value;
@@ -89,7 +89,7 @@ class JResponse
 	 * @access public
 	 * @return array
 	 */
-	function getHeaders() {
+	public static function getHeaders() {
 		return  $GLOBALS['_JRESPONSE']->headers;
 	}
 
@@ -108,7 +108,7 @@ class JResponse
 	 * @access public
 	 * @return void
 	 */
-	function sendHeaders()
+	public static function sendHeaders()
 	{
 		if (!headers_sent())
 		{
@@ -133,7 +133,7 @@ class JResponse
 	 * @access public
 	 * @param string $content
 	 */
-	function setBody($content) {
+	public static function setBody($content) {
 		$GLOBALS['_JRESPONSE']->body = array((string) $content);
 	}
 
@@ -165,7 +165,7 @@ class JResponse
 	 * array of strings or as a single string; defaults to false
 	 * @return string|array
 	 */
-	function getBody($toArray = false)
+	public static function getBody($toArray = false)
 	{
 		if ($toArray) {
 			return $GLOBALS['_JRESPONSE']->body;
@@ -185,7 +185,7 @@ class JResponse
 	 * @param boolean 	$compress	If true, compress the data
 	 * @return string
 	 */
-	function toString($compress = false)
+	public static function toString($compress = false)
 	{
 		$data = JResponse::getBody();
 
@@ -217,7 +217,7 @@ class JResponse
 	* @param	string		data
 	* @return	string		compressed data
 	*/
-	function _compress( $data )
+	private static function _compress( $data )
 	{
 		$encoding = JResponse::_clientEncoding();
 
@@ -262,7 +262,7 @@ class JResponse
 	* @access	private
 	* @return	boolean
 	*/
-	function _clientEncoding()
+	private static function _clientEncoding()
 	{
 		if (!isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
 			return false;

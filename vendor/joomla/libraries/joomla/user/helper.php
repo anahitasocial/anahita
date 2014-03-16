@@ -32,7 +32,7 @@ class JUserHelper
 	 * @return 	boolean 			True on success
 	 * @since	1.5
 	 */
-	function activateUser($activation)
+	public static function activateUser($activation)
 	{
 		//Initialize some variables
 		$db = & JFactory::getDBO();
@@ -77,7 +77,7 @@ class JUserHelper
 	 * @param string The username to search on
 	 * @return int The user id or 0 if not found
 	 */
-	function getUserId($username)
+	public static function getUserId($username)
 	{
 		// Initialize some variables
 		$db = & JFactory::getDBO();
@@ -103,7 +103,7 @@ class JUserHelper
 	 *
 	 * @return string  The encrypted password.
 	 */
-	function getCryptedPassword($plaintext, $salt = '', $encryption = 'md5-hex', $show_encrypt = false)
+	public static function getCryptedPassword($plaintext, $salt = '', $encryption = 'md5-hex', $show_encrypt = false)
 	{
 		// Get the salt to use.
 		$salt = JUserHelper::getSalt($encryption, $salt, $plaintext);
@@ -198,7 +198,7 @@ class JUserHelper
 	 *
 	 * @return string  The generated or extracted salt.
 	 */
-	function getSalt($encryption = 'md5-hex', $seed = '', $plaintext = '')
+	public static function getSalt($encryption = 'md5-hex', $seed = '', $plaintext = '')
 	{
 		// Encrypt the password.
 		switch ($encryption)
@@ -272,38 +272,14 @@ class JUserHelper
 	}
 
 	/**
-	 * Generate a random password on PHP4
-	 * The password is not truely random, but the best we can do for PHP4.
-	 * To get a stronger random number, use PHP5.
-	 *
-	 * @static
-	 * @param	int		$length	Length of the password to generate
-	 * @return	string			Random Password
-	 * @since	1.5.26
-	 */
-	function genRandomPasswordPHP4($length = 8)
-	{
-		$salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-		$len = strlen($salt);
-		$makepass = '';
-
-		for ($i = 0; $i < $length; $i ++) {
-			$makepass .= $salt[mt_rand(0, $len -1)];
-		}
-
-		return $makepass;
-	}
-
-	/**
 	 * Generate a random password
-	 * This method is secure.
 	 *
 	 * @static
 	 * @param	int		$length	Length of the password to generate
 	 * @return	string			Random Password
-	 * @since	1.5.26
+	 * @since	1.5
 	 */
-	function genRandomPasswordPHP5($length = 8)
+	public static function genRandomPassword($length = 8)
 	{
 		$salt = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 		$base = strlen($salt);
@@ -330,24 +306,6 @@ class JUserHelper
 	}
 
 	/**
-	 * Generate a random password
-	 *
-	 * @static
-	 * @param	int		$length	Length of the password to generate
-	 * @return	string			Random Password
-	 * @since	1.5
-	 */
-	function genRandomPassword($length = 8)
-	{
-		if (version_compare(PHP_VERSION, '5.0.0', '<')) {
-			return $makepass = JUserHelper::genRandomPasswordPHP4($length);
-		}
-		else {
-			return $makepass = JUserHelper::genRandomPasswordPHP5($length);
-		}
-	}
-
-	/**
 	 * Converts to allowed 64 characters for APRMD5 passwords.
 	 *
 	 * @access private
@@ -356,7 +314,7 @@ class JUserHelper
 	 * @return string  $value converted to the 64 MD5 characters.
 	 * @since 1.5
 	 */
-	function _toAPRMD5($value, $count)
+	private static function _toAPRMD5($value, $count)
 	{
 		/* 64 characters that are valid for APRMD5 passwords. */
 		$APRMD5 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -378,7 +336,7 @@ class JUserHelper
 	 * @return string  Binary data.
 	 * @since 1.5
 	 */
-	function _bin($hex)
+	private static function _bin($hex)
 	{
 		$bin = '';
 		$length = strlen($hex);

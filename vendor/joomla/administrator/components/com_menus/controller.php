@@ -509,7 +509,6 @@ class MenusController extends JController
 	 */
 	function viewMenus()
 	{
-
 		$view =& $this->getView( 'Menus');
 		$model	=& $this->getModel( 'Menutype' );
 		$view->setModel( $model, true );
@@ -561,6 +560,7 @@ class MenusController extends JController
 
 		$isNew		= ($menuType->id == 0);
 		$isChanged	= ($oldType->menutype != $menuType->menutype);
+		$msg 		= JText::_( 'Menu Items & Modules updated' );
 
 		if (!$menuType->check()) {
 			JError::raiseWarning( 500, $menuType->getError() );
@@ -614,7 +614,7 @@ class MenusController extends JController
 
 			$msg = JText::sprintf( 'New Menu created', $menuType->menutype );
 		}
-		else if ($isChanged)
+		else if($isChanged)
 		{
 			$oldTerm = $oldType->menutype;
 			$newTerm = $menuType->menutype;
@@ -653,9 +653,9 @@ class MenusController extends JController
 			$db->setQuery( $query );
 			$db->query();
 
-			$msg = JText::_( 'Menu Items & Modules updated' );
+			
 		}
-
+		
 		$this->setRedirect( 'index.php?option=com_menus', $msg );
 	}
 

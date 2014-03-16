@@ -686,7 +686,7 @@ class JTable extends JObject
 	 * 							a static function.
 	 * @return boolean
 	 */
-	function isCheckedOut( $with = 0, $against = null)
+	public static function isCheckedOut( $with = 0, $against = null)
 	{
 		if(isset($this) && is_a($this, 'JTable') && is_null($against)) {
 			$against = $this->get( 'checked_out' );

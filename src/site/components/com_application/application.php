@@ -194,7 +194,7 @@ class JSite extends JApplication
      *
      * @return JMenu
      */
-    public function &getMenu($name = null, $options = array())
+    public static function &getMenu($name = null, $options = array())
     {
         $menu =& parent::getMenu('site', $options);
         return $menu;

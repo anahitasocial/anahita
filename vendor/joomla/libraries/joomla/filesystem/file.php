@@ -34,7 +34,7 @@ class JFile
 	 * @return string The file extension
 	 * @since 1.5
 	 */
-	function getExt($file) {
+	public static function getExt($file) {
 		$chunks = explode('.', $file);
 		$chunksCount = count($chunks) - 1;
 
@@ -52,7 +52,7 @@ class JFile
 	 * @return string The file name without the extension
 	 * @since 1.5
 	 */
-	function stripExt($file) {
+	public static function stripExt($file) {
 		return preg_replace('#\.[^.]*$#', '', $file);
 	}
 
@@ -63,7 +63,7 @@ class JFile
 	 * @return string The sanitised string
 	 * @since 1.5
 	 */
-	function makeSafe($file) {
+	public static function makeSafe($file) {
 		$regex = array('#(\.){2,}#', '#[^A-Za-z0-9\.\_\- ]#', '#^\.#');
 		return preg_replace($regex, '', $file);
 	}
@@ -77,7 +77,7 @@ class JFile
 	 * @return boolean True on success
 	 * @since 1.5
 	 */
-	function copy($src, $dest, $path = null)
+	public static function copy($src, $dest, $path = null)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -130,7 +130,7 @@ class JFile
 	 * @return boolean  True on success
 	 * @since 1.5
 	 */
-	function delete($file)
+	public static function delete($file)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -187,7 +187,7 @@ class JFile
 	 * @return boolean True on success
 	 * @since 1.5
 	 */
-	function move($src, $dest, $path = '')
+	public static function move($src, $dest, $path = '')
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -238,7 +238,7 @@ class JFile
 	 * @return mixed Returns file contents or boolean False if failed
 	 * @since 1.5
 	 */
-	function read($filename, $incpath = false, $amount = 0, $chunksize = 8192, $offset = 0)
+	public static function read($filename, $incpath = false, $amount = 0, $chunksize = 8192, $offset = 0)
 	{
 		// Initialize variables
 		$data = null;
@@ -279,7 +279,7 @@ class JFile
 	 * @return boolean True on success
 	 * @since 1.5
 	 */
-	function write($file, $buffer)
+	public static function write($file, $buffer)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -314,7 +314,7 @@ class JFile
 	 * @return boolean True on success
 	 * @since 1.5
 	 */
-	function upload($src, $dest)
+	public static function upload($src, $dest)
 	{
 		// Initialize variables
 		jimport('joomla.client.helper');
@@ -368,7 +368,7 @@ class JFile
 	 * @return boolean True if path is a file
 	 * @since 1.5
 	 */
-	function exists($file)
+	public static function exists($file)
 	{
 		return is_file(JPath::clean($file));
 	}
@@ -380,7 +380,7 @@ class JFile
 	 * @return string filename
 	 * @since 1.5
 	 */
-	function getName($file) {
+	public static function getName($file) {
 		$slash = strrpos($file, DS);
 		if ($slash !== false) {
 			return substr($file, $slash + 1);

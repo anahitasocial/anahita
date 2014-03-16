@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 */
 class TOOLBAR_cpanel
 {
-	function _DEFAULT() {
+	public static function _DEFAULT() {
 		JToolBarHelper::title( JText::_( 'Control Panel' ), 'cpanel.png' );
 		JToolBarHelper::help( 'screen.cpanel' );
 	}

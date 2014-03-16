@@ -22,7 +22,7 @@ class MenusHelper
 	 * Get a list of the menu_types records
 	 * @return array An array of records as objects
 	 */
-	function getMenuTypeList()
+	public static function getMenuTypeList()
 	{
 		$db = &JFactory::getDBO();
 		$query = 'SELECT a.*, SUM(b.home) AS home' .
@@ -37,7 +37,7 @@ class MenusHelper
 	 * Get a list of the menutypes
 	 * @return array An array of menu type names
 	 */
-	function getMenuTypes()
+	public static function getMenuTypes()
 	{
 		$db = &JFactory::getDBO();
 		$query = 'SELECT menutype' .
@@ -49,7 +49,7 @@ class MenusHelper
 	/**
 	 * Gets a list of components that can link to the menu
 	 */
-	function getComponentList()
+	public static function getComponentList()
 	{
 		$db = &JFactory::getDBO();
 		$query = 'SELECT c.id, c.name, c.link, c.option' .
@@ -85,7 +85,7 @@ class MenusHelper
 	/**
 	 * Build the select list for parent menu item
 	 */
-	function Parent( &$row )
+	public static function Parent( &$row )
 	{
 		$db =& JFactory::getDBO();
 
@@ -146,7 +146,7 @@ class MenusHelper
 	/**
 	* build the select list for target window
 	*/
-	function Target( &$row )
+	public static function Target( &$row )
 	{
 		$click[] = JHTML::_('select.option',  '0', JText::_( 'Parent Window With Browser Navigation' ) );
 		$click[] = JHTML::_('select.option',  '1', JText::_( 'New Window With Browser Navigation' ) );
@@ -159,7 +159,7 @@ class MenusHelper
 	/**
 	* build the select list for target window
 	*/
-	function Published( &$row )
+	public static function Published( &$row )
 	{
 		$put[] = JHTML::_('select.option',  '0', JText::_( 'No' ));
 		$put[] = JHTML::_('select.option',  '1', JText::_( 'Yes' ));
@@ -175,7 +175,7 @@ class MenusHelper
 	/**
 	* clean system cache
 	*/
-	function cleanCache()
+	public static function cleanCache()
 	{
 		global $mainframe;
 

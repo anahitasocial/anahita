@@ -46,7 +46,7 @@ class UsersController extends JController
 	/**
 	 * Displays a view
 	 */
-	function display( )
+	function display($cachable = false)
 	{
 		switch($this->getTask())
 		{

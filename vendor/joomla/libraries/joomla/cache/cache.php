@@ -97,7 +97,7 @@ class JCache extends JObject
 	 * @return	object	A JCache object
 	 * @since	1.5
 	 */
-	function &getInstance($type = 'output', $options = array())
+	public static function &getInstance($type = 'output', $options = array())
 	{
 		$type = strtolower(preg_replace('/[^A-Z0-9_\.-]/i', '', $type));
 

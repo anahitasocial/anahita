@@ -219,7 +219,9 @@ class AnDomainQueryHelper
 			throw new AnDomainQueryException('Query Building Failed. Unkown Parent');				
 		 elseif($child_belongs_to_property->isPolymorphic()) 
 		 {
-			$columns = array(array_shift(array_keys($columns)) => array_shift(array_values($columns)));
+			$columnsKeys = array_keys($columns);
+			$columnsValues = array_values($columns);
+		 	$columns = array(array_shift($columnsKeys) => array_shift($columnsValues));
 		 }
 		
 		$condition = array();
@@ -254,8 +256,14 @@ class AnDomainQueryHelper
 		if ( !$child_belongs_to_property->getParent() ) 
 			throw new AnDomainQueryException('Query Building Failed. Unkown Parent');				
 		 elseif($child_belongs_to_property->isPolymorphic())
-			$columns = array(array_shift(array_keys($columns)) => array_shift(array_values($columns)));		
-			$condition = array();
+		 {
+			$columnsKeys = array_keys($columns);
+			$columnsValues = array_values($columns);
+		 	$columns = array(array_shift($columnsKeys) => array_shift($columnsValues));	
+		 }	
+		
+		$condition = array();
+		
 		foreach($columns as $parent_property => $child_column) {
 			$result = self::parseColumn($query, $parent_property);
 			$col    = $result['columns'];

@@ -44,7 +44,7 @@ class JPath
 	 * @return	boolean	True if path can have mode changed
 	 * @since	1.5
 	 */
-	function canChmod($path)
+	public static function canChmod($path)
 	{
 		$perms = fileperms($path);
 		if ($perms !== false)
@@ -67,7 +67,7 @@ class JPath
 	 * @return	boolean	True if successful [one fail means the whole operation failed]
 	 * @since	1.5
 	 */
-	function setPermissions($path, $filemode = '0644', $foldermode = '0755') {
+	public static function setPermissions($path, $filemode = '0644', $foldermode = '0755') {
 
 		// Initialize return value
 		$ret = true;
@@ -115,7 +115,7 @@ class JPath
 	 * @return	string	Filesystem permissions
 	 * @since	1.5
 	 */
-	function getPermissions($path)
+	public static function getPermissions($path)
 	{
 		$path = JPath::clean($path);
 		$mode = @ decoct(@ fileperms($path) & 0777);
@@ -143,7 +143,7 @@ class JPath
 	 * @return	string	A cleaned version of the path
 	 * @since	1.5
 	 */
-	function check($path)
+	public static function check($path)
 	{
 		if (strpos($path, '..') !== false) {
 			JError::raiseError( 20, 'JPath::check Use of relative paths not permitted'); // don't translate
@@ -165,7 +165,7 @@ class JPath
 	 * @return	string	The cleaned path
 	 * @since	1.5
 	 */
-	function clean($path, $ds=DS)
+	public static function clean($path, $ds=DS)
 	{
 		$path = trim($path);
 
@@ -187,7 +187,7 @@ class JPath
 	 * @return	boolean	True if the php script owns the path passed
 	 * @since	1.5
 	 */
-	function isOwner($path)
+	public static function isOwner($path)
 	{
 		jimport('joomla.filesystem.file');
 		jimport('joomla.user.helper');

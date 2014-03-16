@@ -57,7 +57,7 @@ class JCacheCallback extends JCache
 	 * @return	mixed	Result of the callback
 	 * @since	1.5
 	 */
-	function get( $callback, $args, $id=false )
+	function get( $callback, $args=null, $id=false )
 	{
 		// Normalize callback
 		if (is_array( $callback ) || $callback instanceof Closure) {
@@ -108,7 +108,6 @@ class JCacheCallback extends JCache
 			$this->store(serialize($cached), $id);
 		}
 
-		echo $output;
 		return $result;
 	}
 

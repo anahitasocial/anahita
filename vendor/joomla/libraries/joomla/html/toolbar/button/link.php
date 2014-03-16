@@ -54,7 +54,7 @@ class JButtonLink extends JButton
 	 * @return	string	Button CSS Id
 	 * @since	1.5
 	 */
-	function fetchId($name)
+	function fetchId($name='')
 	{
 		return $this->_parent->_name.'-'.$name;
 	}

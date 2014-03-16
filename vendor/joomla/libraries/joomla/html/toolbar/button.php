@@ -111,7 +111,7 @@ class JButton extends JObject
 	 * @access		public
 	 * @since		1.5
 	 */
-	function fetchId()
+	function fetchId($name='')
 	{
 		return;
 	}

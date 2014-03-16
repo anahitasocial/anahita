@@ -33,7 +33,7 @@ class JToolBarHelper
 	* @param string The name of the image
 	* @since 1.5
 	*/
-	function title($title, $icon = 'generic.png')
+	public static function title($title, $icon = 'generic.png')
 	{
 		global $mainframe;
 
@@ -52,7 +52,7 @@ class JToolBarHelper
 	* @param string The width for the cell
 	* @since 1.0
 	*/
-	function spacer($width = '')
+	public static function spacer($width = '')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a spacer
@@ -63,7 +63,7 @@ class JToolBarHelper
 	* Write a divider between menu buttons
 	* @since 1.0
 	*/
-	function divider()
+	public static function divider()
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a divider
@@ -80,7 +80,7 @@ class JToolBarHelper
 	* @param boolean True if required to include callinh hideMainMenu()
 	* @since 1.0
 	*/
-	function custom($task = '', $icon = '', $iconOver = '', $alt = '', $listSelect = true, $x = false)
+	public static function custom($task = '', $icon = '', $iconOver = '', $alt = '', $listSelect = true, $x = false)
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 
@@ -102,7 +102,7 @@ class JToolBarHelper
 	* @since 1.0
 		* (NOTE this is being deprecated)
 	*/
-	function customX($task = '', $icon = '', $iconOver = '', $alt = '', $listSelect = true)
+	public static function customX($task = '', $icon = '', $iconOver = '', $alt = '', $listSelect = true)
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 
@@ -118,7 +118,7 @@ class JToolBarHelper
 	* @param string The name of the popup file (excluding the file extension)
 	* @since 1.0
 	*/
-	function preview($url = '', $updateEditors = false)
+	public static function preview($url = '', $updateEditors = false)
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a preview button
@@ -131,7 +131,7 @@ class JToolBarHelper
 	* @param boolean Use the help file in the component directory
 	* @since 1.0
 	*/
-	function help($ref, $com = false)
+	public static function help($ref, $com = false)
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a help button
@@ -143,7 +143,7 @@ class JToolBarHelper
 	* any other operation
 	* @since 1.0
 	*/
-	function back($alt = 'Back', $href = 'javascript:history.back();')
+	public static function back($alt = 'Back', $href = 'javascript:history.back();')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a back button
@@ -156,7 +156,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function addNew($task = 'add', $alt = 'New')
+	public static function addNew($task = 'add', $alt = 'New')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a new button
@@ -170,7 +170,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function addNewX($task = 'add', $alt = 'New')
+	public static function addNewX($task = 'add', $alt = 'New')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a new button (hide menu)
@@ -183,7 +183,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function publish($task = 'publish', $alt = 'Publish')
+	public static function publish($task = 'publish', $alt = 'Publish')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a publish button
@@ -197,7 +197,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function publishList($task = 'publish', $alt = 'Publish')
+	public static function publishList($task = 'publish', $alt = 'Publish')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a publish button (list)
@@ -210,7 +210,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function makeDefault($task = 'default', $alt = 'Default')
+	public static function makeDefault($task = 'default', $alt = 'Default')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a default button
@@ -223,7 +223,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function assign($task = 'assign', $alt = 'Assign')
+	public static function assign($task = 'assign', $alt = 'Assign')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an assign button
@@ -236,7 +236,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function unpublish($task = 'unpublish', $alt = 'Unpublish')
+	public static function unpublish($task = 'unpublish', $alt = 'Unpublish')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an unpublish button
@@ -249,7 +249,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function unpublishList($task = 'unpublish', $alt = 'Unpublish')
+	public static function unpublishList($task = 'unpublish', $alt = 'Unpublish')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an unpublish button (list)
@@ -263,7 +263,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function archiveList($task = 'archive', $alt = 'Archive')
+	public static function archiveList($task = 'archive', $alt = 'Archive')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an archive button
@@ -276,7 +276,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function unarchiveList($task = 'unarchive', $alt = 'Unarchive')
+	public static function unarchiveList($task = 'unarchive', $alt = 'Unarchive')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an unarchive button (list)
@@ -289,7 +289,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function editList($task = 'edit', $alt = 'Edit')
+	public static function editList($task = 'edit', $alt = 'Edit')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an edit button
@@ -303,7 +303,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function editListX($task = 'edit', $alt = 'Edit')
+	public static function editListX($task = 'edit', $alt = 'Edit')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an edit button (hide)
@@ -316,7 +316,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function editHtml($task = 'edit_source', $alt = 'Edit HTML')
+	public static function editHtml($task = 'edit_source', $alt = 'Edit HTML')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an edit html button
@@ -330,7 +330,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function editHtmlX($task = 'edit_source', $alt = 'Edit HTML')
+	public static function editHtmlX($task = 'edit_source', $alt = 'Edit HTML')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an edit html button (hide)
@@ -357,7 +357,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function editCssX($task = 'edit_css', $alt = 'Edit CSS')
+	public static function editCssX($task = 'edit_css', $alt = 'Edit CSS')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an edit css button (hide)
@@ -371,7 +371,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function deleteList($msg = '', $task = 'remove', $alt = 'Delete')
+	public static function deleteList($msg = '', $task = 'remove', $alt = 'Delete')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a delete button
@@ -405,7 +405,7 @@ class JToolBarHelper
 	* Write a trash button that will move items to Trash Manager
 	* @since 1.0
 	*/
-	function trash($task = 'remove', $alt = 'Trash', $check = true)
+	public static function trash($task = 'remove', $alt = 'Trash', $check = true)
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a trash button
@@ -419,7 +419,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function apply($task = 'apply', $alt = 'Apply')
+	public static function apply($task = 'apply', $alt = 'Apply')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add an apply button
@@ -433,7 +433,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function save($task = 'save', $alt = 'Save')
+	public static function save($task = 'save', $alt = 'Save')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a save button
@@ -446,7 +446,7 @@ class JToolBarHelper
 	* @param string An override for the alt text
 	* @since 1.0
 	*/
-	function cancel($task = 'cancel', $alt = 'Cancel')
+	public static function cancel($task = 'cancel', $alt = 'Cancel')
 	{
 		$bar = & JToolBar::getInstance('toolbar');
 		// Add a cancel button
@@ -462,7 +462,7 @@ class JToolBarHelper
 	* @param	string	An alternative path for the configuation xml relative to JPATH_SITE
 	* @since 1.0
 	*/
-	function preferences($component, $height='150', $width='570', $alt = 'Preferences', $path = '')
+	public static function preferences($component, $height='150', $width='570', $alt = 'Preferences', $path = '')
 	{
 		$user =& JFactory::getUser();
 		if ($user->get('gid') != 25) {
@@ -484,10 +484,9 @@ class JToolBarHelper
 */
 class JSubMenuHelper
 {
-	function addEntry($name, $link = '', $active = false)
+	public static function addEntry($name, $link = '', $active = false)
 	{
 		$menu = &JToolBar::getInstance('submenu');
 		$menu->appendButton($name, $link, $active);
 	}
 }
-?>

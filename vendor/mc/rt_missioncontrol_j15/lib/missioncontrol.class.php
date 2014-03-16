@@ -15,43 +15,45 @@ define("UPDATE_URL", 'http://updates.rockettheme.com/joomla/templates/missioncon
 define("CURRENT_VERSION", '1.5.2');
 
 class MissionControl extends RTCore {
-    private static $instance;
+    
+	private static $instance;
 
 	var $core;
     
-
     public static function getInstance(){
-        if (!self::$instance)
+    	
+    	if (!self::$instance)
         {
             self::$instance = new MissionControl();
         }
+
         return self::$instance;
     }
 
-	function __construct() {
+	public function __construct() {
+		
 		parent::__construct();
-        $this->updateSlug = UPDATE_SLUG;
+        
+		$this->updateSlug = UPDATE_SLUG;
         $this->updateUrl = UPDATE_URL;
 
 
         $this->params->set('update_name',UPDATE_NAME);
         $this->params->set('update_slug',UPDATE_SLUG);
         $this->params->set('current_version',CURRENT_VERSION);
-
-        
 	}
 
-    function addCustomHeaders() {
+    public function addCustomHeaders() {
 
         $inline_css = '';
         if ($inline_css) $this->addInlineStyle($inline_css);
     }
 	
-	function displayLoginForm() {
+	public function displayLoginForm() {
 		require_once($this->templatePath.DS.'html'.DS.'mod_login'.DS.'default.php');
 	}
 	
-	function displayMenu() {
+	public function displayMenu() {
 
         $custom_menu = $this->templatePath.DS.'html'.DS.'mod_menu'.DS.'rtmenuhelper.class.php';
 
@@ -71,7 +73,8 @@ class MissionControl extends RTCore {
         }
 	}
 	
-	function displayBodyTags() {
+	public function displayBodyTags() 
+	{
 		global $option;
 		$params = $this->params;
 		echo "transitions-". $params->get('enableTransitions') ." ";
@@ -84,18 +87,12 @@ class MissionControl extends RTCore {
 	}
 	
 	
-	function displaySubMenu() {
-		// global $option;
-		// if ($option == 'com_config' ||
-		// 	$option == 'com_admin' ||
-		// 	$option == 'com_media')
-		// 	echo '<jdoc:include type="modules" name="submenu" style="rounded" id="submenu-box" />';
-		// else
-		// 	require_once('rtsubmenu.class.php');
+	public function displaySubMenu() 
+	{
 		echo '<jdoc:include type="modules" name="submenu" style="rounded" id="submenu-box" />';	
 	}
 	
-	function displayDashText() {
+	public function displayDashText() {
 		
 		$params = $this->params;
 		$default = 'You can put anything you want here to provide some information to your Administrators. <a href="index.php?option=com_templates&task=edit&cid[]=rt_missioncontrol_j15&client=1">Edit This Text Now...</a>';
@@ -103,7 +100,7 @@ class MissionControl extends RTCore {
 		echo '<p class="mc-dashtext">'.$dashtext.'</p>';
 	}
 
-    function displayLogo() {
+    public function displayLogo() {
 
         $dest = 'images/missioncontrol-logo.png';
 
@@ -122,7 +119,7 @@ class MissionControl extends RTCore {
 
 	
 	
-	function displayLoginStatus() {
+	public function displayLoginStatus() {
 	
 		$browserLang = null;
 		$output = array();
@@ -140,7 +137,7 @@ class MissionControl extends RTCore {
 	
 	}
 	
-	function displayUserInfo() {
+	public function displayUserInfo() {
 	
 		$db			=& JFactory::getDBO();
         $user       =& JFactory::getUser();
@@ -182,7 +179,7 @@ class MissionControl extends RTCore {
 	
 	}
 	
-	function displayTitle() {
+	public function displayTitle() {
 		global $mainframe, $option;
 		
 		if ($option == "com_cpanel")
@@ -199,18 +196,18 @@ class MissionControl extends RTCore {
 		}
 	}
 	
-	function displayHelpButton() {
+	public function displayHelpButton() {
 
 		echo $this->help->render('help');
 	}
 	
-	function displayToolbar() {
+	public function displayToolbar() {
 		
 		echo $this->toolbar_output;
 	
 	}
 	
-	function displayStatus() {
+	public function displayStatus() {
 		
 		$task 		= JRequest::getString('task');
 		
@@ -254,7 +251,7 @@ class MissionControl extends RTCore {
 		echo $this->_listify($output,$disabled_class);
 	}
 
-    function _getEditors() {
+    private function _getEditors() {
 
         $dbo = JFactory::getDBO();
 		$query = 'SELECT element, name text '.
@@ -269,7 +266,7 @@ class MissionControl extends RTCore {
         
     }
 
-    function _renderEditorSelect() {
+    private function _renderEditorSelect() {
 
         $myEditor =& JFactory::getEditor();
         $user =& JFactory::getUser();
@@ -312,8 +309,4 @@ class MissionControl extends RTCore {
 
         return $output;
     }
-	
-	
-	
-
 }

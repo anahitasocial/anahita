@@ -32,15 +32,15 @@ class MenusModelMenutype extends JModel
 	 * Returns the internal table object
 	 * @return JTable
 	 */
-	function &getTable()
-	{
-		if ($this->_table == null) {
-			$this->_table = & JTable::getInstance('menuTypes');
-			if ($id = JRequest::getVar('id', false, '', 'int')) {
-				$this->_table->load($id);
-			}
+	public static function &getTable($name='', $prefix='Table', $options = array())
+	{		
+		$table = & JTable::getInstance('menuTypes');
+		
+		if ($id = JRequest::getVar('id', false, '', 'int')) {
+				$table->load($id);
 		}
-		return $this->_table;
+		
+		return $table;
 	}
 
 	/**

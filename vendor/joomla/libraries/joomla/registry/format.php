@@ -83,7 +83,8 @@ class JRegistryFormat extends JObject
 	 * @return	string	Formatted string
 	 * @since	1.5
 	 */
-	function objectToString( &$object ) {
-
+	function objectToString( &$object, $params ) 
+	{
+		return;
 	}
 }

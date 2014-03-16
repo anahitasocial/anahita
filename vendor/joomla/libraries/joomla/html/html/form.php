@@ -31,7 +31,7 @@ class JHTMLForm
 	 * @return	void
 	 * @since	1.5
 	 */
-	function token()
+	public static function token()
 	{
 		return '<input type="hidden" name="'.JUtility::getToken().'" value="1" />';
 	}

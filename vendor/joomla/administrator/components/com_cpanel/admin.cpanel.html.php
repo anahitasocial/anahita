@@ -27,7 +27,7 @@ class HTML_cpanel
 	/**
 	* Control panel
 	*/
-	function display()
+	public static function display()
 	{
 		global $mainframe;
 

@@ -46,7 +46,7 @@ class PluginsController extends JController
 
 	}
 
-	function display( )
+	function display($cachable = false)
 	{
 		switch($this->getTask())
 		{
@@ -59,7 +59,7 @@ class PluginsController extends JController
 			} break;
 		}
 
-		parent::display();
+		parent::display($cachable);
 	}
 
 	function save()
