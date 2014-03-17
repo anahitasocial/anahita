@@ -88,7 +88,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	$person = $this->getService('repos://site/people.person')->find(array('userId'=>JFactory::getUser()->id));
     	$this->_state->setItem($person);
     	if ( isset($_SESSION['return']) ) {
-    	    $this->_state->append(array('return'=>$_SESSION['return']));
+    		/*
+    		encode return parameter to prevent xss attack
+    		*/
+    	    $validatedSessionID = htmlspecialchars(strip_tags(trim($_SESSION['return'])));
+    	    $this->_state->append(array('return'=>$validatedSessionID));
     	}
     	return $person;
     }
