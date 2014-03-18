@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 */
 class TOOLBAR_templates
 {
-	function _DEFAULT(&$client)
+	public static function _DEFAULT(&$client)
 	{
 		JToolBarHelper::title( JText::_( 'Template Manager' ), 'thememanager' );
 
@@ -34,13 +34,14 @@ class TOOLBAR_templates
 		//JToolBarHelper::addNew();
 		JToolBarHelper::help( 'screen.templates' );
 	}
- 	function _VIEW(&$client){
+ 	
+	public static function _VIEW(&$client){
 
 		JToolBarHelper::title( JText::_( 'Template Manager' ), 'thememanager' );
 		JToolBarHelper::back();
 	}
 
-	function _EDIT_SOURCE(&$client){
+	public static function _EDIT_SOURCE(&$client){
 
 		JToolBarHelper::title( JText::_( 'Template HTML Editor' ), 'thememanager' );
 		JToolBarHelper::save( 'save_source' );
@@ -49,7 +50,7 @@ class TOOLBAR_templates
 		JToolBarHelper::help( 'screen.templates' );
 	}
 
-	function _EDIT(&$client){
+	public static function _EDIT(&$client){
 		JToolBarHelper::title( JText::_( 'Template' ) . ': <small><small>[ '. JText::_( 'Edit' ) .' ]</small></small>', 'thememanager' );
 		//JToolBarHelper::custom('preview', 'preview.png', 'preview_f2.png', 'Preview', false, false);
 		//JToolBarHelper::custom( 'edit_source', 'html.png', 'html_f2.png', 'Edit HTML', false, false );
@@ -60,14 +61,14 @@ class TOOLBAR_templates
 		JToolBarHelper::help( 'screen.templates' );
 	}
 
-	function _CHOOSE_CSS(&$client){
+	public static function _CHOOSE_CSS(&$client){
 		JToolBarHelper::title( JText::_( 'Template CSS Editor' ), 'thememanager' );
 		JToolBarHelper::custom( 'edit_css', 'edit.png', 'edit_f2.png', 'Edit', true );
 		JToolBarHelper::cancel('edit');
 		JToolBarHelper::help( 'screen.templates' );
 	}
 
-	function _EDIT_CSS(&$client){
+	public static function _EDIT_CSS(&$client){
 		JToolBarHelper::title( JText::_( 'Template Manager' ), 'thememanager' );
 		JToolBarHelper::save( 'save_css' );
 		JToolBarHelper::apply( 'apply_css');

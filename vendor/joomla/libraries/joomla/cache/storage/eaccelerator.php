@@ -127,7 +127,7 @@ class JCacheStorageEaccelerator extends JCacheStorage
 	 * @access public
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function test()
+	public static function test()
 	{
 		return (extension_loaded('eaccelerator') && function_exists('eaccelerator_get'));
 	}

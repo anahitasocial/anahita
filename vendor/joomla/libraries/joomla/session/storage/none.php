@@ -31,7 +31,7 @@ class JSessionStorageNone extends JSessionStorage
 	* @access public
 	* @param array $options optional parameters
 	*/
-	function register()
+	function register($options = array())
 	{
 		//let php handle the session storage
 	}

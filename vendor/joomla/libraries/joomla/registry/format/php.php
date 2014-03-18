@@ -61,7 +61,7 @@ class JRegistryFormatPHP extends JRegistryFormat {
 	 * @return boolean True
 	 * @since 1.5
 	 */
-	function stringToObject() {
+	function stringToObject($data, $namespace = '') {
 		return true;
 	}
 

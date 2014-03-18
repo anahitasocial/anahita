@@ -200,7 +200,7 @@ class JCacheStorageFile extends JCacheStorage
 	 * @access public
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function test()
+	public static function test()
 	{
 		$config	=& JFactory::getConfig();
 		$root	= $config->getValue('config.cache_path', JPATH_ROOT.DS.'cache');

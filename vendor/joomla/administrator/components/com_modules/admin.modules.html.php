@@ -25,7 +25,7 @@ class HTML_modules
 	* Writes a list of the defined modules
 	* @param array An array of category objects
 	*/
-	function view( &$rows, &$client, &$page, &$lists )
+	public static function view( &$rows, &$client, &$page, &$lists )
 	{
 		$user =& JFactory::getUser();
 
@@ -210,7 +210,7 @@ class HTML_modules
 	* @param array An array of select lists
 	* @param object Parameters
 	*/
-	function edit( &$model, &$row, &$orders2, &$lists, &$params, $client )
+	public static function edit( &$model, &$row, &$orders2, &$lists, &$params, $client )
 	{
 		JRequest::setVar( 'hidemainmenu', 1 );
 
@@ -513,34 +513,11 @@ class HTML_modules
 	<?php
 	}
 
-	function preview()
-	{
-		$editor =& JFactory::getEditor();
-
-		?>
-		<script>
-		var form = window.top.document.adminForm
-		var title = form.title.value;
-
-		var alltext = window.top.<?php echo $editor->getContent('text') ?>;
-		</script>
-
-		<table align="center" width="90%" cellspacing="2" cellpadding="2" border="0">
-			<tr>
-				<td class="contentheading" colspan="2"><script>document.write(title);</script></td>
-			</tr>
-		<tr>
-			<script>document.write("<td valign=\"top\" height=\"90%\" colspan=\"2\">" + alltext + "</td>");</script>
-		</tr>
-		</table>
-		<?php
-	}
-
 /**
 	/**
 	* Displays a selection list for module types
 	*/
-	function add(&$modules, $client)
+	public static function add(&$modules, $client)
 	{
  		JHTML::_('behavior.tooltip');
 

@@ -19,7 +19,7 @@ class JElementColorChooser extends JElement {
 	function fetchElement($name, $value, &$node, $control_name)
 	{
         global $mctrl;
-        $mctrl =& MissionControl::getInstance();
+        $mctrl = MissionControl::getInstance();
         
 		$output = '';
 

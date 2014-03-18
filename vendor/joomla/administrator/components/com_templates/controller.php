@@ -24,7 +24,7 @@ class TemplatesController
 	* Based on xml files found.  If no xml file found the template
 	* is ignored
 	*/
-	function viewTemplates()
+	public static function viewTemplates()
 	{
 		global $mainframe, $option;
 
@@ -61,63 +61,7 @@ class TemplatesController
 		TemplatesView::showTemplates($rows, $lists, $page, $option, $client);
 	}
 
-	/**
-	* Show the template with module position in an iframe
-	*/
-	function previewTemplate()
-	{
-		$template	= JRequest::getVar('id', '', 'method', 'cmd');
-		$option 	= JRequest::getCmd('option');
-		$client		=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-
-		if (!$template)
-		{
-			return JError::raiseWarning( 500, JText::_('Template not specified') );
-		}
-
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
-
-		require_once (JPATH_COMPONENT.DS.'admin.templates.html.php');
-		TemplatesView::previewTemplate($template, true, $client, $option);
-	}
-
-	/**
-	* Publish, or make current, the selected template
-	*/
-	function publishTemplate()
-	{
-		global $mainframe;
-
-		// Check for request forgeries
-		JRequest::checkToken() or jexit( 'Invalid Token' );
-
-		// Initialize some variables
-		$db		= & JFactory::getDBO();
-		$cid	= JRequest::getVar('cid', array(), 'method', 'array');
-		$cid	= array(JFilterInput::clean(@$cid[0], 'cmd'));
-		$option	= JRequest::getCmd('option');
-		$client	=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-
-		if ($cid[0])
-		{
-			$query = 'DELETE FROM #__templates_menu' .
-					' WHERE client_id = '.(int) $client->id .
-					' AND (menuid = 0 OR template = '.$db->Quote($cid[0]).')';
-			$db->setQuery($query);
-			$db->query();
-
-			$query = 'INSERT INTO #__templates_menu' .
-					' SET client_id = '.(int) $client->id .', template = '.$db->Quote($cid[0]).', menuid = 0';
-			$db->setQuery($query);
-			$db->query();
-		}
-
-		$mainframe->redirect('index.php?option='.$option.'&client='.$client->id);
-	}
-
-	function editTemplate()
+	public static function editTemplate()
 	{
 		jimport('joomla.filesystem.path');
 
@@ -180,7 +124,7 @@ class TemplatesController
 		TemplatesView::editTemplate($row, $lists, $params, $option, $client, $ftp, $template);
 	}
 
-	function saveTemplate()
+	public static function saveTemplate()
 	{
 		global $mainframe;
 
@@ -259,7 +203,7 @@ class TemplatesController
 		}
 	}
 
-	function cancelTemplate()
+	public static function cancelTemplate()
 	{
 		global $mainframe;
 
@@ -272,217 +216,5 @@ class TemplatesController
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		$mainframe->redirect('index.php?option='.$option.'&client='.$client->id);
-	}
-
-	function editTemplateSource()
-	{
-		global $mainframe;
-
-		// Initialize some variables
-		$option		= JRequest::getCmd('option');
-		$client		=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-		$template	= JRequest::getVar('id', '', 'method', 'cmd');
-		$file		= $client->path.DS.'templates'.DS.$template.DS.'index.php';
-
-		// Read the source file
-		jimport('joomla.filesystem.file');
-		$content = JFile::read($file);
-
-		if ($content !== false)
-		{
-			// Set FTP credentials, if given
-			jimport('joomla.client.helper');
-			$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
-
-			$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
-			require_once (JPATH_COMPONENT.DS.'admin.templates.html.php');
-			TemplatesView::editTemplateSource($template, $content, $option, $client, $ftp);
-		} else {
-			$msg = JText::sprintf('Operation Failed Could not open', $file);
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, $msg);
-		}
-	}
-
-	function saveTemplateSource()
-	{
-		global $mainframe;
-
-		// Check for request forgeries
-		JRequest::checkToken() or jexit( 'Invalid Token' );
-
-		// Initialize some variables
-		$option			= JRequest::getCmd('option');
-		$client			=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-		$template		= JRequest::getVar('id', '', 'method', 'cmd');
-		$filecontent	= JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
-
-		if (!$template) {
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::_('No template specified.'));
-		}
-
-		if (!$filecontent) {
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::_('Content empty.'));
-		}
-
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp = JClientHelper::getCredentials('ftp');
-
-		$file = $client->path.DS.'templates'.DS.$template.DS.'index.php';
-
-		// Try to make the template file writeable
-		if (!$ftp['enabled'] && !JPath::setPermissions($file, '0755')) {
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('Could not make the template file writable'));
-		}
-
-		jimport('joomla.filesystem.file');
-		$return = JFile::write($file, $filecontent);
-
-		// Try to make the template file unwriteable
-		if (!$ftp['enabled'] && !JPath::setPermissions($file, '0555')) {
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('Could not make the template file unwritable'));
-		}
-
-		if ($return)
-		{
-			$task = JRequest::getCmd('task');
-			switch($task)
-			{
-				case 'apply_source':
-					$mainframe->redirect('index.php?option='.$option.'&client='.$client->id.'&task=edit_source&id='.$template, JText::_('Template source saved'));
-					break;
-
-				case 'save_source':
-				default:
-					$mainframe->redirect('index.php?option='.$option.'&client='.$client->id.'&task=edit&cid[]='.$template, JText::_('Template source saved'));
-					break;
-			}
-		}
-		else {
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::sprintf('Failed to open file for writing.', $file));
-		}
-	}
-
-	function chooseTemplateCSS()
-	{
-		global $mainframe;
-
-		// Initialize some variables
-		$option 	= JRequest::getCmd('option');
-		$template	= JRequest::getVar('id', '', 'method', 'cmd');
-		$client		=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-
-		// Determine template CSS directory
-		$dir = $client->path.DS.'templates'.DS.$template.DS.'css';
-
-		// List template .css files
-		jimport('joomla.filesystem.folder');
-		$files = JFolder::files($dir, '\.css$', false, false);
-
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
-
-		require_once (JPATH_COMPONENT.DS.'admin.templates.html.php');
-		TemplatesView::chooseCSSFiles($template, $dir, $files, $option, $client);
-	}
-
-	function editTemplateCSS()
-	{
-		global $mainframe;
-
-		// Initialize some variables
-		$option		= JRequest::getCmd('option');
-		$client		=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-		$template	= JRequest::getVar('id', '', 'method', 'cmd');
-		$filename	= JRequest::getVar('filename', '', 'method', 'cmd');
-
-		jimport('joomla.filesystem.file');
-
-		if (JFile::getExt($filename) !== 'css') {
-			$msg = JText::_('Wrong file type given, only CSS files can be edited.');
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id.'&task=choose_css&id='.$template, $msg, 'error');
-		}
-
-		$content = JFile::read($client->path.DS.'templates'.DS.$template.DS.'css'.DS.$filename);
-
-		if ($content !== false)
-		{
-			// Set FTP credentials, if given
-			jimport('joomla.client.helper');
-			$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
-
-			$content = htmlspecialchars($content, ENT_COMPAT, 'UTF-8');
-			require_once (JPATH_COMPONENT.DS.'admin.templates.html.php');
-			TemplatesView::editCSSSource($template, $filename, $content, $option, $client, $ftp);
-		}
-		else
-		{
-			$msg = JText::sprintf('Operation Failed Could not open', $client->path.$filename);
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, $msg);
-		}
-	}
-
-	function saveTemplateCSS()
-	{
-		global $mainframe;
-
-		// Check for request forgeries
-		JRequest::checkToken() or jexit( 'Invalid Token' );
-
-		// Initialize some variables
-		$option			= JRequest::getCmd('option');
-		$client			=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
-		$template		= JRequest::getVar('id', '', 'post', 'cmd');
-		$filename		= JRequest::getVar('filename', '', 'post', 'cmd');
-		$filecontent	= JRequest::getVar('filecontent', '', 'post', 'string', JREQUEST_ALLOWRAW);
-
-		if (!$template) {
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::_('No template specified.'));
-		}
-
-		if (!$filecontent) {
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id, JText::_('Operation Failed').': '.JText::_('Content empty.'));
-		}
-
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
-		$ftp = JClientHelper::getCredentials('ftp');
-
-		$file = $client->path.DS.'templates'.DS.$template.DS.'css'.DS.$filename;
-
-		// Try to make the css file writeable
-		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0755')) {
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('Could not make the css file writable'));
-		}
-
-		jimport('joomla.filesystem.file');
-		$return = JFile::write($file, $filecontent);
-
-		// Try to make the css file unwriteable
-		if (!$ftp['enabled'] && JPath::isOwner($file) && !JPath::setPermissions($file, '0555')) {
-			JError::raiseNotice('SOME_ERROR_CODE', JText::_('Could not make the css file unwritable'));
-		}
-
-		if ($return)
-		{
-			$task = JRequest::getCmd('task');
-			switch($task)
-			{
-				case 'apply_css':
-					$mainframe->redirect('index.php?option='.$option.'&client='.$client->id.'&task=edit_css&id='.$template.'&filename='.$filename,  JText::_('File Saved'));
-					break;
-
-				case 'save_css':
-				default:
-					$mainframe->redirect('index.php?option='.$option.'&client='.$client->id.'&task=edit&cid[]='.$template, JText::_('File Saved'));
-					break;
-			}
-		}
-		else {
-			$mainframe->redirect('index.php?option='.$option.'&client='.$client->id.'&id='.$template.'&task=choose_css', JText::_('Operation Failed').': '.JText::sprintf('Failed to open file for writing.', $file));
-		}
 	}
 }

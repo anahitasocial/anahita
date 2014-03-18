@@ -32,7 +32,7 @@ class CacheView
 	 * @param array An array of records
 	 * @param string The URL option
 	 */
-	function displayCache(&$rows, &$client, &$page)
+	public static function displayCache(&$rows, &$client, &$page)
 	{
 		?>
 		<form action="index.php" method="post" name="adminForm">
@@ -103,7 +103,8 @@ class CacheView
 		</form>
 		<?php
 	}
-	function showPurgeExecute(){
+	
+	public static function showPurgeExecute(){
 		?>
        <form action="index.php" method="post" name="adminForm">
         <table class="adminlist" cellspacing="1">
@@ -127,7 +128,8 @@ class CacheView
         </form>
          <?php
 	}
-	function purgeSuccess(){
+	
+	public static function purgeSuccess(){
 		?>
         <form action="index.php" method="post" name="adminForm">
         <table class="adminlist" cellspacing="1">

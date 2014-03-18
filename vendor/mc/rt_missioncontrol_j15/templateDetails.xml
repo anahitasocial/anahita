@@ -52,15 +52,7 @@
             <language tag="en-GB">en-GB.tpl_rt_missioncontrol_j15.ini</language>
         </languages>
     </administration>
-	<params addpath="/administrator/templates/rt_missioncontrol_j15/elements">
-        <!-- 
-        <param name="updatecheck" label="Update Check" type="updatecheck" />
-         -->
-        
-        <!--
-        <param name="logoupload" type="logoupload" label="Header Logo" description="The image must be PNG, GIF, or JPEG and will be resized to fit" />
-		-->
-		
+	<params addpath="/administrator/templates/rt_missioncontrol_j15/elements">		
 		<param name="adminTitle" size="50" type="text" default="Welcome to Anahita administration!" label="Admin Title" description="Choose your Custom Administrator title" />
 		<param name="templateWidth" type="list" default="1080" label="Template Width" description="Choose the width of the MissionControl Template">
 			<option value="960">Normal - 960px</option>
@@ -69,12 +61,7 @@
 		    <option value="variable">Variable</option>
 		</param>
 		<param name="dashboard" type="textarea" rows="10" cols="30" default="" label="Dashboard Text" description="Text to show on Dashboard" />
-		<!-- 
-		<param name="enableGravatar" type="radio" default="1" label="Enable Gravatar" description="Enable or Disable Gravatar based Avatar icon in header">
-			<option value="0">No</option>
-			<option value="1">Yes</option>
-		</param>
-		 -->
+
         <param name="enableTransitions" type="radio" default="enabled" label="Enable Transitions" description="Enable or Disable CSS based Transitions">
 			<option value="disabled">No</option>
 			<option value="enabled">Yes</option>

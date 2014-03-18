@@ -38,7 +38,7 @@ class ConfigControllerApplication extends ConfigController
 	 * Show the configuration edit form
 	 * @param string The URL option
 	 */
-	function showConfig()
+	public static function showConfig()
 	{
 		// Initialize some variables
 		$db =& JFactory::getDBO();
@@ -441,23 +441,5 @@ class ConfigControllerApplication extends ConfigController
 		JClientHelper::setCredentialsFromRequest('ftp');
 
 		$this->setRedirect( 'index.php' );
-	}
-
-	function refreshHelp()
-	{
-	    /*
-		jimport('joomla.filesystem.file');
-
-		// Set FTP credentials, if given
-		jimport('joomla.client.helper');
-		JClientHelper::setCredentialsFromRequest('ftp');
-        
-		if (($data = file_get_contents('http://help.joomla.org/helpsites-15.xml')) === false ) {
-			$this->setRedirect('index.php?option=com_config', JText::_('HELPREFRESH ERROR FETCH'), 'error');
-		} else if (!JFile::write(JPATH_BASE.DS.'help'.DS.'helpsites-15.xml', $data)) {
-			$this->setRedirect('index.php?option=com_config', JText::_('HELPREFRESH ERROR STORE'), 'error');
-		} else {
-			$this->setRedirect('index.php?option=com_config', JText::_('HELPREFRESH SUCCESS'));
-		}*/
 	}
 }

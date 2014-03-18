@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 */
 class ConfigApplicationView
 {
-	function showConfig( &$row, &$lists )
+	public static function showConfig( &$row, &$lists )
 	{
 		global $mainframe;
 
@@ -113,7 +113,7 @@ class ConfigApplicationView
 		<?php
 	}
 
-	function WarningIcon()
+	public static function WarningIcon()
 	{
 		return '';
 	}

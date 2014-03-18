@@ -125,7 +125,7 @@ class JCache extends JObject
 	 * @access public
 	 * @return array An array of available storage handlers
 	 */
-	function getStores()
+	public static function getStores()
 	{
 		jimport('joomla.filesystem.folder');
 		$handlers = JFolder::files(dirname(__FILE__).DS.'storage', '.php$');
@@ -140,7 +140,9 @@ class JCache extends JObject
 				require_once(dirname(__FILE__).DS.'storage'.DS.$name.'.php');
 			}
 
-			if(call_user_func_array( array( trim($class), 'test' ), array())) {
+			$class= trim($class);
+			
+			if(call_user_func_array( array( $class, 'test' ), array())) {
 				$names[] = $name;
 			}
 		}

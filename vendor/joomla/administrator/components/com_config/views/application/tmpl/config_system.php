@@ -22,7 +22,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
 					</span>
 				</td>
 				<td>
-					<input class="text_area" type="text" size="50" name="log_path" value="<?php echo $row->log_path; ?>" />
+					<input class="text_area" type="text" size="100%" name="log_path" value="<?php echo $row->log_path; ?>" />
 				</td>
 			</tr>
 					
