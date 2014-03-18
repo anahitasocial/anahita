@@ -88,7 +88,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	$person = $this->getService('repos://site/people.person')->find(array('userId'=>JFactory::getUser()->id));
     	$this->_state->setItem($person);
     	if ( isset($_SESSION['return']) ) {
-    	    $this->_state->append(array('return'=>$_SESSION['return']));
+    		
+    	    $this->_state->append(array('return'=>$this->getService('koowa:filter.cmd')->sanitize($data->return);));
     	}
     	return $person;
     }
