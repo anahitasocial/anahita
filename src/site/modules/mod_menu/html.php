@@ -85,7 +85,7 @@ class ModMenuHtml extends ModBaseHtml
 	 * (non-PHPdoc)
 	 * @see LibBaseViewTemplate::load()
 	 */
-	public function load($template, $data = array())
+	public function load($template, array $data = array())
 	{
 		if ( strpos($template,'type_') === 0 ) {
 			if ( !$this->getTemplate()->findFile($template) ) {
@@ -102,7 +102,7 @@ class ModMenuHtml extends ModBaseHtml
 	 * (non-PHPdoc)
 	 * @see LibBaseViewAbstract::getRoute()
 	 */
-	public function getRoute($route)
+	public function getRoute($route = '', $fqr = true)
 	{				
 		if ( is_object($route) ) {			
 						

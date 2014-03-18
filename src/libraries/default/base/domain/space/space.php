@@ -173,7 +173,8 @@ class LibBaseDomainSpace extends AnDomainSpace implements KServiceInstantiatable
         $repositories    = array();
         foreach($types->fetchValues('type') as $key => $type)
         {
-            $identifier = end(explode(',',$type));
+            $type = explode(',',$type);
+        	$identifier = end($type);
             $repositories[] = AnDomain::getRepository($identifier);            
         }
         return $repositories;
