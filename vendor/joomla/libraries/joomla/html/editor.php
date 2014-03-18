@@ -69,7 +69,7 @@ class JEditor extends JObservable
 	 * @param	string	$editor  The editor to use.
 	 * @return	JEditor	The Editor object.
 	 */
-	function &getInstance($editor = 'none')
+	public static function &getInstance($editor = 'none')
 	{
 		static $instances;
 		$editor = 'none';
@@ -123,7 +123,7 @@ class JEditor extends JObservable
 	 * @param	boolean	True and the editor buttons will be displayed
 	 * @param	array	Associative array of editor parameters
 	 */
-	function display($name, $html, $width, $height, $col, $row, $buttons = true, $params = array())
+	public static function display($name, $html, $width, $height, $col, $row, $buttons = true, $params = array())
 	{
 		$this->_loadEditor($params);
 

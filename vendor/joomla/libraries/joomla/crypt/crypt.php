@@ -29,7 +29,7 @@ class JCrypt
 	 * @since  12.1
 	 * @note   This method requires PHP 5
 	 */
-    function genRandomBytes($length = 16)
+    public static function genRandomBytes($length = 16)
     {
 		$sslStr = '';
 		/*

@@ -33,7 +33,7 @@ class JElementSpacer extends JElement
 	*/
 	var	$_name = 'Spacer';
 
-	function fetchTooltip($label, $description, &$node, $control_name, $name) {
+	function fetchTooltip($label, $description, &$xmlElement, $control_name = '', $name = '') {
 		return '&nbsp;';
 	}
 

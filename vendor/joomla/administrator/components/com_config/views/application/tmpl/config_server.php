@@ -12,7 +12,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
 					</span>
 				</td>
 				<td>
-					<input class="text_area" type="text" size="50" name="tmp_path" value="<?php echo $row->tmp_path; ?>" />
+					<input class="text_area" type="text" size="100%" name="tmp_path" value="<?php echo $row->tmp_path; ?>" />
 				</td>
 			</tr>
 			<tr>

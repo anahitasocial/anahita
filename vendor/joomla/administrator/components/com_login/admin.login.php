@@ -41,7 +41,7 @@ switch ( JRequest::getCmd('task'))
  */
 class LoginController
 {
-	function display()
+	public static function display()
 	{
 		jimport('joomla.application.module.helper');
 		$module = & JModuleHelper::getModule('mod_login');
@@ -49,7 +49,7 @@ class LoginController
 		echo $module;
 	}
 
-	function login()
+	public static function login()
 	{
 		global $mainframe;
 
@@ -70,7 +70,7 @@ class LoginController
 		LoginController::display();
 	}
 
-	function logout()
+	public static function logout()
 	{
 		global $mainframe;
 

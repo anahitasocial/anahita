@@ -31,7 +31,7 @@ class JClientHelper
 	 *					these fields: enabled, host, port, user, pass, root
 	 * @since	1.5
 	 */
-	function getCredentials($client, $force=false)
+	public static function getCredentials($client, $force=false)
 	{
 		static $credentials = array();
 
@@ -98,7 +98,7 @@ class JClientHelper
 	 * @return	boolean	True if the given login credentials have been set and are valid
 	 * @since	1.5
 	 */
-	function setCredentials($client, $user, $pass)
+	public static function setCredentials($client, $user, $pass)
 	{
 		$return = false;
 		$client = strtolower($client);
@@ -155,7 +155,7 @@ class JClientHelper
 	 * @return	boolean	True if login credentials are available
 	 * @since	1.5
 	 */
-	function hasCredentials($client)
+	public static function hasCredentials($client)
 	{
 		$return = false;
 		$client = strtolower($client);
@@ -216,7 +216,7 @@ class JClientHelper
 	 * @return	boolean|JExeption	True, if FTP settings should be shown, or an exeption
 	 * @since	1.5
 	 */
-	function &setCredentialsFromRequest($client)
+	public static function &setCredentialsFromRequest($client)
 	{
 		// Determine wether FTP credentials have been passed along with the current request
 		$user = JRequest::getString('username', null, 'POST', JREQUEST_ALLOWRAW);

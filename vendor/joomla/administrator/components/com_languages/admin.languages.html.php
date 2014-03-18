@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 */
 class HTML_languages {
 
-	function showLanguages( &$rows, &$page, $option, &$client, &$ftp )
+	public static function showLanguages( &$rows, &$page, $option, &$client, &$ftp )
 	{
 		$limitstart = JRequest::getVar('limitstart', '0', '', 'int');
 		$user =& JFactory::getUser();

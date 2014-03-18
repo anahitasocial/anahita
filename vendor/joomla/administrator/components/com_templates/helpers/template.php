@@ -21,7 +21,7 @@ defined('_JEXEC') or die('Restricted access');
  */
 class TemplatesHelper
 {
-	function isTemplateDefault($template, $clientId)
+	public static function isTemplateDefault($template, $clientId)
 	{
 		$db =& JFactory::getDBO();
 
@@ -36,7 +36,7 @@ class TemplatesHelper
 		return $defaultemplate == $template ? 1 : 0;
 	}
 
-	function isTemplateAssigned($template)
+	public static function isTemplateAssigned($template)
 	{
 		$db =& JFactory::getDBO();
 
@@ -50,7 +50,7 @@ class TemplatesHelper
 		return $db->loadResult() ? 1 : 0;
 	}
 
-	function parseXMLTemplateFiles($templateBaseDir)
+	public static function parseXMLTemplateFiles($templateBaseDir)
 	{
 		// Read the template folder to find templates
 		jimport('joomla.filesystem.folder');
@@ -71,7 +71,7 @@ class TemplatesHelper
 		return $rows;
 	}
 
-	function parseXMLTemplateFile($templateBaseDir, $templateDir)
+	public static function parseXMLTemplateFile($templateBaseDir, $templateDir)
 	{
 		// Check of the xml file exists
 		if(!is_file($templateBaseDir.DS.$templateDir.DS.'templateDetails.xml')) {
@@ -97,7 +97,7 @@ class TemplatesHelper
 		return $data;
 	}
 
-	function createMenuList($template)
+	public static function createMenuList($template)
 	{
 		$db =& JFactory::getDBO();
 

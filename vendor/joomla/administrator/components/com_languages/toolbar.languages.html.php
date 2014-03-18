@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 */
 class TOOLBAR_languages
 {
-	function _DEFAULT()
+	public static function _DEFAULT()
 	{
 		JToolBarHelper::title( JText::_( 'Language Manager' ), 'langmanager.png' );
 		JToolBarHelper::makeDefault( 'publish' );

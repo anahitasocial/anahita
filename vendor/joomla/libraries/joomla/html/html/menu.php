@@ -53,7 +53,7 @@ class JHTMLMenu
 	/**
 	* Build the multiple select list for Menu Links/Pages
 	*/
-	function linkoptions( $all=false, $unassigned=false )
+	public static function linkoptions( $all=false, $unassigned=false )
 	{
 		$db =& JFactory::getDBO();
 

@@ -66,7 +66,7 @@ class CacheController
 	 *
 	 * @since	1.5
 	 */
-	function showCache()
+	public static function showCache()
 	{
 		global $mainframe, $option;
 		$submenu = JRequest::getVar('client', '0', '', 'int');
@@ -87,10 +87,12 @@ class CacheController
 		jimport('joomla.html.pagination');
 		$pageNav = new JPagination( $cmData->getGroupCount(), $limitstart, $limit );
 
-		CacheView::displayCache( $cmData->getRows( $limitstart, $limit ), $client, $pageNav );
+		$cmDataRows = $cmData->getRows( $limitstart, $limit );
+		
+		CacheView::displayCache( $cmDataRows, $client, $pageNav );
 	}
 
-	function deleteCache($cid)
+	public static function deleteCache($cid)
 	{
 		// Check for request forgeries
 		JRequest::checkToken() or jexit( 'Invalid Token' );
@@ -100,12 +102,14 @@ class CacheController
 		$cmData = new CacheData($client->path.DS.'cache');
 		$cmData->cleanCacheList( $cid );
 	}
-	function showPurgeCache()
+	
+	public static function showPurgeCache()
 	{	
 		// Check for request forgeries
 		CacheView::showPurgeExecute();
 	}
-	function purgeCache()
+	
+	public static function purgeCache()
 	{	
 		// Check for request forgeries
 		JRequest::checkToken() or jexit( 'Invalid Token' );
