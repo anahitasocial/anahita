@@ -144,7 +144,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         $query = $context->query;
         
         if ( $this->q ) {
-            $query->keyword = $this->q;
+            $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
         }
     
         if ( $this->hasBehavior('parentable') && $this->getParent() ) {

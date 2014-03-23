@@ -130,7 +130,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     	
     	if(isset($this->_request->term))
     	{
-    		$term = $this->getService('com://site/search.filter.term')->sanitize($this->_request->term);
+    		$term = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
     		$this->_request->term = $term;
     		$this->term = $term;
     	}

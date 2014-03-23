@@ -90,25 +90,27 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
         $query  = $context->query;        
         
-        if ( $this->q ) {
-            $query->keyword($this->q);
+        if($this->q) 
+        {
+            $query->keyword($this->getService('anahita:filter.term')->sanitize($this->q));
         }  
         
-        $key      = KInflector::pluralize($this->getIdentifier()->name);
+        $key = KInflector::pluralize($this->getIdentifier()->name);
         
-        if ( $this->ids ) 
+        if($this->ids) 
         {
             $ids = KConfig::unbox($this->ids);
             $query->id($ids);
-        } else {
+        } 
+        else 
+        {
             $query->limit( $this->limit, $this->start );
         }
         
         $entities =  $query->toEntitySet();
         
         
-        if ( $this->isOwnable() && 
-                $this->actor ) 
+        if( $this->isOwnable() && $this->actor ) 
         {
             $this->_state->append(array(
                 'filter' => 'following'

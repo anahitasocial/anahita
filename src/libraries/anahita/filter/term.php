@@ -4,7 +4,7 @@
  * LICENSE: ##LICENSE##
  * 
  * @category   Anahita
- * @package    Com_Search
+ * @package    Anahita_Filter
  * @subpackage Filter
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2014 rmdStudio Inc
@@ -16,13 +16,12 @@
  * Term filter
  *
  * @category   Anahita
- * @package    Com_Search
- * @subpackage Filter
+ * @package    Anahita_Filter
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.GetAnahita.com
  */
-class ComSearchFilterTerm extends KFilterAbstract
+class AnFilterTerm extends KFilterAbstract
 {
 	/**
      * Validate a value
