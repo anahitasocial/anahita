@@ -42,7 +42,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
                 array('url'=>$config->redirect_to_after_login));
         
         $this->registerCallback('after.delete', array($this, 'redirect'),
-                array('url'=>$config->redirect_to_after_logout));        
+                array('url'=>$config->redirect_to_after_logout));    
     }
     
     /**
@@ -90,7 +90,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	$person = $this->getService('repos://site/people.person')->find(array('userId'=>JFactory::getUser()->id));
     	$this->_state->setItem($person);
     	if ( isset($_SESSION['return']) ) {
-    	    $this->_state->append(array('return'=>$this->getService('koowa:filter.cmd')->sanitize($_SESSION['return'])));
+    	    $this->_state->append(array('return'=>$this->getService('com://site/people.filter.return')->sanitize($_SESSION['return'])));
     	}
     	return $person;
     }
@@ -210,7 +210,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         //change the redirect url
         if ( $data->return ) 
         {
-        	$_SESSION['return'] = $this->getService('koowa:filter.cmd')->sanitize($data->return);
+        	$_SESSION['return'] = $this->getService('com://site/people.filter.return')->sanitize($data->return);
             $url = base64UrlDecode($data->return);            
             $this->registerCallback('after.login', array($this, 'redirect'), array('url'=>$url));            
         }
@@ -224,7 +224,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         if ( $authentication->status === JAUTHENTICATE_STATUS_SUCCESS )
         {
             $_SESSION['return'] = null;
-            $this->login((array)$authentication, (bool)$data->remember);
+            $this->login((array)$authentication, (bool) $data->remember);
             $this->getResponse()->status = KHttpResponse::CREATED;
         }
         else 
@@ -247,6 +247,27 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         //we don't care if a useris logged in or not just delete
         $context->response->status = KHttpResponse::NO_CONTENT;
         JFactory::getApplication()->logout();
+    }
+    
+	/**
+     * Set the request information
+     *
+     * @param array An associative array of request information
+     * 
+     * @return LibBaseControllerAbstract
+     */
+    public function setRequest(array $request)
+    {
+    	parent::setRequest($request);
+    	
+    	if(isset($this->_request->return))
+    	{
+    		$return = $this->getService('com://site/people.filter.return')->sanitize($this->_request->return);
+    		$this->_request->return = $return;
+    		$this->return = $return;
+    	}
+    	
+    	return $this;
     }
 
     /**
