@@ -112,7 +112,10 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 			$rows  = $query->fetchRows();
 			foreach($rows as $row) 
 			{
-				$identifier = $this->getIdentifier(array_pop(explode(',', $row['type'])));
+				$identifier = explode(',', $row['type']);
+				$identifier = array_pop($identifier);
+				$identifier = $this->getIdentifier($identifier);
+				
 				if ( $identifier->name == 'comment' ) {
 					$identifier = $this->getIdentifier($row['parent_type']);
 				}

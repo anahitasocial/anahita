@@ -47,7 +47,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 			'behaviors'		=> array('ownable'),
 			'toolbars'      => array($this->getIdentifier()->name,'menubar','actorbar'),				
             'request'       => array(
-                'limit'     => 20,
+            	'limit'     => 20,
 				'sort'		=> 'relevant',
 				'direction' => 'ASC'                
             )            
@@ -80,20 +80,18 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         $this->_state->insert('term')
         	->insert('scope')
         	->insert('search_comments')
-        	->insert('search_leaders')
-        ;
-        
+        	->insert('search_leaders');
         
     	JFactory::getLanguage()->load('com_actors');
-		
-    	$this->term = urldecode($this->term);
-    	$this->keywords 		= array_filter(explode(' ', $this->term));
+
+    	$this->keywords = array_filter(explode(' ', $this->term));
+    	
     	$this->scopes			= $this->getService('com://site/search.domain.entityset.scope');
 		$this->current_scope	= $this->scopes->find($this->scope);
 		
     	$query = $this->getService('com://site/search.domain.query.node')
     				->ownerContext($this->actor)
-    				->searchTerm(urldecode($this->term))
+    				->searchTerm($this->term)
     				->searchComments($this->search_comments)
     				->limit($this->limit, $this->start);
     				
@@ -117,5 +115,26 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     	$this->_state->setList($set);
         
         parent::_actionGet($context);
+    }
+    
+	/**
+     * Set the request information
+     *
+     * @param array An associative array of request information
+     * 
+     * @return LibBaseControllerAbstract
+     */
+    public function setRequest(array $request)
+    {
+    	parent::setRequest($request);
+    	
+    	if(isset($this->_request->term))
+    	{
+    		$term = $this->getService('com://site/search.filter.term')->sanitize($this->_request->term);
+    		$this->_request->term = $term;
+    		$this->term = $term;
+    	}
+    	
+    	return $this;
     }
 }

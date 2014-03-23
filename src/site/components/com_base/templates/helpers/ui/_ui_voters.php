@@ -12,7 +12,8 @@ $url = $entity->getURL().'&get=voters&'.$query
         <?php if ( $entity->voterUpIds->offsetExists($viewer->id) ) : ?>    
             <?= @text('LIB-AN-VOTE-ONLY-YOU-VOTED')?> 
         <?php else :?>          
-            <?= sprintf(@text('LIB-AN-VOTE-ONE-VOTED'), @name(@service('repos:actors.actor')->fetch(end($entity->voterUpIds->toArray())))) ?> 
+        	<?php $ids = $entity->voterUpIds->toArray(); ?>
+            <?= sprintf(@text('LIB-AN-VOTE-ONE-VOTED'), @name(@service('repos:actors.actor')->fetch(end($ids)))) ?> 
         <?php endif;?>  
     <?php elseif ( $entity->voteUpCount > 1 ) : ?> 
         <?php if ( $entity->voterUpIds->offsetExists($viewer->id) ) : ?>    
