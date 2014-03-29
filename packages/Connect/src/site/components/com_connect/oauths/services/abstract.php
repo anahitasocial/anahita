@@ -343,12 +343,14 @@ abstract class ComConnectOauthServiceAbstract extends KObject
 		));
 				
 		$request = $this->getRequest($config);
-		$result  = $request->send();
-		
-		if ( strpos((string)$result, '=') ) {
-			$result   = $result->parseQuery();			
+		$response  = $request->send();
+
+		if ( $response->successful() ) {
+			$result   = $response->parseQuery();			
 			$_SESSION['oauth_token_secret'] = $result->oauth_token_secret;	
 		}
+		else
+			$result = '';
 				
 		return $result;
 	}
