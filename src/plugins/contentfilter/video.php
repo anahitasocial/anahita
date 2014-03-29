@@ -53,7 +53,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 		
-		if ( preg_match_all('%http://\S*vimeo.com/(\d+)%', $text, $matches) ) {
+		if ( preg_match_all('%https://\S*vimeo.com/(\d+)%', $text, $matches) ) {
 			foreach($matches[1] as $index => $video_id) {				
 				$url = JURI::base().'plugins/contentfilter/video.php?type=vimeo&id='.$video_id;				
 				$options = array(
@@ -61,7 +61,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 					'allowscriptaccess' => 'always',
 					'color' 	  		=> '00ADEF',
 					'autoplay'	  		=> 'true',
-					'url' 		  		=> 'http://vimeo.com/moogaloop.swf?clip_id='.$video_id,
+					'url' 		  		=> 'https://vimeo.com/moogaloop.swf?clip_id='.$video_id,
 					'thumbnail'   		=> $url
 				);
 				
@@ -82,7 +82,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
-		if ( preg_match_all('%http://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches) )
+		if ( preg_match_all('%https://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches) )
 		{			
 			foreach($matches[1] as $index => $match)
 			{
@@ -96,14 +96,14 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 				{
 					$id   = str_replace('watch?v=','',array_pop($id));
 									
-					$link = 'http://www.youtube.com/v/'.$id;
+					$link = 'https://www.youtube.com/v/'.$id;
 					
 					$options = array(						
 						'allowFullScreen' 	=> 'true',
 						'allowScriptAccess' => 'always',
 						'autoplay'	=> 1,
 						'url' 		=> $link,
-						'thumbnail' => 'http://img.youtube.com/vi/'.$id.'/0.jpg'
+						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/0.jpg'
 					);
 				
 					$video = $this->_createVideo($options);
@@ -137,7 +137,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	$type 	= @$_GET['type'];
 	$video	= @$_GET['id'];
 	if ( $video ) {		
-		$contents = file_get_contents('http://vimeo.com/api/v2/video/'.$video.'.php');
+		$contents = file_get_contents('https://vimeo.com/api/v2/video/'.$video.'.php');
 		$array = array_shift(@unserialize(trim($contents)));
 		$url   = $array['thumbnail_large'];
 		header("Content-type: image/jpeg");
