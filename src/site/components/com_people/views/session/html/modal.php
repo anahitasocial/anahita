@@ -7,7 +7,7 @@
 </popup:header>
 
 
-<?php KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')?>
+<?php KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ?>
 <?php if ( class_exists('ComConnectTemplateHelperService', true) ): ?>
 <p><?= KService::get('com://site/connect.template.helper.service')->renderLogins() ?></p>
 <hr/>
@@ -15,7 +15,7 @@
 
 <div id="flash-message"></div>
 
-<form id="modal-login-form" action="<?=@route()?>" method="post">
+<form id="modal-login-form" action="<?= @route() ?>" method="post">
 	<div class="control-group">			
 		<div class="controls">
 			<input class="input-block-level" name="username" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>" id="username" type="text" alt="username" size="18" />
