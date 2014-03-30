@@ -7,7 +7,7 @@
 
 <div id="flash-message"></div>
 
-<form id="modal-login-form" action="<?=@route()?>" method="post">
+<form id="modal-login-form" action="<?= @route() ?>" method="post">
 	<div class="control-group">			
 		<div class="controls">
 			<input class="input-block-level" name="username" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>" id="username" type="text" alt="username" size="18" />
@@ -29,7 +29,7 @@
 </form>
 
 <popup:footer>
-    <button data-behavior="<?= isset($ajax) ? 'Request' : 'Submit'?>" data-request-form="#modal-login-form" data-submit-form="#modal-login-form" name="Submit" class="btn btn-large btn-primary">
+    <button data-behavior="<?= isset($ajax) ? 'Request' : 'Submit' ?>" data-request-form="#modal-login-form" data-submit-form="#modal-login-form" name="Submit" class="btn btn-large btn-primary">
     	<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
     </button>    
 </popup:footer>
