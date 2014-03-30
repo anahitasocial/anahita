@@ -41,7 +41,7 @@ class ComConnectOauthServiceLinkedin extends ComConnectOauthServiceAbstract
             'response_format'     => 'xml',
             'service_name'        => 'LinkedIn',
             'api_url'             => 'https://api.linkedin.com/v1' ,
-            'request_token_url' => 'https://api.linkedin.com/uas/oauth/requestToken' ,
+            'request_token_url' => 'https://api.linkedin.com/uas/oauth/requestToken?scope=rw_nus',
             'authorize_url'     => 'https://www.linkedin.com/uas/oauth/authenticate' ,
             //'authorize_url'     => 'https://www.linkedin.com/uas/oauth/authorize',
             'access_token_url'  => 'https://api.linkedin.com/uas/oauth/accessToken' ,
@@ -67,7 +67,7 @@ class ComConnectOauthServiceLinkedin extends ComConnectOauthServiceAbstract
   </visibility>
 </share>
 EOT;
-
+   
         $this->post('people/~/shares', $data);
      }
      
@@ -94,7 +94,7 @@ EOT;
         
         $data = array(
             'id'            => $profile['id'],
-            'profile_url'   => 'http://www.linkedin.com/profile/view?id='.$profile['id'],
+            'profile_url'   => 'https://www.linkedin.com/profile/view?id='.$profile['id'],
             'name'     => $profile['first-name'].' '.$profile['last-name'],
             //'username' => $profile->screen_name,
             'large_avatar'  => $profile['picture-url'],
@@ -104,5 +104,3 @@ EOT;
         return $data;
      }
 }
-
-?>
