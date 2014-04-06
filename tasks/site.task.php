@@ -195,7 +195,7 @@ class Create extends Command
         $config->secret = \JUserHelper::genRandomPassword(32);
         //exec("rm -rf ".JPATH_ROOT."/installation");
         $config->save();
-        $output->writeLn("<info>Congradulation you're done.</info>");
+        $output->writeLn("<info>Congratulations you're done.</info>");
         if ( !$db_exists && !$dump_file ) {
             $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");            
         }
