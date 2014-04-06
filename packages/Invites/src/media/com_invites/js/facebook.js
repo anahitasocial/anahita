@@ -36,7 +36,7 @@ var FacebookInvite = new Class({
 							url : 'index.php/invites/token/facebook',
 							data: {value:token.value}
 					}).send();
-					"Invitations Sent".alert('info');
+					"Invitations Sent".alert('success');
 				}				
 			}.bind(this)	
 		);		
