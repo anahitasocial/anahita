@@ -30,7 +30,7 @@ var FacebookInvite = new Class({
 				description: this.options.body
 			},
 			function(response){
-				if(response.success) {
+				if(response && response.success) {
 					new Request.JSON({
 							method: 'post',
 							url : 'index.php/invites/token/facebook',
