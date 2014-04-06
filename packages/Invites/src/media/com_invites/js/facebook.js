@@ -34,9 +34,12 @@ var FacebookInvite = new Class({
 					new Request.JSON({
 							method: 'post',
 							url : 'index.php/invites/token/facebook',
-							data: {value:token.value}
+							data: {value:token.value},
+							onSuccess: function()
+							{
+								"Invitations Sent".alert('success');
+							}
 					}).send();
-					"Invitations Sent".alert('success');
 				}				
 			}.bind(this)	
 		);		

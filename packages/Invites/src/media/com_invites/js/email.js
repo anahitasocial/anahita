@@ -17,6 +17,10 @@ Delegator.register('click', {
 			method: 'post',
 			url: form.action.toURI().setData('layout','emails_sent').toString(),
 			data: {email:emails},
+			onSuccess: function()
+			{
+				"Invitations Sent".alert('success');
+			},
 			onComplete: function(text, tree, html) {
 				window.behavior.apply(new Element('span').set('html', html));				
 			}
