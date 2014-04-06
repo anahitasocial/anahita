@@ -23,8 +23,8 @@ $body    = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @na
 new FacebookInvite({
 	'appId'    :  <?= $service->getAppID() ?>,
     'subject'  : '<?= $subject ?>',
-    'body'     : '<?= $body?>',
-    'appURL'   : '<?= $url?>',
+    'body'     : '<?= $body ?>',
+    'appURL'   : '<?= $url ?>',
     'picture'  : '<?= $viewer->getPortraitURL() ?>',
 });
 
