@@ -35,7 +35,7 @@ var FacebookInvite = new Class({
 							method: 'post',
 							url : 'index.php/invites/token/facebook',
 							data: {value:token.value},
-							onSuccess: function()
+							onComplete: function()
 							{
 								"Invitations Sent".alert('success');
 							}
