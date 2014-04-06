@@ -1,6 +1,3 @@
-
-//document.write('<script data-inline src="http://connect.facebook.net/en_US/all.js"></script>');
-
 var FacebookInvite = new Class({
 	initialize : function(options) {
 		this.options = options;
