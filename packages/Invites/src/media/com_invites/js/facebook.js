@@ -1,6 +1,3 @@
-
-//document.write('<script data-inline src="http://connect.facebook.net/en_US/all.js"></script>');
-
 var FacebookInvite = new Class({
 	initialize : function(options) {
 		this.options = options;
@@ -35,7 +32,7 @@ var FacebookInvite = new Class({
 							method: 'post',
 							url : 'index.php/invites/token/facebook',
 							data: {value:token.value},
-							onSuccess: function()
+							onComplete: function()
 							{
 								"Invitations Sent".alert('success');
 							}
