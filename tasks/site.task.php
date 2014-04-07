@@ -197,7 +197,7 @@ class Create extends Command
         $config->save();
         $output->writeLn("<info>Congratulations you're done.</info>");
         if ( !$db_exists && !$dump_file ) {
-            $output->writeLn("<info>Please create your admin account at http://yoursite/people/signup</info>");            
+            $output->writeLn("<info>The first person who registers for an account becomes the Super Administrator. Point your browser to http://yoursite/people/signup and create a new account.</info>");            
         }
     }    
 }
