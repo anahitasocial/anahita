@@ -54,7 +54,7 @@ class JMail extends PHPMailer
 	 * @return object The global JMail object
 	 * @since 1.5
 	 */
-	function & getInstance($id = 'Joomla')
+	public static function & getInstance($id = 'Joomla')
 	{
 		static $instances;
 
@@ -72,7 +72,7 @@ class JMail extends PHPMailer
 	/**
 	 * @return mixed True if successful, a JError object otherwise
 	 */
-	function &Send()
+	public function &Send()
 	{
 		if ( ( $this->Mailer == 'mail' ) && ! function_exists('mail') )
 		{
@@ -100,7 +100,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function setSender($from)
+	public function setSender($from)
 	{
 		// If $from is an array we assume it has an address and a name
 		if (is_array($from))
@@ -124,7 +124,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function setSubject($subject) {
+	public function setSubject($subject) {
 		$this->Subject = JMailHelper::cleanLine( $subject );
 	}
 
@@ -136,7 +136,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function setBody($content)
+	public function setBody($content)
 	{
 		/*
 		 * Filter the Body
@@ -153,7 +153,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function addRecipient($recipient)
+	public function addRecipient($recipient)
 	{
 		// If the recipient is an aray, add each recipient... otherwise just add the one
 		if (is_array($recipient))
@@ -176,7 +176,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function addCC($cc)
+	public function addCC($cc, $name='')
 	{
 		//If the carbon copy recipient is an aray, add each recipient... otherwise just add the one
 		if (isset ($cc))
@@ -188,7 +188,7 @@ class JMail extends PHPMailer
 				}
 			} else {
 				$cc = JMailHelper::cleanLine( $cc );
-				parent::AddCC($cc);
+				parent::AddCC($cc, $name);
 			}
 		}
 	}
@@ -201,7 +201,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function addBCC($bcc)
+	public function addBCC($bcc, $name='')
 	{
 		// If the blind carbon copy recipient is an aray, add each recipient... otherwise just add the one
 		if (isset ($bcc))
@@ -213,7 +213,7 @@ class JMail extends PHPMailer
 				}
 			} else {
 				$bcc = JMailHelper::cleanLine( $bcc );
-				parent::AddBCC($bcc);
+				parent::AddBCC($bcc, $name);
 			}
 		}
 	}
@@ -226,17 +226,17 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function addAttachment($attachment)
+	public function addAttachment($attachment, $name = '', $encoding = 'base64', $type = 'application')
 	{
 		// If the file attachments is an aray, add each file... otherwise just add the one
 		if (isset ($attachment))
 		{
 			if (is_array($attachment)) {
 				foreach ($attachment as $file) {
-					parent::AddAttachment($file);
+					parent::AddAttachment($file, $name, $encoding, $type);
 				}
 			} else {
-				parent::AddAttachment($attachment);
+				parent::AddAttachment($attachment, $name, $encoding, $type);
 			}
 		}
 	}
@@ -252,7 +252,7 @@ class JMail extends PHPMailer
 	 * @return void
 	 * @since 1.5
 	 */
-	function addReplyTo($replyto)
+	public function addReplyTo($replyto, $name='')
 	{
 		// Take care of reply email addresses
 		if (is_array($replyto[0]))
