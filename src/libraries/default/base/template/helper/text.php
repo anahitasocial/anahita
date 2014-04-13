@@ -220,12 +220,13 @@ class LibBaseTemplateHelperText extends KTemplateHelperAbstract implements KServ
 	 *  @param array  $words 
 	 *  @return string of processed text
 	 */
-	public function highlight($text, $words)
+	public function highlight($text, $words, $min=3)
 	{
 		$words = KConfig::unbox($words);
 		settype($words, 'array');
 		foreach($words as $word)
-			$text = KHelperString::str_ireplace($word, '<span class="an-text-highlight">'.$word.'</span>', $text);
+			if(strlen($word) >= $min)
+				$text = KHelperString::str_ireplace($word, '<span class="an-text-highlight">'.$word.'</span>', $text);
 
 		return $text;
 	}
