@@ -191,7 +191,8 @@ class LibApplicationRouter extends KObject
 	        $url = substr($url, 9);
 	    }
 	    //add ? to the urls that starts with a query key=
-	    elseif ( preg_match('/^\w+=/', $url) ) {
+	    //elseif ( preg_match('/^\w+=/', $url) ) {
+	    elseif (preg_match('%^[^?/]+=%', $url)){
 	        $url = '?'.$url;
 	    }
 	    
@@ -225,21 +226,30 @@ class LibApplicationRouter extends KObject
         }
 
         $uri->query = $query;
-        
-        //only add index.php is it's rewrite SEF
-        if ( !$this->_enable_rewrite || empty($parts) ) {
-            array_unshift($parts,'index.php');
+                
+        if(!$this->_enable_rewrite)
+        {
+        	array_unshift($parts, 'index.php');	
         }
+        elseif(empty($parts))
+        {
+        	array_unshift($parts, '');
+        }
+        
         array_unshift($parts, $this->_base_url->path);        
+        
         $path  = implode('/', $parts);
+        
         $uri->path = $path;
+        
         if ( $fqr )
         {
             foreach(array('host','scheme','port','user','pass') as $part) 
             {
                 $uri->$part = $this->_base_url->$part; 
             }            
-        }        
+        }
+                
         return $uri;        
 	}
 
