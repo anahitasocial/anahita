@@ -74,65 +74,74 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 	{
 		$keywords  = $this->search_term;
 		
-		if ( $keywords )
+		if ($keywords)
 		{
-// 			if ( strpos($keywords,'#') === 0 ) {
-// 				$keywords  = explode(',', substr($keywords,1));
-// 			}
-			if ( strpos($keywords,' OR ') ) {
-				$keywords  = explode(' OR ',$keywords);
-				$operation = 'OR';
-			} else {
-				$keywords = explode(' ', $keywords);
-				$operation = 'AND';
-			}
-		
-			if ( !empty($operation) )
+			$operation = null;
+			
+			if ( strpos($keywords,' OR ') ) 
 			{
-				$clause = $this->clause('OR');
-				foreach($keywords as $keyword) {
-					$clause->where('CONCAT(IF(node.name IS NULL,"",node.name), IF(node.body IS NULL,"",node.body)) LIKE @quote(%'.$keyword.'%)',$operation);
-				}
+				$operation = 'OR';
+				$keywords  = explode(' OR ',$keywords);
 			}
+			else 
+			{
+				$operation = 'AND';
+				
+				if(strpos($keywords,' AND '))
+					$keywords = explode(' AND ',$keywords);
+				else 
+					$keywords = explode(' ',$keywords);
+			}
+			
+			foreach($keywords as $index=>$value)
+				if(strlen($value) < 3)
+					unset($keywords[$index]);
+			
+			$clause = $this->clause('AND');		
+					
+			foreach($keywords as $keyword)
+				$clause->where('CONCAT(IF(node.name IS NULL,"",node.name), IF(node.body IS NULL,"",node.body)) LIKE @quote(%'.$keyword.'%)', $operation);
 		}
 									
 		$scopes = $this->getService('com://site/search.domain.entityset.scope');
 		
-		if ( $this->scope instanceof ComSearchDomainEntityScope ) {
+		if ( $this->scope instanceof ComSearchDomainEntityScope ) 
 			$scopes = array($this->scope);
-		}
 				
 		$comments = array();
 		$types = array();
+		
 		foreach($scopes as $scope) 
-		{
-			if ( $this->owner_context && !$scope->ownable ) 
-				continue;
+		{				
 			$types[] = $scope->node_type;
-			if ( $scope->commentable ) {
-				$comments[] = (string)$scope->identifier;
-			}
+			
+			if ($scope->commentable) 
+				$comments[] = (string) $scope->identifier;
 		}
 
 		$comment_query = '';
-		if ( count($comments) && $this->_state->search_comments ) {
+		
+		if (count($comments) && $this->_state->search_comments)
 			$comment_query = 'OR (@col(node.type) LIKE :comment_type AND node.parent_type IN (:parent_types) )';
-		}
+		
 		$owner_query  = '';
-		if ( $this->owner_context ) {
+		
+		if ($this->owner_context) 
+		{
 			$owner_query = 'node.owner_id = '.$this->owner_context->id.' AND ';
-			if ( !empty($comment_query) ) {
+			
+			if (!empty($comment_query)) 
+			{
 				$this->distinct = true;
 				$this->join('LEFT','anahita_nodes AS comment_parent','node.type LIKE :comment_type AND comment_parent.id = node.parent_id');
 				$comment_query = preg_replace('/\)$/', ' AND comment_parent.owner_id = '.$this->owner_context->id.')', $comment_query);				
 			}			
 		}
 		
-		$this
-			->where('( '.$owner_query.' @col(node.type) IN (:types) '.$comment_query.')')
-			->bind('types', $types)
-			->bind('comment_type','ComBaseDomainEntityComment%')
-			->bind('parent_types',$comments);
+		$this->where('( '.$owner_query.' @col(node.type) IN (:types) '.$comment_query.')')
+		->bind('types', $types)
+		->bind('comment_type','ComBaseDomainEntityComment%')
+		->bind('parent_types',$comments);
 	}
 	
 	/**
