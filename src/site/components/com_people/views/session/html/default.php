@@ -46,7 +46,7 @@
 				
 				<div class="control-group">
 					<label class="checkbox">
-						<input type="checkbox" name="remember" value="yes" alt="<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>" />
+						<input type="checkbox" name="remember" value="true" alt="<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>" />
 						<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>
 					</label>
 				</div>

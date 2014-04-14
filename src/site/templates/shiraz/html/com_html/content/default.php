@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <?php @title('Anahita Social Networking Platform and Framework')?>
-<?php @description('A remarkable social networking platform for building apps and services that connect people, places, and things.')?>
+<?php @description('a remarkable social networking platform for building knowledge sharing apps and services.') ?>
 
 <div class="row">
 	<div class="span8 offset2">
@@ -10,7 +10,7 @@
 			
 			<h1>Anahita</h1>
 			
-			<p class="lead">A remarkable social networking platform for building apps and services that connect people, places, and things.</p>
+			<p class="lead">a remarkable social networking platform for building knowledge sharing apps and services.</p>
 			
 			<p>
 				<a class="btn btn-primary" href="http://GetAnahita.com" target="_blank">
