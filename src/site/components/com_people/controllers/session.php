@@ -159,10 +159,10 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     			//return a cookie that contains the credential
 			if ( $remember === true )
 			{
-    				//legacy for now
+    			//legacy for now
 				$key      = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT','raw'));
-				$crypt    = new JSimpleCrypt($key);
-				$cookie   = $crypt->encrypt(serialize($user));
+				$crypt    = new JSimpleCrypt($key);				
+				$cookie   = $crypt->encrypt(serialize(array('username'=>$user['username'],'password'=>$user['password'])));				
 				$lifetime = time() + AnHelperDate::yearToSeconds();
 				setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
 			}
