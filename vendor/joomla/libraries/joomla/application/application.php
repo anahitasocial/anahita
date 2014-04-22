@@ -633,10 +633,12 @@ class JApplication extends JObject
 		 * should be done in the plugin as this provides the ability to provide
 		 * much more information about why the routine may have failed.
 		 */
+		/*
 		if (!in_array(false, $results, true)) {
 			setcookie( JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, '/' );
 			return true;
 		}
+		*/
 
 		// Trigger onLoginFailure Event
 		$this->triggerEvent('onLogoutFailure', array($parameters));

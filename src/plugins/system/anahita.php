@@ -26,66 +26,7 @@ jimport('joomla.plugin.plugin');
  * @link       http://www.anahitapolis.com
  */
 class PlgSystemAnahita extends JPlugin 
-{
-    /**
-     * Remebers handling
-     * 
-     * @return void
-     */
-    public function onAfterInitialise()
-    {
-        global $mainframe;
-
-        // No remember me for admin
-        if ($mainframe->isAdmin()) {
-            return;
-        }
-
-        //if alredy logged in then forget it
-        if ( JFactory::getUser()->id)  {
-            return;    
-        }
-        
-        jimport('joomla.utilities.utility');
-        jimport('joomla.utilities.simplecrypt');
-                
-        if ( KRequest::has('server.PHP_AUTH_USER')
-             && KRequest::has('server.PHP_AUTH_PW')
-             && KRequest::format() == 'json'
-                )
-        {
-            $data['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
-            $data['password'] = KRequest::get('server.PHP_AUTH_PW',   'raw');
-        }
-        elseif ( $cookie = KRequest::get('cookie.'.JUtility::getHash('JLOGIN_REMEMBER'),'raw') )
-        {
-            //first lets clear the cookie
-            setcookie( JUtility::getHash('JLOGIN_REMEMBER'), false, time() - AnHelperDate::dayToSeconds(), '/' );
-            $key      = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT','raw'));
-            $crypt    = new JSimpleCrypt($key);
-            $cookie   = $crypt->decrypt($cookie);
-            $data     = (array)@unserialize($cookie);
-        }
-        
-        if ( !empty($data) ) 
-        {
-            try {
-                $data['rememmber'] = true;
-                //@TODO what happens when a user is blocked
-                KService::get('com://site/people.controller.session')
-                ->add($data);
-            }
-            
-            catch(RuntimeException $e) {
-                //only throws exception if we are using JSON format
-                //otherwise let the current app handle it
-                if ( KRequest::format() == 'json') {
-                    throw $e;
-                }
-            }
-        }
-    }
-        
+{        
 	/**
 	 * Constructor
 	 * 
@@ -161,6 +102,66 @@ class PlgSystemAnahita extends JPlugin
         
         parent::__construct($subject, $config);
 	}
+	
+    /**
+     * Remebers handling
+     * 
+     * @return void
+     */
+    public function onAfterInitialise()
+    {
+        global $mainframe;
+
+        // No remember me for admin
+        if ($mainframe->isAdmin())
+            return;  
+
+        //if alredy logged in then forget it
+        if (!JFactory::getUser()->guest)
+            return;    
+        
+        jimport('joomla.utilities.utility');
+        jimport('joomla.utilities.simplecrypt');
+        $user = array();
+        $remember = JUtility::getHash('JLOGIN_REMEMBER');
+        
+        // for json requests obtain the username and password from the $_SERVER array
+        // else if the remember me cookie exists, decrypt and obtain the username and password from it
+        if(KRequest::has('server.PHP_AUTH_USER') && KRequest::has('server.PHP_AUTH_PW') && KRequest::format() == 'json')
+        {
+            $user['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
+            $user['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
+        }
+        elseif(isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '')
+        {      	
+        	$key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));    
+            
+            if($key)
+            {
+            	$crypt    = new JSimpleCrypt($key);
+            	$cookie   = $crypt->decrypt($_COOKIE[$remember]);
+            	$user     = (array) @unserialize($cookie);
+            }
+        }
+        
+        if (!empty($user)) 
+        {
+            try
+            {
+                KService::get('com://site/people.helper.person')->login($user, true);
+            }
+            catch(RuntimeException $e) 
+            {
+                //only throws exception if we are using JSON format
+                //otherwise let the current app handle it
+                if ( KRequest::format() == 'json') {
+                    throw $e;
+                }
+            }
+        }
+        
+        return;
+    }
     
 	/**
 	 * store user method
@@ -179,20 +180,19 @@ class PlgSystemAnahita extends JPlugin
 		if( !$succes )
 			return false;
         
-        $person =   KService::get('repos://site/people.person')
-                    ->getQuery()
+        $person = KService::get('repos://site/people.person')
+                	->getQuery()
                     ->disableChain()
                     ->userId($user['id'])
                     ->fetch();
-                    ;
 							
-		if ( $person ) 
+		if ($person) 
 		{		    
-			KService::get('com://site/people.helper.person')->synchronizeWithUser($person, JFactory::getUser($user['id']) );
-			
-		} else 
+			KService::get('com://site/people.helper.person')->synchronizeWithUser($person, JFactory::getUser($user['id']));
+		} 
+		else 
 		{
-			$person = KService::get('com://site/people.helper.person')->createFromUser( JFactory::getUser($user['id']) );
+			$person = KService::get('com://site/people.helper.person')->createFromUser(JFactory::getUser($user['id']));
 		}
 		
 		$person->saveEntity();
@@ -213,8 +213,7 @@ class PlgSystemAnahita extends JPlugin
 	    
 	    if ( $person )
 	    {
-	        KService::get('repos://site/components')
-    	        ->fetchSet()
+	        KService::get('repos://site/components')->fetchSet()
 	            ->registerEventDispatcher(KService::get('anahita:event.dispatcher'));
 	        
 	        KService::get('anahita:event.dispatcher')
