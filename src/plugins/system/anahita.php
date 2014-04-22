@@ -146,9 +146,16 @@ class PlgSystemAnahita extends JPlugin
         
         if (!empty($user)) 
         {
-            try
+            jimport('joomla.user.authentication');
+            $authentication =& JAuthentication::getInstance();
+            
+        	try
             {
-                KService::get('com://site/people.helper.person')->login($user, true);
+                $authResponse = $authentication->authenticate($user, array());
+            	if($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS)
+                {
+            		KService::get('com://site/people.helper.person')->login($user, true);
+                }
             }
             catch(RuntimeException $e) 
             {
