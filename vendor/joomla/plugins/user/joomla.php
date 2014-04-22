@@ -26,20 +26,6 @@ jimport('joomla.plugin.plugin');
  */
 class plgUserJoomla extends JPlugin
 {
-	/**
-	 * Constructor
-	 *
-	 * For php4 compatability we must not use the __constructor as a constructor for plugins
-	 * because func_get_args ( void ) returns a copy of all passed arguments NOT references.
-	 * This causes problems with cross-referencing necessary for the observer design pattern.
-	 *
-	 * @param 	object $subject The object to observe
-	 * @param 	array  $config  An array that holds the plugin configuration
-	 * @since 1.5
-	 */
-	function plgUserJoomla(& $subject, $config) {
-		parent::__construct($subject, $config);
-	}
 
 	/**
 	 * Remove all sessions for the user name
@@ -50,7 +36,7 @@ class plgUserJoomla extends JPlugin
 	 * @param	boolean		true if user was succesfully stored in the database
 	 * @param	string		message
 	 */
-	function onAfterDeleteUser($user, $succes, $msg)
+	public function onAfterDeleteUser($user, $succes, $msg)
 	{
 		if(!$succes) {
 			return false;
@@ -72,17 +58,18 @@ class plgUserJoomla extends JPlugin
 	 * @return	boolean	True on success
 	 * @since	1.5
 	 */
-	function onLoginUser($user, $options = array())
+	public function onLoginUser($user, $options = array())
 	{
+		
 		jimport('joomla.user.helper');
-
+		
 		$instance =& $this->_getUser($user, $options);
-
+		
 		// if _getUser returned an error, then pass it back.
 		if (JError::isError( $instance )) {
 			return $instance;
 		}
-
+		
 		// If the user is blocked, redirect with an error
 		if ($instance->get('block') == 1) {
 			return new JException('SOME_ERROR_CODE', JText::_('E_NOLOGIN_BLOCKED'));
@@ -123,21 +110,21 @@ class plgUserJoomla extends JPlugin
 		$instance->set('usertype', $grp->name);
 
 		// Register the needed session variables
-		$session =& JFactory::getSession();
-		$session->set('user', $instance);
-
+		$session =& JFactory::getSession();		
+		$session->set('user', $instance);		
+		
 		// Get the session object
 		$table = & JTable::getInstance('session');
-		$table->load( $session->getId() );
+		$table->load($session->getId());
 
 		$table->guest 		= $instance->get('guest');
 		$table->username 	= $instance->get('username');
 		$table->userid 		= intval($instance->get('id'));
 		$table->usertype 	= $instance->get('usertype');
 		$table->gid 		= intval($instance->get('gid'));
-
-		$table->update();
-
+		
+		$table->update();		
+		
 		// Hit the user last visit field
 		$instance->setLastVisit();
 
@@ -153,11 +140,12 @@ class plgUserJoomla extends JPlugin
 	 * @return object   True on success
 	 * @since 1.5
 	 */
-	function onLogoutUser($user, $options = array())
+	public function onLogoutUser($user, $options = array())
 	{
 		$my =& JFactory::getUser();
 		//Make sure we're a valid user first
-		if($user['id'] == 0 && !$my->get('tmp_user')) return true;
+		if($user['id'] == 0 && !$my->get('tmp_user')) 
+			return true;
 
 		//Check to see if we're deleting the current session
 		if($my->get('id') == $user['id'])
@@ -187,7 +175,7 @@ class plgUserJoomla extends JPlugin
 	 * @return	object	A JUser object
 	 * @since	1.5
 	 */
-	function &_getUser($user, $options = array())
+	private function &_getUser($user, $options = array())
 	{
 		$instance = new JUser();
 		if($id = intval(JUserHelper::getUserId($user['username'])))  {
@@ -202,23 +190,23 @@ class plgUserJoomla extends JPlugin
 
 		$acl =& JFactory::getACL();
 
-		$instance->set( 'id'			, 0 );
-		$instance->set( 'name'			, $user['fullname'] );
-		$instance->set( 'username'		, $user['username'] );
+		$instance->set( 'id'				, 0 );
+		$instance->set( 'name'				, $user['fullname'] );
+		$instance->set( 'username'			, $user['username'] );
 		$instance->set( 'password_clear'	, $user['password_clear'] );
-		$instance->set( 'email'			, $user['email'] );	// Result should contain an email (check)
-		$instance->set( 'gid'			, $acl->get_group_id( '', $usertype));
-		$instance->set( 'usertype'		, $usertype );
+		$instance->set( 'email'				, $user['email'] );	// Result should contain an email (check)
+		$instance->set( 'gid'				, $acl->get_group_id( '', $usertype));
+		$instance->set( 'usertype'			, $usertype );
 
 		//If autoregister is set let's register the user
 		$autoregister = isset($options['autoregister']) ? $options['autoregister'] :  $this->params->get('autoregister', 1);
 
-		if($autoregister)
+		if($autoregister && !$instance->save())
 		{
-			if(!$instance->save()) {
-				return JError::raiseWarning('SOME_ERROR_CODE', $instance->getError());
-			}
-		} else {
+			return JError::raiseWarning('SOME_ERROR_CODE', $instance->getError());
+		} 
+		else 
+		{
 			// No existing user and autoregister off, this is a temporary user.
 			$instance->set( 'tmp_user', true );
 		}

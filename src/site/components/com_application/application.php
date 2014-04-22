@@ -99,7 +99,7 @@ class JSite extends JApplication
     {
          //Set the application login entry point
          if(!array_key_exists('entry_url', $options)) {
-             $options['entry_url'] = JURI::base().'index.php?option=com_user&task=login';
+             $options['entry_url'] = JURI::base().'index.php?option=com_people&view=session&action=login';
          }
 
         return parent::login($credentials, $options);

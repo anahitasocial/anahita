@@ -637,6 +637,7 @@ class JApplication extends JObject
 			setcookie( JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, '/' );
 			return true;
 		}
+		
 
 		// Trigger onLoginFailure Event
 		$this->triggerEvent('onLogoutFailure', array($parameters));

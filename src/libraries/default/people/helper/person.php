@@ -15,8 +15,7 @@
  */
 
 /**
- * Person Helper. Provides some helper functions suchs as creating a person object from a user. Or to
- * login/logoug a user
+ * Person Helper. Provides some helper functions suchs as creating a person object from a user.
  * 
  * @category   Anahita
  * @package    Lib_People
@@ -27,108 +26,7 @@
  * @link       http://www.anahitapolis.com
  */
 class LibPeopleHelperPerson extends KObject
-{
-    /**
-     * Logouts a person
-     *
-     * @param ComPeopleDomainEntityPerson $person  Person to logout
-     * @param array                       $options Array of options
-     * 
-     * @return void
-     */
-    public function logout($person, $options = array())
-    {
-        //preform the logout action
-        $mainframe = JFactory::getApplication();
-        $error     = $mainframe->logout();
-        $options   = new KConfig($options);
-        $options->append(array(
-              'return'  => 'index.php',
-              'message' => ''              
-        ));
-        $return = $options->return;
-        // Redirect if the return url is not registration or login
-        if ( $return && !( strpos( $return, 'com_user' )) ) {
-            $mainframe->redirect( $return, $options->message, $options->type );
-        }
-    }
-    
-	/**
-	 * Logs in a person 
-	 * 
-	 * @param ComPeopleDomainEntityPerson $person
-	 * @param array                       $options
-	 * 
-	 * @return void
-	 */
-	public function login($person, $options = array())
-	{
-		$user	 	 = (array) JFactory::getUser($person->userId);
-		$application = JFactory::getApplication();
-		if ( @$user['id'] )
-		{
-			$session = &JFactory::getSession();
-	
-			// we fork the session to prevent session fixation issues
-			$session->fork();
-			$application->_createSession($session->getId());
-			
-			// Import the user plugin group
-			JPluginHelper::importPlugin('user');
-	
-			// OK, the credentials are authenticated.  Lets fire the onLogin event
-			
-			$results = $application->triggerEvent('onLoginUser', array($user, $options));
-	
-			/*
-			 * If any of the user plugins did not successfully complete the login routine
-			 * then the whole method fails.
-			 *
-			 * Any errors raised should be done in the plugin as this provides the ability
-			 * to provide much more information about why the routine may have failed.
-			 */
-	
-			if (!in_array(false, $results, true))
-			{
-				// Set the remember me cookie if enabled
-				if (isset($options['remember']) && $options['remember'])
-				{
-					jimport('joomla.utilities.simplecrypt');
-					jimport('joomla.utilities.utility');
-	
-					//Create the encryption key, apply extra hardening using the user agent string
-					$key = JUtility::getHash(@$_SERVER['HTTP_USER_AGENT']);
-	
-					$crypt = new JSimpleCrypt($key);
-					$rcookie = $crypt->encrypt(serialize($credentials));
-					$lifetime = time() + 365*24*60*60;
-					setcookie( JUtility::getHash('JLOGIN_REMEMBER'), $rcookie, $lifetime, '/' );
-				}
-				
-				KService::set('com:people.viewer', $person);
-				
-				if ( isset($options['return']) ) {
-					$application->redirect($options['return']);
-				}
-				
-				return true;
-			}
-		}
-		
-		// Trigger onLoginFailure Event
-		$application->triggerEvent('onLoginFailure', array($user));
-
-
-		// If silent is set, just return false
-		if (isset($options['silent']) && $options['silent']) 
-		{
-			return false;
-		}
-
-		// Return the error
-		return JError::raiseWarning('SOME_ERROR_CODE', JText::_('E_LOGIN_AUTHENTICATE'));				
-	}
-	
+{	
 	/**
 	 * Synchronize a person and user 
 	 * 
@@ -139,7 +37,7 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function synchronizeWithUser($person, $user)
 	{
-		if ( $person->userId != $user->id )
+		if ($person->userId != $user->id)
 			return;
 
 		$params = new JParameter($user->params);
@@ -167,22 +65,19 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function getPerson($id)
 	{
-		if ( is_object($id) )
+		if(is_object($id) && !$id->id)
 		{
-			$id = $id->id;
-			
-			if ( !$id )
-				return null;
+			return null;
 		}
 		
-		$user   = JFactory::getUser($id);
+		$user = JFactory::getUser($id);
 		
-		if ( !$user->id ) return null;
+		if(!$user->id) 
+			return null;
 		
-	    $query  = $this->getService('repos://site/people.person')->getQuery()->disableChain()->userId($user->id);		
-		$person = $query->fetch();
+	    $query = $this->getService('repos://site/people.person')->getQuery()->disableChain()->userId($user->id);		
 		
-		if ( $person )
+	    if($person = $query->fetch())
 			return $person;
 			
 		$person = self::createFromUser($user);
@@ -201,7 +96,7 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function createFromUser($user)
 	{
-		if ( !$user->id )
+		if (!$user->id)
 			return null;
 			
 		$params = new JParameter($user->params);
@@ -222,4 +117,68 @@ class LibPeopleHelperPerson extends KObject
 			
 		return $person;
 	}
+	
+	/**
+     * Logs in a user
+     * 
+     * @param array   $user     The user as an array
+     * @param boolean $remember Flag to whether remember the user or not
+     * 
+     * @return boolean
+     */
+	public function login(array $user, $remember = false)
+    {		
+		$session = &JFactory::getSession();
+    		
+		// we fork the session to prevent session fixation issues
+		$session->fork();   
+		JFactory::getApplication()->_createSession($session->getId());
+    		
+    	// Import the user plugin group
+		JPluginHelper::importPlugin('user');
+    	$options = array();	    	
+    	
+    	$results = JFactory::getApplication()->triggerEvent('onLoginUser', array($user, $options));
+    	
+		foreach($results as $result)
+		{
+			if ($result instanceof JException || $result instanceof Exception || $result === false)
+				return false;
+		}
+		
+    	//if remember is true, create a remember cookie that contains the ecrypted username and password
+		if ($remember)
+		{
+    		// Set the remember me cookie if enabled
+			jimport('joomla.utilities.simplecrypt');
+			jimport('joomla.utilities.utility');
+				
+			$key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT','raw'));
+				
+			if($key)
+			{
+				$crypt = new JSimpleCrypt($key);				
+				$cookie = $crypt->encrypt(serialize(array(
+					'username' =>$user['username'],
+					'password' =>$user['password']
+				)));				
+					
+				$lifetime = time() + AnHelperDate::yearToSeconds();
+				setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
+			}
+		}
+		
+		return true;
+    }
+    
+	/**
+     * Deletes a session and logs out the viewer
+
+     * @return boolean
+     */
+    public function logout()
+    {
+        setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - AnHelperDate::dayToSeconds(30), '/');
+        return JFactory::getApplication()->logout();
+    }
 }

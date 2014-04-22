@@ -92,7 +92,7 @@ class JTableSession extends JTable
 	}
 
 	function insert($sessionId, $clientId)
-	{
+	{		
 		$this->session_id	= $sessionId;
 		$this->client_id	= $clientId;
 
@@ -186,11 +186,6 @@ class JTableSession extends JTable
 	 */
 	function delete( $oid=null )
 	{
-		//if (!$this->canDelete( $msg ))
-		//{
-		//	return $msg;
-		//}
-
 		$k = $this->_tbl_key;
 		if ($oid) {
 			$this->$k = $oid;
