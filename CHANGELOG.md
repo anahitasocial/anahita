@@ -1,3 +1,5 @@
+
+=== Anahita 3.0.0
 * Removed the com_content, com_section, com_categories. If you have existing aricles you can migrate them into
 html and use it within the com_html. Read https://github.com/anahitasocial/article-exporter/blob/master/README.md
 After updating you need to resymlink the site using the command `php anahita site:init -n`
