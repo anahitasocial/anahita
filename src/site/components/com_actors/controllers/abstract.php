@@ -41,8 +41,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         $this->registerCallback(array('after.delete','after.add'), array($this, 'redirect'));
         
         //set filter state  
-        $this->getState()
-                ->insert('filter');            
+        $this->getState()->insert('filter');            
     }
         
     /**
@@ -110,21 +109,23 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         $entities =  $query->toEntitySet();
         
         
-        if( $this->isOwnable() && $this->actor ) 
+        if($this->isOwnable() && $this->actor) 
         {
             $this->_state->append(array(
                 'filter' => 'following'
             ));
 
-            if ( $this->filter == 'administering' && $this->getRepository()->hasBehavior('administrable') )
+            if ($this->filter == 'administering' && $this->getRepository()->hasBehavior('administrable'))
             {
                 $entities->where('administrators.id', 'IN', array($this->actor->id));
             }
-            else if ( $this->actor->isFollowable() ) 
+            else if ($this->actor->isFollowable()) 
             {
                 $entities->where('followers.id','IN', array($this->actor->id));
             }
         }
+        
+        $entities->order('created_on', 'desc');
                 
         return $this->setList($entities)->getList();
     }
@@ -140,7 +141,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionAdd($context);
         
-        if ( $entity->isPortraitable() && KRequest::has('files.portrait') ) {
+        if ($entity->isPortraitable() && KRequest::has('files.portrait')) 
+        {
             $file = KRequest::get('files.portrait', 'raw'); 
             $entity->setPortrait(array('url'=>$file['tmp_name'], 'mimetype'=>$file['type']));             
         }
@@ -159,10 +161,10 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {        
         $entity = parent::_actionEdit($context);
                 
-        if ( $entity->isPortraitable() && KRequest::has('files.portrait') ) 
+        if ($entity->isPortraitable() && KRequest::has('files.portrait')) 
         {         
             $file = KRequest::get('files.portrait', 'raw'); 
-            if ( !empty($file['size']) ) 
+            if (!empty($file['size'])) 
             {
                 $this->getItem()->setPortrait(array('url'=>$file['tmp_name'], 'mimetype'=>$file['type']));
                                 
@@ -171,14 +173,18 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                    'owner'  => $entity,
                    'target' => $entity
                 ));
-            } else {
+            } 
+            else 
+            {
                 $this->getItem()->removePortraitImage();
             }
         }
                         
-        if ( $entity->save($context) ) {
+        if($entity->save($context)) 
+        {
             dispatch_plugin('profile.onSave', array('actor'=>$entity, 'data'=>$context->data));  
         }
+        
         return $entity;
     }    
         
@@ -193,7 +199,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         parent::setView($view);
         
-        if ( !$this->_view instanceof ComBaseViewAbstract ) 
+        if (!$this->_view instanceof ComBaseViewAbstract) 
         {
             $name  = KInflector::isPlural($this->view) ? 'actors' : 'actor';
             $defaults[] = 'ComActorsView'.ucfirst($view).ucfirst($this->_view->name);
@@ -216,13 +222,13 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _actionDelete(KCommandContext $context)
     {
         $this->getService('repos://site/components')
-            ->fetchSet()
-            ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
+        ->fetchSet()
+        ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
                          
         $result  = parent::_actionDelete($context);
         
         $this->getService('anahita:event.dispatcher')
-            ->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()));
+        ->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()));
                 
         return $result;
     }
@@ -234,12 +240,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     public function getToolbar($toolbar, $config = array())
     {
-        if ( is_string($toolbar) )
+        if(is_string($toolbar))
         {
             //if actorbar or menu alawys default to the base
-            if ( in_array($toolbar, array('actorbar')) )
+            if (in_array($toolbar, array('actorbar')))
             {
-                $identifier       = clone $this->getIdentifier();
+                $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller','toolbar');
                 $identifier->name = $toolbar;
                 register_default(array('identifier'=>$identifier, 'default'=>'ComActorsControllerToolbar'.ucfirst($toolbar)));
@@ -262,7 +268,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _actionSetPrivacy(KCommandContext $context)
     {
         //call the parent privactable behavior
-        if ( $this->hasBehavior('privatable') ) {
+        if($this->hasBehavior('privatable')) 
+        {
             $this->getBehavior('privatable')->execute('action.setprivacy', $context);
         }
         
@@ -271,7 +278,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         
         //if access is not followers
         //then set the allowFollowRequest to false
-        if ( $data->access != 'followers' ) {
+        if($data->access != 'followers') 
+        {
             $data->allowFollowRequest = false;
         }
         
@@ -289,16 +297,19 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $url = null;
         
-        if ( $context->action == 'delete' ) {
+        if($context->action == 'delete') 
+        {
             //if deleted then go to back to the general page
             $url = 'option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name);
         }
         //after add always go to the setting
-        elseif ( $context->action = 'add' ) {
+        elseif($context->action = 'add') 
+        {
             $url = $context->result->getURL().'&get=settings';
         }
         
-        if ( $url ) {
+        if($url) 
+        {
             $context->response->setRedirect(JRoute::_($url));
         }
     }
