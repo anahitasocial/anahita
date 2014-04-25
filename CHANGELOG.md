@@ -1,7 +1,7 @@
 Anahita 3.0.2
 ==============
 
-* #cd92071 - added authentication to the auto login just in case if a bad cookie was handed in
+* cd92071 - added authentication to the auto login just in case if a bad cookie was handed in
 * 902ad4d - Legacy joomla cleanup
 * 197cf57 - Uses authentication and the remember me has been re-implemented
 * feb2e93 - added login and logout functions
