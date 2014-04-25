@@ -1,7 +1,6 @@
 What is Anahita?
 ================
-open source social networking platform for building knowledge sharing apps and services. Anahita is open source and it is available under the GPL3 license. 
-Use Anahita to develop:
+Anahita is an open source social networking platform for building knowledge sharing apps and services. Anahita is available under the GPL3 license. Use Anahita to develop:
 
 1. niche social networks for business, lifestyle, and support
 2. cloud back-end for your mobile apps
