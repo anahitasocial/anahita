@@ -40,23 +40,23 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
     protected function _initialize(KConfig $config)
     {
 		$config->append(array(
-		    'inheritance'         => array(
-                'abstract'        => $this->getIdentifier()->classname === __CLASS__,
-		        'column'          => 'type',
-		        'ignore'          => array(),
+		    'inheritance'  => array(
+                'abstract' => $this->getIdentifier()->classname === __CLASS__,
+		        'column'   => 'type',
+		        'ignore'   => array(),
             ),
-			'resources'           => array(
+			'resources' => array(
 				array('name'=>'anahita_edges', 'alias'=>$this->getIdentifier()->name)
 			),
 			'attributes' => array(
-				'id' 				=> array('key'=>true)
+				'id' => array('key'=>true)
 			),
 			'behaviors' => array(
 				'modifiable'
 			),		
 			'relationships' => array(				
-				'nodeA' 	 => array('required' =>true,  'polymorphic'=>true, 'parent'=>'com:base.domain.entity.node'),
-				'nodeB' 	 => array('required' =>true,  'polymorphic'=>true, 'parent'=>'com:base.domain.entity.node')			
+				'nodeA' => array('required' =>true,  'polymorphic'=>true, 'parent'=>'com:base.domain.entity.node'),
+				'nodeB' => array('required' =>true,  'polymorphic'=>true, 'parent'=>'com:base.domain.entity.node')			
 			)
 		));
 		
@@ -72,8 +72,7 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 	protected function _validateInsert(KCommandContext $context)
 	{
 		//@TODO temporary move it to a repository validators ??
-		if ( $this->nodeA->id == $this->nodeB->id ) {
+		if ($this->nodeA->id == $this->nodeB->id)
 			return false;
-		}
 	}
 }
