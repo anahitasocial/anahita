@@ -45,28 +45,13 @@
      {
          parent::__construct($config);
          
-         if ( !$this->_repository->entityInherits('ComBaseDomainEntityNode') ) {
-             throw new InvalidArgumentException($this->_repository
-                     ->getDescription()->getEntityIdentifier().' is not a node');
+         if(!$this->_repository->entityInherits('ComBaseDomainEntityNode')) 
+         {
+             throw new InvalidArgumentException(
+             	$this->_repository
+             	->getDescription()
+             	->getEntityIdentifier().' is not a node');
          }
-     }
-
-     /**
-      * Initializes the default configuration for the object
-      *
-      * Called from {@link __construct()} as a first step of object instantiation.
-      *
-      * @param KConfig $config An optional KConfig object with configuration options.
-      *
-      * @return void
-      */
-     protected function _initialize(KConfig $config)
-     {
-         $config->append(array(
-     
-         ));
-     
-         parent::_initialize($config);
      }
           
      /**
@@ -81,17 +66,18 @@
      {
          $ids = $context['node_ids'];
          
-         if ( $this->_repository->getResources()->count() > 1)
+         if ($this->_repository->getResources()->count() > 1)
          {
              foreach($this->_repository->getResources() as $resource)
              {
-                 if ( $this->_repository->getResources()->main() !== $resource )
+                 if ($this->_repository->getResources()->main() !== $resource)
                  {
-                     $link  = $resource->getLink();
+                     $link = $resource->getLink();
                      $child = 'node_id';
-                     if ( isset($link['child']) ) {
+                     
+                     if(isset($link['child']))
                          $child = $link['child'];
-                     }
+                     
                      $repository = $this->_getRepositoryForTable($resource->getName());                    
                      $repository->destroy(array('node_id'=>$ids));
                  }
@@ -109,16 +95,19 @@
       */
      protected function _getRepositoryForTable($table)
      {
-         if ( !isset($this->_table_repositories[$table]) )
+         if(!isset($this->_table_repositories[$table]))
          {
              $identifier = clone $this->_mixer->getIdentifier();
              $identifier->type = 'repos';
              $identifier->name = uniqid();
+             
              $repository = $this->getService($identifier, array(
                      'resources' => array($table)
              ));
+             
              $this->_table_repositories[$table] = $repository;
          }
+         
          return $this->_table_repositories[$table];
      }
  }

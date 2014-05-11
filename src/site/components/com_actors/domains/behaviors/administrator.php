@@ -40,8 +40,8 @@ class ComActorsDomainBehaviorAdministrator extends AnDomainBehaviorAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(          
-            'attributes'    => array(
-                'administratingIds' => array('type'=>'set', 'default'=>'set')
+        	'attributes' => array(
+            	'administratingIds' => array('type'=>'set', 'default'=>'set')
             )
         ));
                 
@@ -58,7 +58,7 @@ class ComActorsDomainBehaviorAdministrator extends AnDomainBehaviorAbstract
      */
     public function administrator($actor)
     {
-        if ( $this->_mixer->eql($actor) )
+        if($this->_mixer->eql($actor))
             return true;
             
         return $this->administratingIds->offsetExists($actor->id);

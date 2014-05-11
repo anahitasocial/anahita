@@ -74,7 +74,8 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
                 'commentable',                
                 'votable',
                 'privatable',
-                'subscribable'                                
+                'subscribable',
+            	'hashtagable'                                
         )));
         
         //anything within the medium app

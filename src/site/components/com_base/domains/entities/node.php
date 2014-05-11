@@ -52,16 +52,16 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-		    'inheritance'         => array(
-                'abstract'        => $this->getIdentifier()->classname === __CLASS__,
-		        'column'          => 'type',
-		        'ignore'          => array(),
+		    'inheritance' => array(
+                'abstract' => $this->getIdentifier()->classname === __CLASS__,
+		        'column' => 'type',
+		        'ignore' => array(),
             ),
-			'resources'	    => array(array('alias'=>$this->getIdentifier()->name, 'name'=>'anahita_nodes')),
+			'resources' => array(array('alias'=>$this->getIdentifier()->name, 'name'=>'anahita_nodes')),
 		    'identity_property' => 'id',
-			'attributes'    => array(
-				'id'   		=> array('key'=>true, 'type'=>'integer', 'read'=>'public'),				
-				'component'		=> array('required'=>true,'read'=>'public')
+			'attributes' => array(
+				'id' => array('key'=>true, 'type'=>'integer', 'read'=>'public'),				
+				'component' => array('required'=>true,'read'=>'public')
 			),
 		   'behaviors' => to_hash(array('node'))
 		));
@@ -77,7 +77,7 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
 	protected function _afterEntityInstantiate(KConfig $config)
 	{
 		$config->append(array('data'=>array(
-			'component'     => 'com_'.$this->getIdentifier()->package
+			'component' => 'com_'.$this->getIdentifier()->package
 		)));
 	}
 }

@@ -38,17 +38,17 @@ class ComActorsDomainBehaviorEnableable extends LibBaseDomainBehaviorEnableable
 	 */
 	protected function _beforeRepositoryFetch(KCommandContext $context)
 	{
-        if ( get_viewer()->admin() )
+        if(get_viewer()->admin())
             return;
         
 		$query = $context->query;
 		$repos = $query->getRepository();
-        if ( get_viewer()->isAdministrator() )
-        {
-            $ids = get_viewer()->administratingIds->toArray();    
-        }
+		
+        if(get_viewer()->isAdministrator())
+            $ids = get_viewer()->administratingIds->toArray();
+        
 		$ids[] = 0;
-		$ids   = implode(',', $ids);
+		$ids = implode(',', $ids);
 		$query->where("IF(@col(enabled) = FALSE, @col(id) IN ($ids) ,1)");
 	}
 }

@@ -83,7 +83,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
 	 */
 	protected function _afterEntityInstantiate(KConfig $config)
 	{
-		if ( KService::has('com:people.viewer') )
+		if(KService::has('com:people.viewer'))
 		{
 			$config->data->append(array(		
 				'author' => KService::get('com:people.viewer')
@@ -126,7 +126,8 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
 	public function timestamp()
 	{
 		$this->updateTime = AnDomainAttributeDate::getInstance();
-		if ( !isset($this->creationTime) )
+		
+		if (!isset($this->creationTime))
 			$this->creationTime = AnDomainAttributeDate::getInstance();
 	}
 		
@@ -143,8 +144,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
         $modified = array_keys(KConfig::unbox($entity->getModifiedData()));
 		$modified = count(array_intersect($this->_modifiable_properties, $modified)) > 0;
         
-        if ( $modified && KService::has('com:people.viewer') ) {
+        if($modified && KService::has('com:people.viewer'))
             $entity->editor = get_viewer();
-        }
 	}
 }

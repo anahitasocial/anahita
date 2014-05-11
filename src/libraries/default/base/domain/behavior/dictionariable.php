@@ -62,10 +62,13 @@ class LibBaseDomainBehaviorDictionariable extends AnDomainBehaviorAbstract
 	{
 		$meta = clone $this->meta;
         $key  = KConfig::unbox($key);
-        if ( is_array($key) ) {
+        if(is_array($key)) 
+        {
             $data = $key;   
-        } else {
-            $data = array($key=>$value);   
+        } 
+        else 
+        {
+            $data = array($key => $value);   
         }
         
         foreach($data as $key => $value)        
@@ -88,11 +91,9 @@ class LibBaseDomainBehaviorDictionariable extends AnDomainBehaviorAbstract
 	{
 		$meta = $this->meta;
 		
-		if ( isset($meta[$key]) )
+		if(isset($meta[$key]))
 			return $meta[$key];
 			
 		return $default;
 	}
 }
-
-?>

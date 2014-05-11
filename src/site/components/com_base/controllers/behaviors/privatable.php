@@ -34,7 +34,7 @@ class ComBaseControllerBehaviorPrivatable extends KControllerBehaviorAbstract
 	 * 
 	 * @return void
 	 */
-	public function _actionSetPrivacy($context)
+	protected function _actionSetPrivacy($context)
 	{
 		$data 	= $context->data;
 		$names	= KConfig::unbox($data->privacy_name);

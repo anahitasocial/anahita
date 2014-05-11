@@ -40,16 +40,16 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-                'attributes'	=> array(
-                        'administratorIds' => array('type'=>'set', 'default'=>'set', 'write'=>'private')
+        	'attributes' => array(
+            	'administratorIds' => array('type'=>'set', 'default'=>'set', 'write'=>'private')
                 ),
                 'relationships' => array(
-                        'administrators' => array(
-                                'parent_delete' => 'ignore',
-                                'through' 	=> 'com:actors.domain.entity.administrator',
-                                'target'	=> 'com:people.domain.entity.person',
-                                'child_key' => 'administrable'
-                        )
+                	'administrators' => array(
+                    'parent_delete' => 'ignore',
+                    'through' => 'com:actors.domain.entity.administrator',
+                    'target' => 'com:people.domain.entity.person',
+                    'child_key' => 'administrable'
+                    )
                 )
         ));
     
@@ -66,11 +66,11 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
     public function addAdministrator($person)
     {
         $result = $this->administrators->insert($person);
-        //if the actor is followable then the admin must also follow
-        //the actor
-        if ( $this->isFollowable() ) {
+        
+        //if the actor is followable then the admin must also follow the actor
+        if ($this->isFollowable())
             $this->addFollower($person);
-        }
+    
         return $result;
     }
     
@@ -85,9 +85,9 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
     {
         $result = $this->administrators->extract($person);
     
-        if ( !$result ) {
+        if (!$result)
             $this->resetStats(array($this->_mixer, $person));
-        }
+
         return $result;
     }
     
@@ -100,8 +100,8 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
      */
     protected function _afterEntityInsert(KCommandContext $context)
     {
-        if ( $this->author )
-            $this->addAdministrator($this->author);
+        if($this->author)
+			$this->addAdministrator($this->author);
     }
         
     /**
@@ -115,14 +115,14 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
     {
         foreach($entities as $entity)
         {
-            if ( $entity->isAdministrable() )
+            if($entity->isAdministrable())
             {
                 $ids = $this->getService('repos:actors.administrator')->getQuery()->administrable($entity)->disableChain()->fetchValues('administrator.id');
                 $entity->set('administratorIds', AnDomainAttribute::getInstance('set')->setData($ids));
             } 
-            elseif ( $entity->isAdministrator() )
+            elseif($entity->isAdministrator())
             {
-                $ids    = $this->getService('repos:actors.administrator')->getQuery()->administrator($entity)->disableChain()->fetchValues('administrable.id');               
+                $ids = $this->getService('repos:actors.administrator')->getQuery()->administrator($entity)->disableChain()->fetchValues('administrable.id');               
                 $entity->set('administratingIds', AnDomainAttribute::getInstance('set')->setData($ids));                             
             }
         }
@@ -136,13 +136,13 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
 	public function getAdminCanditates()
 	{
 	    $viewer = get_viewer();
-	    $query	= $this->getService('repos://site/people.person')->getQuery();
+	    $query = $this->getService('repos://site/people.person')->getQuery();
 	    
 	    //super admin can make anyone admin
-	    if ( !$viewer->admin() )
+	    if(!$viewer->admin())
 	    {
-	        $ids    = $this->_mixer->followerIds->toArray();
-	        $ids	= array_merge($ids, $viewer->followerIds->toArray());
+	        $ids = $this->_mixer->followerIds->toArray();
+	        $ids = array_merge($ids, $viewer->followerIds->toArray());
 	        $query->id($ids)->id($viewer->id,'<>')->id($this->administratorIds->toArray(),'<>');	        
 	    }
 	    	    	    

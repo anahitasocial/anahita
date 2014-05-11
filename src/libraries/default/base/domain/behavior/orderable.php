@@ -82,21 +82,19 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	{
 		if ( $this->getModifiedData()->ordering ) {
 			
-			$store    = $this->getRepository()->getStore();
-			$query	  = $this->getScopedQuery($context->entity);
-			$change   = $this->getModifiedData()->ordering;
+			$store	= $this->getRepository()->getStore();
+			$query	= $this->getScopedQuery($context->entity);
+			$change = $this->getModifiedData()->ordering;
 		
-			if( $change->new - $change->old < 0 ) 
+			if($change->new - $change->old < 0) 
 			{
 				$query->update('@col(ordering) = @col(ordering) + 1');
-				$query->where('ordering', '>=',  $change->new)
-					  ->where('ordering', '<',   $change->old);
+				$query->where('ordering', '>=',  $change->new)->where('ordering', '<',   $change->old);
 			} 
 			else 
 			{
 				$query->update('@col(ordering) = @col(ordering) - 1');
-				$query->where('ordering', '>',   $change->old)
-					  ->where('ordering', '<=',  $change->new);
+				$query->where('ordering', '>',   $change->old)->where('ordering', '<=',  $change->new);
 			}
 						
 			$store->execute($query);
@@ -110,8 +108,8 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	 */
 	public function reorder()
 	{
-		$store    = $this->getRepository()->getStore();
-		$query 	  = $this->getScopedQuery($this->_mixer);
+		$store = $this->getRepository()->getStore();
+		$query = $this->getScopedQuery($this->_mixer);
 		$store->execute('SET @order = 0');
 		$query->update('@col(ordering) = (@order := @order + 1)')->order('ordering', 'ASC');
 		$store->execute($query);
@@ -125,8 +123,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	 */
 	protected function _beforeEntityInsert(KCommandContext $context)
 	{
-		$max = $this->getScopedQuery($context->entity)
-		        ->fetchValue('MAX(@col(ordering))');
+		$max = $this->getScopedQuery($context->entity)->fetchValue('MAX(@col(ordering))');
 		$this->ordering = $max + 1;
 	}
 	
@@ -138,7 +135,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	 */
 	protected function _afterEntityUpdate(KCommandContext $context)
 	{
-		if ( $this->getModifiedData()->ordering )
+		if ($this->getModifiedData()->ordering)
 			$this->reorder();
 	}
 	
@@ -166,14 +163,15 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 	    
 	    foreach($this->_scopes as $key => $value)
 	    {
-	        if ( is_numeric($key) ) {
-	             $key   = $value;
+	        if(is_numeric($key)) 
+	        {
+	             $key = $value;
 	             $value = $entity->$key;   
 	        }
+	        
 	        $query->where($key,'=',$value);
 	    }
+	    
 	    return $query;	    
 	}
 }
-
-?>
