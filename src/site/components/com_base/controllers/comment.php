@@ -50,7 +50,11 @@ class ComBaseControllerComment extends ComBaseControllerService
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-		    'behaviors' => array('parentable','votable'),
+		    'behaviors' => array(
+		    	'parentable',
+		    	'votable',
+		    	'hashtagable'
+			)
 		));
 	
 		parent::_initialize($config);

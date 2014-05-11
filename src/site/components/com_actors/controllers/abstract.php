@@ -67,7 +67,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'ownable',
                 'privatable',
                 'enablable',
-                'subscribable'
+                'subscribable',
+        		'hashtagable'
             ))
         ));
                 

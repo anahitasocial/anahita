@@ -61,12 +61,11 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
         $behaviors = $config->behaviors;
         
         $behaviors->append(array(
-//            'taggable'    => array('parse_hashtag'=>true) ,
-            'modifiable'  => array(
+            'hashtagable' => array('parse_hashtag'=>true) ,
+            'modifiable' => array(
                 'modifiable_properties' => array('name','body')
             ),
-            'commentable' => 
-                array('comment'=>array('length'=>5000,'format'=>'post'))
+            'commentable' => array('comment'=>array('length'=>5000,'format'=>'post'))
         ));
         
 		parent::_initialize($config);
