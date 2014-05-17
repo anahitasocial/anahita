@@ -59,6 +59,8 @@ class Symlink extends Command
     }
 }
 
+$console->addCommands(array(new Symlink()));
+
 class Create extends Command
 {
     protected $_input;
