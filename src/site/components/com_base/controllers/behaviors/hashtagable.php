@@ -50,7 +50,7 @@ class ComBaseControllerBehaviorHashtagable extends KControllerBehaviorAbstract
 		$terms = $this->extractHashtagTerms($entity->body);
 
     	foreach($terms as $term)
-        	$entity->addHashtag($term);
+        	$entity->addHashtag(trim($term));
 	}
 	
 	/**
@@ -69,33 +69,7 @@ class ComBaseControllerBehaviorHashtagable extends KControllerBehaviorAbstract
        			$entity->removeHashtag($hashtag->name);		
 		
     	foreach($terms as $term)
-        	$entity->addHashtag($term);
-	}
-	
-	/**
-	 * Add hashtag to the entity
-	 * 
-	 * @param KCommandContext $context
-	 * @return void
-	 */
-	protected function _actionAddHashtag($context)
-	{
-	    $data = $context->data;
-	    //@todo use a proper filter for the hashtag
-	    $this->getItem()->addHashtag($data->hashtag);
-	} 
-	
-	/**
-	 * Add hashtag to the entity
-	 * 
-	 * @param KCommandContext $context
-	 * @return void
-	 */
-	protected function _actionRemoveHashtag($context)
-	{
-	    $data = $context->data;
-	    //@todo use a proper filter for the hashtag
-	    $this->getItem()->removeHashtag($data->hashtag);
+        	$entity->addHashtag(trim($term));
 	}
 	
 	/**
@@ -105,11 +79,9 @@ class ComBaseControllerBehaviorHashtagable extends KControllerBehaviorAbstract
 	 */
 	public function extractHashtagTerms($text)
 	{
-		//@todo write a helper method rather than using this
-		$regx = '/#(\w+)/';
         $matches = array();
         
-        if(preg_match_all($regx, $text, $matches))
+        if(preg_match_all(ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, $text, $matches))
         {
         	return array_unique($matches[1]);
         }
