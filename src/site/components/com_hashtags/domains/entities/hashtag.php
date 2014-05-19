@@ -24,6 +24,11 @@
  */
 final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
 {
+    /*
+     * hashtag regex pattern
+     */
+	const PATTERN_HASHTAG = '/#([A-Za-z0-9]{3,}\s)/';
+    
     /**
      * Initializes the default configuration for the object
      *
@@ -71,6 +76,7 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     		$ids = $this->getService('repos://site/hashtags.association')->getQuery()->hashtag($entity)->disableChain()->fetchValues('hashtagable.id');
    			$entity->set('hashtagableIds', AnDomainAttribute::getInstance('set')->setData($ids));
    			$entity->set('hashtagableCount', count($ids));
+   			$entity->timestamp();
    		}
     }
 }
