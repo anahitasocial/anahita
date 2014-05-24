@@ -93,13 +93,12 @@ class PackageCommand extends Command
         $manifests = array();
         foreach($files as $file) 
         {
-           if ( $file->isFile() && 
-                   pathinfo($file->getFilename(), PATHINFO_EXTENSION) == 'xml' )                     
+           if($file->isFile() && pathinfo($file->getFilename(), PATHINFO_EXTENSION) == 'xml')                     
            {             
                $xml     = new \SimpleXMLElement(file_get_contents($file));
-               $install = array_pop($xml->xpath('/install'));               
-               if ( $install && 
-                       in_array($install['type'], array('component','plugin','module')) ) 
+               $xmlPath = $xml->xpath('/install');
+               $install = array_pop($xmlPath);               
+               if ( $install && in_array($install['type'], array('component','plugin','module')) ) 
                {
                    $manifests[dirname($file)] = $install;
                }
@@ -109,7 +108,7 @@ class PackageCommand extends Command
         {
             $type     = $manifest['type'];
             $method   = '_install'.ucfirst($type);
-            $name     = (string)$manifest->name[0].' '.$type;            
+            $name     = (string) $manifest->name[0].' '.$type;            
             $this->$method($manifest, $output, $dir, $schema);            
         }                        
     }
@@ -149,8 +148,7 @@ class PackageCommand extends Command
         $name       = 'com_'.strtolower($name);
         
         
-        $components = \KService::get('repos:cli.component', 
-                    array('resources'=>'components'));
+        $components = \KService::get('repos:cli.component', array('resources'=>'components'));
         
         //find or create a component
         $component  = $components->findOrAddNew(array('option'=>$name,'parent'=>0), 
@@ -173,13 +171,13 @@ class PackageCommand extends Command
                 'adminMenuImg'  => ''
         ));
         
-        if ( $site_menu )
+        if($site_menu)
         {
             $component->setData(array(
                 'link'      => 'option='.$name
             ));
         }
-        elseif ( $admin_menu )
+        elseif($admin_menu)
         {
             $component->setData(array(
                     'link'      => 'option='.$name,
