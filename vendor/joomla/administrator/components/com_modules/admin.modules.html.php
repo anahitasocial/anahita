@@ -485,22 +485,6 @@ class HTML_modules
 		</div>
 		<div class="clr"></div>
 
-		<?php
-		if ( !$row->module || $row->module == 'custom' || $row->module == 'mod_custom' ) {
-			?>
-			<fieldset class="adminform">
-				<legend><?php echo JText::_( 'Custom Output' ); ?></legend>
-
-				<?php
-				// parameters : areaname, content, width, height, cols, rows
-				echo $editor->display( 'content', $row->content, '100%', '400', '60', '20', array('pagebreak', 'readmore') ) ;
-				?>
-
-			</fieldset>
-			<?php
-		}
-		?>
-
 		<input type="hidden" name="option" value="com_modules" />
 		<input type="hidden" name="id" value="<?php echo $row->id; ?>" />
 		<input type="hidden" name="cid[]" value="<?php echo $row->id; ?>" />
