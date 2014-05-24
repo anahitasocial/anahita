@@ -36,13 +36,11 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	{
 	    static $cache;
 	    
-		if ( !$cache ) {
+		if (!$cache)
 			$cache = new AnObjectArray();
-		}
 				
-    	if ( !isset($cache[$entity->getRepository()]) ) {
+    	if (!isset($cache[$entity->getRepository()]))
     		$cache[$entity->getRepository()] = new ArrayObject();
-    	}
     	    	
     	return $cache[$entity->getRepository()];
 	}
@@ -96,12 +94,13 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 		$config->prototype = $this;
 		
 		$config->append(array(
-             'auto_generate' => count(KConfig::unbox($config->attributes)) == 0
+        	'auto_generate' => count(KConfig::unbox($config->attributes)) == 0
 		));
 		
 		$this->getService($config->repository, KConfig::unbox($config));
 		
-		if ( !$this->getEntityDescription()->getIdentityProperty() ) {
+		if (!$this->getEntityDescription()->getIdentityProperty()) 
+		{
 		    throw new AnDomainDescriptionException('Entity '.$this->getIdentifier().' need an identity property');
 		}
 	}
@@ -117,15 +116,19 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	protected function _initialize(KConfig $config)
 	{
-	    $identifier       = clone $this->getIdentifier();
+	    $identifier = clone $this->getIdentifier();
+	    
 	    $identifier->path = array('domain','repository');
+	    
 	    register_default(array('identifier'=>$identifier, 'prefix'=>$this));
+	    
 	    $config->append(array(
 	        'attributes'        => array(),
 	        'relationships'     => array(),
 	        'repository'        => $identifier,	            
 	        'entity_identifier' => $this->getIdentifier()
 	    ));
+	    
 	    parent::_initialize($config);
 	}	
 	
@@ -221,9 +224,12 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	public function saveEntity()
 	{	 
 	    $ret = null;   
-	    if ( $this->getRepository()->validate($this) ) {
+	    
+	    if ($this->getRepository()->validate($this)) 
+	    {
 	        $ret = $this->getRepository()->commit($this);
 	    }
+	    
 	    return $ret;
 	}
 	
@@ -302,17 +308,22 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     public function getIdentifyingData()
     {
         $keys  = array_keys($this->getEntityDescription()->getIdentifyingProperties());
+        
         $data  = array();
+        
         foreach($keys as $key) 
         {
-            if ( $this->_data->isMaterialized($key) )
+            if ($this->_data->isMaterialized($key))
             {
                 $value = $this->get($key);
-                if ( $value ) {
+                
+                if ($value) 
+                {
                     $data[$key] = $value;
                 }
             }
         }
+        
         return $data;
     }    
     
@@ -341,7 +352,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 	//get the property
 		$property = $description->getProperty($name);
 		
-		if ( !$property ) {
+		if (!$property) 
+		{
 		    return parent::get($name, $default);
 		}
 		
@@ -350,11 +362,13 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 					
 		$value = $this->_data->offsetGet($name);
 
-		if ( $property->isRelationship() && $property->isOneToMany() && is_null($value) ) {
+		if ($property->isRelationship() && $property->isOneToMany() && is_null($value)) 
+		{
 			//since it's an external relationship
 			//lets instantitate a dummy relationship
 			//this should happen for the one-to-one relationships
-			if ( $property->isOneToOne() ) {
+			if ($property->isOneToOne()) 
+			{
 				return null;
 			}
 			
@@ -376,92 +390,93 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	{
 		$property = $this->getEntityDescription()->getProperty($name);
 				
-		if ( !$property instanceof AnDomainPropertyAbstract ) { 
+		if(!$property instanceof AnDomainPropertyAbstract) 
+		{ 
 			return parent::set($name, $value);
 		}
 		
 		//if a value is mixin then get its mixer
-		if ( $value instanceof KMixinAbstract )
+		if($value instanceof KMixinAbstract)
 			$value = $value->getMixer();
 			
 		$modify = false;
-		$name 	= $property->getName();
+		$name = $property->getName();
 				
-		$context   = $this->getRepository()->getCommandContext();
+		$context = $this->getRepository()->getCommandContext();
         
         $context['property'] = $property;
         $context['value']    = $value;
         $context['entity']   = $this;
 
-        if ( $this->getRepository()->getCommandChain()->run('before.setdata', $context) === false )
+        if ($this->getRepository()->getCommandChain()->run('before.setdata', $context) === false)
             return $this;
 				
 		$value = $context->value;
 				
-		if ( $property->isSerializable() ) 
+		if($property->isSerializable()) 
 		{
 			$modify = true;
-			if ( $property->isRelationship() && $property->isManyToOne() && $value )
+			if($property->isRelationship() && $property->isManyToOne() && $value)
 			{
-				if ( !is($value, 'AnDomainEntityAbstract', 'AnDomainEntityProxy') )
+				if (!is($value, 'AnDomainEntityAbstract', 'AnDomainEntityProxy'))
+				{
 					throw new AnDomainExceptionType('Value of '.$property->getName().' must be a AnDomainEntityAbstract');
+				}
 					
 				//if a relationship is a belongs to then make sure the parent
 				//is always saved before child
 				//example if $topic->author = new author
 				//then save the new author first before saving topic
 				//only set the dependency 
-				if ( $value->getEntityState() == AnDomain::STATE_NEW ) {
+				if ($value->getEntityState() == AnDomain::STATE_NEW) 
+				{
 				    //save the child before saving the parent
 					$this->getRepository()->getSpace()->setSaveOrder($value, $this);
                 }
 			}
 			//if value is not null do a composite type checking
-			if ( !is_null($value)  )
-				if ( $property->isAttribute() && !$property->isScalar() )
+			if(!is_null($value)  )
+				if ($property->isAttribute() && !$property->isScalar())
 				{
-					if ( !is($value, $property->getType()) ) {
+					if (!is($value, $property->getType())) 
+					{
 						throw new AnDomainEntityException('Value of '.$property->getName().' must be a '.$property->getType().'. a '.get_class($value).' is given.');
 					}
 				}				
 		} 
-		elseif ( $property->isRelationship() && $property->isOnetoOne() )
+		elseif($property->isRelationship() && $property->isOnetoOne())
 		{
-			$child	   = $property->getChildProperty();
-			$current   = $this->get($property->getName());
+			$child   = $property->getChildProperty();
+			$current = $this->get($property->getName());
 
 			//if there's a current value and it's existence depends on 
 			//the parent entity then remove the current
-			if ( $current ) 
-			{
-				if (  $child->isRequired() ) {
-					$current->delete();
-				}
-			}
+			if($current && $child->isRequired()) 
+				$current->delete();
 			
 			//if a one-to-one relationship then there must be a child key for the property
 			//then must set the inverse			
-			if ( $value ) {
+			if($value)
+			{
 				$value->set($child->getName(), $this);
 			}
-			
+				
 			$this->_data[$property->getName()] 	= $value;
 		} 
-		elseif ( $property->isRelationship() && ($property->isManyToMany() || $property->isOneToMany()) )
+		elseif($property->isRelationship() && ($property->isManyToMany() || $property->isOneToMany()))
 		{
             $current = $this->get($name);
             
-            if ( $current instanceof AnDomainDecoratorOnetomany )
+            if($current instanceof AnDomainDecoratorOnetomany)
             {
                 $values = KConfig::unbox($value);                
                 //can be an KObjectArray or KObjectSet object
-                if ( $values instanceof KObject && 
-                        $values instanceof Iterator )
+                if($values instanceof KObject && $values instanceof Iterator)
                 {
                     $current->delete();
-                    foreach($values as $value)  {
+                    
+                    foreach($values as $value)
                         $current->insert($value);
-                    }
                 }
             }
 		} 
@@ -469,41 +484,39 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 		//only modify if the current value is differnet than the new value
 		$modify = $modify && !is_eql($this->get($name), $value);
 		
-		if ( $modify ) 
+		if($modify) 
 		{
 			//lets bring them back to their orignal type
-			if ( !is_null($value) && $property->isAttribute() && $property->isScalar() ) {
+			if(!is_null($value) && $property->isAttribute() && $property->isScalar()) 
+			{
 				settype($value, $property->getType());
 			}
 			
-			if ( $this->getEntityState() != AnDomain::STATE_NEW )
+			if($this->getEntityState() != AnDomain::STATE_NEW)
 			{
 				//store the original value for future checking
-				if ( !isset($this->_modified[$name]) ) 
+				if (!isset($this->_modified[$name])) 
 					$this->_modified[$name] = array('old' => $this->get($name));
 					
-				$this->_modified[$name]['new'] 		   = $value;
+				$this->_modified[$name]['new'] = $value;
 				
 				//check if the new value is the same as the old one then remove the 			
-				if ( is_eql($this->_modified[$name]['old'], $this->_modified[$name]['new']) ) {
+				if(is_eql($this->_modified[$name]['old'], $this->_modified[$name]['new'])) 
+				{
 					//if there are no modified then reset the entity
 					unset($this->_modified[$name]);
-					if ( count($this->_modified) === 0 ) {
+					
+					if(count($this->_modified) === 0)
 						$this->reset();
-					}
 				}
 			}
 						
-			$this->_data[$property->getName()] 	   = $value;
-			$this->getRepository()->getSpace()
-				->setEntityState($this, AnDomain::STATE_MODIFIED);
+			$this->_data[$property->getName()] = $value;
+			$this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_MODIFIED);
 			
 			//only track modifications for the updated entities
-			if ( $this->getEntityState() !== AnDomain::STATE_MODIFIED) {
-				$this->_modified = array();
-			}
-			
-
+			if($this->getEntityState() !== AnDomain::STATE_MODIFIED)
+				$this->_modified = array();			
 		}
 		
 		return $this;
@@ -519,18 +532,20 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function load($properties = array())
 	{	
-	    $keys   = $this->getIdentifyingData();
+	    $keys = $this->getIdentifyingData();
 	    
-	    if ( empty($keys) ) {
+	    if(empty($keys)) 
+	    {
 	        throw new AnDomainEntityException('Trying to load an entity without any identifying data');
 	    }
 	    
 	    //prevent from creating two differne entities	    	    
-	    if ( !$this->_persisted ) 
+	    if(!$this->_persisted) 
 	    {	        
 	        //if found another entity 
 	        $entity = $this->getRepository()->find($keys, false);
-	        if ( $entity && $entity !== $this ) 
+	        
+	        if ($entity && $entity !== $this) 
 	        {
 	            $this->reset();
 	            return $entity->load($properties);
@@ -539,24 +554,26 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
 	    settype($properties, 'array');
 	    
-	    if ( empty($properties) )
+	    if(empty($properties))
 	    {
 	        //only load serializbale properties (i.e. attributes, many to one relationships)
 	        $properties = array();
+	        
 	        foreach($this->getEntityDescription()->getProperty() as $property)
 	        {
 	            if ( $property->isSerializable() ) {
 	                $properties[] = $property->getName();
 	            }
 	        }
-	        $keys		= array_keys($this->getEntityDescription()->getIdentifyingProperties());	        	       
+	        
+	        $keys = array_keys($this->getEntityDescription()->getIdentifyingProperties());	        	       
 	        $properties = array_diff($properties, $keys);
 	    }
 	    
-	    if ( $this->_data->load($properties) )
+	    if($this->_data->load($properties))
 	    {	        
 	        //enttiy has been fetched for the first time
-	        if ( !$this->_persisted ) 
+	        if (!$this->_persisted) 
 	        {
 	            $keys = $this->getIdentifyingData();
 	            $this->_persisted = true;
@@ -566,27 +583,26 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	        else 
 	        {
 	            //the loaded properties are no longer modified
-	            foreach($properties as $property) {
+	            foreach($properties as $property)
 	                unset($this->_modified[$property]);
-	            }
 	            
 	            //reset the element if there are no modified
-	            if ( count($this->_modified) === 0 ) {
+	            if (count($this->_modified) === 0)
 	                $this->reset();
-	            }	            
 	        }	        	        	        
-	    } 
-	    
+	    }
 	    else 
 	    {
 	        //if a persisted entity can not be loaded then
 	        //it must mean the data doesn't exists in the store
 	        //can we assume then the data has been somehow deleted ?
 	        //if that's the case then we need to set the state to destroyed	        
-	        if ( $this->persisted() ) {
-                    $this->getRepository()->getSpace()
-			            ->setEntityState($this, AnDomain::STATE_DESTROYED);        
-	        } else {
+	        if($this->persisted()) 
+	        {
+            	$this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_DESTROYED);        
+	        } 
+	        else 
+	        {
 	            $this->reset();
 	        }
 	    }
@@ -602,21 +618,23 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      */
     public function getAffectedRowData()
     {
-        $data        = array();
+        $data = array();
+        
         $description = $this->getEntityDescription();
+        
         switch($this->getEntityState())
         {
             case AnDomain::STATE_NEW :
                 //get all the serializable property/value pairs
                 foreach($description->getProperty() as $name => $property ) 
-                    if ( $property instanceof AnDomainPropertySerializable)
+                    if ($property instanceof AnDomainPropertySerializable)
                         $data[$name] = $name;
                 //@TODO why are we forcing to unset the property
                 //unset($data[$description->getIdentityProperty()->getName()]);
                 break;
             case AnDomain::STATE_MODIFIED : 
                 //get all the updated serializable property/value pairs
-                $data            = array_keys($this->_modified);
+                $data = array_keys($this->_modified);
                 break;
             case  AnDomain::STATE_DELETED :
                 break;
@@ -635,7 +653,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
         
         $data = $tmp;
         
-        if ( $description->getInheritanceColumn() && $this->getEntityState() == AnDomain::STATE_NEW ) {
+        if($description->getInheritanceColumn() && $this->getEntityState() == AnDomain::STATE_NEW ) 
+        {
             $data[(string)$description->getInheritanceColumn()] = (string)$description->getInheritanceColumnValue();
         }
         
@@ -666,7 +685,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     {
         $data = $this->_data->getRowData();
         
-        if ( !is_null($column) )
+        if(!is_null($column))
             $data = isset($data[$column]) ? $data[$column] : null;
         
         return $data;        
@@ -685,47 +704,61 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     {  	
     	if(is_array($property)) 
     	{
-    		$description	= $this->getEntityDescription();
-    		$properties	 	= $property;
-    		$access  		= pick($value, AnDomain::ACCESS_PUBLIC);        	
+    		$description = $this->getEntityDescription();
+    		$properties  = $property;
+    		$access      = pick($value, AnDomain::ACCESS_PUBLIC);
+    		        	
         	foreach ($properties as $key => $value)
         	{
         		$property = $description->getProperty($key);
-            	if ( $property && $property->getWriteAccess() >= $access ) 
+            	if($property && $property->getWriteAccess() >= $access) 
             	{
             		//ignore any type related exceptions
-          			try { $this->setData($property->getName(), $value); }
-            		catch(AnDomainExceptionType $e) { print $e->getMessage();die; }
+          			try 
+          			{ 
+          				$this->setData($property->getName(), $value);
+          			}
+            		catch(AnDomainExceptionType $e) 
+            		{ 
+            			print $e->getMessage();
+            			die; 
+            		}
           		} 
-          		elseif ( !$property ) 
+          		elseif(!$property) 
           		{
           			$this->$key = $value;
           		}
         	}
+        	
             return $this;
         } 
         else 
         {
-        	$name	  	 = $property; 
+        	$name = $property; 
         	$description = $this->getEntityDescription();      	
-        	$property 	 = $description->getProperty($property);
+        	$property = $description->getProperty($property);
         	
-        	if ( !$property instanceof AnDomainPropertyAbstract ) {
+        	if(!$property instanceof AnDomainPropertyAbstract ) 
+        	{
         		$this->set($name, $value);
         		return $this;
         	}
 
-        	$name 	  = $property->getName();        	
-			$method   = 'set'.ucfirst($name);
+        	$name = $property->getName();        	
+			$method = 'set'.ucfirst($name);
 
-			if ( $this->methodExists($method) ) 
+			if($this->methodExists($method))
+			{ 
 				$this->$method($value);
+			}	
 			else  
 			{
 				//only set the property if it's not write proteced (write != private )       		
-            	if ( $property->getWriteAccess() < AnDomain::ACCESS_PROTECTED   )
+            	if ($property->getWriteAccess() < AnDomain::ACCESS_PROTECTED)
+            	{
         			throw new KException(get_class($this).'::$'.$name.' is write protected');
-        							
+            	}
+            						
 				$this->set($name, $value);
 			}
 				
@@ -744,41 +777,41 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */	
     public function getData($property = AnDomain::ACCESS_PUBLIC, $default = null)
     {
-    	$description	= $this->getEntityDescription();
+    	$description = $this->getEntityDescription();
     	
-		if ( gettype($property) == 'integer' )
+		if(gettype($property) == 'integer')
 		{
-		    $properties  = $this->getEntityDescription()->getProperty();
-		    $access      = (int) $property;
-			$data   = array();
+		    $properties = $this->getEntityDescription()->getProperty();
+		    $access = (int) $property;
+			$data = array();
 			
 			foreach($properties as $name => $property)
 			{
-			    if ( $property->getReadAccess() >= $access )
-			    {
+			    if($property->getReadAccess() >= $access)
 			        $data[$name] = $this->getData($name);
-			    }
 			}			
 				
 			return $data;
 		}
 		
-		if ( ! $prop = $description->getProperty($property) ) 
+		if(!$prop = $description->getProperty($property)) 
 		{
 			return $this->get($property, $default);
 		}
 				
-		$method 	= 'get'.ucfirst($property);
+		$method = 'get'.ucfirst($property);
 						
-		if ( $this->methodExists($method))  
+		if($this->methodExists($method))  
 		{
 			$value = $this->$method();
-		} else 
+		} 
+		else 
 		{			
         	$value = $this->get($property);
 		}
 		
-		if ( is_null($value) ) $value = $default;
+		if(is_null($value)) 
+			$value = $default;
 		
 		return $value;
     }
@@ -789,12 +822,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */	
 	public function __set($property, $value)
 	{
- 		if ( $this->getEntityDescription()->getProperty($property) ) {
+ 		if ($this->getEntityDescription()->getProperty($property))
  		    $this->setData($property, $value);
- 		}			
-		else {
+		else 
 			$this->$property = $value;
-		}
 	}
 	
 	/**
@@ -806,9 +837,12 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	public function __get($property)
 	{
 		$result = null;		
-		if ( $this->getEntityDescription()->getProperty($property) ) {		
+		
+		if($this->getEntityDescription()->getProperty($property)) 
+		{		
 	       $result = $this->getData($property, null);
-		}				   
+		}
+						   
 		return $result;
 	}
 
@@ -820,20 +854,21 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */		
 	public function __isset($property)
 	{
-		if ( $property = $this->getEntityDescription()->getProperty($property) ) {
+		if($property = $this->getEntityDescription()->getProperty($property)) 
+		{
 			 $name     = $property->getName();
 			
-			if ( $this->_data->offsetExists($name) ) 
+			if($this->_data->offsetExists($name)) 
 			{
 				//if a property is one to one or many to one make sure the value
 				//actually exists in the database
 				$value = $this->_data->offsetGet($name);
 				
-				if ( $value instanceof AnDomainEntityProxy  ) 
+				if($value instanceof AnDomainEntityProxy) 
 				{
-					if ( $property->isRelationship() && $property->isOneToOne()  ) 
+					if($property->isRelationship() && $property->isOneToOne()) 
 					{
-						if ( !$value->getObject() ) 
+						if(!$value->getObject()) 
 						{
 						    $this->getRepository()->getCommandChain()->disable();
 							$this->set($name, null);
@@ -855,7 +890,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function __unset($property)
 	{
-		if ( $property = $this->getEntityDescription()->getProperty($property) )
+		if ($property = $this->getEntityDescription()->getProperty($property))
 			unset($this->_data[$property->getName()]);
 	}
 	
@@ -921,10 +956,14 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function eql($entity)
 	{
-		if ( $entity instanceof AnDomainEntityProxy ) {
+		if($entity instanceof AnDomainEntityProxy) 
+		{
 			$object = $entity->getObject();
-		} else if ( $entity instanceof KMixinAbstract )
+		} 
+		elseif($entity instanceof KMixinAbstract )
+		{
 			$object = $entity->getMixer();		
+		}
 		else 
 			$object = $entity;
 							
@@ -939,8 +978,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function delete()
 	{		
-		$this->getRepository()->getSpace()
-				->setEntityState($this, AnDomain::STATE_DELETED);
+		$this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_DELETED);
 
 		return $this;
 	}
@@ -956,11 +994,11 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	public function __call($method, $args)
 	{		
 		 //If the method hasn't been mixed yet, load all the behaviors
-    	if( !isset($this->_mixed_methods[$method]) ) 
+    	if(!isset($this->_mixed_methods[$method])) 
     	{
     		$key = 'behavior.'.$method;
     		
-    		if ( !self::_cache($this)->offsetExists($key) )
+    		if(!self::_cache($this)->offsetExists($key))
     		{
     			self::_cache($this)->offsetSet($key, false);
     			
@@ -968,7 +1006,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	    		
 	        	foreach($behaviors as $behavior) 
 	        	{
-	        		if ( in_array($method, $behavior->getMixableMethods()) ) 
+	        		if(in_array($method, $behavior->getMixableMethods())) 
 	        		{
 	        			//only mix the mixin that has $method
 	        			self::_cache($this)->offsetSet($key, $behavior);
@@ -977,14 +1015,13 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	        	}
     		}
     		
-    		if ( $behavior = self::_cache($this)->offsetGet($key) ) {
+    		if($behavior = self::_cache($this)->offsetGet($key))
     			$this->mixin($behavior);
-    		}
         }
         
         $parts = KInflector::explode($method);
         
-        if ( $parts[0] == 'is' )
+        if($parts[0] == 'is')
         {
             if(isset($this->_mixed_methods[$method]))          
                 return true;            
@@ -992,15 +1029,15 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
                 return false;            
         }
 		        
-        if ( !isset($this->_mixed_methods[$method]) ) 
+        if (!isset($this->_mixed_methods[$method])) 
         {
-        	if ( $parts[0] == 'get' || $parts[0] == 'set' )
+        	if ($parts[0] == 'get' || $parts[0] == 'set')
         	{
         		$property  = lcfirst(KInflector::implode(array_slice($parts, 1)));
         		$property  = $this->getEntityDescription()->getProperty($property);
-        		if ( $property ) 
+        		if($property) 
         		{
-        			if ( $parts[0] == 'get' )
+        			if($parts[0] == 'get')
         				return $this->getData($property->getName());
         			else 
         				return $this->setData($property->getName(), array_shift($args));
@@ -1021,18 +1058,17 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function execute($command, $context)
 	{
-        if ( !$context instanceof  KCommandContext ) {
+        if (!$context instanceof  KCommandContext)
             $context = new KCommandContext($context);
-        }
         
-		$parts   	= explode('.', $command);
-        
-		$method     = '_'.$parts[0].'Entity'.ucfirst($parts[1]);        
+		$parts = explode('.', $command);
+   
+		$method = '_'.$parts[0].'Entity'.ucfirst($parts[1]);   
+		     
 		$result = null;
 				
-		if ( method_exists($this, $method)) {
+		if(method_exists($this, $method))
 			$result = $this->$method($context);
-		}
 		
 		return $result;
 	}
@@ -1045,23 +1081,25 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      */
     public function inherits($class)
     {
-    	if ( $this instanceof $class )
+    	if($this instanceof $class)
     		return true;
     	  		
-        if ( !parent::inherits($class) )
+        if(!parent::inherits($class))
         {
         	//check the mixins registered with the entity mapper
         	$behaviors = $this->getRepository()->getBehaviors();
    			
         	foreach($behaviors as $behavior) 
         	{
-        		if ( $behavior instanceof $class ) 
+        		if ($behavior instanceof $class) 
         			return true;
         	}
         	
         	return false;
         	
-        } else return true;
+        } 
+        else 
+        	return true;
     }
 	
 	/**
@@ -1071,7 +1109,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function getRepository()
 	{
-	    if ( !$this->_repository instanceof AnDomainRepositoryAbstract )
+	    if (!$this->_repository instanceof AnDomainRepositoryAbstract)
 	    {
 	        $this->_repository = $this->getService($this->_repository);
 	    }
@@ -1100,22 +1138,28 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	{
 		$properties = $this->getEntityDescription()->getProperty();
 		$identifier = $this->getIdentifier();
-		$data		= array();
+		
 		$data = array('identifier'=>$identifier);
 		$data['hash']  = $this->getHandle();
 		$data['state'] = $this->getEntityState();;
 		$data['keys']  = implode(',', array_keys($this->getEntityDescription()->getIdentifyingProperties()));
-		$data['required']      = array();
+		$data['required'] = array();
+		
 		foreach($properties as $name => $property)
 		{ 
             $value = isset($this->$name) ? $this->get($name) : null;
-			if ( $property->isRequired() )
+			
+            if($property->isRequired())
 			    $data['required'][] = $name;
+			    
 			$value = $value ? $property->serialize($value) : array();		
 			$data['data'][$name] = 	count($value) < 2 ? array_pop($value) : $value;
 		}
-		if ( count($this->_modified) ) {
-			foreach($this->getModifiedData() as $property => $changes) {
+		
+		if(count($this->_modified))
+		{
+			foreach($this->getModifiedData() as $property => $changes) 
+			{
 				$property = $this->getEntityDescription()->getProperty($property);
 				$old = $property->serialize($changes->old);
 				$new = $property->serialize($changes->new);	
@@ -1123,17 +1167,17 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 			}
 		}
 			
-		if ( count($this->getRowData()) )
+		if(count($this->getRowData()))
 			$data['row'] = $this->getRowData();
 		
 		$serialized = $this->getAffectedRowData();
 		
-		if ( !empty($serialized) ) {
+		if(!empty($serialized))
 			$data['serilized'] = $serialized;	
-		}
 			
-		if ( $dump )
+		if($dump)
 			var_dump($data);
+			
 		return $data;
 	}
 	
@@ -1148,41 +1192,42 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */   
 	public function cloneEntity($deep = true)
 	{
-        $copy       = $this->getRepository()->getEntity(); 
+        $copy = $this->getRepository()->getEntity(); 
         $properties = $this->getEntityDescription()->getProperty();
-        $data       = array();
+        $data = array();
+        
         foreach($properties as $property)
         {
-            if ( $property->isUnique() )
+            if($property->isUnique())
                 continue;
             
-            if ( $property === $this->getEntityDescription()->getIdentityProperty() )
+            if ($property === $this->getEntityDescription()->getIdentityProperty())
                 continue;
                 
             $name = $property->getName();
             
-            if ( $property->isAttribute() ) 
+            if ($property->isAttribute()) 
             {
                 $copy->set($name, $property->isScalar() ? $this->get($name) : clone $this->get($name));
             }            
-            elseif ( $property->isRelationship() )
+            elseif($property->isRelationship())
             {
                 //if it's a belongs to then set the value in the 
                 //copy as  the original
-                if ( $property->isManyToOne() ) 
+                if ($property->isManyToOne()) 
                 {
                     $copy->set($name, $this->get($name));
                 }
                 //copy the one to one
-                elseif ( $deep && $property->isOneToOne() ) 
+                elseif($deep && $property->isOneToOne()) 
                 {
-                    if ( isset($this->$name) ) {
-                        $copy->set($name, $this->get($name)->cloneEntity($deep));    
-                    }
+                    if(isset($this->$name)) 
+                    {
+                        $copy->set($name, $this->get($name)->cloneEntity($deep)); 
+                    }   
                 }
                 //copy the one to many
-                elseif( $deep && $property->isOneToMany() 
-                        && !$property->isManyToMany() )
+                elseif($deep && $property->isOneToMany() && !$property->isManyToMany())
                 {
                     $copy->set($name, $this->get($name)->cloneEntity($deep));
                 }
@@ -1200,10 +1245,11 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function getMethods()
 	{
-		$behaviors  = $this->getRepository()->getBehaviors();
-		foreach($behaviors as $behavior) {
+		$behaviors = $this->getRepository()->getBehaviors();
+		
+		foreach($behaviors as $behavior)
 			$this->mixin($behavior);
-		}
+			
 		return parent::getMethods();
 	}
 	
@@ -1217,7 +1263,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	{
 		$row = array();
 		$row = $this->_data->getRowData();
-		$row = array_merge($row, $this->getAffectedRowData());		
+		$row = array_merge($row, $this->getAffectedRowData());	
+			
 		return serialize(array('row'=>$row,'identifier'=>(string)$this->getIdentifier()));
 	}
 	
@@ -1254,20 +1301,26 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	{
 		$key = 'method.'.$method;
 		
-		if ( !self::_cache($this)->offsetExists($key) )
+		if(!self::_cache($this)->offsetExists($key))
 		{
 			$result = false;
 			
-			if ( method_exists($this, $method) )	
+			if(method_exists($this, $method))
+			{	
 				$result =  true;
-			elseif ( self::_cache($this)->offsetExists('behavior.'.$method) )
+			}
+			elseif(self::_cache($this)->offsetExists('behavior.'.$method))
+			{
 				$result = self::_cache($this)->offsetGet('behavior.'.$method);
+			}
 			else 
 			{
 				$behaviors  = $this->getRepository()->getBehaviors();			
+				
 				foreach($behaviors as $behavior) 
 				{
-					if ( in_array($method, $behavior->getMixableMethods($this)) ) {
+					if(in_array($method, $behavior->getMixableMethods($this))) 
+					{
 						$result = true;
 						break;	
 					}
@@ -1278,6 +1331,5 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 		}
 				
 		return self::_cache($this)->offsetGet($key);	
-	}
-	
+	}	
 }
