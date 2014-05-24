@@ -21,7 +21,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
  */
 class ModulesHelperXML
 {
-	function parseXMLModuleFile( &$rows  )
+	public static function parseXMLModuleFile( &$rows  )
 	{
 		foreach ($rows as $i => $row)
 		{
