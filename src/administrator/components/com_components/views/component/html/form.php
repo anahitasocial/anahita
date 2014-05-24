@@ -37,7 +37,7 @@
     								0 => @text('AN-APPS-APP-ACTOR-ACCESS-OPTIONAL'),
     								1 => @text('AN-APPS-APP-ACTOR-ACCESS-ALWAYS'),
     								2 => @text('AN-APPS-APP-ACTOR-ACCESS-NEVER')
-    							), 'selected'=>$component->getAssignmentForIdentifier($identifier)) )?>
+    							), 'selected'=>$component->getAssignmentForIdentifier($identifier)) ) ?>
 						<?php else : ?>
     						<?= @html('select', 'identifiers['.$identifier.']', array('options'=>array(    								
     								1 => @text('AN-APPS-APP-ACTOR-ACCESS-ALWAYS'),
