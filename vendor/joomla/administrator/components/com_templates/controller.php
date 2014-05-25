@@ -61,6 +61,39 @@ class TemplatesController
 		TemplatesView::showTemplates($rows, $lists, $page, $option, $client);
 	}
 
+	/**
+     * Publish, or make current, the selected template
+     */
+    public static function publishTemplate()
+    {
+        global $mainframe;
+        
+        // Check for request forgeries
+        JRequest::checkToken() or jexit( 'Invalid Token' );
+        
+        // Initialize some variables
+        $db        = & JFactory::getDBO();
+        $cid       = JRequest::getVar('cid', array(), 'method', 'array');
+        $cid       = array(JFilterInput::getInstance()->clean(@$cid[0], 'cmd'));
+        $option    = JRequest::getCmd('option');
+        $client    =& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
+        
+        if ($cid[0]) {
+            $query = 'DELETE FROM #__templates_menu' .
+                    ' WHERE client_id = '.(int) $client->id .
+                    ' AND (menuid = 0 OR template = '.$db->Quote($cid[0]).')';
+            $db->setQuery($query);
+            $db->query();
+            
+            $query = 'INSERT INTO #__templates_menu' .
+                    ' SET client_id = '.(int) $client->id .', template = '.$db->Quote($cid[0]).', menuid = 0';
+            $db->setQuery($query);
+            $db->query();
+        }
+        
+        $mainframe->redirect('index.php?option='.$option.'&client='.$client->id);
+    }
+	
 	public static function editTemplate()
 	{
 		jimport('joomla.filesystem.path');

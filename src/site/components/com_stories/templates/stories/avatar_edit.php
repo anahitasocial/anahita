@@ -10,7 +10,7 @@ if ( !is_array($targets) )
 <?php if(count($targets) == 1): ?>
 <?=sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATAR'), @name($subject), @possessive($target)) ?>
 <?php else: ?>
-<?= @text('COM-STORIES-TITLE-UPDATE-AVATARS') ?>
+<?= sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATARS'), @name($subject)) ?>
 <?php endif; ?>
 </data>
 
