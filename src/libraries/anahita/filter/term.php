@@ -32,8 +32,8 @@ class AnFilterTerm extends KFilterAbstract
     protected function _validate($value)
     {
         $value = trim($value);
-        $pattern    = '/[^A-Za-z0-9.\-_#@\s]*/';
-        return (is_string($value) && preg_replace($pattern, '', $value));
+        $pattern = '/\pL|[.#@_\-\s]/u';
+        return is_string($value) && preg_replace($pattern, '', $value);
     }
 
     /**
@@ -45,7 +45,7 @@ class AnFilterTerm extends KFilterAbstract
     protected function _sanitize($value)
     {
         $value = trim($value);
-        $pattern    = '/[^A-Za-z0-9.\-_#@\s]*/';
+        $pattern = '/(?![.#@_\-\s])\PL/u';
         return preg_replace($pattern, '', $value);
     }	
 }
