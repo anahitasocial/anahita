@@ -59,7 +59,10 @@ class Symlink extends Command
     }
 }
 
-$console->addCommands(array(new Symlink()));
+$config = new Config(WWW_ROOT);
+if ( $config->isConfigured() ) {
+	$console->addCommands(array(new Symlink()));
+}
 
 class Create extends Command
 {
