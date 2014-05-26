@@ -27,7 +27,7 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     /*
      * hashtag regex pattern
      */
-	const PATTERN_HASHTAG = '/#([A-Za-z0-9]{3,}\s)/';
+	const PATTERN_HASHTAG = '/#([A-Za-z0-9]{3,})/';
     
     /**
      * Initializes the default configuration for the object
