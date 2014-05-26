@@ -25,4 +25,13 @@
 class ComHashtagsControllerHashtag extends ComBaseControllerService
 {
 	
+	/**
+     * Fetches an entity
+     *
+     * @param KCommandContext $context
+     */
+    public function fetchEntity(KCommandContext $context)
+    {
+    	
+    }
 }
