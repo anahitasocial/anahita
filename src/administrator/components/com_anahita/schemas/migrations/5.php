@@ -26,6 +26,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE #__anahita_nodes CHANGE `tag_ids` `hashtag_ids` TEXT DEFAULT NULL');
         dbexec('ALTER TABLE #__anahita_nodes ADD `hashtagable_count` INT(11) UNSIGNED DEFAULT NULL AFTER `hashtag_ids`');
         dbexec('ALTER TABLE #__anahita_nodes ADD `hashtagable_ids` TEXT DEFAULT NULL AFTER `hashtagable_count`');
+        dbexec('INSERT INTO #__plugins (name,element,folder,published) VALUES (\'Hashtag Filter\',\'hashtag\',\'contentfilter\',1)');
     	
         $timeThen = microtime(true);
         $ids = array();
