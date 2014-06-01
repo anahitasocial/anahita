@@ -62,8 +62,8 @@
 	<?php endif; ?>
 	
 	<div class="entity-description">
-		<?php $text = @helper('text.highlight', strip_tags($item->body), $keywords) ?>
-		<?= @helper('text.truncate', $text, array('length'=>400, 'consider_html'=>true))?>
+		<?php $text = @helper('text.highlight', @content(@escape($item->body)), $keywords) ?>
+		<?= @helper('text.truncate', $text, array('length'=>400, 'consider_html'=>true)) ?>
 	</div>
 	
 	<?php if($item->inherits('ComMediumDomainEntityMedium')): ?>
