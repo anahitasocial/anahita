@@ -19,44 +19,65 @@
  */
 class ComHashtagsRouter extends ComBaseRouterDefault
 {
-	/**
-     * Build the route
-     *
-     * @param   array   An array of URL arguments
-     * @return  array   The URL arguments to use to assemble the subsequent URL.
-     */
- 	public function build(&$query)
-    {
-    	if ( isset($query['alias']) ) 
-    	{
-    		$query['id'] = $query['alias'];
-    		unset($query['alias']);    		
-    	}
-	
-    	return parent::build($query);        
-    }
-    
-	/**
+    /**
      * Parse the segments of a URL.
      *
      * @param   array   The segments of the URL to parse.
      * @return  array   The URL attributes to be used by the application.
      */
     public function parse(&$segments)
-    {    	
-    	$path = implode('/', $segments);
+    {	
     	$vars = array();
     	
-    	$matches = array();
-    	if(preg_match('/(\d+)-([^\/]+)/', $path, $matches)) 
-    	{	
-    		print_($matches[2]);
-    		
-    		$vars['alias'] = $matches[2];
-    		$path = str_replace($matches[0], $matches[1], $path);
-    		$segments = array_filter(explode('/', $path));    		
+    	if(empty($segments)) 
+    	{
+            $vars['view'] = $this->getIdentifier()->package;
+        }
+        else if ( count($segments) == 1 ) 
+        {
+	    	$identifier = array_pop($segments);
+
+	    	if(is_numeric($identifier))
+	    	{
+	    		$vars['id'] = (int) $identifier;
+	    	}
+	 		else 
+	 		{
+	 			$hashtag = KService::get('com://site/hashtags.domain.entity.hashtag')->getRepository()->fetch(array('alias'=>$identifier));
+	    		$vars['id'] = $hashtag->id;
+	 		}
+
+	 		$vars['view'] = KInflector::singularize($this->getIdentifier()->package);
+    	}
+ 			
+    	return $vars;
+    }
+    
+    /**
+     * Build the route
+     *
+     * @param   array   An array of URL arguments
+     * @return  array   The URL arguments to use to assemble the subsequent URL.
+     */
+    public function build(&$query)
+    {
+    	$segments = array();
+    	
+    	if(isset($query['view']) && !KInflector::isPlural($query['view']))
+    	{
+    		unset($query['view']);
     	}
     	
-        return $vars;
+		if(isset($query['id']))
+    		unset($query['id']);
+    	
+    	if(isset($query['alias']))
+    	{
+    		$segments[] = $query['alias'];
+    		unset($query['alias']);
+    	}
+    	
+    	
+    	return $segments;
     }
 }
