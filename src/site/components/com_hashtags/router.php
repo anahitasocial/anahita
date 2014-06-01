@@ -38,14 +38,9 @@ class ComHashtagsRouter extends ComBaseRouterDefault
 	    	$identifier = array_pop($segments);
 
 	    	if(is_numeric($identifier))
-	    	{
 	    		$vars['id'] = (int) $identifier;
-	    	}
 	 		else 
-	 		{
-	 			$hashtag = KService::get('com://site/hashtags.domain.entity.hashtag')->getRepository()->fetch(array('alias'=>$identifier));
-	    		$vars['id'] = $hashtag->id;
-	 		}
+	    		$vars['alias'] = $identifier;
 
 	 		$vars['view'] = KInflector::singularize($this->getIdentifier()->package);
     	}
