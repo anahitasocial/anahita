@@ -61,6 +61,14 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
             )
         ));
         
+        $behaviors = $config->behaviors;
+        
+        $behaviors->append(array(
+            'modifiable' => array(
+                'modifiable_properties' => array('body')
+            )
+        ));
+        
         parent::_initialize($config);
     }
     
