@@ -38,9 +38,14 @@ class ComMediumViewMediaHtml extends ComBaseViewHtml
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'template_paths' => array(dirname(__FILE__).'/html')
+            'list_item_view' => KInflector::singularize($this->getName()),
+        	'template_paths' => array(dirname(__FILE__).'/html')
         ));
         
         parent::_initialize($config);
+		
+		$config->append(array(
+		    'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_medium/media')
+		));
     }		
 }
