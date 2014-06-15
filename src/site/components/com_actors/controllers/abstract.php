@@ -68,7 +68,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'privatable',
                 'enablable',
                 'subscribable',
-        		'hashtagable'
+        		'com://site/hashtags.controller.behavior.hashtagable'
             ))
         ));
                 
@@ -84,12 +84,13 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        $context->append(array(
+        
+    	$context->append(array(
             'query' => $this->getRepository()->getQuery()
         ));
 
-        $query  = $context->query;        
-        
+        $query = $context->query;        
+
         if($this->q) 
         {
             $query->keyword($this->getService('anahita:filter.term')->sanitize($this->q));
@@ -107,7 +108,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             $query->limit( $this->limit, $this->start );
         }
         
-        $entities =  $query->toEntitySet();
+        $entities = $query->toEntitySet();
         
         
         if($this->isOwnable() && $this->actor) 
@@ -116,11 +117,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'filter' => 'following'
             ));
 
-            if ($this->filter == 'administering' && $this->getRepository()->hasBehavior('administrable'))
+            if($this->filter == 'administering' && $this->getRepository()->hasBehavior('administrable'))
             {
                 $entities->where('administrators.id', 'IN', array($this->actor->id));
             }
-            else if ($this->actor->isFollowable()) 
+            elseif($this->actor->isFollowable()) 
             {
                 $entities->where('followers.id','IN', array($this->actor->id));
             }
@@ -165,6 +166,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         if ($entity->isPortraitable() && KRequest::has('files.portrait')) 
         {         
             $file = KRequest::get('files.portrait', 'raw'); 
+            
             if (!empty($file['size'])) 
             {
                 $this->getItem()->setPortrait(array('url'=>$file['tmp_name'], 'mimetype'=>$file['type']));
@@ -200,7 +202,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         parent::setView($view);
         
-        if (!$this->_view instanceof ComBaseViewAbstract) 
+        if(!$this->_view instanceof ComBaseViewAbstract) 
         {
             $name  = KInflector::isPlural($this->view) ? 'actors' : 'actor';
             $defaults[] = 'ComActorsView'.ucfirst($view).ucfirst($this->_view->name);
@@ -222,14 +224,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        $this->getService('repos://site/components')
-        ->fetchSet()
+        $this->getService('repos://site/components')->fetchSet()
         ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
                          
-        $result  = parent::_actionDelete($context);
+        $result = parent::_actionDelete($context);
         
-        $this->getService('anahita:event.dispatcher')
-        ->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()));
+        $this->getService('anahita:event.dispatcher')->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()));
                 
         return $result;
     }
