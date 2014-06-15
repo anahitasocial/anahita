@@ -95,33 +95,33 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     {
         $action = null;
         
-        if ( $this->_request->get ) 
+        if($this->_request->get) 
         {
             $action = strtolower('get'.$this->_request->get);
         }        
-        else {
+        else 
+        {
             $action = KInflector::isPlural($this->view) ? 'browse' : 'read';
         }
        
         $result = null;
            
-        if ( in_array($action, $this->getActions()) ) 
+        if(in_array($action, $this->getActions())) 
         {
             $result = $this->execute($action, $context);
             
-            if ( is_string($result) || $result === false ) {
+            if(is_string($result) || $result === false) 
                 $context->response->setContent($result.' ');
-            }
         }                
         
         $view = $this->getView();
         
-        if ( !$context->response->getContent() )
+        if(!$context->response->getContent())
         {            
-            if ( $context->params ) {
-                foreach($context->params as $key => $value) {
+            if ($context->params) 
+            {
+                foreach($context->params as $key => $value)
                     $view->set($key, $value);
-                }
             }
                         
             $content = $view->display();

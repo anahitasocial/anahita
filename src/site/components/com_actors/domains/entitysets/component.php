@@ -42,7 +42,8 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
 	 */
 	public function __construct(KConfig $config)
 	{
-		if ( !$config->actor ) {
+		if(!$config->actor) 
+		{
 			throw new KException('Actor object is missing');	
 		}
 		
@@ -50,27 +51,29 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
 		
 		parent::__construct($config);	
 				
-		$query 	= $this->getService($config->repository)
+		$query = $this->getService($config->repository)
 					->getQuery()
 					->bind('actorid', $this->_actor->id)
-					->bind('components_set_to_never',
-							$this->getService('repos://site/components.assignment')
+					->bind('components_set_to_never', $this->getService('repos://site/components.assignment')
 							->getQuery()
 							->columns('id')
 							->where('@col(actortype) = :actortype AND @col(access) = :never'))
 							->bind('actortype', (string)$this->_actor->getEntityDescription()->getInheritanceColumnValue()->getIdentifier())
-							->bind('never',     ComComponentsDomainBehaviorAssignable::ACCESS_NEVER)
-							->bind('always',    ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS)
-							->bind('optional',  ComComponentsDomainBehaviorAssignable::ACCESS_OPTIONAL)
-							;
+							->bind('never', ComComponentsDomainBehaviorAssignable::ACCESS_NEVER)
+							->bind('always', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS)
+							->bind('optional', ComComponentsDomainBehaviorAssignable::ACCESS_OPTIONAL);
 	
-		$query->link('repos://site/components.assignment','@col(assignment.component) = @col(component)',array('type'=>'weak'))
-				->enabled(true)
-				->where('@col(id) NOT IN (:components_set_to_never)')
-				;		
-		if ( $config->can_enable ) {									
+		$query
+		->link('repos://site/components.assignment','@col(assignment.component) = @col(component)',array('type'=>'weak'))
+		->enabled(true)
+		->where('@col(id) NOT IN (:components_set_to_never)');
+						
+		if($config->can_enable) 
+		{									
 			$query->where('@col(assignment.actortype) = :actortype AND @col(access) = :optional');
-		} else {
+		} 
+		else 
+		{
 			$query->where('((@col(assignment.actortype) = :actortype AND @col(access) = :always) OR @col(assignment.actor.id)  = :actorid OR @col(option) = "com_stories")');
 		}
 		
@@ -104,15 +107,18 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
 	 */
 	public function insert($component)
 	{
-		if ( is_string($component) ) {
+		if(is_string($component)) 
+		{
 			$component = $this->getRepository()->fetch(array('component'=>$component));
 		}
 		
-		if ( $component->isAssignable() ) {
+		if($component->isAssignable()) 
+		{
 			$assignment = $component->assignments->findOrAddNew(array('actor'=>$this->_actor));			
 		}
 		
-		if ( $this->isLoaded() ) {
+		if($this->isLoaded()) 
+		{
 			parent::insert($component);
 		}
 	}
@@ -132,18 +138,23 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
 	 */
 	public function extract($component)
 	{
-		if ( is_string($component) ) {
+		if(is_string($component))
+		{
 			$component = $this->getRepository()->fetch(array('component'=>$component));
 		}
 		
-		if ( $component->isAssignable() ) {
+		if($component->isAssignable()) 
+		{
 			$assignment = $component->assignments->find(array('actor'=>$this->_actor));
-			if ( $assignment ) {
+
+			if($assignment) 
+			{
 				$assignment->delete();
 			}
 		}
 		
-		if ( $this->isLoaded() ) {
+		if($this->isLoaded()) 
+		{
 			parent::extract($component);
 		}
 	}

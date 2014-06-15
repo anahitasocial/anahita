@@ -69,10 +69,12 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     	
     	$this->getToolbar('menubar')->setTitle('');    		
     	
-    	if ( $this->actor) {
+    	if($this->actor) 
+    	{
         	$this->getToolbar('actorbar')->setTitle($this->actor->name);
         	$this->getService()->set('mod://site/search.owner', $this->actor);
     	}
+    	
     	$this->_state->append(array(
 			'search_comments' => false
     	));
@@ -101,15 +103,20 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     		$query->orderByRelevance();
 
     	$set = $query->toEntitySet();
+    	
     	// initialize current scope to the 1st one having result
-    	if ( ! $this->current_scope and $set->getScopes()->getTotal()) {
-    		foreach ($set->getScopes() as $scope) {
-    			if ($scope->result_count > 0) {
+    	if (!$this->current_scope and $set->getScopes()->getTotal())
+    	{ 
+    		foreach ($set->getScopes() as $scope) 
+    		{
+    			if ($scope->result_count > 0) 
+    			{
     				$this->current_scope = $scope;
     				break;
     			}
     		}
     	}
+    	
     	$set->getQuery()->scope($this->current_scope);
     	
     	$this->_state->setList($set);

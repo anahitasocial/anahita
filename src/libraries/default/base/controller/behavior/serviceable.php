@@ -125,8 +125,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         $methods = parent::getMethods();
         $methods = array_diff($methods, $this->_exclude_actions);
         return $methods;
-    }
-    
+    }  
 
     /**
      * Service Browse
@@ -137,31 +136,34 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        if ( !$context->query ) {
+    	if(!$context->query) 
+        {
             $context->query = $this->getRepository()->getQuery(); 
         }
+    	
+    	$query = $context->query;
         
-        $query = $context->query;
-        
-        if ( $this->q ) {
+        if($this->q) 
+        {
             $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
         }
     
-        if ( $this->hasBehavior('parentable') && $this->getParent() ) {
+        if($this->hasBehavior('parentable') && $this->getParent()) 
+        {
             $query->parent($this->getParent());
         }
     
         //do some sorting
-        if ( $this->sort )
+        if($this->sort)
         {
             $this->getState()->append(array(
-                'direction' => 'ac'
+                'direction' => 'asc'
             ));
             
             $query->order($this->sort,  $this->direction);
         }
     
-        $query->limit( $this->limit , $this->start );
+        $query->limit($this->limit, $this->start);
     
         return $this->getState()->setList($query->toEntityset())->getList();
     }

@@ -87,9 +87,9 @@ class ComSearchDomainEntityScope extends KObject
 		
 		$this->commentable = $config->commentable;
 		
-		$this->type		   = $config->type;
+		$this->type = $config->type;
 		
-		$this->ownable 	   = $config->ownable;
+		$this->ownable = $config->ownable;
 		
 		JFactory::getLanguage()->load('com_'.$this->identifier->package);
 	}

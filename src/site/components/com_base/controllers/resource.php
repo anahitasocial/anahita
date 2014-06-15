@@ -55,9 +55,9 @@ class ComBaseControllerResource extends LibBaseControllerResource
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-            'viewer'        => $this->getService('com:people.viewer'),
-		    'language'      => 'com_'.$this->getIdentifier()->package,
-		    'behaviors'     => to_hash('com://site/application.controller.behavior.message')
+            'viewer' => $this->getService('com:people.viewer'),
+		    'language' => 'com_'.$this->getIdentifier()->package,
+		    'behaviors' => to_hash('com://site/application.controller.behavior.message')
 		));
 				
 		parent::_initialize($config);

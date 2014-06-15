@@ -37,5 +37,3 @@ interface AnDomainPropertySerializable
 	 */
 	public function serialize($value);
 }
-
-?>

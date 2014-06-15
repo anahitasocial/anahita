@@ -38,14 +38,14 @@ class ComMediumControllerBehaviorComposable extends ComComposerControllerBehavio
     {
         $data = $context->data;
         
-        if ( $data->composed && 
-                $data->story ) 
+        if($data->composed && $data->story) 
         {
-            if ( $context->response->isRedirect() ) 
+            if($context->response->isRedirect()) 
             {
                 $context->response->setStatus(KHttpResponse::OK);
                 $context->response->removeHeader('Location');
             }
+            
             $content = $this->_renderComposedStory($data->story);            
             $context->response->setContent($content);
         }

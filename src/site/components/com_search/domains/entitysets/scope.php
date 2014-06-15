@@ -38,24 +38,29 @@ class ComSearchDomainEntitysetScope extends KObjectArray implements KServiceInst
 	{
 		if (!$container->has($config->service_identifier))
 		{
-			$registry   = $container->get('application.registry', array('key'=>$config->service_identifier));
+			$registry = $container->get('application.registry', array('key'=>$config->service_identifier));
 			 
-			if ( !$registry->offsetExists('scopes') )
+			if(!$registry->offsetExists('scopes'))
 			{
-				$components =  $container->get('repos://site/components.component')->fetchSet();
+				$components = $container->get('repos://site/components.component')->fetchSet();
 				$dispatcher = $container->get('koowa:event.dispatcher'); 
 				$components->registerEventDispatcher($dispatcher);
+				
 				$event = new KEvent(array('scope'=>array()));				
 				$dispatcher->dispatchEvent('onBeforeSearch', $event);	
+				
 				$scopes = new self();
+				
 				foreach($event->scope as $scope) 
 				{
-					$scope  = KConfig::unbox($scope);
-					if ( is_array($scope) ) {
+					$scope = KConfig::unbox($scope);
+					
+					if(is_array($scope))
 						$scope = $container->get('com://site/search.domain.entity.scope', $scope);
-					}
+					
 					$scopes[$scope->getKey()] = $scope;
 				}
+				
 				$registry->offsetSet('scopes', $scopes);
 			}
 						
