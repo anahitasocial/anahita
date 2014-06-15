@@ -24,5 +24,13 @@
  */
 class ComHashtagsControllerHashtag extends ComBaseControllerService
 {
-
+	/**
+     * Hides the menubar title
+     * {@inheritdoc}
+     */
+	protected function _actionGet(KCommandContext $context)
+	{	  
+        $this->getToolbar('menubar')->setTitle(null);        
+		return parent::_actionGet($context);
+	}
 }
