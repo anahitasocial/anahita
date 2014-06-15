@@ -4,7 +4,6 @@
 <script src="com_photos/js/photoset.js" />
 <?php endif; ?>
 
-
 <module position="sidebar-b" title="<?= @text('COM-PHOTOS-PHOTO-RELATED-SETS') ?>">
 <div id="sets-wrapper" oid="<?= $photo->owner->id ?>" photo_id="<?= $photo->id ?>">
 <?= @view('sets')->layout('module')->set('sets', $photo->sets) ?>
