@@ -33,20 +33,18 @@ class ComHashtagsDomainEntitysetScope extends KObjectArray implements KServiceIn
 	 */
 	public static function getInstance(KConfigInterface $config, KServiceInterface $container)
 	{
-		if (!$container->has($config->service_identifier))
+		if(!$container->has($config->service_identifier))
 		{
 			$registry = $container->get('application.registry', array('key'=>$config->service_identifier));
-			 
+			
 			if(!$registry->offsetExists('scopes'))
 			{
 				$components = $container->get('repos://site/components.component')->fetchSet();
 				$dispatcher = $container->get('koowa:event.dispatcher'); 
 				$components->registerEventDispatcher($dispatcher);
 				
-				$event = new KEvent(array('scope'=>array()));	
-
-				//@todo make a hashtagable behavior for the components and use onBeforeProfile or somethig like that
-				$dispatcher->dispatchEvent('onBeforeSearch', $event);	
+				$event = new KEvent(array('scope'=>array()));
+				$dispatcher->dispatchEvent('onBeforeHashtag', $event);	
 				
 				$scopes = new self();
 				

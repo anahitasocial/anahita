@@ -40,7 +40,8 @@ class ComPagesDomainEntityComponent extends ComMediumDomainEntityComponent
 	{
 		$config->append(array(
 				'behaviors' => array(
-						'searchable'=>array('class'=>'ComPagesDomainEntityPage')
+					'searchable'=>array('class'=>'ComPagesDomainEntityPage'),
+					'hashtagable'=>array('class'=>'ComPagesDomainEntityPage')
 				)
 		));
 	

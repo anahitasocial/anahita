@@ -34,11 +34,13 @@ class ComHashtagsViewHashtagHtml extends ComBaseViewHtml
 		$this->set('gadgets', new LibBaseTemplateObjectContainer());
 		$scopes = $this->getService('com://site/hashtags.domain.entityset.scope');
 
+		print $scopes->getTotal();
+		
 		$context = new KCommandContext();
 		$context->gadgets = $this->gadgets;
 		
 		foreach($scopes as $scope)
-		{	
+		{		
 			$scopeKey = explode('.', $scope->getKey());
 			$view = KInflector::pluralize($scopeKey[1]);
 			$option = 'com_'.$scopeKey[0];

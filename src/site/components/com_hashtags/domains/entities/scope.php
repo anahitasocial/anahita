@@ -52,6 +52,13 @@ class ComHashtagsDomainEntityScope extends KObject
 	public $commentable;
 	
 	/**
+	 * A flag whether to scope is hashtagable
+	 *
+	 * @var boolean
+	 */
+	public $hashtagable;
+	
+	/**
 	 * A flag whether to scope is ownable
 	 *
 	 * @var boolean
@@ -84,6 +91,8 @@ class ComHashtagsDomainEntityScope extends KObject
 		
 		$this->commentable = $config->commentable;
 		
+		$this->hashtagable = $config->hashtagable;
+		
 		$this->type = $config->type;
 		
 		$this->ownable = $config->ownable;
@@ -105,10 +114,11 @@ class ComHashtagsDomainEntityScope extends KObject
 		if ( $config->repository ) 
 		{ 
 			$config->append(array(
-				'identifier'  	  => $config->repository->getDescription()->getInheritanceColumnValue()->getIdentifier(),
-				'node_type'		  => (string)$config->repository->getDescription()->getInheritanceColumnValue(),
-				'commentable'	  => $config->repository->isCommentable(),
-				'ownable'	      => $config->repository->isOwnable()
+				'identifier' => $config->repository->getDescription()->getInheritanceColumnValue()->getIdentifier(),
+				'node_type' => (string)$config->repository->getDescription()->getInheritanceColumnValue(),
+				'commentable' => $config->repository->isCommentable(),
+				'ownable' => $config->repository->isOwnable(),
+				'hashtagable' => $config->repository->isHashtagable()
 			));
 		}
 			

@@ -96,9 +96,10 @@ class ComComponentsDomainBehaviorSearchable extends LibBaseDomainBehaviorEnablea
 	public function getSearchScope()
 	{
 		$searchables = array();
-		foreach($this->getEntityRepositories($this->_search_scope) as $repository) {			
+		
+		foreach($this->getEntityRepositories($this->_search_scope) as $repository)		
 			$searchables[] = array('repository'=>$repository,'type'=>$this->_scope_type);
-		}
+		
 		return $searchables;
 	}
 }
