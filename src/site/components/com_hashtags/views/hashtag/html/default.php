@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
+<script src="lib_anahita/js/vendors/mediabox.js" />
+
 <module position="sidebar-b" style="none"></module>
 
 <?php if(count($gadgets) >= 1): ?>

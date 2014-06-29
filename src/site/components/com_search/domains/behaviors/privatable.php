@@ -32,19 +32,17 @@ class ComSearchDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
      */
     protected function _beforeQuerySelect(KCommandContext $context)
     {
-        if ( KService::has('com:people.viewer') 
-                && is_person(get_viewer()) 
-                && get_viewer()->admin() )
+        if(KService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin())
             return;
     
-        $query		= $context->query;
+        $query = $context->query;
         $repository = $query->getRepository();
-        $config 	= pick($query->privacy, new KConfig());
+        $config = pick($query->privacy, new KConfig());
          
         $config->append(array(
-            'visible_to_leaders'  => true,                
-            'viewer'              => KService::get('com:people.viewer'),
-            'graph_check'		  => true
+            'visible_to_leaders' => true,                
+            'viewer' => KService::get('com:people.viewer'),
+            'graph_check' => true
         ));
 
         $query->getRepository()->addBehavior('ownable');

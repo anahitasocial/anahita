@@ -49,7 +49,8 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             'request'       => array(
             	'limit'     => 20,
 				'sort'		=> 'relevant',
-				'direction' => 'ASC'                
+				'direction' => 'ASC',
+				'scope' => 'all'                
             )            
 		));
 		
@@ -65,9 +66,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
      */
     protected function _actionGet(KCommandContext $context)
     {           
-    	$this->setView('searches');
-    	
-    	$this->getToolbar('menubar')->setTitle('');    		
+    	$this->setView('searches');   		
     	
     	if($this->actor) 
     	{
@@ -88,8 +87,8 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
     	$this->keywords = array_filter(explode(' ', $this->term));
     	
-    	$this->scopes			= $this->getService('com://site/search.domain.entityset.scope');
-		$this->current_scope	= $this->scopes->find($this->scope);
+    	$this->scopes = $this->getService('com://site/search.domain.entityset.scope');
+    	$this->current_scope = $this->scopes->find($this->scope);
 		
     	$query = $this->getService('com://site/search.domain.query.node')
     				->ownerContext($this->actor)
@@ -104,20 +103,8 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
     	$set = $query->toEntitySet();
     	
-    	// initialize current scope to the 1st one having result
-    	if (!$this->current_scope and $set->getScopes()->getTotal())
-    	{ 
-    		foreach ($set->getScopes() as $scope) 
-    		{
-    			if ($scope->result_count > 0) 
-    			{
-    				$this->current_scope = $scope;
-    				break;
-    			}
-    		}
-    	}
-    	
-    	$set->getQuery()->scope($this->current_scope);
+    	if($this->current_scope)
+    		$set->getQuery()->scope($this->current_scope);
     	
     	$this->_state->setList($set);
         

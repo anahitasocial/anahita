@@ -32,10 +32,8 @@ class ComHashtagsViewHashtagHtml extends ComBaseViewHtml
 	protected function _layoutDefault()
 	{	
 		$this->set('gadgets', new LibBaseTemplateObjectContainer());
-		$scopes = $this->getService('com://site/hashtags.domain.entityset.scope');
+		$scopes = $this->getService('com://site/search.domain.entityset.scope');
 
-		print $scopes->getTotal();
-		
 		$context = new KCommandContext();
 		$context->gadgets = $this->gadgets;
 		
@@ -44,7 +42,7 @@ class ComHashtagsViewHashtagHtml extends ComBaseViewHtml
 			$scopeKey = explode('.', $scope->getKey());
 			$view = KInflector::pluralize($scopeKey[1]);
 			$option = 'com_'.$scopeKey[0];
-			
+
 			$context->gadgets->insert($scope->getKey(), array(             
                 'title' => translate('COM-'.str_ireplace('.', '-SEARCH-SCOPE-', strtoupper($scope->getKey()))),
 				'url' => 'option='.$option.'&view='.$view.'&layout=gadget&ht[]='.$this->item->alias,
