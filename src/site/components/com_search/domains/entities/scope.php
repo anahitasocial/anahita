@@ -62,6 +62,13 @@ class ComSearchDomainEntityScope extends KObject
 	public $ownable;
 	
 	/**
+	 * A flag whether to scope is hashtagable
+	 *
+	 * @var boolean
+	 */
+	public $hashtagable;
+	
+	/**
 	 * Returns how many result count there are per scope
 	 * 
 	 * @var int
@@ -91,6 +98,8 @@ class ComSearchDomainEntityScope extends KObject
 		
 		$this->ownable = $config->ownable;
 		
+		$this->hashtagable = $config->hashtagable;
+		
 		JFactory::getLanguage()->load('com_'.$this->identifier->package);
 	}
 	
@@ -105,13 +114,14 @@ class ComSearchDomainEntityScope extends KObject
 	 */
 	protected function _initialize(KConfig $config)
 	{
-		if ( $config->repository ) 
+		if($config->repository) 
 		{ 
 			$config->append(array(
-				'identifier'  	  => $config->repository->getDescription()->getInheritanceColumnValue()->getIdentifier(),
-				'node_type'		  => (string)$config->repository->getDescription()->getInheritanceColumnValue(),
-				'commentable'	  => $config->repository->isCommentable(),
-				'ownable'	      => $config->repository->isOwnable()
+				'identifier' => $config->repository->getDescription()->getInheritanceColumnValue()->getIdentifier(),
+				'node_type' => (string) $config->repository->getDescription()->getInheritanceColumnValue(),
+				'commentable' => $config->repository->isCommentable(),
+				'ownable' => $config->repository->isOwnable(),
+				'hashtagable' => $config->repository->isHashtagable()
 			));
 		}
 			

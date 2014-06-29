@@ -48,7 +48,7 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
 		JFactory::getLanguage()->load('com_'.$this->getIdentifier()->package);
 		
 		$config->append(array(
-				
+		
 		));		
 		
 		parent::_initialize($config);
@@ -94,9 +94,8 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
             //foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
             foreach($this->getMethods() as $method)
 			{
-				if(substr($method, 0, 2) == 'on') {
+				if(substr($method, 0, 2) == 'on')
 					$subscriptions[] = $method;
-				}
 			}
 	
 			$this->__subscriptions = $subscriptions;
@@ -115,9 +114,10 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
 	public function getEntityRepositories($class)
 	{
 		$identifiers = $this->getEntityIdentifiers($class);
-		foreach($identifiers as $i => $identifier) {
+		
+		foreach($identifiers as $i => $identifier)
 			$identifiers[$i] = AnDomain::getRepository($identifier);
-		}
+		
 		return $identifiers;
 	}
 		
@@ -130,31 +130,42 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
 	 */
 	public function getEntityIdentifiers($class)
 	{
-		$registry = $this->getService('application.registry', array('key'=>$this->getIdentifier()));		
-		if ( !$registry->offsetExists($class.'-identifiers') ) 
+		$registry = $this->getService('application.registry', array('key'=>$this->getIdentifier()));
+				
+		if(!$registry->offsetExists($class.'-identifiers')) 
 		{
-			$path     = JPATH_ROOT.DS.'components'.DS.'com_'.$this->getIdentifier()->package.DS.'domains'.DS.'entities';
+			$path = JPATH_ROOT.DS.'components'.DS.'com_'.$this->getIdentifier()->package.DS.'domains'.DS.'entities';
+			
 			$identifiers = array();
-			if ( file_exists($path) )
+			
+			if(file_exists($path))
 			{
 				$files = JFolder::files($path);
-				foreach($files as $file) {
-					$name       = explode('.', basename($file));
-					$name       = $name[0];
+				
+				foreach($files as $file) 
+				{
+					$name = explode('.', basename($file));
+					$name = $name[0];
 					$identifier = clone $this->getIdentifier();
 					$identifier->path = array('domain','entity');
 					$identifier->name = $name;
-					try {
-						if ( is($identifier->classname, $class) ) {
+					
+					try 
+					{
+						if(is($identifier->classname, $class)) 
+						{
 							$identifiers[] = $identifier;
 						}
 					}
 					catch(Exception $e) {}
 				}
 			}
+			
 			$registry->offsetSet($class.'-identifiers', $identifiers);
-		}		
+		}	
+			
 		$identifiers = $registry->offsetGet($class.'-identifiers');
+		
 		return $identifiers;
 	}
 }

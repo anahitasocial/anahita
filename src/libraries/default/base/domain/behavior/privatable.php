@@ -76,7 +76,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 		
 		foreach($values as $key => $value) 
 		{
-			if (empty($value))
+			if(empty($value))
 			{
 				$value = self::GUEST;
 			}
@@ -85,7 +85,8 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 				if(!in_array($value, array('public','registered','followers','special','leaders','mutuals','admins')))
 					$value = 'public';
 			}
-			if ( $value == self::GUEST ) 
+			
+			if($value == self::GUEST) 
 			{
 				$values = array(self::GUEST);
 				break;
@@ -136,7 +137,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 		if(empty($value))
 			$value = self::GUEST;
 					
-		if( $key == 'access' )
+		if($key == 'access')
 		{
 			$this->access = $value;
 		}
@@ -167,9 +168,9 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	/**
 	 * Return whether $actor has privellege perform $action on the entity 
 	 * 
-	 * @param  ComPeopleDomainEntityPerson $actor   The person who's trying to perform an operation on the entity
-	 * @param  string	 	               $action  The name of the action being performed
-	 * @param  string                      $default The default value to use if the there are no values are set for the operation
+	 * @param  ComPeopleDomainEntityPerson $actor The person who's trying to perform an operation on the entity
+	 * @param  string $action  The name of the action being performed
+	 * @param  string $default The default value to use if the there are no values are set for the operation
 	 * 
 	 * @return boolean
 	 */
@@ -189,7 +190,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 			$owner = $this->owner;
 		}
 		
-        if (!empty($owner)) 
+        if(!empty($owner)) 
         {
             //if actor and owner the same then 
             //allow

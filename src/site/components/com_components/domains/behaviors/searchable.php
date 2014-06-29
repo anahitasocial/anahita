@@ -32,7 +32,7 @@ class ComComponentsDomainBehaviorSearchable extends LibBaseDomainBehaviorEnablea
 	 * 
 	 * @var array
 	 */
-	protected $_search_scope = array();
+	protected $_scope_identifier = array();
 	
 	/**
 	 * Scope t
@@ -52,8 +52,8 @@ class ComComponentsDomainBehaviorSearchable extends LibBaseDomainBehaviorEnablea
 	{
 		parent::__construct($config);
 		
-		$this->_search_scope = $config->class;		
-		$this->_scope_type   = $config->type;
+		$this->_scope_identifier = $config->class;		
+		$this->_scope_type = $config->type;
 		
 	}
 	
@@ -95,11 +95,11 @@ class ComComponentsDomainBehaviorSearchable extends LibBaseDomainBehaviorEnablea
 	 */
 	public function getSearchScope()
 	{
-		$searchables = array();
+		$scopes = array();
 		
-		foreach($this->getEntityRepositories($this->_search_scope) as $repository)		
-			$searchables[] = array('repository'=>$repository,'type'=>$this->_scope_type);
+		foreach($this->getEntityRepositories($this->_scope_identifier) as $repository)		
+			$scopes[] = array('repository'=>$repository,'type'=>$this->_scope_type);
 		
-		return $searchables;
+		return $scopes;
 	}
 }
