@@ -31,6 +31,7 @@ class ComHashtagsViewHashtagHtml extends ComBaseViewHtml
 	 */
 	protected function _layoutDefault()
 	{	
+		/*
 		$this->set('gadgets', new LibBaseTemplateObjectContainer());
 		$scopes = $this->getService('com://site/search.domain.entityset.scope');
 
@@ -49,5 +50,6 @@ class ComHashtagsViewHashtagHtml extends ComBaseViewHtml
                 'title_url'	=> 'option='.$option.'&view='.$view.'&ht[]='.$this->item->alias
         	));
 		}
+		*/
 	}
 }

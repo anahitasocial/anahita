@@ -53,9 +53,9 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
 			)),
 			'relationships' => array(
                 'hashtagables' => array(
-                    'through' => 'com:hashtags.domain.entity.association',                    
+                    'through' => 'association',                    
                     'child_key' => 'hashtag',
-                    'target' => 'com:hashtags.domain.entity.hashtag',
+                    'target' => 'com:base.domain.entity.node',
                     'target_child_key' => 'hashtagable'
                 )
             )
