@@ -52,15 +52,5 @@
 		search_options['scope'] = el.get('href').toURI().getData('scope');
 		search_options['layout'] = 'results_scopes';
 		submit_form();
-		/*
-		el.ajaxRequest({
-			data : search_options,
-			spinnerTarget : el,
-			evalScripts : false,
-			onSuccess : function() {				
-				document.getElement('.an-entities-wrapper').set('html', this.response.html)
-			}
-		}).send();
-		*/
 	});	
 })()
