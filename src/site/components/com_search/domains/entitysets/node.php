@@ -4,7 +4,7 @@
  * LICENSE: ##LICENSE##
  * 
  * @category   Anahita
- * @package    Com_Actors
+ * @package    Com_Search
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
@@ -17,7 +17,7 @@
  * Request edge represents a follow request between two actors. 
  *
  * @category   Anahita
- * @package    Com_Actors
+ * @package    Com_Search
  * @subpackage Domain_Entity
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
