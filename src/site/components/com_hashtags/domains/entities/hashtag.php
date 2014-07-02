@@ -43,7 +43,6 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
         $config->append(array(
             'attributes' => array(
                 'name' => array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'string','read'=>'public', 'unique'=>true),
-        		'body' => array('format'=>'string'),
         		'hashtagableCount' => array('default'=>0,'write'=>'private'),
         		'hashtagableIds' => array('type'=>'set', 'default'=>'set','write'=>'private')
             ),
@@ -58,14 +57,6 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
                     'target' => 'com:base.domain.entity.node',
                     'target_child_key' => 'hashtagable'
                 )
-            )
-        ));
-        
-        $behaviors = $config->behaviors;
-        
-        $behaviors->append(array(
-            'modifiable' => array(
-                'modifiable_properties' => array('body')
             )
         ));
         

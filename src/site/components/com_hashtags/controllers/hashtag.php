@@ -38,7 +38,7 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
             'request'       => array(
             	'limit'     => 20,
 				'sort'		=> 'recent',
-				'direction' => 'ASC',
+				'direction' => 'DESC',
 				'scope' => ''                
             )            
 		));
@@ -68,9 +68,9 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 		}
 		
 		if($this->sort == 'top')
-    		$entity->hashtagables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC');
+    		$entity->hashtagables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', $this->direction);
     	else 
-			$entity->hashtagables->order('node.created_on', 'DESC');
+			$entity->hashtagables->order('node.created_on', $this->direction);
 
 		$entity->hashtagables->limit($this->limit, $this->start);	
 			
