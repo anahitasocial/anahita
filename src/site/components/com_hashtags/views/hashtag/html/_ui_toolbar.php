@@ -1,11 +1,14 @@
-<?php defined('KOOWA') or die ?>
+<?php defined('KOOWA') or die('Restricted access');?>
 
-<?php $commands = $toolbar->getCommands() ?>
-
-<?php if(count($commands)): ?>
-<div class="hashtag-profile-toolbar btn-toolbar clearfix" data-behavior="BS.Dropdown">
-	<?php if($command = $commands->extract('edit')): ?>
-	<?= @helper('ui.command', $command->class('btn admin')) ?> 
-	<?php endif ?>
+<div class="btn-toolbar clearfix" data-behavior="BS.Dropdown">
+    <div class="pull-right btn-group">
+        <a class="btn <?= ($sort == 'top') ? 'disabled' : '' ?>" href="<?= @route(array('view'=>'hashtag', 'alias'=>$item->name, 'sort'=>'top')) ?>">
+            <i class="icon-fire"></i>
+            <?= @text('COM-HASHTAGS-HASHTAGABLES-SORT-TOP') ?>
+        </a> 
+        <a class="btn <?= ($sort != 'top') ? 'disabled' : '' ?>" href="<?= @route(array('view'=>'hashtag', 'alias'=>$item->name, 'sort'=>'recent')) ?>">
+            <i class="icon-time"></i>
+            <?= @text('COM-HASHTAGS-HASHTAGABLES-SORT-RECENT') ?>
+        </a>
+    </div>
 </div>
-<?php endif ?>
