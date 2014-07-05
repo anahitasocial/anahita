@@ -39,7 +39,11 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'story_aggregation' => array('todo_disable,todo_add,todo_enable'=>'target')
+            'story_aggregation' => array('todo_disable,todo_add,todo_enable'=>'target'),
+        	'behaviors' => array(
+					'scopeable'=>array('class'=>'ComTodosDomainEntityTodo'),
+					'hashtagable'=>array('class'=>'ComTodosDomainEntityTodo')
+				)
         ));
     
         parent::_initialize($config);

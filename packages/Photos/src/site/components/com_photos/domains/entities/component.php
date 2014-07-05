@@ -39,7 +39,11 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'story_aggregation' => array('photo_add'=>'target')
+            'story_aggregation' => array('photo_add'=>'target'),
+        	'behaviors' => array(
+					'scopeable'=>array('class'=>'ComPhotosDomainEntityPhoto'),
+					'hashtagable'=>array('class'=>'ComPhotosDomainEntityPhoto')
+				)
         ));
 
         parent::_initialize($config);

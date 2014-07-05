@@ -61,9 +61,11 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 		
 		if($this->scope)
 		{
-			$this->scopes = $this->getService('com://site/search.domain.entityset.scope');
+			$this->scopes = $this->getService('com://site/components.domain.entityset.scope');
     		$this->current_scope = $this->scopes->find($this->scope);
-    		$entity->hashtagables->where('node.type', 'LIKE', '%'.$this->current_scope->identifier);
+    		
+    		if($this->current_scope)
+    			$entity->hashtagables->where('node.type', 'LIKE', '%'.$this->current_scope->identifier);
 		}
 		
 		if($this->sort == 'top')

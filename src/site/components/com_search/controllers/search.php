@@ -87,26 +87,25 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
     	$this->keywords = array_filter(explode(' ', $this->term));
     	
-    	$this->scopes = $this->getService('com://site/search.domain.entityset.scope');
+    	$this->scopes = $this->getService('com://site/components.domain.entityset.scope');
     	$this->current_scope = $this->scopes->find($this->scope);
-		
+    	
     	$query = $this->getService('com://site/search.domain.query.node')
     				->ownerContext($this->actor)
     				->searchTerm($this->term)
     				->searchComments($this->search_comments)
     				->limit($this->limit, $this->start);
+
+    	if($this->current_scope)
+    		$query->scope($this->current_scope);			
     				
     	if($this->sort == 'recent')
     		$query->order('node.created_on','DESC');
     	else 
     		$query->orderByRelevance();
-
-    	$set = $query->toEntitySet();
-    	
-    	if($this->current_scope)
-    		$set->getQuery()->scope($this->current_scope);
-    	
-    	$this->_state->setList($set);
+    		
+    	$entities = $query->toEntitySet();
+    	$this->_state->setList($entities);
         
         parent::_actionGet($context);
     }

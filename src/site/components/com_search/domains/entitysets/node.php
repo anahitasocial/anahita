@@ -67,7 +67,7 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 	{
 		if(!isset($this->_scopes)) 
 		{
-			$this->_scopes = clone $this->getService('com://site/search.domain.entityset.scope');			
+			$this->_scopes = clone $this->getService('com://site/components.domain.entityset.scope');			
 			$total = 0;
 			
 			foreach($this->_scopes as $scope) 
