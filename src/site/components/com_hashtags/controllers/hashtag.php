@@ -62,9 +62,7 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 		if($this->scope)
 		{
 			$this->scopes = $this->getService('com://site/components.domain.entityset.scope');
-    		$this->current_scope = $this->scopes->find($this->scope);
-    		
-    		if($this->current_scope)
+    		if($this->current_scope = $this->scopes->find($this->scope))
     			$entity->hashtagables->where('node.type', 'LIKE', '%'.$this->current_scope->identifier);
 		}
 		
@@ -73,9 +71,7 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
     	else 
 			$entity->hashtagables->order('node.created_on', 'DESC');
 
-		$entity->hashtagables->limit($this->limit, $this->start);	
-			
-		//print str_replace('#_', 'jos', $entity->hashtagables->getQuery()).'<br>';	
+		$entity->hashtagables->limit($this->limit, $this->start);
 		
 		return $entity;
 	}
