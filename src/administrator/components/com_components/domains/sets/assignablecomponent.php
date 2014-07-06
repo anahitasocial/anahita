@@ -37,28 +37,28 @@ class ComComponentsDomainSetAssignableComponent extends KObject implements KServ
 	{		
 		if (!$container->has($config->service_identifier))
 		{	
-			$query = $container->get('repos://site/components.component')
-							->getQuery();
+			$query = $container->get('repos://site/components.component')->getQuery();
 			
 			$registry = $container->get('application.registry');
 			$cached   = $registry->offsetExists('assignable-components'); 
-			if ( $cached ) {
+			if($cached)
+			{
 				$query->component($registry->offsetGet('assignable-components'));
 			}
 			
 			//check the cache
 			$container->get('repos://site/components.component')->getCommandChain()->disable();
-			$components = $container->get('repos://site/components.component')
-								->fetch($query, AnDomain::FETCH_ENTITY_LIST);
+			$components = $container->get('repos://site/components.component')->fetch($query, AnDomain::FETCH_ENTITY_LIST);
 			
 			$container->get('repos://site/components.component')->getCommandChain()->enable();
 			
-			if ( !$cached ) {
+			if(!$cached) 
+			{
 				$assignables = array();
 				$names = array();
 				foreach($components as $component) 
 				{
-					if ( $component->isAssignable() ) 
+					if ($component->isAssignable()) 
 					{
 						$names[] = $component->component;
 						$assignables[] = $component;
