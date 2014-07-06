@@ -281,7 +281,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	}
 	
 	/**
-	 * Return if the entity is persisted,  it’s not a new record and it was not destroyed.
+	 * Return if the entity is persisted,  it's not a new record and it was not destroyed.
 	 * 
 	 * @return boolean
 	 */
