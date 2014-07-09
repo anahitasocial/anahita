@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die; ?>
 
-<script src="lib_anahita/js/vendors/mediabox.js" />
-
 <h1 id="entity-name"><?= sprintf(@text('COM-HASHTAG-TERM'), $item->name) ?></h1>
 
 <?php 
