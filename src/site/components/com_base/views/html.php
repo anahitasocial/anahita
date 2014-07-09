@@ -36,11 +36,11 @@ class ComBaseViewHtml extends LibBaseViewHtml
 	{
 		parent::__construct($config);
 						
-		if ( $config->list_item_view )
+		if($config->list_item_view)
 		{
 		    //add a template alias
 		    $this->getTemplate()->getFilter('alias')->append(array(
-		            '@listItemView()'=>'$this->getHelper(\'controller\')->getView(\''.$config->list_item_view.'\')'
+		    	'@listItemView()'=>'$this->getHelper(\'controller\')->getView(\''.$config->list_item_view.'\')'
 		    ));
 		}
 	}
