@@ -183,12 +183,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
      */
     public function authenticateRequest(KCommandContext $context)
     {
-        $request = $context->request;
-        
-        //Check referrer
-        if(!$request->getReferrer()) {
-            throw new LibBaseControllerExceptionForbidden('Invalid Request Referrer');
-        }
+
     }
     
     /**
