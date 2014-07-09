@@ -1,3 +1,15 @@
+Anahita 3.0.3
+==============
+
+* d0c8fed added the publish template method back so admins can publish their own custom templates.
+* 6bf4f87 Strict standard warning fixed.
+* 9e92ddf removed the editor until we completely remove this legacy component in the next release.
+* b17490f by default set the assignment to always
+* 8cdf6f7 Strict standard warning fixed
+* c9c4a71 Update avatar_edit.php
+* 3935031 adds site:symlink command to console
+* d013438 commented out line for @flash_message added back
+
 Anahita 3.0.2
 ==============
 

@@ -54,12 +54,10 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
             $component  = str_replace('com_','', basename($path));
             $identifier = 'com://admin/'.$component.'.schema.migration';
             register_default(array('identifier'=>$identifier,'default'=>'ComMigratorMigrationDefault'));
-            $migrator   = \KService::get($identifier, 
-                        array('event_dispatcher'=>$this->_event_dispatcher));
-            if ( ($check_max_version && $migrator->getMaxVersion() > 0) 
-                    || !$check_max_version ) {
+            $migrator = \KService::get($identifier, array('event_dispatcher'=>$this->_event_dispatcher));
+                        
+            if(($check_max_version && $migrator->getMaxVersion() > 0) || !$check_max_version )
                 $this->_migrators[] = $migrator;
-            }
         }
     }
     
