@@ -26,6 +26,6 @@
 	<?php endif; ?>
 	
 	<div class="entity-description">
-		<?= @helper('text.truncate',  @escape($item->body), array('length'=>400, 'consider_html'=>true)) ?>
+		<?= @helper('text.truncate',  @content($item->body), array('length'=>400, 'consider_html'=>true)) ?>
 	</div>
 </div>
