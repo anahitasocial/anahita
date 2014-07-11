@@ -132,6 +132,19 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	    return $this->_render('dropdown', $config);
 	}
 	
+	/**
+	 * Renders a list of basic nodes
+	 *
+	 * @param  AnDomainEntityAbstract $entity  The parent of the comments
+	 * @param  array	              $config  An array of configuration
+	 * 
+	 * @return string
+	 */
+	public function nodes($items, $config = array())
+	{
+		return $this->_render('nodes', array('items'=>$items));
+	}
+	
     /**
 	 * Renders the comments for a commentable
 	 *
