@@ -3,14 +3,14 @@
 	var search_options = {};
 	var submit_form = function() 
 	{
-		search_options['layout'] = 'results_scopes';	
+		search_options['layout'] = 'results';	
 		//console.log(search_options);
 		var url = search_form.get('action').toURI().setData(search_options);		
 		search_form.ajaxRequest({
 			url : url.toString(),
 			evalScripts : false,
 			onSuccess : function() {
-				var updates = ['.search-scopes','.an-entities-wrapper'];
+				var updates = ['.search-scopes','.an-entities'];
 				var html  = this.response.html.parseHTML();			
 				
 				updates.each(function(selector){
@@ -50,7 +50,7 @@
 		el.getParent('ul').getElements('li').removeClass('active');
 		el.getParent('li').addClass('active');
 		search_options['scope'] = el.get('href').toURI().getData('scope');
-		search_options['layout'] = 'results_scopes';
+		search_options['layout'] = 'results';
 		submit_form();
 	});	
 })()
