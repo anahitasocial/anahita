@@ -71,10 +71,10 @@ class ComBaseControllerResource extends LibBaseControllerResource
      */
     public function getToolbar($toolbar, $config = array())
     {
-        if ( is_string($toolbar) )
+        if(is_string($toolbar))
         {
             //if actorbar or menu alawys default to the base
-            if ( in_array($toolbar, array('actorbar','menubar')) )
+            if(in_array($toolbar, array('actorbar','menubar')))
             {
                 $identifier       = clone $this->getIdentifier();
                 $identifier->path = array('controller','toolbar');

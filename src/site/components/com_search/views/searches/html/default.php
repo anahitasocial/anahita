@@ -23,13 +23,13 @@
 <?php endif;?>
 
 <module position="sidebar-b" style="none">
-<?php if ( !empty($keywords)) : ?>
+<?php if(!empty($keywords)): ?>
 <?= @template('scopes') ?>
 <?php endif;?>
 </module>
 
 <?php if(empty($keywords)) : ?>
-<form action="<?=@route('view=searches')?>" class="well">
+<form action="<?= @route('view=searches') ?>" class="well">
 	<fieldset>
 		<legend><?= @text('COM-SEARCH-PROMPT') ?></legend>
 		<input type="text" name="term" class="input-block-level">
@@ -46,6 +46,8 @@
 	</div>
 </form>
 <?php endif ?>
+
+
 
 <div class="an-entities-wrapper">
 	<?= @template('list') ?>

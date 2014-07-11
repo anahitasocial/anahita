@@ -53,37 +53,35 @@ class ComMediumControllerBehaviorCommentable extends ComBaseControllerBehaviorCo
     public function createCommentStory(KCommandContext $context)
     {
         //called by the comment controller as as callback        
-        $entity   = $context->comment;
-        $parent   = $context->comment->parent;
+        $entity = $context->comment;
+        $parent = $context->comment->parent;
         
         $owner = $entity->author;
          
-        if ( $parent->isOwnable() ) {
+        if($parent->isOwnable())
             $owner  = $parent->owner;
-        }
         
         $data = array(
-                'name' 		=> $parent->getIdentifier()->name.'_comment',
-                'component'	=> $parent->component,
-                'comment'	=> $entity,
-                'object'	=> $parent,
-                'owner'		=> $owner,
-                'target'	=> $parent->isOwnable()  ? $parent->owner : null
+        	'name' => $parent->getIdentifier()->name.'_comment',
+            'component'	=> $parent->component,
+            'comment' => $entity,
+            'object' => $parent,
+            'owner'	=> $owner,
+            'target' => $parent->isOwnable()  ? $parent->owner : null
         );
         
         $story = $this->_mixer->createStory($data);
         
-        if ( $this->isNotifier() )
+        if($this->isNotifier())
         {
             //story owner
             $data['subscribers'] = array($story->owner);
              
             //all the not subscribers
-            if ( $parent->isSubscribable() ) {
+            if($parent->isSubscribable())
                 $data['subscribers'][] = $parent->subscriberIds->toArray();
-            }
              
-            $notification  = $this->_mixer->createNotification($data);
+            $notification = $this->_mixer->createNotification($data);
              
             $notification->setType('post');
         }
