@@ -78,18 +78,22 @@ abstract class LibBaseViewAbstract extends KObject
 	public function __construct(KConfig $config = null)
 	{
 		//If no config is passed create it
-		if(!isset($config)) $config = new KConfig();
+		if(!isset($config)) 
+			$config = new KConfig();
 		
 		parent::__construct($config);
 		
 	    //set the base url
-        if(!$config->base_url instanceof KHttpUrl) {
+        if(!$config->base_url instanceof KHttpUrl) 
+        {
             $this->_baseurl = $this->getService('koowa:http.url', array('url' => $config->base_url));
-        } else {
+        } 
+        else 
+        {
             $this->_baseurl = $config->base_url;
         }
 		
-		$this->output   = $config->output;
+		$this->output = $config->output;
 		$this->mimetype = $config->mimetype;
 				
         $this->setLayout($config->layout);
@@ -97,7 +101,7 @@ abstract class LibBaseViewAbstract extends KObject
         //set the data
         $this->_state = $config->state;
                  
-        $this->_data  = KConfig::unbox($config->data);
+        $this->_data = KConfig::unbox($config->data);
 	}
     	
     /**
@@ -111,12 +115,12 @@ abstract class LibBaseViewAbstract extends KObject
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'state'      => new LibBaseControllerState(),
-            'data'       => array(), 
-	    	'output'	 => '',
-    		'mimetype'	 => '',
-            'layout'     => 'default',
-            'base_url'   => '',
+            'state' => new LibBaseControllerState(),
+            'data' => array(), 
+	    	'output' => '',
+    		'mimetype' => '',
+            'layout' => 'default',
+            'base_url' => '',
 	  	));
 	  
         parent::_initialize($config);
@@ -143,9 +147,8 @@ abstract class LibBaseViewAbstract extends KObject
     {   
         $result = null;
         
-        if ( isset($this->_data[$property]) ) {   
+        if(isset($this->_data[$property]))   
             $result = $this->_data[$property];
-        }
             	
     	return $result;
     }
@@ -167,7 +170,7 @@ abstract class LibBaseViewAbstract extends KObject
     public function __call($method, $args) 
     { 
         //If one argument is passed we assume a setter method is being called
-        if ( !isset($this->_mixed_methods[$method]) && count($args) == 1 ) 
+        if(!isset($this->_mixed_methods[$method]) && count($args) == 1) 
         {
             $this->set(KInflector::underscore($method), $args[0]);            
         	return $this; 
@@ -185,25 +188,28 @@ abstract class LibBaseViewAbstract extends KObject
      * @throws  KObjectException
      * @return  KObject
      */
-    public function set( $property, $value = null )
+    public function set($property, $value = null)
     {
-        if(is_object($property)) {
+        if(is_object($property))
             $property = get_object_vars($property);
-        }
         
         if(is_array($property)) 
         {
-            foreach ($property as $k => $v) {
+            foreach ($property as $k => $v) 
+            {
                 $this->set($k, $v);
             }
         }
-        elseif ( '_' != substr($property, 0, 1) ) 
+        elseif('_' != substr($property, 0, 1)) 
         {
-            if(method_exists($this, 'set'.ucfirst($property)))  
+            if(method_exists($this,'set'.ucfirst($property)))  
             {
                 $this->{'set'.ucfirst($property)}($value);                 
-            } else            
+            } 
+            else
+            {            
             	$this->$property = $value;
+            }
         }
         
         return $this;    	
@@ -307,9 +313,9 @@ abstract class LibBaseViewAbstract extends KObject
 	 * @param 	boolean	If TRUE create a fully qualified route. Default TRUE.
 	 * @return 	string 	The route
 	 */
-	public function getRoute( $route = '', $fqr = true)
+	public function getRoute($route = '', $fqr = true)
 	{
-		if ( !is_array($route) ) 
+		if(!is_array($route)) 
 		{
 			$parts = array();
 			parse_str(trim($route), $parts);
@@ -321,9 +327,8 @@ abstract class LibBaseViewAbstract extends KObject
 	    $route = array();
 	    
 	    //Check to see if there is component information in the route if not add it
-	    if(!isset($parts['option'])) {
+	    if(!isset($parts['option']))
 	        $route['option'] = 'com_'.$this->getIdentifier()->package;
-	    }
 	    
 	    //Add the view information to the route if it's not set
 	    if(!isset($parts['view']))
@@ -331,13 +336,13 @@ abstract class LibBaseViewAbstract extends KObject
 	        $route['view'] = $this->getName();
 	
 	        //Add the layout information to the route if it's not set
-	        if(!isset($parts['layout'])) {
+	        if(!isset($parts['layout'])) 
+	        {
 	            $route['layout'] = $this->getLayout();
 	            
 	            //@TODO temporary. who are we to day what's the default la
-	            if ( $route['layout'] == 'default' ) {
-	            	unset($route['layout']);
-	            }	            
+	            if($route['layout'] == 'default')
+	            	unset($route['layout']);	            
 	        }
             
             //since the view is missing then get the data from
@@ -347,9 +352,8 @@ abstract class LibBaseViewAbstract extends KObject
             $route = array_merge($route, $data);
             
             //Add the format information to the route only if it's not 'html'
-            if(!isset($parts['format'])) {
+            if(!isset($parts['format']))
             	$route['format'] = $this->getIdentifier()->name;
-            }
 	    }
 	    
 	    $parts = array_merge($route, $parts);
@@ -357,10 +361,10 @@ abstract class LibBaseViewAbstract extends KObject
 	    $route = $this->getService('application')->getRouter()->build($parts);	    
 	    
 	    //Add the host and the schema
-	    if ( $fqr )
+	    if($fqr)
 	    {
 	    	$route->scheme = $this->getBaseUrl()->scheme;
-	    	$route->host   = $this->getBaseUrl()->host;
+	    	$route->host = $this->getBaseUrl()->host;
 	    }
 	    	    
 	    return $route;    	    
@@ -373,11 +377,15 @@ abstract class LibBaseViewAbstract extends KObject
      */
     public function __toString()
     {
-    	try {
+    	try 
+    	{
         	return $this->display();
-    	}catch(Exception $e) {
+    	}
+    	catch(Exception $e) 
+    	{
     		$trace = str_replace("\n","<br />", $e->getTraceAsString());
     		trigger_error($e->getMessage().'<br />'.$trace, E_USER_ERROR);
+    		
     		return '';
     	}
     } 	

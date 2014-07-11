@@ -37,7 +37,7 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier))
+        if(!$container->has($config->service_identifier))
         {
             $classname = $config->service_identifier->classname;
             $instance  = new $classname($config);
@@ -57,14 +57,14 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
 	 */
 	public function getRoute($url='', $fqr = true)
 	{
-		if ( !is_array($url) )
+		if(!is_array($url))
 		{
-		    if ( strpos($url, 'http') === 0 ) {
+		    if(strpos($url, 'http') === 0)
 		        return $url;
-		    }
-		    if ( strpos($url, '/') === 0 ) {
+		    
+		    if(strpos($url, '/') === 0)
 		        return JRoute::_($url);
-		    }
+		    
 		    $url = str_replace('index.php?', '', trim($url));
 		    $vars = array();
 		    parse_str($url, $vars);
@@ -73,42 +73,35 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
         
 		$parts = array();
 				
-		if ( !isset($url['option']) ) {
+		if(!isset($url['option']))
 		    $parts['option'] = KRequest::get('get.option','cmd');
-		}
 
 		//if not view is set the set
-		if ( !isset($url['view']) ) 
+		if(!isset($url['view'])) 
 		{
 		    $parts['view'] = KRequest::get('get.view','cmd');
 
 		    //only try to set the layout if we are setting the view
-		    if ( !isset($url['layout']) && KRequest::has('get.layout') ) {
+		    if(!isset($url['layout']) && KRequest::has('get.layout'))
 		        $parts['layout'] = KRequest::get('get.layout','cmd');
-		    }
 		}
 		
 		//carry format
-		if ( !isset($url['format']) && KRequest::has('get.format') ) {
+		if(!isset($url['format']) && KRequest::has('get.format')) 
 		    $parts['format'] = KRequest::get('get.format','cmd');
-		}	
 						
 		foreach($parts as $key => $value)
-		{
 		    $url[$key] = $value;
-		}
 		
 		//unset html format since it's a default
-		if ( isset($url['format']) && $url['format'] == 'html' ) {
+		if(isset($url['format']) && $url['format'] == 'html' )
 		    unset($url['format']);
-		}
 		
 		//unset default lyout since it's a default
-		if ( isset($url['layout']) && $url['layout'] == 'default' ) {
+		if(isset($url['layout']) && $url['layout'] == 'default' )
 		    unset($url['layout']);
-		}
 		
-		$route  = JRoute::_('index.php?'.http_build_query($url), false);
+		$route = JRoute::_('index.php?'.http_build_query($url), false);
 		
 		return $route;
 	}
