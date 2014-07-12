@@ -1,3 +1,5 @@
+<?php defined('KOOWA') or die; ?>
+
 <div class="an-entity">
 	<div class="entity-portrait-square">
 		<?= @avatar($item->author)  ?>
