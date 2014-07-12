@@ -141,13 +141,11 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 	{
 	    parent::setView($view);
 	
-	    if ( !$this->_view instanceof ComBaseViewAbstract )
+	    if (!$this->_view instanceof ComBaseViewAbstract)
 	    {
 	        $name  = KInflector::isPlural($this->view) ? 'media' : 'medium';
 	        $defaults[] = 'ComMediumView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComMediumView'.ucfirst($name).ucfirst($this->_view->name);
-            $defaults[] = 'ComBaseView'.ucfirst($this->_view->name);
-            
 	        register_default(array('identifier'=>$this->_view, 'default'=>$defaults)); 
 	    }
 	
