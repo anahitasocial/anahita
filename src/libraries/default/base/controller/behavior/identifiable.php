@@ -96,10 +96,8 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 		
         //for any before if the item has been fetched
         //then try to fetch it
-		if ( $parts[0] == 'before' ) 
-        {
+		if($parts[0] == 'before')
 			return $this->_mixer->fetchEntity($context);
-		}
     }
     
     /**
@@ -149,16 +147,12 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
     {
     	$item = $this->_mixer->getState()->getItem();
     	
-    	if ( $item  == null && $this->_mixer->getState()->isUnique()	
-    			) {
-    		
+    	if($item == null && $this->_mixer->getState()->isUnique())
     		$item = $this->fetchEntity(new KCommandContext()); 
-    	}
     	
     	//create an new entity
-    	if ( $item == null && $create ) {
-    		$this->_mixer->getState()->setItem( $this->getRepository()->getEntity() );
-    	}
+    	if($item == null && $create)
+    		$this->_mixer->getState()->setItem( $this->getRepository()->getEntity());
     	
         return $this->_mixer->getState()->getItem();
     }
@@ -172,11 +166,11 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
      */
     public function setRepository($repository)
     {
-        if ( !$repository instanceof AnDomainRepositoryAbstract )
+        if(!$repository instanceof AnDomainRepositoryAbstract)
         {
             $identifier = $repository;
             
-            if ( strpos($repository,'.') === false ) 
+            if(strpos($repository,'.') === false) 
             {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('domain', 'entity');
@@ -198,11 +192,10 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
      */
     public function getRepository()
     {
-        if ( !$this->_repository instanceof AnDomainRepositoryAbstract ) 
+        if(!$this->_repository instanceof AnDomainRepositoryAbstract) 
         {
-            if ( !$this->_repository instanceof KServiceIdentifier ) {
+            if(!$this->_repository instanceof KServiceIdentifier )
                 $this->setRepository($this->_repository);    
-            }
             
             $this->_repository = AnDomain::getRepository($this->_repository);
         }
@@ -223,7 +216,7 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
     	
         $identifiable_key = $this->getIdentifiableKey();
           
-        if ( $values = $this->$identifiable_key ) 
+        if($values = $this->$identifiable_key) 
         {
             $scope  = KConfig::unbox($context->identity_scope);
             
@@ -231,27 +224,31 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
             
             $scope[$identifiable_key] = $values;
             
-            if ( is_array($values) ) 
+            if(is_array($values)) 
                 $mode = AnDomain::FETCH_ENTITY_SET;
             else
                 $mode = AnDomain::FETCH_ENTITY;
                    
-            $query  = $this->getRepository()->getQuery();
+            $query = $this->getRepository()->getQuery();
+            
             $query->where($scope);
             
             $entity = $this->getRepository()->fetch($query, $mode);
             
-            if ( empty($entity) || !count($entity)) 
+            if(empty($entity) || !count($entity)) 
             {
                 $exception = new LibBaseControllerExceptionNotFound('Resource Not Found');
                 
                 //see if the entity exits or not
-                if ( $query->disableChain()->fetch() ) 
+                if($query->disableChain()->fetch()) 
                 {
-                    if ( $this->viewer && !$this->viewer->guest() ) {
-                        $exception = new  LibBaseControllerExceptionForbidden('Forbidden');
-                    } else {
-                        $exception = new  LibBaseControllerExceptionUnauthorized('Not authorized');
+                    if($this->viewer && !$this->viewer->guest()) 
+                    {
+                        $exception = new LibBaseControllerExceptionForbidden('Forbidden');
+                    } 
+                    else 
+                    {
+                        $exception = new LibBaseControllerExceptionNotFound('Not Found');
                     }
                 }
                 
