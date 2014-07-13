@@ -48,21 +48,18 @@ class PlgContentfilterHashtag extends PlgContentfilterAbstract
 	 * @return string
 	 */
 	public function filter($text)
-	{
-		$this->_stripTags($text);
-        
+	{        
 		$matches = array();
+		
 		if(preg_match_all(ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, $text, $matches))
 		{	
 			foreach($matches[0] as $index=>$hashtag)
 			{	
 				$url = JRoute::_('option=com_hashtags&view=hashtag&alias='.$matches[1][$index]);
-				$replace = 	'<span class="hashtag"><a href="'.$url.'">'.$hashtag.'</a></span>';
+				$replace = 	'<a class="hashtag" href="'.$url.'">'.$hashtag.'</a>';
 				$text = str_ireplace($hashtag, $replace, $text);	
 			}
 		}
-				
-		$this->_replaceTags($text);
 		
 		return $text;
 	}
