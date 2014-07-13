@@ -141,8 +141,9 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	 * @return string
 	 */
 	public function nodes($items, $config = array())
-	{
-		return $this->_render('nodes', array('items'=>$items));
+	{						
+		$config['items'] = $items;	
+		return $this->_render('nodes', $config);
 	}
 	
     /**
