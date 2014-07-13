@@ -40,7 +40,7 @@
 		
 	<?php if($photo->description): ?>
 	<div class="entity-description">
-	<?= @helper('text.truncate', strip_tags($photo->description), array('length'=>200, 'read_more'=>true)); ?>
+	<?= @helper('text.truncate', @content($photo->description), array('length'=>200, 'read_more'=>true)); ?>
 	</div>
 	<?php endif; ?>
 		
