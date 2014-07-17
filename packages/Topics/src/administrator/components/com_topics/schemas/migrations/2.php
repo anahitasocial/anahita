@@ -20,9 +20,9 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
     */
     public function up()
     {
-		//converting the old boards as hashtags
+		$timeThen = microtime(true);
+    	//converting the old boards as hashtags
     	$boards = dbfetch('SELECT id, alias FROM #__anahita_nodes WHERE TYPE LIKE \'%com:topics.domain.entity.board\' ');
-    	
     	
         foreach($boards as $board)
         {
@@ -42,13 +42,17 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
         	{
         		foreach($terms as $term)
         			if(strlen($term) > 3)
-        				$topic->addHashtag($term)->save();
+        				if($topic->set('description', $topic->description.' #'.trim($term))->addHashtag($term)->save())
+        					dboutput($term.', ');
         	}
         }
         
         dbexec('UPDATE #__anahita_nodes SET parent_id = 0 WHERE type LIKE \'%com:topics.domain.entity.topic\'');
         dbexec('DELETE FROM #__anahita_nodes WHERE type LIKE \'%com:topics.domain.entity.board\'');
         dbexec('DELETE FROM #__anahita_edges WHERE node_b_type LIKE \'%com:topics.domain.entity.board\'');
+        
+        $timeDiff = microtime(true) - $timeThen;
+        dboutput("TIME: ($timeDiff)"."\n");
     }
 
    /**

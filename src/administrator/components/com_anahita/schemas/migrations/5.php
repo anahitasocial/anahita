@@ -20,19 +20,22 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     */
     public function up()
     {
-        
+        $timeThen = microtime(true);
+    	
     	//create the fields required for creating hashtag nodes
     	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_count`');
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE `tag_ids` `hashtag_ids` TEXT DEFAULT NULL');
-        dbexec('ALTER TABLE #__anahita_nodes ADD `hashtagable_count` INT(11) UNSIGNED DEFAULT NULL AFTER `hashtag_ids`');
-        dbexec('ALTER TABLE #__anahita_nodes ADD `hashtagable_ids` TEXT DEFAULT NULL AFTER `hashtagable_count`');
-        dbexec('INSERT INTO #__plugins (name,element,folder,published) VALUES (\'Hashtag Filter\',\'hashtag\',\'contentfilter\',1)');
+    	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_ids`');
+        dbexec('ALTER TABLE #__anahita_nodes ADD `hashtagable_count` INT(11) UNSIGNED DEFAULT 0');
+        dbexec('INSERT INTO #__plugins (name, element, folder) VALUES (\'Hashtag Filter\',\'hashtag\',\'contentfilter\')');
     	
-        $timeThen = microtime(true);
         $ids = array();
         
+        //fetch only the nodes that contain something that resembels a hashtag
+        $query_regexp = 'body REGEXP \'#([^0-9_\s\W].{2,})\'';
+        
+        dboutput("\nActors' Hashtags\n");
     	//extracting hashtag terms from actors
-        $ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComActorsDomainEntityActor%\'');
+        $ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComActorsDomainEntityActor%\' AND '.$query_regexp);
 
     	foreach($ids as $id)
     	{
@@ -40,11 +43,13 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     		$hashtagTerms = $this->extractHashtagTerms($entity->description);
     		
     		foreach($hashtagTerms as $term)
-    			$entity->addHashtag(trim($term))->save();
+    			if($entity->addHashtag($term)->save())
+    				dboutput($term.', ');
     	}
         
+    	dboutput("\nComments' hashtags\n");
     	//extracting hashtag terms from comments
-    	$ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComBaseDomainEntityComment%\'');
+    	$ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComBaseDomainEntityComment%\' AND '.$query_regexp);
     	
     	foreach($ids as $id)
     	{
@@ -52,20 +57,37 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     		$hashtagTerms = $this->extractHashtagTerms($entity->body);
     		
     		foreach($hashtagTerms as $term)
-    			$entity->addHashtag(trim($term))->save();
+    			if($entity->addHashtag($term)->save())
+    				dboutput($term.', ');
     	}
     	
-    	//extracting hashtag terms from mediums
-		$ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComMediumDomainEntityMedium%\' AND type NOT LIKE \'%com:topics.domain.entity.board\' ');
+    	dboutput("\nMedia's Hashtags\n");
+    	//extracting hashtag terms from mediums: notes, topics, pages, and todos
+    	$query = 	'SELECT id FROM #__anahita_nodes WHERE '.$query_regexp.' AND ( '.
+    				'type LIKE \'%com:notes.domain.entity.note\' '.
+    	 			'OR type LIKE \'%com:topics.domain.entity.topic\' '.
+    	 			'OR type LIKE \'%com:photos.domain.entity.photo\' '.
+    				'OR type LIKE \'%com:photos.domain.entity.set\' '.
+    	 			'OR type LIKE \'%com:pages.domain.entity.page\' '.
+    	 			'OR type LIKE \'%com:todos.domain.entity.todo\' '.
+    	 			'OR type LIKE \'%com:milestone.domain.entity.milestone\' '.
+    	 			' ) ';
+    	
+		$ids = dbfetch($query);
     	
     	foreach($ids as $id)
     	{
     		$entity = KService::get('com://site/medium.domain.entity.medium')->getRepository()->getQuery()->disableChain()->fetch($id);    		
+    		
     		$hashtagTerms = $this->extractHashtagTerms($entity->description);
     		
     		foreach($hashtagTerms as $term)
-    			$entity->addHashtag(trim($term))->save();
+    			if($entity->addHashtag($term)->save())
+    				dboutput($term.', ');
     	}
+    	
+    	dboutput('Publish the hashtag plugin'."\n");
+    	dbexec('UPDATE #__plugins SET published = 1 WHERE element = \'hashtag\'');
     	
     	$timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n");
