@@ -37,8 +37,8 @@ final class ComHashtagsDomainEntityAssociation extends ComBaseDomainEntityEdge
     {
         $config->append(array(
         	'aliases' => array(
-                'hashtagable' => 'nodeA',
-                'hashtag' => 'nodeB'  
+                'hashtag' => 'nodeA',
+        		'hashtagable' => 'nodeB'
             )
         ));
         
@@ -70,7 +70,7 @@ final class ComHashtagsDomainEntityAssociation extends ComBaseDomainEntityEdge
     }
     
     /**
-     * Resets the hashtag and hashtagable
+     * Resets the hashtag
      *
      * KCommandContext $context Context
      * 
@@ -78,7 +78,6 @@ final class ComHashtagsDomainEntityAssociation extends ComBaseDomainEntityEdge
      */
     private function resetStats()
     {
-    	$this->hashtagable->getRepository()->getBehavior('hashtagable')->resetHashtagStats(array($this->hashtagable));
     	$this->hashtag->resetStats(array($this->hashtag));
     	
     	if($this->hashtag->hashtagableCount === 0)

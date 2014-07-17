@@ -27,7 +27,7 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     /*
      * hashtag regex pattern
      */
-    const PATTERN_HASHTAG = '/#([\p{L}][\p{L}0-9]{2,})/u';
+    const PATTERN_HASHTAG = '/#([^0-9_\s\W][\p{L}0-9]{2,})/u';
 	
     /**
      * Initializes the default configuration for the object
@@ -43,8 +43,7 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
         $config->append(array(
             'attributes' => array(
                 'name' => array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'string','read'=>'public', 'unique'=>true),
-        		'hashtagableCount' => array('default'=>0,'write'=>'private'),
-        		'hashtagableIds' => array('type'=>'set', 'default'=>'set','write'=>'private')
+        		'hashtagableCount' => array('default'=>0,'write'=>'private')
             ),
 			'behaviors'  => to_hash(array(
 				'modifiable',
@@ -68,14 +67,13 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
      * 
      * @return void
      */
-    public function resetStats(array $entities)
+    public function resetStats(array $hashtags)
     {
-    	foreach($entities as $entity)
+    	foreach($hashtags as $hashtag)
    		{
-    		$ids = $this->getService('repos://site/hashtags.association')->getQuery()->hashtag($entity)->disableChain()->fetchValues('hashtagable.id');
-   			$entity->set('hashtagableIds', AnDomainAttribute::getInstance('set')->setData($ids));
-   			$entity->set('hashtagableCount', count($ids));
-   			$entity->timestamp();
+    		$ids = $this->getService('repos://site/hashtags.association')->getQuery()->hashtag($hashtag)->disableChain()->fetchValues('hashtagable.id');
+   			$hashtag->set('hashtagableCount', count($ids));
+   			$hashtag->timestamp();
    		}
     }
 }

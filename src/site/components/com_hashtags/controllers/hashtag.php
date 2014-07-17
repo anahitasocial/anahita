@@ -67,7 +67,7 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 		}
 		
 		if($this->sort == 'top')
-    		$entity->hashtagables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC');
+    		$entity->hashtagables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC')->groupby('hashtagable.id');
     	else 
 			$entity->hashtagables->order('node.created_on', 'DESC');
 

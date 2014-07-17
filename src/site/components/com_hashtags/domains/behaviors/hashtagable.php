@@ -36,13 +36,6 @@
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'attributes' => array(
-                'hashtagIds' => array(
-                	'type' => 'set', 
-                	'default' => 'set', 
-                	'write' => 'private'
-        		)            
-            ),
             'relationships' => array(
                 'hashtags' => array(
                     'through' => 'com:hashtags.domain.entity.association',                    
@@ -65,6 +58,8 @@
      */
     public function addHashtag($term)
     {
+    	$term = trim($term);
+    	
     	//@todo implement is_hashtag filter method
     	if(!is_string($term))
     		return;
@@ -86,6 +81,8 @@
      */
     public function removeHashtag($term)
     {
+    	$term = trim($term);
+    	
     	//@todo implement is_hashtag filter method
     	if(!is_string($term))
     		return;
@@ -111,19 +108,5 @@
     {
         $this->get('hashtags')->getQuery()->select('name');
         return $this->get('hashtags');
-    }
-    
-    /**
-     * Update hashtagable's stats
-     *
-     * @return void
-     */
-    public function resetHashtagStats(array $entities)
-    {    	
-    	foreach($entities as $entity)
-    	{
-    		$ids = $entity->hashtags->getQuery()->disableChain()->fetchValues('id');
-    		$entity->set('hashtagIds', AnDomainAttribute::getInstance('set')->setData($ids));
-    	}
     }
  }
