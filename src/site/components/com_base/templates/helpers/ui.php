@@ -168,7 +168,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 		$offset = isset($data['start'])  ? $data['start']  : 0;
 		
 		if ( !isset($config['comments']) ) {
-			$config['comments'] = $entity->comments->limit($limit, $offset);
+			$config['comments'] = $entity->comments->order('creationTime', 'ASC')->limit($limit, $offset);
 		}
 		
         if ( !isset($config['can_comment']) ) 
