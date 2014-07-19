@@ -80,7 +80,9 @@ class ComBaseControllerService extends ComBaseControllerResource
             'toolbars'      => array($this->getIdentifier()->name,'menubar','actorbar'),
             'request'       => array(
                 'limit'     => 20,
-                'offset'    => 0                
+                'offset'    => 0,
+				'sort'		=> 'recent',
+				'scope'		=> ''                
             )
 		));
 	}
