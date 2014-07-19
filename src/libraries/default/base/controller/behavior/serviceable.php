@@ -152,15 +152,26 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         {
             $query->parent($this->getParent());
         }
-    
-        //do some sorting
-        if($this->sort)
+        
+        switch($this->sort)
         {
-            $this->getState()->append(array(
-                'direction' => 'asc'
-            ));
-            
-            $query->order($this->sort,  $this->direction);
+        	case 'top':
+        		$identifierName = $this->_mixer->getIdentifier()->name;
+        		$query->order('(COALESCE('.$identifierName.'.comment_count,0) + COALESCE('.$identifierName.'.vote_up_count,0) + COALESCE('.$identifierName.'.subscriber_count,0) + COALESCE('.$identifierName.'.follower_count,0))', 'DESC');
+        	break;
+        	
+        	case 'updated':
+        		$query->order('updateTime', 'DESC');
+        	break;
+        	
+        	case 'oldest':
+        		$query->order('creationTime', 'ASC');
+        	break;	
+        	
+        	case 'recent':
+        	case 'newest':
+        		$query->order('creationTime', 'DESC');
+        	break;
         }
     
         $query->limit($this->limit, $this->start);
