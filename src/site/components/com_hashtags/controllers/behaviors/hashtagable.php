@@ -109,8 +109,8 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 			$entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
 			
 			$query
-			->join('left', 'anahita_edges AS association', $entityType.'.id = association.node_a_id')
-			->join('left', 'anahita_nodes AS hashtag', 'association.node_b_id = hashtag.id');
+			->join('left', 'anahita_edges AS edge', $entityType.'.id = edge.node_b_id')
+			->join('left', 'anahita_nodes AS hashtag', 'edge.node_a_id = hashtag.id');
 			
 			foreach($this->ht as $hashtag)
 			{
