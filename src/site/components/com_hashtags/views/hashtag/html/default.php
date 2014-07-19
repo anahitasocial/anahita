@@ -1,9 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<h1 id="entity-name"><?= sprintf(@text('COM-HASHTAG-TERM'), $item->name) ?></h1>
-
 <?php 
-
 $paginationUrl = $item->getURL(); 
 if(!empty($sort))
 	$paginationUrl .= '&sort='.$sort;
