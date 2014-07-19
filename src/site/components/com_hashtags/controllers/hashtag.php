@@ -35,10 +35,9 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(		
-            'request'       => array(
-            	'limit'     => 20,
-				'sort'		=> 'top',
-				'scope' => ''                
+            'request' => array(
+            	'scope' => '',
+				'sort'	=> 'trending'                
             )            
 		));
 		
@@ -51,13 +50,15 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
      */
 	protected function _actionGet(KCommandContext $context)
 	{	  
-        $this->getToolbar('menubar')->setTitle(null);   
+           
 		return parent::_actionGet($context);
 	}
 	
 	protected function _actionRead(KCommandContext $context)
 	{
 		$entity = parent::_actionRead($context);
+
+		$this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-HASHTAGS-HEADER-HASHTAG'), $entity->name));
 		
 		if($this->scope)
 		{
@@ -74,5 +75,28 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 		$entity->hashtagables->limit($this->limit, $this->start);
 		
 		return $entity;
+	}
+	
+	/**
+	 * Applies the browse sorting 
+	 * 
+	 * @param KCommandContext $context
+	 */
+	protected function _actionBrowse(KCommandContext $context)
+	{
+		$entities = parent::_actionBrowse($context);
+		
+		$entities->select('COUNT(*) AS count')
+		->join('RIGHT', 'anahita_edges AS edge', 'hashtag.id = edge.node_a_id')
+		->where('edge.type', 'LIKE', '%com:hashtags.domain.entity.association')
+		->group('hashtag.id')
+		->order('count', 'DESC');
+		
+		if($this->sort == 'trending')
+		{
+			$entities->where('edge.created_on', '>', '2014-07-17 22:52:53');
+		}
+		
+		return $entities;
 	}
 }
