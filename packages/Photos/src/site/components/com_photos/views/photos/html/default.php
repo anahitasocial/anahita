@@ -2,7 +2,7 @@
 
 <module position="sidebar-b"></module>
 
-<?php if($actor && $actor->id > 0): ?>
+<?php if($actor && $actor->id > 0 && empty($filter)): ?>
 	<?php $sets = $actor->sets->order('updateTime', 'DESC')->limit(20); ?>
 	<?php if(count($sets)): ?>
 	<module position="sidebar-b" title="<?= @text('COM-PHOTOS-MODULE-HEADER-SETS') ?>">
