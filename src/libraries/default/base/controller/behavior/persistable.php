@@ -36,8 +36,8 @@ class LibBaseControllerBehaviorPersistable extends KControllerBehaviorAbstract
 	public function restoreState($action)
 	{
 		//Built the session identifier based on the action
-		$identifier  = $this->_mixer->getIdentifier().'.'.$action;
-		$state       = KRequest::get('session.'.$identifier, 'raw', array());
+		$identifier = $this->_mixer->getIdentifier().'.'.$action;
+		$state = KRequest::get('session.'.$identifier, 'raw', array());
 	
 		//Append the data to the request object
 		$this->getState()->append($state);
@@ -51,7 +51,7 @@ class LibBaseControllerBehaviorPersistable extends KControllerBehaviorAbstract
 	 */
 	public function persistState($action)
 	{
-		$state       = $this->getRequest();
+		$state = $this->getRequest();
 
 		// Built the session identifier based on the action
 		$identifier  = $this->_mixer->getIdentifier().'.'.$action;

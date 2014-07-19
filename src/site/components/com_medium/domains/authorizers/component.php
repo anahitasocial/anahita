@@ -37,19 +37,20 @@ class ComMediumDomainAuthorizerComponent extends LibBaseDomainAuthorizerAbstract
 	protected function _authorizeAction(KCommandContext $context)
 	{
 		$method = '_authorize'.ucfirst($context->action);
-		$ret    = self::AUTH_NOT_IMPLEMENTED;
-		if ( method_exists($this, $method) ) {
+		
+		$ret = self::AUTH_NOT_IMPLEMENTED;
+		
+		if(method_exists($this, $method)) 
+		{	
 			$ret = $this->$method($context->resource);
-		} else 
+		} 
+		elseif($context->actor) 
 		{
-			if ( $context->actor ) 
-			{
-			    //check if it's enabled and assigned
-			    if ( $this->_entity->isAssignable() ) {
-			        $ret = $this->_entity->activeForActor($context->actor);
-			    }
-			}
+			//check if it's enabled and assigned
+			if($this->_entity->isAssignable())
+				$ret = $this->_entity->activeForActor($context->actor);
 		}
+		
 		return $ret;
 	}
 }
