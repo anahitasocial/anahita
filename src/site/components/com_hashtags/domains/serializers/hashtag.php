@@ -31,10 +31,10 @@ class ComHashtagsDomainSerializerHashtag extends ComBaseDomainSerializerDefault
     {
         $data = parent::toSerializableArray($entity);
         
-        $data['hashtagableCount'] = $entity->hashtagableCount;
         $data['creationTime'] = $entity->creationTime->getDate();
         $data['updateTime'] = $entity->updateTime->getDate();
         
+        unset($data['body']);
         unset($data['author']);
         unset($data['editor']);
         

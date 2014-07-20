@@ -42,8 +42,7 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'attributes' => array(
-                'name' => array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'string','read'=>'public', 'unique'=>true),
-        		'hashtagableCount' => array('default'=>0,'write'=>'private')
+                'name' => array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'string','read'=>'public', 'unique'=>true)
             ),
 			'behaviors'  => to_hash(array(
 				'modifiable',
@@ -70,10 +69,6 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     public function resetStats(array $hashtags)
     {
     	foreach($hashtags as $hashtag)
-   		{
-    		$ids = $this->getService('repos://site/hashtags.association')->getQuery()->hashtag($hashtag)->disableChain()->fetchValues('hashtagable.id');
-   			$hashtag->set('hashtagableCount', count($ids));
    			$hashtag->timestamp();
-   		}
     }
 }

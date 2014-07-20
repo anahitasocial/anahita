@@ -80,7 +80,7 @@ final class ComHashtagsDomainEntityAssociation extends ComBaseDomainEntityEdge
     {
     	$this->hashtag->resetStats(array($this->hashtag));
     	
-    	if($this->hashtag->hashtagableCount === 0)
+    	if(count($this->hashtag->hashtagables) === 0)
 			$this->hashtag->delete();
     }
 }
