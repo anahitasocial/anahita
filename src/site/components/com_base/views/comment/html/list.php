@@ -12,7 +12,7 @@
 			
 			<div class="an-meta">
 				<?= @date($comment->creationTime) ?> 
-				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>">#</a>
+				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>"><?= @text('LIB-AN-COMMENT-PERMALINK') ?></a>
 			</div>
 		</div>
 	</div>
