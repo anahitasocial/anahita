@@ -120,11 +120,11 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 			}
 			
 			$query
-			->where('association.type', '=', 'ComHashtagsDomainEntityAssociation,com:hashtags.domain.entity.association')
+			->where('edge.type', '=', 'ComHashtagsDomainEntityAssociation,com:hashtags.domain.entity.association')
 			->where('hashtag.name', 'IN', $hashtags)
 			->group($entityType.'.id');
 			
-			//print str_ireplace('#_', 'jos', $query);
+			//print str_replace('#_', 'jos', $query);
 		}
 	}
 }
