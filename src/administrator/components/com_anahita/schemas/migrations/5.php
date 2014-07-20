@@ -22,11 +22,31 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);
     	
+        //some legacy cleanup
+        $legacyTables = array(
+        	'categories',
+        	'content', 
+        	'content_frontpage', 
+        	'core_log_items', 
+        	'migration_backlinks',
+        	'migrations',
+        	'sections',
+        	'stats_agents',
+        	'tagmeta',
+        	'core_log_searches');
+        
+        foreach($legacyTables as $legacyTable)
+        	dbexec('DROP TABLE IF EXISTS #__'.$legacyTable);
+        	
+        dbexec('DELETE FROM #__components WHERE `option` = \'com_mailto\' ');	
+        
     	//create the fields required for creating hashtag nodes
     	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_count`');
     	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_ids`');
-        dbexec('ALTER TABLE #__anahita_nodes ADD `hashtagable_count` INT(11) UNSIGNED DEFAULT 0');
-        dbexec('INSERT INTO #__plugins (name, element, folder) VALUES (\'Hashtag Filter\',\'hashtag\',\'contentfilter\')');
+    	
+    	//install the hashtag related extensions
+    	dbexec('INSERT INTO #__components (`name`,`link`,`option`,`iscore`,`enabled`) VALUES (\'Hashtags\',\'option=com_hashtags\',\'com_hashtags\',1,1)');
+        dbexec('INSERT INTO #__plugins (`name`, `element`, `folder`) VALUES (\'Hashtag Filter\',\'hashtag\',\'contentfilter\')');
     	
         $ids = array();
         
