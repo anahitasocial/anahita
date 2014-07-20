@@ -37,22 +37,13 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 		$config->append(array(		
             'request' => array(
             	'scope' => '',
-				'sort'	=> 'trending'                
+				'sort'	=> 'trending',
+				'days'	=> KRequest::get('get.days', 'int', 1)                
             )            
 		));
 		
 		parent::_initialize($config);
 	}	
-
-	/**
-     * Hides the menubar title
-     * {@inheritdoc}
-     */
-	protected function _actionGet(KCommandContext $context)
-	{	  
-           
-		return parent::_actionGet($context);
-	}
 	
 	protected function _actionRead(KCommandContext $context)
 	{
@@ -84,19 +75,26 @@ class ComHashtagsControllerHashtag extends ComBaseControllerService
 	 */
 	protected function _actionBrowse(KCommandContext $context)
 	{
-		$entities = parent::_actionBrowse($context);
+		if(!$context->query) 
+        {
+            $context->query = $this->getRepository()->getQuery(); 
+        }
 		
-		$entities->select('COUNT(*) AS count')
+        $query = $context->query;
+        
+		$query->select('COUNT(*) AS count')
 		->join('RIGHT', 'anahita_edges AS edge', 'hashtag.id = edge.node_a_id')
 		->where('edge.type', 'LIKE', '%com:hashtags.domain.entity.association')
 		->group('hashtag.id')
-		->order('count', 'DESC');
+		->order('count', 'DESC')
+		->limit($this->limit, $this->start);
 		
 		if($this->sort == 'trending')
 		{
-			$entities->where('edge.created_on', '>', '2014-07-17 22:52:53');
+			$now = new KDate();			
+			$query->where('edge.created_on', '>', $now->addDays(- (int) $this->days)->getDate());
 		}
 		
-		return $entities;
+		return $this->getState()->setList($query->toEntityset())->getList();
 	}
 }
