@@ -39,8 +39,7 @@ class ComHashtagsDomainValidatorDefault extends AnDomainValidatorAbstract
         
         $config->append(array(
             'validations' => array(
-                  'name' => array('format'=>'hashtag'),   			
-                  'body' => array('format'=>'string')
+                  'name' => array('format'=>'hashtag')
              )
         ));        
     }    
