@@ -81,8 +81,6 @@ CREATE TABLE `#__anahita_nodes` (
   `shared_owner_ids` mediumtext,
   `administrator_ids` text,
   `blocked_ids` text,
-  `tag_count` int(11) unsigned DEFAULT NULL,
-  `tag_ids` text,
   `excerpt` text,
   `mimetype` varchar(100) DEFAULT NULL,
   `story_subject_id` bigint(11) unsigned DEFAULT NULL,

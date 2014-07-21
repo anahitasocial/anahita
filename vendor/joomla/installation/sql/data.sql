@@ -16,7 +16,8 @@ INSERT INTO `#__components` (`id`, `name`, `link`, `menuid`, `parent`, `admin_me
 (40, 'Notifications', 'option=com_notifications', 0, 0, 'option=com_notifications', 'Notifications', 'com_notifications', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (41, 'Notes', 'option=com_notes', 0, 0, '', 'Notes', 'com_notes', 0, '', 1, '', 1),
 (42, 'Html', 'option=com_html', 0, 0, 'option=com_html', 'Html', 'com_html', 0, 'js/ThemeOffice/component.png', 1, '', 1),
-(43, 'Mailer', 'option=com_mailer', 0, 0, 'option=com_mailer', 'Mailer', 'com_mailer', 0, 'js/ThemeOffice/component.png', 1, '', 1);
+(43, 'Mailer', 'option=com_mailer', 0, 0, 'option=com_mailer', 'Mailer', 'com_mailer', 0, 'js/ThemeOffice/component.png', 1, '', 1),
+(14, 'Hashtags', 'option=com_hashtags', 0, 0, '', '', 'com_hashtags', 0, '', 1, '', 1);
 
 
 
