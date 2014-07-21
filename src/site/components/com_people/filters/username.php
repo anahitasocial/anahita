@@ -26,7 +26,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComPeopleFilterUsername extends KFilterAbstract
+class ComPeopleFilterUsername extends KFilterCmd
 {
 	/**
 	 * Validate a value
@@ -49,8 +49,7 @@ class ComPeopleFilterUsername extends KFilterAbstract
      */
     protected function _sanitize($value)
     {
-        $value = trim($value);
-        $pattern = '/^[A-Za-z0-9][A-Za-z0-9_-]*$/';
-        return preg_replace($pattern, '', $value);
+        //don't allow to sanitize that way we can return an error
+        return $value;        
     }
 }
