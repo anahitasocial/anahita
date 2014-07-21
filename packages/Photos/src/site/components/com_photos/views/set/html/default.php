@@ -43,7 +43,7 @@ Delegator.register('click', {
 		
 		<div class="entity-description-wrapper">
 			<div data-behavior="<?= $set->authorize('edit') ? 'Editable' : ''; ?>" class="entity-description <?= ($set->authorize('edit')) ? 'editable' : ''; ?>" data-editable-options="{'url':'<?= @route($set->getURL()) ?>','name':'description', 'input-type':'textarea', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-DESCRIPTION-PROMPT') ?>'}">
-				<?= @content($set->description) ?>
+				<?= @hashtags(@content($set->description)) ?>
 			</div>
 		</div>
 		

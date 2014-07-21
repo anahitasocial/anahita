@@ -26,7 +26,7 @@ $highlight = ($milestone->endDate->getDate(DATE_FORMAT_UNIXTIME) >= $current_tim
 	</h3>
 	
 	<?php if($milestone->description): ?>
-	<div class="entity-description"><?= @content($milestone->body) ?></div>
+	<div class="entity-description"><?= @hashtags(@content($milestone->body)) ?></div>
 	<?php endif; ?>
 	
 	<div class="entity-meta">

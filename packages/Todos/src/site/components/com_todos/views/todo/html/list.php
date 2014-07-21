@@ -24,7 +24,7 @@
 	
 	<?php if($todo->description): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($todo->description), array('length'=>500, 'consider_html'=>true, 'read_more'=>true)); ?>
+		<?= @helper('text.truncate', @hashtags(@content($todo->description)), array('length'=>500, 'consider_html'=>true, 'read_more'=>true)); ?>
 	</div>
 	<?php endif; ?>
 	

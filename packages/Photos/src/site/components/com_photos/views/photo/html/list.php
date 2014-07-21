@@ -31,7 +31,7 @@
 	
 	<div class="entity-description-wrapper <?= $photo->authorize('edit') ? 'editable' : '' ?>">
 		<div data-behavior="<?= $photo->authorize('edit') ? 'Editable' : ''; ?>" class="entity-description <?= $photo->authorize('edit') ? 'editable' : '' ?>" data-editable-options="{'url':'<?= @route($photo->getURL()) ?>','name':'description', 'input-type':'textarea', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-DESCRIPTION-PROMPT') ?>'}">
-		<?= @content($photo->description) ?>
+		<?= @hashtags(@content($photo->description)) ?>
 		</div>
 	</div>
 	

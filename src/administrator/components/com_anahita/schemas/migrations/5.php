@@ -46,7 +46,6 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     	
     	//install the hashtag related extensions
     	dbexec('INSERT INTO #__components (`name`,`link`,`option`,`iscore`,`enabled`) VALUES (\'Hashtags\',\'option=com_hashtags\',\'com_hashtags\',1,1)');
-        dbexec('INSERT INTO #__plugins (`name`, `element`, `folder`) VALUES (\'Hashtag Filter\',\'hashtag\',\'contentfilter\')');
     	
         $ids = array();
         
@@ -105,9 +104,6 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     			if($entity->addHashtag($term)->save())
     				dboutput($term.', ');
     	}
-    	
-    	dboutput('Publish the hashtag plugin'."\n");
-    	dbexec('UPDATE #__plugins SET published = 1 WHERE element = \'hashtag\'');
     	
     	$timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n");

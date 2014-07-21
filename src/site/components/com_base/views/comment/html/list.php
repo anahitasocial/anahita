@@ -27,7 +27,7 @@
 	<?php endif;?>
 	
 	<div class="entity-body"> 
-		<?= @content($body) ?>
+		<?= @hashtags(@content($body)) ?>
 	</div>
 		
 	<div class="entity-meta">

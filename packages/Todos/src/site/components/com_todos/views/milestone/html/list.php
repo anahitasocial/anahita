@@ -28,7 +28,7 @@ $highlight = ($milestone->endDate->getDate(DATE_FORMAT_UNIXTIME) >= $current_tim
 	
 	<?php if( $milestone->description ): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($milestone->description), array('length'=>500, 'consider_html'=>true, 'read_more'=>true)); ?>
+		<?= @helper('text.truncate', @hashtags(@content($milestone->description)), array('length'=>500, 'consider_html'=>true, 'read_more'=>true)); ?>
 	</div>
 	<?php endif; ?>
 	

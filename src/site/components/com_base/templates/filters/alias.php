@@ -46,7 +46,8 @@ class ComBaseTemplateFilterAlias extends LibBaseTemplateFilterAlias
 			'@name('		 => '$this->renderHelper(\'com://site/actors.template.helper.name\',',		    
 		    '@editor('	     => '$this->renderHelper(\'ui.editor\',',		        		        
 		    '@message('	     => '$this->renderHelper(\'ui.message\',',
-		    '@date(' 	     => '$this->renderHelper(\'date.format\','		        		        
+		    '@date(' 	     => '$this->renderHelper(\'date.format\',',
+			'@hashtags(' => '$this->renderHelper(\'com://site/hashtags.template.helper.parse\','		        		        
 		));
 	}
 }

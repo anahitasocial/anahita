@@ -55,7 +55,7 @@ class ComTodosDomainEntityTodolist extends ComMediumDomainEntityMedium
 				
 		parent::_initialize($config);
 		
-		AnHelperArray::unsetValues($config->behaviors, 'commentable');		
+		AnHelperArray::unsetValues($config->behaviors, array('commentable', 'subscribable', 'hashtagable'));		
 	}
 	
     /**
