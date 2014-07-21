@@ -493,46 +493,47 @@ class JUser extends JObject
 		$table 	=& $this->getTable();
 		$this->params = $this->_params->toString();
 		$table->bind($this->getProperties());
-
+		
 		// Check and store the object.
-		if (!$table->check()) {
+		if(!$table->check()) 
+		{
 			$this->setError($table->getError());
 			return false;
 		}
-
+		
 		// If user is made a Super Admin group and user is NOT a Super Admin
 		$my =& JFactory::getUser();
-		if ( $this->get('gid') == 25 && $my->get('gid') != 25 )
+		
+		if($this->get('gid') == 25 && $my->get('gid') != 25)
 		{
 			// disallow creation of Super Admin by non Super Admin users
 			$this->setError(JText::_( 'WARNSUPERADMINCREATE' ));
 			return false;
 		}
-
+		
 		// If user is made an Admin group and user is NOT a Super Admin
-		if ($this->get('gid') == 24 && !($my->get('gid') == 25 || ($this->get('id') == $my->id && $my->get('gid') == 24)))
+		if($this->get('gid') == 24 && !($my->get('gid') == 25 || ($this->get('id') == $my->id && $my->get('gid') == 24)))
 		{
 			// disallow creation of Admin by non Super Admin users
 			$this->setError(JText::_( 'WARNSUPERADMINCREATE' ));
 			return false;
 		}
-
+		
 		//are we creating a new user
 		$isnew = !$this->id;
-
+		
 		// If we aren't allowed to create new users return
-		if ($isnew && $updateOnly) {
-			return true;
-		}
+		if($isnew && $updateOnly)
+			return false;
 
 		// Get the old user
 		$old = new JUser($this->id);
-
+		
 		// Fire the onBeforeStoreUser event.
 		JPluginHelper::importPlugin( 'user' );
 		$dispatcher =& JDispatcher::getInstance();
-		$dispatcher->trigger( 'onBeforeStoreUser', array( $old->getProperties(), $isnew ) );
-
+		$dispatcher->trigger( 'onBeforeStoreUser', array($old->getProperties(), $isnew));
+		
 		//Store the user data in the database
 		if (!$result = $table->store()) {
 			$this->setError($table->getError());
@@ -543,8 +544,8 @@ class JUser extends JObject
 			$this->id = $table->get( 'id' );
 		}
 
-		// Fire the onAftereStoreUser event
-		$dispatcher->trigger( 'onAfterStoreUser', array( $this->getProperties(), $isnew, $result, $this->getError() ) );
+		//Fire the onAftereStoreUser event
+		$dispatcher->trigger( 'onAfterStoreUser', array( $this->getProperties(), $isnew, $result, $this->getError()));
 
 		return $result;
 	}

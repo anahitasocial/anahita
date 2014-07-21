@@ -48,18 +48,25 @@ class PlgUserConnect extends JPlugin
 	public function onAfterStoreUser($user, $isnew, $succes, $msg)
 	{		
 		$this->_createToken($user['username']);
+		
 		$userId = $user['id'];
-		if ( $this->_person ) 
+		
+		if($this->_person) 
         {
 		    //unblock the user	
             $user = KService::get('repos://site/users')->find($userId);
+
             $user->block = false;
+            
             $user->save();            
-			$user = $this->_api->getUser();
-			if ( KRequest::get('post.import_avatar', 'cmd') && $user->large_avatar ) {
+			
+            $user = $this->_api->getUser();
+			
+			if(KRequest::get('post.import_avatar', 'cmd') && $user->large_avatar)
 				$this->_person->setPortraitImage(array('url'=>$user->large_avatar));
-			}
+			
 			$this->_person->enabled = true;
+			
 			$this->_person->save();
 		}
 	}
@@ -75,9 +82,8 @@ class PlgUserConnect extends JPlugin
 	 */	
 	public function onLoginUser($user, $options)
 	{				
-		if ( isset($user['username']) ) {
+		if(isset($user['username']))
 			$this->_createToken($user['username']);
-		}
 	}
 	
 	/**
@@ -87,29 +93,34 @@ class PlgUserConnect extends JPlugin
 	 */
 	protected function _createToken($username)
 	{
-        if ( isset($this->_person) ) {            
+        if(isset($this->_person))            
             return ;
-        }
         
         $api = $this->_getApi();
         
         //if there's no api or the token are invalid then don't create 
         //session
-        if ( !$api || !$api->getUser()->id )
+        if(!$api || !$api->getUser()->id)
             return;
 				
-        if ( $token = $api->getToken() )
+        if($token = $api->getToken())
         {	
-            $person   = KService::get('repos://site/people.person')->find(array('username'=>$username));
-            $user     = $api->getUser();
-            $session  = KService::get('repos://site/connect.session')->findOrAddNew(array('profileId'=>$user->id,'api'=>$api->getName()));
+            $person = KService::get('repos://site/people.person')->find(array('username'=>$username));
+            
+            $user = $api->getUser();
+            
+            $session = KService::get('repos://site/connect.session')->findOrAddNew(array('profileId'=>$user->id,'api'=>$api->getName()));
+            
             $session->setData(array(
                 'component' => 'com_connect',
-                'owner'     => $person  
+                'owner' => $person  
             ))->setToken($token);            
+            
             $session->save();            
+            
             $this->_person = $person;
-            $this->_api    = $api;
+            
+            $this->_api = $api;
         }
 	}
     
@@ -119,20 +130,21 @@ class PlgUserConnect extends JPlugin
     protected function _getApi()
     {
         $post = KRequest::get('post','string');
+        
         $api  = null;
-        try {
-            if ( isset($post['oauth_token']) &&
-                 isset($post['oauth_handler']))
+        
+        try 
+        {
+            if(isset($post['oauth_token']) && isset($post['oauth_handler']))
             {
                     $api = ComConnectHelperApi::getApi($post['oauth_handler']);
                     $api->setToken($post['oauth_token'], isset($post['oauth_secret']) ? $post['oauth_secret'] : '');
-            } 
-            
+            }
             else 
             {
                 $session = new KConfig(KRequest::get('session.oauth', 'raw', array()));
                                     
-                if ( !$session->token || !$session->api || !$session->consumer )
+                if(!$session->token || !$session->api || !$session->consumer)
                     return;
                 
                 KRequest::set('session.oauth', null);
@@ -144,7 +156,9 @@ class PlgUserConnect extends JPlugin
                     'token'     => $session->token
                 ));            
             }
-        } catch(Exception $e) {
+        } 
+        catch(Exception $e) 
+        {
           $api = null;  
         }
         

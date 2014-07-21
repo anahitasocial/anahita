@@ -1,7 +1,7 @@
 <?php
 /**
  * @version		1.0
- * @category	Anahita ª Social Plugins and Modules
+ * @category	Anahita ï¿½ Social Plugins and Modules
  * @copyright	Copyright (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
  * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link     	http://www.anahitapolis.com
@@ -28,23 +28,23 @@ class plgUserAutoFollow extends JPlugin
 		if( !$succes ) 
 		       return false;
 		
-		$uid	= $user['id'];
+		$uid = $user['id'];
 
 		$person = KService::get('com://site/people.helper.person')->getPerson($uid);
 	   				
-		if ( $person ) 
+		if($person) 
 		{
-			$actor_ids = explode(',',$this->params->get('actor_ids'));
+			$actor_ids = explode(',', $this->params->get('actor_ids'));
 			
 			foreach($actor_ids as $actor_id)
 			{		
-                $actor_id = (int)$actor_id;
+                $actor_id = (int) $actor_id;
                 
-                if ( $actor_id )
+                if($actor_id)
                 {
                     $actor = KService::get('repos://site/actors.actor')->getQuery()->disableChain()->fetch($actor_id);
                     
-                    if ($actor && $actor->isFollowable() ) 
+                    if($actor && $actor->isFollowable()) 
                     {
                         $actor->addFollower($person);
                         $actor->save();
