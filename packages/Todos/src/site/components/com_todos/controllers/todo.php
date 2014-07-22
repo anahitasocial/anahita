@@ -87,15 +87,10 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
 	{		
 		$todos = parent::_actionBrowse($context);
 
-		if($this->getRequest()->get('layout') == 'gadget')
-			$todos->where('open', '=', 1);
-		else 
-			$todos->order('open', 'DESC');
+		$todos->order('open', 'DESC');
 		
-		if($this->filter == 'leaders')
-			$todos->order('creationTime', 'DESC');
-		else
-			$todos->order('priority', 'DESC');
+		if($this->sort == 'priority')
+			$todos->where('priority', 'DESC');
 			
 		return $todos;
 	}

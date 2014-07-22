@@ -6,17 +6,6 @@
 	<fieldset>
 		<legend><?= ($todo->persisted()) ? @text('COM-TODOS-TODO-EDIT') : @text('COM-TODOS-TODO-ADD') ?></legend>
 		
-		<?php if(isset($pid) && $pid): ?>
-		<input name="pid" type="hidden" value="<?= $pid ?>" />
-		<?php else: ?>
-		<div class="control-group">
-			<label class="control-label" for="todolist"><?= @text('COM-TODOS-TODOLIST-LIST') ?></label>
-			<div class="controls">
-				<?= @helper('todolists', $actor, empty($parent) ? $todo->parent : $parent ) ?>
-			</div>
-		</div>
-		<?php endif; ?>
-		
 		<div class="control-group">
 			<label class="control-label" for="title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
 			<div class="controls">

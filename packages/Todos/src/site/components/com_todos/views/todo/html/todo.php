@@ -23,9 +23,6 @@
 		
 	<div class="entity-meta">
 		<ul class="an-meta inline">
-			<?php if(isset($todo->todolist->id)): ?>
-			<li><?= @text('COM-TODOS-TODO-META-TODOLIST') ?>: <a href="<?= @route($todo->todolist->getURL()) ?>"><?= @escape($todo->todolist->title) ?></a></li>
-			<?php endif; ?>
 			<li><?= @text('COM-TODOS-TODO-PRIORITY') ?>: <span class="priority <?= @helper('priorityLabel', $todo) ?>"><?= @helper('priorityLabel', $todo) ?></span></li>
 		</ul>
 		

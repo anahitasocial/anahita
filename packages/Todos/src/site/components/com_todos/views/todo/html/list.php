@@ -33,12 +33,8 @@
 			<li><?= @text('COM-TODOS-TODO-PRIORITY') ?>: <span class="priority <?= @helper('priorityLabel', $todo) ?>"><?= @helper('priorityLabel', $todo) ?></span></li> 
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $todo->numOfComments) ?></li>
 			
-			<?php if( !isset($pid) && isset($todo->todolist) ): ?>
-			<li><?= @text('COM-TODOS-TODO-META-TODOLIST') ?>: <a href="<?= @route($todo->todolist->getURL()) ?>"><?= @escape($todo->todolist->title) ?></a></li>
-			<?php endif; ?>
-			
 			<?php if(!$todo->open) : ?>			
-			<li><?= sprintf(@text('COM-TODOS-TODOLIST-COMPLETED-BY-REPORT'), @date($todo->openStatusChangeTime), @name($todo->lastChanger)) ?></li>
+			<li><?= sprintf(@text('COM-TODOS-TODO-COMPLETED-BY-REPORT'), @date($todo->openStatusChangeTime), @name($todo->lastChanger)) ?></li>
 		<?php endif; ?>
 		</ul>
 		

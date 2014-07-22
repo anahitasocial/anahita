@@ -75,13 +75,6 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
 					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
 					'action_url'		=> 'option=com_todos&view=todos&oid='.$actor->id
 			));
-			 
-			$gadgets->insert('todos-gadget-profile-milestones', array(
-					'title' 		=> JText::_('COM-TODOS-GADGET-ACTOR-MILESTONES'),
-					'url'   		=> 'option=com_todos&view=milestones&layout=gadget&oid='.$actor->id,
-					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
-					'action_url'		=> 'option=com_todos&view=milestones&oid='.$actor->id
-			));
 		}
 		else
 			$gadgets->insert('todos-gadget-profile-todos', array(
