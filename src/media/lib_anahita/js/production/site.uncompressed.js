@@ -21715,6 +21715,19 @@ var EntityHelper = new Class({
 	}
 });
 
+var SortEntities = function() {
+	var el = this;
+	return {
+		   method: 'get',
+		   update: document.id('an-entities-main-wrapper'),
+		   onSuccess : function() 
+		   {			   
+			   document.getElements('.sort-option').removeClass('active');
+			   el.getParent().addClass('active');
+		   }
+	}
+}
+
 Behavior.addGlobalFilter('Scrollable',{
 	defaults : {
 	
