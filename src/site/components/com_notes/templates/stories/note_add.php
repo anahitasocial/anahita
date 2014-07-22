@@ -9,7 +9,7 @@
 
 <data name="body">    
 	<div class="entity-body">
-		<?= @helper('text.truncate', @content($object->body), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
+		<?= @helper('text.truncate', @hashtags(@content($object->body)), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
 	</div>
 </data>
 <?php if ($type == 'notification') :?>

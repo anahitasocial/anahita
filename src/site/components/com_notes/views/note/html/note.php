@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="entity-description">
-		<?= @content($note->body) ?>
+		<?= @hashtags(@content($note->body)) ?>
 	</div>
 	
 	<div class="entity-meta">
