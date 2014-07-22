@@ -8,14 +8,14 @@
  * @link     	http://www.anahitapolis.com
  */
 
-var OrderPagesOption = function() {
+var SortOption = function() {
 	var el = this;
 	return {
 		   method: 'get',
 		   update: document.id('an-entities-main-wrapper'),
 		   onSuccess : function() 
 		   {			   
-			   document.getElements('.page-ordering').removeClass('active');
+			   document.getElements('.sort-option').removeClass('active');
 			   el.getParent().addClass('active');
 		   }
 	}

@@ -3,16 +3,24 @@
 <module position="sidebar-b">
 <ul class="nav nav-pills nav-stacked">
 	<li class="nav-header">
-       <?= @text('COM-PAGES-ORDERING') ?>
-    </li> 
-	<li class="page-ordering active">
-		<a data-trigger="Request" data-request-options="OrderPagesOption" href="<?= @route('layout=list&order=creationTime') ?>">
-		<?= @text('COM-PAGES-ORDERING-CREATION-TIME') ?>
+       <?= @text('LIB-AN-SORT-TITLE') ?>
+    </li>
+    
+    <li class="sort-option active">
+		<a data-trigger="Request" data-request-options="SortOption" href="<?= @route('layout=list&sort=newest') ?>">
+		<?= @text('LIB-AN-SORT-NEWEST') ?>
 		</a>
 	</li>
-	<li class="page-ordering">
-		<a data-trigger="Request" data-request-options="OrderPagesOption" href="<?= @route('layout=list&order=updateTime') ?>">
-		<?= @text('COM-PAGES-ORDERING-LAST-UPDATE-TIME') ?>
+     
+	<li class="sort-option">
+		<a data-trigger="Request" data-request-options="SortOption" href="<?= @route('layout=list&sort=top') ?>">
+		<?= @text('LIB-AN-SORT-TOP') ?>
+		</a>
+	</li>
+	
+	<li class="sort-option">
+		<a data-trigger="Request" data-request-options="SortOption" href="<?= @route('layout=list&sort=updated') ?>">
+		<?= @text('LIB-AN-SORT-UPDATED') ?>
 		</a>
 	</li>
 </ul>
