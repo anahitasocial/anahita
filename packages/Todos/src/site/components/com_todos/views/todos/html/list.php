@@ -1,13 +1,19 @@
 <?php defined('KOOWA') or die ?>
 
 <div class="an-entities" id="an-entities-main">
-<?php if(count($todos)): ?>
-	<?php foreach($todos as $todo) : ?>
-		<?= @view('todo')->layout('list')->todo($todo)->pid($pid)->filter($filter) ?>
-	<?php endforeach; ?>
-<?php else : ?>
+<?php foreach($todos as $todo) : ?>
+	<?= @view('todo')->layout('list')->todo($todo)->pid($pid)->filter($filter) ?>
+<?php endforeach; ?>
+<?php if(count($todos) == 0): ?>
 <?= @message(@text('COM-TODOS-EMPTY-LIST-MESSAGE')) ?>
 <?php endif; ?>
 </div>
 
-<?= @pagination($todos, array('url'=>@route('layout=list'))) ?>
+<?php 
+$url = 'layout=list';
+
+if(!empty($sort))
+	$url .= '&sort='.$sort;
+?>
+
+<?= @pagination($todos, array('url'=>@route($url))) ?>

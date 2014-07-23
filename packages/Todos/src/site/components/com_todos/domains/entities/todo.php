@@ -62,19 +62,19 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 		$config->append(array(
 			'resources'		=> array('todos_todos'),
 			'attributes' => array(
-				'name'					=> array('required'=>true),
-				'openStatusChangeTime' 	=> array('column'=>'open_status_change_time','default'=>'date', 'type'=>'date', 'write'=>'private'),
-				'priority'				=> array('column'=>'ordering',  'default'=>self::PRIORITY_NORMAL, 'type'=>'integer')
+				'name' => array('required'=>true),
+				'openStatusChangeTime' => array('column'=>'open_status_change_time','default'=>'date', 'type'=>'date', 'write'=>'private'),
+				'priority' => array('column'=>'ordering',  'default'=>self::PRIORITY_NORMAL, 'type'=>'integer')
 				),
 			'relationships' => array(
 				'lastChanger' => array('parent'=>'com:people.domain.entity.person', 'child_column'=>'open_status_change_by'),
 				),
 			'behaviors' => array(
-				'parentable' => array('parent'=>'todolist'),
+				'parentable' => array('parent'=>'milestone'),
 				'enableable'
 			),
 			'aliases' => array(
-				'open'		=> 'enabled'		
+				'open' => 'enabled'		
 			)
 		));
 			
@@ -119,7 +119,7 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	/**
 	 * Set the todolist
 	 * 
-	 * @param ComTodosDomainEntityTodolist $todolist The tododlist	
+	 * @param ComTodosDomainEntityMilestone	
      *  
 	 * @return void
 	 */
@@ -127,13 +127,11 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	{        
         $commands = array('after.insert','after.update','after.delete');
         
-        if ( $parent )   
-            $this->getRepository()
-                ->registerCallback($commands,array($parent,'updateStats'));
+        if($parent)   
+            $this->getRepository()->registerCallback($commands, array($parent, 'updateStats'));
         
-        if ( $this->parent )
-            $this->getRepository()
-                ->registerCallback($commands,array($this->parent,'updateStats'));
+        if($this->parent)
+        	$this->getRepository()->registerCallback($commands, array($this->parent,'updateStats'));
         
         $this->set('parent', $parent);
 	}
@@ -147,11 +145,11 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	{
 		$uptables = array();
 		
-		if ( isset($this->__old_parent) )
+		if(isset($this->__old_parent))
 			$uptables[] = $this->__old_parent;
 			
-		if ( isset($this->parent) ) 
-			$uptables[] =$this->parent;
+		if(isset($this->parent)) 
+			$uptables[] = $this->parent;
 
 		foreach($uptables as $parent) 
 		{

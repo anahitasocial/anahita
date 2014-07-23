@@ -7,6 +7,13 @@
 		<legend><?= ($todo->persisted()) ? @text('COM-TODOS-TODO-EDIT') : @text('COM-TODOS-TODO-ADD') ?></legend>
 		
 		<div class="control-group">
+			<label class="control-label" for="priority"><?= @text('COM-TODOS-MILESTONES-LIST') ?></label>
+			<div class="controls">
+				<?= @helper('milestones', $actor, $todo->pid) ?>
+			</div>
+		</div>
+		
+		<div class="control-group">
 			<label class="control-label" for="title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
 			<div class="controls">
 				<input data-validators="required" name="title" class="input-block-level" value="<?= @escape( $todo->title ) ?>" size="50" maxlength="255" tabindex="1" type="text">

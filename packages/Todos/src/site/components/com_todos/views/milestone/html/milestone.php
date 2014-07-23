@@ -31,7 +31,7 @@ $highlight = ($milestone->endDate->getDate(DATE_FORMAT_UNIXTIME) >= $current_tim
 	
 	<div class="entity-meta">
 		<ul class="an-meta inline">
-			<li><?= sprintf( @text('COM-TODOS-MILESTONE-NUMBER-OF-TODOS'), $milestone->numOfTodolists) ?></li>
+			<li><?= sprintf(@text('COM-TODOS-MILESTONE-COUNTS'), (int) $milestone->numOfOpenTodos, (int) $milestone->numOfTodos) ?></li>
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $milestone->numOfComments) ?></li>
 			<?php if(isset($milestone->editor)) : ?>
 			<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($milestone->updateTime), @name($milestone->editor)) ?></li>

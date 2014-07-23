@@ -2,7 +2,7 @@
 
 <?php $milestone = empty($milestone) ? @service('repos:todos.milestone')->getEntity()->reset() : $milestone; ?>
 			
-<form data-behavior="FormValidator" method="post" action="<?=@route($milestone->getURL().'&oid='.$actor->id)?>">	
+<form data-behavior="FormValidator" method="post" action="<?= @route($milestone->getURL().'&oid='.$actor->id) ?>">	
 	<fieldset>
 		<legend><?= ($milestone->persisted()) ? @text('COM-TODOS-MILESTONE-EDIT') : @text('COM-TODOS-MILESTONE-ADD') ?></legend>
 		

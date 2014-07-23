@@ -40,14 +40,15 @@ class ComTodosDomainEntityMilestone extends ComMediumDomainEntityMedium
 	{
 
 		$config->append(array(
-			'resources'		=> array('todos_milestones'),
-			'attributes' 	=> array(
-				'name'				=> array('required'=>true),
-				'numOfTodolists' 	=> array('column'=>'todolists_count', 'write'=>'private'),
-				'endDate'			=> array('type'=>'date', 'default'=>'date')
+			'resources' => array('todos_milestones'),
+			'attributes' => array(
+				'name' => array('required'=>true),
+				'numOfTodos' => array('column'=>'todos_count', 'write'=>'private'),
+				'numOfOpenTodos' => array('column'=>'open_todos_count', 'default'=>'0', 'type'=>'integer', 'write'=>'private'),
+				'endDate' => array('type'=>'date', 'default'=>'date')
 			),
 			'relationships' => array(
-				'todolists'		
+				'todos'		
 			)
 		));
 		
@@ -78,6 +79,7 @@ class ComTodosDomainEntityMilestone extends ComMediumDomainEntityMedium
      */
     public function updateStats()
     {
-        $this->set('numOfTodolists', $this->todolists->reset()->getTotal());                
+        $this->set('numOfTodos', $this->todos->reset()->getTotal()); 
+        $this->set('numOfOpenTodos', $this->todos->reset()->where('open','=',true)->getTotal());               
     }    
 }
