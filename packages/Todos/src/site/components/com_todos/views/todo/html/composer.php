@@ -9,7 +9,7 @@
 		<div class="control-group">
 			<label class="control-label" for="todolist"><?= @text('COM-TODOS-TODOLIST-LIST') ?></label>
 			<div class="controls">
-				<?= @helper('todolists', $actor, empty($parent) ? $todo->parent : $parent ) ?>
+				<?= @helper('milestones', $actor, empty($parent) ? $todo->parent : $parent ) ?>
 			</div>
 		</div>		
 		

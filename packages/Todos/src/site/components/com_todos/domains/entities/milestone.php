@@ -73,7 +73,7 @@ class ComTodosDomainEntityMilestone extends ComMediumDomainEntityMedium
 	}
     
     /**
-     * Update the todolists stats
+     * Update the milestone's stats
      * 
      * @return void
      */
