@@ -23,7 +23,7 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
 		$timeThen = microtime(true);
 		
     	//converting the old boards as hashtags
-    	$boards = dbfetch('SELECT id, alias FROM #__anahita_nodes WHERE TYPE LIKE \'%com:topics.domain.entity.board\' ');
+    	$boards = dbfetch('SELECT `id`, `alias` FROM #__anahita_nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\' ');
     	
         foreach($boards as $board)
         {
@@ -48,11 +48,11 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
         	}
         }
 		
-        dbexec('UPDATE #__anahita_nodes SET parent_id = 0 WHERE type LIKE \'%com:topics.domain.entity.topic\'');
-        dbexec('DELETE FROM #__anahita_nodes WHERE type LIKE \'%com:topics.domain.entity.board\'');
-        dbexec('DELETE FROM #__anahita_edges WHERE node_b_type LIKE \'%com:topics.domain.entity.board\'');
+        dbexec('UPDATE #__anahita_nodes SET `parent_id` = 0 WHERE `type` LIKE \'%com:topics.domain.entity.topic\'');
+        dbexec('DELETE FROM #__anahita_nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\'');
+        dbexec('DELETE FROM #__anahita_edges WHERE `node_b_type` LIKE \'%com:topics.domain.entity.board\'');
         dbexec('DROP TABLE #__topics_boards');
-        
+       
         $timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n");
     }
