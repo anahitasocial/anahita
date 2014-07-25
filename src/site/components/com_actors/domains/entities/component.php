@@ -63,7 +63,7 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
 	        'story_aggregation' => array(),
 			'behaviors' => array(
 				//'assignable'=>array(),
-				'scopeable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor'),
+				//'scopeable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor'),
 				'hashtagable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor')
 			)
 		));
@@ -80,7 +80,7 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 */
 	public function onStoryAggregation(KEvent $event)
 	{	    
-	    if ( !empty($this->_story_aggregation) ) 
+	    if(!empty($this->_story_aggregation)) 
 	    {
 	        $event->aggregations->append(array(
 	            $this->component => $this->_story_aggregation
