@@ -48,20 +48,6 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     
         parent::_initialize($config);
     }
-
-    /**
-     * Return an array of permission object
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        $permissions = parent::getPermissions();
-        
-        unset($permissions['com://site/todos.domain.entity.milestone']);
-        
-        return $permissions;
-    }
         
 	/**
 	 * @{inheritdoc}

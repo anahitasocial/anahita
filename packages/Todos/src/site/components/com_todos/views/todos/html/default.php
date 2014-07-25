@@ -5,33 +5,23 @@
 	<li class="nav-header">
        <?= @text('LIB-AN-SORT-TITLE') ?>
     </li>
-    
-    <?php $active = ($sort == 'newest') ? 'active' : '' ?>
-    <li class="sort-option <?= $active ?>">
-		<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort=newest') ?>">
-		<?= @text('LIB-AN-SORT-NEWEST') ?>
-		</a>
-	</li>
-     
-    <?php $active = ($sort == 'priority') ? 'active' : '' ?>
-	<li class="sort-option <?= $active ?>">
-		<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort=priority') ?>">
-		<?= @text('COM-TODOS-TODO-SORT-PRIORITY') ?>
-		</a>
-	</li>
-	
-	<?php $active = ($sort == 'updated') ? 'active' : '' ?>
-	<li class="sort-option <?= $active ?>">
-		<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort=updated') ?>">
-		<?= @text('LIB-AN-SORT-UPDATED') ?>
-		</a>
-	</li>
+    <?php $sorts = array('newest', 'priority', 'updated') ?>
+    <?php foreach($sorts as $sort): ?>
+	    <?php $active = ($sort == 'newest') ? 'active' : '' ?>
+	    <li class="sort-option <?= $active ?>">
+			<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort='.$sort) ?>">
+			<?= @text('LIB-AN-SORT-'.$sort) ?>
+			</a>
+		</li>
+    <?php endforeach; ?>
 </ul>
 </module>
 
+<?php if($actor): ?>
 <div id="entity-add-wrapper" class="hide">
 <?= @view('todo')->layout('form')->actor($actor) ?>
 </div>
+<?php endif; ?>
 
 <?= @helper('ui.filterbox', @route('layout=list')) ?>
 

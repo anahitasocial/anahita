@@ -56,11 +56,9 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
     {
         $config->append(array(
             'request' => array(
-            	'pid' => null,
         		'sort' => 'newest'
         	),
         	'behaviors' => array(
-                'parentable',
         		'enablable'
         	)
         ));   

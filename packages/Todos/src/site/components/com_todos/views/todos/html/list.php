@@ -2,7 +2,7 @@
 
 <div class="an-entities" id="an-entities-main">
 <?php foreach($todos as $todo) : ?>
-	<?= @view('todo')->layout('list')->todo($todo)->pid($pid)->filter($filter) ?>
+	<?= @view('todo')->layout('list')->todo($todo)->filter($filter) ?>
 <?php endforeach; ?>
 <?php if(count($todos) == 0): ?>
 <?= @message(@text('COM-TODOS-EMPTY-LIST-MESSAGE')) ?>

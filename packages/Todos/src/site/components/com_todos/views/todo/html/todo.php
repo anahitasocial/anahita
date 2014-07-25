@@ -18,7 +18,7 @@
 	<h3 class="entity-title"><?= @escape($todo->title) ?></h3>
 		
 	<?php if($todo->description): ?>
-	<div class="entity-description"><?= @hashtags(@content( $todo->description )) ?></div>
+	<div class="entity-description"><?= @content(@hashtags($todo->description)) ?></div>
 	<?php endif; ?>
 		
 	<div class="entity-meta">

@@ -22,9 +22,24 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);
         
-        dbexec('ALTER TABLE #__todos_milestones CHANGE todolists_count todos_count BIGINT(11) NULL DEFAULT NULL');
-        dbexec('ALTER TABLE #__todos_milestones ADD COLUMN open_todos_count BIGINT(11) NULL DEFAULT NULL AFTER todos_count');
+        $ids = array();
+        $commentIds = array();
         
+        //clearing the milestones from the data
+        $ids = dbfetch('SELECT `id` FROM #__anahita_nodes WHERE `type` LIKE \'%com:todos.domain.entity.milestone\' ', KDatabase::FETCH_ARRAY);
+        
+        if(count($ids))
+        	dbexec('DELETE FROM #__anahita_nodes WHERE `id` IN ('.implode(',', $commentIds).')');
+        
+        dbexec('SELECT `id` FROM #__anahita_nodes WHERE `type` LIKE \'%ComBaseDomainEntityComment%\' AND `parent_type` = \'com:todos.domain.entity.milestone\' ');
+        
+        dbexec('DELETE FROM #__anahita_nodes WHERE `type` LIKE \'%com:todos.domain.entity.milestone\' ');
+        
+        dbexec('DELETE FROM #__anahita_edges WHERE `node_b_type` LIKE \'%com:todos.domain.entity.milestone\' ');
+		
+        dbexec('DROP TABLE #__todos_milestones');
+        
+        //clearing todolists from the data
        	$todolists = dbfetch('SELECT `id`, `parent_id`, `alias` FROM #__anahita_nodes WHERE `type` LIKE \'%com:todos.domain.entity.todolist\' ');
         	
         foreach($todolists as $todolist)
@@ -33,25 +48,28 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
         	foreach($terms as $index=>$value)
         		if(strlen($value) < 3)
         			unset($terms[$index]);
-        		
+
         	$todos = KService::get('com://site/todos.domain.entity.todo')
         			->getRepository()
         			->getQuery()
         			->disableChain()
         			->where('parent_id = '.$todolist['id'])
-        			->fetchSet();
-        				
+        			->fetchSet();		
+        			
         	foreach($todos as $todo)
         	{
         		foreach($terms as $term)
         			if(strlen($term) > 3)
-        				if($todo->set('parent_id', $todolist['parent_id'])->set('description', $todo->description.' #'.trim($term))->addHashtag($term)->save())
+        				if($todo->set('parent_id', 0)->set('description', $todo->description.' #'.trim($term))->addHashtag($term)->save())
         					dboutput($term.', ');
         	}		
-        }
-        
+        }     
         
         dbexec('DELETE FROM #__anahita_nodes WHERE `type` LIKE \'%com:todos.domain.entity.todolist\' ');
+        
+        //clear stories
+        dbexec('DELETE FROM #__anahita_nodes WHERE `story_object_type` = \'com:todos.domain.entity.todolist\' OR `story_object_type` = \'com:todos.domain.entity.milestone\' ');
+        
         dbexec('DROP TABLE #__todos_todolists');
         
         $timeDiff = microtime(true) - $timeThen;

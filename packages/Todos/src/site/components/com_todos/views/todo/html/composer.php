@@ -4,14 +4,7 @@
 
 <form id="todo-form" data-behavior="FormValidator ComposerForm" method="post" action="<?=@route($todo->getURL().'&oid='.$actor->id)?>">
 	<fieldset>
-		<legend><?=@text('COM-TODOS-TODO-ADD')?></legend>
-			
-		<div class="control-group">
-			<label class="control-label" for="todolist"><?= @text('COM-TODOS-TODOLIST-LIST') ?></label>
-			<div class="controls">
-				<?= @helper('milestones', $actor, empty($parent) ? $todo->parent : $parent ) ?>
-			</div>
-		</div>		
+		<legend><?=@text('COM-TODOS-TODO-ADD')?></legend>	
 		
 		<div class="control-group">
 			<label class="control-label" for="title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
