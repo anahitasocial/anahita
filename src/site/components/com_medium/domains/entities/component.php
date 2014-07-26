@@ -63,7 +63,6 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		    'story_aggregation' => array(),        
 			'behaviors' => array(
 				'assignable'=>array(),
-				'scopeable'=>array('class'=>'ComMediumDomainEntityMedium','type'=>'post'),
 				'hashtagable'=>array('class'=>'ComMediumDomainEntityMedium','type'=>'post')
 			)
 		));		
@@ -181,6 +180,14 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 * @return void
 	 */
 	protected function _setSettingTabs($actor, $tabs){}	
+	
+	/**
+	 * parse tags in the body of the entity
+	 * 
+	 * @param ComMediumDomainEntityMedium $entity
+	 * @return void
+	 */
+	protected function _parseTags($entity){}
 	
 	/**
 	 * Return an array of permissions by using the medium objects

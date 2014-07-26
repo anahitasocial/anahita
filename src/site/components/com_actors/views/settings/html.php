@@ -72,22 +72,26 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
 		{
 			$permissions = array();
 						
-			if ( !$component->isAssignable() ) {
+			if(!$component->isAssignable())
 				continue;
-			}
 			
-			if ( !count($component->getPermissions()) ) continue;
+			if(!count($component->getPermissions())) 
+				continue;
 			
-			foreach($component->getPermissions() as $identifier => $actions ) 
+			foreach($component->getPermissions() as $identifier => $actions) 
 			{
-				if ( strpos($identifier,'.') === false ) {
+				if(strpos($identifier,'.') === false) 
+				{
 					$name = $identifier;
 					$identifier = clone $component->getIdentifier();
 					$identifier->path = array('domain','entity');
 					$identifier->name = $name;
 				}
+				
 				$identifier = $this->getIdentifier($identifier);
-				foreach($actions as $action) {
+				
+				foreach($actions as $action) 
+				{
 					$label  = JText::_(strtoupper('COM-'.$identifier->package.'-PERMISSION'.'-'.$identifier->name.'-'.$action));
 					$name 	= 'com_'.$identifier->package.':'.$identifier->name.':'.$action;
 					$permissions[] = new KConfig(array('label'=>$label, 'name'=>$name));
@@ -124,68 +128,66 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
             'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-PERMISSIONS'),            
 		));
         
-        if ( $this->_state->getItem()->isFollowable() 
-        		&& $this->_state->getItem()->followRequesterIds->count() > 0 )
+        if($this->_state->getItem()->isFollowable() && $this->_state->getItem()->followRequesterIds->count() > 0)
         {
-                    
             $tabs->insert('requests', array(
                 'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-REQUESTS').'<span class="pull-right badge badge-important">'.$this->_state->getItem()->followRequesterIds->count().'</span>',
             ));            
         }
 	
-		if ( $this->_state->getItem()->isAdministrable() ) {
+		if($this->_state->getItem()->isAdministrable())
+		{
 		    $tabs->insert('admins', array(
 		        'label' 	=> JText::_('COM-ACTORS-PROFILE-EDIT-TAB-ADMINS'),
 		    ));
 		}
 				
 		//lets get a list of components that this actor can enable
-		
-		$this->enablable_apps = 
-			$this->getService('com://site/actors.domain.entityset.component', array(
+		$this->enablable_apps = $this->getService('com://site/actors.domain.entityset.component', array(
 				'actor' 		=> $this->_state->getItem(),
 				'can_enable'   => true
 			));
 				
-		if ( count($this->enablable_apps) )
-    		$tabs->insert('apps', array(
+		if(count($this->enablable_apps)) 
+			$tabs->insert('apps', array(
                 'label' 	=> JText::_('COM-ACTORS-PROFILE-EDIT-TAB-APPS'),
     		));
 		
 		
-        if ( $this->_state->getItem()->authorize('delete') ) {
+        if($this->_state->getItem()->authorize('delete'))
             $tabs->insert('delete', array(
-                    'label'     => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-DELETE'),
+           		'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-DELETE'),
             ));
-        }
                 
-		$this->getService('anahita:event.dispatcher')
-            ->dispatchEvent('onSettingDisplay', array('actor'=>$this->_state->getItem(), 'tabs'=>$tabs));
-		
-
+		$this->getService('anahita:event.dispatcher')->dispatchEvent('onSettingDisplay', array('actor'=>$this->_state->getItem(), 'tabs'=>$tabs));
                 			
-		$url        = $this->_state->getItem()->getURL(false).'&get=settings&edit=';		
-		$active_tab = $tabs['profile'];;
+		$url = $this->_state->getItem()->getURL(false).'&get=settings&edit=';		
+		
+		$active_tab = $tabs['profile'];
+		
 		foreach($tabs as $tab) 
 		{
 			$tab->url = $url.$tab->getName();
-			if ( $tab->name == $this->edit ) {
+			
+			if($tab->name == $this->edit) 
 				$active_tab = $tab;
-			}
 		}
 		
 		$active_tab->active = true;
 		
 		$this->tabs = $tabs;
 		
-		if ( $active_tab->content ) 
+		if($active_tab->content) 
 		{
-		     $this->content = $active_tab->content;
+			$this->content = $active_tab->content;
 		}
-		elseif ( $active_tab->controller )  
+		elseif($active_tab->controller)  
 		{
-			 $this->content = $this->getService($active_tab->controller)->oid($this->_state->getItem()->id)->display();			  
+			$this->content = $this->getService($active_tab->controller)->oid($this->_state->getItem()->id)->display();			  
 		}        
-		else $this->content	= $this->load(pick($active_tab->layout, $active_tab->name), array('url'=>$url));
+		else
+		{ 
+			$this->content	= $this->load(pick($active_tab->layout, $active_tab->name), array('url'=>$url));
+		}
 	}		
 }

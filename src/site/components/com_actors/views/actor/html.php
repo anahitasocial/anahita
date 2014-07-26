@@ -56,6 +56,7 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
 	protected function _layoutDefault()
 	{
 		$context = new KCommandContext();
+		
 		$context->gadgets = new LibBaseTemplateObjectContainer();
 		$context->actor	= $this->_state->getItem();
 		$context->composers = new LibBaseTemplateObjectContainer();
@@ -63,9 +64,9 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
 		$context->profile = new KConfig();
 		
         $context->gadgets->insert('socialgraph', array(
-                'title' => translate(array('COM-ACTORS-GADGET-LABEL-SOCIALGRAPH','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-SOCIALGRAPH')),                
-                'url' => $context->actor->getURL().'&get=graph&layout=gadget',
-                'title_url'	=> $context->actor->getURL().'&get=graph&type=followers'
+        	'title' => translate(array('COM-ACTORS-GADGET-LABEL-SOCIALGRAPH','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-SOCIALGRAPH')),                
+            'url' => $context->actor->getURL().'&get=graph&layout=gadget',
+            'title_url'	=> $context->actor->getURL().'&get=graph&type=followers'
         ));
 				
         if($this->_state->getItem()->authorize('access'))
@@ -90,8 +91,8 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
         $context->gadgets->sort(array('stories','information'));                
                      
 		$this->set(array(
-            'commands'  => $context->commands, 
-            'gadgets'   => $context->gadgets,
+            'commands' => $context->commands, 
+            'gadgets' => $context->gadgets,
             'composers' => $context->composers            
         ));
 	}
@@ -106,7 +107,7 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
     	$context->commands = $this->getTemplate()->renderHelper('toolbar.commands', 'toolbar');
 		
 		$this->set(array(
-            'commands'  => $context->commands           
+            'commands' => $context->commands           
         ));
 	}
 }

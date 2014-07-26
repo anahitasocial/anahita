@@ -34,8 +34,7 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
 
 		$this->_packages = KService::get('repos://site/subscriptions.package')->getQuery()->disableChain()->fetchSet();
         
-        KService::get('anahita:domain.store.database')
-            ->addEventSubscriber($this);	
+        KService::get('anahita:domain.store.database')->addEventSubscriber($this);	
 	}
 	
 	/**

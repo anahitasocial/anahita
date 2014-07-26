@@ -262,8 +262,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function reset()
 	{
-		$this->getRepository()->getSpace()
-			->setEntityState($this, AnDomain::STATE_CLEAN);
+		$this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_CLEAN);
 		$this->_modified = array();
 		return $this;
 	}

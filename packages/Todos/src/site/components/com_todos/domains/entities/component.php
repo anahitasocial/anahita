@@ -53,7 +53,7 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
 	 * @{inheritdoc}
 	 */
 	protected function _setGadgets($actor, $gadgets, $mode)
-	{
+	{	
 		if($mode == 'profile')
 		{
 			$gadgets->insert('todos-gadget-profile-todos', array(
