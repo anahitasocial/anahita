@@ -22,12 +22,14 @@
 	<?php $body = strip_tags($body) ?>
 	<?php endif; ?>
 	
+	<?php $body = @content($body); ?>
+	
 	<?php if (!empty($truncate_body) ) : ?>
 	<?php $body = @helper('text.truncate', $body, $truncate_body) ?>	
 	<?php endif;?>
 	
 	<div class="entity-body"> 
-		<?= @hashtags(@content($body)) ?>
+		<?= $body ?>
 	</div>
 		
 	<div class="entity-meta">

@@ -11,7 +11,7 @@
 	<?php endif; ?>
 <?php endif; ?>
 
-<div class="an-entities-wrapper">
+<div class="an-entities-wrapper" id="an-entities-main-wrapper">
 <?= @template('list') ?>
 </div>
 

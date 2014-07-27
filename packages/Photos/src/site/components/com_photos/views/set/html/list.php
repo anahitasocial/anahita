@@ -30,7 +30,7 @@
 	
 	<?php if(!empty($set->description)): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate',  @hashtags(@escape($set->description)), array('length'=>150, 'consider_html'=>true, 'omission'=>'...') ) ?>
+		<?= @helper('text.truncate',  @content($set->description, array('exclude'=>array('syntax','video'))), array('length'=>150, 'consider_html'=>true, 'omission'=>'...') ) ?>
 	</div>
 	<?php endif; ?>
 	

@@ -19,7 +19,7 @@
 	</h3>	
 	
 	<div class="entity-description">
-		<?= @hashtags(@content($topic->body)) ?>
+		<?= @content($topic->body) ?>
 	</div>
 		
 	<div class="entity-meta">

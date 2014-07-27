@@ -25,6 +25,6 @@
 	</div>
 	
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content(@hashtags($item->body)), array('length'=>400, 'consider_html'=>true)) ?>
+		<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>400, 'consider_html'=>true)) ?>
 	</div>
 </div>

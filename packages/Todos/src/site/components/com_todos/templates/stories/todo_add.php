@@ -35,7 +35,7 @@
     	</a>
     </h4>
     <div class="entity-body">
-	    <?= @helper('text.truncate', @content(strip_tags($object->body), array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
+	    <?= @helper('text.truncate', @content($object->body, array('exclude'=>'syntax')), array('length'=>200, 'consider_html'=>true, 'read_more'=>true)); ?>
 	</div>	
 </data>
 <?php endif; ?>
