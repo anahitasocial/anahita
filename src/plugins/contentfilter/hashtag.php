@@ -39,6 +39,8 @@ class PlgContentfilterHashtag extends PlgContentfilterAbstract
 			ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, 
 			'<a class="hashtag" href="'.JRoute::_('option=com_hashtags&view=hashtag&alias=').'$2">$0</a>', 
 			$text);
+			
+		$this->_replaceTags($text);	
 		
 		return $text;
 	}

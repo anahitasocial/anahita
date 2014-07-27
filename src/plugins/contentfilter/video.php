@@ -35,10 +35,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 */	
 	public function filter($text)
 	{
-		//$this->_stripTags($text);
+		$this->_stripTags($text);
 		$this->_youtube($text);
 		$this->_vimeo($text);
-		//$this->_replaceTags($text);
+		$this->_replaceTags($text);
 		return $text;
 	}
 

@@ -53,6 +53,8 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
 	 */	
 	public function filter($text)
 	{
+		$this->_stripTags($text);
+		
 		$matches = array();
 		
 		if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $text, $matches))
@@ -62,7 +64,7 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
 			for ($i = 0; $i < count($matches['0']); $i++)
 			{
 				$period = '';
-				if (preg_match("|\.$|", $matches['6'][$i]))
+				if(preg_match("|\.$|", $matches['6'][$i]))
 				{
 					$period = '.';
 					$matches['6'][$i] = substr($matches['6'][$i], 0, -1);
@@ -79,8 +81,9 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
 									$period, $text);
 			}
 		}
+		
+		$this->_replaceTags($text);
+		
 		return $text;	
 	}
 }
-
-?>
