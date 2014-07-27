@@ -23,7 +23,7 @@
 		</div>
 	</div>
 
-	<?php if ( !empty($return) ) : ?>
+	<?php if(!empty($return)): ?>
 		<input type="hidden" name="return" value="<?= $return; ?>" />
 	<?php endif;?>
 </form>

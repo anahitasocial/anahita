@@ -1,13 +1,14 @@
 <?php defined('KOOWA') or die ?>
+
 <?php
-    $subject             = is_array($subject) ? array_shift($subject) : $subject;
-    $target_to_show      = null;
-    if ( isset($item->object) && 
-            !is_array($item->target) && 
-            !$item->target->eql($item->subject) ) {
-        $target_to_show = $item->target;        
-    }
+$subject = is_array($subject) ? array_shift($subject) : $subject;
+
+$target_to_show = null;
+
+if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item->subject))
+	$target_to_show = $item->target;
 ?>
+
 <div class="an-story an-entity an-record an-removable">
 	<div class="clearfix">
 	    <div class="entity-portrait-square">
@@ -46,12 +47,12 @@
          
     <?php
     	$votable_item = null;               
-        if ( !$item->aggregated() && $item->object && $item->object->isVotable() ) { 
+        
+    	if(!$item->aggregated() && $item->object && $item->object->isVotable())
            $votable_item = $item->object;
-        }
     ?>
         
-    <?php if ( $votable_item ) : ?> 
+    <?php if($votable_item): ?> 
     <div class="entity-meta">
 	    <div class="vote-count-wrapper" id="vote-count-wrapper-<?= $votable_item->id ?>">
         <?= @helper('ui.voters', $votable_item); ?>
@@ -66,11 +67,11 @@
    
     
     <div id="<?= 'story-comments-'.$item->id?>" class="story-comments">
-		<?php if ( !empty($comments) || $can_comment ) : ?>
+		<?php if(!empty($comments) || $can_comment) : ?>
 	    <?= @helper('ui.comments', $item->object, array('comments'=>$comments, 'can_comment'=>$can_comment, 'pagination'=>false, 'show_guest_prompt'=>false, 'truncate_body'=>array('length'=>220, 'consider_html'=>true, 'read_more'=>true))) ?>
 	    <?php endif;?>
 	    
-	    <?php if( !empty($comments) && $can_comment ): ?>
+	    <?php if(!empty($comments) && $can_comment): ?>
 	    <div class="comment-overtext-box">  
 	    	<a class="action-comment-overtext" storyid="<?= $item->id ?>" href="<?= @route($item->object->getURL()) ?>">
 	        	<?= @text('COM-STORIES-ADD-A-COMMENT') ?>

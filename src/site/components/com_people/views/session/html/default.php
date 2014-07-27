@@ -15,7 +15,7 @@
 				<legend>
 					<?= @text('COM-PEOPLE-SESSION-TITLE') ?>
 					
-					<?php if ( @service('com://site/people.controller.person')->permission->canRegister() ) : ?>
+					<?php if(@service('com://site/people.controller.person')->permission->canRegister()): ?>
 		     		<small>
 		     			<a class="pull-right" href="<?= @route('option=com_people&view=person&layout=add'.(!empty($return) ? "&return=$return" : '')) ?>">
 		       				<?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>
@@ -24,7 +24,7 @@
 		     		<?php endif;?>
 				</legend>	         
 	         
-	         	<?php if ( KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ): ?>
+	         	<?php if(KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
 				<p class="lead"><?= @text('COM-PEOPLE-SOCIALMEDIA-LOGIN') ?></p>
 	         	<p><?= $this->renderHelper('com://site/connect.template.helper.service.renderLogins') ?></p>
 				<hr/>
