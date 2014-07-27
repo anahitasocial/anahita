@@ -35,10 +35,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 */	
 	public function filter($text)
 	{
-		$this->_stripTags($text);
+		//$this->_stripTags($text);
 		$this->_youtube($text);
 		$this->_vimeo($text);
-		$this->_replaceTags($text);
+		//$this->_replaceTags($text);
 		return $text;
 	}
 
@@ -82,7 +82,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
-		if ( preg_match_all('%https://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches) )
+		if(preg_match_all('%https://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches))
 		{			
 			foreach($matches[1] as $index => $match)
 			{

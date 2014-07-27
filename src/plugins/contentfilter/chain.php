@@ -78,7 +78,7 @@ class PlgContentfilterChain extends KObject
      */
     public function filter($text, $config = array())
     {
-        $context         = $this->_chain->getContext();
+    	$context         = $this->_chain->getContext();
         $context->data   = $text;
         $context->config = $config;
         if ( $context->config->filter ) 

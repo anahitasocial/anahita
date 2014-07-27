@@ -40,6 +40,9 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         	
         dbexec('DELETE FROM #__components WHERE `option` = \'com_mailto\' ');	
         
+        //delete legacy contentfilters
+        dbexec('INSERT INTO #__plugins (name,element,folder,published,iscore) VALUES (\'Hashtag\', \'hashtag\',\'contentfilter\',1,1)');
+        
     	//create the fields required for creating hashtag nodes
     	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_count`');
     	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_ids`');
@@ -89,7 +92,6 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     				'OR type LIKE \'%com:photos.domain.entity.set\' '.
     	 			'OR type LIKE \'%com:pages.domain.entity.page\' '.
     	 			'OR type LIKE \'%com:todos.domain.entity.todo\' '.
-    	 			'OR type LIKE \'%com:milestone.domain.entity.milestone\' '.
     	 			' ) ';
     	
 		$ids = dbfetch($query);
@@ -127,7 +129,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         $matches = array();
         
         if(preg_match_all(ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, $text, $matches))
-        	return array_unique($matches[1]);
+        	return array_unique($matches[2]);
         else
         	return array();
 	} 
