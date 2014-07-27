@@ -21065,7 +21065,7 @@ Paginator.Pages = new Class({
 Behavior.addGlobalFilter('InfinitScroll', {
 	defaults : {
 		record  	: '.an-entity',
-		numColumns 	: 3,
+		numColumns 	: 2,
 		limit		: 20,
 		url			: null,
 		scrollable  : window,
@@ -21130,7 +21130,7 @@ var MasonryLayout = new Class ({
 	
 	options : {
 		container  		: null,
-		numColumns		: 3,
+		numColumns		: 2,
 		record			: null
 	},
 	
