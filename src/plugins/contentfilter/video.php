@@ -53,7 +53,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 		
-		if ( preg_match_all('%https://\S*vimeo.com/(\d+)%', $text, $matches) ) {
+		if ( preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches) ) {
 			foreach($matches[1] as $index => $video_id) {				
 				$url = JURI::base().'plugins/contentfilter/video.php?type=vimeo&id='.$video_id;				
 				$options = array(
@@ -82,7 +82,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
-		if ( preg_match_all('%https://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches) )
+		if ( preg_match_all('%http[s]?://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches) )
 		{			
 			foreach($matches[1] as $index => $match)
 			{
