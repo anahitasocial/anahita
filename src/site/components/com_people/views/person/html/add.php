@@ -6,15 +6,16 @@
 	<div class="offset3 span6">	
         <?php 
         $user = @service('repos://site/users')->getQuery(true)->fetchValue('id');
-        if ( !$user ) : 
+        if(!$user): 
         //first time user
         //must be an admin
         ?>
         <div class="alert alert-info alert-block">
         <h4><?= @text('COM-PEOPLE-WELCOME1') ?></h4>
-        <?= @text('COM-PEOPLE-WELCOME2') ?>
+        <p><?= @text('COM-PEOPLE-WELCOME2') ?></p>
         </div>
-        <?php endif;?>	
+        <?php endif; ?>	
+        
 		<form data-behavior="FormValidator" action="<?= @route('view=person') ?>" method="post" name="userform" id="userform" class="well" autocomplete="off">
 			<?php if ( !empty($return) ) : ?>
 			<input type="hidden" name="return" value="<?= $return; ?>" />
@@ -37,7 +38,7 @@
 						<?php print JText::_('COM-PEOPLE-ADD-USERNAME'); ?>
 				    </label>
 				    <div class="controls">
-				    	<input class="input-block-level" data-validators="required validate-username validate-remote url:'<?=@route('view=person', false)?>'" type="text" id="username" name="username" value="<?= empty($username) ? '' : $username ?>" maxlength="25" />
+				    	<input class="input-block-level" data-validators="required validate-username validate-remote url:'<?= @route('view=person', false) ?>'" type="text" id="username" name="username" value="<?= empty($username) ? '' : $username ?>" maxlength="25" />
 				    </div>
 				</div>
 				        

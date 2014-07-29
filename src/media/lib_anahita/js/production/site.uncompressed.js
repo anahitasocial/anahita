@@ -19744,10 +19744,10 @@ Class.refactor(Form.Validator.Inline, {
 	});
 	Form.Validator.add('validate-username', {
 		errorMsg : function(element, props) {
-			return 'Username can only contain letters and numbers'.translate();
+			return 'Username starts with a letter and it may contain numbers'.translate();
 		},
-		test 	: function(element, props) {
-			return element.value.match(/^[A-Za-z0-9][A-Za-z0-9_-]*$/);			
+		test : function(element, props) {
+			return element.value.match(/^[A-Za-z][A-Za-z0-9_-]*$/);			
 		}
 	});	
 	Form.Validator.add('validate-remote', {
