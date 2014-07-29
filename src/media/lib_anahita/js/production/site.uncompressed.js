@@ -19744,7 +19744,7 @@ Class.refactor(Form.Validator.Inline, {
 	});
 	Form.Validator.add('validate-username', {
 		errorMsg : function(element, props) {
-			return 'Username starts with a letter and it may contain numbers'.translate();
+			return 'A valid Username starts with a letter and it may contain numbers'.translate();
 		},
 		test : function(element, props) {
 			return element.value.match(/^[A-Za-z][A-Za-z0-9_-]*$/);			

@@ -24,34 +24,7 @@
  * @link       http://www.anahitapolis.com
  */
 class ComPeopleDispatcher extends ComBaseDispatcherDefault
-{    
-    /**
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config); 
-
-    }
-    
-    /**
-     * Initializes the default configuration for the object
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    protected function _initialize(KConfig $config)
-    {    
-        parent::_initialize($config);
-    }	
-	
+{   	
 	/**
 	 * Handles passowrd token before dispatching 
 	 * 
@@ -60,17 +33,18 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 */
 	protected function _actionDispatch(KCommandContext $context)
 	{
-	    if ( $this->token &&
-	            $this->getController()->getIdentifier()->name == 'person' )
+	    if($this->token && $this->getController()->getIdentifier()->name == 'person')
 	    {
-	        if ( $this->getController()->canRead() ) 
+	        if($this->getController()->canRead()) 
 	        {
 	            $this->getController()->login();
 
-	            if ( $this->reset_password ) {
+	            if($this->reset_password) 
+	            {
 	                $url = JRoute::_($this->getController()->getItem()->getURL().'&get=settings&edit=account&reset_password=1');
 	                $this->getController()->getResponse()->location = $url;
 	            }
+	            
 	            $this->getController()->getResponse()->send();
 	            exit(0);
 	        }
@@ -89,15 +63,11 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 */
 	protected function _actionException(KCommandContext $context)
 	{
-	    if ( $context->data instanceof LibBaseControllerExceptionUnauthorized
-	            &&  $this->getController() instanceof ComPeopleControllerSession 
-	            
-	            )
+	    if($context->data instanceof LibBaseControllerExceptionUnauthorized && $this->getController() instanceof ComPeopleControllerSession)
 	    {
 	       $context->response->send();
 	       exit(0);           
 	    }
-	    else 
-	        parent::_actionException($context);	    
+	    else parent::_actionException($context);   
 	}
 }
