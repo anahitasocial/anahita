@@ -1,3 +1,9 @@
+Anahita 3.0.4
+==============
+
+* ed4f06f video links with both http and https are now being parsed
+* ffa0586 A valid username starts with a letter and it may contain numbers
+
 Anahita 3.0.3
 ==============
 
