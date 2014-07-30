@@ -27,17 +27,6 @@
  */
 class ComActorsViewActorsHtml extends ComBaseViewHtml
 {
-    /** 
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     * 
-     * @return void
-     */ 
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);        
-    }
     	
     /**
      * Initializes the options for the object

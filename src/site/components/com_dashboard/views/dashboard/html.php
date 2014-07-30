@@ -36,14 +36,14 @@ class ComDashboardViewDashboardHtml extends ComBaseViewHtml
 	{	
 		$this->set('gadgets',     new LibBaseTemplateObjectContainer());
 		$this->set('composers',   new LibBaseTemplateObjectContainer());
-		$context 		  = new KCommandContext();		
-		$context->actor	  = $this->viewer;
-		$context->gadgets     = $this->gadgets;
-		$context->composers   = $this->composers;
+		
+		$context = new KCommandContext();		
+		$context->actor	= $this->viewer;
+		$context->gadgets = $this->gadgets;
+		$context->composers = $this->composers;
 				
 		//make all the apps to listen to dispatcher
-		$components = $this->getService('repos://site/components.component')
-						->fetchSet();
+		$components = $this->getService('repos://site/components.component')->fetchSet();
 		
 		$components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
 				

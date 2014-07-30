@@ -53,7 +53,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
     {
         parent::__construct($config);
                
-        $this->_default = $config['default'];
+        $this->_default = isset($config['default']) ? $config['default'] : null;
         
         //set the default actor
         $this->setActor($this->_default);
@@ -95,9 +95,8 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
     {
 		$parts = explode('.', $name);
         
-		if ( $parts[0] == 'before' ) {
+		if($parts[0] == 'before')
 			$this->_fetchOwner($context);
-		}
 		
 	    parent::execute($name, $context);
     }
@@ -112,9 +111,10 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
      */
     protected function _beforeControllerAdd(KCommandContext $context)
     {
-        if ( !$context->data['owner'] instanceof ComActorsDomainEntityActor )
+        if(!$context->data['owner'] instanceof ComActorsDomainEntityActor)
         {
-            if  ( $this->getRepository()->hasBehavior('ownable') ) {
+            if($this->getRepository()->hasBehavior('ownable'))
+            {
                 $context->data['owner'] = $this->actor;
             }
         }
@@ -155,27 +155,32 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
         $actor = pick($this->getActor(), $this->_default);
         $value = $this->{$this->getIdentifiableKey()};
         
-        if ( $value ) 
+        if($value) 
         {
-            if ( $value == 'viewer' )  {
+            if($value == 'viewer')  
+            {
                 $actor = get_viewer();
             }
-			elseif ( !is_numeric($value) ) {
+			elseif(!is_numeric($value)) 
+			{
 				$actor = $this->getService('repos://site/people.person')->fetch(array('username'=>$value));
 			}
-            else {
+            else 
+            {
                 $actor = $this->getService('repos://site/actors.actor')->fetch((int)$value);
             }
             
             //guest actor can never be a context actor                
-            if ( is_person($actor) && $actor->guest() ) {
+            if(is_person($actor) && $actor->guest()) 
+            {
                 $actor = null;
             }
                     
             //set the data owner to actor.
             $context->data['owner'] = $actor;  
             
-            if ( !$actor ) {
+            if(!$actor) 
+            {
                 throw new LibBaseControllerExceptionNotFound('Owner Not Found');
             }                      
         }

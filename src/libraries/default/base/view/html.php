@@ -40,7 +40,7 @@ class LibBaseViewHtml extends LibBaseViewTemplate
 	{
 		$config->append(array(
             'template_filters' => array('script', 'style'),
-			'mimetype'         => 'text/html'					
+			'mimetype' => 'text/html'					
 		));
 		
 		parent::_initialize($config);
@@ -56,18 +56,15 @@ class LibBaseViewHtml extends LibBaseViewTemplate
     {
         $name = $this->getName();
         
-        if ( $property == 'item' || $property == 'items' )
+        if($property == 'item' || $property == 'items')
             $name = $property;
         
-        if ( $property == $name ) 
+        if($property == $name) 
         {
-            if ( KInflector::isPlural($name) ) {
-                $this->_state->setList($value);
-            }
-            
-            else {
-                $this->_state->setItem($value);
-            }
+            if(KInflector::isPlural($name))
+            	$this->_state->setList($value);
+            else
+            	$this->_state->setItem($value);
         }
                 
         return parent::__set($property, $value);
@@ -81,18 +78,20 @@ class LibBaseViewHtml extends LibBaseViewTemplate
     public function display()
     {
         //Get the view name
-        $name  = $this->getName();
+        $name = $this->getName();
         
         //set the state data to the view
         $this->_data = array_merge($this->_state->toArray(), $this->_data);
                     
         //Assign the data of the model to the view
-        if ( $items = $this->_state->getList()  ) {
+        if($items = $this->_state->getList()) 
+        {
             $this->_data[ KInflector::pluralize($name) ] = $items;
             $this->_data['items'] = $items;
         }
         
-        if ( $item = $this->_state->getItem()  ) {
+        if($item = $this->_state->getItem()) 
+        {
             $this->_data[ KInflector::singularize($name) ] = $item;
             $this->_data['item'] = $item;
         }

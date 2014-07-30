@@ -38,13 +38,13 @@
 		</label>
 	</div>
 	
-	<?php if ( !empty($return) ) : ?>
-		<input type="hidden" name="return" value="<?= $return; ?>" />
+	<?php if(!empty($return)): ?>
+	<input type="hidden" name="return" value="<?= $return; ?>" />
 	<?php endif;?>
 </form>
 
 <popup:footer>
-	<?php if ( @service('com://site/people.controller.person')->permission->canRegister() ) : ?>
+	<?php if(@service('com://site/people.controller.person')->permission->canRegister()): ?>
 	<p class="lead pull-left">
 		<a href="<?= @route('option=com_people&view=person&layout=add'.( !empty($return) ? '&return='.$return : '')) ?>">
 		    <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>
@@ -53,7 +53,7 @@
 	<?php endif;?>
 
 	<button data-behavior="<?= isset($ajax) ? 'Request' : 'Submit'?>" data-request-form="#modal-login-form" data-submit-form="#modal-login-form" data-request-redirect="true" name="Submit" class="btn btn-large btn-primary">
-    		<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
+    	<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
     </button>
 </popup:footer>
 

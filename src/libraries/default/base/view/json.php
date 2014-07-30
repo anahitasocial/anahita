@@ -46,9 +46,8 @@ class LibBaseViewJson extends LibBaseViewAbstract
 		//Padding can explicitly be turned off by setting to FALSE
 		if(empty($config->padding) && $config->padding !== false)
 		{
-			if(isset($this->callback) && (strlen($this->callback) > 0)) {
+			if(isset($this->callback) && (strlen($this->callback) > 0))
 				$config->padding = $state->callback;
-			}
 		}
 
 		$this->_padding = $config->padding;
@@ -65,10 +64,10 @@ class LibBaseViewJson extends LibBaseViewAbstract
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'padding'	  => '',
-			'version'	  => '1.0'
+			'padding' => '',
+			'version' => '1.0'
 		))->append(array(
-			'mimetype'	  => 'application/json; version='.$config->version,
+			'mimetype' => 'application/json; version='.$config->version,
 		));
 
 		parent::_initialize($config);
@@ -81,34 +80,33 @@ class LibBaseViewJson extends LibBaseViewAbstract
 	 */
     public function display()
     { 
-        $name  = $this->getName();
+        $name = $this->getName();
         
-        $data  = array();
+        $data = array();
         
         //if data is set the just json encode those
-        if ( count($this->_data) ) {
+        if(count($this->_data)) 
+        {
             $this->output = $this->_data;
         }
-        
-        else if ( KInflector::isPlural($name) ) {
+        elseif(KInflector::isPlural($name))
+        {
             $this->output = $this->_getList();
         }
-        
-        else {
+        else
+        {
             $this->output = $this->_getItem();
         }
       
         //if null then return empty string
         $this->output = pick($this->output, '');
         
-        if (!is_string($this->output)) {
+        if(!is_string($this->output))
             $this->output = json_encode($this->_toArray(KConfig::unbox($this->output)));
-        }
 
         //Handle JSONP
-        if(!empty($this->_padding)) {
+        if(!empty($this->_padding))
             $this->output = $this->_padding.'('.$this->output.');';
-        }
         
     	return $this->output;
     }
@@ -122,7 +120,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
     {
         $data = array();
         
-        if ( $items = $this->_state->getList() ) 
+        if($items = $this->_state->getList()) 
         {          
             $name = KInflector::singularize($this->getName());
              
@@ -132,23 +130,22 @@ class LibBaseViewJson extends LibBaseViewAbstract
                $name = null; 
                $item = $this->_serializeToArray($item, $name);                              
                
-               if ( count($commands = $this->getToolbarCommands('list')) ) {
+               if(count($commands = $this->getToolbarCommands('list')))
                     $item['commands'] = $commands;
-               }
                
                $data[] = $item; 
             }
             
             $data = array(
-                'data' => $data                
+            	'data' => $data                
             );
             
-            if ( is($items, 'AnDomainEntitysetAbstract') )
+            if(is($items, 'AnDomainEntitysetAbstract'))
             {
                 $data['pagination'] = array(
-                        'offset' => (int) $items->getOffset(),
-                        'limit'  => (int) $items->getLimit(),
-                        'total'  => (int) $items->getTotal(),                
+                	'offset' => (int) $items->getOffset(),
+                    'limit'  => (int) $items->getLimit(),
+                    'total'  => (int) $items->getTotal(),                
                 );
             }
         }
@@ -165,13 +162,13 @@ class LibBaseViewJson extends LibBaseViewAbstract
     {
         $item = null;
 
-        if ( $item = $this->_state->getItem() ) 
+        if($item = $this->_state->getItem()) 
         {
-           $item     = $this->_serializeToArray($item);
+           $item = $this->_serializeToArray($item);
            $commands = $this->getToolbarCommands('toolbar');
-           if ( !empty($commands) ) {
+           
+           if(!empty($commands))
                 $item['commands'] = $commands;
-           }
         }
         
         return $item;
@@ -186,10 +183,13 @@ class LibBaseViewJson extends LibBaseViewAbstract
     {
         $result = array();
         
-        if ( is($item, 'AnDomainBehaviorSerializable') )
+        if(is($item, 'AnDomainBehaviorSerializable'))
+        {
             $result = $item->toSerializableArray();
-        else {
-            $result = (array)$item;
+        }
+        else
+        {
+            $result = (array) $item;
         }
         
         return $result;         
@@ -207,20 +207,18 @@ class LibBaseViewJson extends LibBaseViewAbstract
     {
         $result = array();
         
-        if ( $this->_state->toolbar instanceof KControllerToolbarAbstract ) 
+        if($this->_state->toolbar instanceof KControllerToolbarAbstract) 
         {
             $this->_state->toolbar->reset();
             $method  = 'add'.ucfirst($name).'Commands';
             
-            if ( method_exists($this->_state->toolbar, $method) ) {
+            if(method_exists($this->_state->toolbar, $method))
                 $this->_state->toolbar->$method();
-            }
         
             $commands = $this->_state->toolbar->getCommands();
             
-            foreach($commands as $command) {
+            foreach($commands as $command)
                 $result[] =$command->getname();
-            }
         }
         
         return $result;
@@ -235,18 +233,23 @@ class LibBaseViewJson extends LibBaseViewAbstract
     protected function _toArray($data)
     {
         $array = array();
+        
         foreach ($data as $key => $value)
         {
-            if ( is($value, 'AnDomainBehaviorSerializable') ) {
+            if(is($value, 'AnDomainBehaviorSerializable'))
+            {
                 $array[$key] = $value->toSerializableArray();
             }
-            elseif ( is_array($value) ) {
-                $array[$key] = $this->_toArray($value); 
+            elseif(is_array($value))
+            {
+                $array[$key] = $this->_toArray($value);
             }
-            else {
+            else
+            {
                 $array[$key] = $value;
             }
         }
+        
         return $array;
     }    
 }

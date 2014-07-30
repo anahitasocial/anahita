@@ -1,0 +1,75 @@
+<?php
+
+/** 
+ * LICENSE: ##LICENSE##
+ * 
+ * @category   Anahita
+ * @package    Com_Hashtags
+ * @subpackage Domain_Entity
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2014 rmdStudio Inc.
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @link       http://www.GetAnahita.com
+ */
+
+/**
+ * A hashtag
+ * 
+ * @category   Anahita
+ * @package    Com_Hashtags
+ * @subpackage Domain_Entity
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @link       http://www.GetAnahita.com
+ */
+final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
+{
+    /*
+     * hashtag regex pattern
+     */
+    //const PATTERN_HASHTAG = '/#([^0-9_\s\W][\p{L}0-9]{2,})/u';
+	const PATTERN_HASHTAG = '/(^|[^&\w])#([^0-9_\s\W][\p{L}0-9]{2,})/u';
+	
+    /**
+     * Initializes the default configuration for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     *
+     * @return void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'attributes' => array(
+                'name' => array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'string','read'=>'public', 'unique'=>true)
+            ),
+			'behaviors'  => to_hash(array(
+				'modifiable',
+				'describable'
+			)),
+			'relationships' => array(
+                'hashtagables' => array(
+                    'through' => 'association',                    
+                    'child_key' => 'hashtag',
+                    'target' => 'com:base.domain.entity.node',
+                    'target_child_key' => 'hashtagable'
+                )
+            )
+        ));
+        
+        parent::_initialize($config);
+    }
+    
+	/**
+     * Update stats
+     * 
+     * @return void
+     */
+    public function resetStats(array $hashtags)
+    {
+    	foreach($hashtags as $hashtag)
+   			$hashtag->timestamp();
+    }
+}

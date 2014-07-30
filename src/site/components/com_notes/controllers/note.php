@@ -45,7 +45,7 @@ class ComNotesControllerNote extends ComMediumControllerDefault
         parent::_initialize($config);
     }
     
-/**
+	/**
 	 * Browse Notes
 	 * 
 	 * @param KCommandContext $context Context parameter

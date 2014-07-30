@@ -39,25 +39,25 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'attributes'	=> array(
+			'attributes' => array(
 				'leaderCount' => array('default'=>0,'write'=>'private'),
-				'leaderIds'   => array('type'=>'set', 'default'=>'set','write'=>'private'),
-				'blockerIds'  => array('type'=>'set', 'default'=>'set','write'=>'private'),
-				'mutualIds'	  => array('type'=>'set', 'default'=>'set','write'=>'private'),
+				'leaderIds' => array('type'=>'set', 'default'=>'set','write'=>'private'),
+				'blockerIds' => array('type'=>'set', 'default'=>'set','write'=>'private'),
+				'mutualIds' => array('type'=>'set', 'default'=>'set','write'=>'private'),
 				'mutualCount' => array('default'=>0,'write'=>'private')
 			),
 			'relationships' => array(
 				'blockers' => array(
-					'through' 	        => 'com:actors.domain.entity.block',
-					'parent_delete'		=> 'ignore',
+					'through' => 'com:actors.domain.entity.block',
+					'parent_delete'	=> 'ignore',
 					'child_key' => 'blocked',
-					'target'	=> 'com:actors.domain.entity.actor',					
+					'target' => 'com:actors.domain.entity.actor',					
 				),
 				'leaders' => array(
 				    'parent_delete'	=> 'ignore',
-					'through' 	=> 'com:actors.domain.entity.follow',
+					'through' => 'com:actors.domain.entity.follow',
 					'child_key' => 'follower',				
-					'target'	=> 'com:actors.domain.entity.actor',
+					'target' => 'com:actors.domain.entity.actor',
 				)
 			)
 		));
@@ -74,13 +74,11 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 	 */
 	public function getCommonLeaders($actor)
 	{
-		if ( !isset($this->__common_leaders) )
+		if(!isset($this->__common_leaders))
 		{				
-			$ids    = array_intersect($this->leaderIds->toArray(), $actor->leaderIds->toArray());
-			$ids[]  = -1;
-			$query	= $this->getService('repos:actors.actor')
-						->getQuery()->where('id','IN', $ids);
-
+			$ids = array_intersect($this->leaderIds->toArray(), $actor->leaderIds->toArray());
+			$ids[] = -1;
+			$query = $this->getService('repos:actors.actor')->getQuery()->where('id','IN', $ids);
 
 			$this->__common_leaders = $query->toEntitySet();
 		}
@@ -95,12 +93,10 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 	 */
 	public function getMutuals()
 	{
-		if ( !isset($this->__mutuals) )
+		if(!isset($this->__mutuals))
 		{
-			$ids   = array_intersect($this->leaderIds->toArray(), $this->followerIds->toArray());
-			
-			$query	= $this->getService('repos://site/people.person')
-						->getQuery()->where('id','IN',$ids);
+			$ids = array_intersect($this->leaderIds->toArray(), $this->followerIds->toArray());
+			$query = $this->getService('repos://site/people.person')->getQuery()->where('id','IN',$ids);
 												
 			$this->__mutuals = $query->toEntitySet();
 		}

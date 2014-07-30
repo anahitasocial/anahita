@@ -39,9 +39,8 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
     {
         static $instance;
     
-        if ( !$instance ) {
+        if(!$instance)
             $instance = new static();
-        }
     
         $object = clone $instance;
         
@@ -50,7 +49,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
         $object->append($config)
                ->append(array(
                    'attribs'    => array(
-                      'id'      => $name
+                      'id'      => null
                  )
         ));
     
@@ -93,12 +92,13 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
     {
         //get attributes
         $attrbs = KConfig::unbox(pick($this->attribs, array()));
+        
         //get the existing value
-        $old    = isset($attrbs[$name]) ? $attrbs[$name] : null;
+        $old = isset($attrbs[$name]) ? $attrbs[$name] : null;
+        
         //if glue and existing value then stich the old and new using the glue
-        if ( $glue && $old ) {            
-            $value = $old.(string)$glue.$value;
-        }
+        if($glue && $old)            
+            $value = $old.(string) $glue.$value;
         
         //put the attributes back
         $attrbs[$name] = $value;

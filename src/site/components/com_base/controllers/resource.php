@@ -39,7 +39,7 @@ class ComBaseControllerResource extends LibBaseControllerResource
         parent::__construct($config);
 
         //load the language
-        JFactory::getLanguage()->load( $config->language );
+        JFactory::getLanguage()->load($config->language);
         
         $this->_state->viewer = $config->viewer;
     }
@@ -55,9 +55,9 @@ class ComBaseControllerResource extends LibBaseControllerResource
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-            'viewer'        => $this->getService('com:people.viewer'),
-		    'language'      => 'com_'.$this->getIdentifier()->package,
-		    'behaviors'     => to_hash('com://site/application.controller.behavior.message')
+            'viewer' => $this->getService('com:people.viewer'),
+		    'language' => 'com_'.$this->getIdentifier()->package,
+		    'behaviors' => to_hash('com://site/application.controller.behavior.message')
 		));
 				
 		parent::_initialize($config);
@@ -71,10 +71,10 @@ class ComBaseControllerResource extends LibBaseControllerResource
      */
     public function getToolbar($toolbar, $config = array())
     {
-        if ( is_string($toolbar) )
+        if(is_string($toolbar))
         {
             //if actorbar or menu alawys default to the base
-            if ( in_array($toolbar, array('actorbar','menubar')) )
+            if(in_array($toolbar, array('actorbar','menubar')))
             {
                 $identifier       = clone $this->getIdentifier();
                 $identifier->path = array('controller','toolbar');

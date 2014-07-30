@@ -125,8 +125,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         $methods = parent::getMethods();
         $methods = array_diff($methods, $this->_exclude_actions);
         return $methods;
-    }
-    
+    }  
 
     /**
      * Service Browse
@@ -137,31 +136,39 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        if ( !$context->query ) {
+    	if(!$context->query)
             $context->query = $this->getRepository()->getQuery(); 
-        }
+    	
+    	$query = $context->query;
         
-        $query = $context->query;
-        
-        if ( $this->q ) {
+        if($this->q)
             $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
-        }
     
-        if ( $this->hasBehavior('parentable') && $this->getParent() ) {
+        if($this->hasBehavior('parentable') && $this->getParent())
             $query->parent($this->getParent());
-        }
-    
-        //do some sorting
-        if ( $this->sort )
+        
+        switch($this->sort)
         {
-            $this->getState()->append(array(
-                'direction' => 'ac'
-            ));
-            
-            $query->order($this->sort,  $this->direction);
+        	case 'top':
+        		$identifierName = $this->_mixer->getIdentifier()->name;
+        		$query->order('(COALESCE('.$identifierName.'.comment_count,0) + COALESCE('.$identifierName.'.vote_up_count,0) + COALESCE('.$identifierName.'.subscriber_count,0) + COALESCE('.$identifierName.'.follower_count,0))', 'DESC');
+        	break;
+        	
+        	case 'updated':
+        		$query->order('updateTime', 'DESC');
+        	break;
+        	
+        	case 'oldest':
+        		$query->order('creationTime', 'ASC');
+        	break;	
+        	
+        	case 'recent':
+        	case 'newest':
+        		$query->order('creationTime', 'DESC');
+        	break;
         }
     
-        $query->limit( $this->limit , $this->start );
+        $query->limit($this->limit, $this->start);
     
         return $this->getState()->setList($query->toEntityset())->getList();
     }

@@ -219,7 +219,8 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	{				
 		$path = $this->findTemplate($template);
 		 
-		if ( !$path ) {
+		if(!$path) 
+		{
 		    //@TODO a hack to prevent caching the 
 		    //paths that are not found
 		    unset($this->_paths[$template.'.php']);
@@ -406,17 +407,20 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	 */
 	public function handleError($code, $message, $file = '', $line = 0, $context = array())
 	{
-	    if($file == 'tmpl://koowa:template.stack' || $code == 1 )
+	    if($file == 'tmpl://koowa:template.stack' || $code == 1)
 	    {
-            if ( $file == 'tmpl://koowa:template.stack') {
+            if($file == 'tmpl://koowa:template.stack')
+            {
                 $file = $this->getPath();  
             }
-            
-	        if(ini_get('display_errors')) {
+                
+	        if(ini_get('display_errors')) 
+	        {
 	            echo '<strong>'.$code.'</strong>: '.$message.' in <strong>'.$file.'</strong> on line <strong>'.$line.'</strong>';
 	        }
 	
-	        if(ini_get('log_errors')) {
+	        if(ini_get('log_errors')) 
+	        {
 	            error_log(sprintf('PHP %s:  %s in %s on line %d', $code, $message, $file, $line));
 	        }
 	

@@ -12,7 +12,7 @@
 			
 			<div class="an-meta">
 				<?= @date($comment->creationTime) ?> 
-				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>">#</a>
+				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>"><?= @text('LIB-AN-COMMENT-PERMALINK') ?></a>
 			</div>
 		</div>
 	</div>
@@ -22,12 +22,14 @@
 	<?php $body = strip_tags($body) ?>
 	<?php endif; ?>
 	
+	<?php $body = @content($body); ?>
+	
 	<?php if (!empty($truncate_body) ) : ?>
 	<?php $body = @helper('text.truncate', $body, $truncate_body) ?>	
 	<?php endif;?>
 	
 	<div class="entity-body"> 
-		<?= @content($body) ?>
+		<?= $body ?>
 	</div>
 		
 	<div class="entity-meta">

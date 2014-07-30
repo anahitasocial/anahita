@@ -36,10 +36,10 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
     {
  		$entity = $this->getController()->getItem();
  		
- 		if ( $entity->authorize('vote') )
+ 		if($entity->authorize('vote'))
 			$this->addCommand('vote');	
 					
-		if ( $entity->authorize('edit') ) 
+		if($entity->authorize('edit')) 
 		{ 
 			$this->addCommand('edit', array('layout'=>'form'))
 			->getCommand('edit')
@@ -49,7 +49,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 			$this->addCommand('enable', array('ajax'=>true));	
 		}	
 
-		if ( $entity->authorize('delete') && $this->getController()->filter != 'leaders' )
+		if($entity->authorize('delete') && $this->getController()->filter != 'leaders')
 		    $this->addCommand('delete');		
 	}
 	

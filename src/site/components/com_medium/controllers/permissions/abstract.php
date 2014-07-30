@@ -26,30 +26,7 @@
  * @link       http://www.anahitapolis.com
  */
 abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPermissionDefault
-{
-	/**
-	 * Authorize Browse
-	 *
-	 * @return boolean
-	 */
-	public function canBrowse()
-	{	
-		$viewer = get_viewer();
-		
-		if( $viewer->id )
-		{
-			if($this->filter == 'leaders' && $viewer->id == $this->actor->id)
-				return true;
-			elseif ($this->actor->id)
-				return true;
-			
-		}
-		elseif( $this->actor->id )
-			return true;
-		
-		return false;	
-	}
-	
+{	
 	/**
 	 * Authorize Read
 	 *

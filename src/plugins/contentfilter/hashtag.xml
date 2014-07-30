@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install version="##BUILD_PLATFORM_VERSION##" type="plugin" group="contentfilter" method="upgrade">
+    <name>Hashtag</name>
+    <author>Anahita</author>
+    <creationDate>##BUILD_DATE##</creationDate>
+    <copyright>rmd Studio</copyright>
+    <license>GPL3</license>
+    <authoremai />
+    <authorurl>GetAnahita.com</authorurl>
+   	<version>##BUILD_VERSION##</version>
+	<release>##BUILD_RELEASE##</release>
+    <description>Converts #hashtag terms to links to the hashtag pages.</description>
+    <params />
+    <files>
+        <filename plugin="hashtag">hashtag.php</filename>        
+    </files>
+</install>

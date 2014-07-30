@@ -132,6 +132,20 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	    return $this->_render('dropdown', $config);
 	}
 	
+	/**
+	 * Renders a list of basic nodes
+	 *
+	 * @param  AnDomainEntityAbstract $entity  The parent of the comments
+	 * @param  array	              $config  An array of configuration
+	 * 
+	 * @return string
+	 */
+	public function nodes($items, $config = array())
+	{						
+		$config['items'] = $items;	
+		return $this->_render('nodes', $config);
+	}
+	
     /**
 	 * Renders the comments for a commentable
 	 *
@@ -154,7 +168,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 		$offset = isset($data['start'])  ? $data['start']  : 0;
 		
 		if ( !isset($config['comments']) ) {
-			$config['comments'] = $entity->comments->limit($limit, $offset);
+			$config['comments'] = $entity->comments->order('creationTime', 'ASC')->limit($limit, $offset);
 		}
 		
         if ( !isset($config['can_comment']) ) 

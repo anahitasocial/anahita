@@ -56,41 +56,43 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
 	protected function _layoutDefault()
 	{
 		$context = new KCommandContext();
-		$context->gadgets 		= new LibBaseTemplateObjectContainer();
-		$context->actor	  		= $this->_state->getItem();
-		$context->composers     = new LibBaseTemplateObjectContainer();
-		$context->commands 		= $this->getTemplate()->renderHelper('toolbar.commands', 'toolbar');
-		$context->profile       = new KConfig();
+		
+		$context->gadgets = new LibBaseTemplateObjectContainer();
+		$context->actor	= $this->_state->getItem();
+		$context->composers = new LibBaseTemplateObjectContainer();
+		$context->commands = $this->getTemplate()->renderHelper('toolbar.commands', 'toolbar');
+		$context->profile = new KConfig();
+		
         $context->gadgets->insert('socialgraph', array(
-                'title' 		=> translate(array('COM-ACTORS-GADGET-LABEL-SOCIALGRAPH','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-SOCIALGRAPH')),                
-                'url'			=> $context->actor->getURL().'&get=graph&layout=gadget',
-                'title_url'		=> $context->actor->getURL().'&get=graph&type=followers'
+        	'title' => translate(array('COM-ACTORS-GADGET-LABEL-SOCIALGRAPH','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-SOCIALGRAPH')),                
+            'url' => $context->actor->getURL().'&get=graph&layout=gadget',
+            'title_url'	=> $context->actor->getURL().'&get=graph&type=followers'
         ));
 				
-        if ( $this->_state->getItem()->authorize('access') )
+        if($this->_state->getItem()->authorize('access'))
         {        	
-        	$this->_state->getItem()->components->registerEventDispatcher( $this->getService('anahita:event.dispatcher'));
+        	$this->_state->getItem()->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
         	
-        	$this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
-        	        	       
             $this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
             
             dispatch_plugin('profile.onDisplay', array('actor'=>$this->_state->getItem(), 'profile'=>$context->profile));
             
             $this->profile = $context->profile;
             
-            if ( count($context->profile) > 0 )
+            if(count($context->profile) > 0)
+            {
                 $context->gadgets->insert('information', array(
-                        'title' 		=> translate(array('COM-ACTORS-GADGET-LABEL-ACTOR-INFO','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-ACTOR-INFO')),
-                        'content'		=> $this->load('info')
+                	'title' => translate(array('COM-ACTORS-GADGET-LABEL-ACTOR-INFO','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-ACTOR-INFO')),
+                    'content' => $this->load('info')
                 ));
+            }
         }
                 
         $context->gadgets->sort(array('stories','information'));                
                      
 		$this->set(array(
-            'commands'  => $context->commands, 
-            'gadgets'   => $context->gadgets,
+            'commands' => $context->commands, 
+            'gadgets' => $context->gadgets,
             'composers' => $context->composers            
         ));
 	}
@@ -105,7 +107,7 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
     	$context->commands = $this->getTemplate()->renderHelper('toolbar.commands', 'toolbar');
 		
 		$this->set(array(
-            'commands'  => $context->commands           
+            'commands' => $context->commands           
         ));
 	}
 }

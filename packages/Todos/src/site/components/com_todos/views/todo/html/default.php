@@ -7,14 +7,14 @@
 		<?php endif; ?>
 		<?php if(!$todo->open) : ?>
 		<li>				
-			<?= sprintf(@text('COM-TODOS-TODOLIST-COMPLETED-BY-REPORT'), @date($todo->openStatusChangeTime), @name($todo->lastChanger)) ?>
+			<?= sprintf(@text('COM-TODOS-TODO-COMPLETED-BY-REPORT'), @date($todo->openStatusChangeTime), @name($todo->lastChanger)) ?>
 		</li>
 		<?php endif; ?>
 		<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $todo->numOfComments) ?></li>
 	</ul>
 </module>
 
-<?php if ( $actor->authorize('administration') ) : ?>
+<?php if($actor->authorize('administration')): ?>
 <module position="sidebar-b" title="<?= @text('COM-TODOS-TODO-PRIVACY') ?>">
 	<?= @helper('ui.privacy',$todo) ?>
 </module>

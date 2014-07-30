@@ -56,5 +56,3 @@ class LibBaseDomainBehaviorHittable extends AnDomainBehaviorAbstract
 	}		
 	
 }
-
-?>

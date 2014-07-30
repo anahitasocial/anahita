@@ -49,7 +49,8 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             'request'       => array(
             	'limit'     => 20,
 				'sort'		=> 'relevant',
-				'direction' => 'ASC'                
+				'direction' => 'ASC',
+				'scope' => 'all'                
             )            
 		));
 		
@@ -65,14 +66,14 @@ class ComSearchControllerSearch extends ComBaseControllerResource
      */
     protected function _actionGet(KCommandContext $context)
     {           
-    	$this->setView('searches');
+    	$this->setView('searches');   		
     	
-    	$this->getToolbar('menubar')->setTitle('');    		
-    	
-    	if ( $this->actor) {
+    	if($this->actor) 
+    	{
         	$this->getToolbar('actorbar')->setTitle($this->actor->name);
         	$this->getService()->set('mod://site/search.owner', $this->actor);
     	}
+    	
     	$this->_state->append(array(
 			'search_comments' => false
     	));
@@ -86,33 +87,25 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
     	$this->keywords = array_filter(explode(' ', $this->term));
     	
-    	$this->scopes			= $this->getService('com://site/search.domain.entityset.scope');
-		$this->current_scope	= $this->scopes->find($this->scope);
-		
+    	$this->scopes = $this->getService('com://site/components.domain.entityset.scope');
+    	$this->current_scope = $this->scopes->find($this->scope);
+    	
     	$query = $this->getService('com://site/search.domain.query.node')
     				->ownerContext($this->actor)
     				->searchTerm($this->term)
     				->searchComments($this->search_comments)
     				->limit($this->limit, $this->start);
+
+    	if($this->current_scope)
+    		$query->scope($this->current_scope);			
     				
     	if($this->sort == 'recent')
     		$query->order('node.created_on','DESC');
     	else 
     		$query->orderByRelevance();
-
-    	$set = $query->toEntitySet();
-    	// initialize current scope to the 1st one having result
-    	if ( ! $this->current_scope and $set->getScopes()->getTotal()) {
-    		foreach ($set->getScopes() as $scope) {
-    			if ($scope->result_count > 0) {
-    				$this->current_scope = $scope;
-    				break;
-    			}
-    		}
-    	}
-    	$set->getQuery()->scope($this->current_scope);
-    	
-    	$this->_state->setList($set);
+    		
+    	$entities = $query->toEntitySet();
+    	$this->_state->setList($entities);
         
         parent::_actionGet($context);
     }

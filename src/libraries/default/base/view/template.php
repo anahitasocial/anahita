@@ -65,9 +65,12 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         parent::__construct($config);
         
         //set the media url
-        if(!$config->media_url instanceof KHttpUrl) {
+        if(!$config->media_url instanceof KHttpUrl) 
+        {
             $this->_mediaurl = KService::get('koowa:http.url', array('url' => $config->media_url));
-        } else {
+        } 
+        else 
+        {
             $this->_mediaurl = $config->media_url;
         }
         
@@ -81,9 +84,8 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         $this->_template = $config->template;
              
         //Set the template filters
-        if(!empty($config->template_filters)) {
+        if(!empty($config->template_filters))
             $this->getTemplate()->addFilter($config->template_filters);
-        }
         
         // Add default template paths
         $this->getTemplate()->addSearchPath(KConfig::unbox($config->template_paths));        
@@ -151,9 +153,8 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         if(!$this->_template instanceof KTemplateAbstract)
         {
             //Make sure we have a template identifier
-            if(!($this->_template instanceof KServiceIdentifier)) {
+            if(!($this->_template instanceof KServiceIdentifier))
                 $this->setTemplate($this->_template);
-            }
               
             $config = array(
             	'view' => $this
@@ -184,11 +185,13 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
                 $identifier->path = array('template');
                 $identifier->name = $template;
 			}
-			else $identifier = $this->getIdentifier($template);
+			else
+			{ 
+				$identifier = $this->getIdentifier($template);
+			}
             
-            if($identifier->path[0] != 'template') {
+            if($identifier->path[0] != 'template')
                 throw new KViewException('Identifier: '.$identifier.' is not a template identifier');
-            }
             
             register_default(array('identifier'=>$identifier,'prefix'=>$this,'name'=>array('Template'.ucfirst($this->getName()), 'TemplateDefault')));
                     	        	
@@ -213,16 +216,15 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
 	 */
 	public function load($template, array $data = array())
 	{
-		if ( method_exists($this, '_beforeLayout') ) {
+		if(method_exists($this, '_beforeLayout'))
 			$this->_beforeLayout($template);
-		}
 					
 		$method = '_layout'.KInflector::camelize($template);
 		
-		if ( method_exists($this, $method) )
+		if(method_exists($this, $method))
 			$this->$method();
 			
-		$data   = array_merge($this->_data, $data);
+		$data = array_merge($this->_data, $data);
 		$output = $this->getTemplate()->loadTemplate($template, $data)->render();
         
         return $output;
@@ -237,7 +239,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     public function display()
     {
     	$this->output = '';
-    	$output 	  = $this->load($this->_layout);
+    	$output = $this->load($this->_layout);
     	$this->output = $this->output.$output;
 		return $this->output;
     }

@@ -3,17 +3,33 @@
 <?php if(!empty($keywords)) : ?>
 <script src="com_search/js/search_request.js" />
 <?php endif;?>
-<module position="sidebar-a" style="none">
-<?php if ( !empty($keywords)) : ?>
+
+<?php if(!empty($keywords) && $items->getTotal()): ?>
+<form>
+	<select data-trigger="SortOption" id="SortOptions" name="sort">
+		<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
+			<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
+		</option>
+		<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
+			<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
+		</option>
+	</select>
+	
+	<label class="checkbox">
+		<input data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
+		<?= @text('COM-SEARCH-OPTION-COMMENTS') ?>
+    </label>
+</form>
+<?php endif;?>
+
+<module position="sidebar-b" style="none">
+<?php if(!empty($keywords)): ?>
 <?= @template('scopes') ?>
 <?php endif;?>
 </module>
 
-<module position="sidebar-b" style="none"></module>
-
-
 <?php if(empty($keywords)) : ?>
-<form action="<?=@route('view=searches')?>" class="well">
+<form action="<?= @route('view=searches') ?>" class="well">
 	<fieldset>
 		<legend><?= @text('COM-SEARCH-PROMPT') ?></legend>
 		<input type="text" name="term" class="input-block-level">
@@ -31,9 +47,9 @@
 </form>
 <?php endif ?>
 
+
+
 <div class="an-entities-wrapper">
-	<?php if ( !empty($keywords)) : ?>
 	<?= @template('list') ?>
-	<?php endif;?>
 </div>
 

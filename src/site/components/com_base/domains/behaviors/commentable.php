@@ -88,7 +88,7 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 		if ( $this->getService()->has('com:people.viewer') )
 			$config->append(array(
 				'data'=>array(
-					'lastCommenter'		=> $this->getService('com:people.viewer')
+					'lastCommenter'	=> $this->getService('com:people.viewer')
 				)
 			));
 	}

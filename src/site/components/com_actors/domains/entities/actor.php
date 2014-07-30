@@ -64,8 +64,9 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'enableable',
                 'dictionariable',
                 'followable',
-                'portraitable'   => array(
-                        'sizes'  => array(
+	        	'com://site/hashtags.domain.behavior.hashtagable',
+                'portraitable' => array(
+                        'sizes' => array(
                                 'small'  => '80xauto',
                                 'medium' => '160xauto',
                                 'large'  => '480xauto',
@@ -98,9 +99,12 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
 	 */
 	public function getPortraitFile($size)
 	{
-		if ( strpos($this->filename,'/') ) {
-			 $filename = str_replace('/', '/avatars/'.$size, $this->filename);			 
-		} else {			
+		if(strpos($this->filename,'/')) 
+		{
+			$filename = str_replace('/', '/avatars/'.$size, $this->filename);			 
+		} 
+		else 
+		{			
 			$filename = $this->component.'/avatars/'.$size.$this->filename;				
 		}
         
@@ -113,19 +117,21 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
 	 */
 	public function __get($name)
 	{
-		if ( $name == 'components' ) 
+		if($name == 'components') 
 		{
-			if ( !isset($this->_components) ) {
-				$this->_components = $this->getService('com://site/actors.domain.entityset.component', array(
-        				'actor' 		=> $this        				
-				));
+			if(!isset($this->_components)) 
+			{
+				$this->_components = $this->getService('com://site/actors.domain.entityset.component', array('actor'=>$this));
 			}
+			
 			return $this->_components;
 		} 
-		else if ( $name == 'uniqueAlias' ) {
+		elseif($name == 'uniqueAlias') 
+		{
 			return $this->get('id');
 		}
-		else {
+		else 
+		{
 			return parent::__get($name);
 		}
 	}

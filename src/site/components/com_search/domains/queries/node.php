@@ -103,9 +103,9 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 				$clause->where('CONCAT(IF(node.name IS NULL,"",node.name), IF(node.body IS NULL,"",node.body)) LIKE @quote(%'.$keyword.'%)', $operation);
 		}
 									
-		$scopes = $this->getService('com://site/search.domain.entityset.scope');
-		
-		if ( $this->scope instanceof ComSearchDomainEntityScope ) 
+		$scopes = $this->getService('com://site/components.domain.entityset.scope');
+
+		if($this->scope instanceof ComComponentsDomainEntityScope) 
 			$scopes = array($this->scope);
 				
 		$comments = array();
@@ -116,7 +116,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 			$types[] = $scope->node_type;
 			
 			if ($scope->commentable) 
-				$comments[] = (string) $scope->identifier;
+				$comments[] = (string) $scope->identifier;	
 		}
 
 		$comment_query = '';
@@ -126,7 +126,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 		
 		$owner_query  = '';
 		
-		if ($this->owner_context) 
+		if($this->owner_context) 
 		{
 			$owner_query = 'node.owner_id = '.$this->owner_context->id.' AND ';
 			

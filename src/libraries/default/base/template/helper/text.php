@@ -269,5 +269,4 @@ class LibBaseTemplateHelperText extends KTemplateHelperAbstract implements KServ
                ->sanitize(KHelperString::str_ireplace(array("\r\n", "\n"), '', $text))
                , ENT_QUOTES);
 	}
-//end class	
 }

@@ -90,8 +90,8 @@ class LibBaseViewFile extends LibBaseViewAbstract
 		$count = count($this->getIdentifier()->path);
 
 		$config->append(array(
-            'path'		  => '',
-			'filename'	  => $this->getIdentifier()->path[$count-1].'.'.$this->getIdentifier()->name,
+            'path' => '',
+			'filename' => $this->getIdentifier()->path[$count-1].'.'.$this->getIdentifier()->name,
 			'disposition' => 'attachment'
        	));
        	
@@ -106,20 +106,17 @@ class LibBaseViewFile extends LibBaseViewAbstract
 	public function display()
 	{
 		// For a certain unmentionable browser
-		if(ini_get('zlib.output_compression')) {
+		if(ini_get('zlib.output_compression'))
 			ini_set('zlib.output_compression', 'Off');
-		}
 		
 		// Remove php's time limit
-	    if(!ini_get('safe_mode') ) {
+	    if(!ini_get('safe_mode'))
 		    @set_time_limit(0);
-        }
 
 		// Mimetype
 		// @TODO magic mimetypes
-		if($this->mimetype) {
+		if($this->mimetype)
 			header('Content-type: '.$this->mimetype);
-		}
 		 
 		header('Content-Transfer-Encoding: binary');
 		header('Accept-Ranges: bytes');
@@ -132,31 +129,40 @@ class LibBaseViewFile extends LibBaseViewAbstract
 		// Clear buffer
         while (@ob_end_clean());
     
-		$this->filename = basename($this->filename);		
+		$this->filename = basename($this->filename);	
+			
     	if(!empty($this->output)) // File body is passed as string
     	{
-			if(empty($this->filename)) {
+			if(empty($this->filename))
 				throw new KViewException('No filename supplied');
-			}
+			
 			$this->_setDisposition();
 			$filesize = strlen($this->output);
 			header('Content-Length: '.$filesize);
 			flush();
+			
 			echo $this->output;
     	}
     	elseif(!empty($this->path)) // File is read from disk
     	{
-     		if(empty($this->filename)) {
+     		if(empty($this->filename))
 				$this->filename = basename($this->path);				
-			}
+			
 			$filesize = @filesize($this->path);
+			
 			header('Content-Length: '.$filesize);
-    		$this->_setDisposition();
-			flush();
+    		
+			$this->_setDisposition();
+			
+    		flush();
+			
 			$this->_readChunked($this->path);
     	}
-    	else throw new KViewException('No output or path supplied');
-		
+    	else
+    	{ 
+    		throw new KViewException('No output or path supplied');
+    	}
+    	
 		die;
 	}
 
@@ -169,13 +175,17 @@ class LibBaseViewFile extends LibBaseViewAbstract
 	protected function _setDisposition()
 	{
 		// @TODO :Content-Disposition: inline; filename="foo"; modification-date="'.$date.'"; size=123;	
-		if(isset($this->disposition) && $this->disposition == 'inline') {		
+		if(isset($this->disposition) && $this->disposition == 'inline') 
+		{		
 			header('Content-Disposition: inline; filename="'.$this->filename.'"');
-		} else {	
+		} 
+		else 
+		{	
 			header('Content-Description: File Transfer');
 			header('Content-type: application/octet-stream');
 			header('Content-Disposition: attachment; filename="'.$this->filename.'"');
 		}
+		
 		return $this;
 	}
 	
@@ -188,25 +198,30 @@ class LibBaseViewFile extends LibBaseViewAbstract
 	 */
     protected function _readChunked($path)
     {
-   		$chunksize	= 1*(1024*1024); // Chunk size
-   		$buffer 	= '';
-   		$cnt 		= 0;
+   		$chunksize = 1*(1024*1024); // Chunk size
+   		$buffer = '';
+   		$cnt = 0;
    		
    		$handle = fopen($path, 'rb');
-   		if ($handle === false) {
+   		
+   		if($handle === false) 
        		throw new KViewException('Cannot open file');
-   		}
    		
    		while (!feof($handle)) 
    		{
        		$buffer = fread($handle, $chunksize);
+       		
        		echo $buffer;
-			@ob_flush();
+			
+       		@ob_flush();
+			
 			flush();
+			
        		$cnt += strlen($buffer);
    		}
    		
        $status = fclose($handle);
-   	   return $cnt; 
+   	   
+       return $cnt; 
 	}
 }

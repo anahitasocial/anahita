@@ -26,7 +26,7 @@
 	</div>
 
 	<div class="entity-description">
-		<?= @helper('text.truncate',strip_tags($item->description), array('length'=>200)); ?>
+		<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>200, 'consider_html'=>true)); ?>
 	</div>
 			
 	<?php if ( count($commands) ) : ?>

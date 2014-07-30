@@ -45,7 +45,7 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
 			),
 			'behaviors'		=> array(       
 			    'parentable' => array('parent'=>'com:base.domain.entity.node'),			                 				
-                //'taggable',
+                'com://site/hashtags.domain.behavior.hashtagable',
 				'modifiable',
 				'authorizer',
 				'locatable' ,
@@ -75,8 +75,7 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
      */
     protected function _onEntityValidate(KCommandContext $context)
     {
-        $this->parent->getRepository()->getBehavior('commentable')
-            ->sanitizeComments(array($this));
+        $this->parent->getRepository()->getBehavior('commentable')->sanitizeComments(array($this));
     }
             
 	/**
@@ -88,9 +87,7 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
 	 */
 	protected function _afterEntityInsert(KCommandContext $context)
 	{	    	    
-		$this->parent->getRepository()->getBehavior('commentable')
-		    ->resetStats(array($this->parent));
-				
+		$this->parent->getRepository()->getBehavior('commentable')->resetStats(array($this->parent));
 		$this->parent->execute('after.comment', array('comment'=>$this));
 	}
 	
@@ -103,7 +100,6 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
 	 */
 	protected function _afterEntityDelete(KCommandContext $context)
 	{	    	    
-		$this->parent->getRepository()->getBehavior('commentable')
-		    ->resetStats(array($this->parent));
+		$this->parent->getRepository()->getBehavior('commentable')->resetStats(array($this->parent));
 	}
 }

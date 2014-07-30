@@ -28,19 +28,7 @@
  * @link       http://www.anahitapolis.com
  */
 class ComSearchControllerBehaviorSearchable extends KControllerBehaviorAbstract
-{
-	/**
-	 * Constructor.
-	 *
-	 * @param KConfig $config An optional KConfig object with configuration options.
-	 *
-	 * @return void
-	 */
-	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);		
-	}	
-	
+{	
 	/**
 	 * Sets the search owner context and scope automatically
 	 * 
@@ -48,22 +36,22 @@ class ComSearchControllerBehaviorSearchable extends KControllerBehaviorAbstract
 	 */
 	protected function _afterControllerGet()
 	{
-		if ( $this->_mixer->isIdentifiable() && !$this->isDispatched() ) 
+		if($this->_mixer->isIdentifiable() && $this->isDispatched()) 
 		{			
-			$scope = $this->_mixer->getIdentifier()->package.'.'.$this->_mixer->getIdentifier()->name;
-			$scope = $this->getService('com://site/search.domain.entityset.scope')->find($scope);
-			if ( $scope ) {
-			    $this->getService()->set('mod://site/search.scope', $scope);
-			}
-			
 			$item = $this->_mixer->getItem();
-			if ( $item && $item->persisted() &&
-			        $item->inherits('ComActorsDomainEntityActor') )
+			$scope = $this->_mixer->getIdentifier()->package.'.'.$this->_mixer->getIdentifier()->name;
+			$scope = $this->getService('com://site/components.domain.entityset.scope')->find($scope);
+			
+			if($scope)
+			    $this->getService()->set('mod://site/search.scope', $scope);
+			
+			if($item && $item->persisted() && $item->inherits('ComActorsDomainEntityActor'))
 			{
 			    $this->getService()->set('mod://site/search.owner', $item);
-			    $this->getService()->set('mod://site/search.scope', null);
+			    $this->getService()->set('mod://site/components.scope', null);
 			}
-			else if ( $this->getRepository()->isOwnable() && $this->actor ) {
+			elseif($this->getRepository()->isOwnable() && $this->actor) 
+			{
 			    $this->getService()->set('mod://site/search.owner', $this->actor);
 			}			
 		}

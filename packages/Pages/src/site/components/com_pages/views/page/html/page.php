@@ -26,7 +26,7 @@
 	
 	<?php if($page->description): ?>
 	<div class="entity-description">
-		<?= @content( $page->description ) ?>
+		<?= @content($page->description) ?>
 	</div>
 	<?php endif; ?>
 	

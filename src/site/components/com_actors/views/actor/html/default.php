@@ -32,7 +32,7 @@
 
 <?php if(!empty($item->body)): ?>
 <div id="actor-description">
-	<?= @helper('text.truncate', @escape($item->body), array('length'=>250, 'read_more'=>true)); ?>
+	<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>250, 'read_more'=>true, 'consider_html'=>true)); ?>
 </div>
 <?php endif; ?>
 <?= @helper('com://site/composer.template.helper.ui.composers', $composers) ?>

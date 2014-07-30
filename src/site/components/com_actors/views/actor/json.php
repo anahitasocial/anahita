@@ -41,11 +41,9 @@ class ComActorsViewActorJson extends ComBaseViewJson
         $context->composers     = new LibBaseTemplateObjectContainer();
         $context->profile       = new KConfig();
         
-        if ( $this->_state->getItem()->authorize('access') )
+        if($this->_state->getItem()->authorize('access'))
         {
-            $this->_state->getItem()->components->registerEventDispatcher( $this->getService('anahita:event.dispatcher'));
-             
-            $this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
+            $this->_state->getItem()->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
              
             $this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
         
@@ -54,15 +52,18 @@ class ComActorsViewActorJson extends ComBaseViewJson
             $this->profile = $context->profile;
         }
         
-        $item['gadgets']     = array_map(function($gadget) {
-            return $gadget->name;
-        }, $context['gadgets']->getObjects());
+        $item['gadgets'] = array_map(function($gadget){
+            	return $gadget->name;
+        	}, 
+        	$context['gadgets']->getObjects());
         
-        $item['composers']     = array_map(function($gadget) {
+        $item['composers'] = array_map(function($gadget){
                 return $gadget->name;
-            }, $context['composers']->getObjects());
+            }, 
+            $context['composers']->getObjects());
                             
         $item['information'] = $context['profile'];
+        
         return $item;
     }    
 }

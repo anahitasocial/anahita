@@ -50,7 +50,11 @@ class ComBaseControllerComment extends ComBaseControllerService
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-		    'behaviors' => array('parentable','votable'),
+		    'behaviors' => array(
+		    	'parentable',
+		    	'votable',
+		    	'com://site/hashtags.controller.behavior.hashtagable'
+			)
 		));
 	
 		parent::_initialize($config);
@@ -107,7 +111,6 @@ class ComBaseControllerComment extends ComBaseControllerService
 		{
 			$view       = KInflector::isPlural($view) ? 'comments' : 'comment';
             $defaults[] = 'ComBaseView'.ucfirst($view).ucfirst($this->_view->name);
-            $defaults[] = 'ComBaseView'.ucfirst($this->_view->name);
 			register_default(array('identifier'=>$this->_view, 'default'=>$defaults));
 		}
 		

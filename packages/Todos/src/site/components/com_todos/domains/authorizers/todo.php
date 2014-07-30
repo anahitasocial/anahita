@@ -38,13 +38,13 @@ class ComTodosDomainAuthorizerTodo extends ComMediumDomainAuthorizerDefault
 	{
 		$ret = parent::_authorizeEdit($context);
 
-		if( $ret === false )
+		if($ret === false)
 		{
-			if ( $this->_entity->isOwnable() )
+			if($this->_entity->isOwnable())
 			{						
-				$action  = $this->_entity->component.':'.$this->_entity->getIdentifier()->name.':add';
+				$action = $this->_entity->component.':'.$this->_entity->getIdentifier()->name.':add';
                 
-				if( $this->_entity->owner->authorize('action', $action ) )
+				if($this->_entity->owner->authorize('action', $action ))
 					return true; 			
 			}
 		}

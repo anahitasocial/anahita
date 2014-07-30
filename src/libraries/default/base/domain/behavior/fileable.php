@@ -58,12 +58,16 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
 	{		
 		$filename = md5($this->id);
 		$data	  = file_get_contents($file->tmp_name);		
-		if ( $this->getFileName() == $this->name ) {
+		
+		if($this->getFileName() == $this->name) 
+		{
 			$this->name = $file->name;
 		}
+		
 		$file->append(array(
 			'type' => mime_content_type($file->name)
 		));
+		
 		$this->mimeType = $file->type;
 		$this->setValue('file_name', $file->name);
 		$this->fileSize = strlen($data);

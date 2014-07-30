@@ -43,6 +43,5 @@ class ComSearchDomainEntityNode extends ComBaseDomainEntityNode
         ));
         
         parent::_initialize($config);
-    }
-                    
+    }               
 }

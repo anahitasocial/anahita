@@ -55,9 +55,10 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'request' => array('pid'=>null),
+            'request' => array(
+        		'sort' => 'newest'
+        	),
         	'behaviors' => array(
-                'parentable',
         		'enablable'
         	)
         ));   
@@ -76,7 +77,7 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
 	{		
 		$this->getItem()->setLastChanger(get_viewer());
 	}
-        
+	
 	/**
 	 * Browse Todos
 	 * 
@@ -85,18 +86,16 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
 	 */
 	protected function _actionBrowse($context)
 	{		
-		$todos = parent::_actionBrowse($context);
-
-		if($this->getRequest()->get('layout') == 'gadget')
-			$todos->where('open', '=', 1);
-		else 
-			$todos->order('open', 'DESC');
-		
-		if($this->filter == 'leaders')
-			$todos->order('creationTime', 'DESC');
-		else
-			$todos->order('priority', 'DESC');
+		if(!$context->query) 
+            $context->query = $this->getRepository()->getQuery(); 
+        
+        $query = $context->query;
+        
+        $query->order('open', 'DESC');
+        
+        if($this->sort == 'priority')
+			$query->order('priority', 'DESC');
 			
-		return $todos;
+		return parent::_actionBrowse($context);
 	}
 }

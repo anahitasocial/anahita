@@ -50,31 +50,6 @@ class ComTodosTemplateHelper extends KTemplateHelperAbstract
 	}
 	
 	/**
-	 * Renders todolist selector using an actor todolists 
-	 *
-	 * @param ComActorsDomainEntityActor $actor
-	 * @param ComTodosDomainEntityTodolist $selected
-	 */
-	public function todolists($actor, $selected)
-	{
-		$html = $this->_template->getHelper('html');
-						
-		$this->getService('repos://site/todos.milestone');
-		
-		$todolists = $actor->todolists->order('title');
-			
-		if( count($todolists) == 0 )
-			return JText::_('COM-TODOS-TODOLISTS-EMPTY-LIST-MESSAGE');
-		
-		$options[] 	= JText::_('COM-TODOS-SELECT-A-TODO-LIST');
-		
-		foreach($todolists as $todolist) 
-			$options[$todolist->id] = $todolist->title;
-		
-		return $html->select('pid', array('options'=>$options, 'selected'=>$selected ? $selected->id : null))->class('input-xlarge');
-	}
-	
-	/**
 	 * Todo item priority list
 	 * 
 	 * @param  string $selected priority constant 
@@ -97,31 +72,4 @@ class ComTodosTemplateHelper extends KTemplateHelperAbstract
 		
 		return $html->select('priority', array('options'=>$options, 'selected'=>$selected))->class('input-medium');
 	}
-	
-	/**
-	 * Renders todolist selector using an actor milestones 
-	 *
-	 * @param ComActorsDomainEntityActor $actor
-	 * @param ComTodosDomainEntityTodolist $selected
-	 */
-	public function milestones($actor, $selected)
-	{
-		$html = $this->_template->getHelper('html');
-		
-		$currentDate = new KDate();
-		
-		$this->getService('repos://site/todos.milestone');
-		
-		$milestones = $actor->milestones->where('endDate', '>=', $currentDate->getDate())->order('title', 'ASC');	
-
-		if( count($milestones) == 0 )
-			return JText::_('COM-TODOS-MILESTONES-EMPTY-LIST-MESSAGE');
-		
-		$options[] 	= JText::_('COM-TODOS-SELECT-A-MILESTONE');
-		
-		foreach($milestones as $milestone) 
-			$options[$milestone->id] = $milestone->title;
-		
-		return $html->select('pid', array('options'=>$options, 'selected'=>$selected ? $selected->id : null))->class('input-xlarge');
-	}	
 }

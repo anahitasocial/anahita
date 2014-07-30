@@ -9,7 +9,7 @@
 	
 	<?php if($revision->body): ?>
 	<div class="entity-description">
-		<?= @content( $revision->body ) ?>
+		<?= @content($revision->body) ?>
 	</div>
 	<?php endif; ?>
 </div>

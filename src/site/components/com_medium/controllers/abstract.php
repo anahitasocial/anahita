@@ -41,8 +41,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 		$this->registerCallback(array('after.add'), array($this, 'createStoryCallback'));       
             
         //add medium related states
-        $this->getState()
-                ->insert('filter')->insert('grid')->insert('order');
+        $this->getState()->insert('filter')->insert('grid')->insert('order');
         
         $this->registerCallback(array('after.delete','after.add'), array($this, 'redirect'));
 	}
@@ -74,15 +73,9 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
                 'commentable',                
                 'votable',
                 'privatable',
-                'subscribable'                                
-        )));
-        
-        //anything within the medium app
-        //is within the context of an owner
-        //we need to set the default owner to the viewer        
-        $config->append(array(
-            'behaviors' => array(
-                'ownable' => array('default'=>get_viewer()),  
+                'subscribable',
+            	'com://site/hashtags.controller.behavior.hashtagable',
+            	'ownable'                                
         )));
         
 	    parent::_initialize($config);
@@ -97,18 +90,18 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 	 */
 	protected function _actionBrowse($context)
 	{		                  		
-		$entities = parent::_actionBrowse($context);		
-
-        if( $this->filter == 'leaders' )
+		$entities = parent::_actionBrowse($context);
+			
+        if($this->filter == 'leaders')
         {
            $leaderIds = array();
            $leaderIds[] = $this->viewer->id;
            $leaderIds = array_merge($leaderIds, $this->viewer->getLeaderIds()->toArray());
            $entities->where( 'owner.id','IN', $leaderIds );
         }
-		elseif( $this->getRepository()->hasBehavior('ownable') && $this->actor && $this->actor->id > 0 )
-			$entities->where('owner', '=', $this->actor);	
-	    
+		elseif($this->getRepository()->hasBehavior('ownable') && $this->actor && $this->actor->id > 0)
+			$entities->where('owner', '=', $this->actor);
+			
         return $entities;
 	}
 	
@@ -148,13 +141,11 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 	{
 	    parent::setView($view);
 	
-	    if ( !$this->_view instanceof ComBaseViewAbstract )
+	    if (!$this->_view instanceof ComBaseViewAbstract)
 	    {
 	        $name  = KInflector::isPlural($this->view) ? 'media' : 'medium';
 	        $defaults[] = 'ComMediumView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComMediumView'.ucfirst($name).ucfirst($this->_view->name);
-            $defaults[] = 'ComBaseView'.ucfirst($this->_view->name);
-            
 	        register_default(array('identifier'=>$this->_view, 'default'=>$defaults)); 
 	    }
 	

@@ -7,7 +7,7 @@ var MasonryLayout = new Class ({
 	
 	options : {
 		container  		: null,
-		numColumns		: 3,
+		numColumns		: 2,
 		record			: null
 	},
 	

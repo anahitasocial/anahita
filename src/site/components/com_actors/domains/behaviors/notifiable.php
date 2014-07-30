@@ -40,7 +40,7 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'attributes'    => array(
+            'attributes' => array(
                 'notificationIds'     => array('type'=>'set', 'default'=>'set','write'=>'private'),
                 'newNotificationIds'  => array('type'=>'set', 'default'=>'set','write'=>'private')
             )
@@ -57,9 +57,8 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
     public function getNotifications()
     {
         $repository = $this->getService('repos://site/notifications.notification');
-        return $repository->getQuery()
-                ->status(ComNotificationsDomainEntityNotification::STATUS_SENT)
-                ->id($this->notificationIds->toArray())->toEntityset();
+        return $repository->getQuery()->status(ComNotificationsDomainEntityNotification::STATUS_SENT)
+               ->id($this->notificationIds->toArray())->toEntityset();
     }
     
     /**
@@ -79,11 +78,11 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
         $this->_mixer->getRepository()
             ->registerCallback('before.update', array($this, 'removeOldNotifications'), array($this->_mixer));            
             
-        $ids   = clone $this->notificationIds;
+        $ids = clone $this->notificationIds;
         $ids[] = $notification->id;
         $this->set('notificationIds', $ids);
         
-        $ids   = clone $this->newNotificationIds;
+        $ids = clone $this->newNotificationIds;
         $ids[] = $notification->id;    
         $this->set('newNotificationIds', $ids);
     }
@@ -121,13 +120,10 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
     {
         $notifications = (array)$notifications;
         
-        $ids   = clone $this->newNotificationIds;
+        $ids = clone $this->newNotificationIds;
                             
         foreach($notifications as $notification)
-        {
-            //$ids[] = $notification->id;
             $ids->offsetUnset($notification->id);    
-        }
         
         $this->set('newNotificationIds', $ids);
         
@@ -143,11 +139,11 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
      */
     public function removeNotification($notification)
     {
-        $ids   = clone $this->notificationIds;
+        $ids = clone $this->notificationIds;
         $ids->offsetUnset($notification->id);
         $this->set('notificationIds', $ids);
         
-        $ids   = clone $this->newNotificationIds;
+        $ids = clone $this->newNotificationIds;
         $ids->offsetUnset($notification->id);    
         $this->set('newNotificationIds', $ids); 
         
@@ -175,15 +171,17 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
     {
         foreach($actors as $actor)
         {
-            $ids   = $actor->notificationIds->toArray();
-            $ids   = $this->getService('repos://site/notifications.notification')->getQuery()->id($ids)->fetchValues('id');       
+            $ids = $actor->notificationIds->toArray();
+            $ids = $this->getService('repos://site/notifications.notification')->getQuery()->id($ids)->fetchValues('id');       
             $actor->set('notificationIds', AnDomainAttribute::getInstance('set')->setData($ids));
             $new_ids = array();
-            foreach($actor->newNotificationIds as $id) {
-                 if ( in_array($id, $ids) ) {
-                    $new_ids[] = $id;  
-                 }
+            
+            foreach($actor->newNotificationIds as $id) 
+            {
+            	if ( in_array($id, $ids))
+                    $new_ids[] = $id;
             }
+            
             $actor->set('newNotificationIds', AnDomainAttribute::getInstance('set')->setData($new_ids));
         }
     }
@@ -203,6 +201,7 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
             $date  = $this->getService('anahita:domain.attribute.date')->modify('-5 days');
             $query = $this->getService('repos://site/notifications.notification')->getQuery()->id($read_notifications)->creationTime($date,'<');        
             $notifications = $query->fetchSet();
+            
             foreach($notifications as $notification)
             {
                 $actor->removeNotification($notification);

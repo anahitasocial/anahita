@@ -63,9 +63,8 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	{
 	    parent::__construct($config);
 	    
-	    $this->_sizes         = $config['sizes'];	        
+	    $this->_sizes = $config['sizes'];	        
 	    $this->_keep_original = $config['keep_original'];
-	    
 	    $this->_pending_files = $this->getService('anahita:object.array');
 	}
 		
@@ -81,8 +80,8 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'attributes' 	=> to_hash(array(
-				'filename'  => array('write'=>'protected'),
+			'attributes' => to_hash(array(
+				'filename' => array('write'=>'protected'),
 			    'mimetype'
 			)),
 		    'keep_original' => true,
@@ -114,18 +113,23 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	public function removePortraitImage()
 	{
-		$sizes   = $this->_mixer->getValue('sizes');
+		$sizes = $this->_mixer->getValue('sizes');
         
-		if ( empty($sizes) ) {
-			$sizes = explode(' ','original large medium small thumbnail square');
-		} else
+		if(empty($sizes)) 
+		{
+			$sizes = explode(' ', 'original large medium small thumbnail square');
+		} 
+		else
+		{
 			$sizes = array_keys($sizes);
+		}
 				
 		foreach($sizes as $size) 
 		{
 			$file = $this->_mixer->getPortraitFile($size);
 			$this->_mixer->deletePath($file);
 		}
+		
 		$this->set('filename', null);
 	}	
 	
@@ -143,7 +147,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
 	    //remove the extension
 	    $extension = JFile::getExt($filename);
-	    $name      = JFile:: stripExt($filename);
+	    $name = JFile:: stripExt($filename);
 	     
 	    $filename = $name.'_'.$size.'.'.$extension;
 	
@@ -169,10 +173,11 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	public function getPortraitSizes()
 	{
-        $sizes  = $this->getValue('sizes');
-        if ( empty($sizes) ) {
+        $sizes = $this->getValue('sizes');
+        
+        if(empty($sizes))
             $sizes = $this->_sizes;
-        }
+        
 		return $sizes;
 	}
 	
@@ -187,9 +192,8 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	{
 	    $data = $context->data;
 	    
-	    if ( $data->portrait ) {
+	    if($data->portrait )
 	        $this->setPortrait($data->portrait);
-	    }
 	}
 
 	/**
@@ -208,7 +212,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	            'mimetype' => 'image/jpeg'
 	    ));
 	    
-	    if ( $config->url ) 
+	    if($config->url)
 	    {
 	        $config->append(array(
                 'data' => file_get_contents($config->url)
@@ -221,18 +225,18 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	    $mimetypes = array('image/jpeg'=>'jpg','image/png'=>'png','image/gif'=>'gif');
 	    
 	    //force mimetype to jpeg if invalid
-	    //@TODO is this wise ??
-	    if ( !isset($mimetypes[$config->mimetype]) ) {
+	    //@TODO is this wise ?? No it isn't, but until we find a more reliable method to detect mimetypes
+	    if(!isset($mimetypes[$config->mimetype]))
+	    {
 	        $config->mimetype = 'image/jpeg';
 	    }
 	    
-	    if ( $config->data ) 
+	    if($config->data) 
 	    {
 	        $data = $config->data;
 
-	        if ( empty($data) ) {
-	            return false; 
-	        }
+	        if(empty($data))
+	            return false;
 	        
 	        $config->append(array(
                 'image' => 	imagecreatefromstring($data)
@@ -241,43 +245,53 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	    
 	    $image = $config->image;
 	    
-	    if ( empty($image) ) {
+	    if (empty($image))
 	        return false;
-	    }
 	    
 	    $rotation  = $config->rotation;
 	     
 	    switch($rotation)
 	    {
-	        case 3:$rotation=180;break;
-	        case 6:$rotation=-90;break;
-	        case 8:$rotation=90 ;break;
+	        case 3:
+	        	$rotation = 180;
+	        	break;
+	        	
+	        case 6:
+	        	$rotation = -90;
+	        	break;
+	        	
+	        case 8:
+	        	$rotation=90;
+	        	break;
+	        	
 	        default :
 	            $rotation = 0;
 	    }
 	     
-	    if($rotation != 0 ) {
+	    if($rotation != 0) 
 	        $image = imagerotate($image, $rotation, 0);
-	    }
 
-	    if ( $this->persisted() ) {
-	        $this->_mixer->removePortraitImage();     
-	    }
+	    if($this->persisted())
+	        $this->_mixer->removePortraitImage();
 	    	    
-	    $images          = $this->_mixer->resizePortraitImage($image);	    
+	    $images = $this->_mixer->resizePortraitImage($image);	    
 	    $this->_mixer->set('filename', md5(uniqid('', true)).'.'.$mimetypes[$config->mimetype]);
 	    $this->_mixer->set('mimetype', $config->mimetype);
-	    $sizes           = array();
-	    $files           = array();
+	    
+	    $sizes = array();
+	    $files = array();
+	    
 	    foreach($images as $key => $value) 
 	    {
-	        $filename         = $this->_mixer->getPortraitFile($key);
-	        $sizes[$key]      = $value['size'];	        
+	        $filename = $this->_mixer->getPortraitFile($key);
+	        $sizes[$key] = $value['size'];	        
 	        $files[$filename] = AnHelperImage::output($value['data'], $config->mimetype);	        
 	    }
+	    
 	    imagedestroy($image);
 	    $this->_mixer->setValue('sizes', $sizes);
 	    $this->_pending_files[$this->_mixer] = $files;
+	    
 	    return true;	    
 	}
 	
@@ -291,27 +305,33 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	public function resizePortraitImage($image)
 	{
 	    $images = array();
-	    $original_width  = imagesx($image);
-	    $originl_height  = imagesy($image);	    
+	    $original_width = imagesx($image);
+	    $originl_height = imagesy($image);	    
+	    
 	    foreach($this->_sizes as $name => $size)
 	    {
-	        if ( !is_int($size) )
+	        if(!is_int($size))
 	        {
-	            list($width,$height) = AnHelperImage::parseSize($size);
-	            if ( $original_width < $width ) {
-	                $size  = array($original_width, $originl_height);
-	            } else {
+	            list($width, $height) = AnHelperImage::parseSize($size);
+	            if($original_width < $width) 
+	            {
+	            	$size = array($original_width, $originl_height);
+	            } 
+	            else 
+	            {
 	                $size  = array($width, 'auto');
 	            }
 	        }
-	        $data    = AnHelperImage::resize($image, $size);
-	        $width   = imagesx($data);
-	        $height  = imagesy($data);	        
-	        $images[$name]  = array('size'=>$width.'x'.$height,'data'=>$data);
+	        
+	        $data = AnHelperImage::resize($image, $size);
+	        $width = imagesx($data);
+	        $height = imagesy($data);	        
+	        $images[$name] = array('size'=>$width.'x'.$height,'data'=>$data);
 	    }
-	    if ( $this->_keep_original ) {
-	        $images['original'] = array('size'=>$original_width.'x'.$originl_height, 'data'=>$image);
-	    }
+	    
+	    if($this->_keep_original)
+	    	$images['original'] = array('size'=>$original_width.'x'.$originl_height, 'data'=>$image);
+	    
 	    return $images;
 	}
 	
@@ -324,12 +344,15 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	protected function _afterEntityUpdate(KCommandContext $context)
 	{
-	    if ( isset($this->_pending_files[$this->_mixer]) )
+	    if(isset($this->_pending_files[$this->_mixer]))
 	    {
 	        $files = $this->_pending_files[$this->_mixer];
-	        foreach($files as $filename => $data) {
+	        
+	        foreach($files as $filename => $data) 
+	        {
 	            $this->_mixer->writeData($filename, $data);
 	        }
+	        
 	        unset($this->_pending_files[$this->_mixer]);
 	    }
 	}
@@ -343,12 +366,15 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	protected function _afterEntityInsert(KCommandContext $context)
 	{
-	    if ( isset($this->_pending_files[$this->_mixer]) )
+	    if(isset($this->_pending_files[$this->_mixer]))
 	    {
 	        $files = $this->_pending_files[$this->_mixer];
-	        foreach($files as $filename => $data) {
+	        
+	        foreach($files as $filename => $data) 
+	        {
 	            $this->_mixer->writeData($filename, $data);
 	        }
+	        
 	        unset($this->_pending_files[$this->_mixer]);
 	    }
 	}

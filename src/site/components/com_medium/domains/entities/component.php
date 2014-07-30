@@ -62,8 +62,8 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$config->append(array(
 		    'story_aggregation' => array(),        
 			'behaviors' => array(
-					'assignable'=>array(),
-					'searchable'=>array('class'=>'ComMediumDomainEntityMedium','type'=>'post')
+				'assignable'=>array(),
+				'hashtagable'=>array('class'=>'ComMediumDomainEntityMedium','type'=>'post')
 			)
 		));		
 		
@@ -78,10 +78,11 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	public function getPermissions()
 	{
 		$registry = $this->getService('application.registry');		
-		$key	  = $this->getIdentifier().'-permissions';
-		if ( !$registry->offsetExists($key) ) {
+		$key = $this->getIdentifier().'-permissions';
+		
+		if(!$registry->offsetExists($key))
 			$registry->offsetSet($key, self::_getDefaultPermissions($this));
-		}
+		
 		return $registry->offsetGet($key);
 	}
 	
@@ -94,12 +95,10 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 */
 	public function onStoryAggregation(KEvent $event)
 	{
-		if ( !empty($this->_story_aggregation) ) 
-	    {
+		if(!empty($this->_story_aggregation))
 	        $event->aggregations->append(array(
 	            $this->component => $this->_story_aggregation
             ));
-	    }
 	}
 	
 	/**
@@ -111,8 +110,8 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 */
 	public function onSettingDisplay(KEvent $event)
 	{
-		$actor  = $event->actor;
-		$tabs   = $event->tabs;
+		$actor = $event->actor;
+		$tabs  = $event->tabs;
 		$this->_setSettingTabs($actor, $tabs);
 	}
 		
@@ -125,9 +124,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 */
 	public function onProfileDisplay(KEvent $event)
 	{
-		$actor       = $event->actor;
-		$gadgets     = $event->gadgets;
-		$composers   = $event->composers;
+		$actor = $event->actor;
+		$gadgets = $event->gadgets;
+		$composers = $event->composers;
 		$this->_setGadgets($actor, $gadgets, 'profile');
 		$this->_setComposers($actor, $composers, 'profile');
 	}
@@ -141,13 +140,13 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 */
 	public function onDashboardDisplay(KEvent $event)
 	{
-		$actor      = $event->actor;
-		$gadgets    = $event->gadgets;
-		$composers  = $event->composers;
+		$actor = $event->actor;
+		$gadgets = $event->gadgets;
+		$composers = $event->composers;
 		$this->_setGadgets($actor, $gadgets, 'dashboard');
-		if ( $this->activeForActor($actor) ) {
-		    $this->_setComposers($actor, $composers, 'dashboard');
-		}			
+		
+		if($this->activeForActor($actor))
+		    $this->_setComposers($actor, $composers, 'dashboard');			
 	}	
 		
 	/**
@@ -159,10 +158,7 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 *
 	 * @return void
 	 */
-	protected function _setGadgets($actor, $gadgets, $mode)
-	{
-		 
-	}
+	protected function _setGadgets($actor, $gadgets, $mode){}
 	
 	/**
 	 * Set the gadgets for a profile/dashboard. This method should be implemented by the subclasses
@@ -173,10 +169,7 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 *
 	 * @return void
 	 */
-	protected function _setComposers($actor, $composers, $mode)
-	{
-	
-	}
+	protected function _setComposers($actor, $composers, $mode){}
 	
 	/**
 	 * Set the gadgets for a profile/dashboard. This method should be implemented by the subclasses
@@ -186,10 +179,15 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 *
 	 * @return void
 	 */
-	protected function _setSettingTabs($actor, $tabs)
-	{
-		 
-	}	
+	protected function _setSettingTabs($actor, $tabs){}	
+	
+	/**
+	 * parse tags in the body of the entity
+	 * 
+	 * @param ComMediumDomainEntityMedium $entity
+	 * @return void
+	 */
+	protected function _parseTags($entity){}
 	
 	/**
 	 * Return an array of permissions by using the medium objects
@@ -199,24 +197,29 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	protected static function _getDefaultPermissions($component)
 	{		
 		$identifiers = $component->getEntityIdentifiers('ComMediumDomainEntityMedium');
+		
 		$permissions = array();
-		foreach($identifiers as $identifier) {
-			try {
+		
+		foreach($identifiers as $identifier) 
+		{
+			try 
+			{
 				$repos = AnDomain::getRepository($identifier);
-				if ( $repos->entityInherits('ComMediumDomainEntityMedium') )
+				
+				if($repos->entityInherits('ComMediumDomainEntityMedium'))
 				{
 					$actions = array('add');
 					//if commentable then allow to set
 					//comment permissions
-					if ( $repos->hasBehavior('commentable') ) {
+					if($repos->hasBehavior('commentable'))
 						$actions[] = 'addcomment';
-					}
 			
-					$permissions[(string)$identifier] = $actions;
+					$permissions[(string) $identifier] = $actions;
 				}
 			}
-			catch(Exception $e) {}			
+			catch(Exception $e){}			
 		}
+		
 		return $permissions;
 	}
 }

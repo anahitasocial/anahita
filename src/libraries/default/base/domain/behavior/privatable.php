@@ -32,13 +32,13 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	/**
 	 * Graph Privacy Constants
 	 */
-	const GUEST 	   = 'public';
-	const REG		   = 'registered';
-	const SPECIAL	   = 'special'; //special permission
-	const FOLLOWER     = 'followers';
-	const LEADER	   = 'leaders';
-	const MUTUAL	   = 'mutuals';
-	const ADMIN	   	   = 'admins';
+	const GUEST		= 'public';
+	const REG		= 'registered';
+	const SPECIAL	= 'special'; 	//special permission
+	const FOLLOWER  = 'followers';
+	const LEADER	= 'leaders';
+	const MUTUAL	= 'mutuals';
+	const ADMIN	   	= 'admins';
 		
     /**
 	 * Initializes the default configuration for the object
@@ -53,8 +53,8 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	{
 		$config->append(array(
 			'attributes' => array(
-				'access'			=> array('default'=>self::GUEST),
-				'permissions'		=> array('type'=>'json','default'=>'json','write'=>'private')
+				'access' => array('default'=>self::GUEST),
+				'permissions' => array('type'=>'json','default'=>'json','write'=>'private')
 			)
 		));
 		
@@ -76,22 +76,24 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 		
 		foreach($values as $key => $value) 
 		{
-			if ( empty($value) )
-				$value = self::GUEST;
-			elseif ( !is_numeric($value) ) 
+			if(empty($value))
 			{
-				if ( !in_array($value, array('public','registered','followers','special','leaders','mutuals','admins')) ) {
-					$value = 'public';
-				}
+				$value = self::GUEST;
 			}
-			if ( $value == self::GUEST ) {
+			elseif(!is_numeric($value)) 
+			{
+				if(!in_array($value, array('public','registered','followers','special','leaders','mutuals','admins')))
+					$value = 'public';
+			}
+			
+			if($value == self::GUEST) 
+			{
 				$values = array(self::GUEST);
 				break;
 			}
             
-            if ( $this->_mixer->authorize('setprivacyvalue', array('value'=>$key)) === false ) {
+            if($this->_mixer->authorize('setprivacyvalue', array('value'=>$key)) === false) 
                 unset($values[$key]);
-            }
 			else 
                 $values[$key] = $value;
 		}
@@ -116,7 +118,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	 */
 	public function getPermission($key, $default = self::GUEST)
 	{
-		if ( $key == 'access' )
+		if ($key == 'access')
 			return $this->access;
 							
 		return $this->permissions->get($key, $default);
@@ -132,14 +134,16 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	 */
 	public function setPermission($key, $value)
 	{
-		if ( empty($value) )
+		if(empty($value))
 			$value = self::GUEST;
 					
-		if ( $key == 'access' )
+		if($key == 'access')
+		{
 			$this->access = $value;
+		}
 		else 
 		{
-			$permission 	  = clone $this->permissions;
+			$permission = clone $this->permissions;
 			$permission[$key] = $value;
 			$this->set('permissions', $permission);
 		}
@@ -164,9 +168,9 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	/**
 	 * Return whether $actor has privellege perform $action on the entity 
 	 * 
-	 * @param  ComPeopleDomainEntityPerson $actor   The person who's trying to perform an operation on the entity
-	 * @param  string	 	               $action  The name of the action being performed
-	 * @param  string                      $default The default value to use if the there are no values are set for the operation
+	 * @param  ComPeopleDomainEntityPerson $actor The person who's trying to perform an operation on the entity
+	 * @param  string $action  The name of the action being performed
+	 * @param  string $default The default value to use if the there are no values are set for the operation
 	 * 
 	 * @return boolean
 	 */
@@ -177,28 +181,31 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         
 		$owner = null;
 		
-		if ( is($this->_mixer, 'ComActorsDomainEntityActor') )
+		if (is($this->_mixer, 'ComActorsDomainEntityActor'))
+		{
 			$owner = $this->_mixer;
-		elseif ( $this->isOwnable() ) {
+		}
+		elseif($this->isOwnable()) 
+		{
 			$owner = $this->owner;
 		}
 		
-        if ( !empty($owner) ) 
+        if(!empty($owner)) 
         {
             //if actor and owner the same then 
             //allow
-            if ( $actor->id == $owner->id ) {
-                return true;    
-            }
+            if($actor->id == $owner->id)
+                return true;
             
             //no operation is allowed if the owner is blokcing the $actor
-            if ( $owner->isFollowable() && $owner->blocking($actor) )
+            if ($owner->isFollowable() && $owner->blocking($actor))
                 return false;
             
             //no opreation is allowed if actor is not published and the accessor
             //is not admin
-            if ( $owner->isEnableable() && $owner->enabled === false ) {
-                if ( $actor->isAdministrator() && !$actor->administrator($owner) )
+            if($owner->isEnableable() && $owner->enabled === false) 
+            {
+            	if($actor->isAdministrator() && !$actor->administrator($owner))
                     return false;
             }
         }
@@ -206,17 +213,17 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         //an array of entities whose permission must return true 
         $entities = array();
         
-        if ( !empty($owner) ) 
+        if (!empty($owner)) 
             $entities[] = $owner;
          
-        if ( !in_array($mixer, $entities) )
+        if(!in_array($mixer, $entities))
             $entities[] = $mixer;     
       
         foreach($entities as $enttiy)
         {
             $permissions = explode(',', $enttiy->getPermission($action, $default));
-            $result      = $this->checkPermissions($actor, $permissions, $owner);
-            if ( $result === false )
+            $result = $this->checkPermissions($actor, $permissions, $owner);
+            if($result === false)
                 return false;               
         }
           
@@ -271,13 +278,11 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
                      $result = $actor->id == $value;
             }
             
-            if ( $result === true ) {                
+            if ($result === true)                
                 break;
-            }
         }
 
         return $result;
-      
     }
 	
 	/**
@@ -291,40 +296,48 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 	 */
 	public function buildCondition($actor_id, $config ,$access = '@col(access)')
 	{
-	    $store      = $this->_repository->getStore();
-		$viewer 	= $config->viewer;
+	    $store = $this->_repository->getStore();
+		$viewer = $config->viewer;
 		$where[] = "CASE";
 		$where[] = "WHEN $access IS NULL THEN 1";
 		
-		if (  false && $config->visible_to_leaders && $viewer->id && count($viewer->blockedIds) > 0 )
+		//for testing purpose
+		if (false && $config->visible_to_leaders && $viewer->id && count($viewer->blockedIds) > 0 )
 		{
 		    $where[] = "WHEN FIND_IN_SET(@col(id), '".$store->quoteValue($viewer->blockedIds->toArray())."') THEN 1";
 		}
 		
 		$where[] = "WHEN FIND_IN_SET('".self::GUEST."', $access) THEN 1";
-		if ( $viewer->id )
+		
+		if($viewer->id)
 		{
 			$where[] = "WHEN FIND_IN_SET('".self::REG."',$access) THEN 1";
-			if ( $viewer->userType != 'registered')
+			
+			if($viewer->userType != 'registered')
 				$where[] = "WHEN FIND_IN_SET('".self::SPECIAL."',$access) THEN 1";
+				
 			$where[] = "WHEN FIND_IN_SET(".$viewer->id.",$access) THEN 1";
-			if ( $config->graph_check )
+			
+			if($config->graph_check)
 			{
-				$leader_ids	  = $store->quoteValue($viewer->leaderIds->toArray());
+				$leader_ids = $store->quoteValue($viewer->leaderIds->toArray());
 				$follower_ids = $store->quoteValue($viewer->followerIds->toArray());
-				$mutual_ids   = $store->quoteValue($viewer->mutualIds->toArray());
-				$admin_ids	  = $store->quoteValue($viewer->administratingIds->toArray());
-				$is_viewer    = "$actor_id = {$viewer->id}";
-				$viewer_is_follower   = "$is_viewer  OR $actor_id IN (".$leader_ids.")";
-				$viewer_is_leader     = "$is_viewer  OR $actor_id IN (".$follower_ids.")";				
-				$viewer_is_mutual     = "$is_viewer  OR $actor_id IN (".$mutual_ids.")";
-				$viewer_is_admin	  = "$is_viewer  OR $actor_id IN (".$admin_ids.")";
-				$requestable          = $this->_repository->isFollowable() ? "@col(allowFollowRequest) = 1" : "FALSE";	 	
-                //if privacy set to follow, show the actor only if viewer is a follower or viewer is a leader or actor 
+				$mutual_ids = $store->quoteValue($viewer->mutualIds->toArray());
+				$admin_ids	= $store->quoteValue($viewer->administratingIds->toArray());
+				$is_viewer  = "$actor_id = {$viewer->id}";
+				
+				$viewer_is_follower = "$is_viewer  OR $actor_id IN (".$leader_ids.")";
+				$viewer_is_leader = "$is_viewer  OR $actor_id IN (".$follower_ids.")";				
+				$viewer_is_mutual = "$is_viewer  OR $actor_id IN (".$mutual_ids.")";
+				$viewer_is_admin = "$is_viewer  OR $actor_id IN (".$admin_ids.")";
+				$requestable = $this->_repository->isFollowable() ? "@col(allowFollowRequest) = 1" : "FALSE";	 	
+                
+				//if privacy set to follow, show the actor only if viewer is a follower or viewer is a leader or actor 
                 //accecpts follow request
 				$where[] = "WHEN FIND_IN_SET('".self::FOLLOWER."',$access) THEN $viewer_is_follower OR $viewer_is_leader OR $requestable";
 				$where[] = "WHEN FIND_IN_SET('".self::LEADER."',$access) THEN $viewer_is_leader";
-				if ( $config->visible_to_leaders ) 
+				
+				if($config->visible_to_leaders) 
 				{
 					$where[] = "WHEN FIND_IN_SET('".self::MUTUAL."',$access) THEN $viewer_is_leader";
 					$where[] = "WHEN FIND_IN_SET('".self::ADMIN."',$access) THEN $viewer_is_admin OR $viewer_is_leader";
@@ -334,12 +347,12 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 				    $where[] = "WHEN FIND_IN_SET('".self::MUTUAL."',$access) THEN $viewer_is_mutual";
 				    $where[] = "WHEN FIND_IN_SET('".self::ADMIN."',$access) THEN $viewer_is_admin";
 				}
-				    
-								
 			}
 		}
+		
 		$where[] = "ELSE 0";
 		$where[] = "END";
+		
 		return implode(' ', $where);	
 	}
 }

@@ -68,18 +68,21 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
      */
 	final public function execute($name, KCommandContext $context) 
 	{
-	    if ( $context->config->filter )
+	    if($context->config->filter)
 	    {
-	        $filters = (array)KConfig::unbox($context->config->filter);
-            if ( !in_array($this->_name, $filters) )
+	        $filters = (array) KConfig::unbox($context->config->filter);
+	        
+            if(!in_array($this->_name, $filters))
                    return $context->data;
 	    }
-	    if ( $context->config->exclude )
+	    
+	    if($context->config->exclude)
 	    {
-	        $exclude = (array)KConfig::unbox($context->config->exclude);
-	        if ( in_array($this->_name, $exclude) )
+	        $exclude = (array) KConfig::unbox($context->config->exclude);
+	        if(in_array($this->_name, $exclude))
 	            return $context->data;
 	    }
+	    
 		$context->data = $this->filter($context->data, $context->config);
 	}
 	

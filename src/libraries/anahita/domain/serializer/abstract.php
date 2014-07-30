@@ -42,8 +42,7 @@ class AnDomainSerializerAbstract extends KObject
      */
     public function toSerializableArray($entity)
     {        
-        $data = array_intersect_key($entity->getData(),
-                $entity->getEntityDescription()->getAttributes());
+        $data = array_intersect_key($entity->getData(), $entity->getEntityDescription()->getAttributes());
                 
         return $data;        
     }    

@@ -118,30 +118,37 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
 	{
 		$query = $context->query;
 		
-		if ( $query->keyword ) 
+		if($query->keyword) 
 		{		    
-		    $keywords  = $query->keyword;
+		    $keywords = $query->keyword;
 		    
-		    if ( $keywords )
+		    if($keywords)
 		    {
-		        if ( strpos($keywords,' OR ') ) {
-		            $keywords  = explode(' OR ',$keywords);
+		        if(strpos($keywords,' OR '))
+		        {
+		            $keywords = explode(' OR ',$keywords);
 		            $operation = 'OR';
-		        } else {
+		        } 
+		        else 
+		        {
 		            $keywords = explode(' ', $keywords);
 		            $operation = 'AND';
 		        }
 		    
-		        if ( !empty($operation) )
+		        if(!empty($operation))
 		        {
-		            $clause        = $query->clause();
+		            $clause = $query->clause();
 		            $search_column = array();
-		            foreach($this->_searchable_properties as $property ) 
+		            
+		            foreach($this->_searchable_properties as $property) 
 		            {
 		                $search_column[] = "IF(@col($property) IS NULL,\"\",@col($property))";		              
 		            }
+		            
 		            $search_column = implode($search_column, ',');
-		            foreach($keywords as $keyword) {
+		            
+		            foreach($keywords as $keyword) 
+		            {
 		                $clause->where('CONCAT('.$search_column.') LIKE @quote(%'.$keyword.'%)',$operation);
 		            }
 		        }

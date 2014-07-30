@@ -39,53 +39,39 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'story_aggregation' => array('todo_disable,todo_add,todo_enable'=>'target')
+            'story_aggregation' => array('todo_disable,todo_add,todo_enable'=>'target'),
+        	'behaviors' => array(
+					'scopeable'=>array('class'=>'ComTodosDomainEntityTodo'),
+					'hashtagable'=>array('class'=>'ComTodosDomainEntityTodo')
+				)
         ));
     
         parent::_initialize($config);
-    }
-
-    /**
-     * Return an array of permission object
-     *
-     * @return array
-     */
-    public function getPermissions()
-    {
-        $permissions = parent::getPermissions();
-        unset($permissions['com://site/todos.domain.entity.todolist']);
-        unset($permissions['com://site/todos.domain.entity.milestone']);
-        return $permissions;
     }
         
 	/**
 	 * @{inheritdoc}
 	 */
 	protected function _setGadgets($actor, $gadgets, $mode)
-	{
-		if ( $mode == 'profile' )
+	{	
+		if($mode == 'profile')
 		{
 			$gadgets->insert('todos-gadget-profile-todos', array(
-					'title' 		=> JText::_('COM-TODOS-GADGET-ACTOR-TODOS'),
-					'url'   		=> 'option=com_todos&view=todos&layout=gadget&oid='.$actor->id,
-					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
-					'action_url'		=> 'option=com_todos&view=todos&oid='.$actor->id
-			));
-			 
-			$gadgets->insert('todos-gadget-profile-milestones', array(
-					'title' 		=> JText::_('COM-TODOS-GADGET-ACTOR-MILESTONES'),
-					'url'   		=> 'option=com_todos&view=milestones&layout=gadget&oid='.$actor->id,
-					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
-					'action_url'		=> 'option=com_todos&view=milestones&oid='.$actor->id
+				'title' => JText::_('COM-TODOS-GADGET-ACTOR-TODOS'),
+				'url' => 'option=com_todos&view=todos&layout=gadget&oid='.$actor->id,
+				'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+				'action_url' => 'option=com_todos&view=todos&oid='.$actor->id
 			));
 		}
 		else
+		{
 			$gadgets->insert('todos-gadget-profile-todos', array(
-					'title' 		=> JText::_('COM-TODOS-GADGET-DASHBOARD-TODOS'),
-					'url'   		=> 'option=com_todos&view=todos&layout=gadget&filter=leaders',
-					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
-					'action_url'		=> 'option=com_todos&view=todos&filter=leaders'
+				'title' => JText::_('COM-TODOS-GADGET-DASHBOARD-TODOS'),
+				'url' => 'option=com_todos&view=todos&layout=gadget&filter=leaders',
+				'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+				'action_url' => 'option=com_todos&view=todos&filter=leaders'
 			));
+		}
 	}
 	
 	/**
@@ -93,11 +79,13 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
 	 */
 	protected function _setComposers($actor, $composers, $mode)
 	{
-		if ( $actor->authorize('action','com_todos:todo:add') )
+		if($actor->authorize('action','com_todos:todo:add'))
+		{
 			$composers->insert('todos-composer', array(
-					'title'        => JText::_('COM-TODOS-COMPOSER-TODO'),
-					'placeholder'  => JText::_('COM-TODOS-TODO-ADD'),
-					'url'          => 'option=com_todos&view=todo&layout=composer&oid='.$actor->id
+				'title' => JText::_('COM-TODOS-COMPOSER-TODO'),
+				'placeholder' => JText::_('COM-TODOS-TODO-ADD'),
+				'url' => 'option=com_todos&view=todo&layout=composer&oid='.$actor->id
 			));
+		}
 	}	
 }

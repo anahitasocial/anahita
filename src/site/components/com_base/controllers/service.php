@@ -39,6 +39,29 @@ class ComBaseControllerService extends ComBaseControllerResource
         //insert the search term query
         $this->_state->insert('q');
 	}
+	
+	/**
+     * Set the default Node View
+     * 
+     * @param KCommandContext $context Context parameter
+     * 
+     * @return ComBaseControllerService
+     */ 
+    public function setView($view)
+    {
+        parent::setView($view);
+        
+        if(!$this->_view instanceof ComBaseViewAbstract) 
+        {
+            $name  = KInflector::isPlural($this->view) ? 'nodes' : 'node';
+            $defaults[] = 'ComBaseView'.ucfirst($view).ucfirst($this->_view->name);
+            $defaults[] = 'ComBaseView'.ucfirst($name).ucfirst($this->_view->name);
+        	$defaults[] = 'ComBaseView'.ucfirst($this->_view->name);
+            register_default(array('identifier'=>$this->_view, 'default'=>$defaults));
+        }
+        
+        return $this;
+    }
 		
     /**
      * Initializes the options for the object
@@ -57,7 +80,9 @@ class ComBaseControllerService extends ComBaseControllerResource
             'toolbars'      => array($this->getIdentifier()->name,'menubar','actorbar'),
             'request'       => array(
                 'limit'     => 20,
-                'offset'    => 0                
+                'offset'    => 0,
+				'sort'		=> 'recent',
+				'scope'		=> ''                
             )
 		));
 	}
@@ -75,5 +100,5 @@ class ComBaseControllerService extends ComBaseControllerResource
 	   	$action = $this->getItem() ? 'edit' : 'add';
 		$result = $this->execute($action, $context);
 		return $result;
-	}	   	
+	}
 }

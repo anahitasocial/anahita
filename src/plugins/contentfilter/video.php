@@ -27,6 +27,24 @@ if ( defined('KOOWA') ) {
 class PlgContentfilterVideo extends PlgContentfilterAbstract
 {
 	/**
+     * Initializes the default configuration for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     * 
+     * @return void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'priority'   => KCommand::PRIORITY_HIGH,
+        ));
+
+        parent::_initialize($config);
+    }
+	
+	/**
 	 * Filter a value  
 	 * 
 	 * @param string The text to filter
@@ -53,7 +71,12 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 		
+<<<<<<< HEAD
 		if ( preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches) ) {
+=======
+		if(preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) 
+		{
+>>>>>>> 13edab851330f6120d9693285f9eee4c0375e5b6
 			foreach($matches[1] as $index => $video_id) {				
 				$url = JURI::base().'plugins/contentfilter/video.php?type=vimeo&id='.$video_id;				
 				$options = array(
@@ -82,7 +105,11 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
+<<<<<<< HEAD
 		if ( preg_match_all('%http[s]?://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches) )
+=======
+		if(preg_match_all('%http[s]?://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches))
+>>>>>>> 13edab851330f6120d9693285f9eee4c0375e5b6
 		{			
 			foreach($matches[1] as $index => $match)
 			{

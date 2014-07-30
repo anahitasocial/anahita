@@ -59,16 +59,6 @@ class ComTodosControllerToolbarActorbar extends ComMediumControllerToolbarActorb
 									JText::_('COM-TODOS-LINK-TODOS'),
 									array('option'=>'com_todos', 'view'=>'todos', 'oid'=>$actor->id),
 									$name == 'todo');
-				
-			$this->addNavigation('todoslists', 
-									JText::_('COM-TODOS-LINK-TODO-LISTS'), 
-									array('option'=>'com_todos', 'view'=>'todolists','oid'=>$actor->id), 
-									$name == 'todolist');
-	
-			$this->addNavigation('milestones', 
-									JText::_('COM-TODOS-LINK-MILESTONES'), 
-									array('option'=>'com_todos', 'view'=>'milestones','oid'=>$actor->id), 
-									$name == 'milestone');
 		}
     }    
 }

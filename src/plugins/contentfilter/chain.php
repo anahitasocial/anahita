@@ -37,7 +37,7 @@ class PlgContentfilterChain extends KObject
     {
         static $_instance;
         
-        if ( !$_instance ) 
+        if(!$_instance) 
         {
             $_instance = new self(new KConfig(array('service_container'=>KService::getInstance())));
             KService::set('plg:contentfilter.chain', $_instance);
@@ -78,7 +78,7 @@ class PlgContentfilterChain extends KObject
      */
     public function filter($text, $config = array())
     {
-        $context         = $this->_chain->getContext();
+    	$context         = $this->_chain->getContext();
         $context->data   = $text;
         $context->config = $config;
         if ( $context->config->filter ) 

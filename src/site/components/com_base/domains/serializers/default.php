@@ -34,57 +34,63 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
     {
         $data = new KConfig();
         
-        $viewer = 
-            KService::has('com:people.viewer')? KService::get('com:people.viewer') 
-                : null;
+        $viewer = KService::has('com:people.viewer') ? KService::get('com:people.viewer') : null;
                       
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();
         
-        $data['objectType'] = 
-            'com.'.$entity->getIdentifier()->package.'.'.$entity->getIdentifier()->name;
+        $data['objectType'] = 'com.'.$entity->getIdentifier()->package.'.'.$entity->getIdentifier()->name;
         
-        if ( $entity->isDescribable() ) {
+        if($entity->isDescribable()) 
+        {
             $data['name']  = $entity->name;
             $data['body']  = $entity->body;
             $data['alias'] = $entity->alias;
         }
         
-        if ( $entity->inherits('ComBaseDomainEntityComment') ) {
+        if($entity->inherits('ComBaseDomainEntityComment')) 
+        {
             $data['body'] = $entity->body;    
         }
         
-        if ( $entity->isPortraitable() ) 
+        if($entity->isPortraitable()) 
         {
             $imageURL = array();
             
-            if ( $entity->portraitSet() )
+            if($entity->portraitSet())
             {
-                $sizes    = $entity->getPortraitSizes();
+                $sizes = $entity->getPortraitSizes();
                 foreach($sizes as $name => $size) 
                 {
                     $url = null;
                     
-                    if ( $entity->portraitSet() ) {
+                    if($entity->portraitSet())
+                    {
                         $url = $entity->getPortraitURL($name);
                     }
                     
                     $parts = explode('x',$size);
                     $width = 0; $height = 0;
-                    if ( count($parts) == 0 )
-                        continue;
                     
-                    elseif ( count($parts) == 1 ) {
+                    if(count($parts) == 0)
+                    {
+                        continue;
+                    }
+                    elseif (count($parts) == 1) 
+                    {
                         $height = $width = $parts[0];
                     }
-                    else {
+                    else 
+                    {
                         $width  = $parts[0];
                         $height = $parts[1];  
                         //hack to set the ratio based on the original
-                        if ( $height == 'auto' && isset($sizes['original']) ) { 
+                        if($height == 'auto' && isset($sizes['original'])) 
+                        { 
                            $original_size = explode('x',$sizes['original']);                           
                            $height = ($width * $original_size[1]) / $original_size[0];
                         }
                     }
+                    
                     $imageURL[$name] = array(
                         'size' => array('width'=>(int)$width,'height'=>(int)$height),
                         'url'  => $url  
@@ -95,27 +101,31 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             $data['imageURL'] = $imageURL;           
         }
         
-        if ( $entity->isAdministrable() 
-//             && $entity->isAuthorizer() 
-//             && $entity->authorize('administration')
-            ) 
+        // @todo check for $entity->isAuthorizer() and $entity->authorize('administration') scenarios later on
+        if($entity->isAdministrable()) 
         {
             $data['administratorIds'] = array_values($entity->administratorIds->toArray());
-            if ( $viewer ) {
+            
+            if($viewer) 
+            {
                 $data['isAdministrated'] = $viewer->administrator($entity);   
             }
         }
         
-        if ( $viewer && !$viewer->eql($entity) ) {
-            if ( $entity->isFollowable() ) {
+        if($viewer && !$viewer->eql($entity)) 
+        {
+            if($entity->isFollowable()) 
+            {
                 $data['isLeader']  = $viewer->following($entity);
             }
-            if ( $entity->isLeadable() ) {
+            
+            if($entity->isLeadable()) 
+            {
                 $data['isFollower'] = $viewer->leading($entity);   
             }
         }        
         
-        if ( $entity->isModifiable() && !is_person($entity) ) 
+        if($entity->isModifiable() && !is_person($entity)) 
         {        
             $data->append(array(
                 'author'        => null,
@@ -135,7 +145,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             } 
         }
         
-        if ( $entity->isCommentable() ) 
+        if($entity->isCommentable()) 
         {
             $data['openToComment'] = (bool)$entity->openToComment;
             $data['numOfComments'] = $entity->numOfComments;
@@ -143,33 +153,40 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             $data['lastComment'] = null;
             $data['lastCommenter'] = null;
             
-            if ( isset($entity->lastComment) ) {
+            if(isset($entity->lastComment)) 
+            {
                 $data['lastComment'] = $entity->lastComment->toSerializableArray();                
             }
             
-            if ( isset($entity->lastCommenter) ) {
+            if(isset($entity->lastCommenter)) 
+            {
                 $data['lastCommenter'] = $entity->lastCommenter->toSerializableArray();                
             }
         }
         
-        if ( $entity->isFollowable() ) {
+        if($entity->isFollowable()) 
+        {
             $data['followerCount'] = $entity->followerCount;   
         }
         
-        if ( $entity->isLeadable() ) {
+        if($entity->isLeadable()) 
+        {
             $data['leaderCount'] = $entity->leaderCount;
             $data['mutualCount'] = $entity->mutualCount;   
         }
         
-        if ( $entity->isSubscribable() ) {
+        if($entity->isSubscribable()) 
+        {
             $data['subscriberCount'] = $entity->subscriberCount;
         }        
         
-        if ( $entity->isVotable() ) {
+        if($entity->isVotable()) 
+        {
             $data['voteUpCount'] = $entity->voteUpCount;
         }
         
-        if ( $entity->isOwnable() ) {
+        if($entity->isOwnable()) 
+        {
             $data['owner'] = $entity->owner->toSerializableArray();
         }
         

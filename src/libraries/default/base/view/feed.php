@@ -98,7 +98,5 @@ class LibBaseViewFeed extends LibBaseViewAbstract
 	protected function _feedItemBody($entity)
 	{
 		return nl2br(stripslashes($entity->body));
-	}
-   
-//end class    
+	} 
 }

@@ -1,22 +1,22 @@
 <?php defined('KOOWA') or die ?>
 
+<module position="sidebar-b" style="none">
+	<?= @helper('ui.gadget', $gadgets->extract('hashtags-trending')) ?>	
+</module>
 
-<module position="sidebar-b" style="none"></module>
-
-<?php if ( count($gadgets) >= 1 ) : ?>
+<?php if(count($gadgets) >= 1 ): ?>
 <module position="sidebar-a">   
     <ul class="nav nav-pills nav-stacked sidelinks" data-behavior="BS.Tabs" data-bs-tabs-options="{'smooth':true,'tabs-selector':'.profile-tab-selector a','sections-selector':'! * .profile-tab-content'}">
         <li class="nav-header">
             <?=  @text('LIB-AN-STREAMS') ?>
         </li>    
         <?php foreach($gadgets as $index=>$gadget) : ?>
-            <li class="profile-tab-selector <?= ($index == 'stories') ? 'active' : ''; ?>">
-            	<a href="#"><?= $gadget->title ?></a>
-            </li>
+        <li class="profile-tab-selector <?= ($index == 'stories') ? 'active' : ''; ?>">
+        	<a href="#"><?= $gadget->title ?></a>
+        </li>
         <?php endforeach;?>
     </ul>
 </module>
-
 <?php endif; ?>
 
 <?= @helper('com:composer.template.helper.ui.composers', $composers) ?>
@@ -29,3 +29,5 @@
 <?php endforeach;?>
 
 <?php endif; ?>
+
+

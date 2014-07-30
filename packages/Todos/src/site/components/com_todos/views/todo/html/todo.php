@@ -18,14 +18,13 @@
 	<h3 class="entity-title"><?= @escape($todo->title) ?></h3>
 		
 	<?php if($todo->description): ?>
-	<div class="entity-description"><?= @content( $todo->description ) ?></div>
+	<div class="entity-description">
+	<?= @content($todo->description); ?>
+	</div>
 	<?php endif; ?>
 		
 	<div class="entity-meta">
 		<ul class="an-meta inline">
-			<?php if(isset($todo->todolist->id)): ?>
-			<li><?= @text('COM-TODOS-TODO-META-TODOLIST') ?>: <a href="<?= @route($todo->todolist->getURL()) ?>"><?= @escape($todo->todolist->title) ?></a></li>
-			<?php endif; ?>
 			<li><?= @text('COM-TODOS-TODO-PRIORITY') ?>: <span class="priority <?= @helper('priorityLabel', $todo) ?>"><?= @helper('priorityLabel', $todo) ?></span></li>
 		</ul>
 		

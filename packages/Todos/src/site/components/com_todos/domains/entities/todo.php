@@ -62,19 +62,18 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 		$config->append(array(
 			'resources'		=> array('todos_todos'),
 			'attributes' => array(
-				'name'					=> array('required'=>true),
-				'openStatusChangeTime' 	=> array('column'=>'open_status_change_time','default'=>'date', 'type'=>'date', 'write'=>'private'),
-				'priority'				=> array('column'=>'ordering',  'default'=>self::PRIORITY_NORMAL, 'type'=>'integer')
+				'name' => array('required'=>true),
+				'openStatusChangeTime' => array('column'=>'open_status_change_time','default'=>'date', 'type'=>'date', 'write'=>'private'),
+				'priority' => array('column'=>'ordering',  'default'=>self::PRIORITY_NORMAL, 'type'=>'integer')
 				),
 			'relationships' => array(
 				'lastChanger' => array('parent'=>'com:people.domain.entity.person', 'child_column'=>'open_status_change_by'),
 				),
 			'behaviors' => array(
-				'parentable' => array('parent'=>'todolist'),
 				'enableable'
 			),
 			'aliases' => array(
-				'open'		=> 'enabled'		
+				'open' => 'enabled'		
 			)
 		));
 			
@@ -114,49 +113,5 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	{
 		$this->set('lastChanger', $changer);
 		$this->set('openStatusChangeTime', AnDomainAttribute::getInstance('date'));
-	}
-		
-	/**
-	 * Set the todolist
-	 * 
-	 * @param ComTodosDomainEntityTodolist $todolist The tododlist	
-     *  
-	 * @return void
-	 */
-	public function setParent($parent)
-	{        
-        $commands = array('after.insert','after.update','after.delete');
-        
-        if ( $parent )   
-            $this->getRepository()
-                ->registerCallback($commands,array($parent,'updateStats'));
-        
-        if ( $this->parent )
-            $this->getRepository()
-                ->registerCallback($commands,array($this->parent,'updateStats'));
-        
-        $this->set('parent', $parent);
-	}
-	
-	/**
-	 * After commit
-	 * 
-	 * @return void
-	 */
-	protected function _afterCommit()
-	{
-		$uptables = array();
-		
-		if ( isset($this->__old_parent) )
-			$uptables[] = $this->__old_parent;
-			
-		if ( isset($this->parent) ) 
-			$uptables[] =$this->parent;
-
-		foreach($uptables as $parent) 
-		{
-			$parent->set('numOfTodos', $parent->todos->reset()->getTotal());			
-			$parent->set('numOfOpenTodos', $parent->todos->reset()->where('open','=',true)->getTotal());
-		}
 	}
 }

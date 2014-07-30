@@ -54,19 +54,18 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
 				'ownable',
 				'dictionariable', 
 				'subscribable',
-				'describable'
+				'describable',
+             	'com://site/hashtags.domain.behavior.hashtagable'
 			)
 		));
 		
         $behaviors = $config->behaviors;
         
         $behaviors->append(array(
-//            'taggable'    => array('parse_hashtag'=>true) ,
-            'modifiable'  => array(
+            'modifiable' => array(
                 'modifiable_properties' => array('name','body')
             ),
-            'commentable' => 
-                array('comment'=>array('length'=>5000,'format'=>'post'))
+            'commentable' => array('comment'=>array('length'=>5000,'format'=>'post'))
         ));
         
 		parent::_initialize($config);

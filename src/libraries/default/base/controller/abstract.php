@@ -79,9 +79,8 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */   
     public function getState()
     {
-        if ( !isset($this->_state) ) {
+        if(!isset($this->_state))
             $this->_state = new LibBaseControllerState();   
-        }
         
         return $this->_state;
     }
@@ -97,7 +96,8 @@ class LibBaseControllerAbstract extends KControllerAbstract
     {
         $this->_request = new LibBaseControllerRequest();
         
-        foreach($request as $key => $value) {
+        foreach($request as $key => $value) 
+        {
             $this->_request->$key = $value;
             $this->$key = $value;
         }
@@ -145,18 +145,15 @@ class LibBaseControllerAbstract extends KControllerAbstract
     public function __call($method, $args)
     {
         //omit anything that starts with underscore 
-        if ( strpos($method, '_') === false )
+        if(strpos($method, '_') === false)
         {
-            if ( count($args) == 1
-                    && !isset($this->_mixed_methods[$method])
-                    && !in_array($method, $this->getActions())
-            )
+            if(count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions()))
             {
                 $this->{KInflector::underscore($method)} = $args[0];
                 return $this;
             }
         }
-        elseif ( strpos($method, '_action') === 0 ) 
+        elseif(strpos($method, '_action') === 0) 
         {
             //if the missing method is _action[Name] but
             //method exists, then that means the action
@@ -166,16 +163,16 @@ class LibBaseControllerAbstract extends KControllerAbstract
             //__call. 
             //we need to check if a behavior implement this
             //method            
-            if ( method_exists($this, $method) ) 
+            if(method_exists($this, $method)) 
             {
                 $action = strtolower(substr($method, 7));
                 
-                if ( isset($this->_mixed_methods[$action]) ) 
+                if(isset($this->_mixed_methods[$action])) 
                 {
-                    return $this->_mixed_methods[$action]
-                        ->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
+                    return $this->_mixed_methods[$action]->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
                 }
-                else {
+                else 
+                {
                     //we need to throw this 
                     //because if it goes to parent::__call it will causes
                     //infinite recursion                    
@@ -198,9 +195,9 @@ class LibBaseControllerAbstract extends KControllerAbstract
         {
             $this->_response = $this->getService($this->_response);
             
-            if ( !$this->_response instanceof LibBaseControllerResponse ) {
-                throw new 
-                    UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');    
+            if(!$this->_response instanceof LibBaseControllerResponse ) 
+            {
+                throw new UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');    
             }
         }
     
@@ -246,11 +243,11 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function getBehavior($behavior, $config = array())
     {
-        if ( is_string($behavior) )
+        if(is_string($behavior))
         {
-            if ( strpos($behavior,'.') === false )
+            if(strpos($behavior,'.') === false)
             {
-                $identifier       = clone $this->getIdentifier();
+                $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller','behavior');                                     
                 $identifier->name = $behavior;
                 register_default(array('identifier'=>$identifier, 'prefix'=>$this));                

@@ -38,29 +38,18 @@ class ComPagesControllerPage extends ComMediumControllerDefault
     */
     protected function _initialize(KConfig $config)
     {
+           
+        parent::_initialize($config);
+        
         $config->append(array(
             'request' => array(
-                'order' => 'creationTime'
+                'sort' => 'newest'
             ),
             'behaviors' => array(
         		'enablable'
         	) 
-        ));   
-
-        parent::_initialize($config);
+        ));
     }
-        
-	/**
-	 * Browse Pages
-	 * 
-	 * @param KCommandContext $context Context parameter
-	 * 
-	 * @return void
-	 */
-	protected function _actionBrowse($context)
-	{
-		return parent::_actionBrowse($context)->order($this->order, 'DESC');
-	}
 	
 	/**
 	 * Redirect after edit
@@ -83,14 +72,9 @@ class ComPagesControllerPage extends ComMediumControllerDefault
 	 */
 	public function redirect(KCommandContext $context)
 	{
-	    if ( $context->action == 'edit' ||
-	         $context->action == 'add'	             
-	            )	    
-	    {
+	    if($context->action == 'edit' || $context->action == 'add')	   
 	        $context->response->setRedirect(JRoute::_($this->getItem()->getURL().'&layout=edit'));
-	        
-	    } else {
+	    else
 	        return parent::redirect($context);
-	    }
 	}
 }

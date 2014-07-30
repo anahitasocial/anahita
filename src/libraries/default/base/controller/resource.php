@@ -39,21 +39,20 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      *
      * @param   object  An optional KConfig object with configuration options.
      */
-    public function __construct( KConfig $config)
+    public function __construct(KConfig $config)
     {            
         parent::__construct($config);        
         
         //set the view
-        $this->_view     = $config->view;
+        $this->_view = $config->view;
       
         //register display as get so $this->display() return
         //$this->get()
         $this->registerActionAlias('display', 'get');
         
         // Mixin the toolbar
-        if($config->dispatch_events) {
+        if($config->dispatch_events)
             $this->mixin(new KMixinToolbar($config->append(array('mixer' => $this))));
-        }
         
         JFactory::getLanguage()->load($this->getIdentifier()->package);
     }
@@ -70,15 +69,15 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     protected function _initialize(KConfig $config)
     {
-    	$permission       = clone $this->getIdentifier();
+    	$permission = clone $this->getIdentifier();
     	$permission->path = array($permission->path[0], 'permission');
     	register_default(array('identifier'=>$permission, 'prefix'=>$this));
     	    	
         $config->append(array(
             'behaviors' => array($permission),
-            'request'   => array('format' => 'html'),
+            'request' => array('format' => 'html'),
         ))->append(array(
-            'view'      => $config->request->get ? $config->request->get : ($config->request->view ? $config->request->view : $this->getIdentifier()->name)
+            'view' => $config->request->get ? $config->request->get : ($config->request->view ? $config->request->view : $this->getIdentifier()->name)
         ));
         
         parent::_initialize($config);
@@ -95,33 +94,33 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     {
         $action = null;
         
-        if ( $this->_request->get ) 
+        if($this->_request->get) 
         {
             $action = strtolower('get'.$this->_request->get);
         }        
-        else {
+        else 
+        {
             $action = KInflector::isPlural($this->view) ? 'browse' : 'read';
         }
        
         $result = null;
            
-        if ( in_array($action, $this->getActions()) ) 
+        if(in_array($action, $this->getActions())) 
         {
             $result = $this->execute($action, $context);
             
-            if ( is_string($result) || $result === false ) {
+            if(is_string($result) || $result === false) 
                 $context->response->setContent($result.' ');
-            }
         }                
         
         $view = $this->getView();
         
-        if ( !$context->response->getContent() )
+        if(!$context->response->getContent())
         {            
-            if ( $context->params ) {
-                foreach($context->params as $key => $value) {
+            if ($context->params) 
+            {
+                foreach($context->params as $key => $value)
                     $view->set($key, $value);
-                }
             }
                         
             $content = $view->display();
@@ -183,9 +182,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         {
             if(is_string($view) && strpos($view, '.') === false ) 
             {
-                $identifier          = clone $this->getIdentifier();
-                $identifier->path    = array('view', $view);
-                $identifier->name    = $this->_request->getFormat();
+                $identifier = clone $this->getIdentifier();
+                $identifier->path = array('view', $view);
+                $identifier->name = $this->_request->getFormat();
             }
             else $identifier = $this->getIdentifier($view);
             
@@ -209,9 +208,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */   
     public function __set($key, $value)
     {
-        if ( $key == 'view' ) {
+        if($key == 'view')
             $this->_view = $value;    
-        }
+        
         //Check for layout, view or format property
         if(in_array($key, array('layout', 'format')))
         {
@@ -229,9 +228,12 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     public function __toString()
     {
-        try {
+        try 
+        {
            return $this->display();
-        } catch(Exception $e) {
+        } 
+        catch(Exception $e) 
+        {
             trigger_error('Exception in '.get_class($this).' : '.$e->getMessage(), E_USER_WARNING);
         }
     }
@@ -243,11 +245,11 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     public function getToolbar($toolbar, $config = array())
     {
-        if ( is_string($toolbar) )
+        if(is_string($toolbar))
         {
-            if ( strpos($toolbar,'.') === false )
+            if(strpos($toolbar,'.') === false)
             {
-                $identifier       = clone $this->getIdentifier();
+                $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller','toolbar');
                 $identifier->name = $toolbar;
                 register_default(array('identifier'=>$identifier, 'prefix'=>$this));
