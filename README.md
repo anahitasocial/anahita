@@ -12,7 +12,7 @@ Anahita is an open source social networking platform for building knowledge shar
 
 Getting Started
 ================
-To install the most recent Birth release of Anahita please read the guide at [Getting Started](https://github.com/anahitasocial/anahita/wiki/Getting-started).
+To install the most recent Birth release of Anahita please read the instructions [Getting Started] (https://github.com/anahitasocial/anahita/wiki/Getting-started).
 
 Get Help
 =========
