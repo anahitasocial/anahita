@@ -1,5 +1,7 @@
-What is Anahita?
+Anahita
 ================
+Version: 4.0 Embryo Release
+
 Anahita is an open source social networking platform for building knowledge sharing apps and services. Anahita is available under the GPL3 license. Use Anahita to develop:
 
 1. niche social networks for business, lifestyle, and support
@@ -10,7 +12,7 @@ Anahita is an open source social networking platform for building knowledge shar
 
 Getting Started
 ================
-To install and get started on Anahita please read the guide at [Getting Started](https://github.com/anahitasocial/anahita/wiki/Getting-started)
+To install the most recent Birth release of Anahita please read the guide at [Getting Started](https://github.com/anahitasocial/anahita/wiki/Getting-started).
 
 Get Help
 =========
