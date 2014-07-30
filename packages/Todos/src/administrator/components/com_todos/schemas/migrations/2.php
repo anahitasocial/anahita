@@ -22,16 +22,7 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);
         
-        $ids = array();
-        $commentIds = array();
-        
-        //clearing the milestones from the data
-        $ids = dbfetch('SELECT `id` FROM #__anahita_nodes WHERE `type` LIKE \'%com:todos.domain.entity.milestone\' ', KDatabase::FETCH_ARRAY);
-        
-        if(count($ids))
-        	dbexec('DELETE FROM #__anahita_nodes WHERE `id` IN ('.implode(',', $commentIds).')');
-        
-        dbexec('SELECT `id` FROM #__anahita_nodes WHERE `type` LIKE \'%ComBaseDomainEntityComment%\' AND `parent_type` = \'com:todos.domain.entity.milestone\' ');
+        dbexec('DELETE FROM #__anahita_nodes WHERE `type` LIKE \'%ComBaseDomainEntityComment%\' AND `parent_type` = \'com:todos.domain.entity.milestone\' ');
         
         dbexec('DELETE FROM #__anahita_nodes WHERE `type` LIKE \'%com:todos.domain.entity.milestone\' ');
         
