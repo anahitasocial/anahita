@@ -41,7 +41,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         dbexec('DELETE FROM #__components WHERE `option` = \'com_mailto\' ');	
         
         //delete legacy contentfilters
-        dbexec('INSERT INTO #__plugins (name,element,folder,published,iscore) VALUES (\'Hashtag\', \'hashtag\',\'contentfilter\',1,1)');
+        dbexec('INSERT INTO #__plugins (name,element,folder,iscore) VALUES (\'Hashtag\', \'hashtag\',\'contentfilter\',1)');
         
     	//create the fields required for creating hashtag nodes
     	dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_count`');
@@ -106,6 +106,8 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     			if($entity->addHashtag($term)->save())
     				dboutput($term.', ');
     	}
+    	
+    	dbexec('UPDATE #__plugins SET published = 1 WHERE element = \'hashtag\'');
     	
     	$timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n");
