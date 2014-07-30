@@ -23,7 +23,7 @@ class ComPeopleRouter extends ComActorsRouterDefault
      */
     public function build(&$query)
     {
-    	if ( isset($query['uniqueAlias']) ) 
+    	if(isset($query['uniqueAlias'])) 
     	{
     		$query['id'] = $query['uniqueAlias'];
     		unset($query['uniqueAlias']);    		
@@ -45,8 +45,7 @@ class ComPeopleRouter extends ComActorsRouterDefault
     	if ( $path == 'signup' ) {
     	    return array('view'=>'person','layout'=>'add');
     	}
-    	elseif ( count($segments) && !is_numeric($segments[0]) && 
-    			!in_array(KInflector::singularize($segments[0]), array('person','session','token'))) 
+    	elseif(count($segments) && !is_numeric($segments[0]) && !in_array(KInflector::singularize($segments[0]), array('person','session','token'))) 
     	{
     		$query['username'] = $segments[0];
     		//@TODO the parent::parse wants a numeric ID in order
