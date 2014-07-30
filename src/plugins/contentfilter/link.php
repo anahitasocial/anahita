@@ -37,7 +37,7 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_LOW,
+            'priority'   => KCommand::PRIORITY_NORMAL,
         ));
 
         parent::_initialize($config);
@@ -55,33 +55,12 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
 	{
 		$this->_stripTags($text);
 		
-		$matches = array();
-		
-		if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $text, $matches))
-		{
-			$pop = " target=\"_blank\" ";
+		$text = trim($text);
+    		    
+    	$text = strip_tags($text, "<b><i><u>");
+    	$text = preg_replace("/(?<!http:\/\/)www\./","http://www.", $text);
+    	$text = preg_replace( "/((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "<a href=\"\\0\" target=\"_blank\">\\0</a>", $text);
 
-			for ($i = 0; $i < count($matches['0']); $i++)
-			{
-				$period = '';
-				if(preg_match("|\.$|", $matches['6'][$i]))
-				{
-					$period = '.';
-					$matches['6'][$i] = substr($matches['6'][$i], 0, -1);
-				}
-
-				$text = str_replace($matches['0'][$i],
-									$matches['1'][$i].'<a class="an-link" href="http'.
-									$matches['4'][$i].'://'.
-									$matches['5'][$i].
-									$matches['6'][$i].'"'.$pop.'>http'.
-									$matches['4'][$i].'://'.
-									$matches['5'][$i].
-									$matches['6'][$i].'</a>'.
-									$period, $text);
-			}
-		}
-		
 		$this->_replaceTags($text);
 		
 		return $text;	

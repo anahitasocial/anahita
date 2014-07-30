@@ -23,6 +23,24 @@
 class PlgContentfilterHashtag extends PlgContentfilterAbstract
 {       
 	/**
+     * Initializes the default configuration for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     * 
+     * @return void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'priority'   => KCommand::PRIORITY_LOWEST,
+        ));
+
+        parent::_initialize($config);
+    }
+	
+	/**
 	 * Filter a value  
 	 * 
 	 * @param string The text to filter
