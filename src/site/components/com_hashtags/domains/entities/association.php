@@ -54,6 +54,11 @@ final class ComHashtagsDomainEntityAssociation extends ComBaseDomainEntityEdge
      */
     protected function _afterEntityInsert(KCommandContext $context)
     {
+    	$this->set('creationTime', $this->hashtagable->updateTime);
+    	
+    	if(isset($this->hashtagable->author))
+    		$this->set('author', $this->hashtagable->author);
+    	
     	$this->resetStats();
     }
     
