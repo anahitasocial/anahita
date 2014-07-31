@@ -192,18 +192,19 @@ class JInstallationHelper
 	/**
 	 *
 	 */
-	static public function populateDatabase(& $db, $sqlfile, & $errors, $nexttask='mainconfig')
+	static public function populateDatabase(&$db, $sqlfile, & $errors, $nexttask='mainconfig')
 	{
-		if( !($buffer = file_get_contents($sqlfile)) )
+		if(!($buffer = file_get_contents($sqlfile)))
 		{
 			return -1;
 		}
 
 		$queries = JInstallationHelper::splitSql($buffer);
 
-		foreach ($queries as $query)
+		foreach($queries as $query)
 		{
 			$query = trim($query);
+			
 			if ($query != '' && $query {0} != '#')
 			{
 				$db->setQuery($query);
@@ -213,6 +214,7 @@ class JInstallationHelper
 				JInstallationHelper::getDBErrors($errors, $db );
 			}
 		}
+		
 		return count($errors);
 	}
 
