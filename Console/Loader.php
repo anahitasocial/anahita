@@ -56,7 +56,7 @@ function include_tasks($directory)
                 if ( strpos($file, '.task.php') ) {
                     $tasks[]  = $file->getPathName();
                 }
-                elseif ( basename($file) == 'bootstrap.php' ) {
+                elseif ( basename($file) == 'server.bootstrap.php' ) {
                     $bootstraps[] = $file->getPathName();
                 }
             };

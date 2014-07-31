@@ -43,8 +43,11 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
         	{
         		foreach($terms as $term)
         			if(strlen($term) > 3)
-        				if($topic->set('description', $topic->description.' #'.trim($term))->addHashtag($term)->save())
-        					dboutput($term.', ');
+        			{
+        				dboutput($term.', ');
+        				$topic->set('description', $topic->description.' #'.trim($term))->addHashtag($term)->save();
+        			}
+        					
         	}
         }
 		

@@ -64,9 +64,11 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     		$entity = KService::get('com://site/actors.domain.entity.actor')->getRepository()->getQuery()->disableChain()->fetch($id);    		
     		$hashtagTerms = $this->extractHashtagTerms($entity->description);
     		
-    		foreach($hashtagTerms as $term)
-    			if($entity->addHashtag($term)->save())
-    				dboutput($term.', ');
+    	   	foreach($hashtagTerms as $term)
+    		{
+    			dboutput($term.', ');
+    			$entity->addHashtag($term)->save();
+    		}
     	}
         
     	dboutput("\nComments' hashtags\n");
@@ -79,8 +81,10 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     		$hashtagTerms = $this->extractHashtagTerms($entity->body);
     		
     		foreach($hashtagTerms as $term)
-    			if($entity->addHashtag($term)->save())
-    				dboutput($term.', ');
+    		{
+    			dboutput($term.', ');
+    			$entity->addHashtag($term)->save();
+    		}
     	}
     	
     	dboutput("\nMedia's Hashtags\n");
@@ -103,8 +107,10 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     		$hashtagTerms = $this->extractHashtagTerms($entity->description);
     		
     		foreach($hashtagTerms as $term)
-    			if($entity->addHashtag($term)->save())
-    				dboutput($term.', ');
+    		{
+    			dboutput($term.', ');
+    			$entity->addHashtag($term)->save();
+    		}
     	}
     	
     	dbexec('UPDATE #__plugins SET published = 1 WHERE element = \'hashtag\'');

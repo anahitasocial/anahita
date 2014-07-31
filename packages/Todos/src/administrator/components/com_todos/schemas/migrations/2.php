@@ -51,8 +51,10 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
         	{
         		foreach($terms as $term)
         			if(strlen($term) > 3)
-        				if($todo->set('parent_id', 0)->set('description', $todo->description.' #'.trim($term))->addHashtag($term)->save())
-        					dboutput($term.', ');
+        			{
+        				dboutput($term.', ');
+        				$todo->set('parent_id', 0)->set('description', $todo->description.' #'.trim($term))->addHashtag($term)->save();
+        			}
         	}		
         }     
         
