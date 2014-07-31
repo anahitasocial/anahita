@@ -63,7 +63,7 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
 	        'story_aggregation' => array(),
 			'behaviors' => array(
 				//'assignable'=>array(),
-				//'scopeable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor'),
+				'scopeable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor'),
 				'hashtagable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor')
 			)
 		));

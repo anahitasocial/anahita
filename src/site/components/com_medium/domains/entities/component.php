@@ -63,7 +63,8 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		    'story_aggregation' => array(),        
 			'behaviors' => array(
 				'assignable'=>array(),
-				'hashtagable'=>array('class'=>'ComMediumDomainEntityMedium','type'=>'post')
+				'scopeable'=>array('class'=>'ComMediumDomainEntityMedium', 'type'=>'post'),
+				'hashtagable'=>array('class'=>'ComMediumDomainEntityMedium', 'type'=>'post')
 			)
 		));		
 		

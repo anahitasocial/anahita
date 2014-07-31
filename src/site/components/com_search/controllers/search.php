@@ -88,6 +88,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     	$this->keywords = array_filter(explode(' ', $this->term));
     	
     	$this->scopes = $this->getService('com://site/components.domain.entityset.scope');
+    	
     	$this->current_scope = $this->scopes->find($this->scope);
     	
     	$query = $this->getService('com://site/search.domain.query.node')

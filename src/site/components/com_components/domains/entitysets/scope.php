@@ -40,6 +40,7 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
 			if(!$registry->offsetExists('scopes'))
 			{
 				$components = $container->get('repos://site/components.component')->fetchSet();
+				
 				$dispatcher = $container->get('koowa:event.dispatcher'); 
 				$components->registerEventDispatcher($dispatcher);
 				
