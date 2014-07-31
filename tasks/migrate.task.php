@@ -342,34 +342,44 @@ $console
                     passthru($cmd);
                 }
         });
-}        
+}    
+    
 $console
-            ->register('db:load')
-            ->setDescription('Load data from a sql file into the database')
-            ->setDefinition(array(
-                    new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
-                    //new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
-            ))
-            ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {                
-                $file = realpath($input->getArgument('file'));
-                if ( !file_exists($file) ) {
-                    throw new \Exception("File '$file' doesn't exists");
-                }
-                require_once 'Console/Installer/Helper.php';
-                $console->loadFramework();
-                $config = new Config(WWW_ROOT);
-                $database = $config->getDatabaseInfo();
-                $errors   = array();
-                $db       = \JInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],true);
-                if ( $db instanceof \JException ) {
-                    $output->writeLn('<error>'.$db->toString().'</error>');
-                    exit(1);
-                }
-                if ( true || $input->getOption('drop-tables') )  {
-                    \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);                                        
-                }
-                $output->writeLn('<info>Loading data. This may take a while...</info>');
-                \JInstallationHelper::populateDatabase($db, $file, $errors);
-            });
-
-?>
+->register('db:load')
+->setDescription('Load data from a sql file into the database')
+->setDefinition(array(
+		new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
+        //new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
+))
+->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {                
+                
+	$file = realpath($input->getArgument('file'));
+            	
+	if(!file_exists($file))
+		throw new \Exception("File '$file' doesn't exists");     			
+		
+	require_once 'Console/Installer/Helper.php';
+                
+    $console->loadFramework();
+                
+    $config = new Config(WWW_ROOT);
+                
+    $database = $config->getDatabaseInfo();
+                
+    $errors   = array();
+                
+    $db = \JInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],true);
+                
+    if($db instanceof \JException) 
+    {
+    	$output->writeLn('<error>'.$db->toString().'</error>');
+        exit(1);
+    }
+                
+    if($input->getOption('drop-tables'))
+    	\JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);                                        
+                
+    $output->writeLn('<info>Loading data. This may take a while...</info>');
+                    
+    \JInstallationHelper::populateDatabase($db, $file, $errors);
+});
