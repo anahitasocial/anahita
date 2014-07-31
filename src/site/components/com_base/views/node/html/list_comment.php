@@ -31,7 +31,7 @@
 	<?php endif; ?>
 	
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($item->body, array('exclude'=>'syntax')), array('length'=>400, 'consider_html'=>true)) ?>
+		<?= @helper('text.truncate', @content($item->body), array('length'=>400, 'consider_html'=>true)) ?>
 	</div>
 	
 	<div class="entity-meta">		
