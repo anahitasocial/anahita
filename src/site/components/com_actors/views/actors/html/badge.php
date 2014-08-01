@@ -28,7 +28,7 @@
 		</div>
 
 		<div class="entity-description">
-			<?= @helper('text.truncate', strip_tags($item->description), array('length'=>200)); ?>
+			<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('consider_html'=>true, 'length'=>150)); ?>
 		</div>
 	</div>
 <?php endforeach; ?>
