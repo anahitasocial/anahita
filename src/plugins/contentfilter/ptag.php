@@ -55,10 +55,11 @@ class PlgContentfilterPtag extends PlgContentfilterAbstract
 		$this->_stripTags($text);
         
 		$paragraphs = explode("\n", $text);
-		$count		= count ($paragraphs);
-		for ($i = 0; $i < $count; $i++){
+		
+		$count = count ($paragraphs);
+		
+		for($i = 0; $i < $count; $i++)
 			$paragraphs[$i] = '<p>' . $paragraphs[$i] . '</p>';
-		}
 		
 		$text = implode($paragraphs, "\n");
 				
