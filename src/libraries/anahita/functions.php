@@ -711,9 +711,9 @@ function clean_apc_with_prefix($prefix)
         if ( $info )
         {
             $list = (array)$info['cache_list'];
-            //delete all the entiry with the prefix $key
+            //delete all the entries with the prefix $key
             foreach($list as $entry) {
-                if ( strpos($entry['info'], $prefix) === 0 ) {
+                if ( array_key_exists('info', $entry) && strpos($entry['info'], $prefix) === 0 ) {
                     apc_delete($entry['info']);
                 }
             }
