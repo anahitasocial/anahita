@@ -207,6 +207,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             $name  = KInflector::isPlural($this->view) ? 'actors' : 'actor';
             $defaults[] = 'ComActorsView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComActorsView'.ucfirst($name).ucfirst($this->_view->name);
+            
             register_default(array('identifier'=>$this->_view, 'default'=>$defaults));
         }
         

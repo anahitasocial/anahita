@@ -61,14 +61,14 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 	{
 		$config->append(array(
 			'attributes' => array(
-				'openToComment'		=> array('column'=>'comment_status',  'default'=>true, 	  'write'=>'protected'),
-				'numOfComments'		=> array('column'=>'comment_count',   'default'=>0, 	  'write'=>'private'),
-				'lastCommentTime'	=> array('column'=>'last_comment_on', 'write'=>'private')
+				'openToComment'	=> array('column'=>'comment_status',  'default'=>true, 	  'write'=>'protected'),
+				'numOfComments'	=> array('column'=>'comment_count',   'default'=>0, 	  'write'=>'private'),
+				'lastCommentTime' => array('column'=>'last_comment_on', 'write'=>'private')
 			),
 			'relationships'	=> array(
-				'lastComment'	=> array('parent'=>'comment', 'write'=>'private'),
+				'lastComment' => array('parent'=>'comment', 'write'=>'private'),
 				'lastCommenter' => array('parent'=>'com:people.domain.entity.person',  'child_column'=>'last_comment_by', 'write'=>'private'),
-				'comments'	    => array('child' =>'comment', 'child_key'=>'parent','parent_delete'=> 'ignore')
+				'comments' => array('child' =>'comment', 'child_key'=>'parent','parent_delete'=> 'ignore')
 			),
             'comment' => array()
 		));
@@ -84,8 +84,9 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 	protected function _afterEntityInstantiate(KConfig $config)
 	{
 		$entity = $config->entity;
+		
 		//set the last commentor to the author
-		if ( $this->getService()->has('com:people.viewer') )
+		if($this->getService()->has('com:people.viewer'))
 			$config->append(array(
 				'data'=>array(
 					'lastCommenter'	=> $this->getService('com:people.viewer')
@@ -103,8 +104,10 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 	public function getCommentOffset($cid)
 	{
 		$this->getRepository()->getStore()->execute('set @i = 0');
+		
 		$query = clone $this->comments->getQuery();
-		return $query->where('@col(id) < '.(int)$cid)->fetchValue('MAX(@i := @i + 1)');
+		
+		return $query->where('@col(id) < '.(int) $cid)->fetchValue('MAX(@i := @i + 1)');
 	}
 	
 	/**
@@ -116,7 +119,7 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 	 */
 	public function addComment($comment)
 	{
-		if ( is_string($comment) ) 
+		if(is_string($comment)) 
 		{
 			$comment = KHelperString::trim($comment);
 			
@@ -129,9 +132,8 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 		
 		$comment = $this->_mixer->comments->addNew($comment);
 		
-		if ( $this->_mixer->isSubscribable() ) {
+		if($this->_mixer->isSubscribable())
 			$this->_mixer->addSubscriber($comment->author);
-		}
 		
 		return $comment;
 	}
@@ -147,13 +149,11 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
     {  
         $sanitizers =  $this->_comment_sanitizer;
    
-        if ( isset($sanitizers['format']) ) {
-            $sanitizers['format'] = $this->_repository->getValidator()->getFilter($sanitizers['format']); 
-        }
+        if(isset($sanitizers['format']))
+            $sanitizers['format'] = $this->_repository->getValidator()->getFilter($sanitizers['format']);
                          
-        foreach($comments as $comment) {
-            $comment->sanitizeData('body', $sanitizers);   
-        }
+        foreach($comments as $comment)
+            $comment->sanitizeData('body', $sanitizers);
     }
     
     /**
@@ -170,13 +170,15 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 	        $entity->set('numOfComments', $entity->comments->getTotal());
 	        $last_comment = $entity->comments->reset()->order('creationTime','DESC')->fetch();
 	        $entity->set('lastComment',	$last_comment);
-	        if ( $last_comment )
+	        
+	        if($last_comment)
 	        {
-	            $entity->set('lastCommenter',   $last_comment->author);
+	            $entity->set('lastCommenter', $last_comment->author);
 	            $entity->set('lastCommentTime', $last_comment->creationTime);
-	        } else
+	        } 
+	        else
 	        {
-	            $entity->set('lastCommenter',   null);
+	            $entity->set('lastCommenter', null);
 	            $entity->set('lastCommentTime', null);
 	        }	        
 	    }		

@@ -81,16 +81,21 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 	 */
 	protected function _actionGetcandidates(KCommandContext $context)
 	{		
-		if ( $context->request->getFormat() != 'html' )
+		if($context->request->getFormat() != 'html')
 		{
 			$data = $context->data;
+			
 			$canditates = $this->getItem()->getAdminCanditates();
+			
 			$canditates->keyword($this->value)->limit(10);
+			
 			$people = array();
-		    foreach($canditates as $person) {
+		    
+			foreach($canditates as $person)
 				$people[] = array('id'=>$person->id, 'value'=>$person->name);
-			}
+			
 			$this->getView()->set($people);
+			
 			return $people;
 		}
 	}
@@ -126,8 +131,10 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 	 */
 	protected function _actionAddapp(KCommandContext $context)
 	{
-		$data 	    = $context->data;
+		$data = $context->data;
+		
 		$this->getItem()->components->insert($data->app);
+		
 		$this->commit();
 	}
 	
@@ -140,8 +147,10 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 	 */
 	protected function _actionRemoveapp(KCommandContext $context)
 	{
-		$data 	    = $context->data;		
+		$data = $context->data;		
+		
 		$this->getItem()->components->extract($data->app);
+		
 		$this->commit();
 	} 
     
@@ -154,8 +163,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
      */
     protected function _actionConfirmrequester(KCommandContext $context)
     {
-        //add the requester as a follower
-        //the rest is take care of
+        //add the requester as a follower. The rest is taken care of
         $this->getItem()->addFollower($this->getState()->requester);
     }
     
@@ -168,8 +176,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
      */
     protected function _actionIgnorerequester(KCommandContext $context)
     {
-        //add the requester as a follower
-        //the rest is take care of
+        //add the requester as a follower. The rest is taken care of
         $this->getItem()->removeRequester($this->getState()->requester);
     }
     
@@ -184,9 +191,8 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
     {
         $data = $context->data;
         
-        if ( $this->getItem() ) {            
-            $this->getState()->requester = $this->getItem()->requesters->fetch($data->requester);   
-        }
+        if($this->getItem())            
+            $this->getState()->requester = $this->getItem()->requesters->fetch($data->requester);
     } 
     
     /**
@@ -200,9 +206,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
     {
         $data = $context->data;
         
-        if ( $this->getItem() ) 
-        {
-            $this->getState()->admin = $this->getService('repos://site/people.person')->fetch($data->adminid);   
-        } 
+        if($this->getItem()) 
+            $this->getState()->admin = $this->getService('repos://site/people.person')->fetch($data->adminid);
     }
 }

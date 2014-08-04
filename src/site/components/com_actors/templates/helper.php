@@ -41,10 +41,11 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier))
+        if(!$container->has($config->service_identifier))
         {
             $classname = $config->service_identifier->classname;
-            $instance  = new $classname($config);
+            $instance = new $classname($config);
+            
             $container->set($config->service_identifier, $instance);
         }
     
@@ -73,9 +74,8 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 	 */
 	public function getAvatarURL($actor, $size = 'square')
 	{
-		if ( $actor->portraitSet() ) {
+		if($actor->portraitSet())
 			return $actor->getPortraitURL($size);
-		}
 				
 		return $this->getService('com://site/base.template.asset')->getURL('lib_anahita/images/avatar/'.$size.'_default.gif');		
 	}
@@ -92,19 +92,20 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 	 */
 	public function avatar($actor, $size = 'square', $linked = true, $attr = array())
 	{
-	    if ( is_numeric($size) ) 
+	    if(is_numeric($size)) 
 	    {
 	        $width = "width=\"$size\"";
 	        $size  = 'square';
 	    } 
-	    else $width = '';
+	    else 
+	    	$width = '';
 	    
 	    $defaultAvatar = $this->getService('com://site/base.template.asset')->getURL('lib_anahita/images/avatar/'.$size.'_default.gif');
 	    
 		if(is_null($actor) || !isset($actor->id))
 			return '<a class="actor-avatar-link" href="#"><img '.$width .' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'" size="'.$size.'" class="actor-avatar '.$size.'" /></a>';
 		
-		if ($actor->portraitSet()) 
+		if($actor->portraitSet()) 
 		{
 			$src  = $actor->getPortraitURL($size);		
 			$name = KHelperString::ucwords($actor->name);
@@ -115,7 +116,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 			$img = '<img '.$width .' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'-'.$actor->id.'" size="'.$size.'" class="actor-avatar '.$size.'" />';
 		} 
 					
-		if ($linked && $actor->authorize('access')) 
+		if($linked && $actor->authorize('access')) 
 		{
 			$url = $this->getActorURL($actor);
 			$img = '<a class="actor-avatar-link" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
@@ -135,16 +136,17 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 	 */
 	public function name($actor, $linked = true, $attr = array())
 	{
-		if (  is_null($actor) || !isset($actor->id) )
+		if(is_null($actor) || !isset($actor->id))
 		{
 			$linked = false;
 			$name = '<span class="actor-name">'.JText::_('LIB-AN-UNKOWN-PERSON').'</span>';
-		} else 
+		} 
+		else 
 		{		
 			$name = '<span class="actor-name" actorid="'.$actor->id.'">'.$actor->name.'</span>';
 		}
 				
-		if ( !$linked || !$actor->authorize('access') ) 
+		if(!$linked || !$actor->authorize('access')) 
 			return (string) $name;
 		
 		$url = $this->getActorURL($actor);
@@ -164,14 +166,11 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 	public function noune($actor, $options=array())
 	{
 		$options = array_merge(array('useyou'=>false), $options);
-		
-		$gender  = strtolower($actor->gender);
-		
-		$type	 = $options['type'];
+		$gender = strtolower($actor->gender);
+		$type = $options['type'];
 				
-		if ( !isset($actor) || is_null($actor)) {
+		if(!isset($actor) || is_null($actor))
 			return "";
-		}
 		
 		switch(strtolower($type)) {	
 			case 'pronoune'   :
@@ -226,8 +225,9 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 		
 		foreach($attr as $key => $value)
 		{
-			if ( is_array($value) ) $value = implode(' ', $value);
-				
+			if(is_array($value)) 
+				$value = implode(' ', $value);
+	
 			$string[] = $key.'="'.$value.'"';
 		}
 		

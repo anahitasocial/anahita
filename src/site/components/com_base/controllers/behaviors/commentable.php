@@ -45,23 +45,27 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 	    if($this->cid)
         {
 	        $context->response->content = $this->getCommentController()->id($this->cid)->display();
+	        
 	        return false;      
 	    }
-        elseif ($this->permalink && !$context->request->isAjax() ) 
+        elseif($this->permalink && !$context->request->isAjax() ) 
 		{
            $cid	= (int) preg_replace('/[^\d]+/', '', $this->permalink);
 		   $offset = $this->getItem()->getCommentOffset($cid);
-		   $start  = (int) ($offset / $this->limit) * $this->limit;
+		   $start = (int) ($offset / $this->limit) * $this->limit;
 		   $url	= KRequest::url();
-		   $query  = $url->getQuery(true);
+		   $query = $url->getQuery(true);
 		   
 		   if($this->start != $start)
 				$query  = array_merge($query, array('start'=>$start));				
 		   
-		   unset($query['permalink']);							
+		   unset($query['permalink']);
+		   							
 		   $url->setQuery($query);
+		   
 		   $context->response->setRedirect($url.'#scroll='.$this->permalink);		   			
-           return false;
+           
+		   return false;
 		}
 	}
 	
@@ -136,7 +140,7 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 	        if($context->request->getFormat() == 'html') 
 	        {
 	            $offset = $this->getItem()->getCommentOffset( $comment->id );
-	            $start  = (int)($offset / $this->limit) * $this->limit;
+	            $start = (int) ($offset / $this->limit) * $this->limit;
 	            $context->response->setRedirect(JRoute::_($comment->parent->getURL().'&start='.$start).'#scroll='.$comment->id);
 	        }
 	        else 

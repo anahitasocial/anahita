@@ -53,7 +53,8 @@ class ComBaseControllerComment extends ComBaseControllerService
 		    'behaviors' => array(
 		    	'parentable',
 		    	'votable',
-		    	'com://site/hashtags.controller.behavior.hashtagable'
+		    	'com://site/hashtags.controller.behavior.hashtagable',
+				'com://site/people.controller.behavior.mentionable'
 			)
 		));
 	
@@ -70,6 +71,7 @@ class ComBaseControllerComment extends ComBaseControllerService
 	{
 		$data = $context->data;
 		$body = $data->body;
+		
 		return $this->setItem($this->parent->addComment($body))->getItem();
 	}
 	
@@ -93,7 +95,9 @@ class ComBaseControllerComment extends ComBaseControllerService
 	protected function _actionEdit($context)
 	{
 		$data = $context->data;
+		
 		$this->getItem()->body = $data->body;
+		
 		return $this->getItem();
 	}	
 	
@@ -107,11 +111,12 @@ class ComBaseControllerComment extends ComBaseControllerService
 	{
 		parent::setView($view);
 
-		if ( !$this->_view instanceof LibBaseViewAbstract ) 
+		if(!$this->_view instanceof LibBaseViewAbstract) 
 		{
-			$view       = KInflector::isPlural($view) ? 'comments' : 'comment';
+			$view = KInflector::isPlural($view) ? 'comments' : 'comment';
             $defaults[] = 'ComBaseView'.ucfirst($view).ucfirst($this->_view->name);
-			register_default(array('identifier'=>$this->_view, 'default'=>$defaults));
+			
+            register_default(array('identifier'=>$this->_view, 'default'=>$defaults));
 		}
 		
 		return $this;
@@ -124,9 +129,7 @@ class ComBaseControllerComment extends ComBaseControllerService
 	 */
 	public function canAdd()
 	{
-	    return $this->parent 
-	    && $this->parent->authorize('access')      
-	    && $this->parent->authorize('add.comment');
+	    return $this->parent && $this->parent->authorize('access') && $this->parent->authorize('add.comment');
 	}
 
 	/**
@@ -136,8 +139,7 @@ class ComBaseControllerComment extends ComBaseControllerService
 	 */
 	public function canEdit()
 	{	   
-	    return $this->getItem() && 
-	        $this->getItem()->authorize('edit');
+	    return $this->getItem() && $this->getItem()->authorize('edit');
 	}
 		
 	/**
@@ -147,7 +149,6 @@ class ComBaseControllerComment extends ComBaseControllerService
 	 */
 	public function canDelete()
 	{	    
-	    return  $this->getItem() && 
-	        $this->getItem()->authorize('delete');
+	    return  $this->getItem() && $this->getItem()->authorize('delete');
 	}
 }

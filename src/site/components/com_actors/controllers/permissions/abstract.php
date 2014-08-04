@@ -44,11 +44,10 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canRead()
 	{	    
-	    if ( $this->getRequest()->get('layout') == 'add' ) {
-	        return $this->_mixer->canAdd();	   
-	    }     
+	    if($this->getRequest()->get('layout') == 'add')
+	        return $this->_mixer->canAdd();
 	   
-        if ( !$this->getItem() )    	    
+        if(!$this->getItem())    	    
             return false;    
         
 	    return true;
@@ -61,10 +60,8 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canEdit()
 	{		
-		if ( $this->getItem() 
-				&& $this->getItem()->authorize('administration') ) {
+		if($this->getItem() && $this->getItem()->authorize('administration'))
 			return true;
-		}
 		
 		return false;
 	}
@@ -76,14 +73,13 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canAdd()
 	{
-	    $component = $this->getService('repos://site/components.component')
-	                ->find(array('component'=>'com_'.$this->getIdentifier()->package));
-	    
 	    $result = false;
+		
+		$component = $this->getService('repos://site/components.component')
+	    ->find(array('component'=>'com_'.$this->getIdentifier()->package));
 	    
-	    if ( $component ) {
+	    if($component)
 	        $result = $component->authorize('add');
-	    }
 	        
 		return $result;
 	}
@@ -95,10 +91,10 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */
     public function canAddrequester()
     {
-        if ( !$this->actor )
+        if(!$this->actor)
             return false;
             
-        if ( !$this->getItem() )
+        if(!$this->getItem())
             return false;
         
         return $this->getItem()->authorize('requester', array('viewer'=>$this->actor));        
@@ -111,10 +107,10 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canAddfollower()
 	{
-        if ( !$this->actor )
+        if(!$this->actor)
             return false;
             
-	    if ( !$this->getItem() )
+	    if(!$this->getItem())
             return false;
 	    
 	    return $this->getItem()->authorize('follower', array('viewer'=>$this->actor));	    
@@ -127,10 +123,10 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */
     public function canDeletefollower()
     {
-        if ( !$this->actor )
+        if(!$this->actor)
             return false;
             
-        if ( !$this->getItem() )
+        if(!$this->getItem())
             return false;
         
         return $this->getItem()->authorize('unfollow', array('viewer'=>$this->actor));        
@@ -143,10 +139,10 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */
     public function canAddblocked()
     {
-        if ( !$this->actor )
+        if(!$this->actor)
             return false;
             
-        if ( !$this->getItem() )
+        if(!$this->getItem())
             return false;
         
         return $this->actor->authorize('blocker', array('viewer'=>$this->getItem()));     
@@ -201,20 +197,16 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */
     public function canExecute($action)
     {        
-        if ( $this->getItem() && $this->getItem()->blocking(get_viewer()) )
+        if($this->getItem() && $this->getItem()->blocking(get_viewer()))
             return false;
                 
-        //if the action is an admin action then check if the
-        //viewer is an admin
-        if ( $this->isAdministrable() ) 
+        //if the action is an admin action then check if the viewer is an admin
+        if($this->isAdministrable()) 
         {
             $methods = $this->getBehavior('administrable')->getMethods();
             
-            if ( in_array('_action'.ucfirst($action), $methods) ) {              
-                if ( $this->canAdministare() === false ) {
-                    return false;
-                }
-            }
+            if(in_array('_action'.ucfirst($action), $methods) && $this->canAdministare() === false)
+            	return false;
         }
              
         return parent::canExecute($action);
@@ -227,9 +219,8 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */     
     public function canAdministare()
     {
-        if ( !$this->getItem() ) {
-            return false;
-        }
+        if(!$this->getItem())
+        	return false;
                 
         return $this->getItem()->authorize('administration');
     }

@@ -44,9 +44,9 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
                   'before.addblocked','before.deleteblocked'), 
                   array($this, 'getActor'));
                   
-        $config->mixer->registerActionAlias('follow',  'addfollower');
+        $config->mixer->registerActionAlias('follow', 'addfollower');
         
-        $config->mixer->registerActionAlias('unfollow','deletefollower');
+        $config->mixer->registerActionAlias('unfollow', 'deletefollower');
                    
     }
     
@@ -59,9 +59,12 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      */
     protected function _actionAddrequester(KCommandContext $context)
     {        
-        $this->getResponse()->status  = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        
         $this->getItem()->addRequester($this->actor);
+        
         $this->createNotification(array('subject'=>$this->actor,'target'=>$this->getItem(),'name'=>'actor_request'));
+        
         return $this->getItem();        
     }
     
@@ -76,8 +79,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->removeRequester($this->actor); 
-               
+        $this->getItem()->removeRequester($this->actor);
     }    
             
 	/**
@@ -92,7 +94,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-		if ( !$this->getItem()->leading( $this->actor ) )
+		if(!$this->getItem()->leading( $this->actor ))
 		{
 		    $this->getItem()->addFollower( $this->actor );
 		    
@@ -120,8 +122,10 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	protected function _actionDeletefollower(KCommandContext $context)
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        
 		$this->getItem()->removeFollower( $this->actor );
-        return $this->getItem();
+        
+		return $this->getItem();
 	}
     
     /**
@@ -134,7 +138,9 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     protected function _actionAddblocked(KCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        
         $this->getItem()->addBlocked($this->actor);
+        
         return $this->getItem();
     }
     
@@ -148,7 +154,9 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     protected function _actionDeleteblocked($context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        
         $this->getItem()->removeBlocked($this->actor);    
+        
         return $this->getItem();
     }        
     
@@ -161,45 +169,51 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      */
     protected function _actionGetgraph(KCommandContext $context)
     {            
-        $this->getState()
-            ->insert('type','followers');        
+        $this->getState()->insert('type','followers');        
         
         $filters  = array();
         $entities = array();
-        $entity   = $this->getItem();
+        $entity = $this->getItem();
         
-        if ( $this->getItem()->isFollowable() )
+        if($this->getItem()->isFollowable())
         {
-            if ( $this->type == 'followers') {
+            if($this->type == 'followers') 
+            {
                 $entities = $this->getItem()->followers;
-            } elseif ( $this->type == 'blockeds' && $entity->authorize('administration')) {
+            } 
+            elseif($this->type == 'blockeds' && $entity->authorize('administration')) 
+            {
                 $entities = $this->getItem()->blockeds;
             }
         }
         
-        if ( $this->getItem()->isLeadable() ) 
+        if($this->getItem()->isLeadable()) 
         {
-            if ( $this->type == 'leaders' ) 
+            if($this->type == 'leaders') 
             {
                 $entities = $this->getItem()->leaders;
-            } elseif ( $this->type == 'mutuals' )
+            } 
+            elseif( $this->type == 'mutuals')
+            {
                 $entities = $this->getItem()->getMutuals();
-            elseif ( $this->type == 'commonleaders' ) {             
+            }
+            elseif($this->type == 'commonleaders') 
+            {             
                 $entities = $this->getItem()->getCommonLeaders(get_viewer());
             }
         }
         
-        if ( !$entities )
+        if(!$entities)
             return false;
             
         $xid = (array) KConfig::unbox($this->getState()->xid);
         
-        if ( !empty($xid) )
+        if(!empty($xid))
             $entities->where('id','NOT IN', $xid);
             
-        $entities->limit( $this->limit, $this->start );
+        $entities->limit($this->limit, $this->start);
         
-        if ( $this->q )
+        if($this->q)
             $entities->keyword($this->q);
             
         $this->setList($entities)->actor($this->getItem());
@@ -218,10 +232,14 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         $data = $context->data;
         
-        if ( $data->actor )         
+        if($data->actor)
+        {         
             $ret = $this->getService('repos:actors.actor')->fetch($data->actor);        
-        else 
+        }
+        else
+        { 
             $ret = get_viewer();
+        }
        
         $this->actor = $ret;
        
