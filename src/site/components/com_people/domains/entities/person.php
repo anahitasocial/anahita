@@ -42,6 +42,11 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     protected $_password;
     
+    /*
+     * hashtag regex pattern
+     */
+	const PATTERN_MENTION = '/(^|[^&\w])@([A-Za-z_-]{3,})/';
+    
     /**
 	 * Initializes the default configuration for the object
 	 *

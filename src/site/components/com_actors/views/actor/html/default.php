@@ -28,7 +28,12 @@
 </module>
 <?php endif; ?>
 
-<h2 id="actor-name"><?= @name($item, false) ?></h2>
+<h2 id="actor-name">
+	<?= @name($item, false) ?>
+	<?php if(is_person($item)): ?> 
+	<small>@<?= $item->username ?></small>
+	<?php endif; ?>
+</h2>
 
 <?php if(!empty($item->body)): ?>
 <div id="actor-description">
