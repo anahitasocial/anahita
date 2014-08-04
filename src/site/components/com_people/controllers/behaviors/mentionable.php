@@ -167,14 +167,29 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 					$comment = $this->getItem();
 					$parent = $comment->parent;
 					
+					/*
 					$notification = $this->_mixer->createNotification(array(
 						'name' => 'mention_comment',
-		    			'subject' => $parent->author,
+						'subject' => get_viewer(),
 						'object' => $parent,
 						'comment' => $comment,
-		    			'component' => $parent->component,
-						'subscribers' => array($person)	
+						'component' => $parent->component,
+						'subscribers' => array($person)
 					));
+					*/
+					
+					$parentIdentifier = $parent->getIdentifier()->name;
+					$parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
+					
+					if($parentController->isNotifier())
+					{
+						$parentController->createNotification(array(
+							'name' => 'mention_comment',
+							'object' => $parent,
+							'comment' => $comment,
+							'subscribers' => array($person)
+						));
+					}
 				}
 				elseif($this->getItem() instanceof ComMediumDomainEntityMedium) 
 				{
