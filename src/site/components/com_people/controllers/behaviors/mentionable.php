@@ -154,54 +154,66 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	 */
 	public function notifyMentioned(KCommandContext $context)
 	{
-		// only notify
-		// 1. the newly added mentions - DONE
-		// 2. mention who can view the mentionable
+		$entity = $this->getItem();
+		$parent = $entity->parent;
 		
 		foreach($this->_notify_mentioned as $mention)
 		{
 			if($person = $this->getService('repos://site/people.person')->find(array('username'=>$mention)))
 			{
-				if($this->getItem() instanceof ComBaseDomainEntityComment)
+				$context->person = $person;
+				
+				if($entity instanceof ComBaseDomainEntityComment)
 				{
-					$comment = $this->getItem();
-					$parent = $comment->parent;
-					
-					/*
-					$notification = $this->_mixer->createNotification(array(
-						'name' => 'mention_comment',
-						'subject' => get_viewer(),
-						'object' => $parent,
-						'comment' => $comment,
-						'component' => $parent->component,
-						'subscribers' => array($person)
-					));
-					*/
-					
 					$parentIdentifier = $parent->getIdentifier()->name;
 					$parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
 					
-					if($parentController->isNotifier())
+					if($parentController->isNotifier() && $this->canNotify($context))
 					{
 						$parentController->createNotification(array(
 							'name' => 'mention_comment',
 							'object' => $parent,
-							'comment' => $comment,
+							'comment' => $entity,
 							'subscribers' => array($person)
 						));
 					}
 				}
-				elseif($this->getItem() instanceof ComMediumDomainEntityMedium) 
-				{
-					$notification = $this->_mixer->createNotification(array(
-						'name' => 'mention',
-		    			'subject' => $this->viewer,
-						'object' => $this->getItem(),
-		    			'component' => $this->getItem()->component,
-						'subscribers' => array($person)
-					));
+				elseif($entity instanceof ComMediumDomainEntityMedium) 
+				{		
+					if($this->canNotify($context, $entity))
+					{
+						$data = array(
+							'name' => 'mention',
+		    				'subject' => $this->viewer,
+							'object' => $entity,
+		    				'component' => $entity->component,
+							'subscribers' => array($person)
+						);
+						
+						$notification = $this->_mixer->createNotification($data);
+					}
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Authorize if person can be notifed
+	 * 
+	 * @return BOOLEAN
+	 */
+	protected function canNotify(KCommandContext $context)
+	{
+		$person = $context->person;
+		
+		if($person->admin())
+			return true;
+
+		$entity = ($this->getItem() instanceof ComBaseDomainEntityComment) ? $this->getItem()->parent : $this->getItem();
+			
+		if($entity->isPrivatable())
+            return $entity->allows($person, 'access');	    
+            
+        return false;
 	}
 }

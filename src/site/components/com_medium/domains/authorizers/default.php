@@ -36,12 +36,11 @@ class ComMediumDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      */
     protected function _authorizeAccess($context)
     {
-        if ( is_person($this->_viewer) && $this->_viewer->admin() )
+        if(is_person($this->_viewer) && $this->_viewer->admin())
             return true;
             
-        if ( $this->_entity->isPrivatable() ) {
+        if($this->_entity->isPrivatable())
             return $this->_entity->allows($this->_viewer,'access');
-        }        
     }
         
 	/**
@@ -54,13 +53,15 @@ class ComMediumDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	protected function _authorizeAdministration($context)
 	{
 		//if an ownable object ask the owner
-		if ( $this->_entity->isOwnable() )
+		if($this->_entity->isOwnable())
 			return $this->_entity->owner->authorize('administration');
+			
 		//if the viewer is a moderator
-		if ( $this->_viewer->admin() )
+		if($this->_viewer->admin())
 			return true;
+			
 		//if the viewer is the author of the object			
-		if ( $this->_entity->author->id == $this->_viewer->id )
+		if($this->_entity->author->id == $this->_viewer->id)
 			return true;
 	}
 	
@@ -73,19 +74,19 @@ class ComMediumDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	 */
 	protected function _authorizeEdit($context)
 	{
-		if ( $this->_viewer->guest() )
+		if($this->_viewer->guest())
 			return false;
 			
-		if ( $this->_viewer->admin() )
+		if($this->_viewer->admin())
 			return true;
 			
-		if ( $this->_viewer->eql($this->_entity->author) )
+		if($this->_viewer->eql($this->_entity->author))
 			return true;
 
-		if ( $this->_entity->isOwnable() )
+		if($this->_entity->isOwnable())
 		{
 			//if the viewer is the admin of the medium owner
-			if ( $this->_entity->owner->authorize('administration') )
+			if($this->_entity->owner->authorize('administration'))
 				return true;		
 		}
 		
@@ -104,5 +105,3 @@ class ComMediumDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 		return $this->_authorizeAdministration($context);
 	}
 }
-
-?>
