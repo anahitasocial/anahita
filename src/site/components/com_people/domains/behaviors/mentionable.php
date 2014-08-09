@@ -58,12 +58,12 @@
      */
     public function addMention($username)
     {    	
-    	if($mention = $this->getService('repos://site/people.person')->find(array('username'=>$username)))
+    	if($mentioned = $this->getService('repos://site/people.person')->find(array('username'=>$username)))
     	{
-    		$this->mentions->insert($mention);
+    		$this->mentions->insert($mentioned);
     		
     		if($this->_mixer->isSubscribable())
-				$this->_mixer->addSubscriber($mention);
+				$this->_mixer->addSubscriber($mentioned);
     		
     		return $this;
     	}
@@ -79,12 +79,12 @@
      */
     public function removeMention($username)
     {    	
-    	if($mention = $this->getService('repos://site/people.person')->find(array('username'=>$username)))
+    	if($mentioned = $this->getService('repos://site/people.person')->find(array('username'=>$username)))
     	{
-    		$this->mentions->extract($mention);
+    		$this->mentions->extract($mentioned);
     		
     		if($this->_mixer->isSubscribable())
-				$this->_mixer->removeSubscriber($mention);
+				$this->_mixer->removeSubscriber($mentioned);
     		
     		return $this;
     	}
