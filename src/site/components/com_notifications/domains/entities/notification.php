@@ -48,19 +48,19 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 			'attributes' => array(
 				'name' => array('required'=>true),
 				'type' => array('column'=>'body'),
-				'creationTime'		 => array('default'=>'date','column'=>'created_on'),
-				'status'			 => array('default'=>self::STATUS_NOT_SENT),
-				'subscriberIds' 	 => array('type'=>'set',   'default'=>'set','write'=>'private','required'=>true)
+				'creationTime' => array('default'=>'date','column'=>'created_on'),
+				'status' => array('default'=>self::STATUS_NOT_SENT),
+				'subscriberIds' => array('type'=>'set',   'default'=>'set','write'=>'private','required'=>true)
 			),
 		    'behaviors' => array(
 		    	  'serializable' => array('serializer'=>'com://site/stories.domain.serializer.story'),
 		          'dictionariable'      
             ),
-			'relationships'	 => array(			    
-				'object'	 => array('polymorphic'=>true, 'type_column'=>'story_object_type', 'child_column'=>'story_object_id'),
-				'subject'    => array('required'=>true,'parent'=>'com:actors.domain.entity.actor', 'child_column'=>'story_subject_id'),
-				'target'     => array('required'=>true,'parent'=>'com:actors.domain.entity.actor', 'child_column'=>'story_target_id'),
-				'comment'    => array('parent'=>'com:base.domain.entity.comment', 'child_column'=>'story_comment_id')
+			'relationships' => array(			    
+				'object' => array('polymorphic'=>true, 'type_column'=>'story_object_type', 'child_column'=>'story_object_id'),
+				'subject' => array('required'=>true,'parent'=>'com:actors.domain.entity.actor', 'child_column'=>'story_subject_id'),
+				'target' => array('required'=>true,'parent'=>'com:actors.domain.entity.actor', 'child_column'=>'story_target_id'),
+				'comment' => array('parent'=>'com:base.domain.entity.comment', 'child_column'=>'story_comment_id')
 			 )
 		));
 						
@@ -81,12 +81,13 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 			'subscribers' => array()			
 		));
 		
-		if ( is($data->object,'ComBaseDomainEntityComment') ) {
+		if(is($data->object,'ComBaseDomainEntityComment')) 
+		{
 		    $data->comment = $data->object;
 		    unset($data->object);
 		}
 		
-		if ( $data->comment ) 
+		if($data->comment) 
 		{
 		    $data->object = $data->comment->parent;
 		    $data->append(array(
@@ -96,13 +97,12 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         
 		//force the target to be the owner of the object
 		//if the object is ownable
-		if ( $data->object && $data->object->isOwnable() ) {
+		if($data->object && $data->object->isOwnable())
 		    $data->target = $data->object->owner;
-		}
 		
-		if ( $data->object ) 
+		if($data->object) 
         {
-			if ( $data->object->isModifiable() && empty($data->comment)) 
+			if($data->object->isModifiable() && empty($data->comment)) 
 			{
 				$data->append(array(
 					'subscribers' => array($data->object->author->id)
@@ -112,9 +112,9 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         //if there are no objects, then there are no subscribers
         //in that case add the target as the notification subscriber 
         //if it's notifiable
-        elseif ( $data->target ) 
+        elseif($data->target) 
         {
-            if ( $data->target->isNotifiable() )
+            if($data->target->isNotifiable())
             {
                 $data->append(array(
                     'subscribers' => array($data->target->id)
@@ -122,7 +122,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
             } 
             //if not notiable but administrable 
             //then add all the admins
-            elseif ( $data->target->isAdministrable() ) 
+            elseif($data->target->isAdministrable()) 
             {
                 $data->append(array(
                     'subscribers' => $data->target->administratorIds->toArray()
@@ -132,9 +132,8 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 
 		parent::_afterEntityInstantiate($config);
 		
-		if ( $config->data->subscribers ) {
+		if($config->data->subscribers)
 			$this->setSubscribers( $config->data->subscribers );
-		}
 	}
 	
 	/**
@@ -149,8 +148,10 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	public function setType($type, $config = array())
 	{
 	    $this->set('type', $type);
+	    
 	    foreach($config as $key => $value)
 	        $this->setValue($key, $value);
+	        
 	    return $this;
 	}
 	
@@ -165,23 +166,22 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	{
 		//flatten the array
 		$subscribers = AnHelperArray::getValues( KConfig::unbox($subscribers) );
-		$ids 	= array();
+		$ids = array();
+		
 		foreach($subscribers as $subscriber) 
         {
-			if ( is($subscriber, 'AnDomainEntityAbstract') ) 
-            {
+			if(is($subscriber, 'AnDomainEntityAbstract'))
                  $ids[]  = $subscriber->id;
-			}
-			else $ids[] = $subscriber;
+			else 
+				$ids[] = $subscriber;
 		}
 		
 		$ids = array_unique($ids);
 		
-		if ( count($ids) > 0 ) 
-		{
+		if(count($ids) > 0) 
 			$this->set('subscriberIds',   AnDomainAttribute::getInstance('set')->setData($ids));			
-		}
-		else $this->delete();
+		else 
+			$this->delete();
 		
 		return $this;
 	}
@@ -197,16 +197,15 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	{
 		$subscribers = KConfig::unbox($subscribers);
 		
-		if ( is($subscribers, 'AnDomainEntityAbstract') ) {
+		if(is($subscribers, 'AnDomainEntityAbstract'))
 			$subscribers = array($subscribers);
-		}
-		else {
+		else
 			$subscribers = (array) $subscribers;
-		}
 		
 		$ids = $this->subscriberIds->toArray();
 
-		foreach($subscribers as $subscriber) {
+		foreach($subscribers as $subscriber)
+		{
 			$id = is($subscriber, 'AnDomainEntityAbstract') ? $subscriber->id : $subscriber;
 			unset($ids[$id]);
 		}
@@ -214,7 +213,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		$this->set('subscriberIds',   AnDomainAttribute::getInstance('set')->setData($ids));
 					
 		//if there are no more subscriber then delete the notification
-		if ( empty($ids) )
+		if(empty($ids))
 			$this->delete();
 		
 		return $this;
@@ -226,50 +225,38 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	 * @param ComPeopleDomainEntityPerson         $person
 	 * @param ComNotificationsDomainEntitySetting $setting
 	 * 
-	 * @return int
+	 * @return BOOLEAN
 	 */
 	public function shouldNotify($person, $setting)
 	{
         //if a person is not notifiable then return false
-        if ( !$person->isNotifiable() )
+        if(!$person->isNotifiable())
             return false;
                    
 	    //check if the target allows access to the person
-        if (  !$this->target->allows($person, 'access') ) 
-        {
-            //if person can't see the target
-            //then remove any bonds between the two
-            if ( $this->target->isFollowable() ) {
-                //$this->target->removeFollower($person);
-            }
+        if(isset($this->object) && $this->object->isSubscribable())
+        {    
+        	if(!$this->target->allows($person, 'access')) 
+        	{   
+        		$this->object->removeSubscriber($person);   
             
-            if ( $person->isFollowable() ) {
-                //$person->removeFollower($this->target);   
-            }
-            
-            if ( isset($this->object) && $this->object->isSubscribable() ) {
-                //$this->object->removeSubscriber($person);   
-            }
-            
-            return false;
-        } 
-        elseif ( isset($this->object) && $this->object->isPrivatable() ) 
-        {
-            if ( !$this->object->allows($person, 'access') ) 
-            {
-                if ( $this->object->isSubscribable() ) {
-                //    $this->object->removeSubscriber($person);
-                }
+            	return false;
+        	} 
+        	elseif($this->object->isPrivatable() && !$this->object->allows($person, 'access')) 
+        	{
+                $this->object->removeSubscriber($person);
                 
-                return false;   
-            }
+                return false;
+        	}
         }
         
-	    if ( $this->type ) 
+	    if($this->type) 
 	    {
 	         $delegate = $this->getService('com://site/notifications.domain.delegate.setting.'.$this->type);
+	         
 	         return $delegate->shouldNotify($person, $this, $setting);
 	    }
-	    else return ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL;;
+	    else 
+	    	return ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL;
 	}	
 }
