@@ -28,7 +28,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	 * contains the list of newly added mentions so they can be notified
 	 * 
 	 */
-	protected $_notify_mentioned = array();
+	protected $_newly_mentioned = array();
 	
 	/** 
      * Constructor.
@@ -43,8 +43,9 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         
         $this->registerCallback('after.add', array($this, 'addMentionsFromBody'));
         $this->registerCallback('after.edit', array($this, 'updateMentionsFromBody'));
-        
+
         $this->registerCallback(array('after.add', 'after.edit'), array($this, 'notifyMentioned'));
+        
     }
 	
 	/**
@@ -56,7 +57,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	{
 		$entity = $this->getItem();
 		$usernames = $this->extractMentions($entity->body);
-		$this->_notify_mentioned = $usernames;
+		$this->_newly_mentioned = $usernames;
 		
     	foreach($usernames as $username)
         	$entity->addMention(trim($username));
@@ -72,7 +73,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	{
 		$entity = $this->getItem();		
 		$usernames = $this->extractMentions($entity->body);
-		$this->_notify_mentioned = $usernames;
+		$this->_newly_mentioned = $usernames;
 		$existing_mentions = $entity->mentions;
 
 		foreach($existing_mentions as $mention)
@@ -81,9 +82,9 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 		
        	//remove the existing mentions from the notify list		
        	$existing_mentions = (array) KConfig::unbox($existing_mentions->username); 		
-       	foreach($this->_notify_mentioned as $index=>$notify_mentioned)
+       	foreach($this->_newly_mentioned as $index=>$notify_mentioned)
        		if(in_array($notify_mentioned, $existing_mentions))
-       			unset($this->_notify_mentioned[$index]);		
+       			unset($this->_newly_mentioned[$index]);		
        			
     	foreach($usernames as $username)
         	$entity->addMention(trim($username));
@@ -118,11 +119,11 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
             $context->query = $this->_mixer->getRepository()->getQuery(); 
         }
 
-		if($this->ht)
+		if($this->u)
 		{
 			$query = $context->query;
 			
-			$hashtags = array();
+			$usernames = array();
 			$entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
 			
 			$query
@@ -157,63 +158,40 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 		$entity = $this->getItem();
 		$parent = $entity->parent;
 		
-		foreach($this->_notify_mentioned as $mention)
+		foreach($this->_newly_mentioned as $mention)
 		{
 			if($person = $this->getService('repos://site/people.person')->find(array('username'=>$mention)))
 			{
-				$context->person = $person;
-				
 				if($entity instanceof ComBaseDomainEntityComment)
 				{
 					$parentIdentifier = $parent->getIdentifier()->name;
 					$parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
 					
-					if($parentController->isNotifier() && $this->canNotify($context))
+					if($parentController->isNotifier())
 					{
 						$parentController->createNotification(array(
 							'name' => 'mention_comment',
 							'object' => $parent,
 							'comment' => $entity,
-							'subscribers' => array($person)
+							'subscribers' => array($person),
+							'entity' => $entity->parent->owner
 						));
 					}
 				}
-				elseif($entity instanceof ComMediumDomainEntityMedium) 
-				{		
-					if($this->canNotify($context, $entity))
-					{
-						$data = array(
-							'name' => 'mention',
-		    				'subject' => $this->viewer,
-							'object' => $entity,
-		    				'component' => $entity->component,
-							'subscribers' => array($person)
-						);
+				else
+				{
+					$data = array(
+						'name' => 'mention',
+		    			'subject' => $this->viewer,
+						'object' => $entity,
+		    			'component' => $entity->component,
+						'subscribers' => array($person),
+						'target' => $entity->owner
+					);
 						
-						$notification = $this->_mixer->createNotification($data);
-					}
+					$notification = $this->_mixer->createNotification($data);
 				}
 			}
 		}
-	}
-	
-	/**
-	 * Authorize if person can be notifed
-	 * 
-	 * @return BOOLEAN
-	 */
-	protected function canNotify(KCommandContext $context)
-	{
-		$person = $context->person;
-		
-		if($person->admin())
-			return true;
-
-		$entity = ($this->getItem() instanceof ComBaseDomainEntityComment) ? $this->getItem()->parent : $this->getItem();
-			
-		if($entity->isPrivatable())
-            return $entity->allows($person, 'access');	    
-            
-        return false;
 	}
 }
