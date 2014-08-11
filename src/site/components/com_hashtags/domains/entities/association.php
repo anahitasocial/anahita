@@ -36,6 +36,10 @@ final class ComHashtagsDomainEntityAssociation extends ComBaseDomainEntityEdge
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
+        	'relationships' => array(
+				'hashtag' => array('parent'=>'com:hashtags.domain.entity.hashtag'),
+				'hashtagable' => array('parent'=>'com:base.domain.entity.node')			
+			),
         	'aliases' => array(
                 'hashtag' => 'nodeA',
         		'hashtagable' => 'nodeB'
