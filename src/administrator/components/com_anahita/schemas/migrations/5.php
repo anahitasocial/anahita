@@ -38,9 +38,10 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         foreach($legacyTables as $legacyTable)
         	dbexec('DROP TABLE IF EXISTS #__'.$legacyTable);
         	
+        //delete a legacy plugin	
         dbexec('DELETE FROM #__components WHERE `option` = \'com_mailto\' ');	
         
-        //delete legacy contentfilters
+        //add the hashtag contentfilter
         dbexec('INSERT INTO #__plugins (name,element,folder,iscore) VALUES (\'Hashtag\', \'hashtag\',\'contentfilter\',1)');
         
     	//create the fields required for creating hashtag nodes

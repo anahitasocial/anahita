@@ -170,23 +170,22 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 					if($parentController->isNotifier())
 					{
 						$parentController->createNotification(array(
-							'name' => 'mention_comment',
-							'object' => $parent,
+							'name' => 'actor_mention_comment',
+							'subject' => $this->viewer,
+							'object' => $entity,
 							'comment' => $entity,
-							'subscribers' => array($person),
-							'entity' => $entity->parent->owner
+							'subscribers' => array($person)
 						));
 					}
 				}
 				else
 				{
 					$data = array(
-						'name' => 'mention',
+						'name' => 'actor_mention',
 		    			'subject' => $this->viewer,
 						'object' => $entity,
 		    			'component' => $entity->component,
-						'subscribers' => array($person),
-						'target' => $entity->owner
+						'subscribers' => array($person)
 					);
 						
 					$notification = $this->_mixer->createNotification($data);
