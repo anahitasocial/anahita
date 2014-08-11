@@ -36,7 +36,7 @@ if ( $editor ) {
 
 			<div class="comment-actions">
 				<?php if(isset($comment)) : ?>
-				<button data-trigger="Request"  type="button" class="btn"  name="cancel"  data-request-options="{method:'get',url:'<?=@route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>',replace:this.getParent('form')}" tabindex="5"/><?= @text('LIB-AN-ACTION-CANCEL') ?></button>								
+				<button data-trigger="Request"  type="button" class="btn"  name="cancel"  data-request-options="{method:'get',url:'<?=@route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>',replace:this.getParent('form')}"><?= @text('LIB-AN-ACTION-CANCEL') ?></button>								
 				<button data-trigger="Comment"  data-request-options="{replace:this.getParent('form')}" type="submit" class="btn btn-primary"   name="submit"><?= @text('LIB-AN-ACTION-UPDATE') ?></button>				
 				<?php else : ?>
 				<button data-trigger="Comment"  data-request-options="{onSuccess:function(){this.form.getElement('textarea').value=''}.bind(this),inject:{where:'bottom',element:this.getParent('.an-comments-wrapper').getElement('.an-comments')}}" type="submit" class="btn"><?= @text('LIB-AN-ACTION-POST') ?></button>
