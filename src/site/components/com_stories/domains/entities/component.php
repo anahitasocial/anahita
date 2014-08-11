@@ -66,6 +66,7 @@ class ComStoriesDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$actor       = $event->actor;
 		$gadgets     = $event->gadgets;
 		$composers   = $event->composers;
+		
 		$this->_setGadgets($actor, $gadgets, 'profile');	
 	}
 	 
@@ -81,6 +82,7 @@ class ComStoriesDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$actor      = $event->actor;
 		$gadgets    = $event->gadgets;
 		$composers  = $event->composers;
+		
 		$this->_setGadgets($actor, $gadgets, 'dashboard');		
 	}
 			
@@ -90,25 +92,26 @@ class ComStoriesDomainEntityComponent extends ComComponentsDomainEntityComponent
 	protected function _setGadgets($actor, $gadgets, $mode)
 	{
 		$controller = $this->getService('com://site/stories.controller.story');
-		$content    = $controller;
+		$content = $controller;
 	
-		if ( $mode == 'profile' )
+		if($mode == 'profile')
 		{
 			$controller->oid($actor->id)->view('stories');
 	
 			$gadgets->insert('stories', array(
-					'title'      => JText::_('COM-STORIES-GADGET-TITLE-STORIES'),
-					'show_title' => get_viewer()->guest(),
-					'content'    => $content
+				'title' => JText::_('COM-STORIES-GADGET-TITLE-STORIES'),
+				'show_title' => get_viewer()->guest(),
+				'content' => $content
 			));
-		} else
+		} 
+		else
 		{
 			$controller->view('stories')->filter('leaders');
 	
 			$gadgets->insert('stories', array(
-					'title' 		=> JText::_('COM-STORIES-GADGET-TITLE-STORIES'),
-					'show_title'    => get_viewer()->guest(),
-					'content'       => $content
+					'title' => JText::_('COM-STORIES-GADGET-TITLE-STORIES'),
+					'show_title' => get_viewer()->guest(),
+					'content' => $content
 			));
 		}
 	}	

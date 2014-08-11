@@ -35,43 +35,47 @@ class ComStoriesViewStoryHtml extends ComBaseViewHtml
 	protected function _layoutList()
 	{	  
 	    $preloaded_nodes = $this->getService('repos:stories.story')->getLoadedNodes();
-		$story  = $this->_state->getItem();
-		$helper = $this->getTemplate()->getHelper('parser');		
-		$data   = $helper->parse($story, $this->actor);
-	
-		$data['subject'] 	= $story->subject;
-		$data['timestamp']	= $story->creationTime;
+		$story = $this->_state->getItem();
+		$helper = $this->getTemplate()->getHelper('parser');
+				
+		$data = $helper->parse($story, $this->actor);
+		$data['subject'] = $story->subject;
+		$data['timestamp'] = $story->creationTime;
 		
-		$viewer 			= get_viewer();
+		$viewer = get_viewer();
 		
 		//setup the comments
 		$comment_ids = $story->getIds('comment');
-		$comments	 = array();
+		$comments = array();
 
 		//only shows comments if there are comment_ids in the story
 		//body or if the story has directly been commented on
-		if ( !empty($comment_ids) ) 
+		if(!empty($comment_ids)) 
 		{
 		    sort($comment_ids);
+		    
             $size = 0;
-		    foreach($comment_ids as $id)
+		    
+            foreach($comment_ids as $id)
 		    {
-		        if ( isset($preloaded_nodes[$id]) )
+		        if(isset($preloaded_nodes[$id]))
 		        {
 		            $comment = $preloaded_nodes[$id];
-		            if ( $comment instanceof ComBaseDomainEntityComment )
+		            
+		            if($comment instanceof ComBaseDomainEntityComment)
 		            {
 		                $comments[$id] = $comment;
                         $size++;
 		            }
 		        }
-                if ( $size == 10 )
+		        
+                if($size == 10)
                     break;
 		    }
 		}
 		
- 		$data['commands']  = $this->getTemplate()->renderHelper('toolbar.commands', 'list');
-		$data['comments']  = $comments;
+ 		$data['commands'] = $this->getTemplate()->renderHelper('toolbar.commands', 'list');
+		$data['comments'] = $comments;
 		
 		$this->set($data);
 	}
@@ -83,17 +87,20 @@ class ComStoriesViewStoryHtml extends ComBaseViewHtml
      */
     protected function _layoutDefault()
     {
-        $story  = $this->_state->getItem();        
-        $helper = $this->getTemplate()->getHelper('parser');        
-        $data   = $helper->parse($story, $this->actor);
-    
-        $data['subject']    = $story->subject;
-        $data['timestamp']  = $story->creationTime;
-        $data['story']      = $story;
-        $data['entity']     = $story;
-        $viewer             = get_viewer();   
+        $story = $this->_state->getItem();        
+        $helper = $this->getTemplate()->getHelper('parser');
+                
+        $data = $helper->parse($story, $this->actor);
+        $data['subject'] = $story->subject;
+        $data['timestamp'] = $story->creationTime;
+        $data['story'] = $story;
+        $data['entity'] = $story;
+        
+        $viewer = get_viewer();   
+        
         $commands = $this->getTemplate()->renderHelper('toolbar.commands', 'list');
         $commands->offsetUnset('comment'); 
+        
         $this->set($data);    
     }
 }

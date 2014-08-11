@@ -40,15 +40,16 @@ class ComStoriesControllerBehaviorPublisher extends KControllerBehaviorAbstract
         $config =  new KConfig($config);
         
         $config->append(array(
-            'subject'	=> get_viewer(),
-            'owner'		=> get_viewer(),               
+            'subject' => get_viewer(),
+            'owner'	=> get_viewer(),               
             'component' => 'com_'.$this->_mixer->getIdentifier()->package,                
         ));
         
-        $story = $this->getService('repos://site/stories')
-                    ->create($config->toArray());
+        $story = $this->getService('repos://site/stories')->create($config->toArray());
         //$story = $this->getService('com://site/stories.controller.story')->add($config->toArray());
+        
         $story->save();
+        
         return $story;
     }
 }

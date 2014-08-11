@@ -37,58 +37,40 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 	{
 		$helper = KService::get('com:actors.template.helper');
 			
-		if ( is_array($actor) )
+		if(is_array($actor))
 		{
-			$actors    = $actor;
+			$actors = $actor;
 			$left_over = count($actors) - $truncate_after;
-			if ( !$truncate_after 
-			        || $left_over <= 1		        
-			        ) {
+			
+			if(!$truncate_after || $left_over <= 1) 
+			{
 			    $last_actor = $helper->name(array_pop($actors));
-			    if ( !empty($actors) ) {
+			    
+			    if(!empty($actors)) 
+			    {
 			        $name = implode(', ', array_map(array($helper, 'name'), $actors));
 			        $name = sprintf(JText::_('COM-STORIES-AND-ACTOR'), $name, $last_actor);
-			    } else 
+			    } 
+			    else 
 			        $name = $last_actor;
-				return $name;
-			}			
-			$ids    = array_map(function($actor) {
-			    return 'ids[]='.$actor->id;
-			}, $actors);
+				
+			   return $name;
+			}
+						
+			$ids = array_map(function($actor){
+			    		return 'ids[]='.$actor->id;
+					}, $actors);
+			
 			$ids = implode('&', $ids);
 			
 			$actors = array_splice($actors, 0, $truncate_after);
 			$actors = implode(', ',array_map(array($helper, 'name'), $actors));
 			$actors = sprintf(JTEXT::_('COM-STORIES-AND-OTHERS'), $actors, JRoute::_('option=com_actors&layout=modal&view=actors&'.$ids), JText::_($left_over));	
-			return   $actors;
+			
+			return $actors;
 		}
 		 
 		return $helper->name($actor);		
-	}
-	
-	/**
-	 * Return a possessive noune
-	 * 
-	 * @param  ComStoriesDomainEntityStory      $story Story
-	 * @param  ComActorsDomainEntityActor $actor Actor
-	 * 
-	 * @return string
-	 */
-	public function possessiveNoune($story, $actor)
-	{
-		if ( is_array($actor) || empty($actor) ) {
-			$value	 = JText::_('LIB-AN-THEIR');
-		}
-		else {
-			if ( $actor->eql($story->subject) )
-				$value = JText::_(KService::get('com:actors.template.helper')->noune($actor, array('type'=>'possessive')));
-			elseif ( $actor->eql( get_viewer()) )
-			     $value = JText::_('LIB-AN-YOUR');
-			else 
-				$value = sprintf(JText::_('LIB-AN-THIRD-PERSON\'S'), $this->actorName($actor));
-		}
-			
-		return $value;	
 	}
 
 	/**

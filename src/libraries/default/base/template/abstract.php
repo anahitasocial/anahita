@@ -122,7 +122,8 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 			}
 			else $identifier = $this->getIdentifier($view);
 		    
-			if($identifier->path[0] != 'view') {
+			if($identifier->path[0] != 'view') 
+			{
 				throw new KTemplateException('Identifier: '.$identifier.' is not a view identifier');
 			}
 
@@ -144,9 +145,8 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	    if(!$this->_view instanceof LibBaseViewAbstract )
 		{
 		    //Make sure we have a view identifier
-		    if(!($this->_view instanceof KServiceIdentifier)) {
+		    if(!($this->_view instanceof KServiceIdentifier))
 		        $this->setView($this->_view);
-            }
 		    
 		    $this->_view = $this->getService($this->_view);
 		}
@@ -165,10 +165,10 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	public function loadFile($file, $data = array(), $process = true)
 	{
 		//tracks the recursive paths
-		$this->_load_stack[]		 = $file;
-		
-		$data['__FILE__'] 	 = $file;
-		$data['__DIR__'] 	 = dirname($file);
+		$this->_load_stack[] = $file;
+	
+		$data['__FILE__'] = $file;
+		$data['__DIR__'] = dirname($file);
 		 
 		$result = parent::loadFile($file, $data, $process);
 	
@@ -196,12 +196,12 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	    $identifier = $this->getIdentifier($template);
 	    
 	    //add the path to the template paths
-	    //@TODO shoudl we do that or just try load the template path
-        $path       = dirname($identifier->filepath);
+	    //@TODO should we do that or just try load the template path
+        $path = dirname($identifier->filepath);
         
-	    if ( !in_array($path, $this->_search_paths) ) {
+	    if(!in_array($path, $this->_search_paths))
 			array_unshift($this->_search_paths, $path);
-	    }
+	    
 	    //load the template
 	    return $this->loadTemplate($identifier->name, $data, $process);
 	}
@@ -241,11 +241,11 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	 */
 	public function renderHelper($identifier, $config = array())
 	{
-		$args		 = func_get_args();
-		$identifier  = array_shift($args);
+		$args = func_get_args();
+		$identifier = array_shift($args);
 		
 		//Get the function to call based on the $identifier
-		$parts    = explode('.', $identifier);
+		$parts = explode('.', $identifier);
 		$function = array_pop($parts);
 		
 		$helper = implode('.', $parts); 
@@ -253,7 +253,8 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 		$helper = $this->getHelper($helper);
 		
 		//Call the helper function
-		if (!is_callable( array( $helper, $function ) )) {
+		if(!is_callable(array( $helper, $function ))) 
+		{
 			throw new KTemplateHelperException( get_class($helper).'::'.$function.' not supported.' );
 		}
 		
@@ -271,18 +272,23 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	public function getHelper($helper, $config = array())
 	{
 	    $name = (string) $helper;
-	    if ( !isset($this->_helpers[$name]) )
+	    
+	    if(!isset($this->_helpers[$name]))
 	    {	        
-	        if(is_string($helper) && strpos($helper, '.') === false )
+	        if(is_string($helper) && strpos($helper, '.') === false)
 	        {
 	            $identifier = clone $this->getIdentifier();
 	            $identifier->path = array('template','helper');
 	            $identifier->name = $helper;
+	            
 	            register_default(array('identifier'=>$identifier, 'prefix'=>$this));
+	            
 	            $helper = $identifier;
 	        }
+	        
 	        $this->_helpers[$name] = parent::getHelper($helper, $config);	        
 	    }
+	    
 	    return $this->_helpers[$name];	
 	}		
 
@@ -307,16 +313,20 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	 */
 	public function findPath($filename)
 	{        
-		if ( !isset($this->_paths[$filename]) )
+		if(!isset($this->_paths[$filename]) )
 		{
 			foreach($this->_search_paths as $path)
 			{
 				$file = $path.'/'.$filename;
-				if ( $this->findFile($file) ) {
+				
+				if($this->findFile($file)) 
+				{
 					$this->_paths[$filename] = $file;
+					
 					return $file;
 				}
 			}
+			
 			$this->_paths[$filename] = false;
 		}
 		
@@ -346,18 +356,16 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 		
 		foreach($paths as $path) 
 		{
-            if ( empty($path) ) {
+            if(empty($path))
                 continue;
-            }
                 
-			if ( in_array($path, $this->_search_paths) )
+			if(in_array($path, $this->_search_paths))
 				continue;
 							
-			if ( $append )
+			if($append)
 				$this->_search_paths[] = $path;
-			else {
+			else
 				array_unshift($this->_search_paths, $path);
-			}
 		}
 	}   
 	
@@ -370,9 +378,8 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	{
         $path = $this->_contents;
         
-        if ( !isset($this->_parsed_data[$path]) ) {
+        if(!isset($this->_parsed_data[$path]))
         	$this->_parsed_data[$path] = parent::parse();
-        }
         
         return $this->_parsed_data[$path];
 	}
@@ -385,14 +392,16 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	public function getFilter($filter)
 	{
 	    //Create the complete identifier if a partial identifier was passed
-	    if(is_string($filter) && strpos($filter, '.') === false )
+	    if(is_string($filter) && strpos($filter, '.') === false)
 	    {
-	        if ( !isset($this->_filters[$filter]) )
+	        if(!isset($this->_filters[$filter]))
 	        {
 	            $identifier = clone $this->getIdentifier();
 	            $identifier->path = array('template', 'filter');
 	            $identifier->name = $filter;
+	            
 	            register_default(array('identifier'=>$identifier, 'prefix'=>$this));
+	            
 	            $filter = $identifier;
 	        }
 	    }
@@ -410,19 +419,13 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 	    if($file == 'tmpl://koowa:template.stack' || $code == 1)
 	    {
             if($file == 'tmpl://koowa:template.stack')
-            {
                 $file = $this->getPath();  
-            }
                 
-	        if(ini_get('display_errors')) 
-	        {
+	        if(ini_get('display_errors'))
 	            echo '<strong>'.$code.'</strong>: '.$message.' in <strong>'.$file.'</strong> on line <strong>'.$line.'</strong>';
-	        }
 	
-	        if(ini_get('log_errors')) 
-	        {
+	        if(ini_get('log_errors'))
 	            error_log(sprintf('PHP %s:  %s in %s on line %d', $code, $message, $file, $line));
-	        }
 	
 	        return true;
 	    }

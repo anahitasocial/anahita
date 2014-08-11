@@ -36,13 +36,10 @@
 	{	
 		parent::__construct($config);
 		
-		if ( $config->cache )
+		if($config->cache)
 		{
-		    $this->_paths       =  $this->getService('application.registry',
-		            array('key' => 'template-paths-'.$config->cache_key));
-		    
-		    $this->_parsed_data = $this->getService('application.registry',
-		            array('key' => 'template-parsed-data-'.$config->cache_key));		    
+		    $this->_paths = $this->getService('application.registry', array('key' => 'template-paths-'.$config->cache_key));
+		    $this->_parsed_data = $this->getService('application.registry', array('key' => 'template-parsed-data-'.$config->cache_key));		    
 		}
 	}
 	
@@ -58,7 +55,7 @@
 	protected function _initialize(KConfig $config)
 	{
 	    $config->append(array(
-	        'cache'     => true,
+	        'cache' => true,
 	        'cache_key' => (string)$this->getIdentifier() 
 	    ));
 	

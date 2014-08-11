@@ -44,8 +44,7 @@ class ComStoriesControllerPermissionStory extends LibBaseControllerPermissionDef
      */
     public function canBrowse()
     {
-        if ( !$this->actor ) {
+        if(!$this->actor)
             return false;
-        }
     }    
 }

@@ -75,6 +75,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
 	protected function _actionAdd(KCommandContext $context)
 	{
 	    $data = $context->data;
+	    
         return $this->getRepository()->create($data->toArray());
 	}
 	
@@ -87,38 +88,33 @@ class ComStoriesControllerStory extends ComBaseControllerService
      */
 	protected function _actionBrowse($context)
 	{				   
-		$query 	  = $this->getRepository()->getQuery()			
-					->limit( 20, $this->start );
+		$query = $this->getRepository()->getQuery()->limit(20, $this->start );
 
-        
-        if ( $this->filter == 'leaders') 
+        if($this->filter == 'leaders') 
         {
-            $ids    = get_viewer()->leaderIds->toArray();
-            $ids[]  = get_viewer()->id;
+            $ids = get_viewer()->leaderIds->toArray();
+            $ids[] = get_viewer()->id;
             $query->where('owner.id','IN', $ids);            
         }
-		else {
+		else 
+		{
 			$query->owner($this->actor);
 		}
 
         $query->aggregateKeys($this->getService('com://site/stories.domain.aggregations'));
         
-        $query->order('creationTime','desc');
+        $query->order('creationTime', 'desc');
         
-        if ( $this->component ) {
-            $query->clause()->component( (array)KConfig::unbox($this->component) );
-        }
+        if($this->component)
+            $query->clause()->component((array) KConfig::unbox($this->component));
         
-        if ( $this->name ) {
-            $query->clause()->name( (array)KConfig::unbox($this->name) );
-        }    
+        if($this->name)
+            $query->clause()->name((array) KConfig::unbox($this->name));   
         
-        if ( $this->subject ) {    
-            $query->clause()->where('subject.id','IN', (array)KConfig::unbox($this->subject));   
-        }
+        if($this->subject)    
+            $query->clause()->where('subject.id','IN', (array) KConfig::unbox($this->subject));   
 
-        return $this->setList($query->toEntitySet())
-                    ->getList();
+        return $this->setList($query->toEntitySet())->getList();
 	}
 	
 	/**
