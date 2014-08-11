@@ -114,12 +114,14 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	 */
 	protected function _beforeControllerBrowse(KCommandContext $context)
 	{				
+		
+		
 		if(!$context->query) 
         {
             $context->query = $this->_mixer->getRepository()->getQuery(); 
         }
 
-		if($this->u)
+		if($this->mention)
 		{
 			$query = $context->query;
 			
@@ -130,16 +132,18 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 			->join('left', 'anahita_edges AS edge', $entityType.'.id = edge.node_b_id')
 			->join('left', 'anahita_nodes AS mention', 'edge.node_a_id = mention.id');
 			
-			foreach($this->u as $username)
+			$this->mention = (array) $this->mention;
+			
+			foreach($this->mention as $mention)
 			{
-				$username = $this->getService('com://site/people.filter.username')->sanitize($username);
+				$username = $this->getService('com://site/people.filter.username')->sanitize($mention);
 				if($username != '')
-					$usernames[] = username;
+					$usernames[] = $username;
 			}
 			
 			$query
 			->where('edge.type', '=', 'ComPeopleDomainEntityMention,com:people.domain.entity.mention')
-			->where('mention.username', 'IN', $usernames)
+			->where('mention.person_username', 'IN', $usernames)
 			->group($entityType.'.id');
 			
 			//print str_replace('#_', 'jos', $query);
