@@ -21,7 +21,10 @@ class ComAnahitaSchemaMigration6 extends ComMigratorMigrationVersion
     public function up()
     {    
         //add the mention tag contentfilter
-        dbexec('INSERT INTO #__plugins (name,element,folder,iscore,published) VALUES (\'Mention\', \'mention\',\'contentfilter\',1,1)');
+        dbexec('INSERT INTO #__plugins (`name`,`element`,`folder`,`iscore`,`published`) VALUES (\'Mention\', \'mention\',\'contentfilter\',1,1)');
+        
+        //changing the hashtag class name to tag
+        dbexec('UPDATE #__anahita_edges SET `type` = REPLACE(`type`, \'ComHashtagsDomainEntityAssociation,com:hashtags.domain.entity.association\', \'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag\') WHERE type LIKE \'%com:hashtags.domain.entity%\' ');
     }
 
    /**
