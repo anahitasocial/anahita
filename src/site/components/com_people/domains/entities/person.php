@@ -35,7 +35,7 @@
  */
 class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor 
 {
-    /**
+    /*
      * Clear string passwrod.
      * 
      * @var string

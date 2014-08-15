@@ -72,7 +72,6 @@ class ComHashtagsRouter extends ComBaseRouterDefault
     		unset($query['alias']);
     	}
     	
-    	
     	return $segments;
     }
 }

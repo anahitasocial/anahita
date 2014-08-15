@@ -38,20 +38,16 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	{
 	    $ret = false;
 	    
-	    if ( $this->_entity->authorize('access', $context) )
+	    if($this->_entity->authorize('access', $context))
 	    {
-            if ( $this->_viewer->isAdministrator() )
-            {
+            if($this->_viewer->isAdministrator())
                 $ret = $this->_viewer->administrator($this->_entity);
-            }
 	        
-	        if ( $context->strict !== true )
-	        {
+	        if($context->strict !== true)
 	            $ret = $ret || $this->_viewer->admin();
-	        }
 	    }
 		
-		return (bool)$ret;
+		return (bool) $ret;
 		
 	}
 	
@@ -66,24 +62,25 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     {
         $value = $context->value;
         
-        if ( $this->_entity->authorize('administration') ) {        
+        if($this->_entity->authorize('administration'))        
             return true;    
-        }
         
         switch($value) 
         {
             case LibBaseDomainBehaviorPrivatable::GUEST :
             case LibBaseDomainBehaviorPrivatable::REG :
                 $ret = true;
-                break;
+            break;
+                
             case LibBaseDomainBehaviorPrivatable::FOLLOWER :                                
                 $ret = $this->_entity->isFollowable() && $this->_entity->leading($this->_viewer);
-                break;
+            break;
+            
             default :
                 $ret = $this->_entity->authorize('administration');
         }
 
-        return (bool)$ret;
+        return (bool) $ret;
     }
         
 	/**
@@ -96,18 +93,23 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	protected function _authorizeAccess(KCommandContext $context)
 	{
         //if entity is not privatable then it doesn't have access to allow method
-        if ( !$this->_entity->isPrivatable() )
+        if(!$this->_entity->isPrivatable())
             return true;
 				
 	    $ret = true;
         
-        if  ( is_person($this->_viewer) && $this->_viewer->admin() ) {
+        if(is_person($this->_viewer) && $this->_viewer->admin()) 
+        {
             $ret = true;
         }   
-        elseif  ( $this->_entity->isFollowable() && $this->_entity->blocking($this->_viewer) )
+        elseif($this->_entity->isFollowable() && $this->_entity->blocking($this->_viewer))
+        {
             $ret = false;                
+        }
         else
+        {
             $ret = (bool)$this->_entity->allows($this->_viewer, 'access');
+        }
             
         return $ret;
 		
@@ -123,13 +125,12 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     protected function _authorizeAction(KCommandContext $context)
     {
         //if entity is not privatable then it doesn't have access to allow method
-        if ( !$this->_entity->isPrivatable() )
+        if(!$this->_entity->isPrivatable())
             return true;
         
         //if viewer is admin then return true on the action
-        if  ( is_person($this->_viewer) && $this->_viewer->admin() ) {
+        if(is_person($this->_viewer) && $this->_viewer->admin())
             return true;
-        }
                             
         $action = $context->action;
         
@@ -139,29 +140,20 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         ));
         
         //not access to the entiy
-        if ( $this->_entity->authorize('access') === false )
+        if($this->_entity->authorize('access') === false)
             return false;
         
         $parts = explode(':', $action);
+        
         $component = array_shift($parts);
         //check if it's a social app then if it's enabled
-        if ( $component ) 
-        {
-        	      
-        	$component = $this->getService('repos://site/components.component')
-        						->find(array('component'=>$component));
+        
+        if($component) 
+        {      
+        	$component = $this->getService('repos://site/components.component')->find(array('component' => $component));
 
-        	if ( $component )
-        	{
-        	    if ( $component->authorize('action',
-        	            array('actor'	 => $this->_entity,
-        	                  'action'   => $parts[1],
-        	                  'resource' => $parts[0],
-        	            )) === false ) {
-        	        
-        	        return false;
-        	    }
-        	}
+        	if($component && $component->authorize('action', array('actor' => $this->_entity, 'action' => $parts[1], 'resource' => $parts[0])) === false)
+        		return false;
         }
         
         return $this->_entity->allows($this->_viewer, $action, $context->default);
@@ -177,28 +169,24 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	 */	
 	protected function _authorizeFollower(KCommandContext $context)
 	{                
-        //viewer can only follow actor if and only if
-        //viewer is leadable and actor is followable           
-        if ( $this->_entity->isFollowable() && !$this->_viewer->isLeadable() )
+        //viewer can only follow actor if and only if viewer is leadable and actor is followable           
+        if($this->_entity->isFollowable() && !$this->_viewer->isLeadable())
             return false;
                     
-        if ( $this->_viewer->eql($this->_entity) )
-            return false;
+        if($this->_viewer->eql($this->_entity))
+        	return false;
             
-        if ( is_guest($this->_viewer) )
-            return false;
+        if(is_guest($this->_viewer))
+        	return false;
             
-	    if ( $this->_entity->authorize('access', $context) === false )
-	    {
-	        if ( $this->_entity->isLeadable() && $this->_entity->following($this->_viewer) )
+	    if($this->_entity->authorize('access', $context) === false)
+	        if($this->_entity->isLeadable() && $this->_entity->following($this->_viewer))
 	            return true;
 	        else
 	            return false;
-	    }
 
-        //if the viewer is blocking the entity, then it can not follow
-        //the entity
-		if ( $this->_viewer->isFollowable() && $this->_viewer->blocking($this->_entity) )
+        //if the viewer is blocking the entity, then it can not follow the entity
+		if($this->_viewer->isFollowable() && $this->_viewer->blocking($this->_entity))
 			return false;
 		
 		return true;
@@ -213,35 +201,34 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      */ 
     protected function _authorizeRequester(KCommandContext $context)
     {
-        //viewer can only follow actor if and only if
-        //viewer is leadable and actor is followable           
-        if ( $this->_entity->isFollowable() && !$this->_viewer->isLeadable() )
+        //viewer can only follow actor if and only if viewer is leadable and actor is followable           
+        if($this->_entity->isFollowable() && !$this->_viewer->isLeadable())
             return false;
              
-        if ( !$this->_entity->allowFollowRequest )
+        if(!$this->_entity->allowFollowRequest)
             return false; 
                         
-        if ( $this->_viewer->eql($this->_entity) )
+        if($this->_viewer->eql($this->_entity))
             return false;
             
-        if ( is_guest($this->_viewer) )
+        if(is_guest($this->_viewer))
             return false;
 
-        //cant' send a requet if already following
-        if ( $this->_viewer->following($this->_entity) )
+        //can't send a requet if already following
+        if($this->_viewer->following($this->_entity))
             return false;
            
         //can't send a request if the viewer can follow
-         if  ($this->_entity->authorize('follower', array('viewer'=>$this->_viewer)))
+         if($this->_entity->authorize('follower', array('viewer'=>$this->_viewer)))
             return false;
          
         //cant' send a requet if already requested
-        if ( $this->_entity->requested($this->_viewer) )
+        if($this->_entity->requested($this->_viewer))
             return false;
             
         //if the viewer is blocking the entity, then it can not follow
         //the entity
-        if ( $this->_viewer->isFollowable() && $this->_viewer->blocking($this->_entity) )
+        if($this->_viewer->isFollowable() && $this->_viewer->blocking($this->_entity))
             return false;
         
         return true;
@@ -257,18 +244,13 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     protected function _authorizeUnfollow(KCommandContext $context)
     {
         //if the viewer is not following then return false;
-        //Riddle : HOW can you unfollow an actor that you are not following
-        if ( !$this->_viewer->following($this->_entity) )
+        //Riddle : How can you unfollow an actor that you are not following
+        if(!$this->_viewer->following($this->_entity))
             return false;
                     
-        //if entity is adminitrable and the viewer is an admin
-        //and there are only one admin. 
-        //then the viewer can't unfollow
-        if ( $this->_entity->isAdministrable() 
-                && $this->_entity->administratorIds->offsetExists($this->_viewer->id) ) 
-        {            
-            return $this->_entity->administratorIds->count() >= 2;
-        }
+        //if entity is adminitrable and the viewer is an admin and there are only one admin. then the viewer can't unfollow
+        if($this->_entity->isAdministrable() && $this->_entity->administratorIds->offsetExists($this->_viewer->id))
+            return ($this->_entity->administratorIds->count() >= 2);
             
         return true;
     }
@@ -283,9 +265,8 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      */ 
     protected function _authorizeRemoveAdmin(KCommandContext $context)
     {
-        if ( $this->_entity->isAdministrable() ) {
-            return $this->_entity->administratorIds->count() >= 2;             
-        }
+        if($this->_entity->isAdministrable())
+            return ($this->_entity->administratorIds->count() >= 2);           
         
         return false;
     }
@@ -301,10 +282,10 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     {
         $entity = $this->_entity;
         
-        if ( is_guest($this->_viewer) )
+        if(is_guest($this->_viewer))
             return false;
     
-        if ( !$entity->isSubscribable() )
+        if(!$entity->isSubscribable())
             return false;
         
         return $this->_viewer->following($entity);
@@ -332,35 +313,27 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	 */	
 	protected function _authorizeBlocker(KCommandContext $context)
 	{
-        //viewer can only block actor from following them if and only if
-        //actor is leadable (can follow ) and viewer is followable        
-        if ( !$this->_entity->isLeadable() || !$this->_viewer->isFollowable() ) {
+        //viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
+        if(!$this->_entity->isLeadable() || !$this->_viewer->isFollowable())
             return false;    
-        }
 
-        if ( is_guest($this->_viewer) )
+        if(is_guest($this->_viewer))
             return false;
                            
-        if ( $this->_viewer->eql($this->_entity) )
+        if($this->_viewer->eql($this->_entity))
             return false;
          
-        //if entity is administrable and the viewer is one of the admins
-        //then it can not be blocked 
-        if ( $this->_viewer->isAdministrable() 
-                && $this->_viewer->administratorIds->offsetExists($this->_entity->id) ) 
-        {
+        //if entity is administrable and the viewer is one of the admins then it can not be blocked 
+        if($this->_viewer->isAdministrable() && $this->_viewer->administratorIds->offsetExists($this->_entity->id))
             return false;
-        }
                  
-//         //if the entity is   
-//        if ( $this->_entity->following($this->_viewer) )
+//      //if the entity is   
+//      if($this->_entity->following($this->_viewer))
 //            return true;
 //            
-//	    if ( !$this->_entity->authorize('access', $context) )
+//	    if(!$this->_entity->authorize('access', $context))
 //	        return false;
 		
 		return true;
 	 }
 }
-
-?>

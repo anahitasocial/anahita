@@ -38,11 +38,8 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	
 		//if repository is ownable then ask the actor if viewer can publish things
 		if(in_array($this->getRequest()->get('layout'), array('add', 'edit', 'form','composer'))) 
-		{
-		    if($this->getItem()) 
-		       $result = $this->canEdit(); 
-		    else 
-		       $result = $this->canAdd();
+		{   
+		   $result = ($this->getItem()) ? $this->canEdit() : $this->canAdd();   
 		    
 		    return $result;
 		}
@@ -65,8 +62,9 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	
 		if($actor)
 		{
-			$action  = 'com_'.$this->_mixer->getIdentifier()->package.':'.$this->_mixer->getIdentifier()->name.':add';
+			$action = 'com_'.$this->_mixer->getIdentifier()->package.':'.$this->_mixer->getIdentifier()->name.':add';
 			$ret = $actor->authorize('action', $action);
+			
 			return $ret !== false;
 		}
 		 
@@ -80,9 +78,8 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canEdit()
 	{
-		if ( $this->getItem() ) {
+		if($this->getItem())
 			return $this->getItem()->authorize('edit');
-		}
 	
 		return false;
 	}
@@ -95,13 +92,9 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 * @return boolean
 	 */
 	public function canExecute($action)
-	{	
-		//check if viewer has access to actor
-		if ( $this->isOwnable() && $this->actor )  {
-			if ( $this->actor->authorize('access') === false ) {
-				return false;
-			}
-		}
+	{
+		if ($this->isOwnable() && $this->actor && $this->actor->authorize('access') === false ) {
+			return false;
 	
 		return parent::canExecute($action);
 	}	

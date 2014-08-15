@@ -36,14 +36,9 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
      */ 
     protected function _authorizeDelete(KCommandContext $context)
     {
-        //if viewer same as the person whose
-        //profile being vieweed and viewer is a super admin 
-        //don't allow to delete
-        if ( $this->_viewer->eql($this->_entity) ) {
-            if ( $this->_entity->userType == 'Super Administrator' ) {
-                return false;   
-            }
-        }
+        //if viewer same as the person whose profile being vieweed and viewer is a super admin don't allow to delete
+        if($this->_viewer->eql($this->_entity) && $this->_entity->userType == 'Super Administrator')
+        	return false;   
         
         return parent::_authorizeDelete($context);
     }    	
