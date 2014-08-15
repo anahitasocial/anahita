@@ -22,7 +22,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.GetAnahita.com
  */
-final class ComPeopleDomainEntityMention extends ComBaseDomainEntityEdge
+final class ComPeopleDomainEntityMention extends ComTagsDomainEntityTag
 {
     /**
     * Initializes the default configuration for the object
@@ -37,12 +37,10 @@ final class ComPeopleDomainEntityMention extends ComBaseDomainEntityEdge
     {
         $config->append(array(
         	'relationships' => array(
-				'mention' => array('parent'=>'com:people.domain.entity.person'),
-				'mentionable' => array('parent'=>'com:base.domain.entity.node')			
+				'mention' => array('parent'=>'com:people.domain.entity.person')	
 			),
         	'aliases' => array(
-                'mention' => 'nodeA',
-        		'mentionable' => 'nodeB'
+                'mention' => 'nodeA'
             )
         ));
         

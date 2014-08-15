@@ -38,9 +38,9 @@
         $config->append(array(
             'relationships' => array(
                 'hashtags' => array(
-                    'through' => 'com:hashtags.domain.entity.association',                    
+                    'through' => 'com:hashtags.domain.entity.tag',                    
                     'target' => 'com:base.domain.entity.node',
-                    'child_key' => 'hashtagable',
+                    'child_key' => 'tagable',
                     'target_child_key' => 'hashtag',
             		'inverse' => true
                 )

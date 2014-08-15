@@ -96,8 +96,6 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 	 */
 	protected function _beforeControllerBrowse(KCommandContext $context)
 	{				
-		
-		
 		if(!$context->query) 
         {
             $context->query = $this->_mixer->getRepository()->getQuery(); 
@@ -124,11 +122,9 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 			}
 			
 			$query
-			->where('edge.type', '=', 'ComHashtagsDomainEntityAssociation,com:hashtags.domain.entity.association')
+			->where('edge.type', '=', 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag')
 			->where('hashtag.name', 'IN', $hashtags)
 			->group($entityType.'.id');
-			
-			//print str_replace('#_', 'jos', $query);
 		}
 	}
 }

@@ -141,8 +141,10 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 					$usernames[] = $username;
 			}
 			
+			$edgeType = 'ComTagsDomainEntityTag,ComPeopleDomainEntityMention,com:people.domain.entity.mention';
+			
 			$query
-			->where('edge.type', '=', 'ComPeopleDomainEntityMention,com:people.domain.entity.mention')
+			->where('edge.type', '=', $edgeType)
 			->where('mention.person_username', 'IN', $usernames)
 			->group($entityType.'.id');
 			

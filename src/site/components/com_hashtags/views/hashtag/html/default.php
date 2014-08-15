@@ -11,6 +11,6 @@ if(!empty($scope))
 
 <div class="an-entities-wrapper">
 	<div data-behavior="InfinitScroll" data-infinitscroll-options="{'url':'<?= @route($paginationUrl) ?>'}" class="an-entities masonry">
-		<?= @helper('ui.nodes', $item->hashtagables) ?>
+		<?= @helper('ui.nodes', $item->tagables) ?>
 	</div>
 </div>

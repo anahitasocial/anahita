@@ -40,7 +40,7 @@
                 'mentions' => array(
                     'through' => 'com:people.domain.entity.mention',                    
                     'target' => 'com:base.domain.entity.node',
-                    'child_key' => 'mentionable',
+                    'child_key' => 'tagable',
                     'target_child_key' => 'mention',
             		'inverse' => true
                 )
