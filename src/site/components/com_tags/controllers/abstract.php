@@ -64,11 +64,10 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     		$entity->tagables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC')->groupby('tagable.id');
     	else 
 			$entity->tagables->order('node.created_on', 'DESC');
-
-		if($this->viewer->admin())
-			$entity->tagables->where('node.enabled', '=', 1);	
 			
 		$entity->tagables->limit($this->limit, $this->start);
+		
+		//print str_replace('#_', 'jos', $entity->tagables->getQuery());
 		
 		return $entity;
 	}
