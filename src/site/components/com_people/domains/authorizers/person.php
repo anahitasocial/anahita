@@ -31,7 +31,6 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
      * Check if a person can be deleted by the viewer
      * 
      * @param KCommandContext $context Context parameter
-     * 
      * @return boolean
      */ 
     protected function _authorizeDelete(KCommandContext $context)
@@ -41,5 +40,19 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
         	return false;   
         
         return parent::_authorizeDelete($context);
-    }    	
+    } 
+
+    /**
+     * Whether the viewer can mention this person or not
+     * 
+     * @param KCommandContext $context
+     * @return boolean
+     */
+    protected function _authorizeMention(KCommandContext $context)
+    {
+    	if($this->_entity->blocking($this->_viewer) || $this->_viewer->blocking($this->_entity))
+    		return false;
+    	
+    	return true;
+    }
 }
