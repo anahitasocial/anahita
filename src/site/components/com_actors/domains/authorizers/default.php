@@ -313,7 +313,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	 */	
 	protected function _authorizeBlocker(KCommandContext $context)
 	{
-        //viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
+		//viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
         if(!$this->_entity->isLeadable() || !$this->_viewer->isFollowable())
             return false;    
 
@@ -327,12 +327,9 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         if($this->_viewer->isAdministrable() && $this->_viewer->administratorIds->offsetExists($this->_entity->id))
             return false;
                  
-//      //if the entity is   
-//      if($this->_entity->following($this->_viewer))
-//            return true;
-//            
-//	    if(!$this->_entity->authorize('access', $context))
-//	        return false;
+        //you can't block an admin    
+		if($this->_entity->admin())
+			return false;
 		
 		return true;
 	 }
