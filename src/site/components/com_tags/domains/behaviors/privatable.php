@@ -59,5 +59,15 @@ class ComTagsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
         $where = "IF($c1, $c2, 0)";
         
         $query->where($where);
+        
+        //comments privacy depends on their parent
+   		$query->join('left', 'anahita_nodes AS parent', 'parent.id = node.parent_id');
+   		
+   		$c1 = $this->buildCondition('@col(owner.id)', $config, '@col(parent.access)');
+        $c2 = $this->buildCondition('@col(owner.id)', $config, $config->use_access_column);
+        
+        $where = "IF($c1, $c2, 0)";
+        
+        $query->where($where);
     }    
 }
