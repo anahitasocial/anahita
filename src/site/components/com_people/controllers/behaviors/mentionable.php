@@ -166,7 +166,9 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 		
 		foreach($this->_newly_mentioned as $mention)
 		{
-			if($person = $this->getService('repos://site/people.person')->find(array('username'=>$mention)))
+			$person = $this->getService('repos://site/people.person')->find(array('username'=>$mention));
+			
+			if($person && $person->authorize('mention'))
 			{
 				if($entity instanceof ComBaseDomainEntityComment)
 				{
