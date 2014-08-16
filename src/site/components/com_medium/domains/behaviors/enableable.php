@@ -41,9 +41,9 @@ class ComMediumDomainBehaviorEnableable extends LibBaseDomainBehaviorEnableable
 	{
 		$query = $context->query;
 		$repos = $query->getRepository();
-		if ( $repos->hasBehavior('ownable') )
+		if($repos->hasBehavior('ownable'))
 		{
-            if ( !get_viewer()->admin() )
+            if(!get_viewer()->admin())
             {
                 $ids   = get_viewer()->administratingIds->toArray();
                 $ids[] = get_viewer()->id;

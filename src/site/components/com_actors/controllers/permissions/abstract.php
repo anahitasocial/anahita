@@ -205,7 +205,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
         {
             $methods = $this->getBehavior('administrable')->getMethods();
             
-            if(in_array('_action'.ucfirst($action), $methods) && $this->canAdministare() === false)
+            if(in_array('_action'.ucfirst($action), $methods) && $this->canAdminister() === false)
             	return false;
         }
              
@@ -213,11 +213,11 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
     }        
     
     /**
-     * Return if a the viewer can administare
+     * Return if a the viewer can administer
      *
      * @return boolean
      */     
-    public function canAdministare()
+    public function canAdminister()
     {
         if(!$this->getItem())
         	return false;
