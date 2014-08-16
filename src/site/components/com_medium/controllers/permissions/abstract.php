@@ -59,9 +59,13 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	public function canAdd()
 	{
 		$actor = $this->actor;
-	
+		$viewer = get_viewer();
+		
 		if($actor)
-		{
+		{			
+			if($viewer->blocking($actor))
+				return false;
+			
 			$action = 'com_'.$this->_mixer->getIdentifier()->package.':'.$this->_mixer->getIdentifier()->name.':add';
 			$ret = $actor->authorize('action', $action);
 			
@@ -93,7 +97,7 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canExecute($action)
 	{
-		if ($this->isOwnable() && $this->actor && $this->actor->authorize('access') === false ) {
+		if ($this->isOwnable() && $this->actor && $this->actor->authorize('access') === false )
 			return false;
 	
 		return parent::canExecute($action);
