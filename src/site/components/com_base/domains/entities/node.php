@@ -27,19 +27,7 @@
  * @link       http://www.anahitapolis.com
  */
 class ComBaseDomainEntityNode extends AnDomainEntityDefault
-{
-    /** 
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     * 
-     * @return void
-     */ 
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
-    }
-        
+{        
     /**
 	 * Initializes the default configuration for the object
 	 *

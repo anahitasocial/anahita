@@ -109,15 +109,16 @@ class AnDomain
 	{
 	    $identifier = KService::getIdentifier($identifier);
 
-	    if ( !$identifier->basepath )
+	    if(!$identifier->basepath)
 	    {
-	        $adapters     = KService::get('koowa:loader')->getAdapters();
-	        $basepath     = pick($adapters[$identifier->type]->getBasePath(), JPATH_BASE);
+	        $adapters = KService::get('koowa:loader')->getAdapters();
+	        $basepath = pick($adapters[$identifier->type]->getBasePath(), JPATH_BASE);
 	        $applications = array_flip(KServiceIdentifier::getApplications());
-	        if ( isset($applications[$basepath])  )
+	        
+	        if(isset($applications[$basepath]) )
 	        {
 	            $identifier->application = $applications[$basepath];
-	            $identifier->basepath    = $basepath;
+	            $identifier->basepath = $basepath;
 	        }
 	    }
 	    
@@ -134,22 +135,19 @@ class AnDomain
      */
 	static public function getRepository($identifier, $config = array())
 	{	    	    
-	    if ( strpos($identifier,'repos:') === 0 ) {
+	    if(strpos($identifier,'repos:') === 0) 
+	    {
 	    	$repository = KService::get($identifier);
 	    } 
-	    else {
-	    	
+	    else 
+	    {	
 	    	$strIdentifier = (string) $identifier;
 	    	
-		    if ( !KService::has($identifier) )
-		    {
+		    if(!KService::has($identifier))
 		        $identifier = self::getEntityIdentifier($identifier);
-		    }
 		      
-		    if ( !KService::has($identifier) )
-		    {
+		    if(!KService::has($identifier))
 		        KService::set($strIdentifier, KService::get($identifier, $config));
-		    }	
 		    
 		    $repository = KService::get($identifier)->getRepository();    
 	    }
@@ -157,21 +155,3 @@ class AnDomain
 	    return $repository;
 	}
 }
-
-/**
- * Helper mehtod to return a repository for an entity
- *
- * @param string $entity Entity Identifier
- * @param array  $config Configuration 
- * 
- * @return AnDomainRepositoryAbstract
- *  
- *  @deprecated Use AnDomain::getRepository or KService::get('repos:[//application/]<Package Name>.<Entity Name>')
- */
-function repos($repository, $config = array())
-{
-    deprecated("Use AnDomain::getRepository or KService::get('repos:[//application/]<Package Name>.<Entity Name>')");
-    return KService::get($repository, $config)->getRepository();
-}
-
-?>

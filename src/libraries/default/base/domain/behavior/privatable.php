@@ -302,29 +302,27 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 		$where[] = "WHEN $access IS NULL THEN 1";
 		
 		//for testing purpose
-		if (false && $config->visible_to_leaders && $viewer->id && count($viewer->blockedIds) > 0 )
-		{
-		    $where[] = "WHEN FIND_IN_SET(@col(id), '".$store->quoteValue($viewer->blockedIds->toArray())."') THEN 1";
-		}
+		//if($config->visible_to_leaders && $viewer->id && count($viewer->blockedIds) > 0)
+		//    $where[] = "WHEN FIND_IN_SET(@col(id), '".$store->quoteValue($viewer->blockedIds->toArray())."') THEN 1";
 		
 		$where[] = "WHEN FIND_IN_SET('".self::GUEST."', $access) THEN 1";
 		
 		if($viewer->id)
 		{
-			$where[] = "WHEN FIND_IN_SET('".self::REG."',$access) THEN 1";
+			$where[] = "WHEN FIND_IN_SET('".self::REG."', $access) THEN 1";
 			
 			if($viewer->userType != 'registered')
-				$where[] = "WHEN FIND_IN_SET('".self::SPECIAL."',$access) THEN 1";
+				$where[] = "WHEN FIND_IN_SET('".self::SPECIAL."', $access) THEN 1";
 				
-			$where[] = "WHEN FIND_IN_SET(".$viewer->id.",$access) THEN 1";
+			$where[] = "WHEN FIND_IN_SET(".$viewer->id.", $access) THEN 1";
 			
 			if($config->graph_check)
 			{
 				$leader_ids = $store->quoteValue($viewer->leaderIds->toArray());
 				$follower_ids = $store->quoteValue($viewer->followerIds->toArray());
 				$mutual_ids = $store->quoteValue($viewer->mutualIds->toArray());
-				$admin_ids	= $store->quoteValue($viewer->administratingIds->toArray());
-				$is_viewer  = "$actor_id = {$viewer->id}";
+				$admin_ids = $store->quoteValue($viewer->administratingIds->toArray());
+				$is_viewer = "$actor_id = {$viewer->id}";
 				
 				$viewer_is_follower = "$is_viewer  OR $actor_id IN (".$leader_ids.")";
 				$viewer_is_leader = "$is_viewer  OR $actor_id IN (".$follower_ids.")";				
