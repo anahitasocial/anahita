@@ -54,17 +54,13 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 		$entity = parent::_actionRead($context);
 		
 		if($this->scope)
-		{
-			$this->scopes = $this->getService('com://site/components.domain.entityset.scope');
-    		if($this->current_scope = $this->scopes->find($this->scope))
-    			$entity->tagables->where('node.type', 'LIKE', '%'.$this->current_scope->identifier);
-		}
+			$entity->tagables->scope($this->scope);
 		
 		if($this->sort == 'top')
-    		$entity->tagables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC')->groupby('tagable.id');
+    		$entity->tagables->sortTop();
     	else 
-			$entity->tagables->order('node.created_on', 'DESC');
-			
+			$entity->tagables->sortRecent();
+		
 		$entity->tagables->limit($this->limit, $this->start);
 		
 		//print str_replace('#_', 'jos', $entity->tagables->getQuery());

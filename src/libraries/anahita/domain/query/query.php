@@ -45,18 +45,19 @@ class AnDomainQuery extends KObject implements KCommandInterface
      */
     static public function getInstance($repository, $conditions)
     {
-        if ( !$conditions instanceof AnDomainQuery )
+        if(!$conditions instanceof AnDomainQuery)
         {
-            if ( $repository instanceof AnDomainQuery ) {
-                $query		= clone $repository;
+            if($repository instanceof AnDomainQuery ) 
+            {
+                $query = clone $repository;
                 $repository = $query->getRepository();
             }
             else
-                $query	= $repository->getQuery();
+                $query = $repository->getQuery();
     
             $identity_property = $repository->getDescription()->getIdentityProperty();
     
-            if ( !empty($conditions) )
+            if(!empty($conditions))
             {
                 if ( is_numeric($conditions) )
                     $conditions = array($conditions);
