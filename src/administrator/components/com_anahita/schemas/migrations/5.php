@@ -38,7 +38,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         foreach($legacyTables as $legacyTable)
         	dbexec('DROP TABLE IF EXISTS #__'.$legacyTable);
         	
-        //delete a legacy plugin	
+        //delete a legacy record	
         dbexec('DELETE FROM #__components WHERE `option` = \'com_mailto\' ');	
         
         //add the hashtag contentfilter
