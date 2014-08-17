@@ -20,7 +20,10 @@ class ComAnahitaSchemaMigration6 extends ComMigratorMigrationVersion
     */
     public function up()
     {    
-        //add the mention tag contentfilter
+        //delete a legacy record	
+        dbexec('DELETE FROM #__components WHERE `option` = \'com_content\' ');
+    	
+    	//add the mention tag contentfilter
         dbexec('INSERT INTO #__plugins (`name`,`element`,`folder`,`iscore`,`published`) VALUES (\'Mention\', \'mention\',\'contentfilter\',1,1)');
         
         //changing the hashtag class name to tag
