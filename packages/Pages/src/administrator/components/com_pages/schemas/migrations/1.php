@@ -20,7 +20,7 @@ class ComPagesSchemaMigration1 extends ComMigratorMigrationVersion
     */
     public function up()
     {
-        dbexec('UPDATE #__anahita_nodes SET access=\'admins\' WHERE enabled=0 AND type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'')
+        dbexec('UPDATE #__anahita_nodes SET access=\'admins\' WHERE enabled=0 AND type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
     }
 
    /**
