@@ -38,9 +38,8 @@ class ComMediumControllerBehaviorCommentable extends ComBaseControllerBehaviorCo
     {
         parent::__construct($config);
         
-        if ( $this->_mixer->isPublisher() ) {
+        if($this->_mixer->isPublisher())
             $this->registerCallback('after.addcomment', array($this, 'createCommentStory'));
-        }         
     }
     
     /**
