@@ -54,7 +54,7 @@
      * Adds a person to a mentionable mixer entity
      * 
      * @param a person username
-     * @return void 
+     * @return mixer entity if a valid username is given 
      */
     public function addMention($username)
     {    	
@@ -67,15 +67,18 @@
     		
     		return $this;
     	}
-    			
-    	return;
+    	else
+    	{
+    		$this->invalidateUsername($username);
+    		return;
+    	}
     }
     
  	/**
      * Removes a person from a mentionable mixer entity
      * 
      * @param a word
-     * @return void 
+     * @return mixer entity if a valid username is given
      */
     public function removeMention($username)
     {    	
@@ -88,8 +91,22 @@
     		
     		return $this;
     	}
-    			
-    	return;
+    	else
+    	{
+    		$this->invalidateUsername($username);
+    		return;
+    	}
+    }
+    
+    /**
+     * Removes the @ symbol from a username in the body of the node
+     * 
+     * @param string username
+     * @return void
+     */
+    protected function invalidateUsername($username)
+    {
+    	$this->_mixer->set('body', KHelperString::str_ireplace('@'.$username, $username, $this->_mixer->body));
     }
     
  	/**
