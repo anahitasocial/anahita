@@ -45,5 +45,3 @@ class ComBaseTemplateAsset extends LibBaseTemplateAsset
         parent::_initialize($config);
     }    
 }
-
-?>

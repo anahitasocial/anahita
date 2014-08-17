@@ -27,17 +27,6 @@
  */
 class ComNotificationsControllerNotification extends ComBaseControllerService
 {
-    /** 
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     * 
-     * @return void
-     */ 
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);        
-    }
         
    /**
      * Initializes the options for the object
@@ -51,7 +40,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
 	{
 		$config->append(array(			
 			'behaviors'	=> array('ownable', 'serviceable'=>array('except'=>array('add','edit'))),
-            'request'   => array('oid'=>'viewer')
+            'request' => array('oid'=>'viewer')
 		));
 	
 		parent::_initialize($config);
@@ -79,7 +68,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
 	{         
         $this->actor->resetNotifications();
               
-        if ( $this->actor->eql(get_viewer()) ) 
+        if($this->actor->eql(get_viewer())) 
             $title = JText::_('COM-NOTIFICATIONS-ACTORBAR-YOUR-NOTIFICATIONS');  
         else 
             $title = sprintf(JText::_('COM-NOTIFICATIONS-ACTORBAR-ACTOR-NOTIFICATIONS'), $this->actor->name);
@@ -90,17 +79,15 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         
         $set = parent::_actionBrowse($context)->order('creationTime','DESC');
           
-        if ( $this->getRequest()->get('layout') != 'popover' ) {
+        if($this->getRequest()->get('layout') != 'popover')
             $set->limit(0);
-        }
         
-        if ( $this->new ) {
-        	$set->id( $this->actor->newNotificationIds->toArray() );
-        }
+        if($this->new)
+        	$set->id($this->actor->newNotificationIds->toArray());
         
         //only zero the notifications if the viewer is the same as the 
         //actor. prevents from admin zeroing others notifications
-        if ( $set->count() > 0 && get_viewer()->eql($this->actor) ) 
+        if($set->count() > 0 && get_viewer()->eql($this->actor)) 
         {
             //set the number of notification, since it's going to be 
             //reset by the time it gets to the mod_viewer 
@@ -133,17 +120,16 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
      */
     public function canExecute($action)
     {       
-        if ( !$this->actor )
+        if(!$this->actor)
             return false;
         
-        if ( !$this->actor->isNotifiable() )
+        if(!$this->actor->isNotifiable())
             return false;
         
-        if ( $this->actor->authorize('access') === false ) {
+        if($this->actor->authorize('access') === false)
             return false;
-        }
         
-        if ( $this->actor->authorize('administration') === false )
+        if($this->actor->authorize('administration') === false)
             return false;
             
         return parent::canExecute($action);    

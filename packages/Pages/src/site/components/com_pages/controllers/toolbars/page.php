@@ -36,16 +36,13 @@ class ComPagesControllerToolbarPage extends ComMediumControllerToolbarDefault
     {
 		$entity = $this->getController()->getItem();
 
-		if( $entity->authorize('vote') )
+		if($entity->authorize('vote'))
 			$this->addCommand('vote');
-			
-		if ( $entity->authorize('administration') )	
-			$this->addCommand('enable', array('ajax'=>true));
 
-		if ( $entity->authorize('edit') )	
+		if($entity->authorize('edit'))	
 			$this->addCommand('edit');
 
-		if ( $entity->authorize('delete') )
+		if($entity->authorize('delete'))
 			$this->addCommand('delete');
 	}
 	
@@ -58,51 +55,19 @@ class ComPagesControllerToolbarPage extends ComMediumControllerToolbarDefault
     {	
 		$entity = $this->getController()->getItem();
 		
-		if ( $entity->authorize('vote') )
+		if($entity->authorize('vote'))
 		    $this->addCommand('vote');
 			
-		if ( $entity->authorize('edit') ) 			
+		if($entity->authorize('edit')) 			
 		    $this->addCommand('edit');
 			
-		if ( $entity->authorize('administration') )				
-		    $this->addCommand('enable');
-			
-		if ( $entity->owner->authorize('administration') ) 
+		if($entity->owner->authorize('administration')) 
 			$this->addAdministrationCommands();		
 			
 		if($entity->authorize('subscribe') || $entity->subscribed(get_viewer())) 			
 		    $this->addCommand('subscribe');
 			
-		if ( $entity->authorize('delete') ) 			
+		if($entity->authorize('delete')) 			
 		    $this->addCommand('delete');
-	}
-	
-	/**
-	 * Enable/Disable
-	 * 
-	 * @param LibBaseTemplateObject $command Command Object
-	 * 
-	 * @return void
-	 */
-	protected function _commandEnable($command)
-	{
-	    $entity = $this->getController()->getItem();
-        
-	    $ajax   = pick($command->ajax, false);
-	    
-		$name   = ($entity->enabled) ? 'disable' : 'enable';
-				
-		$label 	= JText::_('LIB-AN-ACTION-'.strtoupper($name));
-		$url 	= $entity->getURL().'&action='.$name;
-
-		$command->append(array('label'=>$label))
-		    ->href($url);
-		
-		if ( $ajax ) {
-			$command->setAttribute('href', 'layout=list&filter=','&');
-			$command->setAttribute('data-trigger','Request')->setAttribute('data-request-options',"{method:'post',replace:'!.an-entity'}");
-		} else {
-			$command->setAttribute('data-trigger','Submit');
-		}
 	}
 }

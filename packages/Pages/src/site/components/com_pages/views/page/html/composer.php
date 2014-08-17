@@ -28,13 +28,6 @@
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="published"><?= @text('COM-PAGES-PAGE-ENABLED') ?></label>
-			<div class="controls">
-				<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>true))->class('small')?>
-			</div>
-		</div>
-		
-		<div class="control-group">
 			<label class="control-label" id="privacy" ><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
 			<div class="controls">
 				<?= @helper('ui.privacy',array('entity'=>$page, 'auto_submit'=>false, 'options'=>$actor)) ?>

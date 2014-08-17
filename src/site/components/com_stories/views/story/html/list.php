@@ -2,7 +2,6 @@
 
 <?php
 $subject = is_array($subject) ? array_shift($subject) : $subject;
-
 $target_to_show = null;
 
 if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item->subject))
@@ -16,7 +15,7 @@ if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item
 	    </div>     
     
     	<div class="entity-container">
-    		<?php if( !empty($title)): ?>
+    		<?php if(!empty($title)): ?>
     		<h4 class="story-title">
     			<?= $title ?>
     		</h4>
@@ -37,19 +36,17 @@ if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item
     	</div>
     </div>
     
-
-    
-    <?php if ( !empty($body) ) : ?>
+    <?php if(!empty($body)) : ?>
     <div class="story-body">
     	<?= $body ?>
     </div>
     <?php endif; ?>
          
     <?php
-    	$votable_item = null;               
+    $votable_item = null;               
         
-    	if(!$item->aggregated() && $item->object && $item->object->isVotable())
-           $votable_item = $item->object;
+    if(!$item->aggregated() && $item->object && $item->object->isVotable())
+    	$votable_item = $item->object;
     ?>
         
     <?php if($votable_item): ?> 
@@ -61,7 +58,7 @@ if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item
     <?php endif; ?>
         
     <div class="entity-actions">    
-    	<?php $can_comment = $commands->offsetExists('comment') ?>
+    	<?php $can_comment = $commands->offsetExists('comment'); ?>
         <?= @helper('ui.commands', $commands)?>
     </div>      
    

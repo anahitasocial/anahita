@@ -38,19 +38,20 @@ class ComBaseControllerBehaviorVotable extends KControllerBehaviorAbstract
 	{
 		$this->commit();
         
-		if ( $context->request->getFormat() == 'html' ) 
+		if($context->request->getFormat() == 'html') 
         {
-            return $this->getView()
-                ->getTemplate()
-                ->renderHelper('ui.voters', $this->getItem(), array('avatars'=>$this->avatars));			
-        } else {
-            
-            $voters     = $this->getItem()->voteups->voter;
+            return $this->getView()->getTemplate()
+            ->renderHelper('ui.voters', $this->getItem(), array('avatars'=>$this->avatars));			
+        } 
+        else 
+        {    
+            $voters = $this->getItem()->voteups->voter;
             $controller = $this->getService('com://site/actors.controller.actor')
-                             ->view('actors')
-                             ->format($context->request->getFormat()); 
+            					->view('actors')
+            					->format($context->request->getFormat()); 
 
             $controller->getState()->setList($voters);
+            
             return $controller->getView()->display();            
         }
 	}
@@ -66,14 +67,15 @@ class ComBaseControllerBehaviorVotable extends KControllerBehaviorAbstract
 	{				
 	    $context->response->status = KHttpResponse::CREATED;
 	    
-		$this->getItem()->voteup( get_viewer() );
+		$this->getItem()->voteup(get_viewer());
+		
 		$notification = $this->_mixer->createNotification(array(
 			'name' 		=> 'voteup',
 			'object'	=> $this->getItem(),
 		    'component' => $this->getItem()->component
 		));
-		$context->response->content = 
-		    $this->_mixer->execute('getvoters', $context);
+		
+		$context->response->content = $this->_mixer->execute('getvoters', $context);
 	}
 	
 	/**
@@ -85,10 +87,8 @@ class ComBaseControllerBehaviorVotable extends KControllerBehaviorAbstract
 	 */
 	protected function _actionUnvote($context)
 	{
-		$this->getItem()->unvote( get_viewer() );
-		$context->response->content = 
-		    $this->_mixer->execute('getvoters', $context);
+		$this->getItem()->unvote(get_viewer());
+		
+		$context->response->content = $this->_mixer->execute('getvoters', $context);
 	}
 }
-
-?>

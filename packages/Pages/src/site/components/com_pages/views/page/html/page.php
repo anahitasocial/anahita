@@ -2,10 +2,6 @@
 
 <?php @commands('toolbar') ?>
 
-<?php if(!$page->published): ?>
-<?= @message(@text('COM-PAGES-PAGE-IS-UNPUBLISHED'), array('type'=>'warning')) ?>
-<?php endif; ?>
-
 <div class="an-entity">
 	<div class="clearfix">
 		<div class="entity-portrait-square">

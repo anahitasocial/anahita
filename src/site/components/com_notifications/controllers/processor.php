@@ -81,13 +81,12 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     protected function _actionProcess(KCommandContext $context)
     {
         $notifications = $this->getService('repos://site/notifications.notification')
-            ->getQuery(true)
-            ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT)
-            ;
+            				->getQuery(true)
+            				->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
         
-        if ( $this->id ) 
+        if($this->id) 
         {
-            $ids = (array)KConfig::unbox($this->id);
+            $ids = (array) KConfig::unbox($this->id);
             $notifications->id($ids);
         }
                 
@@ -109,14 +108,15 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         {
             foreach($notifications as $notification)
                 $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
+                
             //change the notification status
             $space->commitEntities();
+            
             //send the notification
-            foreach($notifications as $notification) {
+            foreach($notifications as $notification)
                 $this->sendNotification($notification);
-            }
         }
-        catch(Exception $e) { }
+        catch(Exception $e){}
          
         $space->commitEntities();
     }
@@ -130,59 +130,50 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     protected function _renderMails($config)
     {
-        $mails    = array();
-        $config   = new KConfig($config);
-        $settings     = $config->settings;
-        $people       = $config->people;
+        $mails = array();
+        $config = new KConfig($config);
+        $people = $config->people;
         $notification = $config->notification;
+        
         foreach($people as  $person)
         {
-            $setting = $settings->{$person->id};
-    
-            if ( !$ret = $notification->shouldNotify($person, $setting) ) {
-                $notification->removeSubscribers($person);
+            if($ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL)
                 continue;
-            }
-             
-            $person->addNotification($notification);
-             
-            if ( $ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL ) {
-                continue;
-            }
              
             //since each owner revieces the mail, they are in fact the viewer
             //so we need to set the as viewer while processing the notification
             KService::set('com:people.viewer', $person);
              
             $notification->owner = $person;
+            
             $data = new KConfig($this->_parser->parse($notification));
+            
             $data->append(array(
                     'email_subject' => $data->title,
-                    'email_title'	=> pick($data->email_subject, $data->title),
-                    'email_body' 	=> $data->body,
-                    'notification'	=> $notification
+                    'email_title' => pick($data->email_subject, $data->title),
+                    'email_body' => $data->body,
+                    'notification' => $notification
             ));
-            if ( $notification->target && !$notification->target->eql($person)) 
-            {
-                $data->commands->insert('notification_setting', 
-                    array('actor'=>$notification->target));
-            }            
+            
+            if($notification->target && !$notification->target->eql($person))
+                $data->commands->insert('notification_setting', array('actor'=>$notification->target));
+            
             $body = $this->renderMail(array(
-                    'layout'   => false,
+                    'layout' => false,
                     'template' => 'notification',
                     'data' => array(
-                        'person'    => $person,
-                        'commands'  => $data->commands,
+                        'person' => $person,
+                        'commands' => $data->commands,
                         'subject' => $notification->subject,
-                        'title'	  => $data->email_title,
-                        'body'    => $data->email_body
+                        'title' => $data->email_title,
+                        'body' => $data->email_body
                     )
             ));
                 
             $mails[] = array(
                   'subject' => $data->email_subject,
-                  'body'    => $body,
-                  'to'      => $person->email      
+                  'body' => $body,
+                  'to' => $person->email      
             );
         }
          
@@ -198,40 +189,56 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     public function sendNotification($notification)
     {
-        $people    = $this->getService('repos://site/actors.actor')->getQuery(true)->id($notification->subscriberIds->toArray())->fetchSet();
-        $settings  = $this->getService('repos://site/notifications.setting')
-                        ->getQuery(true,array('actor.id'=>$notification->target->id))
-                        ->fetchSet();
+        $people = $this->getService('repos://site/actors.actor')->getQuery(true)->id($notification->subscriberIds->toArray())->fetchSet();
+        $settings = $this->getService('repos://site/notifications.setting')
+                    ->getQuery(true,array('actor.id'=>$notification->target->id))
+                    ->fetchSet();
+                  
+        $settings = AnHelperArray::indexBy($settings, 'person.id');
+
+        foreach($people as $index=>$person)
+        {
+        	if($notification->shouldNotify($person, $setting))
+        	{
+                $person->addNotification($notification);
+        	}
+            else
+            {
+            	$notification->removeSubscribers($person);
+            }
+        }
         
-        $settings  = AnHelperArray::indexBy($settings, 'person.id');
-         
         $mails = $this->_renderMails(array('notification'=>$notification,'people'=>$people, 'settings'=>$settings));
+        
         $debug = $this->getBehavior('mailer')->getTestOptions()->enabled;
         
-        if ( $debug ) 
+        if($debug) 
         {
             $recipients = array();
+            
             foreach($mails as $i => $mail)
             {
                 $recipients[] = $mail['to'];
-                if ( $i < 3 )
+                
+                if($i < 3)
                 {
-                    $body   = array();
-                    $body[] = 'Subject   : '.$mail['subject'];
+                    $body = array();
+                    $body[] = 'Subject : '.$mail['subject'];
                     $body[] = $mail['body'];
-                    $body   = implode('<br />', $body);
+                    $body = implode('<br />', $body);
                     $bodies[] = $body;
                 }
             }
+            
             $bodies[] = 'Sending out '.count($mails).' notification mail(s)';
             $bodies[] = '<br /><br />'.implode('<br />',$recipients);            
-            $mails    = array(array(
+            $mails = array(array(
                  'subject'  => $notification->name,
                  'body'     => implode('<hr />', $bodies)     
             ));
         }
-        foreach($mails as $mail) {
+        
+        foreach($mails as $mail)
             $this->mail($mail);
-        }
     }    
 }

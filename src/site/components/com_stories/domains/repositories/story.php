@@ -39,7 +39,7 @@ class ComStoriesDomainRepositoryStory extends AnDomainRepositoryDefault
 		$data = new KConfig($data);
 				
 		$data->append(array(
-			'owner' 	=> $data->target ? $data->target : $data->subject
+			'owner' => $data->target ? $data->target : $data->subject
 		));
 		
 		$data  = KConfig::unbox($data);
@@ -64,7 +64,7 @@ class ComStoriesDomainRepositoryStory extends AnDomainRepositoryDefault
         //apply the privacy 
         $privtable = $this->getBehavior('com://site/medium.domain.behavior.privatable');
              
-        $query->privacy     = pick($query->privacy, new KConfig());
+        $query->privacy = pick($query->privacy, new KConfig());
         
         //weak link  the stories with object nodes
         //and use the object.access instead of the story access if there are ny

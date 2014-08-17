@@ -41,14 +41,16 @@ class ComStoriesDomainAggregations extends KObjectArray implements KServiceInsta
         {
             $registry = $container->get('application.registry', array('key'=>$config->service_identifier));
         
-            if(!$registry->offsetExists('aggregations') )
+            if(!$registry->offsetExists('aggregations'))
             {
                 $components = $container->get('repos://site/components.component')->fetchSet();
                 
                 $dispatcher = $container->get('koowa:event.dispatcher');
                 $components->registerEventDispatcher($dispatcher);
+                
                 $aggregations = new KConfig();
                 $event = new KEvent(array('aggregations'=>$aggregations));
+                
                 $dispatcher->dispatchEvent('onStoryAggregation', $event);
                 $registry->offsetSet('aggregations', $aggregations);
             }

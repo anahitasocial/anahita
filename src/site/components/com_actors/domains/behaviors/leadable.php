@@ -127,17 +127,5 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 	public function following($actor)
 	{
 		return $this->_mixer->leaderIds->offsetExists($actor->id);
-	}	
-
-	/**
-	 * Return true if the mixer is blocked by the person else return false 	 
-	 * 
-	 * @param  ComActorsDomainEntityActor $actor Actor object
-	 * 
-	 * @return boolean 
-	 */	
-	public function blocked($actor)
-	{
-		return $this->_mixer->blockerIds->offsetExists($actor->id);
-	}	
+	}
 }

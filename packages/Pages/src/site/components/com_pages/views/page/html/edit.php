@@ -11,8 +11,4 @@
 <?php endif; ?>
 </module>
 
-<?php if(!$page->published): ?>
-<?= @message(@text('COM-PAGES-PAGE-IS-UNPUBLISHED'), array('type'=>'warning')) ?>
-<?php endif; ?>
-
 <?= @template('form') ?>

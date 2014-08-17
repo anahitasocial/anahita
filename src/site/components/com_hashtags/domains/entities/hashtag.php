@@ -27,7 +27,6 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     /*
      * hashtag regex pattern
      */
-    //const PATTERN_HASHTAG = '/#([^0-9_\s\W][\p{L}0-9]{2,})/u';
 	const PATTERN_HASHTAG = '/(^|[^&\w])#([^0-9_\s\W][\p{L}0-9]{2,})/u';
 	
     /**
@@ -50,11 +49,11 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
 				'describable'
 			)),
 			'relationships' => array(
-                'hashtagables' => array(
-                    'through' => 'association',                    
+                'tagables' => array(
+                    'through' => 'tag',                    
                     'child_key' => 'hashtag',
-                    'target' => 'com:base.domain.entity.node',
-                    'target_child_key' => 'hashtagable'
+                    'target' => 'com:tags.domain.entity.node',
+                    'target_child_key' => 'tagable'
                 )
             )
         ));

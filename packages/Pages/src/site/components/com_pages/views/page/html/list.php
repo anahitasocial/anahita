@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<?php $published = ($page->enabled) ? '' : 'an-highlight' ?>
+<?php $published = ($page->isPublished()) ? '' : 'an-highlight' ?>
 <div class="an-entity an-record an-removable <?= $published ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
@@ -31,7 +31,7 @@
 	<?php endif; ?>
 	
 	<div class="entity-meta">
-		<?php if(!$page->published): ?>
+		<?php if(!$page->isPublished()): ?>
 		<p class="label label-warning">
 			<?= @text('COM-PAGES-PAGE-IS-UNPUBLISHED') ?>
 		</p>

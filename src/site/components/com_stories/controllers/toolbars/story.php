@@ -36,29 +36,28 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
     {
         $story = $this->getController()->getItem();
                 
-        if ( $story->authorize('vote') ) {
+        if($story->authorize('vote')) 
+        {
             $this->getController()->setItem($story->object);            
             $this->addCommand('vote');            
             $this->getController()->setItem($story);
         }
         
-        if ( $story->authorize('add.comment') ) 
+        if($story->authorize('add.comment')) 
         {
             $this->getController()->setItem($story->object);
             
             $this->addCommand('comment')
                  ->getCommand('comment')
-                 ->storyid($story->id)
-                ;
+                 ->storyid($story->id);
             
             $this->getController()->setItem($story);
         }
         
-        if ( $story->numOfComments > 10 ) {
+        if($story->numOfComments > 10)
             $this->addCommand('view');
-        }
         
-        if( $story->authorize('delete') )
+        if($story->authorize('delete'))
             $this->addCommand('delete');
     }
     
@@ -90,8 +89,7 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
         
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-COMMENT')))
             ->href(JRoute::_($entity->getURL()))
-            ->class('comment')
-            ;
+            ->class('comment');
     }
      
     /**
@@ -104,10 +102,11 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
     protected function _commandDelete($command)
     {
         $entity = $this->getController()->getItem();
-        $link   = 'option=com_stories&view=story';
-        foreach($entity->getIds() as $id) {
+        $link = 'option=com_stories&view=story';
+        
+        foreach($entity->getIds() as $id)
             $link .= '&id[]='.$id;
-        }
+
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-DELETE')))
         ->href(JRoute::_($link.'&_action=delete'))
         ->setAttribute('data-trigger','Remove');

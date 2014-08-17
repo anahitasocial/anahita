@@ -38,14 +38,20 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
 	{
 		$entity = $this->_entity;
 		
-		if ( $this->_viewer->guest() )
+		if($this->_viewer->guest())
 			return false;
 	
-		if ( !$entity->isSubscribable() )
+		if(!$entity->isSubscribable())
 			return false;
+			
+		//if the owner has blocked the viewer or the other way around, return false
+		
+		if($this->_entity->isOwnable())
+			if($this->_entity->owner->blocking($this->_viewer) || $this->_viewer->blocking($this->_entity->owner))
+        		return false;	
 		
 		//if already subscribed to the node then return false
-		if ( $entity->subscribed($this->_viewer) )
+		if($entity->subscribed($this->_viewer))
 			return false;	
 		
 		return true;
@@ -60,9 +66,19 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
 	 */
 	protected function _authorizeVote($context)
 	{
-		if ( $this->_viewer->guest() )
+		if($this->_viewer->guest())
 			return false;
-					
+			
+		//if the owner has blocked the viewer or the other way around, return false
+
+		if($this->_entity instanceof ComBaseDomainEntityComment)
+			$owner = $this->_entity->parent->owner;
+		elseif($this->_entity->isOwnable())
+			$owner = $this->_entity->owner; 	
+			
+		if($owner && ($owner->blocking($this->_viewer) || $this->_viewer->blocking($owner)))
+        	return false;	
+        		
 		return $this->_entity->isVotable();
 	}
 
@@ -76,27 +92,34 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
 	 */
 	protected function _authorizeAddComment($context)
 	{		
-		if ( $this->_viewer->guest() )
+		if($this->_viewer->guest())
 		    return false;
 		
-		if ( $this->_entity->isCommentable() )
+		if($this->_entity->isCommentable())
 		{
-            if ( is_person($this->_viewer) && $this->_viewer->admin() )
+            if(is_person($this->_viewer) && $this->_viewer->admin())
                 return true;
                         
-			if ( !$this->_entity->openToComment )
+			if(!$this->_entity->openToComment)
                 return false;
 			
-			if ( $this->_entity->isOwnable() ) 
+			if($this->_entity->isOwnable()) 
 			{
-                //if ownable and can't access the owner then
+                //if the owner has blocked the viewer or the other way around, return false
+                $owner = $this->_entity->owner;
+                
+                if($this->_entity->owner->blocking($this->_viewer) || $this->_viewer->blocking($this->_entity->owner))
+                	return false;
+				
+				//if ownable and can't access the owner then
                 //can't comment
-				if ( $this->_entity->owner->authorize('access') === false )
+				if($this->_entity->owner->authorize('access') === false)
                     return false;
                                     
-                $action  = 'com_'.$this->_entity->getIdentifier()->package.':'.$this->_entity->getIdentifier()->name.':addcomment';
-                $result  = $this->_entity->owner->authorize('action',array('action'=>$action));
-                if ( $result === false ) 
+                $action = 'com_'.$this->_entity->getIdentifier()->package.':'.$this->_entity->getIdentifier()->name.':addcomment';
+                $result = $this->_entity->owner->authorize('action',array('action'=>$action));
+                
+                if($result === false) 
                 {
                     /**
                      * @TODO We need to communicate back the nature of not having a 
@@ -105,10 +128,11 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
                      * object to KCommandContext
                      */
                     $this->_entity->__require_follow = false;
-                    if ( $this->_entity->owner->hasPermission($action, LibBaseDomainBehaviorPrivatable::FOLLOWER) ) {   
+                    
+                    if($this->_entity->owner->hasPermission($action, LibBaseDomainBehaviorPrivatable::FOLLOWER))   
                         $this->_entity->__require_follow = true;
-                    }
                 }
+                
                 return $result;
 			}
 		}

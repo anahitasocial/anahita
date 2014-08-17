@@ -101,7 +101,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
             $context->query = $this->_mixer->getRepository()->getQuery(); 
         }
 
-		if($this->ht)
+		if($this->hashtag)
 		{
 			$query = $context->query;
 			
@@ -112,7 +112,9 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 			->join('left', 'anahita_edges AS edge', $entityType.'.id = edge.node_b_id')
 			->join('left', 'anahita_nodes AS hashtag', 'edge.node_a_id = hashtag.id');
 			
-			foreach($this->ht as $hashtag)
+			$this->hashtag = (array) $this->hashtag;
+			
+			foreach($this->hashtag as $hashtag)
 			{
 				$hashtag = $this->getService('com://site/hashtags.filter.hashtag')->sanitize($hashtag);
 				if($hashtag != '')
@@ -120,11 +122,9 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 			}
 			
 			$query
-			->where('edge.type', '=', 'ComHashtagsDomainEntityAssociation,com:hashtags.domain.entity.association')
+			->where('edge.type', '=', 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag')
 			->where('hashtag.name', 'IN', $hashtags)
 			->group($entityType.'.id');
-			
-			//print str_replace('#_', 'jos', $query);
 		}
 	}
 }

@@ -39,15 +39,10 @@ class ComPagesDomainEntityPage extends ComMediumDomainEntityMedium
 	protected function _initialize(KConfig $config)
 	{	
 		$config->append(array(			
-			'behaviors' => array(
-				'enableable'
-			),
-			
 			'attributes' => array(
 				'name'			=> array('required'=>true),
 				'excerpt'		=> array('required'=>true,'format'=>'string')
 			),
-			
 			'relationships' => array(
 				'revisions'		
 			),
@@ -129,6 +124,16 @@ class ComPagesDomainEntityPage extends ComMediumDomainEntityMedium
 			'excerpt'		=> $this->excerpt,			
 			'revisionNum'	=> (int)$this->revisions->fetchValue('MAX(@col(revisionNum))') + 1
 		));
+	}
+	
+	/**
+	 * Returns true if the page is published and visible to more than just the owner
+	 * 
+	 * @return boolean
+	 */
+	public function isPublished()
+	{
+		return $this->access !== LibBaseDomainBehaviorPrivatable::ADMIN;
 	}
 
 //end class	

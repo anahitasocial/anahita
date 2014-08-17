@@ -38,7 +38,7 @@ class ComPagesControllerToolbarRevision extends ComMediumControllerToolbarDefaul
 		
 		$this->addCommand('view');
 		
-		if ( $entity->owner->authorize('administration') ) 
+		if($entity->owner->authorize('administration')) 
 			$this->addCommand('restore');
 	}
 	

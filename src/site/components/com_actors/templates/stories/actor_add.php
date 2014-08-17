@@ -2,7 +2,7 @@
 
 <data name="title">
     <?php
-        $label[] = 'COM-STORIES-STORY-ACTOR-ADD';
+        $label[] = 'COM-ACTORS-STORY-ADD';
         $label[] = str_replace('_','-',strtoupper($target->component)).'-STORY-ACTOR-ADD';
     ?>
     <?= sprintf(translate($label), @name($subject), @name($target) ); ?>

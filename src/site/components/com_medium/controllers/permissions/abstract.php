@@ -34,21 +34,17 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canRead()
 	{
-		$actor		= pick($this->actor, get_viewer());		
+		$actor = pick($this->actor, get_viewer());		
 	
 		//if repository is ownable then ask the actor if viewer can publish things
-		if ( in_array($this->getRequest()->get('layout'), array('add', 'edit', 'form','composer'))) 
-		{
-		    if ( $this->getItem() ) {		        
-		       $result = $this->canEdit();
-		    } else {
-		       $result = $this->canAdd();
-		    }
+		if(in_array($this->getRequest()->get('layout'), array('add', 'edit', 'form','composer'))) 
+		{   
+		   $result = ($this->getItem()) ? $this->canEdit() : $this->canAdd();   
 		    
 		    return $result;
 		}
 	
-		if ( !$this->getItem() )
+		if(!$this->getItem())
 			return false;
 	
 		//check if an entiy authorize access
@@ -63,11 +59,16 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	public function canAdd()
 	{
 		$actor = $this->actor;
-	
-		if ( $actor )
-		{
-			$action  = 'com_'.$this->_mixer->getIdentifier()->package.':'.$this->_mixer->getIdentifier()->name.':add';
-			$ret = $actor->authorize('action',$action);
+		$viewer = get_viewer();
+		
+		if($actor)
+		{			
+			if($viewer->blocking($actor))
+				return false;
+			
+			$action = 'com_'.$this->_mixer->getIdentifier()->package.':'.$this->_mixer->getIdentifier()->name.':add';
+			$ret = $actor->authorize('action', $action);
+			
 			return $ret !== false;
 		}
 		 
@@ -81,9 +82,8 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canEdit()
 	{
-		if ( $this->getItem() ) {
+		if($this->getItem())
 			return $this->getItem()->authorize('edit');
-		}
 	
 		return false;
 	}
@@ -96,13 +96,9 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
 	 * @return boolean
 	 */
 	public function canExecute($action)
-	{	
-		//check if viewer has access to actor
-		if ( $this->isOwnable() && $this->actor )  {
-			if ( $this->actor->authorize('access') === false ) {
-				return false;
-			}
-		}
+	{
+		if ($this->isOwnable() && $this->actor && $this->actor->authorize('access') === false )
+			return false;
 	
 		return parent::canExecute($action);
 	}	

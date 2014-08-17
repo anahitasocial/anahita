@@ -28,14 +28,23 @@
 </module>
 <?php endif; ?>
 
-<h2 id="actor-name"><?= @name($item, false) ?></h2>
+<h2 id="actor-name">
+	<?= @name($item, false) ?>
+	<?php if(is_person($item)): ?> 
+	<small>@<?= $item->username ?></small>
+	<?php endif; ?>
+</h2>
 
 <?php if(!empty($item->body)): ?>
 <div id="actor-description">
 	<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>250, 'read_more'=>true, 'consider_html'=>true)); ?>
 </div>
 <?php endif; ?>
+
+<?php if(!$viewer->blocking($item)): ?>
 <?= @helper('com://site/composer.template.helper.ui.composers', $composers) ?>
+<?php endif; ?>
+
 <?php foreach($gadgets as $gadget) : ?>
 <div class="profile-tab-content">		
 	<?= @helper('ui.gadget', $gadget) ?>

@@ -1,12 +1,18 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
-<?=sprintf(@text('COM-ACTORS-TITLE-FOLLOW-REQUEST-NOTIFICATION'), @name($subject), @route($target->getURL().'&get=settings&edit=requests'),@possessive($target))?>
+<?php if ( $type != 'notification' ) : ?>
+<?=sprintf(@text('COM-ACTORS-STORY-FOLLOW'), @name($subject), @name($target))?>
+<?php else : ?>
+<?=sprintf(@text('COM-ACTORS-NOTIFICATION-FOLLOW'), @name($subject), @name($target))?>
+<?php endif; ?>
 </data>
 
+<?php if ( $type == 'story') : ?>
+
+<?php else : ?>
 <?php
-$commands->insert('follow', array('label'=>sprintf(@text('COM-ACTORS-VIEW-PROFILE'), $subject->name)))->href($subject->getURL());
-$commands->insert('viewrequest', array('label'=>sprintf(@text('COM-ACTORS-VIEW-REQUEST'), $subject->name)))->href($target->getURL().'&get=settings&edit=requests')
+$commands->insert('follow', array('label'=>sprintf(@text('COM-ACTORS-VIEW-PROFILE'), $subject->name)))->href($subject->getURL())
 ?>
 <data name="email_body">
 	<?= $subject->followerCount ?>
@@ -32,3 +38,4 @@ $commands->insert('viewrequest', array('label'=>sprintf(@text('COM-ACTORS-VIEW-R
     	<?php endif;?>
 	<?php endif;?>
 </data>
+<?php endif;?>

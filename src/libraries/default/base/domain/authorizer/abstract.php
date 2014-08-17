@@ -63,7 +63,7 @@ abstract class LibBaseDomainAuthorizerAbstract extends KObject
 		
 		$result = self::AUTH_NOT_IMPLEMENTED;
 		
-		if ( method_exists($this, $method) ) 
+		if(method_exists($this, $method)) 
 		{
 			$this->_entity = $context->mixer;
 			$this->_viewer = $context->viewer;
