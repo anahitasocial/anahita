@@ -82,9 +82,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
         $matches = array();
         
         if(preg_match_all(ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, $text, $matches))
-        {
         	return array_unique($matches[2]);
-        }
         else
         	return array();
 	}
@@ -96,10 +94,8 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 	 */
 	protected function _beforeControllerBrowse(KCommandContext $context)
 	{				
-		if(!$context->query) 
-        {
+		if(!$context->query)
             $context->query = $this->_mixer->getRepository()->getQuery(); 
-        }
 
 		if($this->hashtag)
 		{
