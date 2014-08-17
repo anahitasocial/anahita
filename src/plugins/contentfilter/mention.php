@@ -34,7 +34,7 @@ class PlgContentfilterMention extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_LOW,
+            'priority' => KCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);
@@ -48,17 +48,13 @@ class PlgContentfilterMention extends PlgContentfilterAbstract
 	 * @return string
 	 */
 	public function filter($text)
-	{
-		$this->_stripTags($text);
-        
+	{    
 		$matches = array();
 		
 		$text = preg_replace(
 			ComPeopleDomainEntityPerson::PATTERN_MENTION, 
 			'<a class="mention" href="'.JRoute::_("option=com_people&view=person&uniqueAlias=$2").'">$0</a>', 
 			$text);
-			
-		$this->_replaceTags($text);	
 		
 		return $text;
 	}

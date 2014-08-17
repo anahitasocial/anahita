@@ -34,7 +34,7 @@ class PlgContentfilterHashtag extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_LOW,
+            'priority' => KCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);
@@ -48,17 +48,13 @@ class PlgContentfilterHashtag extends PlgContentfilterAbstract
 	 * @return string
 	 */
 	public function filter($text)
-	{
-		$this->_stripTags($text);
-        
+	{      
 		$matches = array();
 		
 		$text = preg_replace(
 			ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, 
 			'<a class="hashtag" href="'.JRoute::_('option=com_hashtags&view=hashtag&alias=').'$2">$0</a>', 
 			$text);
-			
-		$this->_replaceTags($text);	
 		
 		return $text;
 	}
