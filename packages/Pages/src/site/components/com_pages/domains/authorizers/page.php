@@ -38,15 +38,8 @@ class ComPagesDomainAuthorizerPage extends ComMediumDomainAuthorizerDefault
 	{
 		$ret = parent::_authorizeEdit($context);
 
-		if( $ret === false )
-		{
-			if ( $this->_entity->isOwnable() )
-			{
-				if( $this->_entity->owner->allows( $this->_viewer, 'com_pages:page:edit' ) ) {
-					return true; 			
-				}
-			}
-		}
+		if($ret === false && $this->_entity->isOwnable() && $this->_entity->owner->allows( $this->_viewer, 'com_pages:page:edit' ))
+			return true;
 		
 		return $ret;
 	}
