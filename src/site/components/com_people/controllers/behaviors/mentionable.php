@@ -43,7 +43,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         
         $this->registerCallback('after.add', array($this, 'addMentionsFromBody'));
         $this->registerCallback('after.edit', array($this, 'updateMentionsFromBody'));
-
+        
         $this->registerCallback(array('after.add', 'after.edit'), array($this, 'notifyMentioned'));
         
     }
@@ -100,9 +100,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $matches = array();
         
         if(preg_match_all(ComPeopleDomainEntityPerson::PATTERN_MENTION, $text, $matches))
-        {
         	return array_unique($matches[2]);
-        }
         else
         	return array();
 	}
@@ -114,12 +112,8 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	 */
 	protected function _beforeControllerBrowse(KCommandContext $context)
 	{				
-		
-		
-		if(!$context->query) 
-        {
+		if(!$context->query)
             $context->query = $this->_mixer->getRepository()->getQuery(); 
-        }
 
 		if($this->mention)
 		{
@@ -137,6 +131,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 			foreach($this->mention as $mention)
 			{
 				$username = $this->getService('com://site/people.filter.username')->sanitize($mention);
+				
 				if($username != '')
 					$usernames[] = $username;
 			}
@@ -177,13 +172,16 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 					
 					if($parentController->isNotifier())
 					{
-						$parentController->createNotification(array(
+						$data = array(
 							'name' => 'actor_mention_comment',
 							'subject' => $this->viewer,
 							'object' => $entity,
+							'component' => $entity->parent->component,
 							'comment' => $entity,
 							'subscribers' => array($person)
-						));
+						);
+						
+						$parentController->createNotification($data);
 					}
 				}
 				else
