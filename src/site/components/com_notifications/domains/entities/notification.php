@@ -100,15 +100,12 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		if($data->object && $data->object->isOwnable())
 		    $data->target = $data->object->owner;
 		
-		if($data->object) 
-        {
-			if($data->object->isModifiable() && empty($data->comment)) 
-			{
-				$data->append(array(
-					'subscribers' => array($data->object->author->id)
-				));
-			}
-		}
+		if($data->object && $data->object->isModifiable() && empty($data->comment)) 
+		{
+			$data->append(array(
+				'subscribers' => array($data->object->author->id)
+			));
+		}	
         //if there are no objects, then there are no subscribers
         //in that case add the target as the notification subscriber 
         //if it's notifiable
@@ -148,10 +145,8 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	public function setType($type, $config = array())
 	{
 	    $this->set('type', $type);
-	    
 	    foreach($config as $key => $value)
 	        $this->setValue($key, $value);
-	        
 	    return $this;
 	}
 	
@@ -170,7 +165,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		
 		foreach($subscribers as $subscriber) 
         {
-			if(is($subscriber, 'AnDomainEntityAbstract'))
+			if(is($subscriber, 'AnDomainEntityAbstract')) 
                  $ids[]  = $subscriber->id;
 			else 
 				$ids[] = $subscriber;
@@ -204,13 +199,13 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		
 		$ids = $this->subscriberIds->toArray();
 
-		foreach($subscribers as $subscriber)
+		foreach($subscribers as $subscriber) 
 		{
 			$id = is($subscriber, 'AnDomainEntityAbstract') ? $subscriber->id : $subscriber;
 			unset($ids[$id]);
 		}
 		
-		$this->set('subscriberIds',   AnDomainAttribute::getInstance('set')->setData($ids));
+		$this->set('subscriberIds', AnDomainAttribute::getInstance('set')->setData($ids));
 					
 		//if there are no more subscriber then delete the notification
 		if(empty($ids))
@@ -225,7 +220,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	 * @param ComPeopleDomainEntityPerson         $person
 	 * @param ComNotificationsDomainEntitySetting $setting
 	 * 
-	 * @return BOOLEAN
+	 * @return int
 	 */
 	public function shouldNotify($person, $setting)
 	{
@@ -234,21 +229,11 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
             return false;
                    
 	    //check if the target allows access to the person
-        if(isset($this->object) && $this->object->isSubscribable())
-        {    
-        	if(!$this->target->allows($person, 'access')) 
-        	{   
-        		$this->object->removeSubscriber($person);   
-            
-            	return false;
-        	} 
-        	elseif($this->object->isPrivatable() && !$this->object->allows($person, 'access')) 
-        	{
-                $this->object->removeSubscriber($person);
-                
-                return false;
-        	}
-        }
+        if(!$this->target->allows($person, 'access')) 
+            return false;
+       
+        if(isset($this->object) && $this->object->isPrivatable() && !$this->object->allows($person, 'access')) 
+        	return false;
         
 	    if($this->type) 
 	    {
@@ -257,6 +242,6 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	         return $delegate->shouldNotify($person, $this, $setting);
 	    }
 	    else 
-	    	return ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL;
+	    	return ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL;;
 	}	
 }

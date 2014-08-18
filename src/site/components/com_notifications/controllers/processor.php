@@ -63,8 +63,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $config->append(array(
             'parser'    => 'com://site/notifications.template.helper.parser',
             'behaviors' => array(
-                'com://site/mailer.controller.behavior.mailer'
-                    => $config->toArray()       
+                'com://site/mailer.controller.behavior.mailer' => $config->toArray()       
              )
         ));
         	
@@ -81,8 +80,8 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     protected function _actionProcess(KCommandContext $context)
     {
         $notifications = $this->getService('repos://site/notifications.notification')
-            				->getQuery(true)
-            				->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
+            ->getQuery(true)
+            ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
         
         if($this->id) 
         {
@@ -122,65 +121,6 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     }
     
     /**
-     * Renders emails for a list of people
-     *
-     * @param array $config Config parameter
-     *
-     * @return array
-     */
-    protected function _renderMails($config)
-    {
-        $mails = array();
-        $config = new KConfig($config);
-        $people = $config->people;
-        $notification = $config->notification;
-        
-        foreach($people as  $person)
-        {
-            if($ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL)
-                continue;
-             
-            //since each owner revieces the mail, they are in fact the viewer
-            //so we need to set the as viewer while processing the notification
-            KService::set('com:people.viewer', $person);
-             
-            $notification->owner = $person;
-            
-            $data = new KConfig($this->_parser->parse($notification));
-            
-            $data->append(array(
-                    'email_subject' => $data->title,
-                    'email_title' => pick($data->email_subject, $data->title),
-                    'email_body' => $data->body,
-                    'notification' => $notification
-            ));
-            
-            if($notification->target && !$notification->target->eql($person))
-                $data->commands->insert('notification_setting', array('actor'=>$notification->target));
-            
-            $body = $this->renderMail(array(
-                    'layout' => false,
-                    'template' => 'notification',
-                    'data' => array(
-                        'person' => $person,
-                        'commands' => $data->commands,
-                        'subject' => $notification->subject,
-                        'title' => $data->email_title,
-                        'body' => $data->email_body
-                    )
-            ));
-                
-            $mails[] = array(
-                  'subject' => $data->email_subject,
-                  'body' => $body,
-                  'to' => $person->email      
-            );
-        }
-         
-        return $mails;
-    }
-    
-    /**
      * Send a set of notifications
      *
      * @param ComNotificationsDomainEntityNotification $notification Notification
@@ -191,25 +131,12 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     {
         $people = $this->getService('repos://site/actors.actor')->getQuery(true)->id($notification->subscriberIds->toArray())->fetchSet();
         $settings = $this->getService('repos://site/notifications.setting')
-                    ->getQuery(true,array('actor.id'=>$notification->target->id))
-                    ->fetchSet();
-                  
+                        ->getQuery(true,array('actor.id'=>$notification->target->id))
+                        ->fetchSet();
+        
         $settings = AnHelperArray::indexBy($settings, 'person.id');
-
-        foreach($people as $index=>$person)
-        {
-        	if($notification->shouldNotify($person, $setting))
-        	{
-                $person->addNotification($notification);
-        	}
-            else
-            {
-            	$notification->removeSubscribers($person);
-            }
-        }
         
         $mails = $this->_renderMails(array('notification'=>$notification,'people'=>$people, 'settings'=>$settings));
-        
         $debug = $this->getBehavior('mailer')->getTestOptions()->enabled;
         
         if($debug) 
@@ -222,17 +149,17 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                 
                 if($i < 3)
                 {
-                    $body = array();
-                    $body[] = 'Subject : '.$mail['subject'];
+                    $body   = array();
+                    $body[] = 'Subject   : '.$mail['subject'];
                     $body[] = $mail['body'];
-                    $body = implode('<br />', $body);
+                    $body   = implode('<br />', $body);
                     $bodies[] = $body;
                 }
             }
             
             $bodies[] = 'Sending out '.count($mails).' notification mail(s)';
             $bodies[] = '<br /><br />'.implode('<br />',$recipients);            
-            $mails = array(array(
+            $mails    = array(array(
                  'subject'  => $notification->name,
                  'body'     => implode('<hr />', $bodies)     
             ));
@@ -241,4 +168,73 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         foreach($mails as $mail)
             $this->mail($mail);
     }    
+    
+	/**
+     * Renders emails for a list of people
+     *
+     * @param array $config Config parameter
+     *
+     * @return array
+     */
+    protected function _renderMails($config)
+    {
+        $mails = array();
+        $config = new KConfig($config);
+        $settings = $config->settings;
+        $people = $config->people;
+        $notification = $config->notification;
+        
+        foreach($people as  $person)
+        {
+            $setting = $settings->{$person->id};
+    
+            if(!$ret = $notification->shouldNotify($person, $setting)) 
+            {
+                $notification->removeSubscribers($person);
+                continue;
+            }
+             
+            $person->addNotification($notification);
+            
+            if($ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL)
+                continue;
+             
+            //since each owner revieces the mail, they are in fact the viewer
+            //so we need to set the as viewer while processing the notification
+            KService::set('com:people.viewer', $person);
+             
+            $notification->owner = $person;
+            $data = new KConfig($this->_parser->parse($notification));
+            
+            $data->append(array(
+                'email_subject' => $data->title,
+                'email_title'	=> pick($data->email_subject, $data->title),
+                'email_body' 	=> $data->body,
+                'notification'	=> $notification
+            ));
+            
+            if($notification->target && !$notification->target->eql($person))
+                $data->commands->insert('notification_setting', array('actor'=>$notification->target)); 
+                     
+            $body = $this->renderMail(array(
+                    'layout'   => false,
+                    'template' => 'notification',
+                    'data' => array(
+                        'person'    => $person,
+                        'commands'  => $data->commands,
+                        'subject' => $notification->subject,
+                        'title'	  => $data->email_title,
+                        'body'    => $data->email_body
+                    )
+            ));
+                
+            $mails[] = array(
+                  'subject' => $data->email_subject,
+                  'body'    => $body,
+                  'to'      => $person->email      
+            );
+        }
+         
+        return $mails;
+    }
 }
