@@ -45,7 +45,6 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $this->registerCallback('after.edit', array($this, 'updateMentionsFromBody'));
         
         $this->registerCallback(array('after.add', 'after.edit'), array($this, 'notifyMentioned'));
-        
     }
 	
 	/**
@@ -115,18 +114,20 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 		if(!$context->query)
             $context->query = $this->_mixer->getRepository()->getQuery(); 
 
+        print_r($this->mention);    
+            
 		if($this->mention)
 		{
 			$query = $context->query;
 			
-			$usernames = array();
+			
 			$entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
 			
 			$query
 			->join('left', 'anahita_edges AS edge', $entityType.'.id = edge.node_b_id')
 			->join('left', 'anahita_nodes AS mention', 'edge.node_a_id = mention.id');
 			
-			$this->mention = (array) $this->mention;
+			$usernames = array();
 			
 			foreach($this->mention as $mention)
 			{
