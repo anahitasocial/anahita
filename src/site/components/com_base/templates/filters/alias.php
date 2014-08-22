@@ -41,7 +41,6 @@ class ComBaseTemplateFilterAlias extends LibBaseTemplateFilterAlias
             '@flash_message' => '$this->renderHelper(\'ui.flash\')',		            
             '@commands('=>'$this->getHelper(\'toolbar\')->commands(',
 			'@content(' => 'PlgContentfilterChain::getInstance()->filter(',
-			//'@content(' => '$this->renderHelper(\'com://site/base.template.helper.content.parse\',',
 			'@pagination(' => '$this->renderHelper(\'ui.pagination\',',		
 			'@avatar(' => '$this->renderHelper(\'com://site/actors.template.helper.avatar\',',			
 			'@name(' => '$this->renderHelper(\'com://site/actors.template.helper.name\',',		    

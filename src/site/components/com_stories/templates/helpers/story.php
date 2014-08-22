@@ -72,6 +72,39 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 		 
 		return $helper->name($actor);		
 	}
+	
+	/**
+	 * Return a possessive noune
+	 * 
+	 * @param  ComStoriesDomainEntityStory $story Story
+	 * @param  ComActorsDomainEntityActor $actor Actor
+	 * 
+	 * @return string
+	 */
+	public function possessiveNoune($story, $actor)
+	{
+		if(is_array($actor) || empty($actor)) 
+		{
+			$value = JText::_('LIB-AN-THEIR');
+		}
+		else 
+		{
+			if($actor->eql($story->subject))
+			{
+				$value = JText::_(KService::get('com:actors.template.helper')->noune($actor, array('type'=>'possessive')));
+			}
+			elseif( $actor->eql(get_viewer()))
+			{
+			     $value = JText::_('LIB-AN-YOUR');
+			}
+			else
+			{ 
+				$value = sprintf(JText::_('LIB-AN-THIRD-PERSON\'S'), $this->actorName($actor));
+			}
+		}
+			
+		return $value;	
+	}
 
 	/**
 	 * Returns an HTML link to a node URL
