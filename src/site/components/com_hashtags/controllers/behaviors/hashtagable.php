@@ -96,17 +96,19 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 	{				
 		if(!$context->query)
             $context->query = $this->_mixer->getRepository()->getQuery(); 
-
+    
 		if($this->hashtag)
 		{
 			$query = $context->query;
-			
 			$hashtags = array();
 			$entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
+			$this->hashtag = (is_string($this->hashtag)) ? array($this->hashtag) : $this->hashtag;
+			
+			$edgeType = 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag';
 			
 			$query
-			->join('left', 'anahita_edges AS edge', $entityType.'.id = edge.node_b_id')
-			->join('left', 'anahita_nodes AS hashtag', 'edge.node_a_id = hashtag.id');
+			->join('left', 'anahita_edges AS hashtag_edge', '('.$entityType.'.id = hashtag_edge.node_b_id AND hashtag_edge.type=\''.$edgeType.'\')')
+			->join('left', 'anahita_nodes AS hashtag', 'hashtag_edge.node_a_id = hashtag.id');
 			
 			foreach($this->hashtag as $hashtag)
 			{
@@ -115,8 +117,9 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 					$hashtags[] = $hashtag;
 			}
 			
+			
+			
 			$query
-			->where('edge.type', '=', 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag')
 			->where('hashtag.name', 'IN', $hashtags)
 			->group($entityType.'.id');
 			
