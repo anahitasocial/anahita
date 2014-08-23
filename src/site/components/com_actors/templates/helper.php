@@ -151,7 +151,12 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 		
 		$url = $this->getActorURL($actor);
 				
-		return '<a class="actor-name" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$name.'</a>';
+		$name = '<a class="actor-name" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$name.'</a>';
+		
+		if(is_person($actor))
+			$name .= ' <span class="an-meta">@'.$actor->username.'</span>';
+		
+		return $name;
 	}
 	
 	/**

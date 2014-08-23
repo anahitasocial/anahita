@@ -113,21 +113,19 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	{				
 		if(!$context->query)
             $context->query = $this->_mixer->getRepository()->getQuery(); 
-
-        print_r($this->mention);    
-            
+    
 		if($this->mention)
 		{
 			$query = $context->query;
-			
-			
+			$usernames = array();
 			$entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
+			$this->mention = (is_string($this->mention)) ? array($this->mention) : $this->mention;
+			
+			$edgeType = 'ComTagsDomainEntityTag,ComPeopleDomainEntityMention,com:people.domain.entity.mention';
 			
 			$query
-			->join('left', 'anahita_edges AS edge', $entityType.'.id = edge.node_b_id')
-			->join('left', 'anahita_nodes AS mention', 'edge.node_a_id = mention.id');
-			
-			$usernames = array();
+			->join('left', 'anahita_edges AS mention_edge', '('.$entityType.'.id = mention_edge.node_b_id AND mention_edge.type=\''.$edgeType.'\')')
+			->join('left', 'anahita_nodes AS mention', 'mention_edge.node_a_id = mention.id');	
 			
 			foreach($this->mention as $mention)
 			{
@@ -137,10 +135,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 					$usernames[] = $username;
 			}
 			
-			$edgeType = 'ComTagsDomainEntityTag,ComPeopleDomainEntityMention,com:people.domain.entity.mention';
-			
 			$query
-			->where('edge.type', '=', $edgeType)
 			->where('mention.person_username', 'IN', $usernames)
 			->group($entityType.'.id');
 			

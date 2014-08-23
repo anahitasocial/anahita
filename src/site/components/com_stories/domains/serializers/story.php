@@ -79,7 +79,7 @@ class ComStoriesDomainSerializerStory extends ComBaseDomainSerializerDefault
             }
 //        }
         
-        $data['creatiomTime'] = $entity->creationTime->getDate();        
+        $data['creationTime'] = $entity->creationTime->getDate();        
 
         if($entity->getIdentifier()->name == 'story')
 	        foreach($entity->getComments() as $comment)
