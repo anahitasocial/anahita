@@ -49,11 +49,6 @@
 <?= @template('_grid', array('actors'=>$actor->leaders->limit($limit))) ?>
 <?php endif; ?>
 
-<?php if( $viewer->eql($actor) && $actor->mutualCount ) : ?>
-<h4><?= @text('COM-ACTORS-SOCIALGRAPH-MUTUALS') ?></h4>
-<?= @template('_grid', array('actors'=>$actor->getMutuals()->limit($limit))) ?>
-<?php endif; ?>
-
 <?php if( isset($commons) && !$viewer->eql($actor) && $commons->getTotal() ) : ?>
 <h4><?= @text('COM-ACTORS-SOCIALGRAPH-COMMON') ?></h4>
 <?= @template('_grid', array('actors'=>$commons->limit($limit))) ?>

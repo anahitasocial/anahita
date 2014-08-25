@@ -50,7 +50,10 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             //for now render actor socialgraph bar here
             if($this->getController()->get == 'graph') 
             {
-                $this->_configureGraphBar();
+                if($this->getController()->type == 'leadables')
+                	$this->_configureLeadableBar();
+                else
+            		$this->_configureGraphBar();
             } 
             else 
             {
@@ -60,10 +63,8 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             }
         }
         //if viewing a list of actors related to another actor
-        elseif( $this->getController()->isOwnable() && $this->getController()->actor ) 
-        {
+        elseif($this->getController()->isOwnable() && $this->getController()->actor)
             $this->_configureBar();                        
-        }
     } 
     
     /**
@@ -75,7 +76,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
     protected function _configureGraphBar()
     {   
         $entity = $this->getController()->getItem();
-        $types  = array();
+        $types = array();
 
         if($entity->isFollowable())
         	$types[] = 'Followers';
@@ -85,7 +86,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             $types[] = 'Leaders';
             $types[] = 'Mutuals';
 
-            if(!$entity->eql( get_viewer()))
+            if(!$entity->eql(get_viewer()))
                 $types[] = 'CommonLeaders';
         }
 
@@ -97,9 +98,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
         foreach($types as $type)
         {
             $label = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-LINK-SOCIALGRAPH-'.$type));
-            
             $label[] = 'COM-ACTORS-NAV-LINK-SOCIALGRAPH-'.strtoupper($type);
-            
             $cmd = strtolower($filter->sanitize($type));
             
             $this->addNavigation('navbar-'.$cmd,translate($label), $entity->getURL().'&get=graph&type='.$cmd, $this->getController()->type == $cmd);
@@ -110,6 +109,27 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
         $title[] = 'COM-ACTORS-NAV-TITLE-SOCIALGRAPH';
         
         $this->setTitle(sprintf(translate($title), $entity->name));
+        
+        $this->setActor($entity);
+    }
+    
+    /**
+     * Configure the graph bar for when the viewer wants to add new followers to this actor
+     * 
+     * @return void
+     */
+    protected function _configureLeadableBar()
+    {
+    	$entity = $this->getController()->getItem();
+    	$title = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-TITLE-LEADABLES'));
+        $title[] = 'COM-ACTORS-NAV-TITLE-LEADABLES';
+        
+        $this->setTitle(sprintf(translate($title), $entity->name));
+        
+        $title = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-DESCRIPTION-LEADABLES'));
+        $description[] = 'COM-ACTORS-NAV-DESCRIPTIONS-LEADABLES';
+        
+        $this->setDescription(translate($description));
         
         $this->setActor($entity);
     }
@@ -130,7 +150,6 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
 
         foreach($filters as $filter)
         {
-            //COM-[COMPONENT]-NAV-FILTER-[ADMINISTRATING|FOLLOWING]
             $label = array(                
                 strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-FILTER-'.$filter),
                 strtoupper('COM-ACTORS-NAV-FILTER-'.$filter)                

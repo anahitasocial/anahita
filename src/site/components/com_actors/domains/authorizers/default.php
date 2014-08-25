@@ -108,7 +108,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         }
         else
         {
-            $ret = (bool)$this->_entity->allows($this->_viewer, 'access');
+            $ret = (bool) $this->_entity->allows($this->_viewer, 'access');
         }
             
         return $ret;
@@ -190,6 +190,29 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 			return false;
 		
 		return true;
+	}
+	
+	/**
+	 * If true then the viewer can add leadables (new followers) to the group
+	 * @param KCommandContext $context Context parameter
+	 * 
+	 * @return boolean
+	 */
+	protected function _authorizeLeadable(KCommandContext $context)
+	{
+		//obviously guests cannot add new followers
+		if(is_guest($this->_viewer))
+        	return false;
+        	
+        //viewers cannot add new followers to themselves	
+        if($this->_viewer->eql($this->_entity))
+        	return false;	
+
+        //new followers cannot be added to people	
+        if(is_person($this->_entity))
+        	return false;	
+        		
+        return $this->_entity->authorize('action', 'leadable:add');	
 	}
      
     /**
