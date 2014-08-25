@@ -84,19 +84,14 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        
     	$context->append(array(
             'query' => $this->getRepository()->getQuery()
         ));
 
         $query = $context->query;        
 
-        if($this->q) 
-        {
+        if($this->q)
             $query->keyword($this->getService('anahita:filter.term')->sanitize($this->q));
-        }  
-        
-        $key = KInflector::pluralize($this->getIdentifier()->name);
         
         if($this->ids) 
         {
@@ -105,7 +100,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         } 
         else 
         {
-            $query->limit( $this->limit, $this->start );
+            $query->limit($this->limit, $this->start);
         }
         
         $entities = $query->toEntitySet();
@@ -269,22 +264,18 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _actionSetPrivacy(KCommandContext $context)
     {
         //call the parent privactable behavior
-        if($this->hasBehavior('privatable')) 
-        {
+        if($this->hasBehavior('privatable'))
             $this->getBehavior('privatable')->execute('action.setprivacy', $context);
-        }
         
         //now set the follow request
         $data = $context->data;
         
         //if access is not followers
         //then set the allowFollowRequest to false
-        if($data->access != 'followers') 
-        {
+        if($data->access != 'followers')
             $data->allowFollowRequest = false;
-        }
         
-        $this->getItem()->allowFollowRequest = (bool)$data->allowFollowRequest;
+        $this->getItem()->allowFollowRequest = (bool) $data->allowFollowRequest;
     }
     
     /**
@@ -309,9 +300,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             $url = $context->result->getURL().'&get=settings';
         }
         
-        if($url) 
-        {
+        if($url)
             $context->response->setRedirect(JRoute::_($url));
-        }
     }
 }

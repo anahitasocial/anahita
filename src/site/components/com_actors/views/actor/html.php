@@ -65,13 +65,13 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
 		
         $context->gadgets->insert('socialgraph', array(
         	'title' => translate(array('COM-ACTORS-GADGET-LABEL-SOCIALGRAPH','COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-SOCIALGRAPH')),                
-            'url' => $context->actor->getURL().'&get=graph&layout=gadget',
+            'url' => $context->actor->getURL().'&get=graph&layout=gadget_profile',
             'title_url'	=> $context->actor->getURL().'&get=graph&type=followers'
         ));
 				
-        if($this->_state->getItem()->authorize('access'))
+        if($context->actor->authorize('access'))
         {        	
-        	$this->_state->getItem()->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
+        	$context->actor->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
         	
             $this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
             

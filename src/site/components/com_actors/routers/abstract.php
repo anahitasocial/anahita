@@ -29,11 +29,10 @@ abstract class ComActorsRouterAbstract extends ComBaseRouterDefault
      */
     public function build(&$query)
     {
-    	if ( isset($query['alias']) && isset($query['id']) ) 
+    	if(isset($query['alias']) && isset($query['id'])) 
     	{
-    		if ( !isset($query['get']) ) {
+    		if(!isset($query['get']))
     			$query['id'] = $query['id'].'-'.$query['alias'];
-    		}
     		
     		unset($query['alias']);	
     	}
@@ -41,26 +40,32 @@ abstract class ComActorsRouterAbstract extends ComBaseRouterDefault
         $has_id = isset($query['id']);
         $segments = parent::build($query);
         
-        if ( $has_id ) 
+        if($has_id) 
         {
-        	if ( isset($query['get']) ) {
+        	if(isset($query['get'])) 
+        	{
         		$segments[] = $query['get'];
-        		if ( $query['get'] == 'graph' ) {
-        			if ( !isset($query['type']) ) {
+        		
+        		if($query['get'] == 'graph') 
+        		{
+        			if(!isset($query['type']))
         				$query['type'] = 'followers';
-        			}
+        			
         			$segments[] = $query['type'];
+        			
         			unset($query['type']);
         		}
+        		
         		unset($query['get']);
         	}
         } 
-        else if ( isset($query['oid']) ) 
+        elseif(isset($query['oid'])) 
         {
-        	if ( $query['oid'] == 'viewer' ) {
+        	if($query['oid'] == 'viewer')
         		$query['oid'] = get_viewer()->uniqueAlias;
-        	}
+        	
         	$segments[] = '@'.$query['oid'];
+        	
         	unset($query['oid']);
         }
         
@@ -77,9 +82,10 @@ abstract class ComActorsRouterAbstract extends ComBaseRouterDefault
     {    	
     	$path = implode('/', $segments);
     	$vars = array();
-    	
     	$matches = array();
-    	if ( preg_match('/(\d+)-([^\/]+)/', $path, $matches) ) {
+    	
+    	if(preg_match('/(\d+)-([^\/]+)/', $path, $matches)) 
+    	{
     		$vars['alias'] = $matches[2];
     		$path = str_replace($matches[0], $matches[1], $path);
     		$segments = array_filter(explode('/', $path));    		
@@ -87,16 +93,13 @@ abstract class ComActorsRouterAbstract extends ComBaseRouterDefault
     	
     	$last = AnHelperArray::getValueAtIndex($segments, AnHelperArray::LAST_INDEX);    	
     	
-    	if ( preg_match('/@\w+/', $last) ) {
-    		$vars['oid'] = str_replace('@','',array_pop($segments));
-    	}
-		
+    	if(preg_match('/@\w+/', $last))
+    		$vars['oid'] = str_replace('@', '', array_pop($segments));
+    	
         $vars = array_merge($vars, parent::parse($segments));
         
-        if ( isset($vars['get']) && $vars['get'] == 'graph' ) {        	
-        	$vars['type'] = count($segments) ? array_shift($segments) : 'followers';        	
-        }
-       
+        if(isset($vars['get']) && $vars['get'] == 'graph')        	
+        	$vars['type'] = count($segments) ? array_shift($segments) : 'followers';
        
         return $vars;
     }

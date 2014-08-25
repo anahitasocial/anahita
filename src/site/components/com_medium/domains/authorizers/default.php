@@ -83,12 +83,9 @@ class ComMediumDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 		if($this->_viewer->eql($this->_entity->author))
 			return true;
 
-		if($this->_entity->isOwnable())
-		{
-			//if the viewer is the admin of the medium owner
-			if($this->_entity->owner->authorize('administration'))
-				return true;		
-		}
+		//if the viewer is the admin of the medium owner
+		if($this->_entity->isOwnable() && $this->_entity->owner->authorize('administration'))
+			return true;		
 		
 		return false;
 	}

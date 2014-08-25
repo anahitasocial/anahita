@@ -10,13 +10,19 @@
 	<?= @helper('ui.gadget', $gadgets->extract('socialgraph')) ?>	
 </module>
 
+<?php if($gadget = $gadgets->extract('addFollower')): ?>
+<module position="sidebar-b">
+	<?= @helper('ui.gadget', $gadget) ?>
+</module>
+<?php endif; ?>
+
 <module position="sidebar-a">
 <div id="actor-avatar">
 	<?= @avatar($item, 'medium', false) ?>
 </div>
 </module>
 
-<?php if ( count($gadgets) > 1 ) : ?>
+<?php if(count($gadgets) > 1) : ?>
 <module position="sidebar-a">	
 	<ul class="nav nav-pills nav-stacked sidelinks" data-behavior="BS.Tabs" data-bs-tabs-options="{'smooth':true,'tabs-selector':'.profile-tab-selector a','sections-selector':'! * .profile-tab-content'}">
 		<?php foreach($gadgets as $index=>$gadget) : ?>

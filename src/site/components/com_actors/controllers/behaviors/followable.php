@@ -94,19 +94,23 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-		if(!$this->getItem()->leading( $this->actor ))
+		if(!$this->getItem()->leading($this->actor))
 		{
-		    $this->getItem()->addFollower( $this->actor );
+		    $this->getItem()->addFollower($this->actor);
 		    
 		    $story = $this->createStory(array(
-		            'name' 		=> 'actor_follow',
-		            'subject'	=> $this->actor,
-		            'owner'		=> $this->actor,
-		            'target'	=> $this->getItem()
+		    	'name' => 'actor_follow',
+		        'subject' => $this->actor,
+		        'owner' => $this->actor,
+		        'target' => $this->getItem()
 		    ));
 		    
 		    //if the entity is not an adiminstrable actor (person)
-		    $this->createNotification(array('subject'=>$this->actor, 'target'=>$this->getItem(),'name'=>'actor_follow'));
+		    $this->createNotification(array(
+		    	'subject' => $this->actor, 
+		    	'target' => $this->getItem(),
+		    	'name' => 'actor_follow'
+		    ));
 		}
         
         return $this->getItem();
@@ -123,7 +127,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-		$this->getItem()->removeFollower( $this->actor );
+		$this->getItem()->removeFollower($this->actor);
         
 		return $this->getItem();
 	}
@@ -174,6 +178,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
         $filters  = array();
         $entities = array();
         $entity = $this->getItem();
+        $viewer = get_viewer();
         
         if($this->getItem()->isFollowable())
         {
@@ -185,6 +190,12 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             {
                 $entities = $this->getItem()->blockeds;
             }
+            elseif($this->type == 'leadables' && $entity->authorize('leadable'))
+            {
+            	$excludeIds = KConfig::unbox($entity->followers->id);
+            	$excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));            	
+            	$entities = $viewer->followers->where('actor.id', 'NOT IN', $excludeIds);
+            }
         }
         
         if($this->getItem()->isLeadable()) 
@@ -193,7 +204,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             {
                 $entities = $this->getItem()->leaders;
             } 
-            elseif( $this->type == 'mutuals')
+            elseif($this->type == 'mutuals')
             {
                 $entities = $this->getItem()->getMutuals();
             }
@@ -212,9 +223,9 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             $entities->where('id','NOT IN', $xid);
             
         $entities->limit($this->limit, $this->start);
-        
+            
         if($this->q)
-            $entities->keyword($this->q);
+            $entities->keyword($this->q); 
             
         $this->setList($entities)->actor($this->getItem());
        
@@ -226,7 +237,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      * 
      * @param KCommandContext $context Context parameter
      * 
-     * @return void
+     * @return ComActorsDomainEntityActor object
      */
     public function getActor(KCommandContext $context)
     {
