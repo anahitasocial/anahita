@@ -120,7 +120,6 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 		    	$this->createNotification(array(
 		    		'name' => 'actor_leadable_add',
 		    		'subject' => $this->viewer,
-		    	//	'object' => $this->actor, 
 		    		'target' => $this->getItem(),
 		    		'subscribers' => array($this->actor->id)
 		    	));
