@@ -111,25 +111,9 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
             return false;
             
 	    if(!$this->getItem())
-            return false;
-	    
-	    return $this->getItem()->authorize('follower', array('viewer'=>$this->actor));	    
-	}
-	
-	/**
-	 * Authorize adding a follower to the actor
-     * 
-	 * @return boolean
-	 */
-	public function canAddleadable()
-	{
-        if(!$this->actor)
-            return false;
+            return false;  
             
-	    if(!$this->getItem())
-            return false;
-	    
-	    return $this->getItem()->authorize('leadable', array('viewer'=>$this->actor));	    
+	    return $this->getItem()->authorize('follower', array('viewer'=>$this->actor));	    
 	}
     
     /**
@@ -155,12 +139,15 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */
     public function canAddblocked()
     {
-        if(!$this->actor)
+    	if(!$this->actor)
             return false;
-            
+
         if(!$this->getItem())
+            return false;   
+   
+		if($this->getItem()->isAdministrable() && !$this->canAdminister())	
             return false;
-        
+
         return $this->actor->authorize('blocker', array('viewer'=>$this->getItem()));     
     }
     

@@ -64,7 +64,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     public function addListCommands()
     {
-        //the context actor
+    	//the context actor
         $actor1 = $this->getController()->actor;
         
         //the actor entity that the actions are being evaluated against
@@ -72,63 +72,68 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
                 
         //if actor is not available, then all the against are with respect to the viewer
         $actor1 = pick($actor1, get_viewer());
-
+        
         //if context actor is administrable (i.e. groups) then actions are administaration actions
         if($actor1->isAdministrable())
         {
-            if($actor1->authorize('administration'))
+        	//if adding new followers is allowed
+	   		if($actor1->authorize('leadable'))
+	        {
+	            $this->_update = false;
+	        	
+	        	if($command = $this->getLeadableCommand($actor1, $actor2))
+	        	{
+	           		$labels = array();
+	            	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-LEADABLE-ADD';
+	            	$labels[] = 'COM-ACTORS-SOCIALGRAPH-LEADEABLE-ADD';
+	            	$command->label = translate($labels);
+	                    
+	        		$this->addCommand($command);
+	       		}
+	        }            
+        	
+	        $graphType = KRequest::get('get.type', 'cmd', 'followers');
+	        
+        	if($actor1->authorize('administration') && $graphType != 'leadables')
             {
                 $this->_update = false;
-    
+                
                 if($command = $this->getBlockCommand($actor1, $actor2)) 
                 {
-                	$label = pick($command->label, $command->name);
-                	$labels = array();
-                	$labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($label);
-                	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($label);                    
-                	$command->label = translate($labels);
+                    $labels = array();
+                    $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->action);   
+                    $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->action);                 
+                    $command->label = translate($labels);
                     
                     $this->addCommand($command);   
                 }
             }
         }
         else
-        {
-            if($command = $this->getFollowCommand($actor1, $actor2)) 
+        {	
+        	$this->_update = true;
+        	
+        	if($command = $this->getFollowCommand($actor1, $actor2)) 
+	        {
+	        	$label = pick($command->label, $command->name);
+	            $labels = array();
+	            $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($label);
+	            $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($label);                    
+	            $command->label = translate($labels);
+	                
+	            $this->addCommand($command);
+	        }
+	        
+	        $this->_update = false;
+	        
+            if($command = $this->getBlockCommand($actor1, $actor2)) 
             {
-                $label = pick($command->label, $command->name);
-                $labels = array();
-                $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($label);
-                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($label);                    
-                $command->label = translate($labels);
-                
-                $this->addCommand($command);
-            }
-            
-            if($command = $this->getBlockCommand($actor1, $actor2) ) {
                 $labels = array();                                
-                $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->name);
-                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->name);                    
+                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->name); 
+                $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->name);                   
                 $command->label = translate($labels);
                                 
                 $this->addCommand($command);   
-            }
-        }
-        
-        if($actor1->authorize('leadable'))
-        {
-        	if($command = $this->getLeadableCommand($actor1, $actor2))
-            {
-            	$this->_update = false;
-            	
-            	$labels = array();
-                $labels[] = 'COM-ACTORS-SOCIALGRAPH-LEADEABLE-ADD';
-                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-LEADABLE-ADD';
-                $command->label = translate($labels);
-                    
-                $this->addCommand($command);   
-                    
-                $this->addCommand($command); 
             }
         }
     } 
@@ -141,20 +146,11 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     public function addToolbarCommands()
     {        
         $actor = $this->getController()->getItem();
-        $viewer = get_viewer();
         
         $this->_use_post = true;
     
         $this->addListCommands();
     
-        if(!$viewer->eql($actor) && $actor->authorize('access') && $viewer->following($actor))
-        {
-        	$this->addCommand('notification', array('label' => JText::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT'), 'entity'=>$actor))
-        	->getCommand('notification')
-        	->setAttribute('data-trigger','BS.showPopup')
-        	->setAttribute('data-bs-showpopup-url', JRoute::_('&option=notifications&view=settings&layout=modal&oid='.$actor->id));
-        }
-        
         if($actor->authorize('administration'))
         {
             $this->addCommand('edit', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
@@ -232,7 +228,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             return null;
         
         if($actor1->eql($actor2))
-            return null;   
+            return null;    
         
         if($actor1->blocking($actor2)) 
         {
@@ -249,8 +245,8 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             return $command;                        
         }
     }
-    
-    /**
+
+	/**
      * Return commands add/remove leadables (new followers) if $actor1 (context) can perform those commands on $actor2
      *
      * @param ComActorsDomainEntityActor  $actor that is going to be followed 
@@ -259,11 +255,11 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      * @return LibBaseTemplateObject
      */ 
     public function getLeadableCommand($actor, $leadable)
-    {
-    	 if(!$actor->isFollowable() || !$leadable->isLeadable())
+    {    	
+    	if(!$actor->isFollowable() || !$leadable->isLeadable())
             return null;
     	
-         if($actor->eql($leadable))
+        if($actor->eql($leadable))
             return null;    
 
         if($leadable->following($actor) || $actor->blocking($leadable))
@@ -273,7 +269,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $command->name = 'addfollower';
             
        return $command;
-    }
+    }    
     
 	/**
      * New button toolbar
@@ -338,16 +334,23 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $url = $command->receiver->getURL();
                
         $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
-                
-        $command->href($url);
         
-        if(!$this->_use_post)
+         if(!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json')
+            $url .= '&layout=list';
+                
+        $command->href($url); 
+
+    	if(!$this->_update)
         {
-            $command->setAttribute('data-trigger', 'Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
+            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
+        }
+        elseif(!$this->_use_post)
+        {
+            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',replace:\'!.an-record\'}');
         }
         else
         {
-            $command->setAttribute('data-trigger', 'Submit');  
-        }                                 
+            $command->setAttribute('data-trigger','Submit');
+        }
     }
 }

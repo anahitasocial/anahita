@@ -50,10 +50,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             //for now render actor socialgraph bar here
             if($this->getController()->get == 'graph') 
             {
-                if($this->getController()->type == 'leadables')
-                	$this->_configureLeadableBar();
-                else
-            		$this->_configureGraphBar();
+            	$this->_configureGraphBar();
             } 
             else 
             {
@@ -101,7 +98,14 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             $label[] = 'COM-ACTORS-NAV-LINK-SOCIALGRAPH-'.strtoupper($type);
             $cmd = strtolower($filter->sanitize($type));
             
-            $this->addNavigation('navbar-'.$cmd,translate($label), $entity->getURL().'&get=graph&type='.$cmd, $this->getController()->type == $cmd);
+            if($cmd == 'followers' && $this->getController()->type == 'leadables')
+            	$active = true;
+            elseif($cmd === $this->getController()->type)
+            	$active = true;
+            else
+            	$active = false;
+            
+            $this->addNavigation('navbar-'.$cmd,translate($label), $entity->getURL().'&get=graph&type='.$cmd, $active);
         }
 
         $title = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-TITLE-SOCIALGRAPH'));
@@ -109,27 +113,6 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
         $title[] = 'COM-ACTORS-NAV-TITLE-SOCIALGRAPH';
         
         $this->setTitle(sprintf(translate($title), $entity->name));
-        
-        $this->setActor($entity);
-    }
-    
-    /**
-     * Configure the graph bar for when the viewer wants to add new followers to this actor
-     * 
-     * @return void
-     */
-    protected function _configureLeadableBar()
-    {
-    	$entity = $this->getController()->getItem();
-    	$title = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-TITLE-LEADABLES'));
-        $title[] = 'COM-ACTORS-NAV-TITLE-LEADABLES';
-        
-        $this->setTitle(sprintf(translate($title), $entity->name));
-        
-        $title = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-DESCRIPTION-LEADABLES'));
-        $description[] = 'COM-ACTORS-NAV-DESCRIPTIONS-LEADABLES';
-        
-        $this->setDescription(translate($description));
         
         $this->setActor($entity);
     }

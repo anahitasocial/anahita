@@ -327,15 +327,14 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     }
         
 	/**
-	 * If true then owner's name is visiable to the viewer, if not the default name is 
-	 * displayed
+	 * If true then viewer can block the entity
 	 * 
 	 * @param KCommandContext $context Context parameter
 	 * 
 	 * @return boolean
 	 */	
 	protected function _authorizeBlocker(KCommandContext $context)
-	{
+	{	
 		//viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
         if(!$this->_entity->isLeadable() || !$this->_viewer->isFollowable())
             return false;    
@@ -344,16 +343,16 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
             return false;
                            
         if($this->_viewer->eql($this->_entity))
-            return false;
-         
-        //if entity is administrable and the viewer is one of the admins then it can not be blocked 
-        if($this->_viewer->isAdministrable() && $this->_viewer->administratorIds->offsetExists($this->_entity->id))
-            return false;
+            return false;    
                  
         //you can't block an admin    
 		if($this->_entity->admin())
 			return false;
-		
+			
+		 //if entity is administrable and the viewer is one of the admins then it can not be blocked 
+        if($this->_entity->isAdministrable() && $this->_entity->administratorIds->offsetExists($this->_viewer->id))
+            return false;		
+  
 		return true;
 	 }
 }

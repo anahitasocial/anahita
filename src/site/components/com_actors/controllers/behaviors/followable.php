@@ -98,19 +98,33 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 		{
 		    $this->getItem()->addFollower($this->actor);
 		    
-		    $story = $this->createStory(array(
-		    	'name' => 'actor_follow',
-		        'subject' => $this->actor,
-		        'owner' => $this->actor,
-		        'target' => $this->getItem()
-		    ));
-		    
-		    //if the entity is not an adiminstrable actor (person)
-		    $this->createNotification(array(
-		    	'subject' => $this->actor, 
-		    	'target' => $this->getItem(),
-		    	'name' => 'actor_follow'
-		    ));
+		    if($this->viewer->eql($this->actor))
+		    {
+		    	$story = $this->createStory(array(
+		    		'name' => 'actor_follow',
+		        	'subject' => $this->actor,
+		        	'owner' => $this->actor,
+		        	'target' => $this->getItem()
+		    	));
+		    	
+		    	 //if the entity is not an adiminstrable actor (person)
+		    	$this->createNotification(array(
+		    		'name' => 'actor_follow',
+		    		'subject' => $this->actor, 
+		    		'target' => $this->getItem()
+		    	));
+		    }
+		    else 
+		    {
+		    	//notify 
+		    	$this->createNotification(array(
+		    		'name' => 'actor_leadable_add',
+		    		'subject' => $this->viewer,
+		    	//	'object' => $this->actor, 
+		    		'target' => $this->getItem(),
+		    		'subscribers' => array($this->actor->id)
+		    	));
+		    }
 		}
         
         return $this->getItem();
@@ -190,8 +204,15 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             {
                 $entities = $this->getItem()->blockeds;
             }
-            elseif($this->type == 'leadables' && $entity->authorize('leadable'))
+            elseif($this->type == 'leadables')
             {
+            	if(!$entity->authorize('leadable'))
+            	{
+            		throw new LibBaseControllerExceptionForbidden('Forbidden');
+
+            		return false;
+            	}	
+            	
             	$excludeIds = KConfig::unbox($entity->followers->id);
             	$excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));            	
             	$entities = $viewer->followers->where('actor.id', 'NOT IN', $excludeIds);

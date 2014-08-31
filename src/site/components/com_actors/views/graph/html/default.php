@@ -27,6 +27,10 @@
 </module>
 <?php endif; ?>
 
+<?php if($type == 'leadables'): ?>
+<h3><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS-ADD-TITLE') ?></h3>
+<?php endif; ?>
+
 <?= @helper('ui.filterbox', @route('view='.@listItemView()->getName().'&layout=list&get=graph&type='.$type.'&id='.$actor->id))?>
 
 <div class="an-entities-wrapper">	
