@@ -98,12 +98,10 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 		{
 		    $this->getItem()->addFollower($this->actor);
 		   
-		    $owner = (is_person($this->getItem())) ? $this->getItem() : $this->actor;
-		    
 		    $story = $this->createStory(array(
 		    		'name' => 'actor_follow',
 		        	'subject' => $this->actor,
-		        	'owner' => $owner,
+		        	'owner' => $this->actor,
 		        	'target' => $this->getItem()
 		    	));
 		    
