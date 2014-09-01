@@ -40,18 +40,22 @@
 <?php if( $actor->leaderCount + $actor->followerCount ) : ?>  
 <div class="an-gadget-socialgraph">
 <?php if( $actor->followerCount ) : ?>
-<h4><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></h4>
+<h4>
+	<?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?> 
+	<?php if($actor->authorize('leadable')): ?>
+	(<small>
+		<a href="<?= @route($actor->getURL().'&get=graph&type=leadables') ?>">
+			<?= @text('LIB-AN-ACTION-ADD') ?>
+		</a>
+	</small>)
+	<?php endif; ?>
+</h4>
 <?= @template('_grid', array('actors'=>$actor->followers->limit($limit))) ?>
 <?php endif; ?>
 
 <?php if( $actor->leaderCount ) : ?>
 <h4><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></h4>
 <?= @template('_grid', array('actors'=>$actor->leaders->limit($limit))) ?>
-<?php endif; ?>
-
-<?php if( $viewer->eql($actor) && $actor->mutualCount ) : ?>
-<h4><?= @text('COM-ACTORS-SOCIALGRAPH-MUTUALS') ?></h4>
-<?= @template('_grid', array('actors'=>$actor->getMutuals()->limit($limit))) ?>
 <?php endif; ?>
 
 <?php if( isset($commons) && !$viewer->eql($actor) && $commons->getTotal() ) : ?>

@@ -39,9 +39,8 @@ class ComBaseControllerBehaviorIdentifiable extends LibBaseControllerBehaviorIde
     	$entity = parent::fetchEntity($context);
     	
     	//set the entity owner as the context actor of the controller
-    	if ( $entity && $this->getRepository()->isOwnable() && $this->isOwnable() ) {
+    	if($entity && $this->getRepository()->isOwnable() && $this->isOwnable())
             $this->setActor($entity->owner);
-    	}
     	
     	return $entity;
     }	

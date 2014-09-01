@@ -50,11 +50,24 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     public function onAfterControllerBrowse(KEvent $event)
     {
-        $actor = $this->getController()->actor;
-        $filter = $this->getController()->filter;
-        
         if($this->getController()->canAdd())
-            $this->addCommand('new', array('actor' => $actor));
+            $this->addCommand('new');     
+    }
+    
+    /**
+     * Called after controller Getgraph
+     *
+     * @param KEvent $event
+     *
+     * @return void
+     */
+    public function onAfterControllerGetgraph(KEvent $event)
+    {
+    	$actor = $this->getController()->actor;
+    	$type = $this->getController()->type;
+    	
+    	if($actor->authorize('leadable') && $type == 'followers')
+            $this->addCommand('AddFollowers', array('actor' => $actor));    
     }
     
     /**
@@ -64,7 +77,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     public function addListCommands()
     {
-        //the context actor
+    	//the context actor
         $actor1 = $this->getController()->actor;
         
         //the actor entity that the actions are being evaluated against
@@ -72,30 +85,37 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
                 
         //if actor is not available, then all the against are with respect to the viewer
         $actor1 = pick($actor1, get_viewer());
-       
+        
         //if context actor is administrable (i.e. groups) then actions are administaration actions
         if($actor1->isAdministrable())
         {
-            if($actor1->authorize('administration'))
+        	//if adding new followers is allowed
+	   		if($actor1->authorize('leadable'))
+	        {
+	            $this->_update = false;
+	        	
+	        	if($command = $this->getLeadableCommand($actor1, $actor2))
+	        	{
+	           		$labels = array();
+	            	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-LEADABLE-ADD';
+	            	$labels[] = 'COM-ACTORS-SOCIALGRAPH-LEADEABLE-ADD';
+	            	$command->label = translate($labels);
+	                    
+	        		$this->addCommand($command);
+	       		}
+	        }            
+        	
+	        $graphType = KRequest::get('get.type', 'cmd', 'followers');
+	        
+        	if($actor1->authorize('administration') && $graphType != 'leadables')
             {
                 $this->_update = false;
-                
-                //how actor2 would see the actions
-                if (false && $command  = $this->getFollowCommand($actor2, $actor1)) 
-                {
-                    $labels = array();
-                    $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->action);
-                    $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->action);                    
-                    $command->label = translate($labels);
-                    
-                    $this->addCommand($command);   
-                }
                 
                 if($command = $this->getBlockCommand($actor1, $actor2)) 
                 {
                     $labels = array();
-                    $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->action);
-                    $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->action);                    
+                    $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->action);   
+                    $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->action);                 
                     $command->label = translate($labels);
                     
                     $this->addCommand($command);   
@@ -103,22 +123,27 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             }
         }
         else
-        {
-            if($command = $this->getFollowCommand($actor1, $actor2)) 
+        {	
+        	$this->_update = true;
+        	
+        	if($command = $this->getFollowCommand($actor1, $actor2)) 
+	        {
+	        	$label = pick($command->label, $command->name);
+	            $labels = array();
+	            $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($label);
+	            $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($label);                    
+	            $command->label = translate($labels);
+	                
+	            $this->addCommand($command);
+	        }
+	        
+	        $this->_update = false;
+	        
+            if($command = $this->getBlockCommand($actor1, $actor2)) 
             {
-                $label = pick($command->label, $command->name);
-                $labels = array();
-                $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($label);
-                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($label);                    
-                $command->label = translate($labels);
-                
-                $this->addCommand($command);
-            }
-            
-            if($command = $this->getBlockCommand($actor1, $actor2) ) {
                 $labels = array();                                
-                $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->name);
-                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->name);                    
+                $labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->name); 
+                $labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->name);                   
                 $command->label = translate($labels);
                                 
                 $this->addCommand($command);   
@@ -216,7 +241,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             return null;
         
         if($actor1->eql($actor2))
-            return null;
+            return null;    
         
         if($actor1->blocking($actor2)) 
         {
@@ -233,6 +258,31 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             return $command;                        
         }
     }
+
+	/**
+     * Return commands add/remove leadables (new followers) if $actor1 (context) can perform those commands on $actor2
+     *
+     * @param ComActorsDomainEntityActor  $actor that is going to be followed 
+     * @param ComPeopleDomainEntityPerson $leadable person that is going to be added as a follower to the $actor
+     *
+     * @return LibBaseTemplateObject
+     */ 
+    public function getLeadableCommand($actor, $leadable)
+    {    	
+    	if(!$actor->isFollowable() || !$leadable->isLeadable())
+            return null;
+    	
+        if($actor->eql($leadable))
+            return null;    
+
+        if($leadable->following($actor) || $actor->blocking($leadable))
+            return null;    
+            
+        $command = $this->getCommand('follow', array('receiver'=>$actor,'actor'=>$leadable,'action'=>'addfollower'));
+        $command->name = 'addfollower';
+            
+       return $command;
+    }    
     
 	/**
      * New button toolbar
@@ -246,11 +296,32 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $name = $this->getController()->getIdentifier()->name;
         $labels = array();
         $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
-        $labels[] = 'New';
+        $labels[] = 'NEW';
         $label = translate($labels);
         $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
         
         $command->append(array('label'=>$label))->href($url);
+    }
+    
+	/**
+     * Add Followers button toolbar
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandAddFollowers($command)
+    {
+        $actor = $command->actor;
+        
+        $labels = array();
+        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-socialgraph-toolbar-leadables-add');
+        $labels[] = 'COM-ACTORS-SOCIALGRAPH-TOOLBAR-LEADABLES-ADD';
+        $label = translate($labels);
+        
+        $url = $actor->getURL().'&get=graph&type=leadables';
+        
+        $command->append(array('label'=>$label))->href($url)->id('leadables-add');
     }
 
     /**
@@ -297,16 +368,23 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $url = $command->receiver->getURL();
                
         $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
-                
-        $command->href($url);
         
-        if(!$this->_use_post)
+         if(!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json')
+            $url .= '&layout=list';
+                
+        $command->href($url); 
+
+    	if(!$this->_update)
         {
-            $command->setAttribute('data-trigger', 'Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
+            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
+        }
+        elseif(!$this->_use_post)
+        {
+            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',replace:\'!.an-record\'}');
         }
         else
         {
-            $command->setAttribute('data-trigger', 'Submit');  
-        }                                 
+            $command->setAttribute('data-trigger','Submit');
+        }
     }
 }

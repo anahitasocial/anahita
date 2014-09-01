@@ -390,61 +390,65 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	 */
 	public function privacy($config = array())
 	{
-	    if ( $config instanceof AnDomainEntityAbstract )
+	    if($config instanceof AnDomainEntityAbstract)
 	        $config = new KConfig(array('entity'=>$config));
 	    else
 	        $config = new KConfig($config);
 	
 	    $config->append(array(
-            'auto_submit'	=> $config->entity && $config->entity->persisted(),
-            'name'			=> 'access'
+            'auto_submit' => $config->entity && $config->entity->persisted(),
+            'name' => 'access'
 	    ));
 	
-	    if ( !$config->options )
+	    if(!$config->options)
 	    {
 	        //need to know which graph options to render
-	        if ( $config->entity->isOwnable() )
+	        if($config->entity->isOwnable())
 	            $config->options = $config->entity->owner;
 	        elseif (is($config->entity, 'ComActorsDomainEntityActor') )
-	           $config->options  = $config->entity;
+	           $config->options = $config->entity;
 	    }
 	
-	    if ( is($config->options, 'ComActorsDomainEntityActor') )
+	    if(is($config->options, 'ComActorsDomainEntityActor'))
 	    {
             $actor = $config->options;
                         
             $options = new KConfig(array(
-                LibBaseDomainBehaviorPrivatable::GUEST      =>  JTEXT::_('LIB-AN-PRIVACYLABEL-PUBLIC')    ,
-                LibBaseDomainBehaviorPrivatable::REG        =>  JTEXT::_('LIB-AN-PRIVACYLABEL-REG')       ,            
+                LibBaseDomainBehaviorPrivatable::GUEST => JText::_('LIB-AN-PRIVACYLABEL-PUBLIC'),
+                LibBaseDomainBehaviorPrivatable::REG =>  JText::_('LIB-AN-PRIVACYLABEL-REG'),            
             ));
 	
-            if ( $actor->isFollowable() ) {
+            if($actor->isFollowable())
                 $options->append(array(
-                        LibBaseDomainBehaviorPrivatable::FOLLOWER   => JTEXT::_('LIB-AN-PRIVACYLABEL-FOLLOWERS'),                
+                	LibBaseDomainBehaviorPrivatable::FOLLOWER => JTEXT::_('LIB-AN-PRIVACYLABEL-FOLLOWERS'),                
                 ));
-            }
             
-            if ( $actor->isLeadable() ) {
+            if($actor->isLeadable())
                 $options->append(array(
-                        LibBaseDomainBehaviorPrivatable::LEADER     => JTEXT::_('LIB-AN-PRIVACYLABEL-LEADERS'),
-                        LibBaseDomainBehaviorPrivatable::MUTUAL     => JTEXT::_('LIB-AN-PRIVACYLABEL-MUTUALS')
+                        LibBaseDomainBehaviorPrivatable::LEADER => JTEXT::_('LIB-AN-PRIVACYLABEL-LEADERS'),
+                        LibBaseDomainBehaviorPrivatable::MUTUAL => JTEXT::_('LIB-AN-PRIVACYLABEL-MUTUALS')
                 ));
-            }
             
-	        if ( $actor->isAdministrable() )
+	        if($actor->isAdministrable())
+	        {
 	            $options->append(array(
-                    LibBaseDomainBehaviorPrivatable::ADMIN	    => JTEXT::_('LIB-AN-PRIVACYLABEL-ADMIN')
+                    LibBaseDomainBehaviorPrivatable::ADMIN => JTEXT::_('LIB-AN-PRIVACYLABEL-ADMIN')
 	            ));
+	        }
 	        else 
             {
-                if ( is_viewer($actor) )
+                if(is_viewer($actor))
+                {
     	            $options->append(array(
                         LibBaseDomainBehaviorPrivatable::ADMIN 	    => JTEXT::_('LIB-AN-PRIVACYLABEL-ONLYYOU')
     	            ));
+                }
                 else
+                {
                     $options->append(array(
                         LibBaseDomainBehaviorPrivatable::ADMIN      => sprintf(JTEXT::_('LIB-AN-PRIVACYLABEL-ONLYNAME'), $actor->name)
-                    ));                    
+                    ));
+                }                    
 	        }
             
             foreach($options as $key => $value) 

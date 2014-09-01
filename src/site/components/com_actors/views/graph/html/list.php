@@ -8,8 +8,8 @@ if ( !empty($q) ) {
 ?>
 
 <?php 
-if ( $item->isAdministrable() )
-	//set the actor as state
+//set the actor as state
+if($item->isAdministrable())
     @listItemView()->getState()->actor = $item;        
 ?>
 

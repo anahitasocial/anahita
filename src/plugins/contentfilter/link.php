@@ -37,7 +37,7 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_NORMAL,
+            'priority' => KCommand::PRIORITY_NORMAL,
         ));
 
         parent::_initialize($config);
@@ -45,7 +45,6 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
     	
 	/**
 	 * Filter a value. 
-	 * The code is extracted from the ignite framework auto_link 
 	 * 
 	 * @param string The text to filter
 	 * 
@@ -58,7 +57,6 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
 		$text = trim($text);
     		    
     	$text = strip_tags($text, "<b><i><u>");
-    	$text = preg_replace("/(?<!http:\/\/)www\./","http://www.", $text);
     	$text = preg_replace( "/((http|ftp)+(s)?:\/\/[^<>\s]+)/i", "<a href=\"\\0\" target=\"_blank\">\\0</a>", $text);
 
 		$this->_replaceTags($text);

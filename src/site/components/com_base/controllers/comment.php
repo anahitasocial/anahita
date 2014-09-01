@@ -105,7 +105,7 @@ class ComBaseControllerComment extends ComBaseControllerService
 	 * Sets the default view to the comment views
 	 * 
 	 * @param 	stirng $view
-	 * @return	ComCommentsControllerResource
+	 * @return	ComBaseControllerComment
 	 */
 	public function setView($view)
 	{

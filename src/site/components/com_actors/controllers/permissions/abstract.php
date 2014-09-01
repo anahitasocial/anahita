@@ -111,8 +111,8 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
             return false;
             
 	    if(!$this->getItem())
-            return false;
-	    
+            return false;  
+            
 	    return $this->getItem()->authorize('follower', array('viewer'=>$this->actor));	    
 	}
     
@@ -139,12 +139,15 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      */
     public function canAddblocked()
     {
-        if(!$this->actor)
+    	if(!$this->actor)
             return false;
-            
+
         if(!$this->getItem())
+            return false;   
+   
+		if($this->getItem()->isAdministrable() && !$this->canAdminister())	
             return false;
-        
+
         return $this->actor->authorize('blocker', array('viewer'=>$this->getItem()));     
     }
     

@@ -36,11 +36,12 @@ class ComBaseControllerBehaviorPrivatable extends KControllerBehaviorAbstract
 	 */
 	protected function _actionSetPrivacy($context)
 	{
-		$data 	= $context->data;
-		$names	= KConfig::unbox($data->privacy_name);
+		$data = $context->data;
+		$names = KConfig::unbox($data->privacy_name);
+		
 		settype($names, 'array');
-		foreach($names as $name) {
+		
+		foreach($names as $name)
 			$this->getItem()->setPermission($name, $data->$name);	
-		}
 	}	
 }

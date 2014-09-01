@@ -108,7 +108,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         }
         else
         {
-            $ret = (bool)$this->_entity->allows($this->_viewer, 'access');
+            $ret = (bool) $this->_entity->allows($this->_viewer, 'access');
         }
             
         return $ret;
@@ -190,6 +190,29 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 			return false;
 		
 		return true;
+	}
+	
+	/**
+	 * If true then the viewer can add leadables (new followers) to the group
+	 * @param KCommandContext $context Context parameter
+	 * 
+	 * @return boolean
+	 */
+	protected function _authorizeLeadable(KCommandContext $context)
+	{
+		//obviously guests cannot add new followers
+		if(is_guest($this->_viewer))
+        	return false;
+        	
+        //viewers cannot add new followers to themselves	
+        if($this->_viewer->eql($this->_entity))
+        	return false;	
+
+        //new followers cannot be added to people	
+        if(is_person($this->_entity))
+        	return false;	
+        		
+        return $this->_entity->authorize('action', 'leadable:add');	
 	}
      
     /**
@@ -304,15 +327,14 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     }
         
 	/**
-	 * If true then owner's name is visiable to the viewer, if not the default name is 
-	 * displayed
+	 * If true then viewer can block the entity
 	 * 
 	 * @param KCommandContext $context Context parameter
 	 * 
 	 * @return boolean
 	 */	
 	protected function _authorizeBlocker(KCommandContext $context)
-	{
+	{	
 		//viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
         if(!$this->_entity->isLeadable() || !$this->_viewer->isFollowable())
             return false;    
@@ -321,16 +343,16 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
             return false;
                            
         if($this->_viewer->eql($this->_entity))
-            return false;
-         
-        //if entity is administrable and the viewer is one of the admins then it can not be blocked 
-        if($this->_viewer->isAdministrable() && $this->_viewer->administratorIds->offsetExists($this->_entity->id))
-            return false;
+            return false;    
                  
         //you can't block an admin    
 		if($this->_entity->admin())
 			return false;
-		
+			
+		 //if entity is administrable and the viewer is one of the admins then it can not be blocked 
+        if($this->_entity->isAdministrable() && $this->_entity->administratorIds->offsetExists($this->_viewer->id))
+            return false;		
+  
 		return true;
 	 }
 }
