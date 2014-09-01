@@ -10,14 +10,6 @@
 	<?= @helper('ui.gadget', $gadgets->extract('socialgraph')) ?>	
 </module>
 
-<?php if($item->authorize('leadable')): ?>
-<module position="sidebar-b">
-	<a class="btn btn-block" href="<?= @route($item->getURL().'&get=graph&type=leadables') ?>">
-		<?= @text('COM-ACTORS-SOCIALGRAPH-TOOLBAR-LEADABLES-ADD') ?>
-	</a>
-</module>
-<?php endif; ?>
-
 <module position="sidebar-a">
 <div id="actor-avatar">
 	<?= @avatar($item, 'medium', false) ?>
