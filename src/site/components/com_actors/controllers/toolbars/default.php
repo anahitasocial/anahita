@@ -50,11 +50,24 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     public function onAfterControllerBrowse(KEvent $event)
     {
-        $actor = $this->getController()->actor;
-        $filter = $this->getController()->filter;
-        
         if($this->getController()->canAdd())
-            $this->addCommand('new', array('actor' => $actor));
+            $this->addCommand('new');     
+    }
+    
+    /**
+     * Called after controller Getgraph
+     *
+     * @param KEvent $event
+     *
+     * @return void
+     */
+    public function onAfterControllerGetgraph(KEvent $event)
+    {
+    	$actor = $this->getController()->actor;
+    	$type = $this->getController()->type;
+    	
+    	if($actor->authorize('leadable') && $type == 'followers')
+            $this->addCommand('AddFollowers', array('actor' => $actor));    
     }
     
     /**
@@ -283,11 +296,32 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $name = $this->getController()->getIdentifier()->name;
         $labels = array();
         $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
-        $labels[] = 'New';
+        $labels[] = 'NEW';
         $label = translate($labels);
         $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
         
         $command->append(array('label'=>$label))->href($url);
+    }
+    
+	/**
+     * Add Followers button toolbar
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandAddFollowers($command)
+    {
+        $actor = $command->actor;
+        
+        $labels = array();
+        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-socialgraph-toolbar-leadables-add');
+        $labels[] = 'COM-ACTORS-SOCIALGRAPH-TOOLBAR-LEADABLES-ADD';
+        $label = translate($labels);
+        
+        $url = $actor->getURL().'&get=graph&type=leadables';
+        
+        $command->append(array('label'=>$label))->href($url)->id('leadables-add');
     }
 
     /**

@@ -10,9 +10,11 @@
 	<?= @helper('ui.gadget', $gadgets->extract('socialgraph')) ?>	
 </module>
 
-<?php if($gadget = $gadgets->extract('addFollower')): ?>
+<?php if($item->authorize('leadable')): ?>
 <module position="sidebar-b">
-	<?= @helper('ui.gadget', $gadget) ?>
+	<a class="btn btn-block" href="<?= @route($item->getURL().'&get=graph&type=leadables') ?>">
+		<?= @text('COM-ACTORS-SOCIALGRAPH-TOOLBAR-LEADABLES-ADD') ?>
+	</a>
 </module>
 <?php endif; ?>
 
