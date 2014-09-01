@@ -97,17 +97,18 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 		if(!$this->getItem()->leading($this->actor))
 		{
 		    $this->getItem()->addFollower($this->actor);
+		   
+		    $owner = (is_person($this->getItem())) ? $this->getItem() : $this->actor;
+		    
+		    $story = $this->createStory(array(
+		    		'name' => 'actor_follow',
+		        	'subject' => $this->actor,
+		        	'owner' => $owner,
+		        	'target' => $this->getItem()
+		    	));
 		    
 		    if($this->viewer->eql($this->actor))
 		    {
-		    	$story = $this->createStory(array(
-		    		'name' => 'actor_follow',
-		        	'subject' => $this->actor,
-		        	'owner' => $this->actor,
-		        	'target' => $this->getItem()
-		    	));
-		    	
-		    	 //if the entity is not an adiminstrable actor (person)
 		    	$this->createNotification(array(
 		    		'name' => 'actor_follow',
 		    		'subject' => $this->actor, 
@@ -115,12 +116,12 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 		    	));
 		    }
 		    else 
-		    {
-		    	//notify 
+		    { 
 		    	$this->createNotification(array(
 		    		'name' => 'actor_leadable_add',
 		    		'subject' => $this->viewer,
 		    		'target' => $this->getItem(),
+		    		'object' => $this->actor,
 		    		'subscribers' => array($this->actor->id)
 		    	));
 		    }
