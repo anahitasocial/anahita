@@ -213,8 +213,19 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             	}	
             	
             	$excludeIds = KConfig::unbox($entity->followers->id);
-            	$excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));            	
-            	$entities = $viewer->followers->where('actor.id', 'NOT IN', $excludeIds);
+            	$excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));
+            	
+            	if($viewer->admin())
+            	{
+            		$entities = $this->_mixer->getService('com://site/people.domain.entity.person')
+            					->getRepository()->getQuery()
+            					->where('person.id', 'NOT IN', $excludeIds);	
+            	}
+            	else 
+            	{            	
+            		$entities = $viewer->followers->where('actor.id', 'NOT IN', $excludeIds);
+            	}
+            	
             }
         }
         
@@ -245,9 +256,9 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
         $entities->limit($this->limit, $this->start);
             
         if($this->q)
-            $entities->keyword($this->q); 
+            $entities->keyword($this->q);    
             
-        $this->setList($entities)->actor($this->getItem());
+        $this->setList($entities->fetchSet())->actor($this->getItem());
        
         return $entities;
     }
