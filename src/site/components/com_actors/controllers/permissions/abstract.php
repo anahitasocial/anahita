@@ -115,6 +115,22 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
             
 	    return $this->getItem()->authorize('follower', array('viewer'=>$this->actor));	    
 	}
+	
+	/**
+	 * Authorize adding a leadable to the actor
+     * 
+	 * @return boolean
+	 */
+	public function canAddleadable()
+	{
+        if(!$this->actor)
+            return false;
+            
+	    if(!$this->getItem())
+            return false;  
+            
+	    return $this->getItem()->authorize('leadable', array('viewer'=>$this->actor));	    
+	}
     
     /**
      * Authorize unfollowing the actor

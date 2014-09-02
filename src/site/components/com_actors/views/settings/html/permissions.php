@@ -41,7 +41,7 @@
 	</label>
 	
 	<div class="controls">
-		<?= @helper('ui.privacy',array('entity'=>$item, 'name'=>'leadable:add', 'auto_submit'=>true))?>
+		<?= @helper('ui.privacy',array('entity'=>$item, 'name'=>'leadable:add', 'auto_submit'=>false))?>
 	</div>
 </div>
 <?php endif; ?>

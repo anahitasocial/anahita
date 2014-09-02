@@ -278,8 +278,8 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         if($leadable->following($actor) || $actor->blocking($leadable))
             return null;    
             
-        $command = $this->getCommand('follow', array('receiver'=>$actor,'actor'=>$leadable,'action'=>'addfollower'));
-        $command->name = 'addfollower';
+        $command = $this->getCommand('addleadable', array('receiver'=>$actor,'actor'=>$leadable, 'action'=>'addleadable'));
+        $command->name = 'addleadable';
             
        return $command;
     }    
@@ -324,6 +324,38 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $command->append(array('label'=>$label))->href($url)->id('leadables-add');
     }
 
+	/**
+     * Addleadable Command
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandAddleadable($command)
+    {
+        $url = $command->receiver->getURL();
+        
+        $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
+        
+        if(!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json')
+            $url .= '&layout=list';
+                
+        $command->href($url);
+        
+        if(!$this->_update)
+        {
+            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
+        }
+        elseif(!$this->_use_post)
+        {
+            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',replace:\'!.an-record\'}');
+        }
+        else
+        {
+            $command->setAttribute('data-trigger','Submit');
+        }                                   
+    }
+    
     /**
      * Follow Command
      *

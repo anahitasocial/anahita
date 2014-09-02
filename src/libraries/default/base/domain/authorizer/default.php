@@ -74,7 +74,9 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
 		if($this->_entity instanceof ComBaseDomainEntityComment)
 			$owner = $this->_entity->parent->owner;
 		elseif($this->_entity->isOwnable())
-			$owner = $this->_entity->owner; 	
+			$owner = $this->_entity->owner;
+		elseif(is_person($this->_entity))
+			$owner = $this->_entity; 	
 			
 		if($owner && ($owner->blocking($this->_viewer) || $this->_viewer->blocking($owner)))
         	return false;	

@@ -100,7 +100,13 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		if($data->object && $data->object->isOwnable())
 		    $data->target = $data->object->owner;
 		
-		if($data->object && $data->object->isModifiable() && empty($data->comment)) 
+		if(is_person($data->object))
+		{
+			$data->append(array(
+				'subscribers' => array($data->object)
+			));	
+		}    
+		elseif($data->object && $data->object->isModifiable() && empty($data->comment)) 
 		{
 			$data->append(array(
 				'subscribers' => array($data->object->author->id)
