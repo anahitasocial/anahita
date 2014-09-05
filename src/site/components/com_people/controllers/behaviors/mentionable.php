@@ -56,10 +56,11 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	{
 		$entity = $this->getItem();
 		$usernames = $this->extractMentions($entity->body);
-		$this->_newly_mentioned = $usernames;
 		
     	foreach($usernames as $username)
         	$entity->addMention(trim($username));
+        	
+        $this->_newly_mentioned = $usernames;
 	}
 	
 	/**
@@ -72,21 +73,22 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	{
 		$entity = $this->getItem();		
 		$usernames = $this->extractMentions($entity->body);
-		$this->_newly_mentioned = $usernames;
 		$existing_mentions = $entity->mentions;
 
 		foreach($existing_mentions as $mention)
 			if(!in_array($mention->username, $usernames))
-       			$entity->removeMention($mention->username);		
-		
-       	//remove the existing mentions from the notify list		
-       	$existing_mentions = (array) KConfig::unbox($existing_mentions->username); 		
-       	foreach($this->_newly_mentioned as $index=>$notify_mentioned)
-       		if(in_array($notify_mentioned, $existing_mentions))
-       			unset($this->_newly_mentioned[$index]);		
+       			$entity->removeMention($mention->username);	
+
+       	$existing_mentions = KConfig::unbox($existing_mentions->username);
+       	
+       	foreach($usernames as $index=>$username)
+       		if(in_array($username, $existing_mentions))	
+       			unset($usernames[$index]);				
        			
-    	foreach($usernames as $username)
+       	foreach($usernames as $username)
         	$entity->addMention(trim($username));
+
+       	$this->_newly_mentioned = $usernames;
 	}
 	
 	/**
@@ -154,45 +156,46 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	{
 		$entity = $this->getItem();
 		$parent = $entity->parent;
+		$subscribers = array();
 		
-		foreach($this->_newly_mentioned as $mention)
+		foreach($this->_newly_mentioned as $username)
 		{
-			$person = $this->getService('repos://site/people.person')->find(array('username'=>$mention));
+			$person = $this->getService('repos://site/people.person')->find(array('username'=>$username));
 			
 			if($person && $person->authorize('mention'))
+				$subscribers[] = $person->id;
+		}
+		
+		if($entity instanceof ComBaseDomainEntityComment)
+		{
+			$parentIdentifier = $parent->getIdentifier()->name;
+			$parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
+			
+			if($parentController->isNotifier() && $entity->parent->isSubscribable())
 			{
-				if($entity instanceof ComBaseDomainEntityComment)
-				{
-					$parentIdentifier = $parent->getIdentifier()->name;
-					$parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
-					
-					if($parentController->isNotifier())
-					{
-						$data = array(
-							'name' => 'actor_mention_comment',
-							'subject' => $this->viewer,
-							'object' => $entity,
-							'component' => $entity->parent->component,
-							'comment' => $entity,
-							'subscribers' => array($person)
-						);
-						
-						$parentController->createNotification($data);
-					}
-				}
-				else
-				{
-					$data = array(
-						'name' => 'actor_mention',
-		    			'subject' => $this->viewer,
-						'object' => $entity,
-		    			'component' => $entity->component,
-						'subscribers' => array($person)
-					);
-						
-					$notification = $this->_mixer->createNotification($data);
-				}
+				$data = array(
+					'name' => 'actor_mention_comment',
+					'subject' => $this->viewer,
+					'object' => $entity,
+					'component' => $entity->parent->component,
+					'comment' => $entity,
+					'subscribers' => $subscribers
+				);
+				
+				$parentController->createNotification($data);
 			}
+		}
+		else
+		{
+			$data = array(
+				'name' => 'actor_mention',
+    			'subject' => $this->viewer,
+				'object' => $entity,
+    			'component' => $entity->component,
+				'subscribers' => $subscribers
+			);
+				
+			$notification = $this->_mixer->createNotification($data);
 		}
 	}
 }
