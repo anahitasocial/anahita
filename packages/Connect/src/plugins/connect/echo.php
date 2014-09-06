@@ -12,7 +12,9 @@ defined('_JEXEC') or die();
 /**
  * Connect Echo plugin
  *
- * @category	Plg_Connect
+ * @category     Anahita
+ * @package  Com_Connect
+ * @subpackage    Plugin
  */
 class PlgConnectEcho extends PlgKoowaDefault
 {

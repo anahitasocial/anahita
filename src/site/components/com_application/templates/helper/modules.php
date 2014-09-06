@@ -18,7 +18,7 @@
  * Base theme template helper
  * 
  * @category   Anahita
- * @package    Tmpl_Base
+ * @package    Com_Application
  * @subpackage Template_Helper
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>

@@ -11,8 +11,8 @@
 /**
  * Signup Controller
  * 
- * @category	Com_Subscriptions
- * @package		Controller
+ * @package	Com_Subscriptions
+ * @controller		Controller
  */
  class ComSubscriptionsControllerSignup extends ComBaseControllerResource
  {

@@ -11,8 +11,8 @@
 /**
  * Subscription Controller
  * 
- * @category	Com_Subscriptions
- * @package		Controller
+ * @package	Com_Subscriptions
+ * @category		Controller
  */
 class ComSubscriptionsControllerPermissionSubscription extends LibBaseControllerPermissionDefault
 {

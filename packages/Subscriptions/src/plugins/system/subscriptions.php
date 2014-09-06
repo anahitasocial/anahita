@@ -20,8 +20,8 @@ jimport('joomla.plugin.plugin');
  * Subscription system plugins. Validates the viewer subscriptions
  * 
  * @category   Anahita
- * @package    Anahita_Plugins
- * @subpackage System
+ * @package    Com_Subscriptions
+ * @subpackage Plugin
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>

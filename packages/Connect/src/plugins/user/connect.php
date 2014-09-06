@@ -15,8 +15,9 @@ jimport('joomla.plugin.plugin');
  * Anahita Tweets User Plugin
  *
  * @author		Rastin Mehr  <info@rmdstudio.com>
- * @package		Joomla
- * @subpackage	Anahita
+ * @category     Anahita
+ * @package  Com_Connect
+ * @subpackage    Plugin
  * @since 		1.5
  */
 class PlgUserConnect extends JPlugin 

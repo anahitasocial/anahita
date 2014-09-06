@@ -13,8 +13,8 @@
  * Subscription system plugins. Validates the viewer subscriptions
  * 
  * @category	Anahita_Apps
- * @package	 	Plugin
- * @subpackage  Subscriptions
+ * @package	Com_Subscriptions
+ * @subpackage  Plugin
  */
 class PlgSubscriptionsUsertype extends PlgKoowaDefault 
 {

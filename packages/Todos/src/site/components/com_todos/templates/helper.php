@@ -12,8 +12,8 @@
 /**
  * Template Helper
  * 
- * @category	Anahita_Todos
- * @package		Site
+ * @category	Anahita
+ * @package	Com_Todos
  * @subpackage  Template
  */
 class ComTodosTemplateHelper extends KTemplateHelperAbstract
