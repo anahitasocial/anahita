@@ -45,7 +45,7 @@ class ComNotificationsControllerBehaviorNotifier extends KControllerBehaviorAbst
             
         $notification = $this->getService('repos:notifications.notification')->getEntity(array('data'=>$data));
     
-        $notification->removeSubscribers( get_viewer() );
+        $notification->removeSubscribers(get_viewer());
     
         return $notification;
     } 

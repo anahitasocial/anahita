@@ -81,7 +81,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 			'subscribers' => array()			
 		));
 		
-		if(is($data->object,'ComBaseDomainEntityComment')) 
+		if(is($data->object, 'ComBaseDomainEntityComment')) 
 		{
 		    $data->comment = $data->object;
 		    unset($data->object);
@@ -136,7 +136,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		parent::_afterEntityInstantiate($config);
 		
 		if($config->data->subscribers)
-			$this->setSubscribers( $config->data->subscribers );
+			$this->setSubscribers($config->data->subscribers);
 	}
 	
 	/**
@@ -166,7 +166,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 	public function setSubscribers($subscribers)
 	{
 		//flatten the array
-		$subscribers = AnHelperArray::getValues( KConfig::unbox($subscribers) );
+		$subscribers = AnHelperArray::getValues(KConfig::unbox($subscribers));
 		$ids = array();
 		
 		foreach($subscribers as $subscriber) 
