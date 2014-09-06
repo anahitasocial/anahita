@@ -13,9 +13,9 @@
 /**
  * Template Helper
  * 
- * @category	Com_Notifications
- * @package 	Site
- * @subpackage 	Template
+ * @category   Anahita
+ * @package    Com_Notifications
+ * @subpackage Template
  */
 class ComNotificationsTemplateHelperParser extends ComStoriesTemplateHelperParser
 {

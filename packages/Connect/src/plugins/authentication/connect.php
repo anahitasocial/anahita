@@ -20,8 +20,9 @@ jimport( 'joomla.plugin.plugin' );
 /**
  * Joomla Authentication plugin
  *
- * @package     Joomla
- * @subpackage  JFramework
+ * @category     Anahita
+ * @package  Com_Connect
+ * @subpackage    Plugin
  * @since 1.5
  */
 class PlgAuthenticationConnect extends JPlugin

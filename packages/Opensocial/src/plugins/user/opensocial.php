@@ -15,9 +15,10 @@ jimport('joomla.plugin.plugin');
  * Opensocial user plugin
  *
  * @author		Rastin Mehr  <info@rmdstudio.com>
- * @package		Joomla
- * @subpackage	Anahita
- * @since 		1.5
+ * @category    Anahita
+ * @package     Plg
+ * @subpackage  OpenSocial
+ * @since 	1.5
  */
 class PlgUserOpensocial extends JPlugin 
 {

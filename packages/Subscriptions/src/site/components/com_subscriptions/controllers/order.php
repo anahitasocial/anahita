@@ -11,8 +11,8 @@
 /**
  * Package Controller
  * 
- * @category	Com_Subscriptions
- * @package		Controller
+ * @package	Com_Subscriptions
+ * @category		Controller
  */
 class ComSubscriptionsControllerOrder extends ComBaseControllerService
 {	        

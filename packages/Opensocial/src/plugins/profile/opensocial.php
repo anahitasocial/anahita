@@ -12,7 +12,8 @@
  * Profile Plugin
  *
  * @category	Anahita
- * @package		OpenSocial_Plugin
+ * @package	Plg
+ * @subpackage  OpenSocial
  */
 class PlgProfileOpensocial extends PlgProfileAbstract
 {

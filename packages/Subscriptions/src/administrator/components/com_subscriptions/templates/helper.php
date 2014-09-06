@@ -11,8 +11,10 @@
 /**
  * Default Template Helper
  * 
- * @category	Com_Subscriptions
- * @package		Template 
+ * @category   Anahita
+ * @package    Com_Subscriptions
+ * @subpackage Template
+ * 
  */
 class ComSubscriptionsTemplateHelper extends KTemplateHelperDefault
 {

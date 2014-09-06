@@ -11,8 +11,8 @@
 /**
  * Purchase transaction
  * 
- * @category	Com_Subscriptions
- * @package		Model
+ * @package	Com_Subscriptions
+ * @category		Model
  */
 class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 {	
