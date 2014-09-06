@@ -155,7 +155,6 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	public function notifyMentioned(KCommandContext $context)
 	{
 		$entity = $this->getItem();
-		$parent = $entity->parent;
 		$subscribers = array();
 		
 		foreach($this->_newly_mentioned as $username)
@@ -168,28 +167,26 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 		
 		if($entity instanceof ComBaseDomainEntityComment)
 		{
-			$parentIdentifier = $parent->getIdentifier()->name;
+			$parentIdentifier = $entity->parent->getIdentifier()->name;
 			$parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
 			
 			if($parentController->isNotifier() && $entity->parent->isSubscribable())
 			{
 				$data = array(
 					'name' => 'actor_mention_comment',
-					'subject' => $this->viewer,
 					'object' => $entity,
 					'component' => $entity->parent->component,
-					'comment' => $entity,
 					'subscribers' => $subscribers
 				);
 				
-				$parentController->createNotification($data);
+				//@todo it sends notifications to the owner admins and tells them that they have been mentioned
+				//$parentController->createNotification($data);
 			}
 		}
 		else
 		{
 			$data = array(
 				'name' => 'actor_mention',
-    			'subject' => $this->viewer,
 				'object' => $entity,
     			'component' => $entity->component,
 				'subscribers' => $subscribers
