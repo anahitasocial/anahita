@@ -94,11 +94,11 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 	        {
 	            $this->_update = false;
 	        	
-	        	if($command = $this->getLeadableCommand($actor1, $actor2))
+	        	if($command = $this->getAddfollowerCommand($actor1, $actor2))
 	        	{
 	           		$labels = array();
-	            	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-LEADABLE-ADD';
-	            	$labels[] = 'COM-ACTORS-SOCIALGRAPH-LEADEABLE-ADD';
+	            	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-FOLLOWER-ADD';
+	            	$labels[] = 'COM-ACTORS-SOCIALGRAPH-FOLLOWER-ADD';
 	            	$command->label = translate($labels);
 	                    
 	        		$this->addCommand($command);
@@ -200,14 +200,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         
         if($actor2->authorize('unfollow', array('viewer'=>$actor1)))
         {
-            $command = $this->getCommand('follow', array('receiver'=>$actor2,'actor'=>$actor1,'action'=>'deletefollower'));
+            $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'unfollow'));
             $command->name = 'unfollow';
             
             return $command;
         }
         elseif(!$actor1->following($actor2) && $actor2->authorize('follower', array('viewer'=>$actor1)))
         {
-            $command = $this->getCommand('follow', array('receiver'=>$actor2,'actor'=>$actor1,'action'=>'addfollower'));
+            $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'follow'));
             $command->name = 'follow';
             
             return $command;
@@ -218,13 +218,13 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             {
                 if($actor2->requested($actor1)) 
                 {          
-                    $command = $this->getCommand('follow', array('receiver'=>$actor2,'actor'=>$actor1,'action'=>'deleterequester'));
+                    $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'deleterequest'));
                     $command->name = 'unfollow';
                     $command->label = 'unrequest';
                 } 
                 else 
                 {
-                    $command = $this->getCommand('follow', array('receiver'=>$actor2,'actor'=>$actor1,'action'=>'addrequester'));
+                    $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'addrequest'));
                     $command->label = 'request';                    
                 }
                 
@@ -254,14 +254,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         
         if($actor1->blocking($actor2)) 
         {
-            $command = $this->getCommand('block', array('receiver'=>$actor1,'actor'=>$actor2,'action'=>'deleteblocked'));
+            $command = $this->getCommand('block', array('receiver' => $actor1, 'actor' => $actor2, 'action' => 'unblock'));
             $command->name = 'unblock';
             
             return $command;
         }        
         elseif($actor2->authorize('blocker', array('viewer'=>$actor1))) 
         {
-            $command = $this->getCommand('block', array('receiver'=>$actor1,'actor'=>$actor2,'action'=>'addblocked'));
+            $command = $this->getCommand('block', array('receiver' => $actor1, 'actor' => $actor2, 'action' => 'block'));	
             $command->name = 'block';
             
             return $command;                        
@@ -276,7 +276,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      *
      * @return LibBaseTemplateObject
      */ 
-    public function getLeadableCommand($actor, $leadable)
+    public function getAddfollowerCommand($actor, $leadable)
     {    	
     	if(!$actor->isFollowable() || !$leadable->isLeadable())
             return null;
@@ -287,8 +287,8 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         if($leadable->following($actor) || $actor->blocking($leadable))
             return null;    
             
-        $command = $this->getCommand('addleadable', array('receiver'=>$actor,'actor'=>$leadable, 'action'=>'addleadable'));
-        $command->name = 'addleadable';
+        $command = $this->getCommand('addfollower', array('receiver'=>$actor, 'actor'=>$leadable, 'action'=>'addfollower'));
+        $command->name = 'addfollower';
             
        return $command;
     }    
@@ -324,8 +324,8 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $actor = $command->actor;
         
         $labels = array();
-        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-socialgraph-toolbar-leadables-add');
-        $labels[] = 'COM-ACTORS-SOCIALGRAPH-TOOLBAR-LEADABLES-ADD';
+        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-socialgraph-toolbar-followers-add');
+        $labels[] = 'COM-ACTORS-SOCIALGRAPH-TOOLBAR-FOLLOWERS-ADD';
         $label = translate($labels);
         
         $url = $actor->getURL().'&get=graph&type=leadables';
@@ -340,29 +340,9 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      *
      * @return void
      */
-    protected function _commandAddleadable($command)
+    protected function _commandAddFollower($command)
     {
-        $url = $command->receiver->getURL();
-        
-        $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
-        
-        if(!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json')
-            $url .= '&layout=list';
-                
-        $command->href($url);
-        
-        if(!$this->_update)
-        {
-            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
-        }
-        elseif(!$this->_use_post)
-        {
-            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',replace:\'!.an-record\'}');
-        }
-        else
-        {
-            $command->setAttribute('data-trigger','Submit');
-        }                                   
+        $this->_buildCommand($command);                                   
     }
     
     /**
@@ -374,27 +354,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     protected function _commandFollow($command)
     {
-        $url = $command->receiver->getURL();
-        
-        $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
-        
-        if(!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json')
-            $url .= '&layout=list';
-                
-        $command->href($url);
-        
-        if(!$this->_update)
-        {
-            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
-        }
-        elseif(!$this->_use_post)
-        {
-            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',replace:\'!.an-record\'}');
-        }
-        else
-        {
-            $command->setAttribute('data-trigger','Submit');
-        }                                   
+        $this->_buildCommand($command);                                   
     }
     
     /**
@@ -406,7 +366,19 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     protected function _commandBlock($command)
     {
-        $url = $command->receiver->getURL();
+        $this->_buildCommand($command);
+    }
+    
+     /**
+     * Method to build a command
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _buildCommand($command)
+    {
+    	$url = $command->receiver->getURL();
                
         $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
         

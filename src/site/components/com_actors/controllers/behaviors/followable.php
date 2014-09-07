@@ -39,14 +39,10 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
         parent::__construct($config);
         
         $config->mixer->registerCallback(
-            array('before.deletefollower','before.addfollower', 'before.addleadable',
-                  'before.addrequester','before.deleterequester',
-                  'before.addblocked','before.deleteblocked'), 
+            array('before.unfollow','before.follow', 'before.addfollower',
+                  'before.addrequest','before.deleterequest',
+                  'before.block','before.unblock'), 
                   array($this, 'getActor'));
-                  
-        $config->mixer->registerActionAlias('follow', 'addfollower');
-        $config->mixer->registerActionAlias('unfollow', 'deletefollower');
-                   
     }
     
     /**
@@ -56,7 +52,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      * 
      * @return void
      */
-    protected function _actionAddrequester(KCommandContext $context)
+    protected function _actionAddrequest(KCommandContext $context)
     {        
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
@@ -74,7 +70,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      * 
      * @return void
      */
-    protected function _actionDeleterequester(KCommandContext $context)
+    protected function _actionDeleterequest(KCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
@@ -89,7 +85,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	 * 
 	 * @return void 
 	 */
-	protected function _actionAddfollower(KCommandContext $context)
+	protected function _actionFollow(KCommandContext $context)
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
@@ -103,12 +99,17 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	        	'owner' => $this->actor,
 	        	'target' => $this->getItem()
 	    	));
+
+	    	if($this->getItem()->isAdministrable())
+	    		$subscribers = $this->getItem()->administratorIds->toArray();
+	    	else
+	    		$subscribers = array($this->getItem()->id);
 	    	
 	    	$this->createNotification(array(
 	    		'name' => 'actor_follow',
 	    		'subject' => $this->actor, 
 	    		'target' => $this->getItem(),
-	    		'subscribers' => $this->getItem()->administratorIds->toArray()
+	    		'subscribers' => $subscribers
 	    	));
 		}
         
@@ -123,7 +124,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	 * 
 	 * @return void 
 	 */
-	protected function _actionAddleadable(KCommandContext $context)
+	protected function _actionAddfollower(KCommandContext $context)
 	{
 		$this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
@@ -132,19 +133,22 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 		    $this->getItem()->addFollower($this->actor);
 		    
 	    	$this->createStory(array(
-	    		'name' => 'actor_leadable_add',
+	    		'name' => 'actor_follower_add',
 	    		'owner' => $this->getItem(),
 	    		'subject' => $this->viewer,
 	    		'object' => $this->actor,
 	    		'target' => $this->getItem()
 	    	));
+	    		
+	    	$subscribers = array($this->actor->id);	
+	    	$subscribers = array_merge($subscribers, $this->getItem()->administratorIds->toArray());
 	    	
 	    	$this->createNotification(array(
-	    		'name' => 'actor_leadable_add',
+	    		'name' => 'actor_follower_add',
 	    		'subject' => $this->viewer,
 	    		'object' => $this->actor,
 	    		'target' => $this->getItem(),
-	    		'subscribers' => array($this->actor->id)
+	    		'subscribers' => $subscribers
 	    	));
 		}
         
@@ -158,7 +162,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	 * 
 	 * @return void
 	 */
-	protected function _actionDeletefollower(KCommandContext $context)
+	protected function _actionUnfollow(KCommandContext $context)
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
@@ -174,7 +178,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      *
      * @return void
      */
-    protected function _actionAddblocked(KCommandContext $context)
+    protected function _actionBlock(KCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
@@ -190,7 +194,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      * 
      * @return void
      */
-    protected function _actionDeleteblocked($context)
+    protected function _actionUnblock($context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
