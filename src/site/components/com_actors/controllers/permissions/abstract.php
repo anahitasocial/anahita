@@ -89,7 +89,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      * 
      * @return boolean
      */
-    public function canAddrequester()
+    public function canAddrequest()
     {
         if(!$this->actor)
             return false;
@@ -105,7 +105,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      * 
 	 * @return boolean
 	 */
-	public function canAddfollower()
+	public function canAddfollow()
 	{
         if(!$this->actor)
             return false;
@@ -117,11 +117,11 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
 	}
 	
 	/**
-	 * Authorize adding a leadable to the actor
+	 * Authorize adding a follower to the actor
      * 
 	 * @return boolean
 	 */
-	public function canAddleadable()
+	public function canAddfollower()
 	{
         if(!$this->actor)
             return false;
@@ -137,7 +137,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      * 
      * @return boolean
      */
-    public function canDeletefollower()
+    public function canDeletefollow()
     {
         if(!$this->actor)
             return false;
@@ -153,7 +153,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      * 
      * @return boolean
      */
-    public function canAddblocked()
+    public function canAddblock()
     {
     	if(!$this->actor)
             return false;
@@ -182,7 +182,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      * 
      * @return boolean
      */    
-    public function canConfirmrequester()
+    public function canConfirmrequest()
     {        
         return !is_null($this->requester);
     }
@@ -192,7 +192,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      *   
      * @return boolean
      */    
-    public function canIgnorerequester()
+    public function canIgnorerequest()
     {
         return !is_null($this->requester);
     }    

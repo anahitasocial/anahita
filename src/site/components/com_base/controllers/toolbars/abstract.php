@@ -58,6 +58,7 @@ abstract class ComBaseControllerToolbarAbstract extends KControllerToolbarAbstra
     public function setDescription($description)
     {
         $this->_description = $description;
+        
         return $this;
     }
     
@@ -91,11 +92,11 @@ abstract class ComBaseControllerToolbarAbstract extends KControllerToolbarAbstra
      */
     public function addCommand($command, $config = array())
     {
-        if (!($command instanceof  LibBaseTemplateObjectInterface)) {
+        if(!($command instanceof LibBaseTemplateObjectInterface))
             $command = $this->getCommand($command, $config);
-        }
     
         $this->_commands[$command->getName()] = $command;
+        
         return $this;
     }
     
@@ -111,11 +112,10 @@ abstract class ComBaseControllerToolbarAbstract extends KControllerToolbarAbstra
      */
     public function getCommand($name, $config = array())
     {
-        if (!isset($this->_commands[$name]))
+        if(!isset($this->_commands[$name]))
         {
-            if ( !is_array($config) ) {
+            if(!is_array($config))
                 $config = array('label'=>$config);
-            }
     
             //Create the config object
             $command = ComBaseControllerToolbarCommand::getInstance($name, $config);
@@ -124,23 +124,24 @@ abstract class ComBaseControllerToolbarAbstract extends KControllerToolbarAbstra
             if(method_exists($this, '_command'.ucfirst($name)))
             {
                 $function =  '_command'.ucfirst($name);
+                
                 $this->$function($command);
             }
             else
             {
                 //Don't set an action for GET commands
                 if(!isset($command->attribs->href))
-                {
                     $command->append(array(
-                            'attribs'    => array(
-                                    'data-action'  => $command->getName()
-                            )
+                    	'attribs' => array(
+                        	'data-action'  => $command->getName()
+                        )
                     ));
-                }
             }
         }
         else
+        {
             $command = $this->_commands[$name];
+        }
     
         return $command;
     }
