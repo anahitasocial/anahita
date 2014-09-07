@@ -159,10 +159,19 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     public function addToolbarCommands()
     {        
         $actor = $this->getController()->getItem();
+        $viewer = get_viewer();
         
         $this->_use_post = true;
     
         $this->addListCommands();
+        
+        if($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor))
+        {
+        	$this->addCommand('notification-settings', array('label' => JText::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
+        	->getCommand('notification-settings')
+        	->setAttribute('data-trigger', 'BS.showPopup')
+        	->setAttribute('data-bs-showpopup-url', JRoute::_('option=notifications&view=settings&layout=modal&oid='.$actor->id));
+        }
     
         if($actor->authorize('administration'))
         {

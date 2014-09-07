@@ -48,25 +48,48 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 			'attributes' => array(
 				'name' => array('required'=>true),
 				'type' => array('column'=>'body'),
-				'creationTime' => array('default'=>'date','column'=>'created_on'),
+				'creationTime' => array(
+					'default'=>'date',
+					'column'=>'created_on'
+				),
 				'status' => array('default'=>self::STATUS_NOT_SENT),
-				'subscriberIds' => array('type'=>'set',   'default'=>'set','write'=>'private','required'=>true)
+				'subscriberIds' => array(
+					'type'=>'set', 
+					'default'=>'set',
+					'write'=>'private',
+					'required'=>true
+				)
 			),
 		    'behaviors' => array(
 		    	  'serializable' => array('serializer'=>'com://site/stories.domain.serializer.story'),
 		          'dictionariable'      
             ),
 			'relationships' => array(			    
-				'object' => array('polymorphic'=>true, 'type_column'=>'story_object_type', 'child_column'=>'story_object_id'),
-				'subject' => array('required'=>true,'parent'=>'com:actors.domain.entity.actor', 'child_column'=>'story_subject_id'),
-				'target' => array('required'=>true,'parent'=>'com:actors.domain.entity.actor', 'child_column'=>'story_target_id'),
-				'comment' => array('parent'=>'com:base.domain.entity.comment', 'child_column'=>'story_comment_id')
+				'object' => array(
+					'polymorphic'=>true, 
+					'type_column' => 'story_object_type', 
+					'child_column' => 'story_object_id'
+            	),
+				'subject' => array(
+					'required'=>true,
+					'parent' => 'com:actors.domain.entity.actor', 
+					'child_column' => 'story_subject_id'
+            	),
+				'target' => array(
+					'required'=>true,
+					'parent' => 'com:actors.domain.entity.actor', 
+					'child_column' => 'story_target_id'
+            	),
+				'comment' => array(
+					'parent' => 'com:base.domain.entity.comment', 
+					'child_column'=>'story_comment_id'
+            	)
 			 )
 		));
 						
 		parent::_initialize($config);
 	}	
-
+	
 	/**
      * Initializes the options for an entity after being created
      *
@@ -81,57 +104,38 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 			'subscribers' => array()			
 		));
 		
-		if(is($data->object, 'ComBaseDomainEntityComment')) 
+		if($data->object)
 		{
-		    $data->comment = $data->object;
-		    unset($data->object);
-		}
-		
-		if($data->comment) 
-		{
-		    $data->object = $data->comment->parent;
-		    $data->append(array(
-		         'subscribers' => array($data->comment->author->id)
-		    ));		    
+			if(is($data->object, 'ComBaseDomainEntityComment')) 
+			{
+		    	$data->comment = $data->object;
+		    	$data->object = $data->comment->parent;
+		    
+		    	$data->append(array(
+		         	'subscribers' => array($data->comment->author->id)
+		    	));	
+			}    
+			elseif($data->object->isModifiable()) 
+			{
+				$data->append(array(
+					'subscribers' => array($data->object->author->id)
+				));
+			}
+			elseif(is_person($data->object))
+			{
+				$data->append(array(
+					'subscribers' => array($data->object->id)
+				));	
+			}
+			
+			if($data->object->isOwnable())
+		    	$data->target = $data->object->owner;
 		}
         
-		//force the target to be the owner of the object
-		//if the object is ownable
-		if($data->object && $data->object->isOwnable())
-		    $data->target = $data->object->owner;
-		
-		if(is_person($data->object))
-		{
-			$data->append(array(
-				'subscribers' => array($data->object)
-			));	
-		}    
-		elseif($data->object && $data->object->isModifiable() && empty($data->comment)) 
-		{
-			$data->append(array(
-				'subscribers' => array($data->object->author->id)
-			));
-		}	
-        //if there are no objects, then there are no subscribers
-        //in that case add the target as the notification subscriber 
-        //if it's notifiable
-        elseif($data->target) 
-        {
-            if($data->target->isNotifiable())
-            {
-                $data->append(array(
-                    'subscribers' => array($data->target->id)
-                ));                
-            } 
-            //if not notiable but administrable 
-            //then add all the admins
-            elseif($data->target->isAdministrable()) 
-            {
-                $data->append(array(
-                    'subscribers' => $data->target->administratorIds->toArray()
-                ));                
-            }
-        }
+		if($data->target && $data->target->isNotifiable())
+        	$data->append(array(
+				'subscribers' => array($data->target->id)
+            ));                
 
 		parent::_afterEntityInstantiate($config);
 		

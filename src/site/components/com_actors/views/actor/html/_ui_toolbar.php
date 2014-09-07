@@ -1,7 +1,8 @@
 <?php defined('KOOWA') or die ?>
 
 <?php $commands = $toolbar->getCommands() ?>
-<?php if (count($commands)): ?>
+
+<?php if(count($commands)): ?>
     <div class="actor-profile-toolbar btn-toolbar clearfix" data-behavior="BS.Dropdown">
         <?php if ($command = $commands->extract('follow')): ?>
             <?= @helper('ui.command', $command->class('btn btn-primary')) ?> 
@@ -11,8 +12,8 @@
             <?= @helper('ui.command', $command->class('btn btn-primary')) ?>
         <?php endif ?>
         
-        <?php if ($commands->count() > 0 || ! $viewer->eql($item)): ?>
-            <div class="btn-group pull-right">
+        <?php if($commands->count() > 0): ?>
+            <div class="btn-group">
                 <?= @helper('ui.dropdown', $commands) ?>
             </div>
         <?php endif ?>
