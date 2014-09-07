@@ -179,8 +179,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 					'subscribers' => $subscribers
 				);
 				
-				//@todo it sends notifications to the owner admins and tells them that they have been mentioned
-				//$parentController->createNotification($data);
+				$parentController->createNotification($data);
 			}
 		}
 		else
