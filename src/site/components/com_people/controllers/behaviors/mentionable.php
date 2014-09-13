@@ -165,6 +165,9 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 				$subscribers[] = $person->id;
 		}
 		
+		if(count($subscribers) == 0)
+			return;
+		
 		if($entity instanceof ComBaseDomainEntityComment)
 		{
 			$parentIdentifier = $entity->parent->getIdentifier()->name;
@@ -175,6 +178,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 				$data = array(
 					'name' => 'actor_mention_comment',
 					'object' => $entity,
+					//'comment' => $entity,
 					'component' => $entity->parent->component,
 					'subscribers' => $subscribers
 				);
