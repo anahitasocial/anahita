@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">		
-	<?= sprintf(@text('COM-ACTORS-STORY-MENTION-COMMENT'), @name($subject), @route($object->getURL())); ?>
+	<?= sprintf(@text('COM-ACTORS-NOTIFICATION-MENTION-COMMENT'), @name($subject), @route($object->getURL())); ?>
 </data>
 
 <data name="body">	 
