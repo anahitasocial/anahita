@@ -122,6 +122,6 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 	protected function _replaceTags(&$text)
 	{
 		if ( !empty($this->_stripped_tags) )
-			$text 	 = str_replace($this->_stripped_tags[0], $this->_stripped_tags[1], $text);
+			$text = str_replace($this->_stripped_tags[0], $this->_stripped_tags[1], $text);
 	}	
 }
