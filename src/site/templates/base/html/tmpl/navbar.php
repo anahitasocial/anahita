@@ -1,31 +1,34 @@
 <?php defined('KOOWA') or die;?>
 
-<?php $mobile_nav = @helper('modules.render','mobile', array('style'=>'none')); ?>
-
 <div class="navbar <?= ($this->getView()->getParams()->navbarInverse) ? 'navbar-inverse' : '' ?> navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-        	<?php if($mobile_nav): ?>
         	<a type="button" class="btn btn-navbar" data-trigger="ShowMainmenu">
         		<span class="icon-bar"></span>
         		<span class="icon-bar"></span>
         		<span class="icon-bar"></span>
         	</a>
-        	<?php endif; ?>
-        	
-            <?= @render('logo') ?>
+            
+			<?= @render('logo') ?>
+            
             <div id="desktop-main-menu" class="nav-collapse collapse">
             	<?= @service('mod://site/search.html') ?>
-	            <?= @helper('modules.render','navigation', array('style'=>'none')) ?>
-	            <?php if( $viewer_module = @helper('modules.render','viewer', array('style'=>'none'))): ?>
-	            <span class="viewer pull-right"><?= $viewer_module ?></span>
-	            <?php endif; ?>
+	            <?= @template('menus/main') ?>
+	            <span class="viewer pull-right">
+	            	<?php if(get_viewer()->guest()): ?>
+					<a class="btn btn-primary" data-trigger="BS.showPopup" data-bs-showpopup-url="<?= @route('option=people&view=session&layout=modal&return='.base64_encode(KRequest::url()))?>" >
+    				<?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
+					</a>
+	            	<?php else: ?>
+	            	<?= @template('menus/viewer') ?>
+	            	<?php endif; ?>
+	            </span>
             </div>
             
-            <?php if($mobile_nav): ?>
             <div id="mobile-main-menu" class="hidden-desktop">
-            <?= $mobile_nav ?>
+            <?= @template('menus/mobile') ?>
             </div>
+            
             <script>
             document.getElement('#mobile-main-menu ul').hide();
 			Delegator.register('click', {
@@ -35,7 +38,6 @@
 				},
 			});
 			</script>
-            <?php endif; ?>
         </div>
     </div>            
 </div>
