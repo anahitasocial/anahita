@@ -96,25 +96,4 @@ class TemplatesHelper
 
 		return $data;
 	}
-
-	public static function createMenuList($template)
-	{
-		$db =& JFactory::getDBO();
-
-		// get selected pages for $menulist
-		$query = 'SELECT menuid AS value' .
-				' FROM #__templates_menu' .
-				' WHERE client_id = 0' .
-				' AND template = '.$db->Quote($template);
-		$db->setQuery($query);
-		$lookup = $db->loadObjectList();
-		if (empty( $lookup )) {
-			$lookup = array( JHTML::_('select.option',  '-1' ) );
-		}
-
-		// build the html select list
-		$options	= JHTML::_('menu.linkoptions');
-		$result		= JHTML::_('select.genericlist',   $options, 'selections[]', 'class="inputbox" size="15" multiple="multiple"', 'value', 'text', $lookup, 'selections' );
-		return $result;
-	}
 }

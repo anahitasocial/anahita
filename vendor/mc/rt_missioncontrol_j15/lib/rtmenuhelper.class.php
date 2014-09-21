@@ -45,10 +45,6 @@ class RTMenuHelper {
 		$editAllComponents	= $user->authorize('com_components', 'manage');
 		$canManageUsers		= $user->authorize('com_users', 'manage');
 
-		// Menu Types
-		require_once( JPATH_ADMINISTRATOR.DS.'components'.DS.'com_menus'.DS.'helpers'.DS.'helper.php' );
-		$menuTypes 	= MenusHelper::getMenuTypelist();
-
 		/*
 		 * Get the menu object
 		 */
@@ -68,55 +64,6 @@ class RTMenuHelper {
 			$menu->addChild(new JMenuNode(JText::_('Users'), 'index.php?option=com_users&task=view', 'users'));
 		}
 
-
-		/*
-		 * Content SubMenu
-		 */
-// 		$menu->addChild(new JMenuNode(JText::_('Articles')), true);
-// 		$menu->addChild(new JMenuNode(JText::_('Article Manager'), 'index.php?option=com_content', 'article'));
-// 		if ($manageTrash) {
-// 			$menu->addChild(new JMenuNode(JText::_('Article Trash'), 'index.php?option=com_trash&task=viewContent', 'trash'));
-// 		}
-// 		$menu->addSeparator();
-// 		$menu->addChild(new JMenuNode(JText::_('Section Manager'), 'index.php?option=com_sections&scope=content', 'section'));
-// 		$menu->addChild(new JMenuNode(JText::_('Category Manager'), 'index.php?option=com_categories&section=com_content', 'category'));
-// 		$menu->addSeparator();
-// 		//$menu->addChild(new JMenuNode(JText::_('Frontpage Manager'), 'index.php?option=com_frontpage', 'frontpage'));
-
-// 		$menu->getParent();
-		
-		/*
-		 * Menus SubMenu
-		 */
-		$menu->addChild(new JMenuNode(JText::_('Menus')), true);
-		if ($manageMenuMan) {
-			$menu->addChild(new JMenuNode(JText::_('Menu Manager'), 'index.php?option=com_menus', 'menu'));
-		}
-// 		if ($manageTrash) {
-// 			$menu->addChild(new JMenuNode(JText::_('Menu Trash'), 'index.php?option=com_trash&task=viewMenu', 'trash'));
-// 		}
-
-		if($manageTrash || $manageMenuMan) {
-			$menu->addSeparator();
-		}
-		/*
-		 * SPLIT HR
-		 */
-		if (count($menuTypes)) {
-			foreach ($menuTypes as $menuType) {
-				$menu->addChild(
-					new JMenuNode(
-						$menuType->title . ($menuType->home ? ' <span class="default">*</span>' : ''), 
-						'index.php?option=com_menus&task=view&menutype='
-						. $menuType->menutype,
-						'menu'
-					)
-				);
-			}
-		}
-
-		$menu->getParent();
-
 		/*
 		 * Extend SubMenu
 		 */
@@ -126,8 +73,6 @@ class RTMenuHelper {
 
 		if ($installModules)
 		{
-			//$menu->addChild(new JMenuNode(JText::_('Anahita Bazaar'), 'index.php?option=com_socialengine&view=bazaar', 'install'));
-			//$menu->addChild(new JMenuNode(JText::_('Install/Uninstall'), 'index.php?option=com_installer', 'install'));
 			$menu->addSeparator();
 			if ($editAllModules) {
 				$menu->addChild(new JMenuNode(JText::_('Module Manager'), 'index.php?option=com_modules', 'module'),true);

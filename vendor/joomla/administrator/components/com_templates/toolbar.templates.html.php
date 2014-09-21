@@ -41,15 +41,6 @@ class TOOLBAR_templates
 		JToolBarHelper::back();
 	}
 
-	public static function _EDIT_SOURCE(&$client){
-
-		JToolBarHelper::title( JText::_( 'Template HTML Editor' ), 'thememanager' );
-		JToolBarHelper::save( 'save_source' );
-		JToolBarHelper::apply( 'apply_source' );
-		JToolBarHelper::cancel('edit');
-		JToolBarHelper::help( 'screen.templates' );
-	}
-
 	public static function _EDIT(&$client){
 		JToolBarHelper::title( JText::_( 'Template' ) . ': <small><small>[ '. JText::_( 'Edit' ) .' ]</small></small>', 'thememanager' );
 		//JToolBarHelper::custom('preview', 'preview.png', 'preview_f2.png', 'Preview', false, false);
@@ -58,21 +49,6 @@ class TOOLBAR_templates
 		JToolBarHelper::save( 'save' );
 		JToolBarHelper::apply();
 		JToolBarHelper::cancel( 'cancel', 'Close' );
-		JToolBarHelper::help( 'screen.templates' );
-	}
-
-	public static function _CHOOSE_CSS(&$client){
-		JToolBarHelper::title( JText::_( 'Template CSS Editor' ), 'thememanager' );
-		JToolBarHelper::custom( 'edit_css', 'edit.png', 'edit_f2.png', 'Edit', true );
-		JToolBarHelper::cancel('edit');
-		JToolBarHelper::help( 'screen.templates' );
-	}
-
-	public static function _EDIT_CSS(&$client){
-		JToolBarHelper::title( JText::_( 'Template Manager' ), 'thememanager' );
-		JToolBarHelper::save( 'save_css' );
-		JToolBarHelper::apply( 'apply_css');
-		JToolBarHelper::cancel('choose_css');
 		JToolBarHelper::help( 'screen.templates' );
 	}
 }

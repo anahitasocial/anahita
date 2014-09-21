@@ -63,9 +63,9 @@ class JSite extends JApplication
     {
         // if a language was specified it has priority
         // otherwise use user or default language settings
-        if (empty($options['language']))
+        if(empty($options['language']))
         {
-            $user = & JFactory::getUser();
+            $user = &JFactory::getUser();
             $lang = $user->getParam( 'language' );
 
             // Make sure that the user's language exists
@@ -129,22 +129,11 @@ class JSite extends JApplication
             
             $params[$hash] =& JComponentHelper::getParams($option);
 
-            // Get menu parameters
-            $menus =& JSite::getMenu();
-            $menu = $menus->getActive();
-
             $title = htmlspecialchars_decode($this->getCfg('sitename' ));
             $description = $this->getCfg('MetaDesc');
 
-            // Lets cascade the parameters if we have menu item parameters
-            if(is_object($menu))
-            {
-                $params[$hash]->merge(new JParameter($menu->params));
-                $title = $menu->name;
-            }
-
-            $params[$hash]->def( 'page_title'      , $title );
-            $params[$hash]->def( 'page_description', $description );
+            $params[$hash]->def('page_title', $title);
+            $params[$hash]->def('page_description', $description);
         }
 
         return $params[$hash];
@@ -188,18 +177,6 @@ class JSite extends JApplication
     public function setTemplate( $template )
     {        
         $this->_template = $template;
-    }
-
-    /**
-     * Return a reference to the JPathway object.
-     *
-     * @return JMenu
-     */
-    public static function &getMenu($name = null, $options = array())
-    {
-        $menu =& parent::getMenu('site', $options);
-        
-        return $menu;
     }
 
     /**

@@ -67,94 +67,15 @@ class ComMenuRouter extends ComBaseRouterDefault
     
     /**
      * (non-PHPdoc)
-     * @see ComBaseRouterAbstract::build()
-     */
-    public function build(&$query)
-    {
-        $segments = array();
-        
-        if(isset($query['id'])) 
-        {
-            $item = JSite::getMenu()->getItem($query['id']);                        
-            
-            if($item) 
-            {
-                if($item->home) 
-                {
-                    unset($query['option']);                    
-                } 
-                else 
-                {
-                    $route = $item->route;
-                    $segments[] = $route;                    
-                }
-            }
-            
-            unset($query['id']);
-        }
-        
-        return $segments;
-    }
-    
-    /**
-     * (non-PHPdoc)
      * @see ComBaseRouterAbstract::parse()
      */
     public function parse(&$segments)
     {
-        $vars = array();
-        
-        $menu = &JSite::getMenu();
-        
-        if(!empty($segments)) 
-        {
-            $route  = implode('/', $segments);
-            $items	= $menu->getItems('route', $route);
-        } 
-        else 
-        {
-            $user = JFactory::getUser();
+		$user = JFactory::getUser();
             
-            if($user->id > 0 && !empty($this->_home_query)) 
-            {
-                //tries to find a corresponding menu
-                //and set menu id
-                $query = $this->_home_query;
-                $link = 'index.php?'.http_build_query($query);
-                $items = $menu->getItems('link', $link);
-                
-                if(!$items)
-                    $items = $menu->getItems('home', true);
-                    
-                if($items) 
-                {
-                    $item = array_pop($items);
-                    $query['Itemid'] = $item->id;
-                }
-                
-                return $query;
-            }
-            else 
-            { 
-                $items = $menu->getItems('home', true);
-            }
-        }
-
-        if(!empty($items))
-        {
-            foreach($items as $item) 
-            {
-                if($item->type == 'component') 
-                {
-                    $vars = $item->query;
-                    $vars['Itemid'] = $item->id;
-                    break;
-                }
-            }    
-        }
-        		
-		$vars = array_merge(array('option'=>null), $vars);
-		
-		return $vars;
+        if($user->id > 0 && !empty($this->_home_query))
+        	return $this->_home_query;
+        else 
+			return array('option'=>'com_html', 'view'=>'content');
     }    
 }
