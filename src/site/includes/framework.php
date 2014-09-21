@@ -22,7 +22,6 @@ define('JPATH_ROOT',           JPATH_BASE );
 define('JPATH_SITE',           JPATH_ROOT );
 define('JPATH_CONFIGURATION',  JPATH_ROOT );
 define('JPATH_ADMINISTRATOR',  JPATH_ROOT.'/administrator');
-define('JPATH_XMLRPC',         JPATH_ROOT.'/xmlrpc');
 define('JPATH_LIBRARIES',      JPATH_ROOT.'/libraries');
 define('JPATH_PLUGINS',        JPATH_ROOT.'/plugins');
 define('JPATH_INSTALLATION',   JPATH_ROOT.'/installation');
@@ -92,4 +91,3 @@ $autoloader->unregister();
 $autoloader->register();
 
 KLoader::getInstance()->loadIdentifier('com://site/application.aliases');
-?>

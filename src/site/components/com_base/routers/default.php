@@ -25,7 +25,4 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComBaseRouterDefault extends ComBaseRouterAbstract
-{
-    
-}
+class ComBaseRouterDefault extends ComBaseRouterAbstract{}

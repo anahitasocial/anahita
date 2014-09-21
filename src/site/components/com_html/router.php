@@ -23,12 +23,15 @@ class ComHtmlRouter extends ComBaseRouterAbstract
     {
         unset($query['view']);
         $segments = array();
-        if ( isset($query['layout']) )
+        
+        if(isset($query['layout']))
         {
             $query['layout'] = urldecode($query['layout']);
             $segments = explode('/', $query['layout']);            
         }        
+        
         unset($query['layout']);
+        
         return $segments;
     }
     
@@ -39,9 +42,10 @@ class ComHtmlRouter extends ComBaseRouterAbstract
     public function parse(&$segments)
     {
         $query = array('view'=>'content');
-        if ( count($segments) ) {
+        
+        if(count($segments))
             $query['layout'] = str_replace('-','_', implode('/', $segments));
-        }        
+               
         return $query;
     }    
 }

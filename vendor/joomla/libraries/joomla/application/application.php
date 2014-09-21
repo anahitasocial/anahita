@@ -711,12 +711,16 @@ class JApplication extends JObject
 	 */
 	public static function &getMenu($name = null, $options = array())
 	{
-		jimport( 'joomla.application.menu' );
+		jimport('joomla.application.menu');
+		
 		$menu =& JMenu::getInstance($name, $options);
-		if (JError::isError($menu)) {
+		
+		if(JError::isError($menu)) 
+		{
 			$null = null;
 			return $null;
 		}
+		
 		return $menu;
 	}
 

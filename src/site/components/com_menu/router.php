@@ -59,7 +59,7 @@ class ComMenuRouter extends ComBaseRouterDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'home_query' => array('option'=>'com_dashboard','view'=>'dashboard')
+            'home_query' => array('option'=>'com_dashboard', 'view'=>'dashboard')
         ));
     
         parent::_initialize($config);
@@ -73,19 +73,26 @@ class ComMenuRouter extends ComBaseRouterDefault
     {
         $segments = array();
         
-        if ( isset($query['id']) ) 
+        if(isset($query['id'])) 
         {
             $item = JSite::getMenu()->getItem($query['id']);                        
-            if ( $item ) {
-                if ( $item->home ) {
+            
+            if($item) 
+            {
+                if($item->home) 
+                {
                     unset($query['option']);                    
-                } else {
+                } 
+                else 
+                {
                     $route = $item->route;
                     $segments[] = $route;                    
                 }
             }
+            
             unset($query['id']);
         }
+        
         return $segments;
     }
     
@@ -96,42 +103,48 @@ class ComMenuRouter extends ComBaseRouterDefault
     public function parse(&$segments)
     {
         $vars = array();
+        
         $menu = &JSite::getMenu();
-        if ( !empty($segments) ) 
+        
+        if(!empty($segments)) 
         {
             $route  = implode('/', $segments);
             $items	= $menu->getItems('route', $route);
-        } else 
+        } 
+        else 
         {
             $user = JFactory::getUser();
-            if ( $user->id > 0 && 
-                    !empty($this->_home_query) ) 
+            
+            if($user->id > 0 && !empty($this->_home_query)) 
             {
                 //tries to find a corresponding menu
                 //and set menu id
-                $query  = $this->_home_query;
-                $link   = 'index.php?'.http_build_query($query);
-                $items  = $menu->getItems('link', $link);
-                if ( !$items ) {
+                $query = $this->_home_query;
+                $link = 'index.php?'.http_build_query($query);
+                $items = $menu->getItems('link', $link);
+                
+                if(!$items)
                     $items = $menu->getItems('home', true);
-                }
-                if ( $items ) 
+                    
+                if($items) 
                 {
                     $item = array_pop($items);
                     $query['Itemid'] = $item->id;
                 }
+                
                 return $query;
             }
-            else { 
-                $items  = $menu->getItems('home', true);
+            else 
+            { 
+                $items = $menu->getItems('home', true);
             }
         }
 
-        if ( !empty($items) )
+        if(!empty($items))
         {
             foreach($items as $item) 
             {
-                if ( $item->type == 'component') 
+                if($item->type == 'component') 
                 {
                     $vars = $item->query;
                     $vars['Itemid'] = $item->id;

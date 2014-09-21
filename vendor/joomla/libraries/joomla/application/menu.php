@@ -59,12 +59,9 @@ class JMenu extends JObject
 	{
 		$this->load(); //load the menu items
 
-		foreach ($this->_items as $k => $item)
-		{
-			if ($item->home) {
+		foreach($this->_items as $k => $item)
+			if($item->home)
 				$this->_default = $item->id;
-			}
-		}
 	}
 
 	/**
@@ -83,11 +80,12 @@ class JMenu extends JObject
 	{
 		static $instances;
 
-		if (!isset( $instances )) {
+		if(!isset($instances)) 
+		{
 			$instances = array();
 		}
 
-		if (empty($instances[$client]))
+		if(empty($instances[$client]))
 		{
 			//Load the router object
 			$info = JApplicationHelper::getClientInfo($client, true);
@@ -125,7 +123,9 @@ class JMenu extends JObject
 	function &getItem($id)
 	{
 		$result = null;
-		if (isset($this->_items[$id])) {
+		
+		if(isset($this->_items[$id])) 
+		{
 			$result = &$this->_items[$id];
 		}
 
@@ -141,8 +141,10 @@ class JMenu extends JObject
 	 */
 	function setDefault($id)
 	{
-		if(isset($this->_items[$id])) {
+		if(isset($this->_items[$id])) 
+		{
 			$this->_default = $id;
+			
 			return true;
 		}
 
@@ -159,6 +161,7 @@ class JMenu extends JObject
 	function &getDefault()
 	{
 		$item =& $this->_items[$this->_default];
+		
 		return $item;
 	}
 
@@ -175,10 +178,12 @@ class JMenu extends JObject
 		{
 			$this->_active = $id;
 			$result = &$this->_items[$id];
+			
 			return $result;
 		}
 
 		$result = null;
+		
 		return $result;
 	}
 
@@ -191,12 +196,15 @@ class JMenu extends JObject
 	 */
 	function &getActive()
 	{
-		if ($this->_active) {
+		if($this->_active) 
+		{
 			$item =& $this->_items[$this->_active];
+			
 			return $item;
 		}
 
 		$result = null;
+		
 		return $result;
 	}
 
@@ -215,14 +223,13 @@ class JMenu extends JObject
 
 		foreach ($this->_items as  $item)
 		{
-			if ( ! is_object($item) )
+			if(!is_object($item))
 				continue;
 
-			if ($item->$attribute == $value)
+			if($item->$attribute == $value)
 			{
-				if($firstonly) {
+				if($firstonly)
 					return $item;
-				}
 
 				$items[] = $item;
 			}
@@ -241,10 +248,11 @@ class JMenu extends JObject
 	function &getParams($id)
 	{
 		$ini = '';
-		if ($menu =& $this->getItem($id)) {
+		
+		if($menu =& $this->getItem($id))
 			$ini = $menu->params;
-		}
-		$result = new JParameter( $ini );
+		
+		$result = new JParameter($ini);
 
 		return $result;
 	}
@@ -255,7 +263,8 @@ class JMenu extends JObject
 	 * @access public
 	 * @return array
 	 */
-	function getMenu() {
+	function getMenu() 
+	{
 		return $this->_items;
 	}
 
@@ -271,6 +280,7 @@ class JMenu extends JObject
 	function authorize($id, $accessid = 0)
 	{
 		$menu =& $this->getItem($id);
+		
 		return ((isset($menu->access) ? $menu->access : 0) <= $accessid);
 	}
 

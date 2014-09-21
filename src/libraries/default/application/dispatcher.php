@@ -45,9 +45,8 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
         $this->_application = $config->application;
         
-        if ( PHP_SAPI == 'cli' ) {
-            $this->registerCallback('after.load', array($this, 'prepclienv'));
-        }
+        if(PHP_SAPI == 'cli')
+        	$this->registerCallback('after.load', array($this, 'prepclienv'));
     }
         
     /**
@@ -78,11 +77,15 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     protected function _actionRoute(KCommandContext $context)
     {
         //route the application
-        $url  = clone KRequest::url();
+        $url = clone KRequest::url();
+        
         $this->_application->getRouter()->parse($url);
+        
         JRequest::set($url->query, 'get', false);
+        
         // trigger the onAfterRoute events
         $this->_application->triggerEvent('onAfterRoute');
+        
         $url->query = KRequest::get('get','raw');
     
         //globally set ItemId
@@ -106,16 +109,16 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     protected function _actionLoad($context)
     {
         //already loaded
-        if ( $this->_application instanceof JApplication )
+        if($this->_application instanceof JApplication)
             return;
             
-//         legacy register error handling
-        JError::setErrorHandling( E_ERROR, 'callback', array($this, 'exception'));
+		//legacy register error handling
+        JError::setErrorHandling(E_ERROR, 'callback', array($this, 'exception'));
     
         //register exception handler
         set_exception_handler(array($this, 'exception'));
     
-        $identifier = clone $this->getIdentifier();;
+        $identifier = clone $this->getIdentifier();
         $identifier->name = 'application';
         
         //load the JSite
@@ -139,15 +142,16 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         if ($error_reporting > 0)
         {
             error_reporting( $error_reporting );
-            ini_set('display_errors',1);
-            ini_set('display_startup_errors',1);
+            ini_set('display_errors', 1);
+            ini_set('display_startup_errors', 1);
         }
     
         $this->getService()->set($identifier, $this->_application);
         $this->getService()->setAlias('application', $identifier);        
     
         //set the session handler to none for
-        if ( PHP_SAPI == 'cli' ) {
+        if(PHP_SAPI == 'cli') 
+        {
             JFactory::getConfig()->setValue('config.session_handler','none');
             JFactory::getConfig()->setValue('config.cache_handler','file');
         }
@@ -167,32 +171,37 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
      */
     protected function _actionPrepclienv(KCommandContext $context)
     {
-        if ( !empty($_SERVER['argv']) && count($_SERVER['argv']) > 1 ) 
+        if(!empty($_SERVER['argv']) && count($_SERVER['argv']) > 1) 
         {
              $args = array_slice($_SERVER['argv'], 1);
-             if ( is_readable(realpath($args[0])) ) {
+             
+             if(is_readable(realpath($args[0])))
                  $file = array_shift($args);
-             }
+             
              $args = explode('&-data&', implode($args,'&'));
              $args = array_filter($args, 'trim');
+             
              foreach($args as $i => $arg) 
              {
                  $arg = trim($arg);
-                 if ( $i == 0 ) 
+                 
+                 if($i == 0) 
                  {
-                    if ( strpos($arg,'/') !== false ) 
+                    if(strpos($arg,'/') !== false) 
                     {
-                        $arg  =  substr_replace($arg, '?', strpos($arg,'&'), 1);
-                        $url  = KService::get('koowa:http.url', array('url'=>$arg));
+                        $arg = substr_replace($arg, '?', strpos($arg,'&'), 1);
+                        $url = KService::get('koowa:http.url', array('url'=>$arg));
                         KRequest::url()->path = KRequest::base().$url->path;
                         $_GET = $url->query;
-                    } else {
+                    } 
+                    else 
+                    {
                         KRequest::url()->path = KRequest::base();
                         parse_str($arg, $_GET);
                     }
                  }
-                 
-                 else {
+                 else 
+                 {
                      parse_str($arg, $_POST);
                  }
              }
@@ -207,7 +216,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->_application->triggerEvent('onCli');
         
         //if there's a file then just load the file and exit
-        if ( !empty($file) ) 
+        if(!empty($file)) 
         {
             KService::get('koowa:loader')->loadFile($file);
             exit(0);
