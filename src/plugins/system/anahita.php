@@ -38,15 +38,13 @@ class PlgSystemAnahita extends JPlugin
 	public function __construct($subject, $config = array())
 	{	    
         // Command line fixes for Joomla
-        if (PHP_SAPI === 'cli') 
+        if(PHP_SAPI === 'cli') 
         {
-            if (!isset($_SERVER['HTTP_HOST'])) {
+            if(!isset($_SERVER['HTTP_HOST']))
                 $_SERVER['HTTP_HOST'] = '';
-            }
             
-            if (!isset($_SERVER['REQUEST_METHOD'])) {
+            if(!isset($_SERVER['REQUEST_METHOD']))
                 $_SERVER['REQUEST_METHOD'] = '';
-            }
         }                
         
         // Check for suhosin
@@ -110,15 +108,16 @@ class PlgSystemAnahita extends JPlugin
         global $mainframe;
 
         // No remember me for admin
-        if ($mainframe->isAdmin())
+        if($mainframe->isAdmin())
             return;  
 
         //if alredy logged in then forget it
-        if (!JFactory::getUser()->guest)
+        if(!JFactory::getUser()->guest)
             return;    
         
         jimport('joomla.utilities.utility');
         jimport('joomla.utilities.simplecrypt');
+        
         $user = array();
         $remember = JUtility::getHash('JLOGIN_REMEMBER');
         
@@ -135,13 +134,13 @@ class PlgSystemAnahita extends JPlugin
             
             if($key)
             {
-            	$crypt    = new JSimpleCrypt($key);
-            	$cookie   = $crypt->decrypt($_COOKIE[$remember]);
-            	$user     = (array) @unserialize($cookie);
+            	$crypt = new JSimpleCrypt($key);
+            	$cookie = $crypt->decrypt($_COOKIE[$remember]);
+            	$user = (array) @unserialize($cookie);
             }
         }
         
-        if (!empty($user)) 
+        if(!empty($user)) 
         {
             jimport('joomla.user.authentication');
             $authentication =& JAuthentication::getInstance();
@@ -149,18 +148,16 @@ class PlgSystemAnahita extends JPlugin
         	try
             {
                 $authResponse = $authentication->authenticate($user, array());
+                
             	if($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS)
-                {
             		KService::get('com://site/people.helper.person')->login($user, true);
-                }
             }
             catch(RuntimeException $e) 
             {
                 //only throws exception if we are using JSON format
                 //otherwise let the current app handle it
-                if ( KRequest::format() == 'json') {
+                if(KRequest::format() == 'json')
                     throw $e;
-                }
             }
         }
         
@@ -190,7 +187,7 @@ class PlgSystemAnahita extends JPlugin
                     ->userId($user['id'])
                     ->fetch();
 							
-		if ($person) 
+		if($person) 
 		{		    
 			KService::get('com://site/people.helper.person')->synchronizeWithUser($person, JFactory::getUser($user['id']));
 		} 

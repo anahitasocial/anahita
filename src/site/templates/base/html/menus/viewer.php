@@ -38,7 +38,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 			<?php if(KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
             <li class="divider"></li>
             <li>
-            	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias) ?>">
+            	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
             	<?= @text('TMPL-MENU-ITEM-VIEWER-GROUPS') ?>
             	</a>
             </li>
