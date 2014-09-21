@@ -87,11 +87,22 @@ class ComPagesDomainEntityComponent extends ComMediumDomainEntityComponent
 	 */
 	protected function _setComposers($actor, $composers, $mode)
 	{
-		if ( $actor->authorize('action','com_pages:page:add') )
+		if($actor->authorize('action','com_pages:page:add'))
 			$composers->insert('page-composer',array(
 					'title'	       => JText::_('COM-PAGES-COMPOSER-PAGE'),
 					'placeholder'  => JText::_('COM-PAGES-PAGE-ADD'),
 					'url'      => 'option=com_pages&view=page&layout=composer&oid='.$actor->id,
 			));
-	}	
+	}
+
+	/**
+	 * @{inheritdoc}
+	 */
+	protected function _setMenuLinks($actor, $menuItems)
+	{
+		$menuItems->insert('pages-pages', array(
+			'title' => JText::_('COM-PAGES-MENU-ITEM-PAGES'),
+			'url' => 'option=com_pages&view=pages&oid='.$actor->uniqueAlias
+		));
+	}
 }

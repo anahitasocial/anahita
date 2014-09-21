@@ -63,5 +63,16 @@ class ComTopicsDomainEntityComponent extends ComMediumDomainEntityComponent
 					'placeholder'  => JText::_('COM-TOPICS-TOPIC-ADD'),
 					'url'      => 'option=com_topics&view=topic&layout=composer&oid='.$actor->id
 			));
-	}	
+	}
+
+	/**
+	 * @{inheritdoc}
+	 */
+	protected function _setMenuLinks($actor, $menuItems)
+	{
+		$menuItems->insert('topics-topics', array(
+			'title' => JText::_('COM-TOPICS-MENU-ITEM-TOPICS'),
+			'url' => 'option=com_topics&view=topics&oid='.$actor->uniqueAlias
+		));
+	}
 }

@@ -115,6 +115,22 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$tabs  = $event->tabs;
 		$this->_setSettingTabs($actor, $tabs);
 	}
+	
+	/**
+	 * On Viewer Menu display
+	 *
+	 * @param  KEvent $event The event parameter
+	 *
+	 * @return void
+	 */
+	public function onMenuDisplay(KEvent $event)
+	{
+		$actor = $event->actor;
+		$menuItems = $event->menuItems;		
+		
+		if($this->activeForActor($actor))
+			$this->_setMenuLinks($actor, $menuItems);
+	}
 		
 	/**
 	 * On Dashboard event
@@ -180,7 +196,17 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	 *
 	 * @return void
 	 */
-	protected function _setSettingTabs($actor, $tabs){}	
+	protected function _setSettingTabs($actor, $tabs){}
+	
+	/**
+	 * Set the links used to construct the viewer menu. This method should be implemented by the subclasses
+	 *
+	 * @param ComActorsDomainEntityActor     $actor The actor that gadgets is rendering for
+	 * @param LibBaseTemplateObjectContainer $menuItems  menu item objects
+	 *
+	 * @return void
+	 */
+	protected function _setMenuLinks($actor, $menuItems){}
 	
 	/**
 	 * parse tags in the body of the entity
