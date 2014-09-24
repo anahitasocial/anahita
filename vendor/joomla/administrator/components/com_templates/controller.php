@@ -131,17 +131,12 @@ class TemplatesController
 		}
 
 		$params = new JParameter($content, $xml, 'template');
-
-		$assigned = TemplatesHelper::isTemplateAssigned($row->directory);
 		$default = TemplatesHelper::isTemplateDefault($row->directory, $client->id);
 
-		if ($default) {
-			$row->pages = 'all';
-		} elseif (!$assigned) {
-			$row->pages = 'none';
-		} else {
-			$row->pages = null;
-		}
+		if(TemplatesHelper::isTemplateDefault($row->directory, $client->id))
+			$row->default = 1;
+		else 
+			$row->default = 0;
 
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');

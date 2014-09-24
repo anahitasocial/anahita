@@ -221,7 +221,6 @@ class TemplatesView
 	public static function editTemplate($row, $lists, & $params, $option, & $client, & $ftp, & $template)
 	{
 		JRequest::setVar( 'hidemainmenu', 1 );
-
 		JHTML::_('behavior.tooltip');
 ?>
 		<form action="index.php" method="post" name="adminForm">
@@ -317,6 +316,7 @@ class TemplatesView
 		<input type="hidden" name="option" value="<?php echo $option;?>" />
 		<input type="hidden" name="task" value="" />
 		<input type="hidden" name="client" value="<?php echo $client->id;?>" />
+		<input type="hidden" name="default" value="<?php echo $row->default; ?>" />
 		<?php echo JHTML::_( 'form.token' ); ?>
 		</form>
 		<?php
