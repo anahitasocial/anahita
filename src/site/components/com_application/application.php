@@ -180,19 +180,6 @@ class JSite extends JApplication
     }
 
     /**
-     * Return a reference to the JPathway object
-     * 
-     * @return JPathway
-     */
-    public function &getPathway($name = null, $options = array())
-    {
-        $options = array();
-        $pathway =& parent::getPathway('site', $options);
-        
-        return $pathway;
-    }
-
-    /**
      * Set the application router
      * 
      * @param mixed $router

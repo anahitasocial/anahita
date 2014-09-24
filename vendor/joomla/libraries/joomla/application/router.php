@@ -97,14 +97,16 @@ class JRouter extends JObject
             //Load the router object           
             $info =& JApplicationHelper::getClientInfo($client, true);
             $classname = 'JRouter'.ucfirst($client);            
-            if ( !class_exists($classname) )
+            
+            if(!class_exists($classname))
             {
                 $path = $info->path.DS.'includes'.DS.'router.php';
                 if(file_exists($path))
                     require_once $path;
             }
 
-            if ( !class_exists($classname) ) {
+            if(!class_exists($classname)) 
+            {
                 $error = JError::raiseError( 500, 'Unable to load router: '.$client);
                 return $error;
             }

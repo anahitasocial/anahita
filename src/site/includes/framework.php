@@ -32,7 +32,8 @@ define('JPATH_VENDOR',          JPATH_BASE.'/vendor');
 /*
  * Installation check, and check on removal of the install directory.
  */
-if (!file_exists( JPATH_CONFIGURATION.'/configuration.php') || (filesize( JPATH_CONFIGURATION.'/configuration.php') < 10) ) {
+if(!file_exists( JPATH_CONFIGURATION.'/configuration.php') || (filesize( JPATH_CONFIGURATION.'/configuration.php') < 10)) 
+{
 	echo 'No configuration file found. Exiting...';
 	exit();
 }
@@ -42,7 +43,6 @@ require_once(JPATH_LIBRARIES . '/joomla/import.php');
 
 jimport('joomla.application.application');
 jimport('joomla.application.router');
-jimport('joomla.application.menu');
 jimport('joomla.user.user');
 jimport('joomla.environment.uri');
 jimport('joomla.html.html');

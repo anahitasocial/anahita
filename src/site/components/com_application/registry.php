@@ -71,5 +71,3 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
 		return self::$_instances[$config->cache_prefix];
 	}
 }
-
-?>

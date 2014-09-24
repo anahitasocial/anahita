@@ -67,13 +67,12 @@ class LibApplicationRouter extends KObject
 		parent::__construct($config);
 		
 		$this->_enable_rewrite = $config->enable_rewrite;
-	    $this->_base_url       = $config->base_url;
+	    $this->_base_url = $config->base_url;
 	    
-	    if ( is_string($this->_base_url) ) {
-	        $this->_base_url = $this->getService('koowa:http.url', array('url'=>$this->_base_url));    
-	    }
+	    if(is_string($this->_base_url))
+	        $this->_base_url = $this->getService('koowa:http.url', array('url'=>$this->_base_url));
 	    
-        $this->_clonable_url   = $config->url;
+        $this->_clonable_url = $config->url;
 	}
 	
 	/**
@@ -87,20 +86,19 @@ class LibApplicationRouter extends KObject
 	 */
 	protected function _initialize(KConfig $config)
 	{    	
-	    if ( !$config->base_url )
+	    if(!$config->base_url)
 	    {
 	        $base = clone KRequest::base();
 	        
-	        foreach(array('host','scheme','port','user','pass') as $part) {
+	        foreach(array('host','scheme','port','user','pass') as $part)
 	            $base->$part = KRequest::url()->$part;
-	        }
 	        
 	        $config->base_url = $base;	        	       
 	    }
 	    	    
     	$config->append(array(
     		'enable_rewrite' => false,    	    
-    		'url'	         => clone KService::get('koowa:http.url')	
+    		'url' => clone KService::get('koowa:http.url')	
     	));
   	
 	    parent::_initialize($config);
@@ -157,15 +155,15 @@ class LibApplicationRouter extends KObject
 	 */
 	protected function _parse(&$url)
 	{
-	    $segments   = explode('/', trim($url->path,'/'));
-	    $segments   = array_filter($segments);
+	    $segments = explode('/', trim($url->path,'/'));
+	    $segments = array_filter($segments);
 	     
-	    if ( count($segments) )
+	    if(count($segments))
 	    {
-	        $component  = array_shift($segments);
+	        $component = array_shift($segments);
 	        $url->query = array_merge(array('option'=>'com_'.$component), $url->query);
-	        $component  = str_replace('com_','',$url->query['option']);
-	        $query      = $this->getComponentRouter($component)->parse($segments);
+	        $component = str_replace('com_','',$url->query['option']);
+	        $query = $this->getComponentRouter($component)->parse($segments);
 	        $url->query = array_merge($url->query, array('option'=>'com_'.$component), $query);
 	    }
 	}
