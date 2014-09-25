@@ -6,6 +6,13 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 ?>
 
 <ul class="nav " data-behavior="BS.Dropdown">
+<?php if($viewer->guest()): ?>
+	<li>
+		<a href="<?= @route('option=com_people&view=session') ?>">
+		<?= @text('LIB-AN-ACTION-LOGIN') ?>
+		</a>
+	</li>	
+<?php else : ?>
 	<li> 
 		<a href="<?=@route($viewer->getURL())?>">
 		<?= @avatar(get_viewer(), 'square', false) ?>
@@ -16,15 +23,15 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 		<?= @text('TMPL-MENU-ITEM-VIEWER-SOCIALGRAPH') ?>
 		</a>
 	</li>
-	
-	<?php if(KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
-            <li class="divider"></li>
-            <li>
-            	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
-            	<?= @text('TMPL-MENU-ITEM-VIEWER-GROUPS') ?>
-            	</a>
-            </li>
-            <?php endif; ?>
+
+<?php if(KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
+    <li class="divider"></li>
+    <li>
+    	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
+        <?= @text('TMPL-MENU-ITEM-VIEWER-GROUPS') ?>
+        </a>
+    </li>
+ 	<?php endif; ?>
             
 			<?php if(count($components)): ?>
 			<li class="divider"></li>
@@ -42,4 +49,5 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 		<?= @text('LIB-AN-ACTION-LOGOUT') ?>
 		</a>
 	</li>
+<?php endif; ?>	
 </ul>
