@@ -702,25 +702,6 @@ class JApplication extends JObject
 	}
 
 	/**
-	 * Return a reference to the application JPathway object.
-	 *
-	 * @access public
-	 * @param  array	$options 	An optional associative array of configuration settings.
-	 * @return object JMenu.
-	 * @since 1.5
-	 */
-	public static function &getMenu($name = null, $options = array())
-	{
-		jimport( 'joomla.application.menu' );
-		$menu =& JMenu::getInstance($name, $options);
-		if (JError::isError($menu)) {
-			$null = null;
-			return $null;
-		}
-		return $menu;
-	}
-
-	/**
 	 * Create the configuration registry
 	 *
 	 * @access	private

@@ -131,30 +131,19 @@ class TemplatesController
 		}
 
 		$params = new JParameter($content, $xml, 'template');
-
-		$assigned = TemplatesHelper::isTemplateAssigned($row->directory);
 		$default = TemplatesHelper::isTemplateDefault($row->directory, $client->id);
 
-		if($client->id == '1')  {
-			$lists['selections'] =  JText::_('Cannot assign an administrator template');
-		} else {
-			$lists['selections'] = TemplatesHelper::createMenuList($template);
-		}
-
-		if ($default) {
-			$row->pages = 'all';
-		} elseif (!$assigned) {
-			$row->pages = 'none';
-		} else {
-			$row->pages = null;
-		}
+		if(TemplatesHelper::isTemplateDefault($row->directory, $client->id))
+			$row->default = 1;
+		else 
+			$row->default = 0;
 
 		// Set FTP credentials, if given
 		jimport('joomla.client.helper');
 		$ftp =& JClientHelper::setCredentialsFromRequest('ftp');
 
 		require_once (JPATH_COMPONENT.DS.'admin.templates.html.php');
-		TemplatesView::editTemplate($row, $lists, $params, $option, $client, $ftp, $template);
+		TemplatesView::editTemplate($row, array(), $params, $option, $client, $ftp, $template);
 	}
 
 	public static function saveTemplate()

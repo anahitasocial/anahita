@@ -87,10 +87,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
      */        
     protected function _actionDispatch(KCommandContext $context)
     {
-        if ( $context->request->get('option') != 'com_application') 
-        {
-            parent::_actionDispatch($context);
-        }        
+        if($context->request->get('option') != 'com_application')
+        	parent::_actionDispatch($context);  
                 
         $this->_application->triggerEvent('onAfterDispatch', array($context));
         
@@ -99,10 +97,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         //@TODO arash. For some reason the line below Need to fix the line below
         //not working properly
         //$redirect = $context->response->isRedirect()
-        if ( !$context->response->getHeader('Location') && 
-              $context->request->getFormat() == 'html' &&
-             !$context->request->isAjax()
-                )
+        if(!$context->response->getHeader('Location') && $context->request->getFormat() == 'html' && !$context->request->isAjax())
         {
             $config = array(
                 'request'   => $context->request,
@@ -113,8 +108,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
             $layout = $this->_request->get('tmpl','default');
             
             $this->getService('com://site/application.controller.page', $config)
-                ->layout($layout)
-                ->render();
+            ->layout($layout)->render();
         }
         
         $this->_application->triggerEvent('onAfterRender', array($context));
@@ -132,10 +126,12 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     protected function _actionRoute(KCommandContext $context)
     {
         parent::_actionRoute($context);
+        
         $component = $context->request->get('option');
-        if ( empty($component) ) {
-            $context->request->set('option', 'com_application'); 
-        }
+        
+        if(empty($component))
+        	$context->request->set('option', 'com_application'); 
+            
         $this->dispatch();
     }
     
@@ -152,12 +148,11 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         $exception = $context->data;
                 
         //if JException then conver it to KException
-        if ( $exception instanceof JException ) {
+        if($exception instanceof JException)
             $exception = new RuntimeException($exception->getMessage(),$exception->getCode());
-        }
         
         //if cli just print the error and exit
-        if ( PHP_SAPI == 'cli' )
+        if(PHP_SAPI == 'cli')
         {
             print "\n";
             print $exception."\n";
@@ -168,11 +163,11 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         $code = $exception->getCode();
         
         //check if the error is code is valid
-        if ( $code < 400 || $code >= 600 ) {
+        if($code < 400 || $code >= 600)
             $code = KHttpResponse::INTERNAL_SERVER_ERROR;
-        }
                 
-        $context->response->status = $code; 
+        $context->response->status = $code;
+         
         $config = array(
             'response'  => $context->response,
             'request'   => $context->request,
@@ -181,15 +176,12 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
         //if ajax or the format is not html
         //then return the exception in json format
-        if ( $context->request->isAjax()
-             || $context->request->getFormat() != 'html'
-                 ) {
+        if($context->request->isAjax() || $context->request->getFormat() != 'html')
             $context->request->setFormat('json');
-        }
         
         $this->getService('com://site/application.controller.exception', $config)
-                ->layout('error')
-                ->render($exception);
+        ->layout('error')
+        ->render($exception);
                 
         $this->send($context);
     }

@@ -63,26 +63,27 @@ class JSite extends JApplication
     {
         // if a language was specified it has priority
         // otherwise use user or default language settings
-        if (empty($options['language']))
+        if(empty($options['language']))
         {
-            $user = & JFactory::getUser();
-            $lang   = $user->getParam( 'language' );
+            $user = &JFactory::getUser();
+            $lang = $user->getParam( 'language' );
 
             // Make sure that the user's language exists
-            if ( $lang && JLanguage::exists($lang) ) {
+            if($lang && JLanguage::exists($lang)) 
+            {
                 $options['language'] = $lang;
-            } else {
-                $params =  JComponentHelper::getParams('com_languages');
+            } 
+            else 
+            {
+                $params = JComponentHelper::getParams('com_languages');
                 $client =& JApplicationHelper::getClientInfo($this->getClientId());
                 $options['language'] = $params->get($client->name, 'en-GB');
             }
-
         }
 
         // One last check to make sure we have something
-        if ( ! JLanguage::exists($options['language']) ) {
+        if(!JLanguage::exists($options['language']))
             $options['language'] = 'en-GB';
-        }
 
         parent::initialise($options);
     }    
@@ -98,9 +99,8 @@ class JSite extends JApplication
     public function login($credentials, $options = array())
     {
          //Set the application login entry point
-         if(!array_key_exists('entry_url', $options)) {
+         if(!array_key_exists('entry_url', $options))
              $options['entry_url'] = JURI::base().'index.php?option=com_people&view=session&action=login';
-         }
 
         return parent::login($credentials, $options);
     }
@@ -115,33 +115,25 @@ class JSite extends JApplication
     public function &getParams($option = null)
     {
         static $params = array();
+        
         $hash = '__default';
-        if(!empty($option)) $hash = $option;
-        if (!isset($params[$hash]))
+        
+        if(!empty($option)) 
+        	$hash = $option;
+        
+        if(!isset($params[$hash]))
         {
             // Get component parameters
-            if (!$option) {
+            if(!$option)
                 $option = JRequest::getCmd('option');
-            }
+            
             $params[$hash] =& JComponentHelper::getParams($option);
 
-            // Get menu parameters
-            $menus  =& JSite::getMenu();
-            $menu   = $menus->getActive();
-
-            $title       = htmlspecialchars_decode($this->getCfg('sitename' ));
+            $title = htmlspecialchars_decode($this->getCfg('sitename' ));
             $description = $this->getCfg('MetaDesc');
 
-            // Lets cascade the parameters if we have menu item parameters
-            if (is_object($menu))
-            {
-                $params[$hash]->merge(new JParameter($menu->params));
-                $title = $menu->name;
-
-            }
-
-            $params[$hash]->def( 'page_title'      , $title );
-            $params[$hash]->def( 'page_description', $description );
+            $params[$hash]->def('page_title', $title);
+            $params[$hash]->def('page_description', $description);
         }
 
         return $params[$hash];
@@ -154,21 +146,19 @@ class JSite extends JApplication
      */
     public function getTemplate()
     {
-        if ( !isset($this->_template) ) 
+        if(!isset($this->_template)) 
         {
-        	if ( !KService::get('application.registry')
-        		->offsetExists('application-template') )
+        	if(!KService::get('application.registry')->offsetExists('application-template'))
         	{
         		//get the template
         		$template = KService::get('repos://site/templates.menu', array(
-        				'resources'         => 'templates_menu',
-        				'identity_property' => 'menuid'
+        			'resources' => 'templates_menu',
+        			'identity_property' => 'menuid'
         		))->getQuery()->clientId(0)->fetchValue('template');
 
-        		KService::get('application.registry')
-        		->offsetSet('application-template', $template);
+        		KService::get('application.registry')->offsetSet('application-template', $template);
         	}
-        	
+        		
         	$template = KService::get('application.registry')->offsetGet('application-template');
             
             $this->setTemplate(pick($template, 'base'));
@@ -190,29 +180,6 @@ class JSite extends JApplication
     }
 
     /**
-     * Return a reference to the JPathway object.
-     *
-     * @return JMenu
-     */
-    public static function &getMenu($name = null, $options = array())
-    {
-        $menu =& parent::getMenu('site', $options);
-        return $menu;
-    }
-
-    /**
-     * Return a reference to the JPathway object
-     * 
-     * @return JPathway
-     */
-    public function &getPathway($name = null, $options = array())
-    {
-        $options = array();
-        $pathway =& parent::getPathway('site', $options);
-        return $pathway;
-    }
-
-    /**
      * Set the application router
      * 
      * @param mixed $router
@@ -222,6 +189,7 @@ class JSite extends JApplication
     public function setRouter($router)
     {
         $this->_router = $router;
+        
         return $this;
     }
     
@@ -232,10 +200,8 @@ class JSite extends JApplication
      */
     function &getRouter($name = null, $options = array())
     {
-        if ( !isset($this->_router) )
-        {
+        if(!isset($this->_router))
             $this->_router = KService::get('com://site/application.router', array('enable_rewrite'=>JFactory::getConfig()->getValue('sef_rewrite')));
-        }
         
         return $this->_router;
     }

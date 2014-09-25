@@ -50,18 +50,20 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
 	 */
 	public static function getInstance(KConfigInterface $config, KServiceInterface $container)
 	{
-		if ( !isset(self::$_clone) ) {
-			self::$_clone = new AnRegistry();			
-		}
+		if(!isset(self::$_clone))
+			self::$_clone = new AnRegistry();
 							
-		if ( $config->key ) {
+		if($config->key) 
+		{
 			$config->cache_prefix .= '-'.$config->key;
 			unset($config->key);
 		}
 		
-		if ( !isset(self::$_instances[$config->cache_prefix]) ) {
+		if(!isset(self::$_instances[$config->cache_prefix])) 
+		{
 			$instance = clone self::$_clone;
 			self::$_instances[$config->cache_prefix] = $instance;
+			
 			$instance->setCachePrefix($config->cache_prefix);
 			$instance->enableCache($config->cache_enabled);			
 		}
@@ -69,5 +71,3 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
 		return self::$_instances[$config->cache_prefix];
 	}
 }
-
-?>

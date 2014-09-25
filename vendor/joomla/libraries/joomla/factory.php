@@ -231,26 +231,6 @@ class JFactory
 	}
 
 	/**
-	 * Get a template object
-	 *
-	 * Returns a reference to the global {@link JTemplate} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @return object JTemplate
-	 */
-	static public function &getTemplate( )
-	{
-		static $instance;
-
-		if (!is_object($instance)) {
-			$instance = JFactory::_createTemplate();
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get a database object
 	 *
 	 * Returns a reference to the global {@link JDatabase} object, only creating it
@@ -584,53 +564,6 @@ class JFactory
 		}
 
 		return $mail;
-	}
-
-
-	/**
-	 * Create a template object
-	 *
-	 * @access private
-	 * @param array An array of support template files to load
-	 * @return object JTemplate
-	 * @since 1.5
-	 */
-	static private function &_createTemplate($files = array())
-	{
-		jimport('joomla.template.template');
-
-		$conf =& JFactory::getConfig();
-
-		$tmpl = new JTemplate;
-
-		// patTemplate
-		if ($conf->getValue('config.caching')) {
-			 $tmpl->enableTemplateCache( 'File', JPATH_BASE.DS.'cache'.DS);
-		}
-
-		$tmpl->setNamespace( 'jtmpl' );
-
-		// load the wrapper and common templates
-		$tmpl->readTemplatesFromFile( 'page.html' );
-		$tmpl->applyInputFilter('ShortModifiers');
-
-		// load the stock templates
-		if (is_array( $files ))
-		{
-			foreach ($files as $file) {
-				$tmpl->readTemplatesFromInput( $file );
-			}
-		}
-
-		$tmpl->addGlobalVar( 'option', 				$GLOBALS['option'] );
-		$tmpl->addGlobalVar( 'self', 				str_replace(array('"', '<', '>', "'"), '', $_SERVER["PHP_SELF"]) );
-		$tmpl->addGlobalVar( 'uri_query', 			$_SERVER['QUERY_STRING'] );
-		$tmpl->addGlobalVar( 'REQUEST_URI',			JRequest::getURI() );
-		if (isset($GLOBALS['Itemid'])) {
-			$tmpl->addGlobalVar( 'itemid', $GLOBALS['Itemid'] );
-		}
-
-		return $tmpl;
 	}
 
 	/**

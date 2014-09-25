@@ -15,6 +15,5 @@
 
 function com_uninstall() 
 {
-    //doesn't exists create a menu item
-    dbexec("DELETE FROM #__menu WHERE `link` LIKE 'index.php?option=com_groups&view=groups&oid=viewer&filter=following'");
+    
 }

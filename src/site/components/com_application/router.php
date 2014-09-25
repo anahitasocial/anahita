@@ -35,17 +35,10 @@ class ComApplicationRouter extends LibApplicationRouter
 	public function parse(&$url)
 	{
 	    $this->_fixUrlForParsing($url);
-	    
-	    //if the url path is empty then and no option
-	    //isset the add the menu path by default
-	    if ( empty($url->path) && !isset($url->query['option'])) {
-	        $url->path = 'menu';
-	    }
+
+	    if(empty($url->path) && !isset($url->query['option']))
+	    	$url->path = (get_viewer()->guest()) ? 'html' : 'dashboard';
 	    
 	    $this->_parse($url);
-	    
-	    if ( empty($url->query['Itemid']) ) {
-	        $url->query['Itemid'] = null;
-	    }
 	}
 }

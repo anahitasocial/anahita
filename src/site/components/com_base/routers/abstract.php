@@ -26,28 +26,7 @@
  * @link       http://www.anahitapolis.com
  */
 abstract class ComBaseRouterAbstract extends KObject implements KServiceInstantiatable
-{
-    /**
-     * Force creation of a singleton
-     *
-     * @param   object  An optional KConfig object with configuration options
-     * @param   object  A KServiceInterface object
-     * @return KDispatcherDefault
-     */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
-    { 
-       // Check if an instance with this identifier already exists or not
-        if (!$container->has($config->service_identifier))
-        {
-            //Create the singleton
-            $classname = $config->service_identifier->classname;
-            $instance  = new $classname($config);
-            $container->set($config->service_identifier, $instance);
-        }
-        
-        return $container->get($config->service_identifier);
-    }
-    
+{    
     /**
      * Route patterns
      * 
@@ -84,13 +63,33 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
         
         $config->append(array(
             'patterns' => array(
-                ''          => array('view'=>$package)                             
+                '' => array('view'=>$package)                             
             )
         ));   
 
         parent::_initialize($config);
     }
+    
+    /**
+     * Force creation of a singleton
+     *
+     * @param   object  An optional KConfig object with configuration options
+     * @param   object  A KServiceInterface object
+     * @return KDispatcherDefault
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    { 
+       // Check if an instance with this identifier already exists or not
+        if(!$container->has($config->service_identifier))
+        {
+            //Create the singleton
+            $classname = $config->service_identifier->classname;
+            $instance  = new $classname($config);
+            $container->set($config->service_identifier, $instance);
+        }
         
+        return $container->get($config->service_identifier);
+    }   
     
     /**
      * Build the route
@@ -102,12 +101,13 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
     {
         $segments = array();
         
-        if ( isset($query['view']) ) {
-        	
+        if(isset($query['view'])) 
+        {
         	$id = null;
         	
         	//if there's an id pluralize the view
-        	if ( isset($query['id']) && !is_array($query['id']) ) {
+        	if(isset($query['id']) && !is_array($query['id']))
+        	{
         		//remove the singularize view
         		$query['view'] = KInflector::pluralize($query['view']);
         		$id = $query['id'];
@@ -115,15 +115,13 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
         	}
         	        	
             //prevent duplicate name
-            if ( $query['view'] != $this->getIdentifier()->package ) {
+            if($query['view'] != $this->getIdentifier()->package)
                 $segments[] = $query['view'];
-        	}
         	
             unset($query['view']);
                         
-            if ( $id ) {
+            if($id)
             	$segments[] = $id;
-            }
         }
         
         return $segments;
@@ -139,36 +137,37 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
     {
         $vars = array();
         
-        if ( empty($segments) ) {
+        if(empty($segments)) 
+        {
             $vars['view'] = $this->getIdentifier()->package;
         }
-        else if ( count($segments) == 1 ) 
+        elseif(count($segments) == 1) 
         {
-        	if ( is_numeric(current($segments)) ) {
+        	if(is_numeric(current($segments))) 
+        	{
         		$vars['view'] = KInflector::singularize($this->getIdentifier()->package);
-        		$vars['id']   = array_pop($segments);
-        	} else {
+        		$vars['id'] = array_pop($segments);
+        	} 
+        	else 
+        	{
         		$vars['view'] = array_pop($segments);
         	}
         }
-        else {
-        	
-        	$path    = implode('/', $segments);
-        	$matches = array();        	
-        	if ( preg_match('/(\w+\/)?(\d+)(\/\w+)?/', $path, $matches) ) {
-        		
-        		if ( !empty($matches[1]) ) {
-        			$view = trim($matches[1],'/');
-        		} else {
-        			$view = $this->getIdentifier()->package;
-        		}
-        		
+        else 
+        {	
+        	$path = implode('/', $segments);
+        	$matches = array();    
+        	    	
+        	if(preg_match('/(\w+\/)?(\d+)(\/\w+)?/', $path, $matches)) 
+        	{	
+        		$view = (!empty($matches[1])) ? trim($matches[1],'/') : $this->getIdentifier()->package;	
         		$vars['view'] = KInflector::singularize($view);
-        		$vars['id']   = $matches[2];
-        		if ( isset($matches[3]) )
+        		$vars['id'] = $matches[2];
+        		
+        		if(isset($matches[3]))
         			$vars['get'] = trim($matches[3],'/');
         		
-        		$segments	 = array_filter(explode('/', str_replace($matches[0], '', $path)));        		
+        		$segments = array_filter(explode('/', str_replace($matches[0], '', $path)));        		
         	}        	
         }        
         

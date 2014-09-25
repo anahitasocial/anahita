@@ -88,4 +88,15 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
 			));
 		}
 	}	
+	
+	/**
+	 * @{inheritdoc}
+	 */
+	protected function _setMenuLinks($actor, $menuItems)
+	{
+		$menuItems->insert('todos-todos', array(
+			'title' => JText::_('COM-TODOS-MENU-ITEM-TODOS'),
+			'url' => 'option=com_todos&view=todos&oid='.$actor->uniqueAlias
+		));
+	}
 }
