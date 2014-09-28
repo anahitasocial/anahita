@@ -40,7 +40,7 @@ class LibApplicationTemplateFilterAlias extends KTemplateFilterAlias
             '@previous('    => '$this->loadParent(',
             '@template('    => '$this->loadTemplate(',
             '@route('       => 'KService::get(\'com:base.helper.url\')->getRoute(',
-            '@html(\''      => '$this->renderHelper(\'com:base.template.helper.html.',
+            '@html(\''      => '$this->renderHelper(\'com:base.template.helper.html.'
         ));
     }   
 }
