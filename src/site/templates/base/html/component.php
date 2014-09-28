@@ -10,10 +10,12 @@
   		<?= @template('tmpl/js') ?>        
         <div id="container-system-message" class="container">       
     		<?= @render('messages') ?>
-    		<?= @helper('modules.render','messages', array('style'=>'none')) ?>
     	</div>
         
-        <?= @render('component') ?>
+        <div class="container" id="container-main">
+        <?= $this->getView()->content; ?>
+        </div>
+        
         <?= @render('analytics') ?>
     </body>
 </html>
