@@ -39,41 +39,7 @@
     </description>
     <exceptions>
         <filename type="noreplace">params.ini</filename>
-    </exceptions>
-    <positions>
-            <position>navigation</position>
-            <position>viewer</position>
-            <position>mobile</position>
-            
-            <position>sidebar-a</position>
-            <position>sidebar-b</position>
-            
-            <position>1-a</position>
-            <position>1-b</position>
-            <position>1-c</position>
-            <position>1-d</position>
-            
-            <position>2-a</position>
-            <position>2-b</position>
-            <position>2-c</position>
-            <position>2-d</position>
-            
-            <position>3-a</position>
-            <position>3-b</position>
-            <position>3-c</position>
-            <position>3-d</position>
-            
-            <position>4-a</position>
-            <position>4-b</position>
-            <position>4-c</position>
-            <position>4-d</position>
-            
-            <position>5-a</position>
-            <position>5-b</position>
-            <position>5-c</position>
-            <position>5-d</position>
-        </positions>
-     
+    </exceptions>     
         <params addpath="/templates/shiraz/elements">
             <param name="cssStyle" type="list" default="style1" label="Style">
                 <option value="style1">Style 1</option>
@@ -102,12 +68,6 @@
                 <option value="1">Show</option>
             </param>
             <param name="analytics" type="text" default="" label="Analytics ID" description="Enter your google analytics tracking ID which is in the format of UA-XXXXX-Y or UA-XXXXX-YY." />
-            <param name="@spacer" type="spacer" default="Row Column Ratios" />
-            <param name="1" type="row" default="12" label="Row 1" description="Select the number of columns and their ratio from the list for this row." />
-            <param name="2" type="row" default="12" label="Row 2" description="Select the number of columns and their ratio from the list for this row." />
-            <param name="3" type="row" default="12" label="Row 3" description="Select the number of columns and their ratio from the list for this row." />
-            <param name="4" type="row" default="12" label="Row 4" description="Select the number of columns and their ratio from the list for this row." />
-            <param name="5" type="row" default="12" label="Row 5" description="Select the number of columns and their ratio from the list for this row." />
         </params>
     
     <files>
