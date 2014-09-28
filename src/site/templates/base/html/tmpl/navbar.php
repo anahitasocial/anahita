@@ -12,7 +12,7 @@
 			<?= @render('logo') ?>
             
             <div id="desktop-main-menu" class="nav-collapse collapse">
-            	<?= @service('mod://site/search.html') ?>
+            	<?= @searchbox('searchbox') ?>
 	            <?= @template('menus/main') ?>
 	            <span class="viewer pull-right">
 	            	<?php if(get_viewer()->guest()): ?>
