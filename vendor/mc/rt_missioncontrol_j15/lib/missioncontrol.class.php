@@ -50,7 +50,7 @@ class MissionControl extends RTCore {
     }
 	
 	public function displayLoginForm() {
-		require_once($this->templatePath.DS.'html'.DS.'mod_login'.DS.'default.php');
+		require_once($this->templatePath.DS.'html'.DS.'login.php');
 	}
 	
 	public function displayMenu() {
@@ -125,6 +125,7 @@ class MissionControl extends RTCore {
 		$output = array();
 		$cancel = array();
 	
+		jimport('joomla.language.helper');
 		$languages = array();
 		$languages = JLanguageHelper::createLanguageList($browserLang );
 		array_unshift( $languages, JHTML::_('select.option',  '', JText::_( 'Language: Default' ) ) );

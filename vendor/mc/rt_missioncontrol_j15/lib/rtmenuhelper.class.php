@@ -31,14 +31,9 @@ class RTMenuHelper {
 		$usertype	= $user->get('usertype');
 
 		// cache some acl checks
-		$canCheckin			= $user->authorize('com_checkin', 'manage');
 		$canConfig			= $user->authorize('com_config', 'manage');
 		$manageTemplates	= $user->authorize('com_templates', 'manage');
-		$manageTrash		= $user->authorize('com_trash', 'manage');
-		$manageMenuMan		= $user->authorize('com_menus', 'manage');
 		$manageLanguages	= $user->authorize('com_languages', 'manage');
-		$installModules		= $user->authorize('com_installer', 'module');
-		$editAllModules		= $user->authorize('com_modules', 'manage');
 		$installPlugins		= $user->authorize('com_installer', 'plugin');
 		$editAllPlugins		= $user->authorize('com_plugins', 'manage');
 		$installComponents	= $user->authorize('com_installer', 'component');
@@ -67,40 +62,29 @@ class RTMenuHelper {
 		/*
 		 * Extend SubMenu
 		 */
-		if ($installModules || $editAllComponents) {
-			$menu->addChild(new JMenuNode(JText::_('Extend')), true);
-		} 
-
-		if ($installModules)
+		if ($editAllPlugins) 
 		{
-			$menu->addSeparator();
-			if ($editAllModules) {
-				$menu->addChild(new JMenuNode(JText::_('Module Manager'), 'index.php?option=com_modules', 'module'),true);
-				$menu->addChild(new JMenuNode(JText::_('Site Modules'),'index.php?option=com_modules&client=0'));
-				$menu->addChild(new JMenuNode(JText::_('Admin Modules'),'index.php?option=com_modules&client=1'));
-				$menu->getParent();
-			}
-			if ($editAllPlugins) {
+			$menu->addChild(new JMenuNode(JText::_('Extend')), true);
+		
+			if ($editAllPlugins)
 				$menu->addChild(new JMenuNode(JText::_('Plugin Manager'), 'index.php?option=com_plugins', 'plugin'));
-			}
-			if ($manageTemplates) {
+			
+			if ($manageTemplates) 
+			{
 				$menu->addChild(new JMenuNode(JText::_('Template Manager'), 'index.php?option=com_templates', 'themes'),true);
 				$menu->addChild(new JMenuNode(JText::_('Site Templates'),'index.php?option=com_templates&client=0'));
 				$menu->addChild(new JMenuNode(JText::_('Admin Templates'),'index.php?option=com_templates&client=1'));
 				$menu->getParent();
 			}
-			if ($manageLanguages) {
+			
+			if ($manageLanguages)
 				$menu->addChild(new JMenuNode(JText::_('Language Manager'), 'index.php?option=com_languages', 'language'));
-			}
-		}
-		
-		if ($installModules && $editAllComponents) {
-			$menu->addSeparator();
 		}
 		
 		if ($editAllComponents)
 		{
-
+			$menu->addSeparator();
+			
 			$query = 'SELECT *' .
 				' FROM #__components' .
 				' WHERE '.$db->NameQuote( 'option' ).' <> "com_frontpage"' .
@@ -159,7 +143,7 @@ class RTMenuHelper {
 			}
 		}
 		
-		if ($installModules || $editAllComponents) {
+		if ($editAllPlugins || $editAllComponents) {
 			$menu->getParent();
 		}
 		
