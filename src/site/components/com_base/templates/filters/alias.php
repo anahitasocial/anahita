@@ -39,14 +39,15 @@ class ComBaseTemplateFilterAlias extends LibBaseTemplateFilterAlias
 		$this->_alias_read = array_merge($this->_alias_read, array(
 		    '@flash_message(' => '$this->renderHelper(\'ui.flash\',',
             '@flash_message' => '$this->renderHelper(\'ui.flash\')',		            
-            '@commands('=>'$this->getHelper(\'toolbar\')->commands(',
+            '@commands(' => '$this->getHelper(\'toolbar\')->commands(',
 			'@content(' => 'PlgContentfilterChain::getInstance()->filter(',
 			'@pagination(' => '$this->renderHelper(\'ui.pagination\',',		
 			'@avatar(' => '$this->renderHelper(\'com://site/actors.template.helper.avatar\',',			
 			'@name(' => '$this->renderHelper(\'com://site/actors.template.helper.name\',',		    
 		    '@editor(' => '$this->renderHelper(\'ui.editor\',',		        		        
 		    '@message(' => '$this->renderHelper(\'ui.message\',',
-		    '@date(' => '$this->renderHelper(\'date.format\','		        		        
+		    '@date(' => '$this->renderHelper(\'date.format\',',
+			'@searchbox(' => '$this->renderHelper(\'ui.search\','
 		));
 	}
 }

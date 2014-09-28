@@ -81,9 +81,11 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	public function flash($config = array())
 	{
 	    $data = $this->_template->getData();
-	    if ( isset($data['flash']) && $data['flash']->message )
+	    
+	    if(isset($data['flash']) && $data['flash']->message)
 	    {
 	        $message = array_merge((array)$data['flash']->getMessage(true), $config);
+	        
 	        return $this->message(JText::_($message['message']), $message);
 	    }
 	}
@@ -161,7 +163,8 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	        'editor'            => false,
 	        'pagination'        => true,
 	    	'show_guest_prompt' => true           
-	     ), $config);
+	     ), 
+	     $config);
 	    
         $data   = $this->getTemplate()->getData();
 		$limit  = isset($data['limit'])  ? $data['limit']  : 0;
@@ -265,43 +268,39 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
      * @returns string    
      */ 
     public function pagination($paginator, $config = array())
-    {
-        //sanity check   
-        if ( !$paginator )
+    {   
+        if(!$paginator)
             return '';
             
         $config = new KConfig($config);
         
         $config->append(array(
-            'url'             => (string)$this->_template->getView()->getRoute(),
-            'force'           => false,
-        	'options'         => array(
+            'url' => (string)$this->_template->getView()->getRoute(),
+            'force' => false,
+        	'options' => array(
         		'limit' => 20
         	)    
         ));
         
-        if ( is($paginator, 'AnDomainEntitysetDefault') )
+        if(is($paginator, 'AnDomainEntitysetDefault'))
         {       
             $entityset = $paginator;
             $paginator = new KConfigPaginator(array(                            
                 'offset' => $entityset->getOffset(),
-                'limit'  => 20                          
+                'limit' => 20                          
             ));
             
             $paginator->total   = $entityset->getTotal();
         }
         
-        if ( !$paginator instanceof KConfigPaginator )
-        {
+        if(!$paginator instanceof KConfigPaginator)
             $paginator = new KConfigPaginator($paginator);
-        }
         
         $paginator->display = 5;
         
         //if our total is less than the limit don't show paginator
-        if ( $paginator->total < $paginator->limit ) {
+        if($paginator->total < $paginator->limit )
             return;
-        }
         
         $config->paginator = $paginator;
        
@@ -312,13 +311,16 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             
         foreach($paginator->pages->offsets as $offset)
         {               
-            $page       = array();
-            $url        = clone $config->url;               
-            $query      = array_merge($url->getQuery(true), array('limit'=>$offset->limit, 'start'=>$offset->offset));
+            $page = array();
+            $url = clone $config->url;               
+            $query = array_merge($url->getQuery(true), array('limit'=>$offset->limit, 'start'=>$offset->offset));
+            
             $url->setQuery($query);
-            $page['number']  = $offset->page;
+            
+            $page['number'] = $offset->page;
             $page['current'] = $offset->current;
-            $page['url']     = (string)$url;
+            $page['url'] = (string)$url;
+            
             $pages[] = $page;
         }
             
@@ -328,10 +330,11 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             
         foreach($pages as $page) 
         {                        
-            if ( $paginator->pages->$page ) 
+            if($paginator->pages->$page) 
             {
-                $url        = clone $config->url;               
-                $query      = array_merge($url->getQuery(true), array('limit'=>$paginator->pages->$page->limit, 'start'=>$paginator->pages->$page->offset));
+                $url = clone $config->url;               
+                $query = array_merge($url->getQuery(true), array('limit'=>$paginator->pages->$page->limit, 'start'=>$paginator->pages->$page->offset));
+                
                 $url->setQuery($query);                
                 $config->{$page.'_page'} = (string) $url;
             }
@@ -355,29 +358,31 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	    $config = new KConfig($config);
 	
 	    $config->append(array(
-	            'name'    	    => 'description',
-	            'content'		=> '',
-	    		'value'		    => '',
-	            'extended'		=> false
+	    	'name' => 'description',
+	    	'content' => '',
+	    	'value' => '',
+	   		'extended' => false
 	    ));
 	
 	    $config->append(array(
-	            'html'		=> array(
-	                    'id'		=> $config->name,
-	                    'width'     => '100%',
-	                    'height'    => '500',
-	                    'cols'      => '75',
-	                    'rows'      => '20'
+	    	'html' => array(
+	        	'id' => $config->name,
+	            	'width' => '100%',
+	            	'height' => '500',
+	            	'cols' => '75',
+	            	'rows' => '20'
 	            )
 	    ));
 	
-	    if ( !$config->content )
+	    if(!$config->content)
 	        $config->content = '';
 	
-	    $tags     = $this->getService('com:base.template.helper.html');
+	    $tags = $this->getService('com:base.template.helper.html');
 	    $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html));
-	    $options  = array('extended'=>$config->extended, 'visual'=>JText::_('LIB-AN-EDITOR-VISUAL'));
+	    $options = array('extended'=>$config->extended, 'visual'=>JText::_('LIB-AN-EDITOR-VISUAL'));
+	    
 	    $textarea->set('data-behavior','Editor')->set('data-editor-options',"{'extended':'$config->extended'}");
+	    
 	    return  $textarea;
 	}
 		
@@ -391,12 +396,16 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	public function privacy($config = array())
 	{
 	    if($config instanceof AnDomainEntityAbstract)
+	    {
 	        $config = new KConfig(array('entity'=>$config));
+	    }
 	    else
+	    {
 	        $config = new KConfig($config);
+	    }
 	
 	    $config->append(array(
-            'auto_submit' => $config->entity && $config->entity->persisted(),
+        	'auto_submit' => $config->entity && $config->entity->persisted(),
             'name' => 'access'
 	    ));
 	
@@ -405,7 +414,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	        //need to know which graph options to render
 	        if($config->entity->isOwnable())
 	            $config->options = $config->entity->owner;
-	        elseif (is($config->entity, 'ComActorsDomainEntityActor') )
+	        elseif(is($config->entity, 'ComActorsDomainEntityActor'))
 	           $config->options = $config->entity;
 	    }
 	
@@ -415,11 +424,11 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
                         
             $options = new KConfig(array(
                 LibBaseDomainBehaviorPrivatable::GUEST => JText::_('LIB-AN-PRIVACYLABEL-PUBLIC'),
-                LibBaseDomainBehaviorPrivatable::REG =>  JText::_('LIB-AN-PRIVACYLABEL-REG'),            
+                LibBaseDomainBehaviorPrivatable::REG => JText::_('LIB-AN-PRIVACYLABEL-REG'),            
             ));
 	
             if($actor->isFollowable())
-                $options->append(array(
+            	$options->append(array(
                 	LibBaseDomainBehaviorPrivatable::FOLLOWER => JTEXT::_('LIB-AN-PRIVACYLABEL-FOLLOWERS'),                
                 ));
             
@@ -498,25 +507,71 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	 */
 	public function filterbox($path, $config = array())
 	{
-	    if ( is_array($path) ) {
+	    if(is_array($path))
 	        $path = $this->_template->getView()->getRoute($path);
-	    }
         
 	    //remove q from the url
-        $uri  = $this->getService('koowa:http.url', array('url'=>$path));
+        $uri = $this->getService('koowa:http.url', array('url'=>$path));
         $data = $uri->getQuery(true);
+        
         unset($data['q']);
+        
         $uri->setQuery($data);
+        
         $path = (string)$uri;
         
 	    $config = new KConfig($config);
 	
 	    $config->append(array(
-	            'search_action'			=> $path,
-	            'update_element' 		=> false
+	    	'search_action'	=> $path,
+	    	'update_element' => false
 	    ));
 	
 	    return $this->_render('filterbox',  $config);
+	}
+	
+	/**
+	 * Renders a search
+	 *
+	 * @param  array $config Configuration
+	 * 
+	 * @returns	void
+	 */
+	public function search($config = array())
+	{
+        $actor = null;
+		$label = JText::_('LIB-AN-SEARCH-PLACEHOLDER');
+
+		if($this->getService()->has('com://site/search.owner')) 
+		{	
+			$actor = $this->getService('com://site/search.owner');
+			$label = JText::sprintf('LIB-AN-SEARCH-PLACEHOLDER-OWNER', $actor->name);
+		}
+
+		$scope = null;
+		
+		if($this->getService()->has('com://site/search.scope')) 
+			$scope = $this->getService('com://site/search.scope');	
+
+		$url = 'index.php?option=com_search';
+
+		if($actor)
+			$url .= '&oid='.$actor->uniqueAlias;
+
+		$term = KRequest::get('get.term','raw');
+		$term = KService::get('com://site/search.filter.term')->sanitize($term);
+
+	    $config = new KConfig($config);
+	
+	    $config->append(array(
+	    	'label' => $label,
+	    	'term' => $term,
+	        'url' => $url,
+	    	'actor' => $actor,
+	    	'scope' => $scope
+	    ));
+	
+	    return $this->_render('search',  $config);
 	}
 		
 	/**
@@ -559,4 +614,3 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 		return (string) $this->_template->loadTemplate('_ui_'.$ui, $data);
 	}
 }
-?>

@@ -1,3 +1,5 @@
+<?php defined('KOOWA') or die; ?>
+
 <?php if ( $actorbar->getTitle() && $actorbar->getActor() ) : ?>
 <div class="an-media-header">	
 	<div class="clearfix">			
