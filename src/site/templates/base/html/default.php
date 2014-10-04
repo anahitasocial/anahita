@@ -8,11 +8,14 @@
   </head>
   <body>	  	
 	<?= @template('tmpl/js') ?>
+	
     <div id="container-system-message" class="container">
     	<?= @render('messages') ?>
     </div>    		
+    
     <?= @template('tmpl/navbar') ?>
-    <div class="container" id="container-main">
+    
+    <div class="container">
     <?= $this->getView()->content; ?>
     </div>
 

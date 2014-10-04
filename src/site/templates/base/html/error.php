@@ -9,7 +9,7 @@
     <body>
         <?= @template('tmpl/js') ?>
         <?= @template('tmpl/navbar') ?>
-        <div class="container" id="container-main">
+        <div class="container">
     	<?= $this->getView()->content; ?>
     	</div>
         <?= @render('analytics') ?>
