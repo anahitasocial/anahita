@@ -87,9 +87,9 @@ class RTMenuHelper {
 			
 			$query = 'SELECT *' .
 				' FROM #__components' .
-				' WHERE '.$db->NameQuote( 'option' ).' <> "com_frontpage"' .
-				' AND enabled = 1' .
+				' WHERE enabled = 1' .
 				' ORDER BY ordering, name';
+			
 			$db->setQuery($query);
 			$comps = $db->loadObjectList(); // component list
 			$subs = array(); // sub menus
@@ -151,15 +151,6 @@ class RTMenuHelper {
 			$menu->addChild(new JMenuNode(JText::_('Configure'), 'index.php?option=com_config', 'config'));
 		}
 
-		/*
-		 * Help SubMenu
-		 */
-// 		$menu->addChild(new JMenuNode(JText::_('Help')), true);
-// 		$menu->addChild(new JMenuNode(JText::_('Anahita Help'), 'http://www.anahitapolis.com', 'help'));
-// 		$menu->addChild(new JMenuNode(JText::_('System Info'), 'index.php?option=com_admin&task=sysinfo', 'info'));
-
-		//$menu->getParent();
-
 		$menu->renderMenu('mctrl-menu', 'menutop level1');
 	}
 
@@ -175,8 +166,6 @@ class RTMenuHelper {
 		$usertype = $user->get('usertype');
 
 		$canConfig			= $user->authorize('com_config', 'manage');
-		$installModules		= $user->authorize('com_installer', 'module');
-		$editAllModules		= $user->authorize('com_modules', 'manage');
 		$installPlugins		= $user->authorize('com_installer', 'plugin');
 		$editAllPlugins		= $user->authorize('com_plugins', 'manage');
 		$installComponents	= $user->authorize('com_installer', 'component');
@@ -198,14 +187,8 @@ class RTMenuHelper {
 			$menu->addChild(new JMenuNode(JText::_('Users'), null, 'disabled'));
 		}
 
-		// Articles SubMenu
-		$menu->addChild(new JMenuNode(JText::_('Articles'), null, 'disabled daddy'));
-		
-		// Menus SubMenu
-		$menu->addChild(new JMenuNode(JText::_('Menus'), null, 'disabled daddy'));
-
 		// Extend SubMenu
-		if ($installComponents || $installModules) {
+		if ($installComponents || $editAllPlugins) {
 			$menu->addChild(new JMenuNode(JText::_('Extend'), null, 'disabled daddy'));
 		}
 
@@ -214,20 +197,14 @@ class RTMenuHelper {
 			$menu->addChild(new JMenuNode(JText::_('Configure'),  null, 'disabled'));
 		}
 
-		// Help SubMenu
-		$menu->addChild(new JMenuNode(JText::_('Help'),  null, 'disabled daddy'));
-
 		$menu->renderMenu('menu', 'menutop level1 disabled');
 	}
 	
 	function __construct() {
 		// menu data
-		$menus['Dashboard'] = array('com_content','com_trash:task=viewContent','com_sections:scope=content','com_categories:section=com_content','com_frontpage');
-		$menus['Articles'] = array('com_menus','com_trash:task=viewMenu');
 		$menus['Users'] = array('com_users');
-		$menus['Extend'] = array('com_installer','com_modules','com_plugins','com_templates','com_languages','com_search');
+		$menus['Extend'] = array('com_plugins','com_templates','com_languages');
 		$menus['Config'] = array('com_config');
-		$menus['Help'] = array('com_admin:task=help','com_admin:task=sysinfo');
 		$menus['Tools'] = array('com_checkin','com_cache');
 		
 		$this->menudata = $menus;
