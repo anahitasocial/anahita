@@ -1,14 +1,12 @@
 <?php defined('KOOWA') or die ?>
-<?php
-$dates = @helper('notifications.group', $notifications);
-?>
+
+<?php $dates = @helper('notifications.group', $notifications); ?>
+
 <?php foreach($dates as $date => $notifications) : ?>
 <h3><?=$date?></h3>
-<div id="com-notifications-list-" class="an-entities">
+<div id="com-notifications-list" class="an-entities">
     <?php foreach($notifications as $notification) : ?>
-    <?php 
-    $data = @helper('parser.parse', $notification, $actor);
-    ?>
+    <?php $data = @helper('parser.parse', $notification, $actor); ?>
     <div class="an-entity an-record an-removable">
     	<div class="clearfix">
 	    	<div class="entity-portrait-square">
@@ -30,7 +28,6 @@ $dates = @helper('notifications.group', $notifications);
     </div>
     <?php endforeach;?>
 </div>
-
 <?php endforeach; ?>
 
 <?php if (count($dates) == 0) : ?>
