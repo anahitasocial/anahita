@@ -5,7 +5,7 @@
 <div class="row">
 	<div class="offset3 span6">	
 		<form action="<?=@route()?>" method="post" class="well">
-			<?php if ( !empty($return) ) : ?>
+			<?php if(!empty($return)) : ?>
 	    	<input type="hidden" name="return" value="<?= $return; ?>" />
 	    	<?php endif;?>
 		
