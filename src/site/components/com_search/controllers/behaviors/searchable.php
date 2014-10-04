@@ -16,7 +16,7 @@
 
 /**
  * Searchable behavior. The searchable behavior allows for other conrollers to integrate into the 
- * search module for setting up a scope and owner 
+ * setup the scope and owner for the search layout 
  * 
  * 
  * @category   Anahita
