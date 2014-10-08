@@ -1,3 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?= @template('form') ?>
+<div class="row">
+	<div class="span8">
+	<?= @template('form') ?>
+	</div>
+</div>
