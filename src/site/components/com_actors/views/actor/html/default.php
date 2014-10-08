@@ -27,6 +27,8 @@
 		<?= @message(@text('COM-ACTORS-PROFILE-DISABLED-PROMPT'), array('type'=>'warning')) ?>
 		<?php endif; ?>
 
+		<?= @helper('ui.toolbar', array()) ?>
+
 		<h2 id="actor-name">
 		<?= @name($item, false) ?>
 		<?php if(is_person($item)): ?> 
