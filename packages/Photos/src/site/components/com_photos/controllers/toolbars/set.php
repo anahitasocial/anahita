@@ -39,10 +39,8 @@ class ComPhotosControllerToolbarSet extends ComMediumControllerToolbarDefault
         $filter = $this->getController()->filter;
         $actor  = $this->getController()->actor;
         
-        if ( $this->getController()->canAdd() && $filter != 'leaders' && $actor->photos->getTotal() > 0 ) 
-        {
-            $this->addCommand('new');
-        }        
+        if($this->getController()->canAdd() && $filter != 'leaders' && $actor->photos->getTotal() > 0)
+            $this->addCommand('new');       
     }
     
     /**
@@ -53,11 +51,11 @@ class ComPhotosControllerToolbarSet extends ComMediumControllerToolbarDefault
     public function addToolbarCommands()
     { 
 		$entity = $this->getController()->getItem();
-		
-		if ( $entity->authorize('vote') )
+        
+		if($entity->authorize('vote'))
 			$this->addCommand('vote');
 		
-		if ( $entity->owner->authorize('administration') )
+		if($entity->owner->authorize('administration'))
 		{
 			//change cover
 			$this->addCommand('changecover', JText::_('COM-PHOTOS-ACTION-SET-CHANGE-COVER'))

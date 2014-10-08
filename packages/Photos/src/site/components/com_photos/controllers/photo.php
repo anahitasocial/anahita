@@ -106,20 +106,26 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
 	 */
 	protected function _actionAdd($context)
 	{		
-		$data 			= $context->data;			
-		$file    		= KRequest::get('files.file', 'raw');
-		$content 		= @file_get_contents($file['tmp_name']);
-		$filesize		= strlen($content);
-		$uploadlimit 	=  $this->_max_upload_limit * 1024 * 1024; 
+		$data = $context->data;			
+		$file = KRequest::get('files.file', 'raw');
+		$content = @file_get_contents($file['tmp_name']);
+		$filesize = strlen($content);
+		$uploadlimit = $this->_max_upload_limit * 1024 * 1024; 
 		
 		$exif = (function_exists('exif_read_data')) ? @exif_read_data($file['tmp_name']) : array();
 		
-		if( $filesize == 0 ) {
-		    throw new LibBaseControllerExceptionBadRequest('File is missing');			
+		if($filesize == 0)
+		{
+		    throw new LibBaseControllerExceptionBadRequest('File is missing');	
+			
+		    return;
 		}
 		
-		if( $filesize > $uploadlimit ) {
-		    throw new LibBaseControllerExceptionBadRequest('Exceed maximum size');			
+		if($filesize > $uploadlimit)
+		{
+		    throw new LibBaseControllerExceptionBadRequest('Exceed maximum size');	
+
+		    return;
 		}
 		
 		$orientation = 0;
@@ -133,7 +139,8 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
 		$photo->save();
 		$this->setItem($photo);
 		$this->getResponse()->status = KHttpResponse::CREATED;
-        if ( $photo->body && preg_match('/\S/',$photo->body) )
+		
+        if($photo->body && preg_match('/\S/',$photo->body))
             $context->append(array(                
                 'story' => array('body'=>$photo->body)
             ));
