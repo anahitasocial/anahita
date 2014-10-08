@@ -144,20 +144,18 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         if(!$this->_view instanceof LibBaseViewAbstract)
         {
             //Make sure we have a view identifier
-            if(!($this->_view instanceof KServiceIdentifier)) {
+            if(!($this->_view instanceof KServiceIdentifier))
                 $this->setView($this->_view);
-            }
             
             //Create the view
             $config = array(                
                 'media_url' => KRequest::root().'/media',
-                'base_url'  => KRequest::url()->getUrl(KHttpUrl::BASE),
-                'state'     => $this->getState()                             
+                'base_url' => KRequest::url()->getUrl(KHttpUrl::BASE),
+                'state' => $this->getState()                             
             );
             
-            if ( $this->_request->has('layout') ) {
+            if($this->_request->has('layout'))
                 $config['layout'] = $this->_request->get('layout');
-            }
             
             $this->_view = $this->getService($this->_view, $config);
             
@@ -186,7 +184,10 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
                 $identifier->path = array('view', $view);
                 $identifier->name = $this->_request->getFormat();
             }
-            else $identifier = $this->getIdentifier($view);
+            else
+            { 
+            	$identifier = $this->getIdentifier($view);
+            }
             
             register_default(array('identifier'=>$identifier, 'prefix'=>$this, 'name'=>array('View'.ucfirst($identifier->name),'ViewDefault')));
             
@@ -250,9 +251,11 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
             if(strpos($toolbar,'.') === false)
             {
                 $identifier = clone $this->getIdentifier();
-                $identifier->path = array('controller','toolbar');
+                $identifier->path = array('controller', 'toolbar');
                 $identifier->name = $toolbar;
+                
                 register_default(array('identifier'=>$identifier, 'prefix'=>$this));
+                
                 $toolbar = $identifier;
             }
         }       

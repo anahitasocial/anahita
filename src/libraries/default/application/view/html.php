@@ -98,33 +98,35 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
      */
     public function display()
     {
-        if ( $this->content instanceof Exception ) 
+        if($this->content instanceof Exception) 
         {
         	$error   = $this->content;
             
         	$layout  = $error->getCode();
                     		
-            if ( !$this->getTemplate()->findPath('errors/'.$layout.'.php') ) {
+            if(!$this->getTemplate()->findPath('errors/'.$layout.'.php'))
                 $layout = 'default';
-            }
             
             $this->content = $this->getTemplate()->loadTemplate('errors/'.$layout, array('error'=>$error))->render();         
             
-            if ( JDEBUG ) 
+            if(JDEBUG) 
             {
                 $traces   = array();
                 $traces[] = '<h4>Exception '.get_class($error).' with message "'.$error->getMessage().'"</h4>';
                 $traces[] = $error->getFile().':'.$error->getLine();
-                foreach($error->getTrace() as $trace) {
+                
+                foreach($error->getTrace() as $trace) 
+                {
                     $str = '';
                     
-                    if ( isset($trace['file']) ) 
+                    if(isset($trace['file'])) 
                        $str = $trace['file'].':'; 
                     
-                    if ( isset($trace['line']) ) 
+                    if(isset($trace['line'])) 
                        $str .= $trace['line']; 
                     
-                    if ( empty($str) ) continue;
+                    if(empty($str)) 
+                    	continue;
                     
                     $traces[] = $str;
                 }
