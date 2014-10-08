@@ -55,4 +55,20 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
 		if ( $entity->authorize('delete') ) 
 			$this->addCommand('delete');
 	}
+	
+	/**
+     * Called before list commands
+     * 
+     * @return void
+     */
+    public function addListCommands()
+    {
+        $entity = $this->getController()->getItem();
+        
+        if($entity->authorize('vote'))
+            $this->addCommand('vote');
+        
+        if($entity->authorize('delete'))
+            $this->addCommand('delete');
+    } 
 }
