@@ -704,16 +704,19 @@ function get_viewer()
  */
 function clean_apc_with_prefix($prefix)
 {
-    if ( extension_loaded('apc')  )
+    if(extension_loaded('apc'))
     {
         $info = @apc_cache_info('user');
         
-        if ( $info )
+        if($info)
         {
-            $list = (array)$info['cache_list'];
+            $list = (array) $info['cache_list'];
+            
             //delete all the entiry with the prefix $key
-            foreach($list as $entry) {
-                if ( strpos($entry['info'], $prefix) === 0 ) {
+            foreach($list as $entry)
+            {
+                if (isset($entry['info']) && strpos($entry['info'], $prefix) === 0) 
+                {
                     apc_delete($entry['info']);
                 }
             }
