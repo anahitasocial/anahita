@@ -5,12 +5,9 @@
 <?php endif;?>
 
 <div class="row">
-	<div class="span4">
-	<?php if(!empty($keywords)): ?>
-	<?= @template('scopes') ?>
-	<?php endif;?>
-	</div>
 	<div class="span8">	
+		<?= @helper('ui.header', array()) ?>
+	
 		<?php if(!empty($keywords) && $items->getTotal()): ?>
 		<form>
 			<select data-trigger="SortOption" id="SortOptions" name="sort">
@@ -51,6 +48,12 @@
 		<div class="an-entities-wrapper">
 		<?= @template('list') ?>
 		</div>
+	</div>
+	
+	<div class="span4">
+	<?php if(!empty($keywords)): ?>
+	<?= @template('scopes') ?>
+	<?php endif;?>
 	</div>
 </div>
 
