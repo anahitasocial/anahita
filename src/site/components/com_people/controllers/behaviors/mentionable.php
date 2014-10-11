@@ -178,7 +178,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 				$data = array(
 					'name' => 'actor_mention_comment',
 					'object' => $entity,
-					//'comment' => $entity,
+					'comment' => $entity,
 					'component' => $entity->parent->component,
 					'subscribers' => $subscribers
 				);
