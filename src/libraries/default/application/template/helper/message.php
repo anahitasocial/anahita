@@ -38,17 +38,20 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
      */
     public function render($config = array())
     {            
-        $message  = $config['message'];
+        $message = $config['message'];
+        
         unset($config['message']);
-        $message  = '<p>'.$message.'</p>';
-        $buttons  = isset($config['buttons']) ? $config['buttons'] : array();
+        
+        $message = '<p>'.$message.'</p>';
+        $buttons = isset($config['buttons']) ? $config['buttons'] : array();
+        
         unset($config['buttons']);
-        if ( !empty($buttons) ) 
+        
+        if(!empty($buttons)) 
         {
-            foreach($buttons as $label => $attrbs) 
-            {
+            foreach($buttons as $label => $attrbs)
                 $buttons[$label] = $this->_renderButton($label, $attrbs);
-            }
+            
             $message .= '<p class="alert-actions">'.implode(' ', $buttons).'</p>';              
         }
         return $this->_renderMessage($message, $config);
@@ -65,13 +68,16 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
     protected function _renderMessage($message, $config)
     {
         $config = new KConfig($config);
+        
         $config->append(array(
             'type' => 'info'
         ));
+        
         $message = "<div class=\"alert alert-block alert-{$config->type}\">" .
                 "<a class=\"close\" data-trigger=\"nix\" data-nix-options=\"'target':'!div.alert'\">&times;</a>".
                 "$message" .
                 "</div>";
+        
         return $message;
     }
     
@@ -86,19 +92,27 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
     protected function _renderButton($label, $attrbs)
     {
         $attrbs = new KConfig($attrbs);
+        
         $attrbs->append(array(
             'class' => ''
         ));
+        
         $attrbs->class .= 'btn small';
-        if ( isset($attrbs->type) ) {
+        
+        if(isset($attrbs->type)) 
+        {
             $attrbs->class .= ' btn-'.$attrbs->type;
+            
             unset($attrbs->type);
         }
+        
         $attrbs = KConfig::unbox($attrbs);
-        foreach($attrbs as $key => $value) {
+        
+        foreach($attrbs as $key => $value)
             $attrbs[$key] = $key.'="'.$value.'"';
-        }
+        
         $attrbs = implode(' ', $attrbs);
+        
         return '<a '.$attrbs.'>'.$label.'</a>';
     }
 }

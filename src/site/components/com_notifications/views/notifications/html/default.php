@@ -1,8 +1,7 @@
 <?php defined('KOOWA') or die ?>
 
-<module position="sidebar-b" style="none"></module>
-
-<div id="an-entities-wrapper" id="an-entities-main-wrapper">
+<div class="row">
+	<div class="span8" id="an-entities-wrapper">
     <?= @template('list') ?>
+	</div>
 </div>
-

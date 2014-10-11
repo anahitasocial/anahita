@@ -2,7 +2,7 @@
 
 <?php @commands('toolbar')?>
 
-<div class="an-entity an-revision-main">
+<div class="an-entity">
 	<h1 class="entity-title">
 		<?= @escape($revision->title) ?>
 	</h1>

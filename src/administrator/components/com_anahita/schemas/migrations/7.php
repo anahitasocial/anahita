@@ -21,7 +21,7 @@ class ComAnahitaSchemaMigration7 extends ComMigratorMigrationVersion
     public function up()
     {
         //remove some legacy plugin records
-        dbexec('DELETE FROM #__plugins WHERE folder = \'system\' AND element IN (\'sef\',\'debug\',\'logger\',\'missioncontrol\',\'mtupgrade\',\'tagmeta\')');
+        dbexec('DELETE FROM #__plugins WHERE folder = \'system\' AND element IN (\'sef\',\'debug\',\'logger\',\'missioncontrol\', \'mtupgrade\', \'tagmeta\')');
     	
     	dbexec('DROP TABLE IF EXISTS #__menu');
         dbexec('DROP TABLE IF EXISTS #__menu_types');

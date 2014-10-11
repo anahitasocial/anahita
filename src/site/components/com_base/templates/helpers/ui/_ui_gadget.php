@@ -12,7 +12,7 @@ if ( strlen($gadget->url) ) {
 <div data-behavior="Load"  data-load-options="{<?=$url?>'element':'.gadget-content','event':'visible'}" class="an-gadget <?=$gadget->id?>">
     <?php if ( $gadget->show_title !== false) : ?>     
     	<?php if (strlen($gadget->title) ) : ?>
-    	<h2 class="gadget-title">
+    	<h3 class="gadget-title">
             <?php if ($gadget->title_url) : ?>
                 <a href="<?= @route($gadget->title_url) ?>">
                     <?=$gadget->title?>
@@ -26,7 +26,7 @@ if ( strlen($gadget->url) ) {
             	<?= $gadget->action?>
 	        </a>    
 	        <?php endif; ?>
-    	</h2>    	
+    	</h3>    	
     	<?php endif; ?> 
 	<?php endif;?>
 	

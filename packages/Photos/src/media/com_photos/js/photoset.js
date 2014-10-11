@@ -10,10 +10,10 @@ var PhotoSet = new Class({
 	initialize : function(options) 
     {
 		this.setOptions(options);
-		this.slide 		= new Fx.Slide(this.options.sets);
-		this.oid 		= document.id(this.options.sets).get('oid');
-		this.photo_id	= document.id(this.options.sets).get('photo_id');
-		this.baseURL 	= 'index.php?option=com_photos';
+		this.slide = new Fx.Slide(this.options.sets);
+		this.oid = document.id(this.options.sets).get('oid');
+		this.photo_id = document.id(this.options.sets).get('photo_id');
+		this.baseURL = 'index.php?option=com_photos';
     },
 	
 	show : function(){
@@ -21,7 +21,7 @@ var PhotoSet = new Class({
 	},
 	
 	hide : function(){
-		this.browse('module');
+		this.browse('sidebar');
 	},
 	
 	browse : function(layout){
@@ -29,9 +29,9 @@ var PhotoSet = new Class({
 		this.slide.slideOut();
 		
 		var req = new Request.HTML({
-			method  : 'get',
-			url		: this.baseURL + '&view=sets&layout=' + layout + '&oid=' + this.oid + '&photo_id=' + this.photo_id,
-			update	: this.options.sets,
+			method : 'get',
+			url	: this.baseURL + '&view=sets&layout=' + layout + '&oid=' + this.oid + '&photo_id=' + this.photo_id,
+			update : this.options.sets,
 			onComplete: function(el){
 				this.slide.slideIn();
 			}.bind(this)

@@ -61,7 +61,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
         parent::_actionRenderlegacy($context);
         global $mainframe;
         jimport( 'joomla.application.helper' );
-        if (($path = JApplicationHelper::getPath( 'toolbar' )) && $mainframe->isAdmin())
+        
+        if(($path = JApplicationHelper::getPath( 'toolbar' )) && $mainframe->isAdmin())
         {
             // Get the task again, in case it has changed
             $task = JRequest::getString( 'task' );
@@ -88,9 +89,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
             JFactory::getDocument()->setMimeEncoding($view->mimetype);
     
             //Disabled the application menubar
-            if(!KInflector::isPlural($view->getName()) && !KRequest::has('get.hidemainmenu')) {
+            if(!KInflector::isPlural($view->getName()) && !KRequest::has('get.hidemainmenu'))
                 KRequest::set('get.hidemainmenu', 1);
-            }
         }
     
         return parent::_actionRender($context);

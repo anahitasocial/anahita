@@ -47,10 +47,10 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
         $config['name'] = $name;
     
         $object->append($config)
-               ->append(array(
-                   'attribs'    => array(
-                      'id'      => null
-                 )
+        ->append(array(
+        	'attribs' => array(
+            'id' => null
+            )
         ));
     
         return $object;
@@ -66,6 +66,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
     public function setName($name)
     {
         $this->name = $name;
+        
         return $this;
     }
     
@@ -141,6 +142,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
     {
         $attribute = implode('-', KInflector::explode($method));
         $this->setAttribute($attribute, $arguments[0], isset($arguments[1]) ? $arguments[1] : null);
+        
         return $this;
     }   
     
@@ -153,9 +155,10 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
     public function __toString()
     {
         $attributes = array();
+        
         foreach($this->getAttributes() as $key => $value) 
         {
-            $value        = is_string($value) ? '"'.addslashes($value).'"' : json_encode($value);
+            $value = is_string($value) ? '"'.addslashes($value).'"' : json_encode($value);
             $attributes[] = $key.'='.$value;
         }
         

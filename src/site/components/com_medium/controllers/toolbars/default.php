@@ -27,6 +27,21 @@
  */
 class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
 {    
+	/**
+     * Before Controller _actionRead is executed
+     *
+     * @param KEvent $event
+     *
+     * @return void
+     */
+    public function onBeforeControllerGet(KEvent $event)
+    {
+        parent::onBeforeControllerGet($event);
+        
+        if($this->getController()->canEdit())
+        	$this->addToolbarCommands();
+    }
+    
     /**
      * Called after controller browse
      *
@@ -38,10 +53,8 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {                
         $filter = $this->getController()->filter;
         
-        if ( $this->getController()->canAdd() && $filter != 'leaders' ) 
-        {
-            $this->addCommand('new');
-        }        
+        if($this->getController()->canAdd() && $filter != 'leaders') 
+            $this->addCommand('new');       
     }
         
     /**
@@ -53,19 +66,19 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
         
-        if ( $entity->authorize('vote') )
+        if($entity->authorize('vote'))
             $this->addCommand('vote');
                 
-        if(	$entity->authorize('subscribe') || ( $entity->isSubscribable() && $entity->subscribed(get_viewer())))
+        if($entity->authorize('subscribe') || ($entity->isSubscribable() && $entity->subscribed(get_viewer())))
             $this->addCommand('subscribe');
                 
-        if ( $entity->authorize('edit') )
+        if($entity->authorize('edit'))
             $this->addCommand('edit');
         
-        if ( $entity->isOwnable() && $entity->owner->authorize('administration') )
+        if($entity->isOwnable() && $entity->owner->authorize('administration'))
             $this->addAdministrationCommands();       
         
-        if ( $entity->authorize('delete') )
+        if($entity->authorize('delete'))
             $this->addCommand('delete');        
     }
      
@@ -78,13 +91,14 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
         
-        if ( $entity->authorize('vote') ) {
+        if($entity->authorize('vote'))
             $this->addCommand('vote');
-        }
         
-        if ( $entity->authorize('delete') ) {
+        if($entity->authorize('edit'))	
+			$this->addCommand('edit');
+        
+        if($entity->authorize('delete'))
             $this->addCommand('delete');
-        }
     } 
 
     /**

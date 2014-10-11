@@ -15,7 +15,7 @@ var FacebookInvite = new Class({
 	openDialog : function(token) {		
 		var msgLink = this.options.appURL;
 		msgLink    += '?token='+token.value;
-		console.log(msgLink);
+		//console.log(msgLink);
 		FB.ui({
 				display: 'iframe',
 				method:	'send',

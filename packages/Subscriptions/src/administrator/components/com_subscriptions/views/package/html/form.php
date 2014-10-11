@@ -70,7 +70,7 @@
 		
 		<fieldset class="adminform">
 			<legend><?= JText::_( 'AN-SB-PACKAGE-DESCRIPTION' ); ?></legend>
-			<?= JFactory::getEditor()->display( 'description',  htmlspecialchars($package->description, ENT_QUOTES), '500', '300', '60', '20', array('pagebreak', 'readmore') ); ?>	
+			<textarea name="description" width="100%" rows="10" cols="50"><?= htmlspecialchars($package->description, ENT_QUOTES) ?></textarea>	
 		</fieldset>	
 	
 	</div>

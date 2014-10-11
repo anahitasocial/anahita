@@ -20,9 +20,7 @@ html
 }
 
 img
-{
-    .border-radius(@baseBorderRadius);  
-}
+{ .border-radius(@baseBorderRadius); }
 
 a:hover
 {
@@ -31,12 +29,7 @@ a:hover
 
 // Template Grid
 .container
-{
-    .block
-    {
-        padding: 10px 0;
-    }
-    
+{    
     .hero-unit
     {
         .border-radius(@baseBorderRadius);
@@ -128,33 +121,17 @@ a:hover
     }
 }
 
-// MODULES
-.module-title
+//BLOCKS
+.block-title
 {
-	font-size: @baseFontSize + 3;
-	margin: 0 0 10px 0;
-	padding-bottom: 10px;
+    padding: 10px 0;
+    margin: 2px 0;
+    font-size: @baseFontSize + 3;    
 }
 
-.module-content
+.block-content
 {
-    
-    ul
-    {
-        margin: 0;
-        padding-left: 15px;
-        
-        &.nav
-        {
-            padding: 0;
-        }
-    }
-    
-    ol
-    {
-        margin: 0;
-        padding-left: 20px;
-    }
+	margin: 10px 0;
     
     h1,h2,h3,h4
     {
@@ -168,7 +145,7 @@ a:hover
     
     form
     {        
-        margin: 10px;
+        margin: 10px 0;
         
         .form-actions
         {
@@ -211,28 +188,25 @@ a:hover
             }
         }
     }
-    
-    .an-entity
+	
+	.an-entity
     {
        margin: 0;
        padding: 0;
        
        .entity-portrait-square
        {
-            img
-            {
-                margin: 0;
-            }
+            margin: 0;
        }
        
        .entity-body,
-       .entity-description
+       .entity-description,
+       .entity-meta
        {
             margin: 10px 0;
        }
     }
 }
-
 
 //Text Align
 .text-left

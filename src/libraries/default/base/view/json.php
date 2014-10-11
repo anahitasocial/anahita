@@ -45,10 +45,8 @@ class LibBaseViewJson extends LibBaseViewAbstract
 
 		//Padding can explicitly be turned off by setting to FALSE
 		if(empty($config->padding) && $config->padding !== false)
-		{
 			if(isset($this->callback) && (strlen($this->callback) > 0))
 				$config->padding = $state->callback;
-		}
 
 		$this->_padding = $config->padding;
 	}

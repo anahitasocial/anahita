@@ -37,7 +37,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
     {       
         $matches  = array();
 
-        if ( strpos($text, '<html') )
+        if(strpos($text, '<html'))
         {
             //add language
             $text = str_replace('<html', '<html lang="'.JFactory::getLanguage()->getTag().'"', $text);
@@ -61,16 +61,18 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
     protected function _renderHead()
     {
         $document = JFactory::getDocument();
-        $html     = '<base href="base://" />';
-        foreach ($document->_metaTags as $type => $tag)
+        $html = '<base href="base://" />';
+        
+        foreach($document->_metaTags as $type => $tag)
         {
-            foreach ($tag as $name => $content)
+            foreach($tag as $name => $content)
             {
-                if ($type == 'http-equiv') {
+                if($type == 'http-equiv')
+                {
                     $html .= '<meta http-equiv="'.$name.'" content="'.$content.'"'.'/>';
-                } 
-                
-                elseif ($type == 'standard') {
+                }
+                elseif($type == 'standard')
+                {
                     $html .= '<meta name="'.$name.'" content="'.str_replace('"',"'",$content).'"'.'/>';
                 }
             }
@@ -79,12 +81,9 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
         $html .= '<meta name="generator" content="'.$document->getGenerator().'" />';
         
-        if ( isset($document->_custom) )
-        {
-            foreach($document->_custom as $custom) {
-                $html .= $custom;
-            }            
-        }        
+        if(isset($document->_custom))
+        	foreach($document->_custom as $custom)
+            	$html .= $custom;       
         
         $html .= '<title>'.$document->getTitle().'</title>';
         
@@ -103,18 +102,16 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $string = '';
         
         // Generate script file links
-        foreach ($document->_scripts as $src => $type) {
+        foreach($document->_scripts as $src => $type)
             $string .= '<script type="'.$type.'" src="'.$src.'"></script>';
-        }
         
         // Generate script declarations
-        foreach ($document->_script as $type => $content) {
+        foreach($document->_script as $type => $content)
             $string .= '<script type="'.$type.'">'.$content.'</script>';
-        }
         
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
                 
-        return   $string;         
+        return $string;         
     }
    
     /**
@@ -125,33 +122,29 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
     protected function _renderStyles()
     {
         $document = JFactory::getDocument();
-        $html     = '';
+        $html = '';
                 
         // Generate stylesheet links
-        foreach ($document->_styleSheets as $src => $attr )
+        foreach($document->_styleSheets as $src => $attr)
         {
-            $rel    = 'stylesheet';
+            $rel = 'stylesheet';
             
-            if ( strpos($src, '.less') ) {
+            if(strpos($src, '.less'))
                 $rel .= '/less';
-            }
             
             $html .= '<link rel="'.$rel.'" href="'.$src.'" type="'.$attr['mime'].'"';
             
-            if ( isset($attr['media']) ) {
+            if(isset($attr['media']))
                 $html .= ' media="'.$attr['media'].'" ';
-            }
             
-            if ($temp = JArrayHelper::toString($attr['attribs'])) {
-                $html .= ' '.$temp;;
-            }
+            if($temp = JArrayHelper::toString($attr['attribs']))
+                $html .= ' '.$temp;
             
             $html .= '/>';
         }
         
-        foreach ($document->_style as $type => $content) {
-            $html .= '<style type="'.$type.'">'.$content.'</style>';
-        }         
+        foreach($document->_style as $type => $content)
+        	$html .= '<style type="'.$type.'">'.$content.'</style>';    
            
         return $html; 
     }       
