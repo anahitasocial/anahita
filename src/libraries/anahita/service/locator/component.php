@@ -15,7 +15,7 @@
  */
 
 /**
- * Module Locator. If a module is not found, it first look at the default classes 
+ * Compontn Locator. If a component is not found, it first look at the default classes 
  *
  * @category   Anahita
  * @package    Anahita_Service

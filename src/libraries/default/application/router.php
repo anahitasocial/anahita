@@ -155,14 +155,14 @@ class LibApplicationRouter extends KObject
 	 */
 	protected function _parse(&$url)
 	{
-	    $segments = explode('/', trim($url->path,'/'));
+	    $segments = explode('/', trim($url->path, '/'));
 	    $segments = array_filter($segments);
 	     
 	    if(count($segments))
 	    {
 	        $component = array_shift($segments);
 	        $url->query = array_merge(array('option'=>'com_'.$component), $url->query);
-	        $component = str_replace('com_','',$url->query['option']);
+	        $component = str_replace('com_', '', $url->query['option']);
 	        $query = $this->getComponentRouter($component)->parse($segments);
 	        $url->query = array_merge($url->query, array('option'=>'com_'.$component), $query);
 	    }
@@ -178,47 +178,52 @@ class LibApplicationRouter extends KObject
      */
 	public function build(&$url = '', $fqr = false)
 	{	    
-	    if ( is_array($url) ) {
-	        $url = '?'.http_build_query($url, '', '&');    
-	    }
+	    if(is_array($url))
+	        $url = '?'.http_build_query($url, '', '&');
 	    
-	    $url   = (string) $url;
-	    //remove the index.php for urls that starts
-	    //with index.php? 	    
-	    if ( strpos($url, 'index.php?') === 0 ) {
+	    $url = (string) $url;
+	    
+	    //remove the index.php for urls that starts with index.php? 	    
+	    if(strpos($url, 'index.php?') === 0)
+	    {
 	        $url = substr($url, 9);
 	    }
 	    //add ? to the urls that starts with a query key=
 	    //elseif ( preg_match('/^\w+=/', $url) ) {
-	    elseif (preg_match('%^[^?/]+=%', $url)){
+	    elseif (preg_match('%^[^?/]+=%', $url))
+	    {
 	        $url = '?'.$url;
 	    }
 	    
 	    $uri = clone $this->_clonable_url;	    	    
+	    
 	    $uri->setUrl($url);
-	    if ( $uri->scheme || $uri->path ) {
+	    
+	    if($uri->scheme || $uri->path)
 	        return $uri;
-	    }
 	    
 	    $query = $uri->query;
         
-        if ( isset($query['format']) ) {            
+        if(isset($query['format'])) 
+        {            
             $uri->format = $query['format'];                        
+            
             unset($query['format']);
         }
         
-        if ( $uri->format == 'html' ) {
+        if($uri->format == 'html')
             $uri->format = null;
-        }
         
         $parts = array();
         
-        if ( isset($query['option']) ) {
-            $router   = $this->getComponentRouter(str_replace('com_','', $query['option']));
-            $parts    = pick($router->build($query), array());
+        if(isset($query['option'])) 
+        {
+            $router = $this->getComponentRouter(str_replace('com_','', $query['option']));
+            $parts = pick($router->build($query), array());
         }
                 
-        if ( isset($query['option']) ) {
+        if(isset($query['option'])) 
+        {
             array_unshift($parts, str_replace('com_','', $query['option']));
             unset($query['option']);
         }
@@ -236,17 +241,13 @@ class LibApplicationRouter extends KObject
         
         array_unshift($parts, $this->_base_url->path);        
         
-        $path  = implode('/', $parts);
+        $path = implode('/', $parts);
         
         $uri->path = $path;
         
-        if ( $fqr )
-        {
-            foreach(array('host','scheme','port','user','pass') as $part) 
-            {
-                $uri->$part = $this->_base_url->$part; 
-            }            
-        }
+        if($fqr)
+            foreach(array('host','scheme','port','user','pass') as $part)
+            	$uri->$part = $this->_base_url->$part;
                 
         return $uri;        
 	}
@@ -260,12 +261,13 @@ class LibApplicationRouter extends KObject
      */
     public function getComponentRouter($component)
     {
-        if ( !isset($this->_routers[$component]) )
+        if(!isset($this->_routers[$component]))
         {
             $identifier = clone $this->getIdentifier();
-            $identifier->path    = array();
+            $identifier->path = array();
             $identifier->package = str_replace('com_','',$component);
-            $identifier->name    = 'router';            
+            $identifier->name = 'router';            
+            
             $this->_routers[$component] = $this->getService($identifier);
         }
         
@@ -282,18 +284,22 @@ class LibApplicationRouter extends KObject
     protected function _fixUrlForParsing($url)
     {
         $path  = $url->path;
+        
         //bug in request
-        if ( $url->format == 'php') {
+        if($url->format == 'php') 
+        {
             $path .= '.php';
             $url->format = null;
         }
+        
         $path  = substr_replace($path, '', 0, strlen($this->_base_url->path));
         $path  = preg_replace('/index\/?.php/', '', $path);
         $path  = trim($path, '/');
-        $url->path   = $path;
+        
+        $url->path = $path;
         $url->format = $url->format ? $url->format : pick(KRequest::format(), 'html');
-        if(!empty($url->format) ) {
-            $url->query['format'] = $url->format;
-        }        
+        
+        if(!empty($url->format))
+            $url->query['format'] = $url->format; 
     }
 }

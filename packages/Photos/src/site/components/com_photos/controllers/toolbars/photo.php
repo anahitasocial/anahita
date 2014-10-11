@@ -36,10 +36,10 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
     { 
 		$entity = $this->getController()->getItem();
 
-		if ( $entity->authorize('vote') )
+		if($entity->authorize('vote'))
 			$this->addCommand('vote');
 		
-		if ( $entity->owner->authorize('administration') ) 
+		if($entity->owner->authorize('administration')) 
 		{
 			$this->addCommand('setselector', JText::_('COM-PHOTOS-ACTION-ADD-TO-SET'))
 			    ->getCommand('setselector')
@@ -52,7 +52,23 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
 		if($entity->authorize('subscribe') || $entity->subscribed(get_viewer()))
 			$this->addCommand('subscribe');
 		
-		if ( $entity->authorize('delete') ) 
+		if($entity->authorize('delete')) 
 			$this->addCommand('delete');
 	}
+	
+	/**
+     * Called before list commands
+     * 
+     * @return void
+     */
+    public function addListCommands()
+    {
+        $entity = $this->getController()->getItem();
+        
+        if($entity->authorize('vote'))
+            $this->addCommand('vote');
+        
+        if($entity->authorize('delete'))
+            $this->addCommand('delete');
+    } 
 }

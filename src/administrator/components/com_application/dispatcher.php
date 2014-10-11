@@ -122,12 +122,11 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         //old school of rendering for the backend for now        
         $component  = $this->getComponent()->getIdentifier()->package;
 
-        $template   = $this->_application->getTemplate();
-        $file       = $this->_request->get('tmpl','index');
+        $template = $this->_application->getTemplate();
+        $file = $this->_request->get('tmpl','index');
 
-        if($component == 'login') {
+        if($component == 'login')
             $file = 'login';
-        }
         
         $config = array(
             'template'  => $template,
@@ -168,9 +167,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     protected function _actionRoute(KCommandContext $context)
     {     
         //legacy
-        if ( KRequest::has('post.option') ) {
+        if(KRequest::has('post.option'))
             KRequest::set('get.option',KRequest::get('post.option', 'cmd'));
-        }
         
         parent::_actionRoute($context);
         
@@ -178,13 +176,12 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         
         $user =& JFactory::getUser();
         
-        if (!$user->authorize('login', 'administrator')) {
+        if(!$user->authorize('login', 'administrator'))
             $component = 'com_login';
-        }
         
-        if( empty($component) ) {
+        if(empty($component))
             $component = 'com_cpanel';
-        }
+        
         $this->getRequest()->set('option',  $component);
         JRequest::set($this->getRequest()->toArray(),'get');
         $this->setComponent(substr($component, 4));

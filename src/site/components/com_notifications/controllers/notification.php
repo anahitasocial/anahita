@@ -91,7 +91,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         {
             //set the number of notification, since it's going to be 
             //reset by the time it gets to the mod_viewer 
-            KService::setConfig('mod://site/viewer.html', array('data'=>array('num_notifications'=>$this->actor->numOfNewNotifications())));            
+            KService::setConfig('com://site/viewer.html', array('data'=>array('num_notifications'=>$this->actor->numOfNewNotifications())));            
             $this->registerCallback('after.get', array($this->actor,'viewedNotifications'), $set->toArray());
         }
         

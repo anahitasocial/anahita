@@ -1,11 +1,10 @@
 <?php defined('KOOWA') or die ?>
 
-<module position="sidebar-b" style="none">
-	<?= @helper('ui.gadget', $gadgets->extract('hashtags-trending')) ?>	
-</module>
+<?php $trendingHashtags = $gadgets->extract('hashtags-trending'); ?>
 
+<div class="row">
 <?php if(count($gadgets) >= 1 ): ?>
-<module position="sidebar-a">   
+<div class="span2"> 
     <ul class="nav nav-pills nav-stacked sidelinks" data-behavior="BS.Tabs" data-bs-tabs-options="{'smooth':true,'tabs-selector':'.profile-tab-selector a','sections-selector':'! * .profile-tab-content'}">
         <li class="nav-header">
             <?=  @text('LIB-AN-STREAMS') ?>
@@ -16,9 +15,10 @@
         </li>
         <?php endforeach;?>
     </ul>
-</module>
+</div>
 <?php endif; ?>
 
+<div class="span6" id="container-main">
 <?= @helper('com:composer.template.helper.ui.composers', $composers) ?>
 
 <?php if(count($gadgets)): ?>
@@ -27,7 +27,12 @@
 	<?= @helper('ui.gadget', $gadget) ?>
 </div>
 <?php endforeach;?>
-
 <?php endif; ?>
+</div>
+
+<div class="span4">
+<?= @helper('ui.gadget', $trendingHashtags) ?>	
+</div>
+</div>
 
 

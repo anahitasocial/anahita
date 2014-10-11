@@ -1,4 +1,5 @@
 <?php defined('KOOWA') or die ?>
+
 <?php if (!empty($commands)) : ?>
 <ul class="an-actions">
 <?php foreach($commands as $command) : ?>

@@ -41,7 +41,6 @@ if (!file_exists( JPATH_CONFIGURATION.'/configuration.php' ) || (filesize( JPATH
 require_once(JPATH_LIBRARIES . '/joomla/import.php');
 
 jimport( 'joomla.application.application' );
-jimport( 'joomla.application.menu' );
 jimport( 'joomla.user.user');
 jimport( 'joomla.environment.uri' );
 jimport( 'joomla.html.html' );
@@ -69,9 +68,6 @@ KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
         
 KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath'=>JPATH_BASE)));
 KServiceIdentifier::addLocator( KService::get('anahita:service.locator.component') );
-
-KLoader::addAdapter(new KLoaderAdapterModule(array('basepath' => JPATH_BASE)));
-KServiceIdentifier::addLocator( KService::get('anahita:service.locator.module') );
 
 KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
 KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));

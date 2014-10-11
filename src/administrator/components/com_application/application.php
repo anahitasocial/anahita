@@ -71,9 +71,12 @@ class JAdministrator extends JApplication
 			$lang	= $user->getParam( 'admin_language' );
 
 			// Make sure that the user's language exists
-			if ( $lang && JLanguage::exists($lang) ) {
+			if($lang && JLanguage::exists($lang)) 
+			{
 				$options['language'] = $lang;
-			} else {
+			} 
+			else 
+			{
 				$params = JComponentHelper::getParams('com_languages');
 				$client	=& JApplicationHelper::getClientInfo($this->getClientId());
 				$options['language'] = $params->get($client->name, 'en-GB');
@@ -81,9 +84,8 @@ class JAdministrator extends JApplication
 		}
 
 		// One last check to make sure we have something
-		if ( ! JLanguage::exists($options['language']) ) {
+		if(!JLanguage::exists($options['language']))
 			$options['language'] = 'en-GB';
-		}
 
 		parent::initialise($options);
 	}
@@ -97,7 +99,8 @@ class JAdministrator extends JApplication
 	{
 		$uri = JURI::getInstance();
 
-		if($this->getCfg('force_ssl') >= 1 && strtolower($uri->getScheme()) != 'https') {
+		if($this->getCfg('force_ssl') >= 1 && strtolower($uri->getScheme()) != 'https') 
+		{
 			//forward to https
 			$uri->setScheme('https');
 			$this->redirect($uri->toString());
@@ -160,16 +163,8 @@ class JAdministrator extends JApplication
      */
     public function getTemplate()
     {
-        if ( !isset($this->_template) ) 
-        {
-            //get the template
-            $template = KService::get('repos:templates.menu', array(
-                    'resources'         => 'templates_menu',
-                    'identity_property' => 'menuid'
-                ))->getQuery()->clientId(1)->fetchValue('template');
-            
-            $this->setTemplate(pick($template, 'mission')); 
-        }
+        if(!isset($this->_template)) 
+        	$this->setTemplate('rt_missioncontrol_j15');
         
         return $this->_template;
     }
@@ -185,16 +180,4 @@ class JAdministrator extends JApplication
     {        
         $this->_template = $template;
     }
-
-   /**
-	* Deprecated, use JURI::root() instead.
-	*
-	* @since 1.5
-	* @deprecated As of version 1.5
-	* @see JURI::root()
-	*/
-	function getSiteURL()
-	{
-	   return JURI::root();
-	}
 }

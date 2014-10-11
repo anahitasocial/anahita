@@ -163,11 +163,11 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 			
 		$photo_id = (array) KConfig::unbox( $data->photo_id );	
         	   
-		if ( !empty($photo_id) ) 
+		if(!empty($photo_id)) 
         {
 			$photo = $this->actor->photos->fetchSet(array('id'=>$photo_id));
             					
-			if ( count($photo) === 0 )
+			if(count($photo) === 0)
 				$photo = null;
                 
             $this->photos = $this->photo = $photo;
@@ -184,14 +184,15 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 	 */	
 	public function fetchEntity(KCommandContext $context)
 	{
-		if ( $context->action == 'addphoto' )
+		if($context->action == 'addphoto')
 		{		
-			if ( $context->data->id )
+			if($context->data->id)
 				$this->id = $context->data->id;
+				
 			//clone the context so it's not touched
 			$set = $this->__call('fetchEntity', array($context));
 			
-			if ( !$set )
+			if(!$set)
 			{
 				$context->setError(null);
 				//if the action is addphoto and there are no sets then create an set

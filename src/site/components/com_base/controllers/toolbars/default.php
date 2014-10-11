@@ -37,40 +37,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     public function onBeforeControllerGet(KEvent $event)
     {
         $this->getController()->toolbar = $this;
-    }
-    
-    /**
-     * Render the toolbars after the controller GET
-     *
-     * @param KEvent $event
-     *
-     * @return void
-     */
-    public function onAfterControllerGet(KEvent $event)
-    {        
-        $can_render = $this->getController()->isDispatched() 
-                        && $this->getController()->getRequest()->getFormat() == 'html'
-                        && $this->getController()->getView() instanceof LibBaseViewTemplate
-                        && KRequest::type()   == 'HTTP';
-
-        if ( $can_render ) 
-        {
-            $ui     = $this->getController()->getView()->getTemplate()->getHelper('ui');
-            
-            $data = array(
-               'menubar'  => $this->getController()->menubar,
-               'actorbar' => $this->getController()->actorbar,
-               'toolbar'  => $this->getController()->toolbar    
-            );
-            
-            $module = '<module position="toolbar" style="none">'.$ui->header($data).'</module>';
-            
-            $this->getController()
-                    ->getView()
-                    ->getTemplate()
-                    ->loadString($module)->render();
-        }
-    }    
+    }   
            
     /**
      * Edit Command for an entity
@@ -85,8 +52,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $layout = pick($command->layout, 'edit');
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))
-        ->href($entity->getURL().'&layout='.$layout)
-        ;
+        ->href($entity->getURL().'&layout='.$layout);
     }
     
     /**
@@ -115,24 +81,28 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     protected function _commandVote($command)
     {
         $entity = $this->getController()->getItem();
-        $voted  = $entity->votedUp(get_viewer());
+        $voted = $entity->votedUp(get_viewer());
                 
-        $btn_1_id   = uniqid('v');
-        $btn_2_id   = uniqid('u');
+        $btn_1_id = uniqid('v');
+        $btn_2_id = uniqid('u');
 
-        $action_key     = '_action';
+        $action_key = '_action';
         
-        $action_value   = $voted ? 'unvote' : 'vote';
-        if ( is($entity, 'ComBaseDomainEntityComment') ) {
+        $action_value = $voted ? 'unvote' : 'vote';
+        
+        if(is($entity, 'ComBaseDomainEntityComment'))
             $action_value .= 'comment';
-        }
-        $label          = $voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
+        
+        $label = $voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
+        
         $command->setName($action_value);        
         $command->append(array('label' =>$label));
-        $class          = 'btn btn-mini';
-        if ( $voted ) {
+        
+        $class = 'btn btn-mini';
+        
+        if($voted)
             $class .= ' btn-inverse';
-        }
+        
         $command
             ->href(JRoute::_($entity->getURL()."&$action_key=$action_value"))
             ->class('vote-action '.$action_value.' '.$class)
@@ -144,18 +114,20 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         
         //lets add the reverse of the first
         //button if any onle if it's html request 
-        if ( $this->getController()->getRequest()->getFormat() != 'html' )
+        if($this->getController()->getRequest()->getFormat() != 'html')
             return;
             
-        $action_value   = !$voted ? 'unvote' : 'vote';
-        $label          = !$voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
+        $action_value = !$voted ? 'unvote' : 'vote';
+        $label = !$voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
         
-        $class          = 'btn btn-mini';
-        if ( !$voted ) {
+        $class = 'btn btn-mini';
+        
+        if(!$voted)
             $class .= ' btn-inverse';
-        }        
+               
         $command = ComBaseControllerToolbarCommand::getInstance($action_value, array('label'=>$label));
         $this->addCommand($command);        
+        
         $command
             ->href(JRoute::_($entity->getURL()."&$action_key=$action_value"))
             ->class('vote-action '.$action_value.' '.$class)

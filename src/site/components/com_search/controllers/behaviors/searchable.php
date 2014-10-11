@@ -16,7 +16,7 @@
 
 /**
  * Searchable behavior. The searchable behavior allows for other conrollers to integrate into the 
- * search module for setting up a scope and owner 
+ * setup the scope and owner for the search layout 
  * 
  * 
  * @category   Anahita
@@ -43,16 +43,16 @@ class ComSearchControllerBehaviorSearchable extends KControllerBehaviorAbstract
 			$scope = $this->getService('com://site/components.domain.entityset.scope')->find($scope);
 			
 			if($scope)
-			    $this->getService()->set('mod://site/search.scope', $scope);
+			    $this->getService()->set('com://site/search.scope', $scope);
 			
 			if($item && $item->persisted() && $item->inherits('ComActorsDomainEntityActor'))
 			{
-			    $this->getService()->set('mod://site/search.owner', $item);
-			    $this->getService()->set('mod://site/components.scope', null);
+			    $this->getService()->set('com://site/search.owner', $item);
+			    $this->getService()->set('com://site/components.scope', null);
 			}
 			elseif($this->getRepository()->isOwnable() && $this->actor) 
 			{
-			    $this->getService()->set('mod://site/search.owner', $this->actor);
+			    $this->getService()->set('com://site/search.owner', $this->actor);
 			}			
 		}
 	}

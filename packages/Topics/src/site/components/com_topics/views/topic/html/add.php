@@ -1,5 +1,8 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<module position="sidebar-b" style="none"></module>
 
-<?= @template('form') ?>
+<div class="row">
+	<div class="span8">
+	<?= @template('form') ?>
+	</div>
+</div>

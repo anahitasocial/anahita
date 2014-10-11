@@ -8,20 +8,16 @@
   </head>
   <body>	  	
 	<?= @template('tmpl/js') ?>
-    
+	
     <div id="container-system-message" class="container">
-    	<?= @helper('modules.render','messages', array('style'=>'none')) ?>
-    </div>
-    		
+    	<?= @render('messages') ?>
+    </div>    		
+    
     <?= @template('tmpl/navbar') ?>
     
-    <?= @render('modules', '1', array('style'=>'none')) ?>
-	<?= @render('modules', '2', array('style'=>'simple')) ?>
-	<?= @render('modules', '3', array('style'=>'simple')) ?>
-    <?= @render('modules', '4', array('style'=>'simple')) ?>
-    <?= @render('modules', '5', array('style'=>'simple')) ?>
-    
-    <?= @render('component') ?>
+    <div class="container">
+    <?= $this->getView()->content; ?>
+    </div>
 
     <?php if($this->getView()->getParams()->poweredby): ?>
     <div class="container">
@@ -34,7 +30,6 @@
     	</div>
     </div>
     <?php endif; ?>
-
     <?= @render('analytics') ?> 
   </body>
 </html>

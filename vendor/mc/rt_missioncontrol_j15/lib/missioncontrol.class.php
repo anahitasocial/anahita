@@ -50,7 +50,7 @@ class MissionControl extends RTCore {
     }
 	
 	public function displayLoginForm() {
-		require_once($this->templatePath.DS.'html'.DS.'mod_login'.DS.'default.php');
+		require_once($this->templatePath.DS.'html'.DS.'login.php');
 	}
 	
 	public function displayMenu() {
@@ -125,6 +125,7 @@ class MissionControl extends RTCore {
 		$output = array();
 		$cancel = array();
 	
+		jimport('joomla.language.helper');
 		$languages = array();
 		$languages = JLanguageHelper::createLanguageList($browserLang );
 		array_unshift( $languages, JHTML::_('select.option',  '', JText::_( 'Language: Default' ) ) );
@@ -229,12 +230,6 @@ class MissionControl extends RTCore {
 		if ($this->params->get('enableViewSite')) {
 			$output[] = '<span class="preview"><a href="'.JURI::root().'" target="_blank">'.JText::_('VIEW_SITE').'</a></span>';
 		}
-		//render all modules except mod_status
-		$renderer =&  $this->document->loadRenderer('module');
-		foreach (JModuleHelper::getModules('status') as $mod)  {
-			if ($mod->module != 'mod_status') $output[] = $renderer->render($mod, null, null);
-		}
-
 
 		// display Tools
 		$tools = $this->_getTools();
@@ -242,71 +237,7 @@ class MissionControl extends RTCore {
 			$output[] = array('<a href="#" id="ToolsToggle"><span class="select-active">System Tools</span><span class="select-arrow">&#x25BE;</span></a>'.$tools, 'dropdown');
 		else 
 			$output[] = '<span><a>System Tools</a></span>';
-
-        // display editors
-        if ($this->params->get('enableQuickEditor')) {
-        	//$output[] = array($this->_renderEditorSelect(), 'dropdown quickedit');
-		}
 		
 		echo $this->_listify($output,$disabled_class);
 	}
-
-    private function _getEditors() {
-
-        $dbo = JFactory::getDBO();
-		$query = 'SELECT element, name text '.
-			'FROM #__plugins '.
-			'WHERE folder = "editors" '.
-			'AND published = 1 '.
-			'ORDER BY ordering, name';
-		$dbo->setQuery($query);
-		$editors = $dbo->loadObjectList();
-
-		return $editors;
-        
-    }
-
-    private function _renderEditorSelect() {
-
-        $myEditor =& JFactory::getEditor();
-        $user =& JFactory::getUser();
-
-        $editor_script = "\n
-			var updateEditor = function(){
-			
-				var editor = $('editor_selection');
-				
-				var req = new Request({
-					method: 'post',
-					url: 'index.php',
-					data: 'option=com_users&task=save&id=". $user->get('id') ."&sendEmail=0&". JUtility::getToken()."=1&username=" . $user->get('username') ."&params[editor]='+editor.value+'&tmpl=component',
-					onRequest: function(){
-						$('editor_spinner').setStyle('display', 'block');
-						$('editor_selection').getParent().getFirst().setStyle('margin-left', 10);
-					},
-					onSuccess: function(){
-						$('editor_spinner').setStyle('display', 'none');
-						$('editor_selection').getParent().getFirst().setStyle('margin-left', 0);
-					}
-				}).send();
-			};
-			
-			window.addEvent('domready', function(){
-				$('editor_selection').addEvent('change', updateEditor);
-			});\n";
-
-        $this->addInlineScript($editor_script);
-
-        $output = '<select id="editor_selection">';
-        foreach ($this->_getEditors() as $editor) {
-            if ($myEditor->_name == $editor->element)
-                $output .= '<option value="'.$editor->element.'" selected="selected">'.$editor->text.'</option>';
-	        else
-		        $output .= '<option value="'.$editor->element.'">'.$editor->text.'</option>';
-
-        }
-        $output .= '</select><div id="editor_spinner" class="spinner"></div>';
-
-        return $output;
-    }
 }

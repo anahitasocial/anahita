@@ -42,10 +42,6 @@ class ConfigApplicationView
 		$contents = ob_get_contents();
 		ob_end_clean();
 
-		// Set document data
-		$document =& JFactory::getDocument();
-		$document->setBuffer($contents, 'modules', 'submenu');
-
 		// Load settings for the FTP layer
 		jimport('joomla.client.helper');
 		$ftp =& JClientHelper::setCredentialsFromRequest('ftp');

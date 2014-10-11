@@ -51,33 +51,33 @@ $mctrl->addOverrideStyles();
 			</div>
 			<div id="mc-body">
 				<div class="mc-wrapper">
+					
 					<jdoc:include type="message" />
+					
 					<div id="mc-title">
 						<?php $mctrl->displayTitle(); ?>
 						<?php $mctrl->displayHelpButton(); ?>
 						<?php $mctrl->displayToolbar(); ?>
 						<div class="clr"></div>
 					</div>
+					
 					<div id="mc-submenu">
 						<?php $mctrl->displaySubMenu(); ?>
 					</div>
-					
-				
+
 					<?php if ($option == 'com_cpanel') : ?>
-					<div id="mc-sidebar">
-						<jdoc:include type="modules" name="sidebar" style="sidebar"  />
-					</div>
 					<div id="mc-cpanel">
-						<?php $mctrl->displayDashText(); ?>
-						<jdoc:include type="modules" name="dashboard" style="standard"  />
+					<?php $mctrl->displayDashText(); ?>
 					<?php endif; ?>
 					
 					<div id="mc-component">
 						<jdoc:include type="component" />
 					</div>
+					
 					<?php if ($option == 'com_cpanel') : ?>
 					</div>					
 					<?php endif; ?>
+					
 					<div class="clr"></div>
 				</div>
 			</div>	

@@ -148,19 +148,10 @@ class RTAdminCSSMenu extends JTree
 		$menus =& $this->_menudata;
 		
 		
-		switch ($toplevel) {
-
-		
+		switch ($toplevel) 
+		{
 			case 'Dashboard':
 				if ($option == 'com_cpanel') return true;
-				break;
-				
-			case 'Articles':
-				if (RTAdminCSSMenu::_isOption($menus['Dashboard'])) return true;
-				break;
-				
-			case 'Menus':
-				if (RTAdminCSSMenu::_isOption($menus['Articles'])) return true;
 				break;
 				
 			case 'Users':
@@ -174,14 +165,9 @@ class RTAdminCSSMenu extends JTree
 			case 'Configure':
 				if (RTAdminCSSMenu::_isOption($menus['Config'])) return true;
 				break;
-		
-			case 'Help':
-				if (RTAdminCSSMenu::_isOption($menus['Help'])) return true;
-				break;	
-		
 		}
-		return false;
 		
+		return false;
 	}
 	
 	function _isOption($opts_array) {
@@ -246,6 +232,4 @@ class JMenuNode extends JNode
 		$this->id		= str_replace(" ","-",$title);
 
 	}
-
-
 }

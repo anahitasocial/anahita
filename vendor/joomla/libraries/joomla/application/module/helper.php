@@ -45,8 +45,10 @@ class JModuleHelper
 	 */
 	static function &getModule($name, $title = null )
 	{
+		print 'hi';
+		
 		$result		= null;
-		$modules    = array_merge(self::$_dynamic_modules, JModuleHelper::_load());
+		$modules = self::$_dynamic_modules;
 		$total		= count($modules);
 		for ($i = 0; $i < $total; $i++)
 		{
@@ -89,10 +91,9 @@ class JModuleHelper
 	 */
 	static function &getModules($position)
 	{
-		$position	= strtolower( $position );
-		$result		= array();
-
-		$modules = array_merge(self::$_dynamic_modules, JModuleHelper::_load());		
+		$position = strtolower( $position );
+		$result = array();
+		$modules = self::$_dynamic_modules;		
 		$total = count($modules);
 		for($i = 0; $i < $total; $i++) {
 			if($modules[$i]->position == $position) {
@@ -248,63 +249,5 @@ class JModuleHelper
 	    self::$_dynamic_modules[] = $module;
 	    return $module;
 	}
-	
-	/**
-	 * Load published modules
-	 *
-	 * @access	private
-	 * @return	array
-	 */
-	static function &_load()
-	{
-	    static $modules;
-	    
-		global $mainframe, $Itemid;
-
-		if (isset($modules)) {		   
-			return $modules;
-		}
-
-		$user	=& JFactory::getUser();
-		$db		=& JFactory::getDBO();
-
-		$aid	= $user->get('aid', 0);
-
-		$modules	= array();
-
-		$wheremenu = isset( $Itemid ) ? ' AND ( mm.menuid = '. (int) $Itemid .' OR mm.menuid = 0 )' : '';
-
-		$query = 'SELECT id, title, module, position, content, showtitle, control, params'
-			. ' FROM #__modules AS m'
-			. ' LEFT JOIN #__modules_menu AS mm ON mm.moduleid = m.id'
-			. ' WHERE m.published = 1'
-			. ' AND m.access <= '. (int)$aid
-			. ' AND m.client_id = '. (int)$mainframe->getClientId()
-			. $wheremenu
-			. ' ORDER BY position, ordering';
-
-		$db->setQuery( $query );
-
-		if (null === ($modules = $db->loadObjectList())) {
-			JError::raiseWarning( 'SOME_ERROR_CODE', JText::_( 'Error Loading Modules' ) . $db->getErrorMsg());
-			return false;
-		}
-
-		$total = count($modules);
-		for($i = 0; $i < $total; $i++)
-		{
-			//determine if this is a custom module
-			$file					= $modules[$i]->module;
-			$custom 				= substr( $file, 0, 4 ) == 'mod_' ?  0 : 1;
-			$modules[$i]->user  	= $custom;
-			// CHECK: custom module name is given by the title field, otherwise it's just 'om' ??
-			$modules[$i]->name		= $custom ? $modules[$i]->title : substr( $file, 4 );
-			$modules[$i]->style		= null;
-			$modules[$i]->position	= strtolower($modules[$i]->position);
-		}
-
-		return $modules;
-	}
-
 }
 

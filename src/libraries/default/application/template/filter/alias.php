@@ -37,10 +37,10 @@ class LibApplicationTemplateFilterAlias extends KTemplateFilterAlias
         parent::__construct($config);
 
         $this->_alias_read = array_merge($this->_alias_read, array(         
-            '@previous('    => '$this->loadParent(',
-            '@template('    => '$this->loadTemplate(',
-            '@route('       => 'KService::get(\'com:base.helper.url\')->getRoute(',
-            '@html(\''      => '$this->renderHelper(\'com:base.template.helper.html.',
+            '@previous(' => '$this->loadParent(',
+            '@template(' => '$this->loadTemplate(',
+            '@route(' => 'KService::get(\'com:base.helper.url\')->getRoute(',
+            '@html(\'' => '$this->renderHelper(\'com:base.template.helper.html.'
         ));
     }   
 }

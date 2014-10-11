@@ -15,7 +15,7 @@
  */
 
 /**
- * Template Locator. If a module is not found, it first look at the default classes 
+ * Template Locator. 
  *
  * @category   Anahita
  * @package    Anahita_Service
