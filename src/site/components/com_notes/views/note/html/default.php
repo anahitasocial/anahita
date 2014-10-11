@@ -5,7 +5,7 @@
 
 <div class="row">
 	<div class="span8">
-	<?php @commands('toolbar') ?>
+	<?= @helper('ui.header', array()) ?>
 	<?= @template('note') ?>
 	<?= @helper('ui.comments', $note) ?>
 	</div>
