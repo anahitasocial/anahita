@@ -17,6 +17,8 @@
 	</div>
 	
 	<div class="span6">
+		<?= @helper('ui.header', array()) ?>
+	
 		<div class="actor-settings">
 			<?= $content ?>
 		</div>
