@@ -72,8 +72,6 @@ class RTMenuHelper {
 			if ($manageTemplates) 
 			{
 				$menu->addChild(new JMenuNode(JText::_('Template Manager'), 'index.php?option=com_templates', 'themes'),true);
-				$menu->addChild(new JMenuNode(JText::_('Site Templates'),'index.php?option=com_templates&client=0'));
-				$menu->addChild(new JMenuNode(JText::_('Admin Templates'),'index.php?option=com_templates&client=1'));
 				$menu->getParent();
 			}
 			
