@@ -34,8 +34,8 @@ class ComDashboardViewDashboardHtml extends ComBaseViewHtml
 	 */
 	protected function _layoutDefault()
 	{	
-		$this->set('gadgets',     new LibBaseTemplateObjectContainer());
-		$this->set('composers',   new LibBaseTemplateObjectContainer());
+		$this->set('gadgets', new LibBaseTemplateObjectContainer());
+		$this->set('composers', new LibBaseTemplateObjectContainer());
 		
 		$context = new KCommandContext();		
 		$context->actor	= $this->viewer;
