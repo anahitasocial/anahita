@@ -1,11 +1,11 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <div class="module-border well">
-	<h2 class="module-title">
+	<h2 class="block-title">
 		<?= @name($item) ?>
 	</h2>
 	
-	<div class="module-content">
+	<div class="block-content">
 		<div class="an-entity">
 			<div class="clearfix">
 				<div class="entity-portrait-square">

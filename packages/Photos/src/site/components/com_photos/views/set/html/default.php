@@ -29,7 +29,8 @@ Delegator.register('click', {
 	</div>
 	
 	<div class="span4">
-		<a href="#" class="btn btn-primary" data-trigger="Slideshow" title="<?= @escape($set->title) ?>">
+	
+		<a href="#" class="btn btn-large btn-primary" data-trigger="Slideshow" title="<?= @escape($set->title) ?>">
 	    <?= @text('COM-PHOTOS-ACTION-SLIDESHOW') ?>
 		</a>
 				
@@ -59,14 +60,18 @@ Delegator.register('click', {
     		</div>
     	</div>
     	
-    	<h4><?= @text('LIB-AN-META') ?></h4>
+    	<h4 class="block-title">
+    	    <?= @text('LIB-AN-META') ?>
+    	</h4>
     	  
-    	<ul class="an-meta">
-    		<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($set->creationTime), @name($set->author)) ?></li>
-    		<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($set->updateTime), @name($set->editor)) ?></li>
-    		<li><?= sprintf(@text('COM-PHOTOS-SET-META-PHOTOS'), $set->getPhotoCount() ) ?></li>
-    		<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $set->numOfComments) ?></li>
-    	</ul>			
+    	<div class="block-content">  
+        	<ul class="an-meta">
+        		<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($set->creationTime), @name($set->author)) ?></li>
+        		<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($set->updateTime), @name($set->editor)) ?></li>
+        		<li><?= sprintf(@text('COM-PHOTOS-SET-META-PHOTOS'), $set->getPhotoCount() ) ?></li>
+        		<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $set->numOfComments) ?></li>
+        	</ul>	
+    	</div>		
 	</div>
 </div>
 

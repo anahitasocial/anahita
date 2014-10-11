@@ -21,7 +21,7 @@ var PhotoSet = new Class({
 	},
 	
 	hide : function(){
-		this.browse('module');
+		this.browse('sidebar');
 	},
 	
 	browse : function(layout){

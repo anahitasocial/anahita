@@ -9,8 +9,12 @@
 	
 	<?php if($actor->authorize('administration')): ?>
 	<div class="span4">
-	<h4><?= @text('COM-TOPICS-TOPIC-PRIVACY') ?></h4>
-	<?= @helper('ui.privacy', $topic) ?>
+		<h4 class="block-title">
+		    <?= @text('COM-TOPICS-TOPIC-PRIVACY') ?>
+		</h4>
+	    <div class="block-content">
+	        <?= @helper('ui.privacy', $topic) ?>
+	    </div>
 	</div>
 	<?php endif; ?>
 </div>
