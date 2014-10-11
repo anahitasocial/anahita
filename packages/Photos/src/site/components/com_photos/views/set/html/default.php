@@ -30,7 +30,7 @@ Delegator.register('click', {
 	
 	<div class="span4">
 	
-		<a href="#" class="btn btn-large btn-primary" data-trigger="Slideshow" title="<?= @escape($set->title) ?>">
+		<a href="#" class="btn btn-block btn-large btn-primary" data-trigger="Slideshow" title="<?= @escape($set->title) ?>">
 	    <?= @text('COM-PHOTOS-ACTION-SLIDESHOW') ?>
 		</a>
 				
