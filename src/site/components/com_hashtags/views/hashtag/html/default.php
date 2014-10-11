@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
+<?= @helper('ui.header', array()) ?>
+
 <?php 
 $paginationUrl = $item->getURL(); 
 if(!empty($sort))
