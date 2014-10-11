@@ -71,7 +71,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     	if($this->actor) 
     	{
         	$this->getToolbar('actorbar')->setTitle($this->actor->name);
-        	$this->getService()->set('mod://site/search.owner', $this->actor);
+        	$this->getService()->set('com://site/search.owner', $this->actor);
     	}
     	
     	$this->_state->append(array(
