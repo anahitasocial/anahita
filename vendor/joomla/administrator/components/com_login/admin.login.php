@@ -15,7 +15,7 @@
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted access' );
 
-switch ( JRequest::getCmd('task'))
+switch(JRequest::getCmd('task'))
 {
 	case 'login' :
 		LoginController::login();
@@ -51,11 +51,8 @@ class LoginController
 
 		$result = $mainframe->login($credentials);
 
-		if (!JError::isError($result)) {
+		if(!JError::isError($result))
 			$mainframe->redirect('index.php');
-		}
-
-		LoginController::display();
 	}
 
 	public static function logout()
@@ -64,10 +61,7 @@ class LoginController
 
 		$result = $mainframe->logout();
 
-		if (!JError::isError($result)) {
+		if(!JError::isError($result))
 			$mainframe->redirect('index.php?option=com_login');
-		}
-
-		LoginController::display();
 	}
 }
