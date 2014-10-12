@@ -217,46 +217,6 @@ CREATE TABLE `#__groups` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `menutype` varchar(75) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  `alias` varchar(255) NOT NULL DEFAULT '',
-  `link` text,
-  `type` varchar(50) NOT NULL DEFAULT '',
-  `published` tinyint(1) NOT NULL DEFAULT '0',
-  `parent` int(11) unsigned NOT NULL DEFAULT '0',
-  `componentid` int(11) unsigned NOT NULL DEFAULT '0',
-  `sublevel` int(11) DEFAULT '0',
-  `ordering` int(11) DEFAULT '0',
-  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `pollid` int(11) NOT NULL DEFAULT '0',
-  `browserNav` tinyint(4) DEFAULT '0',
-  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `utaccess` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `params` text NOT NULL,
-  `lft` int(11) unsigned NOT NULL DEFAULT '0',
-  `rgt` int(11) unsigned NOT NULL DEFAULT '0',
-  `home` int(1) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `componentid` (`componentid`,`menutype`,`published`,`access`),
-  KEY `menutype` (`menutype`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__menu_types` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `menutype` varchar(75) NOT NULL DEFAULT '',
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `description` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `menutype` (`menutype`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__migrator_versions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `component` varchar(255) NOT NULL,
@@ -264,38 +224,6 @@ CREATE TABLE `#__migrator_versions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `component` (`component`)
 ) ENGINE=InnoDB;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__modules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` text NOT NULL,
-  `content` text NOT NULL,
-  `ordering` int(11) NOT NULL DEFAULT '0',
-  `position` varchar(50) DEFAULT NULL,
-  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `published` tinyint(1) NOT NULL DEFAULT '0',
-  `module` varchar(50) DEFAULT NULL,
-  `numnews` int(11) NOT NULL DEFAULT '0',
-  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `showtitle` tinyint(3) unsigned NOT NULL DEFAULT '1',
-  `params` text NOT NULL,
-  `iscore` tinyint(4) NOT NULL DEFAULT '0',
-  `client_id` tinyint(4) NOT NULL DEFAULT '0',
-  `control` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `published` (`published`,`access`),
-  KEY `newsfeeds` (`module`,`published`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__modules_menu` (
-  `moduleid` int(11) NOT NULL DEFAULT '0',
-  `menuid` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`moduleid`,`menuid`)
-) ENGINE=MyISAM;
 
 -- --------------------------------------------------------
 
