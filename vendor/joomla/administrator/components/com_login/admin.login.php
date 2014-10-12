@@ -24,6 +24,10 @@ switch ( JRequest::getCmd('task'))
 	case 'logout' :
 		LoginController::logout();
 		break;
+
+	default :
+		LoginController::display();
+		break;
 }
 
 
@@ -37,6 +41,14 @@ switch ( JRequest::getCmd('task'))
  */
 class LoginController
 {
+	public static function display()
+	{
+		jimport('joomla.application.module.helper');
+		$module = & JModuleHelper::getModule('mod_login');
+		$module = JModuleHelper::renderModule($module, array('style' => 'rounded', 'id' => 'section-box'));
+		echo $module;
+	}
+
 	public static function login()
 	{
 		global $mainframe;
