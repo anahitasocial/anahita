@@ -36,13 +36,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 	{
 		parent::__construct($config);
 		
-		//if request is html and not ajax
-		//set page title
-		//import assets
-		//
-		if ( $config->request->getFormat() == 'html' &&
-		     !$config->request->isAjax()
-		        ) 
+		if($config->request->getFormat() == 'html' && !$config->request->isAjax()) 
 		{
 		    $this->registerCallback('after.get', array($this, 'includeMedia'));
 		    $this->registerCallback('after.get', array($this, 'setPageTitle'));
@@ -64,9 +58,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 	{	
 	    parent::_initialize($config);
         
-        if ( $config->request->view ) {
+        if($config->request->view)
             $config->controller = $config->request->view;    
-        }
 	}	  
 	
   	/**
@@ -82,13 +75,13 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 	    
 		$url = $asset->getURL("com_{$this->getIdentifier()->package}/js/{$this->getIdentifier()->package}.js");
 		
-		if ( $url )
-			JFactory::getDocument()->addScript($url);
+		if($url)
+		    JFactory::getDocument()->addScript($url);
 			
 		$url = $asset->getURL("com_{$this->getIdentifier()->package}/css/{$this->getIdentifier()->package}.css");
 								
-		if ( $url )
-			JFactory::getDocument()->addStyleSheet($url);
+		if($url)
+		    JFactory::getDocument()->addStyleSheet($url);
 	}
     
     /**
@@ -98,9 +91,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     protected function _actionRender(KCommandContext $context)
     {                                       
-        if ( $context->request->getFormat() == 'html' && KRequest::type() == 'HTTP' ) {
+        if($context->request->getFormat() == 'html' && KRequest::type() == 'HTTP')
             $this->_setPageTitle();
-        }
                
         return parent::_actionRender($context);   
     }
@@ -114,40 +106,42 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     public function setPageTitle(KCommandContext $context)
     {
-        $view     = $this->getController()->getView();
+        $view = $this->getController()->getView();
         $document = JFactory::getDocument();
         
         //@TODO temporary fix
-        if ( $document->getTitle() ) {
+        if($document->getTitle())
             return;
-        }
                 
-        $item     = $this->getController()->getState()->getItem();
+        $item = $this->getController()->getState()->getItem();
         $actorbar = $this->getController()->actorbar;
         
         $title = array();
         $description = null;                               
         
-        if ( $actorbar && $actorbar->getActor() ) 
+        if($actorbar && $actorbar->getActor()) 
         {
-            if ( $actorbar->getTitle() )
+            if($actorbar->getTitle())
                 $title[] = $actorbar->getTitle();
                 
             $description = $actorbar->getDescription();      
         }
-        else {
+        else 
+        {
             $title[] = ucfirst($view->getName());   
         }
         
-        if ( $item && $item->isDescribable() ) {
+        if($item && $item->isDescribable()) 
+        {
             array_unshift($title, $item->name);
             $description = $item->body;
         }
-     
-        $title = implode(' - ', array_unique($title));      
+      
+        $title = implode(' - ', array_filter(array_unique($title)));    
         $document->setTitle($title);
         $description = preg_replace( '/\s+/', ' ', $description );
         $description = htmlspecialchars($view->getTemplate()->renderHelper('text.truncate', $description, array('length'=>160)));          
+        
         $document->setDescription($description);         
     }
     
@@ -161,18 +155,21 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     protected function _actionException(KCommandContext $context)
     {       
-        if ( !JFactory::getUser()->id && 
-                $context->data instanceof LibBaseControllerExceptionUnauthorized ) 
+        if(!JFactory::getUser()->id && $context->data instanceof LibBaseControllerExceptionUnauthorized) 
         {
             $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
+            
             $return = base64_encode(KRequest::url());
+            
             $context->response->setRedirect(JRoute::_('option=com_people&view=session&return='.$return));
+            
             $context->response->send();
+            
             exit(0);
         }
-        else { 
-            $this->getService('application.dispatcher')
-                ->execute('exception', $context);      
+        else 
+        { 
+            $this->getService('application.dispatcher')->execute('exception', $context);      
         }
     }
 }
