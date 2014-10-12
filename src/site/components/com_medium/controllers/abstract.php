@@ -93,15 +93,16 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 	{		                  		
 		$entities = parent::_actionBrowse($context);
 			
-        if($this->filter == 'leaders')
+        if($this->getRepository()->hasBehavior('ownable') && $this->filter == 'leaders')
         {
-           $leaderIds = array();
-           $leaderIds[] = $this->viewer->id;
+           $leaderIds = array($this->viewer->id);
            $leaderIds = array_merge($leaderIds, $this->viewer->getLeaderIds()->toArray());
            $entities->where( 'owner.id','IN', $leaderIds );
         }
 		elseif($this->getRepository()->hasBehavior('ownable') && $this->actor && $this->actor->id > 0)
+		{
 			$entities->where('owner', '=', $this->actor);
+		}
 			
         return $entities;
 	}

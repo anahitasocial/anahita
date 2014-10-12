@@ -61,21 +61,19 @@ class LibBaseDomainBehaviorDictionariable extends AnDomainBehaviorAbstract
 	public function setValue($key, $value = null)
 	{
 		$meta = clone $this->meta;
-        $key  = KConfig::unbox($key);
+        $key = KConfig::unbox($key);
+        
         if(is_array($key)) 
-        {
             $data = $key;   
-        } 
         else 
-        {
-            $data = array($key => $value);   
-        }
+            $data = array($key => $value);
         
         foreach($data as $key => $value)        
 		  $meta[$key] = $value;
 		
         $this->set('meta', $meta);
-		return $this;
+        
+		return $this->_mixer;
 	}
 	
 	/**

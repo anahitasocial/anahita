@@ -38,7 +38,7 @@ class LibBaseDomainBehaviorLocatable extends AnDomainBehaviorAbstract
 	{
 		if(!isset($this->_url)) 
 		{
-			$this->_url = 'index.php?option='.$this->component.'&view='.$this->_mixer->getIdentifier()->name;
+			$this->_url = 'option='.$this->component.'&view='.$this->_mixer->getIdentifier()->name;
 			
 			if($this->_mixer->id)
 				$this->_url .= '&id='.$this->_mixer->id;

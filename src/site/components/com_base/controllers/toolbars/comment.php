@@ -50,8 +50,8 @@ class ComBaseControllerToolbarComment extends ComBaseControllerToolbarDefault
 			$this->addCommand('editcomment', JText::_('LIB-AN-ACTION-EDIT'))
 			    ->getCommand('editcomment')
 			    ->href(JRoute::_($url))
-				->setAttribute('data-trigger','Request')
-				->setAttribute('data-request-options',"{replace:'!.an-comment'}");
+				->setAttribute('data-trigger', 'Request')
+				->setAttribute('data-request-options', "{replace:'!.an-comment'}");
 		}
 			
 		if ( $comment->authorize('delete') ) 
