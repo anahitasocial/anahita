@@ -38,7 +38,7 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {
         parent::onBeforeControllerGet($event);
         
-        if($this->getController()->canEdit())
+        if($this->getController()->canRead())
         	$this->addToolbarCommands();
     }
     
