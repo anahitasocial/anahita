@@ -1,3 +1,25 @@
+To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
+
+Anahita 4.0.0 Birth Release
+============================
+* #hashtags implemented
+* @mentions implemented
+* com_tags implemented as the base component for different types of tagging
+* Social graph in com_people refactored
+* group admins or followers can now add additional followers to the group
+* legacy com_menus has been removed
+* com_search layout improved. Results are now loaded as infinit scroll
+* menus are now hardcoded layouts in templates/base/html/menus
+* viewer menu is now generated dynamically
+* legacy com_modules has been removed
+* removed all module positions from the Shiraz template
+* no more support for <module> tags in the layouts. We are using generic Bootstrap grids from now on 
+* removed milestones MVC from the Todos app
+* refinements to the wysiwyg editor
+* improvements to the Pages app
+* general performance improvements
+* a lot of legacy Joomla files and components are removed
+
 Anahita 3.0.4
 ==============
 
