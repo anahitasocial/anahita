@@ -5,5 +5,5 @@
 <?= @template('masonry_list') ?>
 </div>
 <?php else: ?>
-<?= @message(@text('COM-PHOTOS-NO-PHOTOS-POSTED-YET')) ?>
+<?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
 <?php endif; ?>

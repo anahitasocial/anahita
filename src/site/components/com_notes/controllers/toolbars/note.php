@@ -27,16 +27,18 @@
  */
 class ComNotesControllerToolbarNote extends ComMediumControllerToolbarDefault
 { 
-    /**
-     * Set the toolbar commands
-     * 
+	/**
+     * Before Controller _actionRead is executed
+     *
+     * @param KEvent $event
+     *
      * @return void
      */
-    public function addToolbarCommands()
+    public function onBeforeControllerGet(KEvent $event)
     {
-        parent::addToolbarCommands();
+        parent::onBeforeControllerGet($event);
         
-        //no need to have comment status for messages
-        $this->_commands->extract('commentstatus');
+        if($this->getController()->canRead())
+        	$this->addToolbarCommands();
     }
 }
