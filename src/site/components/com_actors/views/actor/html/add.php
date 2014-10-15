@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die ?>
 
+<?= @helper('ui.header', array()) ?>
+
 <?php $entity = empty($entity) ?@controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $entity; ?>
 
 <div class="row">
