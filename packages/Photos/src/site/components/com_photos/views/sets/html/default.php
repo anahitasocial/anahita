@@ -7,5 +7,5 @@
 <?= @template('list') ?>	
 </div>
 <?php else: ?>
-<?= @message(@text('COM-PHOTOS-SETS-NO-SETS-CREATED')) ?>
+<?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
 <?php endif; ?>

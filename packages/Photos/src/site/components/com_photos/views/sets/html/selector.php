@@ -38,7 +38,7 @@ if(count($photo->top()->sets))
 	<?= @view('set')->layout('selector_list')->set('set', $set)->assignedSets($assigned_sets); ?>
 	<?php endforeach; ?>
 <?php else: ?>
-<?= @message(@text('COM-PHOTOS-SETS-NO-SETS-CREATED')) ?>
+<?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
 <?php endif; ?>
 </div>
 
