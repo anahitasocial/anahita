@@ -70,7 +70,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */    
     protected function _write($path, $data, $public)
     {
-        $acl	 = $public ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE;
+        $acl = $public ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE;
         $options = array('Content-Type'=>$this->_s3->__getMimeType($path));
         return $this->_s3->putObject( $data, $this->_params->bucket, $path, $acl, array(), $options);
     }
@@ -80,7 +80,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */    
     protected function _exists($path)
     {
-        return false;
+        return $this->_s3->getObjectInfo($this->_params->bucket, $path, false);
     }
     
     /**
@@ -88,11 +88,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */    
     protected function _delete($path)
     {
-        $paths = $this->_s3->getBucket($this->_params->bucket, $path);
-    
-        foreach($paths as $path) {
-            $this->_s3->deleteObject($this->_params->bucket, $path['name']);
-        }
+        return $this->_s3->deleteObject($this->_params->bucket, $path);
     }
     
     /**
@@ -107,6 +103,7 @@ class PlgStorageS3 extends PlgStorageAbstract
         {
             $url = 'http://'.$this->_params->bucket.'.s3.amazonaws.com/'.$path;
         }
+        
         return $url;
     }    
 }
