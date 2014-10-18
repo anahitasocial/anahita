@@ -5,7 +5,7 @@ $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
 
-<ul class="nav " data-behavior="BS.Dropdown">
+<ul class="nav" data-behavior="BS.Dropdown">
 <?php if($viewer->guest()): ?>
 	<li>
 		<a href="<?= @route('option=com_people&view=session') ?>">
