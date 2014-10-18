@@ -6,7 +6,7 @@ $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
 
-<ul class="menu nav" data-behavior="BS.Dropdown">
+<ul class="nav pull-right" data-behavior="BS.Dropdown">
 	<li>     
 		<a href="#" data-popover-tipclass="notifications-popover" data-behavior="RemotePopover" data-bs-popover-animate=false data-bs-popover-content-element="D" data-bs-popover-trigger="click" data-bs-popover-location="bottom" data-remotepopover-url="<?=@route('option=com_notifications&view=notifications&layout=popover')?>" >
             <span id="new-notifications-counter" class="badge <?= ($num_notifications) ? 'badge-important' : '' ?>">
