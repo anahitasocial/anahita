@@ -37,29 +37,29 @@ class ComInvitesControllerConnection extends ComInvitesControllerDefault
     {
        $serviceType = pick($this->service, 'facebook');
        
-       if ( !ComConnectHelperApi::enabled($serviceType) ) 
+       if(!ComConnectHelperApi::enabled($serviceType)) 
        {
            throw new LibBaseControllerExceptionBadRequest('Service is not enabled');
+           
+           return;
        }
        
        $this->getService('repos://site/connect.session');
        
        $service = $this->viewer->sessions->$serviceType;
        
-       if ( !empty($service) ) 
+       if(!empty($service)) 
        {
        		try 
           	{
               $this->_state->setList($service->getFriends());
           	} 
-          	catch( Exception $e ) 
+          	catch(Exception $e) 
          	{
             	$session = $this->viewer->sessions->find(array('api'=>'facebook'));
               
-            	if ($session)
-            	{ 
+            	if(isset($session))
               		$session->delete()->save();
-            	}
               
               	$service = null;
           	}
@@ -68,7 +68,7 @@ class ComInvitesControllerConnection extends ComInvitesControllerDefault
        {
 			$service = null;	
        }
-       
+
        $this->service = $service;
     }
 }

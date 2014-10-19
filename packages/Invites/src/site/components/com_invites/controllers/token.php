@@ -50,28 +50,32 @@ class ComInvitesControllerToken extends ComBaseControllerService
      */   
     protected function _actionRead(KCommandContext $context)
     { 
-        if ( $this->token ) 
+        if($this->token) 
         {
             $token = $this->getRepository()->find(array('value'=>$this->token));
+            
             $this->getToolbar('menubar')->setTitle(null);
             
-            if ( !$token || !isset($token->inviter)) {
+            if(!$token || !isset($token->inviter)) 
+            {
                 throw new LibBaseControllerExceptionNotFound('Token not found');
+                
+                return;
             }
                         
-            if ( $this->viewer->guest()  ) {
+            if($this->viewer->guest())
                 KRequest::set('session.invite_token', $token->value);                               
-            }
 
             $this->setItem($token);           
         }
         else
         {
             $service = pick($this->service, 'facebook');                        
-            $token   = $this->getRepository()->getEntity()->reset();
+            $token = $this->getRepository()->getEntity()->reset();
+            
             KRequest::set('session.invite_token', $token->value);
-            $this->getView()                
-                ->value($token->value);
+            
+            $this->getView()->value($token->value);
         
             return $this->getView()->display();
         }
@@ -86,25 +90,31 @@ class ComInvitesControllerToken extends ComBaseControllerService
      */
     protected function _actionAdd(KCommandContext $context)
     {
-        $data  = $context->data;
+        $data = $context->data;
         $value = KRequest::get('session.invite_token', 'string', null);
         
-        if( empty($data->value) || $value != $data->value) {
+        if(empty($data->value) || $value != $data->value) 
+        {
             throw new LibBaseControllerExceptionBadRequest('Invalid token signature');
+            
+            return;
         }
         
         KRequest::set('session.invite_token', null);
         
         $token = $this->getRepository()->getEntity(array(
-                'data'=> array(
-                        'value'	      => $value,
-                        'inviter'     => get_viewer(),
-                        'serviceName' => 'facebook'
-                )
-        ));
+                    	'data'=> array(
+                            'value'	=> $value,
+                            'inviter' => get_viewer(),
+                            'serviceName' => 'facebook'
+                        )
+                    ));
         
-        if ( !$token->save() ) {
+        if(!$token->save()) 
+        {
             throw new LibBaseControllerExceptionInternal();
+            
+            return;
         }
     }
 }

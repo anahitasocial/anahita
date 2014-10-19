@@ -85,40 +85,48 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 		});
 		$payloads = array();
 		$sent_one = false;
+		
 		foreach($emails as $email) 
 		{
 		    $token = $this->getService('repos://site/invites.token')->getEntity(array(
-					'data'=> array(
-						'inviter' => get_viewer(),
-						'serviceName' => 'email' 
-					)
-			));
+    					'data'=> array(
+    						'inviter' => get_viewer(),
+    						'serviceName' => 'email' 
+    					)
+			        ));
 		    $person  = $this->getService('repos://site/people')->find(array('email'=>$email));
 		    $payload = array('email'=>$email, 'sent'=>false);
-			if ( !$person && $token->save()  ) 
+		    
+			if(!$person && $token->save()) 
 			{			    
-			    $payload['sent']  = true;
-			    $sent_one         = true;
+			    $payload['sent'] = true;
+			    $sent_one = true;
+			    
 			    $this->mail(array(
-			            'subject'  => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
-			            'to'       => $email,
-			            'layout'   => false,
-			            'template' => 'invite',
-			            'data'     => array(
-			                    'invite_url' => $token->getURL(),
-			                    'site_name'  => $siteConfig->getValue('sitename'),
-			                    'sender'     => $this->viewer
-			            )
+			    	'subject' => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+			        'to' => $email,
+			        'layout' => false,
+			        'template' => 'invite',
+			        'data' => array(
+			        	'invite_url' => $token->getURL(),
+			            'site_name' => $siteConfig->getValue('sitename'),
+			            'sender' => $this->viewer
+			        )
 			    ));				    
-			} else {
+			} 
+			else 
+			{
 			    $payload['person'] = $person;
 			}
+			
 			$payloads[] = $payload;
 		}
+		
 		$content = $this->getView()->set(array('data'=>$payloads))->display();
+		
 		$context->response->setContent($content);
-		if ( $sent_one ) {
+		
+		if($sent_one)
 		    $this->setMessage('COM-INVITES-EMAIL-INVITES-SENT','info', false);
-		}
 	}
 }
