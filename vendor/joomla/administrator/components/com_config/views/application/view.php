@@ -25,9 +25,7 @@ class ConfigApplicationView
 	{
 		global $mainframe;
 
-		// Load tooltips behavior
-		JHTML::_('behavior.tooltip');
-		JHTML::_('behavior.switcher');
+		
 
 		// Load component specific configurations
 		$table =& JTable::getInstance('component');
