@@ -91,10 +91,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	
     	$this->_state->setItem($person);
     	
-    	if (isset($_SESSION['return'])) 
-    	{
+    	if(isset($_SESSION['return']))
     	    $this->_state->append(array('return'=>$this->getService('com://site/people.filter.return')->sanitize($_SESSION['return'])));
-    	}
     	
     	return $person;
     }
@@ -111,11 +109,13 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         try 
         {
             $result = $this->execute('add', $context);
+            
             return $result;
         } 
         catch(RuntimeException $e) 
         {
             $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
+            
             throw $e;
         }
     }
@@ -140,12 +140,14 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 			
 			if(!isset($user))
 			{
-				$this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');			
+				$this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');
+							
 				throw new RuntimeException('Unkown Error');
 			}
 			elseif(isset($user) && $user->block) 
 			{
-			    $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error');		
+			    $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error');	
+			    	
 			    throw new LibBaseControllerExceptionUnauthorized('User is blocked');
 			}
 			else 
@@ -154,6 +156,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     			JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $user));
     					
 				$this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
+				
     			throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
 			}
 			
@@ -162,6 +165,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 		
 		$context = $this->getCommandContext();
 		$context->result = true;
+		
 		$this->getCommandChain()->run('after.login', $context);
 		
 		return true;

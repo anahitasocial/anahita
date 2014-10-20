@@ -5044,12 +5044,8 @@ abstract class phpQuery {
 			$client->setHeaders("If-Modified-Since", null);
 			$client->setHeaders("Referer", null);
 			$client->resetParameters();
-		} else {
-			// create new XHR object
-			require_once('Zend/Http/Client.php');
-			$client = new Zend_Http_Client();
-			$client->setCookieJar();
-		}
+		} 
+		
 		if (isset($options['timeout']))
 			$client->setConfig(array(
 				'timeout'      => $options['timeout'],
@@ -5159,8 +5155,6 @@ abstract class phpQuery {
 		if (phpQuery::$debug) {
 			self::debug("{$options['type']}: {$options['url']}\n");
 			self::debug("Options: <pre>".var_export($options, true)."</pre>\n");
-//			if ($client->getCookieJar())
-//				self::debug("Cookies: <pre>".var_export($client->getCookieJar()->getMatchingCookies($options['url']), true)."</pre>\n");
 		}
 		// request
 		$response = $client->request();

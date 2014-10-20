@@ -77,7 +77,7 @@ class PlgSystemAnahita extends JPlugin
 
         if(!JFactory::getApplication()->getCfg('caching') || (JFactory::getUser()->usertype == 'Super Administrator' && KRequest::get('get.clearapc', 'cmd'))) 
         {
-            //clear apc cache for module and components
+            //clear apc cache for components
             //@NOTE If apc is shared across multiple services
             //this causes the caceh to be cleared for all of them
             //since all of them starts with the same prefix. Needs to be fix
@@ -130,7 +130,7 @@ class PlgSystemAnahita extends JPlugin
         }
         elseif(isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '')
         {      	
-        	$key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));    
+            $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));    
             
             if($key)
             {
