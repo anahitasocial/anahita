@@ -37,40 +37,38 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function synchronizeWithUser($person, $user)
 	{
-		if ($person->userId != $user->id)
+		if($person->userId != $user->id)
 			return;
 
 		$params = new JParameter($user->params);
 			
 		$person->setData(array(	
-			'component'		=> 'com_people',		
-			'name' 			=> $user->name ,			
-			'username'		=> $user->username ,
-			'email'			=> $user->email	   ,
-			'userType'		=> $user->usertype ,
-			'registrationDate'	=> AnDomainAttribute::getInstance('date')->setDate($user->registerDate),
-			'lastVisitDate'		=> AnDomainAttribute::getInstance('date')->setDate($user->lastvisitDate),
-			'language'		=> $params->get('language'),
-			'timezone'		=> $params->get('timezone'),
-		    'enabled'       => !$user->block
+			'component'	=> 'com_people',		
+			'name' => $user->name ,			
+			'username' => $user->username ,
+			'email' => $user->email	   ,
+			'userType' => $user->usertype ,
+			'registrationDate' => AnDomainAttribute::getInstance('date')->setDate($user->registerDate),
+			'lastVisitDate' => AnDomainAttribute::getInstance('date')->setDate($user->lastvisitDate),
+			'language' => $params->get('language'),
+			'timezone' => $params->get('timezone'),
+		    'enabled' => !$user->block
 		), AnDomain::ACCESS_PROTECTED);
 	}
 	
 	/**
 	 * Tries to get a user, if not exist then it will try to create one
 	 * 
-	 * @param JUser|int $id
+	 * @param JUser|int $uid
 	 * 
 	 * @return ComPeopleDomainEntityPerson|null 
 	 */
-	public function getPerson($id)
+	public function getPerson($uid)
 	{
-		if(is_object($id) && !$id->id)
-		{
+		if(is_object($uid) && !$uid->id)
 			return null;
-		}
 		
-		$user = JFactory::getUser($id);
+		$user = JFactory::getUser($uid);
 		
 		if(!$user->id) 
 			return null;
@@ -96,23 +94,23 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function createFromUser($user)
 	{
-		if (!$user->id)
+		if(!$user->id)
 			return null;
 			
 		$params = new JParameter($user->params);
 
 		$person = $this->getService('repos://site/people.person')->getEntity()->setData(array(
-			'component'		=> 'com_people',
-			'name' 			=> $user->name ,
-			'userId'		=> $user->id   ,
-			'username'		=> $user->username ,
-			'email'			=> $user->email	   ,
-			'userType'		=> $user->usertype ,
-			'registrationDate'	=> AnDomainAttribute::getInstance('date')->setDate($user->registerDate),
-			'lastVisitDate'		=> AnDomainAttribute::getInstance('date')->setDate($user->lastvisitDate),
-			'language'		=> $params->get('language') ,
-			'timezone'		=> $params->get('timezone')	,
-		    'enabled'       => !$user->block		        
+			'component' => 'com_people',
+			'name' => $user->name ,
+			'userId' => $user->id   ,
+			'username' => $user->username ,
+			'email' => $user->email	   ,
+			'userType' => $user->usertype ,
+			'registrationDate' => AnDomainAttribute::getInstance('date')->setDate($user->registerDate),
+			'lastVisitDate' => AnDomainAttribute::getInstance('date')->setDate($user->lastvisitDate),
+			'language' => $params->get('language') ,
+			'timezone' => $params->get('timezone')	,
+		    'enabled' => !$user->block		        
 		), AnDomain::ACCESS_PROTECTED);
 			
 		return $person;
@@ -136,18 +134,17 @@ class LibPeopleHelperPerson extends KObject
     		
     	// Import the user plugin group
 		JPluginHelper::importPlugin('user');
+		
     	$options = array();	    	
     	
     	$results = JFactory::getApplication()->triggerEvent('onLoginUser', array($user, $options));
     	
 		foreach($results as $result)
-		{
 			if ($result instanceof JException || $result instanceof Exception || $result === false)
 				return false;
-		}
 		
     	//if remember is true, create a remember cookie that contains the ecrypted username and password
-		if ($remember)
+		if($remember)
 		{
     		// Set the remember me cookie if enabled
 			jimport('joomla.utilities.simplecrypt');
@@ -162,7 +159,7 @@ class LibPeopleHelperPerson extends KObject
 					'username' =>$user['username'],
 					'password' =>$user['password']
 				)));				
-					
+				
 				$lifetime = time() + AnHelperDate::yearToSeconds();
 				setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
 			}

@@ -7,7 +7,6 @@
  */
 // no direct access
 defined('_JEXEC') or die('Restricted index access');
-define('_COOKIENAME', 'mc-redirect');
 
 class RTCore
 {
@@ -39,7 +38,7 @@ class RTCore
     function __construct()
     {
         require_once('rtbrowser.class.php');
-        $this->checkRedirect();
+        
         $this->browser = new RTBrowser();
 
         // some more init
@@ -181,30 +180,6 @@ class RTCore
         } else {
             return false;
         }
-    }
-
-    function checkRedirect()
-    {
-        global $mainframe;
-
-
-        $redirect = Jrequest::getVar(_COOKIENAME, '', 'COOKIE');
-
-        if (isset($redirect) && $redirect != '') {
-            setcookie(_COOKIENAME, '', time() - 3600);
-
-//             $messages =& $mainframe->getMessageQueue();
-
-//             if (strpos($redirect, 'com_login')===false
-//                 && empty($messages)
-//                 && strtolower(JRequest::getString('process')) != 'ajax')
-//                 $mainframe->redirect($redirect);
-        }
-    }
-
-    function storeRedirect()
-    {
-        setcookie(_COOKIENAME, $this->_getCurrentPageURL());
     }
 
     function _injectClasses()
