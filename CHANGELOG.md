@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.0.1 Birth Release
+============================
+* version number is updated
+* the broken layout of Page read view is fixed
+
+
 Anahita 4.0.0 Birth Release
 ============================
 * #hashtags implemented

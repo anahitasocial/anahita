@@ -1,6 +1,6 @@
 Anahita
 ================
-Version: 4.0 Birth Release
+Version: 4.0.1 Birth Release
 
 Anahita is an open source knowledge networking platform and framework. Anahita is available under the GPL3 license. Use Anahita to develop:
 
