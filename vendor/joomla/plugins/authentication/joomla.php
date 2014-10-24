@@ -57,7 +57,7 @@ class plgAuthenticationJoomla extends JPlugin
         jimport('joomla.user.helper');
 
         // Joomla does not like blank passwords
-        if (empty($credentials['password']))
+        if(empty($credentials['password']))
         {
             $response->status = JAUTHENTICATE_STATUS_FAILURE;
             $response->error_message = 'Empty password not allowed';
@@ -69,21 +69,20 @@ class plgAuthenticationJoomla extends JPlugin
         
         // Get a database object
         $db =& JFactory::getDBO();
-        $username   = $db->Quote( $credentials['username'] );
+        $username = $db->Quote($credentials['username']);
+        
         $query = 'SELECT `username`,`id`, `password`, `gid`'
             . ' FROM `#__users`'
-            . ' WHERE username=' . $username
-            ;
+            . ' WHERE username=' . $username;
+            
         //if an email
-        if ( strpos($username,'@') ) {
+        if(strpos($username,'@'))
             $query .= ' OR email='.$username;
-        }
         
-        $db->setQuery( $query );
+        $db->setQuery($query);
         
         $result = $db->loadObject();
-
-
+        
         if($result)
         {
             //if login with email then set the username credential
@@ -92,14 +91,17 @@ class plgAuthenticationJoomla extends JPlugin
             $crypt  = $parts[0];
             $salt   = @$parts[1];
             $testcrypt = JUserHelper::getCryptedPassword($credentials['password'], $salt);
-
-            if ($crypt == $testcrypt) {             
+            
+            if($crypt == $testcrypt) 
+            {             
                 $user = JUser::getInstance($result->id); // Bring this in line with the rest of the system
                 $response->email = $user->email;
                 $response->fullname = $user->name;
                 $response->status = JAUTHENTICATE_STATUS_SUCCESS;
                 $response->error_message = '';
-            } else {
+            } 
+            else 
+            {
                 $response->status = JAUTHENTICATE_STATUS_FAILURE;
                 $response->error_message = 'Invalid password';
             }

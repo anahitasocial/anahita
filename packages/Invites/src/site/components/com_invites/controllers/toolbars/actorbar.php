@@ -41,27 +41,21 @@ class ComInvitesControllerToolbarActorbar extends ComBaseControllerToolbarActorb
         
     	parent::onBeforeControllerGet($event);
     
-        $data 	= $event->data;
+        $data = $event->data;
 		$viewer = get_viewer();
-		$actor	= $viewer;
+		$actor = $viewer;
 		$layout = pick($this->getController()->layout, 'default');
-		$name	= $this->getController()->getIdentifier()->name;
-		if ( $name == 'connection' ) {
-		    $name = $this->getController()->service; 
-		}    
+		$name = $this->getController()->getIdentifier()->name;
+		
+		if($name == 'connection')
+		    $name = $this->getController()->service;
 		    
 		$this->setTitle(JText::sprintf('COM-INVITES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
 			
 		//create navigations
-		$this->addNavigation('email',
-								JText::_('COM-INVITES-LINK-EMAIL'),
-								'option=com_invites&view=email',
-								$name == 'email');
+		$this->addNavigation('email', JText::_('COM-INVITES-LINK-EMAIL'), 'option=com_invites&view=email', $name == 'email');
 
-		if ( ComConnectHelperApi::enabled('facebook') )
-            $this->addNavigation('facebook', 
-								JText::_('COM-INVITES-LINK-FACEBOOK'), 
-								'option=com_invites&view=connections&service=facebook', 
-								$name == 'facebook');
+		if(ComConnectHelperApi::enabled('facebook'))
+            $this->addNavigation('facebook', JText::_('COM-INVITES-LINK-FACEBOOK'), 'option=com_invites&view=connections&service=facebook', $name == 'facebook');
     }
 }
