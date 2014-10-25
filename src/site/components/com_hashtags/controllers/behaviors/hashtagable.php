@@ -63,10 +63,15 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 	{
 		$entity = $this->getItem();		
 		$terms = $this->extractHashtagTerms($entity->body);
-
-		foreach($entity->hashtags as $hashtag)
-			if(!in_array($hashtag->name, $terms))
-       			$entity->removeHashtag($hashtag->name);		
+	
+		if(is_array($terms))
+		{
+		    $terms_search = array_map('strtolower', $terms);
+		    
+		    foreach($entity->hashtags as $hashtag)
+			    if(!in_array($hashtag->name, $terms_search))
+       			    $entity->removeHashtag($hashtag->name);	
+		}	
 		
     	foreach($terms as $term)
         	$entity->addHashtag(trim($term));
