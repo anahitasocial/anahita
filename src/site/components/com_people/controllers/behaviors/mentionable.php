@@ -71,24 +71,34 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 	 */
 	public function updateMentionsFromBody(KCommandContext $context)
 	{
-		$entity = $this->getItem();		
-		$usernames = $this->extractMentions($entity->body);
-		$existing_mentions = $entity->mentions;
-
-		foreach($existing_mentions as $mention)
-			if(!in_array($mention->username, $usernames))
-       			$entity->removeMention($mention->username);	
-
-       	$existing_mentions = KConfig::unbox($existing_mentions->username);
-       	
-       	foreach($usernames as $index=>$username)
-       		if(in_array($username, $existing_mentions))	
-       			unset($usernames[$index]);				
+	    $entity = $this->getItem();	
+			
+		$body_mentions = $this->extractMentions($entity->body);
+		$body_mentions = array_map('strtolower', $body_mentions);
+		
+		$entity_mentions = KConfig::unbox($entity->mentions->username);
+		
+		if(is_array($entity_mentions))
+		    $entity_mentions = array_map('strtolower', $entity_mentions);
+        
+		//update removed mentions
+		if(is_array($body_mentions))
+		    foreach($entity_mentions as $mention)
+			    if(!in_array($mention, $body_mentions))
+       			    $entity->removeMention($mention);
        			
-       	foreach($usernames as $username)
-        	$entity->addMention(trim($username));
+       	//remove the body mentions that already exists in the entity mentions
+       	if(is_array($entity_mentions))	
+       	    foreach($body_mentions as $index=>$mention)
+       		    if(in_array($mention, $entity_mentions))	
+       			    unset($body_mentions[$index]);      			
 
-       	$this->_newly_mentioned = $usernames;
+       	//what's left are new mentions. Add them to the entity.		
+       	foreach($body_mentions as $mention)
+        	$entity->addMention(trim($mention));
+
+        //keep the list of new mentions so you can notify them later.	
+       	$this->_newly_mentioned = $body_mentions;
 	}
 	
 	/**
