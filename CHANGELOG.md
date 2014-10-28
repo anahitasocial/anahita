@@ -4,7 +4,7 @@ Anahita 4.0.1 Birth Release
 ============================
 * version number is updated
 * the broken layout of Page read view is fixed
-
+* added permission method to make sure that only those with the edit access can set the privacy of a medium node.
 
 Anahita 4.0.0 Birth Release
 ============================
