@@ -6,7 +6,7 @@
     <div class="clearfix" data-behavior="ComposerTabs">
         <div class="btn-group pull-right">
             <?php $array = array_values($composers->getObjects()); ?>
-            <button class="btn dropdown-toggle">
+            <button class="btn dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
             	<i class="icon-plus-sign"></i>
             	<span class="composer-button-title"><?=$array[0]->title?></span>
             	<span class="caret"></span>

@@ -1,5 +1,8 @@
 <?php if ( count($commands) > 0 ) : ?>
-<button class="btn dropdown-toggle"><i class="icon-<?=$icon?>"></i>&nbsp;<span class="caret"></span></button>
+<button class="btn dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
+	<i class="icon-<?=$icon?>"></i>&nbsp;<span class="caret"></span>
+</button>
+
 <ul class="dropdown-menu">
     <?php $delete = $commands->extract('delete') ?> 
     <?php $count  = count($commands) ?>
