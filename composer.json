@@ -2,13 +2,13 @@
     "type": "project",    
     "name": "anahita/anahita",
     "license": "GPL-3.0",    
-    "keywords" : ["social platform"],
-    "description": "Anahita Social Networking Platform",
+    "keywords" : ["social", "knowledge", "platform", "framework", "restful", "graph", "nodes"],
+    "description": "Anahita Knowledge Networking Platform",
     "bin": ["bin/anahita"],    
      "require": {
         "php": ">=5.3",
         "symfony/console": "2.1.*",        
         "dg/mysql-dump": "1.1.0",
-        "easybook/geshi": "1.0.8.11"           
+        "easybook/geshi": "1.0.8.11"         
     }
 }
