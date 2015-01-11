@@ -1,7 +1,12 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if(count($topics)) : ?>
+<div id="an-topics" class="an-entities">
+<?= @template('gadget_list') ?>
+</div>
+
 <?php
-$url = array();
+$url = array('layout'=>'gadget_list');
 
 if(isset($filter))
 	$url['filter'] = $filter;
@@ -9,10 +14,12 @@ elseif (isset($actor))
 	$url['oid'] = $actor->id;
 ?>
 
-<div data-behavior="InfinitScroll" data-infinitscroll-options="{'url':'<?= @route($url) ?>'}" class="an-entities">
-<?= @template('gadget_list') ?>
-</div>
+<script>
+$('#an-topics').infinitscroll({
+	url: '<?= @route($url) ?>'
+});
+</script>
 
-<div class="an-loading-prompt hide">
-	<?= @message(@text('LIB-AN-LOADING-PROMPT')) ?>
-</div>
+<?php else: ?>
+<?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
+<?php endif; ?>

@@ -2,11 +2,9 @@
 <!DOCTYPE html>
 <html>
 	<head>
-  		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0 maximum-scale=1.0, user-scalable=0">
   	    <?= @render('favicon') ?>
   	    <?= @render('style') ?>
-  	    <?= @template('tmpl/js') ?>
-		<?= @render('analytics') ?>
   	</head>
     <body>	  	
         <div id="container-system-message" class="container">
@@ -30,5 +28,8 @@
         	</div>
         </div>
         <?php endif; ?>
+        
+        <?= @template('tmpl/js') ?>
+		<?= @render('analytics') ?>
     </body>
 </html>

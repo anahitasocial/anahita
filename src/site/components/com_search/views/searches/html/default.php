@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if(!empty($keywords)) : ?>
+<?php if(false && !empty($keywords)) : ?>
 <script src="com_search/js/search_request.js" />
 <?php endif;?>
 
@@ -45,9 +45,25 @@
 		</form>
 		<?php endif ?>
 
-		<div class="an-entities-wrapper">
-		<?= @template('list') ?>
+		<?php
+        $url = array('layout'=>'list');
+         
+        if(!empty($sort))
+        	$url['sort'] = $sort;
+        	
+        if(!empty($scope))
+        	$url['scope'] = $scope;	
+        ?>
+
+		<div id="an-search-results" class="an-entities">
+	    <?= @template('list') ?>
 		</div>
+		
+		<script>
+        $('#an-search-results').infinitscroll({
+        	url: '<?= @route($url) ?>'
+        });
+		</script>
 	</div>
 	
 	<div class="span4">

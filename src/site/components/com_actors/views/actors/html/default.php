@@ -4,6 +4,12 @@
 
 <?= @helper('ui.filterbox', @route('layout=list')) ?>
 
-<div class="an-entities-wrapper" id="an-entities-main-wrapper">
+<div id="an-actors" class="an-entities">
 <?= @template('list') ?>
 </div>
+
+<script>
+$('#an-actors').infinitscroll({
+	url: '<?= @route('layout=list') ?>'
+});
+</script>

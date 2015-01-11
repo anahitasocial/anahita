@@ -6,7 +6,7 @@ $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
 
-<ul class="nav pull-right" data-behavior="BS.Dropdown">
+<ul class="nav pull-right">
 	<li>     
 		<a href="#" data-popover-tipclass="notifications-popover" data-behavior="RemotePopover" data-bs-popover-animate=false data-bs-popover-content-element="D" data-bs-popover-trigger="click" data-bs-popover-location="bottom" data-remotepopover-url="<?=@route('option=com_notifications&view=notifications&layout=popover')?>" >
             <span id="new-notifications-counter" class="badge <?= ($num_notifications) ? 'badge-important' : '' ?>">
@@ -15,7 +15,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
         </a>
 	</li>
 	<li class="dropdown">
-		<a href="#" class="dropdown-toggle">
+		<a href="#" class="dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
 		<?= @avatar(get_viewer(), 'square', false) ?> <b class="caret"></b>           
 		</a>
 		<ul class="dropdown-menu">
@@ -73,6 +73,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 </ul>
 
 <script data-inline>
+/*
 var metaTitle = document.getElement('title').innerHTML;
 
 (function(){
@@ -95,4 +96,5 @@ var metaTitle = document.getElement('title').innerHTML;
     }).get();
 })
 .periodical(30000);
+*/
 </script> 

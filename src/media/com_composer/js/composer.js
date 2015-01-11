@@ -1,3 +1,5 @@
+console.log('Rewrite in JQuery');
+/*
 Behavior.addGlobalFilter('ComposerForm', {
     defaults : {
       trigger : 'button'  
@@ -136,3 +138,4 @@ Behavior.addGlobalFilter('ComposerForm', {
         }
     });    
 })();
+*/

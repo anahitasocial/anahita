@@ -111,7 +111,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
     public function style($config = array())
     {
         require_once 'less/compiler.php';
-        
+
         $config = new KConfig($config);
         
         $config->append(array(

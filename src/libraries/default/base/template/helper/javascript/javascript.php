@@ -40,9 +40,7 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
 	 */	
 	public function combine($config = array())
 	{		
-		$this->getService('com:base.template.helper.javascript.file', $config)
-			->write($config['output']);
-		;
+		$this->getService('com:base.template.helper.javascript.file', $config)->write($config['output']);
 	}
 	
     /**

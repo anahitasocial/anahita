@@ -11,6 +11,12 @@ if(isset($filter))
 elseif (isset($actor))
 	$url['oid'] = $actor->id;
 ?>
-<div id="an-stories" data-behavior="InfinitScroll" data-infinitscroll-options="{'url':'<?= @route($url) ?>', 'record':'.an-entity.an-story'} " class="an-entities an-stories">
+<div id="an-stories" class="an-entities">
 	<?= @template('list') ?>
 </div>
+
+<script>
+$('#an-stories').infinitscroll({
+	url: '<?= @route($url) ?>'
+});
+</script>

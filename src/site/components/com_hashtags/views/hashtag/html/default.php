@@ -3,7 +3,8 @@
 <?= @helper('ui.header', array()) ?>
 
 <?php 
-$paginationUrl = $item->getURL(); 
+$paginationUrl = $item->getURL().'&layout=list'; 
+
 if(!empty($sort))
 	$paginationUrl .= '&sort='.$sort;
 	
@@ -11,8 +12,13 @@ if(!empty($scope))
 	$paginationUrl .= '&scope='.$scope;	
 ?>
 
-<div class="an-entities-wrapper">
-	<div data-behavior="InfinitScroll" data-infinitscroll-options="{'url':'<?= @route($paginationUrl) ?>'}" class="an-entities masonry">
-		<?= @helper('ui.nodes', $item->tagables) ?>
-	</div>
+
+<div id="an-hashtags" class="an-entities masonry">
+	<?= @template('list') ?>
 </div>
+
+<script>
+$('#an-hashtags').infinitscroll({
+	url: '<?= @route($paginationUrl) ?>'
+});
+</script>

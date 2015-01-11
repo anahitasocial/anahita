@@ -30,6 +30,7 @@
             </div>
             
             <script>
+            /*
             document.getElement('#mobile-main-menu ul').hide();
 			Delegator.register('click', {
 				'ShowMainmenu' : function(event, el, api) {
@@ -37,6 +38,7 @@
 					document.getElement('#mobile-main-menu ul').toggle();
 				},
 			});
+			*/
 			</script>
         </div>
     </div>            

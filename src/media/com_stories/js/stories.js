@@ -1,3 +1,5 @@
+console.log('Rewrite in JQuery');
+/*
 (function(){
 	var openedForms = [];
 	document.addEvent('click', function(e) {		
@@ -63,3 +65,4 @@ Delegator.register(['click'], 'Share', function(event, el, api) {
 		el.form.reset();
 	}
 });
+*/

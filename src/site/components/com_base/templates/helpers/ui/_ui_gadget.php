@@ -1,15 +1,8 @@
 <?php defined('KOOWA') or die ?>
 
-<?php
-$url = ''; 
-if ( strlen($gadget->url) ) {    
-    $url = "'url':'".@route($gadget->url)."',";
-}
+<?php $url = (strlen($gadget->url)) ? @route($gadget->url) : ''; ?>
 
-?>
-<?php $id = uniqid() ?>
-
-<div data-behavior="Load"  data-load-options="{<?=$url?>'element':'.gadget-content', 'event':'visible'}" class="an-gadget <?= $gadget->id ?>">
+<div class="an-gadget" data-url="<?= $url ?>">
     <?php if ( $gadget->show_title !== false) : ?>     
     	<?php if (strlen($gadget->title) ) : ?>
     	<h3 class="gadget-title">
@@ -30,8 +23,8 @@ if ( strlen($gadget->url) ) {
     	<?php endif; ?> 
 	<?php endif;?>
 	
-	<div class="gadget-content">    
-	<?= $gadget->content ?>
+	<div class="gadget-content">
+	    <?= $gadget->content ?>
 	</div>		
 </div>
 
