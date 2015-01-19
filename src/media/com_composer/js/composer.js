@@ -31,7 +31,7 @@
 			composerTab : '.tab-content-item',
 			formPlaceholder : 'a.form-placeholder',
 			composerForm : '.composer-form',
-			composerMenu : '.dropdown-menu li',
+			composerMenu : '#composer-menu li',
 			composerMenuTitle : '.composer-button-title'
 		},
 		
@@ -59,6 +59,7 @@
 					this.selectTab(selected.index());
 				}
 			});
+			
 			
 			//click on placeholder to show composer form
 			this._on($(this.options.composerTab), {
@@ -141,7 +142,7 @@
 			if($( this ).data('stream') == 'stories')
 				composer.fadeIn();
 			else
-				composer.slideUp();
+				composer.fadeOut();
 		});
 	}
 	

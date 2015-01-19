@@ -12,7 +12,7 @@
             	<span class="caret"></span>
             </button>
             
-            <ul class="dropdown-menu">  
+            <ul id="composer-menu" class="dropdown-menu">  
             <?php foreach($composers as $composer) : ?>
                 <li>
                 	<a href="#" title="<?= $composer->title ?>">
