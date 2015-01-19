@@ -1,6 +1,6 @@
 <?php $photo = @service('repos:photos.photo')->getEntity()->reset() ?>
 
-<form id="photo-form" data-behavior="FormValidator ComposerForm" method="post" action="<?=@route($photo->getURL().'&oid='.$actor->id)?>" enctype="multipart/form-data">
+<form id="photo-form" class="composer-form" data-behavior="FormValidator ComposerForm" method="post" action="<?=@route($photo->getURL().'&oid='.$actor->id)?>" enctype="multipart/form-data">
     <fieldset>
 	    <legend><?= @text('COM-PHOTOS-PHOTO-ADD')  ?></legend>		
 		

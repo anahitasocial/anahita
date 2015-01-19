@@ -2,6 +2,7 @@
 //@depends vendors/jquery-2.1.1.js
 //@depends vendors/jquery-ui.js
 //@depends vendors/fastclick.js
+//@depends vendors/jquery.ba-outside-events.js
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-tab.js
 //@depends vendors/bootstrap/bootstrap-dropdown.js

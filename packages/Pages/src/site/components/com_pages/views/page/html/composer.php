@@ -2,7 +2,7 @@
 
 <?php $page = @service('repos:pages.page')->getEntity()->reset() ?>
 
-<form data-behavior="FormValidator ComposerForm" action="<?= @route( $page->getURL().'&oid='.$actor->id ) ?>" method="post">
+<form class="composer-form" data-behavior="FormValidator ComposerForm" action="<?= @route( $page->getURL().'&oid='.$actor->id ) ?>" method="post">
 	<fieldset>
 		<legend><?= @text('COM-PAGES-PAGE-ADD') ?></legend>
 	

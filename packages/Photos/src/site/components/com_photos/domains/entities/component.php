@@ -56,7 +56,7 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
 	{
 		if($mode == 'profile')
 		{
-			$gadgets->insert('photos-gadget', array(
+			$gadgets->insert('photos', array(
 					'title' 		=> JText::_('COM-PHOTOS-GADGET-ACTOR-PROFILE'),
 					'url'   	    => 'option=com_photos&view=photos&layout=gadget&oid='.$actor->uniqueAlias,
 					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
@@ -65,7 +65,7 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
 		}
 		else
 		{
-			$gadgets->insert('photos-gadget', array(
+			$gadgets->insert('photos', array(
 					'title' 	    => JText::_('COM-PHOTOS-GADGET-DASHBOARD'),
 					'url'   	    => 'option=com_photos&view=photos&filter=leaders&layout=gadget&oid='.$actor->uniqueAlias,
 					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),

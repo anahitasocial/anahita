@@ -5,12 +5,12 @@
 <div class="row">
     <?php if(count($gadgets) >= 1 ): ?>
     <div class="span2"> 
-        <ul class="nav nav-pills nav-stacked">
+        <ul class="nav nav-pills nav-stacked streams">
             <li class="nav-header">
             <?=  @text('LIB-AN-STREAMS') ?>
             </li>    
             <?php foreach($gadgets as $index=>$gadget) : ?>
-            <li class="<?= ($index == 'stories') ? 'active' : ''; ?>">
+            <li data-stream="<?= $index ?>" class="<?= ($index == 'stories') ? 'active' : ''; ?>">
             	<a href="#<?= $index ?>" data-toggle="tab"><?= $gadget->title ?></a>
             </li>
             <?php endforeach;?>
