@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<form id="note-composer-form" class="composer-form" action="<?= @route() ?>" method="POST" data-formvalidator-options="'evaluateFieldsOnBlur':true">
+<form class="composer-form" data-behavior="ComposerForm" action="<?= @route() ?>" method="POST" data-formvalidator-options="'evaluateFieldsOnBlur':true">
 	<input type="hidden" name="composed" value="1" />
 	
 	<div class="control-group">			

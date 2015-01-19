@@ -8,7 +8,23 @@
 ;(function ($, window, document) {
 	
 	'use strict';
+	
+	//Composer Form Plugin
+	$.fn.composerform = function (){
+		
+		if(this.attr('enctype') == 'multipart/form-data')
+		{
+			//file upload code goes here
+			console.log('file upload will be happening');
+		}
+		else
+		{
+			//generic form post goes here
+		}
+		
+	};
 
+	//Composer Widget
 	$.widget("anahita.composer", {
 	
 		options : {
@@ -78,6 +94,9 @@
 					url : tab.data('url'),
 					success : function(data){
 						tab.append(data);
+						
+						$(tab).find('form.composer-form').composerform();
+						
 						tab.data('content', tab.find(this.options.composerForm));
 						
 						if(this.firstTime){
@@ -112,7 +131,6 @@
 			$(tab.data('placeholder')).fadeIn();
 		}
 	});	
-	
 	
 	var composer = $("[data-behavior='Composer']").composer();
 	var streamTabs = $('ul.streams');
