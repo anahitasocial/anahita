@@ -3,6 +3,10 @@
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
  * License: GPL3
+ * 
+ * @todo form verification
+ * @todo file upload
+ * @todo connect link checkboxes
  */
 
 ;(function ($, window, document) {
@@ -12,6 +16,17 @@
 	//Composer Form Plugin
 	$.fn.composerform = function (){
 		
+		var options = $.extend( {}, $.fn.composerform.defaults, options );
+		
+		if($(options.connect.length))
+		{
+			$(options.connectLink).tooltip({
+				placement : 'top',
+				animation : true,
+				trigger : 'hover'
+			});
+		}	
+		
 		if(this.attr('enctype') == 'multipart/form-data')
 		{
 			//file upload code goes here
@@ -19,10 +34,32 @@
 		}
 		else
 		{
-			//generic form post goes here
+			var form = $(options.form);
+			
+			form.on("click", "button[type='submit']", function(event){
+				event.preventDefault();
+			
+				$.ajax({
+					url : form.attr('action'),
+					data : form.serialize() + '&composed=true',
+					type : 'POST',
+					success : function (html) {
+						form.trigger('reset');
+						$(options.stories).prepend($(html).fadeIn('slow'));
+					}.bind(form)
+				});
+			});
 		}
 		
 	};
+	
+	//Composer Form Plugin Defaults
+	$.fn.composerform.defaults = {
+		    form : "form.composer-form",
+			connect : ".connect",
+			connectLink: "a.connect-link",
+			stories : "#an-stories"
+		};
 
 	//Composer Widget
 	$.widget("anahita.composer", {

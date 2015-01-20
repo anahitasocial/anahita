@@ -2,7 +2,7 @@
 
 <?php $todo = @service('repos:todos.todo')->getEntity()->reset() ?>
 
-<form id="todo-form" data-behavior="FormValidator ComposerForm" method="post" action="<?=@route($todo->getURL().'&oid='.$actor->id)?>">
+<form class="composer-form" method="post" action="<?=@route($todo->getURL().'&oid='.$actor->id)?>">
 	<fieldset>
 		<legend><?=@text('COM-TODOS-TODO-ADD')?></legend>	
 		

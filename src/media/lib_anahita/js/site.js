@@ -6,6 +6,7 @@
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-tab.js
 //@depends vendors/bootstrap/bootstrap-dropdown.js
+//@depends vendors/bootstrap/bootstrap-tooltip.js
 
 //@depends anahita/InfinitScroll.js
 //@depends anahita/gadget.js
