@@ -2,7 +2,7 @@
 
 <?php $todo = @service('repos:todos.todo')->getEntity()->reset() ?>
 
-<form class="composer-form" method="post" action="<?=@route($todo->getURL().'&oid='.$actor->id)?>">
+<form class="composer-form" method="post" action="<?= @route() ?>">
 	<fieldset>
 		<legend><?=@text('COM-TODOS-TODO-ADD')?></legend>	
 		
@@ -35,7 +35,7 @@
 		</div>
 		
 		<div class="form-actions">
-			<button class="btn btn-primary">
+			<button type="submit" class="btn btn-primary">
 				<?= @text('LIB-AN-ACTION-ADD') ?>
 			</button>			
 		</div>

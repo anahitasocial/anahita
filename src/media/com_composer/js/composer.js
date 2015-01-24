@@ -5,7 +5,6 @@
  * License: GPL3
  * 
  * @todo form verification
- * @todo file upload
  * @todo connect link checkboxes
  */
 
@@ -13,53 +12,86 @@
 	
 	'use strict';
 	
-	//Composer Form Plugin
-	$.fn.composerform = function (){
+	//Composer Widget
+	$.widget("anahita.composerform", {
 		
-		var options = $.extend( {}, $.fn.composerform.defaults, options );
-		
-		if($(options.connect.length))
-		{
-			$(options.connectLink).tooltip({
-				placement : 'top',
-				animation : true,
-				trigger : 'hover'
-			});
-		}	
-		
-		if(this.attr('enctype') == 'multipart/form-data')
-		{
-			//file upload code goes here
-			console.log('file upload will be happening');
-		}
-		else
-		{
-			var form = $(options.form);
-			
-			form.on("click", "button[type='submit']", function(event){
-				event.preventDefault();
-			
-				$.ajax({
-					url : form.attr('action'),
-					data : form.serialize() + '&composed=true',
-					type : 'POST',
-					success : function (html) {
-						form.trigger('reset');
-						$(options.stories).prepend($(html).fadeIn('slow'));
-					}.bind(form)
-				});
-			});
-		}
-		
-	};
-	
-	//Composer Form Plugin Defaults
-	$.fn.composerform.defaults = {
-		    form : "form.composer-form",
+		options : {
 			connect : ".connect",
 			connectLink: "a.connect-link",
-			stories : "#an-stories"
-		};
+			stories : "#an-stories",
+			form : '.composer-form'
+		},
+		
+		_create : function() {
+			
+			if($(this.options.connect).length)
+			{
+				$(this.options.connectLink).tooltip({
+					placement : 'top',
+					animation : true,
+					trigger : 'hover'
+				});
+			}
+			
+			var form = $(this.element);
+			
+			if(form.attr('enctype') === 'multipart/form-data'){
+				
+				var formData = new FormData(form);
+				formData.append('composed', true);
+				formData.append('format', 'raw');
+				
+				this._on(form, {
+					submit: function(event){
+						event.stopPropagation();
+						event.preventDefault();
+						
+						$.each(form.serializeArray(), function(i, obj){
+							formData.append(obj.name, obj.value);	
+						});
+						
+						$.each(form.find(':file')[0].files, function(i, file) {
+							formData.append('file', file);
+				        });
+						
+						$.ajax({
+							url : form.attr('action'),
+							processData: false, 
+				            contentType: false,
+							cache: false,
+							data : formData,
+							type : 'POST',
+							success : function (html) {
+								$(this.element).trigger('reset');
+								$(this.options.stories).prepend($(html).fadeIn('slow'));
+							}.bind(this)
+						});
+					}
+				});
+				
+			}else{
+
+				this._on(form, {
+					submit: function(event){
+						event.stopPropagation();
+						event.preventDefault();
+	
+						$.ajax({
+							url : form.attr('action'),
+							data : form.serialize() + '&composed=1',
+							cache: false,
+							type : 'POST',
+							success : function (html) {
+								$(this.element).trigger('reset');
+								$(this.options.stories).prepend($(html).fadeIn('slow'));
+							}.bind(this)
+						});
+					}	
+				});
+			
+			}
+		}
+	});
 
 	//Composer Widget
 	$.widget("anahita.composer", {
@@ -88,21 +120,17 @@
 			this._on($(this.options.composerMenu), {
 				click : function(event){
 					event.preventDefault();
-					
 					var selected = $(event.delegateTarget);
-
 					$(this.options.composerMenuTitle).text(selected.find('a').attr('title'));
-
 					this.selectTab(selected.index());
 				}
 			});
-			
 			
 			//click on placeholder to show composer form
 			this._on($(this.options.composerTab), {
 				elem : $(this.options.formPlaceholder),
 				click : function(event){
-					event.preventDefault();
+					event.stopPropagation();
 					this.showTabContent($(event.delegateTarget).index());
 				}
 			});
@@ -111,7 +139,6 @@
 			this._on({
 				elem: $(this),
 				clickoutside : function(event){
-					event.preventDefault();
 					this.hideTabContent(this.currentTabIndex);
 				}
 			});
@@ -128,21 +155,15 @@
 			
 			if(!tab.data('content'))
 			{	
-				$.ajax({
-					url : tab.data('url'),
-					success : function(data){
-						tab.append(data);
-						
-						$(tab).find('form.composer-form').composerform();
-						
-						tab.data('content', tab.find(this.options.composerForm));
-						
-						if(this.firstTime){
-							this.firstTime = false;
-							this.hideTabContent(this.currentTabIndex);
-						}
-						
-					}.bind(this)
+				$(this).load(tab.data('url'), function(data){
+					tab.append(data);
+					$(tab).find('form.composer-form').composerform();
+					tab.data('content', tab.find(this.options.composerForm));
+					
+					if(this.firstTime){
+						this.firstTime = false;
+						this.hideTabContent(this.currentTabIndex);
+					}
 				});
 			}
 			
@@ -156,14 +177,12 @@
 		},
 		
 		showTabContent : function(index){
-			
 			var tab = $(this.tabs[index]);
 			$(tab.data('placeholder')).hide();
 			$(tab.data('content')).fadeIn();
 		},
 		
-		hideTabContent : function(index){
-			
+		hideTabContent : function(index){	
 			var tab = $(this.tabs[index]);	
 			$(tab.data('content')).hide();
 			$(tab.data('placeholder')).fadeIn();
