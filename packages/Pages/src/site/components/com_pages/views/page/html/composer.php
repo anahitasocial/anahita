@@ -9,7 +9,7 @@
 		<div class="control-group">
 			<label class="control-label" for="page-title"><?= @text('COM-PAGES-PAGE-TITLE') ?></label>
 			<div class="controls">
-				<input id="page-title" class="input-block-level" name="title" value="" maxlength="255" type="text" required>
+				<input id="page-title" class="input-block-level" name="title" value="" maxlength="255" type="text" required autofocus />
 			</div>
 		</div>
 		
@@ -23,7 +23,7 @@
 		<div class="control-group">
 			<label class="control-label" for="page-excerpt"><?= @text('COM-PAGES-PAGE-EXCERPT') ?></label>
 			<div class="controls">
-				<input id="page-excerpt" class="input-block-level" name="excerpt" maxlength="250" type="text" required>
+				<input id="page-excerpt" class="input-block-level" name="excerpt" maxlength="250" type="text" required />
 			</div>
 		</div>
 		

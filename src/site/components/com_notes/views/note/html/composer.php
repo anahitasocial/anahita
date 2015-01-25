@@ -5,7 +5,7 @@
 	
 	<div class="control-group">			
 		<div class="controls">
-			<textarea class="input-block-level" id="note-body" maxlength="5000" name="body" required></textarea>
+			<textarea class="input-block-level" id="note-body" maxlength="5000" name="body" required autofocus></textarea>
     	</div>
     </div>
     

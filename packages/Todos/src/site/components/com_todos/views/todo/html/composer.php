@@ -9,7 +9,7 @@
 		<div class="control-group">
 			<label class="control-label" for="todo-title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
 			<div class="controls">
-				<input id="todo-title" name="title" class="input-block-level" value="<?= @escape( $todo->title ) ?>" size="50" maxlength="255" type="text" required>
+				<input id="todo-title" name="title" class="input-block-level" value="<?= @escape( $todo->title ) ?>" size="50" maxlength="255" type="text" required autofocus />
 			</div>
 		</div>
 		

@@ -8,7 +8,7 @@
 		<div class="control-group">
 			<label class="control-label" for="topic-title"><?= @text('COM-TOPICS-TOPIC-TITLE') ?></label>
 			<div class="controls">
-				<input id="topic-title" class="input-block-level" name="title" value="" size="50" maxlength="255" type="text" required>
+				<input id="topic-title" class="input-block-level" name="title" value="" size="50" maxlength="255" type="text" required autofocus />
 			</div>
 		</div>
 		
