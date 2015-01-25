@@ -5,14 +5,14 @@
 	
 	<div class="control-group">			
 		<div class="controls">
-			<textarea class="input-block-level" data-validators="minLength:1 maxLength:5000" id="composer-textarea"  name="body" overtext="<?= @text('COM-NOTES-SHARE-PROMPT') ?>"></textarea>
+			<textarea class="input-block-level" id="note-body" maxlength="5000" name="body" required></textarea>
     	</div>
     </div>
     
 	<?php if (is_person($actor) && !is_viewer($actor)) : ?>			
 	<div class="control-group">			
 		<div class="controls">
-			<label class="checkbox" for="private-message">
+			<label class="checkbox" for="private-flag">
 				<input id="private-flag" type="checkbox" name="private"> 
 				<?=@text('COM-NOTES-COMPOSER-PRIVATE-FLAG')?>
 			</label>
@@ -39,7 +39,7 @@
 			<?php if ( count($sessions) > 0 ) : ?>
 				<?php foreach($sessions as $session) : ?>
 				<span>
-    				<a class="btn btn-<?= $session->api->getName() ?> connect-link" data-trigger="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?= $session->getName() ?>" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
+    				<a class="btn btn-<?= $session->api->getName() ?> connect-link" data-behavior="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?= $session->getName() ?>" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
     					<?= @helper('com://site/connect.template.helper.service.icon', $session->api->getName())?>    			            			         
     			    </a>
 			    </span> 

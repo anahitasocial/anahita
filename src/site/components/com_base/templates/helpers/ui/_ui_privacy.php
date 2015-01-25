@@ -6,7 +6,7 @@
 <?php else : ?>
 <input type="hidden" name="privacy_name[]" 	value="<?= $name ?>" />
 <?php endif;?>
-	<select class="an-privacy-select-box input-large" <?= $auto_submit ? 'onchange="this.form.ajaxRequest().send()"' : ''?> name="<?= $name?>">			
+	<select id="privacy" class="an-privacy-select-box input-large" <?= $auto_submit ? 'onchange="this.form.ajaxRequest().send()"' : ''?> name="<?= $name?>">			
 			<?= @html('options', $options, $selected)?>
 	</select>
 <?php if ( $auto_submit ) : ?>

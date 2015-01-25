@@ -4,7 +4,6 @@
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
  * License: GPL3
  * 
- * @todo form verification
  * @todo connect link checkboxes
  */
 
@@ -16,28 +15,17 @@
 	$.widget("anahita.composerform", {
 		
 		options : {
-			connect : ".connect",
-			connectLink: "a.connect-link",
 			stories : "#an-stories",
 			form : '.composer-form'
 		},
 		
 		_create : function() {
-			
-			if($(this.options.connect).length)
-			{
-				$(this.options.connectLink).tooltip({
-					placement : 'top',
-					animation : true,
-					trigger : 'hover'
-				});
-			}
-			
+
 			var form = $(this.element);
 			
 			if(form.attr('enctype') === 'multipart/form-data'){
 				
-				var formData = new FormData(form);
+				var formData = new FormData(form[0]);
 				formData.append('composed', true);
 				formData.append('format', 'raw');
 				
@@ -74,8 +62,8 @@
 				this._on(form, {
 					submit: function(event){
 						event.stopPropagation();
-						event.preventDefault();
-	
+						event.preventDefault();	
+						
 						$.ajax({
 							url : form.attr('action'),
 							data : form.serialize() + '&composed=1',
@@ -189,9 +177,12 @@
 		}
 	});	
 	
+	//initiate composer widget
 	var composer = $("[data-behavior='Composer']").composer();
+	
+	//show composer only for the stories stream
 	var streamTabs = $('ul.streams');
-
+	
 	if(streamTabs.length){	
 		streamTabs.on('click', 'li', function(event){
 			
@@ -201,5 +192,19 @@
 				composer.fadeOut();
 		});
 	}
+	
+	//add tooltips to the connect links if they exist
+	$(document).ajaxSuccess(function( event, request, settings ) {	
+		
+		var connectLinks = $('a.connect-link');
+		
+		if(connectLinks.length){
+			$(connectLinks).tooltip({
+				placement : 'top',
+				animation : true,
+				trigger : 'hover'
+			});
+		}
+	}); 
 	
 }(jQuery, window, document));

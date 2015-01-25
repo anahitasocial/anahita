@@ -1,29 +1,31 @@
+<?php defined('KOOWA') or die('Restricted access'); ?>
+
 <?php $photo = @service('repos:photos.photo')->getEntity()->reset() ?>
 
-<form class="composer-form" method="post" action="<?= @route($photo->getURL().'&oid='.$actor->id) ?>" enctype="multipart/form-data">
+<form class="composer-form" method="post" action="<?= @route() ?>" enctype="multipart/form-data">
     <fieldset>
 	    <legend><?= @text('COM-PHOTOS-PHOTO-ADD')  ?></legend>		
 		
 		<div class="control-group">
-			<label class="control-label" for="file">
+			<label class="control-label" for="photo-file">
 			    <?= @text('COM-PHOTOS-COMPOSER-FILE-SELECT') ?>
 			</label>	
 			<div class="controls">
-				<input type="file" name="file" />
+				<input id="photo-file" type="file" name="file" required />
 			</div>
 		</div>
 				
 		<div class="control-group">
-			<label class="control-label" for="body">
+			<label class="control-label" for="photo-description">
 			    <?= @text('COM-PHOTOS-COMPOSER-PHOTO-POST-DESCRIPTION') ?>
 			</label>
 			<div class="controls">
-				<textarea class="input-block-level" name="body" cols="10" rows="5" tabindex="2"></textarea>
+				<textarea id="photo-description" class="input-block-level" name="body" cols="10" rows="5" maxlength="5000"></textarea>
 			</div>
 		</div>
 				
 		<div class="control-group">
-			<label class="control-label" for="privacy" id="privacy">
+			<label class="control-label" for="privacy">
 			    <?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?>
 			</label>
 			<div class="controls">

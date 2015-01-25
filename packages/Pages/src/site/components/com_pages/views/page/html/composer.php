@@ -2,28 +2,28 @@
 
 <?php $page = @service('repos:pages.page')->getEntity()->reset() ?>
 
-<form class="composer-form" data-behavior="FormValidator ComposerForm" action="<?= @route( $page->getURL().'&oid='.$actor->id ) ?>" method="post">
+<form class="composer-form" action="<?= @route() ?>" method="post">
 	<fieldset>
 		<legend><?= @text('COM-PAGES-PAGE-ADD') ?></legend>
 	
 		<div class="control-group">
-			<label class="control-label" for="title"><?= @text('COM-PAGES-PAGE-TITLE') ?></label>
+			<label class="control-label" for="page-title"><?= @text('COM-PAGES-PAGE-TITLE') ?></label>
 			<div class="controls">
-				<input data-validators="required" class="input-block-level" name="title" value="" maxlength="255" type="text" tabindex="1">
+				<input id="page-title" class="input-block-level" name="title" value="" maxlength="255" type="text" required>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="description"><?= @text('COM-PAGES-PAGE-DESCRIPTION') ?></label>
+			<label class="control-label" for="page-description"><?= @text('COM-PAGES-PAGE-DESCRIPTION') ?></label>
 			<div class="controls">
-			    <textarea data-validators="required maxLength:5000" class="input-block-level" name="body" cols="10" rows="5" id="an-pages-page-excerpt" tabindex="2"></textarea>				
+			    <textarea id="page-description" class="input-block-level" name="body" cols="10" rows="5" maxlength="5000" required></textarea>				
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="excerpt"><?= @text('COM-PAGES-PAGE-EXCERPT') ?></label>
+			<label class="control-label" for="page-excerpt"><?= @text('COM-PAGES-PAGE-EXCERPT') ?></label>
 			<div class="controls">
-				<input data-validators="required maxLength:500" class="input-block-level" name="excerpt" value="" maxlength="250" type="text" id="an-pages-page-excerpt" tabindex="3">
+				<input id="page-excerpt" class="input-block-level" name="excerpt" maxlength="250" type="text" required>
 			</div>
 		</div>
 		
@@ -35,7 +35,9 @@
 		</div>
 		
 		<div class="form-actions">			 
-			<button type="submit" class="btn btn-primary" id="an-pages-button-save"><?= @text('LIB-AN-ACTION-PUBLISH') ?></button>
+			<button type="submit" class="btn btn-primary">
+			    <?= @text('LIB-AN-ACTION-PUBLISH') ?>
+			</button>
 		</div>
 		
 	</fieldset>

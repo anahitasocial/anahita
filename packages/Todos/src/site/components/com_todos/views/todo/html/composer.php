@@ -7,30 +7,30 @@
 		<legend><?=@text('COM-TODOS-TODO-ADD')?></legend>	
 		
 		<div class="control-group">
-			<label class="control-label" for="title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
+			<label class="control-label" for="todo-title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
 			<div class="controls">
-				<input data-validators="required" name="title" class="input-block-level" value="<?= @escape( $todo->title ) ?>" size="50" maxlength="255" tabindex="1" type="text">
+				<input id="todo-title" name="title" class="input-block-level" value="<?= @escape( $todo->title ) ?>" size="50" maxlength="255" type="text" required>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
+			<label class="control-label" for="todo-description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
 			<div class="controls">
-				<textarea data-validators="maxLength:5000" class="input-block-level" name="description" cols="50" rows="5" tabindex="2" tabindex="2"><?= @escape( $todo->description ) ?></textarea>
+				<textarea id="todo-description" class="input-block-level" name="description" cols="50" rows="5" maxlength="5000" required><?= @escape( $todo->description ) ?></textarea>
 			</div>
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="priority"><?= @text('COM-TODOS-TODO-PRIORITY') ?></label>
+			<label class="control-label" for="todo-priority"><?= @text('COM-TODOS-TODO-PRIORITY') ?></label>
 			<div class="controls">
-				<?= @helper('prioritylist', $todo->priority)?>
+				<?= @helper('prioritylist', $todo->priority) ?>
 			</div>
 		</div>
 		
 		<div class="control-group">
 			<label class="control-label" id="privacy" ><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
 			<div class="controls">
-				<?= @helper('ui.privacy',array('entity'=>$todo, 'auto_submit'=>false, 'options'=>$actor)) ?>
+				<?= @helper('ui.privacy', array('entity'=>$todo, 'auto_submit'=>false, 'options'=>$actor)) ?>
 			</div>
 		</div>
 		
