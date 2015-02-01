@@ -17,18 +17,6 @@
         <?= $this->getView()->content; ?>
         </div>
         
-        <?php if($this->getView()->getParams()->poweredby): ?>
-        <div class="container">
-        	<div class="row">
-        		<div class="span12">
-        			<p class="muted">
-        				<em>Powered by <a href="http://www.anahitapolis.com" target="_blank">Anahita</a></em>
-        			</p>
-        		</div>
-        	</div>
-        </div>
-        <?php endif; ?>
-        
         <?= @template('tmpl/js') ?>
 		<?= @render('analytics') ?>
     </body>
