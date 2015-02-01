@@ -20662,7 +20662,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 			var self = this;
 			
 			scrollable.scroll(function(){
-				if (self.element.is(':visible') && scrollable.scrollTop() == $(document).height() - scrollable.height() )
+				if (self.element.is(':visible') && (scrollable.scrollTop() > $(document).height() - scrollable.height()))
 					self._getNextPage();
 			});
 		},
@@ -20795,6 +20795,110 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	$( document ).ajaxSuccess(function( event, request, settings ) {
 		$("[data-behavior='Checkbox']").checkbox();
+	});
+	
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * License: GPL3
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+	
+	$.widget("anahita.entityActions", {
+		
+		options : {
+			
+		},
+		
+		_create : function(){
+			
+			this._on('a.action-vote', { 
+				click : function (event){
+					event.preventDefault();
+					this._vote($(event.currentTarget));
+				}
+			});	
+			
+			this._on('a.action-unvote', { 
+				click : function (event){
+					event.preventDefault();
+					this._vote($(event.currentTarget));
+				}
+			});
+			
+			this._on('a.action-votecomment', { 
+				click : function (event){
+					event.preventDefault();
+					this._vote($(event.currentTarget), 'comment');
+				}
+			});	
+			
+			this._on('a.action-unvotecomment', { 
+				click : function (event){
+					event.preventDefault();
+					this._vote($(event.currentTarget), 'comment');
+				}
+			});
+			
+			this._on('a.action-delete', { 
+				click : function (event){
+					event.preventDefault();
+					this._delete($(event.currentTarget));
+				}
+			});
+		},
+		
+		_delete : function(elem){
+			console.log(elem.attr('id'));
+		},
+		
+		_vote : function(elem, type){
+			
+			type = type || '';
+			
+			var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
+			
+			$.ajax({
+				type : 'POST',
+				url : elem.attr('href'),
+				data : {
+					action : elem.data('action')
+				},
+				beforeSend : function(){
+					elem.fadeTo('fast', 0.3);
+				}.bind(elem),
+				success : function(response){
+					
+					if(elem.hasClass('action-vote' + type))
+					{
+						elem.data('action', 'unvote' + type);
+						elem.text(StringLibAnahita.action.unvote);
+					}	
+					else if(elem.hasClass('action-unvote' + type))
+					{
+						elem.data('action', 'vote' + type);
+						elem.text(StringLibAnahita.action.vote);
+					}	
+					
+					elem.toggleClass('action-vote' + type).toggleClass('action-unvote' + type);
+					elem.fadeTo('fast', 1);
+					voteCountWrapper.html(response);
+						
+				}.bind(elem)
+			});
+		}
+	});
+	
+	$("body").entityActions();
+	
+	$( document ).ajaxSuccess(function( event, request, settings ) {
+		$("body").entityActions();
 	});
 	
 }(jQuery, window, document));

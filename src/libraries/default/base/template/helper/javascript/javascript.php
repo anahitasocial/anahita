@@ -55,18 +55,21 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
         //force array
         settype($langs, 'array');
         
-        $scripts  = '';               
-        $tag      = JFactory::getLanguage()->getTag();
-        $base     = JLanguage::getLanguagePath( JPATH_ROOT, $tag);
+        $scripts = '';               
+        $tag = JFactory::getLanguage()->getTag();
+        $base = JLanguage::getLanguagePath(JPATH_ROOT, $tag);
+        
         foreach($langs as $lang)
         {
-            $path        = $base.'/'.$tag.'.'.$lang.'.js';            
-            if ( is_readable($path) )
-            {
-                $content     = '{'.file_get_contents($path).'}';
-                $scripts    .=  '<script type="text/language">'.$content.'</script>';                
+            $path = $base.'/'.$tag.'.'.$lang.'.js';  
+                       
+            if(is_readable($path))
+            { 
+                $src = JURI::root(true).'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
+                $scripts .= '<script type="text/javascript" src="'.$src.'"></script>'."\n";       
             }            
         }
+        
         return  $scripts;
     }
 }
