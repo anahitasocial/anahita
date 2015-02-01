@@ -11,7 +11,7 @@
 	
 	'use strict';
 	
-	//Composer Widget
+	//Composer Form Widget
 	$.widget("anahita.composerform", {
 		
 		options : {
