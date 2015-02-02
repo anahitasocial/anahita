@@ -20799,7 +20799,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	});
 	
 }(jQuery, window, document));
-///media/lib_anahita/js/anahita/vote.js
+///media/lib_anahita/js/anahita/actions/vote.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -20830,12 +20830,12 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 			}.bind(elem),
 			success : function(response){
 				
-				if(elem.hasClass('action-vote' + type))
+				if(elem.data('action') == ('vote' + type))
 				{
 					elem.data('action', 'unvote' + type);
 					elem.text(StringLibAnahita.action.unvote);
 				}	
-				else if(elem.hasClass('action-unvote' + type))
+				else if(elem.data('action') == ('unvote' + type))
 				{
 					elem.data('action', 'vote' + type);
 					elem.text(StringLibAnahita.action.vote);
