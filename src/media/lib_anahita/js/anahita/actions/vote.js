@@ -9,14 +9,14 @@
 	
 	'use strict';
 	
-	$.fn.vote = function(type) {
+	$.fn.actionVote = function(type) {
 		
 		type = type || '';
 		
 		var elem = $(this);
 		
 		var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
-		
+
 		$.ajax({
 			type : 'POST',
 			url : elem.attr('href'),
@@ -45,26 +45,28 @@
 					
 			}.bind(elem)
 		});
+		
+		return this;
 	};
 	
 	$('body').on('click', 'a.action-vote', function( event ) {
 		event.preventDefault();
-		$(this).vote();
+		$(this).actionVote();
 	});
 	
 	$('body').on('click', 'a.action-unvote', function( event ) {
 		event.preventDefault();
-		$(this).vote();
+		$(this).actionVote();
 	});
 	
 	$('body').on('click', 'a.action-votecomment', function( event ) {
 		event.preventDefault();
-		$(this).vote('comment');
+		$(this).actionVote('comment');
 	});
 	
 	$('body').on('click', 'a.action-unvotecomment', function( event ) {
 		event.preventDefault();
-		$(this).vote('comment');
+		$(this).actionVote('comment');
 	});
 	
 }(jQuery, window, document));

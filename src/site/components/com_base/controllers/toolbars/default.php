@@ -68,7 +68,8 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-DELETE')))
         ->href($entity->getURL().'&action=delete')
-        ->setAttribute('data-trigger','Remove');
+        ->setAttribute('data-action', 'delete')
+        ->class('action-delete');
     }
     
     /**

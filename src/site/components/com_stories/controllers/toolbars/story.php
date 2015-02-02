@@ -108,7 +108,8 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
             $link .= '&id[]='.$id;
 
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-DELETE')))
-        ->href(JRoute::_($link.'&_action=delete'))
-        ->setAttribute('data-trigger','Remove');
+        ->href(JRoute::_($link))
+        ->setAttribute('data-action', 'delete')
+        ->class('action-delete');
     }
 }

@@ -20799,6 +20799,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	});
 	
 }(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/actions/vote.js
 /**
  * Author: Rastin Mehr
@@ -20811,14 +20812,14 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	'use strict';
 	
-	$.fn.vote = function(type) {
+	$.fn.actionVote = function(type) {
 		
 		type = type || '';
 		
 		var elem = $(this);
 		
 		var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
-		
+
 		$.ajax({
 			type : 'POST',
 			url : elem.attr('href'),
@@ -20847,26 +20848,55 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 					
 			}.bind(elem)
 		});
+		
+		return this;
 	};
 	
 	$('body').on('click', 'a.action-vote', function( event ) {
 		event.preventDefault();
-		$(this).vote();
+		$(this).actionVote();
 	});
 	
 	$('body').on('click', 'a.action-unvote', function( event ) {
 		event.preventDefault();
-		$(this).vote();
+		$(this).actionVote();
 	});
 	
 	$('body').on('click', 'a.action-votecomment', function( event ) {
 		event.preventDefault();
-		$(this).vote('comment');
+		$(this).actionVote('comment');
 	});
 	
 	$('body').on('click', 'a.action-unvotecomment', function( event ) {
 		event.preventDefault();
-		$(this).vote('comment');
+		$(this).actionVote('comment');
+	});
+	
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/delete.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * License: GPL3
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+	
+	$.fn.actionDelete = function(type) {
+		
+		type = type || '';
+		
+		var elem = $(this);
+		
+		console.log(elem);
+	};
+	
+	$('body').on('click', 'a.action-delete', function( event ) {
+		event.preventDefault();
+		$(this).actionDelete();
 	});
 	
 }(jQuery, window, document));
