@@ -12,6 +12,6 @@
 //@depends anahita/InfinitScroll.js
 //@depends anahita/gadget.js
 //@depends anahita/checkbox.js
-//@depends anahita/actions.js
+//@depends anahita/vote.js
 
 

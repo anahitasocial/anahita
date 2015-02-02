@@ -20662,7 +20662,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 			var self = this;
 			
 			scrollable.scroll(function(){
-				if (self.element.is(':visible') && (scrollable.scrollTop() > $(document).height() - scrollable.height()))
+				if (self.element.is(':visible') && scrollable.scrollTop() >= $(document).height() - scrollable.height() )
 					self._getNextPage();
 			});
 		},
@@ -20678,6 +20678,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 					limit : this.options.limit * this.options.preload,
 				},
 				success : function(html){
+					
 					var html = $(html);
 					
 					if(this.options.debug)
@@ -20798,7 +20799,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	});
 	
 }(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions.js
+///media/lib_anahita/js/anahita/vote.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -20810,95 +20811,62 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	'use strict';
 	
-	$.widget("anahita.entityActions", {
+	$.fn.vote = function(type) {
 		
-		options : {
-			
-		},
+		type = type || '';
 		
-		_create : function(){
-			
-			this._on('a.action-vote', { 
-				click : function (event){
-					event.preventDefault();
-					this._vote($(event.currentTarget));
-				}
-			});	
-			
-			this._on('a.action-unvote', { 
-				click : function (event){
-					event.preventDefault();
-					this._vote($(event.currentTarget));
-				}
-			});
-			
-			this._on('a.action-votecomment', { 
-				click : function (event){
-					event.preventDefault();
-					this._vote($(event.currentTarget), 'comment');
-				}
-			});	
-			
-			this._on('a.action-unvotecomment', { 
-				click : function (event){
-					event.preventDefault();
-					this._vote($(event.currentTarget), 'comment');
-				}
-			});
-			
-			this._on('a.action-delete', { 
-				click : function (event){
-					event.preventDefault();
-					this._delete($(event.currentTarget));
-				}
-			});
-		},
+		var elem = $(this);
 		
-		_delete : function(elem){
-			console.log(elem.attr('id'));
-		},
+		var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
 		
-		_vote : function(elem, type){
-			
-			type = type || '';
-			
-			var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
-			
-			$.ajax({
-				type : 'POST',
-				url : elem.attr('href'),
-				data : {
-					action : elem.data('action')
-				},
-				beforeSend : function(){
-					elem.fadeTo('fast', 0.3);
-				}.bind(elem),
-				success : function(response){
+		$.ajax({
+			type : 'POST',
+			url : elem.attr('href'),
+			data : {
+				action : elem.data('action')
+			},
+			beforeSend : function(){
+				elem.fadeTo('fast', 0.3);
+			}.bind(elem),
+			success : function(response){
+				
+				if(elem.hasClass('action-vote' + type))
+				{
+					elem.data('action', 'unvote' + type);
+					elem.text(StringLibAnahita.action.unvote);
+				}	
+				else if(elem.hasClass('action-unvote' + type))
+				{
+					elem.data('action', 'vote' + type);
+					elem.text(StringLibAnahita.action.vote);
+				}	
+				
+				elem.toggleClass('action-vote' + type).toggleClass('action-unvote' + type);
+				elem.fadeTo('fast', 1);
+				voteCountWrapper.html(response);
 					
-					if(elem.hasClass('action-vote' + type))
-					{
-						elem.data('action', 'unvote' + type);
-						elem.text(StringLibAnahita.action.unvote);
-					}	
-					else if(elem.hasClass('action-unvote' + type))
-					{
-						elem.data('action', 'vote' + type);
-						elem.text(StringLibAnahita.action.vote);
-					}	
-					
-					elem.toggleClass('action-vote' + type).toggleClass('action-unvote' + type);
-					elem.fadeTo('fast', 1);
-					voteCountWrapper.html(response);
-						
-				}.bind(elem)
-			});
-		}
+			}.bind(elem)
+		});
+	};
+	
+	$('body').on('click', 'a.action-vote', function( event ) {
+		event.preventDefault();
+		$(this).vote();
 	});
 	
-	$("body").entityActions();
+	$('body').on('click', 'a.action-unvote', function( event ) {
+		event.preventDefault();
+		$(this).vote();
+	});
 	
-	$( document ).ajaxSuccess(function( event, request, settings ) {
-		$("body").entityActions();
+	$('body').on('click', 'a.action-votecomment', function( event ) {
+		event.preventDefault();
+		$(this).vote('comment');
+	});
+	
+	$('body').on('click', 'a.action-unvotecomment', function( event ) {
+		event.preventDefault();
+		$(this).vote('comment');
 	});
 	
 }(jQuery, window, document));
