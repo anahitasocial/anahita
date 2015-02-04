@@ -462,38 +462,39 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             
             foreach($options as $key => $value) 
             {
-                if ( $actor->authorize('setprivacyvalue', array('value'=>$key)) === false ) {
-                    unset($options[$key]);   
-                }
+                if($actor->authorize('setprivacyvalue', array('value'=>$key)) === false)
+                    unset($options[$key]);
             }
             
             $config->options = $options;
             
             
-	        if ( $config->entity ) 
+	        if($config->entity) 
             {
 	            $config->append(array(
                     'selected' => $config->entity->getPermission($config->name, LibBaseDomainBehaviorPrivatable::FOLLOWER)
 	            ));
             }
 	
-	        if ( strpos($config->name, 'access') === false ) {
+	        if(strpos($config->name, 'access') === false)
 	            unset($config->options[LibBaseDomainBehaviorPrivatable::GUEST]);
-	        }
 	
 	        //trim the options based on the actor
-	        if ( $config->entity && !$config->entity->eql($actor ))
+	        if($config->entity && !$config->entity->eql($actor))
 	        {
 	            $current_index = array_search($actor->access, array_keys(KConfig::unbox($config->options)));
 	            $i = 0;
+
 	            foreach($config->options as $key => $value)
 	            {
 	                if ( $current_index > $i)
 	                    unset($config->options[$key]);
+	                
 	                $i++;
 	            }
 	        }
 	    }
+	    
 	    return $this->_render('privacy', $config);
 	}
 

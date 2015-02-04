@@ -12,9 +12,7 @@
 	$.fn.actionVote = function(type) {
 		
 		type = type || '';
-		
 		var elem = $(this);
-		
 		var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
 
 		$.ajax({

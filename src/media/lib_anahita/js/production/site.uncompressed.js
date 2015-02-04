@@ -20815,9 +20815,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	$.fn.actionVote = function(type) {
 		
 		type = type || '';
-		
 		var elem = $(this);
-		
 		var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
 
 		$.ajax({
@@ -20888,15 +20886,39 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	$.fn.actionDelete = function(type) {
 		
 		type = type || '';
-		
 		var elem = $(this);
 		
-		console.log(elem);
+		
 	};
 	
 	$('body').on('click', 'a.action-delete', function( event ) {
 		event.preventDefault();
 		$(this).actionDelete();
+	});
+	
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/privacy.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * License: GPL3
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+	
+	$('body').on('change', 'select.privacy-select', function( event ) {
+		event.preventDefault();
+		
+		var form = $(this.form);
+		
+		$.ajax({
+			type : 'post',
+			url : form.attr('action'),
+			data : form.serialize()
+		});
 	});
 	
 }(jQuery, window, document));

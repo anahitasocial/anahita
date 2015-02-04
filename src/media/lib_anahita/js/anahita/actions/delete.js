@@ -12,7 +12,6 @@
 	$.fn.actionDelete = function(type) {
 		
 		type = type || '';
-		
 		var elem = $(this);
 		
 		

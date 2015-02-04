@@ -31,7 +31,7 @@
 		<?= @helper('ui.toolbar', array()) ?>
 
 		<h2 id="actor-name">
-		<?= @name($item, false) ?>
+		<?= @name($item, false) ?> 
 		<?php if(is_person($item)): ?> 
 		<small>@<?= $item->username ?></small>
 		<?php endif; ?>
