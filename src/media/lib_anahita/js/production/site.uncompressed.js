@@ -20812,7 +20812,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	'use strict';
 	
-	$.fn.actionVote = function(type) {
+	$.fn.AnActionVote = function(type) {
 		
 		type = type || '';
 		var elem = $(this);
@@ -20852,22 +20852,22 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	$('body').on('click', 'a.action-vote', function( event ) {
 		event.preventDefault();
-		$(this).actionVote();
+		$(this).AnActionVote();
 	});
 	
 	$('body').on('click', 'a.action-unvote', function( event ) {
 		event.preventDefault();
-		$(this).actionVote();
+		$(this).AnActionVote();
 	});
 	
 	$('body').on('click', 'a.action-votecomment', function( event ) {
 		event.preventDefault();
-		$(this).actionVote('comment');
+		$(this).AnActionVote('comment');
 	});
 	
 	$('body').on('click', 'a.action-unvotecomment', function( event ) {
 		event.preventDefault();
-		$(this).actionVote('comment');
+		$(this).AnActionVote('comment');
 	});
 	
 }(jQuery, window, document));
@@ -20897,7 +20897,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	});
 	
 }(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions/privacy.js
+///media/lib_anahita/js/anahita/actions/autosubmit.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -20909,16 +20909,47 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	'use strict';
 	
-	$('body').on('change', 'select.privacy-select', function( event ) {
-		event.preventDefault();
+	$.fn.AnAutosubmit = function() {
+		
+		var elem = $(this);
 		
 		var form = $(this.form);
 		
 		$.ajax({
+			
 			type : 'post',
-			url : form.attr('action'),
-			data : form.serialize()
+			
+			url : form.attr( 'action' ),
+			
+			data : form.serialize(),
+			
+			beforeSend : function() {
+			
+				elem.fadeTo( 'fast', 0.3 );
+			
+			}.bind( elem ),
+	
+			success : function ( response ) {
+				
+				elem.fadeTo( 'fast', 1 );
+			
+			}
 		});
+	};
+	
+	$('body').on( 'change', 'select.autosubmit', function( event ) {
+		
+		event.preventDefault();
+	
+		$(this).AnAutosubmit();
+	
+	});
+	
+	$('body').on( 'change', 'input.autosubmit', function( event ) {
+		
+		event.preventDefault();
+		
+		$( this ).AnAutosubmit();
 	});
 	
 }(jQuery, window, document));

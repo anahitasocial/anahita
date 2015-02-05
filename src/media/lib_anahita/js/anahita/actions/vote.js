@@ -9,7 +9,7 @@
 	
 	'use strict';
 	
-	$.fn.actionVote = function(type) {
+	$.fn.AnActionVote = function(type) {
 		
 		type = type || '';
 		var elem = $(this);
@@ -49,22 +49,22 @@
 	
 	$('body').on('click', 'a.action-vote', function( event ) {
 		event.preventDefault();
-		$(this).actionVote();
+		$(this).AnActionVote();
 	});
 	
 	$('body').on('click', 'a.action-unvote', function( event ) {
 		event.preventDefault();
-		$(this).actionVote();
+		$(this).AnActionVote();
 	});
 	
 	$('body').on('click', 'a.action-votecomment', function( event ) {
 		event.preventDefault();
-		$(this).actionVote('comment');
+		$(this).AnActionVote('comment');
 	});
 	
 	$('body').on('click', 'a.action-unvotecomment', function( event ) {
 		event.preventDefault();
-		$(this).actionVote('comment');
+		$(this).AnActionVote('comment');
 	});
 	
 }(jQuery, window, document));

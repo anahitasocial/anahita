@@ -7,7 +7,7 @@
 <?php else : ?>
 <input type="hidden" name="privacy_name[]" value="<?= $name ?>" />
 <?php endif; ?>
-	<select class="privacy-select input-large" name="<?= $name ?>">			
+	<select class="autosubmit input-large" name="<?= $name ?>">			
 			<?= @html('options', $options, $selected)?>
 	</select>
 <?php if ($auto_submit) : ?>
