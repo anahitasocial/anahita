@@ -12,9 +12,9 @@ var StringLibAnahita = {
 		unvote : 'Unlike'
 	},
 	
-	'Prompt' : {
+	'prompt' : {
 		loading : 'Loading...',
-		confirmDelete : 'Delete this item?',	
+		confirmDelete : 'Are you sure you want to delete this?',	
 		inlineEdit : 'Click to edit'
 	},
 	
@@ -55,7 +55,7 @@ var StringLibAnahita = {
 	
 	},
 	
-	'Date' : {
+	'date' : {
 	
 		months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 		months_abbr: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],

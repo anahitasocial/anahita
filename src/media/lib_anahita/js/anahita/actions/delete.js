@@ -9,17 +9,57 @@
 	
 	'use strict';
 	
-	$.fn.actionDelete = function(type) {
+	$.fn.actionDelete = function ( options ) {
 		
-		type = type || '';
-		var elem = $(this);
+		var elem = $( this );
 		
+		var settings = $.extend({
+			modal : '#an-modal'
+		}, options );
+			
+		var confirmModal = $(settings.modal);
 		
+		confirmModal.find('.modal-header').find('h3').text(StringLibAnahita.action.delete);
+		confirmModal.find('.modal-body').text(StringLibAnahita.prompt.confirmDelete);
+		
+		var triggerBtn = confirmModal.find('.modal-footer').find('.btn-primary');
+		
+		triggerBtn.text(StringLibAnahita.action.delete);
+		
+		triggerBtn.on('click', function(event){
+
+			$.ajax({
+				
+				method : 'post',
+				url : elem.attr('href'),
+				data : {
+					action : elem.data('action')
+				},
+				
+				beforeSend : function(){
+					confirmModal.modal('hide');
+				},
+				
+				success : function() {
+					
+					if(elem.data('redirect')){
+						window.location.href = elem.data('redirect');
+					} else {
+						elem.closest('.an-entity').fadeOut();
+					}
+					
+				}.bind(elem)
+			});
+		});
+			
+		confirmModal.modal('show');	
 	};
 	
-	$('body').on('click', 'a.action-delete', function( event ) {
+	$( 'body' ).on( 'click', 'a.action-delete', function( event ) {
+		
 		event.preventDefault();
-		$(this).actionDelete();
+		
+		$(this).actionDelete($(this).data('action-options'));
 	});
 	
 }(jQuery, window, document));

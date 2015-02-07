@@ -8,6 +8,7 @@
 //@depends vendors/bootstrap/bootstrap-tab.js
 //@depends vendors/bootstrap/bootstrap-dropdown.js
 //@depends vendors/bootstrap/bootstrap-tooltip.js
+//@depends vendors/bootstrap/bootstrap-modal.js
 
 //@depends anahita/InfinitScroll.js
 //@depends anahita/gadget.js

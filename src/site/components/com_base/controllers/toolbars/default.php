@@ -67,8 +67,9 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-DELETE')))
-        ->href($entity->getURL().'&action=delete')
+        ->href(JRoute::_($entity->getURL()))
         ->setAttribute('data-action', 'delete')
+        ->setAttribute('data-redirect', JRoute::_('index.php?'))
         ->class('action-delete');
     }
     

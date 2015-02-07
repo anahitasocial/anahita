@@ -7,10 +7,12 @@
   	    <?= @render('style') ?>
   	</head>
     <body>	  	
+    	<?= @template('tmpl/modal') ?>
+    	
         <div id="container-system-message" class="container">
         	<?= @render('messages') ?>
         </div>    		
-        
+
         <?= @template('tmpl/navbar') ?>
         
         <div class="container">
