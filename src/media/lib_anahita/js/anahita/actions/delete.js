@@ -12,12 +12,7 @@
 	$.fn.actionDelete = function ( options ) {
 		
 		var elem = $( this );
-		
-		var settings = $.extend({
-			modal : '#an-modal'
-		}, options );
-			
-		var confirmModal = $(settings.modal);
+		var confirmModal = $('#an-modal');
 		
 		confirmModal.find('.modal-header').find('h3').text(StringLibAnahita.action.delete);
 		confirmModal.find('.modal-body').text(StringLibAnahita.prompt.confirmDelete);
@@ -59,7 +54,7 @@
 		
 		event.preventDefault();
 		
-		$(this).actionDelete($(this).data('action-options'));
+		$(this).actionDelete();
 	});
 	
 }(jQuery, window, document));

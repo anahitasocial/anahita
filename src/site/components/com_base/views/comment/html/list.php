@@ -1,5 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
-<div scroll-handle="<?=$comment->id?>" id="an-comment-<?= $comment->id ?>" class="an-entity an-comment an-record an-removable">
+<div scroll-handle="<?=$comment->id?>" id="an-comment-<?= $comment->id ?>" class="an-entity an-comment">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($comment->author)  ?>
