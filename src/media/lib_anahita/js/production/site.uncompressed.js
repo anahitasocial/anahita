@@ -21088,19 +21088,12 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		});
 	};
 	
-	$('body').on( 'change', 'select.autosubmit', function( event ) {
+	$('body').on( 'change', 'select.autosubmit, input.autosubmit', function( event ) {
 		
 		event.preventDefault();
 	
 		$(this).AnAutosubmit();
 	
-	});
-	
-	$('body').on( 'change', 'input.autosubmit', function( event ) {
-		
-		event.preventDefault();
-		
-		$( this ).AnAutosubmit();
 	});
 	
 }(jQuery, window, document));
@@ -21155,25 +21148,53 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		return this;
 	};
 	
-	$('body').on('click', 'a.action-vote', function( event ) {
+	$('body').on('click', 'a.action-vote, a.action-unvote', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote();
 	});
 	
-	$('body').on('click', 'a.action-unvote', function( event ) {
-		event.preventDefault();
-		$(this).AnActionVote();
-	});
-	
-	$('body').on('click', 'a.action-votecomment', function( event ) {
+	$('body').on('click', 'a.action-votecomment, a.action-unvotecomment', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote('comment');
 	});
 	
-	$('body').on('click', 'a.action-unvotecomment', function( event ) {
-		event.preventDefault();
-		$(this).AnActionVote('comment');
-	});
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/comment.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * License: GPL3
+ */
+
+;(function ($, window, document) {
+	
+'use strict';
+	
+/*
+form.on('submit', function ( event ){
+	
+	event.preventDefault();
+	
+	$.ajax({
+		
+		method : 'post',
+		
+		url : form.attr( 'action' ),
+		
+		data : form.serialize(),
+		
+		beforeSend : function () {
+			form.fadeTo( 'fast', 0.7 );
+		},
+		
+		success : function ( html ) {
+			form.fadeTo( 'fast', 1 ).trigger('reset');
+			comments.append($(html).fadeIn('slow'));
+		}
+	});	
+});
+*/
 	
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/actions/delete.js
@@ -21188,7 +21209,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	
 	'use strict';
 	
-	$.fn.actionDelete = function ( options ) {
+	$.fn.actionDelete = function () {
 		
 		var elem = $( this );
 		var confirmModal = $('#an-modal');

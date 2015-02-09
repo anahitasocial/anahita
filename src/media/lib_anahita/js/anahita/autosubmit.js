@@ -37,19 +37,12 @@
 		});
 	};
 	
-	$('body').on( 'change', 'select.autosubmit', function( event ) {
+	$('body').on( 'change', 'select.autosubmit, input.autosubmit', function( event ) {
 		
 		event.preventDefault();
 	
 		$(this).AnAutosubmit();
 	
-	});
-	
-	$('body').on( 'change', 'input.autosubmit', function( event ) {
-		
-		event.preventDefault();
-		
-		$( this ).AnAutosubmit();
 	});
 	
 }(jQuery, window, document));

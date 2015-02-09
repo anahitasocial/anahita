@@ -1,68 +1,105 @@
-console.log('Rewrite in JQuery');
-/*
-(function(){
-	var openedForms = [];
-	document.addEvent('click', function(e) {		
-		openedForms.each(function(form) {
-			if( !$(e.target).getParents().contains(form) ) { 
-				var hotspot = form.retrieve('hotspot');
-				if ( hotspot ) {					
-					hotspot.show();
-				}
-				form.hide();
-				openedForms.erase(form);
-			}
-		});
-	});
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * License: GPL3
+ */
+
+;(function ($, window, document) {
 	
-	var open  = function(event, link) {
+	'use strict';
+
+	var lastOpened = null;
+
+	$.fn.StoryComment = function (action, options) {
 		
-		event.stop();
+		//default settings
+		var settings = $.extend({
+			
+			entity : '.an-entity',
+			comments : '.an-comments',
+			form : '.an-comment-form',
+			actionOvertext : '.action-comment-overtext',
+			overtextBox : '.comment-overtext-box'
 		
-		var form = document.getElement('#story-comments-' + link.get('storyid') + ' form');
+		}, options );
 		
-		if ( !form )
-				return;
+		var elem = $(this);
+		var parent = elem.closest(settings.entity);
+		var comments = parent.find(settings.comments);
+		var form = parent.find(settings.form);
 		
-		var hotspot = link.hasClass('action-comment-overtext') ? link.getParent() : document.getElement('#story-comments-' + link.get('storyid') + ' .comment-overtext-box');
+		if(!form)
+			return;
 		
-		if ( hotspot ) {
-			hotspot.hide();
-			form.store('hotspot', hotspot);
+		//show form
+		this.ShowForm = function() {
+			
+			this.HideLastForm();	
+			
+			form.show();
+			
+			lastOpened = form;
+			
+			$('body').animate({ scrollTop: $(form).offset().top - 150 }, 
+				700, 
+				function(){
+		    		form.find('textarea').focus();
+		    	});
+			
+			return this;
+		};
+		
+		//hide last form
+		this.HideLastForm = function() {
+			
+			var hotspot = null;
+			
+			if ( parent.find( settings.actionOvertext ).length )
+				var hotspot = parent.find( settings.overtextBox );
+			
+			if ( hotspot ) {
+				hotspot.hide();
+				form.data('hotspot', hotspot);
+			}
+			
+			if ( lastOpened && lastOpened.attr('id') != form.attr('id') ) {
+				
+				if(lastOpened.data('hotspot'))
+					lastOpened.data('hotspot').show();
+				
+				lastOpened.hide();
+			}
+			
+			return this;
+		};
+		
+		//actions for this plugin
+		switch ( action ) {
+		
+			case 'hide':
+				this.HideLastForm();
+			break;
+			
+			case 'show':
+			default:
+				this.ShowForm();
 		}
 		
-		openedForms.include(form);
-		
-		form.show();
-		
-		form.getElement('textarea').focus();
-		
-		var scroll = new Fx.Scroll(window,{
-			offset:{x:0,y:-200}
-		}).toElement(form);			
-	}
+		return this;
+	};
 	
-	'*[data-trigger="ViewSource"]'.addEvent('domready', function() {
-		this.set('html', this.get('alt'));
-		this.removeClass('pull-right');
-	});
-	
-	document.addEvents({
-        'click:relay(.an-actions .comment)' : open,
-        'click:relay(.comment-overtext-box .action-comment-overtext)' : open                
-	});
-	
-}).apply();
+	$( 'body' ).on( 'click', 'a.action-comment, a.action-comment-overtext', function( event ) {
+		
+		event.preventDefault();
 
-Delegator.register(['click'], 'Share', function(event, el, api) {
-	event.stop();
-	var textarea = el.form.getElement('textarea');
-	//before sumbmitting validate min and max leng of text area
-	//if ok then submit 	 
-	textarea.value = textarea.value.stripTags();
-	if ( el.form.get('validator').validateField(textarea) && textarea.value.match(/^(?!\s*$).+/) ) {
-		window.delegator.trigger('Request', el, event);
-		el.form.reset();
-	}
-});
-*/
+		$(this).StoryComment('show');
+	});
+	
+	$( '#an-stories' ).on( 'clickoutside', function( event ) {
+		
+		$(this).StoryComment('hide');
+	
+	});
+	
+}(jQuery, window, document));

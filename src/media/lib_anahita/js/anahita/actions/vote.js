@@ -47,22 +47,12 @@
 		return this;
 	};
 	
-	$('body').on('click', 'a.action-vote', function( event ) {
+	$('body').on('click', 'a.action-vote, a.action-unvote', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote();
 	});
 	
-	$('body').on('click', 'a.action-unvote', function( event ) {
-		event.preventDefault();
-		$(this).AnActionVote();
-	});
-	
-	$('body').on('click', 'a.action-votecomment', function( event ) {
-		event.preventDefault();
-		$(this).AnActionVote('comment');
-	});
-	
-	$('body').on('click', 'a.action-unvotecomment', function( event ) {
+	$('body').on('click', 'a.action-votecomment, a.action-unvotecomment', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote('comment');
 	});

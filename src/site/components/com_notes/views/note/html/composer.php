@@ -1,11 +1,11 @@
 <?php defined('KOOWA') or die ?>
 
-<form class="composer-form" action="<?= @route() ?>" method="POST">
+<form class="composer-form" action="<?= @route() ?>" method="post">
 	<input type="hidden" name="composed" value="1" />
 	
 	<div class="control-group">			
 		<div class="controls">
-			<textarea class="input-block-level" id="note-body" maxlength="5000" name="body" required autofocus></textarea>
+			<textarea class="input-block-level" id="note-body" name="body" required maxlength="5000"></textarea>
     	</div>
     </div>
     

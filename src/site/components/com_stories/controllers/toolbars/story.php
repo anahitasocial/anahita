@@ -89,7 +89,8 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
         
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-COMMENT')))
             ->href(JRoute::_($entity->getURL()))
-            ->class('comment');
+            ->class('comment action-comment')
+            ->setAttribute('data-action', 'addcomment');
     }
      
     /**

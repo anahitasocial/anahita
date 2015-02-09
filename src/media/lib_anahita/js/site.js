@@ -16,6 +16,7 @@
 //@depends anahita/autosubmit.js
 
 //@depends anahita/actions/vote.js
+//@depends anahita/actions/comment.js
 //@depends anahita/actions/delete.js
 
 

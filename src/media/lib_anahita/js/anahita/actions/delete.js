@@ -9,7 +9,7 @@
 	
 	'use strict';
 	
-	$.fn.actionDelete = function ( options ) {
+	$.fn.actionDelete = function () {
 		
 		var elem = $( this );
 		var confirmModal = $('#an-modal');
