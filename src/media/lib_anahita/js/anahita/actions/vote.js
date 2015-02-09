@@ -16,7 +16,7 @@
 		var voteCountWrapper = $('#vote-count-wrapper-' + elem.data('nodeid'));
 
 		$.ajax({
-			type : 'POST',
+			type : 'post',
 			url : elem.attr('href'),
 			data : {
 				action : elem.data('action')

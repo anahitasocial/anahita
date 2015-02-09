@@ -36,10 +36,16 @@ if ( $editor ) {
 
 		<div class="comment-actions">
 			<?php if(isset($comment)) : ?>
-			<button data-trigger="Request"  type="button" class="btn"  name="cancel"  data-request-options="{method:'get',url:'<?=@route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>',replace:this.getParent('form')}"><?= @text('LIB-AN-ACTION-CANCEL') ?></button>								
-			<button data-trigger="Comment"  data-request-options="{replace:this.getParent('form')}" type="submit" class="btn btn-primary"   name="submit"><?= @text('LIB-AN-ACTION-UPDATE') ?></button>				
+			<button type="button" class="btn action-cancel"  name="cancel" data-url="<?= @route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>">
+			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
+			</button>								
+			<button type="submit" class="btn btn-primary">
+			    <?= @text('LIB-AN-ACTION-UPDATE') ?>
+			</button>				
 			<?php else : ?>
-			<button type="submit" class="btn btn-primary"><?= @text('LIB-AN-ACTION-POST') ?></button>
+			<button type="submit" class="btn btn-primary">
+			    <?= @text('LIB-AN-ACTION-POST') ?>
+			</button>
 			<?php endif; ?>
 		</div>
 	</div>

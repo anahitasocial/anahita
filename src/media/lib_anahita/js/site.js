@@ -18,6 +18,8 @@
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/comment.js
 //@depends anahita/actions/delete.js
+//@depends anahita/actions/edit.js
+//@depends anahita/actions/cancel.js
 
 
 
