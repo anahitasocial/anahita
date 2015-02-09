@@ -1,5 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
-<div scroll-handle="<?=$comment->id?>" id="an-comment-<?= $comment->id ?>" class="an-entity an-comment">
+
+<div class="an-entity an-comment">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($comment->author)  ?>
@@ -12,7 +13,9 @@
 			
 			<div class="an-meta">
 				<?= @date($comment->creationTime) ?> 
-				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>"><?= @text('LIB-AN-COMMENT-PERMALINK') ?></a>
+				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>">
+				    <?= @text('LIB-AN-COMMENT-PERMALINK') ?>
+				</a>
 			</div>
 		</div>
 	</div>

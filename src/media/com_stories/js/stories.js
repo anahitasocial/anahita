@@ -79,7 +79,7 @@
 		
 			case 'hide':
 				this.HideLastForm();
-			break;
+				break;
 			
 			case 'show':
 			default:
