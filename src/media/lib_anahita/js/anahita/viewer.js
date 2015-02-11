@@ -14,12 +14,15 @@
     var badge = $('#new-notifications-counter');
 
     $.fn.viewer = function () {
-
-        window.setInterval(updateNotificationCount, 30000);
+        
+        window.setInterval(updateNotificationCount, 3 * 10 * 1000);
 
         function updateNotificationCount() {
+            
             $.ajax({
-                type: 'GET',
+                headers: { 
+                    accept: 'application/json'
+                },
                 url: 'index.php?option=com_notifications&view=notifications&get=count',
             })
             .done(function (data) {
@@ -36,6 +39,6 @@
         }
     };
     
-    $.viewer();
+    $().viewer();
 
 }(jQuery, window));
