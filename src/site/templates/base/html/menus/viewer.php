@@ -9,7 +9,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 <ul class="nav pull-right">
 	<li>     
 		<a href="#" data-popover-tipclass="notifications-popover" data-behavior="RemotePopover" data-bs-popover-animate=false data-bs-popover-content-element="D" data-bs-popover-trigger="click" data-bs-popover-location="bottom" data-remotepopover-url="<?=@route('option=com_notifications&view=notifications&layout=popover')?>" >
-            <span id="new-notifications-counter" class="badge <?= ($num_notifications) ? 'badge-important' : '' ?>">
+            <span data-url="<?= @route('option=com_notifications&view=notifications&get=count') ?>" data-interval="30000" id="notifications-counter" class="badge <?= ($num_notifications) ? 'badge-important' : '' ?>">
             <?= $num_notifications ?>
 			</span>           
         </a>
@@ -71,30 +71,3 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 		</ul>
 	</li>
 </ul>
-
-<script data-inline>
-/*
-var metaTitle = document.getElement('title').innerHTML;
-
-(function(){
-    new Request.JSON({
-        url : '<?= @route('option=com_notifications&view=notifications&get=count') ?>',
-        onSuccess : function(data) {
-            var badge = document.id('new-notifications-counter');
-            badge.set('text', data.new_notifications);
-
-            if(data.new_notifications){
-            	document.getElement('title').innerHTML = '(' + data.new_notifications + ') ' + metaTitle;
-            }
-                
-            if(data.new_notifications > 0){   
-                badge.addClass('badge-important');
-            }else{
-                badge.removeClass('badge-important');   
-            }
-        }
-    }).get();
-})
-.periodical(30000);
-*/
-</script> 

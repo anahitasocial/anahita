@@ -14,7 +14,8 @@
 //@depends anahita/gadget.js
 //@depends anahita/checkbox.js
 //@depends anahita/autosubmit.js
-//@depends anahita/viewer.js
+//@depends anahita/notifications.js
+
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/comment.js
