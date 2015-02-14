@@ -47,14 +47,34 @@
 		return this;
 	};
 	
+	//vote
 	$('body').on('click', 'a.action-vote, a.action-unvote', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote();
 	});
 	
+	//unvote
 	$('body').on('click', 'a.action-votecomment, a.action-unvotecomment', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote('comment');
+	});
+	
+	//show voters in a modal
+	$('body').on('click', 'a[data-toggle*="Voters"]', function ( event ){
+		
+		event.preventDefault();
+		
+		var votersModal = $('#an-modal');
+		var header = votersModal.find('.modal-header').find('h3');
+		var body = votersModal.find('.modal-body');
+
+		$.get($(this).attr('href'), function (response){
+			
+			header.html($(response).filter('.modal-header').html());
+			body.html($(response).filter('.modal-body').html());
+			
+			votersModal.modal('show');
+		}); 
 	});
 	
 }(jQuery, window, document));

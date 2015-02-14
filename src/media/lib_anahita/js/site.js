@@ -16,6 +16,7 @@
 //@depends anahita/checkbox.js
 //@depends anahita/autosubmit.js
 //@depends anahita/notifications.js
+//@depends anahita/modal.js
 
 
 //@depends anahita/actions/vote.js

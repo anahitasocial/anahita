@@ -7,7 +7,6 @@
   </div>
   <div class="modal-body"></div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal" aria-hidden="true"><?= @text('LIB-AN-ACTION-CANCEL') ?></button>
-    <button class="btn btn-primary"></button>
+    <a class="btn" data-dismiss="modal" aria-hidden="true"><?= @text('LIB-AN-ACTION-CANCEL') ?></a>
   </div>
 </div>

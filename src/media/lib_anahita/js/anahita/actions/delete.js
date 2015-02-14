@@ -12,14 +12,18 @@
 	$.fn.actionDelete = function () {
 		
 		var elem = $( this );
+		
 		var confirmModal = $('#an-modal');
+		var header = confirmModal.find('.modal-header').find('h3');
+		var body = confirmModal.find('.modal-body');
+		var footer = confirmModal.find('.modal-footer'); 
 		
-		confirmModal.find('.modal-header').find('h3').text(StringLibAnahita.action.delete);
-		confirmModal.find('.modal-body').text(StringLibAnahita.prompt.confirmDelete);
+		header.text(StringLibAnahita.action.delete);
+		body.text(StringLibAnahita.prompt.confirmDelete);
 		
-		var triggerBtn = confirmModal.find('.modal-footer').find('.btn-primary');
+		var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
 		
-		triggerBtn.text(StringLibAnahita.action.delete);
+		footer.append(triggerBtn);
 		
 		triggerBtn.on('click', function(event){
 

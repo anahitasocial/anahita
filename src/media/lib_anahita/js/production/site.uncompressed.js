@@ -21289,6 +21289,23 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     });
 	
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/modal.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * License: GPL3
+ */
+
+;(function ($, window, document) {
+	
+    'use strict';
+    
+    $('#an-modal').bind('hidden', function () {
+    	  $(this).find('.modal-footer').find('button').remove();
+    });
+    
+}(jQuery, window, document));
 
 
 ///media/lib_anahita/js/anahita/actions/vote.js
@@ -21341,14 +21358,34 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		return this;
 	};
 	
+	//vote
 	$('body').on('click', 'a.action-vote, a.action-unvote', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote();
 	});
 	
+	//unvote
 	$('body').on('click', 'a.action-votecomment, a.action-unvotecomment', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote('comment');
+	});
+	
+	//show voters in a modal
+	$('body').on('click', 'a[data-toggle*="Voters"]', function ( event ){
+		
+		event.preventDefault();
+		
+		var votersModal = $('#an-modal');
+		var header = votersModal.find('.modal-header').find('h3');
+		var body = votersModal.find('.modal-body');
+
+		$.get($(this).attr('href'), function (response){
+			
+			header.html($(response).filter('.modal-header').html());
+			body.html($(response).filter('.modal-body').html());
+			
+			votersModal.modal('show');
+		}); 
 	});
 	
 }(jQuery, window, document));
@@ -21424,14 +21461,18 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	$.fn.actionDelete = function () {
 		
 		var elem = $( this );
+		
 		var confirmModal = $('#an-modal');
+		var header = confirmModal.find('.modal-header').find('h3');
+		var body = confirmModal.find('.modal-body');
+		var footer = confirmModal.find('.modal-footer'); 
 		
-		confirmModal.find('.modal-header').find('h3').text(StringLibAnahita.action.delete);
-		confirmModal.find('.modal-body').text(StringLibAnahita.prompt.confirmDelete);
+		header.text(StringLibAnahita.action.delete);
+		body.text(StringLibAnahita.prompt.confirmDelete);
 		
-		var triggerBtn = confirmModal.find('.modal-footer').find('.btn-primary');
+		var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
 		
-		triggerBtn.text(StringLibAnahita.action.delete);
+		footer.append(triggerBtn);
 		
 		triggerBtn.on('click', function(event){
 

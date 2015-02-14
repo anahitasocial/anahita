@@ -27,7 +27,7 @@
 	<?php endif; ?>
 	
 	<div class="entity-meta">
-		<div class="an-meta" id="vote-count-wrapper-<?= $page->id ?>">
+		<div id="vote-count-wrapper-<?= $page->id ?>">
 			<?= @helper('ui.voters', $page); ?>
 		</div>
 	</div>
