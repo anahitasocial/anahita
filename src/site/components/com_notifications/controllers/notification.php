@@ -77,10 +77,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
                 
 		$context->query = $this->actor->getNotifications()->getQuery();
         
-        $set = parent::_actionBrowse($context)->order('creationTime','DESC');
-          
-        if($this->getRequest()->get('layout') != 'popover')
-            $set->limit(0);
+        $set = parent::_actionBrowse($context)->order('creationTime','DESC');   
         
         if($this->new)
         	$set->id($this->actor->newNotificationIds->toArray());

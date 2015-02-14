@@ -7,8 +7,8 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 ?>
 
 <ul class="nav pull-right">
-	<li>     
-		<a href="#" data-popover-tipclass="notifications-popover" data-behavior="RemotePopover" data-bs-popover-animate=false data-bs-popover-content-element="D" data-bs-popover-trigger="click" data-bs-popover-location="bottom" data-remotepopover-url="<?=@route('option=com_notifications&view=notifications&layout=popover')?>" >
+	<li>
+        <a data-trigger="notifications-popover" href="<?= @route('option=com_notifications&view=notifications&layout=popover&new=1&limit=5') ?>">
             <span data-url="<?= @route('option=com_notifications&view=notifications&get=count') ?>" data-interval="30000" id="notifications-counter" class="badge <?= ($num_notifications) ? 'badge-important' : '' ?>">
             <?= $num_notifications ?>
 			</span>           
