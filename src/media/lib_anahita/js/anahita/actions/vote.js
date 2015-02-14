@@ -38,10 +38,12 @@
 				}	
 				
 				elem.toggleClass('action-vote' + type).toggleClass('action-unvote' + type);
-				elem.fadeTo('fast', 1);
 				voteCountWrapper.html(response);
 					
-			}.bind(elem)
+			}.bind(elem),
+			complete : function(){
+				elem.fadeTo('fast', 1);
+			}
 		});
 		
 		return this;

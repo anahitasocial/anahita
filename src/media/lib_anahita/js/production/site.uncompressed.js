@@ -21321,8 +21321,9 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     $.widget('anahita.paginator',{
         
         options: {
-          scrollToTop: null,
-          limit: null
+          scrollToTop : true,
+          limit : 20,
+          entities : '.an-entities'
         },
         
         _getCreateOptions: function() {
@@ -21330,10 +21331,13 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
         },
        
         _create: function() {
-            this._on(this.element, {
-                "click a": function(event) {
-                    event.preventDefault();
-                    var li = $(event.target).parent();
+            
+        	this._on(this.element, {
+                "click a": function ( event ) {
+                    
+                	event.preventDefault();
+                    
+                	var li = $( event.target ).parent();
                     
                     if(!li.hasClass('disabled') && !li.hasClass('active')) {
                         this._getPage(event);
@@ -21343,42 +21347,35 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
         },
         
         _getPage: function(event) {
-            var a = $(event.target); 
-            var self = this;
-//            var ul = this.element.find('ul');
             
-//            ul.addClass('uiActivityIndicator');
+        	var a = $(event.target);
+            var self = this;
+            var currentEntities = $(this.element).prev(this.options.entities);
             
             $.ajax({
-              url: a.attr('href')
-            })
-            .done(function(response){
-                
-                self._updateHash(a.attr('href'));
-                
-                var entities = $(response).find('.an-entities');
-                var pagination = $(response).find('.pagination');
-                
-                pagination.paginator();
-
-                if(self.options.scrollToTop) {
-                    $('html').animate({scrollTop:'0px'},'slow');
-                }
-
-                $('.an-entities').fadeOut('fast', function() {
-                    $(this).fadeIn('fast',function() {
-                        $(this).replaceWith(entities);
-                    });
-                });
-
-                $('.pagination').fadeOut('fast', function() {
-                    $(this).fadeIn('fast',function() {
-                        $(this).replaceWith(pagination);
-                    });
-                });
-
-//                ul.removeClass('uiActivityIndicator');
+            	method : 'get',
+            	url : a.attr('href'),
+            	beforeSend : function (){
+            		$(self.element).fadeTo('fast', 0.3);
+            	},
+            	success : function ( response ) {
+            		
+            		//self._updateHash(a.attr('href'));
+            		
+            		var entities = $(response).filter('.an-entities');
+                    var pagination = $(response).filter('.pagination');
+                    
+                    pagination.paginator();
+            		
+                    $(currentEntities).replaceWith(entities);
+                    $(self.element).replaceWith(pagination);
+                    
+                    if(self.options.scrollToTop) {
+                        $('body').animate({scrollTop:'0px'},'slow');
+                    }
+            	}
             });
+            
         },
         
         _updateHash: function(url) {
@@ -21388,7 +21385,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
         
     });
     
-    $('div[data-behavior=pagination]').paginator();
+    $('div[data-behavior*="pagination"]').paginator();
     
 }(jQuery, window));
 
@@ -21434,10 +21431,12 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 				}	
 				
 				elem.toggleClass('action-vote' + type).toggleClass('action-unvote' + type);
-				elem.fadeTo('fast', 1);
 				voteCountWrapper.html(response);
 					
-			}.bind(elem)
+			}.bind(elem),
+			complete : function(){
+				elem.fadeTo('fast', 1);
+			}
 		});
 		
 		return this;
