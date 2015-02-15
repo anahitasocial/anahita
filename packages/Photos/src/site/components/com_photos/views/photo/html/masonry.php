@@ -23,7 +23,7 @@
 			(($photo->title && $photo->description) ? ' :: ' : '').
 			@helper('text.script', $photo->description);			 
 		?>
-		<a data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
+		<a data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>

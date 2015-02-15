@@ -18,7 +18,7 @@
 		(($object->title && $object->description) ? ' :: ' : '').
 		@helper('text.script', $object->description);			 
 	?>
-	<a rel="story-<?= $story->id ?>" data-trigger="imageviewer" href="<?= @route($object->getPortraitURL('original')) ?>" title="<?= $caption ?>">
+	<a rel="story-<?= $story->id ?>" data-trigger="MediaViewer" href="<?= @route($object->getPortraitURL('original')) ?>" title="<?= $caption ?>">
 		<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
 	</a>
 </data>

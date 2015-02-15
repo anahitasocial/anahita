@@ -34,7 +34,7 @@
 		<?php endif;?>
 		
 		<div class="entity-portrait-medium">
-			<a data-rel="story-<?= $story->id ?>" data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $object->getPortraitURL('original'); ?>">
+			<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $object->getPortraitURL('original'); ?>">
 				<img src="<?= $object->getPortraitURL('medium') ?>" />
 			</a>
 		</div>
@@ -48,7 +48,7 @@
 			@helper('text.script', $photo->description); 
 		?>
 		<div class="entity-portrait">
-			<a data-rel="story-<?= $story->id ?>" data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
+			<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 				<img src="<?= $photo->getPortraitURL('square') ?>" />
 			</a>
 		</div>

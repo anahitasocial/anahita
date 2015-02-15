@@ -34,7 +34,7 @@
 			?>
 			<?php if ( $i > 12 ) break; ?>
 			<div class="entity-portrait">
-				<a data-rel="story-<?= $story->id ?>" data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
+				<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 					<img src="<?= $photo->getPortraitURL('square') ?>" />
 				</a>
 			</div>

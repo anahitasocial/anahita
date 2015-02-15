@@ -19,7 +19,7 @@
 //@depends anahita/autosubmit.js
 //@depends anahita/notifications.js
 //@depends anahita/paginator.js
-//@depends anahita/imageviewer.js
+//@depends anahita/mediaviewer.js
 
 
 //@depends anahita/actions/vote.js

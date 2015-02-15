@@ -22271,7 +22271,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     $('[data-behavior*="pagination"]').paginator();
     
 }(jQuery, window));
-///media/lib_anahita/js/anahita/imageviewer.js
+///media/lib_anahita/js/anahita/mediaviewer.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -22284,10 +22284,10 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     
     'use strict';
     
-    $('[data-trigger="imageviewer"]').swipebox();
+    $('[data-trigger="MediaViewer"]').swipebox();
     
     $( document ).ajaxSuccess(function( event, request, settings ) {
-    	$('[data-trigger="imageviewer"]').swipebox();
+    	$('[data-trigger="MediaViewer"]').swipebox();
 	});
     
 }(jQuery, window));
