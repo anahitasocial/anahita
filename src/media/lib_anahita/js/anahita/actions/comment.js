@@ -51,6 +51,7 @@
 	
 	$('.an-comments-wrapper').on('submit', 'form', function(event){
 		event.preventDefault();
+		event.stopPropagation();
 		$(this).CommentPost();
 	});
 	

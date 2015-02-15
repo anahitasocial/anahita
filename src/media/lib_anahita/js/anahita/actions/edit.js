@@ -27,6 +27,7 @@
 	
 	$('body').on('click', 'a[data-action="edit"], a[data-action="editcomment"]', function( event ) {
 		event.preventDefault();
+		event.stopPropagation();
 		$(this).ActionEdit();
 	});
 

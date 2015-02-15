@@ -77,6 +77,6 @@
         
     });
     
-    $('div[data-behavior*="pagination"]').paginator();
+    $('[data-behavior*="pagination"]').paginator();
     
 }(jQuery, window));

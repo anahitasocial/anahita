@@ -53,12 +53,14 @@
 	//vote
 	$('body').on('click', 'a[data-action="vote"], a[data-action="unvote"]', function( event ) {
 		event.preventDefault();
+		event.stopPropagation();
 		$(this).AnActionVote();
 	});
 	
 	//unvote
 	$('body').on('click', 'a[data-action="votecomment"], a[data-action="unvotecomment"]', function( event ) {
 		event.preventDefault();
+		event.stopPropagation();
 		$(this).AnActionVote('comment');
 	});
 	
@@ -66,6 +68,7 @@
 	$('body').on('click', 'a[data-toggle*="Voters"]', function ( event ){
 		
 		event.preventDefault();
+		event.stopPropagation();
 		
 		var votersModal = $('#an-modal');
 		var header = votersModal.find('.modal-header').find('h3');
