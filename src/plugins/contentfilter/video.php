@@ -76,12 +76,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 			foreach($matches[1] as $index => $video_id) {				
 				$url = JURI::base().'plugins/contentfilter/video.php?type=vimeo&id='.$video_id;				
 				$options = array(
-					'allowfullscreen'  	=> 'true',
-					'allowscriptaccess' => 'always',
-					'color' 	  		=> '00ADEF',
-					'autoplay'	  		=> 'true',
-					'url' 		  		=> 'https://vimeo.com/moogaloop.swf?clip_id='.$video_id,
-					'thumbnail'   		=> $url
+					'id'				=> $video_id,
+					'url' 		  		=> 'https://vimeo.com/'.$video_id,
+					'thumbnail'   		=> $url,
+				    'type'				=> 'vimeo'
 				);
 				
 				$video = $this->_createVideo($options);
@@ -113,16 +111,13 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 						
 				if ( preg_match($pattern, $youtube_link, $id) )
 				{
-					$id   = str_replace('watch?v=','',array_pop($id));
-									
-					$link = 'https://www.youtube.com/v/'.$id;
-					
+					$id   = str_replace('watch?v=','', array_pop($id));
+		
 					$options = array(						
-						'allowFullScreen' 	=> 'true',
-						'allowScriptAccess' => 'always',
-						'autoplay'	=> 1,
-						'url' 		=> $link,
-						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/0.jpg'
+						'id'		=> $id,
+						'url' 		=> 'https://www.youtube.com/watch?v='.$id,
+						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/0.jpg',
+					    'type'		=> 'youtube'
 					);
 				
 					$video = $this->_createVideo($options);
@@ -143,11 +138,13 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	protected function _createVideo(array $options)
 	{
 		$thumbnail = $options['thumbnail'];
-		unset($options['thumbnail']);
-		$options   = json_encode($options);
-		return '<div style="cursor:pointer" data-behavior="EmbeddedVideo" class="an-media-video-thumbnail" data-embeddedvideo-options=\''.$options.'\'>'.					
+		$url = $options['url'];
+		$type = $options['type'];
+		$id = $options['id'];
+
+		return '<a data-trigger="MediaViewer" class="an-media-video-thumbnail" rel="'.$type.' '.$id.'" class="swipebox-video" href="'.$url.'">'.					
 					'<img src="'.$thumbnail.'" />'.					
-			   '</div>';
+			   '</a>';
 	}
 }
 
