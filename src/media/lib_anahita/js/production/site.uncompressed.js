@@ -21412,21 +21412,21 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 			type : 'post',
 			url : elem.attr('href'),
 			data : {
-				action : elem.data('action')
+				action : elem.attr('data-action')
 			},
 			beforeSend : function(){
 				elem.fadeTo('fast', 0.3);
 			}.bind(elem),
 			success : function(response){
 				
-				if(elem.data('action') == ('vote' + type))
+				if(elem.attr('data-action') == ('vote' + type))
 				{
-					elem.data('action', 'unvote' + type);
+					elem.attr('data-action', 'unvote' + type);
 					elem.text(StringLibAnahita.action.unvote);
 				}	
-				else if(elem.data('action') == ('unvote' + type))
+				else if(elem.attr('data-action') == ('unvote' + type))
 				{
-					elem.data('action', 'vote' + type);
+					elem.attr('data-action', 'vote' + type);
 					elem.text(StringLibAnahita.action.vote);
 				}	
 				
@@ -21443,13 +21443,13 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 	};
 	
 	//vote
-	$('body').on('click', 'a.action-vote, a.action-unvote', function( event ) {
+	$('body').on('click', 'a[data-action="vote"], a[data-action="unvote"]', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote();
 	});
 	
 	//unvote
-	$('body').on('click', 'a.action-votecomment, a.action-unvotecomment', function( event ) {
+	$('body').on('click', 'a[data-action="votecomment"], a[data-action="unvotecomment"]', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote('comment');
 	});
@@ -21587,7 +21587,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		confirmModal.modal('show');	
 	};
 	
-	$( 'body' ).on( 'click', 'a.action-delete', function( event ) {
+	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
 		
 		event.preventDefault();
 		
@@ -21622,7 +21622,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		});
 	};
 	
-	$('body').on('click', 'a.action-edit', function( event ) {
+	$('body').on('click', 'a[data-action="edit"], a[data-action="editcomment"]', function( event ) {
 		event.preventDefault();
 		$(this).ActionEdit();
 	});
@@ -21649,7 +21649,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		});
 	};
 	
-	$('body').on('click', 'button.action-cancel', function( event ) {
+	$('body').on('click', 'button[data-action="cancel"], button[data-action="cancelcomment"]', function( event ) {
 		event.preventDefault();
 		$(this).ActionCancel();
 	});

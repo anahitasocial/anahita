@@ -24,7 +24,7 @@
 		});
 	};
 	
-	$('body').on('click', 'a.action-edit', function( event ) {
+	$('body').on('click', 'a[data-action="edit"], a[data-action="editcomment"]', function( event ) {
 		event.preventDefault();
 		$(this).ActionEdit();
 	});

@@ -86,7 +86,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $voted = $entity->votedUp(get_viewer());
          
         $action = $voted ? 'unvote' : 'vote';
-        $class = 'action-vote';
+        $class = 'action-'.$action;
          
         if(is($entity, 'ComBaseDomainEntityComment'))
         {

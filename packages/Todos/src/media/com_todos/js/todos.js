@@ -8,6 +8,7 @@
  * @link     	http://www.anahitapolis.com
  */
 
+/*
 window.addEvent('domready', function(){
     window.entityHelper = new EntityHelper();
 });
@@ -32,3 +33,4 @@ Delegator.register('click', {
 		entityHelper.add();
 	}
 });
+*/

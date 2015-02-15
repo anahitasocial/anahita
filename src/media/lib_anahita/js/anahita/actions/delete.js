@@ -54,7 +54,7 @@
 		confirmModal.modal('show');	
 	};
 	
-	$( 'body' ).on( 'click', 'a.action-delete', function( event ) {
+	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
 		
 		event.preventDefault();
 		

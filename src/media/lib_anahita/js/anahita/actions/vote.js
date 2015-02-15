@@ -19,21 +19,21 @@
 			type : 'post',
 			url : elem.attr('href'),
 			data : {
-				action : elem.data('action')
+				action : elem.attr('data-action')
 			},
 			beforeSend : function(){
 				elem.fadeTo('fast', 0.3);
 			}.bind(elem),
 			success : function(response){
 				
-				if(elem.data('action') == ('vote' + type))
+				if(elem.attr('data-action') == ('vote' + type))
 				{
-					elem.data('action', 'unvote' + type);
+					elem.attr('data-action', 'unvote' + type);
 					elem.text(StringLibAnahita.action.unvote);
 				}	
-				else if(elem.data('action') == ('unvote' + type))
+				else if(elem.attr('data-action') == ('unvote' + type))
 				{
-					elem.data('action', 'vote' + type);
+					elem.attr('data-action', 'vote' + type);
 					elem.text(StringLibAnahita.action.vote);
 				}	
 				
@@ -50,13 +50,13 @@
 	};
 	
 	//vote
-	$('body').on('click', 'a.action-vote, a.action-unvote', function( event ) {
+	$('body').on('click', 'a[data-action="vote"], a[data-action="unvote"]', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote();
 	});
 	
 	//unvote
-	$('body').on('click', 'a.action-votecomment, a.action-unvotecomment', function( event ) {
+	$('body').on('click', 'a[data-action="votecomment"], a[data-action="unvotecomment"]', function( event ) {
 		event.preventDefault();
 		$(this).AnActionVote('comment');
 	});

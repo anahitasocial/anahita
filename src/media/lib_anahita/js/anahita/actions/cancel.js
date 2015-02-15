@@ -18,7 +18,7 @@
 		});
 	};
 	
-	$('body').on('click', 'button.action-cancel', function( event ) {
+	$('body').on('click', 'button[data-action="cancel"], button[data-action="cancelcomment"]', function( event ) {
 		event.preventDefault();
 		$(this).ActionCancel();
 	});
