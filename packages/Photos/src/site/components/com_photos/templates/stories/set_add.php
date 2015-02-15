@@ -24,27 +24,22 @@
 		</a>
 	</div>
 	<?php endif ?>
-	
-	<div data-behavior="Mediabox">
 		<div class="media-grid">	
 			<?php $photos = $object->photos->order('photoSets.ordering')->limit(15)->fetchSet(); ?>
 			<?php foreach( $photos as $i=>$photo ): ?>
 			<?php 
-			$rel = 'lightbox[actor-set-'.$photo->owner->id.' 900 900]';
-		
 			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
 			(($photo->title && $photo->description) ? ' :: ' : '').
 			@helper('text.script', $photo->description);
 			?>
 			<?php if ( $i > 12 ) break; ?>
 			<div class="entity-portrait">
-				<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($photo->getPortraitURL('medium')) ?>">
+				<a data-rel="story-<?= $story->id ?>" data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 					<img src="<?= $photo->getPortraitURL('square') ?>" />
 				</a>
 			</div>
-		<?php endforeach; ?>
+		    <?php endforeach; ?>
 		</div>
-	</div>
 	
 	<div class="entity-meta">
 		<?= sprintf(@text('COM-PHOTOS-SET-META-PHOTOS'), $object->getPhotoCount()) ?>

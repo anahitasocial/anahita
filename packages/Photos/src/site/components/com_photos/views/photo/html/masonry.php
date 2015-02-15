@@ -17,15 +17,13 @@
 		</div>
 	</div>
 	
-	<div class="entity-portrait-medium" data-behavior="Mediabox">
+	<div class="entity-portrait-medium">
 		<?php 
-			$rel = 'lightbox[actor-'.$photo->owner->id.' 900 900]';
-		
 			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
 			(($photo->title && $photo->description) ? ' :: ' : '').
 			@helper('text.script', $photo->description);			 
 		?>
-		<a title="<?= $caption ?>" href="<?= $photo->getPortraitURL('medium') ?>" rel="<?= $rel ?>">			
+		<a data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>

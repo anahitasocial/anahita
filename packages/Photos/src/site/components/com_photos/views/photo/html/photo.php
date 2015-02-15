@@ -4,7 +4,14 @@
 
 <div id="an-photos-photo" class="an-entity">	
 	<div class="entity-portrait-medium">
-		<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
+		<?php 
+			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
+			(($photo->title && $photo->description) ? ' :: ' : '').
+			@helper('text.script', $photo->description);			 
+		?>
+		<a data-trigger="imageviewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
+			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
+		</a>
 	</div>
 
 	<div class="entity-title-wrapper">

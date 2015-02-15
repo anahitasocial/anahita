@@ -3,6 +3,7 @@
 //@depends vendors/jquery-ui.js
 //@depends vendors/fastclick.js
 //@depends vendors/jquery.ba-outside-events.js
+//@depends vendors/jquery.swipebox.js
 
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-tab.js
@@ -18,6 +19,7 @@
 //@depends anahita/autosubmit.js
 //@depends anahita/notifications.js
 //@depends anahita/paginator.js
+//@depends anahita/imageviewer.js
 
 
 //@depends anahita/actions/vote.js

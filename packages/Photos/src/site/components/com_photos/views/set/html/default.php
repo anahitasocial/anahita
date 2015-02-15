@@ -1,25 +1,8 @@
 <?php defined('KOOWA') or die ?>
 
-<script src="lib_anahita/js/vendors/mediabox.js" />
 <?php if($set->authorize('edit')) : ?>
 <script src="com_photos/js/organizer.js" />
 <?php endif; ?>
-
-<script>
-Delegator.register('click', {
-	'Slideshow' : function(event, el, api){
-		event.stop();
-		
-		var media = new Array();
-		
-		document.getElements('#set-mediums .media-grid img').each(function(item){
-			media.push([item.get('src').replace('_square', '_medium'), item.get('caption')]);
-		});
-		
-		Mediabox.open(media,0);
-	}
-});
-</script>
 
 <div class="row">
 	<div class="span8">
@@ -28,12 +11,7 @@ Delegator.register('click', {
     <?= @helper('ui.comments', $set) ?>
 	</div>
 	
-	<div class="span4">
-	
-		<a href="#" class="btn btn-block btn-large btn-primary" data-trigger="Slideshow" title="<?= @escape($set->title) ?>">
-	    <?= @text('COM-PHOTOS-ACTION-SLIDESHOW') ?>
-		</a>
-				
+	<div class="span4">			
     	<div class="an-entity an-photos-set">		
     		<?php if($set->hasCover()): ?>
     		<div id="set-cover-wrapper">

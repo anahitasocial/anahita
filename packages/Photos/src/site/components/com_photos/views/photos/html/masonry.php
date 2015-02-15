@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<script src="lib_anahita/js/vendors/mediabox.js" />
-
 <?= @helper('ui.header', array()) ?>
 
 <?php if(count($photos)) : ?>

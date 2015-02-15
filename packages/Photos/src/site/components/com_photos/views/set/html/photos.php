@@ -6,7 +6,7 @@
 	<div class="media-grid">
 		<?php foreach($photos as $photo) :?>
 		<div class="thumbnail-wrapper <?= ($set->isCover($photo)) ? 'cover' : '' ?>" mid="<?= $photo->id ?>">
-			<a class="thumbnail-link" href="<?= @route($photo->getURL()) ?>" title="<?= @escape($photo->title) ?>">
+			<a data-trigger="imageviewer" class="thumbnail-link" href="<?= $photo->getPortraitURL('original') ?>" title="<?= @escape($photo->title) ?>">
 				<?php 
 				$caption = htmlspecialchars($photo->title, ENT_QUOTES).
 				(($photo->title && $photo->description) ? ' :: ' : '').
@@ -18,3 +18,5 @@
 		<?php endforeach; ?>
 	</div>
 </div>
+
+

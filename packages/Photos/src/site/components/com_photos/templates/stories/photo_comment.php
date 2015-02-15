@@ -13,19 +13,14 @@
     	</a>
     </h4>
 	<?php endif; ?>
-
-	<div data-behavior="Mediabox">
-		<?php 
-			$rel = 'lightbox[actor-'.$object->owner->id.' 900 900]';
-		
-			$caption = htmlspecialchars($object->title, ENT_QUOTES).
-			(($object->title && $object->description) ? ' :: ' : '').
-			@helper('text.script', $object->description);			 
-		?>
-		<a rel="<?= $rel ?>" href="<?= @route($object->getPortraitURL('medium')) ?>" title="<?= $caption ?>">
-			<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
-		</a>
-	</div>
+	<?php 
+		$caption = htmlspecialchars($object->title, ENT_QUOTES).
+		(($object->title && $object->description) ? ' :: ' : '').
+		@helper('text.script', $object->description);			 
+	?>
+	<a rel="story-<?= $story->id ?>" data-trigger="imageviewer" href="<?= @route($object->getPortraitURL('original')) ?>" title="<?= $caption ?>">
+		<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
+	</a>
 </data>
 <?php endif;?>
 
