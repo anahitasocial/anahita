@@ -125,7 +125,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 						'id' => $id,
 					    'title' => $video['entry']['title']['$t'],
 						'url' => 'https://www.youtube.com/watch?v='.$id,
-						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/0.jpg',
+						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/maxresdefault.jpg',
 					    'type' => 'youtube'
 					);
 				
@@ -145,16 +145,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 * @return string
 	 */
 	protected function _createVideo(array $options)
-	{	    
-	    /*
-	    return '<a data-trigger="MediaViewer" class="an-media-video-thumbnail" '
-		.' rel="'.$options['type'].' '.$options['id'].'" '
-		.' href="'.$options['url'].'"'
-		.' title="'.htmlspecialchars($options['title'], ENT_QUOTES).'" >'
-		.'<img src="'.$options['thumbnail'].'" /><div></div>'
-		.'</a>';
-		*/
-	    
+	{	    	    
 	    return '<div class="an-media-video">' 
 	    .'<img src="'.$options['thumbnail'].'" />'
 	    .'<a data-trigger="MediaViewer" class="an-media-video-thumbnail" '

@@ -19897,7 +19897,8 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 				afterOpen: null,
 				afterClose: null,
 				loopAtEnd: false,
-				autoplayVideos: false
+				autoplayVideos: false,
+				closeOnClick: false
 			},
 
 			plugin = this,
@@ -20461,6 +20462,14 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 				$( '#swipebox-close' ).bind( action, function() {
 					$this.closeSlide();
 				} );
+				
+				if ( plugin.settings.closeOnClick ) {
+					$( '#swipebox-slider' ).bind( 'click', function(event) {
+						if ( !$(event.target).parent().hasClass('slide') ) {
+							$this.closeSlide();
+						}
+					});
+				}
 			},
 
 			/**
@@ -20632,7 +20641,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 					iframe = '<iframe width="560" height="315" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
 				}
 
-				return '<div class="swipebox-video-container" style="max-width:' + plugin.settings.videomaxWidth + 'px"><div class="swipebox-video">' + iframe + '</div></div>';
+				return '<div class="swipebox-video-container" style="max-width:' + plugin.settings.videoMaxWidth + 'px"><div class="swipebox-video">' + iframe + '</div></div>';
 			},
 
 			/**
@@ -22287,7 +22296,10 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     $('[data-trigger="MediaViewer"]').swipebox();
     
     $( document ).ajaxSuccess(function( event, request, settings ) {
-    	$('[data-trigger="MediaViewer"]').swipebox();
+    	$('[data-trigger="MediaViewer"]').swipebox({
+    		autoplayVideos : true,
+    		closeOnClick : true
+    	});
 	});
     
 }(jQuery, window));
