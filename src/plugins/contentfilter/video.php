@@ -1,6 +1,4 @@
 <?php
-if ( defined('KOOWA') ) {
- 
 /** 
  * LICENSE: ##LICENSE##
  * 
@@ -38,7 +36,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_HIGH,
+            'priority' => KCommand::PRIORITY_HIGH,
         ));
 
         parent::_initialize($config);
@@ -73,17 +71,23 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 		
 		if(preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) 
 		{
-			foreach($matches[1] as $index => $video_id) {				
-				$url = JURI::base().'plugins/contentfilter/video.php?type=vimeo&id='.$video_id;				
-				$options = array(
-					'id'				=> $video_id,
-					'url' 		  		=> 'https://vimeo.com/'.$video_id,
-					'thumbnail'   		=> $url,
-				    'type'				=> 'vimeo'
-				);
-				
-				$video = $this->_createVideo($options);
-				$text = str_replace($matches[0][$index], $video, $text);
+			foreach($matches[1] as $index => $id) 
+			{				
+			    $video = json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$id.'.json'))[0];
+			    
+			    if($video && $video->id)
+			    {
+    				$options = array(
+    					'id' => $video->id,
+    				    'title' => $video->title,
+    					'url' => 'https://vimeo.com/'.$video->id,
+    					'thumbnail' => $video->thumbnail_large,
+    				    'type' => 'vimeo'
+    				);
+    				
+    				$video = $this->_createVideo($options);
+    				$text = str_replace($matches[0][$index], $video, $text);
+			    }
 			}
 		}
 	}	
@@ -104,23 +108,28 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 			foreach($matches[1] as $index => $match)
 			{
 				$youtube_link = $match;
-				$full_link	  = $matches[0][$index];
-				$id	  = array();
+				$full_link = $matches[0][$index];
+				$id	= array();
 				$pattern = '/v=([^&#]+)/';
-				if ( strpos($full_link,'.be/') ) $pattern = '/([^&#]+)/';
+				
+				if(strpos($full_link,'.be/')) 
+				    $pattern = '/([^&#]+)/';
 						
-				if ( preg_match($pattern, $youtube_link, $id) )
+				if(preg_match($pattern, $youtube_link, $id))
 				{
-					$id   = str_replace('watch?v=','', array_pop($id));
-		
+					$id = str_replace('watch?v=', '', array_pop($id));
+					
+					$video = json_decode(file_get_contents('https://gdata.youtube.com/feeds/api/videos/'.$id.'?alt=json'), true);
+
 					$options = array(						
-						'id'		=> $id,
-						'url' 		=> 'https://www.youtube.com/watch?v='.$id,
+						'id' => $id,
+					    'title' => $video['entry']['title']['$t'],
+						'url' => 'https://www.youtube.com/watch?v='.$id,
 						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/0.jpg',
-					    'type'		=> 'youtube'
+					    'type' => 'youtube'
 					);
 				
-					$video = $this->_createVideo($options);
+					$video = $this->_createVideo( $options );
 					$text = str_replace($matches[0][$index], $video, $text);
 				}
 			}
@@ -136,27 +145,12 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 * @return string
 	 */
 	protected function _createVideo(array $options)
-	{
-		$thumbnail = $options['thumbnail'];
-		$url = $options['url'];
-		$type = $options['type'];
-		$id = $options['id'];
-
-		return '<a data-trigger="MediaViewer" class="an-media-video-thumbnail" rel="'.$type.' '.$id.'" class="swipebox-video" href="'.$url.'">'.					
-					'<img src="'.$thumbnail.'" />'.					
-			   '</a>';
-	}
-}
-
-} else {
-	
-	$type 	= @$_GET['type'];
-	$video	= @$_GET['id'];
-	if ( $video ) {		
-		$contents = file_get_contents('https://vimeo.com/api/v2/video/'.$video.'.php');
-		$array = array_shift(@unserialize(trim($contents)));
-		$url   = $array['thumbnail_large'];
-		header("Content-type: image/jpeg");
-		print file_get_contents($url);
+	{	    
+	    return '<a data-trigger="MediaViewer" class="an-media-video-thumbnail" '
+		.' rel="'.$options['type'].' '.$options['id'].'" '
+		.' href="'.$options['url'].'"'
+		.' title="'.htmlspecialchars($options['title'], ENT_QUOTES).'" >'
+		.'<img src="'.$options['thumbnail'].'" />'
+		.'</a>';
 	}
 }
