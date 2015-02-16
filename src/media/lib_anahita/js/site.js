@@ -27,6 +27,7 @@
 //@depends anahita/actions/delete.js
 //@depends anahita/actions/edit.js
 //@depends anahita/actions/cancel.js
+//@depends anahita/actions/commentstatus.js
 
 
 
