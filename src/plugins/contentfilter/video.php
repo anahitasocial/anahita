@@ -121,11 +121,20 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 					
 					$video = json_decode(file_get_contents('https://gdata.youtube.com/feeds/api/videos/'.$id.'?alt=json'), true);
 
+					$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
+
+					if(get_headers($thumbBase.'maxresdefault.jpg')[0] != 'HTTP/1.0 404 Not Found')
+					    $thumbnail = $thumbBase.'maxresdefault.jpg';
+					elseif(get_headers($thumbBase.'0.jpg')[0] != 'HTTP/1.0 404 Not Found')
+					    $thumbnail = $thumbBase.'0.jpg';
+					else 
+					    return;
+
 					$options = array(						
 						'id' => $id,
 					    'title' => $video['entry']['title']['$t'],
 						'url' => 'https://www.youtube.com/watch?v='.$id,
-						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/maxresdefault.jpg',
+						'thumbnail' => $thumbnail,
 					    'type' => 'youtube'
 					);
 				

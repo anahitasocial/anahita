@@ -22156,12 +22156,12 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     			 if (data.new_notifications > 0) {
                      
     				 title.html('(' + data.new_notifications + ') ' + metaTitle);
-                     counter.addClass('counter-important');
+                     counter.addClass('badge-important');
                      
                  } else {
                 	 
                      title.html(metaTitle);
-                     counter.removeClass('counter-important');
+                     counter.removeClass('badge-important');
                  }
                 
                 setTimeout(pulse, counter.data('interval'));
