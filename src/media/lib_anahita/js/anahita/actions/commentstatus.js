@@ -7,7 +7,7 @@
         var a = $(this);
 
         $.ajax({
-            type: 'get',
+            type: 'POST',
             url: a.attr('href'),
             data: {
                 action: 'commentstatus',
