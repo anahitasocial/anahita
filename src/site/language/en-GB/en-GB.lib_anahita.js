@@ -11,7 +11,9 @@ var StringLibAnahita = {
 		vote : 'Like',
 		unvote : 'Unlike',
                 openComments: 'Open Comments',
-                closeComments: 'Close Comments'
+                closeComments: 'Close Comments',
+                subscribe: 'Follow',
+                unsubscribe: 'Unfollow'
 	},
 	
 	'prompt' : {

@@ -28,6 +28,7 @@
 //@depends anahita/actions/edit.js
 //@depends anahita/actions/cancel.js
 //@depends anahita/actions/commentstatus.js
+//@depends anahita/actions/subscribe.js
 
 
 

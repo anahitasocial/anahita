@@ -116,14 +116,13 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     {
         $entity = $this->getController()->getItem();
     
-    
-        $label 	= JText::_('LIB-AN-ACTION-'.strtoupper($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe'));
-    
-        $command
-        ->append(array('label'=>$label))
-        ->href($entity->getURL().'&action='.($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe'))
-        ->setAttribute('data-trigger','Submit');
-        ;
+        $action = ($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe');
+        $label 	= JText::_('LIB-AN-ACTION-'.strtoupper($action));
+        
+        $command->append(array('label'=>$label))
+            ->href($entity->getURL())
+            ->class('action-'.$action)
+            ->setAttribute('data-action',$action);
     }
     
     
