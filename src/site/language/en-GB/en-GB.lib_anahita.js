@@ -9,7 +9,9 @@ var StringLibAnahita = {
 		yes : 'Yes',
 		browseImage : 'Browse Image',
 		vote : 'Like',
-		unvote : 'Unlike'
+		unvote : 'Unlike',
+                openComments: 'Open Comments',
+                closeComments: 'Close Comments'
 	},
 	
 	'prompt' : {

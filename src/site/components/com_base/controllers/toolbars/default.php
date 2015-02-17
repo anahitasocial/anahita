@@ -139,10 +139,13 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
     
         $label  = $entity->openToComment ? JTEXT::_('LIB-AN-ACTION-CLOSE-COMMENTING') : JTEXT::_('LIB-AN-ACTION-OPEN-COMMENTING');
+        $status = $entity->openToComment ? 0 : 1;
     
         $command->append(array('label'=>$label))
-        ->href($entity->getURL().'&action=commentstatus&status='.(!$entity->openToComment))
-        ->setAttribute('data-trigger','Submit');
+        ->href($entity->getURL())
+        ->class('action-commentstatus')
+        ->setAttribute('data-action','commentstatus')
+        ->setAttribute('data-status',$status);
     }
     
     /**
