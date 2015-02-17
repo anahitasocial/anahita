@@ -21,7 +21,7 @@
                 var text = StringLibAnahita['action'][actions[action]];
 
                 a.data('action', actions[action]).text(text);
-                a.removeClass('action-' + a.dat('action')).addClass('action-'+actions[action]);
+                a.removeClass('action-' + action).addClass('action-'+actions[action]);
             },
             complete: function () {
                 a.fadeTo('fast', 1);
