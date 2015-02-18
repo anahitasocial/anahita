@@ -20,7 +20,7 @@
 //@depends anahita/notifications.js
 //@depends anahita/paginator.js
 //@depends anahita/mediaviewer.js
-
+//@depends anahita/sortable.js
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/comment.js
