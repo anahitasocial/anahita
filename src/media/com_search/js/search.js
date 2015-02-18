@@ -1,3 +1,70 @@
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+	
+	$.widget("anahita.search", {
+		
+		options : {
+			searchForm : 'form[data-trigger="SearchRequest"]',
+			sortOption : 'select[data-trigger="SortOption"]',
+			commentOption : 'input[data-trigger="SearchOption"]',
+			scope : 'a[data-trigger="ChangeScope"]'
+		},
+		
+		_create : function() {
+		
+			this.form = $(this.options.searchForm); 
+			this.sort = $(this.options.sortOption);
+			this.comment = $(this.options.commentOption);
+			this.scope = $(this.options.scope);
+			
+			//search form
+			this._on(this.form, {
+				submit : function( event ) {
+					event.preventDefault();
+					console.log(this.form);
+				}
+			});
+			
+			//sort options
+			this._on(this.sort, {
+				change : function ( event ) {
+					event.preventDefault();
+					console.log(this.sort);
+				}
+			});
+			
+			//sort options
+			this._on(this.comment, {
+				change : function ( event ) {
+					event.preventDefault();
+					console.log(this.comment);
+				}
+			});
+			
+			//change scope
+			this._on(this.scope, {
+				click : function ( event ) {
+					event.preventDefault();
+					console.log(this.scope.attr('href'));
+				}
+			});
+		}
+	});
+	
+	var search = $('body').search();
+	
+}(jQuery, window, document));	
+
+/*
 (function(){	
 	var search_form    = null;
 	var search_options = {};
@@ -54,3 +121,4 @@
 		submit_form();
 	});	
 })()
+*/
