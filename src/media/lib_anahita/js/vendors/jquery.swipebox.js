@@ -75,7 +75,7 @@
 				$( document ).on( 'click', selector, function( event ) {
 
 					// console.log( isTouch );
-
+					
 					if ( event.target.parentNode.className === 'slide current' ) {
 
 						return false;
@@ -102,11 +102,11 @@
 					}
 
 					if ( relVal && relVal !== '' && relVal !== 'nofollow' ) {
-						$elem = $selector.filter( '[' + relType + '="' + relVal + '"]' );
+						$elem = $( selector ).filter( '[' + relType + '="' + relVal + '"]' );
 					} else {
 						$elem = $( selector );
 					}
-
+					
 					$elem.each( function() {
 
 						var title = null,

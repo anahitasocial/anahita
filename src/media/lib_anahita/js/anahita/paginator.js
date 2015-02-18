@@ -63,7 +63,7 @@
                     $(self.element).replaceWith(pagination);
                     
                     if(self.options.scrollToTop) {
-                        $('body').animate({scrollTop:'0px'},'slow');
+                        $('body,html').animate({scrollTop:'0px'},'slow');
                     }
             	}
             });

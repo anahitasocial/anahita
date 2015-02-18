@@ -19954,7 +19954,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 				$( document ).on( 'click', selector, function( event ) {
 
 					// console.log( isTouch );
-
+					
 					if ( event.target.parentNode.className === 'slide current' ) {
 
 						return false;
@@ -19981,11 +19981,11 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 					}
 
 					if ( relVal && relVal !== '' && relVal !== 'nofollow' ) {
-						$elem = $selector.filter( '[' + relType + '="' + relVal + '"]' );
+						$elem = $( selector ).filter( '[' + relType + '="' + relVal + '"]' );
 					} else {
 						$elem = $( selector );
 					}
-
+					
 					$elem.each( function() {
 
 						var title = null,
@@ -22263,7 +22263,7 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
                     $(self.element).replaceWith(pagination);
                     
                     if(self.options.scrollToTop) {
-                        $('body').animate({scrollTop:'0px'},'slow');
+                        $('body,html').animate({scrollTop:'0px'},'slow');
                     }
             	}
             });
@@ -22293,13 +22293,9 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
     
     'use strict';
     
-    $('[data-trigger="MediaViewer"]').swipebox();
-    
-    $( document ).ajaxSuccess(function( event, request, settings ) {
-    	$('[data-trigger="MediaViewer"]').swipebox({
-    		autoplayVideos : true,
-    		closeOnClick : true
-    	});
+    $('[data-trigger="MediaViewer"]').swipebox({
+		autoplayVideos : true,
+		closeOnClick : true
 	});
     
 }(jQuery, window));
@@ -22580,6 +22576,95 @@ var effectTransfer = $.effects.effect.transfer = function( o, done ) {
 		event.stopPropagation();
 		$(this).ActionCancel();
 	});
+
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/commentstatus.js
+;(function ($, window, document) {
+
+    'use strict';
+
+    $.fn.AnActionCommentStatus = function () {
+
+        var a = $(this);
+
+        $.ajax({
+            type: 'POST',
+            url: a.attr('href'),
+            data: {
+                action: 'commentstatus',
+                status: a.data('status')
+            },
+            beforeSend: function () {
+                a.fadeTo('fast', 0.3);
+                a.parent().addClass('uiActivityIndicator');
+            },
+            success: function (response) {
+                var status = 1 - parseInt(a.data('status'));
+                var text = (status ? StringLibAnahita.action.openComments : StringLibAnahita.action.closeComments);
+
+                a.data('status', status).text(text);
+
+                if (status) {
+                    $('.an-comment-form').remove();
+                    $('.an-comments-wrapper').append($(response).find('div.alert'));
+                } else {
+                    $('.an-comments-wrapper').find('div.alert').remove();
+                    $('.an-comments-wrapper').append($(response).find('.an-comment-form'));
+                }
+            },
+            complete: function() {
+                a.fadeTo('fast',1);
+                a.parent().removeClass('uiActivityIndicator');
+            }
+        });
+
+        return this;
+
+    };
+
+    $('body').on('click', 'a[data-action="commentstatus"]', function (event) {
+        event.preventDefault();
+        $(this).AnActionCommentStatus();
+    });
+
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/subscribe.js
+;(function ($, window, document) {
+
+    'use strict';
+
+    $.fn.AnActionSubscribe = function () {
+        var a = $(this);
+
+        $.ajax({
+            type: 'POST',
+            url: a.attr('href'),
+            data: {
+                action: a.data('action')
+            },
+            beforeSend: function () {
+                a.fadeTo('fast', 0.3);
+                a.parent().addClass('uiActivityIndicator');
+            },
+            success: function () {
+                var action = a.data('action');
+                var actions = {subscribe:'unsubscribe',unsubscribe:'subscribe'};
+                var text = StringLibAnahita['action'][actions[action]];
+
+                a.data('action', actions[action]).text(text);
+                a.removeClass('action-' + action).addClass('action-'+actions[action]);
+            },
+            complete: function () {
+                a.fadeTo('fast', 1);
+                a.parent().removeClass('uiActivityIndicator');
+            }
+        });
+    };
+
+    $('body').on('click', 'a[data-action="subscribe"], a[data-action="unsubscribe"]', function (event) {
+        event.preventDefault();
+        $(this).AnActionSubscribe();
+    });
 
 }(jQuery, window, document));
 

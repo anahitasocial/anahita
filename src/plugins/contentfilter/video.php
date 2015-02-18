@@ -78,11 +78,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 			    if($video && $video->id)
 			    {
     				$options = array(
-    					'id' => $video->id,
     				    'title' => $video->title,
     					'url' => 'https://vimeo.com/'.$video->id,
-    					'thumbnail' => $video->thumbnail_large,
-    				    'type' => 'vimeo'
+    					'thumbnail' => $video->thumbnail_large
     				);
     				
     				$video = $this->_createVideo($options);
@@ -131,11 +129,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 					    return;
 
 					$options = array(						
-						'id' => $id,
 					    'title' => $video['entry']['title']['$t'],
 						'url' => 'https://www.youtube.com/watch?v='.$id,
-						'thumbnail' => $thumbnail,
-					    'type' => 'youtube'
+						'thumbnail' => $thumbnail
 					);
 				
 					$video = $this->_createVideo( $options );
@@ -157,8 +153,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{	    	    
 	    return '<div class="an-media-video">' 
 	    .'<img src="'.$options['thumbnail'].'" />'
-	    .'<a data-trigger="MediaViewer" class="an-media-video-thumbnail" '
-	    .' rel="'.$options['type'].' '.$options['id'].'" '
+	    .'<a data-rel="media-'.uniqid().'" data-trigger="MediaViewer" class="an-media-video-thumbnail" '
 		.' href="'.$options['url'].'"'
 		.' title="'.htmlspecialchars($options['title'], ENT_QUOTES).'" >'
 	    .'</a></div>';
