@@ -23,13 +23,15 @@
 
                 a.data('status', status).text(text);
 
-                if (status) {
-                    $('.an-comment-form').remove();
-                    $('.an-comments-wrapper').append($(response).find('div.alert'));
-                } else {
-                    $('.an-comments-wrapper').find('div.alert').remove();
-                    $('.an-comments-wrapper').append($(response).find('.an-comment-form'));
-                }
+                $.get(a.attr('href'), function(response) {
+                    if (status) {
+                        $('.an-comment-form').remove();
+                        $('.an-comments-wrapper').append($(response).find('div.alert'));
+                    } else {
+                        $('.an-comments-wrapper').find('div.alert').remove();
+                        $('.an-comments-wrapper').append($(response).find('.an-comment-form'));
+                    }
+                });
             },
             complete: function() {
                 a.fadeTo('fast',1);
