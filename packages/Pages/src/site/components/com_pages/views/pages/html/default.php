@@ -10,7 +10,7 @@
 	</div>
 	
 	<div class="span4">
-		<ul class="nav nav-pills nav-stacked">
+		<ul class="nav nav-pills nav-stacked" data-behavior="sortable">
 			<li class="nav-header">
        		<?= @text('LIB-AN-SORT-TITLE') ?>
     		</li>
