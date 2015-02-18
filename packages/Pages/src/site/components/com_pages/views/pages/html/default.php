@@ -15,19 +15,19 @@
        		<?= @text('LIB-AN-SORT-TITLE') ?>
     		</li>
     		<li class="sort-option active">
-				<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort=newest') ?>">
+				<a href="<?= @route('layout=list&sort=newest') ?>">
 				<?= @text('LIB-AN-SORT-NEWEST') ?>
 				</a>
 			</li>
      
 			<li class="sort-option">
-				<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort=top') ?>">
+				<a href="<?= @route('layout=list&sort=top') ?>">
 				<?= @text('LIB-AN-SORT-TOP') ?>
 				</a>
 			</li>
 	
 			<li class="sort-option">
-				<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort=updated') ?>">
+				<a href="<?= @route('layout=list&sort=updated') ?>">
 				<?= @text('LIB-AN-SORT-UPDATED') ?>
 				</a>
 			</li>

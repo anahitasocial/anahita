@@ -26,7 +26,7 @@
 		    <?php foreach($sorts as $sort): ?>
 			<?php $active = ($sort == 'newest') ? 'active' : '' ?>
 			<li class="sort-option <?= $active ?>">
-				<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort='.$sort) ?>">
+				<a href="<?= @route('layout=list&sort='.$sort) ?>">
 				<?= @text('LIB-AN-SORT-'.$sort) ?>
 				</a>
 			</li>

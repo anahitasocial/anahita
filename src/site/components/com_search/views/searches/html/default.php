@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if(false && !empty($keywords)) : ?>
-<script src="com_search/js/search_request.js" />
+<?php if(!empty($keywords)) : ?>
+<script src="com_search/js/search.js" />
 <?php endif;?>
 
 <div class="row">

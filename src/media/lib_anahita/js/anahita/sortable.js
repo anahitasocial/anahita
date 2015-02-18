@@ -1,3 +1,11 @@
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
 ;(function ($, window, document) {
     
     $.fn.sortable = function() {
@@ -21,7 +29,7 @@
         });
     }
     
-    $('body').on('click','ul[data-behavoir="sortable"] a', function(event) {
+    $('body').on('click','ul[data-behavior="sortable"] a', function(event) {
         event.preventDefault();
         $(this).sortable();
     });
