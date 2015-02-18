@@ -4,6 +4,7 @@
 //@depends vendors/fastclick.js
 //@depends vendors/jquery.ba-outside-events.js
 //@depends vendors/jquery.swipebox.js
+//@depends vendors/tinycon.min.js
 
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-tab.js

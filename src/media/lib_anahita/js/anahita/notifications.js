@@ -12,8 +12,6 @@
     
     $.fn.notificationsCounter = function () {
     	
-    	var title = $('title');
-    	var metaTitle = title.html();
     	var counter = $(this);
     	
     	function pulse() {
@@ -29,15 +27,14 @@
     		}).done(function (data) {
                 
     			counter.html(data.new_notifications);
-    			
+    			Tinycon.setBubble(data.new_notifications);
     			 if (data.new_notifications > 0) {
                      
-    				 title.html('(' + data.new_notifications + ') ' + metaTitle);
+    				 
                      counter.addClass('counter-important');
                      
                  } else {
-                	 
-                     title.html(metaTitle);
+                	
                      counter.removeClass('counter-important');
                  }
                 
