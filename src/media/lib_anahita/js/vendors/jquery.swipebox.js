@@ -18,7 +18,8 @@
 				afterOpen: null,
 				afterClose: null,
 				loopAtEnd: false,
-				autoplayVideos: false
+				autoplayVideos: false,
+				closeOnClick: false
 			},
 
 			plugin = this,
@@ -74,7 +75,7 @@
 				$( document ).on( 'click', selector, function( event ) {
 
 					// console.log( isTouch );
-
+					
 					if ( event.target.parentNode.className === 'slide current' ) {
 
 						return false;
@@ -101,11 +102,11 @@
 					}
 
 					if ( relVal && relVal !== '' && relVal !== 'nofollow' ) {
-						$elem = $selector.filter( '[' + relType + '="' + relVal + '"]' );
+						$elem = $( selector ).filter( '[' + relType + '="' + relVal + '"]' );
 					} else {
 						$elem = $( selector );
 					}
-
+					
 					$elem.each( function() {
 
 						var title = null,
@@ -582,6 +583,14 @@
 				$( '#swipebox-close' ).bind( action, function() {
 					$this.closeSlide();
 				} );
+				
+				if ( plugin.settings.closeOnClick ) {
+					$( '#swipebox-slider' ).bind( 'click', function(event) {
+						if ( !$(event.target).parent().hasClass('slide') ) {
+							$this.closeSlide();
+						}
+					});
+				}
 			},
 
 			/**
@@ -753,7 +762,7 @@
 					iframe = '<iframe width="560" height="315" src="' + url + '" frameborder="0" allowfullscreen></iframe>';
 				}
 
-				return '<div class="swipebox-video-container" style="max-width:' + plugin.settings.videomaxWidth + 'px"><div class="swipebox-video">' + iframe + '</div></div>';
+				return '<div class="swipebox-video-container" style="max-width:' + plugin.settings.videoMaxWidth + 'px"><div class="swipebox-video">' + iframe + '</div></div>';
 			},
 
 			/**

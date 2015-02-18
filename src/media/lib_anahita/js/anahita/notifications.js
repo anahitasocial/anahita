@@ -29,13 +29,13 @@
     			counter.html(data.new_notifications);
     			Tinycon.setBubble(data.new_notifications);
     			 if (data.new_notifications > 0) {
-                     
-    				 
+
                      counter.addClass('counter-important');
                      
                  } else {
                 	
                      counter.removeClass('counter-important');
+
                  }
                 
                 setTimeout(pulse, counter.data('interval'));
