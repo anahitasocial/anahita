@@ -27,11 +27,7 @@
 		<div class="media-grid">	
 			<?php $photos = $object->photos->order('photoSets.ordering')->limit(15)->fetchSet(); ?>
 			<?php foreach( $photos as $i=>$photo ): ?>
-			<?php 
-			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
-			(($photo->title && $photo->description) ? ' :: ' : '').
-			@helper('text.script', $photo->description);
-			?>
+			<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 			<?php if ( $i > 12 ) break; ?>
 			<div class="entity-portrait">
 				<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">

@@ -13,11 +13,7 @@
     	</a>
     </h4>
 	<?php endif; ?>
-	<?php 
-		$caption = htmlspecialchars($object->title, ENT_QUOTES).
-		(($object->title && $object->description) ? ' :: ' : '').
-		@helper('text.script', $object->description);			 
-	?>
+	<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 	<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" href="<?= @route($object->getPortraitURL('original')) ?>" title="<?= $caption ?>">
 		<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
 	</a>

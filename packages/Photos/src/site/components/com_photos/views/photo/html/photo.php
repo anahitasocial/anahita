@@ -4,11 +4,7 @@
 
 <div id="an-photos-photo" class="an-entity">	
 	<div class="entity-portrait-medium">
-		<?php 
-			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
-			(($photo->title && $photo->description) ? ' :: ' : '').
-			@helper('text.script', $photo->description);			 
-		?>
+		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 		<a data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>

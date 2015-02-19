@@ -18,12 +18,8 @@
 	</div>
 	
 	<div class="entity-portrait-medium">
-		<?php 
-			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
-			(($photo->title && $photo->description) ? ' :: ' : '').
-			@helper('text.script', $photo->description);			 
-		?>
-		<a data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
+		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
+		<a data-rel="media-photos" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>

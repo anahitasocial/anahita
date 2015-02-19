@@ -22131,6 +22131,8 @@ Copyright (c) 2012 Tom Moor
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/notifications.js
 /**
+ * Author: Nick Swinford
+ * Email: NicholasJohn16@gmail.com
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
@@ -22205,6 +22207,8 @@ Copyright (c) 2012 Tom Moor
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/paginator.js
 /**
+ * Author: Nick Swinford
+ * Email: NicholasJohn16@gmail.com
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
@@ -22307,6 +22311,8 @@ Copyright (c) 2012 Tom Moor
 }(jQuery, window));
 ///media/lib_anahita/js/anahita/sortable.js
 /**
+ * Author: Nick Swinford
+ * Email: NicholasJohn16@gmail.com
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
@@ -22622,6 +22628,16 @@ Copyright (c) 2012 Tom Moor
 
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/actions/commentstatus.js
+/**
+ * Author: Nick Swinford
+ * Email: NicholasJohn16@gmail.com
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
 ;(function ($, window, document) {
 
     'use strict';
@@ -22674,6 +22690,16 @@ Copyright (c) 2012 Tom Moor
 
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/actions/subscribe.js
+/**
+ * Author: Nick Swinford
+ * Email: NicholasJohn16@gmail.com
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
 ;(function ($, window, document) {
 
     'use strict';
