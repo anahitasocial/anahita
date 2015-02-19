@@ -16,53 +16,103 @@
 			searchForm : 'form[data-trigger="SearchRequest"]',
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
-			scope : 'a[data-trigger="ChangeScope"]'
+			scope : '[data-trigger="ChangeScope"]',
+			results : '#an-search-results',
+			searchScopes : '.search-scopes'
 		},
 		
 		_create : function() {
 		
 			this.form = $(this.options.searchForm); 
-			this.sort = $(this.options.sortOption);
-			this.comment = $(this.options.commentOption);
-			this.scope = $(this.options.scope);
+			
+			var elemSort = $(this.options.sortOption);
+			var elemComment = $(this.options.commentOption);
+			var elemScope = $(this.options.scope);
+			
+			this.formData = [];
+			
+			this.formData['layout'] = 'results';
+			this.formData['sort'] = $(elemSort).find('option:selected').val();
+			this.formData['search_comments'] = $(elemComment).is(':checked');
+			this.formData['scope'] = $(elemScope).data('scope');
 			
 			//search form
 			this._on(this.form, {
 				submit : function( event ) {
 					event.preventDefault();
-					console.log(this.form);
+					this.submit(this.form);
 				}
 			});
 			
 			//sort options
-			this._on(this.sort, {
+			this._on( elemSort, {
 				change : function ( event ) {
 					event.preventDefault();
-					console.log(this.sort);
+					this.formData['sort'] = $(event.currentTarget).find('option:selected').val();
+					this.submit($(event.currentTarget));
 				}
 			});
 			
 			//sort options
-			this._on(this.comment, {
+			this._on( elemComment, {
 				change : function ( event ) {
 					event.preventDefault();
-					console.log(this.comment);
+					this.formData['search_comments'] = $(event.currentTarget).is(':checked');
+					this.submit($(event.currentTarget));
 				}
 			});
+			
+			this._initScopes();
+		},
+		
+		_initScopes : function() {
 			
 			//change scope
-			this._on(this.scope, {
+			this._on( $(this.options.scope) , {
 				click : function ( event ) {
 					event.preventDefault();
-					console.log(this.scope.attr('href'));
+					this.formData['scope'] = $(event.currentTarget).data('scope');
+					this.submit($(event.currentTarget));
 				}
 			});
+		},
+		
+		submit : function( currentTarget ) {
+			
+			var self = this;
+
+			$.ajax({
+				method : 'get',
+				action : this.form.attr('action'),
+				data : {
+					
+					'layout' : 'results',
+					'scope' : this.formData['scope'],
+					'search_comments' : this.formData['search_comments'],
+					'sort' : this.formData['sort']
+				
+				},
+				beforeSend : function () {
+					currentTarget.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+				},
+				success : function ( response ) {
+					
+					response = $(response);
+					$(self.options.results).html(response.filter('.an-entity'));
+					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
+					self._initScopes();
+				},
+				complete : function () {
+					currentTarget.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+				}
+			});
+			
 		}
 	});
 	
 	var search = $('body').search();
 	
-}(jQuery, window, document));	
+}(jQuery, window, document));		
 
 /*
 (function(){	

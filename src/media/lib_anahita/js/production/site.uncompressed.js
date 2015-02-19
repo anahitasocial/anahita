@@ -22341,7 +22341,7 @@ Copyright (c) 2012 Tom Moor
                a.parent().fadeTo('fast', 1).removeClass('uiActivityIndicator');
            }
         });
-    }
+    };
     
     $('body').on('click','ul[data-behavior="sortable"] a', function(event) {
         event.preventDefault();
