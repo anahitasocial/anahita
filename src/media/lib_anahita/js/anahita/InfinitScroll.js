@@ -29,6 +29,7 @@
 			if(this.options.debug)
 				console.log('Instantiated');
 			
+			this.url = this.options.url;
 			this.records = $(this.element.children(this.options.record));
 			
 			if(this.options.debug)
@@ -45,6 +46,14 @@
 				if (self.element.is(':visible') && scrollable.scrollTop() >= $(document).height() - scrollable.height() )
 					self._getNextPage();
 			});
+			
+			this._on($(document), {
+				'urlChange' : function( event ) {
+					this.url = $(document).data('newUrl');
+					this.records = $(this.element.children(this.options.record));
+					this._getNextRecords();
+				}
+			});
 		},
 		
 		_getNextRecords: function(){
@@ -52,7 +61,7 @@
 			var self = this;
 			
 			$.ajax({
-				url : this.options.url,
+				url : this.url,
 				data : {
 					start : this.records.length,
 					limit : this.options.limit * this.options.preload,
