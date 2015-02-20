@@ -4,12 +4,6 @@
 
 <?= @helper('ui.filterbox', @route('layout=list')) ?>
 
-<div id="an-actors" class="an-entities">
+<div id="an-actors" class="an-entities masonry" data-trigger="InfinitScroll" data-url="<?= @route('layout=list') ?>">
 <?= @template('list') ?>
 </div>
-
-<script>
-$('#an-actors').infinitscroll({
-	url: '<?= @route('layout=list') ?>'
-});
-</script>

@@ -29,7 +29,8 @@
 			if(this.options.debug)
 				console.log('Instantiated');
 			
-			this.url = this.options.url;
+			this.url = this.options.url || this.element.data('url');
+			
 			this.records = $(this.element.children(this.options.record));
 			
 			if(this.options.debug)
@@ -40,13 +41,18 @@
 			this._getNextRecords();
 
 			var scrollable = $(this.options.scrollable);
+			
 			var self = this;
 			
 			scrollable.scroll(function(){
-				if (self.element.is(':visible') && scrollable.scrollTop() >= $(document).height() - scrollable.height() )
+	
+				if ( self.element.is(':visible') && scrollable.scrollTop() >= $(document).height() - scrollable.height() ) {
 					self._getNextPage();
+				}
 			});
 			
+			// listen to the "urlChange" event
+			// if there is one, update the url and refresh records.
 			this._on($(document), {
 				'urlChange' : function( event ) {
 					this.url = $(document).data('newUrl');
@@ -58,23 +64,28 @@
 		
 		_getNextRecords: function(){
 			
+			var limit = {
+				start : this.records.length,
+				limit : this.options.limit * this.options.preload,	
+			};
+			
+			limit = $.param(limit);
+			
+			if(!this._isFreshLimit(limit))
+				return false;
+			
+			this._rememberLimit(limit);
+			
 			var self = this;
 			
-			$.ajax({
-				url : this.url,
-				data : {
-					start : this.records.length,
-					limit : this.options.limit * this.options.preload,
-				},
-				success : function(html){
-					
-					var html = $(html);
-					
-					if(this.options.debug)
-						console.log(html.filter(this.options.record));
-					
-					this.records = $.merge(this.records, html.filter(this.options.record));
-				}.bind(this)
+			$.get( this.url + '&' + limit , function ( response ) {
+				
+				response = $(response);
+				
+				if(self.options.debug)
+					console.log(response.filter(self.options.record));
+				
+				self.records = $.merge(self.records, response.filter(self.options.record));
 			});
 		},
 		
@@ -82,7 +93,7 @@
 			
 			if ( this.start < this.records.length ) {
 				
-				for ( var i = 0; i < this.options.limit; i++ ){
+				for ( var i = 0; i < this.options.limit; i++ ) {
 					this.element.append(this.records[ this.start + i ]);
 				}
 
@@ -90,7 +101,19 @@
 			}
 			
 			this._getNextRecords();
+		},
+		
+		_rememberLimit : function(url) {
+			this._limit = url;
+		},
+		
+		_isFreshLimit : function (limit) {
+			return this._limit != limit;
 		}
+	});
+	
+	$(document).ajaxSuccess(function() {
+			$('[data-trigger*="InfinitScroll"]').infinitscroll();
 	});
 	
 }(jQuery, window, document));
