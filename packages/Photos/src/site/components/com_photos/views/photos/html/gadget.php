@@ -11,7 +11,7 @@ elseif (isset($actor))
 	$url['oid'] = $actor->id;
 ?>
 
-<div id="an-photos" class="an-entities" data-trigger="InfinitScroll" data-url="<?= @route($url) ?>">
+<div id="an-photos" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
 <?= @template('masonry_list') ?>
 </div>
 <?php else: ?>

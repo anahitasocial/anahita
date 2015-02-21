@@ -55,7 +55,7 @@
         	$url['scope'] = $scope;	
         ?>
 
-		<div id="an-search-results" class="an-entities" data-trigger="InfinitScroll" data-url="<?= @route($url) ?>">
+		<div id="an-search-results" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
 	    <?= @template('list') ?>
 		</div>
 	</div>

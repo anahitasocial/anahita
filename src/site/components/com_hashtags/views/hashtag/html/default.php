@@ -13,6 +13,6 @@ if(!empty($scope))
 ?>
 
 
-<div id="an-hashtags" class="an-entities masonry" data-trigger="InfinitScroll" data-url="<?= @route($paginationUrl) ?>">
+<div id="an-hashtags" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route($paginationUrl) ?>">
 	<?= @template('list') ?>
 </div>

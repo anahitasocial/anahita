@@ -17,6 +17,6 @@ $url = array('view'=>'photos', 'layout'=>'selector', 'oid'=>$actor->id);
 if(!empty($exclude_set))
 	$url['exclude_set'] = $exclude_set;
 ?>
-<div id="photo-selector" data-behavior="InfinitScroll" data-infinitscroll-options="{'record':'.thumbnail-wrapper','scrollable':'photo-selector', 'url':'<?= @route($url) ?>', 'fixedheight':true}" class="an-entities media-grid">
+<div id="photo-selector" data-behavior="InfiniteScroll" data-InfiniteScroll-options="{'record':'.thumbnail-wrapper','scrollable':'photo-selector', 'url':'<?= @route($url) ?>', 'fixedheight':true}" class="an-entities media-grid">
 <?= @template('selector_list') ?>	
 </div>

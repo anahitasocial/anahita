@@ -21895,7 +21895,7 @@ Copyright (c) 2012 Tom Moor
     });
     
 }(jQuery, window, document));
-///media/lib_anahita/js/anahita/InfinitScroll.js
+///media/lib_anahita/js/anahita/InfiniteScroll.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -21908,7 +21908,7 @@ Copyright (c) 2012 Tom Moor
 	
 	'use strict';
 	
-	$.widget("anahita.infinitscroll", {
+	$.widget("anahita.infinitescroll", {
 		
 		options: {
 			record : '.an-entity',
@@ -22011,7 +22011,7 @@ Copyright (c) 2012 Tom Moor
 	});
 	
 	$(document).ajaxSuccess(function() {
-			$('[data-trigger*="InfinitScroll"]').infinitscroll();
+			$('[data-trigger*="InfiniteScroll"]').infinitescroll();
 	});
 	
 }(jQuery, window, document));

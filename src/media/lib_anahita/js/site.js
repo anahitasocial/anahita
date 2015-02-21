@@ -14,7 +14,7 @@
 //@depends vendors/bootstrap/bootstrap-popover.js
 
 //@depends anahita/modal.js
-//@depends anahita/InfinitScroll.js
+//@depends anahita/InfiniteScroll.js
 //@depends anahita/gadget.js
 //@depends anahita/filterbox.js
 //@depends anahita/checkbox.js

@@ -10,6 +10,6 @@ if(isset($filter))
 elseif (isset($actor))
 	$url['oid'] = $actor->id;
 ?>
-<div id="an-stories" class="an-entities" data-trigger="InfinitScroll" data-url="<?= @route($url) ?>">
+<div id="an-stories" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
 	<?= @template('list') ?>
 </div>
