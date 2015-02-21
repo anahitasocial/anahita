@@ -22047,6 +22047,44 @@ Copyright (c) 2012 Tom Moor
 
 
 
+///media/lib_anahita/js/anahita/filterbox.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+	
+	$('body').on('submit', '.an-filterbox', function( event ){
+		
+		event.preventDefault();
+		
+		var form = $(this);
+
+		$.ajax({
+			method : 'get',
+			url : form.attr('action'),
+			data : form.serialize(),
+			beforeSend : function (){
+				form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+			},
+			success : function ( response ) {
+				form.next('.an-entities').html($(response).filter('.an-entity'));
+			},
+			complete : function () {
+				form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+				var newUrl = form.attr('action') + '&' + form.serialize();
+				$(document).data( 'newUrl',  newUrl ).trigger('urlChange')
+			}
+		});
+	})
+	
+}(jQuery, window, document));	
 ///media/lib_anahita/js/anahita/checkbox.js
 /**
  * Author: Rastin Mehr

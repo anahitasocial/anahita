@@ -16,6 +16,7 @@
 //@depends anahita/modal.js
 //@depends anahita/InfinitScroll.js
 //@depends anahita/gadget.js
+//@depends anahita/filterbox.js
 //@depends anahita/checkbox.js
 //@depends anahita/autosubmit.js
 //@depends anahita/notifications.js
