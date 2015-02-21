@@ -10,10 +10,10 @@ var StringLibAnahita = {
 		browseImage : 'Browse Image',
 		vote : 'Like',
 		unvote : 'Unlike',
-                openComments: 'Open Comments',
-                closeComments: 'Close Comments',
-                subscribe: 'Follow',
-                unsubscribe: 'Unfollow'
+        openComments: 'Open Comments',
+        closeComments: 'Close Comments',
+        subscribe: 'Follow',
+        unsubscribe: 'Unfollow'
 	},
 	
 	'prompt' : {
