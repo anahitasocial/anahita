@@ -66,7 +66,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     	$actor = $this->getController()->actor;
     	$type = $this->getController()->type;
     	
-    	if($actor->authorize('leadable') && $type == 'followers')
+    	if($actor->authorize('lead') && $type == 'followers')
             $this->addCommand('AddFollowers', array('actor' => $actor));    
     }
     
