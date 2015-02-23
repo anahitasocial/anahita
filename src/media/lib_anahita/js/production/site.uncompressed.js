@@ -22808,6 +22808,67 @@ Copyright (c) 2012 Tom Moor
     });
 
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/socialgraph.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+	
+	$.fn.actionSocialgraph = function () {
+		
+		var elem = $( this );
+		
+		$.ajax({
+			method : 'post',
+			url : elem.attr('href'),
+			data : {
+				'action' : elem.data('action'),
+				'actor' : elem.data('actor')
+			}, 
+			beforeSend : function () {
+				elem.addClass('disabled');
+			},
+			success : function (response){
+				
+				var listEntity = elem.closest('.an-entity');
+				
+				if ( $(listEntity).is('.an-entity') ) {
+					elem.closest('.an-entity').replaceWith($(response));
+				} else {
+					window.location.href = elem.attr('href');
+				}
+			}
+		});
+	};
+	
+	var selectors = 
+		'[data-action="confirmrequest"],' +
+		'[data-action="ignorerequest"],' +
+		'[data-action="addrequest"],' +
+		'[data-action="deleterequest"],' +
+		'[data-action="follow"],' +
+		'[data-action="unfollow"],' +
+		'[data-action="block"],' +
+		'[data-action="unblock"],' +
+		'[data-action="lead"],' +
+		'[data-action="unlead"]';
+	
+	$( 'body' ).on( 'click', selectors, function( event ) {
+		
+		event.preventDefault();
+		event.stopPropagation();
+		
+		$(this).actionSocialgraph();
+	});
+	
+}(jQuery, window, document));
 
 
 

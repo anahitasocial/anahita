@@ -68,13 +68,6 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         
         $this->_subscribe_after_follow = $config->subscribe_after_follow;
     }
-        
-    /**
-     * A boolean flag to temporarily disable resting the stats
-     * 
-     * @var boolean
-     */
-    static private $__disable_reset_stats = false;
     
     /**
 	 * Initializes the default configuration for the object
@@ -88,27 +81,34 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-		    'subscribe_after_follow' => $config->mixer->isSubscribable(),
+		    
+			'subscribe_after_follow' => $config->mixer->isSubscribable(),
+			
 			'attributes' => array(
-                'allowFollowRequest'   => array('default'=>false),                
-                'followRequesterIds'   => array('type'=>'set', 'default'=>'set','write'=>'private'),                 
-				'followerCount'  => array('default'=>0,'write'=>'private'),
-				'followerIds'    => array('type'=>'set', 'default'=>'set','write'=>'private'),
-				'blockedIds'     => array('type'=>'set', 'default'=>'set','write'=>'private')		
+                'allowFollowRequest' => array('default'=>false),                
+                'followRequesterIds' => array('type'=>'set', 'default'=>'set','write'=>'private'),                 
+				'followerCount' => array('default'=>0,'write'=>'private'),
+				'followerIds' => array('type'=>'set', 'default'=>'set','write'=>'private'),
+				'blockedIds' => array('type'=>'set', 'default'=>'set','write'=>'private'),
+		        'blockerIds' => array('type'=>'set', 'default'=>'set','write'=>'private')		
 			),
+			
 			'relationships' => array(
-                'requesters' => array(
+                
+				'requesters' => array(
                     'parent_delete' => 'ignore',
                     'through' => 'com:actors.domain.entity.request',
                     'target'  => 'com:actors.domain.entity.actor',
                     'child_key' => 'requestee'                
                 ),
-				'followers' => array(
+				
+                'followers' => array(
 				    'parent_delete' => 'ignore',				        
 					'through' => 'com:actors.domain.entity.follow',
 					'target' => 'com:actors.domain.entity.actor',
 					'child_key' => 'leader'
 				),
+				
 				'blockeds' => array(
 				    'parent_delete' => 'ignore',
 					'through' => 'com:actors.domain.entity.block',
@@ -124,33 +124,28 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     /**
      * Add a follow requester to the actor 
      * 
-     * @param ComActorsDomainEntityActor $actor The actor to block
+     * @param ComActorsDomainEntityActor $requester
      * 
      * @return void
      */ 
-    public function addRequester($actor)
+    public function addRequester($requester)
     {
-        $mixer = $this->_mixer;
+        $leader = $this->_mixer;
         
-        self::$__disable_reset_stats = true;
-        
-        //remove any edges just in case
-        $actor->removeFollower($mixer);
-        $mixer->removeFollower($actor);
-        
-        $actor->removeBlocked($mixer);
-        $mixer->removeBlocked($actor);
-        
-        self::$__disable_reset_stats = false;
+        if($requester->following($leader))
+            return false;
+            
+        if($leader->blocking($requester))
+            return false;
         
         $edge = $this->getService('repos:actors.request')->findOrAddNew(array(
-                'requester'   => $actor ,                   
-                'requestee'   => $mixer             
+                'requester'   => $requester,                   
+                'requestee'   => $leader             
             ));
         
         $edge->save();
         
-        $this->resetStats(array($mixer, $actor));
+        $this->resetStats(array($leader, $requester));
     }
     
     /**
@@ -160,15 +155,17 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
      * 
      * @return void
      */
-    public function removeRequester($actor)
+    public function removeRequester($requester)
     {
+        $leader = $this->_mixer;
+        
         $data = array(
-            'requester'   => $actor ,                   
-            'requestee'   => $this->_mixer 
+            'requester'   => $requester,                   
+            'requestee'   => $leader 
         );
         
         $this->getService('repos:actors.request')->destroy($data);
-        $this->resetStats(array($this->_mixer, $actor));
+        $this->resetStats(array($leader, $requester));
     }
         
 	/**
@@ -178,164 +175,190 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 	 * 
 	 * @return void
 	 */	
-	public function addFollower($actor)
-	{
-		//if A adds B as follower, then A must remove B as a blocked
-		//@TODO should not be able to follow if blocked 		
-    	$mixer = $this->_mixer;
+	public function addFollower($follower)
+	{		
+    	$leader = $this->_mixer;
     	
-        //actor is becoming the mixer follower
-        //hence mixer is a leader. therefore any pending
-        //request from mixer to the actor must be replaced
-        //with a follow
-         
-        if($actor->requested($mixer)) 
-        {
-            //if mixer has also been requested 
-            //prevents infite nesting 
-            if($mixer->requested($actor))
-               $mixer->followRequesterIds->offsetUnset($actor->id);
-            
-            $actor->addFollower($mixer);
-        }
-        
-        self::$__disable_reset_stats = true;
-        
-    	$actor->removeBlocked($mixer);
-    	$mixer->removeBlocked($actor);
-        
-        //just in case
-        $actor->removeRequester($mixer);
-        $mixer->removeRequester($actor);        
-    	
-        self::$__disable_reset_stats = false;
+    	if($leader->blocking($follower))
+    	    return false;
+    	        
+        if($follower->requested($leader))
+            $leader->removeRequester($follower);
         
         //add a subscriber
         if($this->_subscribe_after_follow)
-            $mixer->addSubscriber($actor);
+            $leader->addSubscriber($follower);
                 
 		$edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
-		        	'leader'	=> $mixer,
-		        	'follower'	=> $actor		        
+		        	'leader'	=> $leader,
+		        	'follower'	=> $follower		        
             	));
 
 		$edge->save();
-		$this->resetStats(array($mixer, $actor));
+		
+		$this->resetStats(array($leader, $follower));
 		
 		return $edge;
 	}
 		
 	/**
-	 * Remove an actor to from list of the actor followers. If the 
-	 * actor is subscribable then it will remove the actor from the list
+	 * Remove an actor to from list of the followers. If the 
+	 * leader is subscribable then it will remove the follower from the list
 	 * of it's subscribers 
+	 * 
+	 * @param ComActorsDomainEntityActor $follower
+	 * 
+	 * @return void
+	 */	
+	public function removeFollower($follower)
+	{   		  
+        
+        $leader = $this->_mixer;
+
+        if($leader->isSubscribable())
+        	$leader->removeSubscriber($follower);
+          
+        $this->removeNodeSubscriptions($leader, $follower);
+             			        
+        if($leader->isAdministrable())
+            $leader->removeAdministrator($follower);
+		 
+		$this->getService('repos:actors.follow')
+		    ->destroy(array(
+	            'follower'	  => $follower,
+	            'leader'	  => $leader		        
+            ));
+		
+		$this->resetStats(array($leader, $follower));
+	}
+	
+	/**
+	 * Add a leader to the actor 
 	 * 
 	 * @param ComActorsDomainEntityActor $actor The actor to block
 	 * 
 	 * @return void
 	 */	
-	public function removeFollower($actor)
+	public function addLeader( $leader )
+	{		
+    	$follower = $this->_mixer;
+    	
+    	if($leader->blocking($follower))
+    	    return false;
+    	        
+        if($follower->requested($leader))
+            $leader->removeRequester($follower);
+        
+        //add a subscriber
+        if($this->_subscribe_after_follow)
+            $leader->addSubscriber($follower);
+                
+		$edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
+		        	'leader' => $leader,
+		        	'follower' => $follower		        
+            	));
+
+		$edge->save();
+		
+		$this->resetStats(array($leader, $follower));
+		
+		return $edge;
+	}
+		
+	/**
+	 * Removes a leader from the list of the leaders. If the 
+	 * leader is subscribable then it will remove the follower from the list
+	 * of it's subscribers 
+	 * 
+	 * @param ComActorsDomainEntityActor $follower
+	 * 
+	 * @return void
+	 */	
+	public function removeLeader( $leader )
 	{   		  
         
-        $mixer = $this->_mixer;
+        $follower = $this->_mixer;
 
-        if($mixer->isSubscribable())
-        	$mixer->removeSubscriber($actor);
+        if($leader->isSubscribable())
+        	$leader->removeSubscriber($follower);
           
-        //remove the follower as subscriber from any node that's owned
-        //mixer
-        
-        //lets find all the nodes that actor is subscribed to
-        $query = $this->getService('repos://site/base.subscription')
-        				->getQuery()->subscriber($actor)
-                        ->where('subscribee.id','IN', $this->getService('repos:base.node')
-                        ->getQuery()->columns('id')->where('owner_id','=',$mixer->id));
-        
-        $subscribers = $query->disableChain()->fetchValues('subscribee.id');
-        
-        if(count($subscribers))
-        {
-            $this->getService('repos://site/base.node')
-            ->update("subscriber_ids = @remove_from_set(subscriber_ids,{$actor->id}), subscriber_count = @set_length(subscriber_ids)", $subscribers);
-            
-            $this->getService('repos://site/base.subscription')->destroy($query);
-        }
+        $this->removeNodeSubscriptions($leader, $follower);
              			        
-        if($mixer->isAdministrable())
-            $mixer->removeAdministrator($actor);
+        if($leader->isAdministrable())
+            $leader->removeAdministrator($follower);
 		 
 		$this->getService('repos:actors.follow')
 		    ->destroy(array(
-	            'follower'	  => $actor,
-	            'leader'	  => $mixer		        
+	            'follower' => $follower,
+	            'leader' => $leader		        
             ));
 		
-		$this->resetStats(array($mixer, $actor));
+		$this->resetStats(array($leader, $follower));
 	}
 	
     /**
-     * Adds an actor to a list of blockes
+     * Adds an $person to a list of blocked actors
      * 
-     * @param ComActorsDomainEntityActor $actor The actor to block
+     * @param ComActorsDomainEntityActor $person
      * 
      * @return void
      */
-    public function addBlocked($actor)
+    public function addBlocked( $person )
     {   
     	//if A blocks B, then A must remove B as a follower 
     	//need to keep track of this since the mixin is a singleton
-    	$mixer = $this->_mixer;
+    	$leader = $this->_mixer;
     	
-        self::$__disable_reset_stats = true;
-        
-        $actor->removeFollower($mixer);
-    	$mixer->removeFollower($actor);
+        $person->removeFollower($leader);
+    	$leader->removeFollower($person);
     	
 		//just in case
-        $actor->removeRequester($mixer);
-        $mixer->removeRequester($actor);
-        
-        self::$__disable_reset_stats = false;
+        $person->removeRequester($leader);
+        $leader->removeRequester($person);
                 
 		$edge = $this->getService('repos:actors.block')->findOrAddNew(array(
-				'blocker'	  => $mixer,					
-				'blocked'	  => $actor		        
+				'blocker'	  => $leader,					
+				'blocked'	  => $person		        
             ));
 		
 		$edge->save();
-		$this->resetStats(array($mixer, $actor));
+		
+		$this->resetStats(array($leader, $person));
 
 		return $edge;
     }    
     
     /**
-     * Removes an actor from the list of blocked
+     * Removes a person from the list of blocked
      * 
-     * @param ComActorsDomainEntityActor $actor The actor to block
+     * @param ComActorsDomainEntityActor $person
      *  
      * @return void
      */
-    public function removeBlocked($actor)
+    public function removeBlocked( $person )
     {
-		$data = array(
-			'blocker' => $this->_mixer,		
-			'blocked' => $actor
+		$leader = $this->_mixer;
+        
+        $data = array(
+			'blocker' => $leader,		
+			'blocked' => $person
 		);
 		
-		$this->getService('repos:actors.block')->destroy($data);		
-		$this->resetStats(array($this->_mixer, $actor));
+		$this->getService('repos:actors.block')->destroy($data);
+				
+		$this->resetStats(array($leader, $person));
     }
 
 	/**
-	 * Return true if the actor is following the mixer else return false	 
+	 * Return true if mixer is leading the actor else return false	 
 	 * 
 	 * @param ComActorsDomainEntityActor $actor The actor to block
 	 * 
 	 * @return boolean 
 	 */	
-	public function leading($actor)
+	public function leading( $actor )
 	{
-		return $this->_mixer->followerIds->offsetExists($actor->id);
+		return $this->_mixer->followerIds->offsetExists( $actor->id );
 	}
     
     /**
@@ -345,9 +368,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
      * 
      * @return boolean 
      */ 
-    public function requested($actor)
+    public function requested( $leader )
     {
-        return $this->_mixer->followRequesterIds->offsetExists($actor->id);
+        return $leader->followRequesterIds->offsetExists( $this->_mixer->id );
     }    
 		
 	/**
@@ -383,42 +406,28 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 	}
 	
 	/**
-	 * Reset the all graph information for the actors
-	 *
-	 * @param array $actors Array of actors
-	 *
-	 * @return void
+	 * Remove all the subscriptions of a follower to the nodes owned by a leader
+	 * 
+	 * @param ComActorsDomainEntityActor $leader
+	 * @param ComActorsDomainEntityActor $follower
 	 */
-	public function resetStats($actors)
+	public function removeNodeSubscriptions($leader, $follower)
 	{
-        //if reset stats is disabled then return
-        if(self::$__disable_reset_stats === true)
-            return;
+	    //Find all the nodes that follower was subscribed to
+        $query = $this->getService('repos://site/base.subscription')
+        		 ->getQuery()->subscriber($follower)
+                 ->where('subscribee.id', 'IN', $this->getService('repos:base.node')
+                 ->getQuery()->columns('id')->where('owner_id', '=', $leader->id));
+        
+        $subscribers = $query->disableChain()->fetchValues('subscribee.id');
+        
+        //Remove the follower as subscriber from any node that's owned by the leader
+        if(count($subscribers))
+        {
+            $this->getService('repos://site/base.node')
+            ->update("subscriber_ids = @remove_from_set(subscriber_ids,{$follower->id}), subscriber_count = @set_length(subscriber_ids)", $subscribers);
             
-	    foreach($actors as $actor)
-	    {
-	        if($actor->isFollowable())
-	        {
-	            $follower_ids = $actor->followers->getQuery(true,true)->fetchValues('id');
-	            $blocked_ids = $actor->blockeds->getQuery(true,true)->fetchValues('id');
-                $requester_ids = $actor->requesters->getQuery(true,true)->fetchValues('id');
-	            $actor->set('followerCount', count($follower_ids));
-	            $actor->set('followerIds', AnDomainAttribute::getInstance('set')->setData($follower_ids));
-	            $actor->set('blockedIds', AnDomainAttribute::getInstance('set')->setData($blocked_ids));
-                $actor->set('followRequesterIds', AnDomainAttribute::getInstance('set')->setData($requester_ids));
-	        }
-	
-	        if($actor->isLeadable())
-	        {
-	            $leader_ids = $actor->leaders->getQuery(true,true)->fetchValues('id');
-	            $blocker_ids = $actor->blockers->getQuery(true,true)->fetchValues('id');
-	            $mutual_ids = array_intersect($leader_ids, $follower_ids);
-	            $actor->set('leaderCount', count($leader_ids));
-	            $actor->set('leaderIds', AnDomainAttribute::getInstance('set')->setData($leader_ids));
-	            $actor->set('blockerIds', AnDomainAttribute::getInstance('set')->setData($blocker_ids));
-	            $actor->set('mutualIds', AnDomainAttribute::getInstance('set')->setData($mutual_ids));
-	            $actor->set('mutualCount', count($mutual_ids));
-	        }
-	    }
-	}	
+            $this->getService('repos://site/base.subscription')->destroy($query);
+        }
+	}
 }

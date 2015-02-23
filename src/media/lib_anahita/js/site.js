@@ -31,6 +31,7 @@
 //@depends anahita/actions/cancel.js
 //@depends anahita/actions/commentstatus.js
 //@depends anahita/actions/subscribe.js
+//@depends anahita/actions/socialgraph.js
 
 
 
