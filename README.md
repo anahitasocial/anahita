@@ -2,15 +2,13 @@ Anahita
 ================
 Version: 4.0.1 Birth Release
 
-Anahita is a social networking platform and framework for building knowledge sharing apps and services.
+Anahita is a social networking platform and framework for building knowledge apps and services.
 
-Anahita is fully open source and available under the GPL3 license. Use Anahita to develop:
+Anahita is fully open source and available under the GPL3 license. Use Anahita to build social networks for:
 
-1. knowledge sharing networks
-2. project management and collaboration environments
-3. online learning
-4. open science and research
-5. sharing and collecting data and content
+1. online learning and knowledge systems
+2. open science and open data
+3. online collaboration
 
 Getting Started
 ================
