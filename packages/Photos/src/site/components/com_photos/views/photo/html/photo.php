@@ -2,7 +2,7 @@
 
 <?php @commands('toolbar') ?>
 
-<div id="an-photos-photo" class="an-entity">	
+<div class="an-entity">	
 	<div class="entity-portrait-medium">
 		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 		<a data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			

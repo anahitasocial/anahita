@@ -1,3 +1,11 @@
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
 //@depends vendors/modernizr.js
 //@depends vendors/jquery-2.1.1.js
 //@depends vendors/jquery-ui.js
@@ -12,6 +20,9 @@
 //@depends vendors/bootstrap/bootstrap-tooltip.js
 //@depends vendors/bootstrap/bootstrap-modal.js
 //@depends vendors/bootstrap/bootstrap-popover.js
+//@depends vendors/bootstrap/bootstrap-alert.js
+
+//@depends vendors/dropzone/min/dropzone.min.js
 
 //@depends anahita/modal.js
 //@depends anahita/InfiniteScroll.js

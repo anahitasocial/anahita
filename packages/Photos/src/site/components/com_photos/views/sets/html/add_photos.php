@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<form id="set-select-form" data-behavior="FormValidator" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
+<form id="set-select-form" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
 	<?php foreach($photos as $photo): ?>
 	<input type="hidden" name="photo_id[]" value="<?= $photo->id ?>" />
 	<?php endforeach; ?>
@@ -39,6 +39,7 @@
 
 
 <script>
+/*
 Delegator.register('click', {
 	
 	'add-photos-to-set' : function(event, el, api){
@@ -52,4 +53,5 @@ Delegator.register('click', {
 	}
 	
 });
+*/
 </script>

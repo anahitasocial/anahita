@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<div class="an-entity an-entity-portraiable an-record an-removable">
+<div class="an-entity">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($photo->author) ?>
