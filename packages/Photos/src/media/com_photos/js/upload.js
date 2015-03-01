@@ -20,6 +20,7 @@
     		this.uploadedPhotoIds = [];
     		
     		var dropzoneOptions = {
+    				
     				sending: function(file, xhr, data) {
     					var access = $(this.element).find('select[name="access"]').val();
     					data.append("access", access);
@@ -31,15 +32,17 @@
     				
     				queuecomplete : function(){
 
-    					var url = self.options.setsUrl;
-    					
-    					$.each(self.uploadedPhotoIds, function(index, value){
-    						url += '&photo_id[]=' + value;
-    						});
+    					if(self.uploadedPhotoIds.length > 0){
+    						var url = self.options.setsUrl;
+        					
+        					$.each(self.uploadedPhotoIds, function(index, value){
+        						url += '&photo_id[]=' + value;
+        						});
 
-    					$.get(url, function ( response ){
-    						$(self.element).html(response);
-    					});
+        					$.get(url, function ( response ){
+        						$(self.element).html(response);
+        					});
+    					}
     				}
     			};
     		
