@@ -12,6 +12,7 @@
     
     Dropzone.autoDiscover = false;
     
+    //multiple file uploader
     $.widget('photos.upload',{
     	    	
     	_create : function(){
@@ -66,6 +67,39 @@
     			} 
     		});
     	}
+    });
+    
+    //Photos to set assignment
+    $.widget('photos.setAssignment',{
+    	
+    	_create : function () {
+    		
+    		var textField = $(this.element).find('input[name="title"]');
+    		var selector = $(this.element).find('select[name="id"]');
+    		
+    		this._on(selector, {
+    			'change' : function ( event ) {
+    				if($(event.target).val() != '' )
+    					textField.attr('disabled', true);
+    				else
+    					textField.attr('disabled', false);
+    			}
+    		});
+    		
+    		this._on(textField, {
+    			'change' : function ( event ) {
+    				if($(event.target).val() != '' )
+    					selector.attr('disabled', true);
+    				else
+    					selector.attr('disabled', false);
+    			}
+    		});
+    	}
+    	
+    });
+    
+    $(document).ajaxSuccess( function() {
+    	$('#photos-set-assignment').setAssignment();
     });
 
 }(jQuery, window));    
