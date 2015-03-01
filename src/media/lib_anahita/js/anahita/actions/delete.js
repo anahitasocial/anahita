@@ -27,9 +27,8 @@
 		footer.append(triggerBtn);
 		
 		triggerBtn.on('click', function(event){
-
+			
 			$.ajax({
-				
 				method : 'post',
 				url : elem.attr('href'),
 				data : {
@@ -42,10 +41,10 @@
 				
 				success : function() {
 					
-					if(elem.data('redirect')){
-						window.location.href = elem.data('redirect');
-					} else {
+					if(elem.closest('.an-entities').is('.an-entities')){
 						elem.closest('.an-entity').fadeOut();
+					} else {
+						window.location.href = elem.data('redirect');
 					}
 					
 				}.bind(elem)
