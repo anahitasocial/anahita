@@ -13,7 +13,7 @@
     Dropzone.autoDiscover = false;
     
     //multiple file uploader
-    $.widget('photos.upload',{
+    $.widget('anahita.photoUpload', {
     	    	
     	_create : function(){
     		
@@ -70,7 +70,7 @@
     });
     
     //Photos to set assignment
-    $.widget('photos.setAssignment',{
+    $.widget('photos.photosSetAssignment',{
     	
     	_create : function () {
     		
@@ -99,7 +99,7 @@
     });
     
     $(document).ajaxSuccess( function() {
-    	$('#photos-set-assignment').setAssignment();
+    	$('#photos-set-assignment').photosSetAssignment();
     });
 
 }(jQuery, window));    
