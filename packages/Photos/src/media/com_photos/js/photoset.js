@@ -1,129 +1,142 @@
-var PhotoSet = new Class({
-	
-	Implements :[Options],
-	
-	options : {
-		sets	: 'sets-wrapper', 
-		setForm : 'set-form'
-	},
-	
-	initialize : function(options) 
-    {
-		this.setOptions(options);
-		this.slide = new Fx.Slide(this.options.sets);
-		this.oid = document.id(this.options.sets).get('oid');
-		this.photo_id = document.id(this.options.sets).get('photo_id');
-		this.baseURL = 'index.php?option=com_photos';
-    },
-	
-	show : function(){
-		this.browse('selector');
-	},
-	
-	hide : function(){
-		this.browse('sidebar');
-	},
-	
-	browse : function(layout){
-		
-		this.slide.slideOut();
-		
-		var req = new Request.HTML({
-			method : 'get',
-			url	: this.baseURL + '&view=sets&layout=' + layout + '&oid=' + this.oid + '&photo_id=' + this.photo_id,
-			update : this.options.sets,
-			onComplete: function(el){
-				this.slide.slideIn();
-			}.bind(this)
-		}).send();
-	},
-	
-	add : function(){
-		
-		this.form = document.id(this.options.setForm);
-		
-		if(!this.form.get('validator').validate())
-			return;
-		
-		this.form.ajaxRequest({
-			method : 'post',
-			url : this.form.get('action') + '?layout=selector_list&reset=1',
-			data : this.form,
-			inject : {
-				element : document.getElement('#' + this.options.sets + ' .an-entities'),
-				where   : 'top'
-			},
-			onSuccess : function(form){
-				var element = document.getElement('#' + this.options.sets + ' .an-entities').getElement('.an-entity');
-				this.form.reset();
-			}.bind(this)
-		}).send();
-	},
-	
-	addPhoto : function(el){
-		
-		var entity = el;
-		
-		entity.ajaxRequest({
-			method	: 'post',
-			url		: this.baseURL + '&view=set&id=' + el.get('set_id').toInt() + '&photo_id=' + this.photo_id.toInt(),
-			data	: 'action=addphoto',
-			onComplete : function()
-			{
-				entity.addClass('an-highlight');
-				entity.set('data-trigger', 'RemovePhoto');
-			}
-		}).send();
-	},
-	
-	removePhoto : function(el){
-		
-		var entity = el;
-		
-		el.ajaxRequest({
-			method	: 'post',
-			url		: this.baseURL + '&view=set&id=' + el.get('set_id').toInt() + '&photo_id=' + this.photo_id.toInt(),
-			data	: 'action=removephoto',
-			onSuccess : function()
-			{
-				if(this.status == 204)
-					entity.destroy();
-				else
-				{
-					entity.removeClass('an-highlight');
-					entity.set('data-trigger', 'AddPhoto');
-				}	
-			}
-		}).send();
-	}
-});
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
 
-var photoSet = new PhotoSet();
+;(function($, window) {
+    
+    'use strict';
+    
+    $.widget('anahita.photoSetAssignment', {
+    	
+    	_create : function () {
+    		
+    		var self = this;
+    		this.photoId = this.element.data('photo');
+    		this.url = this.element.data('url');
+    		
+    		//open set selector event
+    		this._on('[data-action="OpenSetSelector"]', {
+    			click : function ( event ) {
+    				event.preventDefault();
+    				self._open( event.target.href );
+    			}
+    		});
+    		
+    		//Close set selector event
+			this._on(this.element, {
+				'click [data-action="CloseSetSelector"]' : function ( event ) {
+					event.preventDefault();
+					self._close(self.url);
+				}
+			});
+    		
+			var form = this.element.find('form');
+			
+			
+			//Event to create a set and assign the photo to it
+			this._on(this.element, {
+				elem : form,
+				submit : function ( event ) {
+					
+					event.preventDefault();
 
-Delegator.register('click', {
-	
-	'SetSelector' : function(event, el, api) {
-		event.stop();
-		photoSet.show();
-	},
-	
-	'CloseSelector' : function(event, el, api) {
-		event.stop();
-		photoSet.hide();
-	},
-	
-	'RemovePhoto' : function(event, el, api){
-		event.stop();
-		photoSet.removePhoto(el);
-	},
-	
-	'AddPhoto' : function(event, el, api){
-		event.stop();
-		photoSet.addPhoto(el);
-	},
-	
-	'Add' : function(event, el, api){
-		event.stop();
-		photoSet.add();
-	}
-});
+					$.ajax({
+						'method' : 'post',
+						url : $(event.target).attr('action'),
+						data : $(event.target).serialize(),
+						success : function ( response ) {
+							self.element.find('.an-entities').prepend(response);
+						}
+					});
+				}
+			});
+			
+			//add photo event
+			this._on(this.element, {
+				'click [data-action="addphoto"], [data-action="removephoto"]' : function ( event ) {
+					event.preventDefault();
+					this._changeAssignment($(event.currentTarget));
+				}
+			});
+    	},
+    	
+    	_open : function (url) {
+    		
+    		var self = this;
+    		
+    		$.ajax({
+    			method : 'get',
+    			url : url + '&photo_id' + this.photoId,
+    			beforeSend : function () {
+    				self.element.slideUp();
+    			},
+    			success : function (response) {
+    				self.element.html(response);
+    			},
+    			complete : function () {
+    				self.element.slideDown();
+    			}
+    		});
+    	},
+    	
+    	_close : function ( url ) {
+    		
+    		var self = this;
+    		
+    		$.ajax({
+    			method : 'get',
+    			url : url + '&photo_id=' + this.photoId,
+    			beforeSend : function () {
+    				self.element.slideUp();
+    			},
+    			success : function (response){
+    				self.element.html(response);
+    			},
+    			complete : function () {
+    				self.element.slideDown();
+    			}
+    		});
+    	},
+    	
+    	_changeAssignment : function (set) {
+
+    		var self = this;
+    		var action = set.data('action');
+    		
+    		$.ajax({
+    			method : 'post',
+    			url : set.data('url'),
+    			data : {
+    				photo_id : this.photoId,
+    				action : action
+    			},
+    			beforeSend : function () {
+    				set.fadeTo('fast', 0.7).addClass('uiActivityIndicator');
+    			},
+    			success : function () {
+    				
+    				set.fadeTo('fast', 1).removeClass('uiActivityIndicator')
+    				
+    				if ( action == 'addphoto' ) {
+    				
+    					set.data('data-action', 'removephoto');
+    					set.addClass('an-highlight');
+    				
+    				} else {
+    				
+    					set.data('data-action', 'addphoto');
+    					set.removeClass('an-highlight');
+    				
+    				}
+    			}
+    		});
+    	}
+    });
+    
+    $('#sets-wrapper').photoSetAssignment();
+    
+}(jQuery, window));  

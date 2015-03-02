@@ -41,10 +41,9 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
 		
 		if($entity->owner->authorize('administration')) 
 		{
-			$this->addCommand('setselector', JText::_('COM-PHOTOS-ACTION-ADD-TO-SET'))
-			    ->getCommand('setselector')
-			    ->dataTrigger('SetSelector')
-			    ->dataSetSelectorOptions('{\'oid\':'.$entity->owner->id.', \'photo_id\':'.$entity->id.'}');
+			$this->addCommand('OpenSetSelector', JText::_('COM-PHOTOS-ACTION-ADD-TO-SET'))
+			    ->getCommand('OpenSetSelector')
+			    ->href(JRoute::_('option=com_photos&view=sets&layout=selector&oid='.$entity->owner->id.'&photo_id='.$entity->id));
 		
 			$this->addAdministrationCommands();
 		}

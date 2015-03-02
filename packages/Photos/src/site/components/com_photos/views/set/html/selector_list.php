@@ -8,9 +8,12 @@ if(!isset($assigned_sets))
 		foreach($photo->top()->sets as $set)
 			$assigned_sets[] = $set->id;
 }
+
+$highlight = (in_array($set->id, $assigned_sets)) ? true : false;
+$action = (in_array($set->id, $assigned_sets)) ? 'removephoto' : 'addphoto';
 ?>
 
-<div class="an-entity an-entity-select-option <?= (in_array($set->id, $assigned_sets)) ? 'an-highlight' : '' ?>" set_id="<?= $set->id ?>" data-trigger="<?= (in_array($set->id, $assigned_sets)) ? 'RemovePhoto' : 'AddPhoto' ?>">
+<div class="an-entity an-entity-select-option <?= ($highlight) ? 'an-highlight' : '' ?>" data-action="<?= $action ?>" data-url="<?= @route($set->getURL()) ?>" >
 	<?php if($set->hasCover()): ?>
 	<div class="entity-portrait-square">
 		<img src="<?= $set->getCoverSource('square') ?>" />

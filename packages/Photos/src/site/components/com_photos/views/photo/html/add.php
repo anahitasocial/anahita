@@ -35,7 +35,7 @@
 </div>   
 
 <script>
-$('#photos-add').upload({
+$('#photos-add').photoUpload({
 	filedrop : '.dropzone',
 	url : "<?= @route( 'view=photo&format=json&oid='.$actor->id ) ?>",
 	setsUrl : "<?= @route('view=sets&oid='.$actor->id.'&layout=add_photos') ?>",
