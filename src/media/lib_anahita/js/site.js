@@ -6,7 +6,6 @@
  * http://www.opensource.org/licenses/MIT
  */
 
-//@depends vendors/modernizr.js
 //@depends vendors/jquery-2.1.1.js
 //@depends vendors/jquery-ui.js
 //@depends vendors/fastclick.js
