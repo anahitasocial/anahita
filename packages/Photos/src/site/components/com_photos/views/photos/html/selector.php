@@ -17,6 +17,15 @@ $url = array('view'=>'photos', 'layout'=>'selector_list', 'oid'=>$actor->id);
 if(!empty($exclude_set))
 	$url['exclude_set'] = $exclude_set;
 ?>
-<div class="an-entities media-grid" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
+<div id="photo-selector-list" class="an-entities media-grid">
 <?= @template('selector_list') ?>	
 </div>
+
+<script>
+$('#photo-selector-list').infinitescroll({
+	url : '<?= @route($url) ?>',
+	record : '.thumbnail-wrapper',
+	scrollable : '#photo-selector-list',
+	window: '#photo-selector'
+});
+</script>

@@ -32,7 +32,9 @@
     		this._on( this.element, {
     			'click a[data-trigger="ClosePhotoSelector"]' : function ( event ) {
     				event.preventDefault();
-    				self.element.slideUp();
+    				self.element.slideUp('normal', function(){
+    					self.element.empty();
+    				});
     			}
     		});
     		

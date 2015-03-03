@@ -22024,7 +22024,8 @@ Copyright (c) 2012 Tom Moor
 		
 		options: {
 			record : '.an-entity',
-			scrollable : window,
+			window : window,
+			scrollable : document,
 			preload: 3,
 			limit : 20,
 			url : null,
@@ -22056,7 +22057,14 @@ Copyright (c) 2012 Tom Moor
 			
 			scrollable.scroll(function(){
 	
-				if ( self.element.is(':visible') && scrollable.scrollTop() >= $(document).height() - scrollable.height() ) {
+				if ( self.options.debug ) {
+					
+					console.log($(window).scrollTop());
+					console.log($(scrollable).height());
+				
+				}
+				
+				if ( self.element.is(':visible') && $(window).scrollTop() >= $(scrollable).height() - $(window).height()) {
 					self._getNextPage();
 				}
 			});
@@ -22123,7 +22131,9 @@ Copyright (c) 2012 Tom Moor
 	});
 	
 	$(document).ajaxSuccess(function() {
-			$('[data-trigger*="InfiniteScroll"]').infinitescroll();
+			$('[data-trigger*="InfiniteScroll"]').infinitescroll({
+				'debug' : false
+			});
 	});
 	
 }(jQuery, window, document));
