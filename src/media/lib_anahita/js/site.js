@@ -25,7 +25,7 @@
 //@depends vendors/dropzone/min/dropzone.min.js
 
 //@depends anahita/modal.js
-//@depends anahita/InfiniteScroll.js
+//@depends anahita/infinitescroll.js
 //@depends anahita/gadget.js
 //@depends anahita/filterbox.js
 //@depends anahita/checkbox.js
