@@ -2,7 +2,7 @@
 
 <?php $photos = $set->photos->order('photoSets.ordering'); ?>
 
-<div id="set-mediums" class="set-mediums an-entities">
+<div id="set-photos" class="an-entities">
 	<div class="media-grid">
 		<?php foreach($photos as $photo) :?>
 		<div class="thumbnail-wrapper <?= ($set->isCover($photo)) ? 'cover' : '' ?>" mid="<?= $photo->id ?>">

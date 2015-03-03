@@ -1,7 +1,13 @@
 <?php defined('KOOWA') or die ?>
 
 <?php if($set->authorize('edit')) : ?>
+
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="com_photos/js/organizer.js" />
+<?php else: ?>
+<script src="com_photos/js/min/organizer.min.js" />
+<?php endif; ?>
+
 <?php endif; ?>
 
 <div class="row">
