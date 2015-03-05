@@ -2,7 +2,7 @@
 	
 <?php if(count($photos)) :?>
 <?php foreach( $photos as $photo) : ?>
-<div class="thumbnail-wrapper" mid="<?= $photo->id ?>">
+<div class="thumbnail-wrapper" photo="<?= $photo->id ?>">
 	<a class="thumbnail-link" href="<?= @route($photo->getURL()) ?>" title="<?= @escape($photo->title) ?>">
 		<img class="thumbnail" src="<?= $photo->getPortraitURL('square') ?>" />
 	</a>

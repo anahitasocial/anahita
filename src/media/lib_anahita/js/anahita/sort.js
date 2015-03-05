@@ -10,7 +10,7 @@
 
 ;(function ($, window, document) {
     
-    $.fn.sortable = function() {
+    $.fn.anSort = function() {
         
         var a = $(this);
         
@@ -33,7 +33,7 @@
     
     $('body').on('click','ul[data-behavior="sortable"] a', function(event) {
         event.preventDefault();
-        $(this).sortable();
+        $(this).anSort();
     });
     
 }(jQuery, window, document));

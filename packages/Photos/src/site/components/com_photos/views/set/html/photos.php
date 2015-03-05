@@ -2,21 +2,18 @@
 
 <?php $photos = $set->photos->order('photoSets.ordering'); ?>
 
-<div id="set-photos" class="an-entities">
-	<div class="media-grid">
-		<?php foreach($photos as $photo) :?>
-		<div class="thumbnail-wrapper <?= ($set->isCover($photo)) ? 'cover' : '' ?>" mid="<?= $photo->id ?>">
-			<a data-trigger="MediaViewer" class="thumbnail-link" href="<?= $photo->getPortraitURL('original') ?>" title="<?= @escape($photo->title) ?>">
-				<?php 
-				$caption = htmlspecialchars($photo->title, ENT_QUOTES).
-				(($photo->title && $photo->description) ? ' :: ' : '').
-				@helper('text.script', $photo->description)
-				?>
-				<img caption="<?= $caption ?>" class="thumbnail" src="<?= $photo->getPortraitURL('square') ?>" alt="<?= @escape($photo->title) ?>" />
-			</a>
-		</div>
-		<?php endforeach; ?>
-	</div>
+<?php foreach($photos as $photo) :?>
+<div class="thumbnail-wrapper <?= ($set->isCover($photo)) ? 'cover' : '' ?>" photo="<?= $photo->id ?>">
+	<a data-trigger="MediaViewer" class="thumbnail-link" href="<?= $photo->getPortraitURL('original') ?>" title="<?= @escape($photo->title) ?>">
+		<?php 
+		$caption = htmlspecialchars($photo->title, ENT_QUOTES).
+		(($photo->title && $photo->description) ? ' :: ' : '').
+		@helper('text.script', $photo->description)
+		?>
+		<img caption="<?= $caption ?>" class="thumbnail" src="<?= $photo->getPortraitURL('square') ?>" alt="<?= @escape($photo->title) ?>" />
+	</a>
 </div>
+<?php endforeach; ?>
+
 
 

@@ -6,4 +6,7 @@
 <div id="photo-selector"></div>
 <?php endif; ?>
 
-<?= @template('photos') ?>
+
+<div id="set-photos" class="an-entities media-grid">
+    <?= @template('photos') ?>
+</div>

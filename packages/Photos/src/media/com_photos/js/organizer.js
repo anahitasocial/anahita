@@ -17,13 +17,26 @@
     		var self = this;
     		
     		this.element.hide();
+    		this.selector = null;
+    		this.photoList = null;
     		
     		//open organizer
     		this._on('body', {
     			'click a[data-action="organize"]' : function ( event ) {
     				event.preventDefault();
     				$.get( event.currentTarget.href , function( response ){
-    	    			self.element.html(response).slideDown();
+    	    			
+    					self.element.html(response).slideDown();
+    	    			
+    	    			self.selector = $('#photo-selector-list').sortable({
+    	    				connectWith : $('#set-photos'),
+    	    				scroll: false
+    	    			});
+    	    			
+    	    			self.photoList = $('#set-photos').sortable({
+    	    				connectWith : $('#photo-selector-list')
+    	    			});
+    	    			
     	    		});
     			}
     		});
@@ -33,7 +46,11 @@
     			'click a[data-trigger="ClosePhotoSelector"]' : function ( event ) {
     				event.preventDefault();
     				self.element.slideUp('normal', function(){
+    					
+    					self.selector.sortable('destroy');
+    					self.photoList.sortable('destroy');
     					self.element.empty();
+    				
     				});
     			}
     		});
