@@ -36,7 +36,9 @@
     			<?= @controller('photos')->view('photos')->oid($actor->id)->layout('selector') ?>
     		</div>
     		
-    		<div id="set-photos" class="an-entities media-grid"></div>
+    		<div id="set-photos" class="an-entities">
+    			<div class="media-grid"></div>
+    		</div>
     			
     		<div class="form-actions">
     			<a data-trigger="Cancel" class="btn" href="<?= @route(array('view'=>'sets', 'oid'=>$actor->id)) ?>"><?= @text('LIB-AN-ACTION-CANCEL') ?></a> 

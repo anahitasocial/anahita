@@ -7,6 +7,8 @@
 <?php endif; ?>
 
 
-<div id="set-photos" class="an-entities media-grid">
+<div id="set-photos" class="an-entities">
+	<div class="media-grid">
     <?= @template('photos') ?>
+    </div>
 </div>

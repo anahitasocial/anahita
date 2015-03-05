@@ -29,11 +29,11 @@
     					self.element.html(response).slideDown();
     	    			
     	    			self.selector = $('#photo-selector-list').sortable({
-    	    				connectWith : $('#set-photos'),
+    	    				connectWith : $('#set-photos').find('.media-grid'),
     	    				scroll: false
     	    			});
     	    			
-    	    			self.photoList = $('#set-photos').sortable({
+    	    			self.photoList = $('#set-photos').find('.media-grid').sortable({
     	    				connectWith : $('#photo-selector-list')
     	    			});
     	    			
