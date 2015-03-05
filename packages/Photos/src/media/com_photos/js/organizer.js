@@ -12,6 +12,12 @@
     
     $.widget('anahita.setOrganizer', {
     
+    	options : {
+    		
+    		selector : '#photo-selector-list',
+    		photos : $('#set-photos').find('.media-grid') 
+    	},
+    	
     	_create : function () {
     		
     		var self = this;
@@ -27,17 +33,23 @@
     				$.get( event.currentTarget.href , function( response ){
     	    			
     					self.element.html(response).slideDown();
-    	    			
-    	    			self.selector = $('#photo-selector-list').sortable({
-    	    				connectWith : $('#set-photos').find('.media-grid'),
+    					
+    	    			self.selector = $(self.options.selector).sortable({
+    	    				connectWith : $(self.options.photos),
     	    				scroll: false
     	    			});
     	    			
-    	    			self.photoList = $('#set-photos').find('.media-grid').sortable({
-    	    				connectWith : $('#photo-selector-list')
+    	    			self.photoList = $(self.options.photos).sortable({
+    	    				connectWith : $(self.options.selector)
     	    			});
     	    			
     	    		});
+    			}
+    		});
+    		
+    		this._on('body', {
+    			'click a.thumbnail-link' : function ( event ) {
+    				event.preventDefault();
     			}
     		});
     		
@@ -50,7 +62,6 @@
     					self.selector.sortable('destroy');
     					self.photoList.sortable('destroy');
     					self.element.empty();
-    				
     				});
     			}
     		});
@@ -65,7 +76,7 @@
     	},
     	
     	_update : function () {
-    		console.log('Update Set');
+    		
     	}
     });
     
