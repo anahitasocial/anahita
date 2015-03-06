@@ -6,8 +6,7 @@
 
 <?php if(!empty($exclude_set)): ?>
 <div class="form-actions">
-	<a data-trigger="ClosePhotoSelector" href="#" class="btn"><?= @text('LIB-AN-ACTION-CANCEL') ?></a> 
-	<a data-trigger="UpdateSet" href="<?= @route() ?>" class="btn btn-primary"><?= @text('LIB-AN-ACTION-SAVE') ?></a>
+	<a data-trigger="ClosePhotoSelector" href="#" class="btn"><?= @text('LIB-AN-ACTION-CLOSE') ?></a>
 </div>
 <?php endif; ?>
 

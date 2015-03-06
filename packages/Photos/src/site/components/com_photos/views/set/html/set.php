@@ -7,7 +7,7 @@
 <?php endif; ?>
 
 
-<div id="set-photos" class="an-entities">
+<div id="set-photos" class="an-entities" data-url="<?= @route($set->getURL()) ?>">
 	<div class="media-grid">
     <?= @template('photos') ?>
     </div>
