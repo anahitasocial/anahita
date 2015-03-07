@@ -17719,7 +17719,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
     'use strict';
     
-    $('[data-trigger="MediaViewer"]').swipebox({
+    var swipebox = $('[data-trigger="MediaViewer"]').swipebox({
 		autoplayVideos : true,
 		closeOnClick : true
 	});

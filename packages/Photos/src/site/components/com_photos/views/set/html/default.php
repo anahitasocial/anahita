@@ -19,11 +19,9 @@
 	
 	<div class="span4">			
     	<div class="an-entity an-photos-set">		
-    		<?php if($set->hasCover()): ?>
     		<div id="set-cover-wrapper">
     			<?= @template('cover') ?>
     		</div>
-    		<?php endif; ?>
     		
     		<div class="entity-title-wrapper">
     			<h3 data-behavior="<?= $set->authorize('edit') ? 'Editable' : ''; ?>" class="entity-title <?= ($set->authorize('edit')) ? 'editable' : ''; ?>" data-editable-options="{'url':'<?= @route($set->getURL()) ?>','name':'title', 'dataValidators':'required', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-TITLE-PROMPT') ?>'}">

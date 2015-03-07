@@ -18,6 +18,7 @@
     		url : $('#set-photos').data('url'),
     		photos : $('#set-photos').find('.media-grid'),
     		thumbnail : '.thumbnail-wrapper',
+    		cover : '#set-cover-wrapper',
     		form : '#set-form'
     	},
     	
@@ -50,13 +51,6 @@
     			'submit' : function ( event ) {
     				this._beforeAdd();
     			}
-    		})
-    		
-    		this._on('body', {
-    			'click a[data-trigger="ChangeCover"]' : function ( event ) {
-    				event.preventDefault();
-    				this._changeCover();
-    			} 
     		});
     	},
     	
@@ -85,8 +79,6 @@
     			
     			self.photoList.parent().addClass('an-highlight');
     		});
-    		
-    		//disable mediaviewer
     	},
     	
     	close : function () {
@@ -100,7 +92,6 @@
 				self.photoList.parent().removeClass('an-highlight');
 				self.element.empty();
 				
-				//enable mediaviewer
     		});
     	},
     	
@@ -121,6 +112,7 @@
     	
     	_edit : function () {
     		
+    		var self = this;
     		var thumbnails = this.photoList.find( this.options.thumbnail );
     		var data = 'action=updatephotos';
     		
@@ -131,7 +123,30 @@
     		$.ajax({
     			method : 'post',
     			url : this.options.url,
-    			data : data
+    			data : data,
+    			success : function() {
+    				
+    				var thumbnails = $(self.options.photos).find(self.options.thumbnail);
+    				
+    				thumbnails.removeClass('cover');
+    				thumbnails.first().addClass('cover');
+    				
+    				self._refreshCover();
+    			}
+    		});
+    	},
+    	
+    	_refreshCover : function () {
+    		
+    		var self = this;
+
+    		$.ajax({
+    			method : 'get',
+    			url : this.options.url,
+    			data : 'layout=cover',
+    			success : function ( response ) {
+    				$(self.options.cover).html(response);
+    			}
     		});
     	}
     });

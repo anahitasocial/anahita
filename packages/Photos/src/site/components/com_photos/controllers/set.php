@@ -76,10 +76,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 		
 		foreach($this->getItem()->photos as $photo)
 			if(!in_array($photo->id, $photo_ids))
-				$this->getItem()->removePhoto($photo);
-				
-		if(!$this->getItem()->hasCover())
-			$this->execute('updatecover', $context);		
+				$this->getItem()->removePhoto($photo);	
 				
 		return $this->getItem();
 	}
@@ -133,18 +130,6 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 		}
 		else
 			return $this->getItem();
-	}
-	
-	/**
-	 * Updates the set cover
-	 * 
-	 * @return object ComPhotosDomainEntitySet
-	 * @param object POST data
-	 */
-	protected function _actionUpdatecover($context)
-	{	
-		$this->getItem()->setCover($this->photos->top());
-		return $this->getItem();
 	}
 	
 	/**

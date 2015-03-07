@@ -16,26 +16,19 @@
 	<?php if($object->description): ?>
 	<div class="entity-description"><?= @content($object->description) ?></div>
 	<?php endif; ?>
-	
-	<?php if ( $object->hasCover() ) : ?>
-	<div class="entity-portrait-medium">
-		<a href="<?= @route($object->getURL()) ?>">
-			<img src="<?= $object->getCoverSource('medium') ?>" />
-		</a>
-	</div>
-	<?php endif ?>
-		<div class="media-grid">	
-			<?php $photos = $object->photos->order('photoSets.ordering')->limit(15)->fetchSet(); ?>
-			<?php foreach( $photos as $i=>$photo ): ?>
-			<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
-			<?php if ( $i > 12 ) break; ?>
-			<div class="entity-portrait">
-				<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
-					<img src="<?= $photo->getPortraitURL('square') ?>" />
-				</a>
-			</div>
-		    <?php endforeach; ?>
+
+	<div class="media-grid">	
+		<?php $photos = $object->photos->order('photoSets.ordering')->limit(10)->fetchSet(); ?>
+		<?php foreach( $photos as $i=>$photo ): ?>
+		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
+		<?php if ( $i > 12 ) break; ?>
+		<div class="entity-portrait">
+			<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
+				<img src="<?= $photo->getPortraitURL('square') ?>" />
+			</a>
 		</div>
+	    <?php endforeach; ?>
+	</div>
 	
 	<div class="entity-meta">
 		<?= sprintf(@text('COM-PHOTOS-SET-META-PHOTOS'), $object->getPhotoCount()) ?>

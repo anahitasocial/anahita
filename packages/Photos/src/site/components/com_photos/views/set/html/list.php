@@ -14,13 +14,11 @@
 		</div>
 	</div>
 	
-	<?php if($set->hasCover()): ?>
 	<div class="entity-portrait-medium">
 		<a href="<?= @route($set->getURL()) ?>">
 			<img src="<?= $set->getCoverSource('medium') ?>" alt="<?= @escape($set->title) ?>" />
 		</a>
 	</div>
-	<?php endif; ?>
 	
 	<h3 class="entity-title">
 		<a href="<?= @route($set->getURL()) ?>">
