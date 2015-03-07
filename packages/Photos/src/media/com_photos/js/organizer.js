@@ -17,8 +17,8 @@
     		selector : '#photo-selector-list',
     		url : $('#set-photos').data('url'),
     		photos : $('#set-photos').find('.media-grid'),
-    		thumbnail : '.thumbnail-wrapper'
-    			
+    		thumbnail : '.thumbnail-wrapper',
+    		form : '#set-form'
     	},
     	
     	_create : function () {
@@ -33,13 +33,7 @@
     		this._on('body', {
     			'click a[data-action="organize"]' : function ( event ) {
     				event.preventDefault();
-    				self._open( event.currentTarget.href );
-    			}
-    		});
-    		
-    		this._on('body', {
-    			'click a.thumbnail-link' : function ( event ) {
-    				event.preventDefault();
+    				self.open( event.currentTarget.href );
     			}
     		});
     		
@@ -47,12 +41,19 @@
     		this._on( this.element, {
     			'click a[data-trigger="ClosePhotoSelector"]' : function ( event ) {
     				event.preventDefault();
-    				self._close();
+    				self.close();
     			}
     		});
+    		
+    		//add set
+    		this._on( this.options.form, {
+    			'submit' : function ( event ) {
+    				this._beforeAdd();
+    			}
+    		})
     	},
     	
-    	_open : function ( url ) {
+    	open : function ( url ) {
     		
     		var self = this;
     		
@@ -69,14 +70,18 @@
     				connectWith : $(self.options.selector),
     				update : function () {
     					if(self.options.url) {
-    						self._update();
+    						self._edit();
     					}
     				}
     			});
+    			
+    			self.photoList.parent().addClass('an-highlight');
     		});
+    		
+    		//disable mediaviewer
     	},
     	
-    	_close : function () {
+    	close : function () {
     		
     		var self = this;
     		
@@ -84,21 +89,35 @@
 				
     			self.selector.sortable('destroy');
 				self.photoList.sortable('destroy');
+				self.photoList.parent().removeClass('an-highlight');
 				self.element.empty();
-			
+				
+				//enable mediaviewer
     		});
     	},
     	
-    	_update : function () {
+    	_beforeAdd : function () {
     		
     		var self = this;
+    		var hasPhotos = false;
+			var thumbnails = self.photoList.find( self.options.thumbnail );
+
+			if ( thumbnails.length == 0 ) {
+				event.preventDefault();
+			}
+				
+			$.each( thumbnails, function ( index, thumbnail ) {
+				$(self.options.form).append('<input type="hidden" name="photo_id[]" value=' + $(thumbnail).attr('photo') + ' />');
+			});
+    	},
+    	
+    	_edit : function () {
+    		
     		var thumbnails = this.photoList.find( this.options.thumbnail );
     		var data = 'action=updatephotos';
     		
     		$.each( thumbnails, function ( index, thumbnail ) {
-    		
     			data += '&photo_id[]=' + $(thumbnail).attr('photo')
-    		
     		});
     		
     		$.ajax({

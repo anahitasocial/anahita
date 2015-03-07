@@ -41,11 +41,20 @@
     		</div>
     			
     		<div class="form-actions">
-    			<a data-trigger="Cancel" class="btn" href="<?= @route(array('view'=>'sets', 'oid'=>$actor->id)) ?>"><?= @text('LIB-AN-ACTION-CANCEL') ?></a> 
-    			<button type="submit" class="btn btn-primary"><?= @text('LIB-AN-ACTION-ADD') ?></button>
+    			<a class="btn" href="<?= @route(array('view'=>'sets', 'oid'=>$actor->id)) ?>">
+    			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
+    			</a> 
+    			<button type="submit" class="btn btn-primary">
+    			    <?= @text('LIB-AN-ACTION-ADD') ?>
+    			</button>
     		</div>
     	</fieldset>
     </form>
 
 	</div>
 </div>
+
+<script>
+<?php $url = 'option=com_photos&view=photos&layout=selector&oid='.$actor->id; ?>
+$('#photo-selector').setOrganizer( 'open', '<?= @route($url) ?>');		
+</script>
