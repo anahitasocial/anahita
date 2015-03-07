@@ -31,7 +31,7 @@
     		
     		//open organizer
     		this._on('body', {
-    			'click a[data-action="organize"]' : function ( event ) {
+    			'click a[data-trigger="Organize"]' : function ( event ) {
     				event.preventDefault();
     				self.open( event.currentTarget.href );
     			}
@@ -45,12 +45,19 @@
     			}
     		});
     		
-    		//add set
+    		//before add set
     		this._on( this.options.form, {
     			'submit' : function ( event ) {
     				this._beforeAdd();
     			}
     		})
+    		
+    		this._on('body', {
+    			'click a[data-trigger="ChangeCover"]' : function ( event ) {
+    				event.preventDefault();
+    				this._changeCover();
+    			} 
+    		});
     	},
     	
     	open : function ( url ) {
@@ -68,6 +75,7 @@
     			
     			self.photoList = $(self.options.photos).sortable({
     				connectWith : $(self.options.selector),
+    				cancel : '.cover',
     				update : function () {
     					if(self.options.url) {
     						self._edit();
