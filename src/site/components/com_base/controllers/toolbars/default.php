@@ -52,7 +52,8 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $layout = pick($command->layout, 'edit');
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))
-        ->href($entity->getURL().'&layout='.$layout);
+        ->href($entity->getURL().'&layout='.$layout)
+        ->setAttribute('data-action', 'edit');
     }
     
     /**
@@ -144,7 +145,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         ->href($entity->getURL())
         ->class('action-commentstatus')
         ->setAttribute('data-action','commentstatus')
-        ->setAttribute('data-status',$status);
+        ->setAttribute('data-status', $status);
     }
     
     /**

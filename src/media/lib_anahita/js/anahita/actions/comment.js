@@ -10,49 +10,96 @@
 	
 	'use strict';
 	
-	$.fn.CommentPost = function (options) {
-		
-		//default settings
-		var settings = $.extend({
-			comments : '.an-comments',		
-		}, options );
-		
-		var form = $(this);
-		var formAction = form.find('input[name="action"]').val();
-		var comments = form.prev(settings.comments);
-		
-		$.ajax({
-			
-			method : 'post',
-			
-			url : form.attr( 'action' ),
-			
-			data : form.serialize(),
-			
-			beforeSend : function () {
-				form.fadeTo( 'fast', 0.7 );
-			},
-			
-			success : function ( html ) {
+	$.widget('anahita.commentEdit', {
 				
-				form.fadeTo( 'fast', 1 ).trigger('reset');
-				
-				if ( formAction == 'addcomment') {
-				
-					comments.append($(html).fadeIn('slow'));
-				
-				} else if ( formAction == 'editcomment') {
-					
-					form.replaceWith($(html).fadeIn('slow'));
+		_create : function () {
+			
+			var self = this;
+			
+			this._on( this.element, {
+				'click [data-action="editcomment"], [data-action="cancelcomment"]' : function ( event ) {
+					event.preventDefault();
+					event.stopPropagation();
+					self._read( event.currentTarget.href );
 				}
-			}
-		});
-	};
+			});
+
+			this._on( this.element, {
+				'submit' : function ( event ) {
+					event.preventDefault();
+					event.stopPropagation();
+					self._edit( event.target );
+				}
+			});
+		},
+		
+		_read : function ( url ) {
+			
+			var self = this;
+
+			$.ajax({
+				method : 'get',
+				url : url,
+				beforeSend : function () {
+					self.element.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+				},
+				success : function ( response ) {
+					
+					if ( $(response).is('.an-comment') )
+						response = $(response).html();
+						
+					self.element.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+				}
+			});
+		},
+		
+		_edit : function ( form ) {
+			
+			var self = this;
+			
+			$.ajax({
+				method : 'post',
+				url : $(form).attr('action'),
+				data : $(form).serialize(),
+				beforeSend : function () {
+					$(form).find(':submit').attr('disabled', true);
+					self.element.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+				},
+				success : function ( response ) {
+					self.element.html( $(response).html() );
+					self.element.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+				}
+			});
+		}
+	});
 	
-	$('.an-comments-wrapper').on('submit', 'form', function(event){
+	$(document).ajaxSuccess(function() {
+		$('.an-comment').commentEdit();
+	});
+	
+	$('.an-comments-wrapper').on('submit', '> form', function() {
+		
 		event.preventDefault();
 		event.stopPropagation();
-		$(this).CommentPost();
+		
+		var form = $(this);
+		var comments = form.prev('.an-comments');
+		
+		$.ajax({
+			method : 'post',
+			url : form.attr('action'),
+			data : form.serialize(),
+			beforeSend : function (){
+				form.find(':submit').attr('disabled', true);
+				form.fadeTo('fast', 0.3);
+			},
+			success : function ( response ) {
+				
+				form.trigger('reset').fadeTo( 'fast', 1 );
+				comments.append($(response).fadeIn('slow'));
+			}
+		});
+		
 	});
 	
 }(jQuery, window, document));

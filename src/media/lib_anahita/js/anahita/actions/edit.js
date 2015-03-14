@@ -20,12 +20,19 @@
 		var elem = $(this);
 		var entity = elem.closest(settings.entity);
 		
-		$.get( elem.attr('href'), function (html) {
-			entity.replaceWith($(html).fadeIn('slow'));
+		$.ajax({
+			method : 'get',
+			url : elem.attr('href'),
+			beforeSend : function () {
+				entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+			},
+			success : function ( response ) {
+				entity.html(response).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+			}
 		});
 	};
 	
-	$('body').on('click', 'a[data-action="edit"], a[data-action="editcomment"]', function( event ) {
+	$('body').on('click', 'a[data-action="edit"]', function( event ) {
 		event.preventDefault();
 		event.stopPropagation();
 		$(this).ActionEdit();

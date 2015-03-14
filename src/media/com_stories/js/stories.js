@@ -19,7 +19,6 @@
 			
 			entity : '.an-entity',
 			comments : '.an-comments',
-			form : '.an-comment-form',
 			actionOvertext : '.action-comment-overtext',
 			overtextBox : '.comment-overtext-box'
 		
@@ -28,7 +27,7 @@
 		var elem = $(this);
 		var parent = elem.closest(settings.entity);
 		var comments = parent.find(settings.comments);
-		var form = parent.find(settings.form);
+		var form = parent.find('form:last-child');
 		
 		if(!form)
 			return;

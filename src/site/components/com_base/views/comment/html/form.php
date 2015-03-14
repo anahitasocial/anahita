@@ -35,10 +35,11 @@ if ( $editor ) {
 		</div>
 
 		<div class="comment-actions">
-			<?php if(isset($comment)) : ?>
-			<button type="button" class="btn action-cancel" data-action="cancelcomment"  name="cancel" data-url="<?= @route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>">
-			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
-			</button>								
+			<?php if(isset($comment)) : ?>			
+			<a class="btn action-cancel" data-action="cancelcomment" href="<?= @route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>">
+				<?= @text('LIB-AN-ACTION-CANCEL') ?>
+			</a> 
+									
 			<button type="submit" class="btn btn-primary">
 			    <?= @text('LIB-AN-ACTION-UPDATE') ?>
 			</button>				
