@@ -17866,6 +17866,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
 	'use strict';
 	
+	//Edit Comment Widget
 	$.widget('anahita.commentEdit', {
 				
 		_create : function () {
@@ -17875,7 +17876,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			this._on( this.element, {
 				'click [data-action="editcomment"], [data-action="cancelcomment"]' : function ( event ) {
 					event.preventDefault();
-					event.stopPropagation();
 					self._read( event.currentTarget.href );
 				}
 			});
@@ -17883,7 +17883,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			this._on( this.element, {
 				'submit' : function ( event ) {
 					event.preventDefault();
-					event.stopPropagation();
 					self._edit( event.target );
 				}
 			});
@@ -17929,14 +17928,15 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 	});
 	
+	//Edit Comment
 	$(document).ajaxSuccess(function() {
 		$('.an-comment').commentEdit();
 	});
 	
+	// Add Comment
 	$('.an-comments-wrapper').on('submit', '> form', function() {
 		
 		event.preventDefault();
-		event.stopPropagation();
 		
 		var form = $(this);
 		var comments = form.prev('.an-comments');

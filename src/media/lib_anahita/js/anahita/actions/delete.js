@@ -57,9 +57,8 @@
 	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
 		
 		event.preventDefault();
-		event.stopPropagation();
-		
 		$(this).actionDelete();
+		
 	});
 	
 }(jQuery, window, document));

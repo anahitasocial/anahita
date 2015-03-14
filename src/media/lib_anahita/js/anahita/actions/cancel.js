@@ -21,7 +21,6 @@
 	
 	$('body').on('click', 'button[data-action="cancel"], button[data-action="cancelcomment"]', function( event ) {
 		event.preventDefault();
-		event.stopPropagation();
 		$(this).ActionCancel();
 	});
 
