@@ -17,23 +17,22 @@
     <?= @helper('ui.comments', $set) ?>
 	</div>
 	
-	<div class="span4">			
-    	<div class="an-entity an-photos-set">		
+	<div class="span4">	
+			
+    	<div class="an-entity an-photos-set editable" data-url="<?= @route($set->getURL()) ?>">		
     		<div id="set-cover-wrapper">
     			<?= @template('cover') ?>
     		</div>
     		
-    		<div class="entity-title-wrapper">
-    			<h3 data-behavior="<?= $set->authorize('edit') ? 'Editable' : ''; ?>" class="entity-title <?= ($set->authorize('edit')) ? 'editable' : ''; ?>" data-editable-options="{'url':'<?= @route($set->getURL()) ?>','name':'title', 'dataValidators':'required', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-TITLE-PROMPT') ?>'}">
-    			<?= @escape($set->title) ?>
-    			</h3>
-    		</div>
-    		
     		<div class="entity-description-wrapper">
-    			<div data-behavior="<?= $set->authorize('edit') ? 'Editable' : ''; ?>" class="entity-description <?= ($set->authorize('edit')) ? 'editable' : ''; ?>" data-editable-options="{'url':'<?= @route($set->getURL()) ?>','name':'description', 'input-type':'textarea', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-DESCRIPTION-PROMPT') ?>'}">
-    				<?= @content($set->description) ?>
-    			</div>
-    		</div>
+        		<h3 class="entity-title">
+        			<?= @escape($set->title) ?>
+        		</h3>
+        		
+        		<div class="entity-description">
+        			<?= @content($set->description, array('exclude'=>array('syntax','video'))) ?>
+        		</div>
+			</div>
     		
     		<div class="entity-meta">
     			<div class="an-meta" id="vote-count-wrapper-<?= $set->id ?>">
