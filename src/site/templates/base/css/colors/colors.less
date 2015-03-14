@@ -132,18 +132,22 @@ a.action-comment-overtext
 .an-entity
 {
     background-color: @white;
+    
+    &.editable
+    {
+        .entity-title:hover,
+        .entity-description:hover
+        {
+            background-color: @yellow;
+        }
+    }
 }
 
 .entity-title,
 .entity-name,
 .entity-description,
 .entity-body
-{        
-    &.editable:hover
-    {
-        background-color: @yellow;
-    }
-    
+{            
     blockquote
     { 
         border-right: @grayLighter; 
