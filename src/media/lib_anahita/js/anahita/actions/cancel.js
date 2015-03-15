@@ -9,7 +9,7 @@
 ;(function ($, window, document) {
 	
 	'use strict';
-
+/*
 	$.fn.ActionCancel = function () {
 		
 		var elem = $(this);
@@ -23,5 +23,5 @@
 		event.preventDefault();
 		$(this).ActionCancel();
 	});
-
+*/
 }(jQuery, window, document));

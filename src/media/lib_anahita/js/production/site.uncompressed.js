@@ -17822,14 +17822,12 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	//vote
 	$('body').on('click', 'a[data-action="vote"], a[data-action="unvote"]', function( event ) {
 		event.preventDefault();
-		event.stopPropagation();
 		$(this).AnActionVote();
 	});
 	
 	//unvote
 	$('body').on('click', 'a[data-action="votecomment"], a[data-action="unvotecomment"]', function( event ) {
 		event.preventDefault();
-		event.stopPropagation();
 		$(this).AnActionVote('comment');
 	});
 	
@@ -17837,8 +17835,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	$('body').on('click', 'a[data-toggle*="Voters"]', function ( event ){
 		
 		event.preventDefault();
-		event.stopPropagation();
-		
+
 		var votersModal = $('#an-modal');
 		var header = votersModal.find('.modal-header').find('h3');
 		var body = votersModal.find('.modal-body');
@@ -17853,7 +17850,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	});
 	
 }(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions/comment.js
+///media/lib_anahita/js/anahita/actions/entity.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -17866,96 +17863,92 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
 	'use strict';
 	
-	//Edit Comment Widget
-	$.widget('anahita.commentEdit', {
-				
-		_create : function () {
-			
-			var self = this;
-			
-			this._on( this.element, {
-				'click [data-action="editcomment"], [data-action="cancelcomment"]' : function ( event ) {
-					event.preventDefault();
-					self._read( event.currentTarget.href );
-				}
-			});
-
-			this._on( this.element, {
-				'submit' : function ( event ) {
-					event.preventDefault();
-					self._edit( event.target );
-				}
-			});
-		},
+	$.fn.anahitaEntity = function ( action ) {
 		
-		_read : function ( url ) {
+		var entity = $(this).closest('.an-entity');
+		
+		//read entity
+		if ( action == 'read' ) {
 			
-			var self = this;
-
+			var url = $(this).attr('href');
+			
 			$.ajax({
 				method : 'get',
 				url : url,
 				beforeSend : function () {
-					self.element.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 				},
 				success : function ( response ) {
 					
-					if ( $(response).is('.an-comment') )
+					if ( $(response).is('.an-comment') ) {
 						response = $(response).html();
+					}
 						
-					self.element.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+					entity.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
 				}
 			});
-		},
+		}
 		
-		_edit : function ( form ) {
+		//edit entity
+		if ( action == 'edit' ) {
 			
+			var url = $(this).attr('action');
 			var self = this;
 			
 			$.ajax({
 				method : 'post',
-				url : $(form).attr('action'),
-				data : $(form).serialize(),
+				url : url,
+				data : $(this).serialize(),
 				beforeSend : function () {
-					$(form).find(':submit').attr('disabled', true);
-					self.element.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+					$(self).find(':submit').attr('disabled', true);
+					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 				},
 				success : function ( response ) {
-					self.element.html( $(response).html() );
-					self.element.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+					entity.html( $(response).html() );
+					entity.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
 				}
 			});
 		}
-	});
-	
-	//Edit Comment
-	$(document).ajaxSuccess(function() {
-		$('.an-comment').commentEdit();
-	});
-	
-	// Add Comment
-	$('.an-comments-wrapper').on('submit', '> form', function() {
 		
+		//add comment entity
+		if ( action == 'addcomment' )
+		{
+			var form = $(this);
+			var comments = form.prev('.an-comments');
+			
+			$.ajax({
+				method : 'post',
+				url : form.attr('action'),
+				data : form.serialize(),
+				beforeSend : function (){
+					form.find(':submit').attr('disabled', true);
+					form.fadeTo('fast', 0.3);
+				},
+				success : function ( response ) {
+					
+					form.trigger('reset').fadeTo( 'fast', 1 );
+					comments.append($(response).fadeIn('slow'));
+				}
+			});
+		}	
+	}
+	
+	//Read Actions
+	$('body').on('click', 'a[data-action="edit"], a[data-action="editcomment"], a[data-action="cancelcomment"]', function( event ) {
 		event.preventDefault();
-		
-		var form = $(this);
-		var comments = form.prev('.an-comments');
-		
-		$.ajax({
-			method : 'post',
-			url : form.attr('action'),
-			data : form.serialize(),
-			beforeSend : function (){
-				form.find(':submit').attr('disabled', true);
-				form.fadeTo('fast', 0.3);
-			},
-			success : function ( response ) {
-				
-				form.trigger('reset').fadeTo( 'fast', 1 );
-				comments.append($(response).fadeIn('slow'));
-			}
-		});
-		
+		$(this).anahitaEntity('read');
+	});
+	
+	//Edit Action
+	$('body').on('submit', '.an-entity > form', function( event ) {
+		event.preventDefault();
+		$(this).anahitaEntity('edit');
+	});
+	
+	//Add Comment Action
+	$('body').on('submit', '.an-comments-wrapper > form', function( event ) {
+		event.preventDefault();
+		$(this).anahitaEntity('addcomment');
 	});
 	
 }(jQuery, window, document));
@@ -18019,53 +18012,10 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
 		
 		event.preventDefault();
-		event.stopPropagation();
-		
 		$(this).actionDelete();
+		
 	});
 	
-}(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions/edit.js
-/**
- * Author: Rastin Mehr
- * Email: rastin@anahitapolis.com
- * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
-;(function ($, window, document) {
-	
-	'use strict';
-
-	$.fn.ActionEdit = function (options) {
-		
-		//default settings
-		var settings = $.extend({
-			entity : '.an-entity',		
-		}, options );
-		
-		var elem = $(this);
-		var entity = elem.closest(settings.entity);
-		
-		$.ajax({
-			method : 'get',
-			url : elem.attr('href'),
-			beforeSend : function () {
-				entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-			},
-			success : function ( response ) {
-				entity.html(response).fadeTo('fast', 1).removeClass('uiActivityIndicator');
-			}
-		});
-	};
-	
-	$('body').on('click', 'a[data-action="edit"]', function( event ) {
-		event.preventDefault();
-		event.stopPropagation();
-		$(this).ActionEdit();
-	});
-
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/actions/editable.js
 /**
@@ -18159,35 +18109,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
 	$(document).ajaxSuccess(function() {
 		$('.an-entity.editable').entityEditable();
-	});
-
-}(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions/cancel.js
-/**
- * Author: Rastin Mehr
- * Email: rastin@anahitapolis.com
- * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
-;(function ($, window, document) {
-	
-	'use strict';
-
-	$.fn.ActionCancel = function () {
-		
-		var elem = $(this);
-		
-		$.get( elem.data('url'), function (html) {
-			elem.closest('form').replaceWith($(html).fadeIn('slow'));
-		});
-	};
-	
-	$('body').on('click', 'button[data-action="cancel"], button[data-action="cancelcomment"]', function( event ) {
-		event.preventDefault();
-		event.stopPropagation();
-		$(this).ActionCancel();
 	});
 
 }(jQuery, window, document));
@@ -18357,8 +18278,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	$( 'body' ).on( 'click', selectors, function( event ) {
 		
 		event.preventDefault();
-		event.stopPropagation();
-		
 		$(this).actionSocialgraph();
 	});
 	
