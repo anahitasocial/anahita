@@ -12,21 +12,26 @@
     
     $.fn.anSort = function() {
         
-        var a = $(this);
+        var self = $(this);
         
         $.ajax({
-           url: a.attr('href'),
-           beforeSend: function() {
-               a.parent().fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-           },
+           
+        	url: self.attr('href'),
+        	
+        	beforeSend: function() {
+        		self.parent().fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+        	},
+           
            success: function(response) {
-               var entities = $(response).filter('#an-entities-main');
-               $('#an-entities-main-wrapper').html(entities);
-               a.parent().siblings().removeClass('active');
-               a.parent().addClass('active');
+                              
+               $('#an-entities-main').html($(response).find('.an-entity'));
+               $('.pagination').html($(response).filter('.pagination'));
+        	   
+               self.parent().siblings().removeClass('active');
+               self.parent().addClass('active');
            },
            complete: function() {
-               a.parent().fadeTo('fast', 1).removeClass('uiActivityIndicator');
+               self.parent().fadeTo('fast', 1).removeClass('uiActivityIndicator');
            }
         });
     };
