@@ -96,4 +96,19 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	    	->setAttribute('data-trigger','Submit');
 	    }
 	}
+	
+/**
+     * New button toolbar
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandNew($command)
+    {
+        $command
+        ->append(array('label'=>$label))
+        ->href('#')
+        ->setAttribute('data-trigger', 'ReadForm');
+    }
 }

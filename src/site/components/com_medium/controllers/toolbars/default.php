@@ -157,7 +157,6 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
         
         $command
         ->append(array('label'=>$label))
-        ->href(JRoute::_($url))
-        ->setAttribute('data-trigger', 'ReadForm');
+        ->href(JRoute::_($url));
     }
 }
