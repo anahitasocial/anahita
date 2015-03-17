@@ -5,7 +5,8 @@ $url = empty($comment) ?  $parent->getURL() : $comment->getURL();
 $action = empty($comment)  ? 'addcomment' : 'editcomment';
 $editor = !isset($editor) ? false : $editor;
 
-if ( $editor ) {
+if ( $editor ) 
+{
     $url .= '&comment[editor]=1';
 }
 ?>
@@ -25,9 +26,9 @@ if ( $editor ) {
 		<div class="control-group">
 			<div class="controls">
 			<?php if ( $editor ) : ?>			
-			<?php $id   = isset($comment) ? $comment->id   : time() ?>
-			<?php $body = isset($comment) ? $comment->getBody() : ''?>
-			<?= @editor(array('name'=>'body', 'content'=>$body, 'html'=>array('cols'=>50, 'rows'=>5, 'class'=>'input-block-level','required'=>'required', 'maxlength'=>'5000', 'id'=>'an-comment-body-'.$id)))?>
+			<?php $id   = isset($comment) ? $comment->id : time(); ?>
+			<?php $body = isset($comment) ? $comment->getBody() : ''; ?>
+			<?= @editor(array('name'=>'body', 'content'=>$body, 'html'=>array('cols'=>50, 'rows'=>5, 'class'=>'input-block-level', 'required'=>'required', 'maxlength'=>'5000', 'id'=>'an-comment-body-'.$id)))?>
 			<?php else : ?>
 			<textarea name="body" cols="50" rows="3" class="input-block-level" required maxlength="5000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
 			<?php endif;?>
@@ -36,7 +37,7 @@ if ( $editor ) {
 
 		<div class="comment-actions">
 			<?php if(isset($comment)) : ?>			
-			<a class="btn action-cancel" data-action="cancelcomment" href="<?= @route($comment->getURL().'&comment[layout]=list&comment[editor]='.$editor)?>">
+			<a class="btn action-cancel" data-action="cancelcomment" href="<?= @route($comment->getURL().'&comment[layout]=list')?>">
 				<?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</a> 
 									
