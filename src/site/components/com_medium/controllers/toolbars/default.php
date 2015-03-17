@@ -155,6 +155,9 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $label = translate($labels);
         $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&oid='.$actor->id.'&layout=add';
         
-        $command->append(array('label'=>$label))->href($url);
+        $command
+        ->append(array('label'=>$label))
+        ->href(JRoute::_($url))
+        ->setAttribute('data-trigger', 'ReadForm');
     }
 }
