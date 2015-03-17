@@ -1,6 +1,10 @@
 <?php defined('KOOWA') or die; ?>
 
-<div class="an-entity an-record an-removable"">
+<?php if($photo->authorize('edit')) : ?>
+<div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
+<?php else : ?>
+<div class="an-entity">
+<?php endif; ?>
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($photo->author) ?>
@@ -24,19 +28,17 @@
 		</a>
 	</div>
 	
-	<?php if($photo->title): ?>
-	<h4 class="entity-title">
-		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
-		<?= @escape($photo->title) ?>
-		</a>
-	</h4>
-	<?php endif; ?>
-		
-	<?php if($photo->description): ?>
-	<div class="entity-description">
-	<?= @helper('text.truncate', @content($photo->description, array('exclude'=>array('syntax','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+	<div class="entity-description-wrapper">
+    	<h4 class="entity-title">
+    		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
+    		<?= @escape($photo->title) ?>
+    		</a>
+    	</h4>
+    		
+    	<div class="entity-description">
+    	<?= @helper('text.truncate', @content($photo->description, array('exclude'=>array('syntax','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+    	</div>
 	</div>
-	<?php endif; ?>
 		
 	<div class="entity-meta">
 		<ul class="an-meta inline">
