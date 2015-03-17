@@ -43,8 +43,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 		{ 
 			$this->addCommand('edit', array('layout'=>'form'))
 			->getCommand('edit')
-			->setAttribute('data-trigger','Request')
-			->setAttribute('data-request-options','{replace:\'!.an-entity\'}');	
+			->setAttribute('data-action', 'edit');	
 			
 			$this->addCommand('enable', array('ajax'=>true));	
 		}	
@@ -67,24 +66,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	}
 	
 	/**
-	 * Add Action for an entity
-	 *
-	 * @param LibBaseTemplateObject $command Command Object
-	 *
-	 * @return void
-	 */
-	protected function _commandNew($command)
-	{		 
-		 $entity = $command->entity;
-		
-		$command
-		->append(array('label'=>JText::_('COM-TODOS-TOOLBAR-TODO-NEW')))
-		->href('option=com_todos&view=todo&layout=add')
-		->setAttribute('data-trigger','ReadForm');
-	} 
-	
-	/**
-	 * Delete Action for an entity
+	 * Enable Action for an entity
 	 *
 	 * @param LibBaseTemplateObject $command Command Object
 	 *

@@ -1,14 +1,17 @@
 <?php defined('KOOWA') or die ?>
 
 <?php $highlight = ($todo->open) ? 'an-highlight' : '' ?>
-<div class="an-entity an-record an-removable <?= $highlight ?>">
+<div class="an-entity <?= $highlight ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($todo->author) ?>
 		</div>
 		
 		<div class="entity-container">
-			<h4 class="author-name"><?= @name($todo->author) ?></h4>
+			<h4 class="author-name">
+			    <?= @name($todo->author) ?>
+			</h4> 
+			
 			<ul class="an-meta inline">
 				<li><?= @date($todo->creationTime) ?></li>
 				<?php if(!$todo->owner->eql($todo->author)): ?>
@@ -19,7 +22,9 @@
 	</div>
 	
 	<h3 class="entity-title">
-		<a href="<?= @route($todo->getURL()) ?>"><?= @escape($todo->title) ?></a>
+		<a href="<?= @route($todo->getURL()) ?>">
+		    <?= @escape($todo->title) ?>
+		</a>
 	</h3>
 	
 	<?php if($todo->description): ?>

@@ -2,9 +2,9 @@
 
 <div class="row">
 	<div class="span8">
-	<?= @helper('ui.header', array()) ?>
-	<?= @template('todo') ?>
-	<?= @helper('ui.comments', $todo, array('pagination'=>true)) ?>
+	<?= @helper('ui.header', array()); ?>
+	<?= @template('todo'); ?>
+	<?= @helper('ui.comments', $todo, array('pagination'=>true)); ?>
 	</div>
 	
 	<div class="span4">
@@ -28,10 +28,11 @@
 		
 		<?php if($actor->authorize('administration')): ?>
 		<h4 class="block-title">
-		<?= @text('COM-TODOS-TODO-PRIVACY') ?>
-		</h4>
+		    <?= @text('COM-TODOS-TODO-PRIVACY') ?>
+		</h4> 
+		
 		<div class="block-content">
-		<?= @helper('ui.privacy',$todo) ?>
+		    <?= @helper('ui.privacy', $todo) ?>
 		</div>
 		<?php endif; ?>
 	</div>

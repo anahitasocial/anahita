@@ -54,12 +54,18 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
 	protected function _actionAdd($context)
 	{
 	    $entity = parent::_actionAdd($context);
-	    if ( $entity->owner->isSubscribable() )
+	    
+	    if( $entity->owner->isSubscribable() )
+	    {
     	    $notification = $this->createNotification(array(
-    	        'name'	           => 'topic_add',
-    	        'object'           => $entity,
-    	        'subscribers'      => $entity->owner->subscriberIds->toArray()
+
+    	    	'name' => 'topic_add',
+    	        'object' => $entity,
+    	        'subscribers' => $entity->owner->subscriberIds->toArray()
+    	    
     	    ))->setType('post', array('new_post'=>true));
+	    }
+	        
 	    return $entity;
 	}
 	

@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die ?>
 
-<?php if(count($todos)) : ?>
-
 <?php
 $url = array('layout'=>'gadget_list');
 
@@ -11,9 +9,6 @@ elseif (isset($actor))
 	$url['oid'] = $actor->id;
 ?>
 
-<div id="an-todos" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
+<div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
 <?= @template('gadget_list') ?>
 </div>
-<?php else: ?>
-<?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
-<?php endif; ?>

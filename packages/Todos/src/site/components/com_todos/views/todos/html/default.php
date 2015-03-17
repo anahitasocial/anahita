@@ -4,17 +4,14 @@
 	<div class="span8">	
 		<?= @helper('ui.header', array()) ?>
 	
-		<?php if($actor): ?>
-		<div id="entity-add-wrapper" class="hide">
+		<?php if($actor && $actor->authorize('action', 'todo:add')) : ?>
+		<div id="entity-form-wrapper" class="hide">
 		<?= @view('todo')->layout('form')->actor($actor) ?>
 		</div>
 		<?php endif; ?>
 		
 		<?= @helper('ui.filterbox', @route('layout=list')) ?>
-		
-		<div class="an-entities-wrapper" id="an-entities-main-wrapper">
-			<?= @template('list') ?>
-		</div>
+		<?= @template('list') ?>
 	</div>
 	
 	<div class="span4">			
