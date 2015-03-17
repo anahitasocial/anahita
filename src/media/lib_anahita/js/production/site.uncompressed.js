@@ -17420,7 +17420,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 			},
 			success : function ( response ) {
-				form.next('.an-entities').html($(response).filter('.an-entity'));
+				form.siblings('.an-entities').html($(response).find('.an-entity'));
+				form.siblings('.pagination').html($(response).filter('.pagination'));
 			},
 			complete : function () {
 				form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
@@ -17740,21 +17741,26 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
     $.fn.anSort = function() {
         
-        var a = $(this);
+        var self = $(this);
         
         $.ajax({
-           url: a.attr('href'),
-           beforeSend: function() {
-               a.parent().fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-           },
+           
+        	url: self.attr('href'),
+        	
+        	beforeSend: function() {
+        		self.parent().fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+        	},
+           
            success: function(response) {
-               var entities = $(response).filter('#an-entities-main');
-               $('#an-entities-main-wrapper').html(entities);
-               a.parent().siblings().removeClass('active');
-               a.parent().addClass('active');
+                              
+               $('#an-entities-main').html($(response).find('.an-entity'));
+               $('.pagination').html($(response).filter('.pagination'));
+        	   
+               self.parent().siblings().removeClass('active');
+               self.parent().addClass('active');
            },
            complete: function() {
-               a.parent().fadeTo('fast', 1).removeClass('uiActivityIndicator');
+               self.parent().fadeTo('fast', 1).removeClass('uiActivityIndicator');
            }
         });
     };
@@ -17880,34 +17886,59 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				},
 				success : function ( response ) {
 					
-					if ( $(response).is('.an-comment') ) {
+					if( !$(response).is('form') ) {
 						response = $(response).html();
 					}
 						
 					entity.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
 				}
 			});
+			
+			return this;
 		}
 		
 		//edit entity
 		if ( action == 'edit' ) {
 			
-			var url = $(this).attr('action');
-			var self = this;
+			var form = $(this);
 			
 			$.ajax({
 				method : 'post',
-				url : url,
-				data : $(this).serialize(),
+				url : form.attr('action') + '?' + 'layout=list',
+				data : form.serialize(),
 				beforeSend : function () {
-					$(self).find(':submit').attr('disabled', true);
+					form.find(':submit').attr('disabled', true);
 					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 				},
 				success : function ( response ) {
-					entity.html( $(response).html() );
-					entity.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+					entity.replaceWith($(response));
 				}
 			});
+			
+			return this;
+		}
+		
+		//add entity
+		if ( action == 'add' ) {
+			
+			var form = $(this);
+			var entities = $('.an-entities');
+			
+			$.ajax({
+				method : 'post',
+				url : form.attr('action') + '?' + 'layout=list',
+				data : form.serialize(),
+				beforeSend : function () {
+					form.find(':submit').attr('disabled', true);
+					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+				},
+				success : function ( response ) {
+					form.trigger('reset');
+					entities.prepend( response );
+				}
+			});
+			
+			return this;
 		}
 		
 		//add comment entity
@@ -17930,23 +17961,43 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					comments.append($(response).fadeIn('slow'));
 				}
 			});
+			
+			return this;
 		}	
 	}
 	
-	//Read Actions
-	$('body').on('click', 'a[data-action="edit"], a[data-action="editcomment"], a[data-action="cancelcomment"]', function( event ) {
+	var readSelectors = 
+		'a[data-action="edit"],' +
+		'a[data-action="cancel"],' +
+		'a[data-action="editcomment"],' +
+		'a[data-action="cancelcomment"]';	
+	
+	//Read Entity Actions
+	$('body').on('click', readSelectors, function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('read');
 	});
 	
-	//Edit Action
-	$('body').on('submit', '.an-entity > form', function( event ) {
+	//Edit Entity Action
+	$('body').on('submit', '.an-entity > form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('edit');
 	});
 	
+	//Add Entity Action
+	$('body').on('submit', '#entity-form-wrapper > form', function ( event ) {
+		event.preventDefault();
+		$(this).anahitaEntity('add');
+	});
+	
+	//Show/Hide Add Form
+	$('body').on('click', '[data-trigger="ReadForm"], [data-trigger="CancelAdd"]', function ( event ) {
+		event.preventDefault();
+		$('#entity-form-wrapper').slideToggle();
+	});
+	
 	//Add Comment Action
-	$('body').on('submit', '.an-comments-wrapper > form', function( event ) {
+	$('body').on('submit', '.an-comments-wrapper > form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('addcomment');
 	});
@@ -18263,7 +18314,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		});
 	};
 	
-	var selectors = 
+	var socialgraphSelectors = 
 		'[data-action="confirmrequest"],' +
 		'[data-action="ignorerequest"],' +
 		'[data-action="addrequest"],' +
@@ -18275,7 +18326,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		'[data-action="lead"],' +
 		'[data-action="unlead"]';
 	
-	$( 'body' ).on( 'click', selectors, function( event ) {
+	$( 'body' ).on( 'click', socialgraphSelectors, function( event ) {
 		
 		event.preventDefault();
 		$(this).actionSocialgraph();
