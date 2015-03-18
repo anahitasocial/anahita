@@ -17941,6 +17941,48 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			return this;
 		}
 		
+		if ( action == 'delete' ) {
+			
+			var entity = $( this );
+			
+			var confirmModal = $('#an-modal');
+			var header = confirmModal.find('.modal-header').find('h3');
+			var body = confirmModal.find('.modal-body');
+			var footer = confirmModal.find('.modal-footer'); 
+			
+			header.text(StringLibAnahita.action.delete);
+			body.text(StringLibAnahita.prompt.confirmDelete);
+			
+			var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
+			
+			footer.append(triggerBtn);
+			
+			triggerBtn.on('click', function(event){
+				
+				$.ajax({
+					method : 'post',
+					url : entity.attr('href'),
+					data : {
+						action : entity.data('action')
+					},
+					beforeSend : function(){
+						confirmModal.modal('hide');
+					},
+					success : function() {
+						if(entity.closest('.an-entities').is('.an-entities')){
+							entity.closest('.an-entity').fadeOut();
+						} else {
+							window.location.href = entity.data('redirect');
+						}	
+					}
+				});
+			});
+			
+			confirmModal.modal('show');
+			
+			return this;
+		}
+		
 		//add comment entity
 		if ( action == 'addcomment' )
 		{
@@ -17990,6 +18032,12 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		$(this).anahitaEntity('add');
 	});
 	
+	//Delete Entity Action
+	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
+		event.preventDefault();
+		$(this).anahitaEntity('delete');
+	});
+	
 	//Show/Hide Add Form
 	$('body').on('click', '[data-trigger="ReadForm"], [data-trigger="CancelAdd"]', function ( event ) {
 		event.preventDefault();
@@ -18000,71 +18048,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	$('body').on('submit', '.an-comments-wrapper > form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('addcomment');
-	});
-	
-}(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions/delete.js
-/**
- * Author: Rastin Mehr
- * Email: rastin@anahitapolis.com
- * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
-;(function ($, window, document) {
-	
-	'use strict';
-	
-	$.fn.actionDelete = function () {
-		
-		var elem = $( this );
-		
-		var confirmModal = $('#an-modal');
-		var header = confirmModal.find('.modal-header').find('h3');
-		var body = confirmModal.find('.modal-body');
-		var footer = confirmModal.find('.modal-footer'); 
-		
-		header.text(StringLibAnahita.action.delete);
-		body.text(StringLibAnahita.prompt.confirmDelete);
-		
-		var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
-		
-		footer.append(triggerBtn);
-		
-		triggerBtn.on('click', function(event){
-			
-			$.ajax({
-				method : 'post',
-				url : elem.attr('href'),
-				data : {
-					action : elem.data('action')
-				},
-				
-				beforeSend : function(){
-					confirmModal.modal('hide');
-				},
-				
-				success : function() {
-					
-					if(elem.closest('.an-entities').is('.an-entities')){
-						elem.closest('.an-entity').fadeOut();
-					} else {
-						window.location.href = elem.data('redirect');
-					}
-					
-				}.bind(elem)
-			});
-		});
-			
-		confirmModal.modal('show');	
-	};
-	
-	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
-		
-		event.preventDefault();
-		$(this).actionDelete();
-		
 	});
 	
 }(jQuery, window, document));
@@ -18274,7 +18257,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
 
 }(jQuery, window, document));
-///media/lib_anahita/js/anahita/actions/socialgraph.js
+///media/lib_anahita/js/anahita/actions/actor.js
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
@@ -18287,7 +18270,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
 	'use strict';
 	
-	$.fn.actionSocialgraph = function () {
+	//social graph
+	$.fn.actorSocialgraph = function () {
 		
 		var elem = $( this );
 		
@@ -18327,9 +18311,37 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		'[data-action="unlead"]';
 	
 	$( 'body' ).on( 'click', socialgraphSelectors, function( event ) {
-		
 		event.preventDefault();
-		$(this).actionSocialgraph();
+		$(this).actorSocialgraph();
+	});
+	
+	
+	//notifications settings
+	$.fn.actorNotifications = function ( action ) {
+		
+		if ( action == 'read' )
+		{
+			var modal = $('#an-modal');
+			var header = modal.find('.modal-header').find('h3');
+			var body = modal.find('.modal-body');
+			var footer = modal.find('.modal-footer'); 
+			
+			
+			
+			$.get(this.attr('href'), function ( response ) {
+
+				header.html( $(response).filter('mheader').html() );
+				body.html( $(response).filter('mbody').html() );
+				footer.html( $(response).filter('mfooter').html() );
+				modal.modal('show');
+			});
+		}	
+		
+	};
+	
+	$('body').on( 'click', '[data-action="notifications-settings"]', function ( event ) {
+		event.preventDefault();
+		$(this).actorNotifications('read');
 	});
 	
 }(jQuery, window, document));

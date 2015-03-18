@@ -36,11 +36,10 @@
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/entity.js
-//@depends anahita/actions/delete.js
 //@depends anahita/actions/editable.js
 //@depends anahita/actions/commentstatus.js
 //@depends anahita/actions/subscribe.js
-//@depends anahita/actions/socialgraph.js
+//@depends anahita/actions/actor.js
 
 
 
