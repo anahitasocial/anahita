@@ -20,6 +20,7 @@
 //@depends vendors/bootstrap/bootstrap-modal.js
 //@depends vendors/bootstrap/bootstrap-popover.js
 //@depends vendors/bootstrap/bootstrap-alert.js
+//@depends vendors/bootstrap/bootstrap-typeahead.js
 
 //@depends vendors/dropzone/dropzone.js
 

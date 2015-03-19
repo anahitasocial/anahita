@@ -163,18 +163,18 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     
         $this->addListCommands();
         
+        if($actor->authorize('administration'))
+        {
+            $this->addCommand('edit-actor', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
+            ->getCommand('edit-actor')
+            ->href($actor->getURL().'&get=settings');
+        }
+        
         if($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor))
         {
         	$this->addCommand('notifications-settings', array('label' => JText::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
         	->getCommand('notifications-settings')
         	->href(JRoute::_('option=notifications&view=settings&layout=modal&oid='.$actor->id));
-        }
-    
-        if($actor->authorize('administration'))
-        {
-            $this->addCommand('edit', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
-                  ->getCommand('edit')
-                  ->href($actor->getURL(false).'&get=settings');
         }
     }
     

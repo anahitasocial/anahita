@@ -65,9 +65,7 @@
 			var header = modal.find('.modal-header').find('h3');
 			var body = modal.find('.modal-body');
 			var footer = modal.find('.modal-footer'); 
-			
-			
-			
+
 			$.get(this.attr('href'), function ( response ) {
 
 				header.html( $(response).filter('mheader').html() );
@@ -82,6 +80,77 @@
 	$('body').on( 'click', '[data-action="notifications-settings"]', function ( event ) {
 		event.preventDefault();
 		$(this).actorNotifications('read');
+	});
+
+	//manage admins
+	$.fn.actorTypeahead = function () {
+		
+		var form = this;
+		var actors = [];
+		var map = {};
+		
+		form.find('input:text').typeahead({
+			minLength : 3,
+			source : function ( query, process ) {
+
+				var self = this;
+				
+				return $.ajax({
+					method : 'get',
+					url : form.attr('action'),
+					headers: { 
+	                    accept: 'application/json'
+	                },
+	                dataType : 'json',
+					data : {
+						get : 'candidates',
+						value : query
+					},
+					beforeSend : function () {
+						self.$element.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+					},
+					success : function ( response ) {
+						
+						var actors = [];
+
+						$.each(response, function(i, actor) {
+				            map[actor.value] = actor;
+				            actors.push(actor.value);
+				        });
+
+						process(actors);
+						
+						self.$element.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+					}
+				});
+			},
+			updater: function(item) {
+		        form.find('[name="adminid"]').attr('value', map[item].id);
+		        return item;
+		    }
+		});
+	};
+	
+	$('form#an-actors-search').actorTypeahead();
+	
+	$('body').on('submit', 'form#an-actors-search', function( event ){
+		event.preventDefault();
+		
+		var form = $(this);
+		
+		$.ajax({
+			method : 'post',
+			url : form.attr('action'),
+			data : form.serialize(),
+			beforeSend : function () {
+				form.find(':submit').attr('disabled', true);
+			},
+			success : function ( response ) {
+				console.log(response);
+				form.trigger('reset');
+				form.find(':submit').attr('disabled', false);
+			}
+		});
 	});
 	
 }(jQuery, window, document));
