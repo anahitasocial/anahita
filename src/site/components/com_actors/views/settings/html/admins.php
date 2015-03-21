@@ -38,9 +38,12 @@
 				
 			<div class="entity-actions">
                 <?php if ( $item->authorize('remove.admin', array('admin'=>$actor)) ) : ?>
-				<a data-prompt="Are you sure you want to remove admin" href="<?= @route($item->getURL().'&action=removeadmin&adminid='.$actor->id) ?>" class="btn btn-danger">
-				    <?= @text('LIB-AN-ACTION-REMOVE') ?>
-				</a>
+				<form class="remove-admin" action="<?= @route($item->getURL()) ?>">
+					<input type="hidden" name="action" value="removeadmin" />
+					<input type="hidden" name="adminid" value="<?= $actor->id ?>" />
+					
+					<button type="submit" class="btn btn-danger"><?= @text('LIB-AN-ACTION-REMOVE') ?></button>
+				</form>
                 <?php endif; ?>
 			</div>
 		</div>

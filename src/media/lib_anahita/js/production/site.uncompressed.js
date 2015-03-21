@@ -18734,6 +18734,28 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		event.preventDefault();
 		
 		var form = $(this);
+		var adminId = form.find(':input[name="adminid"]').val();
+
+		$.ajax({
+			method : 'post',
+			url : form.attr('action'),
+			data : form.serialize(),
+			beforeSend : function () {
+				form.find(':submit').attr('disabled', true);
+			},
+			success : function () {
+			
+				form.trigger('reset');
+				form.find(':submit').attr('disabled', false);
+				window.location.reload();
+			}
+		});
+	});
+	
+	$('body').on('submit', '.remove-admin', function ( event ) {
+		event.preventDefault();
+		
+		var form = $(this);
 		
 		$.ajax({
 			method : 'post',
@@ -18742,10 +18764,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			beforeSend : function () {
 				form.find(':submit').attr('disabled', true);
 			},
-			success : function ( response ) {
-				console.log(response);
-				form.trigger('reset');
-				form.find(':submit').attr('disabled', false);
+			success : function () {
+				window.location.reload();
 			}
 		});
 	});
