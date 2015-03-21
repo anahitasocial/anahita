@@ -1,7 +1,9 @@
 <?php defined('KOOWA') or die; ?>
 
 <?php $document =& JFactory::getDocument(); ?>
-<?php $path = JURI::root(true).'/media/lib_anahita/js/production/' ?>
+<?php $path = JURI::root().'media/lib_anahita/js/production/' ?>
+
+<?php $document->addScript(JURI::root().'templates/base/js/base.js'); ?>
 
 <?php if(defined('JDEBUG') && JDEBUG ) : ?>
 
