@@ -15,7 +15,7 @@
 
 <div id="an-actors" class="an-entities">
 	<?php foreach($item->administrators as $actor ) : ?>
-	<div class="an-entity an-record">
+	<div class="an-entity">
 		<div class="entity-portrait-square">
 			<?= @avatar($actor) ?>
 		</div>
@@ -38,12 +38,9 @@
 				
 			<div class="entity-actions">
                 <?php if ( $item->authorize('remove.admin', array('admin'=>$actor)) ) : ?>
-				<form class="remove-admin" action="<?= @route($item->getURL()) ?>">
-					<input type="hidden" name="action" value="removeadmin" />
-					<input type="hidden" name="adminid" value="<?= $actor->id ?>" />
-					
-					<button type="submit" class="btn btn-danger"><?= @text('LIB-AN-ACTION-REMOVE') ?></button>
-				</form>
+                <a class="btn btn-danger" data-action="removeadmin" href="<?= @route($item->getURL()) ?>" data-adminid="<?= $actor->id ?>">
+                	<?= @text('LIB-AN-ACTION-REMOVE') ?>
+                </a>
                 <?php endif; ?>
 			</div>
 		</div>

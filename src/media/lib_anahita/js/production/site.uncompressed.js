@@ -18752,18 +18752,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		});
 	});
 	
-	$('body').on('submit', '.remove-admin', function ( event ) {
+	$('body').on('click', '[data-action="removeadmin"]', function () {
+		
 		event.preventDefault();
 		
-		var form = $(this);
+		$(this).attr('disabled', true);
 		
 		$.ajax({
 			method : 'post',
-			url : form.attr('action'),
-			data : form.serialize(),
-			beforeSend : function () {
-				form.find(':submit').attr('disabled', true);
-			},
+			url : this.href,
+			data : $(this).data(),
 			success : function () {
 				window.location.reload();
 			}
