@@ -13,12 +13,7 @@
 <?php if ( $type != 'notification') : ?>
 <data name="body">
 	<?php if ( !is_array($object) ) : ?>
-		<?php 
-			$caption = htmlspecialchars($object->title, ENT_QUOTES).
-			(($object->title && $object->description) ? ' :: ' : '').
-			@helper('text.script', $object->description);			 
-		?>
-		
+		<?php $caption = htmlspecialchars($object->title, ENT_QUOTES) ?>
 		<?php if( !empty($object->title) ): ?>
 		<h4 class="entity-title">
     		<a href="<?= @route($object->getURL()) ?>">

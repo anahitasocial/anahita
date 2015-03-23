@@ -1,7 +1,5 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 
-<?php JHTML::_('behavior.tooltip'); ?>
-
 <?php
 	$cid = JRequest::getVar( 'cid', array(0) );
 	$edit		= JRequest::getVar('edit',true);

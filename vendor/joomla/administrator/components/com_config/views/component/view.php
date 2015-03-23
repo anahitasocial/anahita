@@ -34,7 +34,6 @@ class ConfigViewComponent extends JView
 
 		$document = & JFactory::getDocument();
 		$document->setTitle( JText::_('Edit Preferences') );
-		JHTML::_('behavior.tooltip');
 ?>
 	<form action="index.php" method="post" name="adminForm" autocomplete="off">
 		<fieldset>

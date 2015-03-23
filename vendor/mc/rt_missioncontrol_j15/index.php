@@ -7,10 +7,7 @@
  */
 // no direct access
 defined( '_JEXEC' ) or die( 'Restricted index access' );
-JHTML::script('lib_koowa/js/koowa.js',     'media/');
-JHTML::script('lib_anahita/js/anahita.js', 'media/');
-JHTML::script('lib_anahita/js/admin.js',   'media/'); 
-// load and init the MissioControl Class
+
 require_once('lib/missioncontrol.class.php');
 
 global $mctrl;
@@ -19,6 +16,12 @@ $mctrl->initRenderer();
 $mctrl->addStyle("core.css");
 $mctrl->addStyle("menu.css");
 $mctrl->addStyle("colors.css.php");
+
+//JHTML::script('lib_anahita/js/vendors/jquery-2.1.1.js', 'media/', false);
+//JHTML::script('lib_anahita/js/admin.js',   'media/'); 
+
+// load and init the MissioControl Class
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $mctrl->language; ?>" lang="<?php echo $mctrl->language; ?>" dir="<?php echo $mctrl->direction; ?>">
@@ -82,7 +85,7 @@ $mctrl->addStyle("colors.css.php");
 				<div class="mc-wrapper">
 					<p class="copyright">
 						<span class="mc-footer-logo"></span>
-						<a href="http://www.anahitapolis.com" target="_blank">Anahita Social Networking Platform and Framework</a>
+						<a href="http://www.GetAnahita.com" target="_blank">Anahita Social Networking Platform and Framework</a>
 						<?php echo JText::_('ISFREESOFTWARE') ?> - Anahita <?php echo  JText::_('Version') ?> <?php echo  Anahita::getVersion(); ?><br />
 						<?php echo JText::_('MISSION_CONTROL_FOOTER') ?> (MC Version <?php echo CURRENT_VERSION; ?>)
 					</p>
@@ -94,3 +97,6 @@ $mctrl->addStyle("colors.css.php");
 		</div>
 	</body>
 </html>
+
+<script type="text/javascript" src="http://localhost/anahitapolis/rmdstudio/www/media/lib_anahita/js/vendors/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="http://localhost/anahitapolis/rmdstudio/www/media/lib_anahita/js/admin.js"></script>

@@ -1,8 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
-<?php JHTML::_('behavior.calendar');?>
-<script>
 
-</script>
 <form data-behavior="FormValidator" action="<?= @route($coupon->persisted() ? array('id'=>$coupon->id) : '')?>" method="post" class="-koowa-form">
 	<div class="col width-50">
 	

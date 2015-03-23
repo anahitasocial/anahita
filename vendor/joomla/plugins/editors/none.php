@@ -141,7 +141,7 @@ class plgEditorNone extends JPlugin
 	function _displayButtons($name, $buttons)
 	{
 		// Load modal popup behavior
-		JHTML::_('behavior.modal', 'a.modal-button');
+		JHTML::_('a.modal-button');
 
 		$args['name'] = $name;
 		$args['event'] = 'onGetInsertMethod';

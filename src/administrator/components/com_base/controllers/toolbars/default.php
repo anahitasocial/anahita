@@ -111,29 +111,4 @@ class ComBaseControllerToolbarDefault extends KControllerToolbarAbstract
         }
         
     } 
-       
-    /**
-     * Parameters toolbar command
-     * 
-     * @param   object  A KControllerToolbarCommand object
-     * @return  void
-     */
-    protected function _commandParameters(KControllerToolbarCommand $command)
-    {
-        $option = $this->_identifier->package;
-        
-		JHTML::_('behavior.modal');
-		
-        $command->append(array(
-            'width'   => '640',
-            'height'  => '480',
-            'href'	  => ''
-        ))->append(array(
-            'attribs' => array(
-                'class' => array('modal'),
-                'href'  => 'index.php?option=com_config&tmpl=component&controller=component&component=com_'.$option,
-                'rel'   => '{handler: \'iframe\', size: {x: '.$command->width.', y: '.$command->height.'}}'
-            )
-        ));
-    }
 }

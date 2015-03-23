@@ -51,7 +51,6 @@ class RTCore
 
 
         // Set the main class vars to match the call
-        JHTML::_('behavior.mootools');
         $doc =& JFactory::getDocument();
         $this->document = $doc;
         $this->user =& JFactory::getUser();

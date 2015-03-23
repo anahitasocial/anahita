@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?php JHTML::_('behavior.calendar');?>
-
 <div class="col width-50">
 	<form action="<?= @route('&id='.$person->id)?>" method="post" class="-koowa-form" >
 	<fieldset class="adminform">

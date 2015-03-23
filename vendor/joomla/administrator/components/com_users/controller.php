@@ -465,10 +465,4 @@ class UsersController extends JController
 				break;
 		}
 	}
-
-	function contact()
-	{
-		$contact_id = JRequest::getVar( 'contact_id', '', 'post', 'int' );
-		$this->setRedirect( 'index.php?option=com_contact&task=edit&cid[]='. $contact_id );
-	}
 }

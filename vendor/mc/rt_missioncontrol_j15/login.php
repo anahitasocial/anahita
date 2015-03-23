@@ -17,8 +17,6 @@ $mctrl = MissionControl::getInstance();
 $mctrl->addStyle("core.css");
 $mctrl->addStyle("colors.css.php");
 $mctrl->addStyle("http://fonts.googleapis.com/css?family=Josefin+Sans+Std+Light&subset=latin");
-$mctrl->addScript('MC.js');
-$mctrl->addScript('MC.Notice.js');
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $mctrl->language; ?>" lang="<?php echo $mctrl->language; ?>" dir="<?php echo $mctrl->direction; ?>">
@@ -28,11 +26,6 @@ $mctrl->addScript('MC.Notice.js');
 	<body id="mc-login" class="<?php $mctrl->displayBodyTags(); ?>">
 		<div id="mc-frame">
 			<div id="mc-header">
-				<div class="mc-wrapper">
-					<div id="mc-status">
-						<?php $mctrl->displayLoginStatus(); ?>
-					</div>	
-				</div>
 				<div id="mc-logo">
 					<?php $mctrl->displayLogo(); ?>
 					<h1><?php echo JText::_("ADMINISTRATOR_LOGIN"); ?></h1>
@@ -48,7 +41,7 @@ $mctrl->addScript('MC.Notice.js');
 					<p class="copyright">
 						<span class="mc-footer-logo"></span>
 						
-						<a href="http://www.anahitapolis.com" target="_blank">Anahita</a>
+						<a href="http://www.GetAnahita.com" target="_blank">Anahita</a>
 						<?php echo JText::_('ISFREESOFTWARE') ?>
 						<br />
 						<?php echo JText::_('MISSION_CONTROL_FOOTER') ?>

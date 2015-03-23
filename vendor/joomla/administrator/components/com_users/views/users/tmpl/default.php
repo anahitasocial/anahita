@@ -1,6 +1,6 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 
-<?php  JHTML::_('behavior.tooltip');  ?>
+<?php    ?>
 
 <?php
 	JToolBarHelper::title( JText::_( 'User Manager' ), 'user.png' );
@@ -106,7 +106,7 @@
 				</td>
 				<td align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $task;?>')">
-						<img src="images/<?php echo $img;?>" width="16" height="16" border="0" alt="<?php echo $alt; ?>" /></a>
+						<img src="<?= JURI::base() ?>images/<?php echo $img;?>" width="16" height="16" border="0" alt="<?php echo $alt; ?>" /></a>
 				</td>
 				<td>
 					<?php echo JText::_( $row->groupname ); ?>

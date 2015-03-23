@@ -177,9 +177,6 @@ class JPaneTabs extends JPane
 	 */
 	function _loadBehavior($params = array())
 	{
-		// Include mootools framework
-		JHTML::_('behavior.mootools');
-
 		$document =& JFactory::getDocument();
 
 		$options = '{';
@@ -275,9 +272,6 @@ class JPaneSliders extends JPane
 	 */
 	function _loadBehavior($params = array())
 	{
-		// Include mootools framework
-		JHTML::_('behavior.mootools');
-
 		$document =& JFactory::getDocument();
 
 		$options = '{';

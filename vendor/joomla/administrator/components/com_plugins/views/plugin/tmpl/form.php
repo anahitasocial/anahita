@@ -1,7 +1,5 @@
 <?php defined('_JEXEC') or die('Restricted access'); ?>
 
-<?php JHTML::_('behavior.tooltip'); ?>
-
 <?php
 	JToolBarHelper::title( JText::_( 'Plugin' ) .': <small><small>[' .JText::_('Edit'). ']</small></small>', 'plugin.png' );
 	JToolBarHelper::save();

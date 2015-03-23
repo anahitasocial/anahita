@@ -38,7 +38,7 @@ class TemplatesView
 			$row->authorUrl = str_replace('http://', '', $row->authorUrl);
 		}
 
-		JHTML::_('behavior.tooltip');
+		
 ?>
 		<form action="index.php" method="post" name="adminForm">
 
@@ -221,7 +221,7 @@ class TemplatesView
 	public static function editTemplate($row, $lists, & $params, $option, & $client, & $ftp, & $template)
 	{
 		JRequest::setVar( 'hidemainmenu', 1 );
-		JHTML::_('behavior.tooltip');
+		
 ?>
 		<form action="index.php" method="post" name="adminForm">
 

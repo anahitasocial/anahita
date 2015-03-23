@@ -86,7 +86,7 @@ class JAdministrator extends JApplication
 		// One last check to make sure we have something
 		if(!JLanguage::exists($options['language']))
 			$options['language'] = 'en-GB';
-
+			
 		parent::initialise($options);
 	}
 

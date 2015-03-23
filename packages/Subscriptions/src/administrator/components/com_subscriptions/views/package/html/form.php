@@ -86,5 +86,3 @@
 	
 	<div class="clr"></div>		
 </form>
-
-<?= JHTML::_('behavior.keepalive') ?>
