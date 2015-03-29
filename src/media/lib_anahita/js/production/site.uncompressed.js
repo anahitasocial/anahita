@@ -18768,6 +18768,37 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		});
 	});
 	
+	//manage apps
+	$('body').on('click', '[data-action="addapp"], [data-action="removeapp"]', function ( event ) {
+		
+		event.preventDefault();
+		
+		var elem = $(this);
+		
+		$.ajax({
+			method : 'post',
+			url : elem.href,
+			data : elem.data(),
+			beforeSend : function () {
+				elem.toggleClass('disabled');
+			},
+			success : function () {
+				
+				elem.toggleClass('disabled').toggleClass('btn-primary');
+				
+				if ( elem.attr('data-action') == 'addapp' ) {
+				
+					elem.attr('data-action', 'removeapp').text(StringLibAnahita.action.disable);
+				
+				} else {
+				
+					elem.attr('data-action', 'addapp').text(StringLibAnahita.action.enable);
+				
+				}
+			}
+		});
+	});
+	
 }(jQuery, window, document));
 
 

@@ -13,7 +13,9 @@ var StringLibAnahita = {
         openComments: 'Open Comments',
         closeComments: 'Close Comments',
         subscribe: 'Follow',
-        unsubscribe: 'Unfollow'
+        unsubscribe: 'Unfollow',
+        enable : 'Enable',
+        disable : 'Disable'
 	},
 	
 	'prompt' : {
