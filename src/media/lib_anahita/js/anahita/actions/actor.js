@@ -10,34 +10,147 @@
 	
 	'use strict';
 	
-	//social graph
-	$.fn.actorSocialgraph = function () {
+	$.fn.anahitaActor = function ( context ) {
 		
 		var elem = $( this );
 		
-		$.ajax({
-			method : 'post',
-			url : elem.attr('href'),
-			data : {
-				'action' : elem.data('action'),
-				'actor' : elem.data('actor')
-			}, 
-			beforeSend : function () {
-				elem.addClass('disabled');
-			},
-			success : function (response){
-				
-				var listEntity = elem.closest('.an-entity');
-				
-				if ( $(listEntity).is('.an-entity') ) {
-					elem.closest('.an-entity').replaceWith($(response));
-				} else {
-					window.location.href = elem.attr('href');
+		var modal = $('#an-modal');
+		var mHeader = modal.find('.modal-header').find('h3');
+		var mBody = modal.find('.modal-body');
+		var mFooter = modal.find('.modal-footer');
+		
+		if ( context == 'socialgraph' )
+		{
+			$.ajax({
+				method : 'post',
+				url : elem.attr('href'),
+				data : {
+					'action' : elem.data('action'),
+					'actor' : elem.data('actor')
+				}, 
+				beforeSend : function () {
+					elem.addClass('disabled');
+				},
+				success : function (response){
+					
+					var listEntity = elem.closest('.an-entity');
+					
+					if ( $(listEntity).is('.an-entity') ) {
+						elem.closest('.an-entity').replaceWith($(response));
+					} else {
+						window.location.href = elem.attr('href');
+					}
 				}
-			}
-		});
+			});
+			
+			return this;
+		}	
+		
+		if ( context == 'notifications' ) {
+			
+			$.get(this.attr('href'), function ( response ) {
+
+				mHeader.html( $(response).filter('mheader').html() );
+				mBody.html( $(response).filter('mbody').html() );
+				mFooter.html( $(response).filter('mfooter').html() );
+				modal.modal('show');
+			});
+			
+			return this;
+		}
+		
+		if ( context == 'addadmin' ) {
+			
+			var form = $(this);
+			var adminId = form.find(':input[name="adminid"]').val();
+
+			$.ajax({
+				method : 'post',
+				url : form.attr('action'),
+				data : form.serialize(),
+				beforeSend : function () {
+					form.find(':submit').attr('disabled', true);
+				},
+				success : function () {
+				
+					form.trigger('reset');
+					form.find(':submit').attr('disabled', false);
+					window.location.reload();
+				}
+			});
+			
+			return this;
+		}
+		
+		if ( context == 'addadmin' ) {
+			
+			$(this).attr('disabled', true);
+			
+			$.ajax({
+				method : 'post',
+				url : this.href,
+				data : $(this).data(),
+				success : function () {
+					window.location.reload();
+				}
+			});
+			
+			return this;
+		}
+		
+		if ( context == 'manageapps' ) {
+			
+			$.ajax({
+				method : 'post',
+				url : elem.href,
+				data : elem.data(),
+				beforeSend : function () {
+					elem.toggleClass('disabled');
+				},
+				success : function () {
+					
+					elem.toggleClass('disabled').toggleClass('btn-primary');
+					
+					if ( elem.attr('data-action') == 'addapp' ) {
+					
+						elem.attr('data-action', 'removeapp').text(StringLibAnahita.action.disable);
+					
+					} else {
+					
+						elem.attr('data-action', 'addapp').text(StringLibAnahita.action.enable);
+					
+					}
+				}
+			});
+			
+			return this;
+		}
+		
+		if ( context == 'delete' ) {
+			
+			mHeader.text(StringLibAnahita.action.delete);
+			mBody.text(StringLibAnahita.prompt.deleteActor);
+			
+			var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
+			
+			mFooter.append( triggerBtn );
+			
+			modal.modal('show');
+			
+			triggerBtn.on('click', function ( event ) {
+				
+				triggerBtn.attr('disabled', true);
+				elem.closest('form').trigger('submit');
+				
+			});
+			
+			return this;
+		}
+		
+		return false;
 	};
 	
+	//Social Graph
 	var socialgraphSelectors = 
 		'[data-action="confirmrequest"],' +
 		'[data-action="ignorerequest"],' +
@@ -51,35 +164,18 @@
 		'[data-action="unlead"]';
 	
 	$( 'body' ).on( 'click', socialgraphSelectors, function( event ) {
+	
 		event.preventDefault();
-		$(this).actorSocialgraph();
+		$(this).anahitaActor( 'socialgraph' );
+	
 	});
 	
-	
-	//notifications settings
-	$.fn.actorNotifications = function ( action ) {
-		
-		if ( action == 'read' )
-		{
-			var modal = $('#an-modal');
-			var header = modal.find('.modal-header').find('h3');
-			var body = modal.find('.modal-body');
-			var footer = modal.find('.modal-footer'); 
-
-			$.get(this.attr('href'), function ( response ) {
-
-				header.html( $(response).filter('mheader').html() );
-				body.html( $(response).filter('mbody').html() );
-				footer.html( $(response).filter('mfooter').html() );
-				modal.modal('show');
-			});
-		}	
-		
-	};
-	
+	//notifications settings	
 	$('body').on( 'click', '[data-action="notifications-settings"]', function ( event ) {
+		
 		event.preventDefault();
-		$(this).actorNotifications('read');
+		$(this).anahitaActor('notifications');
+		
 	});
 
 	//manage admins
@@ -131,75 +227,38 @@
 		});
 	};
 	
+	//Admin Candidate Typeahead
 	$('form#an-actors-search').actorTypeahead();
 	
+	//Add Admin
 	$('body').on('submit', 'form#an-actors-search', function( event ){
-		event.preventDefault();
 		
-		var form = $(this);
-		var adminId = form.find(':input[name="adminid"]').val();
-
-		$.ajax({
-			method : 'post',
-			url : form.attr('action'),
-			data : form.serialize(),
-			beforeSend : function () {
-				form.find(':submit').attr('disabled', true);
-			},
-			success : function () {
-			
-				form.trigger('reset');
-				form.find(':submit').attr('disabled', false);
-				window.location.reload();
-			}
-		});
+		event.preventDefault();
+		$(this).anahitaActor('addadmin');
+		
 	});
 	
+	//Remove Admin
 	$('body').on('click', '[data-action="removeadmin"]', function () {
 		
 		event.preventDefault();
+		$(this).anahitaActor('removeadmin');
 		
-		$(this).attr('disabled', true);
-		
-		$.ajax({
-			method : 'post',
-			url : this.href,
-			data : $(this).data(),
-			success : function () {
-				window.location.reload();
-			}
-		});
 	});
 	
 	//manage apps
 	$('body').on('click', '[data-action="addapp"], [data-action="removeapp"]', function ( event ) {
 		
 		event.preventDefault();
+		$(this).anahitaActor('manageapps');
+
+	});
+	
+	//Delete Actor
+	$('body').on('click', '[data-trigger="DeleteActor"]', function ( event ) {
 		
-		var elem = $(this);
-		
-		$.ajax({
-			method : 'post',
-			url : elem.href,
-			data : elem.data(),
-			beforeSend : function () {
-				elem.toggleClass('disabled');
-			},
-			success : function () {
-				
-				elem.toggleClass('disabled').toggleClass('btn-primary');
-				
-				if ( elem.attr('data-action') == 'addapp' ) {
-				
-					elem.attr('data-action', 'removeapp').text(StringLibAnahita.action.disable);
-				
-				} else {
-				
-					elem.attr('data-action', 'addapp').text(StringLibAnahita.action.enable);
-				
-				}
-			}
-		});
+		event.preventDefault();
+		$(this).anahitaActor('delete');
 	});
 	
 }(jQuery, window, document));

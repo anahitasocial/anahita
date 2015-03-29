@@ -20,7 +20,8 @@ var StringLibAnahita = {
 	
 	'prompt' : {
 		loading : 'Loading...',
-		confirmDelete : 'Are you sure you want to delete this?',	
+		'delete' : 'Are you sure you want to delete this?',	
+		deleteActor : 'Are you absolutely sure that you want to delete this profile?',
 		inlineEdit : 'Click to edit'
 	},
 	

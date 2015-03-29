@@ -92,13 +92,13 @@
 			var footer = confirmModal.find('.modal-footer'); 
 			
 			header.text(StringLibAnahita.action.delete);
-			body.text(StringLibAnahita.prompt.confirmDelete);
+			body.text(StringLibAnahita.prompt.delete);
 			
 			var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
 			
 			footer.append(triggerBtn);
 			
-			triggerBtn.on('click', function(event){
+			triggerBtn.on('click', function ( event ) {
 				
 				$.ajax({
 					method : 'post',
