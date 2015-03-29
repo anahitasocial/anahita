@@ -52,7 +52,8 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 					
 		$this->_consumer = $config->consumer;
 		
-		if ( $config->api ) {
+		if ( $config->api ) 
+		{
 			$this->_api  = $config->api;
 			$this->_api->setConsumer( $this->_consumer );
 		}
@@ -69,12 +70,25 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 	protected function _actionGetaccesstoken($context)
 	{			    
 		$this->getAPI()->requestAccessToken($this->getRequest());
-		$token		= (array) $this->getAPI()->getToken();
-		$consumer	= (array)$this->_consumer;
-		KRequest::set('session.oauth', array('api'=>$this->getAPI()->getName(),'token'=>$token, 'consumer'=>$consumer));
+		
+		$token	= (array) $this->getAPI()->getToken();
+		
+		$consumer = (array) $this->_consumer;
+		
+		KRequest::set('session.oauth', array( 
+					
+					'api' => $this->getAPI()->getName(), 
+					'token' => $token, 
+					'consumer' => $consumer 
+		        
+		        ));
+		
 		$return = KRequest::get('session.return','raw', null);
+		
 		if ( $return )
-		    $context->append(array('data'=>array('return'=>$return)));
+		{
+		    $context->append( array( 'data' => array( 'return' => $return ) ) );
+		}
 	}
 		
 	/**
@@ -86,10 +100,14 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 	protected function _actionOauthorize($context)
 	{	
 	    $data = $context->data;
-	    KRequest::set('session.return', (string)$data->return);
+	    
+	    KRequest::set('session.return', (string) $data->return);
 		KRequest::set('session.oauth', null);
+		
 		$view = $this->_mixer->getIdentifier()->name;		
+		
 		$this->getAPI()->setToken(null);		
+		
 		$context->response->setRedirect($this->getAPI()->getAuthorizationURL());
 	}
 
@@ -121,7 +139,7 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 		{
 			$session = new KConfig(KRequest::get('session.oauth', 'raw', array()));
 			
-			$api = pick($this->getRequest()->server, $session->api);
+			$api = pick( $this->getRequest()->server, $session->api );
 			
 			if ( !$api )
 				return null;
@@ -132,23 +150,30 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
 			if ( !$this->_consumer ) 
 			{
 				$name = $this->_api->getName();
-				$key  	= get_config_value('com_connect.'.$name.'_key');
+				$key = get_config_value('com_connect.'.$name.'_key');
 				$secret = get_config_value('com_connect.'.$name.'_secret');
 				
 				$query = array(
-				     'option=com_'.$this->_mixer->getIdentifier()->package,
+
+					'option=com_'.$this->_mixer->getIdentifier()->package,
 				     'view='.$this->_mixer->getIdentifier()->name,				    
 				     'server='.$this->server,
 				     'get=accesstoken'
+				
 				);
+				
 				if ( $this->oid ) {
 				    $query[] = 'oid='.$this->oid;
 				}				
+				
 				$callback = JRoute::_(implode($query,'&'), true);
+				
 				$this->_consumer = new ComConnectOauthConsumer(new KConfig(array(
-					'key'	      => $key, 
-					'secret'      => $secret, 
-					'callback_url'=> (string)$callback
+
+					'key' => $key, 
+					'secret' => $secret, 
+					'callback_url' => (string) $callback
+				
 				)));
 			}
 			
@@ -170,7 +195,8 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
     {
         $api = $this->getAPI();
         
-        if ( $api && $this->actor ) {
+        if ( $api && $this->actor ) 
+        {
            return $api->canAddService($this->actor);             
         }
         

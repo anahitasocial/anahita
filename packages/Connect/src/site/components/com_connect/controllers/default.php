@@ -52,15 +52,18 @@ class ComConnectControllerDefault extends ComBaseControllerResource
      */
     public function canGet()
     {
-        if ( !$this->actor ) {
+        if ( !$this->actor ) 
+        {
             $this->actor = get_viewer();    
         }
         
-        if ( !$this->actor ) {
+        if ( !$this->actor ) 
+        {
             return false;   
         }
         
-        if ( !$this->actor->authorize('administration') ) {
+        if ( !$this->actor->authorize('administration') ) 
+        {
             return false;   
         }
         
@@ -111,13 +114,13 @@ class ComConnectControllerDefault extends ComBaseControllerResource
         
         if ( $this->get ) 
         {        
-          $url  = ltrim($this->get,'/');
-          $data = KConfig::unbox($this->api->get($url));
-          $data = json_encode($data);          
+            $url  = ltrim($this->get, '/');
+            $data = KConfig::unbox($this->api->get($url));
+            $data = json_encode($data);          
         } 
-        
-        else {
-          $data = (array)$this->api->getUser();
+        else 
+        {
+          $data = (array) $this->api->getUser();
         }
  
         $this->getView()->data($data);

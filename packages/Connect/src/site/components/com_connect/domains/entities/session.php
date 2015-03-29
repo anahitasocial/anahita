@@ -41,21 +41,27 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
+			
 			'resources'		=> array('table'=>'connect_sessions'),
-			'attributes'	=> array(
-                'id'=>array('key'=>true),				
+			
+			'attributes' => array(
+                
+				'id' => array( 'key' => true ),				
 				'component',
 				'tokenKey',
 				'tokenSecret',
-				'api'			=> array('write_access'=>'protected'),
+				'api' => array('write_access'=>'protected'),
 				'profileId'
+				
 			),
+			
 			'relationships' => array(
+				
 				'owner' => array(
-					'polymorphic'  => true, 
-					'required'	   => true, 
-					'parent'	   => 'com:actors.domain.entity.actor', 
-					'inverse'	   => true			
+					'polymorphic' => true, 
+					'required' => true, 
+					'parent' => 'com:actors.domain.entity.actor', 
+					'inverse' => true			
 				)
 			)
 		));	
@@ -70,7 +76,8 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
 	 */
 	public function getApi()
 	{
-		if ( !isset($this->_api) ) {
+		if ( !isset($this->_api) ) 
+		{
 			$this->_api = ComConnectHelperApi::getApi($this->get('api'));
 			$this->_api->setToken($this->tokenKey, $this->tokenSecret);
 		}
@@ -96,8 +103,9 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
 	 */
 	public function setToken($token)
 	{
-		$this->tokenKey    = $token->key;
+		$this->tokenKey = $token->key;
 		$this->tokenSecret = $token->secret;
+		
 		return $this;
 	}
 
@@ -110,6 +118,7 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
 	public function echoStory($data)
 	{
 		$service = $this->getService('com:connect.domain.echoer.'.$this->get('api'));
+		
 		return $service->echoStory($this, $data);
 	}
 	
