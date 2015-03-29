@@ -23,9 +23,9 @@
 				success : function () {
 					
 					if ( action == 'apply' ) {
-						window.history.back();
-					} else {
 						window.location.reload();
+					} else {
+						window.history.back();
 					}
 					
 				}
