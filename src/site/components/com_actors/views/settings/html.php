@@ -138,28 +138,33 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
 		if($this->_state->getItem()->isAdministrable())
 		{
 		    $tabs->insert('admins', array(
-		        'label' 	=> JText::_('COM-ACTORS-PROFILE-EDIT-TAB-ADMINS'),
+		        'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-ADMINS'),
 		    ));
 		}
 				
 		//lets get a list of components that this actor can enable
 		$this->enablable_apps = $this->getService('com://site/actors.domain.entityset.component', array(
-				'actor' 		=> $this->_state->getItem(),
-				'can_enable'   => true
+				'actor' => $this->_state->getItem(),
+				'can_enable' => true
 			));
 				
 		if(count($this->enablable_apps)) 
 			$tabs->insert('apps', array(
-                'label' 	=> JText::_('COM-ACTORS-PROFILE-EDIT-TAB-APPS'),
+                'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-APPS'),
     		));
 		
 		
         if($this->_state->getItem()->authorize('delete'))
             $tabs->insert('delete', array(
            		'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-DELETE'),
-            ));
-                
-		$this->getService('anahita:event.dispatcher')->dispatchEvent('onSettingDisplay', array('actor'=>$this->_state->getItem(), 'tabs'=>$tabs));
+            ));   
+            
+		$this
+		->getService('anahita:event.dispatcher')
+		->dispatchEvent('onSettingDisplay', array(
+			'actor' => $this->_state->getItem(), 
+			'tabs' => $tabs
+		));
                 			
 		$url = $this->_state->getItem()->getURL(false).'&get=settings&edit=';		
 		

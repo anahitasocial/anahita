@@ -324,7 +324,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     public function redirect(KCommandContext $context)
     {
-        if ( $context->action != 'add' ) {
+        if ( $context->action != 'add' ) 
+        {
             return parent::redirect($context);
         }
     }
@@ -339,7 +340,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function login()
     {
     	$user = (array)JFactory::getUser($this->getItem()->userId);
+    	
     	$this->getService()->set('com:people.viewer', $this->getItem());
+    	
     	$controller = $this->getService('com://site/people.controller.session', array('response'=>$this->getResponse()));
     	
     	return $controller->login($user);
@@ -355,8 +358,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function onSettingDisplay(KEvent $event)
     {   
         $tabs = $event->tabs;   
+        
         if ( JFactory::getUser()->id == $event->actor->userId ) {     
-            $tabs->insert('account',array('label'=>JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));                    
+            $tabs->insert('account', array('label'=>JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));                    
         } 
     }    
 }
