@@ -10,7 +10,7 @@
 	
 	'use strict';
 	
-	$.fn.anahitaActor = function ( context ) {
+	$.fn.anahitaActor = function ( action ) {
 		
 		var elem = $( this );
 		
@@ -19,7 +19,7 @@
 		var mBody = modal.find('.modal-body');
 		var mFooter = modal.find('.modal-footer');
 		
-		if ( context == 'socialgraph' )
+		if ( action == 'socialgraph' )
 		{
 			$.ajax({
 				method : 'post',
@@ -46,7 +46,7 @@
 			return this;
 		}	
 		
-		if ( context == 'notifications' ) {
+		if ( action == 'notifications' ) {
 			
 			$.get(this.attr('href'), function ( response ) {
 
@@ -59,7 +59,7 @@
 			return this;
 		}
 		
-		if ( context == 'addadmin' ) {
+		if ( action == 'addadmin' ) {
 			
 			var form = $(this);
 			var adminId = form.find(':input[name="adminid"]').val();
@@ -82,7 +82,7 @@
 			return this;
 		}
 		
-		if ( context == 'addadmin' ) {
+		if ( action == 'addadmin' ) {
 			
 			$(this).attr('disabled', true);
 			
@@ -98,7 +98,7 @@
 			return this;
 		}
 		
-		if ( context == 'manageapps' ) {
+		if ( action == 'manageapps' ) {
 			
 			$.ajax({
 				method : 'post',
@@ -126,7 +126,7 @@
 			return this;
 		}
 		
-		if ( context == 'delete' ) {
+		if ( action == 'delete' ) {
 			
 			mHeader.text(StringLibAnahita.action.delete);
 			mBody.text(StringLibAnahita.prompt.deleteActor);
@@ -143,6 +143,27 @@
 				elem.closest('form').trigger('submit');
 				
 			});
+			
+			return this;
+		}
+		
+		if ( action == 'delete-avatar' ) {
+			
+			var form = elem.closest('form');
+			
+			form.find(':file').attr('value', '');
+			form.trigger('submit');
+			
+			return this;
+		}
+		
+		if ( action == 'add-avatar' ) {
+			
+			var form = elem.closest('form');
+			
+			elem.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+			
+			form.trigger('submit');
 			
 			return this;
 		}
@@ -259,6 +280,20 @@
 		
 		event.preventDefault();
 		$(this).anahitaActor('delete');
+	});
+	
+	//Delete Avatar
+	$('body').on('click', '[data-trigger="DeleteAvatar"]', function ( event ) {
+		
+		event.preventDefault();
+		$(this).anahitaActor('delete-avatar');
+	});
+	
+	//Add Avatar
+	$('form#actor-avatar').on('change', ':file', function ( event ) {
+		
+		event.preventDefault();
+		$(this).anahitaActor('add-avatar');
 	});
 	
 }(jQuery, window, document));
