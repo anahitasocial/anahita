@@ -2,7 +2,7 @@
 
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-PROFILE-INFORMATION') ?></h3>
 
-<form data-behavior="FormValidator" action="<?=@route($item->getURL())?>" method="post" enctype="multipart/form-data">		
+<form action="<?=@route($item->getURL())?>" method="post">		
 
 	<fieldset>
 		<legend><?= @text('COM-ACTORS-PROFILE-INFO-BASIC') ?></legend>
@@ -12,17 +12,25 @@
 				<?= @text('COM-ACTORS-NAME') ?>
 			</label>
 			<div class="controls">
-				<input data-validators="required" class="input-block-level" size="50" maxlength="100" name="name" value="<?=$item->name?>" type="text" />
+				<input type="text" class="input-block-level" id="actor-name" size="50" maxlength="100" name="name" value="<?=$item->name?>" required />
 			</div>
 		</div>
 		
 		<?php if ( is_person($item) ) : ?>
 		<div class="control-group">
-			<label class="control-label" for="actor-enabled">
+			<label class="control-label" for="gender">
 				<?= @text('COM-ACTORS-PROFILE-GENDER') ?>
 			</label>
 			<div class="controls">
-				<?= @html('select','gender', array('options'=>array('male'=>'Male','female'=>'Female','transgender'=>'Transgender','other'=>'Other'), 'selected'=>$item->gender)) ?>
+				<?php 
+				$genderOptions = array(
+					'' => @text('COM-ACTORS-GENDER-UNDEFINED'), 
+					'male' => @text('COM-ACTORS-GENDER-MALE'), 
+					'female' => @text('COM-ACTORS-GENDER-FEMALE'), 
+					'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'), 
+					'other' => @text('COM-ACTORS-GENDER-OTHER')); 
+				?>
+				<?= @html('select','gender', array('options'=>$genderOptions, 'selected'=>$item->gender)) ?>
 			</div>
 		</div>
 		<?php endif;?>
@@ -32,17 +40,17 @@
 				<?= @text('COM-ACTORS-BODY') ?>
 			</label>
 			<div class="controls">
-				<textarea class="input-block-level" name="body" rows="5" cols="5"><?= $item->body?></textarea>
+				<textarea class="input-block-level" id="actor-body" name="body" rows="5" cols="5"><?= $item->body?></textarea>
 			</div>
 		</div>
 		
 		<?php if ( $item->isEnableable() ) : ?>
 		<div class="control-group">
-			<label class="control-label" for="actor-enabled">
+			<label class="control-label" for="enabled">
 				<?= @text('COM-ACTORS-ENABLED') ?>
 			</label>
 			<div class="controls">
-				<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>$item->enabled))?>
+				<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>$item->enabled)) ?>
 			</div>
 		</div>
 		<?php endif;?>
@@ -68,7 +76,7 @@
 	<?php endforeach;?>
 	
 	<div class="form-actions">			
-		<input type="submit" class="btn" value="<?= @text('LIB-AN-ACTION-SAVE') ?>" />
+		<button type="submit" class="btn"><?= @text('LIB-AN-ACTION-SAVE') ?></button>
 	</div>
 </form>
 
