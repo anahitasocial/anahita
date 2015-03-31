@@ -30,7 +30,7 @@
 					'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'), 
 					'other' => @text('COM-ACTORS-GENDER-OTHER')); 
 				?>
-				<?= @html('select','gender', array('options'=>$genderOptions, 'selected'=>$item->gender)) ?>
+				<?= @html('select', 'gender', array( 'options' => $genderOptions, 'selected' => $item->gender )) ?>
 			</div>
 		</div>
 		<?php endif;?>
