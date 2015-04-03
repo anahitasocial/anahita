@@ -1,6 +1,4 @@
 /**
- * Author: Nick Swinford
- * Email: NicholasJohn16@gmail.com
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
@@ -10,7 +8,7 @@
 
 ;(function ($, window, document) {
     
-    $('body').on('click', '[data-trigger="readmore"], [data-trigger="readless"]', function ( event ) {
+    $('body').on('click', '[data-trigger="ReadMore"], [data-trigger="ReadLess"]', function ( event ) {
         
         event.preventDefault();
         
