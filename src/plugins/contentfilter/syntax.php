@@ -114,9 +114,8 @@ class PlgContentfilterSyntax extends PlgContentfilterAbstract
 				$geshi->set_language($lng);
 				$geshi->set_source($code);
 			
-				$code  = '<div class="an-code-wrapper">';				
-				//$code .= '<div><a data-trigger="ViewSource" data-viewsource-element="!div !+ div" class="btn small"><i class="icon-fullscreen"></i>&nbsp;</a></div>';
-                $code .= '<div class="an-code"><div><a alt="'.JText::_('LIB-AN-ACTION-VIEW-SOURCE').'" data-trigger="ViewSource" data-viewsource-element="!div" class="pull-right btn" href="#"><i class="icon-fullscreen"></i></a>'.$geshi->parse_code().'</div></div>';
+				$code  = '<div class="an-code-wrapper">';
+                $code .= '<div class="an-code"><div><a alt="'.JText::_('LIB-AN-ACTION-VIEW-SOURCE').'" data-trigger="ViewSource" class="pull-right btn" href="#"><i class="icon-fullscreen"></i></a>'.$geshi->parse_code().'</div></div>';
 				$code .= '</div>';
 				
 				$text  = str_replace($matches[0][$key], $code, $text);				

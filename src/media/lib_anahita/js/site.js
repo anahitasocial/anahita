@@ -35,6 +35,7 @@
 //@depends anahita/mediaviewer.js
 //@depends anahita/sort.js
 //@depends anahita/readmore.js
+//@depends anahita/viewsource.js
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/entity.js

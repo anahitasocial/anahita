@@ -18110,8 +18110,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/readmore.js
 /**
- * Author: Nick Swinford
- * Email: NicholasJohn16@gmail.com
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
@@ -18121,7 +18119,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 ;(function ($, window, document) {
     
-    $('body').on('click', '[data-trigger="readmore"], [data-trigger="readless"]', function ( event ) {
+    $('body').on('click', '[data-trigger="ReadMore"], [data-trigger="ReadLess"]', function ( event ) {
         
         event.preventDefault();
         
@@ -18135,6 +18133,33 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 }(jQuery, window, document));
 
 
+///media/lib_anahita/js/anahita/viewsource.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    $('body').on('click', '[data-trigger="ViewSource"]', function ( event ) {
+        
+        event.preventDefault();
+        
+        var codes = $(this).closest('.an-code').find('pre');
+        var content = '';
+
+        $.each(codes, function ( index, value ) {
+            content += $(value).html() + "\n";
+        });
+        
+        sourceWindow = window.open('','','resizable=no,scrollbars=yes,width=800,height=600');
+        sourceWindow.document.body.innerHTML = '<pre>' + content + '</pre>';
+    });
+    
+}(jQuery, window, document));
 
 ///media/lib_anahita/js/anahita/actions/vote.js
 /**
