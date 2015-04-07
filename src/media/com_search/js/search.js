@@ -34,7 +34,7 @@
 				sort : $(elemSort).find('option:selected').val(),
 				'search_comments' : $(elemComment).is(':checked'),
 				scope : $(elemScope).data('scope')
-			}
+			};
 			
 			//search form
 			this._on(this.form, {
@@ -102,7 +102,7 @@
 				complete : function () {
 					currentTarget.fadeTo('fast', 1).removeClass('uiActivityIndicator');
 					var newUrl = self.form.attr('action') + '?' + self.form.serialize() + '&' + $.param(self.searchOptions);
-					$(document).data( 'newUrl',  newUrl ).trigger('urlChange')
+					$(document).data( 'newUrl',  newUrl ).trigger('urlChange');
 				}
 			});
 		}
