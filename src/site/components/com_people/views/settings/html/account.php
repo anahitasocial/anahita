@@ -47,7 +47,7 @@
 	</div>
 
 	<?php        
-	$user   = JFactory::getUser($item->userId);
+	$user = JFactory::getUser($item->userId);
 	$params = $user->getParameters(true)->renderToArray();        
 	?>                
 	
@@ -62,7 +62,7 @@
 	        
 	<div class="form-actions">
 		<button type="submit" class="btn" >
-		    <?php print @text('LIB-AN-ACTION-SAVE'); ?>
+		    <?= @text('LIB-AN-ACTION-SAVE'); ?>
 		</button>
 	</div>
     
