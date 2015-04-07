@@ -17766,7 +17766,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				$(document).data( 'newUrl',  newUrl ).trigger('urlChange')
 			}
 		});
-	});
+	})
 	
 }(jQuery, window, document));	
 ///media/lib_anahita/js/anahita/checkbox.js
@@ -18399,7 +18399,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			
 			return this;
 		}	
-	};
+	}
 	
 	var readSelectors = 
 		'a[data-action="edit"],' +

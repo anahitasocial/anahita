@@ -28,16 +28,18 @@ var StringLibAnahita = {
 		inlineEdit : 'Click to edit',
 		
 		username : {
-		    unavailable : 'This username is already taken',
-            isAvailable : 'This username is available',
+		    
+            valid : 'This username is available',
+            invalid : 'This username is already taken',
             patternMismatch : 'Username must start with upper or lowercase characters and it may contain numbers in the middle or the end as well as _ or - characters.',
             tooShort : 'Username must be 6 characters or longer',
             tooLong : 'Username is too long'  
 		},
 		
 		email : {
-            unavailable : 'This is a good email',
-            isAvailable : 'There is already an account with this email address',
+            
+            valid : 'This is a good email',
+            invalid : 'There is already an account with this email address',
             patternMismatch : 'This is an invalid email format',
             tooShort : 'This email is a little too short',
             tooLong : 'Really? This email is way too long'  

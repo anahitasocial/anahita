@@ -46,7 +46,10 @@
             var type = elem.attr('name');
             var validity = elem[0].validity;
             
+            //if no password is entered there is not need for validation
             if ( type == 'password' && elem.val() == '' ) {
+                
+                validity.valid = true;
                 
                 return;
             }
@@ -86,7 +89,7 @@
                     url : elem.data('url'),
                     data : {
                         action : 'validate',
-                        key : 'username',
+                        key : type,
                         value : elem.val() || ''
                     },
                     headers: { 
@@ -96,15 +99,15 @@
                         
                         if ( state == 'error' ) {
     
-                           self._prompt( elem, StringLibAnahita.prompt[type].unavailable, 'error' );
+                           self._prompt( elem, StringLibAnahita.prompt[type].invalid, 'error' );
+                           
+                           validity.valid = true;
                            
                            return;
                         
                         } else {
                         
-                            self._prompt( elem, StringLibAnahita.prompt[type].isAvailable, 'success' );
-                            
-                            validity.valid = true;
+                            self._prompt( elem, StringLibAnahita.prompt[type].valid, 'success' );
                             
                             return;
                         }
