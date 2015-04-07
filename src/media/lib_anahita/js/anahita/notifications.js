@@ -16,9 +16,9 @@
     	
     	var counter = $(this);
     	
-    	function pulse() {
+    	var pulse = function () {
     		
-    		$.ajax({
+    		$.ajax ( {
                 
     			headers: { 
                     accept: 'application/json'
@@ -29,7 +29,9 @@
     		}).done(function (data) {
                 
     			counter.html(data.new_notifications);
+    			
     			Tinycon.setBubble(data.new_notifications);
+    			
     			 if (data.new_notifications > 0) {
 
                      counter.addClass('counter-important');
@@ -41,7 +43,7 @@
                  }
                 
                 setTimeout(pulse, counter.data('interval'));
-            })
+            });
     	};
     	
     	pulse();
