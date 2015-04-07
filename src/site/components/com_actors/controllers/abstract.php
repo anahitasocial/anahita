@@ -295,7 +295,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             $url = 'option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name);
         }
         //after add always go to the setting
-        elseif($context->action = 'add') 
+        elseif($context->action == 'add') 
         {
             $url = $context->result->getURL().'&get=settings';
         }

@@ -17766,7 +17766,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				$(document).data( 'newUrl',  newUrl ).trigger('urlChange')
 			}
 		});
-	})
+	});
 	
 }(jQuery, window, document));	
 ///media/lib_anahita/js/anahita/checkbox.js
@@ -17902,9 +17902,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     	
     	var counter = $(this);
     	
-    	function pulse() {
+    	var pulse = function () {
     		
-    		$.ajax({
+    		$.ajax ( {
                 
     			headers: { 
                     accept: 'application/json'
@@ -17915,7 +17915,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     		}).done(function (data) {
                 
     			counter.html(data.new_notifications);
+    			
     			Tinycon.setBubble(data.new_notifications);
+    			
     			 if (data.new_notifications > 0) {
 
                      counter.addClass('counter-important');
@@ -17927,7 +17929,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                  }
                 
                 setTimeout(pulse, counter.data('interval'));
-            })
+            });
     	};
     	
     	pulse();
@@ -17999,7 +18001,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                         this._getPage(event);
                     } 
                 }
-            })
+            });
         },
         
         _getPage: function(event) {
@@ -18035,7 +18037,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         },
         
         _updateHash: function(url) {
-            var hash = url.split('?')
+            var hash = url.split('?');
             window.location.hash = hash[1];
         }
         
@@ -18149,6 +18151,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         event.preventDefault();
         
         var codes = $(this).closest('.an-code').find('pre');
+        
         var content = '';
 
         $.each(codes, function ( index, value ) {
@@ -18156,6 +18159,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         });
         
         sourceWindow = window.open('','','resizable=no,scrollbars=yes,width=800,height=600');
+        
         sourceWindow.document.body.innerHTML = '<pre>' + content + '</pre>';
     });
     
@@ -18395,7 +18399,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			
 			return this;
 		}	
-	}
+	};
 	
 	var readSelectors = 
 		'a[data-action="edit"],' +
