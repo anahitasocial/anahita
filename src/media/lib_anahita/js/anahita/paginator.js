@@ -37,7 +37,7 @@
                         this._getPage(event);
                     } 
                 }
-            })
+            });
         },
         
         _getPage: function(event) {
@@ -73,7 +73,7 @@
         },
         
         _updateHash: function(url) {
-            var hash = url.split('?')
+            var hash = url.split('?');
             window.location.hash = hash[1];
         }
         
