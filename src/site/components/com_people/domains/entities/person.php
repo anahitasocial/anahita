@@ -61,11 +61,11 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 		$config->append(array(	        
 			'attributes' 	=> array(
 				'administratingIds' => array('type'=>'set', 'default'=>'set'),				
-				'userId' 	 => array('column'=>'person_userid',	 	 'key'=>true, 'type'=>'integer'),
-				'username'	 => array('column'=>'person_username',	 	 'key'=>true, 'format'=>'username'),
+				'userId' 	 => array('column'=>'person_userid', 'key'=>true, 'type'=>'integer'),
+				'username'	 => array('column'=>'person_username', 'key'=>true, 'format'=>'username'),
 				'userType'	 => array('column'=>'person_usertype', 'write'=>'protected'),
-				'email'		 => array('column'=>'person_useremail',	 	 'key'=>true, 'format'=>'email'),
-				'givenName'  => array('column'=>'person_given_name',  'format'=>'string'),
+				'email'		 => array('column'=>'person_useremail', 'key'=>true, 'format'=>'email'),
+				'givenName'  => array('column'=>'person_given_name', 'format'=>'string'),
 				'familyName' => array('column'=>'person_family_name', 'format'=>'string'),
 				'lastVisitDate' => array('type'=>'date', 'column'=>'person_lastvisitdate'),
 				'language' => array('column'=>'person_language'),
@@ -74,7 +74,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 			),
 			'aliases' => array(
 				'registrationDate' => 'creationTime',
-				'aboutMe'		   => 'description'
+				'aboutMe' => 'description'
 			),		    
 			'behaviors'	=>  to_hash(array(
 			    'describable' => array('searchable_properties'=>array('username')),
