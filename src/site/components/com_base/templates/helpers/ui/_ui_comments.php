@@ -24,8 +24,12 @@
         <?= @message(@text('LIB-AN-COMMENTS-ARE-CLOSED')) ?>
     <?php elseif ( !empty($require_follow) ) : ?>
        <div class="alert alert-info">
-            <p><?= sprintf(@text('LIB-AN-COMMENT-MUST-FOLLOW'), $entity->owner->name) ?></p>
-            <p><a class="btn" data-trigger="Submit" href="<?= @route($entity->owner->getURL().'&action=follow') ?>"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOW')?></a></p>
+           <p><?= sprintf(@text('LIB-AN-COMMENT-MUST-FOLLOW'), $entity->owner->name) ?></p>
+           <p>
+               <a class="btn" data-action="follow" data-actor="<?= $entity->owner->id ?>" href="<?= @route( $entity->owner->getURL() ) ?>">
+               <?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOW')?>
+               </a>
+           </p>
        </div>
     <?php else : ?>
         <?= @message(@text('LIB-AN-COMMENT-NO-PERMISSION')) ?>

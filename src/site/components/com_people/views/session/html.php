@@ -65,10 +65,6 @@ class ComPeopleViewSessionHtml extends ComBaseViewHtml
 			$this->getService('application')->redirect($url);			
 		}
 		
-		if ( $this->_state->return ) {
-		    //$this->return = $this->_state->return;    
-		}
-		
 		return parent::display();
 	}
 }
