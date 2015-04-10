@@ -78,7 +78,7 @@
                return;
            }
            
-           var remoteVerification = Boolean(elem.data('remote'));
+           var remoteVerification = ( type == 'username' || type == 'email' ) ? true : false;
            
            //remote validation    
            if ( remoteVerification && elem.val() !== '' && this.current[type] != elem.val() ) {
