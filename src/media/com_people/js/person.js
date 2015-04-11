@@ -38,6 +38,42 @@
                 }
             }); 
          
+            //reset password
+            this._on({
+                'submit' : function ( event ) {
+                    
+                    event.preventDefault();
+                    
+                    var form = $(event.currentTarget);
+
+                    this._sendToken( form );
+                }
+            });
+        },
+        
+        _sendToken : function ( form ) {
+            
+            var self = this;
+            var elem = form.find('input[type="email"]');
+            
+            //clear prompt messages
+            this._prompt( elem );
+            
+            $.ajax({
+                method : 'post',
+                url : form.attr('action'),
+                data : form.serialize(),
+                complete : function ( xhr, state ) {
+                    
+                    if ( state == 'error' ) {
+                        self._prompt( elem, StringLibAnahita.prompt.token.unavailable, 'error');
+                    } else {
+                       elem.attr('disabled', true).addClass('disabled');
+                       self._prompt( elem, StringLibAnahita.prompt.token.available, 'success'); 
+                    }
+                    
+                }
+            });
         },
         
         _validate : function ( elem ) {

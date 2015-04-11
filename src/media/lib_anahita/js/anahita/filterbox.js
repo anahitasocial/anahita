@@ -30,9 +30,9 @@
 			complete : function () {
 				form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
 				var newUrl = form.attr('action') + '&' + form.serialize();
-				$(document).data( 'newUrl',  newUrl ).trigger('urlChange')
+				$(document).data( 'newUrl',  newUrl ).trigger('urlChange');
 			}
 		});
-	})
+	});
 	
 }(jQuery, window, document));	
