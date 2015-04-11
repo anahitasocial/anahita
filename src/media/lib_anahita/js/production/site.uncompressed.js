@@ -17567,6 +17567,34 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     	  $(this).find('.modal-footer').find('button').remove();
     });
     
+    $('body').on('click', '[data-trigger="OpenModal"]', function ( event ) {
+        
+        var elem = $(this);
+        var modal = $('#an-modal');
+        
+        var header = modal.find('.modal-header').find('h3');
+        var body = modal.find('.modal-body');
+        var footer = modal.find('.modal-footer');
+                
+        var url = elem.data('url');
+
+        $.get( url, function ( response ) {
+   
+            header.text( $(response).filter('.modal-header').find('h3').text() );
+            body.html( $(response).filter('.modal-body').html() ) ;
+            footer.append( $(response).filter('.modal-footer').html() );
+            
+            modal.modal('show');
+            
+            var triggerBtn = footer.find('button[type="submit"]');
+            var form = body.find('form');
+            
+            triggerBtn.on('click', function( event ) {
+                form.trigger('submit');
+            });
+        }); 
+    });
+    
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/infinitescroll.js
 /**
@@ -18164,6 +18192,189 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
     
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/person.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+    $.widget('anahita.person', {
+        
+        options : {
+            
+        },
+        
+        _create : function () {
+            
+            var self = this;
+            
+            this.current = [];
+            this.current['username'] = this.element.find(':input[name="username"]').val();
+            this.current['email'] = this.element.find(':input[name="email"]').val();
+            
+            //validate uesrname
+            this._on({
+                
+                'change [data-validate="username"], [data-validate="email"], [data-validate="password"] ' : function ( event ) {
+                    
+                    var elem = $(event.currentTarget);
+                    
+                    //clear prompt messages
+                    this._prompt( elem );
+                    
+                    this._validate( elem ); 
+                }
+            }); 
+         
+            //reset password
+            this._on({
+                'submit' : function ( event ) {
+                    
+                    event.preventDefault();
+                    
+                    var form = $(event.currentTarget);
+
+                    this._sendToken( form );
+                }
+            });
+        },
+        
+        _sendToken : function ( form ) {
+            
+            var self = this;
+            var elem = form.find('input[type="email"]');
+            
+            //clear prompt messages
+            this._prompt( elem );
+            
+            $.ajax({
+                method : 'post',
+                url : form.attr('action'),
+                data : form.serialize(),
+                complete : function ( xhr, state ) {
+                    
+                    if ( state == 'error' ) {
+                        self._prompt( elem, StringLibAnahita.prompt.token.unavailable, 'error');
+                    } else {
+                       elem.attr('disabled', true).addClass('disabled');
+                       self._prompt( elem, StringLibAnahita.prompt.token.available, 'success'); 
+                    }
+                    
+                }
+            });
+        },
+        
+        _validate : function ( elem ) {
+            
+            var self = this;
+            var type = elem.attr('name');
+            var validity = elem[0].validity;
+            
+            //if no password is entered there is not need for validation
+            if ( type == 'password' && elem.val() == '' ) {
+                
+                validity.valid = true;
+                
+                return;
+            }
+            
+            //validate too short
+           if( validity.tooShort ) {
+               
+               this._prompt( elem, StringLibAnahita.prompt[type].tooShort, 'error' );
+               
+               return;
+           }
+           
+           //validate too long
+           if( validity.tooLong ) {
+               
+                this._prompt( elem, StringLibAnahita.prompt[type].tooLong, 'error' );
+               
+                return;
+            }
+   
+           //validate pattern mismatch     
+           if( validity.patternMismatch ) {
+               
+               this._prompt( elem, StringLibAnahita.prompt[type].patternMismatch, 'error' );
+               
+               return;
+           }
+           
+           var remoteVerification = ( type == 'username' || type == 'email' ) ? true : false;
+           
+           //remote validation    
+           if ( remoteVerification && elem.val() !== '' && this.current[type] != elem.val() ) {
+                
+                $.ajax({
+                               
+                    method : 'post',
+                    url : elem.data('url'),
+                    data : {
+                        action : 'validate',
+                        key : type,
+                        value : elem.val() || ''
+                    },
+                    headers: { 
+                        accept: 'application/json'
+                    },
+                    complete : function ( xhr, state ) {
+                        
+                        if ( state == 'error' ) {
+    
+                           self._prompt( elem, StringLibAnahita.prompt[type].invalid, 'error' );
+                           
+                           validity.valid = true;
+                           
+                           return;
+                        
+                        } else {
+                        
+                            self._prompt( elem, StringLibAnahita.prompt[type].valid, 'success' );
+                            
+                            return;
+                        }
+                    }
+                });
+                
+            }
+        },
+        
+        _prompt : function ( elem, msg, status ) {
+            
+            msg = msg || '';
+            status = status || '';
+            
+            var controlGroup = elem.closest('.control-group');
+            
+            controlGroup.removeClass('error').removeClass('success');
+            
+            controlGroup.addClass( status );
+            
+            if( controlGroup.find('.help-inline').is('.help-inline') ) {
+                controlGroup.find('.help-inline').remove();
+            }
+            
+            if( msg != '' ) {
+                $( '<span class="help-inline">' + msg + '</span>' ).insertAfter(elem);
+            }
+        }
+        
+    });
+    
+    $(document).ajaxSuccess(function() {
+        $('#person-form').person();
+    });
+    
+}(jQuery, window, document));
 
 ///media/lib_anahita/js/anahita/actions/vote.js
 /**
@@ -18377,8 +18588,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 		
 		//add comment entity
-		if ( action == 'addcomment' )
-		{
+		if ( action == 'addcomment' ) {
+			
 			var form = $(this);
 			var comments = form.prev('.an-comments');
 			
@@ -18399,7 +18610,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			
 			return this;
 		}	
-	}
+	};
 	
 	var readSelectors = 
 		'a[data-action="edit"],' +

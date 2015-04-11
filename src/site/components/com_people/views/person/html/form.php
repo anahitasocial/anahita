@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die; ?>
 
-<script src="com_people/js/person.js" />
-
 <?php $return = empty($return) ? null : $return; ?>
 
 <form action="<?= @route('view=person') ?>" method="post" name="person-form" id="person-form" class="well" autocomplete="off">

@@ -58,7 +58,7 @@
     </fieldset>
     
     <div class="form-actions">
-        <button type="submit" name="Submit" class="btn btn-large btn-primary pull-right"/>
+        <button type="submit" class="btn btn-primary btn-large pull-right">
             <?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
         </button>
     </div>

@@ -125,8 +125,8 @@
 		}
 		
 		//add comment entity
-		if ( action == 'addcomment' )
-		{
+		if ( action == 'addcomment' ) {
+			
 			var form = $(this);
 			var comments = form.prev('.an-comments');
 			
@@ -147,7 +147,7 @@
 			
 			return this;
 		}	
-	}
+	};
 	
 	var readSelectors = 
 		'a[data-action="edit"],' +

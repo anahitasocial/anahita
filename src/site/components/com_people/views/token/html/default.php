@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<script src="com_people/js/person.js" />
+
 
 <div class="row">
 	<div class="offset3 span6">

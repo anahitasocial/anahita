@@ -14,4 +14,32 @@
     	  $(this).find('.modal-footer').find('button').remove();
     });
     
+    $('body').on('click', '[data-trigger="OpenModal"]', function ( event ) {
+        
+        var elem = $(this);
+        var modal = $('#an-modal');
+        
+        var header = modal.find('.modal-header').find('h3');
+        var body = modal.find('.modal-body');
+        var footer = modal.find('.modal-footer');
+                
+        var url = elem.data('url');
+
+        $.get( url, function ( response ) {
+   
+            header.text( $(response).filter('.modal-header').find('h3').text() );
+            body.html( $(response).filter('.modal-body').html() ) ;
+            footer.append( $(response).filter('.modal-footer').html() );
+            
+            modal.modal('show');
+            
+            var triggerBtn = footer.find('button[type="submit"]');
+            var form = body.find('form');
+            
+            triggerBtn.on('click', function( event ) {
+                form.trigger('submit');
+            });
+        }); 
+    });
+    
 }(jQuery, window, document));

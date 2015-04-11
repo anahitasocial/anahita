@@ -8,13 +8,18 @@
         <?= @template('tmpl/js') ?> 
         <?= @render('analytics') ?>     
     </head>
-    <body id="tmpl-component">           
-        <div id="container-system-message" class="container">       
-    		<?= @render('messages') ?>
-    	</div>
+    <body>      
+        <?= @template('tmpl/modal') ?>
+        
+        <div id="container-system-message" class="container">
+            <?= @render('messages') ?>
+        </div>          
         
         <div class="container">
         <?= $this->getView()->content; ?>
         </div>
+        
+        <?= @template('tmpl/js') ?>
+        <?= @render('analytics') ?>
     </body>
 </html>

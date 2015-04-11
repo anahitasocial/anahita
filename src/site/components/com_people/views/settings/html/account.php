@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<script src="com_people/js/person.js" />
+
 
 <h3><?= @text('COM-PEOPLE-PROFILE-EDIT-ACCOUNT-INFORMATION') ?></h3>
 

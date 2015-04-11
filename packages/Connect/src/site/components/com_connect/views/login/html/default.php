@@ -12,12 +12,12 @@
     </div>
     
     <div class="well">    
-        <button data-trigger="PersonAuthenticationModal" data-url="<?= @route('option=com_people&view=session&layout=modal_simple') ?>" class="btn btn-large">
-            <?= @text('COM-CONNECT-ACTION-MAP-ACCOUNT') ?>
+        <button data-trigger="OpenModal" data-url="<?= @route('option=com_people&view=session&layout=modal&connect=1') ?>" class="btn">
+            <?= @text('Sign In') ?>
         </button> 
         
-        <button data-trigger="PersonRegistrationModal" data-url="<?= @route('option=com_people&view=person&layout=add&modal=1') ?>" class="btn btn-large">
-            <?= @text('COM-CONNECT-ACTION-SIGNUP') ?>
+        <button data-trigger="OpenModal" data-url="<?= @route('option=com_people&view=person&layout=add&modal=1') ?>" class="btn">
+            <?= @text('Register') ?>
         </button>
     </div>
     
@@ -28,7 +28,7 @@
     </div>
     
     <div class="well"> 
-    	<button data-redirect="true" data-trigger="PersonAuthenticationModal" data-url="<?= @route('option=com_people&view=session&layout=modal_simple') ?>" class="btn btn-large btn-primary">
+    	<button data-trigger="OpenModal" data-url="<?= @route('option=com_people&view=session&layout=modal&connect=1') ?>" class="btn btn-primary">
     		<?= @text('COM-CONNECT-LOGIN-PROMPT-LOGIN')?>
     	</button>
     </div>
