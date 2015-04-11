@@ -17563,12 +17563,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
     'use strict';
     
-    $('#an-modal').bind('hidden', function () {
-    	  $(this).find('.modal-footer').find('button').remove();
-    });
-    
-    $('body').on('click', '[data-trigger="OpenModal"]', function ( event ) {
-        
+    $.fn.anahitaModal = function () {
+      
         var elem = $(this);
         var modal = $('#an-modal');
         
@@ -17592,7 +17588,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             triggerBtn.on('click', function( event ) {
                 form.trigger('submit');
             });
-        }); 
+        });
+        
+    };
+    
+    $('body').on('click', '[data-trigger="OpenModal"]', function ( event ) {
+        $(this).anahitaModal();
+    });
+    
+    $('#an-modal').bind('hidden', function () {
+    	  $(this).find('.modal-footer').find('button').remove();
     });
     
 }(jQuery, window, document));
