@@ -18207,10 +18207,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
     $.widget('anahita.person', {
         
-        options : {
-            
-        },
-        
         _create : function () {
             
             var self = this;
@@ -18230,43 +18226,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                     this._prompt( elem );
                     
                     this._validate( elem ); 
-                }
-            }); 
-         
-            //reset password
-            this._on({
-                'submit' : function ( event ) {
-                    
-                    event.preventDefault();
-                    
-                    var form = $(event.currentTarget);
-
-                    this._sendToken( form );
-                }
-            });
-        },
-        
-        _sendToken : function ( form ) {
-            
-            var self = this;
-            var elem = form.find('input[type="email"]');
-            
-            //clear prompt messages
-            this._prompt( elem );
-            
-            $.ajax({
-                method : 'post',
-                url : form.attr('action'),
-                data : form.serialize(),
-                complete : function ( xhr, state ) {
-                    
-                    if ( state == 'error' ) {
-                        self._prompt( elem, StringLibAnahita.prompt.token.unavailable, 'error');
-                    } else {
-                       elem.attr('disabled', true).addClass('disabled');
-                       self._prompt( elem, StringLibAnahita.prompt.token.available, 'success'); 
-                    }
-                    
                 }
             });
         },
@@ -18370,9 +18329,90 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         
     });
     
+    $('#person-form').person();
+    
     $(document).ajaxSuccess(function() {
         $('#person-form').person();
     });
+    
+}(jQuery, window, document));
+///media/lib_anahita/js/anahita/token.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+   $.widget('anahita.token', {
+       
+       _create : function () {
+           
+           var self = this;
+           var form = this.element;
+           
+           this._on({
+               'submit' : function ( event ) {
+                   
+                   event.preventDefault();
+                   self._send( form );
+               }
+           });
+           
+       },
+       
+       _send : function ( form ) {
+            
+            var self = this;
+            var elem = form.find('input[type="email"]');
+            
+            //clear prompt messages
+            this._prompt( elem );
+            
+            $.ajax({
+                method : 'post',
+                url : form.attr('action'),
+                data : form.serialize(),
+                complete : function ( xhr, state ) {
+                    
+                    if ( state == 'error' ) {
+                        self._prompt( elem, StringLibAnahita.prompt.token.unavailable, 'error');
+                    } else {
+                       elem.attr('disabled', true).addClass('disabled');
+                       self._prompt( elem, StringLibAnahita.prompt.token.available, 'success'); 
+                    }
+                    
+                }
+            });
+        },
+       
+       _prompt : function ( elem, msg, status ) {
+            
+            msg = msg || '';
+            status = status || '';
+            
+            var controlGroup = elem.closest('.control-group');
+            
+            controlGroup.removeClass('error').removeClass('success');
+            
+            controlGroup.addClass( status );
+            
+            if( controlGroup.find('.help-inline').is('.help-inline') ) {
+                controlGroup.find('.help-inline').remove();
+            }
+            
+            if( msg != '' ) {
+                $( '<span class="help-inline">' + msg + '</span>' ).insertAfter(elem);
+            }
+        }
+   });
+    
+   $('#token-form').token();
     
 }(jQuery, window, document));
 
@@ -19161,6 +19201,114 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	});
 	
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/stories.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+	
+	'use strict';
+
+	var lastOpened = null;
+
+	$.fn.StoryComment = function (action, options) {
+		
+		//default settings
+		var settings = $.extend({
+			
+			entity : '.an-entity',
+			comments : '.an-comments',
+			actionOvertext : '.action-comment-overtext',
+			overtextBox : '.comment-overtext-box'
+		
+		}, options );
+		
+		var elem = $(this);
+		var parent = elem.closest(settings.entity);
+		var comments = parent.find(settings.comments);
+		var form = parent.find('form:last-child');
+		
+		if(!form)
+			return;
+		
+		//show form
+		this.ShowForm = function() {
+			
+			this.HideLastForm();	
+			
+			form.show();
+			
+			lastOpened = form;
+			
+			$('body').animate({ scrollTop: $(form).offset().top - 150 }, 
+				700, 
+				function(){
+		    		form.find('textarea').focus();
+		    	});
+			
+			return this;
+		};
+		
+		//hide last form
+		this.HideLastForm = function() {
+			
+			var hotspot = null;
+			
+			if ( parent.find( settings.actionOvertext ).length )
+				var hotspot = parent.find( settings.overtextBox );
+			
+			if ( hotspot ) {
+				hotspot.hide();
+				form.data('hotspot', hotspot);
+			}
+			
+			if ( lastOpened && lastOpened.attr('id') != form.attr('id') ) {
+				
+				if(lastOpened.data('hotspot'))
+					lastOpened.data('hotspot').show();
+				
+				lastOpened.hide();
+			}
+			
+			return this;
+		};
+		
+		//actions for this plugin
+		switch ( action ) {
+		
+			case 'hide':
+				this.HideLastForm();
+				break;
+			
+			case 'show':
+			default:
+				this.ShowForm();
+		}
+		
+		return this;
+	};
+	
+	$( 'body' ).on( 'click', 'a.action-comment, a.action-comment-overtext', function( event ) {
+		
+		event.preventDefault();
+
+		$(this).StoryComment('show');
+	});
+	
+	$( '#an-stories' ).on( 'clickoutside', function( event ) {
+		
+		$(this).StoryComment('hide');
+	
+	});
+	
+}(jQuery, window, document));
+
+
 
 
 

@@ -17,7 +17,7 @@
                 <?= @text( 'COM-PEOPLE-ADD-NAME' ); ?>
             </label>
             <div class="controls">
-                <input class="input-block-level" type="text" id="person-name" name="name" maxlength="25" minlength="6" required />
+                <input class="input-block-level" type="text" id="person-name" name="name" maxlength="100" minlength="6" required />
             </div>
         </div>
         
@@ -27,7 +27,7 @@
             </label>
             <div class="controls">
                 <? $usernamePattern = "^[A-Za-z][A-Za-z0-9_-]*$"; ?>
-                <input data-validate="username" data-url="<?= @route('view=person', false ) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="25" minlength="6" required />
+                <input data-validate="username" data-url="<?= @route('view=person', false ) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="100" minlength="6" required />
             </div>
         </div>
                 

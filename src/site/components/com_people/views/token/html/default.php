@@ -1,16 +1,13 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-
-
 <div class="row">
 	<div class="offset3 span6">
-		<form name="person-form" id="person-form" action="<?= @route('view=token') ?>" method="post" class="well">
+	    
+		<form name="token-form" id="token-form" action="<?= @route('view=token') ?>" method="post" class="well">
     		<fieldset>
     			<legend>
     			    <?= @text('COM-PEOPLE-TOKEN-FORGOT-PASSWORD') ?>
     			</legend>                        
-                
-                <div id="flash-message"></div>
 		
 				<div class="control-group">
                     <label class="control-label"  for="person-email">
@@ -30,5 +27,6 @@
                 </button>
             </div>
 		</form>
+		
 	</div>
 </div>

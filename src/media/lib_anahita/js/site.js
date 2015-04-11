@@ -37,6 +37,7 @@
 //@depends anahita/readmore.js
 //@depends anahita/viewsource.js
 //@depends anahita/person.js
+//@depends anahita/token.js
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/entity.js
@@ -44,6 +45,8 @@
 //@depends anahita/actions/commentstatus.js
 //@depends anahita/actions/subscribe.js
 //@depends anahita/actions/actor.js
+//@depends anahita/actions/stories.js
+
 
 
 
