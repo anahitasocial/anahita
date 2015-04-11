@@ -40,6 +40,7 @@
     };
     
     $('body').on('click', '[data-trigger="OpenModal"]', function ( event ) {
+        event.preventDefault();
         $(this).anahitaModal();
     });
     

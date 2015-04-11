@@ -66,10 +66,12 @@
  		
  		$html = $this->getService('com:base.template.helper.html');
  		
- 		return $html->link($config->html, null, $config->attributes)
- 		         ->dataSubmitUrl($config->url)
- 		         ->class('btn btn-'.$service)
- 		         ->dataTrigger('Submit')->title($service);
+ 		$link = $html->link($config->html, $config->url, $config->attributes)
+ 	                 ->class('btn btn-'.$service)
+ 		             ->dataTrigger('PostLink')
+ 		             ->title($service);
+        
+        return $link;
  	}
 
  	 /**

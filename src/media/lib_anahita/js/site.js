@@ -41,6 +41,7 @@
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/entity.js
+//@depends anahita/actions/postlink.js
 //@depends anahita/actions/editable.js
 //@depends anahita/actions/commentstatus.js
 //@depends anahita/actions/subscribe.js
