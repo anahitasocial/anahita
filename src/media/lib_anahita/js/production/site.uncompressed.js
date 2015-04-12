@@ -17550,6 +17550,58 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 }).call(this);
 
 
+///media/lib_anahita/js/anahita/input-alert.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+    $.widget('anahita.inputAlert', {
+        
+        _create : function () {
+            
+            this.controlGroup = this.element.closest('.control-group');
+            this.clear();
+        },
+        
+        error : function ( msg ) {
+            
+            this.controlGroup.addClass( 'error' );
+            this._addMessage( msg );
+        },
+        
+        success : function ( msg ) {
+            
+            this.controlGroup.addClass( 'success' );
+            this._addMessage( msg );
+        },
+        
+        clear : function () {
+            
+            this.controlGroup.removeClass('error').removeClass('success');
+            
+            if( this.controlGroup.find('.help-inline').length ) {
+                this.controlGroup.find('.help-inline').remove();
+            }
+        },
+        
+        _addMessage : function ( msg ) {
+            
+            if( msg != '' ) {
+                $( '<span class="help-inline">' + msg + '</span>' ).insertAfter(this.element);
+            }
+        }
+    });
+    
+}(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/modal.js
 /**
  * Author: Rastin Mehr
@@ -18230,8 +18282,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                     
                     var elem = $(event.currentTarget);
                     
-                    //clear prompt messages
-                    this._prompt( elem );
+                    elem.inputAlert();
+                    elem.inputAlert('clear');
                     
                     this._validate( elem ); 
                 }
@@ -18247,7 +18299,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             //validate too short
            if( validity.tooShort ) {
                
-               this._prompt( elem, StringLibAnahita.prompt[type].tooShort, 'error' );
+               elem.inputAlert('error', StringLibAnahita.prompt[type].tooShort );
                
                return;
            }
@@ -18255,7 +18307,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
            //validate too long
            if( validity.tooLong ) {
                
-                this._prompt( elem, StringLibAnahita.prompt[type].tooLong, 'error' );
+                elem.inputAlert('error', StringLibAnahita.prompt[type].tooLong );
                
                 return;
             }
@@ -18263,7 +18315,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
            //validate pattern mismatch     
            if( validity.patternMismatch ) {
                
-               this._prompt( elem, StringLibAnahita.prompt[type].patternMismatch, 'error' );
+               elem.inputAlert('error', StringLibAnahita.prompt[type].patternMismatch );
                
                return;
            }
@@ -18289,7 +18341,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                         
                         if ( state == 'error' ) {
     
-                           self._prompt( elem, StringLibAnahita.prompt[type].invalid, 'error' );
+                           elem.inputAlert('error', StringLibAnahita.prompt[type].invalid );
                            
                            validity.valid = true;
                            
@@ -18297,7 +18349,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                         
                         } else {
                         
-                            self._prompt( elem, StringLibAnahita.prompt[type].valid, 'success' );
+                            elem.inputAlert('success', StringLibAnahita.prompt[type].valid );
                             
                             return;
                         }
@@ -18305,28 +18357,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                 });
                 
             }
-        },
-        
-        _prompt : function ( elem, msg, status ) {
-            
-            msg = msg || '';
-            status = status || '';
-            
-            var controlGroup = elem.closest('.control-group');
-            
-            controlGroup.removeClass('error').removeClass('success');
-            
-            controlGroup.addClass( status );
-            
-            if( controlGroup.find('.help-inline').length ) {
-                controlGroup.find('.help-inline').remove();
-            }
-            
-            if( msg != '' ) {
-                $( '<span class="help-inline">' + msg + '</span>' ).insertAfter(elem);
-            }
         }
-        
     });
     
     $('#person-form').person();
@@ -18371,8 +18402,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             var self = this;
             var elem = form.find('input[type="email"]');
             
-            //clear prompt messages
-            this._prompt( elem );
+            elem.inputAlert();
+            elem.inputAlert('clear');
             
             $.ajax({
                 method : 'post',
@@ -18381,34 +18412,18 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                 complete : function ( xhr, state ) {
                     
                     if ( state == 'error' ) {
-                        self._prompt( elem, StringLibAnahita.prompt.token.unavailable, 'error');
+                        
+                        elem.inputAlert('error', StringLibAnahita.prompt.token.unavailable );
+                        
                     } else {
+                       
                        elem.attr('disabled', true).addClass('disabled');
-                       self._prompt( elem, StringLibAnahita.prompt.token.available, 'success'); 
+                       elem.inputAlert('success', StringLibAnahita.prompt.token.available );
+
                     }
                     
                 }
             });
-        },
-       
-       _prompt : function ( elem, msg, status ) {
-            
-            msg = msg || '';
-            status = status || '';
-            
-            var controlGroup = elem.closest('.control-group');
-            
-            controlGroup.removeClass('error').removeClass('success');
-            
-            controlGroup.addClass( status );
-            
-            if( controlGroup.find('.help-inline').length ) {
-                controlGroup.find('.help-inline').remove();
-            }
-            
-            if( msg != '' ) {
-                $( '<span class="help-inline">' + msg + '</span>' ).insertAfter(elem);
-            }
         }
    });
     

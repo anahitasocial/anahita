@@ -24,6 +24,7 @@
 
 //@depends vendors/dropzone/dropzone.js
 
+//@depends anahita/input-alert.js
 //@depends anahita/modal.js
 //@depends anahita/infinitescroll.js
 //@depends anahita/gadget.js

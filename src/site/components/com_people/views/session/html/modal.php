@@ -48,7 +48,7 @@
     
     <?php if(@service('com://site/people.controller.person')->permission->canRegister()): ?>
     <hr/>
-    <p>
+    <p class="lead">
         <?= @text('COM-PEOPLE-ADD-GREETINING') ?> 
         <a href="<?= @route('option=com_people&view=person&layout=add'.( ( $return ) ? "&return=$return" : '')) ?>">
             <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>

@@ -32,8 +32,8 @@
             var self = this;
             var elem = form.find('input[type="email"]');
             
-            //clear prompt messages
-            this._prompt( elem );
+            elem.inputAlert();
+            elem.inputAlert('clear');
             
             $.ajax({
                 method : 'post',
@@ -42,34 +42,18 @@
                 complete : function ( xhr, state ) {
                     
                     if ( state == 'error' ) {
-                        self._prompt( elem, StringLibAnahita.prompt.token.unavailable, 'error');
+                        
+                        elem.inputAlert('error', StringLibAnahita.prompt.token.unavailable );
+                        
                     } else {
+                       
                        elem.attr('disabled', true).addClass('disabled');
-                       self._prompt( elem, StringLibAnahita.prompt.token.available, 'success'); 
+                       elem.inputAlert('success', StringLibAnahita.prompt.token.available );
+
                     }
                     
                 }
             });
-        },
-       
-       _prompt : function ( elem, msg, status ) {
-            
-            msg = msg || '';
-            status = status || '';
-            
-            var controlGroup = elem.closest('.control-group');
-            
-            controlGroup.removeClass('error').removeClass('success');
-            
-            controlGroup.addClass( status );
-            
-            if( controlGroup.find('.help-inline').length ) {
-                controlGroup.find('.help-inline').remove();
-            }
-            
-            if( msg != '' ) {
-                $( '<span class="help-inline">' + msg + '</span>' ).insertAfter(elem);
-            }
         }
    });
     
