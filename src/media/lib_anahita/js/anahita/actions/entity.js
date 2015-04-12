@@ -27,7 +27,7 @@
 				},
 				success : function ( response ) {
 					
-					if( !$(response).is('form') ) {
+					if( !$(response).length ) {
 						response = $(response).html();
 					}
 						
@@ -110,7 +110,7 @@
 						confirmModal.modal('hide');
 					},
 					success : function() {
-						if(entity.closest('.an-entities').is('.an-entities')){
+						if(entity.closest('.an-entities').length){
 							entity.closest('.an-entity').fadeOut();
 						} else {
 							window.location.href = entity.data('redirect');

@@ -35,7 +35,7 @@
 					
 					var listEntity = elem.closest('.an-entity');
 					
-					if ( $(listEntity).is('.an-entity') ) {
+					if ( $(listEntity).length ) {
 						elem.closest('.an-entity').replaceWith($(response));
 					} else {
 						window.location.href = elem.attr('href');
@@ -249,7 +249,11 @@
 	};
 	
 	//Admin Candidate Typeahead
-	$('form#an-actors-search').actorTypeahead();
+	if( $('form#an-actors-search').length ) {
+	   
+	   $('form#an-actors-search').actorTypeahead();    
+	}
+	
 	
 	//Add Admin
 	$('body').on('submit', 'form#an-actors-search', function( event ){

@@ -50,7 +50,9 @@
     };
     
     //counter
-    $('#notifications-counter').notificationsCounter();
+    if($('#notifications-counter').length) {
+        $('#notifications-counter').notificationsCounter();
+    }
     
     //popover
     $('body').on('click', 'a[data-trigger*="notifications-popover"]', function ( event ) {

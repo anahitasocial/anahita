@@ -63,7 +63,7 @@
             
             controlGroup.addClass( status );
             
-            if( controlGroup.find('.help-inline').is('.help-inline') ) {
+            if( controlGroup.find('.help-inline').length ) {
                 controlGroup.find('.help-inline').remove();
             }
             

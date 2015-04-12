@@ -17970,7 +17970,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     };
     
     //counter
-    $('#notifications-counter').notificationsCounter();
+    if($('#notifications-counter').length) {
+        $('#notifications-counter').notificationsCounter();
+    }
     
     //popover
     $('body').on('click', 'a[data-trigger*="notifications-popover"]', function ( event ) {
@@ -18324,7 +18326,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             
             controlGroup.addClass( status );
             
-            if( controlGroup.find('.help-inline').is('.help-inline') ) {
+            if( controlGroup.find('.help-inline').length ) {
                 controlGroup.find('.help-inline').remove();
             }
             
@@ -18408,7 +18410,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             
             controlGroup.addClass( status );
             
-            if( controlGroup.find('.help-inline').is('.help-inline') ) {
+            if( controlGroup.find('.help-inline').length ) {
                 controlGroup.find('.help-inline').remove();
             }
             
@@ -18536,7 +18538,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				},
 				success : function ( response ) {
 					
-					if( !$(response).is('form') ) {
+					if( !$(response).length ) {
 						response = $(response).html();
 					}
 						
@@ -18619,7 +18621,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 						confirmModal.modal('hide');
 					},
 					success : function() {
-						if(entity.closest('.an-entities').is('.an-entities')){
+						if(entity.closest('.an-entities').length){
 							entity.closest('.an-entity').fadeOut();
 						} else {
 							window.location.href = entity.data('redirect');
@@ -18975,7 +18977,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					
 					var listEntity = elem.closest('.an-entity');
 					
-					if ( $(listEntity).is('.an-entity') ) {
+					if ( $(listEntity).length ) {
 						elem.closest('.an-entity').replaceWith($(response));
 					} else {
 						window.location.href = elem.attr('href');
@@ -19189,7 +19191,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	};
 	
 	//Admin Candidate Typeahead
-	$('form#an-actors-search').actorTypeahead();
+	if( $('form#an-actors-search').length ) {
+	   
+	   $('form#an-actors-search').actorTypeahead();    
+	}
+	
 	
 	//Add Admin
 	$('body').on('submit', 'form#an-actors-search', function( event ){
