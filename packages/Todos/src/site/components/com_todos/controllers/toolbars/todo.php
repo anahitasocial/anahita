@@ -107,7 +107,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
     protected function _commandNew($command)
     {
         $command
-        ->append(array('label'=>$label))
+        ->append(array('label' => JText::_('COM-TODOS-TOOLBAR-TODO-NEW') ))
         ->href('#')
         ->setAttribute('data-trigger', 'ReadForm');
     }
