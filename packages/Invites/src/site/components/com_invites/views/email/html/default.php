@@ -16,14 +16,15 @@
         		<div class="controls">
         			<div class="input-prepend">
         				<span class="add-on"><i class="icon-envelope"></i></span>
-        				<input required maxlength="100" minlength="10" class="email span3" type="email" name="email[]" autocomplete="off" placeholder="<?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i+1) ?>" />
+        				<?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
+        				<input pattern="<?= $emailPattern ?>" maxlength="100" class="email span3" type="email" name="email[]" autocomplete="off" placeholder="<?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i+1) ?>" />
         			</div>
         		</div>
         	</div>
         	<?php endfor; ?>
         	
         	<div class="form-actions">
-        		<button class="btn btn-primary" data-trigger="Invite">
+        		<button type="submit" class="btn btn-primary">
         			<?= @text('COM-INVITES-EMAIL-SEND-INVITES') ?>
         		</button>
         	</div>

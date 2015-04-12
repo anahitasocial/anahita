@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die; ?>
 
-
-
 <h3><?= @text('COM-PEOPLE-PROFILE-EDIT-ACCOUNT-INFORMATION') ?></h3>
 
 <?php $user = $item->getJUserObject() ?>

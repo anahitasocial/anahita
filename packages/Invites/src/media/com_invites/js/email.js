@@ -1,30 +1,44 @@
-Delegator.register('click', {
-	
-	'Invite' : function(event, el, api) 
-	{
-		event.stop();		
-		var form   = document.id('email-invites');
-		var emails = [];
-		var inputs = [];
-		document.getElements('.email').each(function(input, index) {
-			if(input.value.length > 3 && 
-					form.get('validator').validateField(input)) {
-				input.setProperty('disabled', true);
-				emails.push(input.value);				
-			}
-		});
-		var req = new Request.HTML({
-			method: 'post',
-			url: form.action.toURI().setData('layout','emails_sent').toString(),
-			data: {email:emails},
-			onSuccess: function()
-			{
-				"Invitations Sent".alert('success');
-			},
-			onComplete: function(text, tree, html) {
-				window.behavior.apply(new Element('span').set('html', html));				
-			}
-		}).send();		
-	}
-	
-});
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+    $.fn.invitesEmail = function ( action ) {
+        
+        var form = $(this);
+        var inputs = form.find('input[type="email"]');
+        var canSubmit = true;
+          
+        $.each(inputs, function ( index, input ) {
+            
+            var elem = $(input);
+            
+            if(elem.val() != '') {
+                if(!elem[0].checkValidity()) {
+                    canSubmit = false;
+                }
+            }
+            
+        });         
+        
+        if ( canSubmit ) {
+            form.trigger('submit');
+        }
+       
+        return false;
+    };
+    
+    $('body').on('submit', 'form#invites-email', function ( event ){
+
+        even.preventDefault();
+        $(this).invitesEmail();
+    });
+    
+}(jQuery, window, document));

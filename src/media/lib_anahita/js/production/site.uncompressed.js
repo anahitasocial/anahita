@@ -18244,14 +18244,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             var type = elem.attr('name');
             var validity = elem[0].validity;
             
-            //if no password is entered there is not need for validation
-            if ( type == 'password' && elem.val() == '' ) {
-                
-                validity.valid = true;
-                
-                return;
-            }
-            
             //validate too short
            if( validity.tooShort ) {
                
