@@ -6,16 +6,17 @@
 
 <div class="row">
 	<div class="span8">
+	    
 		<?= @helper('ui.header', array()) ?>
 	    	
-        <form data-behavior="FormValidator" id="email-invites" action="<?= @route() ?>" method="post">
+        <form id="invites-email" name="invites-email" action="<?= @route() ?>" method="post">
         	<?php for($i=0; $i<$num_emails; $i++): ?>
         	
         	<div class="control-group">
         		<div class="controls">
         			<div class="input-prepend">
         				<span class="add-on"><i class="icon-envelope"></i></span>
-        				<input class="email required validate-email span3" type="text" name="email[]" autocomplete="off" placeholder="<?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i+1) ?>" />
+        				<input required maxlength="100" minlength="10" class="email span3" type="email" name="email[]" autocomplete="off" placeholder="<?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i+1) ?>" />
         			</div>
         		</div>
         	</div>

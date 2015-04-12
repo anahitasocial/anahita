@@ -1,4 +1,5 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<?php defined('KOOWA') or die('Restricted access'); ?>
+
 <?php $payloads = new KConfig($data)?>
 <?php foreach($payloads as $i=>$payload) : ?>
 <?php if ( $payload->person) : ?>
