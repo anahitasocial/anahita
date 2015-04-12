@@ -17,7 +17,7 @@ var StringLibAnahita = {
         unsubscribe: 'Unfollow',
         enable : 'Enable',
         disable : 'Disable'
-	
+        
 	},
 	
 	'prompt' : {
@@ -26,6 +26,7 @@ var StringLibAnahita = {
 		'delete' : 'Are you sure you want to delete this?',	
 		deleteActor : 'Are you absolutely sure that you want to delete this profile?',
 		inlineEdit : 'Click to edit',
+		error : 'Something went wrong!',
 		
 		username : {
 		    
@@ -42,7 +43,8 @@ var StringLibAnahita = {
             invalid : 'There is already an account with this email address',
             patternMismatch : 'This is an invalid email format',
             tooShort : 'This email is a little too short',
-            tooLong : 'Really? This email is way too long'  
+            tooLong : 'Really? This email is way too long',
+            inviteSent : 'Invitation Sent' 
         },
 	
 	    password : {

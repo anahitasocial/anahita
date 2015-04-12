@@ -17583,9 +17583,24 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             this._addMessage( msg );
         },
         
+        info : function ( msg ) {
+            
+            this.controlGroup.addClass( 'info' );
+            this._addMessage( msg );
+        },
+        
+        warning : function ( msg ) {
+            
+            this.controlGroup.addClass( 'warning' );
+            this._addMessage( msg );
+        },
+        
         clear : function () {
             
-            this.controlGroup.removeClass('error').removeClass('success');
+            this.controlGroup.removeClass('error');
+            this.controlGroup.removeClass('success');
+            this.controlGroup.removeClass('info');
+            this.controlGroup.removeClass('warning');
             
             if( this.controlGroup.find('.help-inline').length ) {
                 this.controlGroup.find('.help-inline').remove();

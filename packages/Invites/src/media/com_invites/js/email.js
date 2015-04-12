@@ -14,30 +14,45 @@
         
         var form = $(this);
         var inputs = form.find('input[type="email"]');
-        var canSubmit = true;
           
         $.each(inputs, function ( index, input ) {
             
             var elem = $(input);
             
-            if(elem.val() != '') {
-                if(!elem[0].checkValidity()) {
-                    canSubmit = false;
-                }
-            }
+            elem.inputAlert();
+            elem.inputAlert('clear');
+           
+           if ( elem.val() != '' && elem[0].checkValidity()) {
+               
+               $.ajax({
+                   
+                   method : 'post',
+                   url : form.attr('action'),
+                   data : form.serialize(),
+                   complete : function ( xhr, state ) {
+                       
+                       if ( state == 'error' ) {
+                           
+                           elem.inputAlert('error', StringLibAnahita.prompt.error );
+                           
+                       } else {
+                            
+                            elem.inputAlert('success', StringLibAnahita.prompt.email.inviteSent );
+                            elem.attr('disabled', true);
+                       }
+                   }
+               });
+               
+           }
             
         });         
         
-        if ( canSubmit ) {
-            form.trigger('submit');
-        }
-       
         return false;
     };
     
-    $('body').on('submit', 'form#invites-email', function ( event ){
+    $('body').on('submit', 'form#invites-email', function ( event ) {
 
-        even.preventDefault();
+        event.preventDefault();
         $(this).invitesEmail();
     });
     

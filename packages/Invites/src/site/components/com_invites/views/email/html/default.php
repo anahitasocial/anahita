@@ -10,15 +10,15 @@
 		<?= @helper('ui.header', array()) ?>
 	    	
         <form id="invites-email" name="invites-email" action="<?= @route() ?>" method="post">
-        	<?php for($i=0; $i<$num_emails; $i++): ?>
+        	<?php for ( $i=0; $i < $num_emails; $i++ ) : ?>
         	
         	<div class="control-group">
+        	    <label class="control-label"  for="email-<?= $i ?>">
+                    <?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i + 1 ) ?>
+                </label>
         		<div class="controls">
-        			<div class="input-prepend">
-        				<span class="add-on"><i class="icon-envelope"></i></span>
-        				<?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
-        				<input pattern="<?= $emailPattern ?>" maxlength="100" class="email span3" type="email" name="email[]" autocomplete="off" placeholder="<?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i+1) ?>" />
-        			</div>
+        			<?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
+        			<input id="email-<?= $i ?>" pattern="<?= $emailPattern ?>" maxlength="100" class="input-block-level" type="email" name="email[]" autocomplete="off" />
         		</div>
         	</div>
         	<?php endfor; ?>
