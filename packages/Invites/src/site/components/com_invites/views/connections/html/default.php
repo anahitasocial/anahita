@@ -2,7 +2,7 @@
 
 <?php if(isset($service)) : ?>
 <script data-inline src="http://connect.facebook.net/en_US/all.js"></script>
-<script data-inline src="media://com_invites/js/facebook.js"></script>
+<script src="media://com_invites/js/facebook.js" />
 
 <div id="fb-root"></div>
 
@@ -12,14 +12,18 @@ $subject = htmlspecialchars(sprintf(@text('COM-INVITES-MESSAGE-SUBJECT'), JFacto
 $body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name($viewer, false), JFactory::getConfig()->getValue('sitename')));
 $url = @route()->getUrl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT );
 ?>
-new FacebookInvite({
-	'appId'    :  <?= $service->getAppID() ?>,
-    'subject'  : '<?= $subject ?>',
-    'body'     : '<?= $body ?>',
-    'appURL'   : '<?= $url ?>',
-    'picture'  : '<?= $viewer->getPortraitURL() ?>'
+$('body').invitesFacebook({
+	
+	'appId' :  <?= $service->getAppID() ?>,
+    'subject' : '<?= $subject ?>',
+    'body' : '<?= $body ?>',
+    'appURL' : '<?= $url ?>',
+    'picture' : '<?= $viewer->getPortraitURL() ?>'
 });
+
 </script>
+
+<?= $url ?>
 
 <?= @helper('ui.header', array()) ?>
 
@@ -27,7 +31,7 @@ new FacebookInvite({
 	+ <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
 </a>
 
-<div class="an-entities-wrapper">	
+<div class="an-entities masonry">	
 <?php 
 $controller = @service('com://site/people.controller.person', array('request'=>array('view'=>'people')));                
 $controller->getState()->setList($items);

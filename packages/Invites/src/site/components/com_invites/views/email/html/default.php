@@ -2,7 +2,7 @@
 
 <script src="media://com_invites/js/email.js" />
 
-<?php $num_emails = 5; ?>
+<?php $numEmails = 5; ?>
 
 <div class="row">
 	<div class="span8">
@@ -10,7 +10,7 @@
 		<?= @helper('ui.header', array()) ?>
 	    	
         <form id="invites-email" name="invites-email" action="<?= @route() ?>" method="post">
-        	<?php for ( $i=0; $i < $num_emails; $i++ ) : ?>
+        	<?php for ( $i=0; $i < $numEmails; $i++ ) : ?>
         	
         	<div class="control-group">
         	    <label class="control-label"  for="email-<?= $i ?>">
