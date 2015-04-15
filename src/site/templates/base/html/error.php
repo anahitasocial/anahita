@@ -6,7 +6,7 @@
   		<?= @render('favicon') ?>
   		<?= @render('style') ?>
         <?= @template('tmpl/js') ?>
-        <?= @render('analytics') ?>
+        <?= @template('tmpl/analytics') ?>
   	</head>
     <body>
         <?= @template('tmpl/navbar') ?>
