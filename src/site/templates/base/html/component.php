@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die;?>
+<?php defined('KOOWA') or die ;?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -6,7 +6,7 @@
         <?= @render('favicon') ?>	
 		<?= @render('style') ?>  
         <?= @template('tmpl/js') ?> 
-        <?= @render('analytics') ?>     
+        <?= @template('tmpl/analytics') ?>     
     </head>
     <body id="tmpl-component">           
         <div id="container-system-message" class="container">       
