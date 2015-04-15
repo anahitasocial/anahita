@@ -114,7 +114,7 @@ class RTAdminCSSMenu extends JTree
 		 * Print a link if it exists
 		 */
 		if ($this->_current->link != null) {
-			echo "<a class=\"".$this->_current->class."\" href=\"".JRoute::_($this->_current->link)."\"><span>".$this->_current->title."</span></a>";
+			echo "<a class=\"".$this->_current->class."\" href=\"".$this->_current->link."\"><span>".$this->_current->title."</span></a>";
 		} elseif ($this->_current->title != null) {
 			echo "<span class=\"".$this->_current->class."\"><span>".$this->_current->title."</span></span>\n";
 		} else {

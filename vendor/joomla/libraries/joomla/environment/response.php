@@ -44,7 +44,7 @@ class JResponse
 	 * @return	boolean 	True of browser caching should be allowed
 	 * @since	1.5
 	 */
-	function allowCache($allow = null)
+	public static function allowCache($allow = null)
 	{
 		if (!is_null($allow)) {
 			$GLOBALS['_JRESPONSE']->cachable = (bool) $allow;

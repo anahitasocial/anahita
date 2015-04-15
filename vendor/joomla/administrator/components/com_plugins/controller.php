@@ -155,7 +155,7 @@ class PluginsController extends JController
 		$row->bind(JRequest::get('post'));
 		$row->checkin();
 
-		$this->setRedirect( JRoute::_( 'index.php?option=com_plugins&client='. $client, false ) );
+		$this->setRedirect( 'index.php?option=com_plugins', false );
 	}
 
 	function order(  )

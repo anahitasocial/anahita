@@ -26,28 +26,50 @@
 class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 {
     /**
-     * If no view is set and there are no controller 
-     * then set the controller to configuration 
+     * Dispatches the component
      * 
-     * (non-PHPdoc)
-     * @see LibBaseDispatcherComponent::_actionGet()
-     */
-    protected function _actionGet(KCommandContext $context)
-    {   
-        //if there are no views then
-        //lets redirect to configuration
-        if ( !file_exists(JPATH_COMPONENT.'/views') &&
-              file_exists(JPATH_COMPONENT.'/config.xml')
-              && $context->request->get('view') != 'configurations'   
-                 ) 
-        {
-            $query = $context->request->toArray();
-            $query['view'] = 'configurations';
-            $context->response->setRedirect(JRoute::_($query));
-            return false;
-        }
-
-        parent::_actionGet($context);
+     * @param KCommandContext $context Command chain context
+     * 
+     * @return boolean
+     */        
+    protected function _actionDispatch(KCommandContext $context)
+    {
+       
+       $option = $context->request->get('option');    
+       $view = $context->request->get('view');
+       
+       $legacyComponents = array(
+        'com_cpanel', 
+        'com_users', 
+        'com_plugins',
+        'com_languages',
+        'com_config', 
+        'com_cache',
+        'com_login',
+        'com_templates');
+       
+       if ( !in_array($option, $legacyComponents) && empty($view) )
+       {
+           $query = $context->request->toArray();
+           
+           if ( file_exists( JPATH_COMPONENT.'/views' ) )
+           {
+              $query['view'] = str_replace('com_', '', $option); 
+           }
+           elseif( file_exists( JPATH_COMPONENT.'/config.xml' ) ) 
+           {
+              $query['view'] = 'configurations'; 
+           }
+           else 
+           {
+                //this shouldn't happen    
+                $query['view'] = '';  
+           }
+           
+           $context->response->setRedirect( 'index.php?option='.$query['option'].'&view='.$query['view'] );
+       }     
+            
+        parent::_actionDispatch( $context );
     }
     
     /**
@@ -59,7 +81,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     protected function _actionRenderlegacy(KCommandContext $context)
     {
         parent::_actionRenderlegacy($context);
+        
         global $mainframe;
+        
         jimport( 'joomla.application.helper' );
         
         if(($path = JApplicationHelper::getPath( 'toolbar' )) && $mainframe->isAdmin())
@@ -90,7 +114,10 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     
             //Disabled the application menubar
             if(!KInflector::isPlural($view->getName()) && !KRequest::has('get.hidemainmenu'))
+            {
                 KRequest::set('get.hidemainmenu', 1);
+            }
+                
         }
     
         return parent::_actionRender($context);
