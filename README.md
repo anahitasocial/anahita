@@ -1,6 +1,6 @@
 Anahita
 ================
-Version: 4.0.2 Birth Release
+Version: 4.0.3 Birth Release
 
 Anahita is a social networking platform and framework for building knowledge sharing apps and services.
 
