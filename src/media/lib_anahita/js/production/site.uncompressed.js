@@ -19787,7 +19787,7 @@ Class.refactor(Form.Validator.Inline, {
 (function(){
 			
 	Browser.Platform.mobile = Browser.Platform.ios || Browser.Platform.android ||
-							  Browser.Platform.webos || Browser.Platform.name.match(/BlackBerry/i)		
+							  Browser.Platform.webos || Browser.Platform.name.match(/BlackBerry/i);		
 
 	//for firefix 15, don't round corder the images
 	//caauses issues
@@ -19931,7 +19931,7 @@ String.implement({
 		    		    elements.push(el);
 		    			fn.apply(el);
 		    		});
-		    	})
+		    	});
 		    } else {
 				type = type + ':relay(' + this + ')';
 				document.addEvent(type, fn);		
@@ -20021,7 +20021,7 @@ Class.refactor(Spinner, {
 				{
 					options = {
 						element: document.id(options)
-					}
+					};
 				}
 				
 				Object.add(options, {
@@ -20113,16 +20113,16 @@ Element.Form = function(options)
 	
 	var lambda = function(key, value) {
 		form.adopt(new Element('input',{name:key,value:value,type:'hidden'}));
-	}
+	};
 	Object.each(data , function(value, key) {
 		if ( instanceOf(value, Object) ) {			
 			Object.each(value, function(v, k){
 				lambda(key + '[' + k + ']', v);
-			})
+			});
 		} else if ( instanceOf(value, Array) ) {			
 			Object.each(value, function(v){
 				lambda(key + '[]',v);
-			})
+			});
 		}   
 		else lambda(key, value);
 	});
@@ -20131,7 +20131,7 @@ Element.Form = function(options)
 	form.hide();
 	form.inject(document.body);	
 	return form;
-}
+};
 
 
 
@@ -20145,7 +20145,7 @@ Element.Properties.content = {
            this.empty().adopt(content);
        else this.set('html', content);
    }
-}
+};
 
 Elements.implement({
 	replaces : function(elements) {
@@ -20266,8 +20266,8 @@ Behavior.addGlobalFilter('Countable',{
 			var decrement  = limit ? api.getAs(Boolean, 'decrement') : false;			
 			var emptyValue = decrement ? limit : '&nbsp;';
 			var getLength  = function(length) {
-				return decrement ? limit - length : length
-			}
+				return decrement ? limit - length : length;
+			};
 			if ( !counter ) return;			
 			(function() {
 				var length = el.get('value').length;
@@ -20281,9 +20281,9 @@ Behavior.addGlobalFilter('Countable',{
 					counter.removeClass('label important');
 				counter.set('text', getLength(length));
 			}).periodical(100);			
-		})
+		});
 	}
-})
+});
 
 
 
@@ -20295,7 +20295,7 @@ DOMEvent.definePseudo('outside', function(split, fn, args) {
      var event    = args[0];
      var elements = split.value ? document.getElements(split.value) : [];     
      if ( instanceOf(event, DOMEvent) && elements.length > 0 ) {
-         var outsideEvent = elements.every(function(el){return el != event.target && !el.contains(event.target)});         
+         var outsideEvent = elements.every(function(el){return el != event.target && !el.contains(event.target);});         
          if ( outsideEvent ) {
              fn.apply(this, args);
          }
