@@ -9,7 +9,7 @@ Behavior.addGlobalFilter('FollowerAutoComplete', {
 			ajaxOptions : {
 				method : 'get'
 			}
-		}
+		};
 		
 		var aaj = new Autocompleter.Ajax.Json(element, element.getData('autocomplete-url'), options);
 		

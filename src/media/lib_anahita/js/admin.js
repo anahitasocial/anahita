@@ -10,7 +10,7 @@ Behavior.addGlobalPlugin('FormValidator','Koowa.Form', {
 			});
 		}
 	}
-})
+});
 
 window.addEvent('domready', function(){
     if ( $('limit') )
