@@ -67,7 +67,7 @@ class ComBaseControllerToolbarMenubar extends KControllerToolbarAbstract
         {
             if ( count($this->getCommands()) > 0 ) {
                 $this->addCommand('configurations',
-                        array('href'=>JRoute::_('index.php?option=com_'.$this->getIdentifier()->package.'&view=configurations')));                
+                        array('href'=> 'index.php?option=com_'.$this->getIdentifier()->package.'&view=configurations'));                
             }
             
             //if the view is configuration then just add a save
@@ -115,7 +115,7 @@ class ComBaseControllerToolbarMenubar extends KControllerToolbarAbstract
                     }
                      
                     $this->addCommand(JText::_((string)$menu), array(
-                            'href'   => JRoute::_($menu['href']),
+                            'href'   => $menu['href'],
                             'active' => (string) $menu['active']
                     ));
                 }

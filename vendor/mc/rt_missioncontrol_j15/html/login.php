@@ -26,7 +26,7 @@ $lang =& JFactory::getLanguage();
 		$document->addScriptDeclaration( $langScript );
 		JHTML::_('script', 'openid.js');
 endif; ?>
-<form action="<?php echo JRoute::_( 'index.php', true); ?>" method="post" name="login" id="form-login" style="clear: both;">
+<form action="index.php" method="post" name="login" id="form-login" style="clear: both;">
 	<div id="login-wrapper">
 		<input name="username" id="modlgn_username" type="text" placeholder="Username" class="inputbox" size="15" />
 		<input name="passwd" id="modlgn_passwd" type="password" placeholder="Password" class="inputbox" size="15" />

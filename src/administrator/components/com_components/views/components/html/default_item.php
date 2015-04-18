@@ -6,13 +6,13 @@
 	<td align="center"><?= $i + 1; ?></td>		
 	<td align="center"><?= @helper('grid.checkbox', array('row'=>$component)); ?></td>	
 	<td>
-		<a href="<?= @route('view=component&id='.$component->id.'&hidemainmenu=1')?>">
-			<?= @escape($component->getName()); ?>
+		<a href="<?= 'index.php?option=com_components&view=component&id='.$component->id.'&hidemainmenu=1' ?>">
+			<?= @escape( $component->getName() ); ?>
 		</a>
 	</td>
 	
 	<td align="center">
-		<?= @helper('grid.order', array('row'=>$component, 'url'=>@route('view=component&id='.$component->id))); ?>
+		<?= @helper('grid.order', array('row'=>$component, 'url' => 'index.php?option=com_components&view=component&id='.$component->id ) ); ?>
 	</td>
 	<td align="center"><?= $component->id; ?></td>				
 </tr>

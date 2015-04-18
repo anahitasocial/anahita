@@ -1,5 +1,15 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.0.3 Birth Release
+============================
+* minor but annoying mistake fixed. The error page wasn't loading the correct analytics template causing the error page to break.
+
+Anahita 4.0.2 Birth Release
+============================
+* removed all JRoute::_ instances for the urls in the admin backend. We did that becuase some Nginx servers had problem routing the urls properly and were landing on 404 pages instead.
+* analytics code is now a layout template inside the templates/base/html/tmpl and it can be customized within your tempalte.
+* minor UI fixes
+
 Anahita 4.0.1 Birth Release
 ============================
 * version number is updated

@@ -7,7 +7,7 @@
 				<th width="1%"><?= @text('NUM'); ?></th>	
 				<th width="1%"><input name="checkall" type="checkbox" class="-koowa-grid-checkall" /></th>				
 				<th width="90%"><?= @text('Name')?></th>
-				<th width="5%"><?= @helper('grid.sort', array('column'=>'order', 'sort'=>$sort, 'direction'=>$direction)); ?></th>
+				<th width="5%"></th>
 				<th width="4%"><?= @text('ID')?></th>				
 			</tr>
 		</thead>

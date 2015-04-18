@@ -34,7 +34,7 @@ class ComComponentsControllerComponent extends ComBaseControllerService
 	 */
 	public function __construct(KConfig $config)
 	{
-		parent::__construct($config);
+		parent::__construct( $config );
 				
 		$this->_action_map['edit'] = 'order';
 		
@@ -53,8 +53,12 @@ class ComComponentsControllerComponent extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-             'behaviors' => array('serviceable'=>array('read_only'=>true))     
+             'behaviors' => array( 'serviceable' => array( 'read_only' => true )),
+             'request' => array(
+                'sort' => 'order' 
+             )     
         ));
+        
         parent::_initialize($config);
     }
 

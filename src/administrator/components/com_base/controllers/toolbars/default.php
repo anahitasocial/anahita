@@ -100,7 +100,7 @@ class ComBaseControllerToolbarDefault extends KControllerToolbarAbstract
         {
             $identifier = $this->getController()->getIdentifier();
             $config     = array('attribs' => array(
-                    'href' => JRoute::_( 'index.php?option=com_'.$identifier->package.'&view='.$identifier->name)
+                    'href' => 'index.php?option=com_'.$identifier->package.'&view='.$identifier->name
             ));
     
             $this->addCommand('new', $config);

@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<form action="<?= @route(array('id'=>$component->id))?>" method="post" class="-koowa-form">
+<form action="index.php?option=com_components&view=component&id=<?= $component->id ?>" method="post" class="-koowa-form">
 	<input type="hidden" name="action" value="assign" />
 	
 	<div class="col width-50">

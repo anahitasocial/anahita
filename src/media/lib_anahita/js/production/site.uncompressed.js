@@ -18446,6 +18446,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
 }(jQuery, window, document));
 
+
 ///media/lib_anahita/js/anahita/actions/vote.js
 /**
  * Author: Rastin Mehr

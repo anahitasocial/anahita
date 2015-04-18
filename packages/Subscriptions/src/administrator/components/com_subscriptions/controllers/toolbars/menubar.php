@@ -48,8 +48,8 @@
          {
          	$this->addCommand( $label, array(	
          		'active'=> ($view == $this->getController()->view), 
-         		'href'=>JRoute::_('index.php?option=com_subscriptions&view='.$view
-         	)));
+         		'href'=>'index.php?option=com_subscriptions&view='.$view
+         	) );
          }       
      }     
  }
