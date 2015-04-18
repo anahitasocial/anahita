@@ -78,22 +78,21 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	    	    
 	    $label 	= JText::_('COM-TODOS-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
 	
-	    $url = $entity->getURL().'&action='.($entity->enabled ? 'disable' : 'enable');
-	    
+        $action = ( $entity->enabled ) ? 'disable' : 'enable';
+        
 	    $command->append(array('label'=>$label));
 	           
 	    if($command->ajax)
 	    {
 	        $command
-	        ->href($url.'&layout=list')
-	        ->setAttribute('data-trigger', 'Request')
-	        ->setAttribute('data-request-options',"{method:'post', replace:'!.an-entity'}");
+	        ->href($entity->getURL().'&layout=list')
+	        ->setAttribute('data-action', $action);
 	    }
 	    else
 	    {
 	    	$command
-	    	->href($url)
-	    	->setAttribute('data-trigger','Submit');
+	    	->href( $entity->getURL().'&action='.$action )
+	    	->setAttribute('data-trigger','PostLink');
 	    }
 	}
 	

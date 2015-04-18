@@ -18571,6 +18571,27 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			return this;
 		}
 		
+		//edit enable
+		if ( action == 'enable' ) {
+		    
+		    var url = $(this).attr('href'); 
+		    var action = $(this).data('action');
+		    
+		    $.ajax({
+		        method : 'post',
+		        url : url,
+		        data : {
+		            action : action
+		        },
+		        beforeSend : function () {
+                    entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+                },
+                success : function ( response ) {
+                    entity.replaceWith( response );
+                }
+		    });
+		}
+		
 		//edit entity
 		if ( action == 'edit' ) {
 			
@@ -18694,6 +18715,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		$(this).anahitaEntity('read');
 	});
 	
+	$('body').on('click', 'a[data-action="enable"], a[data-action="disable"]', function ( event ) {
+	    event.preventDefault();
+        $(this).anahitaEntity('enable');
+	});
+	
 	//Edit Entity Action
 	$('body').on('submit', '.an-entity > form', function ( event ) {
 		event.preventDefault();
@@ -18740,11 +18766,19 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
     $.fn.anahitaPostlink = function () {
         
-        var elem = $(this);
-        var form = $(document.createElement('form'));
- 
-        form.attr('action', elem.attr('href'));
-        form.attr('method', 'post');
+        var elem = $(this);        
+        var form = $(document.createElement('form'));       
+        var params = elem.attr('href').split(/\?|\&/);        
+        
+        form.attr('action', params.shift()).attr('method', 'post');
+         
+        $.each(params, function(index, param){
+            var pair = param.split('=');
+            var input = $(document.createElement('input'));
+            input.attr('type', 'hidden').attr('name', pair[0]).attr('value', pair[1]);  
+            form.append(input);
+        });
+        
         form.trigger('submit');
     };
     

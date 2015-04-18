@@ -38,6 +38,27 @@
 			return this;
 		}
 		
+		//edit enable
+		if ( action == 'enable' ) {
+		    
+		    var url = $(this).attr('href'); 
+		    var action = $(this).data('action');
+		    
+		    $.ajax({
+		        method : 'post',
+		        url : url,
+		        data : {
+		            action : action
+		        },
+		        beforeSend : function () {
+                    entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+                },
+                success : function ( response ) {
+                    entity.replaceWith( response );
+                }
+		    });
+		}
+		
 		//edit entity
 		if ( action == 'edit' ) {
 			
@@ -159,6 +180,11 @@
 	$('body').on('click', readSelectors, function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('read');
+	});
+	
+	$('body').on('click', 'a[data-action="enable"], a[data-action="disable"]', function ( event ) {
+	    event.preventDefault();
+        $(this).anahitaEntity('enable');
 	});
 	
 	//Edit Entity Action

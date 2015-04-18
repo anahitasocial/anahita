@@ -12,11 +12,19 @@
     
     $.fn.anahitaPostlink = function () {
         
-        var elem = $(this);
-        var form = $(document.createElement('form'));
- 
-        form.attr('action', elem.attr('href'));
-        form.attr('method', 'post');
+        var elem = $(this);        
+        var form = $(document.createElement('form'));       
+        var params = elem.attr('href').split(/\?|\&/);        
+        
+        form.attr('action', params.shift()).attr('method', 'post');
+         
+        $.each(params, function(index, param){
+            var pair = param.split('=');
+            var input = $(document.createElement('input'));
+            input.attr('type', 'hidden').attr('name', pair[0]).attr('value', pair[1]);  
+            form.append(input);
+        });
+        
         form.trigger('submit');
     };
     
