@@ -8,7 +8,6 @@
      "require": {
         "php": ">=5.3",
         "symfony/console": "2.1.*",        
-        "dg/mysql-dump": "1.1.0",
-        "easybook/geshi": "1.0.8.11"         
+        "dg/mysql-dump": "1.1.0"        
     }
 }
