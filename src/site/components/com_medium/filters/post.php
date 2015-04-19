@@ -39,7 +39,7 @@ class ComMediumFilterPost extends KFilterHtml
 	protected function _initialize(KConfig $config)
 	{
 	    $config->append(array(
-	        'tag_list'    => array('img', 'a', 'blockquote', 'strong', 'em', 'ul', 'ol', 'li', 'code'),
+	        'tag_list'    => array('img', 'strong', 'em', 'ul', 'ol', 'li'),
 	        'tag_method'  => 0
 	    ));
 	
@@ -50,46 +50,6 @@ class ComMediumFilterPost extends KFilterHtml
 	    
 	    if ( $config->tag_method )
 	        $config['tag_method'] = KConfig::unbox($config->tag_method);	    
-	}
-		
-	/**
-	 * Try to convert to plaintext
-	 *
-	 * @param string $source The source to convert 
-	 * 
-	 * @return string Plaintext string
-	 */
-	protected function _decode($source)
-	{
-		$matches = array();
-		
-		if ( preg_match_all('#<code(.*?)>(.*?)</code>#si', $source, $matches) )
-		{
-			$replacements = array_map('htmlentities', $matches[2]);
-			
-			foreach($replacements as $key => &$match)
-			{
-				$match = '<code'.$matches[1][$key].'>'.$match.'</code>';				
-			}
-			
-			$source = str_replace($matches[0], $replacements, $source);
-							
-		}		
-		return $source;
-		
-		// entity decode
-		$trans_tbl = get_html_translation_table(HTML_ENTITIES);
-		foreach($trans_tbl as $k => $v) {
-			$ttr[$v] = utf8_encode($k);
-		}
-		$source = strtr($source, $ttr);
-		
-		// convert decimal
-		$source = preg_replace('/&#(\d+);/me', "chr(\\1)", $source); // decimal notation
-		
-		// convert hex
-		$source = preg_replace('/&#x([a-f0-9]+);/mei', "chr(0x\\1)", $source); // hex notation
-		return $source;
 	}	
 
 //end class
