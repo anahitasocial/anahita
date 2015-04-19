@@ -49,11 +49,17 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     protected function _commandEdit($command)
     {
         $entity = $this->getController()->getItem();
+        $view = $this->getController()->getView()->getName();
+    
         $layout = pick($command->layout, 'edit');
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))
-        ->href($entity->getURL().'&layout='.$layout)
-        ->setAttribute('data-action', 'edit');
+        ->href($entity->getURL().'&layout='.$layout);
+        
+        if(KInflector::isPlural($view))
+        {
+            $command->setAttribute('data-action', 'edit');
+        }
     }
     
     /**
