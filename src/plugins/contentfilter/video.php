@@ -121,10 +121,17 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 
 					$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
 
-					if(get_headers($thumbBase.'maxresdefault.jpg')[0] != 'HTTP/1.0 404 Not Found')
+                    $maxres = get_headers($thumbBase.'maxresdefault.jpg');
+                    $notfound = get_headers($thumbBase.'0.jpg');
+
+					if($maxres[0] != 'HTTP/1.0 404 Not Found') 
+					{
 					    $thumbnail = $thumbBase.'maxresdefault.jpg';
-					elseif(get_headers($thumbBase.'0.jpg')[0] != 'HTTP/1.0 404 Not Found')
+                    }    
+					elseif($notfound[0] != 'HTTP/1.0 404 Not Found') 
+					{
 					    $thumbnail = $thumbBase.'0.jpg';
+                    }
 					else 
 					    return;
 
