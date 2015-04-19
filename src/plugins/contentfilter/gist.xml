@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install type="plugin" group="contentfilter" method="upgrade">
+    <name>Content Filter - GithubGist</name>
+    <author>Rastin Mehr</author>
+    <creationDate>April 2015</creationDate>
+    <copyright>rmd Studio</copyright>
+    <license>GPL3</license>
+    <authoremai />
+    <authorurl>www.GetAnahita.com</authorurl>
+    <description>Renders GithubGist links as gist embeds. Ideal for sharing code examples.</description>
+    <params />
+    <files>
+        <filename plugin="gist">gist.php</filename>        
+    </files>
+</install>
