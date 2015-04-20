@@ -13,6 +13,9 @@
 //@depends vendors/jquery.swipebox.js
 //@depends vendors/tinycon.js
 
+//@depends vendors/editor/bootstrap-wysiwyg.js
+//@depends vendors/editor/jquery.hotkeys.js
+
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-tab.js
 //@depends vendors/bootstrap/bootstrap-dropdown.js
@@ -39,6 +42,7 @@
 //@depends anahita/viewsource.js
 //@depends anahita/person.js
 //@depends anahita/token.js
+//@depends anahita/editor.js
 
 
 //@depends anahita/actions/vote.js

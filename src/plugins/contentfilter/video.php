@@ -51,10 +51,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 */	
 	public function filter($text)
 	{
-		$this->_stripTags($text);
+
 		$this->_youtube($text);
 		$this->_vimeo($text);
-		$this->_replaceTags($text);
+
 		return $text;
 	}
 
@@ -67,13 +67,14 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 */
 	protected function _vimeo(&$text)
 	{
-		$matches = array();
-		
+	   $matches = array();
+		        
 		if(preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) 
-		{
+		{     
 			foreach($matches[1] as $index => $id) 
 			{				
-			    $video = json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$id.'.json'))[0];
+			    $video = json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$id.'.json'));
+                $video = $video[0];
 			    
 			    if($video && $video->id)
 			    {
@@ -101,9 +102,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
-		if(preg_match_all('%http[s]?://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches))
+		if(preg_match_all('%http[s]?://\S*youtube.com/watch\?v=[\w]+%', $text, $matches))
 		{			
-			foreach($matches[1] as $index => $match)
+			foreach($matches[0] as $index => $match)
 			{
 				$youtube_link = $match;
 				$full_link = $matches[0][$index];

@@ -53,7 +53,7 @@ class PlgContentfilterMention extends PlgContentfilterAbstract
 		
 		$text = preg_replace(
 			ComPeopleDomainEntityPerson::PATTERN_MENTION, 
-			'<a class="mention" href="'.JRoute::_("option=com_people&view=person&uniqueAlias=$2").'">$0</a>', 
+			'<a class="mention" href="'.JRoute::_("option=com_people&view=person&uniqueAlias=$1").'">$0</a>', 
 			$text);
 		
 		return $text;

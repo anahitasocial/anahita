@@ -351,10 +351,6 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	 */
 	public function editor($config)
 	{
-	    JHTML::script('lib_anahita/js/editor/tiny_mce.js', 	   'media/', false);
-	    JHTML::script('lib_anahita/js/editor/encoder.js', 	   'media/', false);
-	    JHTML::script('lib_anahita/js/editor/editor.js', 	   'media/', false);
-	
 	    $config = new KConfig($config);
 	
 	    $config->append(array(
@@ -374,14 +370,15 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	            )
 	    ));
 	
-	    if(!$config->content)
-	        $config->content = '';
+	    if( !$config->content )
+        {
+           $config->content = ''; 
+        }
+	        
 	
 	    $tags = $this->getService('com:base.template.helper.html');
-	    $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html));
-	    $options = array('extended'=>$config->extended, 'visual'=>JText::_('LIB-AN-EDITOR-VISUAL'));
-	    
-	    $textarea->set('data-behavior','Editor')->set('data-editor-options',"{'extended':'$config->extended'}");
+	    $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html)); 
+	    $textarea->set('data-behavior','Editor')->set('data-extended', (int) $config->extended );
 	    
 	    return  $textarea;
 	}

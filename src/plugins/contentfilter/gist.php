@@ -35,7 +35,7 @@
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_NORMAL,
+            'priority' => KCommand::PRIORITY_HIGH,
         ));
 
         parent::_initialize($config);
@@ -50,14 +50,11 @@
      */ 
     public function filter($text)
     {
-        $this->_stripTags($text);    
-               
+       
         $text = preg_replace(
-        "/https?\:\/\/gist\.github\.com\/[\S]+\/[0-9a-z]+/", 
+        "/https?\:\/\/gist.github.com\/[\S]+\/[0-9a-z]+[^\W]/", 
         "<script data-inline src=\"\\0.js\"></script>", 
         $text);
-        
-        $this->_replaceTags($text);
            
         return $text;   
     }       
