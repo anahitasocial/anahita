@@ -356,8 +356,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	    $config->append(array(
 	    	'name' => 'description',
 	    	'content' => '',
-	    	'value' => '',
-	   		'extended' => false
+	    	'value' => ''
 	    ));
 	
 	    $config->append(array(
@@ -373,12 +372,11 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	    if( !$config->content )
         {
            $config->content = ''; 
-        }
-	        
+        }    
 	
 	    $tags = $this->getService('com:base.template.helper.html');
 	    $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html)); 
-	    $textarea->set('data-behavior','Editor')->set('data-extended', (int) $config->extended );
+	    $textarea->set('data-behavior','Editor')->id(rand());
 	    
 	    return  $textarea;
 	}

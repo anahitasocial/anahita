@@ -23,8 +23,7 @@
 			
 			<div class="controls">
 				<?= @editor(array(
-				    'name'=>'description', 
-				    'extended'=>true,
+				    'name'=>'description',
 				    'content'=> @escape($page->description), 
 				    'html' => array(    
 				        'maxlength'=>'20000', 

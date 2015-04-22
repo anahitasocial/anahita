@@ -39,7 +39,7 @@ class ComPagesFilterPost extends ComMediumFilterPost
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'tag_list'   => array('p', 'img', 'blockquote', 'strong', 'em', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
+            'tag_list'   => array('p', 'pre', 'address', 'img', 'blockquote', 'b', 'i', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
             'tag_method' => 0
         ));   
 

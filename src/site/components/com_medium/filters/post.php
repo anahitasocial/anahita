@@ -39,7 +39,7 @@ class ComMediumFilterPost extends KFilterHtml
 	protected function _initialize(KConfig $config)
 	{
 	    $config->append(array(
-	        'tag_list'    => array('img', 'strong', 'em', 'ul', 'ol', 'li'),
+	        'tag_list'    => array('img', 'b', 'i', 'ul', 'ol', 'li'),
 	        'tag_method'  => 0
 	    ));
 	
