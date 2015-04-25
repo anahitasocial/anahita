@@ -19,7 +19,7 @@
 		</h3>
 		
 		<div class="entity-description">
-			<?= @content($photo->description, array('exclude'=>array('syntax','video'))) ?>
+			<?= @content( nl2br($photo->description), array('exclude'=>array('gist','video'))) ?>
 		</div>
 	</div>
 	

@@ -17,8 +17,8 @@ $commands->insert('viewrequest', array('label'=>sprintf(@text('COM-ACTORS-VIEW-R
 	<?php endif; ?>
 	<?php if ($subject->isLeadable() && $target->isLeadable() ) : ?>
     	<?php 
-    	    $common               = $subject->getCommonLeaders($target);
-    	    $common_leaders_total = $common->getTotal();	
+    	$common = $subject->getCommonLeaders($target);
+    	$common_leaders_total = $common->getTotal();	
     	?>
     	<?php if ( $common_leaders_total > 0 ) : ?>
     	/ <?= $common_leaders_total ?>

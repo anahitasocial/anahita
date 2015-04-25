@@ -26,11 +26,11 @@
     		
     		<div class="entity-description-wrapper">
         		<h3 class="entity-title">
-        			<?= @escape($set->title) ?>
+        			<?= @escape( $set->title ) ?>
         		</h3>
         		
         		<div class="entity-description">
-        			<?= @content($set->description, array('exclude'=>array('syntax','video'))) ?>
+        			<?= @content( nl2br( $set->description ), array( 'exclude' => array('gist','video') ) ) ?>
         		</div>
 			</div>
     		

@@ -36,7 +36,7 @@
     	</h4>
     		
     	<div class="entity-description">
-    	<?= @helper('text.truncate', @content($photo->description, array('exclude'=>array('syntax','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+    	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude'=>array('gist','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
     	</div>
 	</div>
 		

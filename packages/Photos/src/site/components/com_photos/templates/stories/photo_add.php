@@ -24,7 +24,7 @@
 		
 		<?php if ( $story->body ) : ?>
 		<div class="entity-description">
-			<?= @content($story->body) ?>
+			<?= @content( nl2br( $story->body ), array('exclude'=>'gist') ) ?>
 		</div>
 		<?php endif;?>
 		

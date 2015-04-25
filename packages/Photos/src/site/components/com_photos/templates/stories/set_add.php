@@ -14,7 +14,9 @@
 	<?php endif; ?>
 
 	<?php if($object->description): ?>
-	<div class="entity-description"><?= @content($object->description) ?></div>
+	<div class="entity-description">
+	    <?= @content( nl2br($object->description), array('exclude'=>'gist') ) ?>
+	</div>
 	<?php endif; ?>
 
 	<div class="media-grid">	

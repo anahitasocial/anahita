@@ -16,10 +16,20 @@
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
+			<label class="control-label" for="todo-description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
 			<div class="controls">
-				<textarea maxlength="5000" class="input-block-level" name="description" cols="50" rows="5"><?= @escape( $todo->description ) ?></textarea>
-			</div>
+                <?= @editor(array(
+                    'name'=>'description',
+                    'content'=> @escape($todo->description), 
+                    'html' => array(    
+                        'maxlength'=>'5000', 
+                        'cols'=>'50',
+                        'rows'=>'5', 
+                        'class'=>'input-block-level', 
+                        'id'=>'todo-description' 
+                        )
+                )); ?>
+            </div>
 		</div>
 		
 		<div class="control-group">
