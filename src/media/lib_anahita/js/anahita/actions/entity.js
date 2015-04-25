@@ -160,7 +160,7 @@
 					form.fadeTo('fast', 0.3);
 				},
 				success : function ( response ) {
-					
+					form.find(':submit').attr('disabled', false);
 					form.trigger('reset').fadeTo( 'fast', 1 );
 					comments.append($(response).fadeIn('slow'));
 				}

@@ -39,7 +39,6 @@
 //@depends anahita/mediaviewer.js
 //@depends anahita/sort.js
 //@depends anahita/readmore.js
-//@depends anahita/viewsource.js
 //@depends anahita/person.js
 //@depends anahita/token.js
 //@depends anahita/editor.js

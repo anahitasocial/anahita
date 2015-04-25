@@ -22,7 +22,9 @@
 
             this._on(this.element.closest('form'), {
                 'submit' : function ( event ) {
+                    //event.preventDefault();
                     self._getContent();
+                    //console.log(self.element.val());
                 }
             });
             
@@ -117,7 +119,15 @@
         },
         
         _getContent : function() {
-            this.element.val(this.editor.html());
+            
+            var value = this._htmlEncode(this.editor.html());
+            this.element.val(value);
+        },
+        
+        _htmlEncode : function(value) {
+            
+            var div = $(document.createElement('div'));
+            return div.text(value).html();
         }
     });
     

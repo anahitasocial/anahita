@@ -18675,35 +18675,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 }(jQuery, window, document));
 
 
-///media/lib_anahita/js/anahita/viewsource.js
-/**
- * Author: Rastin Mehr
- * Email: rastin@anahitapolis.com
- * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
-;(function ($, window, document) {
-    
-    $('body').on('click', '[data-trigger="ViewSource"]', function ( event ) {
-        
-        event.preventDefault();
-        
-        var codes = $(this).closest('.an-code').find('pre');
-        
-        var content = '';
-
-        $.each(codes, function ( index, value ) {
-            content += $(value).html() + "\n";
-        });
-        
-        sourceWindow = window.open('','','resizable=no,scrollbars=yes,width=800,height=600');
-        
-        sourceWindow.document.body.innerHTML = '<pre>' + content + '</pre>';
-    });
-    
-}(jQuery, window, document));
 ///media/lib_anahita/js/anahita/person.js
 /**
  * Author: Rastin Mehr
@@ -18907,7 +18878,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
             this._on(this.element.closest('form'), {
                 'submit' : function ( event ) {
+                    //event.preventDefault();
                     self._getContent();
+                    //console.log(self.element.val());
                 }
             });
             
@@ -19002,7 +18975,15 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         },
         
         _getContent : function() {
-            this.element.val(this.editor.html());
+            
+            var value = this._htmlEncode(this.editor.html());
+            this.element.val(value);
+        },
+        
+        _htmlEncode : function(value) {
+            
+            var div = $(document.createElement('div'));
+            return div.text(value).html();
         }
     });
     
@@ -19258,7 +19239,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					form.fadeTo('fast', 0.3);
 				},
 				success : function ( response ) {
-					
+					form.find(':submit').attr('disabled', false);
 					form.trigger('reset').fadeTo( 'fast', 1 );
 					comments.append($(response).fadeIn('slow'));
 				}
