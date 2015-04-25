@@ -19252,6 +19252,14 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					form.find(':submit').attr('disabled', false);
 					form.trigger('reset').fadeTo( 'fast', 1 );
 					comments.append($(response).fadeIn('slow'));
+				},
+				complete : function ( xhr, status ) {
+				    
+				    if (status == 'error') {
+				        form.find(':submit').attr('disabled', false);
+				        form.fadeTo( 'fast', 1 );
+				    }
+				    
 				}
 			});
 			
