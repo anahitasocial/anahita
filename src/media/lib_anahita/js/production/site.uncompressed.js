@@ -19181,11 +19181,13 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				data : form.serialize(),
 				beforeSend : function () {
 					form.find(':submit').attr('disabled', true);
-					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 				},
 				success : function ( response ) {
 					form.trigger('reset');
 					entities.prepend( response );
+				},
+				complete : function () {
+				   form.find(':submit').attr('disabled', false);
 				}
 			});
 			
@@ -19220,7 +19222,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 						confirmModal.modal('hide');
 					},
 					success : function() {
-						if(entity.closest('.an-entities').length){
+						if( entity.closest('.an-entities').length ) {
 							entity.closest('.an-entity').fadeOut();
 						} else {
 							window.location.href = entity.data('redirect');
@@ -19249,17 +19251,15 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					form.fadeTo('fast', 0.3);
 				},
 				success : function ( response ) {
-					form.find(':submit').attr('disabled', false);
-					form.trigger('reset').fadeTo( 'fast', 1 );
+				
+					form.trigger('reset');
 					comments.append($(response).fadeIn('slow'));
+				
 				},
 				complete : function ( xhr, status ) {
 				    
-				    if (status == 'error') {
-				        form.find(':submit').attr('disabled', false);
-				        form.fadeTo( 'fast', 1 );
-				    }
-				    
+				    form.find(':submit').attr('disabled', false);
+				    form.fadeTo( 'fast', 1 );
 				}
 			});
 			
