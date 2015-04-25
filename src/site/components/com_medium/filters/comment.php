@@ -20,7 +20,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.GetAnahita.com
  */
-class ComMediumFilterPost extends KFilterHtml
+class ComMediumFilterComment extends KFilterHtml
 {
 	/**
 	 * Initializes the default configuration for the object
@@ -34,7 +34,7 @@ class ComMediumFilterPost extends KFilterHtml
 	protected function _initialize(KConfig $config)
 	{
 	    $config->append(array(
-            'tag_list'   => array('p','strike', 'u',  'pre', 'address', 'img', 'blockquote', 'b', 'i', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
+            'tag_list'   => array(),
             'tag_method' => 0
         )); 
 	
