@@ -25,13 +25,7 @@ if ( $editor )
 	<div class="comment-form-container">
 		<div class="control-group">
 			<div class="controls">
-			<?php if ( $editor ) : ?>			
-			<?php $id   = isset($comment) ? $comment->id : time(); ?>
-			<?php $body = isset($comment) ? $comment->getBody() : ''; ?>
-			<?= @editor(array('name'=>'body', 'content'=>$body, 'html'=>array('cols'=>50, 'rows'=>5, 'class'=>'input-block-level', 'required'=>'required', 'maxlength'=>'5000', 'id'=>'an-comment-body-'.$id)))?>
-			<?php else : ?>
-			<textarea name="body" cols="50" rows="3" class="input-block-level" required maxlength="5000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
-			<?php endif;?>
+			    <textarea name="body" cols="50" rows="3" class="input-block-level" required maxlength="5000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
 			</div>
 		</div>
 
