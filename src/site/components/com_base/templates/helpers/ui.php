@@ -162,10 +162,12 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	        'truncate_body'     => array(),
 	        'editor'            => false,
 	        'pagination'        => true,
-	    	'show_guest_prompt' => true           
+	    	'show_guest_prompt' => true,
+	    	'content_filter_exclude' => array()           
 	     ), 
+	     
 	     $config);
-	    
+        
         $data   = $this->getTemplate()->getData();
 		$limit  = isset($data['limit'])  ? $data['limit']  : 0;
 		$offset = isset($data['start'])  ? $data['start']  : 0;
@@ -194,8 +196,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         
 		$config['entity'] = $entity;
 		
-		if ( $config['pagination'] === true && 
-            $config['comments'] instanceof AnDomainEntitysetDefault ) 
+		if ( $config['pagination'] === true && $config['comments'] instanceof AnDomainEntitysetDefault ) 
         {
         	$config['pagination'] = $this->pagination($config['comments'], array('paginate'=>true, 'options'=>array('scrollToTop'=>true)));
 		}
