@@ -28,7 +28,48 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         dbexec("INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES (49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '')");
         
         //remove the syntax plugin
-        dbexec("DELETE FROM #__plugins WHERE `element` = 'syntax' ");
+        dbexec("DELETE FROM #__plugins WHERE `element` IN ('syntax', 'ptag') ");
+        
+        //UTF-8 conversions
+        dbexec("ALTER DATABASE CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__anahita_edges CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__anahita_nodes CHARACTER SET utf8");
+        
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE name name VARBINARY");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE name name VARCHAR");
+        
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE alias alias VARBINARY");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE alias alias VARCHAR");
+        
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMBLOB");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMBLOB");
+        
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARBINARY");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARCHAR");
+        
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARBINARY");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARCHAR");
+        
+        dbexec("ALTER TABLE #__migrator_migrations CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__migrator_versions CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__opensocial_profiles CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__opensocial_profiles CHARACTER SET utf8");
+        
+        //move these to related components
+        dbexec("ALTER TABLE #__invites_tokens CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__opensocial_profiles CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__subscriptions_coupons CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__subscriptions_packages CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__subscriptions_transactions CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__subscriptions_vats CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__todos_todos CHARACTER SET utf8");
+        dbexec("ALTER TABLE #__topics_topics CHARACTER SET utf8");
+        
+        dbexec("ALTER TABLE #__users CHARACTER SET utf8");
+        
+        dbexec("ALTER TABLE #__users CHANGE name name VARBINARY");
+        dbexec("ALTER TABLE #__users CHANGE name name VARCHAR");
+        
     }
 
    /**
