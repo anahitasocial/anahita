@@ -19,13 +19,11 @@
 			</div>
 		</div>
 	</div>
-		
-	<?php $body = $comment->body ?>
-	<?php if(!empty($strip_tags)): ?>
-	<?php $body = strip_tags($body) ?>
-	<?php endif; ?>
+				
+	<?php $body = nl2br( $comment->body ); ?>	
 	
-	<?php $body = @content($body); ?>
+	<?php $exclude = ( empty($content_filter_exclude) ) ? array() : $content_filter_exclude; ?>	
+	<?php $body = @content( $body, array( 'exclude' => $exclude )); ?>
 	
 	<?php if (!empty($truncate_body) ) : ?>
 	<?php $body = @helper('text.truncate', $body, $truncate_body) ?>	

@@ -45,7 +45,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
     {
         parent::__construct($config);
         
-        $this->_max_upload_limit = $config->max_upload_zie;
+        $this->_max_upload_limit = $config->max_upload_limit;
     }
         
     /**
@@ -60,7 +60,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'max_upload_zie' => get_config_value('photos.uploadlimit',4)
+            'max_upload_limit' => get_config_value('photos.uploadlimit', 2)
         ));
     
         parent::_initialize($config);
@@ -87,11 +87,16 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
 			if(!empty($set))
 			{
 				$photo_ids = array();
+                
 				foreach($set->photos as $photo)
-					$photo_ids[] = $photo->id;
-				
-				if(count($photo_ids))
-					$photos->where('photo.id', '<>', $photo_ids);
+                {
+                   $photo_ids[] = $photo->id; 
+                }
+					
+				if( count( $photo_ids ) )
+                {
+                   $photos->where('photo.id', '<>', $photo_ids); 
+                }
 			}
 		}
 		
@@ -130,20 +135,29 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
 		
 		$orientation = 0;
 		
-		if(!empty($exif) && isset($exif['Orientation']) ) 
-			$orientation = $exif['Orientation'];		
+		if(!empty($exif) && isset($exif['Orientation']) )
+        {
+           $orientation = $exif['Orientation']; 
+        }		
 		
 		$data['portrait']  = array('data'=>$content,'rotation'=>$orientation,'mimetype'=>isset($file['type']) ? $file['type'] : null);				
+		
 		$photo = $this->actor->photos->addNew($data);	
+		
 		$photo->setExifData($exif);
+		
 		$photo->save();
+		
 		$this->setItem($photo);
+		
 		$this->getResponse()->status = KHttpResponse::CREATED;
 		
         if($photo->body && preg_match('/\S/',$photo->body))
-            $context->append(array(                
+        {
+           $context->append(array(                
                 'story' => array('body'=>$photo->body)
-            ));
+            )); 
+        }
 
 		return $photo;
 	}

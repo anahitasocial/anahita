@@ -4,7 +4,7 @@
 	<div class="span8">
 	<?= @helper('ui.header', array()) ?>
 	<?= @template('topic') ?>
-	<?= @helper('ui.comments', $topic, array('editor'=>true)) ?>
+	<?= @helper('ui.comments', $topic) ?>
 	</div>
 	
 	<?php if($actor->authorize('administration')): ?>

@@ -15,7 +15,7 @@
 	</div>
 
 	<div class="entity-description">
-		<?= @content($note->body) ?>
+		<?= @content( nl2br($note->body) ) ?>
 	</div>
 	
 	<div class="entity-meta">

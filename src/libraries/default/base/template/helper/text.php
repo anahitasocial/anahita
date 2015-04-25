@@ -165,8 +165,8 @@ class LibBaseTemplateHelperText extends KTemplateHelperAbstract implements KServ
         {
         	$short_id  = uniqid();
         	$full_id   = uniqid();
-        	$read_more = '<a class="an-read-more" data-trigger="ReadMore" data-short="'.$short_id.'" data-full="'.$full_id.'" href="#">'.JText::_('LIB-AN-READMORE').'</a>';
-        	$read_less = '<a class="an-read-less" data-trigger="ReadLess" data-short="'.$short_id.'" data-full="'.$full_id.'" href="#">'.JText::_('LIB-AN-READLESS').'</a>'; 
+        	$read_more = ' <a class="an-read-more" data-trigger="ReadMore" data-short="'.$short_id.'" data-full="'.$full_id.'" href="#">'.JText::_('LIB-AN-READMORE').'</a>';
+        	$read_less = ' <a class="an-read-less" data-trigger="ReadLess" data-short="'.$short_id.'" data-full="'.$full_id.'" href="#">'.JText::_('LIB-AN-READLESS').'</a>'; 
         	$truncate  = '<div id="'.$short_id.'">'.$truncate.$read_more.'</div>';
         	$truncate .= '<div id="'.$full_id.'" class="hide">'.$text.$read_less.'</div>';
         }

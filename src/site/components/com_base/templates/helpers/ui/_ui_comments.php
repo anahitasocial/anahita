@@ -3,7 +3,7 @@
 <div class="an-comments-wrapper">
 <div class="an-comments an-entities">
 	<?php foreach($comments as $comment) : ?>
-	<?= @view('comment')->comment($comment)->strip_tags($strip_tags)->truncate_body($truncate_body)->editor($editor) ?>
+	<?= @view('comment')->comment($comment)->truncate_body($truncate_body)->content_filter_exclude($content_filter_exclude) ?>
 	<?php endforeach; ?>
 </div>
 
@@ -12,7 +12,7 @@
 <?php endif; ?>
 
 <?php if ( $can_comment ) : ?>
-<?= @view('comment')->load('form', array('parent'=>$entity,'editor'=>$editor,'comment'=>null))?>
+<?= @view('comment')->load('form', array( 'parent'=>$entity, 'comment'=>null))?>
 <?php endif;?>
 
 <?php if ( $show_guest_prompt && !$can_comment ) : ?>

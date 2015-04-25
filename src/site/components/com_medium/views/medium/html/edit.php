@@ -10,7 +10,7 @@
 	
 	<div class="control-group">
 		<div class="controls">
-		<textarea class="input-block-level" maxlength="5000" rows="5" cols="25"><?= @escape( $item->body ) ?></textarea>	
+		<textarea name="body" class="input-block-level" maxlength="5000" rows="5" cols="25"><?= @escape( $item->body ) ?></textarea>	
 		</div>
 	</div>
 	
