@@ -45,6 +45,7 @@
         	var a = $(event.target);
             var self = this;
             var currentEntities = $(this.element).prev(this.options.entities);
+            var isComments = ( currentEntities.hasClass('an-comments') ) ? true : false; 
             
             $.ajax({
             	method : 'get',
@@ -54,11 +55,20 @@
             	},
             	success : function ( response ) {
             		
-            		//self._updateHash(a.attr('href'));
+            		self._updateHash(a.attr('href'));
             		
-            		var entities = $(response).filter('.an-entities');
-                    var pagination = $(response).filter('.pagination');
-                    
+            		if( isComments ) {
+            		
+            		    var entities = $(response).find(self.options.entities);
+                        var pagination = $(response).find('.pagination');
+            		
+            		} else {
+            		
+            		    var entities = $(response).filter(self.options.entities);
+                        var pagination = $(response).filter('.pagination');
+            		
+            		}
+            		
                     pagination.paginator();
             		
                     $(currentEntities).replaceWith(entities);
@@ -74,7 +84,7 @@
         
         _updateHash: function(url) {
             var hash = url.split('?');
-            window.location.hash = hash[1];
+            window.location.hash = hash[1].replace('layout=list&', '');
         }
         
     });
