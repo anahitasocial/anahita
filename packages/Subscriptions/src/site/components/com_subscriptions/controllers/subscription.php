@@ -174,7 +174,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
                 $this->mail(array(
                     'to'      => $this->getItem()->person->email,
                     'subject' => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
-                    'body'    => html_entity_decode($welcome->introtext)
+                    'body'    => html_entity_decode($welcome->introtext, ENT_COMPAT | ENT_HTML5, 'UTF-8')
                 ));
             }
         }

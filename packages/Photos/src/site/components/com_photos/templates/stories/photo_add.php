@@ -13,7 +13,7 @@
 <?php if ( $type != 'notification') : ?>
 <data name="body">
 	<?php if ( !is_array($object) ) : ?>
-		<?php $caption = htmlspecialchars($object->title, ENT_QUOTES) ?>
+		<?php $caption = htmlspecialchars($object->title, ENT_QUOTES, 'UTF-8') ?>
 		<?php if( !empty($object->title) ): ?>
 		<h4 class="entity-title">
     		<a href="<?= @route($object->getURL()) ?>">
@@ -37,7 +37,7 @@
 	<div class="media-grid">	
 		<?php foreach($object as $i=>$photo) : ?>
 		<?php if($i > 12) break; ?>
-		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
+		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
 		<div class="entity-portrait">
 			<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 				<img src="<?= $photo->getPortraitURL('square') ?>" />
