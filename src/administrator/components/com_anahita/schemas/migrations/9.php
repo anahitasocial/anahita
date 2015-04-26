@@ -35,20 +35,20 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         dbexec("ALTER TABLE #__anahita_edges CHARACTER SET utf8");
         dbexec("ALTER TABLE #__anahita_nodes CHARACTER SET utf8");
         
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE name name VARBINARY");
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE name name VARCHAR");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE name name VARBINARY(255)");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE name name VARCHAR(255) CHARACTER SET utf8");
         
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE alias alias VARBINARY");
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE alias alias VARCHAR");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE alias alias VARBINARY(255)");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE alias alias VARCHAR(255) CHARACTER SET utf8");
         
         dbexec("ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMBLOB");
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMBLOB");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMTEXT CHARACTER SET utf8");
         
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARBINARY");
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARCHAR");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARBINARY(255)");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARCHAR(255) CHARACTER SET utf8");
         
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARBINARY");
-        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARCHAR");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARBINARY(255)");
+        dbexec("ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARCHAR(255) CHARACTER SET utf8");
         
         dbexec("ALTER TABLE #__migrator_migrations CHARACTER SET utf8");
         dbexec("ALTER TABLE #__migrator_versions CHARACTER SET utf8");
@@ -67,9 +67,8 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         
         dbexec("ALTER TABLE #__users CHARACTER SET utf8");
         
-        dbexec("ALTER TABLE #__users CHANGE name name VARBINARY");
-        dbexec("ALTER TABLE #__users CHANGE name name VARCHAR");
-        
+        dbexec("ALTER TABLE #__users CHANGE name name VARBINARY(255)");
+        dbexec("ALTER TABLE #__users CHANGE name name VARCHAR(255) CHARACTER SET utf8");
     }
 
    /**
