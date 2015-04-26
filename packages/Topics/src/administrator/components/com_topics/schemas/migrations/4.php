@@ -31,7 +31,11 @@ class ComTopicsSchemaMigration4 extends ComMigratorMigrationVersion
         {
             $id = $entity['id'];   
             $entity = KService::get('com://site/base.domain.entity.comment')
-            ->getRepository()->getQuery()->disableChain()->fetch( $id )->save();  
+            ->getRepository()->getQuery()->disableChain()->fetch( $id );
+            
+            $entity->body = strip_tags($entity->body);  
+            
+            $entity->save();
 
             //dboutput( $id.', ' );        
         }
