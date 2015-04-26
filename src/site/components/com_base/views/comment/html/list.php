@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<div class="an-entity an-comment">
+<div class="an-entity an-comment cid-<?= $comment->id ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($comment->author)  ?>
@@ -13,7 +13,7 @@
 			
 			<div class="an-meta">
 				<?= @date($comment->creationTime) ?> 
-				<a href="<?= @route($comment->parent->getURL()).'#permalink='.$comment->id ?>">
+				<a href="<?= @route($comment->parent->getURL().'&permalink='.$comment->id ) ?>" >
 				    <?= @text('LIB-AN-COMMENT-PERMALINK') ?>
 				</a>
 			</div>

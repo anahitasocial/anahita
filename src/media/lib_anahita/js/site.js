@@ -36,6 +36,7 @@
 //@depends anahita/autosubmit.js
 //@depends anahita/notifications.js
 //@depends anahita/paginator.js
+//@depends anahita/permalink.js
 //@depends anahita/mediaviewer.js
 //@depends anahita/sort.js
 //@depends anahita/readmore.js
