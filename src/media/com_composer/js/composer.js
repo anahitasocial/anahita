@@ -159,7 +159,7 @@
 				        
 				        tab.append(response);
 				        
-                        $(response).find('form.composer-form').composerform();
+                        $(tab).find('form.composer-form').composerform();
                         
                         tab.data('content', tab.find(self.options.composerForm));
                         
