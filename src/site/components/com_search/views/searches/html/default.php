@@ -1,7 +1,13 @@
 <?php defined('KOOWA') or die; ?>
 
 <?php if(!empty($keywords)) : ?>
+
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="com_search/js/search.js" />
+<?php else: ?>
+<script src="com_search/js/min/search.min.js" />
+<?php endif; ?>
+
 <?php endif;?>
 
 <div class="row">

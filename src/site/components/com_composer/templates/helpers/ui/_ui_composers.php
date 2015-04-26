@@ -1,6 +1,10 @@
 <?php if ( count($composers) ) : ?>
 
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="com_composer/js/composer.js" />
+<?php else: ?>
+<script src="com_composer/js/min/composer.min.js" />
+<?php endif; ?>
 
 <div id="com-composer-container" data-behavior="Composer">   
     <div class="clearfix">
