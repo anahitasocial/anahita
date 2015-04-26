@@ -32,7 +32,7 @@
 	</h3>
 	
 	<div class="entity-description">
-	<?= @helper('text.truncate', @content($topic->body), array('length'=>200, 'consider_html'=>true)); ?>
+	<?= @helper('text.truncate', @content($topic->body, array('exclude'=>'gist')), array('length'=>200, 'consider_html'=>true)); ?>
 	</div>
 	
 	<div class="entity-meta">
