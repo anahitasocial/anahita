@@ -19,7 +19,7 @@
 		
 	<?php if($todo->description): ?>
 	<div class="entity-description">
-	<?= @content($todo->description); ?>
+	<?= @content( nl2br($todo->description) ); ?>
 	</div>
 	<?php endif; ?>
 		
