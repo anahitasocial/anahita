@@ -21,18 +21,47 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
     public function up()
     {
         $timeThen = microtime(true);    
+        
+        dboutput("Updating Topics. This may take a while ...\n");
+         
+        //Use p tags instead of inlines for topics
+        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.topic" ');
+        
+        foreach($entities as $entity)
+        {
+            $id = $entity['id'];   
+            $topic = KService::get('com://site/topics.domain.entity.topic')
+            ->getRepository()->getQuery()->disableChain()->fetch( $id );  
+            
+            $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $topic->body);
+            $topic->body = '<p>'.$body.'</p>';
+
+            $topic->save();
+            
+            //dboutput( $id.', ' );
+        }
+        
+        dboutput("Topics updated!\n");
+         
+        $timeDiff = microtime(true) - $timeThen;
+        dboutput("TIME: ($timeDiff)"."\n"); 
+        
             
         //change comment formats from html to string    
-        $comments = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.comment" ');
+        $entities = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.comment" ');
     
-        foreach($comments as $comment)
+        dboutput("Updating topics' comments. This may take a while ...\n");
+    
+        foreach($entities as $entity)
         {
-            $id = $comment['id'];   
+            $id = $entity['id'];   
             $entity = KService::get('com://site/base.domain.entity.comment')
-            ->getRepository()->getQuery()->disableChain()->fetch($id)->save();  
+            ->getRepository()->getQuery()->disableChain()->fetch( $id )->save();  
 
             //dboutput( $id.', ' );        
         }
+        
+        dboutput("Topic comments updated!\n");
         
         $timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n");
