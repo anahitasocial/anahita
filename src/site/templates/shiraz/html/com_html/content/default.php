@@ -1,16 +1,16 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<?php @title('Anahita - Open source knowledge networking platform and framework'); ?>
+<?php @title('Anahita - Open source social networking platform and framework'); ?>
 <?php @description('a remarkable open source platform for building knowledge sharing apps and services'); ?>
 
 <div class="row">
 	<div class="span8 offset2">
 		<div class="hero-unit text-center">
-			<img src="https://s3.amazonaws.com/anahitapolis.com/media/logos/homepage_logo.png" alt="Anahita knowledge networking platform and framework" />
+			<img src="https://s3.amazonaws.com/anahitapolis.com/media/logos/homepage_logo.png" alt="Anahita social networking platform and framework" />
 			
 			<h1>Anahita</h1>
 			
-			<p class="lead">open source knowledge networking platform</p>
+			<p class="lead">open source social networking platform</p>
 			
 			<p>
 				<a class="btn btn-primary" href="http://GetAnahita.com" target="_blank">
