@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.0.4 Birth Release
+============================
+* removed routing from component configuration form in the admin back-end. The routing was preventing the form to save on some Nginx servers.
+
 Anahita 4.0.3 Birth Release
 ============================
 * minor but annoying mistake fixed. The error page wasn't loading the correct analytics template causing the error page to break.
