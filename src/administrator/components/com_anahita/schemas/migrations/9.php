@@ -69,6 +69,29 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         
         dbexec("ALTER TABLE #__users CHANGE name name VARBINARY(255)");
         dbexec("ALTER TABLE #__users CHANGE name name VARCHAR(255) CHARACTER SET utf8");
+        
+        //updating comments
+        
+        $timeThen = microtime(true);    
+        $db = KService::get('koowa:database.adapter.mysqli');
+        
+        //change comment formats from html to string    
+        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "ComBaseDomainEntityComment%" ');
+    
+        dboutput("Updating comments. This WILL take a while ...\n");
+    
+        foreach($entities as $entity)
+        {
+            $id = $entity['id']; 
+            $body = strip_tags($entity['body']);
+            
+            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id );  
+        }
+        
+        dboutput("Comments updated!\n");
+        
+        $timeDiff = microtime(true) - $timeThen;
+        dboutput("TIME: ($timeDiff)"."\n");
     }
 
    /**
