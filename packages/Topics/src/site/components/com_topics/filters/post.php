@@ -34,7 +34,7 @@ class ComTopicsFilterPost extends KFilterHtml
 	protected function _initialize(KConfig $config)
 	{
 	    $config->append(array(
-            'tag_list'   => array('p','strike', 'u', 'pre', 'address', 'img', 'blockquote', 'b', 'i', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
+            'tag_list'   => array('p','strike', 'u', 'pre', 'address', 'blockquote', 'b', 'i', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
             'tag_method' => 0
         )); 
 	
