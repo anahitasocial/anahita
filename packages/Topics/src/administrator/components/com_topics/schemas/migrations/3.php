@@ -45,24 +45,6 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
          
         $timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n"); 
-        
-        //change comment formats from html to string    
-        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.comment" ');
-    
-        dboutput("Updating topics' comments. This may take a while ...\n");
-    
-        foreach($entities as $entity)
-        {
-            $id = $entity['id']; 
-            $body = strip_tags($entity['body']);
-            
-            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id );  
-        }
-        
-        dboutput("Topic comments updated!\n");
-        
-        $timeDiff = microtime(true) - $timeThen;
-        dboutput("TIME: ($timeDiff)"."\n");
     }
 
    /**
