@@ -22,6 +22,8 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);    
         
+        $db = KService::get('koowa:database.adapter.mysqli');
+        
         dboutput("Updating Topics. This may take a while ...\n");
          
         //Use p tags instead of inlines for topics
@@ -29,22 +31,35 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
         
         foreach($entities as $entity)
         {
-            $id = $entity['id'];   
-            $topic = KService::get('com://site/topics.domain.entity.topic')
-            ->getRepository()->getQuery()->disableChain()->fetch( $id );  
-            
-            $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $topic->body);
-            $topic->body = '<p>'.$body.'</p>';
-
-            $topic->save();
-            
-            //dboutput( $id.', ' );
+            $id = $entity['id']; 
+            $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $entity['body']);
+            $body = '<p>'.$body.'</p>';
+             
+            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id ); 
         }
         
         dboutput("Topics updated!\n");
          
         $timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n"); 
+        
+        //change comment formats from html to string    
+        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.comment" ');
+    
+        dboutput("Updating topics' comments. This WILL take a while ...\n");
+    
+        foreach($entities as $entity)
+        {
+            $id = $entity['id']; 
+            $body = strip_tags($entity['body']);
+            
+            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id );  
+        }
+        
+        dboutput("Topic comments updated!\n");
+        
+        $timeDiff = microtime(true) - $timeThen;
+        dboutput("TIME: ($timeDiff)"."\n");
     }
 
    /**

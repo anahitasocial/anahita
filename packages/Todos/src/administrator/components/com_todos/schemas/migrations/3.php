@@ -22,16 +22,17 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);    
             
+        $db = KService::get('koowa:database.adapter.mysqli');    
+            
         //change todo formats from html to string    
-        $todos = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE "%com:todos.domain.entity.todo" ');
+        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:todos.domain.entity.todo" ');
     
-        foreach($todos as $todo)
+        foreach($entities as $entity)
         {
-            $id = $todo['id'];   
-            $entity = KService::get('com://site/todos.domain.entity.todo')
-            ->getRepository()->getQuery()->disableChain()->fetch($id)->save();  
-
-            //dboutput( $id.', ' );        
+            $id = $entity['id']; 
+            $body = strip_tags($entity['body']);
+            
+            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id );       
         }
         
         $timeDiff = microtime(true) - $timeThen;

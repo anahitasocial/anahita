@@ -22,6 +22,8 @@ class ComPagesSchemaMigration2 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);    
             
+        $db = KService::get('koowa:database.adapter.mysqli');    
+            
         dboutput("Updating Pages. This may take a while ...\n");    
             
         //Use p tags instead of inlines for topics
@@ -29,14 +31,11 @@ class ComPagesSchemaMigration2 extends ComMigratorMigrationVersion
         
         foreach($entities as $entity)
         {
-            $id = $entity['id'];   
-            $page = KService::get('com://site/pages.domain.entity.page')
-            ->getRepository()->getQuery()->disableChain()->fetch( $id );  
-            
-            $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $page->body);
-            $page->body = '<p>'.$body.'</p>';
-
-            $page->save();
+            $id = $entity['id']; 
+            $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $entity['body']);
+            $body = '<p>'.$body.'</p>';
+             
+            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id );
         }
         
         dboutput("Pages updated!\n");
