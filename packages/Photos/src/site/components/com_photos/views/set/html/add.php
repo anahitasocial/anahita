@@ -1,6 +1,10 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="com_photos/js/organizer.js" />
+<?php else: ?>
+<script src="com_photos/js/min/organizer.min.js" />
+<?php endif; ?>
 
 <div class="row">
 	<div class="span8">

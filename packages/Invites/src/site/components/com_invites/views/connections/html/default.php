@@ -2,7 +2,12 @@
 
 <?php if(isset($service)) : ?>
 <script data-inline src="http://connect.facebook.net/en_US/all.js"></script>
+
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="media://com_invites/js/facebook.js" />
+<?php else: ?>
+<script src="media://com_invites/js/min/facebook.min.js" />
+<?php endif; ?>
 
 <div id="fb-root"></div>
 

@@ -1,6 +1,10 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="media://com_invites/js/email.js" />
+<?php else: ?>
+<script src="media://com_invites/js/min/email.min.js" />
+<?php endif; ?>
 
 <?php $numEmails = 5; ?>
 
