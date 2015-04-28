@@ -65,5 +65,3 @@
 		
 	</fieldset>
 </form>
-
-<?= @message(@text('COM-PAGES-PAGE-ALLOWED-MARKUP-INSTRUCTIONS')) ?>

@@ -34,5 +34,3 @@
 		</div>
 	</fieldset>
 </form>
-
-<?= @message(@text('COM-TOPICS-ALLOWED-MARKUP-INSTRUCTIONS')) ?>
