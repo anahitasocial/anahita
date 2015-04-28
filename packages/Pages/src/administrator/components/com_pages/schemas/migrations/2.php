@@ -27,7 +27,7 @@ class ComPagesSchemaMigration2 extends ComMigratorMigrationVersion
         dboutput("Updating Pages. This may take a while ...\n");    
             
         //Use p tags instead of inlines for topics
-        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:pages.domain.entity.page" ');
+        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:pages.domain.entity.page" OR type LIKE "%com:pages.domain.entity.revision" ');
         
         foreach($entities as $entity)
         {
