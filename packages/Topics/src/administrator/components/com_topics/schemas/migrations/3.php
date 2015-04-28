@@ -32,6 +32,9 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
         foreach($entities as $entity)
         {
             $id = $entity['id']; 
+            
+            $entity['body'] = strip_tags( $entity['body'], '<i><b><h1><h2><h3><h4><ul><ol><li><blockquote><pre>');
+            
             $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $entity['body']);
             $body = '<p>'.$body.'</p>';
              
@@ -46,7 +49,7 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
         //change comment formats from html to string    
         $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.comment" ');
     
-        dboutput("Updating topics' comments. This WILL take a while ...\n");
+        dboutput("Updating topics' comments. This may take a while ...\n");
     
         foreach($entities as $entity)
         {

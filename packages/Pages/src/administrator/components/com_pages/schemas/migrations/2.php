@@ -32,6 +32,9 @@ class ComPagesSchemaMigration2 extends ComMigratorMigrationVersion
         foreach($entities as $entity)
         {
             $id = $entity['id']; 
+            
+            $entity['body'] = strip_tags( $entity['body'], '<i><b><h1><h2><h3><h4><ul><ol><li><blockquote><pre>');
+            
             $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $entity['body']);
             $body = '<p>'.$body.'</p>';
              

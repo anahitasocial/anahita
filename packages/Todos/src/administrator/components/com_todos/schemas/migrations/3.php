@@ -32,7 +32,7 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
             $id = $entity['id']; 
             $body = strip_tags($entity['body']);
             
-            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id );       
+            $db->update('anahita_nodes', array('body'=>$body), ' WHERE id='.$id ); 
         }
         
         $timeDiff = microtime(true) - $timeThen;
