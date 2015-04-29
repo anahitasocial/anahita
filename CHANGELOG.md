@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.0 Embryo Release
+=============================
+* all the mootools code has been removed
+* the entire javascript library has been rewritten in JQuery
+
 Anahita 4.0.4 Birth Release
 ============================
 * removed routing from component configuration form in the admin back-end. The routing was preventing the form to save on some Nginx servers.
