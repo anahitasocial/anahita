@@ -61,7 +61,7 @@
            $id = (int) $id;     
            $photo = KService::get('repos:photos.photo')->getQuery()->disableChain()->id($id)->fetch();
                         
-            if ( isset($photo->id) ) 
+            if ( isset($photo->id) && $photo->authorize('access') ) 
             {
                 $caption = htmlspecialchars( $photo->title, ENT_QUOTES, 'UTF-8' );
                 
