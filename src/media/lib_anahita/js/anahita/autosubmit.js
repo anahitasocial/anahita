@@ -14,7 +14,7 @@
 		
 		var elem = $(this);
 		
-		var form = $(this.form);
+		var form = $(this.closest('form'));
 		
 		$.ajax({
 			
