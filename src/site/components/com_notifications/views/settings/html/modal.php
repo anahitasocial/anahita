@@ -29,5 +29,7 @@
 </mbody>
 
 <mfooter>
-    <a href="#" class="btn dismiss"><?= @text('LIB-AN-ACTION-DONE') ?></a>
+    <a href="#" class="btn dismiss" data-dismiss="modal">
+        <?= @text('LIB-AN-ACTION-DONE') ?>
+    </a>
 </mfooter>
