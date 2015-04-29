@@ -114,7 +114,7 @@
             
             } else {
             
-                this.editor.html(document.createElement('p'));
+                this.editor.html();
             }
         },
         

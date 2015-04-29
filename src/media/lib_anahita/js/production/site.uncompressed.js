@@ -19009,7 +19009,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             
             } else {
             
-                this.editor.html(document.createElement('p'));
+                this.editor.html();
             }
         },
         
