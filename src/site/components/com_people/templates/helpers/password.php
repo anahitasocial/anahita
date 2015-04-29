@@ -36,10 +36,13 @@ class ComPeopleTemplateHelperPassword extends KTemplateHelperAbstract
     public function input($required = true)
     {
         $validators = '';
+        
         $min = ComPeopleFilterPassword::$MIN_LENGTH;
+        
         if ( $required ) {
-            $validators .= 'required  minLength:'.$min;
+            $validators .= 'required  minLength="'.$min.'" ';
         }
-        return '<input class="input-block-level" data-validators="'.$validators.' validate-passwod" type="password" id="password" value="" name="password" />';
+        
+        return '<input '.$validators.' class="input-block-level"  data-validate="password" type="password" id="password" value="" name="password" />';
     }
 }

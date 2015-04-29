@@ -13,7 +13,9 @@
 $url = 'layout=list';
 
 if(!empty($sort))
+{
 	$url .= '&sort='.$sort;
+}
 ?>
 
-<?= @pagination($todos, array('url'=>@route($url))) ?>
+<?= @pagination($todos, array('url'=>@route($url))); ?>

@@ -209,14 +209,6 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 	protected function _setMenuLinks($actor, $menuItems){}
 	
 	/**
-	 * parse tags in the body of the entity
-	 * 
-	 * @param ComMediumDomainEntityMedium $entity
-	 * @return void
-	 */
-	protected function _parseTags($entity){}
-	
-	/**
 	 * Return an array of permissions by using the medium objects
 	 * 
 	 * @return array()

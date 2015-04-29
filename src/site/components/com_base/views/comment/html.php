@@ -38,14 +38,14 @@ class ComBaseViewCommentHtml extends ComBaseViewHtml
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(		
-			'layout' 		 => 'list',
-			'template_paths' => array(dirname(__FILE__).'/html')
+			'layout' => 'list',
+			'template_paths' => array( dirname(__FILE__).'/html' )
 		));
 		
-		parent::_initialize($config);
+		parent::_initialize( $config );
         
-        $config->append(array(
-            'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_base/comment')          
+        $config->append( array(
+            'template_paths' => array( JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_base/comment' )          
         ));
 	}
 }

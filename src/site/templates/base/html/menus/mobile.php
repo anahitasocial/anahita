@@ -5,7 +5,7 @@ $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
 
-<ul class="nav" data-behavior="BS.Dropdown">
+<ul class="nav">
 <?php if($viewer->guest()): ?>
 	<li>
 		<a href="<?= @route('option=com_people&view=session') ?>">
@@ -33,20 +33,20 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
     </li>
  	<?php endif; ?>
             
-			<?php if(count($components)): ?>
-			<li class="divider"></li>
-            <?php foreach($components as $component): ?>
-            <li>
-            	<a href="<?= @route($component->url) ?>">
-            	<?= $component->title ?>
-            	</a>
-            </li>
-            <?php endforeach; ?>
-            <?php endif; ?>
-            <li class="divider"></li>
-			<li>
-				<a data-trigger="Submit" href="<?= @route('option=com_people&view=session&action=delete') ?>">
-		<?= @text('LIB-AN-ACTION-LOGOUT') ?>
+	<?php if(count($components)): ?>
+	<li class="divider"></li>
+    <?php foreach($components as $component): ?>
+    <li>
+    	<a href="<?= @route($component->url) ?>">
+    	<?= $component->title ?>
+    	</a>
+    </li>
+    <?php endforeach; ?>
+    <?php endif; ?>
+    <li class="divider"></li>
+	<li>
+		<a data-trigger="Logtou" href="<?= @route('option=com_people&view=session&action=delete') ?>">
+        <?= @text('LIB-AN-ACTION-LOGOUT') ?>
 		</a>
 	</li>
 <?php endif; ?>	

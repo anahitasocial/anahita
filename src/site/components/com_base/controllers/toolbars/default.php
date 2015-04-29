@@ -49,10 +49,17 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     protected function _commandEdit($command)
     {
         $entity = $this->getController()->getItem();
+        $view = $this->getController()->getView()->getName();
+    
         $layout = pick($command->layout, 'edit');
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))
         ->href($entity->getURL().'&layout='.$layout);
+        
+        if(KInflector::isPlural($view))
+        {
+            $command->setAttribute('data-action', 'edit');
+        }
     }
     
     /**
@@ -67,8 +74,10 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-DELETE')))
-        ->href($entity->getURL().'&action=delete')
-        ->setAttribute('data-trigger','Remove');
+        ->href(JRoute::_($entity->getURL()))
+        ->setAttribute('data-action', 'delete')
+        ->setAttribute('data-redirect', JRoute::_('index.php?'))
+        ->class('action-delete');
     }
     
     /**
@@ -82,60 +91,25 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     {
         $entity = $this->getController()->getItem();
         $voted = $entity->votedUp(get_viewer());
-                
-        $btn_1_id = uniqid('v');
-        $btn_2_id = uniqid('u');
-
-        $action_key = '_action';
-        
-        $action_value = $voted ? 'unvote' : 'vote';
-        
+         
+        $action = $voted ? 'unvote' : 'vote';
+        $class = 'action-'.$action;
+         
         if(is($entity, 'ComBaseDomainEntityComment'))
-            $action_value .= 'comment';
+        {
+           $action .= 'comment';
+           $class .= 'comment';
+        }
         
         $label = $voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
         
-        $command->setName($action_value);        
-        $command->append(array('label' =>$label));
-        
-        $class = 'btn btn-mini';
-        
-        if($voted)
-            $class .= ' btn-inverse';
-        
         $command
-            ->href(JRoute::_($entity->getURL()."&$action_key=$action_value"))
-            ->class('vote-action '.$action_value.' '.$class)
-            ->setAttribute('data-trigger','VoteLink')
-            ->setAttribute('data-votelink-toggle', $btn_2_id)
-            ->setAttribute('data-votelink-object', $entity->id)
-            ->id($btn_1_id);
-                
-        
-        //lets add the reverse of the first
-        //button if any onle if it's html request 
-        if($this->getController()->getRequest()->getFormat() != 'html')
-            return;
-            
-        $action_value = !$voted ? 'unvote' : 'vote';
-        $label = !$voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
-        
-        $class = 'btn btn-mini';
-        
-        if(!$voted)
-            $class .= ' btn-inverse';
-               
-        $command = ComBaseControllerToolbarCommand::getInstance($action_value, array('label'=>$label));
-        $this->addCommand($command);        
-        
-        $command
-            ->href(JRoute::_($entity->getURL()."&$action_key=$action_value"))
-            ->class('vote-action '.$action_value.' '.$class)
-            ->setAttribute('data-trigger','VoteLink')
-            ->setAttribute('data-votelink-toggle', $btn_1_id)
-            ->setAttribute('data-votelink-object', $entity->id)
-            ->setAttribute('data-behavior', 'Hide',',')->setAttribute('data-hide-element','!>')
-            ->id($btn_2_id);
+        ->setName($action)
+        ->append(array('label' =>$label))
+        ->href(JRoute::_($entity->getURL()))
+        ->class($class)
+        ->setAttribute('data-action', $action)
+        ->setAttribute('data-nodeid', $entity->id);
     }
     
     /**
@@ -149,14 +123,13 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     {
         $entity = $this->getController()->getItem();
     
-    
-        $label 	= JText::_('LIB-AN-ACTION-'.strtoupper($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe'));
-    
-        $command
-        ->append(array('label'=>$label))
-        ->href($entity->getURL().'&action='.($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe'))
-        ->setAttribute('data-trigger','Submit');
-        ;
+        $action = ($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe');
+        $label 	= JText::_('LIB-AN-ACTION-'.strtoupper($action));
+        
+        $command->append(array('label'=>$label))
+            ->href($entity->getURL())
+            ->class('action-'.$action)
+            ->setAttribute('data-action',$action);
     }
     
     
@@ -172,10 +145,13 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
     
         $label  = $entity->openToComment ? JTEXT::_('LIB-AN-ACTION-CLOSE-COMMENTING') : JTEXT::_('LIB-AN-ACTION-OPEN-COMMENTING');
+        $status = $entity->openToComment ? 0 : 1;
     
         $command->append(array('label'=>$label))
-        ->href($entity->getURL().'&action=commentstatus&status='.(!$entity->openToComment))
-        ->setAttribute('data-trigger','Submit');
+        ->href($entity->getURL())
+        ->class('action-commentstatus')
+        ->setAttribute('data-action','commentstatus')
+        ->setAttribute('data-status', $status);
     }
     
     /**

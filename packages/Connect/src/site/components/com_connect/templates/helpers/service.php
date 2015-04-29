@@ -39,7 +39,7 @@
  		
  		$html = array();
  		
- 		foreach($services as $name => $service) 
+ 		foreach ( $services as $name => $service ) 
  		{
  			$html[] = $this->login($name);
  		}
@@ -66,10 +66,12 @@
  		
  		$html = $this->getService('com:base.template.helper.html');
  		
- 		return $html->link($config->html, null, $config->attributes)
- 		    ->dataSubmitUrl($config->url)
- 		    ->class('btn btn-large btn-'.$service)
- 		    ->dataTrigger('Submit')->title($service);
+ 		$link = $html->link($config->html, $config->url, $config->attributes)
+ 	                 ->class('btn btn-'.$service)
+ 		             ->dataTrigger('PostLink')
+ 		             ->title($service);
+        
+        return $link;
  	}
 
  	 /**
@@ -78,11 +80,12 @@
 	 * @param  string $service
 	 * @return string 
  	 */
- 	public function url($service)
+ 	public function url( $service )
  	{
  		$url = 'index.php?option=com_connect&view=login&server='.$service;
  		
- 		if ( KRequest::get('get.return', 'cmd') ) {
+ 		if ( KRequest::get('get.return', 'cmd') ) 
+ 		{
  			$url .= '&return='.KRequest::get('get.return', 'raw') ;
  		}
  			
@@ -95,7 +98,7 @@
 	 * @param  string $service
 	 * @return LibBaseTemplateHelperHtmlElement 
  	 */
- 	public function icon($service)
+ 	public function icon( $service )
  	{
         return '<i class="icon-'.$service.'"></i>';
  	} 	

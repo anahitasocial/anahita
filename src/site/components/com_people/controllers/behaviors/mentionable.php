@@ -111,7 +111,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $matches = array();
         
         if(preg_match_all(ComPeopleDomainEntityPerson::PATTERN_MENTION, $text, $matches))
-        	return array_unique($matches[2]);
+        	return array_unique($matches[1]);
         else
         	return array();
 	}

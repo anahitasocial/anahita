@@ -103,12 +103,6 @@ hr
     background-color: @yellow !important 
 }
 
-.an-ui-inline-form-prompt
-{ 
-    color: @grayLight;
-    width: 100%;
-}
-
 a.form-placeholder,
 a.action-comment-overtext
 {
@@ -125,7 +119,7 @@ a.action-comment-overtext
 { 
    #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
    border: 1px solid @navbarBorder;
-  .box-shadow(0 1px 4px rgba(0,0,0,.065)); 
+  .box-shadow(0 1px 1px rgba(0,0,0, .065)); 
 }
 
 .an-meta,
@@ -138,18 +132,22 @@ a.action-comment-overtext
 .an-entity
 {
     background-color: @white;
+    
+    &.editable
+    {
+        .entity-title:hover,
+        .entity-description:hover
+        {
+            background-color: @yellow;
+        }
+    }
 }
 
 .entity-title,
 .entity-name,
 .entity-description,
 .entity-body
-{        
-    &.editable:hover
-    {
-        background-color: @yellow;
-    }
-    
+{            
     blockquote
     { 
         border-right: @grayLighter; 

@@ -36,10 +36,7 @@ form.inline-edit
 .an-read-more,
 .an-read-less
 {
-    display: block;
-    font-size: @baseFontSize;
-    font-weight: bold;
-    margin-top: 5px;
+    font-size: @baseFontSize + 1;
 }
 
 .an-meta
@@ -109,12 +106,12 @@ form
 }
 
 // vote button adjustment
-a.vote-action
+a.action-unvote
 {
     &.btn
     {
-       margin-bottom: 1px;
-    }
+        .btn-inverse;
+    }	
 }
 
 .an-actions

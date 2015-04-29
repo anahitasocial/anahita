@@ -39,7 +39,8 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
         parent::__construct($config);
         
         $config->mixer->registerCallback(
-            array('before.unfollow','before.follow', 'before.addfollower',
+            array('before.unfollow','before.follow', 
+            	  'before.lead', 'before.unlead',
                   'before.addrequest','before.deleterequest',
                   'before.block','before.unblock'), 
                   array($this, 'getActor'));
@@ -117,45 +118,6 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	}
 	
 	/**
-	 * Viewer adds a follower to the current actor resource. status is set to 
-     * KHttpResponse::RESET_CONTENT;
-	 * 
-	 * @param KCommandContext $context Context Parameter
-	 * 
-	 * @return void 
-	 */
-	protected function _actionAddfollower(KCommandContext $context)
-	{
-		$this->getResponse()->status = KHttpResponse::RESET_CONTENT;
-        
-		if(!$this->getItem()->leading($this->actor))
-		{
-		    $this->getItem()->addFollower($this->actor);
-		    
-	    	$this->createStory(array(
-	    		'name' => 'actor_follower_add',
-	    		'owner' => $this->getItem(),
-	    		'subject' => $this->viewer,
-	    		'object' => $this->actor,
-	    		'target' => $this->getItem()
-	    	));
-	    		
-	    	$subscribers = array($this->actor->id);	
-	    	$subscribers = array_merge($subscribers, $this->getItem()->administratorIds->toArray());
-	    	
-	    	$this->createNotification(array(
-	    		'name' => 'actor_follower_add',
-	    		'subject' => $this->viewer,
-	    		'object' => $this->actor,
-	    		'target' => $this->getItem(),
-	    		'subscribers' => $subscribers
-	    	));
-		}
-        
-        return $this->getItem();
-	}
-		
-	/**
 	 * Add a person to the. The data passed is set my the receiver controller::getCommandChain()::getContext()::data
 	 * 
 	 * @param KCommandContext $context Context Parameter
@@ -170,19 +132,75 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
         
 		return $this->getItem();
 	}
+	
+	/**
+	 * Add a leader to this actor
+	 * 
+	 * @param KCommandContext $context Context Parameter
+	 * 
+	 * @return ComActorsDomainEntityActor object 
+	 */
+	protected function _actionLead(KCommandContext $context)
+	{
+		$this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+		
+		if(!$this->getItem()->following($this->actor))
+		{
+		    $this->getItem()->addLeader($this->actor);
+		    
+	    	$this->createStory(array(
+	    		'name' => 'actor_follower_add',
+	    		'owner' => $this->actor,
+	    		'subject' => $this->viewer,
+	    		'object' => $this->getItem(),
+	    		'target' => $this->actor
+	    	));
+	    		
+	    	if($this->actor->isAdministrable())
+	    		$subscribers = $this->actor->administratorIds->toArray();
+	    	else
+	    		$subscribers = array($this->actor->id);
+	    		
+	    	$this->createNotification(array(
+	    		'name' => 'actor_follower_add',
+	    		'subject' => $this->viewer,
+	    		'object' => $this->getItem(),
+	    		'target' => $this->actor,
+	    		'subscribers' => $subscribers
+	    	));
+		}
+        
+        return $this->getItem();
+	}
+		
+	/**
+	 * Remove a leader from this actor
+	 * 
+	 * @param KCommandContext $context Context Parameter
+	 * 
+	 * @return ComActorsDomainEntityActor object
+	 */
+	protected function _actionUnlead(KCommandContext $context)
+	{
+        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        
+		$this->getItem()->removeLeader( $this->actor );
+        
+		return $this->getItem();
+	}
     
-    /**
+	/**
      * The viewers blocks the actor
      *
      * @param KCommandContext $context Context parameter
      *
-     * @return void
+     * @return ComActorsDomainEntityActor object
      */
     protected function _actionBlock(KCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->addBlocked($this->actor);
+        $this->getItem()->addBlocker($this->actor);
         
         return $this->getItem();
     }
@@ -192,13 +210,13 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      *
      * @param KCommandContext $context Context parameter
      * 
-     * @return void
+     * @return ComActorsDomainEntityActor object
      */
     protected function _actionUnblock($context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->removeBlocked($this->actor);    
+        $this->getItem()->removeBlocker($this->actor);    
         
         return $this->getItem();
     }        

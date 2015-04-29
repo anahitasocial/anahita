@@ -42,12 +42,12 @@
 <?php if( $actor->followerCount ) : ?>
 <h4>
 	<?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?> 
-	<?php if($actor->authorize('leadable')): ?>
-	(<small>
+	<?php if($actor->authorize('lead')): ?> - 
+	<small>
 		<a href="<?= @route($actor->getURL().'&get=graph&type=leadables') ?>">
 			<?= @text('LIB-AN-ACTION-ADD') ?>
 		</a>
-	</small>)
+	</small>
 	<?php endif; ?>
 </h4>
 <?= @template('_grid', array('actors'=>$actor->followers->limit($limit))) ?>

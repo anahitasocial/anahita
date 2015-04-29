@@ -193,12 +193,13 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	}
 	
 	/**
-	 * If true then the viewer can add leadables (new followers) to the group
+	 * If true then the viewer can add new followers to the this actor
+	 * 
 	 * @param KCommandContext $context Context parameter
 	 * 
 	 * @return boolean
 	 */
-	protected function _authorizeLeadable(KCommandContext $context)
+	protected function _authorizeLead(KCommandContext $context)
 	{
 		//obviously guests cannot add new followers
 		if(is_guest($this->_viewer))
@@ -223,38 +224,8 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      * @return boolean
      */ 
     protected function _authorizeRequester(KCommandContext $context)
-    {
-        //viewer can only follow actor if and only if viewer is leadable and actor is followable           
-        if($this->_entity->isFollowable() && !$this->_viewer->isLeadable())
-            return false;
-             
-        if(!$this->_entity->allowFollowRequest)
-            return false; 
-                        
-        if($this->_viewer->eql($this->_entity))
-            return false;
-            
-        if(is_guest($this->_viewer))
-            return false;
-
-        //can't send a requet if already following
-        if($this->_viewer->following($this->_entity))
-            return false;
-           
-        //can't send a request if the viewer can follow
-         if($this->_entity->authorize('follower', array('viewer'=>$this->_viewer)))
-            return false;
-         
-        //cant' send a requet if already requested
-        if($this->_entity->requested($this->_viewer))
-            return false;
-            
-        //if the viewer is blocking the entity, then it can not follow
-        //the entity
-        if($this->_viewer->isFollowable() && $this->_viewer->blocking($this->_entity))
-            return false;
-        
-        return true;
+    {  
+        return $this->_entity->allowFollowRequest;
     } 
              
     /**
@@ -333,13 +304,13 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	 * 
 	 * @return boolean
 	 */	
-	protected function _authorizeBlocker(KCommandContext $context)
+	protected function _authorizeBlock(KCommandContext $context)
 	{	
-		//viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
-        if(!$this->_entity->isLeadable() || !$this->_viewer->isFollowable())
-            return false;    
-
-        if(is_guest($this->_viewer))
+		if(is_guest($this->_viewer))
+            return false;
+	    
+	    //viewer can only block actor from following them if and only if actor is leadable (can follow ) and viewer is followable        
+        if(!$this->_entity->isLeadable())
             return false;
                            
         if($this->_viewer->eql($this->_entity))
@@ -354,5 +325,17 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
             return false;		
   
 		return true;
+	 }
+	 
+	 /**
+	  * If true the viewer can remove a follower from an actor
+	  * 
+	  * @param KCommandContext $context Context parameter
+	  * 
+	  * @return boolean
+	  */
+	 protected function _authorizeUnlead(KCommandContext $context)
+	 {
+	     return $this->_authorizeAdministration($context);
 	 }
 }

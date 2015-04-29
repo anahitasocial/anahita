@@ -88,9 +88,9 @@ class ComComponentsControllerComponent extends ComBaseControllerService
     /**
      * Sets the assignment
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionAssign(KCommandContext $context)
     {
-    	if($item = $this->getService('com://admin/components.domain.set.assignablecomponent')->find(array('id'=>$this->id))) 
+        if($item = $this->getService('com://admin/components.domain.set.assignablecomponent')->find(array('id'=>$this->id))) 
     	{
     		$item->setAssignmentForIdentifier( KConfig::unbox($context->data->identifiers) );
     		$item->save();	

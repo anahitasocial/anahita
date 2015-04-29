@@ -135,4 +135,48 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
 			return parent::__get($name);
 		}
 	}
+	
+	/**
+	 * Reset the all graph information for the actors
+	 *
+	 * @param array $actors Array of actors
+	 *
+	 * @return void
+	 */
+	public function resetStats($actors)
+	{            
+	    foreach($actors as $actor)
+	    {
+	        if($actor->isFollowable())
+	        {
+	            $followerIds = $actor->followers->getQuery(true,true)->fetchValues('id');
+	            $actor->set('followerCount', count($followerIds));
+	            $actor->set('followerIds', AnDomainAttribute::getInstance('set')->setData($followerIds));
+	            
+	            $blockedIds = $actor->blockeds->getQuery(true,true)->fetchValues('id');
+	            $actor->set('blockedIds', AnDomainAttribute::getInstance('set')->setData($blockedIds));
+	            
+                $requesterIds = $actor->requesters->getQuery(true,true)->fetchValues('id');
+                $actor->set('followRequesterIds', AnDomainAttribute::getInstance('set')->setData($requesterIds));
+	        }
+	
+	        if($actor->isLeadable())
+	        {
+	            $leaderIds = $actor->leaders->getQuery(true,true)->fetchValues('id');
+	            $actor->set('leaderCount', count($leaderIds));
+	            $actor->set('leaderIds', AnDomainAttribute::getInstance('set')->setData($leaderIds));
+	            
+	            $blockerIds = $actor->blockers->getQuery(true,true)->fetchValues('id');
+	            $actor->set('blockerIds', AnDomainAttribute::getInstance('set')->setData($blockerIds));
+	            
+	            $followerIds = $actor->followers->getQuery(true,true)->fetchValues('id');
+	            
+	            $mutualIds = array_intersect($leaderIds, $followerIds);
+	            
+	            $actor->set('mutualIds', AnDomainAttribute::getInstance('set')->setData($mutualIds));
+	            
+	            $actor->set('mutualCount', count($mutualIds));
+	        }
+	    }
+	}
 }

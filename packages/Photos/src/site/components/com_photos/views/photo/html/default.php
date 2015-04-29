@@ -1,7 +1,13 @@
 <?php defined('KOOWA') or die; ?>
 
 <?php if($photo->authorize('edit')) : ?>
+
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="com_photos/js/photoset.js" />
+<?php else: ?>
+<script src="com_photos/js/min/photoset.min.js" />
+<?php endif; ?>
+
 <?php endif; ?>
 
 <div class="row">
@@ -17,7 +23,7 @@
     	</h4>
     	
     	<div class="block-content">
-    		<div id="sets-wrapper" oid="<?= $photo->owner->id ?>" photo_id="<?= $photo->id ?>">
+    		<div id="sets-wrapper" data-url="<?= @route('option=com_photos&view=sets&layout=sidebar&oid='.$actor->id) ?>" data-photo="<?= $photo->id ?>">
             <?= @view('sets')->layout('sidebar')->set('sets', $photo->sets) ?>
     		</div>
 		</div>

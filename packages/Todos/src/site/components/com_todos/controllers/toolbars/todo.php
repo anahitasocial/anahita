@@ -43,8 +43,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 		{ 
 			$this->addCommand('edit', array('layout'=>'form'))
 			->getCommand('edit')
-			->setAttribute('data-trigger','Request')
-			->setAttribute('data-request-options','{replace:\'!.an-entity\'}');	
+			->setAttribute('data-action', 'edit');	
 			
 			$this->addCommand('enable', array('ajax'=>true));	
 		}	
@@ -67,24 +66,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	}
 	
 	/**
-	 * Add Action for an entity
-	 *
-	 * @param LibBaseTemplateObject $command Command Object
-	 *
-	 * @return void
-	 */
-	protected function _commandNew($command)
-	{		 
-		 $entity = $command->entity;
-		
-		$command
-		->append(array('label'=>JText::_('COM-TODOS-TOOLBAR-TODO-NEW')))
-		->href('option=com_todos&view=todo&layout=add')
-		->setAttribute('data-trigger','ReadForm');
-	} 
-	
-	/**
-	 * Delete Action for an entity
+	 * Enable Action for an entity
 	 *
 	 * @param LibBaseTemplateObject $command Command Object
 	 *
@@ -96,22 +78,36 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	    	    
 	    $label 	= JText::_('COM-TODOS-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
 	
-	    $url = $entity->getURL().'&action='.($entity->enabled ? 'disable' : 'enable');
-	    
+        $action = ( $entity->enabled ) ? 'disable' : 'enable';
+        
 	    $command->append(array('label'=>$label));
 	           
 	    if($command->ajax)
 	    {
 	        $command
-	        ->href($url.'&layout=list')
-	        ->setAttribute('data-trigger', 'Request')
-	        ->setAttribute('data-request-options',"{method:'post', replace:'!.an-entity'}");
+	        ->href($entity->getURL().'&layout=list')
+	        ->setAttribute('data-action', $action);
 	    }
 	    else
 	    {
 	    	$command
-	    	->href($url)
-	    	->setAttribute('data-trigger','Submit');
+	    	->href( $entity->getURL().'&action='.$action )
+	    	->setAttribute('data-trigger','PostLink');
 	    }
 	}
+	
+/**
+     * New button toolbar
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandNew($command)
+    {
+        $command
+        ->append(array('label' => JText::_('COM-TODOS-TOOLBAR-TODO-NEW') ))
+        ->href('#')
+        ->setAttribute('data-trigger', 'ReadForm');
+    }
 }

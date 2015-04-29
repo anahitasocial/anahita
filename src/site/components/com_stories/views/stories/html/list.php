@@ -4,7 +4,9 @@
 $view = @view('story')->layout('list');
 
 if(isset($actor))
-	$view->actor($actor);
+{
+   $view->actor($actor); 
+}
 ?>
 
 <?php if(count($stories)) :?>

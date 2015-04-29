@@ -170,31 +170,6 @@ class UsersController extends JController
 			return $this->execute('edit');
 		}
 
-		/*
-	 	 * Time for the email magic so get ready to sprinkle the magic dust...
-	 	 */
-		
-		// Emailing out plain text passwords is a terrible idea. 
-		// that is why this part has been commented out.
-		
-		/*
-		if ($isNew)
-		{
-			$adminEmail = $me->get('email');
-			$adminName	= $me->get('name');
-
-			$subject = JText::_('NEW_USER_MESSAGE_SUBJECT');
-			$message = sprintf ( JText::_('NEW_USER_MESSAGE'), $user->get('name'), $SiteName, JURI::root(), $user->get('username'), $user->password_clear );
-
-			if ($MailFrom != '' && $FromName != '')
-			{
-				$adminName 	= $FromName;
-				$adminEmail = $MailFrom;
-			}
-			JUtility::sendMail( $adminEmail, $adminName, $user->get('email'), $subject, $message );
-		}
-		*/
-
 		// If updating self, load the new user object into the session
 		if ($user->get('id') == $me->get('id'))
 		{
@@ -464,11 +439,5 @@ class UsersController extends JController
 				$this->setRedirect( 'index.php?option=com_users', $msg );
 				break;
 		}
-	}
-
-	function contact()
-	{
-		$contact_id = JRequest::getVar( 'contact_id', '', 'post', 'int' );
-		$this->setRedirect( 'index.php?option=com_contact&task=edit&cid[]='. $contact_id );
 	}
 }

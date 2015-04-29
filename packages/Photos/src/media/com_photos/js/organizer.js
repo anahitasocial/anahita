@@ -1,216 +1,156 @@
-var SetOrganizer = new Class({
-	
-	Implements :[Options],
-	
-	options : {
-		mediums		: 'set-mediums',
-		selector	: 'medium-selector',
-		cover		: 'set-cover',
-		form		: 'set-form'
-	},
-	
-	initialize : function(options) 
-    {
-		this.setOptions(options);
-		this.inUse = false;
-		
-		this.slide 			= new Fx.Slide(this.options.selector);
-		this.sortableItems 	= '#' + this.options.selector + ' .media-grid, #' + this.options.mediums + ' .media-grid';
-		this.droppables 	= '.' + this.options.mediums + ' .media-grid';
-		
-		this.setId 			= document.id(this.options.selector).get('set_id');
-		this.oid 			= document.id(this.options.selector).get('oid');
-		this.baseURL 		= 'index.php?option=com_photos';
-		
-		if(this.setId)
-			this.slide.hide();
-		else
-			this.updateSortables();
-    },
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function($, window) {
     
-    hide : function()
-    {
-    	document.id(this.options.mediums).removeClass('an-highlight');
-    	this.slide.slideOut();
-    	this.refreshSet();
-    	this.inUse = false;
-    },
+    'use strict';
     
-    show : function()
-    {
-    	if(this.inUse)
-    		return;
+    $.widget('anahita.setOrganizer', {
+    
+    	options : {
     	
-    	var req = new Request.HTML({
-    		method  : 'get',
-    		url		: this.baseURL + '&view=photos&oid=' + this.oid + '&layout=selector&exclude_set=' + this.setId,
-    		update	: this.options.selector,
-    		onSuccess : function(){
-    			this.updateSortables();
-    			this.slide.slideIn();
-    			this.inUse = true;
-    		}.bind(this)
-    	}).send();
-    },
-    
-    updateSortables : function()
-    {
-    	document.getElements('#' + this.options.selector + ' .media-grid a').each(function(item, index){
-			item.addEvent('click', function(e, el){
-				e.stop();
-			}).setStyle('cursor', 'move');
-		});
-		
-    	document.getElements('#' + this.options.mediums + ' .media-grid a').each(function(item, index){
-			item.addEvent('click', function(e, el){
-				e.stop();
-			}).setStyle('cursor', 'move');
-		});
-		
-		this.sortables = new Sortables(this.sortableItems, {
-			clone: true,
-			revert: true,
-		    opacity: 0.7,
-		    dragOptions: {
-				'droppables': this.droppables
-		    },
-		});
-		
-		document.id(this.options.mediums).addClass('an-highlight');
-    },
-    
-    refreshSet : function()
-    {
-    	document.id(this.options.mediums).getParent().load(this.baseURL + '&view=set&layout=photos&id=' + this.setId);
-    	document.id(this.options.cover).getParent().load(this.baseURL + '&view=set&layout=cover&id=' + this.setId);
-    },
-    
-    addSet: function(el)
-    {
-    	var form = document.id(this.options.form);
-    	var photoCount = 0;
+    		selector : '#photo-selector-list',
+    		url : $('#set-photos').data('url'),
+    		photos : $('#set-photos').find('.media-grid'),
+    		thumbnail : '.thumbnail-wrapper',
+    		cover : '#set-cover-wrapper',
+    		form : '#set-form'
+    	},
     	
-    	document.getElements('#' + this.options.mediums + ' .thumbnail-wrapper').reverse().each(function(item, index){
-			var inputField = new Element('input', {
-				type: 'hidden',
-				name: 'photo_id[]',
-				value: item.get('mid')
-			})
-			
-			inputField.inject(form, 'top'); 
-			photoCount++;
-		}.bind(this));
-		
-    	if(form.get('validator').validate() && photoCount)
-    		form.submit();
-    },
-    
-    updateSet: function(el)
-    {
-    	var data = '';
-		var photo_ids = new Array();
-		var photoCount = 0;
-		
-		document.getElements('#' + this.options.mediums + ' .thumbnail-wrapper').each(function(item, index){
-			data = data + '&photo_id[]=' + item.get('mid');
-			photoCount++;
-		});
-		
-		if(photoCount)
-		{
-			el.ajaxRequest({
-				method: 'post',
-				url: this.baseURL + '&view=set&id=' + this.setId,
-				data: 'action=updatephotos' + data,
-				onComplete: function(){	
-					this.hide();
-				}.bind(this)
-			}).send();
-		}
-    },
-    
-    coverSelect: function()
-    {
-    	if(this.inUse)
-    		return;
+    	_create : function () {
+    		
+    		var self = this;
+    		
+    		this.element.hide();
+    		this.selector = null;
+    		this.photoList = null;
+    		
+    		//open organizer
+    		this._on('body', {
+    			'click a[data-trigger="Organize"]' : function ( event ) {
+    				event.preventDefault();
+    				self.open( event.currentTarget.href );
+    			}
+    		});
+    		
+    		//close organizer 
+    		this._on( this.element, {
+    			'click a[data-trigger="ClosePhotoSelector"]' : function ( event ) {
+    				event.preventDefault();
+    				self.close();
+    			}
+    		});
+    		
+    		//before add set
+    		this._on( this.options.form, {
+    			'submit' : function ( event ) {
+    				this._beforeAdd();
+    			}
+    		});
+    	},
     	
-    	var req = new Request.HTML({
-    		method  : 'get',
-    		url		: this.baseURL + '&view=set&oid=' + this.oid + '&layout=cover_edit&id=' + this.setId,
-    		update	: this.options.selector,
-    		onSuccess : function(){
+    	open : function ( url ) {
+    		
+    		var self = this;
+    		
+    		$.get( url , function( response ){
     			
-    			document.getElements('#' + this.options.mediums + ' .media-grid a').each(function(item){
+				self.element.html(response).slideDown();
+				
+    			self.selector = $(self.options.selector).sortable({
+    				connectWith : $(self.options.photos),
+    				scroll: false
+    			});
+    			
+    			self.photoList = $(self.options.photos).sortable({
+    				connectWith : $(self.options.selector),
+    				cancel : '.cover',
+    				update : function () {
+    					if(self.options.url) {
+    						self._edit();
+    					}
+    				}
+    			});
+    			
+    			self.photoList.parent().addClass('an-highlight');
+    		});
+    	},
+    	
+    	close : function () {
+    		
+    		var self = this;
+    		
+    		this.element.slideUp('normal', function(){
+				
+    			self.selector.sortable('destroy');
+				self.photoList.sortable('destroy');
+				self.photoList.parent().removeClass('an-highlight');
+				self.element.empty();
+				
+    		});
+    	},
+    	
+    	_beforeAdd : function () {
+    		
+    		var self = this;
+    		var hasPhotos = false;
+			var thumbnails = self.photoList.find( self.options.thumbnail );
+
+			if ( thumbnails.length == 0 ) {
+				event.preventDefault();
+			}
+				
+			$.each( thumbnails, function ( index, thumbnail ) {
+				$(self.options.form).append('<input type="hidden" name="photo_id[]" value=' + $(thumbnail).attr('photo') + ' />');
+			});
+    	},
+    	
+    	_edit : function () {
+    		
+    		var self = this;
+    		var thumbnails = this.photoList.find( this.options.thumbnail );
+    		var data = 'action=updatephotos';
+    		
+    		$.each( thumbnails, function ( index, thumbnail ) {
+    			data += '&photo_id[]=' + $(thumbnail).attr('photo')
+    		});
+    		
+    		$.ajax({
+    			method : 'post',
+    			url : this.options.url,
+    			data : data,
+    			success : function() {
     				
-    				item.addEvent('click', function(e){
-    					e.stop();
-    					
-    					item.ajaxRequest({
-    						method			: 'post',
-    						url				: this.baseURL + '&view=set&id=' + this.setId,
-    						data			: 'action=updatecover&id=' + this.setId + '&photo_id=' + item.getParent().get('mid'),
-    						onComplete		: function (){
-    							document.id(this.options.cover).getParent().load(this.baseURL + '&view=set&layout=cover&id=' + this.setId);    							
-    							var scrollTop = new Fx.Scroll(window).toTop();
-    						}.bind(this)
-    					}).send();
-    					
-    				}.bind(this));
-    			}.bind(this));
-    			
-    			document.id(this.options.mediums).addClass('an-highlight');
-    			this.slide.slideIn();
-    			this.inUse = true;
-    			
-    		}.bind(this)
-    	}).send();
-    },
-});
+    				var thumbnails = $(self.options.photos).find(self.options.thumbnail);
+    				
+    				thumbnails.removeClass('cover');
+    				thumbnails.first().addClass('cover');
+    				
+    				self._refreshCover();
+    			}
+    		});
+    	},
+    	
+    	_refreshCover : function () {
+    		
+    		var self = this;
 
-var organizer = new SetOrganizer();
-
-Delegator.register('click', {
-	
-	'Organize' : function(event, el, api) {
-		event.stop();
-		organizer.show();
-	},
-	
-	'Close' : function(event, el, api) {
-		event.stop();
-		organizer.hide();
-	},
-	
-	'Update' : function(event, el, api){
-		event.stop();
-		organizer.updateSet(el);
-	},
-	
-	'Add' : function(event, el, api)
-	{
-		event.stop();
-		organizer.addSet(el);
-	},
-	
-	'Cancel' : function(event, el, api)
-	{
-		event.stop();
-		window.location = el.href;
-	},
-	
-	'ChangeCover' : function(event, el, api){
-		event.stop();
-		organizer.coverSelect();
-	}
-});
-
-Behavior.addGlobalPlugin('InfinitScroll', 'Sortable',
-	function(el, api,instance){
-    	var paginator = el.retrieve('paginator');
- 		if ( paginator ) {
-    		paginator.addEvent('pageReady', function(page){
-	 			organizer.updateSortables();
-        	});
- 		}
-	}
-);
+    		$.ajax({
+    			method : 'get',
+    			url : this.options.url,
+    			data : 'layout=cover',
+    			success : function ( response ) {
+    				$(self.options.cover).html(response);
+    			}
+    		});
+    	}
+    });
+    
+    $('#photo-selector').setOrganizer();
+    
+}(jQuery, window));  

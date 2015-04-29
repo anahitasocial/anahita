@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
 <?php if ( count($pages) > 1 ) : ?>
-<div class="pagination" data-behavior="Pagination" data-pagination-options="<?= htmlspecialchars(json_encode($options), ENT_QUOTES, 'UTF-8') ?>">
+<div class="pagination" data-behavior="pagination" data-pagination-options="<?= htmlspecialchars(json_encode($options), ENT_QUOTES, 'UTF-8') ?>">
 	<ul>	    	
 		<li class="prev <?= $paginator['offset'] == 0 ? 'disabled' : ''?>">
 			<a href="<?= $prev_page ?>">

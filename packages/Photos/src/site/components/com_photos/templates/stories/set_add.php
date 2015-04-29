@@ -14,36 +14,22 @@
 	<?php endif; ?>
 
 	<?php if($object->description): ?>
-	<div class="entity-description"><?= @content($object->description) ?></div>
-	<?php endif; ?>
-	
-	<?php if ( $object->hasCover() ) : ?>
-	<div class="entity-portrait-medium">
-		<a href="<?= @route($object->getURL()) ?>">
-			<img src="<?= $object->getCoverSource('medium') ?>" />
-		</a>
+	<div class="entity-description">
+	    <?= @content( nl2br($object->description), array('exclude'=>'gist') ) ?>
 	</div>
-	<?php endif ?>
-	
-	<div data-behavior="Mediabox">
-		<div class="media-grid">	
-			<?php $photos = $object->photos->order('photoSets.ordering')->limit(15)->fetchSet(); ?>
-			<?php foreach( $photos as $i=>$photo ): ?>
-			<?php 
-			$rel = 'lightbox[actor-set-'.$photo->owner->id.' 900 900]';
-		
-			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
-			(($photo->title && $photo->description) ? ' :: ' : '').
-			@helper('text.script', $photo->description);
-			?>
-			<?php if ( $i > 12 ) break; ?>
-			<div class="entity-portrait">
-				<a rel="<?= $rel ?>" title="<?= $caption ?>" href="<?= @route($photo->getPortraitURL('medium')) ?>">
-					<img src="<?= $photo->getPortraitURL('square') ?>" />
-				</a>
-			</div>
-		<?php endforeach; ?>
+	<?php endif; ?>
+
+	<div class="media-grid">	
+		<?php $photos = $object->photos->order('photoSets.ordering')->limit(10)->fetchSet(); ?>
+		<?php foreach( $photos as $i=>$photo ): ?>
+		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
+		<?php if ( $i > 12 ) break; ?>
+		<div class="entity-portrait">
+			<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
+				<img src="<?= $photo->getPortraitURL('square') ?>" />
+			</a>
 		</div>
+	    <?php endforeach; ?>
 	</div>
 	
 	<div class="entity-meta">

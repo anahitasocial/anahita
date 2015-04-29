@@ -12,8 +12,13 @@
     </div>
     
     <div class="well">    
-        <button data-trigger="BS.showPopup" data-bs-showpopup-url="<?= @route('option=com_people&view=session&layout=modal_simple') ?>" class="btn btn-large"><?= @text('COM-CONNECT-ACTION-MAP-ACCOUNT')?></button>
-        <button data-trigger="BS.showPopup" data-bs-showpopup-url="<?= @route('option=com_people&view=person&layout=add&modal=1') ?>" class="btn btn-large"><?= @text('COM-CONNECT-ACTION-SIGNUP')?></button>
+        <button data-trigger="OpenModal" data-url="<?= @route('option=com_people&view=session&layout=modal&connect=1') ?>" class="btn">
+            <?= @text('Sign In') ?>
+        </button> 
+        
+        <button data-trigger="OpenModal" data-url="<?= @route('option=com_people&view=person&layout=add&modal=1') ?>" class="btn">
+            <?= @text('Register') ?>
+        </button>
     </div>
     
     <?php else : ?>
@@ -23,7 +28,7 @@
     </div>
     
     <div class="well"> 
-    	<button data-request-redirect="true" data-trigger="BS.showPopup" data-bs-showpopup-url="<?= @route('option=com_people&view=session&layout=modal_simple') ?>" class="btn btn-large btn-primary">
+    	<button data-trigger="OpenModal" data-url="<?= @route('option=com_people&view=session&layout=modal&connect=1') ?>" class="btn btn-primary">
     		<?= @text('COM-CONNECT-LOGIN-PROMPT-LOGIN')?>
     	</button>
     </div>

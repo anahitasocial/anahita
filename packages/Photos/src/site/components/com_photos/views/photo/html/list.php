@@ -1,6 +1,10 @@
 <?php defined('KOOWA') or die; ?>
 
-<div class="an-entity an-entity-portraiable an-record an-removable">
+<?php if($photo->authorize('edit')) : ?>
+<div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
+<?php else : ?>
+<div class="an-entity">
+<?php endif; ?>
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($photo->author) ?>
@@ -23,15 +27,13 @@
 		</a>
 	</div>
 	
-	<div class="entity-title-wrapper">
-		<h3 data-behavior="<?= $photo->authorize('edit') ? 'Editable' : ''; ?>" class="entity-title <?= $photo->authorize('edit') ? 'editable' : '' ?>" data-editable-options="{'url':'<?= @route($photo->getURL()) ?>','name':'title', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-TITLE-PROMPT') ?>'}">
-		<?= @escape($photo->title) ?>
-        </h3>		
-	</div>
-	
-	<div class="entity-description-wrapper <?= $photo->authorize('edit') ? 'editable' : '' ?>">
-		<div data-behavior="<?= $photo->authorize('edit') ? 'Editable' : ''; ?>" class="entity-description <?= $photo->authorize('edit') ? 'editable' : '' ?>" data-editable-options="{'url':'<?= @route($photo->getURL()) ?>','name':'description', 'input-type':'textarea', 'prompt':'<?= @text('COM-PHOTOS-MEDIUM-DESCRIPTION-PROMPT') ?>'}">
-		<?= @content($photo->description, array('exclude'=>array('syntax','video'))) ?>
+	<div class="entity-description-wrapper">
+		<h3 class="entity-title">
+			<?= @escape($photo->title) ?>
+		</h3>
+		
+		<div class="entity-description">
+			<?= @content(nl2br($photo->description), array('exclude'=>array('gist','video'))) ?>
 		</div>
 	</div>
 	

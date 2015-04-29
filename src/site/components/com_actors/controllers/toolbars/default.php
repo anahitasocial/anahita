@@ -66,7 +66,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     	$actor = $this->getController()->actor;
     	$type = $this->getController()->type;
     	
-    	if($actor->authorize('leadable') && $type == 'followers')
+    	if($actor->authorize('lead') && $type == 'followers')
             $this->addCommand('AddFollowers', array('actor' => $actor));    
     }
     
@@ -90,15 +90,13 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         if($actor1->isAdministrable())
         {
         	//if adding new followers is allowed
-	   		if($actor1->authorize('leadable'))
+	   		if($actor1->authorize('lead'))
 	        {
-	            $this->_update = false;
-	        	
-	        	if($command = $this->getAddfollowerCommand($actor1, $actor2))
+	        	if($command = $this->getLeadCommand($actor1, $actor2))
 	        	{
 	           		$labels = array();
-	            	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-FOLLOWER-ADD';
-	            	$labels[] = 'COM-ACTORS-SOCIALGRAPH-FOLLOWER-ADD';
+	            	$labels[] = 'COM-'.strtoupper($this->getIdentifier()->package).'-SOCIALGRAPH-'.strtoupper($command->action);
+	            	$labels[] = 'COM-ACTORS-SOCIALGRAPH-'.strtoupper($command->action);
 	            	$command->label = translate($labels);
 	                    
 	        		$this->addCommand($command);
@@ -165,19 +163,18 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     
         $this->addListCommands();
         
-        if($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor))
-        {
-        	$this->addCommand('notification-settings', array('label' => JText::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
-        	->getCommand('notification-settings')
-        	->setAttribute('data-trigger', 'BS.showPopup')
-        	->setAttribute('data-bs-showpopup-url', JRoute::_('option=notifications&view=settings&layout=modal&oid='.$actor->id));
-        }
-    
         if($actor->authorize('administration'))
         {
-            $this->addCommand('edit', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
-                  ->getCommand('edit')
-                  ->href($actor->getURL(false).'&get=settings');
+            $this->addCommand('edit-actor', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
+            ->getCommand('edit-actor')
+            ->href($actor->getURL().'&get=settings');
+        }
+        
+        if($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor))
+        {
+        	$this->addCommand('notifications-settings', array('label' => JText::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
+        	->getCommand('notifications-settings')
+        	->href(JRoute::_('option=notifications&view=settings&layout=modal&oid='.$actor->id));
         }
     }
     
@@ -189,47 +186,47 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      *
      * @return LibBaseTemplateObject
      */   
-    public function getFollowCommand($actor1, $actor2)
-    {
-        //actor1 can only follow $actor2 if and only if $actor1 is leadable and $actor2 is followable           
-        if(!$actor2->isFollowable() || !$actor1->isLeadable())
-            return null;
-                         
-        if($actor1->eql($actor2))
+    public function getFollowCommand($viewer, $actor)
+    {                           
+        if($viewer->eql($actor))
             return null;   
         
-        if($actor2->authorize('unfollow', array('viewer'=>$actor1)))
+        if($viewer->following($actor))
         {
-            $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'unfollow'));
-            $command->name = 'unfollow';
-            
-            return $command;
-        }
-        elseif(!$actor1->following($actor2) && $actor2->authorize('follower', array('viewer'=>$actor1)))
-        {
-            $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'follow'));
-            $command->name = 'follow';
-            
-            return $command;
-        }
-        elseif(!$actor1->following($actor2)) 
-        {
-            if($actor2->requested($actor1) || $actor2->authorize('requester', array('viewer'=>$actor1)))
+            if($actor->authorize('unfollow', array('viewer'=>$viewer)))
             {
-                if($actor2->requested($actor1)) 
+                $command = $this->getCommand('follow', array('receiver'=>$actor, 'actor'=>$viewer, 'action'=>'unfollow'));
+                $command->name = 'unfollow';
+                
+                return $command;
+            }
+        }
+        else 
+        {
+            if($actor->authorize('requester', array('viewer'=>$viewer)))
+            {
+                if($viewer->requested($actor)) 
                 {          
-                    $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'deleterequest'));
-                    $command->name = 'unfollow';
-                    $command->label = 'unrequest';
+                    $command = $this->getCommand('follow', array('receiver'=>$actor, 'actor'=>$viewer, 'action'=>'deleterequest'));
+                    $command->name = 'deleterequest';
+                    $command->label = 'deleterequest';
                 } 
                 else 
                 {
-                    $command = $this->getCommand('follow', array('receiver'=>$actor2, 'actor'=>$actor1, 'action'=>'addrequest'));
-                    $command->label = 'request';                    
+                    $command = $this->getCommand('follow', array('receiver'=>$actor, 'actor'=>$viewer, 'action'=>'addrequest'));
+                    $command->name = 'addrequest';
+                    $command->label = 'addrequest';                    
                 }
                 
                 return $command;                
-            }                        
+            }
+            elseif($actor->authorize('follower', array('viewer'=>$viewer)))
+            {
+                $command = $this->getCommand('follow', array('receiver'=>$actor, 'actor'=>$viewer, 'action'=>'follow'));
+                $command->name = 'follow';
+                
+                return $command;
+            }
         }
     }
         
@@ -243,9 +240,6 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */   
     public function getBlockCommand($actor1, $actor2)
     {
-        //actor1 can only block $actor2 if and only if
-        //$actor1 is followable and $actor2 is leadable this
-        //prevents actor2 from following actor2       
         if(!$actor1->isFollowable() || !$actor2->isLeadable())
             return null;
         
@@ -254,14 +248,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         
         if($actor1->blocking($actor2)) 
         {
-            $command = $this->getCommand('block', array('receiver' => $actor1, 'actor' => $actor2, 'action' => 'unblock'));
+            $command = $this->getCommand('block', array('receiver' => $actor2, 'actor' => $actor1, 'action' => 'unblock'));
             $command->name = 'unblock';
             
             return $command;
         }        
-        elseif($actor2->authorize('blocker', array('viewer'=>$actor1))) 
+        elseif($actor2->authorize('block', array('viewer'=>$actor1))) 
         {
-            $command = $this->getCommand('block', array('receiver' => $actor1, 'actor' => $actor2, 'action' => 'block'));	
+            $command = $this->getCommand('block', array('receiver' => $actor2, 'actor' => $actor1, 'action' => 'block'));	
             $command->name = 'block';
             
             return $command;                        
@@ -269,27 +263,39 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     }
 
 	/**
-     * Return commands add/remove leadables (new followers) if $actor1 (context) can perform those commands on $actor2
+     * Lead a person command
      *
      * @param ComActorsDomainEntityActor  $actor that is going to be followed 
-     * @param ComPeopleDomainEntityPerson $leadable person that is going to be added as a follower to the $actor
+     * @param ComPeopleDomainEntityPerson $person person that is going to be added as a follower to the $actor
      *
      * @return LibBaseTemplateObject
      */ 
-    public function getAddfollowerCommand($actor, $leadable)
+    public function getLeadCommand($actor, $person)
     {    	
-    	if(!$actor->isFollowable() || !$leadable->isLeadable())
+    	if(!$actor->isFollowable() || !$person->isLeadable())
             return null;
     	
-        if($actor->eql($leadable))
-            return null;    
+        if($actor->eql($person))
+            return null; 
 
-        if($leadable->following($actor) || $actor->blocking($leadable))
+        if($actor->blocking($person))
             return null;    
-            
-        $command = $this->getCommand('addfollower', array('receiver'=>$actor, 'actor'=>$leadable, 'action'=>'addfollower'));
-        $command->name = 'addfollower';
-            
+        
+        if($person->following($actor) && $actor->authorize('administration'))
+        {
+           $command = $this->getCommand('lead', array('receiver'=> $person, 'actor' => $actor, 'action'=>'unlead'));
+           $command->name = 'unlead'; 
+        }
+        elseif(!$person->following($actor) && $actor->authorize('lead'))
+        {
+           $command = $this->getCommand('lead', array('receiver'=> $person, 'actor' => $actor, 'action'=>'lead'));
+           $command->name = 'lead'; 
+        }
+        else 
+        {
+            return null;
+        }
+   
        return $command;
     }    
     
@@ -340,7 +346,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      *
      * @return void
      */
-    protected function _commandAddFollower($command)
+    protected function _commandLead($command)
     {
         $this->_buildCommand($command);                                   
     }
@@ -379,25 +385,13 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     protected function _buildCommand($command)
     {
     	$url = $command->receiver->getURL();
-               
-        $command->data(array('action'=>$command->action,'actor'=>$command->actor->id));
+    	
+        $command->setAttribute('data-action', $command->action);
+        $command->setAttribute('data-actor', $command->actor->id);
         
          if(!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json')
             $url .= '&layout=list';
                 
-        $command->href($url); 
-
-    	if(!$this->_update)
-        {
-            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',remove:\'!.an-record\'}');
-        }
-        elseif(!$this->_use_post)
-        {
-            $command->setAttribute('data-trigger','Request')->setAttribute('data-request-options','{method:\'post\',replace:\'!.an-record\'}');
-        }
-        else
-        {
-            $command->setAttribute('data-trigger','Submit');
-        }
+        $command->href($url);
     }
 }

@@ -63,17 +63,14 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 											
 		$this->_cache_file = $config->cache_file;
 				
-		if ( is_readable($this->_cache_file)) {
+		if(is_readable($this->_cache_file))
 			$this->_cache_data = unserialize(file_get_contents($this->_cache_file));
-		}
 		
-		if ( !is_array($this->_cache_data) ) {
+		if(!is_array($this->_cache_data))
 			$this->_cache_data = array();
-		}
 		
-		if ( !isset($this->_cache_data['timestamp']) ) {
+		if(!isset($this->_cache_data['timestamp']))
 			$this->_cache_data = array('timetamp' => time());
-		}
 	}
 
 		
@@ -117,7 +114,8 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 	public function write($output)
 	{
 		//lets parse the file		
-		if ( $this->_hasBeenModified($this->_file) || !file_exists($output)) {
+		if($this->_hasBeenModified($this->_file) || !file_exists($output)) 
+		{
 			//get the data
 			file_put_contents($output, $this->getData());
 			//update the timestamp
@@ -138,28 +136,37 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 	protected function _parseFile($file)
 	{
 		//if modified parse it again
-		if ( $this->_hasBeenModified($file) ) 
+		if($this->_hasBeenModified($file)) 
 		{
 			$imports = array();
 			$content = file_get_contents($file);
 			//lets compress the file
 			$matches = array();
-			$dir 	 = dirname($file);
-			if ( preg_match_all('/\/\/@depends (.*)/', $content, $matches) ) {
-				foreach($matches[1] as $i => $match) {
+			$dir = dirname($file);
+			
+			if(preg_match_all('/\/\/@depends (.*)/', $content, $matches)) 
+			{
+				foreach($matches[1] as $i => $match) 
+				{
 					$imported_file = $dir.'/'.$match;
 					$imports[] = $imported_file;
-					if ( file_exists($imported_file) ) {
-						$data 	 = $this->_parseFile($imported_file);
+					
+					if(file_exists($imported_file)) 
+					{
+						$data = $this->_parseFile($imported_file);
 						$content = str_replace($matches[0][$i], $data, $content);
 					}
 				}
 			}
+			
 			$content = "//".str_replace(JPATH_ROOT,'',$file)."\n".$content;
 			$this->_cache_data[$file] = array('data'=> $content,'imports' => $imports);
-		} else {
+		} 
+		else 
+		{
 			$content = $this->_cache_data[$file]['data'];
 		}
+		
 		return $content;
 	}	
 	
@@ -173,21 +180,17 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 	 */
 	protected function _hasBeenModified($file)
 	{		
-		if ( !isset($this->_cache_data[$file]) ) {
+		if(!isset($this->_cache_data[$file]))
 			return true;
-		}
 		
-		if ( filemtime($file) > $this->_cache_data['timestamp'] ) {
+		if(filemtime($file) > $this->_cache_data['timestamp'])
 			return true;
-		}
 		
 		$imports = $this->_cache_data[$file]['imports'];
 		
-		foreach($imports as $import) {
-			if ( $this->_hasBeenModified($import) ) {
+		foreach($imports as $import)
+			if($this->_hasBeenModified($import))
 				return true;
-			}
-		}
 		
 		return false;	
 	}

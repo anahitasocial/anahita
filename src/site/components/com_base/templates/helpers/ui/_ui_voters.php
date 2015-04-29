@@ -7,7 +7,7 @@ if ( is($entity, 'ComBaseDomainEntityComment') ) {
 $url = $entity->getURL().'&get=voters&'.$query
 ?>
 <?php if( $entity->voteUpCount > 0 ): ?>
-<div class="an-meta">
+
     <?php if (  $entity->voteUpCount == 1 ) : ?>
         <?php if ( $entity->voterUpIds->offsetExists($viewer->id) ) : ?>    
             <?= @text('LIB-AN-VOTE-ONLY-YOU-VOTED')?> 
@@ -30,5 +30,5 @@ $url = $entity->getURL().'&get=voters&'.$query
             <?= sprintf(@text('LIB-AN-VOTE-OTHER-VOTED-POPOVER'), @route($url), $entity->voteUpCount)?> 
         <?php endif;?>
     <?php endif;?>
-</div>
+
 <?php endif; ?>

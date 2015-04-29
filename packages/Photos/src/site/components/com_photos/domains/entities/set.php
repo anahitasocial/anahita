@@ -42,11 +42,10 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 	protected function _initialize(KConfig $config)
 	{	
 		$config->append(array(			
-			'attributes' 	=> array(
-				'name'				   => array('required'=>true),
-				'coverFileIdentifier'  => 'filename'
+			'attributes' => array(
+				'name' => array('required'=>true)
 			),
-			'behaviors'		=> array(				
+			'behaviors'	=> array(				
 				'hittable'
 			),			
 			'relationships'	=> array(
@@ -65,17 +64,14 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 	 */
 	public function getCoverSource($size=ComPhotosDomainEntityPhoto::SIZE_SQUARE)
 	{
-		if($this->hasCover())         
-        {
-            $filename  = $this->coverFileIdentifier;
-            //remove the extension 
-            $extension = JFile::getExt($filename);
-            $name      = JFile:: stripExt($filename);
-            $filename = $name.'_'.$size.'.'.$extension;                               
-			return $this->owner->getPathURL('com_photos/'.$filename);
-        }
-		
-		return 'base://media/com_photos/images/default.png';		
+        $cover = $this->photos->order('photoSets.ordering')->fetch();
+        $filename  = $cover->filename;
+        
+        //remove the extension 
+        $extension = JFile::getExt($filename);
+        $name = JFile:: stripExt($filename);
+        $filename = $name.'_'.$size.'.'.$extension;                               
+		return $this->owner->getPathURL('com_photos/'.$filename);	
 	}
 	
 	/**
@@ -90,18 +86,12 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 		
 		foreach($photos as $photo) 
 		{
-			if ( !$this->photos->find($photo) ) 
+			if(!$this->photos->find($photo)) 
 			{
 			    $this->photos->insert($photo, array(
-			         'author'=> $photo->author
+			         'author' => $photo->author
                 ));
 			}
-		}
-
-		if(!$this->hasCover())
-		{
-			$cover = is_array($photos) ? $photos[0] : $photos->top();
-			$this->setCover($cover);
 		}
 	}
 	
@@ -115,13 +105,9 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 	{
 		$photos = AnHelperArray::getIterator($photo);
 		
-		foreach($photos as $photo) {
-			if ( $edge = $this->photos->find($photo) )
+		foreach($photos as $photo)
+			if($edge = $this->photos->find($photo))
 				$edge->delete();
-				
-			if( $this->isCover($photo) )
-				$this->coverFileIdentifier = null;
-		}
 	}
 	
 	/**
@@ -144,38 +130,6 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 			if($edge = $this->getService('repos://site/photos.edge')->fetch(array('set'=>$this,'photo.id'=>$photo_id)))
 				$edge->ordering = $index + 1;
 		}
-	}
-	
-	/**
-	 * Return true or false if the set has a cover
-	 * 
-	 * @return boolean
-	 */
-	public function hasCover()
-	{
-		return strlen($this->coverFileIdentifier) > 0;
-	}
-	
-	/**
-	 * Determines if the given photo is the set cover or not.
-	 * 
-	 * @param $photo a ComPhotosDomainEntityPhoto object
-	 * @return boolean
-	 */
-	public function isCover($photo)
-	{
-		return $this->coverFileIdentifier == $photo->filename;
-	}
-	
-	/**
-	 * Sets the set cover image
-	 * 
-	 * @return null
-	 * @param $photo a ComPhotosDomainEntityPhoto object
-	 */
-	public function setCover($photo)
-	{
-		$this->coverFileIdentifier = $photo->filename;
 	}
 	
 	/**

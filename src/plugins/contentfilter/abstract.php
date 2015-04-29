@@ -70,17 +70,23 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 	{
 	    if($context->config->filter)
 	    {
-	        $filters = (array) KConfig::unbox($context->config->filter);
+	        $filters = (array) KConfig::unbox( $context->config->filter );
 	        
-            if(!in_array($this->_name, $filters))
-                   return $context->data;
+            if ( !in_array($this->_name, $filters ) )
+            {
+               return $context->data; 
+            }
 	    }
 	    
-	    if($context->config->exclude)
+	    if( $context->config->exclude )
 	    {
 	        $exclude = (array) KConfig::unbox($context->config->exclude);
-	        if(in_array($this->_name, $exclude))
-	            return $context->data;
+            
+	        if ( in_array( $this->_name, $exclude ) )
+            {
+                return $context->data;
+            }
+	            
 	    }
 	    
 		$context->data = $this->filter($context->data, $context->config);
@@ -104,7 +110,9 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 			$matches = $matches[0];
 			
 			foreach($matches as $i => $tag) 
-				$replacements[] = $i.'-'.md5($tag);
+            {
+               $replacements[] = $i.'-'.md5($tag); 
+            }
 				
 			$text = str_replace($matches, $replacements, $text);
 		}
@@ -121,7 +129,9 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 	 */
 	protected function _replaceTags(&$text)
 	{
-		if ( !empty($this->_stripped_tags) )
-			$text = str_replace($this->_stripped_tags[0], $this->_stripped_tags[1], $text);
+		if ( !empty($this->_stripped_tags) ) 
+        {
+           $text = str_replace($this->_stripped_tags[0], $this->_stripped_tags[1], $text); 
+        }	
 	}	
 }

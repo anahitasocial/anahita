@@ -46,10 +46,10 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
             $text = str_replace('<head>', '<head>'.$this->_renderHead(), $text);
 
             //render the styles
-            $text = str_replace('</head>',$this->_renderStyles().'</head>', $text);
+            $text = str_replace('</head>', $this->_renderStyles().'</head>', $text);
 
             //render the scripts                
-            $text = str_replace('</body>',$this->_renderScripts().'</body>', $text);
+            $text = str_replace('</body>', $this->_renderScripts().'</body>', $text);
         }
     }
     
@@ -101,16 +101,21 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $document = JFactory::getDocument();
         $string = '';
         
-        // Generate script file links
-        foreach($document->_scripts as $src => $type)
-            $string .= '<script type="'.$type.'" src="'.$src.'"></script>';
-        
-        // Generate script declarations
-        foreach($document->_script as $type => $content)
-            $string .= '<script type="'.$type.'">'.$content.'</script>';
-        
+        //include tranlsation files
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
-                
+        
+        // Generate script file links
+        $scripts = array_reverse($document->_scripts);
+        
+        foreach($scripts as $src => $type)
+            $string .= '<script type="'.$type.'" src="'.$src.'"></script>';    
+            
+        // Generate script declarations
+        $script = $document->_script;
+        
+        foreach($script as $type => $content)
+            $string .= '<script type="'.$type.'">'.$content.'</script>';    
+            
         return $string;         
     }
    

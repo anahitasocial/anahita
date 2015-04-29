@@ -87,6 +87,7 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
 	public function setExifData($data = array())
 	{
 		$this->setValue('exif_data', $data);
+		
 		return $this;
 	}
 	
@@ -100,6 +101,7 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
 		//keep the photos set to use
 		//for _afterEntityDelete
 		$this->__sets = $this->sets->fetchSet();
+		
 		parent::delete();
 	}
 	
@@ -132,14 +134,8 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
         {            
 			foreach($this->__sets as $set)
 			{
-				$count = $set->photos->getTotal();
-				if( $count == 0 )
+				if( $set->photos->getTotal() == 0 )
 					$set->delete();
-				else 
-				{
-					if( $set->coverFileIdentifier == $context->filename )
-						$set->coverFileIdentifier = $set->photos->fetch()->filename;
-				}
 			}
 		}
 	}	

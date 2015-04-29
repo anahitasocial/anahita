@@ -66,7 +66,7 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
             'modifiable' => array(
                 'modifiable_properties' => array('name','body')
             ),
-            'commentable' => array('comment'=>array('length'=>5000,'format'=>'post'))
+            'commentable' => array( 'comment'=>array( 'length'=>5000 ) )
         ));
         
 		parent::_initialize($config);

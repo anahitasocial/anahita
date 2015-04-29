@@ -27,6 +27,9 @@
  */
 class ComMediumViewMediaHtml extends ComBaseViewHtml
 {
+
+    
+    
    /**
      * Initializes the options for the object
      *
@@ -46,6 +49,6 @@ class ComMediumViewMediaHtml extends ComBaseViewHtml
 		
 		$config->append(array(
 		    'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_medium/media')
-		));
+        ));
     }		
 }

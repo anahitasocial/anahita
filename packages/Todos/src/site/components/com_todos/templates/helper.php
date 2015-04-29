@@ -70,6 +70,6 @@ class ComTodosTemplateHelper extends KTemplateHelperAbstract
 			array(ComTodosDomainEntityTodo::PRIORITY_LOWEST,	JText::_('COM-TODOS-TODO-PRIORITY-LOWEST'))
 		);
 		
-		return $html->select('priority', array('options'=>$options, 'selected'=>$selected))->class('input-medium');
+		return $html->select('priority', array('options'=>$options, 'selected'=>$selected))->class('input-medium')->id('todo-priority');
 	}
 }

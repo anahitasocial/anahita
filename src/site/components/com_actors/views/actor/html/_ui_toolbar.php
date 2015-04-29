@@ -3,8 +3,12 @@
 <?php $commands = $toolbar->getCommands() ?>
 
 <?php if(count($commands)): ?>
-    <div class="actor-profile-toolbar btn-toolbar clearfix" data-behavior="BS.Dropdown">
-        <?php if ($command = $commands->extract('follow')): ?>
+    <div class="actor-profile-toolbar btn-toolbar clearfix">
+    	<?php if ($command = $commands->extract('addrequest')): ?>
+            <?= @helper('ui.command', $command->class('btn btn-primary')) ?>
+        <?php elseif ($command = $commands->extract('deleterequest')): ?>
+            <?= @helper('ui.command', $command->class('btn btn-primary')) ?>    
+        <?php elseif ($command = $commands->extract('follow')): ?>
             <?= @helper('ui.command', $command->class('btn btn-primary')) ?> 
         <?php elseif ($command = $commands->extract('unfollow')): ?>
             <?= @helper('ui.command', $command->class('btn')) ?> 

@@ -7,10 +7,9 @@
 		<?php if($type == 'leadables'): ?>
 		<h3><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS-ADD-TITLE') ?></h3>
         <?php endif; ?>
-		
-        <?= @helper('ui.filterbox', @route('view='.@listItemView()->getName().'&layout=list&get=graph&type='.$type.'&id='.$actor->id)) ?>
-		
-		<div class="an-entities-wrapper">	
+		<?php $url = 'view='.@listItemView()->getName().'&layout=list&get=graph&type='.$type.'&id='.$actor->id; ?>
+        <?= @helper('ui.filterbox', @route($url)) ?>
+		<div id="an-actor-socialgraph" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">	
 	    <?= @template('list') ?>
 		</div>
 	</div>

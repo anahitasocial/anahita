@@ -4,7 +4,7 @@
 
 <div id="an-actors" class="an-entities an-actors">
     <?php foreach($item->requesters as $actor ) : ?>
-    <div class="an-entity an-record">
+    <div class="an-entity">
         <div class="entity-portrait-square">
             <?= @avatar($actor) ?>
         </div>
@@ -24,14 +24,13 @@
             </div>
                 
             <div class="entity-actions">
-                <button data-trigger="Submit" href="<?= @route($item->getURL().'&action=addblocked&actor='.$actor->id) ?>" class="btn">
-                    <i class="icon-ban-circle"></i>&nbsp;<?= @text('COM-ACTORS-SOCIALGRAPH-BLOCK') ?>
-                </button>
-                <button data-trigger="Submit" href="<?= @route($item->getURL().'&action=ignorerequester&requester='.$actor->id) ?>" class="btn">
-                    <i class="icon-remove"></i>&nbsp;<?= @text('LIB-AN-ACTION-REMOVE') ?>
-                </button>            
-                <button data-trigger="Submit" href="<?= @route($item->getURL().'&action=confirmrequester&requester='.$actor->id) ?>" class="btn">
-                    <i class="icon-ok"></i>&nbsp;<?= @text('LIB-AN-ACTION-CONFIRM') ?>
+            	<?php $url = $item->getURL().'&layout=list'; ?>
+                <button data-action="ignorerequest" data-actor="<?= $actor->id ?>" href="<?= @route($url) ?>" class="btn">
+                    <?= @text('LIB-AN-ACTION-IGNORE') ?>
+                </button> 
+                            
+                <button data-action="confirmrequest" data-actor="<?= $actor->id ?>" href="<?= @route($url) ?>" class="btn btn-primary">
+                    <?= @text('LIB-AN-ACTION-CONFIRM') ?>
                 </button>                            
             </div>
         </div>

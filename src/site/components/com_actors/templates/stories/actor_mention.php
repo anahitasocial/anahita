@@ -12,7 +12,7 @@
     	<?php if($object->excerpt): ?>
     	<?= @helper('text.truncate', @escape($object->excerpt), array('length'=>200)); ?>
     	<?php else: ?>
-	    <?= @helper('text.truncate', @content($object->body, array('exclude'=>'syntax')), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+	    <?= @helper('text.truncate', @content(nl2br( $object->body ), array('exclude'=>'gist')), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
 		<?php endif; ?>
 	</div>
 </data>

@@ -1,0 +1,31 @@
+{
+  "name": "anahita",
+  "version": "1.0.0",
+  "description": "Anahita Social Networking Platform and Framework",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/anahitasocial/anahita.git"
+  },
+  "keywords": [
+    "socialnetworking",
+    "opensource",
+    "knowledgesharing",
+    "opendata",
+    "openaccess"
+  ],
+  "author": "Rastin Mehr",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anahitasocial/anahita/issues"
+  },
+  "homepage": "https://www.GetAnahita.com",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-contrib-uglify": "^0.9.1"
+  }
+}

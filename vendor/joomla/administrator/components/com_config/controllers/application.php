@@ -51,34 +51,12 @@ class ConfigControllerApplication extends ConfigController
 
 		// PRE-PROCESS SOME LIST
 
-		// -- Editors --
-
-		// compile list of the editors
-		$query = 'SELECT element AS value, name AS text'
-				.' FROM #__plugins'
-				.' WHERE folder = "editors"'
-				.' AND published = 1'
-				.' ORDER BY ordering, name'
-				;
-		$db->setQuery($query);
-		$edits = $db->loadObjectList();
-
 		// -- Show/Hide --
 
 		$show_hide		= array (JHTML::_('select.option', 1, JText::_('Hide')), JHTML::_('select.option', 0, JText::_('Show')),);
 
 		$show_hide_r 	= array (JHTML::_('select.option', 0, JText::_('Hide')), JHTML::_('select.option', 1, JText::_('Show')),);
-
-		// SITE SETTINGS
-		$lists['offline'] = JHTML::_('select.booleanlist', 'offline', 'class="inputbox"', $row->offline);
-		if (!$row->editor) {
-			$row->editor = '';
-		}
-		// build the html select list
-		$lists['editor'] 		= JHTML::_('select.genericlist',  $edits, 'editor', 'class="inputbox" size="1"', 'value', 'text', $row->editor);
-		$listLimit 				= array (JHTML::_('select.option', 5, 5), JHTML::_('select.option', 10, 10), JHTML::_('select.option', 15, 15), JHTML::_('select.option', 20, 20), JHTML::_('select.option', 25, 25), JHTML::_('select.option', 30, 30), JHTML::_('select.option', 50, 50), JHTML::_('select.option', 100, 100),);
-		$lists['list_limit'] 	= JHTML::_('select.genericlist',  $listLimit, 'list_limit', 'class="inputbox" size="1"', 'value', 'text', ($row->list_limit ? $row->list_limit : 50));
-    	
+	
 		// DEBUG
 		$lists['debug'] 		= JHTML::_('select.booleanlist', 'debug', 'class="inputbox"', $row->debug);
 		$lists['debug_lang'] 	= JHTML::_('select.booleanlist', 'debug_lang', 'class="inputbox"', $row->debug_lang);
@@ -86,18 +64,10 @@ class ConfigControllerApplication extends ConfigController
 		// DATABASE SETTINGS
 
 		// SERVER SETTINGS
-		$lists['gzip'] 			= JHTML::_('select.booleanlist', 'gzip', 'class="inputbox"', $row->gzip);
 		$errors 				= array (JHTML::_('select.option', -1, JText::_('System Default')), JHTML::_('select.option', 0, JText::_('None')), JHTML::_('select.option', E_ERROR | E_WARNING | E_PARSE, JText::_('Simple')), JHTML::_('select.option', E_ALL ^ E_STRICT, JText::_('Maximum')));
 		
 		$lists['error_reporting'] = JHTML::_('select.genericlist',  $errors, 'error_reporting', 'class="inputbox" size="1"', 'value', 'text', $row->error_reporting);
 		$lists['enable_ftp'] 	= JHTML::_('select.booleanlist', 'ftp_enable', 'class="inputbox"', intval($row->ftp_enable));
-
-		$forceSSL = array(
-								JHTML::_('select.option', 0, JText::_('None')),
-								JHTML::_('select.option', 1, JText::_('Administrator Only')),
-								JHTML::_('select.option', 2, JText::_('Entire Site')),
-						);
-		$lists['force_ssl'] = JHTML::_('select.genericlist', $forceSSL, 'force_ssl', 'class="inputbox" size="1"', 'value', 'text', @$row->force_ssl);
 
 		// LOCALE SETTINGS
 		$timeoffset = array (
@@ -173,23 +143,11 @@ class ConfigControllerApplication extends ConfigController
 		$lists['memcache_persist'] = JHTML::_('select.booleanlist', 'memcache_settings[persistent]', 'class="inputbox"', @$row->memcache_settings['persistent']);
 		$lists['memcache_compress'] = JHTML::_('select.booleanlist', 'memcache_settings[compression]', 'class="inputbox"', @$row->memcache_settings['compression']);
 
-		// META SETTINGS
-		$lists['MetaAuthor'] 	= JHTML::_('select.booleanlist', 'MetaAuthor', 'class="inputbox"', $row->MetaAuthor);
-		$lists['MetaTitle'] 	= JHTML::_('select.booleanlist', 'MetaTitle', 'class="inputbox"', $row->MetaTitle);
-
 		// SEO SETTINGS
 		$lists['sef'] 		= JHTML::_('select.booleanlist', 'sef', 'class="inputbox"', $row->sef);
 		$lists['sef_rewrite'] 	= JHTML::_('select.booleanlist', 'sef_rewrite', 'class="inputbox"', $row->sef_rewrite);
 		$lists['sef_suffix'] 	= JHTML::_('select.booleanlist', 'sef_suffix', 'class="inputbox"', $row->sef_suffix);
-
-		// FEED SETTINGS
-		$formats	= array (JHTML::_('select.option', 'RSS2.0', JText::_('RSS')), JHTML::_('select.option', 'Atom', JText::_('Atom')));
-		$summary	= array (JHTML::_('select.option', 1, JText::_('Full Text')), JHTML::_('select.option', 0, JText::_('Intro Text')),);
-		$lists['feed_limit']	= JHTML::_('select.genericlist',  $listLimit, 'feed_limit', 'class="inputbox" size="1"', 'value', 'text', ($row->feed_limit ? $row->feed_limit : 10));
-		$emailOptions = array (	JHTML::_('select.option', 'author', JText::_('Author Email')),
-								JHTML::_('select.option', 'site', JText::_('Site Email')));
-		$lists['feed_email'] = JHTML::_('select.genericlist', $emailOptions, 'feed_email', 'class="inputbox" size="1"', 'value', 'text', (@$row->feed_email) ? $row->feed_email : 'author');
-
+		
 		// SESSION SETTINGS
 		$stores = JSession::getStores();
 		$options = array();
@@ -253,9 +211,6 @@ class ConfigControllerApplication extends ConfigController
 		$config_array = array();
 
 		// SITE SETTINGS
-		$config_array['offline']	= JRequest::getVar('offline', 0, 'post', 'int');
-		$config_array['editor']		= JRequest::getVar('editor', 'tinymce', 'post', 'cmd');
-		$config_array['list_limit']	= JRequest::getVar('list_limit', 20, 'post', 'int');
 		$config_array['helpurl']	= JRequest::getVar('helpurl', 'http://www.GetAnahita.com', 'post', 'string');
 
 		// DEBUG
@@ -267,18 +222,12 @@ class ConfigControllerApplication extends ConfigController
 		$config_array['sef_rewrite']	= JRequest::getVar('sef_rewrite', 0, 'post', 'int');
 		$config_array['sef_suffix']		= JRequest::getVar('sef_suffix', 0, 'post', 'int');
 
-		// FEED SETTINGS
-		$config_array['feed_limit']		= JRequest::getVar('feed_limit', 10, 'post', 'int');
-		$config_array['feed_email']		= JRequest::getVar('feed_email', 'author', 'post', 'word');
-
 		// SERVER SETTINGS
 		$config_array['secret']				= JRequest::getVar('secret', 0, 'post', 'string');
-		$config_array['gzip']				= JRequest::getVar('gzip', 0, 'post', 'int');
 		$config_array['error_reporting']	= JRequest::getVar('error_reporting', -1, 'post', 'int');
 		$config_array['log_path']			= JRequest::getVar('log_path', JPATH_ROOT.DS.'logs', 'post', 'string');
 		$config_array['tmp_path']			= JRequest::getVar('tmp_path', JPATH_ROOT.DS.'tmp', 'post', 'string');
 		$config_array['live_site'] 			= preg_replace('/\/administrator.*/','',JURI::getInstance()->toString(array('scheme','host','port','path')));//rtrim(JRequest::getVar('live_site','','post','string'), );
-		$config_array['force_ssl'] 			= JRequest::getVar('force_ssl', 0, 'post', 'int');
 
 		// LOCALE SETTINGS
 		$config_array['offset']				= JRequest::getVar('offset', 0, 'post', 'float');

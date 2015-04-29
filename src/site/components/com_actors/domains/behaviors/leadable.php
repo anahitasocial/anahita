@@ -27,6 +27,7 @@
  */
 class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract 
 {
+    
     /**
 	 * Initializes the default configuration for the object
 	 *
@@ -64,6 +65,59 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 		
 		parent::_initialize($config);
 	}
+	
+	/**
+     * Removes an $actor from the list of blockers
+     * 
+     * @param ComActorsDomainEntityActor $actor
+     * 
+     * @return void
+     */
+    public function addBlocker( $actor )
+    {   
+    	//if A blocks B, then A must remove B as a follower 
+    	//need to keep track of this since the mixin is a singleton
+    	$person = $this->_mixer;
+        
+        $person->removeFollower($actor);
+    	$actor->removeFollower($person);
+    	
+		//just in case
+        $person->removeRequester($actor);
+        $actor->removeRequester($person);
+                
+		$edge = $this->getService('repos:actors.block')->findOrAddNew(array(
+				'blocker'	  => $actor,					
+				'blocked'	  => $person		        
+            ));
+		
+		$edge->save();
+		
+		$this->resetStats(array($actor, $person));
+
+		return $edge;
+    }     
+    
+    /**
+     * Removes a person from the list of blocked
+     * 
+     * @param ComActorsDomainEntityActor $person
+     *  
+     * @return void
+     */
+    public function removeBlocker( $actor )
+    {
+		$person = $this->_mixer;
+        
+        $data = array(
+			'blocker' => $actor,		
+			'blocked' => $person
+		);
+		
+		$this->getService('repos:actors.block')->destroy($data);
+				
+		$this->resetStats(array($actor, $person));
+    }
 		
 	/**
 	 * Return this person common leader with another person 

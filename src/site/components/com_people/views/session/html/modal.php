@@ -1,60 +1,64 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
+
+<?php $return = empty($return) ? null : $return; ?> 
+<?php $connect = empty($connect) ? false : true; ?>
+
+<div class="modal-header">
+    <h3><?= @text('COM-PEOPLE-SESSION-TITLE') ?></h3>
+</div>
+
+<div class="modal-body">
+    <form action="<?=@route()?>" name="person-form" id="person-form" method="post">
+        <?php if( $return ) : ?>
+        <input type="hidden" name="return" value="<?= $return; ?>" />
+        <?php endif; ?> 
+        
+        <?php if( $connect && KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
+        <p class="lead"><?= @text('COM-PEOPLE-SOCIALMEDIA-LOGIN') ?></p>
+        <p><?= $this->renderHelper('com://site/connect.template.helper.service.renderLogins') ?></p>
+        
+        <p class="lead"><?= @text('LIB-AN-OR') ?></p>
+        
+        <hr/>
+        
+        <?php endif ?>        
+ 
+        <div class="control-group">         
+            <div class="controls">
+                <input class="input-block-level" name="username" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>" id="person-username" type="text" size="25" />
+            </div>
+        </div>
+        
+        <div class="control-group">             
+            <div class="controls">
+                <?= @helper('password.input', array('required'=>true)) ?>
+                <a href="<?= @route('view=token') ?>">
+                    <?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
+                </a> 
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="checkbox">
+                <input type="checkbox" name="remember" value="true" alt="<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>" />
+                <?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>
+            </label>
+        </div>
+    </form>
     
-<popup:header>
-	<h3>
-		<?= @text('COM-PEOPLE-SESSION-TITLE') ?> 
-	</h3>
-</popup:header>
+    <?php if(@service('com://site/people.controller.person')->permission->canRegister()): ?>
+    <hr/>
+    <p class="lead">
+        <?= @text('COM-PEOPLE-ADD-GREETINING') ?> 
+        <a href="<?= @route('option=com_people&view=person&layout=add'.( ( $return ) ? "&return=$return" : '')) ?>">
+            <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>
+        </a>
+    </p>
+    <?php endif;?> 
+</div>
 
-
-<?php KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ?>
-<?php if ( class_exists('ComConnectTemplateHelperService', true) ): ?>
-<p><?= KService::get('com://site/connect.template.helper.service')->renderLogins() ?></p>
-<hr/>
-<?php endif; ?>
-
-<div id="flash-message"></div>
-
-<form id="modal-login-form" action="<?= @route() ?>" method="post">
-	<div class="control-group">			
-		<div class="controls">
-			<input class="input-block-level" name="username" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>" id="username" type="text" alt="username" size="18" />
-		</div>
-	</div>
-	
-	<div class="control-group">				
-		<div class="controls">
-			<input class="input-block-level" type="password" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-PASSWORD')?>" id="passwd" name="password" size="18" alt="password" /> 
-			<a href="<?= @route('view=token') ?>">
-			<?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
-			</a>
-		</div>
-	</div>
-	
-	<div class="control-group">
-		<label class="checkbox">
-			<input type="checkbox" name="remember" value="true" alt="<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>" />
-			<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>
-		</label>
-	</div>
-	
-	<?php if(!empty($return)): ?>
-	<input type="hidden" name="return" value="<?= $return; ?>" />
-	<?php endif;?>
-</form>
-
-<popup:footer>
-	<?php if(@service('com://site/people.controller.person')->permission->canRegister()): ?>
-	<p class="lead pull-left">
-		<a href="<?= @route('option=com_people&view=person&layout=add'.( !empty($return) ? '&return='.$return : '')) ?>">
-		    <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>
-		</a>
-	</p>
-	<?php endif;?>
-
-	<button data-behavior="<?= isset($ajax) ? 'Request' : 'Submit'?>" data-request-form="#modal-login-form" data-submit-form="#modal-login-form" data-request-redirect="true" name="Submit" class="btn btn-large btn-primary">
-    	<?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
-    </button>
-</popup:footer>
-
-
+<div class="modal-footer">
+   <button type="submit" class="btn btn-primary">
+        <?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
+   </button> 
+</div>

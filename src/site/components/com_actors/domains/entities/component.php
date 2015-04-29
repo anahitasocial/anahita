@@ -62,7 +62,6 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$config->append(array(
 	        'story_aggregation' => array(),
 			'behaviors' => array(
-				//'assignable'=>array(),
 				'scopeable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor'),
 				'hashtagable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor')
 			)

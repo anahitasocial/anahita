@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<form id="" action="index.php?option=com_components&view=component&id=<?= $component->id ?>" method="post" class="-koowa-form" data-token-name="_token" data-token-value="<?=JUtility::getToken()?>">
+<form action="index.php?option=com_components&view=component&id=<?= $component->id ?>" method="post" class="-koowa-form">
 	<input type="hidden" name="action" value="assign" />
-
+	
 	<div class="col width-50">
 	
 		<fieldset class="adminform">
@@ -57,5 +57,3 @@
 	</div>
 	<div class="clr"></div>
 </form>
-
-<?= JHTML::_('behavior.keepalive') ?>

@@ -34,7 +34,7 @@ class JButtonPopup extends JButton
 
 	function fetchButton( $type='Popup', $name = '', $text = '', $url = '', $width=640, $height=480, $top=0, $left=0 )
 	{
-		JHTML::_('behavior.modal');
+		
 
 		$text	= JText::_($text);
 		$doTask	= $this->_getCommand($name, $url, $width, $height, $top, $left);

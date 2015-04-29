@@ -1,6 +1,6 @@
 <ul class="search-scopes nav nav-tabs nav-stacked">
 	<li class="<?= empty($current_scope) ? 'active' : ''; ?>" >
-		<a data-trigger="ChangeScope" href="<?= @route('layout=list&scope=all') ?>">
+		<a data-trigger="ChangeScope" data-scope="all" href="<?= @route('layout=list&scope=all') ?>">
 			<?= @text('COM-SEARCH-SCOPE-HEADER-ALL') ?> 
 			<span class="badge badge-info pull-right"><?= $items->getScopes()->getTotal() ?></span>
 		</a>
@@ -15,7 +15,7 @@
 	</li>	
 	<?php foreach($scopes as $scope ) : ?>
 	<li class="<?= ($current_scope == $scope) ? 'active' : ''?>" >
-		<a data-trigger="ChangeScope" href="<?= @route('layout=list&scope='.$scope->getKey()) ?>">
+		<a data-trigger="ChangeScope" data-scope="<?= $scope->getKey() ?>" href="<?= @route('layout=list&scope='.$scope->getKey()) ?>">
 			<?= @text(strtoupper($scope->identifier->type.'-'.$scope->identifier->package.'-SEARCH-SCOPE-'.$scope->identifier->name)) ?> 
 			<span class="badge badge-info pull-right"><?= $scope->result_count ?></span>
 		</a>

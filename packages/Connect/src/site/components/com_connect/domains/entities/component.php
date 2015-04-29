@@ -39,9 +39,9 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-                'behaviors' => array(
-                    'assignable'=>array('assignment_option'   => ComComponentsDomainBehaviorAssignable::OPTION_NOT_OPTIONAL),                       
-                )
+        	'behaviors' => array(
+            	'assignable'=>array()                       
+            )
         ));
     
         parent::_initialize($config);
@@ -55,9 +55,12 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
         $actor = $event->actor;
         $tabs  = $event->tabs;
         $services = ComConnectHelperApi::getServices();
-    
-        if ( count($services) ) {
-            $tabs->insert('connect',array('label'=> JText::_('COM-CONNECT-PROFILE-EDIT'),'controller'=>'com://site/connect.controller.setting'));
+        
+        if ( count($services) ) 
+        {
+            $tabs->insert('connect', array(
+            	'label'=> JText::_('COM-CONNECT-PROFILE-EDIT'), 
+            	'controller'=>'com://site/connect.controller.setting'));
         }
     }
     
@@ -72,12 +75,12 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     {
         $actor = $context->actor;
         
-        if ( $actor->isAdministrable() && 
-                $actor->authorize('administration') )
+        if ( $actor->isAdministrable() && $actor->authorize('administration') )
         {
             return true;
         }
-        else {
+        else 
+        {
             return $actor->id == $context->viewer->id;
         }
     }
@@ -90,7 +93,8 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
      */
     public function onDeleteActor(KEvent $event)
     {
-        $this->getService('repos:connect.session')
-            ->destroy(array('owner.id'=>$event->actor_id));
+        $this
+        ->getService('repos:connect.session')
+        ->destroy( array( 'owner.id' => $event->actor_id ) );
     }
 }

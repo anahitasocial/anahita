@@ -359,10 +359,10 @@ class JPagination extends JObject
 		{
 			if($enabled) {
 				$html	= '<a href="#reorder" onclick="return listItemTask(\'cb'.$i.'\',\''.$task.'\')" title="'.$alt.'">';
-				$html	.= '   <img src="images/uparrow.png" width="16" height="16" border="0" alt="'.$alt.'" />';
+				$html	.= '   <img src="'.JURI::base().'images/uparrow.png" width="16" height="16" border="0" alt="'.$alt.'" />';
 				$html	.= '</a>';
 			} else {
-				$html	= '<img src="images/uparrow0.png" width="16" height="16" border="0" alt="'.$alt.'" />';
+				$html	= '<img src="'.JURI::base().'images/uparrow0.png" width="16" height="16" border="0" alt="'.$alt.'" />';
 			}
 		}
 
@@ -390,10 +390,10 @@ class JPagination extends JObject
 		{
 			if($enabled) {
 				$html	= '<a href="#reorder" onclick="return listItemTask(\'cb'.$i.'\',\''.$task.'\')" title="'.$alt.'">';
-				$html	.= '  <img src="images/downarrow.png" width="16" height="16" border="0" alt="'.$alt.'" />';
+				$html	.= '  <img src="'.JURI::base().'images/downarrow.png" width="16" height="16" border="0" alt="'.$alt.'" />';
 				$html	.= '</a>';
 			} else {
-				$html	= '<img src="images/downarrow0.png" width="16" height="16" border="0" alt="'.$alt.'" />';
+				$html	= '<img src="'.JURI::base().'images/downarrow0.png" width="16" height="16" border="0" alt="'.$alt.'" />';
 			}
 		}
 

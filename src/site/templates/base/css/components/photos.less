@@ -30,7 +30,7 @@
     }	
 }
 
-#set-mediums
+#set-photos
 {
     margin: 10px 0;
     .border-radius(@baseBorderRadius);
@@ -38,9 +38,20 @@
     {
         min-height: 130px;
     }
+    
+    &.an-highlight
+    {
+        .thumbnail-wrapper
+        {
+            &.cover
+            {
+                .opacity(30);
+            }
+        }
+    }
 }
 
-#medium-selector
+#photo-selector
 {
     .well;
     .media-grid.an-entities

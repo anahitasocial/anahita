@@ -162,10 +162,12 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	        'truncate_body'     => array(),
 	        'editor'            => false,
 	        'pagination'        => true,
-	    	'show_guest_prompt' => true           
+	    	'show_guest_prompt' => true,
+	    	'content_filter_exclude' => array()           
 	     ), 
+	     
 	     $config);
-	    
+        
         $data   = $this->getTemplate()->getData();
 		$limit  = isset($data['limit'])  ? $data['limit']  : 0;
 		$offset = isset($data['start'])  ? $data['start']  : 0;
@@ -194,8 +196,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         
 		$config['entity'] = $entity;
 		
-		if ( $config['pagination'] === true && 
-            $config['comments'] instanceof AnDomainEntitysetDefault ) 
+		if ( $config['pagination'] === $config['comments'] instanceof AnDomainEntitysetDefault ) 
         {
         	$config['pagination'] = $this->pagination($config['comments'], array('paginate'=>true, 'options'=>array('scrollToTop'=>true)));
 		}
@@ -351,17 +352,12 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	 */
 	public function editor($config)
 	{
-	    JHTML::script('lib_anahita/js/editor/tiny_mce.js', 	   'media/', false);
-	    JHTML::script('lib_anahita/js/editor/encoder.js', 	   'media/', false);
-	    JHTML::script('lib_anahita/js/editor/editor.js', 	   'media/', false);
-	
 	    $config = new KConfig($config);
 	
 	    $config->append(array(
 	    	'name' => 'description',
 	    	'content' => '',
-	    	'value' => '',
-	   		'extended' => false
+	    	'value' => ''
 	    ));
 	
 	    $config->append(array(
@@ -374,14 +370,14 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 	            )
 	    ));
 	
-	    if(!$config->content)
-	        $config->content = '';
+	    if( !$config->content )
+        {
+           $config->content = ''; 
+        }    
 	
 	    $tags = $this->getService('com:base.template.helper.html');
-	    $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html));
-	    $options = array('extended'=>$config->extended, 'visual'=>JText::_('LIB-AN-EDITOR-VISUAL'));
-	    
-	    $textarea->set('data-behavior','Editor')->set('data-editor-options',"{'extended':'$config->extended'}");
+	    $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html)); 
+	    $textarea->set('data-behavior','Editor')->id(rand());
 	    
 	    return  $textarea;
 	}
@@ -462,38 +458,39 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             
             foreach($options as $key => $value) 
             {
-                if ( $actor->authorize('setprivacyvalue', array('value'=>$key)) === false ) {
-                    unset($options[$key]);   
-                }
+                if($actor->authorize('setprivacyvalue', array('value'=>$key)) === false)
+                    unset($options[$key]);
             }
             
             $config->options = $options;
             
             
-	        if ( $config->entity ) 
+	        if($config->entity) 
             {
 	            $config->append(array(
                     'selected' => $config->entity->getPermission($config->name, LibBaseDomainBehaviorPrivatable::FOLLOWER)
 	            ));
             }
 	
-	        if ( strpos($config->name, 'access') === false ) {
+	        if(strpos($config->name, 'access') === false)
 	            unset($config->options[LibBaseDomainBehaviorPrivatable::GUEST]);
-	        }
 	
 	        //trim the options based on the actor
-	        if ( $config->entity && !$config->entity->eql($actor ))
+	        if($config->entity && !$config->entity->eql($actor))
 	        {
 	            $current_index = array_search($actor->access, array_keys(KConfig::unbox($config->options)));
 	            $i = 0;
+
 	            foreach($config->options as $key => $value)
 	            {
 	                if ( $current_index > $i)
 	                    unset($config->options[$key]);
+	                
 	                $i++;
 	            }
 	        }
 	    }
+	    
 	    return $this->_render('privacy', $config);
 	}
 

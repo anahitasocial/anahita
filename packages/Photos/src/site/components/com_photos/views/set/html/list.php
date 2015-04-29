@@ -9,18 +9,16 @@
 		<div class="entity-container">
 			<h4 class="author-name"><?= @name($set->author) ?></h4>
 			<div class="an-meta">
-				<?= @date($set->creationTime) ?>
+				<?= @date( $set->creationTime ) ?>
 			</div>
 		</div>
 	</div>
 	
-	<?php if($set->hasCover()): ?>
 	<div class="entity-portrait-medium">
 		<a href="<?= @route($set->getURL()) ?>">
 			<img src="<?= $set->getCoverSource('medium') ?>" alt="<?= @escape($set->title) ?>" />
 		</a>
 	</div>
-	<?php endif; ?>
 	
 	<h3 class="entity-title">
 		<a href="<?= @route($set->getURL()) ?>">
@@ -30,7 +28,7 @@
 	
 	<?php if(!empty($set->description)): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate',  @content($set->description, array('exclude'=>array('syntax','video'))), array('length'=>150, 'consider_html'=>true, 'omission'=>'...') ) ?>
+		<?= @helper('text.truncate',  @content( nl2br( $set->description ), array( 'exclude' => array('gist','video') ) ), array('length'=>150, 'consider_html'=>true, 'omission'=>'...') ) ?>
 	</div>
 	<?php endif; ?>
 	

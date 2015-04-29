@@ -121,7 +121,7 @@ class JHTMLGrid
 
 		$href = '
 		<a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $prefix.$task .'\')" title="'. $action .'">
-		<img src="images/'. $img .'" border="0" alt="'. $alt .'" /></a>'
+		<img src="'.JURI::base().'images/'. $img .'" border="0" alt="'. $alt .'" /></a>'
 		;
 
 		return $href;

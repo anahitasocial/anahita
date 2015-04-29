@@ -39,7 +39,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
         parent::__construct($config);
         
         $this->registerCallback(
-                array('before.confirmrequester','before.ignorerequester'), 
+                array('before.confirmrequest','before.ignorerequest'), 
                 array($this, 'fetchRequester')
         );
         
@@ -155,28 +155,26 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 	} 
     
     /**
-     * Confirm a requester
+     * Confirm a request
      *
      * @param KCommandContext $context Context parameter
      * 
      * @return void
      */
-    protected function _actionConfirmrequester(KCommandContext $context)
+    protected function _actionConfirmrequest(KCommandContext $context)
     {
-        //add the requester as a follower. The rest is taken care of
         $this->getItem()->addFollower($this->getState()->requester);
     }
     
     /**
-     * Ignores a requester
+     * Ignores a request
      *
      * @param KCommandContext $context Context parameter
      * 
      * @return void
      */
-    protected function _actionIgnorerequester(KCommandContext $context)
+    protected function _actionIgnorerequest(KCommandContext $context)
     {
-        //add the requester as a follower. The rest is taken care of
         $this->getItem()->removeRequester($this->getState()->requester);
     }
     

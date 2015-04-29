@@ -40,8 +40,9 @@ class ComPagesDomainEntityPage extends ComMediumDomainEntityMedium
 	{	
 		$config->append(array(			
 			'attributes' => array(
-				'name'			=> array('required'=>true),
-				'excerpt'		=> array('required'=>true,'format'=>'string')
+				'name' => array('required'=>true),
+				'excerpt' => array('required'=>true,'format'=>'string'),
+				'body' => array('format'=>'post')
 			),
 			'relationships' => array(
 				'revisions'		

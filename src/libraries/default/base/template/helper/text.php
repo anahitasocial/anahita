@@ -153,21 +153,24 @@ class LibBaseTemplateHelperText extends KTemplateHelperAbstract implements KServ
         // add the defined ending to the text
         $truncate .= $ending;
        
-        if($consider_html) {
+        if ( $consider_html ) 
+        {
             // close all unclosed html-tags
             foreach ($open_tags as $tag) {
                 $truncate .= '</' . $tag . '>';
             }
         }
+        
         if ( $read_more )
         {
         	$short_id  = uniqid();
         	$full_id   = uniqid();
-        	$read_more = '<a class="an-read-more" onclick="$(\''.$short_id.'\').hide();$(\''.$full_id.'\').show();return false;" href="#">'.JText::_('LIB-AN-READMORE').'</a>';
-        	$read_less = '<a class="an-read-less" onclick="$(\''.$short_id.'\').show();$(\''.$full_id.'\').hide();return false;" href="#">'.JText::_('LIB-AN-READLESS').'</a>'; 
+        	$read_more = ' <a class="an-read-more" data-trigger="ReadMore" data-short="'.$short_id.'" data-full="'.$full_id.'" href="#">'.JText::_('LIB-AN-READMORE').'</a>';
+        	$read_less = ' <a class="an-read-less" data-trigger="ReadLess" data-short="'.$short_id.'" data-full="'.$full_id.'" href="#">'.JText::_('LIB-AN-READLESS').'</a>'; 
         	$truncate  = '<div id="'.$short_id.'">'.$truncate.$read_more.'</div>';
-        	$truncate .= '<div id="'.$full_id.'" style="display:none">'.$text.$read_less.'</div>';
+        	$truncate .= '<div id="'.$full_id.'" class="hide">'.$text.$read_less.'</div>';
         }
+        
         return $truncate;		
 	}
 

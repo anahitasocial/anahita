@@ -63,7 +63,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
 		    'searchable_properties' => array('name','body'),
 			'attributes' => array(
 				'name'  => array('format'=>'string'),
-				'body',
+				'body' => array('format'=>'string'),
 				'alias'	=> array('format'=>'slug')
 			),
 			'aliases' => array(

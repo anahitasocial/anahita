@@ -3,9 +3,12 @@
 <?php @commands('toolbar') ?>
 
 <?php if( $set->authorize('edit') ) : ?>
-<div id="medium-selector" oid="<?= $set->owner->id ?>" set_id="<?= $set->id ?>" ></div>
+<div id="photo-selector"></div>
 <?php endif; ?>
 
-<div id="set-mediums-wrapper">
-<?= @template('photos') ?>
+
+<div id="set-photos" class="an-entities" data-url="<?= @route($set->getURL()) ?>">
+	<div class="media-grid">
+    <?= @template('photos') ?>
+    </div>
 </div>

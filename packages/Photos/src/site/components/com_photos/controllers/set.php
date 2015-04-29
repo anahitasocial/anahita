@@ -56,9 +56,11 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
         
       	$sets->order('updateTime', 'DESC');
         
-        if($this->photo_id && $this->getRequest()->get('layout') != 'selector')
-        	$sets->where('photos.id', '=', $this->photo_id);
-		
+        if( $this->photo_id && $this->getRequest()->get('layout') != 'selector' )
+        {
+           $sets->where('photos.id', '=', $this->photo_id); 
+        }
+        	
 		return $sets;
 	}
 	
@@ -75,11 +77,12 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 		$photo_ids = (array) KConfig::unbox( $context->data->photo_id );
 		
 		foreach($this->getItem()->photos as $photo)
-			if(!in_array($photo->id, $photo_ids))
-				$this->getItem()->removePhoto($photo);
-				
-		if(!$this->getItem()->hasCover())
-			$this->execute('updatecover', $context);		
+        {
+           if(!in_array($photo->id, $photo_ids))
+           {
+              $this->getItem()->removePhoto($photo);  
+           }    
+        }
 				
 		return $this->getItem();
 	}
@@ -129,22 +132,11 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 		if($lastPhoto)
 		{
 			$this->getResponse()->status = 204;
+            
 			return;
 		}
 		else
 			return $this->getItem();
-	}
-	
-	/**
-	 * Updates the set cover
-	 * 
-	 * @return object ComPhotosDomainEntitySet
-	 * @param object POST data
-	 */
-	protected function _actionUpdatecover($context)
-	{	
-		$this->getItem()->setCover($this->photos->top());
-		return $this->getItem();
 	}
 	
 	/**
@@ -168,8 +160,10 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 			$photo = $this->actor->photos->fetchSet(array('id'=>$photo_id));
             					
 			if(count($photo) === 0)
-				$photo = null;
-                
+            {
+               $photo = null; 
+            }
+				  
             $this->photos = $this->photo = $photo;
 		}
 		
@@ -187,8 +181,10 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 		if($context->action == 'addphoto')
 		{		
 			if($context->data->id)
-				$this->id = $context->data->id;
-				
+            {
+               $this->id = $context->data->id; 
+            }
+					
 			//clone the context so it's not touched
 			$set = $this->__call('fetchEntity', array($context));
 			
@@ -205,5 +201,4 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 			return $this->__call('fetchEntity', array($context));
 	}
 
-//end class	
 }

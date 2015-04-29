@@ -13,19 +13,10 @@
     	</a>
     </h4>
 	<?php endif; ?>
-
-	<div data-behavior="Mediabox">
-		<?php 
-			$rel = 'lightbox[actor-'.$object->owner->id.' 900 900]';
-		
-			$caption = htmlspecialchars($object->title, ENT_QUOTES).
-			(($object->title && $object->description) ? ' :: ' : '').
-			@helper('text.script', $object->description);			 
-		?>
-		<a rel="<?= $rel ?>" href="<?= @route($object->getPortraitURL('medium')) ?>" title="<?= $caption ?>">
-			<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
-		</a>
-	</div>
+	<?php $caption = htmlspecialchars($object->title, ENT_QUOTES, 'UTF-8'); ?>
+	<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" href="<?= @route($object->getPortraitURL('original')) ?>" title="<?= $caption ?>">
+		<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
+	</a>
 </data>
 <?php endif;?>
 
@@ -40,7 +31,7 @@
         		</a>            
             </td>
             <td valign="top">
-                <?= $comment->body?>
+                <?= nl2br( $comment->body ) ?>
             </td>
     </table>	
 </data>

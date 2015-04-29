@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<form id="set-form" data-behavior="FormValidator" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
+<form id="set-form" method="post" action="<?= @route('option=com_photos&view=set&oid='.$actor->id.'&layout=selector_list&reset=1') ?>">
 	<input type="hidden" name="action" value="addphoto" />
 	<input type="hidden" name="photo_id" value="<?= $photo->top()->id ?>" />
 	
@@ -9,13 +9,15 @@
 		<div class="control-group">
 			<label class="control-label" for="title"><?= @text('LIB-AN-MEDIUM-TITLE') ?></label>
 			<div class="controls">
-				<input data-validators="required" name="title" class="input-large" size="50" maxlength="255" tabindex="1" type="text">
+				<input name="title" class="input-large" size="50" maxlength="255" type="text" required>
 			</div>
 		</div>
 			
 		<div class="form-actions">
-			<a data-trigger="CloseSelector" class="btn" href="<?= @route(array('view'=>'sets', 'oid'=>$actor->id)) ?>"><?= @text('LIB-AN-ACTION-CLOSE') ?></a> 
-			<button data-trigger="Add" class="btn btn-primary">
+			<button data-action="CloseSetSelector" class="btn">
+			    <?= @text('LIB-AN-ACTION-CLOSE') ?>
+			</button> 
+			<button type="submit" class="btn btn-primary">
 				<i class="icon-plus-sign icon-white"></i>
 				<?= @text('LIB-AN-ACTION-NEW') ?>
 			</button>

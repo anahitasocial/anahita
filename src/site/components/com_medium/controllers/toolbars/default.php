@@ -119,6 +119,24 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
                 $this->addCommand('commentstatus');
         }
     }
+    
+	/**
+     * Delete Command for an entity
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandDelete($command)
+    {
+        $entity = $this->getController()->getItem();
+    
+        $command->append(array('label'=>JText::_('LIB-AN-ACTION-DELETE')))
+        ->href(JRoute::_($entity->getURL()))
+        ->setAttribute('data-action', 'delete')
+        ->setAttribute('data-redirect', JRoute::_($entity->owner->getURL()))
+        ->class('action-delete');
+    }
 
     /**
      * New button toolbar
@@ -135,8 +153,10 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
         $labels[] = 'New';
         $label = translate($labels);
-        $url   = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&oid='.$actor->id.'&layout=add';
-        $command->append(array('label'=>$label))
-                ->href($url);
+        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&oid='.$actor->id.'&layout=add';
+        
+        $command
+        ->append(array('label'=>$label))
+        ->href(JRoute::_($url));
     }
 }

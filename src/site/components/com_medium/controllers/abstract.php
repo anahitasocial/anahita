@@ -116,20 +116,22 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 	 */
 	public function redirect(KCommandContext $context)
 	{
-	    if ( $context->action == 'delete' ) 
+	    if ( $context->action == 'add' )
+	    {
+	        $url['id']     = $this->getItem()->id;
+	        $url['view']   = KInflector::pluralize($this->getIdentifier()->name);
+	        $url['option'] = $this->getIdentifier()->package;
+	        
+	        $this->getResponse()->setRedirect(JRoute::_($url));
+	    }
+	    elseif ( $context->action == 'delete' ) 
 	    {
 	        $url['oid']    = $this->getItem()->owner->id;
 	        $url['view']   = KInflector::pluralize($this->getIdentifier()->name);
 	        $url['option'] = $this->getIdentifier()->package;
 	        $this->getResponse()->setRedirect(JRoute::_($url));
 	    }	    
-	    elseif ( $context->action == 'add' ) 
-	    {
-	        $url['id']     = $this->getItem()->id;
-	        $url['view']   = KInflector::pluralize($this->getIdentifier()->name);
-	        $url['option'] = $this->getIdentifier()->package;
-	        $this->getResponse()->setRedirect(JRoute::_($url));	        
-	    }
+	    
 	}
 	
 	/**

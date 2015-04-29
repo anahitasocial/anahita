@@ -115,7 +115,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 		         	'subscribers' => array($data->comment->author->id)
 		    	));	
 			}    
-			elseif($data->object->isModifiable()) 
+			elseif($data->object->isModifiable() && !is($data->object, 'ComActorsDomainEntityActor')) 
 			{
 				$data->append(array(
 					'subscribers' => array($data->object->author->id)

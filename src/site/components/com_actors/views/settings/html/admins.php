@@ -1,18 +1,21 @@
-<?php defined('KOOWA') or die('Restricted access');?>
-<script src="lib_anahita/js/groupadmin.js" />
+<?php defined('KOOWA') or die('Restricted access'); ?>
 
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-ADMINS') ?></h3>
 
-<form id="an-entities-search" class="well" action="<?= @route($item->getURL()) ?>" method="post">
+<form id="an-actors-search" class="well" action="<?= @route($item->getURL()) ?>" method="post">
 	<input type="hidden" name="action" value="addadmin" />
-	<input type="hidden" name="adminid" value="" />
+	<input type="hidden" name="adminid" />
 	<p><?= @text('COM-ACTORS-MANAGE-ADMINSTRATORS-DESCIRPTION')?></p>
-	<input class="search-query input-large" type="text" data-behavior="FollowerAutoComplete"  data-autocomplete-url="<?= @route($item->getURL().'&get=candidates') ?>"/>
+	
+	<div class="input-append">
+		<input autocomplete="off" data-url="<?= @route($item->getURL().'&get=candidates') ?>" class="input-large" type="text" />
+		<button type="submit" class="btn btn-primary">+ <?= @text('LIB-AN-ACTION-ADD') ?></button>
+	</div>
 </form>
 
 <div id="an-actors" class="an-entities">
 	<?php foreach($item->administrators as $actor ) : ?>
-	<div class="an-entity an-record">
+	<div class="an-entity">
 		<div class="entity-portrait-square">
 			<?= @avatar($actor) ?>
 		</div>
@@ -23,19 +26,21 @@
 			</h3>
 			
 			<div class="entity-description">
-			<?= @helper('text.truncate',strip_tags($actor->description), array('length'=>200)); ?>
+			    <?= @helper('text.truncate',strip_tags($actor->description), array('length'=>200)); ?>
 			</div>
 			
 			<div class="entity-meta">
-				<?= $actor->followerCount ?>
+				<?= $actor->followerCount ?> 
 				<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span> 
-				/ <?= $item->leaderCount ?>
+				/ <?= $item->leaderCount ?> 
 				<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
 			</div>
 				
 			<div class="entity-actions">
                 <?php if ( $item->authorize('remove.admin', array('admin'=>$actor)) ) : ?>
-				<button data-trigger="Submit" data-submit-options="{'promptMsg':'Are you sure you want to remove admin'}" href="<?= @route($item->getURL().'&action=removeadmin&adminid='.$actor->id) ?>" class="btn btn-danger"><?= @text('LIB-AN-ACTION-REMOVE') ?></button>
+                <a class="btn btn-danger" data-action="removeadmin" href="<?= @route($item->getURL()) ?>" data-adminid="<?= $actor->id ?>">
+                	<?= @text('LIB-AN-ACTION-REMOVE') ?>
+                </a>
                 <?php endif; ?>
 			</div>
 		</div>

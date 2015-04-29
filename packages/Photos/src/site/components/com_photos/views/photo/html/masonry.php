@@ -1,6 +1,10 @@
 <?php defined('KOOWA') or die; ?>
 
-<div class="an-entity an-record an-removable"">
+<?php if($photo->authorize('edit')) : ?>
+<div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
+<?php else : ?>
+<div class="an-entity">
+<?php endif; ?>
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($photo->author) ?>
@@ -17,32 +21,24 @@
 		</div>
 	</div>
 	
-	<div class="entity-portrait-medium" data-behavior="Mediabox">
-		<?php 
-			$rel = 'lightbox[actor-'.$photo->owner->id.' 900 900]';
-		
-			$caption = htmlspecialchars($photo->title, ENT_QUOTES).
-			(($photo->title && $photo->description) ? ' :: ' : '').
-			@helper('text.script', $photo->description);			 
-		?>
-		<a title="<?= $caption ?>" href="<?= $photo->getPortraitURL('medium') ?>" rel="<?= $rel ?>">			
+	<div class="entity-portrait-medium">
+		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
+		<a data-rel="media-photos" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>
 	
-	<?php if($photo->title): ?>
-	<h4 class="entity-title">
-		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
-		<?= @escape($photo->title) ?>
-		</a>
-	</h4>
-	<?php endif; ?>
-		
-	<?php if($photo->description): ?>
-	<div class="entity-description">
-	<?= @helper('text.truncate', @content($photo->description, array('exclude'=>array('syntax','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+	<div class="entity-description-wrapper">
+    	<h4 class="entity-title">
+    		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
+    		<?= @escape($photo->title) ?>
+    		</a>
+    	</h4>
+    		
+    	<div class="entity-description">
+    	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude'=>array('gist','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+    	</div>
 	</div>
-	<?php endif; ?>
 		
 	<div class="entity-meta">
 		<ul class="an-meta inline">

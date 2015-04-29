@@ -1,21 +1,25 @@
 <?php if ( count($composers) ) : ?>
 
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
 <script src="com_composer/js/composer.js" />
+<?php else: ?>
+<script src="com_composer/js/min/composer.min.js" />
+<?php endif; ?>
 
-<div id="com-composer-container">   
-    <div class="clearfix" data-behavior="ComposerTabs">
+<div id="com-composer-container" data-behavior="Composer">   
+    <div class="clearfix">
         <div class="btn-group pull-right">
             <?php $array = array_values($composers->getObjects()); ?>
-            <button class="btn dropdown-toggle">
+            <button class="btn dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
             	<i class="icon-plus-sign"></i>
             	<span class="composer-button-title"><?=$array[0]->title?></span>
             	<span class="caret"></span>
             </button>
             
-            <ul class="dropdown-menu">  
+            <ul id="composer-menu" class="dropdown-menu">  
             <?php foreach($composers as $composer) : ?>
                 <li>
-                	<a href="#">
+                	<a href="#" title="<?= $composer->title ?>">
                 	<?= $composer->title ?>
                 	</a>
                 </li>
@@ -24,12 +28,9 @@
         </div>
     </div>
     <div class="tab-content">   
-    <?php $i = 0; ?>
     <?php foreach($composers as $index=>$composer) : ?>
-        <div class="tab-content-item" data-behavior="PlaceHolder"  data-placeholder-element=".form-placeholder" data-placeholder-area="!#com-composer-container" data-trigger="LoadComposerTab" data-loadcomposertab-index="<?= $i++ ?>" data-content-url="<?=@route($composer->url)?>">
-            <a class="form-placeholder" onclick="return false;">
-            <?= $composer->placeholder ?>
-            </a>
+        <div class="tab-content-item" data-url="<?=@route($composer->url) ?>">
+            <a class="form-placeholder"><?= $composer->placeholder ?></a>
         </div>
     <?php endforeach;?>
     </div>

@@ -123,7 +123,7 @@ CREATE TABLE `#__anahita_nodes` (
   KEY `type_created_on` (`type`,`created_on`),
   KEY `type_status_update_time` (`type`,`status_update_time`),
   KEY `type_default` (`type`,`is_default`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -293,6 +293,6 @@ CREATE TABLE `#__users` (
   KEY `gid_block` (`gid`,`block`),
   KEY `username` (`username`),
   KEY `email` (`email`)
-) ENGINE=MyISAM;
+) ENGINE=MyISAM CHARACTER SET=utf8;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(3, 'anahita') ON DUPLICATE KEY UPDATE `version` = 3;

@@ -27,6 +27,7 @@
  */
 class ComMediumViewMediumHtml extends ComBaseViewHtml
 {
+    
 	/**
      * Initializes the options for the object
      *

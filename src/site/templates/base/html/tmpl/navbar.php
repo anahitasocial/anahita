@@ -16,8 +16,8 @@
 	            <?= @template('menus/main') ?>
 	            <span class="viewer pull-right">
 	            	<?php if(get_viewer()->guest()): ?>
-					<a class="btn btn-primary" data-trigger="BS.showPopup" data-bs-showpopup-url="<?= @route('option=people&view=session&layout=modal&return='.base64_encode(KRequest::url()))?>" >
-    				<?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
+					<a data-trigger="OpenModal" class="btn btn-primary" href="#" data-url="<?= @route('option=people&view=session&layout=modal&connect=1&return='.base64_encode(KRequest::url()))?>" >
+    				    <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
 					</a>
 	            	<?php else: ?>
 	            	<?= @template('menus/viewer') ?>
@@ -25,19 +25,9 @@
 	            </span>
             </div>
             
-            <div id="mobile-main-menu" class="hidden-desktop">
+            <div id="mobile-main-menu" class="hidden-desktop hide">
             <?= @template('menus/mobile') ?>
             </div>
-            
-            <script>
-            document.getElement('#mobile-main-menu ul').hide();
-			Delegator.register('click', {
-				'ShowMainmenu' : function(event, el, api) {
-					event.stop();
-					document.getElement('#mobile-main-menu ul').toggle();
-				},
-			});
-			</script>
         </div>
     </div>            
 </div>

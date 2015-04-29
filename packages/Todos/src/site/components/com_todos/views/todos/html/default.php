@@ -4,21 +4,18 @@
 	<div class="span8">	
 		<?= @helper('ui.header', array()) ?>
 	
-		<?php if($actor): ?>
-		<div id="entity-add-wrapper" class="hide">
+		<?php if($actor && $actor->authorize('action', 'todo:add')) : ?>
+		<div id="entity-form-wrapper" class="hide">
 		<?= @view('todo')->layout('form')->actor($actor) ?>
 		</div>
 		<?php endif; ?>
 		
 		<?= @helper('ui.filterbox', @route('layout=list')) ?>
-		
-		<div class="an-entities-wrapper" id="an-entities-main-wrapper">
-			<?= @template('list') ?>
-		</div>
+		<?= @template('list') ?>
 	</div>
 	
 	<div class="span4">			
-		<ul class="nav nav-pills nav-stacked">
+		<ul class="nav nav-pills nav-stacked" data-behavior="sortable">
 			<li class="nav-header">
 		       <?= @text('LIB-AN-SORT-TITLE') ?>
 		    </li>
@@ -26,7 +23,7 @@
 		    <?php foreach($sorts as $sort): ?>
 			<?php $active = ($sort == 'newest') ? 'active' : '' ?>
 			<li class="sort-option <?= $active ?>">
-				<a data-trigger="Request" data-request-options="SortEntities" href="<?= @route('layout=list&sort='.$sort) ?>">
+				<a href="<?= @route('layout=list&sort='.$sort) ?>">
 				<?= @text('LIB-AN-SORT-'.$sort) ?>
 				</a>
 			</li>

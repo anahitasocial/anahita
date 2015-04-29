@@ -1,44 +1,98 @@
-var FacebookInvite = new Class({
-	initialize : function(options) {
-		this.options = options;
-		FB.init({appId: options.appId, xfbml: true, cookie: true});
-		Delegator.register('click', {'Invite' : this.onInvite.bind(this)});
-	},
-	onInvite : function(event, el, api) {
-		event.stop();		
-		this.fbid = api.get('fbid');
-		new Request.JSON({
-			url : 'index.php/invites/token/facebook',
-			onSuccess : this.openDialog.bind(this)
-		}).get();
-	},
-	openDialog : function(token) {		
-		var msgLink = this.options.appURL;
-		msgLink    += '?token='+token.value;
-		//console.log(msgLink);
-		FB.ui({
-				display: 'iframe',
-				method:	'send',
-				name: 'Anahita',
-				link: msgLink,
-				picture: this.options.picture,				
-				/*to: this.fbid,*/
-				name: this.options.subject,
-				description: this.options.body
-			},
-			function(response){
-				if(response && response.success) {
-					new Request.JSON({
-							method: 'post',
-							url : 'index.php/invites/token/facebook',
-							data: {value:token.value},
-							onComplete: function()
-							{
-								"Invitations Sent".alert('success');
-							}
-					}).send();
-				}				
-			}.bind(this)	
-		);		
-	}
-});
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+    $.widget('anahita.invitesFacebook', {
+        
+        options : {
+            
+            appId : 0,
+            subject : 'Message Subject',
+            body : 'Message Body',
+            appURL : 'http://',
+            picture : ''
+        },
+        
+        _create : function ( ) {
+            
+            var self = this;
+            
+            FB.init({ appId: this.options.appId, xfbml: true });
+    
+            this._on({
+                'click [data-trigger="Invite"]' : function ( event ) {
+                    
+                    event.preventDefault();
+
+                   $.ajax({
+                       method : 'get',
+                       headers: { 
+                            accept: 'application/json'
+                       },
+                       url : 'index.php/invites/token/facebook',
+                       success : function ( response ) {
+                           self._openDialog( response.value );
+                       }
+                   });
+                }
+            });
+        },
+        
+        _openDialog : function ( token ) {
+            
+            var self = this;
+            var msgLink = this.options.appURL;
+            msgLink += '?token=' + token ;
+            
+            //console.log( msgLink );
+            
+            FB.ui({
+                
+                display : 'iframe',
+                method : 'send',
+                link : msgLink,
+                picture : this.options.picture,              
+                name : this.options.subject,
+                description : this.options.body
+                
+            },
+            function(response) {
+                
+                if(response && response.success) {
+                    
+                    $.ajax({
+                        method : 'post',
+                        url : 'index.php/invites/token/facebook',
+                        data : {
+                            value : token
+                        },
+                        complete : function ( xhr, status ) {
+                            if ( status == 'error' ) {
+                            
+                                //global alert
+                                //console.log( 'error' );
+                            
+                            } else {
+                            
+                                //global alert
+                                //console.log( 'success' );
+                            
+                            }
+                        }
+                    });
+                }
+                               
+            }.bind(this));
+        }
+
+    });
+    
+}(jQuery, window, document));

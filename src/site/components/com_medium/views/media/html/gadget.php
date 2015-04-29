@@ -9,7 +9,7 @@ elseif (isset($actor))
 	$url['oid'] = $actor->id;
 ?>
 
-<div data-behavior="InfinitScroll" data-infinitscroll-options="{'url':'<?= @route($url) ?>'}" class="an-entities">
+<div data-behavior="InfiniteScroll" data-InfiniteScroll-options="{'url':'<?= @route($url) ?>'}" class="an-entities">
 <?= @template('gadget_list') ?>
 </div>
 

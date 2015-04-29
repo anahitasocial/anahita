@@ -1,7 +1,13 @@
 <?php defined('KOOWA') or die; ?>
 
 <?php if(!empty($keywords)) : ?>
-<script src="com_search/js/search_request.js" />
+
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<script src="com_search/js/search.js" />
+<?php else: ?>
+<script src="com_search/js/min/search.min.js" />
+<?php endif; ?>
+
 <?php endif;?>
 
 <div class="row">
@@ -45,8 +51,18 @@
 		</form>
 		<?php endif ?>
 
-		<div class="an-entities-wrapper">
-		<?= @template('list') ?>
+		<?php
+        $url = array('layout'=>'list');
+         
+        if(!empty($sort))
+        	$url['sort'] = $sort;
+        	
+        if(!empty($scope))
+        	$url['scope'] = $scope;	
+        ?>
+
+		<div id="an-search-results" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
+	    <?= @template('list') ?>
 		</div>
 	</div>
 	

@@ -73,6 +73,7 @@ class ComPhotosDomainEntityEdge extends ComBaseDomainEntityEdge
 	protected function _afterEntityDelete(KCommandContext $context)
 	{	    
 		$total = $this->set->photos->reset()->getTotal();
+		
 		if ( $total > 0 )
 			$this->set->setValue('photo_count', $this->set->photos->reset()->getTotal());
 		else

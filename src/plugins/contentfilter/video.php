@@ -1,6 +1,4 @@
 <?php
-if ( defined('KOOWA') ) {
- 
 /** 
  * LICENSE: ##LICENSE##
  * 
@@ -38,7 +36,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_HIGH,
+            'priority' => KCommand::PRIORITY_HIGH,
         ));
 
         parent::_initialize($config);
@@ -53,10 +51,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 */	
 	public function filter($text)
 	{
-		$this->_stripTags($text);
+
 		$this->_youtube($text);
 		$this->_vimeo($text);
-		$this->_replaceTags($text);
+
 		return $text;
 	}
 
@@ -69,23 +67,26 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 */
 	protected function _vimeo(&$text)
 	{
-		$matches = array();
-		
+	   $matches = array();
+		        
 		if(preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) 
-		{
-			foreach($matches[1] as $index => $video_id) {				
-				$url = JURI::base().'plugins/contentfilter/video.php?type=vimeo&id='.$video_id;				
-				$options = array(
-					'allowfullscreen'  	=> 'true',
-					'allowscriptaccess' => 'always',
-					'color' 	  		=> '00ADEF',
-					'autoplay'	  		=> 'true',
-					'url' 		  		=> 'https://vimeo.com/moogaloop.swf?clip_id='.$video_id,
-					'thumbnail'   		=> $url
-				);
-				
-				$video = $this->_createVideo($options);
-				$text = str_replace($matches[0][$index], $video, $text);
+		{     
+			foreach($matches[1] as $index => $id) 
+			{				
+			    $video = json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$id.'.json'));
+                $video = $video[0];
+			    
+			    if($video && $video->id)
+			    {
+    				$options = array(
+    				    'title' => $video->title,
+    					'url' => 'https://vimeo.com/'.$video->id,
+    					'thumbnail' => $video->thumbnail_large
+    				);
+    				
+    				$video = $this->_createVideo($options);
+    				$text = str_replace($matches[0][$index], $video, $text);
+			    }
 			}
 		}
 	}	
@@ -101,31 +102,47 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
-		if(preg_match_all('%http[s]?://?:\S+\.swf\b|\S+?youtu\.?be\S*\/(\S+)%', $text, $matches))
+		if(preg_match_all('%http[s]?://\S*youtube.com/watch\?v=[\w]+%', $text, $matches))
 		{			
-			foreach($matches[1] as $index => $match)
+			foreach($matches[0] as $index => $match)
 			{
 				$youtube_link = $match;
-				$full_link	  = $matches[0][$index];
-				$id	  = array();
+				$full_link = $matches[0][$index];
+				$id	= array();
 				$pattern = '/v=([^&#]+)/';
-				if ( strpos($full_link,'.be/') ) $pattern = '/([^&#]+)/';
+				
+				if(strpos($full_link,'.be/')) 
+				    $pattern = '/([^&#]+)/';
 						
-				if ( preg_match($pattern, $youtube_link, $id) )
+				if(preg_match($pattern, $youtube_link, $id))
 				{
-					$id   = str_replace('watch?v=','',array_pop($id));
-									
-					$link = 'https://www.youtube.com/v/'.$id;
+					$id = str_replace('watch?v=', '', array_pop($id));
 					
+					$video = json_decode(file_get_contents('https://gdata.youtube.com/feeds/api/videos/'.$id.'?alt=json'), true);
+
+					$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
+
+                    $maxres = get_headers($thumbBase.'maxresdefault.jpg');
+                    $notfound = get_headers($thumbBase.'0.jpg');
+
+					if($maxres[0] != 'HTTP/1.0 404 Not Found') 
+					{
+					    $thumbnail = $thumbBase.'maxresdefault.jpg';
+                    }    
+					elseif($notfound[0] != 'HTTP/1.0 404 Not Found') 
+					{
+					    $thumbnail = $thumbBase.'0.jpg';
+                    }
+					else 
+					    return;
+
 					$options = array(						
-						'allowFullScreen' 	=> 'true',
-						'allowScriptAccess' => 'always',
-						'autoplay'	=> 1,
-						'url' 		=> $link,
-						'thumbnail' => 'https://img.youtube.com/vi/'.$id.'/0.jpg'
+					    'title' => $video['entry']['title']['$t'],
+						'url' => 'https://www.youtube.com/watch?v='.$id,
+						'thumbnail' => $thumbnail
 					);
 				
-					$video = $this->_createVideo($options);
+					$video = $this->_createVideo( $options );
 					$text = str_replace($matches[0][$index], $video, $text);
 				}
 			}
@@ -141,25 +158,12 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	 * @return string
 	 */
 	protected function _createVideo(array $options)
-	{
-		$thumbnail = $options['thumbnail'];
-		unset($options['thumbnail']);
-		$options   = json_encode($options);
-		return '<div style="cursor:pointer" data-behavior="EmbeddedVideo" class="an-media-video-thumbnail" data-embeddedvideo-options=\''.$options.'\'>'.					
-					'<img src="'.$thumbnail.'" />'.					
-			   '</div>';
-	}
-}
-
-} else {
-	
-	$type 	= @$_GET['type'];
-	$video	= @$_GET['id'];
-	if ( $video ) {		
-		$contents = file_get_contents('https://vimeo.com/api/v2/video/'.$video.'.php');
-		$array = array_shift(@unserialize(trim($contents)));
-		$url   = $array['thumbnail_large'];
-		header("Content-type: image/jpeg");
-		print file_get_contents($url);
+	{	    	    
+	    return '<div class="an-media-video">' 
+	    .'<img src="'.$options['thumbnail'].'" />'
+	    .'<a data-rel="media-'.uniqid().'" data-trigger="MediaViewer" class="an-media-video-thumbnail" '
+		.' href="'.$options['url'].'"'
+		.' title="'.htmlspecialchars($options['title'], ENT_QUOTES).'" >'
+	    .'</a></div>';
 	}
 }

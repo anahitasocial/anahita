@@ -37,7 +37,7 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_NORMAL,
+            'priority' => KCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);
@@ -52,14 +52,10 @@ class PlgContentfilterLink extends PlgContentfilterAbstract
 	 */	
 	public function filter($text)
 	{
-		$this->_stripTags($text);
-		
-		$text = trim($text);
-    		    
-    	$text = strip_tags($text, "<img><b><i><u>");
-    	$text = preg_replace( "/((?<!=\")(http|ftp)+(s)?:\/\/[^<>\s]+)/i", " <a href=\"\\0\" target=\"_blank\">\\0</a>", $text);
-    	
-		$this->_replaceTags($text);
+    	$text = preg_replace( 
+    	"/((?<!=\")(http|ftp)+(s)?:\/\/[^<>\s]+)/i", 
+    	"<a href=\"\\0\" target=\"_blank\">\\0</a>", 
+    	$text);
 		
 		return $text;	
 	}

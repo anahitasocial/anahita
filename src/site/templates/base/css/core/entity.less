@@ -111,6 +111,11 @@ h4.entity-name,
      {   
          margin: 10px;
      }
+     
+     form
+     {
+        margin: 10px;
+     }
 	
 	dl
     {   
@@ -168,14 +173,32 @@ h4.entity-name,
     
     &.masonry
     {
-        .entity-portrait-medium
-        {            
-            margin: 0;
-            
-            img
-            {
-                .border-radius(0);
-            }
+        -moz-column-gap: 15px;
+        -webkit-column-gap: 15px;
+        column-gap: 15px;
+        
+        @media (min-width: 767px) 
+        {
+            -moz-column-count: 2;
+            -webkit-column-count: 2;
+            column-count: 2;
+        }
+        
+        .an-entity
+        {
+            display: inline-block; /* Display inline-block, and absolutely NO FLOATS! */
+            margin-bottom: 0;
+            width: 100%;
+       
+            .entity-portrait-medium
+	        {            
+	            margin: 0;
+	            
+	            img
+	            {
+	                .border-radius(0);
+	            }
+	        }
         }
     }
 }

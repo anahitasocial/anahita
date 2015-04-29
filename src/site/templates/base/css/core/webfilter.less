@@ -1,19 +1,23 @@
 // WEBFILTER MEDIA
-.an-media-video-thumbnail 
-{   
-    cursor:pointer;    
-    margin-bottom: 10px;
-    
-    span
-    {
-        background: url("images/icon-play.png") no-repeat center;
-        opacity: 0.5;
-        position: absolute;
-        display:block;
-        
-        &:hover
+
+.an-media-video 
+{ 
+	position: relative; 
+	margin: 10px 0;
+	
+	a {
+	   position: absolute;
+	   display: block;
+	   background: url("images/icon-play.png") no-repeat center;
+	   width: 100%;
+       height: 100%;
+	   top: 0;
+	   left: 0;
+	   .opacity(50);
+	   
+	   &:hover
         {
-           opacity: 0.8;
+           opacity: .7;
         }
-    }
+	}
 }
