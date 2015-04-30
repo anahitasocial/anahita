@@ -13,14 +13,20 @@
 //@depends vendors/jquery.swipebox.js
 //@depends vendors/tinycon.js
 
-//@depends vendors/bootstrap/bootstrap-transition.js
-//@depends vendors/bootstrap/bootstrap-tab.js
-//@depends vendors/bootstrap/bootstrap-dropdown.js
-//@depends vendors/bootstrap/bootstrap-tooltip.js
-//@depends vendors/bootstrap/bootstrap-modal.js
-//@depends vendors/bootstrap/bootstrap-popover.js
 //@depends vendors/bootstrap/bootstrap-alert.js
+//@depends vendors/bootstrap/bootstrap-button.js
+//@depends vendors/bootstrap/bootstrap-carousel.js
+//@depends vendors/bootstrap/bootstrap-collapse.js
+//@depends vendors/bootstrap/bootstrap-dropdown.js
+//@depends vendors/bootstrap/bootstrap-modal.js
+
+//@depends vendors/bootstrap/bootstrap-scrollspy.js
+//@depends vendors/bootstrap/bootstrap-tab.js
+//@depends vendors/bootstrap/bootstrap-tooltip.js
+//@depends vendors/bootstrap/bootstrap-popover.js
+//@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-typeahead.js
+
 
 //@depends vendors/editor/bootstrap-wysiwyg.js
 //@depends vendors/editor/jquery.hotkeys.js

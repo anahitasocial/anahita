@@ -14,7 +14,7 @@
         
         var elem = $(this);        
         var form = $(document.createElement('form'));       
-        var params = elem.attr('href').split(/\?|\&/);        
+        var params = elem.attr('href').split(/\?|\&/);     
         
         form.attr('action', params.shift()).attr('method', 'post');
          
@@ -25,13 +25,14 @@
             form.append(input);
         });
         
-        form.trigger('submit');
+        form.appendTo('body').submit();
     };
     
     $('body').on('click', 'a[data-trigger="PostLink"]', function ( event ) {
         
         event.preventDefault();
         $(this).anahitaPostlink();
+        
     });
     
 }(jQuery, window, document));

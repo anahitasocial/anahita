@@ -45,7 +45,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
     <?php endif; ?>
     <li class="divider"></li>
 	<li>
-		<a data-trigger="Logtou" href="<?= @route('option=com_people&view=session&action=delete') ?>">
+		<a data-trigger="PostLink" href="<?= @route('option=com_people&view=session&action=delete') ?>">
         <?= @text('LIB-AN-ACTION-LOGOUT') ?>
 		</a>
 	</li>
