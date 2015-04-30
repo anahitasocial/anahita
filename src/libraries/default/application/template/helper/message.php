@@ -73,10 +73,11 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
             'type' => 'info'
         ));
         
-        $message = "<div class=\"alert alert-block alert-{$config->type}\">" .
-                "<a class=\"close\" data-trigger=\"nix\" data-nix-options=\"'target':'!div.alert'\">&times;</a>".
-                "$message" .
-                "</div>";
+        $message = '' 
+        .'<div class="alert alert-block alert-'.$config->type.'">' 
+        .'<a class="close" data-dismiss="alert" href="#">&times;</a>'
+        .$message
+        .'</div>';
         
         return $message;
     }
