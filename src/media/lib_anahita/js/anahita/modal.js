@@ -33,7 +33,7 @@
             var form = body.find('form');
             
             triggerBtn.on('click', function( event ) {
-                form.appendTo('body').submit();
+                form.submit();
             });
         });
         
