@@ -29,7 +29,7 @@
   var Button = function (element, options) {
     this.$element = $(element)
     this.options = $.extend({}, $.fn.button.defaults, options)
-  }
+  };
 
   Button.prototype.setState = function (state) {
     var d = 'disabled'
@@ -48,7 +48,7 @@
         $el.addClass(d).attr(d, d) :
         $el.removeClass(d).removeAttr(d)
     }, 0)
-  }
+  };
 
   Button.prototype.toggle = function () {
     var $parent = this.$element.closest('[data-toggle="buttons-radio"]')
@@ -58,7 +58,7 @@
       .removeClass('active')
 
     this.$element.toggleClass('active')
-  }
+  };
 
 
  /* BUTTON PLUGIN DEFINITION
@@ -75,11 +75,11 @@
       if (option == 'toggle') data.toggle()
       else if (option) data.setState(option)
     })
-  }
+  };
 
   $.fn.button.defaults = {
     loadingText: 'loading...'
-  }
+  };
 
   $.fn.button.Constructor = Button
 
@@ -90,7 +90,7 @@
   $.fn.button.noConflict = function () {
     $.fn.button = old
     return this
-  }
+  };
 
 
  /* BUTTON DATA-API
