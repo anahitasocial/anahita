@@ -18090,7 +18090,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             var form = body.find('form');
             
             triggerBtn.on('click', function( event ) {
-                form.trigger('submit');
+                form.appendTo('body').submit();
             });
         });
         
@@ -19361,7 +19361,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         
         var elem = $(this);        
         var form = $(document.createElement('form'));       
-        var params = elem.attr('href').split(/\?|\&/);        
+        var params = elem.attr('href').split(/\?|\&/);     
         
         form.attr('action', params.shift()).attr('method', 'post');
          
@@ -19372,13 +19372,14 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             form.append(input);
         });
         
-        form.trigger('submit');
+        form.appendTo('body').submit();
     };
     
     $('body').on('click', 'a[data-trigger="PostLink"]', function ( event ) {
         
         event.preventDefault();
         $(this).anahitaPostlink();
+        
     });
     
 }(jQuery, window, document));
@@ -19743,7 +19744,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			var form = elem.closest('form');
 			
 			form.find(':file').attr('value', '');
-			form.trigger('submit');
+			form.appendTo('body').submit();
 			
 			return this;
 		}
@@ -19754,7 +19755,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			
 			elem.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 			
-			form.trigger('submit');
+			form.appendTo('body').submit();
 			
 			return this;
 		}

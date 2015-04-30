@@ -152,7 +152,7 @@
 			var form = elem.closest('form');
 			
 			form.find(':file').attr('value', '');
-			form.trigger('submit');
+			form.appendTo('body').submit();
 			
 			return this;
 		}
@@ -163,7 +163,7 @@
 			
 			elem.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 			
-			form.trigger('submit');
+			form.appendTo('body').submit();
 			
 			return this;
 		}
