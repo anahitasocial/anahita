@@ -110,7 +110,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 		
 		$close_handler = '';
 		if ( $config->closable ) {
-		    $close_handler =  "<a class=\"close\" data-trigger=\"nix\" data-nix-options=\"'target':'!div.alert'\">&times;</a>";
+		    $close_handler =  "<a class=\"close\" data-dismiss=\"alert\">&times;</a>";
 		}
 		
 		return "<div class=\"alert alert-{$config->type} $alertblock\">$close_handler<p>$message</p></div>";
