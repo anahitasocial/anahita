@@ -68,35 +68,35 @@
             //format blocks
             text += ''
             + '<div class="btn-group">'
-            + '<a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Format">'
-            + '<b class="caret"></b> Format' 
+            + '<a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Text Format">'
+            + '<b class="caret"></b> Text' 
             + '</a>'
             + '<ul class="dropdown-menu">'
-            + '<li><a data-edit="formatblock p" data-original-title="Paragraph">Paragraph</a></li>'
-            + '<li><a data-edit="formatblock pre" data-original-title="Preformatted">Preformatted</a></li>'
-            + '<li><a data-edit="formatblock address" data-original-title="Address">Address</a></li>'
-            + '<li><a data-edit="formatblock h1" data-original-title="Header 1">Header 1</a></li>'
-            + '<li><a data-edit="formatblock h2" data-original-title="Header 2">Header 2</a></li>'
-            + '<li><a data-edit="formatblock h3" data-original-title="Header 3">Header 3</a></li>'
-            + '<li><a data-edit="formatblock h4" data-original-title="Header 4">Header 4</a></li>'
-            + '<li><a data-edit="formatblock h5" data-original-title="Header 5">Header 5</a></li>'
+            + '<li><a data-edit="formatblock p" data-original-title="Paragraph">p</a></li>'
+            + '<li><a data-edit="formatblock pre" data-original-title="Preformatted">pre</a></li>'
+            + '<li><a data-edit="formatblock address" data-original-title="Address">addr</a></li>'
+            + '<li><a data-edit="formatblock h1" data-original-title="Header 1">h1</a></li>'
+            + '<li><a data-edit="formatblock h2" data-original-title="Header 2">h2</a></li>'
+            + '<li><a data-edit="formatblock h3" data-original-title="Header 3">h3</a></li>'
+            + '<li><a data-edit="formatblock h4" data-original-title="Header 4">h4</a></li>'
+            + '<li><a data-edit="formatblock h5" data-original-title="Header 5">h5</a></li>'
             + '</ul>'
             + '</div>';
             
             //bold, italic, Strike Through, Underline
             text += '' 
             + '<div class="btn-group">'
-            + '<a class="btn" data-edit="bold" data-original-title="Bold (Ctrl/Cmd+B)"><strong>B</strong></a>'
-            + '<a class="btn" data-edit="italic" data-original-title="Italic (Ctrl/Cmd+I)"><em>I</em></a>'
-            + '<a class="btn" data-edit="strikethrough" data-original-title="Strikethrough"><strike>U</strike></a>'
-            + '<a class="btn" data-edit="underline" data-original-title="Underline (Ctrl/Cmd+U)"><u>U</u></a>'
+            + '<a class="btn" data-edit="bold" data-original-title="Bold (Ctrl/Cmd+B)"><b>b</b></a>'
+            + '<a class="btn" data-edit="italic" data-original-title="Italic (Ctrl/Cmd+I)"><i>i</i></a>'
+            + '<a class="btn" data-edit="strikethrough" data-original-title="Strikethrough"><strike>u</strike></a>'
+            + '<a class="btn" data-edit="underline" data-original-title="Underline (Ctrl/Cmd+U)"><u>u</u></a>'
             + '</div>'; 
             
             //lists
             text += ''
             + '<div class="btn-group">'
-            + '<a class="btn" data-edit="insertunorderedlist" data-original-title="Bullet list">&#8226; List</a>'
-            + '<a class="btn" data-edit="insertorderedlist" data-original-title="Number list">&sup1; &sup2; &sup3; List</a>'
+            + '<a class="btn" data-edit="insertunorderedlist" data-original-title="Bullet list">ul</a>'
+            + '<a class="btn" data-edit="insertorderedlist" data-original-title="Number list">ol</a>'
             + '</div>';
             
             this.toolbar.html(text);
