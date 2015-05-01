@@ -1,6 +1,6 @@
 var StringLibAnahita = { 
 
-	'action' : {
+	action : {
 	
 		close : 'Close',
 		ok : 'Ok',
@@ -20,7 +20,7 @@ var StringLibAnahita = {
         
 	},
 	
-	'prompt' : {
+	prompt : {
 		
 		loading : 'Loading...',
 		'delete' : 'Are you sure you want to delete this?',	
