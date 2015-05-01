@@ -138,7 +138,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         $matches = array();
         
         if(preg_match_all(ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, $text, $matches))
-        	return array_unique($matches[2]);
+        	return array_unique($matches[3]);
         else
         	return array();
 	} 

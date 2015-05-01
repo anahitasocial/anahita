@@ -1,6 +1,4 @@
-/**
- * anahita-media
- * 
+/** 
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
  * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
