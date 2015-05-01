@@ -28,7 +28,7 @@
 				    'html' => array(    
 				        'maxlength'=>'20000', 
 				        'cols'=>'10',
-				        'rows'=>'30', 
+				        'rows'=>'5', 
 				        'class'=>'input-block-level', 
 				        'id'=>'page-description' 
                         )
