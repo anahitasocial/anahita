@@ -22,9 +22,7 @@
 
             this._on(this.element.closest('form'), {
                 'submit' : function ( event ) {
-                    //event.preventDefault();
                     self._getContent();
-                    //console.log(self.element.val());
                 }
             });
             
@@ -114,7 +112,7 @@
             
             } else {
             
-                this.editor.html();
+                this.editor.html('<p><br/></p>');
             }
         },
         

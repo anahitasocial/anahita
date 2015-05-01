@@ -9,8 +9,8 @@
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
-	    <?= @helper('text.truncate',  @content( nl2br( $object->body ) , array('exclude'=>'gist')), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
-	</div>	
+        <?= @helper('text.truncate', strip_tags( $object->body ), array('length'=>200, 'read_more'=>true)); ?>
+    </div>	
 </data>
 
 <?php if ($type == 'notification') :?>

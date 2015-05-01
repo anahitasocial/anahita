@@ -19564,9 +19564,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
             this._on(this.element.closest('form'), {
                 'submit' : function ( event ) {
-                    //event.preventDefault();
                     self._getContent();
-                    //console.log(self.element.val());
                 }
             });
             
@@ -19656,7 +19654,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             
             } else {
             
-                this.editor.html();
+                this.editor.html('<p><br/></p>');
             }
         },
         
