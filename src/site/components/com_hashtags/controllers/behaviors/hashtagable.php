@@ -87,7 +87,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
         $matches = array();
         
         if(preg_match_all(ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG, $text, $matches))
-        	return array_unique($matches[3]);
+        	return array_unique($matches[1]);
         else
         	return array();
 	}
