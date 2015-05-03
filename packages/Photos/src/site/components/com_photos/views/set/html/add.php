@@ -17,27 +17,27 @@
     	<fieldset>
     		<legend><?= @text('COM-PHOTOS-SET-ADD') ?></legend>
     		<div class="control-group">
-    			<label class="control-label" for="title">
+    			<label class="control-label" for="set-title">
     			    <?= @text('LIB-AN-MEDIUM-TITLE') ?>
     			</label>
     			
     			<div class="controls">
-    				<input class="input-block-level" name="title" size="50" maxlength="255" type="text" required>
+    				<input class="input-block-level" id="set-title" name="title" size="50" maxlength="255" type="text" required>
     			</div>
     		</div>
     		
     		<div class="control-group">
-    			<label class="control-label" for="description">
+    			<label class="control-label" for="set-description">
     			    <?= @text('LIB-AN-MEDIUM-DESCRIPTION') ?>
     			</label>
     			
     			<div class="controls">
-    				<textarea maxlength="5000" class="input-block-level" name="description" cols="50" rows="5"></textarea>
+    				<textarea maxlength="5000" id="set-description" class="input-block-level" name="description" cols="50" rows="5"></textarea>
     			</div>
     		</div>
     
     		<div id="photo-selector">
-    			<?= @controller('photos')->view('photos')->oid($actor->id)->layout('selector') ?>
+    			
     		</div>
     		
     		<div id="set-photos" class="an-entities">

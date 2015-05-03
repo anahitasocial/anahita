@@ -56,8 +56,18 @@
 	
 	$("[data-behavior='Checkbox']").checkbox();
 	
-	$( document ).ajaxSuccess(function( event, request, settings ) {
-		$("[data-behavior='Checkbox']").checkbox();
-	});
+	$(document).ajaxSuccess(function() {
+        
+        var elements = $("[data-behavior='Checkbox']");
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-checkbox')") ) {
+            
+              $(element).checkbox();
+            
+            }
+        });
+    });
 	
 }(jQuery, window, document));

@@ -69,8 +69,6 @@
             		
             		}
             		
-                    pagination.paginator();
-            		
                     $(currentEntities).replaceWith(entities);
                     $(self.element).replaceWith(pagination);
                     
@@ -90,5 +88,19 @@
     });
     
     $('[data-behavior*="pagination"]').paginator();
+    
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('[data-behavior*="pagination"]');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-paginator')") ) {
+            
+              $(element).paginator();
+            
+            }
+        });
+    });
     
 }(jQuery, window));

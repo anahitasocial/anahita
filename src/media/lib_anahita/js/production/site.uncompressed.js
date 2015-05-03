@@ -18774,86 +18774,75 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			scrollable : document,
 			preload: 3,
 			limit : 20,
-			url : null,
-			debug : false
+			url : null
 		},
 		
 		_create: function() {
 			
 			if (this.element.children(this.options.record).length < this.options.limit )
 				return;
-			
-			if(this.options.debug)
-				console.log('Instantiated');
-			
-			this.url = this.options.url || this.element.data('url');
-			
-			this.records = $(this.element.children(this.options.record));
-			
-			if(this.options.debug)
-				console.log(this.records);
-			
-			this.start = this.records.length;
 
-			this._getNextRecords();
+            this.url = this.element.data('url') || this.options.url;
+            this.records = this.element.children(this.options.record);
+            this.start = this.records.length;
+            
+            this._preload();
 
-			var scrollable = $(this.options.scrollable);
-			
 			var self = this;
 			
+			// listen to the "urlChange" event
+            // if there is one, update the url and refresh records.
+            this._on( $(document) , {
+                
+                'urlChange' : function( event ) {
+
+                    self.element.data('url', $(document).data('newUrl'));
+                    this.url = this.element.data('url');
+                    this.records = this.element.children(this.options.record);
+                    this.start = this.records.length;
+                    
+                    this._setNewLimit(null);
+                    
+                    this._preload();
+                }
+            });
+			
+			var scrollable = $(this.options.scrollable);
+			
 			scrollable.scroll(function(){
-	
-				if ( self.options.debug ) {
-					
-					console.log($(window).scrollTop());
-					console.log($(scrollable).height());
 				
-				}
-				
-				if ( self.element.is(':visible') && $(window).scrollTop() >= $(scrollable).height() - $(window).height()) {
+				if ( self.element.is(':visible') && $(window).scrollTop() + $(window).height() >= $(scrollable).height()) {
 					self._getNextPage();
 				}
 			});
-			
-			// listen to the "urlChange" event
-			// if there is one, update the url and refresh records.
-			this._on($(document), {
-				'urlChange' : function( event ) {
-					this.url = $(document).data('newUrl');
-					this.records = $(this.element.children(this.options.record));
-					this._getNextRecords();
-				}
-			});
 		},
 		
-		_getNextRecords: function(){
+		_preload: function(){
 			
-			var limit = {
+			var limit = $.param({
 				start : this.records.length,
 				limit : this.options.limit * this.options.preload,	
-			};
+			});
 			
-			limit = $.param(limit);
+			if(!this._isNewLimit( limit )) {
+			    return false;
+			}
 			
-			if(!this._isFreshLimit(limit))
-				return false;
+			this._setNewLimit( limit );
 			
-			this._rememberLimit(limit);
-			
-			var self = this;
-			
-			$.get( this.url + '&' + limit , function ( response ) {
-				
-				response = $(response);
-				
-				if(self.options.debug)
-					console.log(response.filter(self.options.record));
-				
-				self.records = $.merge(self.records, response.filter(self.options.record));
+			$.ajax({
+			    method : 'get',
+			    url : this.url + '&' + limit,
+			    success : function ( response ) {
+			       
+			       response = $(response);
+                   this.records = $.merge( this.records, response.filter( this.options.record )); 
+
+			    }.bind( this )
 			});
 		},
 		
-		_getNextPage: function(){
+		_getNextPage: function() {
 			
 			if ( this.start < this.records.length ) {
 				
@@ -18864,22 +18853,32 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				this.start += this.options.limit;
 			}
 			
-			this._getNextRecords();
+			this._preload();
 		},
 		
-		_rememberLimit : function(url) {
-			this._limit = url;
+		_isNewLimit : function ( limit ) {
+		    return this._limit != limit;
 		},
 		
-		_isFreshLimit : function (limit) {
-			return this._limit != limit;
+		_setNewLimit : function ( limit ) {
+		    this._limit = limit;
 		}
 	});
 	
+	$('[data-trigger="InfiniteScroll"]').infinitescroll();
+	
 	$(document).ajaxSuccess(function() {
-			$('[data-trigger*="InfiniteScroll"]').infinitescroll({
-				'debug' : false
-			});
+		
+		var elements = $('[data-trigger="InfiniteScroll"]');
+		
+		$.each(elements, function( index, element ){
+		    
+		    if( !$(element).is(":data('anahita-infinitescroll')") ) {
+		    
+		      $(element).infinitescroll();
+		    
+		    }
+		});
 	});
 	
 }(jQuery, window, document));
@@ -19013,9 +19012,19 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
 	$("[data-behavior='Checkbox']").checkbox();
 	
-	$( document ).ajaxSuccess(function( event, request, settings ) {
-		$("[data-behavior='Checkbox']").checkbox();
-	});
+	$(document).ajaxSuccess(function() {
+        
+        var elements = $("[data-behavior='Checkbox']");
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-checkbox')") ) {
+            
+              $(element).checkbox();
+            
+            }
+        });
+    });
 	
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/autosubmit.js
@@ -19220,8 +19229,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             		
             		}
             		
-                    pagination.paginator();
-            		
                     $(currentEntities).replaceWith(entities);
                     $(self.element).replaceWith(pagination);
                     
@@ -19241,6 +19248,20 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
     
     $('[data-behavior*="pagination"]').paginator();
+    
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('[data-behavior*="pagination"]');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-paginator')") ) {
+            
+              $(element).paginator();
+            
+            }
+        });
+    });
     
 }(jQuery, window));
 ///media/lib_anahita/js/anahita/permalink.js
@@ -19472,7 +19493,17 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     $('#person-form').person();
     
     $(document).ajaxSuccess(function() {
-        $('#person-form').person();
+        
+        var elements = $('#person-form');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-person')") ) {
+            
+              $(element).person();
+            
+            }
+        });
     });
     
 }(jQuery, window, document));
@@ -19672,6 +19703,20 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
     
     $('[data-behavior="Editor"]').editor();
+    
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('[data-behavior="Editor"]');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-editor')") ) {
+            
+              $(element).editor();
+            
+            }
+        });
+    });
     
 }(jQuery, window, document));
 
@@ -20118,9 +20163,21 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 	});
 	
-	$(document).ajaxSuccess(function() {
-		$('.an-entity.editable').entityEditable();
-	});
+	$('.an-entity.editable').entityEditable();
+    
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('.an-entity.editable');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-entityEditable')") ) {
+            
+              $(element).entityEditable();
+            
+            }
+        });
+    });
 
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/actions/commentstatus.js

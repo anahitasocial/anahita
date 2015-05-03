@@ -108,7 +108,17 @@
     $('#person-form').person();
     
     $(document).ajaxSuccess(function() {
-        $('#person-form').person();
+        
+        var elements = $('#person-form');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-person')") ) {
+            
+              $(element).person();
+            
+            }
+        });
     });
     
 }(jQuery, window, document));

@@ -131,4 +131,18 @@
     
     $('[data-behavior="Editor"]').editor();
     
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('[data-behavior="Editor"]');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-editor')") ) {
+            
+              $(element).editor();
+            
+            }
+        });
+    });
+    
 }(jQuery, window, document));

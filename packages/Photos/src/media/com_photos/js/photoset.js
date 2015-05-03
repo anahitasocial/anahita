@@ -119,7 +119,7 @@
     			},
     			success : function () {
     				
-    				set.fadeTo('fast', 1).removeClass('uiActivityIndicator')
+    				set.fadeTo('fast', 1).removeClass('uiActivityIndicator');
     				
     				if ( action == 'addphoto' ) {
     				
