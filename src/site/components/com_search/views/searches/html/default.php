@@ -11,7 +11,13 @@
 <?php endif;?>
 
 <div class="row">
-	<div class="span8">	
+    <div class="span2">
+    <?php if(!empty($keywords)): ?>
+    <?= @template('scopes') ?>
+    <?php endif;?>
+    </div>
+    
+	<div class="span6">	
 	
 		<?= @helper('ui.header', array()) ?>
 	
@@ -44,12 +50,6 @@
 		<div id="an-search-results" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
 	    <?= @template('list') ?>
 		</div>
-	</div>
-	
-	<div class="span4">
-	<?php if(!empty($keywords)): ?>
-	<?= @template('scopes') ?>
-	<?php endif;?>
 	</div>
 </div>
 

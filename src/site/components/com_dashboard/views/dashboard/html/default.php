@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <div class="span4">
+    <div class="span4 visible-desktop">
     <?= @helper('ui.gadget', $trendingHashtags) ?>	
     </div>
 </div>

@@ -14,7 +14,7 @@
 		</div>
 	</div>
 	
-	<div class="span4">
+	<div class="span4 visible-desktop">
 		<h3 class="block-title"><?= @text('COM-ACTORS-SOCIALGRAPH-STATS') ?></h3>
 		<div class="block-content an-socialgraph-stat">
             <?php if($actor->isFollowable()) : ?>
