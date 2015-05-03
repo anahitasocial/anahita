@@ -117,7 +117,7 @@
     		var data = 'action=updatephotos';
     		
     		$.each( thumbnails, function ( index, thumbnail ) {
-    			data += '&photo_id[]=' + $(thumbnail).attr('photo')
+    			data += '&photo_id[]=' + $(thumbnail).attr('photo');
     		});
     		
     		$.ajax({

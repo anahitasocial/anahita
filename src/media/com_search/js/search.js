@@ -44,7 +44,7 @@
 				}
 			});
 			
-			//sort options
+			//sort options recent/relevant
 			this._on( elemSort, {
 				change : function ( event ) {
 					event.preventDefault();
@@ -53,7 +53,7 @@
 				}
 			});
 			
-			//sort options
+			//sort options search comments
 			this._on( elemComment, {
 				change : function ( event ) {
 					event.preventDefault();
@@ -98,8 +98,10 @@
 					$(self.options.results).html(response.filter('.an-entity'));
 					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
 					self._initScopes();
+					
 				},
 				complete : function () {
+					
 					currentTarget.fadeTo('fast', 1).removeClass('uiActivityIndicator');
 					var newUrl = self.form.attr('action') + '?' + self.form.serialize() + '&' + $.param(self.searchOptions);
 					$(document).data( 'newUrl',  newUrl ).trigger('urlChange');

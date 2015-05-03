@@ -87,8 +87,20 @@
 		}
 	});
 	
-	$(document).ajaxSuccess(function() {
-		$('.an-entity.editable').entityEditable();
-	});
+	$('.an-entity.editable').entityEditable();
+    
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('.an-entity.editable');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahita-entityEditable')") ) {
+            
+              $(element).entityEditable();
+            
+            }
+        });
+    });
 
 }(jQuery, window, document));
