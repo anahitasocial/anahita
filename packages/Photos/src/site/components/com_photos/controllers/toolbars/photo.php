@@ -43,7 +43,8 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
 		{
 			$this->addCommand('OpenSetSelector', JText::_('COM-PHOTOS-ACTION-ADD-TO-SET'))
 			    ->getCommand('OpenSetSelector')
-			    ->href(JRoute::_('option=com_photos&view=sets&layout=selector&oid='.$entity->owner->id.'&photo_id='.$entity->id));
+			    ->href(JRoute::_('option=com_photos&view=sets&layout=selector&oid='.$entity->owner->id.'&photo_id='.$entity->id))
+                ->class('visible-desktop');
 		
 			$this->addAdministrationCommands();
 		}
