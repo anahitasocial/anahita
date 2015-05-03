@@ -49,6 +49,7 @@
 //@depends anahita/person.js
 //@depends anahita/token.js
 //@depends anahita/editor.js
+//@depends anahita/gist.js
 
 
 //@depends anahita/actions/vote.js

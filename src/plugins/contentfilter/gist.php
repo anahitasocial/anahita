@@ -53,7 +53,7 @@
        
         $text = preg_replace(
         "/https?\:\/\/gist.github.com\/[\S]+\/[0-9a-z]+[^\W]/", 
-        "<script data-inline src=\"\\0.js\"></script>", 
+        "<div class=\"an-meta\" data-trigger=\"LoadGist\" data-inline data-src=\"\\0.js\">".JText::_('LIB-AN-REMOTE-LOADING')."</div>", 
         $text);
            
         return $text;   

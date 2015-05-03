@@ -19719,6 +19719,56 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
     
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/gist.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+    $.fn.anahitaGist = function () {
+        
+        var placeholder = $(this);
+        
+        console.log( placeholder );
+        
+        $.getJSON( placeholder.data('src') + 'on?callback=?', function( data ) {
+ 
+            // replace script with gist html
+            placeholder.replaceWith( $( data.div ) );
+ 
+            // load the stylesheet, but only once…            
+            var head = $('head');
+ 
+            if ( head.find('link[rel="stylesheet"][href="'+ data.stylesheet +'"]').length < 1 ) {
+                head.append('<link rel="stylesheet" href="'+ data.stylesheet +'" type="text/css" />');
+            }
+        });
+    };
+    
+    $('[data-trigger="LoadGist"]').anahitaGist();
+    
+    $(document).ajaxSuccess(function() {
+        
+        var elements = $('[data-trigger="LoadGist"]');
+        
+        $.each(elements, function( index, element ){
+            
+            if( !$(element).is(":data('anahitaGist')") ) {
+            
+              $(element).anahitaGist();
+            
+            }
+        });
+    });
+    
+}(jQuery, window, document));
 
 
 ///media/lib_anahita/js/anahita/actions/vote.js
