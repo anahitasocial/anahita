@@ -11,7 +11,7 @@
 // remove this if statement for the menu to render
 
 if(false): ?>
-<ul class="nav" data-behavior="BS.Dropdown">
+<ul class="nav">
 	<li>
 		<a href="<?= @route('option=com_html&view=content&layout=examples/article') ?>">
 		<?= @text('Article') ?>

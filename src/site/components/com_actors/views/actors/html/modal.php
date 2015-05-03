@@ -2,7 +2,7 @@
 <div class="an-entities" id="an-entities-main">
 	<div id="an-actors" class="an-entities">
 		<?php foreach($items as $item ) : ?>
-            <div class="an-entity an-record dropdown-actions <?= $highlight ?>" data-behavior="BS.Dropdown">
+            <div class="an-entity an-record dropdown-actions <?= $highlight ?>">
             	<div class="clearfix">
             		<div class="entity-portrait-square">
             			<?= @avatar($item) ?>
