@@ -26,6 +26,7 @@
             </div>
             
             <div id="mobile-main-menu" class="nav-collapse collapse menu-mobile hidden-desktop">
+            <?= @searchbox('searchbox') ?>
             <?= @template('menus/mobile') ?>
             </div>
         </div>
