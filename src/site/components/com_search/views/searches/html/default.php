@@ -11,13 +11,13 @@
 <?php endif;?>
 
 <div class="row">
-    <div class="span2">
+    <div class="span4">
     <?php if(!empty($keywords)): ?>
     <?= @template('scopes') ?>
     <?php endif;?>
     </div>
     
-	<div class="span6">	
+	<div class="span8">	
 	
 		<?= @helper('ui.header', array()) ?>
 	

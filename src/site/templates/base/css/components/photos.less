@@ -5,23 +5,11 @@
 	 filter:alpha(opacity=40);
 }
 
-// SETS
-.an-photos-plugin
-{
-   margin: 20px 0;
-    
-   img
-   {
-       .square(90px);
-   }
-}
-
 #set-select-list
 {
     .thumbnail
     {
         cursor: pointer;
-        .square(98px);
         
         &:hover
         {
@@ -33,21 +21,21 @@
 #set-photos
 {
     margin: 10px 0;
+    
     .border-radius(@baseBorderRadius);
+    
     .media-grid
     {
         min-height: 130px;
-    }
-    
-    &.an-highlight
-    {
-        .thumbnail-wrapper
+        
+        .ui-sortable-handle
         {
-            &.cover
-            {
-                .opacity(30);
-            }
+          &.cover
+          {
+              .opacity(30);
+          }
         }
+        
     }
 }
 
@@ -56,18 +44,9 @@
     .well;
     .media-grid.an-entities
     {
-	    overflow-x: hidden;
+	      overflow-x: hidden;
         overflow-y: auto;
         height: 240px;
         padding-right: 10px;
-	    margin: -10px;
-	    
-	    .thumbnail-wrapper
-	    {		    
-		    img
-		    {   
-		        .square(65px);
-		    }
-        }
     }
 }
