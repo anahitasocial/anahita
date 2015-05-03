@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<div class="btn-toolbar clearfix" data-behavior="BS.Dropdown">
-    <div class="pull-left visible-desktop">
+<div class="btn-toolbar clearfix">
+    <div class="pull-left">
         <?= @helper('ui.commands', $toolbar->getCommands()->class('btn btn-primary')) ?>
     </div>
     
