@@ -7,7 +7,7 @@
 	<?= @helper('ui.comments', $todo, array('pagination'=>true)); ?>
 	</div>
 	
-	<div class="span4">
+	<div class="span4 visible-desktop">
 		<h4 class="block-title">
 		<?= @text('LIB-AN-META') ?>
 		</h4>				

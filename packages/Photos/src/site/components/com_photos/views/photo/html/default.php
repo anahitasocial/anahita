@@ -17,7 +17,7 @@
 	<?= @helper('ui.comments', $photo) ?>
 	</div>
 	
-	<div class="span4">
+	<div class="span4 visible-desktop">
     	<h4 class="block-title">
     	<?= @text('COM-PHOTOS-PHOTO-RELATED-SETS') ?>
     	</h4>

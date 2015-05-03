@@ -1,13 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <div class="row">
-	<div class="span8">
-		<?= @helper('ui.header', array()) ?>
-	
-		<div class="actor-settings">
-			<?= $content ?>
-		</div>
-	</div>
 	
 	<div class="span4">
 		<ul id="setting-tabs" class="nav nav-pills nav-stacked" >
@@ -23,4 +16,12 @@
 		<?php endforeach;?>
 		</ul>
 	</div>
+	
+	<div class="span8">
+        <?= @helper('ui.header', array()) ?>
+    
+        <div class="actor-settings">
+            <?= $content ?>
+        </div>
+    </div>
 </div>

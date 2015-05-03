@@ -8,7 +8,7 @@
 	</div>
 	
 	<?php if($actor->authorize('administration')): ?>
-	<div class="span4">
+	<div class="span4 visible-desktop">
 		<h4 class="block-title">
 		    <?= @text('COM-TOPICS-TOPIC-PRIVACY') ?>
 		</h4>

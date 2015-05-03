@@ -14,7 +14,7 @@
 		<?= @template('list') ?>
 	</div>
 	
-	<div class="span4">			
+	<div class="span4 visible-desktop">			
 		<ul class="nav nav-pills nav-stacked" data-behavior="sortable">
 			<li class="nav-header">
 		       <?= @text('LIB-AN-SORT-TITLE') ?>
