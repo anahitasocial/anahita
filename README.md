@@ -49,18 +49,20 @@ PHP, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
 
 Before you start please make sure that your server meets the following requirements:
 
-1. Apache 2.0+ (with mod_mysql, mod_xml, mod_zlib) or nginx
-2. MySql 5.0+
-3. php 5.3.3+ with APC
-4. If you have Zend Optimizer on your server **disable it**!
-6. Composer package management. You can download it following the instructions on
+1. Linux or unix server
+2. Apache 2.0+ (with mod_mysql, mod_xml, mod_zlib) or Nginx
+3. MySql 5.0+
+4. php 5.3.3+ with APC
+5. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
 `curl -s http://getcomposer.org/installer | php`
 
 #### Important Note
 
-If you have the suhosin patch installed on your server you might get an error. [Here is how you can fix it](https://www.assembla.com/spaces/nooku-framework/wiki/Known_Issues).
+1. If you have the suhosin patch installed on your server you might get an error. [Here is how you can fix it](https://www.assembla.com/spaces/nooku-framework/wiki/Known_Issues).
+2. If you have Zend Optimizer on your server **disable it**!
+3. Anahita is installed and managed via commandline, becuase this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
 ### System Requirements
 
