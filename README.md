@@ -42,7 +42,25 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 6. specialized Anahita framework to build your own custom social apps
 7. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
 
+### Built using your favourite technologies
+PHP, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
+
 ## Installation
+
+Before you start please make sure that your server meets the following requirements:
+
+1. Apache 2.0+ (with mod_mysql, mod_xml, mod_zlib) or nginx
+2. MySql 5.0+
+3. php 5.3.3+ with APC
+4. If you have Zend Optimizer on your server **disable it**!
+6. Composer package management. You can download it following the instructions on
+http://getcomposer.org/ or just run the following command:
+
+`curl -s http://getcomposer.org/installer | php`
+
+#### Important Note
+
+If you have the suhosin patch installed on your server you might get an error. [Here is how you can fix it](https://www.assembla.com/spaces/nooku-framework/wiki/Known_Issues).
 
 ### System Requirements
 
