@@ -10,7 +10,7 @@ Anahita is a remarkable social networking platform for developing knowledge shar
 2. information access networks about people, places, and things
 3. open science and open data
 4. online collaboration
-5. as the cloud back-end for your mobile apps
+5. cloud back-end for your mobile apps
 
 Anahita provides a genuine nodes and graphs architecture as well as design patterns for building apps that are smarter and inherently social.
 
@@ -44,13 +44,15 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 
 ## Installation
 
+### System Requirements
+
 ### Installing a Birth Release
 
 ### Installaing an Embryo Release
 
 ## Configuration
 
-### Social Apps
+### Installing Social Apps
 
 ### Amazon S3 Storage
 
