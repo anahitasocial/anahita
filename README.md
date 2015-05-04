@@ -58,7 +58,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 
 ## Anahita Cli
 
-## Report a Bug or Issue
+## Report Bugs or Issues
 
 ## Contribute to Anahita
 
