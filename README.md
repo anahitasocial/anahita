@@ -58,9 +58,9 @@ http://getcomposer.org/ or just run the following command:
 
 `curl -s http://getcomposer.org/installer | php`
 
-#### Important Note
+#### Important Notes
 
-1. If you have the suhosin patch installed on your server you might get an error. To fix that add this line to your php.ini file: `suhosin.executor.include.whitelist = tmpl://, file://`
+1. If you have the suhosin patch installed on your server you might get an error. Add this line to your php.ini file to fix it: `suhosin.executor.include.whitelist = tmpl://, file://`
 2. If you have Zend Optimizer on your server **disable it**!
 3. Anahita is installed and managed via commandline, becuase this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
