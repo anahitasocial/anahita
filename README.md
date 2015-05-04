@@ -60,7 +60,7 @@ http://getcomposer.org/ or just run the following command:
 
 #### Important Note
 
-1. If you have the suhosin patch installed on your server you might get an error. [Here is how you can fix it](https://www.assembla.com/spaces/nooku-framework/wiki/Known_Issues).
+1. If you have the suhosin patch installed on your server you might get an error. To fix that add this line to your php.ini file: `suhosin.executor.include.whitelist = tmpl://, file://`
 2. If you have Zend Optimizer on your server **disable it**!
 3. Anahita is installed and managed via commandline, becuase this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
