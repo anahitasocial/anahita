@@ -1,3 +1,5 @@
+![Anahita social networking platform and framework](https://s3.amazonaws.com/anahitapolis.com/media/logos/homepage_logo.png)
+
 Anahita
 ================
 Version: 4.1.0 Embryo Release
