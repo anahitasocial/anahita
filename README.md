@@ -29,11 +29,11 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 4. notifications: a person recieves an email notification whenever a comment is posted on an item they are subscribed to.
 5. votes: people can Like/Unlike media and comments
 
-## Stories
+### Stories
 - story feeds on dashboard and actor profiles
 - notifications
 
-## More Features
+### More Features
 1. media composer: for posting notes, topics, pages, todos, and photos from actor profiles or the dashboard.
 2. commnets: all media are commentable 
 3. privacy management: for actors and media nodes
@@ -42,7 +42,23 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 6. specialized Anahita framework to build your own custom social apps
 7. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
 
+## Installation
 
+### Installing a Birth Release
+
+### Installaing an Embryo Release
+
+## Configuration
+
+### Social Apps
+
+### Amazon S3 Storage
+
+## Anahita Cli
+
+## Report a Bug or Issue
+
+## Contribute to Anahita
 
 Getting Started
 ================
