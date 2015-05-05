@@ -116,6 +116,18 @@ Congratulations! You have installed Anahita successfully. Now you need to config
 
 ### Installing Social Apps
 
+Now it is time to extend your Anahita installation with some apps and components. Anahita already comes with some really useful ones. To get a list of them simply type the following command:
+
+`php anahita package:list`
+
+Now in order to install an app, for example the Photos app, type the following command:
+
+`php anahita package:install photos`
+
+You can even provide a list of apps and components in one line. For example to install the Groups, Topics, and Connect apps use the following command:
+
+`php anahita package:install groups topics connect`
+
 ### Amazon S3 Storage
 
 ## Anahita Cli
