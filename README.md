@@ -120,7 +120,14 @@ Now you need to make some configurations before you can use your Anahita for dev
 
 ## Global Configuration
 
+In the admin back-end go to the _Configure_ tab. Here are the main settings that you should care about:
 
+- **Site Name:** the name of your site. This will show up in all the notifications emailed out to people.
+- **User Settings:** 
+- - **Allow User Registration:** normally it should be _yes_ unless you are using Anahita for a small team and adding the members to your network one by one or adding members automatically using an Anahita app such as the Subscriptions app.
+-- **New User Registration Type:** we recommend _registered_ as the default
+-- **New User Account Activation:** If set to _yes_ people who sign up receive a link which they have to click on in order to activate their account. 
+- **Route Setting:** Set to _yes_ to get nice urls. If you are on an Apache server, you need to rename the _htaccess.txt_ file in the _www_ directory to _.htaccess_ for this feature to work.
 
 ### Installing Social Apps
 
