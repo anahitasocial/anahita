@@ -128,6 +128,10 @@ You can even provide a list of apps and components in one line. For example to i
 
 `php anahita package:install groups topics connect`
 
+In the administration back-end you can go to the _Extend > Components_ and further define whether an app should optionally or always be available on actor profiles (people, groups, etc.). If an app is optionally available, then on each actor profile the app can be enabled under the _Edit Profile > Apps_.
+
+Congratulations! You have just installed some apps and extensions on your Anahita installation.
+
 ### Amazon S3 Storage
 
 ## Anahita Cli
