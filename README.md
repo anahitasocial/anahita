@@ -4,7 +4,7 @@
 
 *Version:* 4.1.0 Embryo Release
 
-Anahita is a remarkable social networking platform for developing knowledge sharing apps and services. Use Anahita to launch:
+Anahita is a social networking platform for developing knowledge sharing apps and services. Use Anahita to launch:
 
 1. online learning and knowledge sharing networks
 2. information access networks about people, places, and things
@@ -14,7 +14,7 @@ Anahita is a remarkable social networking platform for developing knowledge shar
 
 Anahita provides a genuine nodes and graphs architecture as well as design patterns for building apps that are smarter and inherently social.
 
-## Features
+## Concepts
 
 ### Nodes
 1. **actors:** people, groups, or build your own custom actor
@@ -33,7 +33,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 - story feeds on dashboard and actor profiles
 - notifications
 
-### More Features
+### Features
 1. **media composer:** for posting notes, topics, pages, todos, and photos from actor profiles or the dashboard.
 2. **comments:** all media are commentable 
 3. **privacy management:** for actors and media nodes
