@@ -66,7 +66,7 @@ http://getcomposer.org/ or just run the following command:
 2. If you have Zend Optimizer on your server *disable it*!
 3. Anahita is installed and managed via commandline, becuase this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
-### Getting the Birth Release code
+### Using the Birth Release code
 
 A **Birth** release is the most recent stable release of Anahita. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
@@ -76,7 +76,9 @@ Now go to the _myproject_ directory:
 
 `cd myproject`
 
-### Getting the Embryo Release code
+Continue with *Initiating Installation* from this point.
+
+### Using the Embryo Release code
 
 An Embryo release is the codebase that hasn't been throughly finalized yet and it is still undergoing changes. you may use the embryo code for your project, but you need to be mindful of the fact that it still contain some bugs while it is stable enough that we are using it on our production site [GetAnahita.com](http://www.GetAnahita.com). That is how we discover and fix all the bugs, before we tag the code as a Birth release. The master branch of Anahita always contains the most recent embryo release.
 
@@ -91,6 +93,8 @@ change directory to *myproject*
 Now run the composer command to obtain all the 3rd party libraries that Anahita requires:
 
 `composer update`
+
+Continue with *Initiating Installation* from this point.
 
 ## Initiating Installation
 
