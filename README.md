@@ -118,7 +118,7 @@ Now you need to make some configurations before you can use your Anahita for dev
 
 **Please Note:** the administration back-end will be removed in Anahita 4.3 and all the administration features will be available on the front to the users with _admin_ and _super admin_ privileges.
 
-## Global Configuration
+### Global Configuration
 
 In the admin back-end go to the _Configure_ tab. Here are the main settings that you should care about:
 
@@ -173,6 +173,18 @@ In the administration back-end you can go to the _Extend > Components_ and furth
 Congratulations! You have just installed some apps and extensions on your Anahita installation.
 
 ### Amazon S3 Storage
+
+Nearly in all cases you wouldn't want to store the uploaded files on your own server. They add up very quickly and that makes it very difficult to maintain or migrate your Anahita installation. Anahita provides a plugin which allows all the uploaded files to be stored in the AWS or [Amazon S3](https://aws.amazon.com/s3/) cloud. 
+
+Under the _Extend_ tab go to the _Plugin Manager_ and then from the _type_ list select _Storage_. Disable the _Storage - Local_ plugin by clicking on the checkmark under the Published column. Then click on the _Storage - Amazon S3_ to edit the plugin. Configure the plugin with the following setting:
+
+- **The folder to store the data:** use _assets_ as the default setting
+- **Bucket:** enter the name of your Amazon S3 bucket
+- **Access Key:** enter your AWS access key
+- **Secret Key:** enter your AWS secret key
+- **Published:** set to _yes_
+
+Now click save to store the settings. Try uploading your avatar in the front-end and see if it gets uploaded properly. Check the image src to make sure it is an AWS url.
 
 ## Anahita Cli
 
