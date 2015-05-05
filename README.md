@@ -26,7 +26,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 1. **social graph:** people and groups can be followed by other people. 
 2. **hashtags:** for actors, media, and comments
 3. **mentions:** tag people in media and comments
-4. **notifications:** a person recieves an email notification whenever a comment is posted on an item they are subscribed to.
+4. **notifications:** a person receives an email notification whenever a comment is posted on an item they are subscribed to.
 5. **votes:** people can Like/Unlike media and comments
 
 ### Stories
@@ -35,7 +35,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 
 ### More Features
 1. **media composer:** for posting notes, topics, pages, todos, and photos from actor profiles or the dashboard.
-2. **commnets:** all media are commentable 
+2. **comments:** all media are commentable 
 3. **privacy management:** for actors and media nodes
 4. fully customizable theme and user interfaces
 5. extendable by social apps and components
@@ -64,7 +64,7 @@ http://getcomposer.org/ or just run the following command:
 
 1. If you have the suhosin patch installed on your server you might get an error. Add this line to your php.ini file to fix it: `suhosin.executor.include.whitelist = tmpl://, file://`
 2. If you have Zend Optimizer on your server *disable it*!
-3. Anahita is installed and managed via commandline, becuase this is the most reliable approach especially after you accumulate large amounts of data in your database.
+3. Anahita is installed and managed via command line interface, because this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
 ### Using the Birth Release code
 
@@ -118,9 +118,9 @@ The first account that is created on this installation becomes the _Super Admini
 
 Congratulations! You have installed Anahita successfully. Now you need to configure your installation and install some apps.
 
-## Configurating Your Anahita Installation
+## Configuring Your Anahita Installation
 
-Now you need to make some configurations before you can use your Anahita for development or production server. Go to _/administrator_ to access the administraion back-end. 
+Now you need to make some configurations before you can use your Anahita for development or production server. Go to _/administrator_ to access the administration back-end. 
 
 **Please Note:** the administration back-end will be removed in Anahita 4.3 and all the administration features will be available on the front to the users with _admin_ and _super admin_ privileges.
 
@@ -142,13 +142,13 @@ In the admin back-end go to the _Configure_ tab. Here are the main settings that
 
 **Server Settings:** Set _Error Reporting_ to _none_ on production server.
 
-**Debug Settings:** Set _Debug System_ to _yes_ if you are devleoping on Anahita or debugging an app.
+**Debug Settings:** Set _Debug System_ to _yes_ if you are developing on Anahita or debugging an app.
 
 **Cache Setting:** You don't need to use caching when developing, but on your production server select _APC_ from the list and set Cache to _yes_. This will significantly speed up your site.
 
 **Session Settings:** We prefer _Database_ as the default setting.
 
-**Mail Settings:** We prefer _PHP Mail Function_ as the default setting. Enter a valid email address for _Mail From_ this will show up in all the email notifications that people recieve from Anahita. A valid email address will reduce the possibility of them getting picked up by spam filters. Enter your server's _SMTP_ settings in the appropriate fields so notification emails get sent out. 
+**Mail Settings:** We prefer _PHP Mail Function_ as the default setting. Enter a valid email address for _Mail From_ this will show up in all the email notifications that people receive from Anahita. A valid email address will reduce the possibility of them getting picked up by spam filters. Enter your server's _SMTP_ settings in the appropriate fields so notification emails get sent out. 
 
 Don't forget to _Save_ or _Apply_ or settings. Your settings are saved in the _www/configuration.php_ file so make sure that this file has the appropriate write permissions.
 
@@ -197,7 +197,7 @@ Now click save to store the settings. Try uploading your avatar in the front-end
 ## Join the Anahita Tribe
 Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](http://www.GetAnahita.com/join) 
 
-**Plase Note:** we do not asnwer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](http://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
+**Please Note:** we do not answer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](http://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
 
 ## Report Bugs or Issues
 
@@ -215,4 +215,6 @@ Anahita could never be possible without the help of people in our tribe. We need
 
 Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like our facebook page [Facebook.com/anahitasocial](https://www.facebook.com/anahitasocial)
 
+## Credits
 
+Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver software development company specialized in knowledge sharing cloud and mobile apps. 
