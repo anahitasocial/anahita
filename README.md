@@ -8,8 +8,8 @@ Anahita is a remarkable social networking platform for developing knowledge shar
 
 1. online learning and knowledge sharing networks
 2. information access networks about people, places, and things
-3. open science and open data
-4. online collaboration
+3. open science and open data networks
+4. online collaboration environments
 5. cloud back-end for your mobile apps
 
 Anahita provides a genuine nodes and graphs architecture as well as design patterns for building apps that are smarter and inherently social.
