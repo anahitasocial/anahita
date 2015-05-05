@@ -122,12 +122,33 @@ Now you need to make some configurations before you can use your Anahita for dev
 
 In the admin back-end go to the _Configure_ tab. Here are the main settings that you should care about:
 
-- **Site Name:** the name of your site. This will show up in all the notifications emailed out to people.
-- **User Settings:** 
-- - **Allow User Registration:** normally it should be _yes_ unless you are using Anahita for a small team and adding the members to your network one by one or adding members automatically using an Anahita app such as the Subscriptions app.
--- **New User Registration Type:** we recommend _registered_ as the default
--- **New User Account Activation:** If set to _yes_ people who sign up receive a link which they have to click on in order to activate their account. 
-- **Route Setting:** Set to _yes_ to get nice urls. If you are on an Apache server, you need to rename the _htaccess.txt_ file in the _www_ directory to _.htaccess_ for this feature to work.
+**Site Name:** the name of your site. This will show up in all the notifications emailed out to people.
+
+**User Settings:** 
+
+- **Allow User Registration:** normally it should be _yes_ unless you are using Anahita for a small team and adding   the members to your network one by one or adding members automatically using an Anahita app such as the Subscriptions app.
+
+- **New User Registration Type:** we recommend _registered_ as the default
+  
+- **New User Account Activation:** If set to _yes_ people who sign up receive a link which they have to click on in order to activate their account. 
+
+**Route Setting:** Set to _yes_ to get nice urls. If you are on an Apache server, you need to rename the _htaccess.txt_ file in the _www_ directory to _.htaccess_ for this feature to work.
+
+**Server Settings:** Set _Error Reporting_ to _none_ on production server.
+
+**Debug Settings:** Set _Debug System_ to _yes_ if you are devleoping on Anahita or debugging an app.
+
+**Cache Setting:** You don't need to use caching when developing, but on your production server select _APC_ from the list and set Cache to _yes_. This will significantly speed up your site.
+
+**Session Settings:** We prefer _Database_ as the default setting.
+
+**Mail Settings:** We prefer _PHP Mail Function_ as the default setting. Enter a valid email address for _Mail From_ this will show up in all the email notifications that people recieve from Anahita. A valid email address will reduce the possibility of them getting picked up by spam filters. Enter your server's _SMTP_ settings in the appropriate fields so notification emails get sent out. 
+
+Don't forget to _Save_ or _Apply_ or settings. Your settings are saved in the _www/configuration.php_ file so make sure that this file has the appropriate write permissions.
+
+### Notifications
+
+Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you need to setup a cron job on your server. In the admin back-end under the _Extend_ tab go to the _Notifications_ component. There you find the path and url that you need to use in your cron. There are many articles on the web to show you how to setup a cron job. Depending on your number of users and activity on your site, anywhere from 15 minute to 1 hour intervals will work. You will find the suitable interval after monitoring your Anahita installation for a while.  
 
 ### Installing Social Apps
 
