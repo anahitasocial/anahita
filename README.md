@@ -112,11 +112,23 @@ The first account that is created on this installation becomes the _Super Admini
 
 Congratulations! You have installed Anahita successfully. Now you need to configure your installation and install some apps.
 
-## Configuration
+## Configurating Your Anahita Installation
+
+Now you need to make some configurations before you can use your Anahita for development or production server. Go to _/administrator_ to access the administraion back-end. 
+
+**Please Note:** the administration back-end will be removed in Anahita 4.3 and all the administration features will be available on the front to the users with _admin_ and _super admin_ privileges.
+
+## Global Configuration
+
+
 
 ### Installing Social Apps
 
-Now it is time to extend your Anahita installation with some apps and components. Anahita already comes with some really useful ones. To get a list of them simply type the following command:
+Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
+
+**Please Note:** the _Subscriptions_ app has not yet been upgraded for the Anahita 4.1. The updated version should be available by June 2015.
+
+To get a list of available apps simply type the following command:
 
 `php anahita package:list`
 
