@@ -68,6 +68,8 @@ http://getcomposer.org/ or just run the following command:
 
 ### Using the Birth Release code
 
+![Installing Anahita using the Birth release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
+
 A **Birth** release is a stable release of Anahita. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
 `composer create-project anahita/project myproject`
@@ -79,6 +81,8 @@ Now go to the _myproject_ directory:
 Continue with [Initiating Installation] (#initiating-installation) from this point.
 
 ### Using the Embryo Release code
+
+![Installing Anahita using the Embryo release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-embryo.gif)
 
 An Embryo release is the codebase that hasn't been throughly finalized yet and it is still undergoing changes. you may use the embryo code for your project, but you need to be mindful of the fact that it still contain some bugs while it is stable enough that we are using it on our production site [GetAnahita.com](http://www.GetAnahita.com). That is how we discover and fix all the bugs, before we tag the code as a Birth release. The master branch of Anahita always contains the most recent embryo release.
 
@@ -97,6 +101,8 @@ Now run the composer command to obtain all the 3rd party libraries that Anahita 
 Continue with *Initiating Installation* from this point.
 
 ## Initiating Installation
+
+![Initiating Anahita installation](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-init.gif)
 
 If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. If the command didn't work, perhaps the symlink to the anahita command line tool isn't created. In this case run the following command to create a symlink. Otherwise move to the next step which is initiating the installation process.
 
@@ -151,6 +157,8 @@ Don't forget to _Save_ or _Apply_ or settings. Your settings are saved in the _w
 Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you need to setup a cron job on your server. In the admin back-end under the _Extend_ tab go to the _Notifications_ component. There you find the path and url that you need to use in your cron. There are many articles on the web to show you how to setup a cron job. Depending on your number of users and activity on your site, anywhere from 15 minute to 1 hour intervals will work. You will find the suitable interval after monitoring your Anahita installation for a while.  
 
 ### Installing Social Apps
+
+![Installing Anahita social apps](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-apps-install.gif)
 
 Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
 
