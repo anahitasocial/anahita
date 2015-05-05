@@ -66,7 +66,7 @@ http://getcomposer.org/ or just run the following command:
 2. If you have Zend Optimizer on your server *disable it*!
 3. Anahita is installed and managed via commandline, becuase this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
-### Installing a Birth Release
+### Getting the Birth Release code
 
 A **Birth** release is the most recent stable release of Anahita. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
@@ -76,7 +76,29 @@ Now go to the _myproject_ directory:
 
 `cd myproject`
 
-If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. In order to initiate the installation process run the following command and provide your database information when it is asked from you:
+### Getting the Embryo Release code
+
+An Embryo release is the codebase that hasn't been throughly finalized yet and it is still undergoing changes. you may use the embryo code for your project, but you need to be mindful of the fact that it still contain some bugs while it is stable enough that we are using it on our production site [GetAnahita.com](http://www.GetAnahita.com). That is how we discover and fix all the bugs, before we tag the code as a Birth release. The master branch of Anahita always contains the most recent embryo release.
+
+Now clone Anahita repository from the master branch:
+
+`git clone git@github.com:anahitasocial/anahita.git myproject`
+
+change directory to *myproject*
+
+`cd myproject`
+
+Now run the composer command to obtain all the 3rd party libraries that Anahita requires:
+
+`composer update`
+
+## Initiating Installation
+
+If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. If the command didn't work, perhaps the symlink to the anahita command line tool isn't created. In this case run the following command to create a symlink. Otherwise move to the next step which is initiating the installation process.
+
+`ln -s bin/anahita anahita`
+
+In order to initiate the installation process run the following command and provide your database information when it is asked from you:
 
 `php anahita site:init`
 
@@ -85,8 +107,6 @@ The Anahita installation is created in the _PATH-TO-YOUR-DIRECTORY/myproject/www
 The first account that is created on this installation becomes the _Super Administrator_ account. Go to the _http://www.YOUR-DOMAIN-NAME.com/people/signup_ and create an account.
 
 Congratulations! You have installed Anahita successfully. Now you need to configure your installation and install some apps.
-
-### Installing an Embryo Release
 
 ## Configuration
 
