@@ -76,7 +76,7 @@ Now go to the _myproject_ directory:
 
 `cd myproject`
 
-Continue with *Initiating Installation* from this point.
+Continue with [Initiating Installation] (#initiating-installation) from this point.
 
 ### Using the Embryo Release code
 
