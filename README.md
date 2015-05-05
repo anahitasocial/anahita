@@ -120,15 +120,10 @@ Congratulations! You have installed Anahita successfully. Now you need to config
 
 ## Anahita Cli
 
+## Join the Anahita Tribe
+If you need any help with the Anahita installation or have general question about Anahita. 
+You visit http://GetAnahita.com or follow the Anahita project group at http://www.GetAnahita.com/groups/group/42242-anahita
+
 ## Report Bugs or Issues
 
 ## Contribute to Anahita
-
-Getting Started
-================
-To install the most recent Birth release of Anahita please read the instructions [Getting Started] (https://github.com/anahitasocial/anahita/wiki/Getting-started).
-
-Get Help
-=========
-If you need any help with the Anahita installation or have general question about Anahita. 
-You visit http://GetAnahita.com or follow the Anahita project group at http://www.GetAnahita.com/groups/group/42242-anahita
