@@ -186,12 +186,25 @@ Under the _Extend_ tab go to the _Plugin Manager_ and then from the _type_ list 
 
 Now click save to store the settings. Try uploading your avatar in the front-end and see if it gets uploaded properly. Check the image src to make sure it is an AWS url.
 
-## Anahita Cli
-
 ## Join the Anahita Tribe
-If you need any help with the Anahita installation or have general question about Anahita. 
-You visit http://GetAnahita.com or follow the Anahita project group at http://www.GetAnahita.com/groups/group/42242-anahita
+Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](http://www.GetAnahita.com/join) 
+
+**Plase Note:** we do not asnwer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](http://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
 
 ## Report Bugs or Issues
 
+There are so many ways that you can report us a bug:
+
+- open an issue here on our repository
+- start a topic on [Anahita Project](http://www.getanahita.com/groups/42242-anahita-project) group
+- send us a [friendly email](http://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug 
+
 ## Contribute to Anahita
+
+Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a [complete guideline](http://www.getanahita.com/html/tribes/contribute) of how you can contribute to Anahita.
+
+## Follow us, Like us
+
+Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like our facebook page [Facebook.com/anahitasocial](https://www.facebook.com/anahitasocial)
+
+
