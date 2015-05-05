@@ -68,7 +68,7 @@ http://getcomposer.org/ or just run the following command:
 
 ### Using the Birth Release code
 
-A **Birth** release is the most recent stable release of Anahita. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
+A **Birth** release is a stable release of Anahita. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
 `composer create-project anahita/project myproject`
 
