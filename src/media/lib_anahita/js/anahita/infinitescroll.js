@@ -55,7 +55,7 @@
 			
 			scrollable.scroll(function(){
 				
-				if ( self.element.is(':visible') && $(window).scrollTop() + $(window).height() >= $(scrollable).height()) {
+				if ( self.element.is(':visible') && $(window).scrollTop() + ($(window).height() * 1.3 ) >= $(scrollable).height()) {
 					self._getNextPage();
 				}
 			});
@@ -87,6 +87,8 @@
 		},
 		
 		_getNextPage: function() {
+			
+			console.log( this.start );
 			
 			if ( this.start < this.records.length ) {
 				
