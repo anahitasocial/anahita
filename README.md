@@ -37,15 +37,12 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 1. MVC rapid app development framework specialized for building social apps 
 2. fully customizable theme and user interfaces
 3. extendable by social apps and components
-4. specialized Anahita framework to build your own custom social apps
-5. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
+4. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
+5. Built using your favourite technologies such as PHP5, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
 
 ### Embryo and Birth releases
 
 The code in the master branch is called the **Embryo**. It is what we use to power our website [GetAnahita.com](http://www.getanahita.com) and it is constantly changing and evolving. It may contain bugs that are being fixed. Experimental features may be added and removed. Whenever we reach a specific milestone and the codebase is stable, it is packaged as a **Birth** relase.
-
-### Built using your favourite technologies
-PHP, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
 
 ## Installation
 
