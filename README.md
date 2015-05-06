@@ -42,7 +42,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 
 ### Embryo and Birth releases
 
-The code in the master branch is called the **Embryo**. It is what we use to power our website [GetAnahita.com](http://www.getanahita.com) and it is constantly changing and evolving. It may contain bugs that are being fixed. Experimental features may be added and removed. Whenever we reach a specific milestone and the codebase is stable, it is packaged as a *Birth* relase.
+The code in the master branch is called the **Embryo**. It is what we use to power our website [GetAnahita.com](http://www.getanahita.com) and it is constantly changing and evolving. It may contain bugs that are being fixed. Experimental features may be added and removed. Whenever we reach a specific milestone and the codebase is stable, it is packaged as a **Birth** relase.
 
 ### Built using your favourite technologies
 PHP, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
