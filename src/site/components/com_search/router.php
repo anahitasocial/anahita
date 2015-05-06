@@ -47,6 +47,7 @@ class ComSearchRouter extends ComBaseRouterDefault
         
         //we don't need the view
         unset($query['view']);
+        unset($query['oid']);
         unset($query['q']);
         
         return $segments;
@@ -63,7 +64,7 @@ class ComSearchRouter extends ComBaseRouterDefault
         $vars = array();   
         
         if ( preg_match('/@\w+/', current($segments)) ) {
-        	$vars['oid'] = str_replace('@','',array_shift($segments));
+        	$vars['oid'] = str_replace('@','', array_shift($segments));
         }
 
         if ( count($segments) ) {

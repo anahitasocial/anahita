@@ -18811,7 +18811,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			
 			scrollable.scroll(function(){
 				
-				if ( self.element.is(':visible') && $(window).scrollTop() + $(window).height() >= $(scrollable).height()) {
+				if ( self.element.is(':visible') && $(window).scrollTop() + ($(window).height() * 1.3 ) >= $(scrollable).height()) {
 					self._getNextPage();
 				}
 			});
@@ -18843,6 +18843,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		},
 		
 		_getNextPage: function() {
+			
+			console.log( this.start );
 			
 			if ( this.start < this.records.length ) {
 				
@@ -19735,8 +19737,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     $.fn.anahitaGist = function () {
         
         var placeholder = $(this);
-        
-        console.log( placeholder );
         
         $.getJSON( placeholder.data('src') + 'on?callback=?', function( data ) {
  

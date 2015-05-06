@@ -44,7 +44,7 @@
         	$url['sort'] = $sort;
         	
         if(!empty($scope))
-        	$url['scope'] = $scope;	
+        	$url['scope'] = $scope;
         ?>
 
 		<div id="an-search-results" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
