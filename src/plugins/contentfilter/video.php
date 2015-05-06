@@ -102,49 +102,40 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 	{
 		$matches = array();
 
-		if(preg_match_all('%http[s]?://\S*youtube.com/watch\?v=[\w]+%', $text, $matches))
-		{			
-			foreach($matches[0] as $index => $match)
+		if(preg_match_all('%http[s]?://\S*(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $text, $matches))
+		{
+			  
+                			
+			foreach($matches[1] as $index => $id)
 			{
-				$youtube_link = $match;
-				$full_link = $matches[0][$index];
-				$id	= array();
-				$pattern = '/v=([^&#]+)/';
-				
-				if(strpos($full_link,'.be/')) 
-				    $pattern = '/([^&#]+)/';
-						
-				if(preg_match($pattern, $youtube_link, $id))
+
+                $video = file_get_contents('https://gdata.youtube.com/feeds/api/videos/'.$id.'?alt=json');
+				$video = json_decode($video, true);
+
+				$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
+
+                $maxres = get_headers($thumbBase.'maxresdefault.jpg');
+                $notfound = get_headers($thumbBase.'0.jpg');
+
+				if($maxres[0] != 'HTTP/1.0 404 Not Found') 
 				{
-					$id = str_replace('watch?v=', '', array_pop($id));
-					
-					$video = json_decode(file_get_contents('https://gdata.youtube.com/feeds/api/videos/'.$id.'?alt=json'), true);
+				    $thumbnail = $thumbBase.'maxresdefault.jpg';
+                }    
+				elseif($notfound[0] != 'HTTP/1.0 404 Not Found') 
+				{
+				    $thumbnail = $thumbBase.'0.jpg';
+                }
+				else 
+				    return;
 
-					$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
-
-                    $maxres = get_headers($thumbBase.'maxresdefault.jpg');
-                    $notfound = get_headers($thumbBase.'0.jpg');
-
-					if($maxres[0] != 'HTTP/1.0 404 Not Found') 
-					{
-					    $thumbnail = $thumbBase.'maxresdefault.jpg';
-                    }    
-					elseif($notfound[0] != 'HTTP/1.0 404 Not Found') 
-					{
-					    $thumbnail = $thumbBase.'0.jpg';
-                    }
-					else 
-					    return;
-
-					$options = array(						
-					    'title' => $video['entry']['title']['$t'],
-						'url' => 'https://www.youtube.com/watch?v='.$id,
-						'thumbnail' => $thumbnail
-					);
-				
-					$video = $this->_createVideo( $options );
-					$text = str_replace($matches[0][$index], $video, $text);
-				}
+				$options = array(						
+				    'title' => $video['entry']['title']['$t'],
+					'url' => 'https://www.youtube.com/watch?v='.$id,
+					'thumbnail' => $thumbnail
+				);
+			
+				$video = $this->_createVideo( $options );
+				$text = str_replace($matches[0][$index], $video, $text);
 			}
 		}	
 		

@@ -140,12 +140,14 @@
 			$(this.tabs[this.currentTabIndex]).hide();
 			
 			this.currentTabIndex = index;
+			
 			var tab = $(this.tabs[this.currentTabIndex]);
 			
 			if(!tab.data('content'))
 			{	
 				
 				$.ajax({
+				    
 				    method: 'get',
 				    url : tab.data('url'),
 				    beforeSend : function () {
@@ -186,12 +188,14 @@
 		},
 		
 		showTabContent : function(index){
+			
 			var tab = $(this.tabs[index]);
 			$(tab.data('placeholder')).hide();
 			$(tab.data('content')).fadeIn();
 		},
 		
 		hideTabContent : function(index){	
+			
 			var tab = $(this.tabs[index]);	
 			$(tab.data('content')).hide();
 			$(tab.data('placeholder')).fadeIn();
@@ -204,13 +208,16 @@
 	//show composer only for the stories stream
 	var streamTabs = $('ul.streams');
 	
-	if(streamTabs.length){	
+	if ( streamTabs.length ) {	
+		
 		streamTabs.on('click', 'li', function(event){
 			
-			if($( this ).data('stream') == 'stories')
-				composer.fadeIn();
-			else
-				composer.fadeOut();
+			if ( $( this ).data('stream') == 'stories') {
+			     composer.fadeIn();
+			} else {
+			     composer.fadeOut(); 
+			}
+				
 		});
 	}
 	
@@ -219,8 +226,10 @@
 		
 		var connectLinks = $('a.connect-link');
 		
-		if(connectLinks.length){
-			$(connectLinks).tooltip({
+		if ( connectLinks.length && !connectLinks.is(":data('tooltip')") ) {
+		
+			$(connectLinks).tooltip( {
+				
 				placement : 'top',
 				animation : true,
 				trigger : 'hover'
