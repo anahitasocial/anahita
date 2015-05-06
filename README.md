@@ -4,7 +4,7 @@
 
 *Version:* 4.1.0 Embryo Release
 
-Anahita is a social networking platform for developing knowledge sharing apps and services. Use Anahita to launch:
+Anahita is a social networking platform for building knowledge sharing apps and services. Use Anahita to launch:
 
 1. online learning and knowledge sharing networks
 2. information access networks about people, places, and things
