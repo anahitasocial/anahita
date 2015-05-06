@@ -33,14 +33,16 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 - story feeds on dashboard and actor profiles
 - notifications
 
-### Features
-1. **media composer:** for posting notes, topics, pages, todos, and photos from actor profiles or the dashboard.
-2. **comments:** all media are commentable 
-3. **privacy management:** for actors and media nodes
-4. fully customizable theme and user interfaces
-5. extendable by social apps and components
-6. specialized Anahita framework to build your own custom social apps
-7. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
+### RAD Framework
+1. MVC rapid app development framework specialized for building social apps 
+2. fully customizable theme and user interfaces
+3. extendable by social apps and components
+4. specialized Anahita framework to build your own custom social apps
+5. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
+
+### Embryo and Birth releases
+
+The code in the master branch is called the **Embryo**. It is what we use to power our website [GetAnahita.com](http://www.getanahita.com) and it is constantly changing and evolving. It may contain bugs that are being fixed. Experimental features may be added and removed. Whenever we reach a specific milestone and the codebase is stable, it is packaged as a *Birth* relase.
 
 ### Built using your favourite technologies
 PHP, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
@@ -66,11 +68,11 @@ http://getcomposer.org/ or just run the following command:
 2. If you have Zend Optimizer on your server *disable it*!
 3. Anahita is installed and managed via command line interface, because this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
-### Using the Birth Release code
+### Installing a stable package 
 
 ![Installing Anahita using the Birth release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
 
-A **Birth** release is a stable release of Anahita. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
+Stable packages are called _Birth_ releases. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
 `composer create-project anahita/project myproject`
 
@@ -80,13 +82,11 @@ Now go to the _myproject_ directory:
 
 Continue with [Initiating Installation] (#initiating-installation) from this point.
 
-### Using the Embryo Release code
+### Installing from the master branch
 
 ![Installing Anahita using the Embryo release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-embryo.gif)
 
-An Embryo release is the codebase that hasn't been throughly finalized yet and it is still undergoing changes. you may use the embryo code for your project, but you need to be mindful of the fact that it still contain some bugs while it is stable enough that we are using it on our production site [GetAnahita.com](http://www.GetAnahita.com). That is how we discover and fix all the bugs, before we tag the code as a Birth release. The master branch of Anahita always contains the most recent embryo release.
-
-Now clone Anahita repository from the master branch:
+The master branch always contains the _Embryo_ release. Using the following command, clone the Anahita repository from the master branch:
 
 `git clone git@github.com:anahitasocial/anahita.git myproject`
 
