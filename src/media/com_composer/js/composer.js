@@ -29,8 +29,9 @@
 				formData.append('format', 'raw');
 				
 				this._on(form, {
+
 					submit: function(event){
-						event.stopPropagation();
+
 						event.preventDefault();
 						
 						$.each(form.serializeArray(), function(i, obj){
@@ -45,33 +46,53 @@
 							url : form.attr('action'),
 							processData: false, 
 				            contentType: false,
-							cache: false,
 							data : formData,
-							type : 'POST',
+							method : 'post',
+							beforeSend : function () {
+                            
+                                form.find(':submit').button('loading');
+                            
+                            },
 							success : function (html) {
+							
 								$(this.element).trigger('reset');
 								$(this.options.stories).prepend($(html).fadeIn('slow'));
-							}.bind(this)
+							
+							}.bind(this),
+                            complete : function () {
+                               form.find(':submit').button("reset");
+                            }
 						});
 					}
 				});
 				
-			}else{
+			} else {
 
 				this._on(form, {
+					
 					submit: function(event){
-						event.stopPropagation();
+					
 						event.preventDefault();	
 						
 						$.ajax({
+							
 							url : form.attr('action'),
 							data : form.serialize() + '&composed=1',
-							cache: false,
-							type : 'POST',
+							method : 'post',
+							beforeSend : function () {
+							
+							    form.find(':submit').button('loading');
+							
+							},
 							success : function (html) {
+							
 								$(this.element).trigger('reset');
 								$(this.options.stories).prepend($(html).fadeIn('slow'));
-							}.bind(this)
+							
+							}.bind(this),
+                            complete : function () {
+                               form.find(':submit').button("reset");
+                            }
 						});
 					}	
 				});

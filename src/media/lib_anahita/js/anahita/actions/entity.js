@@ -69,12 +69,14 @@
 				url : form.attr('action') + '?' + 'layout=list',
 				data : form.serialize(),
 				beforeSend : function () {
-					form.find(':submit').attr('disabled', true);
-					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
 					entity.replaceWith($(response));
-				}
+				},
+				complete : function () {
+                   form.find(':submit').button('reset');
+                }
 			});
 			
 			return this;
@@ -91,14 +93,14 @@
 				url : form.attr('action') + '?' + 'layout=list',
 				data : form.serialize(),
 				beforeSend : function () {
-					form.find(':submit').attr('disabled', true);
+					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
 					form.trigger('reset');
 					entities.prepend( response );
 				},
 				complete : function () {
-				   form.find(':submit').attr('disabled', false);
+				   form.find(':submit').button('reset');
 				}
 			});
 			
@@ -158,8 +160,7 @@
 				url : form.attr('action'),
 				data : form.serialize(),
 				beforeSend : function (){
-					form.find(':submit').attr('disabled', true);
-					form.fadeTo('fast', 0.3);
+					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
 				
@@ -169,8 +170,7 @@
 				},
 				complete : function ( xhr, status ) {
 				    
-				    form.find(':submit').attr('disabled', false);
-				    form.fadeTo( 'fast', 1 );
+				    form.find(':submit').button('reset');
 				}
 			});
 			
