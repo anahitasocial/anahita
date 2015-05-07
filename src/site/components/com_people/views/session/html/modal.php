@@ -58,7 +58,7 @@
 </div>
 
 <div class="modal-footer">
-   <button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-ACTION-PLEASE-WAIT') ?>">
+   <button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-ACTION-LOGGING-IN') ?>">
         <?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
    </button> 
 </div>
