@@ -48,7 +48,7 @@
 				</a> 
 				<?php endif;?> 
 				
-				<button type="submit" class="btn btn-primary">
+				<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-UPDATING') ?>">
 					<?= @text('LIB-AN-ACTION-UPDATE') ?>
 				</button>
 			<?php else : ?>
@@ -56,7 +56,7 @@
 				<?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</a>  
 			
-			<button data-trigger="Add" class="btn btn-primary">
+			<button data-trigger="Add" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
 				<?= @text('LIB-AN-ACTION-ADD') ?>
 			</button>
 			<?php endif;?>

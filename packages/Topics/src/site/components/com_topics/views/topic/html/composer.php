@@ -22,7 +22,7 @@
 			</label> 
 			
 			<div class="controls">
-                <textarea id="topic-body" maxlength="5000" class="input-block-level" name="body" cols="10" rows="5" required></textarea>
+                <textarea id="topic-body" maxlength="5000" class="input-block-level" name="body" cols="5" rows="3" required></textarea>
             </div>
 		</div>
 		
@@ -37,7 +37,7 @@
 		</div>
 			
 		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
 			    <?= @text('LIB-AN-ACTION-POST') ?>
 			</button>
 		</div>

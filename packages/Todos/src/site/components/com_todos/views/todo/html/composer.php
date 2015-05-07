@@ -16,7 +16,7 @@
 		<div class="control-group">
 			<label class="control-label" for="todo-description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
 			<div class="controls">
-				<textarea id="todo-description" class="input-block-level" name="description" cols="50" rows="5" maxlength="5000" required><?= @escape( $todo->description ) ?></textarea>
+				<textarea id="todo-description" class="input-block-level" name="description" cols="5" rows="3" maxlength="5000" required><?= @escape( $todo->description ) ?></textarea>
 			</div>
 		</div>
 		
@@ -35,7 +35,7 @@
 		</div>
 		
 		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
 				<?= @text('LIB-AN-ACTION-ADD') ?>
 			</button>			
 		</div>

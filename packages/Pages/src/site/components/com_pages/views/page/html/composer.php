@@ -16,7 +16,7 @@
 		<div class="control-group">
 			<label class="control-label" for="page-description"><?= @text('COM-PAGES-PAGE-DESCRIPTION') ?></label>
 			<div class="controls">
-			    <textarea id="page-description" class="input-block-level" name="body" cols="10" rows="5" maxlength="5000" required></textarea>				
+			    <textarea id="page-description" class="input-block-level" name="body" cols="5" rows="3" maxlength="5000" required></textarea>				
 			</div>
 		</div>
 		
@@ -35,7 +35,7 @@
 		</div>
 		
 		<div class="form-actions">			 
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
 			    <?= @text('LIB-AN-ACTION-PUBLISH') ?>
 			</button>
 		</div>

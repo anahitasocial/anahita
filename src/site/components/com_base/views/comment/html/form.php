@@ -25,7 +25,7 @@ if ( $editor )
 	<div class="comment-form-container">
 		<div class="control-group">
 			<div class="controls">
-			    <textarea name="body" cols="50" rows="3" class="input-block-level" required maxlength="5000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
+			    <textarea name="body" cols="5" rows="3" class="input-block-level" required maxlength="5000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
 			</div>
 		</div>
 
@@ -35,11 +35,11 @@ if ( $editor )
 				<?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</a> 
 									
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-UPDATING') ?>">
 			    <?= @text('LIB-AN-ACTION-UPDATE') ?>
 			</button>				
 			<?php else : ?>
-			<button type="submit" class="btn btn-primary">
+			<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
 			    <?= @text('LIB-AN-ACTION-POST') ?>
 			</button>
 			<?php endif; ?>

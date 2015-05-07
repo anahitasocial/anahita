@@ -20,7 +20,7 @@
 			    <?= @text('COM-PHOTOS-COMPOSER-PHOTO-POST-DESCRIPTION') ?>
 			</label>
 			<div class="controls">
-				<textarea id="photo-description" class="input-block-level" name="body" cols="10" rows="5" maxlength="5000"></textarea>
+				<textarea id="photo-description" class="input-block-level" name="body" cols="5" rows="3" maxlength="5000"></textarea>
 			</div>
 		</div>
 				
@@ -36,7 +36,7 @@
 	</fieldset>
 	
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
             <?=@text('LIB-AN-ACTION-SHARE')?>
         </button>
     </div>

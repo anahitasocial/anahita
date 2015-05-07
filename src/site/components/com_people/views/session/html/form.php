@@ -58,7 +58,7 @@
     </fieldset>
     
     <div class="form-actions">
-        <button type="submit" class="btn btn-primary btn-large pull-right">
+        <button type="submit" class="btn btn-primary btn-large pull-right" data-loading-text="<?= @text('LIB-AN-ACTION-PLEASE-WAIT') ?>">
             <?= @text('COM-PEOPLE-ACTION-LOGIN') ?>
         </button>
     </div>

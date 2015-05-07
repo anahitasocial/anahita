@@ -60,7 +60,10 @@
 		<?php endforeach;?>
 	</fieldset>
 <?php endforeach;?>
-<div class="form-actions">			
-	<input type="submit" data-trigger="Request" class="btn" value="<?= @text('LIB-AN-ACTION-SAVE') ?>" />
-</div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">
+            <?= @text('LIB-AN-ACTION-SAVE'); ?>
+        </button>
+    </div>
 </form>
