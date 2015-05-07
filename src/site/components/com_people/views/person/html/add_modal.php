@@ -53,7 +53,7 @@
 </div>
 
 <div class="modal-footer">
-    <button type="submit" class="btn btn-primary">
+    <button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-ACTION-WAITING') ?>">
         <?= @text('COM-PEOPLE-ACTION-REGISTER') ?>
     </button> 
 </div>

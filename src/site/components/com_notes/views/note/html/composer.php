@@ -5,7 +5,7 @@
 	
 	<div class="control-group">			
 		<div class="controls">
-			<textarea class="input-block-level" id="note-body" name="body" required maxlength="5000"></textarea>
+			<textarea class="input-block-level" id="note-body" name="body" cols="5" rows="3" required maxlength="5000"></textarea>
     	</div>
     </div>
     
@@ -52,7 +52,7 @@
 		<?php endif; ?>
 		</span>
 		
-		<button type="submit" class="btn btn-primary pull-right" >
+		<button type="submit" class="btn btn-primary pull-right" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>" >
 			<?= @text('LIB-AN-ACTION-SHARE') ?>
 		</button>
 	</div>

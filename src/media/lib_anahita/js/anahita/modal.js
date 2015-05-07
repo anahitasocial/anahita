@@ -33,6 +33,7 @@
             var form = body.find('form');
             
             triggerBtn.on('click', function( event ) {
+                $(this).button('loading');
                 form.submit();
             });
         });

@@ -47,7 +47,8 @@
 			</a>  
 			
 			<?php $action = ($topic->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
-			<button class="btn btn-primary">
+			<?php $actionLoading = ($topic->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
+			<button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
 			    <?= @text($action) ?>
 			</button>
 		</div>

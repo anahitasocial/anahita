@@ -14307,73 +14307,73 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
   var dismiss = '[data-dismiss="alert"]'
     , Alert = function (el) {
-        $(el).on('click', dismiss, this.close)
-      }
+        $(el).on('click', dismiss, this.close);
+      };
 
   Alert.prototype.close = function (e) {
     var $this = $(this)
       , selector = $this.attr('data-target')
-      , $parent
+      , $parent;
 
     if (!selector) {
-      selector = $this.attr('href')
-      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, '') //strip for ie7
+      selector = $this.attr('href');
+      selector = selector && selector.replace(/.*(?=#[^\s]*$)/, ''); //strip for ie7
     }
 
-    $parent = $(selector)
+    $parent = $(selector);
 
-    e && e.preventDefault()
+    e && e.preventDefault();
 
-    $parent.length || ($parent = $this.hasClass('alert') ? $this : $this.parent())
+    $parent.length || ($parent = $this.hasClass('alert') ? $this : $this.parent());
 
-    $parent.trigger(e = $.Event('close'))
+    $parent.trigger(e = $.Event('close'));
 
     if (e.isDefaultPrevented()) return
 
-    $parent.removeClass('in')
+    $parent.removeClass('in');
 
     function removeElement() {
       $parent
         .trigger('closed')
-        .remove()
-    }
+        .remove();
+    };
 
     $.support.transition && $parent.hasClass('fade') ?
       $parent.on($.support.transition.end, removeElement) :
-      removeElement()
-  }
+      removeElement();
+  };
 
 
  /* ALERT PLUGIN DEFINITION
   * ======================= */
 
-  var old = $.fn.alert
+  var old = $.fn.alert;
 
   $.fn.alert = function (option) {
     return this.each(function () {
       var $this = $(this)
-        , data = $this.data('alert')
-      if (!data) $this.data('alert', (data = new Alert(this)))
-      if (typeof option == 'string') data[option].call($this)
-    })
-  }
+        , data = $this.data('alert');
+      if (!data) $this.data('alert', (data = new Alert(this)));
+      if (typeof option == 'string') data[option].call($this);
+    });
+  };
 
-  $.fn.alert.Constructor = Alert
+  $.fn.alert.Constructor = Alert;
 
 
  /* ALERT NO CONFLICT
   * ================= */
 
   $.fn.alert.noConflict = function () {
-    $.fn.alert = old
-    return this
-  }
+    $.fn.alert = old;
+    return this;
+  };
 
 
  /* ALERT DATA-API
   * ============== */
 
-  $(document).on('click.alert.data-api', dismiss, Alert.prototype.close)
+  $(document).on('click.alert.data-api', dismiss, Alert.prototype.close);
 
 }(window.jQuery);
 ///media/lib_anahita/js/vendors/bootstrap/bootstrap-button.js
@@ -14406,69 +14406,69 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
   * ============================== */
 
   var Button = function (element, options) {
-    this.$element = $(element)
-    this.options = $.extend({}, $.fn.button.defaults, options)
+    this.$element = $(element);
+    this.options = $.extend({}, $.fn.button.defaults, options);
   };
 
   Button.prototype.setState = function (state) {
     var d = 'disabled'
       , $el = this.$element
       , data = $el.data()
-      , val = $el.is('input') ? 'val' : 'html'
+      , val = $el.is('input') ? 'val' : 'html';
 
-    state = state + 'Text'
-    data.resetText || $el.data('resetText', $el[val]())
+    state = state + 'Text';
+    data.resetText || $el.data('resetText', $el[val]());
 
-    $el[val](data[state] || this.options[state])
+    $el[val](data[state] || this.options[state]);
 
     // push to event loop to allow forms to submit
     setTimeout(function () {
       state == 'loadingText' ?
         $el.addClass(d).attr(d, d) :
-        $el.removeClass(d).removeAttr(d)
-    }, 0)
+        $el.removeClass(d).removeAttr(d);
+    }, 0);
   };
 
   Button.prototype.toggle = function () {
-    var $parent = this.$element.closest('[data-toggle="buttons-radio"]')
+    var $parent = this.$element.closest('[data-toggle="buttons-radio"]');
 
     $parent && $parent
       .find('.active')
-      .removeClass('active')
+      .removeClass('active');
 
-    this.$element.toggleClass('active')
+    this.$element.toggleClass('active');
   };
 
 
  /* BUTTON PLUGIN DEFINITION
   * ======================== */
 
-  var old = $.fn.button
+  var old = $.fn.button;
 
   $.fn.button = function (option) {
     return this.each(function () {
       var $this = $(this)
         , data = $this.data('button')
-        , options = typeof option == 'object' && option
-      if (!data) $this.data('button', (data = new Button(this, options)))
-      if (option == 'toggle') data.toggle()
-      else if (option) data.setState(option)
-    })
+        , options = typeof option == 'object' && option;
+      if (!data) $this.data('button', (data = new Button(this, options)));
+      if (option == 'toggle') data.toggle();
+      else if (option) data.setState(option);
+    });
   };
 
   $.fn.button.defaults = {
     loadingText: 'loading...'
   };
 
-  $.fn.button.Constructor = Button
+  $.fn.button.Constructor = Button;
 
 
  /* BUTTON NO CONFLICT
   * ================== */
 
   $.fn.button.noConflict = function () {
-    $.fn.button = old
-    return this
+    $.fn.button = old;
+    return this;
   };
 
 
@@ -14476,10 +14476,10 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
   * =============== */
 
   $(document).on('click.button.data-api', '[data-toggle^=button]', function (e) {
-    var $btn = $(e.target)
-    if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn')
-    $btn.button('toggle')
-  })
+    var $btn = $(e.target);
+    if (!$btn.hasClass('btn')) $btn = $btn.closest('.btn');
+    $btn.button('toggle');
+  });
 
 }(window.jQuery);
 ///media/lib_anahita/js/vendors/bootstrap/bootstrap-carousel.js
@@ -18737,6 +18737,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             var form = body.find('form');
             
             triggerBtn.on('click', function( event ) {
+                $(this).button('loading');
                 form.submit();
             });
         });
@@ -19927,12 +19928,14 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				url : form.attr('action') + '?' + 'layout=list',
 				data : form.serialize(),
 				beforeSend : function () {
-					form.find(':submit').attr('disabled', true);
-					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
 					entity.replaceWith($(response));
-				}
+				},
+				complete : function () {
+                   form.find(':submit').button('reset');
+                }
 			});
 			
 			return this;
@@ -19949,14 +19952,14 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				url : form.attr('action') + '?' + 'layout=list',
 				data : form.serialize(),
 				beforeSend : function () {
-					form.find(':submit').attr('disabled', true);
+					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
 					form.trigger('reset');
 					entities.prepend( response );
 				},
 				complete : function () {
-				   form.find(':submit').attr('disabled', false);
+				   form.find(':submit').button('reset');
 				}
 			});
 			
@@ -20016,8 +20019,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				url : form.attr('action'),
 				data : form.serialize(),
 				beforeSend : function (){
-					form.find(':submit').attr('disabled', true);
-					form.fadeTo('fast', 0.3);
+					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
 				
@@ -20027,8 +20029,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				},
 				complete : function ( xhr, status ) {
 				    
-				    form.find(':submit').attr('disabled', false);
-				    form.fadeTo( 'fast', 1 );
+				    form.find(':submit').button('reset');
 				}
 			});
 			
@@ -20250,7 +20251,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         var a = $(this);
 
         $.ajax({
-            type: 'POST',
+            method: 'post',
             url: a.attr('href'),
             data: {
                 action: 'commentstatus',
@@ -20268,15 +20269,20 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
                 $.get(a.attr('href'), function(response) {
                     if (status) {
+                    
                         $('.an-comment-form').remove();
                         $('.an-comments-wrapper').append($(response).find('div.alert'));
+                    
                     } else {
+                    
                         $('.an-comments-wrapper').find('div.alert').remove();
                         $('.an-comments-wrapper').append($(response).find('.an-comment-form'));
+                    
                     }
                 });
             },
             complete: function() {
+               
                 a.fadeTo('fast',1);
                 a.parent().removeClass('uiActivityIndicator');
             }

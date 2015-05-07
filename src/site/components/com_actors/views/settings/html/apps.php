@@ -15,7 +15,7 @@
 		
 		<div class="entity-actions">
     		<?php if ( !$component->enabledForActor($item) ) : ?>
-    		<a class="btn btn-primary" data-action="addapp" data-app="<?= $component->component ?>" href="<?= @route($item->getURL()) ?>">
+    		<a  class="btn btn-primary" data-action="addapp" data-app="<?= $component->component ?>" href="<?= @route($item->getURL()) ?>">
     			<?= @text('COM-ACTORS-APP-ACTION-INSTALL') ?>
     		</a>						
     		<?php else : ?>

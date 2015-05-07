@@ -58,9 +58,11 @@
 				<?= @text('LIB-AN-ACTION-CLOSE') ?>
 			</a>  
 			
-			<button type="submit" class="btn btn-primary">
-			    <?= @text( ($page->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-PUBLISH') ?>
-		    </button>
+			<?php $action = ($topic->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
+            <?php $actionLoading = ($topic->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
+            <button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
+                <?= @text($action) ?>
+            </button>
 		</div>
 		
 	</fieldset>
