@@ -17,14 +17,23 @@
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="topic-body">
-			    <?= @text('COM-TOPICS-TOPIC-POST-BODY') ?>
-			</label> 
-			
-			<div class="controls">
-                <textarea id="topic-body" maxlength="5000" class="input-block-level" name="body" cols="5" rows="3" required></textarea>
+            <label class="control-label" for="topic-body">
+                <?= @text('LIB-AN-MEDIUM-BODY') ?>
+            </label>
+            <div class="controls">
+                <?= @editor(array(
+                    'name'=>'body',
+                    'content'=> '', 
+                    'html' => array(    
+                        'maxlength'=>'20000', 
+                        'cols'=>'5',
+                        'rows'=>'5', 
+                        'class'=>'input-block-level', 
+                        'id'=>'topic-body' 
+                        )
+                )); ?>
             </div>
-		</div>
+        </div>
 		
 		<div class="control-group">
 			<label class="control-label" id="privacy" >
