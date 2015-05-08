@@ -22,9 +22,9 @@
 	 * @param 	object 	An optional KConfig object with configuration options
 	 */
 	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);
-				
+	{   
+		parent::__construct($config);      
+                
 		$this->registerCallback(array('before.process','before.payment','before.confirm','before.xpayment', 'layout.payment'), array($this, 'validateUser'));		
 		$this->registerCallback(array('before.process','before.confirm', 'layout.confirm'), array($this, 'validatePayment'));
 
@@ -44,10 +44,10 @@
      * @return 	void
      */
 	protected function _initialize(KConfig $config)
-	{
+	{ 
 		$config->append(array(			
 			'behaviors' => to_hash(array(
-				'identifiable' => array('repository'=>'package'),
+				'identifiable' => array('repository' => 'package'),
 				'committable',
 				'validatable'
 			))
@@ -62,22 +62,15 @@
 	 * @param  KCommandContext $context
 	 * @return void
 	 */
-	protected function _actionGet($context)
-	{
+	protected function _actionGet(KCommandContext $context)
+	{    
 		$this->_request->append(array(
 			'layout' => 'default'
 		));
 
 		$this->getCommandChain()->run('layout.'.$this->getRequest()->get('layout'), $context);
 		
-		if ( $this->getRequest()->get('layout') == 'default' ) 
-        {
-			$article_id = get_config_value('subscriptions.tos_article_id');
-			$tos =& JTable::getInstance('content');
-			$tos->load($article_id);
-			$this->tos = $tos;				
-		} 
-		elseif ( $this->getRequest()->get('layout') == 'login' && !$this->viewer->guest() ) 
+		if ( $this->getRequest()->get('layout') == 'login' && !$this->viewer->guest() ) 
 		{
 			$context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
 			return false;
@@ -116,17 +109,18 @@
      */
 	protected function _actionXpayment($context)
 	{
-		$data 	  	  = $context->data;
-		$package  	  = $this->getItem();
+		$data = $context->data;
+		$package = $this->getItem();
 
-		$gateway = $this->getService('com://site/subscriptions.controller.subscription')
-		            ->getGateway();
+		$gateway = $this->getService('com://site/subscriptions.controller.subscription')->getGateway();
+		
 		try 
 		{
 		    $url = $gateway->getAuthorizationURL($this->order->getPayload(),
 		        JRoute::_('option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true),
 		        JRoute::_('option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true)
 		        );
+                
 		    $context->response->setRedirect($url, KHttpResponse::SEE_OTHER);
 		} 
 		

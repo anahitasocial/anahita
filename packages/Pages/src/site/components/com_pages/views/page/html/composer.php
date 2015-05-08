@@ -14,11 +14,24 @@
 		</div>
 		
 		<div class="control-group">
-			<label class="control-label" for="page-description"><?= @text('COM-PAGES-PAGE-DESCRIPTION') ?></label>
-			<div class="controls">
-			    <textarea id="page-description" class="input-block-level" name="body" cols="5" rows="3" maxlength="5000" required></textarea>				
-			</div>
-		</div>
+            <label class="control-label" for="page-description">
+                <?= @text('COM-PAGES-PAGE-DESCRIPTION') ?>
+            </label> 
+            
+            <div class="controls">
+                <?= @editor(array(
+                    'name'=>'description',
+                    'content'=> '', 
+                    'html' => array(    
+                        'maxlength'=>'20000', 
+                        'cols'=>'5',
+                        'rows'=>'5', 
+                        'class'=>'input-block-level', 
+                        'id'=>'page-description' 
+                        )
+                )); ?>
+            </div>
+        </div>
 		
 		<div class="control-group">
 			<label class="control-label" for="page-excerpt"><?= @text('COM-PAGES-PAGE-EXCERPT') ?></label>

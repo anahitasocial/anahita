@@ -50,8 +50,9 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
     {
 		parent::__construct($config);
 		
-		$this->getService('repos:people.person')
-			->addBehavior('com://site/subscriptions.domain.behavior.subscriber');		
+		$this
+		->getService('repos:people.person')
+		->addBehavior('com://site/subscriptions.domain.behavior.subscriber');		
 	}
 	
 	/**
@@ -66,12 +67,12 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'resources'			=> array('subscriptions_packages'),
-			'attributes'		=> array(
-				'name'			=> array('required'=>true),
-				'price'     	=> array('type'=>'float', 	'required'=>true),	
-				'duration'  	=> array('type'=>'integer', 'required'=>true),
-				'recurring' 	=> array('type'=>'integer', 'default'=>0),
+			'resources'	=> array('subscriptions_packages'),
+			'attributes' => array(
+				'name' => array('required'=>true),
+				'price' => array('type'=>'float', 'required'=>true),	
+				'duration' => array('type'=>'integer', 'required'=>true),
+				'recurring' => array('type'=>'integer', 'default'=>0),
 				'billingPeriod'	=> array('column'=>'billing_period', 'required'=>true) 				
 			),			
 			'relationships' => array(
@@ -83,7 +84,8 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 				'orderable',
 				'describable',
 				'enableable',
-				'dictionariable'
+				'dictionariable',
+				'modifiable'
 			)
 		));
 				
@@ -207,8 +209,9 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 		
 		if ( !$viewer->hasSubscription() )
 			return false; 
-		$package		= $viewer->subscription->package;		
-		return !$this->eql($package) && 
-			($package->duration < $this->duration || $package->price < $this->price);
+        
+		$package = $viewer->subscription->package;	
+        	
+		return !$this->eql($package) && ($package->duration < $this->duration || $package->price < $this->price);
 	}
 }

@@ -36,6 +36,7 @@ class ComSubscriptionsRouter extends ComBaseRouterDefault
         if ( empty($segments) ) {
             $segments[] = 'packages';
         }
+        
         return parent::parse($segments);
     }
 }

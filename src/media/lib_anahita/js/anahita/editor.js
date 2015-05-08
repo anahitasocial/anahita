@@ -20,9 +20,18 @@
             this._createToolbar(); 
             this._setContent();
 
-            this._on(this.element.closest('form'), {
-                'submit' : function ( event ) {
+            this._on( this.element.closest('form'), {
+                   
+                'beforeSubmit' : function ( event ) {
                     self._getContent();
+                },
+                
+                submit : function ( event ) {
+                    self._getContent();
+                },
+                
+                reset : function ( event ) {
+                    self._clear();
                 }
             });
             
@@ -32,9 +41,7 @@
                     'ctrl+i meta+i': 'italic',
                     'ctrl+u meta+u': 'underline',
                     'ctrl+z meta+z': 'undo',
-                    'ctrl+y meta+y meta+shift+z': 'redo',
-                    'shift+tab': 'outdent',
-                    'tab': 'indent'
+                    'ctrl+y meta+y meta+shift+z': 'redo'
                 },
                 toolbarSelector: '[data-role=editor-toolbar]',
                 commandRole: 'edit',
@@ -118,14 +125,13 @@
         
         _getContent : function() {
             
-            var value = this._htmlEncode(this.editor.html());
-            this.element.val(value);
+            this.element.html(this.editor.html());
         },
         
-        _htmlEncode : function(value) {
-            
-            var div = $(document.createElement('div'));
-            return div.text(value).html();
+        _clear : function () {
+           
+           this.editor.html('<p><br/></p>'); 
+           this.element.html('');
         }
     });
     

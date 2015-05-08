@@ -19596,9 +19596,18 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             this._createToolbar(); 
             this._setContent();
 
-            this._on(this.element.closest('form'), {
-                'submit' : function ( event ) {
+            this._on( this.element.closest('form'), {
+                   
+                'beforeSubmit' : function ( event ) {
                     self._getContent();
+                },
+                
+                submit : function ( event ) {
+                    self._getContent();
+                },
+                
+                reset : function ( event ) {
+                    self._clear();
                 }
             });
             
@@ -19608,9 +19617,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                     'ctrl+i meta+i': 'italic',
                     'ctrl+u meta+u': 'underline',
                     'ctrl+z meta+z': 'undo',
-                    'ctrl+y meta+y meta+shift+z': 'redo',
-                    'shift+tab': 'outdent',
-                    'tab': 'indent'
+                    'ctrl+y meta+y meta+shift+z': 'redo'
                 },
                 toolbarSelector: '[data-role=editor-toolbar]',
                 commandRole: 'edit',
@@ -19694,14 +19701,13 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         
         _getContent : function() {
             
-            var value = this._htmlEncode(this.editor.html());
-            this.element.val(value);
+            this.element.html(this.editor.html());
         },
         
-        _htmlEncode : function(value) {
-            
-            var div = $(document.createElement('div'));
-            return div.text(value).html();
+        _clear : function () {
+           
+           this.editor.html('<p><br/></p>'); 
+           this.element.html("");
         }
     });
     
@@ -20758,6 +20764,76 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	
 }(jQuery, window, document));
 
+
+///media/lib_anahita/js/anahita/ui/select-state.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+    
+    'use strict';
+    
+    $.widget('anahita.stateSelector', { 
+
+        _create : function () {
+          
+          var self = this;
+          this.states = [];
+            
+          this.states[0] = $('[country="us"]');
+          this.states[1] = $('[country="canada"]');
+          this.states[2] = $('[country="custom"]');
+          
+          self._hideAll();
+          
+          var country = this.element.find('options:selected').val();
+          
+          this._show( country );  
+          
+          this._on('#country-selector', {
+              'change' : function ( event ) {
+                 
+                 self._hideAll();
+                 
+                 var country = $(event.currentTarget).find('option:selected').val();
+                 
+                 self._show(country);
+              }
+          });
+        },
+        
+        _hideAll : function () {
+            
+            $.each(this.states, function (index, state) {
+                state.hide().attr('disabled', true);
+            });
+        },
+        
+        _show : function ( country ) {
+            
+            var index = 0; 
+            
+            if (country == 'US') {
+                     index = 0;
+                 } else if( country == 'CA' ) {
+                     index = 1;
+                 } else {
+                     index = 2;
+                 }
+            
+            
+            this.states[index].show().attr('disabled', false);
+        }
+    });
+
+    $('body').stateSelector();
+    
+}(jQuery, window, document));
 
 
 

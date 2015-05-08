@@ -38,12 +38,12 @@ class ComSubscriptionsDispatcher extends ComBaseDispatcherDefault
     {
         parent::__construct($config);
         
-        if ( $this->getController()->getIdentifier()->name 
-                == 'signup' && $config->use_ssl
-                ) 
+        /*
+        if ( $this->getController()->getIdentifier()->name == 'signup' && $config->use_ssl ) 
         {
             $this->registerCallback('before.dispatch', array($this, 'redirectHttps'));
         }
+        */
     }
 
     /**
@@ -57,9 +57,9 @@ class ComSubscriptionsDispatcher extends ComBaseDispatcherDefault
      */
     protected function _initialize(KConfig $config)
     {
-        $config->append(array(
-            'use_ssl' => get_config_value('subscriptions.use_ssl', true)
-        ));
+        //$config->append(array(
+        //    'use_ssl' => get_config_value('subscriptions.use_ssl', true)
+        //));
     
         parent::_initialize($config);
     }
@@ -80,7 +80,7 @@ class ComSubscriptionsDispatcher extends ComBaseDispatcherDefault
            return $this->execute('post', $context);
        }
        
-       return parent::_actionDispatch($context);
+       return parent::_actionDispatch( $context );
     }
 
     /**

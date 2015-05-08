@@ -34,6 +34,8 @@
 
 						event.preventDefault();
 						
+						form.trigger('beforeSubmit');
+						
 						$.each(form.serializeArray(), function(i, obj){
 							formData.append(obj.name, obj.value);	
 						});
@@ -68,11 +70,13 @@
 				
 			} else {
 
-				this._on(form, {
+				this._on( form, {
 					
-					submit: function(event){
+					submit : function( event ){
 					
 						event.preventDefault();	
+						
+						form.trigger('beforeSubmit');
 						
 						$.ajax({
 							
@@ -94,6 +98,7 @@
                                form.find(':submit').button("reset");
                             }
 						});
+
 					}	
 				});
 			

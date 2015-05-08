@@ -61,6 +61,8 @@
 //@depends anahita/actions/actor.js
 //@depends anahita/actions/stories.js
 
+//@depends anahita/ui/select-state.js
+
 
 
 

@@ -10,7 +10,7 @@ name: Behavior.FormValidator
 */
 
 
-
+/*
 Delegator.register('blur','ValidateCoupon', function(event, el) {
 	alert('d');
 	var value = el.value;
@@ -44,3 +44,4 @@ document.addEvent('click:relay(#proceed)', function(e){
        e.stop();
    }
 });
+*/
