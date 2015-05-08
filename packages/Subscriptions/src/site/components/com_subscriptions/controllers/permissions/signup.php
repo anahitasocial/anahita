@@ -37,7 +37,7 @@ class ComSubscriptionsControllerPermissionSignup extends LibBaseControllerPermis
      * @see LibBaseControllerPermissionAbstract::canExecute()
      */
     public function _canExecute($action)
-    {
+    {   
         $viewer = get_viewer();
          
         if ( $viewer->hasSubscription() )
