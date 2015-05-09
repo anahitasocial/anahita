@@ -3,8 +3,9 @@
 <?php $trendingHashtags = $gadgets->extract('hashtags-trending'); ?>
 
 <div class="row">
-    <?php if(count($gadgets) >= 1 ): ?>
+    
     <div class="span2"> 
+        <?php if(count($gadgets) >= 1 ): ?>
         <ul class="nav nav-pills nav-stacked streams">
             <li class="nav-header">
             <?=  @text('LIB-AN-STREAMS') ?>
@@ -15,8 +16,8 @@
             </li>
             <?php endforeach;?>
         </ul>
+        <?php endif; ?>
     </div>
-    <?php endif; ?>
 
     <div class="span6" id="container-main">
     
@@ -32,7 +33,7 @@
     </div>
 
     <div class="span4 visible-desktop">
-    <?= @helper('ui.gadget', $trendingHashtags) ?>	
+        <?= @helper('ui.gadget', $trendingHashtags) ?>
     </div>
 </div>
 

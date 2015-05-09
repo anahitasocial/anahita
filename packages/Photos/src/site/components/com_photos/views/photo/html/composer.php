@@ -11,7 +11,7 @@
 			    <?= @text('COM-PHOTOS-COMPOSER-FILE-SELECT') ?>
 			</label>	
 			<div class="controls">
-				<input id="photo-file" type="file" name="file" required autofocus />
+				<input accept="image/*" id="photo-file" type="file" name="file" required autofocus />
 			</div>
 		</div>
 				
