@@ -68,7 +68,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
 	        	'coverable' => array(
                     'sizes' => array(
                         'medium' => '640xauto',
-                        'large'  => '1024xauto'
+                        'large'  => '1920xauto'
                     )
                 ),
                 'portraitable' => array(

@@ -82,7 +82,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 			)),
 		    'keep_original' => true,
 		    'sizes' => array(
-		        'large'  => '1024xauto',	            
+		        'large'  => '1600xauto',	            
 		        'medium' => '640xauto'
 		     )
 		));

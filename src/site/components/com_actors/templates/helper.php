@@ -154,19 +154,18 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
             return;
         }
             
-        
         if($actor->coverSet()) 
         {
             $src  = $actor->getCoverURL($size);   
                
             $name = KHelperString::ucwords($actor->name);
-            $img  = '<img '.$width .' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-cover-'.$actor->id.'" size="'.$size.'" class="actor-cover actor-cover-'.$actor->id.' '.$size.'" />';     
+            $img  = '<img '.$width .' alt="'.$name.'" class="cover" src="'.$src.'"  />';     
         }
                     
         if($linked && $actor->authorize('access')) 
         {
             $url = $this->getActorURL($actor);
-            $img = '<a class="actor-cover-link" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
+            $img = '<a '.$this->_buildAttribute($attr).' data-actor="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
         }
         
         return $img;

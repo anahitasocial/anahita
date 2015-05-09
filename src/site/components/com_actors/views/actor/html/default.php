@@ -10,7 +10,7 @@
 
 <?php if( $item->coverSet() ): ?>
 <div class="profile-cover" data-max-height="400">
-    <?= @cover($item, 'original', false) ?>
+    <?= @cover($item, 'large', false) ?>
 </div>
 <?php endif; ?>
 
