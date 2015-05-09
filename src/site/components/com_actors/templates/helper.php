@@ -101,13 +101,16 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 	    	$width = '';
 	    
 	    $defaultAvatar = $this->getService('com://site/base.template.asset')->getURL('lib_anahita/images/avatar/'.$size.'_default.gif');
-	    
+        
 		if(is_null($actor) || !isset($actor->id))
+        {
 			return '<a class="actor-avatar-link" href="#"><img '.$width .' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'" size="'.$size.'" class="actor-avatar '.$size.'" /></a>';
-		
+        }
+        
 		if($actor->portraitSet()) 
 		{
 			$src  = $actor->getPortraitURL($size);		
+            
 			$name = KHelperString::ucwords($actor->name);
 			$img  = '<img '.$width .' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-avatar-'.$actor->id.'" size="'.$size.'" class="actor-avatar actor-avatar-'.$actor->id.' '.$size.'" />';		
 		}
@@ -124,6 +127,51 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
 		
 		return $img;
 	}
+
+    
+    /**
+     * Draws an actor cover image
+     * 
+     * @param ComActorsDomainEntityActor $actor
+     * @param string                    $size 
+     * @param boolean                   $linked if true it returns a linked image tag of not just an image tag
+     * @param array                     $attr link attributes
+     * 
+     * @return string
+     */
+    public function cover($actor, $size = 'large', $linked = true, $attr = array())
+    {
+        if(is_numeric($size)) 
+        {
+            $width = "width=\"$size\"";
+            $size  = 'large';
+        } 
+        else 
+            $width = '';
+        
+        if(is_null($actor) || !isset($actor->id) || !$actor->coverSet())
+        {
+            return;
+        }
+            
+        
+        if($actor->coverSet()) 
+        {
+            $src  = $actor->getCoverURL($size);   
+               
+            $name = KHelperString::ucwords($actor->name);
+            $img  = '<img '.$width .' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-cover-'.$actor->id.'" size="'.$size.'" class="actor-cover actor-cover-'.$actor->id.' '.$size.'" />';     
+        }
+                    
+        if($linked && $actor->authorize('access')) 
+        {
+            $url = $this->getActorURL($actor);
+            $img = '<a class="actor-cover-link" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
+        }
+        
+        return $img;
+    }
+
 	
 	/**
 	 * Draws an actor name

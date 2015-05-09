@@ -122,7 +122,11 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
 
 		$tabs->insert('avatar', array(
 		   'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-AVATAR'),
-		));			
+		));
+        
+        $tabs->insert('cover', array(
+           'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-COVER'),
+        )); 			
 		
 		$tabs->insert('permissions', array(
             'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-PERMISSIONS'),            

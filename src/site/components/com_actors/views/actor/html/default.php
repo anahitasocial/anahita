@@ -1,6 +1,18 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php $socialgraphGadget = $gadgets->extract('socialgraph') ?>
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<script src="com_actors/js/cover.js" />
+<?php else: ?>
+<script src="com_actors/js/min/cover.min.js" />
+<?php endif; ?>
+
+<?php $socialgraphGadget = $gadgets->extract('socialgraph') ?>   
+
+<?php if( $item->coverSet() ): ?>
+<div class="profile-cover" data-max-height="400">
+    <?= @cover($item, 'original', false) ?>
+</div>
+<?php endif; ?>
 
 <div class="row" id="actor-profile">
 	<div class="span2">
@@ -57,6 +69,6 @@
 	</div>
 	
 	<div class="span4 visible-desktop">
-		<?= @helper('ui.gadget', $socialgraphGadget) ?>	
+		  <?= @helper('ui.gadget', $socialgraphGadget) ?>	
 	</div>
 </div>

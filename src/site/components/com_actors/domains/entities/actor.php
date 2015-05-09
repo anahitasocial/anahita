@@ -65,6 +65,12 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'dictionariable',
                 'followable',
 	        	'com://site/hashtags.domain.behavior.hashtagable',
+	        	'coverable' => array(
+                    'sizes' => array(
+                        'medium' => '640xauto',
+                        'large'  => '1024xauto'
+                    )
+                ),
                 'portraitable' => array(
                         'sizes' => array(
                                 'small'  => '80xauto',
@@ -91,7 +97,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
 	}
 
 	/**
-	 * Return the portrait file for a size
+	 * Return the avatar file for a size
 	 * 
 	 * @see LibBaseDomainBehaviorPortraitable
 	 * 
@@ -110,6 +116,27 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
         
 		return $filename;
 	}
+    
+    /**
+     * Return the cover file for a size
+     * 
+     * @see LibBaseDomainBehaviorCoverable
+     * 
+     * @return string
+     */
+    public function getCoverFile($size)
+    {
+        if(strpos($this->coverFilename, '/')) 
+        {
+            $cover = str_replace('/', '/covers/'.$size, $this->coverFilename);            
+        } 
+        else 
+        {           
+            $cover = $this->component.'/covers/'.$size.$this->coverFilename;             
+        }
+        
+        return $cover;
+    }
 	
 	/**
 	 * (non-PHPdoc)

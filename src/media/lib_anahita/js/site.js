@@ -13,6 +13,7 @@
 //@depends vendors/jquery.swipebox.js
 //@depends vendors/tinycon.js
 
+//@depends vendors/bootstrap/bootstrap-affix.js
 //@depends vendors/bootstrap/bootstrap-alert.js
 //@depends vendors/bootstrap/bootstrap-button.js
 //@depends vendors/bootstrap/bootstrap-carousel.js
@@ -26,7 +27,6 @@
 //@depends vendors/bootstrap/bootstrap-popover.js
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-typeahead.js
-
 
 //@depends vendors/editor/bootstrap-wysiwyg.js
 //@depends vendors/editor/jquery.hotkeys.js

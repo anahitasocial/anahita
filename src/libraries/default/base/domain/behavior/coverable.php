@@ -1,38 +1,34 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
  * 
  * @category   Anahita
  * @package    Lib_Base
  * @subpackage Domain_Behavior
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
+ * @copyright  2008 - 2015 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id$
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
 
 jimport('joomla.filesystem.file');
 
 /**
- * Portraitable Behavior. 
+ * Coverable Behavior. 
  * 
- * An image representation of a node
+ * An cover representation of a node
  *
  * @category   Anahita
  * @package    Lib_Base
  * @subpackage Domain_Behavior
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
-class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable 
+class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable 
 {
 	/**
-	 * An arary of sizes to resize a portrait to
+	 * An arary of sizes to resize a cover to
 	 * 
 	 * @var array
 	 */
@@ -81,15 +77,13 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	{
 		$config->append(array(
 			'attributes' => to_hash(array(
-				'filename' => array('write'=>'protected'),
-			    'mimetype'
+				'coverFilename' => array('write'=>'protected'),
+			    'coverMimetype'
 			)),
 		    'keep_original' => true,
 		    'sizes' => array(
 		        'large'  => '1024xauto',	            
-		        'medium' => '640xauto',		        
-		        'small'  => '240xauto', 	             
-	            'square' => 100
+		        'medium' => '640xauto'
 		     )
 		));
 		
@@ -97,27 +91,27 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	}
 
 	/**
-	 * Return if the portrait is set
+	 * Return if the cover is set
 	 * 
 	 * @return boolean
 	 */
-	public function portraitSet()
-	{   
-		return !empty( $this->filename );
+	public function coverSet()
+	{
+		return !empty( $this->coverFilename );
 	}
 	
 	/**
-	 * Removes the portrait image
+	 * Removes the cover image
 	 * 
 	 * @return void
 	 */
-	public function removePortraitImage()
+	public function removeCoverImage()
 	{
 		$sizes = $this->_mixer->getValue('sizes');
         
 		if(empty($sizes)) 
 		{
-			$sizes = explode(' ', 'original large medium small thumbnail square');
+			$sizes = explode(' ', 'original large medium');
 		} 
 		else
 		{
@@ -126,57 +120,61 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 				
 		foreach($sizes as $size) 
 		{
-			$file = $this->_mixer->getPortraitFile($size);
+			$file = $this->_mixer->getCoverFile($size);
 			$this->_mixer->deletePath($file);
 		}
 		
-		$this->set('filename', null);
+		$this->set('coverFilename', null);
 	}	
 	
 	/**
-	 * Return the portrait file for a size. Override the Portriable behavior due
+	 * Return the cover file for a size. Override the Coverable behavior due
 	 * to some legacy
 	 *
-	 * @see LibBaseDomainBehaviorPortraitable
+	 * @see LibBaseDomainBehaviorCoverable
 	 *
 	 * @return string
 	 */
-	public function getPortraitFile($size)
+	public function getCoverFile( $size )
 	{
-	    $filename = $this->filename;
+	    $coverFilename = $this->coverFilename;
 
 	    //remove the extension
-	    $extension = JFile::getExt($filename);
-	    $name = JFile:: stripExt($filename);
+	    $extension = JFile::getExt($coverFilename);
+	    $name = JFile:: stripExt($coverFilename);
 	     
-	    $filename = $name.'_'.$size.'.'.$extension;
+	    $coverFilename = $name.'_'.$size.'.'.$extension;
 	
-	    return $filename;
+	    return $coverFilename;
 	}	
 	
 	/**
-	 * Return the URL to the portrait
+	 * Return the URL to the cover
 	 * 
 	 * @return string
 	 */
-	public function getPortraitURL($size='square')
+	public function getCoverURL( $size='large' )
 	{
-		$filename =  $this->_mixer->getPortraitFile($size);
-		$url = $this->getPathURL($filename, true);
+		$coverFilename =  $this->_mixer->getCoverFile( $size );
+		
+		$url = $this->getPathURL( $coverFilename, true );
+		
 		return $url;
 	}
 		
 	/**
-	 * Obtain the list of available sizes and dimensions for this photo
+	 * Obtain the list of available sizes and dimensions for this cover
 	 * 
 	 * @return array of $size=>$dimension
 	 */
-	public function getPortraitSizes()
+	public function getCoverSizes()
 	{
         $sizes = $this->getValue('sizes');
         
         if(empty($sizes))
-            $sizes = $this->_sizes;
+        {
+            $sizes = $this->_sizes;  
+        }
         
 		return $sizes;
 	}
@@ -192,37 +190,38 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	{
 	    $data = $context->data;
 	    
-	    if($data->portrait )
-	        $this->setPortrait($data->portrait);
+	    if( $data->cover )
+        {
+           $this->setCover( $data->cover ); 
+        }    
 	}
 
 	/**
-	 * Set the portrait
+	 * Set the cover
 	 * 
-	 * @param array $config The portrait options [data,orientation,mimetype]
+	 * @param array $config The cover options [data,orientation,mimetype]
 	 * 
 	 * @return void
 	 */
-	public function setPortrait($config)
+	public function setCover( $config )
 	{
-	    $config = new KConfig($config);
+	    $config = new KConfig( $config );
 	    
 	    $config->append(array(
-	            'rotation' => 0,
 	            'mimetype' => 'image/jpeg'
 	    ));
 	    
-	    if($config->url)
+	    if( $config->url )
 	    {
 	        $config->append(array(
-                'data' => file_get_contents($config->url)
+                'data' => file_get_contents( $config->url )
 	        ));
 	    }
 	    
-	    $config->mimetype = strtolower($config->mimetype);
+	    $config->mimetype = strtolower( $config->mimetype );
 	    
 	    //the allowed mimetypes
-	    $mimetypes = array('image/jpeg'=>'jpg','image/png'=>'png','image/gif'=>'gif');
+	    $mimetypes = array('image/jpeg'=>'jpg', 'image/png'=>'png' );
 	    
 	    //force mimetype to jpeg if invalid
 	    //@TODO is this wise ?? No it isn't, but until we find a more reliable method to detect mimetypes
@@ -236,59 +235,44 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	        $data = $config->data;
 
 	        if(empty($data))
-	            return false;
+            {
+              return false;  
+            }
 	        
 	        $config->append(array(
-                'image' => 	imagecreatefromstring($data)
+                'image' => 	imagecreatefromstring( $data )
 	        ));
 	    }
 	    
 	    $image = $config->image;
 	    
-	    if (empty($image))
-	        return false;
-	    
-	    $rotation  = $config->rotation;
-	     
-	    switch($rotation)
-	    {
-	        case 3:
-	        	$rotation = 180;
-	        	break;
-	        	
-	        case 6:
-	        	$rotation = -90;
-	        	break;
-	        	
-	        case 8:
-	        	$rotation=90;
-	        	break;
-	        	
-	        default :
-	            $rotation = 0;
-	    }
-	     
-	    if($rotation != 0) 
-	        $image = imagerotate($image, $rotation, 0);
+	    if( empty( $image ) )
+        {
+            return false; 
+        }
 
-	    if($this->persisted())
-	        $this->_mixer->removePortraitImage();
+	    if( $this->persisted() )
+        {
+           $this->_mixer->removeCoverImage(); 
+        }
+	        
 	    	    
-	    $images = $this->_mixer->resizePortraitImage($image);	    
-	    $this->_mixer->set('filename', md5(uniqid('', true)).'.'.$mimetypes[$config->mimetype]);
-	    $this->_mixer->set('mimetype', $config->mimetype);
+	    $images = $this->_mixer->resizeCoverImage( $image );	    
+	    $this->_mixer->set('coverFilename', md5(uniqid('', true)).'.'.$mimetypes[$config->mimetype]);
+	    $this->_mixer->set('coverMimetype', $config->mimetype);
 	    
 	    $sizes = array();
 	    $files = array();
 	    
 	    foreach($images as $key => $value) 
 	    {
-	        $filename = $this->_mixer->getPortraitFile($key);
+	        $filename = $this->_mixer->getCoverFile($key);
 	        $sizes[$key] = $value['size'];	        
 	        $files[$filename] = AnHelperImage::output($value['data'], $config->mimetype);	        
 	    }
 	    
 	    imagedestroy($image);
+        
 	    $this->_mixer->setValue('sizes', $sizes);
 	    $this->_pending_files[$this->_mixer] = $files;
 	    
@@ -302,7 +286,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 * 
 	 * @return array 
 	 */
-	public function resizePortraitImage($image)
+	public function resizeCoverImage($image)
 	{
 	    $images = array();
 	    $original_width = imagesx($image);
@@ -329,8 +313,10 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	        $images[$name] = array('size'=>$width.'x'.$height,'data'=>$data);
 	    }
 	    
-	    if($this->_keep_original)
-	    	$images['original'] = array('size'=>$original_width.'x'.$originl_height, 'data'=>$image);
+	    if( $this->_keep_original )
+        {
+            $images['original'] = array('size'=>$original_width.'x'.$originl_height, 'data'=>$image);  
+        }
 	    
 	    return $images;
 	}
@@ -388,6 +374,6 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 	 */
 	protected function _beforeEntityDelete(KCommandContext $context)
 	{
-		$this->_mixer->removePortraitImage();
+		$this->_mixer->removeCoverImage();
 	}
 }

@@ -147,23 +147,36 @@
 			return this;
 		}
 		
-		if ( action == 'delete-avatar' ) {
+		if ( action == 'delete-file' ) {
 			
 			var form = elem.closest('form');
 			
-			form.find(':file').attr('value', '');
-			form.appendTo('body').submit();
+			form.find(':file').attr('value', null);
+			
+			form.submit();
 			
 			return this;
 		}
 		
-		if ( action == 'add-avatar' ) {
+		if ( action == 'add-file' ) {
 			
 			var form = elem.closest('form');
 			
+			elem.inputAlert();
+            elem.inputAlert('clear');
+            
+            var limit = elem.data('limit') * 1024 * 1024;
+            var size = form.find(':file')[0].files[0].size;
+
+			if( size > limit )
+			{
+			    elem.inputAlert('error', 'This file is too large' );
+			    return false;
+			}
+			
 			elem.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 			
-			form.appendTo('body').submit();
+			form.submit();
 			
 			return this;
 		}
@@ -287,17 +300,17 @@
 	});
 	
 	//Delete Avatar
-	$('body').on('click', '[data-trigger="DeleteAvatar"]', function ( event ) {
+	$('body').on('click', '[data-trigger="DeleteAvatar"], [data-trigger="DeleteCover"]', function ( event ) {
 		
 		event.preventDefault();
-		$(this).anahitaActor('delete-avatar');
+		$(this).anahitaActor('delete-file');
 	});
 	
 	//Add Avatar
-	$('form#actor-avatar').on('change', ':file', function ( event ) {
+	$('form#actor-avatar,form#actor-cover').on('change', ':file', function ( event ) {
 		
 		event.preventDefault();
-		$(this).anahitaActor('add-avatar');
+		$(this).anahitaActor('add-file');
 	});
 	
 }(jQuery, window, document));
