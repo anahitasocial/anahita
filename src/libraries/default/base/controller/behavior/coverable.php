@@ -22,7 +22,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract 
+class LibBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract 
 {
     /** 
      * Constructor.
@@ -90,6 +90,7 @@ class ComBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract
             } 
             else 
             {
+                //$this->_mixer->getItem()->removeCoverImage();
                 $entity->removeCoverImage();
             }
         }
