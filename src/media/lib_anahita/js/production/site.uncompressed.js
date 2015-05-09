@@ -18962,8 +18962,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		
 		_getNextPage: function() {
 			
-			console.log( this.start );
-			
 			if ( this.start < this.records.length ) {
 				
 				for ( var i = 0; i < this.options.limit; i++ ) {
