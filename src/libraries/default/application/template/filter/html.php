@@ -42,11 +42,8 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
             //add language
             $text = str_replace('<html', '<html lang="'.JFactory::getLanguage()->getTag().'"', $text);
 
-            //render the head
-            $text = str_replace('<head>', '<head>'.$this->_renderHead(), $text);
-
             //render the styles
-            $text = str_replace('</head>', $this->_renderStyles().'</head>', $text);
+            $text = str_replace('</head>', $this->_renderHead().$this->_renderStyles().'</head>', $text);
 
             //render the scripts                
             $text = str_replace('</body>', $this->_renderScripts().'</body>', $text);
@@ -63,23 +60,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $document = JFactory::getDocument();
         $html = '<base href="base://" />';
         
-        foreach($document->_metaTags as $type => $tag)
-        {
-            foreach($tag as $name => $content)
-            {
-                if($type == 'http-equiv')
-                {
-                    $html .= '<meta http-equiv="'.$name.'" content="'.$content.'"'.'/>';
-                }
-                elseif($type == 'standard')
-                {
-                    $html .= '<meta name="'.$name.'" content="'.str_replace('"',"'",$content).'"'.'/>';
-                }
-            }
-        }
-        
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
-        $html .= '<meta name="generator" content="'.$document->getGenerator().'" />';
         
         if(isset($document->_custom))
         	foreach($document->_custom as $custom)
