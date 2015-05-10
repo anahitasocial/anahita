@@ -19,12 +19,10 @@
             this.maxHeight = this.element.data('max-height');
             this.profile = $('#actor-profile');
             
-            this.image.load(function(){
-                $(this).hide();
-                self._resetImageSrc();
-                self._resizeCover( self._getHeight() );
-                $(this).fadeIn(500);
-            });
+            this.image.hide();
+            this._resetImageSrc();
+            this._resizeCover( self._getHeight() );
+            this.image.fadeIn(500);
             
             this._on( window, {
                 'resize' : function ( event ){
@@ -54,7 +52,13 @@
         },
         
         _getHeight : function () {
-            return Math.min( this.image.height(), this.maxHeight );
+            
+            if( this.image.height() && this.image.height() < this.maxHeight )
+            {
+               return this.image.height(); 
+            }
+                
+            return this.maxHeight;
         },
         
         _resetImageSrc : function () {
