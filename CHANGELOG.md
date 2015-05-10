@@ -1,9 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.1.0 Embryo Release
+Anahita 4.1.0 Birth Release
 =============================
 * all the mootools code has been removed
 * the entire javascript library has been rewritten in JQuery
+* added covers for the actor profiles and coverable behavior to the librariy which can be used for other types of nodes such as locations.
 
 Anahita 4.0.4 Birth Release
 ============================

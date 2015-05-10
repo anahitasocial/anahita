@@ -36,7 +36,7 @@
             
             this.element.height( height );
             
-            this.profile.find('.span2').css('margin-top', this.element.height() - 140 );
+            this.profile.find('.span2').css('margin-top', this.element.height() - 120 );
             
             if( $( window ).width() < 767 ) {
                 
