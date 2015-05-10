@@ -25,6 +25,12 @@
 				</div>
 			</div>
 			
+			<?php if( $item->coverSet() ): ?>
+            <div class="entity-cover">
+                <?= @cover($item, 'medium') ?>
+            </div>
+            <?php endif; ?>
+			
 			<div class="entity-description">
 				<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>200)); ?>
 			</div>

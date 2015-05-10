@@ -57,6 +57,8 @@ CREATE TABLE `#__anahita_nodes` (
   `actor_gender` varchar(50) DEFAULT NULL,
   `filename` varchar(255) DEFAULT NULL,
   `filesize` int(11) DEFAULT NULL,
+  `cover_filename` varchar(255) DEFAULT NULL,
+  `cover_filesize` int(11) DEFAULT NULL,
   `status` text,
   `status_update_time` datetime DEFAULT NULL,
   `follower_count` int(11) unsigned DEFAULT NULL,
