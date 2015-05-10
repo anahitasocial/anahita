@@ -19,11 +19,11 @@
             this.maxHeight = this.element.data('max-height');
             this.profile = $('#actor-profile');
             
-            this._on( this.image, {
-                'load' : function ( event ) {
-                    self._resetImageSrc( self._getHeight() );
-                    self._resizeCover( self._getHeight() );
-                }
+            this.image.load(function(){
+                $(this).hide();
+                self._resetImageSrc( self._getHeight() );
+                self._resizeCover( self._getHeight() );
+                $(this).fadeIn(500);
             });
             
             this._on( window, {
