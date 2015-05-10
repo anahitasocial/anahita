@@ -21,10 +21,8 @@
             
             this._on( this.image, {
                 'load' : function ( event ) {
-                    self.image.hide();
                     self._resetImageSrc( self._getHeight() );
                     self._resizeCover( self._getHeight() );
-                    self.image.fadeIn(500);
                 }
             });
             
