@@ -110,6 +110,6 @@
 		}
 	});
 	
-	var search = $('body').search();
+	$('body').search();
 	
 }(jQuery, window, document));

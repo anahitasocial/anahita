@@ -56,7 +56,10 @@
             });
         }
    });
-    
-   $('#token-form').token();
+   
+   
+   if( $('#token-form').length ) {
+      $('#token-form').token(); 
+   } 
     
 }(jQuery, window, document));

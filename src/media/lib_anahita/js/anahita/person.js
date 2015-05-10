@@ -105,7 +105,9 @@
         }
     });
     
-    $('#person-form').person();
+    if( $('#person-form').length ) {
+        $('#person-form').person();
+    }
     
     $(document).ajaxSuccess(function() {
         

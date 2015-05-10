@@ -18983,7 +18983,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 	});
 	
-	$('[data-trigger="InfiniteScroll"]').infinitescroll();
+	if ( $('[data-trigger="InfiniteScroll"]').length ) {
+	   $('[data-trigger="InfiniteScroll"]').infinitescroll(); 
+	}
 	
 	$(document).ajaxSuccess(function() {
 		
@@ -19026,7 +19028,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		
 	};
 	
-	$(".an-gadget").gadget();
+	if ( $('.an-gadget').length ) {
+	  $('.an-gadget').gadget();  
+	}
 	
 }(jQuery, window, document));
 
@@ -19128,8 +19132,10 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 	});
 	
-	$("[data-behavior='Checkbox']").checkbox();
-	
+	if ( $("[data-behavior='Checkbox']").length ) {
+	  $("[data-behavior='Checkbox']").checkbox();  
+	}
+
 	$(document).ajaxSuccess(function() {
         
         var elements = $("[data-behavior='Checkbox']");
@@ -19215,32 +19221,25 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     	var counter = $(this);
     	
     	var pulse = function () {
-    		
-    		$.ajax ( {
-                
-    			headers: { 
-                    accept: 'application/json'
-                },
-                
-                url : counter.data('url')
             
-    		}).done(function (data) {
-                
-    			counter.html(data.new_notifications);
-    			
-    			Tinycon.setBubble(data.new_notifications);
-    			
-    			 if (data.new_notifications > 0) {
-
-                     counter.addClass('counter-important');
-                     
-                 } else {
-                	
-                     counter.removeClass('counter-important');
-
-                 }
-                
-                setTimeout(pulse, counter.data('interval'));
+            $.ajax({
+            
+                method : 'get',
+                url : counter.data('url'),
+                headers: { 
+                        accept: 'application/json'
+                },
+                success : function ( response ) {
+                    
+                    counter.html( response.new_notifications );
+                    Tinycon.setBubble( response.new_notifications ); 
+                    
+                    if ( response.new_notifications > 0 ) {
+                        counter.addClass('badge-important');
+                    }
+                    
+                    setTimeout(pulse, counter.data('interval'));
+                }     
             });
     	};
     	
@@ -19365,7 +19364,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         
     });
     
-    $('[data-behavior*="pagination"]').paginator();
+    if ( $('[data-behavior*="pagination"]').length ) {
+       $('[data-behavior*="pagination"]').paginator(); 
+    }
     
     $(document).ajaxSuccess(function() {
         
@@ -19608,7 +19609,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         }
     });
     
-    $('#person-form').person();
+    if( $('#person-form').length ) {
+        $('#person-form').person();
+    }
     
     $(document).ajaxSuccess(function() {
         
@@ -19684,8 +19687,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             });
         }
    });
-    
-   $('#token-form').token();
+   
+   
+   if( $('#token-form').length ) {
+      $('#token-form').token(); 
+   } 
     
 }(jQuery, window, document));
 ///media/lib_anahita/js/anahita/editor.js
@@ -19826,7 +19832,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         }
     });
     
-    $('[data-behavior="Editor"]').editor();
+    if ( $('[data-behavior="Editor"]').length ) {
+        $('[data-behavior="Editor"]').editor();    
+    }
     
     $(document).ajaxSuccess(function() {
         
@@ -19874,7 +19882,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         });
     };
     
-    $('[data-trigger="LoadGist"]').anahitaGist();
+    if ( $('[data-trigger="LoadGist"]').length ) {
+        $('[data-trigger="LoadGist"]').anahitaGist();
+    }
     
     $(document).ajaxSuccess(function() {
         
@@ -20335,8 +20345,10 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 	});
 	
-	$('.an-entity.editable').entityEditable();
-    
+	if ( $('.an-entity.editable').length ) {
+	  $('.an-entity.editable').entityEditable();  
+	}
+	
     $(document).ajaxSuccess(function() {
         
         var elements = $('.an-entity.editable');

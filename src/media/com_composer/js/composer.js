@@ -229,22 +229,25 @@
 	});	
 	
 	//initiate composer widget
-	var composer = $("[data-behavior='Composer']").composer();
-	
-	//show composer only for the stories stream
-	var streamTabs = $('ul.streams');
-	
-	if ( streamTabs.length ) {	
-		
-		streamTabs.on('click', 'li', function(event){
-			
-			if ( $( this ).data('stream') == 'stories') {
-			     composer.fadeIn();
-			} else {
-			     composer.fadeOut(); 
-			}
-				
-		});
+	if ( $("[data-behavior='Composer']").length ) {
+	   
+	   var composer = $("[data-behavior='Composer']").composer(); 
+	   
+	   //show composer only for the stories stream
+        var streamTabs = $('ul.streams');
+        
+        if ( streamTabs.length ) {  
+            
+            streamTabs.on('click', 'li', function(event){
+                
+                if ( $( this ).data('stream') == 'stories') {
+                     composer.fadeIn();
+                } else {
+                     composer.fadeOut(); 
+                }
+                    
+            });
+        }
 	}
 	
 	//add tooltips to the connect links if they exist

@@ -135,7 +135,9 @@
         }
     });
     
-    $('[data-behavior="Editor"]').editor();
+    if ( $('[data-behavior="Editor"]').length ) {
+        $('[data-behavior="Editor"]').editor();    
+    }
     
     $(document).ajaxSuccess(function() {
         

@@ -109,7 +109,9 @@
 		}
 	});
 	
-	$('[data-trigger="InfiniteScroll"]').infinitescroll();
+	if ( $('[data-trigger="InfiniteScroll"]').length ) {
+	   $('[data-trigger="InfiniteScroll"]').infinitescroll(); 
+	}
 	
 	$(document).ajaxSuccess(function() {
 		
