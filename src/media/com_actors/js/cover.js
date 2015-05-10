@@ -21,7 +21,7 @@
             
             this._on( this.image, {
                 'load' : function ( event ) {
-                    this.image.hide();
+                    self.image.hide();
                     self._resetImageSrc( self._getHeight() );
                     self._resizeCover( self._getHeight() );
                     self.image.fadeIn(500);
