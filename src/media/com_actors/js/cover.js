@@ -21,7 +21,7 @@
             
             this.image.load(function(){
                 $(this).hide();
-                self._resetImageSrc( self._getHeight() );
+                self._resetImageSrc();
                 self._resizeCover( self._getHeight() );
                 $(this).fadeIn(500);
             });
