@@ -54,8 +54,10 @@
 		}
 	});
 	
-	$("[data-behavior='Checkbox']").checkbox();
-	
+	if ( $("[data-behavior='Checkbox']").length ) {
+	  $("[data-behavior='Checkbox']").checkbox();  
+	}
+
 	$(document).ajaxSuccess(function() {
         
         var elements = $("[data-behavior='Checkbox']");

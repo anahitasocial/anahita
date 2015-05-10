@@ -17,32 +17,25 @@
     	var counter = $(this);
     	
     	var pulse = function () {
-    		
-    		$.ajax ( {
-                
-    			headers: { 
-                    accept: 'application/json'
-                },
-                
-                url : counter.data('url')
             
-    		}).done(function (data) {
-                
-    			counter.html(data.new_notifications);
-    			
-    			Tinycon.setBubble(data.new_notifications);
-    			
-    			 if (data.new_notifications > 0) {
-
-                     counter.addClass('counter-important');
-                     
-                 } else {
-                	
-                     counter.removeClass('counter-important');
-
-                 }
-                
-                setTimeout(pulse, counter.data('interval'));
+            $.ajax({
+            
+                method : 'get',
+                url : counter.data('url'),
+                headers: { 
+                        accept: 'application/json'
+                },
+                success : function ( response ) {
+                    
+                    counter.html( response.new_notifications );
+                    Tinycon.setBubble( response.new_notifications ); 
+                    
+                    if ( response.new_notifications > 0 ) {
+                        counter.addClass('badge-important');
+                    }
+                    
+                    setTimeout(pulse, counter.data('interval'));
+                }     
             });
     	};
     	

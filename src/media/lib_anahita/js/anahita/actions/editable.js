@@ -87,8 +87,10 @@
 		}
 	});
 	
-	$('.an-entity.editable').entityEditable();
-    
+	if ( $('.an-entity.editable').length ) {
+	  $('.an-entity.editable').entityEditable();  
+	}
+	
     $(document).ajaxSuccess(function() {
         
         var elements = $('.an-entity.editable');

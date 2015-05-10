@@ -23,7 +23,9 @@
 		
 	};
 	
-	$(".an-gadget").gadget();
+	if ( $('.an-gadget').length ) {
+	  $('.an-gadget').gadget();  
+	}
 	
 }(jQuery, window, document));
 

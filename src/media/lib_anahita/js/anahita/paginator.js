@@ -87,7 +87,9 @@
         
     });
     
-    $('[data-behavior*="pagination"]').paginator();
+    if ( $('[data-behavior*="pagination"]').length ) {
+       $('[data-behavior*="pagination"]').paginator(); 
+    }
     
     $(document).ajaxSuccess(function() {
         
