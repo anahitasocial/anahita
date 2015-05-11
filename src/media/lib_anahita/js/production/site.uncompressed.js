@@ -19794,11 +19794,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             + '<a class="btn" data-edit="italic" data-original-title="Italic (Ctrl/Cmd+I)"><i>i</i></a>'
             + '<a class="btn" data-edit="strikethrough" data-original-title="Strikethrough"><strike>u</strike></a>'
             + '<a class="btn" data-edit="underline" data-original-title="Underline (Ctrl/Cmd+U)"><u>u</u></a>'
-            + '</div>'; 
-            
-            //lists
-            text += ''
-            + '<div class="btn-group">'
             + '<a class="btn" data-edit="insertunorderedlist" data-original-title="Bullet list">ul</a>'
             + '<a class="btn" data-edit="insertorderedlist" data-original-title="Number list">ol</a>'
             + '</div>';

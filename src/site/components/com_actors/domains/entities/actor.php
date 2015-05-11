@@ -65,12 +65,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'dictionariable',
                 'followable',
 	        	'com://site/hashtags.domain.behavior.hashtagable',
-	        	'coverable' => array(
-                    'sizes' => array(
-                        'medium' => '640xauto',
-                        'large'  => '1920xauto'
-                    )
-                ),
+	        	'coverable',
                 'portraitable' => array(
                         'sizes' => array(
                                 'small'  => '80xauto',
