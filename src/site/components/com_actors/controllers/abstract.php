@@ -177,7 +177,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {        
         $entity = parent::_actionEdit($context);    
              
-        if ($entity->isPortraitable() && KRequest::get('files.portrait', 'raw')) 
+        if ($entity->isPortraitable() && KRequest::has('files.portrait')) 
         {         
             $file = KRequest::get('files.portrait', 'raw'); 
             
