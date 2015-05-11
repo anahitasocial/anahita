@@ -5,5 +5,5 @@
 </data>
 
 <data name="body">
-<?= @cover($target, 'medium') ?>
+    <?= @cover($target, 'medium') ?>
 </data>

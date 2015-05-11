@@ -60,7 +60,7 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-	        'story_aggregation' => array(),
+	        'story_aggregation' => array('cover_edit' => 'target'),
 			'behaviors' => array(
 				'scopeable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor'),
 				'hashtagable'=>array('class'=>'ComActorsDomainEntityActor','type'=>'actor')
