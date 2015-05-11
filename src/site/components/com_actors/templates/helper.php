@@ -140,7 +140,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
      * @return string
      */
     public function cover($actor, $size = 'large', $linked = true, $attr = array())
-    {
+    {  
         if(is_numeric($size)) 
         {
             $width = "width=\"$size\"";
@@ -148,11 +148,6 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
         } 
         else 
             $width = '';
-        
-        if(is_null($actor) || !isset($actor->id) || !$actor->coverSet())
-        {
-            return;
-        }
             
         if($actor->coverSet()) 
         {

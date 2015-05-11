@@ -6,16 +6,26 @@ html
     letter-spacing: 0;
 }
 
+
 .profile-cover
-{
+{  
    position: absolute;
    top: 0;
    left: 0;
    right: 0;
-   bottom: 0;
    overflow: hidden;
    z-index: -1000;
-   width: 100%;
+   width: 100%; 
+   
+   @media(min-width: 768px)
+   { 
+      height: 400px;
+   }
+   
+   @media(max-width: 768px)
+   {
+      height: 210px;
+   }
    
    img
    {
@@ -23,6 +33,47 @@ html
      display: block;
    }
 }
+
+#actor-profile.has-cover
+{
+   .span2
+   {
+      margin-top: 260px;
+   }
+}
+
+#actor-profile.has-cover
+{
+
+  @media(max-width: 768px)
+  { 
+     .span2
+     {
+        margin-top: 60px;
+     }
+  }
+
+  @media(min-width: 768px)
+  { 
+     .span2
+     {
+        margin-top: 260px;
+     }
+     
+     .span6,
+     .span8
+     {
+       margin-top: 360px;
+     }
+     
+     .span4
+     {
+       margin-top: 340px;
+     }
+ 
+  }
+}
+
 
 @media(min-width: 980px)
 {
