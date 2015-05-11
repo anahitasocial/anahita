@@ -59,6 +59,7 @@ CREATE TABLE `#__anahita_nodes` (
   `filesize` int(11) DEFAULT NULL,
   `cover_filename` varchar(255) DEFAULT NULL,
   `cover_filesize` int(11) DEFAULT NULL,
+  `cover_mimetype` varchar(100) DEFAULT NULL,
   `status` text,
   `status_update_time` datetime DEFAULT NULL,
   `follower_count` int(11) unsigned DEFAULT NULL,
