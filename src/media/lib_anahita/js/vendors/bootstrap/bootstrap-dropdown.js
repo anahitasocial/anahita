@@ -134,18 +134,18 @@
   /* DROPDOWN PLUGIN DEFINITION
    * ========================== */
 
-  var old = $.fn.dropdown
+  var old = $.fn.dropdown;
 
   $.fn.dropdown = function (option) {
     return this.each(function () {
       var $this = $(this)
-        , data = $this.data('dropdown')
-      if (!data) $this.data('dropdown', (data = new Dropdown(this)))
-      if (typeof option == 'string') data[option].call($this)
-    })
-  }
+        , data = $this.data('dropdown');
+      if (!data) $this.data('dropdown', (data = new Dropdown(this)));
+      if (typeof option == 'string') data[option].call($this);
+    });
+  };
 
-  $.fn.dropdown.Constructor = Dropdown
+  $.fn.dropdown.Constructor = Dropdown;
 
 
  /* DROPDOWN NO CONFLICT
