@@ -5,6 +5,10 @@ Anahita 4.1.0 Birth Release
 * all the mootools code has been removed
 * the entire javascript library has been rewritten in JQuery
 * added covers for the actor profiles and coverable behavior to the librariy which can be used for other types of nodes such as locations.
+* improvements to the social graph API
+* new lightweight html5 editor that is being used in Topics and Pages apps
+* using Dropzone multiple file uploader in the Photos app
+* improved usability of the user interfaces for mobile users
 
 Anahita 4.0.4 Birth Release
 ============================
