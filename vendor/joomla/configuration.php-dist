@@ -1,25 +1,5 @@
 <?php
-/**
-* @version		$Id: configuration.php-dist 14401 2010-01-26 14:10:00Z louis $
-* @package		Joomla
-* @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software and parts of it may contain or be derived from the
-* GNU General Public License or other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*
-* -------------------------------------------------------------------------
-* THIS SHOULD ONLY BE USED AS A LAST RESORT WHEN THE WEB INSTALLER FAILS
-*
-* If you are installing Joomla! manually i.e. not using the web browser installer
-* then rename this file to configuration.php e.g.
-*
-* UNIX -> mv configuration.php-dist configuration.php
-* Windows -> rename configuration.php-dist configuration.php
-*
-* Now edit this file and configure the parameters for your site and
-* database.
-*/
+
 class JConfig {
 	/**
 	* -------------------------------------------------------------------------
@@ -82,7 +62,7 @@ class JConfig {
 	/* Cache Settings */
 	var $caching = '0';
 	var $cachetime = '15';
-	var $cache_handler = 'file';
+	var $cache_handler = 'apc';
 
 	/* Debug Settings */
 	var $debug      = '0';
@@ -90,7 +70,7 @@ class JConfig {
 	var $debug_lang = '0';
 
 	/* Meta Settings */
-	var $MetaDesc = 'Anahitaª is a remarkable open source platform and framework for developing various social networking services';
+	var $MetaDesc = 'Anahitaï¿½ is a remarkable open source platform and framework for developing various social networking services';
 	var $MetaKeys = 'Anahita';
 	var $MetaTitle = '1';
 	var $MetaAuthor = '1';

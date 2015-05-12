@@ -87,7 +87,6 @@ class Config
             'tmp_path'     => $site_path.'/tmp',
             'offline_message' => 'This site is down for maintenance.<br /> Please check back again soon.',
             'sitename'        => 'Anahita',
-            'editor'          => 'tinymce',
             //'memcache_settings' => array(),                
             'list_limit'        => 20,
             'gzip'              => 0,
@@ -108,7 +107,7 @@ class Config
            'cache_lifetime'   => 60,
            'session_lifetime' => 1440,           
            'error_reporting' => 0,
-           'enable_caching'  => 1,
+           'enable_caching'  => 0,
            'url_rewrite'     => 0,
            'session_handler'    => function_exists('apc_fetch') ? 'apc' : 'database',
            'cache_handler'      => function_exists('apc_fetch') ? 'apc' : 'file'
