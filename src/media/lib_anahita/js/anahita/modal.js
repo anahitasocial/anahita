@@ -10,7 +10,7 @@
 	
     'use strict';
     
-    $.fn.anahitaModal = function () {
+    $.fn.anahitaModal = function ( action ) {
       
         var elem = $(this);
         var modal = $('#an-modal');
@@ -23,6 +23,8 @@
 
         $.get( url, function ( response ) {
    
+            footer.find('button[type="submit"]').remove();
+            
             header.text( $(response).filter('.modal-header').find('h3').text() );
             body.html( $(response).filter('.modal-body').html() ) ;
             footer.append( $(response).filter('.modal-footer').html() );
