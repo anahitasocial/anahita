@@ -313,4 +313,23 @@
 		$(this).anahitaActor('add-file');
 	});
 	
+	//show actors in a modal
+    $('body').on('click', 'a[data-trigger="Actors"]', function ( event ){
+        
+        event.preventDefault();
+
+        var actorsModal = $('#an-modal');
+        
+        var header = actorsModal.find('.modal-header').find('h3');
+        var body = actorsModal.find('.modal-body');
+
+        $.get( $(this).attr('href'), function (response){
+            
+            header.html($(response).filter('.modal-header').html());
+            body.html($(response).filter('.modal-body').html());
+            
+            actorsModal.modal('show');
+        }); 
+    });
+	
 }(jQuery, window, document));

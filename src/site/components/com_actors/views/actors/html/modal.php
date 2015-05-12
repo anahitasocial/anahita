@@ -1,4 +1,9 @@
-<popup:header>&nbsp;</popup:header>
+<div class="modal-header">
+    &nbsp;
+</div>
+
+<div class="modal-body">
+    
 <div class="an-entities" id="an-entities-main">
 	<div id="an-actors" class="an-entities">
 		<?php foreach($items as $item ) : ?>
@@ -27,4 +32,6 @@
             </div>			
 		<?php endforeach; ?>
 	</div>
+</div>
+
 </div>

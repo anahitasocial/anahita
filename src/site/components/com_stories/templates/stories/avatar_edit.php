@@ -2,13 +2,16 @@
 
 <?php 
 $targets = $target;
-if ( !is_array($targets) ) 
-    $targets = array($targets);
+
+if ( !is_array($targets) )
+{
+    $targets = array( $targets ); 
+} 
 ?>
 
 <data name="title">
 <?php if(count($targets) == 1): ?>
-<?=sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATAR'), @name($subject), @possessive($target)) ?>
+<?=sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATAR'), @name($subject)) ?>
 <?php else: ?>
 <?= sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATARS'), @name($subject)) ?>
 <?php endif; ?>

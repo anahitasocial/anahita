@@ -1,11 +1,16 @@
 <?php defined('KOOWA') or die ?>
 
 <?php
-$subject = is_array($subject) ? array_shift($subject) : $subject;
-$target_to_show = null;
+$subject = is_array( $subject ) ? array_shift( $subject ) : $subject;
 
-if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item->subject))
-	$target_to_show = $item->target;
+if( !is_array( $item->target ) && !$item->target->eql( $item->subject ) )
+{
+   $target_to_show = $item->target; 
+} 
+else 
+{
+   $target_to_show = null;     
+}
 ?>
 
 <div class="an-story an-entity">
@@ -24,6 +29,17 @@ if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item
     			<?= @name($subject) ?>
     		</h4>
     		<?php endif; ?>
+
+    		<ul class="an-meta inline">  
+    		    <li><?= @date( $timestamp ) ?></li> 			
+    			<?php if( $target_to_show ): ?>
+				<li>
+					<a href="<?= @route($target_to_show->getURL()) ?>">
+					    <?= @name($target_to_show) ?>
+					</a>
+				</li>
+				<?php endif; ?>
+    		</ul>
     	</div>
     </div>
     
@@ -37,28 +53,16 @@ if(isset($item->object) && !is_array($item->target) && !$item->target->eql($item
     $votable_item = null;               
         
     if(!$item->aggregated() && $item->object && $item->object->isVotable())
-    	$votable_item = $item->object;
+    {
+       $votable_item = $item->object; 
+    }
     ?>
         
-    <div class="entity-meta">
-        <ul class="inline">
-            <?php if( $target_to_show ): ?>
-            <li>
-                <a href="<?= @route($target_to_show->getURL()) ?>"><?= @name($target_to_show) ?></a>
-            </li>
-            <?php endif; ?>
-            
-            <li>
-                <?= @date($timestamp) ?> 
-            </li>
-            
-            <?php if($votable_item): ?> 
-    	    <li class="vote-count-wrapper" id="vote-count-wrapper-<?= $votable_item->id ?>">
-            <?= @helper('ui.voters', $votable_item); ?>
-    	     </li>
-    	     <?php endif; ?>
-	     </ul>
-   	</div>
+    <?php if($votable_item): ?> 
+	<div class="vote-count-wrapper entity-meta" id="vote-count-wrapper-<?= $votable_item->id ?>">
+        <?= @helper('ui.voters', $votable_item); ?>
+	</div>
+    <?php endif; ?>
         
     <div class="entity-actions">    
     	<?php $can_comment = $commands->offsetExists('comment'); ?>
