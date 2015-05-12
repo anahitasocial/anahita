@@ -41,7 +41,7 @@
                var src = this.element.data('src-large'); 
             }
                   
-            this.element.css('background', 'url(' + src + ') no-repeat fixed center top' );    
+            this.element.css('background-image', 'url(' + src + ')' );    
         }
     });
     
