@@ -51,7 +51,7 @@ class PackageCommand extends Command
         {
             $mapper   = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
             $mapper->addCrawlMap('',  array(
-                    '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                    '#^(site|administrator)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#^(media)/([^/]+)/.+#' => '\1/\2',
                     '#CHANGELOG.php#'  => '',
                     '#^migration.*#'     => '',
@@ -96,7 +96,7 @@ class PackageCommand extends Command
                $xmlPath = $xml->xpath('/install');
                $install = array_pop($xmlPath);       
                        
-               if($install && in_array($install['type'], array('component','plugin','module')))
+               if($install && in_array($install['type'], array('component','plugin')))
                    $manifests[dirname($file)] = $install;
            }
         }
@@ -221,7 +221,7 @@ $console
         {
             $mapper = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
             $mapper->addCrawlMap('',  array(
-                    '#^(site|administrator)/(components|modules|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                    '#^(site|administrator)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#^(media)/([^/]+)/.+#' => '\1/\2',
                     '#CHANGELOG.php#'    => '',
                     '#^migration.*#'     => '',
