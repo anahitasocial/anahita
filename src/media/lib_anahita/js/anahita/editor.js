@@ -87,12 +87,7 @@
             + '<li><a data-edit="formatblock h3" data-original-title="Header 3">h3</a></li>'
             + '<li><a data-edit="formatblock h4" data-original-title="Header 4">h4</a></li>'
             + '<li><a data-edit="formatblock h5" data-original-title="Header 5">h5</a></li>'
-            + '</ul>'
-            + '</div>';
-            
-            //bold, italic, Strike Through, Underline
-            text += '' 
-            + '<div class="btn-group">'
+            + '</ul> '
             + '<a class="btn" data-edit="bold" data-original-title="Bold (Ctrl/Cmd+B)"><b>b</b></a>'
             + '<a class="btn" data-edit="italic" data-original-title="Italic (Ctrl/Cmd+I)"><i>i</i></a>'
             + '<a class="btn" data-edit="strikethrough" data-original-title="Strikethrough"><strike>u</strike></a>'
@@ -104,6 +99,8 @@
             this.toolbar.html(text);
             
             this.toolbar.insertAfter(this.element);
+            
+            this.toolbar.find('[data-toggle="dropdown"]').dropdown();
         },
         
         _setContent : function() {           
@@ -143,7 +140,6 @@
             if( !$(element).is(":data('anahita-editor')") ) {
             
               $(element).editor();
-            
             }
         });
     });
