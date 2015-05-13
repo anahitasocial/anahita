@@ -2,8 +2,8 @@
     "type": "project",    
     "name": "anahita/anahita",
     "license": "GPL-3.0",    
-    "keywords" : ["social", "knowledge", "platform", "framework", "restful", "graph", "nodes"],
-    "description": "Anahita Knowledge Networking Platform",
+    "keywords" : ["socialnetwork", "knowledge", "platform", "framework", "restful", "graph", "nodes"],
+    "description": "Anahita Social Networking Platform",
     "bin": ["bin/anahita"],    
      "require": {
         "php": ">=5.3",
