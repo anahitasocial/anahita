@@ -6,9 +6,15 @@ Anahita 4.1.0 Birth Release
 * the entire javascript library has been rewritten in JQuery
 * added covers for the actor profiles and coverable behavior to the librariy which can be used for other types of nodes such as locations.
 * improvements to the social graph API
-* new lightweight html5 editor that is being used in Topics and Pages apps
-* using Dropzone multiple file uploader in the Photos app
+* removed TinyMCE and instead developed a new lightweight html5 editor that is being used in Topics and Pages apps
+* drag'n drop multiple file uploader in the Photos app
 * improved usability of the user interfaces for mobile users
+* added gist content plugin for sharing code snips
+* simplified and improved the social graph API
+* removed ptag content filter
+* all comments do not support html content. They do however use content filters
+* users can no longer add a and img tags in posts. 
+* added grunt.js file for compressing the js files 
 
 Anahita 4.0.4 Birth Release
 ============================
