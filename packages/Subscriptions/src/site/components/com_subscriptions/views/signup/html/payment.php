@@ -30,14 +30,21 @@
             	</div>
             </div>
         
-        <form action="<?=@route(array('id'=>$item->id))?>">	
+        <form action="<?=@route(array('id'=>$item->id))?>" class="form-horizontal">	
         	<fieldset>
-        		<legend><?= @text('COM-SUB-SIGNUP-PROMOTION') ?></legend>
+        		<legend>
+        		    <?= @text('COM-SUB-SIGNUP-PROMOTION') ?>
+        		</legend>
         		
-        		<p class="lead"><?= @text('COM-SUB-ENTER-COUPON-INFORMATION') ?></p>
+        		<p class="lead">
+        		    <?= @text('COM-SUB-ENTER-COUPON-INFORMATION') ?>
+        		</p>
         		
         		<div class="control-group">
-        			<label class="control-label" for="COM-SUB-ENTER-COUPON-CODE"><?=@text('COM-SUB-ENTER-COUPON-CODE')?>:</label>
+        			<label class="control-label" for="COM-SUB-ENTER-COUPON-CODE">
+        			    <?=@text('COM-SUB-ENTER-COUPON-CODE')?>: 
+        			</label>
+        			
         			<div class="controls">
         				<input id="coupon" data-validator-properties="{successMsg:'<?=@text('COM-SUB-VALID-COUPON')?>',url:'<?=@route('view=coupon')?>',key:'code'}" data-validators="validate-remote" type="text" value="<?=$coupon_code?>" name="coupon" />
         			</div>
@@ -45,7 +52,9 @@
         	</fieldset>
         </form>
         
-        <p class="lead"><?= @text('COM-SUB-CHOOSE-PAYMENT-METHOD') ?></p>
+        <p class="lead">
+            <?= @text('COM-SUB-CHOOSE-PAYMENT-METHOD') ?>
+        </p>
         
         <ul class="nav nav-pills">
         	<li class="active">
@@ -64,7 +73,7 @@
             
         	<div id="creditcard" class="tab-pane fade in active">
         	    
-        		<form action="<?=@route(array('id'=>$item->id))?>" method="post" onsubmit="this.coupon_code.value=document.id('coupon').value">
+        		<form action="<?=@route(array('id'=>$item->id))?>" method="post" onsubmit="this.coupon_code.value=document.id('coupon').value" class="form-horizontal">
         			
         			<input type="hidden" name="payment_method" value="direct" />
         			<input type="hidden" name="coupon_code" value="">
@@ -107,7 +116,9 @@
         			</fieldset>
         			
         			<fieldset>
-        				<legend><?= @text('COM-SUB-CONTACT-INFORMATION') ?></legend>
+        				<legend>
+        				    <?= @text('COM-SUB-CONTACT-INFORMATION') ?>
+        				</legend>
             			
             			<?php if ( isset($flash['address_error'])) : ?>
             			<?= @message($flash['address_error'], array('type'=>'error'))?>
@@ -141,7 +152,9 @@
         			
         			<div class="form-actions">
         				<?php if ( $viewer->guest() ) :?>
-        				<button class="btn" type="submit" onclick="document.location='<?=@route(array('layout'=>'login','id'=>$item->id))?>';return false;"><?=@text('COM-SUB-EDIT-USER-INFORMATION')?></button>
+        				<button class="btn" type="submit" onclick="document.location='<?=@route(array('layout'=>'login','id'=>$item->id))?>';return false;">
+        				    <?=@text('COM-SUB-EDIT-USER-INFORMATION')?>
+        				</button>
         				<?php endif; ?>
         				
         				<button class="btn btn-primary" type="submit">
@@ -159,7 +172,7 @@
         			<input type="hidden" name="action" value="xpayment">	
         			<input type="hidden" name="payment_method" value="express" />
         			
-        			<p>
+        			<p class="lead">
         			    <span class="paypal-express"></span> 
         			    <?= @text('COM-SUB-PAYPAL-INSTRUCTIONS') ?>
         		    </p>
