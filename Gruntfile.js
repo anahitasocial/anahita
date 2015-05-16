@@ -17,7 +17,7 @@ module.exports = function ( grunt ) {
       
       uglify : {
         
-        // lib_anahita js files
+        //uglify lib_anahita js files
         anahita : {
             options : {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
@@ -39,7 +39,7 @@ module.exports = function ( grunt ) {
             }
         },
         
-        // com_photos js files
+        //uglify com_photos js files
         photos : {
             
             options : {
@@ -60,7 +60,7 @@ module.exports = function ( grunt ) {
             }
         },
         
-        // com_invites js files
+        //uglify com_invites js files
         invites : {
             
             options : {
@@ -75,6 +75,21 @@ module.exports = function ( grunt ) {
                 
                 'packages/Invites/src/media/com_invites/js/min/facebook.min.js' : 
                 ['packages/Invites/src/media/com_invites/js/facebook.js']
+            }
+        },
+        
+        //uglify com_subscriptions js files
+        subscriptions : {
+            
+            options : {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+                compress: true
+            },
+            
+            files : {
+                
+                'packages/Subscriptions/src/media/com_subscriptions/js/min/coupon.min.js' : 
+                ['packages/Subscriptions/src/media/com_subscriptions/js/coupon.js']
             }
         }
         

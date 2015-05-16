@@ -1,34 +1,48 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<script src="com_subscriptions/js/coupon.js" />
+<?php else: ?>
+<script src="com_subscriptions/js/min/coupon.min.js" />
+<?php endif; ?>
+
 <?= @template('_steps', array('current_step'=>'payment')) ?>
 
 <div class="row">
 	<div class="span8">
-                
-        	<p class="lead">
-        	    <?= $order->upgrade ? @text('COM-SUB-YOU-ARE-UPGRADING-TO') : @text('COM-SUB-YOU-ARE-SUBSCRIBING-TO') ?>
-            </p>
-        
-            <div class="an-entity">
-            	<h2 class="entity-title">
-            		<?= @escape( $item->name ) ?>
-            	</h2>
-            	
-            	<div class="entity-description">
-                	<dl>
-                		<?php if($item->recurring): ?>
-                		<dt><?= @text('COM-SUB-BILLING-PERIOD') ?>:</dt> 
-                		<dd><?= @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
-                		<?php else: ?>
-                		<dt><?= @text('COM-SUB-PACKAGE-DURATION') ?>:</dt>
-                		<dd><?= AnHelperDate::secondsTo('day', $item->duration)?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
-                		<?php endif; ?>
-                	
-                		<dt><?= @text('COM-SUB-PACKAGE-PRICE') ?>: </dt>
-                		<dd><?= $item->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
-                	</dl>
-            	</div>
+	    
+       <h1><?= @text('COM-SUB-STEP-PAYMENT-METHOD') ?></h1>
+            
+    	<p class="lead">
+    	    <?= $order->upgrade ? @text('COM-SUB-YOU-ARE-UPGRADING-TO') : @text('COM-SUB-YOU-ARE-SUBSCRIBING-TO') ?>
+        </p>
+    
+        <div class="an-entity">
+        	<h2 class="entity-title">
+        		<?= @escape( $item->name ) ?>
+        	</h2>
+        	
+        	<div class="entity-description">
+                <?= $item->description ?>
             </div>
+        	
+        	<div class="entity-description">
+            	<dl>
+            		<?php if($item->recurring): ?>
+            		<dt><?= @text('COM-SUB-BILLING-PERIOD') ?>:</dt> 
+            		<dd><?= @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
+            		<?php else: ?>
+            		<dt><?= @text('COM-SUB-PACKAGE-DURATION') ?>:</dt>
+            		<dd><?= round(AnHelperDate::secondsTo('day', $item->duration)) ?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
+            		<?php endif; ?>
+            	
+            		<dt><?= @text('COM-SUB-PACKAGE-PRICE') ?>: </dt>
+            		<dd><?= $item->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
+            	</dl>
+        	</div>
+        </div>
+        
+        <hr/>
         
         <form action="<?=@route(array('id'=>$item->id))?>" class="form-horizontal">	
         	<fieldset>
@@ -46,11 +60,13 @@
         			</label>
         			
         			<div class="controls">
-        				<input id="coupon" data-validator-properties="{successMsg:'<?=@text('COM-SUB-VALID-COUPON')?>',url:'<?=@route('view=coupon')?>',key:'code'}" data-validators="validate-remote" type="text" value="<?=$coupon_code?>" name="coupon" />
-        			</div>
+        			    <input name="coupon" value="<?=$coupon_code?>" type="text" data-url="<?= @route('view=coupon', false) ?>" />
+        		    </div>
         		</div>	
         	</fieldset>
         </form>
+        
+        <hr/>
         
         <p class="lead">
             <?= @text('COM-SUB-CHOOSE-PAYMENT-METHOD') ?>
@@ -106,12 +122,12 @@
         									'american_express'   => @text('COM-SUB-CREDITCARD-TYPE-AMERICAN_EXPRESS'),
         									'discover'  => @text('COM-SUB-CREDITCARD-TYPE-DISCOVER')
         								),
-        								'selected' => $creditcard->type))->class('medium'),
-        						'COM-SUB-CREDITCARD-NAME' => @html('textfield', 'creditcard[name]',	$creditcard->first_name.' '.$creditcard->last_name)->dataValidators('required'),
-        						'COM-SUB-CREDITCARD-NUM' => @html('textfield', 'creditcard[number]',	$creditcard->number)->dataValidators('required validate-cc-num'),
-        						'COM-SUB-CREDITCARD-CSV' => @html('textfield', 'creditcard[csv]', 	$creditcard->verification_value)->dataValidators('required')->class('input-small'),
-        						'COM-SUB-CREDITCARD-EXP' => @helper('selector.month', array('name'=>'creditcard[month]', 'selected'=>$creditcard->month))->dataValidators('required')->class('input-medium')
-        						.' '.@helper('selector.year',  array('name'=>'creditcard[year]',  'selected'=>$creditcard->year))->dataValidators('required')->class('input-medium')
+        								'selected' => $creditcard->type))->class('medium')->required(''),
+        						'COM-SUB-CREDITCARD-NAME' => @html('textfield', 'creditcard[name]',	$creditcard->first_name.' '.$creditcard->last_name)->required(''),
+        						'COM-SUB-CREDITCARD-NUM' => @html('textfield', 'creditcard[number]',	$creditcard->number)->required(''),
+        						'COM-SUB-CREDITCARD-CSV' => @html('textfield', 'creditcard[csv]', 	$creditcard->verification_value)->required('')->class('input-small'),
+        						'COM-SUB-CREDITCARD-EXP' => @helper('selector.month', array('name'=>'creditcard[month]', 'selected'=>$creditcard->month))->required('')->class('input-medium')
+        						.' '.@helper('selector.year',  array('name'=>'creditcard[year]',  'selected'=>$creditcard->year))->required('')->class('input-medium')
         					)) ?>
         			</fieldset>
         			
@@ -126,17 +142,14 @@
         				
         				<?= @helper('ui.form', array(
         					
-        					'COM-SUB-BILLING-ADDR' => @html('textfield', 'contact[address]', 
-        					       $contact->address )->dataValidators('required'),
-        					       
-        					'COM-SUB-BILLING-CITY' => @html('textfield', 'contact[city]', 
-        					       $contact->city)->dataValidators('required'),
+        					'COM-SUB-BILLING-ADDR' => @html('textfield', 'contact[address]', $contact->address )->required(''),   
+        					'COM-SUB-BILLING-CITY' => @html('textfield', 'contact[city]', $contact->city )->required(''),
         					       
         					'COM-SUB-BILLING-COUNTRY' => @helper('selector.country', 
         					   array(
         			             'name' => 'contact[country]', 
         					     'id' => 'country-selector', 
-        					     'selected' => $contact->country ) ),
+        					     'selected' => $contact->country ) )->required(''),
         					     
         					'COM-SUB-BILLING-STATE' => @helper('selector.state', 
         					   array( 
@@ -145,7 +158,7 @@
         					       'selected' => $contact->state ) ),
         					       			
         					'COM-SUB-BILLING-ZIP' => @html('textfield', 'contact[zip]', 
-        					       $contact->zip)->dataValidators('required')->class('small')
+        					       $contact->zip)->required('')->class('small')
         				)) ?>
         				
         			</fieldset>	

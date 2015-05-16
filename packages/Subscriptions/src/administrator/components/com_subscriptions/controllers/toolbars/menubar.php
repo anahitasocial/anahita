@@ -38,6 +38,7 @@
      {     
         
      	$menu = array(
+                 'subscriptions' => JText::_('AN-SB-SUBSCRIPTIONS'),
                  'packages' => JText::_('AN-SB-PACKAGES'),
                  'people'   => JText::_('AN-SB-PEOPLE'),
                  'coupons'  => JText::_('AN-SB-COUPONS'),

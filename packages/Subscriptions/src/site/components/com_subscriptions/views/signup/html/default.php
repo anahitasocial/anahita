@@ -4,44 +4,36 @@
 
 <div class="row">
 	<div class="span8">
-        <div id="sub-tos">
-        	
-        	<h2 class="entity-title">
-        	    <?= @text('COM-SUB-TERMS-TITLE') ?>
-        	</h2>
-        	
-        	<div class="entity-description">
-        		Terms of services go here
-        	</div>
-        	
-        	<?php 
-        	$class = '';
-        	$checkboxes = array( 
-        	       get_config_value('subscriptions.tos_confirmation_checkbox1'), 
-        	       get_config_value('subscriptions.tos_confirmation_checkbox2'));
-            ?> 
-            
-            <div class="entity-description">
-                <?php foreach($checkboxes as $i => $checkbox) : ?>
-            	   <?php if ( !$checkbox ) continue ?>
-            	   <?php $class = 'disabled'; ?>
-            	   <div class="clearfix alert alert-box alert-warning">
-            	         <?= @html('checkbox','confirm'.$i)->class('confirm-tos')?>
-                         <?= $checkbox ?>
-            	   </div>
-            	<?php endforeach;?>
-            	<div class="well">
-            		<a href="<?= @route('view=packages') ?>" class="btn">
-            		    <?=@text('COM-SUB-TERM-CANCEL')?>
-            		</a> 
-            		 
-            		<a id="proceed" href="<?=@route('layout=payment&id='.$item->id)?>" class="btn btn-primary">
-            		    <?=@text('COM-SUB-TERM-AGREE')?>
-            		</a>
-            	</div>
-        	</div>
-        	
-        </div>
+	    
+	    <h1>Terms Of Service</h1>
+
+        <?php
+    
+        $tos_layout = get_config_value('subscriptions.tos_content_layout');
+        $tos_replace = '<a href="'.@route('option=com_html&view=content&layout='.$tos_layout).'" target="_blank">'.@text('COM-SUB-TERMS-SERVICE').'</a>';
+
+        $privacy_layout = get_config_value('subscriptions.privacy_content_layout');
+        $privacy_replace = '<a href="'.@route('option=com_html&view=content&layout='.$privacy_layout).'" target="_blank">'.@text('COM-SUB-PRIVACY-POLICY').'</a>';
+        
+        
+        $body = sprintf(@text('COM-SUB-TERMS-DESCRIPTION'), $tos_replace, $privacy_replace);
+        
+        ?>
+        
+        <p class="lead well">
+            <?= $body ?>
+        </p>
+        
+        <p>
+            <a href="<?= @route('view=packages') ?>" class="btn btn-large">
+                <?=@text('COM-SUB-TERM-CANCEL')?>
+            </a> 
+             
+            <a href="<?=@route('layout=payment&id='.$item->id)?>" class="btn btn-primary btn-large">
+                <?=@text('COM-SUB-TERM-AGREE')?>
+            </a>
+        </p>
+	    
 	</div>
 </div>
 

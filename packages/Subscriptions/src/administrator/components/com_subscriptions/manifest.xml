@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="##BUILD_PLATFORM_VERSION##" social_app="1" method="upgrade">
+<install type="component" social_app="1" method="upgrade">
 	<name>Subscriptions</name>
 	<author>Anahita Social Networking Platform and Framework</author>
-	<copyright>(C) 2013 rmd Studio, PeerGlobe Technology</copyright>
+	<copyright>(C) 2015 rmd Studio</copyright>
 	<license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
-	<authoremail>info@anahitapolis.com</authoremail>
-	<authorurl>www.Anahitapolis.com</authorurl>
+	<authorurl>www.GetAnahita.com</authorurl>
 	<description>Create and offer paid membership plans to your members</description>
 	<administration>
 		<menu>Subscriptions</menu>

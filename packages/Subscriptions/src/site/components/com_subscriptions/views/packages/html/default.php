@@ -15,7 +15,7 @@
                         <dd><?= ($package->recurring) ? @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$package->billingPeriod) : @text('COM-SUB-BILLING-PERIOD-'.$package->billingPeriod) ?></dd>
 
             			<dt><?= @text('COM-SUB-PACKAGE-DURATION') ?>:</dt>
-            			<dd><?= AnHelperDate::secondsTo('day', $package->duration)?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
+            			<dd><?= round(AnHelperDate::secondsTo('day', $package->duration)) ?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
             
             			<dt><?= @text('COM-SUB-PACKAGE-PRICE') ?>:</dt> 
             			<dd><?= $package->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
