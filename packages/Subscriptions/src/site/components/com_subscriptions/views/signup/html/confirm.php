@@ -33,15 +33,15 @@
                 <dd><?= @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
                 <?php else: ?>
                 <dt><?= @text('COM-SUB-PACKAGE-DURATION') ?>:</dt>
-                <dd><?= AnHelperDate::secondsTo('day', $item->duration)?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
+                <dd><?= round(AnHelperDate::secondsTo('day', $item->duration)) ?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
                 <?php endif; ?>
             
                 <dt><?= @text('COM-SUB-PACKAGE-PRICE') ?>: </dt>
-                <dd><?= $item->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
+                <dd><?= $item->price ?> <?= get_config_value('subscriptions.currency','US') ?></dd>
                 
                 <?php if( $order->getDiscountAmount() ): ?>
                 <dt><?=@text('COM-SUB-PACKAGE-DISCOUNT')?></dt>
-                <dd><?= round($order->getDiscountAmount(), 2) ?></dd>
+                <dd><?= round($order->getDiscountAmount(), 2) ?> <?= get_config_value('subscriptions.currency','US') ?></dd>
                 <?php endif; ?>
                 
                 <dt><?=@text('COM-SUB-PACKAGE-TAX')?></dt>
@@ -49,7 +49,7 @@
                 
                 <dt><?=@text('COM-SUB-PACKAGE-TOTAL')?></dt>
                 <dd>
-                    <?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?> 
+                    <?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?>,  
                     <?= ($item->recurring) ? @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) : @text('COM-SUB-BILLING-PERIOD-'.$item->billingPeriod) ?>
                 </dd>
             </dl>

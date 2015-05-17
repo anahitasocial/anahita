@@ -26,7 +26,7 @@
 
 .icon-paypal
 {
-	background-position: -35px 0;
+	background-position: -35px 4px;
 }
 
 .icon-visa
@@ -34,56 +34,36 @@
 	background-position: 0 0;
 }
 
-#sub-tos
+.paypal-express
 {
-	.entity-description
-	{
-		margin: 10px 0;
-		padding: 10px;
-		height: 320px;
-		overflow: auto;
-		.border-radius(@baseBorderRadius);
-	}
+	.icon-paypal;
+	width: 100px;
 }
 
-#payment-selector
-{
-	padding: 10px;
-}
-
-#payment-methods-container
-{
-	.paypal-express
+.icon-creditcards
+{	
+	.clearfix;
+	margin: 20px 0;
+	width: 100%;
+	
+	.visa
 	{
-		.icon-paypal;
-		width: 100px;
+		.icon-visa;
 	}
 	
-	.icon-creditcards
-	{	
-		.clearfix;
-		margin: 20px 0;
-		width: 100%;
-		
-		.visa
-		{
-			.icon-visa;
-		}
-		
-		.mastercard
-		{
-			.icon-mastercard;
-		}
-		
-		.american-express
-		{
-			.icon-americanexpress;
-		}
-		
-		.discover
-		{
-			.icon-discover;
-		}
+	.mastercard
+	{
+		.icon-mastercard;
+	}
+	
+	.american-express
+	{
+		.icon-americanexpress;
+	}
+	
+	.discover
+	{
+		.icon-discover;
 	}
 }
 

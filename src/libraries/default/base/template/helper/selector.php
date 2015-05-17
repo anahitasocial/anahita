@@ -111,8 +111,10 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 		);
 		
 		unset($options->prompt);
-		if ( $prompt ) {
-			$array  = array(JText::_('LIB-AN-SELECTOR-SELECT-MONTH'));
+        
+		if ( $prompt ) 
+		{
+			$array  = array(JText::_('LIB-AN-SELECTOR-SELECT-MONTH'), null);
 			$months = AnHelperArray::merge($array, $months);
 		}				
 		
@@ -146,7 +148,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 		$years = array_combine(range($options->start, $options->end), range($options->start, $options->end));
 		
 		if ( $prompt ) {
-			$array  = array(JText::_('LIB-AN-SELECTOR-SELECT-YEAR'));
+			$array  = array(JText::_('LIB-AN-SELECTOR-SELECT-YEAR'), null);
 			$years = AnHelperArray::merge($array, $years);			
 		}	
 		
@@ -190,6 +192,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 	public function country($options = array())
 	{
 		$options   = new KConfig($options);
+		
 		$options->append(array(
 			'id'               => 'an-se-selection-countries-'.uniqid(),
 			'selected'         => null,
@@ -197,11 +200,17 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 			'use_country_code' => true,	
 			'prompt'           => true
 		));
+        
 		$selected  = $options->selected;
 		$use_country_code = $options->use_country_code;
+		
 		unset($options->selected);		
 		unset($options->use_country_code);		
-		$countries = array();
+		
+		$countries = array(
+            null => JText::_('LIB-AN-SELECTOR-SELECT-OPTION')
+        );
+		
 		foreach(self::$COUNTRIES as $key => $name)
 		{
 			$countries[$use_country_code ? $key : $name] = JText::_($name);

@@ -44,7 +44,7 @@
         
         <hr/>
         
-        <form action="<?=@route(array('id'=>$item->id))?>" class="form-horizontal">	
+        <form id="coupon-form" action="<?= @route('view=coupon', false) ?>" class="form-horizontal">	
         	<fieldset>
         		<legend>
         		    <?= @text('COM-SUB-SIGNUP-PROMOTION') ?>
@@ -60,7 +60,7 @@
         			</label>
         			
         			<div class="controls">
-        			    <input name="coupon" value="<?=$coupon_code?>" type="text" data-url="<?= @route('view=coupon', false) ?>" />
+        			    <input name="coupon_code" value="<?= $coupon_code ?>" type="text" limit="100" />
         		    </div>
         		</div>	
         	</fieldset>
@@ -89,7 +89,7 @@
             
         	<div id="creditcard" class="tab-pane fade in active">
         	    
-        		<form action="<?=@route(array('id'=>$item->id))?>" method="post" onsubmit="this.coupon_code.value=document.id('coupon').value" class="form-horizontal">
+        		<form id="cc-form" action="<?= @route(array('id'=>$item->id)) ?>" method="post" class="form-horizontal">
         			
         			<input type="hidden" name="payment_method" value="direct" />
         			<input type="hidden" name="coupon_code" value="">
@@ -114,16 +114,26 @@
                 			<?= @message($flash['credit_card_error'], array('type'=>'error'))?>
                 			<?php endif;?>						
         								
+        					<?php
+        					$ccName = null;
+        					
+        					if ( $creditcard->first_name && $creditcard->last_name )
+                            {
+                                $ccName =  $creditcard->first_name.' '.$creditcard->last_name;
+                            }
+        					?>			
+        								
         					<?= @helper('ui.form', array(
         						'COM-SUB-CREDITCARD-TYPE' => @html('select', 'creditcard[type]', array(
         								'options' => array(
+        									null => @text('LIB-AN-SELECTOR-SELECT-OPTION'),
         									'visa' 	=> @text('COM-SUB-CREDITCARD-TYPE-VISA'),
         									'master' 	=> @text('COM-SUB-CREDITCARD-TYPE-MASTER'),
         									'american_express'   => @text('COM-SUB-CREDITCARD-TYPE-AMERICAN_EXPRESS'),
         									'discover'  => @text('COM-SUB-CREDITCARD-TYPE-DISCOVER')
         								),
         								'selected' => $creditcard->type))->class('medium')->required(''),
-        						'COM-SUB-CREDITCARD-NAME' => @html('textfield', 'creditcard[name]',	$creditcard->first_name.' '.$creditcard->last_name)->required(''),
+        						'COM-SUB-CREDITCARD-NAME' => @html('textfield', 'creditcard[name]',	$ccName )->required(''),
         						'COM-SUB-CREDITCARD-NUM' => @html('textfield', 'creditcard[number]',	$creditcard->number)->required(''),
         						'COM-SUB-CREDITCARD-CSV' => @html('textfield', 'creditcard[csv]', 	$creditcard->verification_value)->required('')->class('input-small'),
         						'COM-SUB-CREDITCARD-EXP' => @helper('selector.month', array('name'=>'creditcard[month]', 'selected'=>$creditcard->month))->required('')->class('input-medium')
@@ -164,10 +174,10 @@
         			</fieldset>	
         			
         			<div class="form-actions">
-        				<?php if ( $viewer->guest() ) :?>
-        				<button class="btn" type="submit" onclick="document.location='<?=@route(array('layout'=>'login','id'=>$item->id))?>';return false;">
+        				<?php if ( $viewer->guest() ) : ?>
+        				<a href="<?=@route(array('layout'=>'login','id'=>$item->id)) ?>" class="btn">
         				    <?=@text('COM-SUB-EDIT-USER-INFORMATION')?>
-        				</button>
+        				</a>
         				<?php endif; ?>
         				
         				<button class="btn btn-primary" type="submit">
@@ -179,7 +189,7 @@
         	
         	<div id="paypal" class="tab-pane fade">
         	    
-        		<form action="<?=@route(array('id'=>$item->id))?>" method="post" onsubmit="this.coupon_code.value=document.id('coupon').value">
+        		<form id="paypal-form" action="<?=@route(array('id'=>$item->id))?>" method="post">
         			
         			<input type="hidden" name="coupon_code" value="">			
         			<input type="hidden" name="action" value="xpayment">	
@@ -191,10 +201,10 @@
         		    </p>
         			
         			<div class="form-actions">
-        				<?php if ( $viewer->guest() ) :?>
-        				<button class="btn" type="submit" onclick="document.location='<?=@route(array('layout'=>'default','id'=>$item->id))?>';return false;">
+        				<?php if ( $viewer->guest() ) : ?>
+        				<a class="btn" href="<?= @route( array( 'layout'=>'default', 'id'=>$item->id )) ?>">
         				    <?=@text('COM-SUB-EDIT-USER-INFORMATION')?>
-        				</button> 
+        				</a>
         				<?php endif; ?>		
         				<button class="btn btn-primary" type="submit">
         				    <?=@text('COM-SUB-PAYPAL-LOGIN') ?>

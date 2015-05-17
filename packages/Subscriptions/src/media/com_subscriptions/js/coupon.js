@@ -12,11 +12,12 @@
     
     'use strict';
     
-    $('body').on('change', 'input[name="coupon"]', function( event ){
+    $('body').on('change', 'input[name="coupon_code"]', function( event ){
         
         event.preventDefault();
         
         var element = $(this);
+        var form = element.closest('form');
         
         element.inputAlert();
         element.inputAlert('clear');
@@ -24,7 +25,7 @@
         var ajax = $.ajax({
             
             method : 'post',
-            url : element.data('url'),
+            url : form.attr('action'),
             data : {
                 action : 'validate',
                 key : 'code',
@@ -46,11 +47,17 @@
    
                    element.inputAlert('error', validation['errorMsg'] );
                    
+                   $('#cc-form').find('input[name="coupon_code"]').val(null);
+                   $('#paypal-form').find('input[name="coupon_code"]').val(null);
+                   
                    return;
                 
                 } else {
                 
                     element.inputAlert('success', validation );
+                    
+                    $('#cc-form').find('input[name="coupon_code"]').val( element.val() );
+                    $('#paypal-form').find('input[name="coupon_code"]').val( element.val() );
                     
                     return;
                 }
