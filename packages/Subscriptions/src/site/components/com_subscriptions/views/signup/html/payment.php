@@ -91,14 +91,13 @@
         	    
         		<form id="cc-form" action="<?= @route(array('id'=>$item->id)) ?>" method="post" class="form-horizontal">
         			
+        			<input type="hidden" name="action" value="confirm">
         			<input type="hidden" name="payment_method" value="direct" />
-        			<input type="hidden" name="coupon_code" value="">
+        			<input type="hidden" name="coupon_code">
         			
         			<fieldset>
         				<legend><?= @text('COM-SUB-CREDITCARD-INFORMATION') ?></legend>
         			
-        					<input type="hidden" name="action" value="confirm">
-        					
         					<div class="icon-creditcards">
         						<span class="visa"></span>
         						<span class="mastercard"></span>
@@ -191,9 +190,9 @@
         	    
         		<form id="paypal-form" action="<?=@route(array('id'=>$item->id))?>" method="post">
         			
-        			<input type="hidden" name="coupon_code" value="">			
-        			<input type="hidden" name="action" value="xpayment">	
+        			<input type="hidden" name="action" value="xpayment">
         			<input type="hidden" name="payment_method" value="express" />
+        			<input type="hidden" name="coupon_code">
         			
         			<p class="lead">
         			    <span class="paypal-express"></span> 

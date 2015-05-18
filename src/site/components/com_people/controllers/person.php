@@ -53,7 +53,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 	protected function _initialize(KConfig $config)
 	{	
 		$config->append(array(			
-			'behaviors'	=> array('validatable','com://site/mailer.controller.behavior.mailer')		    
+			'behaviors'	=> array('validatable', 'com://site/mailer.controller.behavior.mailer')		    
 		));
 		
 		parent::_initialize($config);
@@ -64,9 +64,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         if ( $config->request->view == 'person' )
         {
             $config->append(array(
-                    'request'    => array(
-						'id' => get_viewer()->id
-                    )
+                'request' => array(
+				'id' => get_viewer()->id
+                )
             ));
         }
 	}
@@ -79,7 +79,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 	{	  
         $this->getToolbar('menubar')->setTitle(null);
         
-        if ( $this->modal ) {
+        if ( $this->modal ) 
+        {
             $this->getView()->layout('add_modal');
         }
         
@@ -127,25 +128,27 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         
         //add the validations here
         $this->getRepository()->getValidator()
-                ->addValidation('username','uniqueness')
-                ->addValidation('email',   'uniqueness');
+             ->addValidation('username','uniqueness')
+             ->addValidation('email',   'uniqueness');
                 
-        if ( $person->validate() === false ) {
+        if ( $person->validate() === false ) 
+        {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
         }
 
         $person->reset();
         
-        $firsttime  = !(bool) $this->getService('repos://site/users')->getQuery(true)->fetchValue('id');
-        $user       = clone JFactory::getUser();
+        $firsttime = !(bool) $this->getService('repos://site/users')->getQuery(true)->fetchValue('id');
+        $user = clone JFactory::getUser();
         $authorize  =& JFactory::getACL();
                 
         if ( $firsttime ) {
             
             //for now lets make the com_notes assigable to always
-            $component = $this->getService('repos://site/components')->find(array('component'=>'com_notes'));
+            $component = $this->getService('repos://site/components')->find( array( 'component' => 'com_notes' ));
             
-            if ( $component ) {
+            if ( $component ) 
+            {
                 $component->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
             }
             
@@ -161,8 +164,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $user  = JUser::getInstance(62);
             $this->unregisterCallback('after.add', array($this, 'notifyAdminsNewUser'));
         
-        } else {
-                
+        } 
+        else 
+        {        
             $user->set('id', 0);
             
             $config = &JComponentHelper::getParams( 'com_users' );
@@ -295,15 +299,18 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function mailActivationLink(KCommandContext $context)
     {    	    	
 		$person = $context->result;
+		
 		$this->user = $person->getUserObject();
+        
 		$this->mail(array(
-    				'to' 		=> $this->user->email,
-    				'subject'	=> JText::_('COM-PEOPLE-ACTIVATION-SUBJECT'),
-    				'template'	=> 'account_activate'
+            'to' => $this->user->email,
+    		'subject' => JText::_('COM-PEOPLE-ACTIVATION-SUBJECT'),
+    		'template' => 'account_activate'
 		));
+        
 		$context->response->setHeader('X-User-Activation-Required', true);
-		$this->setMessage(JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $this->user->name),'success');
-		$context->response->setRedirect(JRoute::_('option=com_people&view=session'));
+		$this->setMessage( JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $this->user->name), 'success');
+		$context->response->setRedirect( JRoute::_('option=com_people&view=session') );
     }
     
     /**
@@ -364,7 +371,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {   
         $tabs = $event->tabs;   
         
-        if ( JFactory::getUser()->id == $event->actor->userId ) {     
+        if ( JFactory::getUser()->id == $event->actor->userId ) 
+        {     
             $tabs->insert('account', array('label'=>JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));                    
         } 
     }    

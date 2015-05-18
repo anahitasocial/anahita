@@ -78,11 +78,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	protected function _initialize(KConfig $config)
 	{	    	    	    
 		$config->append(array(
-		    'base_url'      => KRequest::url(),
-		    'test_options'  => array(
-		        'enabled'   => get_config_value('mailer.debug', false),
-		        'email'     => get_config_value('mailer.redirect_email'),
-		        'log'       => JFactory::getConfig()->getValue('tmp_path').'/emails/'       
+		    'base_url' => KRequest::url(),
+		    'test_options' => array(
+		        'enabled' => get_config_value('mailer.debug', false),
+		        'email' => get_config_value('mailer.redirect_email'),
+		        'log' => JFactory::getConfig()->getValue('tmp_path').'/emails/'       
             ),		    
 	        'template_view'  => null
 		));
@@ -124,8 +124,8 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	        $paths[] = implode(DS, array(JPATH_THEMES, JFactory::getApplication()->getTemplate(), 'emails'));
 	         	        
 	        $config = array(
-                'base_url'          => $this->_base_url,
-	            'template_paths'    => $paths	            
+                'base_url' => $this->_base_url,
+	            'template_paths' => $paths	            
 	        );
 	        register_default(array('identifier'=>$this->_template_view, 'default'=>'LibBaseViewTemplate'));
             $this->_template_view = $this->getService($this->_template_view, $config);
@@ -149,13 +149,15 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	    
 	    $layout = $config->layout;
 	    
-	    $data   = $this->getState()->toArray();
+	    $data = $this->getState()->toArray();
 	    
-	    if ( $this->getState()->getItem() ) {
+	    if ( $this->getState()->getItem() ) 
+	    {
 	        $data[$this->_mixer->getIdentifier()->name] = $this->getState()->getItem();
 	    }
 	    
-	    if ( $this->getState()->getList() ) {
+	    if ( $this->getState()->getList() ) 
+	    {
 	        $data[KInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
 	    }
 	    
@@ -164,10 +166,13 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	    ));	  
 	      
 	    $template = $this->getEmailTemplateView()->getTemplate();
-	    $data     = array_merge($config['data'], array('config'=>$config));	    
-	    $output   = $template->loadTemplate($config->template, $data)->render();
+	    
+	    $data = array_merge($config['data'], array('config'=>$config));	    
+	    
+	    $output = $template->loadTemplate($config->template, $data)->render();
         
-        if ( $layout && $template->findTemplate($layout) ) {
+        if ( $layout && $template->findTemplate($layout) ) 
+        {
             $output = $template->loadTemplate($layout, array('output'=>$output))->render();            
         }
 
@@ -184,7 +189,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	public function mailAdmins($config = array())
 	{
 	    $admins = $this->getService('repos://site/users.user')
-	        ->fetchSet(array('usertype'=>'Super Administrator'));
+	                   ->fetchSet(array('usertype'=>'Super Administrator'));
 	    
 	    $config['to'] = $admins->email;
 	    
@@ -206,7 +211,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	public function mail($config = array())
 	{
 	    $config = new KConfig($config);
-	    $emails	= (array)$config['to'];
+	    $emails	= (array) $config['to'];
 	    
 	    if ( $this->_test_options->enabled ) {
 	        $emails = $this->_test_options->email;
@@ -218,15 +223,14 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		    'is_html' => true        
         ));
 		
-		//@TODO what the hell is this. use template filter 
-		//also what if the mailer is not HTML ??
 		if ( !empty($emails) )
 		{
-		    $subject = KService::get('koowa:filter.string')->sanitize($config->subject);
-		    //$output = nl2br($output);
+		    $subject = KService::get('koowa:filter.string')->sanitize( $config->subject );
+		    
 		    //Supposed to fix the random exclamation points
-		    $output = wordwrap($output,900,"\n");
-		    $mailer = JFactory::getMailer();		    
+		    $output = wordwrap($output, 900, "\n");
+		    $mailer = JFactory::getMailer();		  
+              
 		    $mailer->setSubject($subject);
 		    $mailer->setBody($output);
 		    $mailer->isHTML($config->is_html);
@@ -234,14 +238,18 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		    $mailer->Send();		    
 		}
 		
-		if ( $this->_test_options->enabled && 
-		        $this->_test_options->log ) {
+		if ( $this->_test_options->enabled && $this->_test_options->log ) 
+		{
 		    $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ','_',$config->subject));
-		    $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
-		    if ( !file_exists(dirname($file)) ) {
+		
+            $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
+		
+            if ( !file_exists(dirname($file)) ) 
+            {
 		        mkdir(dirname($file),0755);
 		    }
-		    file_put_contents($file, $output);
+		
+            file_put_contents($file, $output);
 		}
 	}
 }

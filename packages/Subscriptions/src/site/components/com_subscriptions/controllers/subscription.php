@@ -1,11 +1,10 @@
 <?php 
 /**
- * @version     $Id$
  * @category	Com_Subscriptions
  * @package		Controller
- * @copyright (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
+ * @copyright   (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link        http://anahitapolis.com
+ * @link        http://www.GetAnahita.com
  */
 
 /**
@@ -41,8 +40,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     {
         parent::__construct($config);
         
-        if ( !$config->gateway instanceof 
-                ComSubscriptionsDomainPaymentGatewayInterface)
+        if( !$config->gateway instanceof ComSubscriptionsDomainPaymentGatewayInterface )
         {
             $config->gateway = $this->getService($config->gateway); 
         }
@@ -67,8 +65,8 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     {
         $config->append(array(
             'serviceable'=> array('except'=>array('browse','edit')),
-            'behaviors'  => array('com://site/mailer.controller.behavior.mailer'),
-            'gateway'    => 'com://site/subscriptions.domain.payment.gateway.paypal'
+            'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
+            'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal'
         ));
     
         parent::_initialize($config);
@@ -82,43 +80,53 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
      * @return void
      */    
     protected function _actionAdd(KCommandContext $context)
-    {
+    {    
         $payload = $this->_order->getPayload();
                 
-        if ( !$this->_gateway->process($payload) ) {
+        if( !$this->_gateway->process( $payload ) ) 
+        {
             throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
         }
-
+        
         $person  = $this->_order->getSubscriber();
         $package = $this->_order->getPackage();
-        $set     = new AnObjectSet();
+        
+        $set = new AnObjectSet();
         $set->insert($this->_order);
         
-        if ( !$person->persisted() ) 
+        if( !$person->persisted() ) 
         {            
             $person->reset();
-            $user = $person->getJUserObject();
-            $user->save();
-            $person = $this->getService('repos://site/people.person')
-                                ->find(array('userId'=>$user->id));
             
-            if ( $person ) {
+            $user = $person->getJUserObject();
+            
+            $user->save();
+            
+            $person = $this->getService('repos://site/people.person')->find(array('userId'=>$user->id));
+            
+            if ( $person ) 
+            {
                 $set->insert($person);
+                
                 $this->_order->setSubscriber($person);                
             }
         }
 
         if ( !$package->recurring && $person->hasSubscription() )
-            $subscription = $person->upgradeTo($package);
-        else
-            $subscription = $person->subscribeTo($package);
-        
-        $set->insert($subscription);
-        
-        if( $payload->getRecurring() )
         {
-            $subscription->setValue('profileId',     $payload->getRecurring()->profile_id);
-            $subscription->setValue('profileStatus', $payload->getRecurring()->profile_status);
+            $subscription = $person->upgradeTo( $package );    
+        }
+        else
+        {
+            $subscription = $person->subscribeTo( $package );
+        }    
+        
+        $set->insert( $subscription );
+        
+        if ( $payload->getRecurring() )
+        {
+            $subscription->setValue( 'profileId', $payload->getRecurring()->profile_id );
+            $subscription->setValue( 'profileStatus', $payload->getRecurring()->profile_status );
         }
         
         if ( !$this->commit() ) 
@@ -130,7 +138,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         
         $this->getResponse()->status = KHttpResponse::CREATED;
 
-        dispatch_plugin('subscriptions.onAfterSubscribe', array('subscription'=>$subscription));
+        dispatch_plugin('subscriptions.onAfterSubscribe', array( 'subscription' => $subscription ));
         
         $this->setItem($subscription);
         
@@ -149,9 +157,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         if ( $this->getItem() ) 
         {                       
             $this->mail(array(
-                'to'        => $this->getItem()->person->email,
-                'subject'   => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
-                'template'  => 'invoice'
+                'to' => $this->getItem()->person->email,
+                'subject' => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
+                'template' => 'invoice'
             ));
         }
     }
@@ -164,21 +172,17 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
      * @return void
      */
     public function mailWelcome(KCommandContext $context)
-    {
+    {  
         if ( $this->getItem() )
         {
-            $article_id = get_config_value('subscriptions.welcome_article_id');
-            $welcome =& JTable::getInstance('content');
-            if ( $welcome->load($article_id) )
-            {
-                $this->mail(array(
-                    'to'      => $this->getItem()->person->email,
-                    'subject' => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
-                    'body'    => html_entity_decode($welcome->introtext, ENT_COMPAT | ENT_HTML5, 'UTF-8')
-                ));
-            }
-        }
-                                
+            $message = get_config_value('subscriptions.welcome_message');    
+                
+            $this->mail(array(
+                'to' => $this->getItem()->person->email,
+                'subject' => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
+                'body' => html_entity_decode( $message, ENT_COMPAT | ENT_HTML5, 'UTF-8')
+            ));
+        }                       
     }
     
     /**

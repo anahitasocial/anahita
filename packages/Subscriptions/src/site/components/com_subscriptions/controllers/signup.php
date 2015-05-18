@@ -25,14 +25,23 @@
 	{   
 		parent::__construct($config);      
                 
-		$this->registerCallback(array('before.process','before.payment','before.confirm','before.xpayment', 'layout.payment'), array($this, 'validateUser'));		
-		$this->registerCallback(array('before.process','before.confirm', 'layout.confirm'), array($this, 'validatePayment'));
+		$this->registerCallback( array( 
+		  'before.process',
+		  'before.payment',
+		  'before.confirm',
+		  'before.xpayment', 
+		  'layout.payment' ), 
+		  array( $this, 'validateUser' ) );
+          		
+		$this->registerCallback( array( 
+		  'before.process', 
+		  'before.confirm', 
+		  'layout.confirm'), 
+		  array( $this, 'validatePayment' ) );
 
-		$this->getService('repos://site/people.person')
-		    ->getValidator()
-		    ->addValidation('username','uniqueness')
-		    ->addValidation('email',   'uniqueness')
-		;
+		$this->getService('repos://site/people.person')->getValidator()
+		     ->addValidation('username','uniqueness')
+		     ->addValidation('email',   'uniqueness');
 	}
 	
      /**
@@ -87,7 +96,8 @@
 	 */
 	protected function _actionConfirm($context)
 	{
-	    $url = JRoute::_('option=com_subscriptions&view=signup&layout=confirm&id='.$this->getItem()->id);	    
+	    $url = JRoute::_('option=com_subscriptions&view=signup&layout=confirm&id='.$this->getItem()->id);	
+            
 		$context->response->setRedirect($url);
 	}
 	
@@ -99,6 +109,7 @@
 	protected function _actionPayment($context)
 	{
 		$url = JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id);
+        
 		$context->response->setRedirect($url);
 	}
 
@@ -118,9 +129,8 @@
 		try 
 		{
 		    $url = $gateway->getAuthorizationURL($this->order->getPayload(),
-		        JRoute::_('option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true),
-		        JRoute::_('option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true)
-		        );
+		        JRoute::_( 'option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true ),
+		        JRoute::_( 'option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true ) );
                 
 		    $context->response->setRedirect($url, KHttpResponse::SEE_OTHER);
 		} 
@@ -139,10 +149,9 @@
 	 */
 	protected function _actionLogin()
 	{
-	    $this->getService('com://site/people.controller.person',
-	            array('response'=>$this->getResponse()))
-	        ->setItem($this->person)
-	        ->login();
+	    $this->getService('com://site/people.controller.person', array('response'=>$this->getResponse()))
+	         ->setItem($this->person)
+	         ->login();
 	}
 	
 	/**
@@ -155,13 +164,14 @@
     {      
         try 
         {
-            $ret = $this->getService('com://site/subscriptions.controller.subscription')
-                ->setOrder($this->order->cloneEntity())
-                ->add();
+            $identifier = 'com://site/subscriptions.controller.subscription';    
+            
+            $ret = $this->getService($identifier)->setOrder($this->order->cloneEntity())->add();       
         } 
         catch(ComSubscriptionsDomainPaymentException $exception) 
         {
             $this->setMessage('COM-SUB-TRANSACTION-ERROR', 'error');
+            
             throw new RuntimeException('Payment process error');
         }
         
@@ -169,8 +179,12 @@
         {
            //clreat the sesion
            $_SESSION['signup'] = null;
+           
            KRequest::set('session.subscriber_id', $ret->person->id);
-           $context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id));           
+           
+           $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
+           
+           $context->response->setRedirect( $url );           
         } 
         else 
         {
@@ -241,16 +255,17 @@
      */    
     public function validateUser(KCommandContext $context)
     {
-    	$package	= $this->getItem();
-        
+    	$package = $this->getItem();
+
         //validate user
     	if ( get_viewer()->guest() && !$this->person->validateEntity() )
     	{
-    	   $context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=login&id='.$package->id));
-    	   return true;
+    	   $url = JRoute::_( 'option=com_subscriptions&view=signup&layout=login&id='.$package->id );    
+    	   $context->response->setRedirect( $url );
+    	   return false;
         }    	
 
-        return false;
+        return true;
     }
     
 	 /**
