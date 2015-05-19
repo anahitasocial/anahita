@@ -2,6 +2,9 @@
 
 <div class="row">
 	<div class="span8">  	
+	    
+	    <?= @helper('ui.header', array()) ?>
+	    
         <?php if(!$actor->hasSubscription()): ?>
         <div class="alert alert-warning">
         	<p><?= @text('COM-SUB-SUBSCRIPTIONS-NOT-SUBSCRIBED') ?></p>
