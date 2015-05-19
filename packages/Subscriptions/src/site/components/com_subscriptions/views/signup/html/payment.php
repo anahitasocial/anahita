@@ -42,8 +42,6 @@
         	</div>
         </div>
         
-        <hr/>
-        
         <form id="coupon-form" action="<?= @route('view=coupon', false) ?>" class="form-horizontal">	
         	<fieldset>
         		<legend>

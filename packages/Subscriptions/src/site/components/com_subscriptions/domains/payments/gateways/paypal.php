@@ -93,9 +93,9 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
         $gateway  = new Merchant_Billing_PaypalExpress($this->_gateway_config);
         $response = $gateway->get_details_for($token, '');
         
-        $method   = new ComSubscriptionsDomainPaymentMethodToken('Paypal', 
-                array('payer_id'=>$response->payer_id(),'token'=>$token));
-        
+        $method = new ComSubscriptionsDomainPaymentMethodToken('Paypal', array(
+                                                                  'payer_id' => $response->payer_id(),
+                                                                  'token'=>$token ) );
         $country = $response->COUNTRYCODE;
         
         return $method; 
@@ -110,21 +110,18 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      * 
      * @return string
      */
-    public function getAuthorizationURL(ComSubscriptionsDomainPaymentPayload $payload, 
-            $return_url, 
-            $cancel_url)
+    public function getAuthorizationURL(ComSubscriptionsDomainPaymentPayload $payload, $return_url, $cancel_url )
     {
-
         $gateway = new Merchant_Billing_PaypalExpress($this->_gateway_config);
         
         $options  = array(
-                'return_url'	 	 	=> (string)$return_url,
-                'cancel_return_url'	 	=> (string)$cancel_url,
+                'return_url'	 	 	=> (string) $return_url,
+                'cancel_return_url'	 	=> (string) $cancel_url,
                 'NOSHIPPING'			=> 1,
                 'LANDINGPAGE' 			=> 'Billing'
         );
         
-        if($payload->getRecurring())
+        if ( $payload->getRecurring() )
         {
             $options['billing_type'] = 'RecurringPayments';
             $options['billing_agreement_description'] = $payload->description;
@@ -133,8 +130,11 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
         $response = $gateway->setup_purchase($payload->getTotalAmount(), $options);
         
         if ( $response->success() )
+        {
             return $gateway->url_for_token($response->TOKEN);
-        else {
+        }
+        else 
+        {
             throw new KException($response->message());
         }
     }
@@ -147,34 +147,40 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
     {   
         $options = new KConfig();
         
-        $options->append(array(                
+        $options->append( array(                
             'description' => $payload->description,
         ));
         
-        $args = array($payload->getTotalAmount());
+        $args = array( $payload->getTotalAmount() );
         
         if ( $payload->payment_method instanceof ComSubscriptionsDomainPaymentMethodToken ) 
         {
             $gateway = new Merchant_Billing_PaypalExpress($this->_gateway_config);
+            
             $options->append($payload->payment_method->options);
         }
         else 
         {
             $gateway = new Merchant_Billing_Paypal($this->_gateway_config);
-            $ip = KRequest::get('server.REMOTE_ADDR', 'raw');            
-            if ( !$this->getService('koowa:filter.ip')->validate($ip) || strlen($ip) <= 7  ) {
+            
+            $ip = KRequest::get('server.REMOTE_ADDR', 'raw');           
+                        
+            if ( !$this->getService('koowa:filter.ip')->validate($ip) || strlen($ip) <= 7  ) 
+            {
                 $ip = '127.0.0.1';
-            }            
+            }
+                        
             $contact = $payload->payment_method->address;            
+            
             $options->append(array(
-                    'order_id'    => $payload->order_id,                    
-                    'ip'		  => $ip,
+                    'order_id' => $payload->order_id,                    
+                    'ip' => $ip,
                     'address' => array(
                             'address1' => $contact->address,
-                            'zip' 	 => $contact->zip,
-                            'state' 	 => $contact->state,
-                            'city'     => $contact->city,
-                            'country'  => $contact->country
+                            'zip' => $contact->zip,
+                            'state' => $contact->state,
+                            'city' => $contact->city,
+                            'country' => $contact->country
                     )
             ));  
 
@@ -187,23 +193,25 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
         {
             $method = 'recurring';                        
             $options['occurrences'] = $payload->getRecurring()->frequency;
-            $options['unit']        = $payload->getRecurring()->unit;
+            $options['unit'] = $payload->getRecurring()->unit;
             $options['start_date']  = $payload->getRecurring()->start_date;            
         }
         
         $args[] = KConfig::unbox($options);
         
         $gateway->post(array(
-                'TAXAMT'  => $payload->tax_amount,
-                'ITEMAMT' => $payload->amount                
+            'TAXAMT'  => $payload->tax_amount,
+            'ITEMAMT' => $payload->amount                
         ));
         
-        $response = call_object_method($gateway, $method, $args);
-        $result   = $response->success();
+        $response = call_object_method( $gateway, $method, $args );
+        
+        $result = $response->success();
         
         if ( !$result ) {
-            $this->_logError($response);            
+            $this->_logError( $response );            
         }
+        
         return $result;           
     }
     
@@ -214,16 +222,27 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      * 
      * @return void
      */
-    protected function _logError($response)
+    protected function _logError( $response )
     {
-        $log      = JLog::getInstance('system_log.php');
-        $message  = "\nerror_message=".$response->message()."\n";        
+        $log = JLog::getInstance('system_log.php');
+        
+        $message = "\nerror_message=".$response->message()."\n"; 
+               
         if ( $response->cvv_result() )
-            $message .= "cvv_result=".implode(" ",$response->cvv_result()->toArray())."\n";
+        {
+            $message .= "cvv_result=".implode(" ", $response->cvv_result()->toArray())."\n";
+        }
 
         if ( $response->avs_result() )
-            $message .= "avs_result=".implode(" ",$response->avs_result()->toArray())."\n";
+        {
+            $message .= "avs_result=".implode(" ", $response->avs_result()->toArray())."\n";
+        }
         
-        $log->addEntry(array('comment'=>$message, 'level'=>'ERROR'));
+        if ( $response->params() )
+        {
+            $message .= "params=".implode(" ", $response->params())."\n";
+        }
+        
+        $log->addEntry( array( 'comment' => $message, 'level'=>'ERROR' ) );
     }
 }
