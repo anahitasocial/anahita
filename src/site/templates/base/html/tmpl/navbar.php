@@ -16,7 +16,8 @@
 	            <?= @template('menus/main') ?>
 	            <span class="viewer pull-right">
 	            	<?php if(get_viewer()->guest()): ?>
-					<a data-trigger="OpenModal" class="btn btn-primary" href="#" data-url="<?= @route('option=people&view=session&layout=modal&connect=1&return='.base64_encode(KRequest::url()))?>" >
+	            	<?php $return = base64UrlEncode( KRequest::url() ); ?>    
+					<a data-trigger="OpenModal" class="btn btn-primary" href="#" data-url="<?= @route('option=people&view=session&layout=modal&connect=1&return='.$return)?>" >
     				    <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
 					</a>
 	            	<?php else: ?>

@@ -19523,8 +19523,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             var self = this;
             
             this.current = [];
-            this.current['username'] = this.element.find(':input[name="username"]').val();
-            this.current['email'] = this.element.find(':input[name="email"]').val();
+            this.current['username'] = this.element.find(':input[data-validate="username"]').val();
+            this.current['email'] = this.element.find(':input[data-validate="email"]').val();
             
             //validate uesrname
             this._on({
@@ -19544,7 +19544,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         _validate : function ( elem ) {
             
             var self = this;
-            var type = elem.attr('name');
+            var type = elem.data('validate');
             var validity = elem[0].validity;
             
             //validate too short

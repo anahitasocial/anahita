@@ -26,7 +26,7 @@
                 <?= @text('COM-PEOPLE-ADD-USERNAME'); ?>
             </label>
             <div class="controls">
-                <? $usernamePattern = "^[A-Za-z][A-Za-z0-9_-]*$"; ?>
+                <?php $usernamePattern = "^[A-Za-z][A-Za-z0-9_-]*$"; ?>
                 <input data-validate="username" data-url="<?= @route('view=person', false ) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="100" minlength="6" required />
             </div>
         </div>

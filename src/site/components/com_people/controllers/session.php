@@ -247,7 +247,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	
     	if(isset($this->_request->return))
     	{
-    		$return = $this->getService('com://site/people.filter.return')->sanitize($this->_request->return);
+    		$return = $this->getService('com://site/people.filter.return')->sanitize( $this->_request->return );
     		$this->_request->return = $return;
     		$this->return = $return;
     	}
