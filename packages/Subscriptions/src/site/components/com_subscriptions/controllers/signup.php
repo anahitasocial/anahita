@@ -5,7 +5,7 @@
  * @package		Controller
  * @copyright (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link        http://anahitapolis.com
+ * @link        http://www.GetAnahita.com
  */
 
 /**
