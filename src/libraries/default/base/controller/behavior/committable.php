@@ -73,22 +73,28 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
         {
             //if there are not any commitable
             //skip
-            if ( count($this->getRepository()->getSpace()->getCommitables()) == 0 ) { 
+            if ( count($this->getRepository()->getSpace()->getCommitables()) == 0 ) 
+            { 
                 return;
             }
             
             //do a commit
-            $result  = $this->commit();
-            $type    = $result === false ? 'error' : 'success';             
+            $result = $this->commit();
+            
+            $type = $result === false ? 'error' : 'success';             
+            
             $message = $this->_makeStatusMessage($context->action, $type);
-            if ( $message ) {                
+            
+            if ( $message ) 
+            {                
                 $this->setMessage($message, $type, true);    
             }
             if ( $result === false ) 
             {
                 if ( $this->isIdentifiable() && $this->getItem() ) 
                 {
-                    if ( $this->getItem()->getErrors()->count() ) {
+                    if ( $this->getItem()->getErrors()->count() ) 
+                    {
                         throw new AnErrorException($this->getItem()->getErrors(), KHttpResponse::BAD_REQUEST);
                     }
                 }

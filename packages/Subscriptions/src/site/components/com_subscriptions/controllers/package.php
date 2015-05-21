@@ -1,7 +1,28 @@
 <?php
 
+/** 
+ * 
+ * @category   Anahita
+ * @package    Com_Subscriptions
+ * @subpackage Controller
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2015 rmdStudio Inc./Peerglobe Technology Inc
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @link       http://www.GetAnahita.com
+ */
+
+/**
+ * Package Controller
+ * 
+ * @category   Anahita
+ * @package    Com_Subscriptions
+ * @subpackage Controller
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @link       http://www.GetAnahita.com
+ */
 class ComSubscriptionsControllerPackage extends ComBaseControllerService
-{
+{       
     /**
      * Constructor.
      *
@@ -23,8 +44,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      */ 
     public function _actionRead($context)
     {
-        $this->plugins = JPluginHelper::getPlugin('subscriptions'); 
-               
+        $this->plugins = JPluginHelper::getPlugin('subscriptions');        
         return parent::_actionRead($context);
     }   
     
@@ -40,5 +60,5 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
         $entity      = $this->getItem();
         $plugins     = KConfig::unbox(pick($data->plugins, array()));
         $entity->setPluginsValues($plugins);
-    }
+    }   
 }
