@@ -20558,7 +20558,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			return this;
 		}
 		
-		if ( action == 'addadmin' ) {
+		if ( action == 'addadmin' || action == 'removeadmin' ) {
 			
 			$(this).attr('disabled', true);
 			
@@ -20757,7 +20757,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		
 		event.preventDefault();
 		$(this).anahitaActor('removeadmin');
-		
 	});
 	
 	//manage apps
