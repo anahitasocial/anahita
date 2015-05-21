@@ -39,10 +39,13 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 		
         $data->person = $this->getService('repos://admin/subscriptions.person')->fetch(array('userId'=>$data->user_id));
     
-		$package 	  = $this->getService('repos://admin/subscriptions.package')->find($data->package_id);
+		$package = $this->getService('repos://admin/subscriptions.package')->find($data->package_id);
 				
-		if ( !$package ) 
-			return false;
+		if ( !$package )
+        {
+            return false;  
+        } 
+			
 
 		$data->person->subscribeTo($package);
 	}	
@@ -58,7 +61,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 	{
 		$data = $context->data;
 		$data->person = $this->getService('repos://admin/subscriptions.person')->fetch(array('userId'=>$data->user_id));
-		$package 	  = $this->getService('repos://admin/subscriptions.package');
+		$package = $this->getService('repos://admin/subscriptions.package');
 		$data->person->unsubscribe();
 	}
 		

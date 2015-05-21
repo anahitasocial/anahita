@@ -34,8 +34,8 @@ class ComPeopleFilterReturn extends KFilterInternalurl
     protected function _sanitize($value)
     {
         $value = parent::_sanitize($value);
-        $pattern    = '/[()<\/>\"\']*/';
-        $value = preg_replace($pattern, '', $value);
+        $pattern = '/[()<\/>\"\']*/';
+        $value = preg_replace( $pattern, '', $value );
         
         return $value;
     }

@@ -70,9 +70,10 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 			'resources'	=> array('subscriptions_packages'),
 			'attributes' => array(
 				'name' => array('required'=>true),
+                'body' => array('format'=>'html'),
 				'price' => array('type'=>'float', 'required'=>true),	
 				'duration' => array('type'=>'integer', 'required'=>true),
-				'recurring' => array('type'=>'integer', 'default'=>0),
+				'recurring' => array('type'=>'integer', 'default' => 0),
 				'billingPeriod'	=> array('column'=>'billing_period', 'required'=>true) 				
 			),			
 			'relationships' => array(

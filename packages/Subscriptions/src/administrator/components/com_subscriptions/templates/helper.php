@@ -5,7 +5,7 @@
  * @package		Template
  * @copyright (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link        http://anahitapolis.com
+ * @link        http://www.GetAnahita.com
  */
 
 /**
@@ -26,8 +26,9 @@ class ComSubscriptionsTemplateHelper extends KTemplateHelperDefault
 	 */
 	public function renderParams($plugin, $entity)
 	{		 
-		 $data	 = $entity->getPluginValues($plugin->name, array());
- 		 $file   = JApplicationHelper::getPath( 'plg_xml', $plugin->type.DS.$plugin->name ); 	
+		 $data = $entity->getPluginValues($plugin->name, array());
+ 		 $file = JApplicationHelper::getPath( 'plg_xml', $plugin->type.DS.$plugin->name ); 	
+         
 		 return $this->getTemplate()->getHelper('form')->render(array('path'=>$file,'data'=>$data, 'group'=>'package','name'=>'plugins['.$plugin->name.']'));		 
 	}
 	
@@ -39,10 +40,11 @@ class ComSubscriptionsTemplateHelper extends KTemplateHelperDefault
 	 */
 	public function packages($selected = null)
 	{
-		$packages	    = $this->getService('repos:subscriptions.package')->getQuery()->fetchSet();		
-		$packages	 	= array_combine(AnHelperArray::collect($packages, 'id'),AnHelperArray::collect($packages, 'name'));
-		$packages['']	= JText::_('AN-SB-COUPON-SELECT-PACKAGE');
-		$packages 		= array_reverse($packages, true);
+		$packages = $this->getService('repos:subscriptions.package')->getQuery()->fetchSet();		
+		$packages = array_combine(AnHelperArray::collect($packages, 'id'),AnHelperArray::collect($packages, 'name'));
+		$packages[''] = JText::_('AN-SB-COUPON-SELECT-PACKAGE');
+		$packages = array_reverse($packages, true);
+        
 		return $this->getTemplate()->renderHelper('html.options', $packages, $selected);	
 	}
 }

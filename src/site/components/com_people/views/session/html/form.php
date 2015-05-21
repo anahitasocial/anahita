@@ -3,7 +3,7 @@
 <?php $return = empty($return) ? null : $return; ?> 
 <?php $connect = empty($connect) ? false : true; ?>
 
-<form action="<?=@route()?>" name="person-form" id="person-form" method="post" class="well">
+<form action="<?= @route() ?>" name="person-form" id="person-form" method="post" class="well">
     <?php if( $return ) : ?>
     <input type="hidden" name="return" value="<?= $return; ?>" />
     <?php endif; ?>

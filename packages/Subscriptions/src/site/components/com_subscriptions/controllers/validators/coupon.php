@@ -42,11 +42,20 @@ class ComSubscriptionsControllerValidatorCoupon extends LibBaseControllerValidat
     {
         $coupon = $this->_controller->getRepository()->find(array('code'=>$code));
 		
-		if ( !$coupon ) {
-		    $this->setMessage(JText::_('COM-SUB-INVALID-COUPON'));
-			return false;
+		if( $coupon = $this->_controller->getRepository()->find(array('code'=>$code)) ) 
+		{
+           $discount = $coupon->discount * 100;     
+           
+           $this->setMessage( JText::sprintf('COM-SUBSCRIPTIONS-VALID-COUPON', $discount) );
+           
+           return true; 
 		}
 		else 
-            $this->setMessage(array('discount'=>$coupon->discount));
+        {
+           $this->setMessage(JText::_('COM-SUBSCRIPTIONS-INVALID-COUPON'));
+            
+           return false;
+        }    
+            
     }
 }

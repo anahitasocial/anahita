@@ -17,7 +17,7 @@ $transactions = @service('repos:subscriptions.transaction')->fetchSet(array('act
 				<th width="5%"><?= @helper('grid.sort', array('title'=>@text('AN-SB-TRANSACTION-DISCOUNT-AMOUNT'),'sort'=>$sort)); ?></th>
 				<th width="10%"><?= @helper('grid.sort', array('title'=>@text('AN-SB-TRANSACTION-PAYMENT-METHOD'),'sort'=>$sort)); ?></th>
 				<th width="20%"><?= @helper('grid.sort', array('title'=>@text('AN-SB-TRANSACTION-TIMESTAMP'),'sort'=>$sort)); ?></th>
-				<th width="10%"><?= @text('COM-SUB-BILLING-PERIOD'); ?></th>
+				<th width="10%"><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD'); ?></th>
 				<th width="10%"><?= @text('AN-SB-TRANSACTION-DURATION'); ?></th>				
 			</tr>
 		</thead>
@@ -33,7 +33,7 @@ $transactions = @service('repos:subscriptions.transaction')->fetchSet(array('act
 					<td align="center"><?=$transaction->discountAmount?></td>
 					<td align="center"><?=$transaction->method?></td>					
 					<td align="center"><?= $transaction->createdOn->getDate('%b/%d/%y - %T')?></td>
-					<td align="center"><?= ($transaction->recurring) ? @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$transaction->billingPeriod) : @text('COM-SUB-BILLING-PERIOD-'.$transaction->billingPeriod) ?></td>
+					<td align="center"><?= ($transaction->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$transaction->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$transaction->billingPeriod) ?></td>
 					<td align="center"><?= floor(AnHelperDate::secondsTo('day', $transaction->duration))?> <?=@text('AN-SB-TRANSACTION-DURATION-DAYS') ?></td>
 				</tr>
 			<?php endforeach; ?>			

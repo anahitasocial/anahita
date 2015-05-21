@@ -4,6 +4,7 @@
 	<div class="span8">
 	<?= @helper('ui.header', array()); ?>
 	<?= @template('todo'); ?>
+	<?php @commands('toolbar') ?>
 	<?= @helper('ui.comments', $todo, array('pagination'=>true)); ?>
 	</div>
 	
