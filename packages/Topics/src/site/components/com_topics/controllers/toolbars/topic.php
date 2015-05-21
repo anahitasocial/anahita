@@ -55,6 +55,6 @@ class ComTopicsControllerToolbarTopic extends ComMediumControllerToolbarDefault
 		$command
 		->append(array('label'=>$label))
 		->href( $entity->getURL().'&action=sticky&is_sticky='.($entity->isSticky ? 0 : 1) )
-		->setAttribute('data-trigger','Submit');
+		->setAttribute('data-trigger','PostLink');
 	}
 }
