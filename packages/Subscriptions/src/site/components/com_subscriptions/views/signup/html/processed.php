@@ -5,9 +5,9 @@
 <div class="row">
 	<div class="span8">	
         <div class="alert alert-success alert-block">
-        	<p><?= @text('COM-SUB-THANK-YOU') ?></p>
+        	<p><?= @text('COM-SUBSCRIPTIONS-THANK-YOU') ?></p>
         	<?php if ( !$viewer->guest() ) : ?>
-        	<p><a class="btn" href="<?= @route('view=subscription') ?>"><?= @text('COM-SUB-VIEW-YOUR-SUBSCRIPTION') ?></a></p>
+        	<p><a class="btn" href="<?= @route('view=subscription') ?>"><?= @text('COM-SUBSCRIPTIONS-VIEW-YOUR-SUBSCRIPTION') ?></a></p>
         	<?php endif;?>
         </div>
         

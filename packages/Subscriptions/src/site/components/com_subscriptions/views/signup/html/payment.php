@@ -11,10 +11,10 @@
 <div class="row">
 	<div class="span8">
 	    
-       <h1><?= @text('COM-SUB-STEP-PAYMENT-METHOD') ?></h1>
+       <h1><?= @text('COM-SUBSCRIPTIONS-STEP-PAYMENT-METHOD') ?></h1>
             
     	<p class="lead">
-    	    <?= $order->upgrade ? @text('COM-SUB-YOU-ARE-UPGRADING-TO') : @text('COM-SUB-YOU-ARE-SUBSCRIBING-TO') ?>
+    	    <?= $order->upgrade ? @text('COM-SUBSCRIPTIONS-YOU-ARE-UPGRADING-TO') : @text('COM-SUBSCRIPTIONS-YOU-ARE-SUBSCRIBING-TO') ?>
         </p>
     
         <div class="an-entity">
@@ -29,14 +29,14 @@
         	<div class="entity-description">
             	<dl>
             		<?php if($item->recurring): ?>
-            		<dt><?= @text('COM-SUB-BILLING-PERIOD') ?>:</dt> 
-            		<dd><?= @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
+            		<dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt> 
+            		<dd><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
             		<?php else: ?>
-            		<dt><?= @text('COM-SUB-PACKAGE-DURATION') ?>:</dt>
-            		<dd><?= round(AnHelperDate::secondsTo('day', $item->duration)) ?> <?= @text('COM-SUB-PACKAGE-DAYS') ?></dd>
+            		<dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-DURATION') ?>:</dt>
+            		<dd><?= round(AnHelperDate::secondsTo('day', $item->duration)) ?> <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DAYS') ?></dd>
             		<?php endif; ?>
             	
-            		<dt><?= @text('COM-SUB-PACKAGE-PRICE') ?>: </dt>
+            		<dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>: </dt>
             		<dd><?= $item->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
             	</dl>
         	</div>
@@ -45,16 +45,16 @@
         <form id="coupon-form" action="<?= @route('view=coupon', false) ?>" class="form-horizontal">	
         	<fieldset>
         		<legend>
-        		    <?= @text('COM-SUB-SIGNUP-PROMOTION') ?>
+        		    <?= @text('COM-SUBSCRIPTIONS-SIGNUP-PROMOTION') ?>
         		</legend>
         		
         		<p class="lead">
-        		    <?= @text('COM-SUB-ENTER-COUPON-INFORMATION') ?>
+        		    <?= @text('COM-SUBSCRIPTIONS-ENTER-COUPON-INFORMATION') ?>
         		</p>
         		
         		<div class="control-group">
-        			<label class="control-label" for="COM-SUB-ENTER-COUPON-CODE">
-        			    <?=@text('COM-SUB-ENTER-COUPON-CODE')?>: 
+        			<label class="control-label" for="COM-SUBSCRIPTIONS-ENTER-COUPON-CODE">
+        			    <?=@text('COM-SUBSCRIPTIONS-ENTER-COUPON-CODE')?>: 
         			</label>
         			
         			<div class="controls">
@@ -67,7 +67,7 @@
         <hr/>
         
         <p class="lead">
-            <?= @text('COM-SUB-CHOOSE-PAYMENT-METHOD') ?>
+            <?= @text('COM-SUBSCRIPTIONS-CHOOSE-PAYMENT-METHOD') ?>
         </p>
         
         <ul class="nav nav-pills">
@@ -94,7 +94,7 @@
         			<input type="hidden" name="coupon_code">
         			
         			<fieldset>
-        				<legend><?= @text('COM-SUB-CREDITCARD-INFORMATION') ?></legend>
+        				<legend><?= @text('COM-SUBSCRIPTIONS-CREDITCARD-INFORMATION') ?></legend>
         			
         					<div class="icon-creditcards">
         						<span class="visa"></span>
@@ -104,7 +104,7 @@
         					</div>
         					
         					<p class="lead">
-        					    <?= @text('COM-SUB-ENTER-CREDITCARD-INFORMATION') ?>
+        					    <?= @text('COM-SUBSCRIPTIONS-ENTER-CREDITCARD-INFORMATION') ?>
         					</p>
         					
                 			<?php if ( isset($flash['credit_card_error'])) : ?>
@@ -121,26 +121,26 @@
         					?>			
         								
         					<?= @helper('ui.form', array(
-        						'COM-SUB-CREDITCARD-TYPE' => @html('select', 'creditcard[type]', array(
+        						'COM-SUBSCRIPTIONS-CREDITCARD-TYPE' => @html('select', 'creditcard[type]', array(
         								'options' => array(
         									null => @text('LIB-AN-SELECTOR-SELECT-OPTION'),
-        									'visa' 	=> @text('COM-SUB-CREDITCARD-TYPE-VISA'),
-        									'master' 	=> @text('COM-SUB-CREDITCARD-TYPE-MASTER'),
-        									'american_express'   => @text('COM-SUB-CREDITCARD-TYPE-AMERICAN_EXPRESS'),
-        									'discover'  => @text('COM-SUB-CREDITCARD-TYPE-DISCOVER')
+        									'visa' 	=> @text('COM-SUBSCRIPTIONS-CREDITCARD-TYPE-VISA'),
+        									'master' 	=> @text('COM-SUBSCRIPTIONS-CREDITCARD-TYPE-MASTER'),
+        									'american_express'   => @text('COM-SUBSCRIPTIONS-CREDITCARD-TYPE-AMERICAN_EXPRESS'),
+        									'discover'  => @text('COM-SUBSCRIPTIONS-CREDITCARD-TYPE-DISCOVER')
         								),
         								'selected' => $creditcard->type))->class('medium')->required(''),
-        						'COM-SUB-CREDITCARD-NAME' => @html('textfield', 'creditcard[name]',	$ccName )->required(''),
-        						'COM-SUB-CREDITCARD-NUM' => @html('textfield', 'creditcard[number]',	$creditcard->number)->required(''),
-        						'COM-SUB-CREDITCARD-CSV' => @html('textfield', 'creditcard[csv]', 	$creditcard->verification_value)->required('')->class('input-small'),
-        						'COM-SUB-CREDITCARD-EXP' => @helper('selector.month', array('name'=>'creditcard[month]', 'selected'=>$creditcard->month))->required('')->class('input-medium')
+        						'COM-SUBSCRIPTIONS-CREDITCARD-NAME' => @html('textfield', 'creditcard[name]',	$ccName )->required(''),
+        						'COM-SUBSCRIPTIONS-CREDITCARD-NUM' => @html('textfield', 'creditcard[number]',	$creditcard->number)->required(''),
+        						'COM-SUBSCRIPTIONS-CREDITCARD-CSV' => @html('textfield', 'creditcard[csv]', 	$creditcard->verification_value)->required('')->class('input-small'),
+        						'COM-SUBSCRIPTIONS-CREDITCARD-EXP' => @helper('selector.month', array('name'=>'creditcard[month]', 'selected'=>$creditcard->month))->required('')->class('input-medium')
         						.' '.@helper('selector.year',  array('name'=>'creditcard[year]',  'selected'=>$creditcard->year))->required('')->class('input-medium')
         					)) ?>
         			</fieldset>
         			
         			<fieldset>
         				<legend>
-        				    <?= @text('COM-SUB-CONTACT-INFORMATION') ?>
+        				    <?= @text('COM-SUBSCRIPTIONS-CONTACT-INFORMATION') ?>
         				</legend>
             			
             			<?php if ( isset($flash['address_error'])) : ?>
@@ -149,22 +149,22 @@
         				
         				<?= @helper('ui.form', array(
         					
-        					'COM-SUB-BILLING-ADDR' => @html('textfield', 'contact[address]', $contact->address )->required(''),   
-        					'COM-SUB-BILLING-CITY' => @html('textfield', 'contact[city]', $contact->city )->required(''),
+        					'COM-SUBSCRIPTIONS-BILLING-ADDR' => @html('textfield', 'contact[address]', $contact->address )->required(''),   
+        					'COM-SUBSCRIPTIONS-BILLING-CITY' => @html('textfield', 'contact[city]', $contact->city )->required(''),
         					       
-        					'COM-SUB-BILLING-COUNTRY' => @helper('selector.country', 
+        					'COM-SUBSCRIPTIONS-BILLING-COUNTRY' => @helper('selector.country', 
         					   array(
         			             'name' => 'contact[country]', 
         					     'id' => 'country-selector', 
         					     'selected' => $contact->country ) )->required(''),
         					     
-        					'COM-SUB-BILLING-STATE' => @helper('selector.state', 
+        					'COM-SUBSCRIPTIONS-BILLING-STATE' => @helper('selector.state', 
         					   array( 
         					       'name' => 'contact[state]', 
         					       'country_selector' => 'country-selector', 
         					       'selected' => $contact->state ) ),
         					       			
-        					'COM-SUB-BILLING-ZIP' => @html('textfield', 'contact[zip]', 
+        					'COM-SUBSCRIPTIONS-BILLING-ZIP' => @html('textfield', 'contact[zip]', 
         					       $contact->zip)->required('')->class('small')
         				)) ?>
         				
@@ -173,12 +173,12 @@
         			<div class="form-actions">
         				<?php if ( $viewer->guest() ) : ?>
         				<a href="<?=@route(array('layout'=>'login','id'=>$item->id)) ?>" class="btn">
-        				    <?=@text('COM-SUB-EDIT-USER-INFORMATION')?>
+        				    <?=@text('COM-SUBSCRIPTIONS-EDIT-USER-INFORMATION')?>
         				</a>
         				<?php endif; ?>
         				
         				<button class="btn btn-primary" type="submit">
-        				    <?=@text('COM-SUB-PREVIEW-ORDER') ?>
+        				    <?=@text('COM-SUBSCRIPTIONS-PREVIEW-ORDER') ?>
         				</button>
         			</div>	
         		</form>	
@@ -194,17 +194,17 @@
         			
         			<p class="lead">
         			    <span class="paypal-express"></span> 
-        			    <?= @text('COM-SUB-PAYPAL-INSTRUCTIONS') ?>
+        			    <?= @text('COM-SUBSCRIPTIONS-PAYPAL-INSTRUCTIONS') ?>
         		    </p>
         			
         			<div class="form-actions">
         				<?php if ( $viewer->guest() ) : ?>
         				<a class="btn" href="<?= @route( array( 'layout'=>'default', 'id'=>$item->id )) ?>">
-        				    <?=@text('COM-SUB-EDIT-USER-INFORMATION')?>
+        				    <?=@text('COM-SUBSCRIPTIONS-EDIT-USER-INFORMATION')?>
         				</a>
         				<?php endif; ?>		
         				<button class="btn btn-primary" type="submit">
-        				    <?=@text('COM-SUB-PAYPAL-LOGIN') ?>
+        				    <?=@text('COM-SUBSCRIPTIONS-PAYPAL-LOGIN') ?>
         				</button>
         			</div>
         		</form>

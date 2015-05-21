@@ -11,7 +11,7 @@
 				<th width="1%"><?= @helper('grid.sort', array('column'=>'order','sort'=>$sort, 'direction'=>$direction)); ?></th>								
 				<th width="10%"><?= @text('AN-SB-PACKAGE-NUM-SUBSCRIPTIONS') ?></th>
 				<th width="10%"><?= @helper('grid.sort', array('column'=>'price','sort'=>$sort, 'direction'=>$direction)); ?></th>
-				<th width="10%"><?= @text('COM-SUB-BILLING-PERIOD') ?></th>		
+				<th width="10%"><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?></th>		
 				<th width="1%"><?= @helper('grid.sort', array('column'=>'id','sort'=>$sort, 'direction'=>$direction)); ?></th>
 			</tr>
 		</thead>

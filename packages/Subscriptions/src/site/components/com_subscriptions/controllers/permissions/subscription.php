@@ -1,6 +1,5 @@
 <?php 
 /**
- * @version     $Id$
  * @category	Com_Subscriptions
  * @package		Controller
  * @copyright   (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.

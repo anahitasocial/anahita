@@ -28,7 +28,10 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('serviceable'=>array('only'=>'browse'))
+            'behaviors' => array( 
+                'serviceable' => array( 
+                    'only' => 'browse'
+                    ))
         ));
     
         parent::_initialize($config);

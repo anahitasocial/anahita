@@ -6,34 +6,34 @@
         	<h3 class="entity-title"><?= @escape($oder->itemName) ?></h3>
         
         	<dl>
-        		<dt><?= @text('COM-SUB-TRANSACTION-ID'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-ID'); ?></dt>
         		<dd><?= $oder->itemId ?></dd>
         		
-        		<dt><?= @text('COM-SUB-TRANSACTION-PRICE'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PRICE'); ?></dt>
         		<dd><?= $oder->itemAmount ?></dd>
         		
         		<?php if($oder->discountAmount): ?>
-        		<dt><?= @text('COM-SUB-TRANSACTION-DISCOUNT'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DISCOUNT'); ?></dt>
         		<dd>- <?= round($oder->discountAmount, 2) ?></dd>
         		<?php endif; ?>
         		
-        		<dt><?= @text('COM-SUB-TRANSACTION-TAX'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-TAX'); ?></dt>
         		<dd>+ <?= round($oder->taxAmount, 2) ?></dd>
         		
-        		<dt><?= @text('COM-SUB-TRANSACTION-PAID'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PAID'); ?></dt>
         		<dd><?= round($oder->getTotalAmount(), 2) ?></dd>
         		
-        		<dt><?= @text('COM-SUB-BILLING-PERIOD'); ?></dt>
-        		<dd><?= ($oder->recurring) ? @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$oder->billingPeriod) : @text('COM-SUB-BILLING-PERIOD-'.$oder->billingPeriod) ?></dd>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD'); ?></dt>
+        		<dd><?= ($oder->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$oder->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$oder->billingPeriod) ?></dd>
         		
-        		<dt><?= @text('COM-SUB-TRANSACTION-METHOD'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-METHOD'); ?></dt>
         		<dd><?= $oder->method?></dd>
         		
-        		<dt><?= @text('COM-SUB-TRANSACTION-DATE'); ?></dt>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DATE'); ?></dt>
         		<dd><?= $oder->createdOn->getDate('%b %d %Y')?></dd>
         		
-        		<dt><?= @text('COM-SUB-TRANSACTION-DURATION'); ?></dt>
-        		<dd><?= AnHelperDate::secondsTo('day', $oder->duration)?> <?= @text('COM-SUB-TRANSACTION-DAYS') ?></dd>
+        		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DURATION'); ?></dt>
+        		<dd><?= AnHelperDate::secondsTo('day', $oder->duration)?> <?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DAYS') ?></dd>
         
         	</dl>
         </div>

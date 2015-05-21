@@ -69,7 +69,8 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 		$config->append(array(
 			'resources'	=> array('subscriptions_packages'),
 			'attributes' => array(
-				'name' => array('required'=>true),
+				'name'      => array('required'=>true),
+                'body'      => array('required'=>true, 'format'=>'html'),
 				'price' => array('type'=>'float', 'required'=>true),	
 				'duration' => array('type'=>'integer', 'required'=>true),
 				'recurring' => array('type'=>'integer', 'default'=>0),

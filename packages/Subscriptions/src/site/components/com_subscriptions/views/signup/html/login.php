@@ -5,11 +5,11 @@
 <div class="row">
 	<div class="span8">  	
 	    
-	    <h1><?= @text('COM-SUB-STEP-REGISTER') ?></h1>
+	    <h1><?= @text('COM-SUBSCRIPTIONS-STEP-REGISTER') ?></h1>
 	    
 	    <div class="well">
             <p class="lead">
-                <?= @text('COM-SUB-LOGIN-PROMPT'); ?>
+                <?= @text('COM-SUBSCRIPTIONS-LOGIN-PROMPT'); ?>
             </p>
             
             <p>
@@ -23,7 +23,7 @@
         <div class="well">
         
             <p class="lead">
-                <?= @text('COM-SUB-REGISTER-PROMMPT-PROMPT') ?>
+                <?= @text('COM-SUBSCRIPTIONS-REGISTER-PROMMPT-PROMPT') ?>
             </p>
             
             <form action="<?= @route( 'id='.$item->id ) ?>" method="post" name="person-form" id="person-form">
@@ -33,17 +33,17 @@
             	<?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>		
             			
             	<?= @helper('ui.form', array(
-            		'COM-SUB-REGISTER-FULL-NAME' => @html('textfield', 'user[name]', $person->name)->required('true'),
+            		'COM-SUBSCRIPTIONS-REGISTER-FULL-NAME' => @html('textfield', 'user[name]', $person->name)->required('true'),
             		
-            		'COM-SUB-REGISTER-USERNAME' => @html('textfield', 'user[username]', $person->username)
+            		'COM-SUBSCRIPTIONS-REGISTER-USERNAME' => @html('textfield', 'user[username]', $person->username)
             		 ->required('true')->dataValidate('username')->dataUrl( @route('option=com_people&view=person', false) )
             		 ->id('person-username')->pattern( $usernamePattern )->maxlength(100)->minlength(6),
             		 
-            		'COM-SUB-REGISTER-EMAIL' => @html('textfield', 'user[email]', $person->email)
+            		'COM-SUBSCRIPTIONS-REGISTER-EMAIL' => @html('textfield', 'user[email]', $person->email)
             		->required('true')->dataValidate('email')->dataUrl( @route('option=com_people&view=person', false) )
             		->id('person-email')->pattern( $emailPattern )->maxlength(100)->minlength(10),
             		
-            		'COM-SUB-REGISTER-PASSWORD' => @html('passwordfield',  'user[password]', '')->required('true')				
+            		'COM-SUBSCRIPTIONS-REGISTER-PASSWORD' => @html('passwordfield',  'user[password]', '')->required('true')				
             	)); ?>
             			
             	<div class="form-actions">

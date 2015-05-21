@@ -158,7 +158,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         {                       
             $this->mail(array(
                 'to' => $this->getItem()->person->email,
-                'subject' => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
+                'subject' => JText::_('COM-SUBSCRIPTIONS-CONFIRMATION-MESSAGE-SUBJECT'),
                 'template' => 'invoice'
             ));
         }
@@ -179,7 +179,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
                 
             $this->mail(array(
                 'to' => $this->getItem()->person->email,
-                'subject' => JText::_('COM-SUB-CONFIRMATION-MESSAGE-SUBJECT'),
+                'subject' => JText::_('COM-SUBSCRIPTIONS-CONFIRMATION-MESSAGE-SUBJECT'),
                 'body' => html_entity_decode( $message, ENT_COMPAT | ENT_HTML5, 'UTF-8')
             ));
         }                       

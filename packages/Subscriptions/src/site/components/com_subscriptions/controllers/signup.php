@@ -170,7 +170,7 @@
         } 
         catch(ComSubscriptionsDomainPaymentException $exception) 
         {
-            $this->setMessage('COM-SUB-TRANSACTION-ERROR', 'error');
+            $this->setMessage('COM-SUBSCRIPTIONS-TRANSACTION-ERROR', 'error');
             
             throw new RuntimeException('Payment process error');
         }
@@ -226,7 +226,7 @@
 	    	if ( !$this->creditcard->is_valid() ) 
 	    	{
 	    	    $error = true;
-	    	    $this->storeValue('credit_card_error', JText::_('COM-SUB-CREDITCARD-INVALID'));
+	    	    $this->storeValue('credit_card_error', JText::_('COM-SUBSCRIPTIONS-CREDITCARD-INVALID'));
 	    	}
 	    	
 	    	//validate contact    	
@@ -234,7 +234,7 @@
             
 			if( !($contact->address && $contact->city && $contact->country && $contact->state && $contact->zip) ) 
 			{
-			    $this->storeValue('address_error', JText::_('COM-SUB-BILLING-INVALID'));                
+			    $this->storeValue('address_error', JText::_('COM-SUBSCRIPTIONS-BILLING-INVALID'));                
 			}
 			
 			if ( $error ) 

@@ -46,13 +46,13 @@ class ComSubscriptionsControllerValidatorCoupon extends LibBaseControllerValidat
 		{
            $discount = $coupon->discount * 100;     
            
-           $this->setMessage( JText::sprintf('COM-SUB-VALID-COUPON', $discount) );
+           $this->setMessage( JText::sprintf('COM-SUBSCRIPTIONS-VALID-COUPON', $discount) );
            
            return true; 
 		}
 		else 
         {
-           $this->setMessage(JText::_('COM-SUB-INVALID-COUPON'));
+           $this->setMessage(JText::_('COM-SUBSCRIPTIONS-INVALID-COUPON'));
             
            return false;
         }    

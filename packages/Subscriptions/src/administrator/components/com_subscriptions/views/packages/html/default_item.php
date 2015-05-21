@@ -19,7 +19,7 @@
 	<td align="center"><?=$package->subscriptions->getTotal()?></td>
 	<td align="center"><?= $package->price ?> <?= get_config_value('subscriptions.currency','US') ?></td>
 	
-	<td align="center"><?= ($package->recurring) ? @text('COM-SUB-BILLING-PERIOD-RECURRING-'.$package->billingPeriod) : @text('COM-SUB-BILLING-PERIOD-'.$package->billingPeriod) ?></td>
+	<td align="center"><?= ($package->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$package->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$package->billingPeriod) ?></td>
 	<td align="center"><?= $package->id; ?></td>
 </tr>
 <? $i = $i + 1; $m = (1 - $m); ?>
