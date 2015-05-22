@@ -60,16 +60,19 @@ class LibBaseDomainSpace extends AnDomainSpace implements KServiceInstantiatable
         {
             $ids  = array();
              
-            foreach($this->_entities as $entity)
+            foreach( $this->_entities as $entity )
             {    
                 if ( $entity->getEntityState() ==  AnDomain::STATE_DESTROYED )
                 {
-                    if ( is($entity, 'ComBaseDomainEntityNode') )
+                    if ( is( $entity, 'ComBaseDomainEntityNode' ) )
+                    {
                         $ids[] = $entity->id;
+                    }
                 }
             }
             
-            if ( !empty($ids) ) {
+            if ( !empty($ids) ) 
+            {
                 $this->cleanupNodesWithIds($ids);
             }
         }
