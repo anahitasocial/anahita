@@ -147,8 +147,9 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 		unset($options->prompt);
 		$years = array_combine(range($options->start, $options->end), range($options->start, $options->end));
 		
-		if ( $prompt ) {
-			$array  = array(JText::_('LIB-AN-SELECTOR-SELECT-YEAR'), null);
+		if ( $prompt ) 
+		{
+			$array  = array(JText::_('LIB-AN-SELECTOR-SELECT-YEAR'));
 			$years = AnHelperArray::merge($array, $years);			
 		}	
 		

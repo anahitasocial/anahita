@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" social_app="1" method="upgrade">
+<install type="component" enforce="1" social_app="1" method="upgrade">
 	<name>Subscriptions</name>
 	<author>Anahita Social Networking Platform and Framework</author>
 	<copyright>(C) 2015 rmd Studio</copyright>

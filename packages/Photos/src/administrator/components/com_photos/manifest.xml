@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="##BUILD_PLATFORM_VERSION##" enforce="1" social_app="1" method="upgrade">
+<install type="component" enforce="1" social_app="1" method="upgrade">
     <name>Photos</name>
     <author>Anahita Social Networking Platform and Framework</author>
     <copyright>(C) 2013 rmd Studio, Peerglobe Technology</copyright>

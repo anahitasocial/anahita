@@ -61,17 +61,24 @@
 	{
 		if ( $this->hasSubscription() ) 
 		{
-			$diff 	  = max(0, $package->duration - $this->subscription->package->duration);
+			$diff 	  = max( 0, $package->duration - $this->subscription->package->duration );
+			
 			$end_date = clone $this->subscription->endDate;
+			
 			$end_date->addSeconds($diff);
-			$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(array('data'=>array( 				
- 				'package'	  => $package, 	
-				'endDate'	  => $end_date
- 			)));
+            
+			$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity( array( 'data' => array( 				
+ 				
+ 				'package' => $package, 	
+				'endDate' => $end_date
+ 			
+            )));
+            
  			return $this->_mixer->subscription;
 			
 		}
-		else return $this->subscribeTo($package);		
+		else 
+		    return $this->subscribeTo( $package );		
 	}
 		
 	/**
@@ -83,7 +90,7 @@
 	public function subscribeTo($package) 
 	{
 		$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(array('data'=>array( 				
- 				'package'	  => $package, 		
+ 		     'package' => $package, 		
  		)));
  		
  	 	return $this->_mixer->subscription;

@@ -64,7 +64,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'serviceable'=> array('except'=>array('browse','edit')),
+            'serviceable'=> array('except'=>array('browse', 'read', 'edit')),
             'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
             'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal'
         ));
@@ -92,6 +92,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         $package = $this->_order->getPackage();
         
         $set = new AnObjectSet();
+        
         $set->insert($this->_order);
         
         if( !$person->persisted() ) 
@@ -206,6 +207,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     {
         $this->_order = $order; 
         $this->_state->order = $order;
+        
         return $this;
     }
     
@@ -218,22 +220,6 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     {
         return $this->_order;
     }
-    
-	/** 
-	 * Read a subscription
-	 * 
-	 * @param KCommandContext $context
-	 * 
-	 * @return void
-	 */
-	protected function _actionRead($context)
- 	{ 	
- 	    $this->getService('repos://site/subscriptions.package');
-        $actor = get_viewer();
- 	    $this->setItem($actor->subscription);
- 	    $this->actor = $actor;
- 	    return $this->getItem();
- 	}
  }
  
  

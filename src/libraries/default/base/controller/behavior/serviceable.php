@@ -47,15 +47,18 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         parent::__construct($config);
 
         //inverse of exclude_actions
-        if ( count($config->only) ) 
-        {
-            $actions = (array)$config['only'];            
+        if ( count( $config->only ) ) 
+        {     
+            $actions = (array) $config['only'];            
+            
             $exclude = array();
-            foreach($this->getMethods() as $method) 
+            
+            foreach( $this->getMethods() as $method ) 
             {
                 if ( strpos($method, '_action') === 0 ) 
                 {
                     $action = strtolower(substr($method, 7));  
+                    
                     if ( !in_array($action, $actions) ) {
                         $exclude[] = $action;
                     }                  

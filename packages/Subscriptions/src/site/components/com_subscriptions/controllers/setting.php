@@ -27,6 +27,7 @@
  */
 class ComSubscriptionsControllerSetting extends ComBaseControllerResource
 {
+
     /**
      * Initializes the default configuration for the object
      *
@@ -40,7 +41,7 @@ class ComSubscriptionsControllerSetting extends ComBaseControllerResource
     {
         $config->append(array(
             'behaviors' => array(
-                                  
+                'ownable'          
             )
         ));
     
@@ -57,21 +58,8 @@ class ComSubscriptionsControllerSetting extends ComBaseControllerResource
 	 * @param void
 	 */
 	protected function _actionRead(KCommandContext $context)
-	{		
-		
+	{
+        $this->getService('repos://site/subscriptions.package');       		
+        $this->setItem( $this->actor->subscription );
 	}
-    
-    /**
-     * Read action
-     * 
-     * Edits the actor setting for package subscription
-     *
-     * @param KCommandContext $context Context parameter
-     * 
-     * @param void
-     */
-    protected function _actionEdit(KCommandContext $context)
-    {       
-        
-    }
 }

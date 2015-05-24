@@ -75,7 +75,7 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
 	}
 	
 	/**
-	 * Adds a photo to an set
+	 * Adds a photo to a set
 	 * 
 	 * @return true on success
 	 * @param $photo a ComPhotosDomainEntityPhoto object
