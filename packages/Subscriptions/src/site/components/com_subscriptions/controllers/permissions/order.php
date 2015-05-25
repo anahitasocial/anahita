@@ -51,8 +51,8 @@ class ComSubscriptionsControllerPermissionOrder extends LibBaseControllerPermiss
         {
             return true;
         }
-        
-        if( $this->actor->id == $viewer->id )
+
+        if( $this->getItem()->actorId == $viewer->id )
         {
             return true;
         }

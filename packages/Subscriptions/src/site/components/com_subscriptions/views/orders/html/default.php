@@ -1,6 +1,8 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<?php if(count($orders)): ?>
+<?= @helper('ui.header', array()); ?>
+
+
 <table class="table table-striped">
 	<thead>
 		<tr>				
@@ -34,7 +36,8 @@
 	</tr>
 	<?php endforeach; ?>
 </table>
-<?php else: ?>
+
+<?php if(count($orders) == 0): ?>
 <div class="alert alert-info">
 <?= @text('COM-SUBSCRIPTIONS-TRANSACTION-EMPTY-LIST') ?>
 </div>

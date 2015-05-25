@@ -3,6 +3,8 @@
 <div class="row">
 	<div class="span8">   	
 	    
+	    <?= @helper('ui.header', array()); ?>
+	    
         <div class="an-entity">
         	<h2 class="entity-title">
         	    <?= @escape($order->itemName) ?>
