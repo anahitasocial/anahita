@@ -19065,8 +19065,18 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 			},
 			success : function ( response ) {
-				form.siblings('.an-entities').html($(response).find('.an-entity'));
-				form.siblings('.pagination').html($(response).filter('.pagination'));
+				
+				if( $(response).filter('.an-entity').length ) {
+				    
+				  form.siblings('.an-entities').html($(response).filter('.an-entity'));
+                  form.siblings('.pagination').html($(response).filter('.pagination'));  
+				    
+				} else {
+				  
+				  form.siblings('.an-entities').html($(response).find('.an-entity'));
+                  form.siblings('.pagination').html($(response).find('.pagination'));
+				    
+				}
 			},
 			complete : function () {
 				form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
@@ -19336,7 +19346,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             		
             		self._updateHash(a.attr('href'));
             		
-            		if( isComments ) {
+            		if( $(response).find(self.options.entities).length ) {
             		
             		    var entities = $(response).find(self.options.entities);
                         var pagination = $(response).find('.pagination');

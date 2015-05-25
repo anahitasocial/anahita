@@ -57,7 +57,7 @@
             		
             		self._updateHash(a.attr('href'));
             		
-            		if( isComments ) {
+            		if( $(response).find(self.options.entities).length ) {
             		
             		    var entities = $(response).find(self.options.entities);
                         var pagination = $(response).find('.pagination');
