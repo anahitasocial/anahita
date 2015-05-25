@@ -49,7 +49,10 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'resources' => array('subscriptions_transactions')
+            'resources' => array('subscriptions_transactions'),
+            'aliases' => array(
+                'creationTime' => 'createdOn', 
+            ),
         ));
     
         parent::_initialize($config);

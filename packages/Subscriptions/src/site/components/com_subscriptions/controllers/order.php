@@ -46,14 +46,15 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
 	 * 
 	 * @return void
 	 */
-	protected function _actionBrowse($context)
+	protected function _actionBrowse( $context )
  	{
-        $this->_state->setList( $this->getService('repos://site/subscriptions.order')
-         								->getQuery()
-         								->actorId( $this->actor->id )
-         								->order('createdOn', 'DESC')
-         								->fetchSet());
+ 	    $entities = parent::_actionBrowse( $context );
+
+        if( isset($this->actor->id) )
+        {
+           $entities->actorId( $this->actor->id ); 
+        }
         
-        return $this->_state->getList();
+        return $entities;
  	}
 }

@@ -42,6 +42,7 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
 			$topics->order('isSticky', 'DESC');
 			
 		$topics->order('IF(@col(lastCommentTime) IS NULL,@col(creationTime),@col(lastCommentTime))', 'DESC');
+
 	}
 	
 	/**
