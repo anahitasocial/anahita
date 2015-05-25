@@ -1,15 +1,14 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php $highlight = ($topic->isSticky && $filter != 'leaders') ? 'an-highlight' : '' ?>
-<?php $author = ($topic->lastComment) ? $topic->lastCommenter : $topic->author; ?>
 <div class="an-entity <?= $highlight ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
-			<?= @avatar($author) ?>
+			<?= @avatar($topic->author) ?>
 		</div>
 		
 		<div class="entity-container">
-			<h4 class="author-name"><?= @name($author) ?></h4>
+			<h4 class="author-name"><?= @name($topic->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($topic->creationTime) ?></li>
 				<?php if(!$topic->owner->eql($topic->author)): ?>
@@ -20,19 +19,17 @@
 	</div>
 	
 	<h3 class="entity-title">
-		<?php if( $topic->lastComment ) : ?>
-		<a href="<?= @route($topic->getURL().'&permalink='.$topic->lastComment->id) ?>">
-			<?= sprintf( @text('LIB-AN-MEDIUM-COMMENTED'), @escape($topic->title) ); ?>
-		</a>
-		<?php else: ?>
 		<a href="<?= @route($topic->getURL()) ?>">
-			<?= @escape($topic->title) ?>
-		</a>
-		<?php endif; ?>
+            <?= @escape($topic->title) ?>
+        </a>
 	</h3>
 	
 	<div class="entity-description">
-	<?= @helper('text.truncate', @content($topic->body, array('exclude'=>'gist')), array('length'=>200, 'consider_html'=>true)); ?>
+	<?= @helper( 'text.truncate', 
+	    @content( $topic->body, 
+	       array('exclude'=>'gist')), 
+	       array('length'=>200, 'consider_html'=>true)); 
+	?>
 	</div>
 	
 	<div class="entity-meta">

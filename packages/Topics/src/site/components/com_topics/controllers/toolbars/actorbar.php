@@ -43,19 +43,11 @@ class ComTopicsControllerToolbarActorbar extends ComMediumControllerToolbarActor
         $layout = pick($this->getController()->layout, 'default');
         $name	= $this->getController()->getIdentifier()->name;
     
-        if($this->getController()->filter == 'leaders')
-        {
-            $this->setTitle(JText::_('COM-TOPICS-HEADER-LEADERS-TOPICS'));
-            $this->setDescription(JText::_('COM-TOPICS-HEADER-LEADERS-TOPICS-DESCRIPTION'));
-        }
-        else
-        {
-            $this->setTitle(JText::sprintf('COM-TOPICS-HEADER-TOPICS', $actor->name));
+        $this->setTitle(JText::sprintf('COM-TOPICS-HEADER-TOPICS', $actor->name));
     
-            $this->addNavigation('topics',
-                    JText::_('COM-TOPICS-NAV-TOPICS'),
-                    array('option'=>'com_topics', 'view'=>'topics', 'oid'=>$actor->id),
-                    $name == 'topic');
-        }
+        $this->addNavigation('topics',
+                JText::_('COM-TOPICS-NAV-TOPICS'),
+                array('option'=>'com_topics', 'view'=>'topics', 'oid'=>$actor->id),
+                $name == 'topic');
     }    
 }
