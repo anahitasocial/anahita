@@ -58,7 +58,8 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
         {
             $tabs->insert('subscription', array(
                 'label'=> JText::_('COM-SUBSCRIPTIONS-PROFILE-EDIT'), 
-                'controller'=>'com://site/subscriptions.controller.setting'));    
+                'controller'=>'com://site/subscriptions.controller.setting'
+            ));       
         }
         
     }
