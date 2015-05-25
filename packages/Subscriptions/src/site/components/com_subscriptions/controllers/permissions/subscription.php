@@ -16,13 +16,29 @@
 class ComSubscriptionsControllerPermissionSubscription extends LibBaseControllerPermissionDefault
 {
     /**
+     * only admins can browse
+     */    
+    public function canBrowse()
+    {
+        return (boolean) get_viewer()->admin();
+    }
+    
+    /**
      * Can't be guest
      * 
      * @return boolean
      */
-    public function canGet()
+    public function canRead()
     {
         return !get_viewer()->guest();
+    }
+    
+    /**
+     * only admins can browse
+     */    
+    public function canEdit()
+    {
+        return (boolean) get_viewer()->admin();
     }
     
     /**
@@ -33,5 +49,13 @@ class ComSubscriptionsControllerPermissionSubscription extends LibBaseController
     {
         return  $this->getOrder() instanceof ComSubscriptionsDomainEntityOrder && 
                 $this->getOrder()->canProcess();
+    }
+    
+    /**
+     * only admins can browse
+     */    
+    public function canDelete()
+    {
+        return (boolean) get_viewer()->admin();
     }
 }

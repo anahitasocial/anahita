@@ -45,20 +45,12 @@ class ComTodosControllerToolbarActorbar extends ComMediumControllerToolbarActorb
 		$layout = pick($this->getController()->layout, 'default');
 		$name	= $this->getController()->getIdentifier()->name;
 		
-		if($this->getController()->filter == 'leaders')
-		{
-			$this->setTitle(JText::_('COM-TODOS-HEADER-LEADERS'));
-			$this->setDescription(JText::_('COM-TODOS-HEADER-LEADERS-DESCRIPTION'));
-		}
-		else 
-		{
-			$this->setTitle(JText::sprintf('COM-TODOS-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
-			
-			//create navigations
-			$this->addNavigation('todos',
-									JText::_('COM-TODOS-LINK-TODOS'),
-									array('option'=>'com_todos', 'view'=>'todos', 'oid'=>$actor->id),
-									$name == 'todo');
-		}
+		$this->setTitle(JText::sprintf('COM-TODOS-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
+            
+        //create navigations
+        $this->addNavigation('todos',
+                                JText::_('COM-TODOS-LINK-TODOS'),
+                                array('option'=>'com_todos', 'view'=>'todos', 'oid'=>$actor->id),
+                                $name == 'todo');
     }    
 }

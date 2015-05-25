@@ -49,7 +49,10 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'resources' => array('subscriptions_transactions')
+            'resources' => array('subscriptions_transactions'),
+            'aliases' => array(
+                'creationTime' => 'createdOn', 
+            ),
         ));
     
         parent::_initialize($config);
@@ -63,10 +66,12 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 */
 	protected function _afterEntityInstantiate(KConfig $config)
 	{
-		$config->append(array('data'=>array(
-		    'orderId'       => substr(uniqid(rand(), true), 0, 10),
-			'createdOn'     => AnDomainAttributeDate::getInstance()
-		)));
+		$config->append( array(
+		  'data' => array(
+		    
+		      'orderId' => substr( uniqid( rand(), true), 0, 10),
+	          'createdOn' => AnDomainAttributeDate::getInstance()
+        ) ) );
 	}
 		
 	/**
@@ -132,19 +137,23 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 */
 	public function setPackage($package, $upgraded = null)
 	{
-		$this->currency   		= get_config_value('subscriptions.currency','US');
-		$this->itemName	  		= $package->name;
-		$this->itemId	  		= $package->id;
-		$this->itemAmount 		= $package->price;
-		$this->duration			= $package->duration;
-		$this->billingPeriod 	= $package->billingPeriod;
-		$this->recurring 		= $package->recurring;
-		if ( $upgraded ) {
+		$this->currency = get_config_value('subscriptions.currency','US');
+		$this->itemName = $package->name;
+		$this->itemId = $package->id;
+		$this->itemAmount = $package->price;
+		$this->duration	= $package->duration;
+		$this->billingPeriod = $package->billingPeriod;
+		$this->recurring = $package->recurring;
+        
+		if ( $upgraded ) 
+		{
 			$this->duration 	= max(0, $package->duration - $upgraded->duration);
 			$this->itemAmount	= max(0, $package->price - $upgraded->price);
 			$this->upgrade		= true;
 		}
+        
 		$this->_package = $package;
+		
 		return $this;
 	}
 	
@@ -156,15 +165,18 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	public function getPayload()
 	{
 	    $payload = $this->getService('com://site/subscriptions.domain.payment.payload', array(
-	            'order_id'        => $this->orderId,
-	            'description'     => $this->_package->name,
-	            'amount'          => $this->getItemAmountAfterDiscount(),
-	            'tax_amount'      => $this->getTaxAmount(),
-	            'payment_method'  => $this->getPaymentMethod(),
-	            'currency'        => $this->currency
+	            
+	       'order_id' => $this->orderId,
+	       'description' => $this->_package->name,
+	       'amount' => $this->getItemAmountAfterDiscount(),
+	       'tax_amount' => $this->getTaxAmount(),
+	       'payment_method' => $this->getPaymentMethod(),
+	       'currency' => $this->currency
+	       
         ));
 	    
-	    if ( $this->_package->recurring ) {
+	    if( $this->_package->recurring ) 
+	    {
 	        $payload->setRecurring(1, $this->_package->billingPeriod, AnDomainAttributeDate::getInstance()->getDate(DATE_FORMAT_ISO_EXTENDED));
 	    }
 	    
@@ -178,10 +190,11 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 *
 	 * @return void
 	 */
-	public function setPaymentMethod(ComSubscriptionsDomainPaymentMethodInterface $method)
+	public function setPaymentMethod( ComSubscriptionsDomainPaymentMethodInterface $method )
 	{
 	    $this->_payment_method = $method;
 	    $this->method = (string) $method;
+        
 	    return $this;
 	}
 	
@@ -202,29 +215,33 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 */
 	public function canProcess()
 	{
-	    if ( $this->persisted() ) {
+	    if( $this->persisted() ) 
+	    {
 	        return false;
 	    }
 	    
-	    if ( !$this->_subscriber ) {	        
+	    if( !$this->_subscriber ) 
+	    {	        
 	        return false;
 	    }
 	    
-	    if ( !$this->validateEntity() ) {
+	    if( !$this->validateEntity() ) 
+	    {
 	        return false;
 	    }
 	    
-	    if ( !$this->_subscriber->persisted() && 
-	            !$this->_subscriber->validateEntity() ) {
-	        
+	    if( !$this->_subscriber->persisted() && !$this->_subscriber->validateEntity() ) 
+	    {    
 	        return false;
 	    }
 	    
-	    if ( !isset($this->_package) ) {
+	    if( !isset($this->_package) ) 
+	    {
 	        return false;
 	    }
 	    
-	    if ( !isset($this->_payment_method) ) {
+	    if ( !isset($this->_payment_method) ) 
+	    {
 	        return false;
 	    }
 	    
@@ -241,11 +258,14 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	public function setCountry($country)
 	{
 	    $this->set('country', $country);
-	    $vat = $this->getService('repos://site/subscriptions.vat')
-	            ->find(array('country'=>$country));	     
-	    if ( $vat ) {
-	        $this->setVat($vat);
+        
+	    $vat = $this->getService('repos://site/subscriptions.vat')->find(array('country'=>$country));	     
+	    
+	    if ( $vat ) 
+	    {
+	        $this->setVat( $vat );
 	    }
+        
 	    return $this;	    
 	}
 	
@@ -265,12 +285,17 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 * @param ComSubscriptionsDomainEntityVat $vat
 	 * @return void
 	 */
-	public function setVat($vat)
+	public function setVat( $vat )
 	{
 		$taxes = array();
-		foreach($vat->getFederalTaxes() as $tax)
+        
+		foreach( $vat->getFederalTaxes() as $tax )
+        {
 			$taxes[] = $tax->value;
-		$this->taxAmount =  array_sum(array_values($taxes));
+        }
+        
+		$this->taxAmount =  array_sum( array_values( $taxes ) );
+		
 		return $this;		
 	}
 
@@ -300,10 +325,11 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 * @param ComSubscriptionsDomainEntityCoupon|string $coupon
 	 * @return void
 	 */
-	public function setCoupon($coupon)
+	public function setCoupon( $coupon )
 	{		
 		$this->discountAmount = $coupon->discount; 
-		$this->couponCode	  = $coupon->code;
+		$this->couponCode = $coupon->code;
+        
 		return $this;
 	}
 	
@@ -311,12 +337,14 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 * (non-PHPdoc)
 	 * @see AnDomainEntityAbstract::cloneEntity()
 	 */
-	public function cloneEntity($deep = true)
+	public function cloneEntity( $deep = true )
 	{
 	    $clone = parent::cloneEntity($deep);
-	    $clone->setSubscriber($this->_subscriber);
-	    $clone->setPackage($this->_package);
-	    $clone->setPaymentMethod($this->_payment_method);
+	    
+	    $clone->setSubscriber( $this->_subscriber );
+	    $clone->setPackage( $this->_package );
+	    $clone->setPaymentMethod( $this->_payment_method );
+	    
 	    return $clone;
 	}
 
@@ -328,10 +356,17 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 */
 	protected function _beforeEntityInsert(KCommandContext $context)
 	{		    	    
-		if ( !empty($this->couponCode) ) {
-			$coupon = $this->getService('repos:subscriptions.coupon')->find(array('code'=>$this->couponCode));
-			if ( $coupon )			
-				$coupon->used();			
+		if( !empty($this->couponCode) ) 
+		{
+			$coupon = $this->getService('repos:subscriptions.coupon')
+			               ->find( array( 
+			                 'code' => $this->couponCode
+                           ));
+			
+			if ( $coupon )
+            {			
+				$coupon->used();	
+            }		
 		}
 	}
 }

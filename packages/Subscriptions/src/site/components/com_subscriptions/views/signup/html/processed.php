@@ -7,15 +7,20 @@
         <div class="alert alert-success alert-block">
         	<p><?= @text('COM-SUBSCRIPTIONS-THANK-YOU') ?></p>
         	<?php if ( !$viewer->guest() ) : ?>
-        	<p><a class="btn" href="<?= @route('view=subscription') ?>"><?= @text('COM-SUBSCRIPTIONS-VIEW-YOUR-SUBSCRIPTION') ?></a></p>
+        	<p>
+        	    <a class="btn" href="<?= @route( $viewer->getURL().'&get=settings&edit=subscription' ) ?>">
+        	       <?= @text('COM-SUBSCRIPTIONS-VIEW-YOUR-SUBSCRIPTION') ?>
+        	    </a>
+        	</p>
         	<?php endif;?>
         </div>
         
         <?php if ( $viewer->guest() ) : ?>
-        <form action="<?@route()?>" method="post">
-            <input type="hidden" name="_action" value="login" />
-            <input type="submit" class="btn" value="Login">
-        </form>
+        <p>
+            <a data-trigger="OpenModal" class="btn btn-primary btn-large" href="#" data-url="<?= @route('option=people&view=session&layout=modal&connect=1' ) ?>" >
+                <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
+            </a>
+        </p>
         <?php endif; ?>
 	</div>
 </div>

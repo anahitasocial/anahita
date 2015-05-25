@@ -36,27 +36,19 @@ class ComSubscriptionsControllerToolbarActorbar extends ComBaseControllerToolbar
      */
     public function onBeforeControllerGet(KEvent $event)
     {
+        parent::onBeforeControllerGet($event);    
+        
         $name = $this->getController()->getIdentifier()->name;
         
-        if ( $name != 'subscription' || $name != 'order') {
-            return;    
+        if( $name != 'order' )
+        {
+            return;
         }
-         
-        $actor = get_viewer();
         
-        $this->setActor($actor);
-        $this->setTitle(JText::_('COM-SUBSCRIPTIONS-ACTOR-HEADER-TITLE-SUBSCRIPTION'));
-        		
-		$name     = $this->getController()->getIdentifier()->name;		        
-		
-		$this->addNavigation('package', 
-									JText::_('COM-SUBSCRIPTIONS-NAV-SUBSCRIPTION'),
-									'option=com_subscriptions&view=subscription', $name == 'subscription');
-									
-		$this->addNavigation('orders', 
-									JText::_('COM-SUBSCRIPTIONS-NAV-ORDERS'),
-									'option=com_subscriptions&view=orders', $name == 'order');
-		
-		return parent::onBeforeControllerGet($event);        
+        $viewer = $this->getController()->viewer;
+        $actor = pick($this->getController()->actor, $viewer);
+
+        $this->setActor( $actor );
+        $this->setTitle( JText::sprintf( 'COM-SUBSCRIPTIONS-ACTOR-HEADER-TITLE-ORDER', $actor->name ) ); 
     }
 }

@@ -29,12 +29,14 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
     {
         $config->append(array(
             'behaviors' => array( 
-                'serviceable' => array( 
-                    'only' => 'browse'
-                    ))
+                'ownable',
+                'serviceable' => array ( 
+                    'read_only' => true
+                    )    
+                )
         ));
     
-        parent::_initialize($config);
+        parent::_initialize( $config );
     }
     
 	/** 
@@ -44,16 +46,15 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
 	 * 
 	 * @return void
 	 */
-	protected function _actionBrowse($context)
+	protected function _actionBrowse( $context )
  	{
- 		$viewer = get_viewer();
- 		
-        $this->_state->setList($this->getService('repos://site/subscriptions.order')
-         								->getQuery()
-         								->actorId($viewer->id)
-         								->order('createdOn', 'DESC')
-         								->fetchSet());
+ 	    $entities = parent::_actionBrowse( $context );
+
+        if( isset($this->actor->id) )
+        {
+           $entities->actorId( $this->actor->id ); 
+        }
         
-        return $this->_state->getList();
+        return $entities;
  	}
 }

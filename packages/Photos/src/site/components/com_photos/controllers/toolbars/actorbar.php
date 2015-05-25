@@ -43,16 +43,12 @@ class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActor
 		$layout = pick($this->getController()->getRequest()->layout, 'default');
 		
 		$name = $this->getController()->getIdentifier()->name;
-		$filter = $this->getController()->filter;
-		//create pathway
 
 		//create title
 		if($layout == 'upload')
 			$this->setTitle(JText::sprintf('COM-PHOTOS-UPLOAD-PHOTOS', $actor->name));
 		elseif($name == 'set')
 			$this->setTitle(JText::sprintf('COM-PHOTOS-HEADER-ACTOR-SETS', $actor->name));
-		elseif($name == 'photo' && $filter == 'leaders')
-			$this->setTitle(JText::sprintf('COM-PHOTOS-HEADER-ACTOR-LEADERS-PHOTOS', $actor->name));
 		else
 			$this->setTitle(JText::sprintf('COM-PHOTOS-HEADER-ACTOR-PHOTOS', $actor->name));
 		
@@ -60,21 +56,13 @@ class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActor
 		$this->addNavigation('photos',
 			JText::_('COM-PHOTOS-LINKS-PHOTOS'),
 			array('option'=>'com_photos', 'view'=>'photos', 'oid'=>$actor->uniqueAlias),
-			$name == 'photo' && (in_array($layout, array('default', 'add', 'masonry'))) && $filter == '');
+			$name == 'photo' && (in_array($layout, array('default', 'add', 'masonry'))));
 
 		if($actor->photos->getTotal() > 0)
 		{			
 			$this->addNavigation('sets', JText::_('COM-PHOTOS-LINKS-SETS'), 
 			array('option'=>'com_photos', 'view'=>'sets','oid'=>$actor->uniqueAlias), 
 			$name == 'set' && in_array($layout, array('default', 'add', 'edit')));
-		}
-		
-		if($viewer->eql($actor))
-		{
-			$this->addNavigation('leaders', 
-			JText::_('COM-PHOTOS-LINKS-LEADERS'), 
-			array('option'=>'com_photos', 'view'=>'photos', 'filter'=>'leaders', 'oid'=>$actor->uniqueAlias),
-			$name == 'photo' && in_array($layout, array('default', 'masonry')) && $filter == 'leaders');
 		}
     }    
 }

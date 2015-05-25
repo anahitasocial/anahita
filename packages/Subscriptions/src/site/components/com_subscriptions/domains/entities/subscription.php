@@ -43,6 +43,10 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
 				'person' 	=> 'nodeA',
 				'package'	=> 'nodeB'
 			),
+			'relationships' => array(
+                'person' => array('parent'=>'com:people.domain.entity.person'),
+                'package' => array('parent'=>'com:subscriptions.domain.entity.package')
+            ),
 			'behaviors' => array(
 				'expirable',
 				'dictionariable'
@@ -62,8 +66,8 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
 	public function setNodeB($package)
 	{
 		$this->set('nodeB', $package);
-		$this->set('endDate', clone $this->startDate);
-		$this->endDate->addSeconds($package->duration);
+		$this->set('endDate', clone $this->startDate );
+		$this->endDate->addSeconds( $package->duration );
 	}
 	
 	/**

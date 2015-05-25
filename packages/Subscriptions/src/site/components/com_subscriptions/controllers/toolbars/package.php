@@ -1,6 +1,6 @@
 <?php
 
-class ComSubscriptionsControllerToolbarDefault extends ComBaseControllerToolbarDefault
+class ComSubscriptionsControllerToolbarPackage extends ComBaseControllerToolbarDefault
 {
     /**
      * Before Controller _actionRead is executed

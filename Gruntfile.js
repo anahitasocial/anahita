@@ -89,7 +89,10 @@ module.exports = function ( grunt ) {
             files : {
                 
                 'packages/Subscriptions/src/media/com_subscriptions/js/min/coupon.min.js' : 
-                ['packages/Subscriptions/src/media/com_subscriptions/js/coupon.js']
+                ['packages/Subscriptions/src/media/com_subscriptions/js/coupon.js'],
+                
+                'packages/Subscriptions/src/media/com_subscriptions/js/min/setting.min.js' : 
+                ['packages/Subscriptions/src/media/com_subscriptions/js/setting.js']
             }
         }
         

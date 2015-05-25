@@ -78,7 +78,9 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 			),			
 			'relationships' => array(
 			    //let the cleaner to take care of it
-				'subscriptions' => array('parent_delete'=>'ignore')				
+				'subscriptions' => array ( 
+				    'parent_delete' => 'ignore'
+                 )			
 			),
 			'behaviors' => array(
 				'authorizer',
@@ -124,7 +126,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	 */
 	public function getUpgradePrice()
 	{
-		return (float)$this->price - ($this->price * $this->getUpgradeDiscount());
+		return (float) $this->price - ($this->price * $this->getUpgradeDiscount());
 	}	
 	
 	/**
@@ -135,8 +137,10 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	public function getUpgradeDiscount()
 	{
 		if ( $this->ordering <= 1 )
+        {
 			return 0;
-					
+        }
+        			
 		return $this->getValue('upgrade_discount', 0);
 	}
 	
@@ -150,10 +154,14 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	public function setUpgradeDiscount($discount)
 	{
 		if ( $this->ordering <= 1 )
+        {
 			$discount = 0;
-			
-		$discount = (float) min(1, max(0, $discount));
+        }
+        	
+		$discount = (float) min( 1, max(0, $discount) );
+		
 		$this->setValue('upgrade_discount', $discount);
+		
 		return $this;
 	}
 	
@@ -166,6 +174,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	public function setPluginsValues(array $values)
 	{
 		$this->setValue('plugins', $values);
+        
 		return $this;
 	}
 	
@@ -178,8 +187,9 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	 */
 	public function getPluginValues($plugin)
 	{
-		$values = (array)$this->getValue('plugins');
-		return isset($values[$plugin]) ? $values[$plugin] : array();
+		$values = (array) $this->getValue('plugins');
+        
+		return isset( $values[$plugin] ) ? $values[$plugin] : array();
 	}	
 	
 	
@@ -208,8 +218,10 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	{		
 		$viewer = $context->viewer;
 		
-		if ( !$viewer->hasSubscription() )
+		if( !$viewer->hasSubscription() )
+        {
 			return false; 
+        }
         
 		$package = $viewer->subscription->package;	
         	

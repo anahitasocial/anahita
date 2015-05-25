@@ -10,7 +10,7 @@
 		<?php $url = 'view='.@listItemView()->getName().'&layout=list&get=graph&type='.$type.'&id='.$actor->id; ?>
         <?= @helper('ui.filterbox', @route($url)) ?>
 		<div id="an-actor-socialgraph" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">	
-	    <?= @template('list') ?>
+	       <?= @template('list') ?>
 		</div>
 	</div>
 	

@@ -23,13 +23,8 @@ class ComSubscriptionsControllerPermissionDefault extends LibBaseControllerPermi
     public function canAdd()
     {
         $viewer = get_viewer();
-        
-        if( $viewer->admin() )
-        {
-            return true;
-        }
-        
-        return false;
+            
+        return $viewer->admin() ? true : false;
     }
 }
     

@@ -53,9 +53,10 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             	</a>
             </li>
             <?php endforeach; ?>
-            
             <?php endif; ?>
+
             <li class="divider"></li>
+
             <?php if(KService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
             <li>
             	<a href="<?= @route('option=com_invites&view=email') ?>">
@@ -63,6 +64,15 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             	</a>
             </li>
             <?php endif; ?>
+            
+            <?php if( !$viewer->admin() && KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')): ?>    
+            <li> 
+                <a href="<?= @route( 'option=com_subscriptions&view=orders&oid='.$viewer->id ) ?>">
+                <?= @text('TMPL-MENU-ITEM-VIEWER-SUBSCRIPTIONS-ORDERS-HISTORY') ?>
+                </a>
+            </li>
+            <?php endif; ?>
+            
 			<li>
 				<a data-trigger="PostLink" href="<?= @route('option=com_people&view=session&action=delete') ?>">
 				    <?= @text('LIB-AN-ACTION-LOGOUT') ?>

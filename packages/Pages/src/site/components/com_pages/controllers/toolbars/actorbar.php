@@ -42,21 +42,13 @@ class ComPagesControllerToolbarActorbar extends ComMediumControllerToolbarActorb
 		$actor	= pick($this->getController()->actor, $viewer);
 		$layout = pick($this->getController()->layout, 'default');
 		$name	= $this->getController()->getIdentifier()->name;
-		
-		if($this->getController()->filter == 'leaders')
-		{
-			$this->setTitle(JText::_('COM-PAGES-ACTOR-HEADER-PAGES-LEADERS'));
-			$this->setDescription(JText::_('COM-PAGES-ACTOR-HEADER-PAGES-LEADERS-DESCRIPTION'));
-		}	
-		else
-		{
-			$this->setTitle(JText::sprintf('COM-PAGES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
-		
-			//create navigations
-			$this->addNavigation('pages',
-									JText::_('COM-PAGES-LINK-PAGES'),
-									array('option'=>'com_pages', 'view'=>'pages', 'oid'=>$actor->id),
-									$name == 'page');
-		}
+
+		$this->setTitle(JText::sprintf('COM-PAGES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
+	
+		//create navigations
+		$this->addNavigation('pages',
+								JText::_('COM-PAGES-LINK-PAGES'),
+								array('option'=>'com_pages', 'view'=>'pages', 'oid'=>$actor->id),
+								$name == 'page');
     }    
 }
