@@ -33,7 +33,7 @@ class TemplatesController
 		$client	=& JApplicationHelper::getClientInfo(JRequest::getVar('client', '0', '', 'int'));
 
 		// Initialize the pagination variables
-		$limit		= $mainframe->getUserStateFromRequest('global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int');
+		$limit		= $mainframe->getUserStateFromRequest('global.list.limit', 'limit', 20, 'int');
 		$limitstart = $mainframe->getUserStateFromRequest($option.'.'.$client->id.'.limitstart', 'limitstart', 0, 'int');
 
 		$select[] 			= JHTML::_('select.option', '0', JText::_('Site'));

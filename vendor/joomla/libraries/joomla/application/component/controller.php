@@ -293,20 +293,24 @@ class JController extends JObject
 		$view = & $this->getView( $viewName, $viewType, '', array( 'base_path'=>$this->_basePath));
 
 		// Get/Create the model
-		if ($model = & $this->getModel($viewName)) {
+		if ($model = & $this->getModel($viewName)) 
+		{
 			// Push the model into the view (as default)
-			$view->setModel($model, true);
+			$view->setModel( $model, true );
 		}
 
 		// Set the layout
-		$view->setLayout($viewLayout);
+		$view->setLayout( $viewLayout );
 
 		// Display the view
-		if ($cachable && $viewType != 'feed') {
+		if ($cachable && $viewType != 'feed') 
+		{
 			global $option;
 			$cache =& JFactory::getCache($option, 'view');
 			$cache->get($view, 'display');
-		} else {
+		} 
+		else 
+		{
 			$view->display();
 		}
 	}

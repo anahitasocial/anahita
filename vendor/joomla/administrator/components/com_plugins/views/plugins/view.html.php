@@ -45,7 +45,7 @@ class PluginsViewPlugins extends JView
 		}
 		$search = JString::strtolower($search);
 
-		$limit		= $mainframe->getUserStateFromRequest( 'global.list.limit', 'limit', $mainframe->getCfg('list_limit'), 'int' );
+		$limit		= $mainframe->getUserStateFromRequest( 'global.list.limit', 'limit', 20, 'int' );
 		$limitstart	= $mainframe->getUserStateFromRequest( $option.'.limitstart', 'limitstart', 0, 'int' );
 
 		$where = '';
