@@ -129,6 +129,7 @@ class JURI extends JObject
 
 		if (!isset ($instances[$uri]))
 		{
+			    
 			// Are we obtaining the URI from the server?
 			if ($uri == 'SERVER')
 			{

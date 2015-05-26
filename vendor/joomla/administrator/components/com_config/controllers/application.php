@@ -228,7 +228,7 @@ class ConfigControllerApplication extends ConfigController
 		$config_array['log_path']			= JRequest::getVar('log_path', JPATH_ROOT.DS.'logs', 'post', 'string');
 		$config_array['tmp_path']			= JRequest::getVar('tmp_path', JPATH_ROOT.DS.'tmp', 'post', 'string');
 		$config_array['live_site'] 			= preg_replace('/\/administrator.*/','',JURI::getInstance()->toString(array('scheme','host','port','path')));//rtrim(JRequest::getVar('live_site','','post','string'), );
-
+		
 		// LOCALE SETTINGS
 		$config_array['offset']				= JRequest::getVar('offset', 0, 'post', 'float');
 
