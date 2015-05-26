@@ -25,6 +25,17 @@ defined( '_JEXEC' ) or die( 'Restricted access' ); ?>
 					<?php echo $lists['error_reporting']; ?>
 				</td>
 			</tr>
+			
+			<tr>
+                <td class="key">
+                    <span class="editlinktip hasTip" title="<?php echo JText::_('Force SSL'); ?>::<?php echo JText::_( 'TIPFORCESSL' ); ?>">
+                        <?php echo JText::_('Force SSL'); ?>
+                    </span>
+                </td>
+                <td>
+                    <?php echo $lists['force_ssl']; ?>
+                </td>
+            </tr>
 		</tbody>
 	</table>
 </fieldset>
