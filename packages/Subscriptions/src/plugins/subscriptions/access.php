@@ -44,11 +44,11 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
 	 */
 	public function onBeforeDomainStoreFetch(KEvent $event)
 	{
-        if ( !$event->query->getRepository()
-                ->getEventDispatcher()->isSubscribed($this) ) 
+        if ( !$event->query->getRepository()->getEventDispatcher()->isSubscribed($this) ) 
         {
             //only add if it's a node 
-            if ( $event->query->getRepository()->isNode() ) {
+            if ( $event->query->getRepository()->isNode() ) 
+            {
                 $event->query->getRepository()->addEventSubscriber($this);
             }
         }
@@ -81,16 +81,20 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
         
 	    if ( $query->access_changed && $event->data ) 
 	    {
-	        $entity   = $event->data;
-            if ( is_person($entity) ) {
+	        $entity = $event->data;
+            
+            if ( is_person($entity) ) 
+            {
                 return;   
             }
             
-	        $option   = KRequest::get('get.option','cmd');
-	        $id       = KRequest::get('get.id','cmd');
+	        $option = KRequest::get('get.option','cmd');
+	        $id = KRequest::get('get.id','cmd');
+	        
 	        if ( !$entity->authorize('access') && $entity->id == $id && $entity->component == $option )
 	        {
 	            JFactory::getLanguage()->load('com_subscriptions');
+                
 	            JFactory::getApplication()->redirect('index.php?option=com_subscriptions&view=packages', JText::_('COM-SUBSCRIPTIONS-ACCESS-PLG-NO-SUBS'));
 	        }
 	    }
@@ -105,18 +109,23 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
 	public function onAfterExpire($event)
 	{
 	    $subscription = $event->subscription;	    
-	    //unfollow from the groups
-	    $access   = new KConfig($subscription->package->getPluginValues('access'));
-	    $ids      = array();
-	    if ( $access->limited_actor_ids ) {
-	        $ids = explode(',', $access->limited_actor_ids);
-	        $ids = array_unique(array_filter($ids));
-	    }    	    
-	    $actors   = KService::get('repos://site/actors')
-	                ->getQuery(true)
-	                ->id($ids)->fetchSet();
 	    
-	    foreach($actors as $actor) {	        	        
+	    //unfollow from the groups
+	    $access = new KConfig( $subscription->package->getPluginValues('access') );
+	    
+	    $ids = array();
+        
+	    if( $access->limited_actor_ids ) 
+	    {
+	        $ids = explode(',', $access->limited_actor_ids);
+            
+	        $ids = array_unique(array_filter($ids));
+	    }
+            	    
+	    $actors   = KService::get('repos://site/actors')->getQuery(true)->id($ids)->fetchSet();
+	    
+	    foreach($actors as $actor) 
+	    {	        	        
             $actor->removeFollower($subscription->person);
 	    }
 	        
@@ -131,104 +140,142 @@ class PlgSubscriptionsAccess extends PlgKoowaDefault
 	 */
 	protected function _buildQuery(KEvent $event)
 	{
-	    $viewer       = get_viewer();
+	    $viewer = get_viewer();
+        
 	    if ( $viewer->admin() )
+        {
 	        return;
-	    $query        = $event->query;
-	    $conditions   = array();
-	    $is_actor         = $query->getRepository()->entityInherits('ComActorsDomainEntityActor');
-	    $is_ownable       = $query->getRepository()->hasBehavior('ownable');
-	    $clause           = $query->clause();
+        }
+        
+	    $query = $event->query;
+        
+	    $conditions = array();
 	    
-	    if ( !$is_ownable && !$is_actor )
+	    $is_actor = $query->getRepository()->entityInherits('ComActorsDomainEntityActor');
+	    
+	    $is_ownable = $query->getRepository()->hasBehavior('ownable');
+	    
+	    $clause = $query->clause();
+	    
+	    if( !$is_ownable && !$is_actor )
+        {
 	        return;
+        }
 
 	    $subscription_package_id = 0;
-	    $package_ids             = array();
-	    if ( $viewer->hasSubscription() ) 
+        
+	    $package_ids = array();
+	    
+	    if( $viewer->hasSubscription() ) 
 	    {
 	        $subscription_package_id = $viewer->subscription->package->id;
 	    }
 	    
-	    foreach($this->_packages as $package)
+	    foreach( $this->_packages as $package )
 	    {
-	        if ( !$package->enabled )
+	        if( !$package->enabled )
+            {
 	            continue;
-	    
+            }
+            
 	        $package_ids[] = $package->id;
-	        $access        = new KConfig($package->getPluginValues('access'));
 	        
-	        if ( empty($access->limited_actor_ids) && empty($access->open_actor_ids) )
+	        $access = new KConfig($package->getPluginValues('access'));
+	        
+	        if( empty( $access->limited_actor_ids ) && empty( $access->open_actor_ids ) )
+            {
 	            continue;
-	    
+            }
+        
 	        $subscribed = (int)$viewer->subscribedTo($package);
 	        
-	        if ( $is_actor ) 
+	        if( $is_actor ) 
 	        {
-	            $col     = 'id';
+	            $col = 'id';
+                
 	            $default = 'access';
+                
     	        if ( $subscribed )
+                {
     	            $subscribed = 'access';
+                }
     	        else
+                {    
     	            $subscribed = '"admin"';
+                }
 	        }
 	        else 
 	        {
 	            $default = '1';
-	            $col     = 'owner.id';
+                
+	            $col = 'owner.id';
 	        } 
 	        
 	        if ( $access->limited_actor_ids )
 	        {
-	            $ids 	    = array_unique(explode(',', implode(',', (array)$access['limited_actor_ids'])));
-	            $condition	= '@col('.$col.') IN (%s)';
+	            $ids = array_unique(explode(',', implode(',', (array)$access['limited_actor_ids'])));
+	            
+	            $condition = '@col('.$col.') IN (%s)';
 	        }
 	        else
 	        {
-	            $ids 	    = array_unique(explode(',', implode(',', (array)$access['open_actor_ids'])));
+	            $ids = array_unique(explode(',', implode(',', (array)$access['open_actor_ids'])));
+	            
 	            $condition	= '@col('.$col.') NOT IN (%s)';
 	        }
 	        
-	        $condition      = sprintf($condition, implode($ids,','));	        
-	        $conditions[]   = $condition;
+	        $condition = sprintf( $condition, implode($ids, ',') );	        
+	        
+	        $conditions[] = $condition;
 	    }
 	   
-	    if ( empty($conditions) )
+	    if( empty($conditions) )
+        {
 	        return;
-        if ( $is_actor && ($event->mode == AnDomain::FETCH_VALUE || $event->mode == AnDomain::FETCH_VALUE_LIST) )
+        }
+        
+        if( $is_actor && ($event->mode == AnDomain::FETCH_VALUE || $event->mode == AnDomain::FETCH_VALUE_LIST) )
+        {
 	        return;
+        }
+        
+	    $true = '1';
+	    $false = '0';
+	    $conditions = implode($conditions, ' OR ');
+	    $subscribed = "$subscription_package_id.' IN (".implode(',',$package_ids).")";	    
 	    
-	    $true        = '1';
-	    $false       = '0';
-	    $conditions  = implode($conditions, ' OR ');
-	    $subscribed  = "$subscription_package_id IN (".implode(',',$package_ids).")";
-// 	    $subscribed  = (int)in_array($subscription_package_id, $package_ids);	    
-	    if ( $is_actor )
+	    if( $is_actor )
 	    {
 	        if ( $event->mode & AnDomain::FETCH_ENTITY ) 
             {
                 $query->accessChanged(true);
+            
                 $query->getRepository()->addEventListener('onAfterDomainRepositoryFetch', $this);
             }
+            
 	        $conditions  = "($conditions) AND !@instanceof(ComPeopleDomainEntityPerson)";
+	        
 	        $true  = 'access';
+	        
 	        $false = '@quote(admin)';
-	    } else {	    	   
+	    } 
+	    else 
+	    {	    	   
 	        $conditions  = "($conditions) AND @col(owner.type) NOT LIKE @quote(com:people.domain.entity.person)";
 	    }
+        
 	    $conditions  = "IF($conditions, IF($subscribed,$true,$false),$true)";
-	    if ( $is_actor ) 
+	    
+	    if( $is_actor ) 
 	    {
-	       if ( isset($query->operation['type']) && 
-	               $query->operation['type'] == AnDomainQuery::QUERY_SELECT_DEFAULT  
-	               ) {
+	       if( isset($query->operation['type']) && $query->operation['type'] == AnDomainQuery::QUERY_SELECT_DEFAULT ) 
+	       {
 	           $query->select(array('access'=>$conditions));
 	       }
 	    } 
 	    else 
 	    {
 	        $query->where($conditions);
-	    }
-	    	    
+	    }    
 	}
 }
