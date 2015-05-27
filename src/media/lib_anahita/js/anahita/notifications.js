@@ -43,7 +43,7 @@
     };
     
     //counter
-    if($('#notifications-counter').length) {
+    if( $('#notifications-counter').length ) {
         $('#notifications-counter').notificationsCounter();
     }
     
@@ -59,7 +59,7 @@
     		var notifications = $(response);
     		var title = notifications.filter('.popover-title').html();
     		var content = notifications.filter('.popover-content').html();
-    		
+ 
     		elem.popover({
     			title : title,
     			content: content,
