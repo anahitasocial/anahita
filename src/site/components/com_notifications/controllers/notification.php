@@ -80,11 +80,13 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         $set = parent::_actionBrowse($context)->order('creationTime','DESC');   
         
         if($this->new)
-        	$set->id($this->actor->newNotificationIds->toArray());
+        {
+        	$set->id( $this->actor->newNotificationIds->toArray() );
+        }
         
         //only zero the notifications if the viewer is the same as the 
         //actor. prevents from admin zeroing others notifications
-        if($set->count() > 0 && get_viewer()->eql($this->actor)) 
+        if( $set->count() > 0 && get_viewer()->eql( $this->actor ) ) 
         {
             //set the number of notification, since it's going to be 
             //reset by the time it gets to the mod_viewer 
