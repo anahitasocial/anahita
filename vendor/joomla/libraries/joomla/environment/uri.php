@@ -135,8 +135,6 @@ class JURI extends JObject
 			{
                 $https = ( isSSL() ) ? 's://' : '://';
 
-                
-
 				/*
 				 * Since we are assigning the URI from the server variables, we first need
 				 * to determine if we are running on apache or IIS.  If PHP_SELF and REQUEST_URI
