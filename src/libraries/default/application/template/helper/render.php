@@ -133,8 +133,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         $css = $css_folder.DS.'style.css';
         
         //compile        
-        //if($config->compile > 0 && !empty($style))
-        if(true)
+        if($config->compile > 0 && !empty($style))
         {
             $this->_template->renderHelper('less.compile', array(
                 'force' => $config->compile > 1,
