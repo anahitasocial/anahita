@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
 <data name="title">
-<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET-COMMENT'),  @name($subject), @route($object->getURL())) ?>
+<?= sprintf(@text('COM-PHOTOS-STORY-NEW-SET-COMMENT'),  @name($subject), @route($object->getURL().'&permalink='.$comment->id)) ?>
 </data>
 
 <?php if ($type != 'notification') :?>
