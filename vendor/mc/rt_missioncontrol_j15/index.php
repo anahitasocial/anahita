@@ -17,9 +17,6 @@ $mctrl->addStyle("core.css");
 $mctrl->addStyle("menu.css");
 $mctrl->addStyle("colors.css.php");
 
-//JHTML::script('lib_anahita/js/vendors/jquery-2.1.1.js', 'media/', false);
-//JHTML::script('lib_anahita/js/admin.js',   'media/'); 
-
 // load and init the MissioControl Class
 
 ?>
@@ -98,5 +95,5 @@ $mctrl->addStyle("colors.css.php");
 	</body>
 </html>
 
-<script type="text/javascript" src="http://localhost/anahitapolis/rmdstudio/www/media/lib_anahita/js/vendors/jquery-2.1.1.js"></script>
-<script type="text/javascript" src="http://localhost/anahitapolis/rmdstudio/www/media/lib_anahita/js/admin.js"></script>
+<script type="text/javascript" src="<?php print $mctrl->baseUrl ?>media/lib_anahita/js/vendors/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="<?php print $mctrl->baseUrl ?>media/lib_anahita/js/admin.js"></script>
