@@ -1,5 +1,14 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.1 Birth Release
+=============================
+* ability to run the entire site with SSL on
+* fixed infinit scroll bugs in social graph and other entities
+* fixed notification scroll bug
+* fixed permalinks in comment stories and notifications
+* fixed the default list limit bug in the admin back-end
+* lots of development on the Subscriptions app, but sorry it isn't ready for this release yet.
+
 Anahita 4.1.0 Birth Release
 =============================
 * all the mootools code has been removed

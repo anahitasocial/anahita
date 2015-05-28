@@ -129,16 +129,6 @@ class RTCore
         return $doc->addScriptDeclaration($js);
     }
 
-    function getMooScriptVersion($filename) {
-        global $moo_override;
-
-        if (true || JPluginHelper::isEnabled('system', 'mtupgrade') || $moo_override) {
-            return str_replace('.js','-mt1.2.js',$filename);
-        } else {
-            return $filename;
-        }
-    }
-
     function addOverrideStyles()
     {
         global $option;
