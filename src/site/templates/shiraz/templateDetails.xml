@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<install version="##BUILD_PLATFORM_VERSION##" type="template" method="upgrade">
+<install type="template" method="upgrade">
     <name>Shiraz</name>
-    <version>4.0</version>
+    <version>4.1.0</version>
     <creationDate>October 2014</creationDate>
     <author>Anahitapolis.com</author>
     <authorEmail>info@anahitapolis.com</authorEmail>
@@ -73,7 +73,6 @@
     <files>
         <folder>css</folder>
         <folder>html</folder>
-        <file>params.ini.tmp</file>
         <file>template_thumbnail.png</file>
     </files>
 </install>
