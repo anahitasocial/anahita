@@ -493,11 +493,36 @@ class KRequest
         
         if (PHP_SAPI !== 'cli') 
         {
-            $scheme = 'http';
             
-            if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
-                $scheme = 'https';
+            $isSSL = false;
+            
+            if ( isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' )
+            {
+                 $isSSL = true;
             }
+            
+            if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1 )
+            {
+                 $isSSL = true;
+            } 
+            
+            if ( isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443 ) ) 
+            {
+                 $isSSL = true;
+            } 
+            
+            if ( isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on' ) 
+            {
+                $isSSL = true;
+            }
+            
+            if ( isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true ) 
+            {
+                $isSSL = true;
+            }    
+                
+                
+            $scheme = ($isSSL) ? 'https' : 'http';
         } 
      
         return $scheme;
