@@ -133,12 +133,9 @@ class JURI extends JObject
 			// Are we obtaining the URI from the server?
 			if ($uri == 'SERVER')
 			{
-				// Determine if the request was over SSL (HTTPS)
-				if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off')) {
-					$https = 's://';
-				} else {
-					$https = '://';
-				}
+                $https = ( isSSL() ) ? 's://' : '://';
+
+                
 
 				/*
 				 * Since we are assigning the URI from the server variables, we first need
@@ -684,7 +681,18 @@ class JURI extends JObject
 	 * @since	1.5
 	 */
 	function isSSL() {
-		return $this->getScheme() == 'https' ? true : false;
+
+        if( $this->getScheme() == 'https' )
+        {
+           return true;
+        }
+                
+        if( isSSL() )
+        {
+            return true;
+        }  
+            
+        return false;    
 	}
 
 	/** 

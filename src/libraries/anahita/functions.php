@@ -14,8 +14,33 @@
 
 /**
  * Lots of cool functions 
- */
+ */ 
 
+function isSSL()
+{
+    if( isset($_SERVER['HTTPS']) ) 
+    {
+        if ( strtolower($_SERVER['HTTPS']) == 'on' )
+        {
+             return true;
+        }
+        if ( $_SERVER['HTTPS'] == 1 )
+        {
+             return true;
+        } 
+        elseif ( isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443 ) ) 
+        {
+             return true;
+        } 
+        elseif ( isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on' ) 
+        {
+            return true;
+        }
+    }
+    
+    return false;
+} 
+  
 /**
  * Prints deprecated messages
  *

@@ -96,7 +96,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */    
     protected function _getUrl($path)
     {
-        if (isset($_SERVER['HTTPS']) && !empty($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) != 'off'))
+        if ( isSSL() )
         {
             $url = 'https://s3.amazonaws.com/'.$this->_params->bucket.'/'.$path;
         } else
