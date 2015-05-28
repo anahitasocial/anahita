@@ -65,7 +65,7 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
                        
             if(is_readable($path))
             { 
-                $src = JURI::root(true).'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
+                $src = JURI::base().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
                 $scripts .= '<script type="text/javascript" src="'.$src.'"></script>'."\n";       
             }            
         }
