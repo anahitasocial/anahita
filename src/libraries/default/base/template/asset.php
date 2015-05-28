@@ -164,8 +164,7 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
 		
 		$this->_urls[$url] = null;
 				
-		$base      = $this->getService('application')->getRouter()
-                        ->getBaseUrl();
+		$base      = $this->getService('application')->getRouter()->getBaseUrl();
 		$file_path = null;
 		$path	   = null;
 		
