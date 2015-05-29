@@ -554,9 +554,9 @@ class JSession extends JObject
 	 */
 	private function _setCookieParams() {
 		$cookie	=	session_get_cookie_params();
-		if($this->_force_ssl) {
-			$cookie['secure'] = true;
-		}
+		
+        $cookie['secure'] = isSSL();
+        
 		session_set_cookie_params( $cookie['lifetime'], $cookie['path'], $cookie['domain'], $cookie['secure'] );
 	}
 

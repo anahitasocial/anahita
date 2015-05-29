@@ -743,18 +743,7 @@ class JApplication extends JObject
 	{
 		$options = array();
 		$options['name'] = $name;
-		switch($this->_clientId) {
-			case 0:
-				if($this->getCfg('force_ssl') == 2) {
-					$options['force_ssl'] = true;
-				}
-				break;
-			case 1:
-				if($this->getCfg('force_ssl') >= 1) {
-					$options['force_ssl'] = true;
-				}
-				break;
-		}
+        $options['force_ssl'] = isSSL();
 
 		$session =& JFactory::getSession($options);
 
