@@ -8,6 +8,7 @@ Anahita 4.1.1 Birth Release
 * fixed permalinks in comment stories and notifications
 * fixed the default list limit bug in the admin back-end
 * lots of development on the Subscriptions app, but sorry it isn't ready for this release yet.
+* removed legacy force_ssl and implemented a global isSSL() auto detection method
 
 Anahita 4.1.0 Birth Release
 =============================
