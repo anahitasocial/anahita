@@ -19333,7 +19333,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             
         	var a = $(event.target);
             var self = this;
-            var currentEntities = $(this.element).prev(this.options.entities);
+            var currentEntities = $(this.element).siblings(this.options.entities);
             var isComments = ( currentEntities.hasClass('an-comments') ) ? true : false; 
             
             $.ajax({
@@ -20146,7 +20146,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		if ( action == 'addcomment' ) {
 			
 			var form = $(this);
-			var comments = form.prev('.an-comments');
+			var comments = form.siblings('.an-comments');
 			
 			$.ajax({
 				method : 'post',

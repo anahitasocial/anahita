@@ -153,7 +153,7 @@
 		if ( action == 'addcomment' ) {
 			
 			var form = $(this);
-			var comments = form.prev('.an-comments');
+			var comments = form.siblings('.an-comments');
 			
 			$.ajax({
 				method : 'post',
