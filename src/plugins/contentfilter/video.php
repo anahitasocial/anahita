@@ -73,7 +73,7 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 		{     
 			foreach($matches[1] as $index => $id) 
 			{				
-			    $video = json_decode(file_get_contents('http://vimeo.com/api/v2/video/'.$id.'.json'));
+			    $video = json_decode(file_get_contents('https://vimeo.com/api/v2/video/'.$id.'.json'));
                 $video = $video[0];
 			    
 			    if($video && $video->id)
