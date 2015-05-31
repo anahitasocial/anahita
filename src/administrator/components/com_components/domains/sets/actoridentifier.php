@@ -34,23 +34,25 @@ class ComComponentsDomainSetActorIdentifier extends KObject implements KServiceI
 	 * @return KServiceInstantiatable
 	 */
 	public static function getInstance(KConfigInterface $config, KServiceInterface $container)
-	{		
-		if (!$container->has($config->service_identifier))
+	{
+		if ( !$container->has( $config->service_identifier ) )
 		{
 			//check the cache
 			$registry  = $container->get('application.registry');
 			
-			if ( !$registry->offsetExists('actor-identifiers') ) {
+			if( !$registry->offsetExists('actor-identifiers') ) 
+			{
 				$registry['actor-identifiers'] = self::_findActorIdentifiers($container);	
 			}
 			
 			$identifiers = $registry['actor-identifiers'];
 			
-			$instance = $container->get('koowa:object.array', array('data'=>$identifiers));
-			$container->set($config->service_identifier, $instance);
+			$instance = $container->get('koowa:object.array', array( 'data' => $identifiers ) );
+            
+			$container->set( $config->service_identifier, $instance);
 		}
 		
-		return $container->get($config->service_identifier);				
+		return $container->get( $config->service_identifier );				
 	}	
 	
 	/**
@@ -61,11 +63,13 @@ class ComComponentsDomainSetActorIdentifier extends KObject implements KServiceI
 	static protected function _findActorIdentifiers(KServiceInterface $container)
 	{		
 		$components = $container->get('repos://admin/components.component')
-						->getQuery()->enabled(true)
+						->getQuery()
+						->enabled( true )
 						->fetchSet();
 		
-		$components   = array_unique($container->get('repos://admin/components.component')
-						->fetchSet()->component);
+		$components  = array_unique( 
+		      $container->get('repos://admin/components.component')->fetchSet()->component
+          );
 		
 		$identifiers  = array();
 		
@@ -73,32 +77,37 @@ class ComComponentsDomainSetActorIdentifier extends KObject implements KServiceI
 		{
 			$path = JPATH_SITE.'/components/'.$component.'/domains/entities';
 		
-			if ( !file_exists($path) ) {
+			if ( !file_exists( $path ) ) 
+			{
 				continue;
 			}
 		
 			//get all the files
-			$files = (array)JFolder::files($path);
+			$files = (array) JFolder::files($path);
+			
 			//convert com_<Component> to ['com','<Name>']
-			$parts      = explode('_', $component);
+			$parts = explode('_', $component);
+			
 			$identifier = new KServiceIdentifier('com:'. substr($component, strpos($component, '_') + 1));
+            
 			$identifier->path = array('domain', 'entity');
 		
-			foreach($files as $file)
+			foreach( $files as $file )
 			{
 				$identifier->name = substr($file, 0, strpos($file, '.'));
+				
 				try
 				{
-					if ( is($identifier->classname, 'ComActorsDomainEntityActor') ) {
+					if ( is( $identifier->classname, 'ComActorsDomainEntityActor') ) 
+					{
 						$identifiers[] = clone $identifier;
 					}
 				}
-				catch(Exception $e) {  }
+				
+				catch(Exception $e) {}
 			}
 		}	
+        
 		return $identifiers;	
-	}
-			
+	}			
 }
-
-?>
