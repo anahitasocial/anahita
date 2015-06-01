@@ -33,24 +33,17 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      *
      * @param   object  An optional KConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct( KConfig $config )
     {
-        parent::__construct($config);
+        parent::__construct( $config );
         
-        $this->registerCallback(array('before.edit', 'after.add'), array($this, 'setMeta'));
+        $this->registerCallback( array( 'before.edit', 'after.add' ), array( $this, 'setMeta' ) );
         
         $this->registerCallback( array(
                 'before.editsubscription',
                 'before.addsubscriber', 
                 'before.deletesubscriber'), 
-              array($this, 'fetchSubscriber'));
-        
-        
-        $this->registerCallback( array( 
-                 'after.editsubscription',
-                 'after.addsubscriber', 
-                 'after.deletesubscriber'), 
-             array($this, 'setEnddate'));
+                array( $this, 'fetchSubscriber' ) );
     }
         
     /**
@@ -59,10 +52,11 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * @param KCommandContext $context
      * @return void
      */ 
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead( KCommandContext $context )
     {
-        $this->plugins = JPluginHelper::getPlugin('subscriptions');        
-        return parent::_actionRead($context);
+        $this->plugins = JPluginHelper::getPlugin( 'subscriptions' );  
+              
+        return parent::_actionRead( $context );
     }   
     
     /**
@@ -71,18 +65,9 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * @param KCommandContext $context
      * @return void
      */
-    protected function _actionEditsubscription()
+    protected function _actionEditsubscription( KCommandContext $context )
     {
-        if($this->_subscriber->hasSubscription())
-        {
-           $sub = $this->_subscriber->subscription;
-           
-           if( $sub->package->id != $this->getItem()->id )
-           {
-               $sub->delete();
-               $this->_subscriber->subscribeTo($this->getItem());
-           } 
-        } 
+        $this->_subscriber->changeSubscriptionTo( $this->getItem() );     
     }
     
     /**
@@ -91,12 +76,9 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * @param KCommandContext $context
      * @return void
      */ 
-    protected function _actionAddsubscriber(KCommandContext $context)
+    protected function _actionAddsubscriber( KCommandContext $context )
     {            
-        if(!$this->_subscriber->hasSubscription())
-        {
-           $this->_subscriber->subscribeTo($this->getItem()); 
-        }   
+        $this->_subscriber->subscribeTo( $this->getItem() );  
     }
     
     /**
@@ -105,7 +87,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * @param KCommandContext $context
      * @return void
      */ 
-    public function _actionDeletesubscriber(KCommandContext $context)
+    protected function _actionDeletesubscriber( KCommandContext $context )
     {
        $this->_subscriber->subscription->delete();
     }
@@ -116,12 +98,15 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * @param KCommandContext $context
      * @return boolean
      */
-    public function setMeta(KCommandContext $context)
+    public function setMeta( KCommandContext $context )
     {
-        $data        = $context->data;
-        $entity      = $this->getItem();
-        $plugins     = KConfig::unbox(pick($data->plugins, array()));
-        $entity->setPluginsValues($plugins);
+        $data = $context->data;
+        
+        $entity = $this->getItem();
+        
+        $plugins = KConfig::unbox( pick( $data->plugins, array() ) );
+        
+        $entity->setPluginsValues( $plugins );
     }   
     
     /**
@@ -131,15 +116,15 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * 
      * @return ComActorsDomainEntityActor
      */
-    public function fetchSubscriber(KCommandContext $context)
+    public function fetchSubscriber( KCommandContext $context )
     {
-        if(!$this->_subscriber)
+        if( !$this->_subscriber )
         {   
             $actor_id = $context->data->actor_id;
             
             $this->_subscriber = $this->getService('repos://site/actors.actor')->fetch( $actor_id );
             
-            if(!$this->_subscriber) 
+            if( !$this->_subscriber ) 
             {
                 throw new LibBaseControllerExceptionNotFound('Subscriber Not Found');
             }
@@ -154,19 +139,17 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * @return null
      * @param object POST data
      */ 
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity( KCommandContext $context )
     {
         if( in_array( $context->action, array( 'editsubscription', 'addsubscriber', 'deletesubscriber' ) ) )
         {       
             if( $context->data->package_id )
             {
-               $this->id = $context->data->package_id; 
-               
-               return clone $this->__call('fetchEntity', array($context));
+               $this->id = $context->data->package_id;
             }    
         }
          
-        return $this->__call('fetchEntity', array($context));
+        return $this->__call( 'fetchEntity', array( $context ) );
     }
     
     /**
@@ -178,17 +161,21 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * 
      * @param void
      */
-    public function setEnddate(KCommandContext $context)
+    protected function _actionPost( KCommandContext $context )
     {
        $data = $context->data;
        
-       $date = new KDate();
+       if( $date->day || $date->month || $date->year )
+       {
+           $date = new KDate();
        
-       $date->day( (int) $data->day );
-       $date->month( (int) $data->month );
-       $date->year( (int) $data->year );
-       
-       //$this->_subscriber->subscription->endDate->addSeconds( 100000000 );
-       //$this->_subscriber->subscription->save();
+           $date->day( (int) $data->day );
+           
+           $date->month( (int) $data->month );
+           
+           $date->year( (int) $data->year );
+           
+           $data->endDate = $date;
+       }
     }
 }

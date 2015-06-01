@@ -115,7 +115,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 
         if ( !$package->recurring && $person->hasSubscription() )
         {
-            $subscription = $person->upgradeTo( $package );    
+            $subscription = $person->changeSubscriptionTo( $package );    
         }
         else
         {

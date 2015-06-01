@@ -49,7 +49,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function __construct( KConfig $config)
     {
-        parent::__construct($config);  
+        parent::__construct( $config );  
         
         $this->_response = $config->response;
     }
@@ -79,8 +79,10 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */   
     public function getState()
     {
-        if(!isset($this->_state))
+        if( !isset( $this->_state ) )
+        {
             $this->_state = new LibBaseControllerState();   
+        }
         
         return $this->_state;
     }
@@ -92,11 +94,11 @@ class LibBaseControllerAbstract extends KControllerAbstract
      * 
      * @return LibBaseControllerAbstract
      */
-    public function setRequest(array $request)
+    public function setRequest( array $request )
     {
         $this->_request = new LibBaseControllerRequest();
         
-        foreach($request as $key => $value) 
+        foreach( $request as $key => $value ) 
         {
             $this->_request->$key = $value;
             $this->$key = $value;
@@ -113,7 +115,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      * 
      * @return void
      */   
-    public function __set($key, $value)
+    public function __set( $key, $value )
     {
         $this->getState()->$key = $value;
     }
@@ -125,7 +127,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      * 
      * @return void
      */   
-    public function __get($key)
+    public function __get( $key )
     {
         return $this->getState()->$key;
     }
@@ -142,18 +144,18 @@ class LibBaseControllerAbstract extends KControllerAbstract
      *
      * @see http://martinfowler.com/bliki/FluentInterface.html
      */
-    public function __call($method, $args)
+    public function __call( $method, $args )
     {
         //omit anything that starts with underscore 
-        if(strpos($method, '_') === false)
+        if( strpos( $method, '_' ) === false )
         {
-            if(count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions()))
+            if( count( $args ) == 1 && !isset( $this->_mixed_methods[$method] ) && !in_array( $method, $this->getActions() ) )
             {
                 $this->{KInflector::underscore($method)} = $args[0];
                 return $this;
             }
         }
-        elseif(strpos($method, '_action') === 0) 
+        elseif( strpos( $method, '_action' ) === 0 ) 
         {
             //if the missing method is _action[Name] but
             //method exists, then that means the action
@@ -163,25 +165,25 @@ class LibBaseControllerAbstract extends KControllerAbstract
             //__call. 
             //we need to check if a behavior implement this
             //method            
-            if(method_exists($this, $method)) 
+            if( method_exists( $this, $method ) ) 
             {
-                $action = strtolower(substr($method, 7));
+                $action = strtolower( substr( $method, 7 ) );
                 
-                if(isset($this->_mixed_methods[$action])) 
+                if( isset( $this->_mixed_methods[ $action ] ) ) 
                 {
-                    return $this->_mixed_methods[$action]->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
+                    return $this->_mixed_methods[ $action ]->execute( 'action.'.$action, isset( $args[0] ) ? $args[0] : null );
                 }
                 else 
                 {
                     //we need to throw this 
                     //because if it goes to parent::__call it will causes
                     //infinite recursion                    
-                    throw new BadMethodCallException('Call to undefined method :'.$method);
+                    throw new BadMethodCallException( 'Call to undefined method :'.$method );
                 }
             }
         }    
         
-        return parent::__call($method, $args);
+        return parent::__call( $method, $args );
     }
 
     /**
@@ -191,13 +193,13 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function getResponse()
     {
-        if(!$this->_response instanceof LibBaseControllerResponse)
+        if( !$this->_response instanceof LibBaseControllerResponse )
         {
-            $this->_response = $this->getService($this->_response);
+            $this->_response = $this->getService( $this->_response );
             
-            if(!$this->_response instanceof LibBaseControllerResponse ) 
+            if( !$this->_response instanceof LibBaseControllerResponse ) 
             {
-                throw new UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');    
+                throw new UnexpectedValueException( 'Response must be an instanceof LibBaseControllerResponse' );    
             }
         }
     
@@ -211,9 +213,10 @@ class LibBaseControllerAbstract extends KControllerAbstract
      *
      * @return LibBaseControllerResource
      */
-    public function setResponse($response)
+    public function setResponse( $response )
     {
         $this->_response = $response;    
+        
         return $this;
     }
         
@@ -225,7 +228,9 @@ class LibBaseControllerAbstract extends KControllerAbstract
     public function getCommandContext()
     {        
         $context = parent::getCommandContext();
+        
         $context->response = $this->getResponse();
+        
         $context->request  = $this->getRequest();        
          
         return $context;
@@ -241,22 +246,24 @@ class LibBaseControllerAbstract extends KControllerAbstract
      *
      * @return AnDomainBehaviorAbstract
      */
-    public function getBehavior($behavior, $config = array())
+    public function getBehavior( $behavior, $config = array() )
     {
-        if(is_string($behavior))
+        if( is_string( $behavior ) )
         {
-            if(strpos($behavior,'.') === false)
+            if( strpos( $behavior, '.' ) === false )
             {
                 $identifier = clone $this->getIdentifier();
+                
                 $identifier->path = array('controller','behavior');                                     
+                
                 $identifier->name = $behavior;
-                register_default(array('identifier'=>$identifier, 'prefix'=>$this));                
+                
+                register_default( array( 'identifier' => $identifier, 'prefix' => $this ) );                
+                
                 $behavior = $identifier;
             }
         }
         
-        return parent::getBehavior($behavior, $config);        
+        return parent::getBehavior( $behavior, $config );        
     }
-    
-   
 }
