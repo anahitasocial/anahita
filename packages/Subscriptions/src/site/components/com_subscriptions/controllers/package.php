@@ -44,6 +44,11 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
                 'before.addsubscriber', 
                 'before.deletesubscriber'), 
                 array( $this, 'fetchSubscriber' ) );
+                
+        $this->registerCallback( array(
+                'before.editsubscription',
+                'before.addsubscriber'),  
+                array( $this, 'setEndDate' ) );
     }
         
     /**
@@ -67,7 +72,10 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      */
     protected function _actionEditsubscription( KCommandContext $context )
     {
-        $this->_subscriber->changeSubscriptionTo( $this->getItem() );     
+        if( $subscription = $this->_subscriber->changeSubscriptionTo( $this->getItem() ) )
+        {
+           $subscription->endDate = $context->data->endDate;
+        }
     }
     
     /**
@@ -78,7 +86,10 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      */ 
     protected function _actionAddsubscriber( KCommandContext $context )
     {            
-        $this->_subscriber->subscribeTo( $this->getItem() );  
+        if( $subscription = $this->_subscriber->subscribeTo( $this->getItem() ) )
+        {
+            $subscription->endDate = $context->data->endDate;
+        }
     }
     
     /**
@@ -161,12 +172,12 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      * 
      * @param void
      */
-    protected function _actionPost( KCommandContext $context )
+    public function setEndDate( KCommandContext $context )
     {
        $data = $context->data;
        
-       if( $date->day || $date->month || $date->year )
-       {
+       if( $data->day || $data->month || $data->year )
+       {    
            $date = new KDate();
        
            $date->day( (int) $data->day );
