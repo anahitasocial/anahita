@@ -59,7 +59,7 @@
 	 */
 	public function changeSubscriptionTo( $package )
 	{
-		if ( $this->hasSubscription() && !$this->_mixer->subscription->package->eql( $package ) ) 
+		if ( $this->hasSubscription(false) && !$this->_mixer->subscription->package->eql( $package ) ) 
 		{
 			$diff = max( 0, $package->duration - $this->subscription->package->duration );
 			
@@ -69,11 +69,9 @@
             
             $this->_mixer->subscription->package = $package;
             $this->_mixer->subscription->endDate = $end_date;
-   
- 			return $this->_mixer->subscription;
 		}
 
-        return;
+        return $this->_mixer->subscription;
 	}
 		
 	/**
@@ -84,7 +82,7 @@
 	 */
 	public function subscribeTo( $package ) 
 	{
-        if( !$this->hasSubscription() )
+        if( !$this->hasSubscription(false) )
         {    
     		$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(array('data'=>array( 				
      		     'package' => $package, 		
@@ -94,15 +92,26 @@
  	 	return $this->_mixer->subscription;
 	}
 	
-	/**
-	 * Check if the person has subcription
-	 * 
-	 * @return boolean
-	 */
-	public function hasSubscription()
-	{
-		return isset( $this->_mixer->subscription ) && $this->_mixer->subscription->getTimeLeft() > 0;
-	}
+    /**
+     * Check if the person has subcription
+     * 
+     * @param if true also check to see if the subscription hasn't expired yet
+     * @return boolean
+     */
+    public function hasSubscription( $checkValidity = true )
+    {
+        if( !isset( $this->_mixer->subscription ) )
+        {
+            return false;
+        }    
+            
+        if ( $checkValidity && $this->_mixer->subscription->getTimeLeft() <= 0 )
+        {
+            return false;
+        }    
+            
+        return true;
+    }
 	
 	/**
 	 * Unsubscribe the person 

@@ -31,7 +31,7 @@ class ComSubscriptionsViewSettingHtml extends ComBaseViewHtml
     {
         $subscription = null;    
            
-       if( $this->actor->hasSubscription() )
+       if( $this->actor->hasSubscription(false) )
        {
           $subscription = $this->actor->subscription; 
        }  
@@ -49,7 +49,7 @@ class ComSubscriptionsViewSettingHtml extends ComBaseViewHtml
         
         $endDate = new KDate();
         
-        if( $this->actor->hasSubscription() )
+        if( $this->actor->hasSubscription(false) )
         {
            $selectedPackageId = $this->actor->subscription->package->id;
            

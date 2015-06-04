@@ -204,7 +204,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	{
 		$viewer = $context->viewer;
 		
-		return !$viewer->hasSubscription() || $this->authorize( 'upgradepackage' );
+		return !$viewer->hasSubscription(false) || $this->authorize( 'upgradepackage' );
 	}
 
 	/**
