@@ -38,7 +38,7 @@
      {     
         
      	$menu = array(
-                 'subscriptions' => JText::_('AN-SB-SUBSCRIPTIONS'),
+        //         'subscriptions' => JText::_('AN-SB-SUBSCRIPTIONS'),
                  'coupons'  => JText::_('AN-SB-COUPONS'),
                  'vats'     => JText::_('AN-SB-TAXES')
          );

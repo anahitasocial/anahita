@@ -40,7 +40,7 @@ class ComBaseViewConfigurationsHtml extends ComBaseViewHtml
 	{
 		$config->append(array(
 			'template_paths'  => array(dirname(__FILE__).DS.'html'),
-			'layout'	      => 'form'
+			'layout' => 'form'
 		));
 	
 		parent::_initialize($config);

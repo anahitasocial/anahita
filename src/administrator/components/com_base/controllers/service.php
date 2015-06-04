@@ -80,14 +80,20 @@ class ComBaseControllerService extends ComBaseControllerResource
 	protected function _actionPost(KCommandContext $context)
 	{
 	    if($context->action == 'save')
+        {
 	        $context->response->setRedirect( 'option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name ));
-	
+        }
+    
 	    $data = $context->data;
 	
 	    if($this->getItem())
+        {
 	        $this->execute('edit', $context);
+        }
 	    else
+        {    
 	        $this->execute('add',  $context);
+        }
 	
 	    return $this->getItem();
 	}	

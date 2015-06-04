@@ -78,6 +78,7 @@ class ComBaseControllerToolbarMenubar extends KControllerToolbarAbstract
                 if ( $this->getController()->hasToolbar($toolbar) )
                 {
                     $this->getController()->getToolbar($toolbar)->addCommand('save');
+                    $this->getController()->getToolbar($toolbar)->addCommand('apply');
                 }
             }
         }

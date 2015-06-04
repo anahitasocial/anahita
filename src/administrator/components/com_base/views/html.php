@@ -26,22 +26,7 @@
  * @link       http://www.anahitapolis.com
  */
 class ComBaseViewHtml extends LibBaseViewHtml
-{
-	/**
-	 * Constructor.
-	 *
-	 * @param 	object 	An optional KConfig object with configuration options
-	 */
-	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);
-		
-        //Add alias filter for editor helper
-        $this->getTemplate()->getFilter('alias')->append(array(
-            '@editor(' => '$this->renderHelper(\'com://admin/default.template.helper.editor.display\', ')
-        );		
-	}	
-		
+{		
     /**
      * Initializes the configuration for the object
      * 
@@ -54,10 +39,10 @@ class ComBaseViewHtml extends LibBaseViewHtml
     	$path[] = dirname($this->getIdentifier()->filepath).'/html';
 
         $config->append(array(
-            'template_filters'  => array('form','module'),      
-            'media_url'         => JURI::base().'../media',          
-            'layout' 		    => KInflector::isSingular($this->getName()) ? 'form' : 'default',
-        	'template_paths'	=> $path
+            'template_filters' => array('form','module'),      
+            'media_url' => JURI::base().'../media',          
+            'layout' => KInflector::isSingular($this->getName()) ? 'form' : 'default',
+        	'template_paths' => $path
         ));
         
         parent::_initialize($config);
