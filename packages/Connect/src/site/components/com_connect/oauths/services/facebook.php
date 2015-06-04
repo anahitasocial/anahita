@@ -113,7 +113,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
 	 */
 	public function getAuthorizationURL($query = array())
 	{
-		$query['scope']		   = implode(',', array('offline_access','publish_stream', 'user_about_me','email'));
+		$query['scope']		   = implode(',', array('publish_actions', 'user_about_me','email'));
 		$query['redirect_uri'] = $this->_consumer->callback_url;		
 		$query['client_id']	   = $this->_consumer->key;
 		
