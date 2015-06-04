@@ -33,6 +33,12 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	 * @var int
 	 */
 	protected $_assignment_option;
+    
+    /*
+     * can only assigned to these actors
+     * 
+     */ 
+    protected $_actor_identifiers;
 	
 	/**
 	 * Profile features
@@ -80,7 +86,9 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     	parent::__construct($config);
     	
     	$this->_assignment_option = $config->assignment_option;
-    	
+
+        $this->_actor_identifiers = $config->actor_identifiers;
+        
     	$this->_profile_features  = $config->profile_features;
     	
     	$this->_profile_name	  = $config->profile_name;
@@ -100,15 +108,16 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-				'profile_name'		  => ucfirst($this->getIdentifier()->package),
+				'profile_name' => ucfirst($this->getIdentifier()->package),
 				'profile_description' => JText::_('COM-'.$this->getIdentifier()->package.'-APP-DESCRIPTION'),
-				'profile_features'	  => array(),
-				'assignment_option'   => self::OPTION_OPTIONAL,
-				'relationships' 	  => array(
-						'assignments' => array(
-								'child'		 	=> 'com:components.domain.entity.assignment',
-								'child_key'  	=> 'componentEntity'
-						)
+				'profile_features' => array(),
+				'assignment_option' => self::OPTION_OPTIONAL,
+				'actor_identifiers' => array(),
+				'relationships' => array(
+				    'assignments' => array(
+					   'child'	=> 'com:components.domain.entity.assignment',
+					   'child_key' => 'componentEntity'
+					)
 				)
 		));
 	
@@ -120,21 +129,29 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	 *
 	 * @return void
 	 */	
-	public function setAssignmentForIdentifier($identifier, $access = null)
+	public function setAssignmentForIdentifier( $identifier, $access = null )
 	{
-		if ( is_array($identifier) ) {
-			foreach($identifier as $identifier => $access ) {
-				$this->setAssignmentForIdentifier($identifier, $access);
+		if ( is_array( $identifier ) ) 
+		{
+			foreach( $identifier as $identifier => $access ) 
+			{
+				$this->setAssignmentForIdentifier( $identifier, $access );
 			}
-		} else {
+		} 
+		else 
+		{
 		    //not a real identifier just the
 		    //the name part. 
 		    //we need to infer the whole identifier
 		    //com:[pluralized name].domain.entity.[name]
-		    if ( strpos($identifier,'.') === false) {		        
+		    
+		    if ( strpos( $identifier, '.') === false ) 
+		    {		        
 		        $identifier = 'com:'.KInflector::pluralize($identifier).'.domain.entity.'.$identifier;
-		    } 		        
-			$assignment = $this->assignments->findOrAddNew(array('actortype'=>$identifier));
+		    }
+             		        
+			$assignment = $this->assignments->findOrAddNew( array( 'actortype' => $identifier ) );
+            
 			$assignment->access = $access;
 		}
 	}
@@ -144,13 +161,16 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	 *
 	 * @return int
 	 */	
-	public function getAssignmentForIdentifier($identifier)
+	public function getAssignmentForIdentifier( $identifier )
 	{
-		$assignment = $this->assignments->find(array('actortype'=> (string) $identifier));
+		$assignment = $this->assignments->find( array( 'actortype'=> (string) $identifier ) );
 		
-		if ( $assignment ) {
+		if ( $assignment ) 
+		{
 			return $assignment->access;
-		} else {
+		} 
+		else 
+		{
 			return self::ACCESS_ALWAYS;
 		}
 	}
@@ -167,13 +187,20 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	public function activeForActor($actor)
 	{
 		$actortype = $actor->getEntityDescription()->getInheritanceColumnValue()->getIdentifier();
-		$access = $this->getAssignmentForIdentifier($actortype);
+		
+		$access = $this->getAssignmentForIdentifier( $actortype );
+		
 		$return = false; 
-		if ( $access == self::ACCESS_ALWAYS ) {
+		
+		if ( $access == self::ACCESS_ALWAYS ) 
+		{
 			$return = true;	
-		} elseif ( $access == self::ACCESS_OPTIONAL ) {
-			$return = $this->enabledForActor($actor);
+		} 
+		elseif ( $access == self::ACCESS_OPTIONAL ) 
+		{
+			$return = $this->enabledForActor( $actor );
 		}
+        
 		return $return;
 	}
 	
@@ -186,7 +213,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	 */
 	public function enabledForActor($actor)
 	{
-		return !is_null($this->assignments->find(array('actor'=>$actor)));
+		return !is_null( $this->assignments->find( array( 'actor' => $actor ) ) );
 	}
 		
 	/**
@@ -196,7 +223,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	 * 
 	 * @return void
 	 */
-	public function setAssignmentOption($option)
+	public function setAssignmentOption( $option )
 	{
 		$this->_assignment_option = $option;
 	}
@@ -210,6 +237,16 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 	{
 		return $this->_assignment_option;
 	}
+    
+    /**
+     * Return an array of allowed actors for this component to associate with
+     * 
+     * @return array
+     */
+     public function getActorIdentifiers()
+     {
+         return $this->_actor_identifiers;
+     }
 	
 	/**
 	 * Name of the app when assigned to a profile

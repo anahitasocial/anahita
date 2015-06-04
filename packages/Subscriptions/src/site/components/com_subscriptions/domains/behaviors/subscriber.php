@@ -41,8 +41,8 @@
 		$config->append(array(
 			'relationships' => array(
 				'subscription' => array(
-				    'type'      => 'has',    					
-					'child'		=> 'com:subscriptions.domain.entity.subscription'
+				    'type' => 'has',    					
+					'child'	=> 'com:subscriptions.domain.entity.subscription'
 				)
 			)
 		));
@@ -57,28 +57,21 @@
 	 * @param  ComSubscriptionsDomainEntityPackage $package
 	 * @return ComSubscriptionsDomainEntitySubscription
 	 */
-	public function upgradeTo($package)
+	public function changeSubscriptionTo( $package )
 	{
-		if ( $this->hasSubscription() ) 
+		if ( $this->hasSubscription(false) && !$this->_mixer->subscription->package->eql( $package ) ) 
 		{
-			$diff 	  = max( 0, $package->duration - $this->subscription->package->duration );
+			$diff = max( 0, $package->duration - $this->subscription->package->duration );
 			
 			$end_date = clone $this->subscription->endDate;
 			
-			$end_date->addSeconds($diff);
+			$end_date->addSeconds( $diff );
             
-			$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity( array( 'data' => array( 				
- 				
- 				'package' => $package, 	
-				'endDate' => $end_date
- 			
-            )));
-            
- 			return $this->_mixer->subscription;
-			
+            $this->_mixer->subscription->package = $package;
+            $this->_mixer->subscription->endDate = $end_date;
 		}
-		else 
-		    return $this->subscribeTo( $package );		
+
+        return $this->_mixer->subscription;
 	}
 		
 	/**
@@ -87,25 +80,38 @@
 	 * @param  ComSubscriptionsDomainEntityPackage $package
 	 * @return void
 	 */
-	public function subscribeTo($package) 
+	public function subscribeTo( $package ) 
 	{
-		$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(array('data'=>array( 				
- 		     'package' => $package, 		
- 		)));
+        if( !$this->hasSubscription(false) )
+        {    
+    		$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(array('data'=>array( 				
+     		     'package' => $package, 		
+     		)));
+        }
  		
  	 	return $this->_mixer->subscription;
 	}
 	
-	/**
-	 * Check if the person has subcription
-	 * 
-	 * @return boolean
-	 */
-	public function hasSubscription()
-	{
-		return isset($this->_mixer->subscription) && 
-		    $this->_mixer->subscription->getTimeLeft() > 0;
-	}
+    /**
+     * Check if the person has subcription
+     * 
+     * @param if true also check to see if the subscription hasn't expired yet
+     * @return boolean
+     */
+    public function hasSubscription( $checkValidity = true )
+    {
+        if( !isset( $this->_mixer->subscription ) )
+        {
+            return false;
+        }    
+            
+        if ( $checkValidity && $this->_mixer->subscription->getTimeLeft() <= 0 )
+        {
+            return false;
+        }    
+            
+        return true;
+    }
 	
 	/**
 	 * Unsubscribe the person 
@@ -123,9 +129,8 @@
 	 * @param  ComSubscriptionsDomainEntityPackage $package
 	 * @return boolean
 	 */
-	public function subscribedTo($package)
+	public function subscribedTo( $package )
 	{
-		return $this->hasSubscription() && $this->_mixer->subscription->package->eql($package); 
+		return $this->hasSubscription() && $this->_mixer->subscription->package->eql( $package ); 
 	}
- 	
- }
+}

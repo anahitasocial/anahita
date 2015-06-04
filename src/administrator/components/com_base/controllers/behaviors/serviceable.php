@@ -39,9 +39,11 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
     protected function _actionRead(KCommandContext $context)
     {
         //create an empty entity for the form layout;
-        if ( !$this->getItem() ) {
+        if ( !$this->getItem() ) 
+        {
             $this->setItem($this->getRepository()->getEntity()->reset());
         }
+        
         return $this->getItem();
     }
     
@@ -55,13 +57,16 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
     protected function _actionAdd(KCommandContext $context)
     {
         $entity = parent::_actionAdd($context);       
-        $data 	= $context->data;    
+        $data 	= $context->data; 
+           
         if ( $entity->isDictionariable() && $data->meta )
         {
-            foreach($data->meta as $key => $value) {
+            foreach($data->meta as $key => $value) 
+            {
                 $entity->setValue($key, $value);
             }
         }
+        
         return $entity;
     }
     
@@ -75,10 +80,13 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
     protected function _actionEdit( KCommandContext $context)
     {
         $entity = parent::_actionEdit($context);
+        
         $data   = $context->data;    
+        
         if ( $entity->isDictionariable() && $data->meta )
         {
-            foreach($data->meta as $key => $value) {
+            foreach($data->meta as $key => $value) 
+            {
                 $entity->setValue($key, $value);
             }
         }
@@ -98,21 +106,24 @@ class ComBaseControllerBehaviorServiceable extends LibBaseControllerBehaviorServ
         $data  = $context->data;
     
         $context->append(array(
-                'query' => $this->getRepository()->getQuery()
+            'query' => $this->getRepository()->getQuery()
         ));
     
         $query = $context->query;
     
-        $query->order($this->sort, $this->direction)
-        ->limit($this->limit, $this->limitstart);
+        $query->order( $this->sort, $this->direction )->limit($this->limit, $this->limitstart);
     
         $query->keyword = $this->search;
     
-        if ( $this->getRepository()->hasBehavior('parentable') ) {
-            if ( $this->getState()->parent ) {
+        if ( $this->getRepository()->hasBehavior('parentable') ) 
+        {
+            if ( $this->getState()->parent ) 
+            {
                 $query->parent($this->getState()->parent);
-            } elseif ($this->pid == -1) {
-                $query->parent(null);
+            } 
+            elseif ($this->pid == -1) 
+            {
+                $query->parent( null );
             }
         }
     

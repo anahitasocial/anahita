@@ -52,13 +52,13 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
        {
            $query = $context->request->toArray();
            
-           if ( file_exists( JPATH_COMPONENT.'/views' ) )
-           {
-              $query['view'] = str_replace('com_', '', $option); 
-           }
-           elseif( file_exists( JPATH_COMPONENT.'/config.xml' ) ) 
+           if( file_exists( JPATH_COMPONENT.'/config.xml' ) ) 
            {
               $query['view'] = 'configurations'; 
+           }
+           elseif ( file_exists( JPATH_COMPONENT.'/views' ) )
+           {
+              $query['view'] = str_replace('com_', '', $option); 
            }
            else 
            {

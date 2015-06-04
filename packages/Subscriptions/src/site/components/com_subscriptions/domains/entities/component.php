@@ -38,7 +38,10 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
         $config->append(array(
             'behaviors' => array(
                 'assignable'=>array(
-                    'assignment_option' => ComComponentsDomainBehaviorAssignable::OPTION_NOT_OPTIONAL
+                    'assignment_option' => ComComponentsDomainBehaviorAssignable::OPTION_NOT_OPTIONAL,
+                    'actor_identifiers' => array( 
+                        'com:people.domain.entity.person' 
+                    )
                 )                       
             )
         ));

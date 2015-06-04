@@ -80,8 +80,10 @@ class ComComponentsControllerComponent extends ComBaseControllerService
      */    
     protected function _actionOrder(KCommandContext $context)
     {    	
-    	$components = $this->getRepository()->fetchSet(array('id'=>KConfig::unbox($this->id)));
-    	$components->setData(KConfig::unbox($context->data));    	
+    	$components = $this->getRepository()->fetchSet( array( 'id' => KConfig::unbox( $this->id ) ) );
+    	
+    	$components->setData( KConfig::unbox( $context->data ) );    	
+    	
     	$components->save();    	
     }
     
@@ -93,6 +95,7 @@ class ComComponentsControllerComponent extends ComBaseControllerService
         if($item = $this->getService('com://admin/components.domain.set.assignablecomponent')->find(array('id'=>$this->id))) 
     	{
     		$item->setAssignmentForIdentifier( KConfig::unbox($context->data->identifiers) );
+    		
     		$item->save();	
     	}
     }
@@ -102,8 +105,10 @@ class ComComponentsControllerComponent extends ComBaseControllerService
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $component = $this->getService('repos://site/components')->find($this->_request->get('id'));        
-    	$this->setItem($component);    	
+        $component = $this->getService('repos://site/components')->find( $this->_request->get('id') );
+        
+    	$this->setItem( $component );    	
+    	
     	$this->actor_identifiers = $this->getService('com://admin/components.domain.set.actoridentifier');
     }
     
