@@ -36,13 +36,13 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
      * 
      * @return void
      */ 
-    public function __construct(KConfig $config)
+    public function __construct( KConfig $config )
     {
-        parent::__construct($config);
+        parent::__construct( $config );
         
         if( !$config->gateway instanceof ComSubscriptionsDomainPaymentGatewayInterface )
         {
-            $config->gateway = $this->getService($config->gateway); 
+            $config->gateway = $this->getService( $config->gateway ); 
         }
             
         $this->_gateway = $config->gateway;
@@ -63,11 +63,13 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
      */
     protected function _initialize(KConfig $config)
     {
-        $config->append(array(
+        $config->append( array (
+        
             'serviceable'=> array('except'=>array('browse', 'read', 'edit')),
             'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
             'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal'
-        ));
+        
+        ) );
     
         parent::_initialize($config);
     }
