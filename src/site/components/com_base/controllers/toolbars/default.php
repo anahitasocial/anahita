@@ -50,7 +50,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     {
         $entity = $this->getController()->getItem();
         $view = $this->getController()->getView()->getName();
-    
+ 
         $layout = pick($command->layout, 'edit');
     
         $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))

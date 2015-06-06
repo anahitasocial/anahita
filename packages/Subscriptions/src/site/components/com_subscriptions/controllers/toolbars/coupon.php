@@ -22,7 +22,7 @@
  */
  
 class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDefault
-{
+{   
     /**
      * Called after controller browse
      *
@@ -53,6 +53,25 @@ class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDe
         if($entity->authorize('delete'))
             $this->addCommand('delete');
     } 
+    
+    /**
+     * Edit Command for an entity
+     *
+     * @param LibBaseTemplateObject $command The action object
+     *
+     * @return void
+     */
+    protected function _commandEdit($command)
+    {
+        $entity = $this->getController()->getItem();
+        $view = $this->getController()->getView()->getName();
+ 
+        $layout = pick($command->layout, 'edit');
+    
+        $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))
+        ->href($entity->getURL().'&layout='.$layout)
+        ->setAttribute('data-action', 'edit');
+    }
     
     /**
      * Delete Command for an entity
