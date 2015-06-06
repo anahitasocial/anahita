@@ -55,29 +55,34 @@ class ComConnectOauthRequest extends KObject
 	 *
 	 * @param 	object 	An optional KConfig object with configuration options
 	 */
-	public function __construct($config=array())
+	public function __construct( $config = array() )
 	{
-		if ( is_array($config) ) {
-			$config = new KConfig($config);
+		if ( is_array( $config ) ) 
+		{
+			$config = new KConfig( $config );
 		}
 		
 		parent::__construct($config);
 		
-        $params        = new KConfig();
-        $this->_data   = KConfig::unbox($config->data);
+        $params = new KConfig();
+        
+        $this->_data = KConfig::unbox($config->data);
                 
-        if ( is_array($this->_data) ) {
-            $params->append($this->_data);            
+        if ( is_array( $this->_data ) ) 
+        {
+            $params->append( $this->_data );            
         }
         
-        $params->append(array(
+        $params->append( array(
             'oauth_version' => $config->version
         ));
                
-		$this->_internal_request = OAuthRequest::from_consumer_and_token($config->consumer, $config->token, $config->method, $config->url, KConfig::unbox($params));
+		$this->_internal_request = OAuthRequest::from_consumer_and_token( $config->consumer, $config->token, $config->method, $config->url, KConfig::unbox($params));
 		
-		if ( !empty($config->signature) )
-			$this->_internal_request->sign_request($config->signature, $config->consumer, $config->token);
+		if ( !empty( $config->signature ) )
+        {
+			$this->_internal_request->sign_request( $config->signature, $config->consumer, $config->token);
+        }
 
 		$this->_options = $config->options;		
 	}
@@ -90,9 +95,9 @@ class ComConnectOauthRequest extends KObject
      * @param 	object 	An optional KConfig object with configuration options.
      * @return 	void
      */
-	protected function _initialize(KConfig $config)
+	protected function _initialize( KConfig $config )
 	{		
-		$config->append(array(
+		$config->append( array(
 			'signature'  => new OAuthSignatureMethod_HMAC_SHA1(),
 			'method' 	 => KHttpRequest::GET,
 			'data'		 => array(),
@@ -102,7 +107,7 @@ class ComConnectOauthRequest extends KObject
 				'ssl'		 => false,
 				'useragent'  => 'com_connect'		
 			)
-		));
+		) );
 	
 		parent::_initialize($config);
 	}
@@ -115,9 +120,12 @@ class ComConnectOauthRequest extends KObject
 	public function getURL()
 	{
         $url = $this->_internal_request->get_normalized_http_url();
-        if ( $this->getMethod() == KHttpRequest::GET ) {
+        
+        if ( $this->getMethod() == KHttpRequest::GET ) 
+        {
             $url = $this->_internal_request->to_url();
         }
+        
 		return $url;
 	}
 	
