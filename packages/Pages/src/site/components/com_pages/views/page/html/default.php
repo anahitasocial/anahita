@@ -14,7 +14,7 @@
 		
 		<div class="block-content">
     		<ul class="an-meta">
-    			<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($page->updateTime), @name($page->editor)) ?></li>
+    			<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($page->updateTime), @name($page->editor)) ?></li>
     			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $page->numOfComments) ?></li>
     		</ul>
 		</div>

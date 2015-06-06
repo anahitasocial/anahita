@@ -6,8 +6,14 @@ CREATE TABLE `#__subscriptions_coupons` (
   `code` varchar(255) NOT NULL,
   `limit` int(11) DEFAULT NULL,
   `usage` int(11) DEFAULT NULL,
+  `created_on` datetime DEFAULT NULL,
+  `created_by` bigint(11) unsigned DEFAULT NULL,
+  `modified_on` datetime DEFAULT NULL,
+  `modified_by` bigint(11) unsigned DEFAULT NULL,
   `expires_on` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  KEY `modified_by` (`modified_by`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------

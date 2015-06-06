@@ -35,7 +35,7 @@
         <div class="block-content">
         	<ul class="an-meta">
         		<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($photo->creationTime), @name($photo->author)) ?></li>
-        		<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($photo->updateTime), @name($photo->editor)) ?></li>
+        		<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($photo->updateTime), @name($photo->editor)) ?></li>
         		<li><?= sprintf( @text('COM-PHOTOS-PHOTO-META-SETS'), $photo->sets->getTotal()) ?></li>
         		<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
         	</ul>

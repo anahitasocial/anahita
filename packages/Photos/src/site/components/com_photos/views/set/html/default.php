@@ -30,7 +30,7 @@
     	<div class="block-content">  
         	<ul class="an-meta">
         		<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($set->creationTime), @name($set->author)) ?></li>
-        		<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($set->updateTime), @name($set->editor)) ?></li>
+        		<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($set->updateTime), @name($set->editor)) ?></li>
         		<li><?= sprintf(@text('COM-PHOTOS-SET-META-PHOTOS'), $set->getPhotoCount() ) ?></li>
         		<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $set->numOfComments) ?></li>
         	</ul>	
