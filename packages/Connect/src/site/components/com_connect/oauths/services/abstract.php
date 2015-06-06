@@ -306,16 +306,20 @@ abstract class ComConnectOauthServiceAbstract extends KObject
 	 */
 	public function getAuthorizationURL($data = array())
 	{
-		if ( version_compare($this->getVersion(), '1.0', '=') ) {
+		if ( version_compare($this->getVersion(), '1.0', '=' ) ) {
+			        
 			$response = $this->requestRequestToken();
+            
 			$data['oauth_token'] = $response->oauth_token;
 		}
 		
 		$data = KConfig::unbox($data);
 		
-		foreach($data as $key => $value) {
-			if ( is_array($value) ) {
-				$data[$key] = implode(',', $value);
+		foreach( $data as $key => $value ) 
+		{
+			if ( is_array( $value ) ) 
+			{
+				$data[ $key ] = implode(',', $value);
 			}
 		}
 		
@@ -335,9 +339,9 @@ abstract class ComConnectOauthServiceAbstract extends KObject
 	 */
 	public function requestRequestToken($data = array())
 	{
-		$config = new KConfig(array('data'=>$data));
+		$config = new KConfig( array( 'data'=>$data ) );
 		
-		$config->append(array(
+		$config->append( array(
 			'url'	  => $this->request_token_url	,					
 			'data'	  => array('oauth_callback'=>$this->getConsumer()->callback_url)
 		));
@@ -345,8 +349,10 @@ abstract class ComConnectOauthServiceAbstract extends KObject
 		$request = $this->getRequest($config);
 		$response  = $request->send();
 
-		if ( $response->successful() ) {
-			$result   = $response->parseQuery();			
+		if ( $response->successful() ) 
+		{
+			$result = $response->parseQuery();
+            			
 			$_SESSION['oauth_token_secret'] = $result->oauth_token_secret;	
 		}
 		else

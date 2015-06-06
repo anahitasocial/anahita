@@ -16,7 +16,7 @@
 		<div class="block-content">
     		<ul class="an-meta">
     			<?php if(isset($todo->editor)) : ?>
-    			<li><?= sprintf( @text('LIB-AN-MEDIUM-EDITOR'), @date($todo->updateTime), @name($todo->editor)) ?></li>
+    			<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($todo->updateTime), @name($todo->editor)) ?></li>
     			<?php endif; ?>
     			<?php if(!$todo->open) : ?>
     			<li>				

@@ -96,7 +96,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
 	    }
 	}
 	
-/**
+    /**
      * New button toolbar
      *
      * @param LibBaseTemplateObject $command The action object

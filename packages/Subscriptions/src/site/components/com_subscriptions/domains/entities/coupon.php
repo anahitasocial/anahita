@@ -40,6 +40,7 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(			
+			'searchable_properties' => array('code'),
 			'attributes' => array(
 				'id' ,
 				'discount'	=> array('default'=>'0') ,
@@ -47,7 +48,12 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
 				'limit'		=> array('default'=>1, 'require'=>true) ,
 				'usage'		=> array('default'=>0, 'write_access'=>'private') ,
 				'expiresOn' ,
-			)
+			),
+			'behaviors' => array(
+                'authorizer',
+                'modifiable',
+                'locatable'
+            )
 		));
 		
 		parent::_initialize($config);
