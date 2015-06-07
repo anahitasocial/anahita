@@ -43,9 +43,9 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
 			'searchable_properties' => array('code'),
 			'attributes' => array(
 				'id' ,
-				'discount'	=> array('default'=>'0') ,
+				'discount'	=> array('default'=>'0.1') ,
 				'code'		=> array('required'=>true,'unique'=>true) ,
-				'limit'		=> array('default'=>1, 'require'=>true) ,
+				'limit'		=> array('default'=>100, 'require'=>true) ,
 				'usage'		=> array('default'=>0, 'write_access'=>'private') ,
 				'expiresOn' ,
 			),
@@ -126,6 +126,7 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
 	public function setExpiresOn($date)
 	{
 		$date = AnDomainAttributeDate::getInstance()->setDate($date);
+		
 		$this->set('expiresOn', $date);
 	}
 		
@@ -136,10 +137,12 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
 	 */
 	public function expired()
 	{			
-		if ( empty($this->expiresOn) )					
+		if ( empty( $this->expiresOn ) )
+        {					
 			return false;
-		 
-		return AnDomainAttributeDate::getInstance()->toDate()->compare($this->expiresOn) > 0;
+        }
+         
+		return AnDomainAttributeDate::getInstance()->toDate()->compare( $this->expiresOn ) > 0;
 	}	
 	
 }

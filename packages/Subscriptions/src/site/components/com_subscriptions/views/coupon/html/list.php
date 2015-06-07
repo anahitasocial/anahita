@@ -12,11 +12,14 @@
             <dt><?= @text('COM-SUBSCRIPTIONS-COUPONE-DISCOUNT') ?></dt>
             <dd><?= $coupon->discount * 100 ?> &#37;</dd>
             
-            <dt><?= @text('COM-SUBSCRIPTIONS-COUPONE-LIMIT') ?></dt>
-            <dd><?= $coupon->limit ?></dd>
-            
             <dt><?= @text('COM-SUBSCRIPTIONS-COUPONE-EXPIRES-ON') ?></dt>
             <dd><?= @date( $coupon->expiresOn ) ?></dd>
+            
+            <dt><?= @text('COM-SUBSCRIPTIONS-COUPONE-LIMIT') ?></dt>
+            <dd><?= $coupon->limit ?></dd>
+  
+            <dt><?= @text('COM-SUBSCRIPTIONS-COUPONE-USAGE') ?></dt>
+            <dd><?= $coupon->usage ?></dd>
         </dl>
     </div>
     
