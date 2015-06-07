@@ -12,7 +12,7 @@
 		<div class="block-content">
     		<ul class="an-meta">
     			<li><span class="label label-info"><?= sprintf(@text('COM-PAGES-PAGE-REVISION-META-NUMBER'), $revision->revisionNum) ?></span></li>
-    			<li><?= sprintf( @text('LIB-AN-MEDIUM-AUTHOR'), @date($revision->creationTime, '%B %d %Y - %l:%M %p'), @name($revision->author)) ?></li>
+    			<li><?= sprintf( @text('LIB-AN-ENTITY-AUTHOR'), @date($revision->creationTime, '%B %d %Y - %l:%M %p'), @name($revision->author)) ?></li>
     		</ul>
 		</div>
 		

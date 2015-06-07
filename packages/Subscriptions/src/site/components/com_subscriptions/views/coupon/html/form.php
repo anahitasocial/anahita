@@ -12,7 +12,38 @@
                 <?= @text('COM-SUBSCRIPTIONS-COUPONE-CODE') ?>
             </label>
             <div class="controls">
-                <input required name="code" class="input-block-level" value="<?= ($coupon->persisted()) ? $coupon->code : ''; ?>" size="50" maxlength="255" type="text">
+                <input id="coupon-code" required name="code" class="input-block-level" value="<?= ($coupon->persisted()) ? $coupon->code : ''; ?>" maxlength="255" type="text">
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="coupon-discount">
+                <?= @text('COM-SUBSCRIPTIONS-COUPONE-DISCOUNT') ?>
+            </label>
+            <div class="controls input-append">
+                <input required name="discount" class="span1" value="<?= $coupon->discount * 100 ?>" maxlength="2" type="number">
+                <span class="add-on">&#37;</span>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="class-label">
+                <?= @text('COM-SUBSCRIPTIONS-COUPONE-EXPIRY-DATE') ?>
+            </label>
+            
+            <div class="controls">
+                <?= @helper('selector.day', array( 'name'=>'expiresOnDay', 'required'=>'', 'selected'=> $expiresOn->day, 'class'=>'span2')) ?>
+                <?= @helper('selector.month', array( 'name'=>'expiresOnMonth', 'required'=>'', 'selected'=> $expiresOn->month, 'class'=>'span2')) ?>
+                <?= @helper('selector.year', array( 'name'=>'expiresOnYear', 'required'=>'', 'selected'=> $expiresOn->year, 'class'=>'span2')) ?>
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="coupon-limit">
+                <?= @text('COM-SUBSCRIPTIONS-COUPONE-LIMIT') ?>
+            </label>
+            <div class="controls">
+                <input required name="limit" class="span1" value="<?= $coupon->limit ?>" maxlength="5" type="number">
             </div>
         </div>
     
@@ -30,7 +61,7 @@
             </a> 
             <?php endif;?> 
             
-            <button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-UPDATING') ?>">
+            <button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">
                 <?= @text('LIB-AN-ACTION-UPDATE') ?>
             </button>
         <?php else : ?>
@@ -38,7 +69,7 @@
             <?= @text('LIB-AN-ACTION-CANCEL') ?>
         </a>  
         
-        <button data-trigger="Add" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
+        <button data-trigger="Add" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">
             <?= @text('LIB-AN-ACTION-ADD') ?>
         </button>
         <?php endif;?>
