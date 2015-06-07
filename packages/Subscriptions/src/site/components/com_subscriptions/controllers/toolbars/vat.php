@@ -11,7 +11,7 @@
  */
 
 /**
- * Coupon Toolbars 
+ * VAT Toobars
  *
  * @category   Anahita
  * @package    Com_Subscriptions
@@ -21,7 +21,7 @@
  * @link       http://www.GetAnahita.com
  */
  
-class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDefault
+class ComSubscriptionsControllerToolbarVat extends ComBaseControllerToolbarDefault
 {   
     /**
      * Called after controller browse

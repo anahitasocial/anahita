@@ -43,7 +43,12 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
 				'id',
 				'country'	=> array('required'=>true, 'unique'=>true),
 				'meta'		=> array('type'=>'json', 'column'=>'data', 'default'=>'json')
-			)
+			),
+            'behaviors' => array(
+                'authorizer',
+                'modifiable',
+                'locatable'
+            )
 		));
 		
 		parent::_initialize($config);
