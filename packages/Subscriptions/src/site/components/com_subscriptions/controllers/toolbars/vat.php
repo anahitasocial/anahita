@@ -104,7 +104,7 @@ class ComSubscriptionsControllerToolbarVat extends ComBaseControllerToolbarDefau
     protected function _commandNew($command)
     {
         $command
-        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-COUPON-NEW') ))
+        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-VAT-NEW') ))
         ->href('#')
         ->setAttribute('data-trigger', 'ReadForm');
     }
