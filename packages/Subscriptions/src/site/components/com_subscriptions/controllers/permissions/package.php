@@ -13,19 +13,9 @@
  * @package     Com_Subscriptions
  * @category    Controller
  */
-class ComSubscriptionsControllerPermissionPackage extends LibBaseControllerPermissionDefault
+class ComSubscriptionsControllerPermissionPackage extends ComSubscriptionsControllerPermissionDefault
 {
-    /**
-     * Authorize if viewer can change subscription
-     *
-     * @return boolean
-     */    
-    public function canAdminister()
-    {
-        $viewer = get_viewer();
-            
-        return $viewer->admin() ? true : false;
-    }
+    
     
      /**
      * Authorize if viewer can add subscriber
@@ -53,26 +43,6 @@ class ComSubscriptionsControllerPermissionPackage extends LibBaseControllerPermi
      * @return boolean
      */    
     public function canChangesubscription()
-    {
-        return $this->canAdminister();
-    }
-    
-    /**
-     * Authorize if viewer can change subscription
-     *
-     * @return boolean
-     */    
-    public function canAdd()
-    {
-        return $this->canAdminister();
-    }
-    
-    /**
-     * Authorize if viewer can change subscription
-     *
-     * @return boolean
-     */    
-    public function canEdit()
     {
         return $this->canAdminister();
     }
