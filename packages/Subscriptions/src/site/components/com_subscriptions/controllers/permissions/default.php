@@ -16,15 +16,45 @@
 class ComSubscriptionsControllerPermissionDefault extends LibBaseControllerPermissionDefault
 {
     /**
+     * Authorize if viewer can administer
+     *
+     * @return boolean
+     */    
+    public function canAdminister()
+    {
+        $viewer = get_viewer();
+            
+        return $viewer->admin() ? true : false;
+    }
+    
+    /**
      * Authorize if viewer can add
      *
      * @return boolean
      */    
     public function canAdd()
     {
-        $viewer = get_viewer();
-            
-        return $viewer->admin() ? true : false;
+        return $this->canAdminister();
+    }
+    
+    /**
+     * Authorize if viewer can change
+     *
+     * @return boolean
+     */    
+    public function canEdit()
+    {
+        return $this->canAdminister();
+    }
+    
+    /**
+     * Authorize if viewer can delete
+     *
+     * @return boolean
+     */    
+    public function canDelete()
+    {
+        return $this->canAdminister();
     }
 }
     

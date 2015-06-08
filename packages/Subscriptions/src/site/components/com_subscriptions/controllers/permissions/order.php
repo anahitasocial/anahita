@@ -13,7 +13,7 @@
  * @package     Com_Subscriptions
  * @category    Controller
  */
-class ComSubscriptionsControllerPermissionOrder extends LibBaseControllerPermissionDefault
+class ComSubscriptionsControllerPermissionOrder extends ComSubscriptionsControllerPermissionDefault
 {
     
     /**
@@ -78,17 +78,5 @@ class ComSubscriptionsControllerPermissionOrder extends LibBaseControllerPermiss
     public function canEdit()
     {
         return false;
-    }   
-    
-    /**
-     * Authorize if viewer can change subscription
-     *
-     * @return boolean
-     */    
-    public function canAdminister()
-    {
-        $viewer = get_viewer();
-            
-        return $viewer->admin() ? true : false;
-    }      
+    }        
 }    

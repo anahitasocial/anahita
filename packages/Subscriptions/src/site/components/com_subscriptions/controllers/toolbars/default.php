@@ -1,4 +1,5 @@
 <?php
+
 /** 
  * 
  * @category   Anahita
@@ -11,7 +12,7 @@
  */
 
 /**
- * Coupon Toolbars 
+ * Subscriptions App default toolbar class
  *
  * @category   Anahita
  * @package    Com_Subscriptions
@@ -20,9 +21,26 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.GetAnahita.com
  */
- 
-class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDefault
-{   
+
+class ComSubscriptionsControllerToolbarDefault extends ComBaseControllerToolbarDefault
+{
+    /**
+     * Before Controller _actionRead is executed
+     *
+     * @param KEvent $event
+     *
+     * @return void
+     */
+    public function onBeforeControllerGet(KEvent $event)
+    {
+        parent::onBeforeControllerGet($event);
+
+        if($this->getController()->getItem())
+        {
+           $this->addToolbarCommands(); 
+        } 
+    }
+    
     /**
      * Called after controller browse
      *
@@ -36,6 +54,22 @@ class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDe
         {
             $this->addCommand('new');    
         }   
+    }    
+    
+    /**
+     * Set the toolbar commands
+     * 
+     * @return void
+     */
+    public function addToolbarCommands()
+    {
+        $entity = $this->getController()->getItem();
+                
+        if($entity->authorize('edit'))
+            $this->addCommand('edit');      
+        
+        if($entity->authorize('delete'))
+            $this->addCommand('delete');        
     }
     
     /**
@@ -46,7 +80,7 @@ class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDe
     public function addListCommands()
     {
         $entity = $this->getController()->getItem();
-
+        
         if($entity->authorize('edit'))  
             $this->addCommand('edit');
         
@@ -92,7 +126,7 @@ class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDe
         ->setAttribute('data-action', 'delete')
         ->setAttribute('data-redirect', JRoute::_($redirect))
         ->class('action-delete');
-    }
+    }  
     
     /**
      * New button toolbar
@@ -103,9 +137,13 @@ class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDe
      */
     protected function _commandNew($command)
     {
+        $name = $this->getController()->getIdentifier()->name;    
+            
         $command
-        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-COUPON-NEW') ))
+        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-'.$name.'-NEW') ))
         ->href('#')
         ->setAttribute('data-trigger', 'ReadForm');
     }
-}
+}        
+        
+    
