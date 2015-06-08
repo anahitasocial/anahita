@@ -7,23 +7,24 @@
     
     <div class="entity-description">
         <dl>
-            <dt></dt>
-            <dd></dd>
+            <?php foreach( $vat->getFederalTaxes() as $tax ) :?>
+            <dt><?= @text('COM-SUBSCRIPTIONS-VAT-TAXES') ?></dt>
+            <dd><?= $tax->name ?></dd>
+            <dd><?= $tax->value ?> &#37;</dd>
+            <?php endforeach; ?>
         </dl>
     </div>
-    
-    <div class="entity-meta">
-        <ul class="an-meta">
-            <?php if(isset($vat->author)) : ?>
-            <li><?= sprintf( @text('LIB-AN-ENTITY-AUTHOR'), @date($vat->creationTime), @name($vat->author)) ?></li>
-            <?php endif; ?>
-            
-            <?php if(isset($vat->editor)) : ?>
-            <li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($vat->updateTime), @name($vat->editor)) ?></li>
-            <?php endif; ?>       
-        </ul>
-    </div>
-    
+
+    <ul class="an-meta">
+        <?php if(isset($vat->author)) : ?>
+        <li><?= sprintf( @text('LIB-AN-ENTITY-AUTHOR'), @date($vat->creationTime), @name($vat->author)) ?></li>
+        <?php endif; ?>
+        
+        <?php if(isset($vat->editor)) : ?>
+        <li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($vat->updateTime), @name($vat->editor)) ?></li>
+        <?php endif; ?>       
+    </ul>
+        
     <div class="entity-actions">
         <?= @helper('ui.commands', @commands('list')) ?>
     </div>
