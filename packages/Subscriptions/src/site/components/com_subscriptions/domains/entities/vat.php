@@ -43,7 +43,12 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
 				'id',
 				'country'	=> array('required'=>true, 'unique'=>true),
 				'meta'		=> array('type'=>'json', 'column'=>'data', 'default'=>'json')
-			)
+			),
+            'behaviors' => array(
+                'authorizer',
+                'modifiable',
+                'locatable'
+            )
 		));
 		
 		parent::_initialize($config);
@@ -64,13 +69,19 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
 		
 		foreach($taxes as $tax) 
 		{
-			$value = $tax->value;
-			$name  = $tax->name;
+			if( $tax->value != 0 )
+            {
+			         
+			 $value = $tax->value;
+			 $name  = $tax->name;
 			
-			if ( $value > 1) 
-				$value = $value / 100;
-				
-			$values[strtolower($name)] = array('name'=>$name, 'value'=>min(max(0,$value), 1));	
+			    if ( $value > 1) 
+                {
+				    $value = $value / 100;
+                }
+            	
+			    $values[strtolower($name)] = array('name'=>$name, 'value'=>min(max(0,$value), 1));	
+            }
 		}
 		
 		$meta['federal_taxes'] = $values;

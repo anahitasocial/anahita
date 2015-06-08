@@ -11,7 +11,7 @@
  */
 
 /**
- * Coupon Toolbars 
+ * VAT Toobars
  *
  * @category   Anahita
  * @package    Com_Subscriptions
@@ -21,7 +21,7 @@
  * @link       http://www.GetAnahita.com
  */
  
-class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDefault
+class ComSubscriptionsControllerToolbarVat extends ComBaseControllerToolbarDefault
 {   
     /**
      * Called after controller browse
@@ -104,7 +104,7 @@ class ComSubscriptionsControllerToolbarCoupon extends ComBaseControllerToolbarDe
     protected function _commandNew($command)
     {
         $command
-        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-COUPON-NEW') ))
+        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-VAT-NEW') ))
         ->href('#')
         ->setAttribute('data-trigger', 'ReadForm');
     }
