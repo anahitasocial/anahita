@@ -24,7 +24,7 @@
 		_create : function() {
 		
 			this.form = $(this.options.searchForm); 
-			
+
 			var elemSort = $(this.options.sortOption);
 			var elemComment = $(this.options.commentOption);
 			var elemScope = $(this.options.scope);

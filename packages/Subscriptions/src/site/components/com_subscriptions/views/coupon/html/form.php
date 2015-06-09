@@ -2,7 +2,7 @@
 
 <?php $coupon = empty( $coupon ) ? @service('repos:subscriptions.coupon')->getEntity()->reset() : $coupon; ?>
 
-<form method="post" action="<?= @route( $coupon->getURL() ) ?>">
+<form method="post" action="<?= @route( $coupon->getURL() ) ?>" class="an-entity">
     
     <fieldset>
         <legend><?= ( $coupon->persisted() ) ? @text('COM-SUBSCRIPTIONS-COUPON-EDIT') : @text('COM-SUBSCRIPTIONS-COUPON-ADD') ?></legend>

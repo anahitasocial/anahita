@@ -2,7 +2,7 @@
 
 <?php $package = empty($package) ?@controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $package; ?>
 
-<form method="post" action="<?= @route() ?>">
+<form method="post" action="<?= @route() ?>" class="an-entity">
     <fieldset>
         <legend><?= ( $package->persisted() ) ? @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-EDIT') : @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-ADD') ?></legend>
         <div class="control-group">

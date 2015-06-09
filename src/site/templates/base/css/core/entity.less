@@ -61,6 +61,14 @@ h4.entity-name,
     h4 { font-size: @baseFontSize + 1 }
 }
 
+.entity-description-wrapper
+{
+  form
+  {
+    padding: 0 10px;
+  }
+}
+
 .entity-cover
 {
   margin: 0 10px;
@@ -87,10 +95,16 @@ h4.entity-name,
    padding: 0 10px 0 60px;
 }
 
+form.an-entity
+{
+  padding: 0 10px;
+  margin: 0;
+}
+
 .an-entity
 {
     .clearfix;
-    margin: 20px 0;
+    margin: 10px 0;
     .border-radius(@baseBorderRadius);
     
     &.an-entity-select-option
@@ -115,11 +129,6 @@ h4.entity-name,
     .entity-portrait-medium
      {   
          margin: 10px;
-     }
-     
-     form
-     {
-        margin: 10px;
      }
 	
   	dl

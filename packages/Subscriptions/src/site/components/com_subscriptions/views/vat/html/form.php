@@ -2,7 +2,7 @@
 
 <?php $vat = empty( $vat ) ? @service('repos:subscriptions.vat')->getEntity()->reset() : $vat; ?>
 
-<form method="post" action="<?= @route( $vat->getURL() ) ?>">
+<form method="post" action="<?= @route( $vat->getURL() ) ?>" class="an-entity">
     
     <fieldset>
         <legend><?= ( $vat->persisted() ) ? @text('COM-SUBSCRIPTIONS-VAT-EDIT') : @text('COM-SUBSCRIPTIONS-VAT-ADD') ?></legend>
