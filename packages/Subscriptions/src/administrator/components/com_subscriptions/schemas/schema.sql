@@ -59,7 +59,13 @@ CREATE TABLE `#__subscriptions_vats` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `country` varchar(255) NOT NULL,
   `data` text,
-  PRIMARY KEY (`id`)
+  `created_on` datetime DEFAULT NULL,
+  `created_by` bigint(11) unsigned DEFAULT NULL,
+  `modified_on` datetime DEFAULT NULL,
+  `modified_by` bigint(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `created_by` (`created_by`),
+  KEY `modified_by` (`modified_by`)
 ) ENGINE=InnoDB;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'subscriptions') ON DUPLICATE KEY UPDATE `version` = 1;
