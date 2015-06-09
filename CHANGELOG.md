@@ -2,6 +2,15 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.1.1 Birth Release
 =============================
+* Upgraded facebook OAth API
+* Upgraded linkedIn OAuth API 
+* fixed inline edit and cancel issue where nested an-entity layers were being created
+* major upgrade of the Subscriptions App. No it isn't ready yet. Wait for the next release.
+* discontinued OpenSocial plugin
+* apps can now be specific to what type of actors they can be assigned to. Subscriptions app can only be assigned to person actors
+
+Anahita 4.1.1 Birth Release
+=============================
 * ability to run the entire site with SSL on
 * fixed infinit scroll bugs in social graph and other entities
 * fixed notification scroll bug
