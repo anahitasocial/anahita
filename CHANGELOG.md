@@ -1,6 +1,6 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.1.1 Birth Release
+Anahita 4.1.2 Birth Release
 =============================
 * Upgraded facebook OAth API
 * Upgraded linkedIn OAuth API 
