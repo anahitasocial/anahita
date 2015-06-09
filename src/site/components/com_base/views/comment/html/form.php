@@ -11,7 +11,7 @@ if ( $editor )
 }
 ?>
 
-<form id="<?= uniqid() ?>" class="an-comment-form form-stacked" method="post" action="<?= @route($url) ?>">		
+<form id="<?= uniqid() ?>" class="an-comment-form form-stacked an-entity" method="post" action="<?= @route($url) ?>">		
 	<input type="hidden" name="action" value="<?= $action ?>" />
 	
 	<div class="comment-form-avatar">

@@ -4,7 +4,7 @@
 
 <?php $url = $todo->getURL().'&oid='.$actor->id; ?>
 
-<form method="post" action="<?= @route($url) ?>">
+<form method="post" action="<?= @route($url) ?>" class="an-entity">
 	<fieldset>
 		<legend><?= ($todo->persisted()) ? @text('COM-TODOS-TODO-EDIT') : @text('COM-TODOS-TODO-ADD') ?></legend>
 		

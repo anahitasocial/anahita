@@ -20019,12 +20019,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					entity.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 				},
 				success : function ( response ) {
-					
-					if( !$(response).length ) {
-						response = $(response).html();
-					}
-						
-					entity.html( response ).fadeTo('fast', 1).removeClass('uiActivityIndicator');
+					entity.replaceWith($(response));
 				}
 			});
 			
@@ -20189,7 +20184,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	});
 	
 	//Edit Entity Action
-	$('body').on('submit', '.an-entity > form', function ( event ) {
+	$('body').on('submit', '.an-entities > form.an-entity', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('edit');
 	});

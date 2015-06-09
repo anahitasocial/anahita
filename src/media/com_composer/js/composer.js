@@ -125,8 +125,8 @@
 			this.tabs = this.element.find(this.options.composerTab);
 			var formPlaceholder = this.options.formPlaceholder;
 			
-			this.tabs.each(function(index, tab){	
-				$(tab).data('placeholder', $(tab).find(formPlaceholder));
+			this.tabs.each(function(index, tab) {	
+				$(tab).data( 'placeholder', $(tab).find(formPlaceholder) );
 			});
 			
 			//composer dropdown menu
@@ -232,6 +232,8 @@
 	if ( $("[data-behavior='Composer']").length ) {
 	   
 	   var composer = $("[data-behavior='Composer']").composer(); 
+	   
+	   composer.hide();
 	   
 	   //show composer only for the stories stream
         var streamTabs = $('ul.streams');
