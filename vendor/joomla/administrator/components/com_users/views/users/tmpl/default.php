@@ -106,7 +106,7 @@
 				</td>
 				<td align="center">
 					<a href="javascript:void(0);" onclick="return listItemTask('cb<?php echo $i;?>','<?php echo $task;?>')">
-						<img src="<?= JURI::base() ?>images/<?php echo $img;?>" width="16" height="16" border="0" alt="<?php echo $alt; ?>" /></a>
+						<img src="<?php echo JURI::base() ?>images/<?php echo $img;?>" width="16" height="16" border="0" alt="<?php echo $alt; ?>" /></a>
 				</td>
 				<td>
 					<?php echo JText::_( $row->groupname ); ?>
