@@ -84,12 +84,13 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         $config->append(array(
             'favicon' => pick($this->_params->favicon, 'favicon.ico'),
         	'type' => 'image/png',
+        	'style' => pick($this->_params->cssStyle, 'style1'),
             'url' => 'base://'
         ));
         
         $paths = array(
             JPATH_THEMES.DS.'base'.DS.'css'.DS.'images',
-            JPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.'images'
+            JPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style.DS.'images'
         );
         
         $finder = $this->getService('anahita:file.pathfinder');
