@@ -1,12 +1,3 @@
-##
-# @version $Id: htaccess.txt 21064 2011-04-03 22:12:19Z dextercowley $
-# @package Joomla
-# @copyright Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
-# @license http://www.gnu.org/copyleft/gpl.html GNU/GPL
-# Joomla! is Free Software
-##
-
-
 #####################################################
 #  READ THIS COMPLETELY IF YOU CHOOSE TO USE THIS FILE
 #
@@ -38,8 +29,6 @@ RewriteEngine On
 #Satisfy all
 #</Files>
 ## End of deny access to extension xml files
-# Block out any script trying to set a mosConfig value through the URL
-RewriteCond %{QUERY_STRING} mosConfig_[a-zA-Z_]{1,21}(=|\%3D) [OR]
 # Block out any script trying to base64_encode data within the URL
 RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
 # Block out any script that includes a <script> tag in URL
@@ -87,4 +76,4 @@ RewriteCond %{REQUEST_FILENAME} !-d
 # internally rewrite the request to the index.php script
 RewriteRule .* index.php [L]
 #
-########## End - Joomla! core SEF Section
+########## End
