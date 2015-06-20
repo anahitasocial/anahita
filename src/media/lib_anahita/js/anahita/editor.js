@@ -127,13 +127,9 @@
         }
     });
     
-    if ( $('[data-behavior="Editor"]').length ) {
-        $('[data-behavior="Editor"]').editor();    
-    }
-    
-    $(document).ajaxSuccess(function() {
-        
-        var elements = $('[data-behavior="Editor"]');
+    var bindEditor = function() {
+      
+      var elements = $('[data-behavior="Editor"]');
         
         $.each(elements, function( index, element ){
             
@@ -142,6 +138,12 @@
               $(element).editor();
             }
         });
+    };
+    
+    bindEditor();
+    
+    $(document).ajaxSuccess(function() {
+        bindEditor();
     });
     
 }(jQuery, window, document));

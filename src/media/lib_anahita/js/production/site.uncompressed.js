@@ -19019,7 +19019,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 	$.fn.gadget = function () {
 		
-		this.filter(".an-gadget").each(function(){
+	   this.filter( this.selector ).each(function(){
 			
 			var gadget = $(this);
 			var content = gadget.find(".gadget-content");
@@ -19144,13 +19144,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		}
 	});
 	
-	if ( $("[data-behavior='Checkbox']").length ) {
-	  $("[data-behavior='Checkbox']").checkbox();  
-	}
-
-	$(document).ajaxSuccess(function() {
-        
-        var elements = $("[data-behavior='Checkbox']");
+	var bindCheckbox = function (){
+	    
+	    var elements = $("[data-behavior='Checkbox']");
         
         $.each(elements, function( index, element ){
             
@@ -19159,7 +19155,13 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
               $(element).checkbox();
             
             }
-        });
+        });  
+	};
+	
+	bindCheckbox();
+
+	$(document).ajaxSuccess(function() {
+        bindCheckbox();
     });
 	
 }(jQuery, window, document));
@@ -19836,13 +19838,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         }
     });
     
-    if ( $('[data-behavior="Editor"]').length ) {
-        $('[data-behavior="Editor"]').editor();    
-    }
-    
-    $(document).ajaxSuccess(function() {
-        
-        var elements = $('[data-behavior="Editor"]');
+    var bindEditor = function() {
+      
+      var elements = $('[data-behavior="Editor"]');
         
         $.each(elements, function( index, element ){
             
@@ -19851,6 +19849,12 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
               $(element).editor();
             }
         });
+    };
+    
+    bindEditor();
+    
+    $(document).ajaxSuccess(function() {
+        bindEditor();
     });
     
 }(jQuery, window, document));
@@ -19869,19 +19873,22 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
     $.fn.anahitaGist = function () {
         
-        var placeholder = $(this);
+        this.filter( this.selector ).each(function(){
+           
+            var placeholder = $(this);
         
-        $.getJSON( placeholder.data('src') + 'on?callback=?', function( data ) {
- 
-            // replace script with gist html
-            placeholder.replaceWith( $( data.div ) );
- 
-            // load the stylesheet, but only once…            
-            var head = $('head');
- 
-            if ( head.find('link[rel="stylesheet"][href="'+ data.stylesheet +'"]').length < 1 ) {
-                head.append('<link rel="stylesheet" href="'+ data.stylesheet +'" type="text/css" />');
-            }
+            $.getJSON( placeholder.data('src') + 'on?callback=?', function( data ) {
+     
+                // replace script with gist html
+                placeholder.replaceWith( $( data.div ) );
+     
+                // load the stylesheet, but only once…            
+                var head = $('head');
+     
+                if ( head.find('link[rel="stylesheet"][href="'+ data.stylesheet +'"]').length < 1 ) {
+                    head.append('<link rel="stylesheet" href="'+ data.stylesheet +'" type="text/css" />');
+                }
+            });
         });
     };
     
@@ -19891,16 +19898,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     
     $(document).ajaxSuccess(function() {
         
-        var elements = $('[data-trigger="LoadGist"]');
-        
-        $.each(elements, function( index, element ){
-            
-            if( !$(element).is(":data('anahitaGist')") ) {
-            
-              $(element).anahitaGist();
-            
-            }
-        });
+        if ( $('[data-trigger="LoadGist"]').length ) {
+            $('[data-trigger="LoadGist"]').anahitaGist();
+        }
     });
     
 }(jQuery, window, document));

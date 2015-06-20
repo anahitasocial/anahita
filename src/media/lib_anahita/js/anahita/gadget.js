@@ -12,7 +12,7 @@
 
 	$.fn.gadget = function () {
 		
-		this.filter(".an-gadget").each(function(){
+	   this.filter( this.selector ).each(function(){
 			
 			var gadget = $(this);
 			var content = gadget.find(".gadget-content");
