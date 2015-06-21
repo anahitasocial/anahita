@@ -56,14 +56,9 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
 	 * 
 	 * @return void
 	 */
-	protected function _actionBrowse($context)
+	protected function _actionBrowse( $context )
 	{	
-		$topics = parent::_actionBrowse($context);
-		
-		if( $this->filter != 'leaders')
-        {
-			$topics->order('pinned', 'DESC');
-        }
+		$topics = parent::_actionBrowse( $context );
 			
 		$topics->order('IF(@col(lastCommentTime) IS NULL, @col(creationTime), @col(lastCommentTime))', 'DESC');
 	}

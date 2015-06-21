@@ -50,23 +50,6 @@ class ComPagesControllerPage extends ComMediumControllerDefault
             )
         ));
     }
-    
-    /**
-     * Browse
-     * 
-     * @param KCommandContext $context Context
-     * 
-     * @return void
-     */
-    protected function _actionBrowse($context)
-    {   
-        $entities = parent::_actionBrowse($context);
-        
-        if( $this->filter != 'leaders')
-        {
-            $entities->order('pinned', 'DESC');
-        }
-    }
 	
 	/**
 	 * Redirect after edit

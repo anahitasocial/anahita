@@ -140,15 +140,26 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
     protected function _actionBrowse(KCommandContext $context)
     {
     	if(!$context->query)
+        {
             $context->query = $this->getRepository()->getQuery(); 
-    	
+        }
+        
     	$query = $context->query;
         
-        if($this->q)
+        if( $this->q )
+        {
             $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
+        }
     
-        if($this->hasBehavior('parentable') && $this->getParent())
-            $query->parent($this->getParent());
+        if( $this->hasBehavior('parentable') && $this->getParent() )
+        {
+            $query->parent( $this->getParent() );
+        }
+        
+        if( $this->hasBehavior('ownable') && $this->getActor() )
+        {
+            $query->order('pinned', 'DESC');
+        }
         
         switch($this->sort)
         {
