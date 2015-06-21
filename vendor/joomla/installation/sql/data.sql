@@ -5,7 +5,6 @@ INSERT INTO `#__components` (`id`, `name`, `link`, `menuid`, `parent`, `admin_me
 (29, 'Plugin Manager', '', 0, 0, '', 'Plugins', 'com_plugins', 0, '', 1, '', 1),
 (30, 'Template Manager', '', 0, 0, '', 'Templates', 'com_templates', 0, '', 1, '', 1),
 (31, 'User Manager', '', 0, 0, '', 'Users', 'com_users', 0, '', 1, 'allowUserRegistration=1\nnew_usertype=Registered\nuseractivation=1\nfrontend_userparams=1\n\n', 1),
-(32, 'Cache Manager', '', 0, 0, '', 'Cache', 'com_cache', 0, '', 1, '', 1),
 (33, 'Control Panel', '', 0, 0, '', 'Control Panel', 'com_cpanel', 0, '', 1, '', 1),
 (35, 'Components', 'option=com_components', 0, 0, 'option=com_components', 'Components', 'com_components', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (37, 'Dashboard', 'option=com_dashboard', 0, 0, '', 'Dashboard', 'com_dashboard', 0, '', 1, '', 1),
@@ -35,17 +34,16 @@ INSERT INTO `#__core_acl_aro_sections` (`id`, `value`, `order_value`, `name`, `h
 
 INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES
 (1, 'Authentication - Joomla', 'joomla', 'authentication', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
-(5, 'User - Joomla!', 'joomla', 'user', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', 'autoregister=1\n\n'),
+(5, 'User - Joomla!', 'joomla', 'user', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', 'autoregister=1\n\n'),
 (36, 'System - Anahita', 'anahita', 'system', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
-(41, 'Content Filter - Hyperlink', 'link', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(42, 'Content Filter - Syntax', 'syntax', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(43, 'Content Filter - Video', 'video', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(44, 'Content Filter - PTag', 'ptag', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(41, 'Content Filter - Hyperlink', 'link', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(43, 'Content Filter - Video', 'video', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
 (45, 'Storage - Local', 'local', 'storage', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
-(46, 'Storage - Amazon S3', 's3', 'storage', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(47, 'Content Filter - Hashtag', 'hashtag', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(48, 'Content Filter - Mention', 'mention', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '');
+(46, 'Storage - Amazon S3', 's3', 'storage', 0, 0, 0, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(47, 'Content Filter - Hashtag', 'hashtag', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(48, 'Content Filter - Mention', 'mention', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(50, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', '');
 
 
 INSERT INTO `#__templates_menu` (`template`, `menuid`, `client_id`) VALUES

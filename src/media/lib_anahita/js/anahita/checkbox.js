@@ -54,13 +54,9 @@
 		}
 	});
 	
-	if ( $("[data-behavior='Checkbox']").length ) {
-	  $("[data-behavior='Checkbox']").checkbox();  
-	}
-
-	$(document).ajaxSuccess(function() {
-        
-        var elements = $("[data-behavior='Checkbox']");
+	var bindCheckbox = function (){
+	    
+	    var elements = $("[data-behavior='Checkbox']");
         
         $.each(elements, function( index, element ){
             
@@ -69,7 +65,13 @@
               $(element).checkbox();
             
             }
-        });
+        });  
+	};
+	
+	bindCheckbox();
+
+	$(document).ajaxSuccess(function() {
+        bindCheckbox();
     });
 	
 }(jQuery, window, document));

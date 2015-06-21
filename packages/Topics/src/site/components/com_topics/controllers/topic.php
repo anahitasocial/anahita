@@ -40,6 +40,9 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
         $config->append(array(
             'request' => array(
                 'sort' => null,               
+            ),
+            'behaviors' => array(
+                'pinnable'
             )
         ));
         
@@ -53,12 +56,9 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
 	 * 
 	 * @return void
 	 */
-	protected function _actionBrowse($context)
+	protected function _actionBrowse( $context )
 	{	
-		$topics = parent::_actionBrowse($context);
-		
-		if( $this->filter != 'leaders')
-			$topics->order('isSticky', 'DESC');
+		$topics = parent::_actionBrowse( $context );
 			
 		$topics->order('IF(@col(lastCommentTime) IS NULL, @col(creationTime), @col(lastCommentTime))', 'DESC');
 	}
@@ -86,18 +86,5 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
 	    }
 	        
 	    return $entity;
-	}
-	
-	/**
-	 * Sticks/unstick a topic
-	 *
-	 * @param  KCommandContext $context Context parameter
-	 * 
-	 * @return void
-	 */
-	protected function _actionSticky($context)
-	{
-		$data = $context->data;
-		$this->getItem()->isSticky = $data->is_sticky;				
 	}
 }

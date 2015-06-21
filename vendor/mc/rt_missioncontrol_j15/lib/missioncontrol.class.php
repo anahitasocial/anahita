@@ -230,14 +230,7 @@ class MissionControl extends RTCore {
 		if ($this->params->get('enableViewSite')) {
 			$output[] = '<span class="preview"><a href="'.JURI::root().'" target="_blank">'.JText::_('VIEW_SITE').'</a></span>';
 		}
-
-		// display Tools
-		$tools = $this->_getTools();
-		if (!$disabled && $tools) 
-			$output[] = array('<a href="#" id="ToolsToggle"><span class="select-active">System Tools</span><span class="select-arrow">&#x25BE;</span></a>'.$tools, 'dropdown');
-		else 
-			$output[] = '<span><a>System Tools</a></span>';
 		
-		echo $this->_listify($output,$disabled_class);
+		echo $this->_listify($output, $disabled_class);
 	}
 }

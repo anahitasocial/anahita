@@ -8,7 +8,6 @@ Disallow: /installation/
 Disallow: /language/
 Disallow: /libraries/
 Disallow: /media/
-Disallow: /modules/
 Disallow: /plugins/
 Disallow: /templates/
 Disallow: /tmp/

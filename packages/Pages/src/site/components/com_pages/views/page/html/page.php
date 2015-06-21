@@ -2,7 +2,7 @@
 
 <?php @commands('toolbar') ?>
 
-<div class="an-entity">
+<div class="an-entity <?= ($page->pinned) ? 'an-highlight' : '' ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($page->author) ?> 

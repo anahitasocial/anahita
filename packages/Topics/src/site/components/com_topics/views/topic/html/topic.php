@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<div class="an-entity <?= ($topic->isSticky) ? 'an-highlight' : '' ?>">
+<div class="an-entity <?= ($topic->pinned) ? 'an-highlight' : '' ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($topic->author) ?>

@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die ?>
 
-<?php $published = ($page->isPublished()) ? '' : 'an-highlight' ?>
-<div class="an-entity an-record an-removable <?= $published ?>">
+
+<div class="an-entity <?= ($page->pinned) ? 'an-highlight' : '' ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($page->author) ?> 

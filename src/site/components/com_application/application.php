@@ -63,28 +63,30 @@ class JSite extends JApplication
     {
         // if a language was specified it has priority
         // otherwise use user or default language settings
-        if(empty($options['language']))
+        if( empty( $options['language'] ) )
         {
             $user = &JFactory::getUser();
             $lang = $user->getParam( 'language' );
 
             // Make sure that the user's language exists
-            if($lang && JLanguage::exists($lang)) 
+            if( $lang && JLanguage::exists( $lang ) ) 
             {
                 $options['language'] = $lang;
             } 
             else 
             {
-                $params = JComponentHelper::getParams('com_languages');
-                $client =& JApplicationHelper::getClientInfo($this->getClientId());
-                $options['language'] = $params->get($client->name, 'en-GB');
+                $params = JComponentHelper::getParams( 'com_languages' );
+                $client =& JApplicationHelper::getClientInfo( $this->getClientId() );
+                $options['language'] = $params->get( $client->name, 'en-GB' );
             }
         }
 
         // One last check to make sure we have something
-        if(!JLanguage::exists($options['language']))
+        if( !JLanguage::exists( $options['language'] ) )
+        {
             $options['language'] = 'en-GB';
-
+        }
+        
         parent::initialise($options);
     }    
 
@@ -161,7 +163,7 @@ class JSite extends JApplication
         		
         	$template = KService::get('application.registry')->offsetGet('application-template');
             
-            $this->setTemplate(pick($template, 'base'));
+            $this->setTemplate( pick( $template, 'base' ) );
         }
         
         return $this->_template;
@@ -200,9 +202,11 @@ class JSite extends JApplication
      */
     function &getRouter($name = null, $options = array())
     {
-        if(!isset($this->_router))
+        if( !isset( $this->_router ) )
+        {
             $this->_router = KService::get('com://site/application.router', array('enable_rewrite'=>JFactory::getConfig()->getValue('sef_rewrite')));
-        
+        }
+
         return $this->_router;
     }
 }

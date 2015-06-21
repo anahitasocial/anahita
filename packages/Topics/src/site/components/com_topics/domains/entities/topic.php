@@ -39,13 +39,12 @@ class ComTopicsDomainEntityTopic extends ComMediumDomainEntityMedium
 	protected function _initialize(KConfig $config)
 	{
 		$config->append(array(
-			'resources'		=> array('topics_topics'),
 			'attributes' 	=> array(
 			    'name'		=> array('required'=>AnDomain::VALUE_NOT_EMPTY),
-			    'body'		=> array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'post'),
-				'isSticky'  => array('column'=>'sticky', 'type'=>'boolean', 'default'=>false,'required'=>true)
+			    'body'		=> array('required'=>AnDomain::VALUE_NOT_EMPTY, 'format'=>'post')
 			),
 			'behaviors' => array(
+				'pinnable',
 				'hittable'
 			),
 		));

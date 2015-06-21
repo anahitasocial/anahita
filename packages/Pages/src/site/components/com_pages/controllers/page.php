@@ -44,6 +44,9 @@ class ComPagesControllerPage extends ComMediumControllerDefault
         $config->append(array(
             'request' => array(
                 'sort' => 'newest'
+            ),
+            'behaviors' => array(
+                'pinnable'
             )
         ));
     }
