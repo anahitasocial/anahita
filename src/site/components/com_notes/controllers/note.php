@@ -44,18 +44,6 @@ class ComNotesControllerNote extends ComMediumControllerDefault
     
         parent::_initialize($config);
     }
-    
-	/**
-	 * Browse Notes
-	 * 
-	 * @param KCommandContext $context Context parameter
-	 * 
-	 * @return void
-	 */
-	protected function _actionBrowse($context)
-	{
-		return parent::_actionBrowse($context)->order('creationTime', 'DESC');
-	}
             
     /**
      * Adds a new post
@@ -72,29 +60,34 @@ class ComNotesControllerNote extends ComMediumControllerDefault
         
         //if a person posting a message on his profile
         //or if a target is not actor then it can't be a private message
-        if ( get_viewer()->eql($this->actor) || !is_person($this->actor) ) {
-            unset($data->private);       
+        if ( get_viewer()->eql($this->actor) || !is_person($this->actor) ) 
+        {
+            unset( $data->private );       
         }
         
         //if a private message then
         //set the privacy to subject/target
-        if ( $data->private ) {
-            $entity->setAccess(array($this->actor->id, get_viewer()->id));
+        if ( $data->private ) 
+        {
+            $entity->setAccess( array( $this->actor->id, get_viewer()->id ) );
         }
 
         //create a notification for the subscribers and 
         //the post owner as well
         if ( $entity->owner->isSubscribable() ) 
-        {
+        {    
             //create a notification and pass the owner
             $notification = $this->createNotification(array(
-                'name'             => 'note_add',
-                'object'           => $entity,
-                'subscribers'      => array($entity->owner->subscriberIds->toArray(),$entity->owner)
-            ))->setType('post', array('new_post'=>true));
+            
+                'name' => 'note_add',
+                'object' => $entity,
+                'subscribers' => array( $entity->owner->subscriberIds->toArray(), $entity->owner )
+            
+            ))->setType( 'post', array('new_post' => true) );
         }
 
-        if ( !empty($data['channels']) ) {
+        if ( !empty( $data['channels'] ) ) 
+        {
             $this->shareObject(array('object'=>$entity,'sharers'=>$data['channels']));
         }
         

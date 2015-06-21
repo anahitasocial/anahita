@@ -37,9 +37,13 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
     protected function _initialize(KConfig $config)
     {
         $identifier = clone $this->getIdentifier();        
+        
         $identifier->path = array();
+        
         $paths[] = JPATH_THEMES.'/base/'.$this->getFormat();
+        
         $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
+        
         $config->append(array(
             'template_paths' => $paths,                      
         ));
@@ -53,9 +57,11 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
      */
     public function getRoute($route = '', $fqr = true)
     {
-    	if(strpos($route, 'index.php?') === false )
+    	if( strpos( $route, 'index.php?' ) === false )
+        {
     		$route .= 'index.php?'.$route;
-    	
+        }
+        
     	return $this->getService('application')->getRouter()->build($route);
     }
 }

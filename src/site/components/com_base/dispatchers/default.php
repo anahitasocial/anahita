@@ -137,10 +137,15 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
             $description = $item->body;
         }
       
-        $title = implode(' - ', array_filter(array_unique($title)));    
+        $title = implode(' - ', array_filter( array_unique($title) ) );    
+        
         $document->setTitle($title);
+        
+        $description = strip_tags( $description );
+        
         $description = preg_replace( '/\s+/', ' ', $description );
-        $description = htmlspecialchars($view->getTemplate()->renderHelper('text.truncate', $description, array('length'=>160)));          
+        
+        $description = $view->getTemplate()->renderHelper('text.truncate', $description, array('length'=>160));          
         
         $document->setDescription($description);         
     }

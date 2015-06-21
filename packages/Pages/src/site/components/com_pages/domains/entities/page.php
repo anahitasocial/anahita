@@ -55,10 +55,11 @@ class ComPagesDomainEntityPage extends ComMediumDomainEntityMedium
 		
         $config->append(array(
             'behaviors' => array(
+                'hittable',
+                'pinnable',
                 'modifiable'  => array(
                     'modifiable_properties' => array('excerpt','name','body')
                 ),
-                //h2-h6 not allowed in the comments
                 'commentable' => array('comment'=>array('format'=>'com://site/medium.filter.post'))
             )        
         ));

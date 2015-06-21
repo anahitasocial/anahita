@@ -159,4 +159,23 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
         ->append(array('label'=>$label))
         ->href(JRoute::_($url));
     }
+    
+    /**
+     * Customize the sticky command
+     *
+     * @param LibBaseTemplateObject $command Command Object
+     *
+     * @return void
+     */ 
+    protected function _commandPin($command)
+    {
+        $entity = $this->getController()->getItem();
+        
+        $label  = ( $entity->pinned ) ? JTEXT::_('LIB-AN-ACTION-UNPIN') : JTEXT::_('LIB-AN-ACTION-PIN');
+        
+        $command
+        ->append(array('label'=>$label))
+        ->href( $entity->getURL().'&action='.($entity->pinned ? 'unpin' : 'pin') )
+        ->setAttribute('data-trigger','PostLink');
+    }
 }

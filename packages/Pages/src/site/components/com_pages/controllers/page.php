@@ -44,8 +44,28 @@ class ComPagesControllerPage extends ComMediumControllerDefault
         $config->append(array(
             'request' => array(
                 'sort' => 'newest'
+            ),
+            'behaviors' => array(
+                'pinnable'
             )
         ));
+    }
+    
+    /**
+     * Browse
+     * 
+     * @param KCommandContext $context Context
+     * 
+     * @return void
+     */
+    protected function _actionBrowse($context)
+    {   
+        $entities = parent::_actionBrowse($context);
+        
+        if( $this->filter != 'leaders')
+        {
+            $entities->order('pinned', 'DESC');
+        }
     }
 	
 	/**

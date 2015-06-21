@@ -20,11 +20,14 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
     */
     public function up()
     {
+        dbexec('DROP TABLE #__opensocial_profiles');    
         dbexec('DELETE FROM #__components WHERE `option` = \'com_cache\' OR `option` = \'com_opensocial\' ');
         dbexec('DELETE FROM #__components WHERE name = "" ');
         dbexec('UPDATE #__components SET `admin_menu_link` = \'option=com_mailer\' WHERE `option` = \'com_mailer\' ');
         
         dbexec('DELETE FROM #__plugins WHERE `element` IN ( \'ptag\', \'syntax\', \'opensocial\', \'mtupgrade\', \'usertype\' ) ');
+        
+        dbexec('ALTER TABLE jos_anahita_nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');
     }
 
    /**

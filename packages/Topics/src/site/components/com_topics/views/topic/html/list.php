@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?php $highlight = ($topic->isSticky && $filter != 'leaders') ? 'an-highlight' : '' ?>
+<?php $highlight = ($topic->pinned && $filter != 'leaders') ? 'an-highlight' : '' ?>
 <div class="an-entity <?= $highlight ?>">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
