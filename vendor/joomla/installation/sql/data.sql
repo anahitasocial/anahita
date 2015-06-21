@@ -42,7 +42,8 @@ INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering
 (46, 'Storage - Amazon S3', 's3', 'storage', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
 (47, 'Content Filter - Hashtag', 'hashtag', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
 (48, 'Content Filter - Mention', 'mention', 'contentfilter', 0, 0, 1, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '');
+(49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
+(50, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '');
 
 
 INSERT INTO `#__templates_menu` (`template`, `menuid`, `client_id`) VALUES

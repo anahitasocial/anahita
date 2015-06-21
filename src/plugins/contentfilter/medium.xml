@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <install type="plugin" group="contentfilter" method="upgrade">
-    <name>Content Filter - Anahita Photo</name>
+    <name>Content Filter - Anahita</name>
     <author>Rastin Mehr</author>
-    <creationDate>April 2015</creationDate>
+    <creationDate>June 2015</creationDate>
     <copyright>rmd Studio</copyright>
     <license>GPL3</license>
     <authoremai />
     <authorurl>www.GetAnahita.com</authorurl>
-    <description>Replaces the link to an Anahita photo page with the photo</description>
+    <description>Replaces the link to an Anahita medium with a preview</description>
     <params />
     <files>
-        <filename plugin="photo">photo.php</filename>        
+        <filename plugin="medium">medium.php</filename>        
     </files>
 </install>

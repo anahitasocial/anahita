@@ -28,6 +28,12 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
         dbexec('DELETE FROM #__plugins WHERE `element` IN ( \'ptag\', \'syntax\', \'opensocial\', \'mtupgrade\', \'usertype\' ) ');
         
         dbexec('ALTER TABLE jos_anahita_nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');
+    
+        //add github gist plugin
+        dbexec("INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES (50, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '')");
+        
+        //remove the photo plugin
+        dbexec("DELETE FROM #__plugins WHERE `element` = 'photo' ");
     }
 
    /**
