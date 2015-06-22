@@ -1,12 +1,15 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<div class="an-entity <?= ($topic->pinned) ? 'an-highlight' : '' ?>">
+<div class="an-entity">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($topic->author) ?>
 		</div>
 			
 		<div class="entity-container">
+		    <?php if( $topic->owner->authorize('administration') && $topic->pinned ): ?>
+            <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
+            <?php endif; ?>
 			<h4 class="entity-author"><?= @name($topic->author) ?></h4>
 			<div class="an-meta"><?= @date($topic->creationTime) ?></div>
 		</div>
