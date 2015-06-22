@@ -2,13 +2,16 @@
 
 <?php @commands('toolbar') ?>
 
-<div class="an-entity <?= ($page->pinned) ? 'an-highlight' : '' ?>">
+<div class="an-entity">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($page->author) ?> 
 		</div>
 		
 		<div class="entity-container">
+		    <?php if( $page->owner->authorize('administration') && $page->pinned ): ?>
+            <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
+            <?php endif; ?>
 			<h4 class="author-name"><?= @name($page->author) ?></h4>
 			<div class="an-meta">
 				<?= @date($page->creationTime) ?> 
@@ -16,8 +19,8 @@
 		</div>
 	</div>
 	
-	<h1 class="entity-title">
-		<?= @escape( $page->title ) ?>
+	<h1 class="entity-title"> 
+		<?= @escape( $page->title ) ?> 
 	</h1>
 	
 	<?php if($page->description): ?>

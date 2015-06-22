@@ -64,7 +64,7 @@
             if ( isset($medium->id) && $medium->authorize('access') ) 
             {
                 
-                if( $medium->getRepository()->hasBehavior('Portraitable') )
+                if( $medium->getRepository()->hasBehavior('portraitable') )
                 {    
                     $caption = htmlspecialchars( $medium->title, ENT_QUOTES, 'UTF-8' );
                     

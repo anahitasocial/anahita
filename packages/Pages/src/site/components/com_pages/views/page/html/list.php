@@ -1,13 +1,16 @@
 <?php defined('KOOWA') or die ?>
 
 
-<div class="an-entity <?= ($page->pinned) ? 'an-highlight' : '' ?>">
+<div class="an-entity">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($page->author) ?> 
 		</div>
 		
 		<div class="entity-container">
+		    <?php if( $page->owner->authorize('administration') && $page->pinned ): ?>
+            <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
+            <?php endif; ?>
 			<h4 class="author-name"><?= @name($page->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($page->creationTime) ?></li>
@@ -18,9 +21,9 @@
 		</div>
 	</div>
 
-	<h3 class="entity-title">
+	<h3 class="entity-title"> 
 		<a href="<?= @route($page->getURL()) ?>">
-			<?= @escape($page->title) ?>
+			<?= @escape($page->title) ?> 
 		</a>
 	</h3>
 	
