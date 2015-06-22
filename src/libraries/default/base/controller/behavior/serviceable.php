@@ -156,7 +156,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
             $query->parent( $this->getParent() );
         }
         
-        if( $this->hasBehavior('ownable') && $this->getActor() )
+        if( $this->getActor() && $this->hasBehavior('ownable') && $this->hasBehavior('pinnable') )
         {
             $query->order('pinned', 'DESC');
         }
