@@ -50,19 +50,6 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
                 'before.addsubscriber'),  
                 array( $this, 'setEndDate' ) );
     }
-        
-    /**
-     * Read a package
-     * 
-     * @param KCommandContext $context
-     * @return void
-     */ 
-    protected function _actionRead( KCommandContext $context )
-    {
-        $this->plugins = JPluginHelper::getPlugin( 'subscriptions' );  
-              
-        return parent::_actionRead( $context );
-    }   
     
     /**
      * reassign subscriber to a different package
@@ -104,7 +91,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     }
     
     /**
-     * Set the entity gid
+     * Set the entity meta fields
      * 
      * @param KCommandContext $context
      * @return boolean
@@ -113,11 +100,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     {
         $data = $context->data;
         
-        $entity = $this->getItem();
-        
-        $plugins = KConfig::unbox( pick( $data->plugins, array() ) );
-        
-        $entity->setPluginsValues( $plugins );
+        $this->getItem()->setValue('actorIds', $data->actor_ids);
     }   
     
     /**

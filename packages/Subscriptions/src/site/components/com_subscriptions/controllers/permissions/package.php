@@ -16,6 +16,15 @@
 class ComSubscriptionsControllerPermissionPackage extends ComSubscriptionsControllerPermissionDefault
 {
     
+    /**
+     * Authorize if viewer can read
+     *
+     * @return boolean
+     */    
+    public function canRead()
+    {
+        return $this->canAdminister();
+    }
     
      /**
      * Authorize if viewer can add subscriber

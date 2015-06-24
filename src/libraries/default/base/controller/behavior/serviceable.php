@@ -156,10 +156,10 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
             $query->parent( $this->getParent() );
         }
         
-        if( $this->getActor() && $this->hasBehavior('ownable') && $this->hasBehavior('pinnable') )
+        if( $this->hasBehavior('ownable') && $this->hasBehavior('pinnable') )
         {
             $query->order('pinned', 'DESC');
-        }
+        } 
         
         switch($this->sort)
         {
@@ -182,7 +182,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         	break;
         }
     
-        $query->limit($this->limit, $this->start);
+        $query->limit( $this->limit, $this->start );
     
         return $this->getState()->setList($query->toEntityset())->getList();
     }

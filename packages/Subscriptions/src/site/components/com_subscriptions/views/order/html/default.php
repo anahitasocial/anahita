@@ -7,7 +7,7 @@
 	    
         <div class="an-entity">
         	<h2 class="entity-title">
-        	    <?= @escape($order->itemName) ?>
+        	    <?= @escape( $order->itemName ) ?>
         	</h2>
         
             <div class="entity-description">

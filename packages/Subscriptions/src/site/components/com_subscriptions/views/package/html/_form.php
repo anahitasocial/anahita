@@ -2,7 +2,7 @@
 
 <?php $package = empty($package) ?@controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $package; ?>
 
-<form method="post" action="<?= @route() ?>" class="an-entity">
+<form method="post" action="<?= @route() ?>">
     <fieldset>
         <legend><?= ( $package->persisted() ) ? @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-EDIT') : @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-ADD') ?></legend>
         <div class="control-group">
@@ -96,6 +96,32 @@
             </div>
         </div>
         <?php endif; ?>
+        
+        <div class="control-group">
+            <label class="control-label" for="package-subscribables">
+                <?= @text('COM-SUBSCRIPTIONS-PACKAGE-SUBSCRIBABLES') ?>
+            </label> 
+            <div class="controls">
+                <textarea id="package-subscribables" class="input-block-level" rows="5" name="actor_ids" required maxlength="500"><?= $package->getValue('actorIds') ?></textarea>
+            </div>
+        </div>
+        
+        <div class="control-group">
+           <label class="control-label" for="package-enabled">
+                <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ENABLED') ?>
+           </label>
+           <div class="controls"> 
+                <select class="span1" name="enabled" id="package-enabled">
+                 <?php
+                 $recurring_options = array(
+                    array( 0, @text('LIB-AN-NO') ),
+                    array( 1, @text('LIB-AN-YES') )
+                 );
+                 ?>   
+                 <?= @helper('html.options', $recurring_options, $package->enabled ) ?>   
+                </select>
+           </div>
+       </div>
         
         <div class="form-actions">
             <?php $cancelURL = ($package->persisted()) ? $package->getURL() : 'view=packages' ?>

@@ -36,29 +36,24 @@ class PlgSystemSubscriptions extends JPlugin
 	 */
 	public function onAfterRoute()
 	{
-		global $mainframe;	
+        $person = get_viewer();
         	
-		if( $mainframe->isAdmin() ) 
-		{
-		    return;
-        }
-        		
-		$person = get_viewer();		
+		if ( $person->admin() )
+        {
+            return;
+        }	
 		
 		KService::get('repos://site/subscriptions.package');
-		
-		if ( !$person ) 
-		{
-		    return;
-		}
         
+        //why isn't this in the below if statement?
 		JPluginHelper::importPlugin('subscriptions', null, true, KService::get('anahita:event.dispatcher'));
-		//if subscribe then unsubsribe 
 		
-		if ( isset($person->subscription) && $person->subscription->getTimeLeft() < 0 ) 
+		//if subscribe then unsubsribe 
+		if ( isset( $person->subscription ) && $person->subscription->getTimeLeft() < 0 ) 
 		{
-		    dispatch_plugin('subscriptions.onAfterExpire',
-		    array('subscription'=>$person->subscription));
+		    //JPluginHelper::importPlugin('subscriptions', null, true, KService::get('anahita:event.dispatcher'));
+                
+		    dispatch_plugin('subscriptions.onAfterExpire', array( 'subscription' => $person->subscription ) );
             
 		    $person->subscription = null;
 		    
@@ -66,9 +61,12 @@ class PlgSystemSubscriptions extends JPlugin
 		    {
 		        //redirect
 		        $url = (string) KRequest::url();
-		        KService::get('application.dispatcher')->getResponse()->setRedirect($url)->send();
+                
+		        KService::get('application.dispatcher')->getResponse()->setRedirect( $url )->send();
+		        
 		        exit(0);		        
 		    }
 		}
+        
 	}	
 }

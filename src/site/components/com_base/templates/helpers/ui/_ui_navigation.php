@@ -39,7 +39,7 @@
 			<?php endif; ?>
 			
 			<?php if( count($navigation->getNavigationItems()) ) :?>
-			<ul class="toolbar">
+			<ul class="toolbar inline">
 			<?php foreach($navigation->getNavigationItems() as $item) : ?>
 				<li><?= $helper->addAction($item)?></li>
 			<?php endforeach; ?>

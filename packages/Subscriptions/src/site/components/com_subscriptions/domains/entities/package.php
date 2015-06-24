@@ -1,7 +1,6 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
  * 
  * @category   Anahita
  * @package    Com_Subscriptions
@@ -164,34 +163,6 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 		
 		return $this;
 	}
-	
-	/**
-	 * Set the subscription plugins value for this package
-	 * 
-	 * @param array $values The plugins configuration value
-	 * @return void
-	 */
-	public function setPluginsValues( array $values )
-	{
-		$this->setValue( 'plugins', $values );
-        
-		return $this;
-	}
-	
-	/**
-	 * Return the $plugin values;
-	 * 
-	 * @param string $plugin The name of the plugin
-	 * 
-	 * @return array
-	 */
-	public function getPluginValues($plugin)
-	{
-		$values = (array) $this->getValue( 'plugins' );
-        
-		return isset( $values[$plugin] ) ? $values[$plugin] : array();
-	}	
-	
 	
 	/**
 	 * Authorizers subscripting to a package

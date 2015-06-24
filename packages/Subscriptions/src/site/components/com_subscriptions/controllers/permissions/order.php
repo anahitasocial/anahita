@@ -44,8 +44,8 @@ class ComSubscriptionsControllerPermissionOrder extends ComSubscriptionsControll
      * @return boolean
      */
     public function canRead()
-    {
-       $viewer = get_viewer();
+    { 
+        $viewer = get_viewer();
         
         if($viewer->admin())
         {
