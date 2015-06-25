@@ -25,7 +25,7 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
     {
         parent::__construct( $config );
         
-        $this->registerCallback( 'before.get', array( $this, 'setOwner' ) );
+        $this->registerCallback( 'before.get', array( $this, 'fetchActor' ) );
     }    
     	        
     /**
@@ -75,12 +75,13 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
      * 
      *  @return void
      */
-    public function setOwner()
+    public function fetchActor()
     {
         if( $entity = $this->getItem() )
         {
-           $actor = clone $entity->owner;    
-           $this->setActor( $actor );
+           $actor = $this->getService('repos://site/people.person')->find(array('id'=>$entity->actorId));
+  
+           $this->actor = $actor;
         }
     }
 }

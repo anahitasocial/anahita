@@ -6,7 +6,6 @@
 	<thead>
 		<tr>				
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-ID'); ?></th>
-			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-SUBSCRIBER'); ?></th>
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-SUBSCRIPTION'); ?></th>
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PAID'); ?></th>
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-BILLING-PERIOD'); ?></th>
@@ -22,7 +21,6 @@
 				<?= $order->itemId ?>
 			</a>
 		</td>
-		<td><?= @name( $order->owner ) ?></td>
 		<td><?= @escape($order->itemName); ?></td>
 		<td><?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?></td>
 		<td><i class="icon-<?= ($order->recurring) ? 'repeat' : 'ok-circle' ?>"></i> <?= ($order->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$order->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$order->billingPeriod) ?></td>

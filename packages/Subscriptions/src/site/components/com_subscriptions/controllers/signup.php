@@ -166,9 +166,9 @@
         {
             $identifier = 'com://site/subscriptions.controller.subscription';    
             
-            $ret = $this->getService($identifier)->setOrder($this->order->cloneEntity())->add();       
+            $ret = $this->getService( $identifier )->setOrder( $this->order->cloneEntity() )->add();       
         } 
-        catch(ComSubscriptionsDomainPaymentException $exception) 
+        catch( ComSubscriptionsDomainPaymentException $exception ) 
         {
             $this->setMessage('COM-SUBSCRIPTIONS-TRANSACTION-ERROR', 'error');
             
@@ -180,9 +180,9 @@
            //clreat the sesion
            $_SESSION['signup'] = null;
            
-           KRequest::set('session.subscriber_id', $ret->person->id);
+           KRequest::set('session.subscriber_id', $ret->person->id );
            
-           $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
+           $url = JRoute::_( 'option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id );
            
            $context->response->setRedirect( $url );           
         } 

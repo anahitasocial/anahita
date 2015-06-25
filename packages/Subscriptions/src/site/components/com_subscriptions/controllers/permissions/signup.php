@@ -14,7 +14,7 @@
  * @category	Controller
  */
 class ComSubscriptionsControllerPermissionSignup extends LibBaseControllerPermissionDefault
-{
+{    
     /**
      * Can login
      * 
