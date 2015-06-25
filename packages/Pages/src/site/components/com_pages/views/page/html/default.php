@@ -7,7 +7,7 @@
 	<?= @helper('ui.comments', $page) ?>
 	</div>
 	
-	<div class="span4">
+	<div class="span4 visible-desktop">
 		<h4 class="block-title">
 		<?= @text('COM-PAGES-META-ADDITIONAL-INFORMATION') ?>
 		</h4>
