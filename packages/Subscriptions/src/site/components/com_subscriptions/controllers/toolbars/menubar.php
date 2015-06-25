@@ -46,7 +46,7 @@ class ComSubscriptionsControllerToolbarMenubar extends ComBaseControllerToolbarM
             'nav-transactions', 
             JText::_('COM-SUBSCRIPTIONS-TRANSACTIONS-MENU-ITEM'), 
             JRoute::_('option=com_subscriptions&view=orders'),
-            ( $name == 'package' ) ? true : false);
+            ( $name == 'order' ) ? true : false);
         
         //packages navigation
         $this->addNavigation( 

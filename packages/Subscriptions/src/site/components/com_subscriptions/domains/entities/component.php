@@ -65,5 +65,18 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
             ));       
         }
     }
+    
+    /**
+     * On Destroy Nodes
+     *
+     * @param  KEvent $event
+     * @return void
+     */
+    public function onDeleteActor(KEvent $event)
+    {
+        $this
+        ->getService('repos:subscriptions.order')
+        ->destroy( array( 'owner.id' => $event->actor_id ) );
+    }
 }
     
