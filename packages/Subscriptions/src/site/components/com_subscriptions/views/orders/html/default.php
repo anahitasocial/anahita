@@ -2,7 +2,6 @@
 
 <?= @helper('ui.header', array()); ?>
 
-
 <table class="table table-striped">
 	<thead>
 		<tr>				
@@ -25,6 +24,7 @@
 				<?= $order->itemId ?>
 			</a>
 		</td>
+		
 		<td><?= @escape($order->itemName); ?></td>
 		<td><?= $order->itemAmount ?></td>
 		<td>- <?= round($order->discountAmount, 2) ?></td>

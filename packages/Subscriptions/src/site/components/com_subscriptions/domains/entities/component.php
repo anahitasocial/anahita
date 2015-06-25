@@ -64,7 +64,6 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
                 'controller'=>'com://site/subscriptions.controller.setting'
             ));       
         }
-        
     }
 }
     

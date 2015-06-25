@@ -91,4 +91,48 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
 	{
 		return $this->endDate->compare( AnDomainAttributeDate::getInstance() ) < 0;
 	}
+    
+    /**
+     * After adding a subscriptions add the person as a follower to all the package actors
+     * 
+     * KCommandContext $context Context
+     * 
+     * @return void
+     */
+    protected function _afterEntityInsert(KCommandContext $context)
+    {       
+        $actorIds = $this->package->getActorIds();
+            
+        if( count( $actorIds ) )
+        {
+            $actors = $this->getService('repos://site/actors.actor')->getQuery()->where( 'id', 'IN', $actorIds )->fetchSet();
+                       
+            foreach( $actors as $actor )
+            {
+                $actor->addFollower( $this->person );
+            }
+        }        
+    }
+
+    /**
+     * After deleting a subscription, unfollow the person from all the package actors
+     * 
+     * KCommandContext $context Context
+     * 
+     * @return void
+     */ 
+    protected function _afterEntityDelete(KCommandContext $context)
+    {       
+        $actorIds = $this->package->getActorIds();
+            
+        if( count( $actorIds ) )
+        {
+            $actors = $this->getService('repos://site/actors.actor')->getQuery()->where( 'id', 'IN', $actorIds )->fetchSet();
+                       
+            foreach( $actors as $actor )
+            {
+                $actor->removeFollower( $this->person );
+            }
+        }
+    }
 }

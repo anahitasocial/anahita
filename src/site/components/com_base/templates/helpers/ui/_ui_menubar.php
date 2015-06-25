@@ -5,7 +5,7 @@
 <?php endif;?>
 
 <?php if( count($menubar->getCommands()) ) :?>
-<ul class="toolbar">
+<ul class="toolbar inline">
 <?php foreach($menubar->getCommands() as $command) : ?>
 	<li><?= @html('tag', 'a', $command->label, $command->getAttributes()) ?></li>
 <?php endforeach; ?>

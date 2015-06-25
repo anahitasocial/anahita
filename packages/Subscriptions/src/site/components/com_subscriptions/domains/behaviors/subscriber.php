@@ -82,11 +82,13 @@
 	 */
 	public function subscribeTo( $package ) 
 	{
-        if( !$this->hasSubscription(false) )
+        if( !$this->hasSubscription( false ) )
         {    
-    		$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(array('data'=>array( 				
-     		     'package' => $package, 		
-     		)));
+    		$this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(
+    		array(
+    		  'data'=>array( 				
+     		     'package' => $package 		
+     		)));           
         }
  		
  	 	return $this->_mixer->subscription;
@@ -119,8 +121,8 @@
 	 * @return void
 	 */
 	public function unsubscribe() 
-	{
-		$this->_mixer->subscription = null;
+	{    
+		$this->_mixer->subscription->delete();
 	}
 	
 	/**
@@ -129,7 +131,7 @@
 	 * @param  ComSubscriptionsDomainEntityPackage $package
 	 * @return boolean
 	 */
-	public function subscribedTo( $package )
+	public function isSubscribedTo( $package )
 	{
 		return $this->hasSubscription() && $this->_mixer->subscription->package->eql( $package ); 
 	}

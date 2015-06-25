@@ -36,39 +36,25 @@ class PlgSystemSubscriptions extends JPlugin
 	 */
 	public function onAfterRoute()
 	{
-		global $mainframe;	
+        $person = get_viewer();
         	
-		if( $mainframe->isAdmin() ) 
-		{
-		    return;
-        }
-        		
-		$person = get_viewer();		
-		
+		if ( $person->admin() )
+        {
+            return;
+        }	
+
 		KService::get('repos://site/subscriptions.package');
-		
-		if ( !$person ) 
+        
+		//if subscribe then unsubsribe 
+		if( isset( $person->subscription ) && $person->subscription->getTimeLeft() < 0 ) 
 		{
-		    return;
+            $person->unsubscribe();
+            
+            $url = JRoute::_( 'index.php?option=com_subscriptions&view=packages' );
+            
+            KService::get('application.dispatcher')->getResponse()->setRedirect( $url )->send();
 		}
         
-		JPluginHelper::importPlugin('subscriptions', null, true, KService::get('anahita:event.dispatcher'));
-		//if subscribe then unsubsribe 
-		
-		if ( isset($person->subscription) && $person->subscription->getTimeLeft() < 0 ) 
-		{
-		    dispatch_plugin('subscriptions.onAfterExpire',
-		    array('subscription'=>$person->subscription));
-            
-		    $person->subscription = null;
-		    
-		    if ( KService::get('anahita:domain.space')->commitEntities() )
-		    {
-		        //redirect
-		        $url = (string) KRequest::url();
-		        KService::get('application.dispatcher')->getResponse()->setRedirect($url)->send();
-		        exit(0);		        
-		    }
-		}
+        return;
 	}	
 }

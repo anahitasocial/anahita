@@ -1,7 +1,6 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
  * 
  * @category   Anahita
  * @package    Com_Subscriptions
@@ -166,34 +165,6 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 	}
 	
 	/**
-	 * Set the subscription plugins value for this package
-	 * 
-	 * @param array $values The plugins configuration value
-	 * @return void
-	 */
-	public function setPluginsValues( array $values )
-	{
-		$this->setValue( 'plugins', $values );
-        
-		return $this;
-	}
-	
-	/**
-	 * Return the $plugin values;
-	 * 
-	 * @param string $plugin The name of the plugin
-	 * 
-	 * @return array
-	 */
-	public function getPluginValues($plugin)
-	{
-		$values = (array) $this->getValue( 'plugins' );
-        
-		return isset( $values[$plugin] ) ? $values[$plugin] : array();
-	}	
-	
-	
-	/**
 	 * Authorizers subscripting to a package
 	 * 
 	 * @param KCommandContext $context Context parameter
@@ -227,4 +198,26 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
         	
 		return !$this->eql( $package ) && ( $package->duration < $this->duration || $package->price < $this->price );
 	}
+    
+    /**
+     * returns actor ids as an array
+     * 
+     * @return array of actor ids that subscribers to this package will follow 
+     */
+    public function getActorIds()
+    {
+        $actorIds = $this->getValue('actorIds');
+        
+        if( $actorIds )
+        {
+            $actorIds = explode(',', $actorIds);
+            $actorIds = array_unique($actorIds);    
+        } 
+        else 
+        {
+          $actorIds = array();  
+        }
+        
+        return $actorIds;
+    }
 }

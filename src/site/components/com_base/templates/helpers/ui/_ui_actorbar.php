@@ -15,7 +15,7 @@
 		</div>
 	</div>
 	
-	<ul class="toolbar">
+	<ul class="toolbar inline">
 	<?php foreach($actorbar->getCommands() as $command) : ?>
 		<li><?= @helper('ui.command', $command) ?></li>
 	<?php endforeach; ?>

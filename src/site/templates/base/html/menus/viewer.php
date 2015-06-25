@@ -65,12 +65,16 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             </li>
             <?php endif; ?>
             
-            <?php if( !$viewer->admin() && KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')): ?>    
+            <?php if( KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder') ): ?>
             <li> 
-                <a href="<?= @route( 'option=com_subscriptions&view=orders&oid='.$viewer->id ) ?>">
-                <?= @text('TMPL-MENU-ITEM-VIEWER-SUBSCRIPTIONS-ORDERS-HISTORY') ?>
-                </a>
-            </li>
+                 <?php if( $viewer->admin()): ?>
+                 <a href="<?= @route( 'option=com_subscriptions&view=orders' ) ?>">  
+                 <?php else: ?>    
+                 <a href="<?= @route( 'option=com_subscriptions&view=orders&oid='.$viewer->id ) ?>">
+                 <?php endif; ?>  
+                 <?= @text('TMPL-MENU-ITEM-VIEWER-SUBSCRIPTIONS-ORDERS-HISTORY') ?>
+                 </a>  
+            </li>              
             <?php endif; ?>
             
 			<li>

@@ -36,8 +36,7 @@ class ComSubscriptionsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDef
      */
     protected function _authorizeAccess($context)
     {
-        if(is_person($this->_viewer) && $this->_viewer->admin())
-            return true;
+        return $this->_viewer->admin();
     }
         
 	/**
@@ -48,10 +47,8 @@ class ComSubscriptionsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDef
 	 * @return boolean
 	 */
 	protected function _authorizeAdministration($context)
-	{
-		//if the viewer is a moderator
-		if($this->_viewer->admin())
-			return true;
+	{        
+        return $this->_viewer->admin();
 	}
 	
 	/**

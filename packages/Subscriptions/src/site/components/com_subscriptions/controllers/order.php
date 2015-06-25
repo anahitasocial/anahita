@@ -15,7 +15,19 @@
  * @category		Controller
  */
 class ComSubscriptionsControllerOrder extends ComBaseControllerService
-{	        
+{
+    /**
+     * Constructor.
+     *
+     * @param   object  An optional KConfig object with configuration options
+     */
+    public function __construct( KConfig $config )
+    {
+        parent::__construct( $config );
+        
+        $this->registerCallback( 'before.get', array( $this, 'setOwner' ) );
+    }    
+    	        
     /**
      * Initializes the default configuration for the object
      *
@@ -37,7 +49,7 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
         ));
     
         parent::_initialize( $config );
-    }
+    }   
     
 	/** 
 	 * Service Browse
@@ -50,11 +62,25 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
  	{
  	    $entities = parent::_actionBrowse( $context );
 
-        if( isset($this->actor->id) )
+        if( isset( $this->actor->id ) )
         {
            $entities->actorId( $this->actor->id ); 
         }
         
         return $entities;
  	}
+    
+    /**
+     *  Sets controller's actor if a single entity is loaded
+     * 
+     *  @return void
+     */
+    public function setOwner()
+    {
+        if( $entity = $this->getItem() )
+        {
+           $actor = clone $entity->owner;    
+           $this->setActor( $actor );
+        }
+    }
 }

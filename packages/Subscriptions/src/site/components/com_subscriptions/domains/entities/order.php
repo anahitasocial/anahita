@@ -49,10 +49,17 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
+            'searchable_properties' => array('order_id'),
             'resources' => array('subscriptions_transactions'),
-            'aliases' => array(
-                'creationTime' => 'createdOn', 
+            'relationships'  => array(
+                'owner' => array( 
+                    'parent' => 'com:people.domain.entity.person', 
+                    'child_column' => 'actor_id' 
+                    ),      
             ),
+            'aliases' => array(
+                'creationTime' => 'createdOn'
+            )
         ));
     
         parent::_initialize($config);
@@ -68,7 +75,6 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	{
 		$config->append( array(
 		  'data' => array(
-		    
 		      'orderId' => substr( uniqid( rand(), true), 0, 10),
 	          'createdOn' => AnDomainAttributeDate::getInstance()
         ) ) );
