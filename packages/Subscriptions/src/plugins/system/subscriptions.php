@@ -42,31 +42,19 @@ class PlgSystemSubscriptions extends JPlugin
         {
             return;
         }	
-		
+
 		KService::get('repos://site/subscriptions.package');
         
-        //why isn't this in the below if statement?
-		JPluginHelper::importPlugin('subscriptions', null, true, KService::get('anahita:event.dispatcher'));
-		
 		//if subscribe then unsubsribe 
-		if ( isset( $person->subscription ) && $person->subscription->getTimeLeft() < 0 ) 
+		if( isset( $person->subscription ) && $person->subscription->getTimeLeft() < 0 ) 
 		{
-		    //JPluginHelper::importPlugin('subscriptions', null, true, KService::get('anahita:event.dispatcher'));
-                
-		    dispatch_plugin('subscriptions.onAfterExpire', array( 'subscription' => $person->subscription ) );
+            $person->unsubscribe();
             
-		    $person->subscription = null;
-		    
-		    if ( KService::get('anahita:domain.space')->commitEntities() )
-		    {
-		        //redirect
-		        $url = (string) KRequest::url();
-                
-		        KService::get('application.dispatcher')->getResponse()->setRedirect( $url )->send();
-		        
-		        exit(0);		        
-		    }
+            $url = JRoute::_( 'index.php?option=com_subscriptions&view=packages' );
+            
+            KService::get('application.dispatcher')->getResponse()->setRedirect( $url )->send();
 		}
         
+        return;
 	}	
 }
