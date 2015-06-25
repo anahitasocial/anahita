@@ -198,4 +198,26 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
         	
 		return !$this->eql( $package ) && ( $package->duration < $this->duration || $package->price < $this->price );
 	}
+    
+    /**
+     * returns actor ids as an array
+     * 
+     * @return array of actor ids that subscribers to this package will follow 
+     */
+    public function getActorIds()
+    {
+        $actorIds = $this->getValue('actorIds');
+        
+        if( $actorIds )
+        {
+            $actorIds = explode(',', $actorIds);
+            $actorIds = array_unique($actorIds);    
+        } 
+        else 
+        {
+          $actorIds = array();  
+        }
+        
+        return $actorIds;
+    }
 }
