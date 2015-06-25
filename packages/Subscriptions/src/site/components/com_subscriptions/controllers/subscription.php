@@ -135,7 +135,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         if ( !$this->commit() ) 
         {
             $set->delete();
+            
             $this->commit();
+            
             throw new RuntimeException("Subscription can not be added");
         }
         
@@ -143,7 +145,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 
         dispatch_plugin('subscriptions.onAfterSubscribe', array( 'subscription' => $subscription ));
         
-        $this->setItem($subscription);
+        $this->setItem( $subscription );
         
         return $subscription;        
     }
