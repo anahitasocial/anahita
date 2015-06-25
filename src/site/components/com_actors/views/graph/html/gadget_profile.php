@@ -15,15 +15,6 @@
     </div>
     <?php endif; ?>
     
-    <?php if($actor->isLeadable() && $actor->isFollowable()) : ?>
-        <?php if( $viewer->eql($actor) && $actor->mutualCount) : ?>
-        <div class="stat-count">
-            <?= $actor->mutualCount ?>
-            <span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-MUTUALS') ?></span>
-        </div>
-        <?php endif; ?>
-    <?php endif; ?>
-    
     <?php if($actor->isLeadable() && $viewer->isLeadable()) : ?>
         <?php $commons = $actor->getCommonLeaders($viewer); ?>    
         <?php if( isset($commons) && !$viewer->eql($actor) && $commons->getTotal() ) : ?>
@@ -56,11 +47,6 @@
 <?php if( $actor->leaderCount ) : ?>
 <h4><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></h4>
 <?= @template('_grid', array('actors'=>$actor->leaders->limit($limit))) ?>
-<?php endif; ?>
-
-<?php if( isset($commons) && !$viewer->eql($actor) && $commons->getTotal() ) : ?>
-<h4><?= @text('COM-ACTORS-SOCIALGRAPH-COMMON') ?></h4>
-<?= @template('_grid', array('actors'=>$commons->limit($limit))) ?>
 <?php endif; ?>
 
 <?php if(count($actor->administrators)): ?>
