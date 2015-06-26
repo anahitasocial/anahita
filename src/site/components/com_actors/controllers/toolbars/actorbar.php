@@ -81,7 +81,6 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
         if($entity->isLeadable()) 
         {
             $types[] = 'Leaders';
-            $types[] = 'Mutuals';
 
             if(!$entity->eql(get_viewer()))
                 $types[] = 'CommonLeaders';

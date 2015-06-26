@@ -51,12 +51,6 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
         $config->append(array(
             'searchable_properties' => array('order_id'),
             'resources' => array('subscriptions_transactions'),
-            'relationships'  => array(
-                'owner' => array( 
-                    'parent' => 'com:people.domain.entity.person', 
-                    'child_column' => 'actor_id' 
-                    ),      
-            ),
             'aliases' => array(
                 'creationTime' => 'createdOn'
             )
@@ -107,7 +101,7 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	 * 
 	 * @return void
 	 */
-	public function setSubscriber($subscriber)
+	public function setSubscriber( $subscriber )
 	{
 	    $this->_subscriber = $subscriber;
 	    
@@ -115,11 +109,15 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
 	    {
 	        $this->userId  = $this->_subscriber->userId;
 	        $this->actorId = $this->_subscriber->id;
-	    } else {
+	    } 
+	    else 
+	    {
 	        $this->set('actorId', PHP_INT_MAX);
             $this->set('userId',  PHP_INT_MAX);
 	    }
-	    $this->getRepository()->getSpace()->setSaveOrder($this, $this->_subscriber);
+        
+	    $this->getRepository()->getSpace()->setSaveOrder( $this, $this->_subscriber );
+		
 		return $this;
 	}
 

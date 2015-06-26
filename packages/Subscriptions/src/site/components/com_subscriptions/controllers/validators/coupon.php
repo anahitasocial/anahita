@@ -42,7 +42,7 @@ class ComSubscriptionsControllerValidatorCoupon extends LibBaseControllerValidat
     {
         $coupon = $this->_controller->getRepository()->find(array('code'=>$code));
 		
-		if( $coupon = $this->_controller->getRepository()->find(array('code'=>$code)) ) 
+		if( $coupon && !$coupon->expired() ) 
 		{
            $discount = $coupon->discount * 100;     
            

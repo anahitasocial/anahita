@@ -47,9 +47,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             
         $this->_gateway = $config->gateway;
         
-        $this->registerCallback('after.add', array($this, 'mailInvoice'));
-        
-        $this->registerCallback('after.add', array($this, 'mailWelcome'));
+        $this->registerCallback( 'after.add', array( $this, 'mailInvoice' ) );
     }
     
     /**
@@ -81,7 +79,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
      *
      * @return void
      */    
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd( KCommandContext $context )
     {    
         $payload = $this->_order->getPayload();
                 
@@ -91,6 +89,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         }
         
         $person  = $this->_order->getSubscriber();
+        
         $package = $this->_order->getPackage();
         
         $set = new AnObjectSet();
@@ -102,6 +101,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             $person->reset();
             
             $user = $person->getJUserObject();
+            
+            //encrypt the password
+            $user->set('password', $person->getPassword(true));
             
             $user->save();
             
@@ -129,6 +131,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         if ( $payload->getRecurring() )
         {
             $subscription->setValue( 'profileId', $payload->getRecurring()->profile_id );
+            
             $subscription->setValue( 'profileStatus', $payload->getRecurring()->profile_status );
         }
         
@@ -167,27 +170,6 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
                 'template' => 'invoice'
             ));
         }
-    }
-    
-    /**
-     * Mail an invoice after adding a subscription
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
-     */
-    public function mailWelcome(KCommandContext $context)
-    {  
-        if ( $this->getItem() )
-        {
-            $message = get_config_value('subscriptions.welcome_message');    
-                
-            $this->mail(array(
-                'to' => $this->getItem()->person->email,
-                'subject' => JText::_('COM-SUBSCRIPTIONS-CONFIRMATION-MESSAGE-SUBJECT'),
-                'body' => html_entity_decode( $message, ENT_COMPAT | ENT_HTML5, 'UTF-8')
-            ));
-        }                       
     }
     
     /**

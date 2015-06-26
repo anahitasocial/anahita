@@ -76,7 +76,7 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
     {
         $this
         ->getService('repos:subscriptions.order')
-        ->destroy( array( 'owner.id' => $event->actor_id ) );
+        ->destroy( array( 'transaction_tbl.actor_id' => $event->actor_id ) );
     }
 }
     

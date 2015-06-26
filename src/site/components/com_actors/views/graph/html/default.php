@@ -30,13 +30,6 @@
             <span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
             </div>        
             <?php endif; ?>
-                    
-            <?php if($actor->isLeadable() && $actor->isFollowable() && $actor->mutualCount) : ?>
-            <div class="stat-count">
-            <?= $actor->mutualCount ?>
-            <span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-MUTUALS') ?></span>
-            </div>
-            <?php endif; ?>
         </div>
 	</div>
 </div>

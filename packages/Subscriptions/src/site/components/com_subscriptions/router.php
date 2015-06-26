@@ -36,10 +36,13 @@ class ComSubscriptionsRouter extends ComBaseRouterDefault
     {
         $query = array();
         
-        if ( !count($segments) ) {
+        if( !count($segments) ) 
+        {
             $query['view'] = 'packages';
-        } else {
-            $query = parent::parse($segments);
+        } 
+        else 
+        {
+            $query = parent::parse( $segments );
         }
         
         return $query;         

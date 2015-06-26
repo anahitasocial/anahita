@@ -1,7 +1,10 @@
+<?php defined('KOOWA') or die('Restricted access'); ?>
+
 <h1><?= @text('COM-SUBSCRIPTIONS-INVOICE') ?></h1>
 
-<p><?= @text('COM-SUBSCRIPTIONS-INVOICE-DESCRIPTION') ?></p>
-<p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></strong>: <?= @escape($person->name) ?></p>
+<p><?= sprintf( get_config_value('subscriptions.welcome_message'), @name( $order->getSubscriber() ) ) ?></p>
+
+<p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></strong>: <?= @name( $order->getSubscriber() ) ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-SUBSCRIBED-TO') ?></strong>: <?= stripslashes($order->itemName) ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DATE') ?></strong>: <?= $order->createdOn->format('%D') ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PAID') ?></strong>: <?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?></p>
