@@ -103,7 +103,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             $user = $person->getJUserObject();
             
             //encrypt the password
-            $user->set('password', $person->getPassword(true));
+            $user->set('password', $person->getPassword( true ));
+
+            $user->set('block', '0');
             
             $user->save();
             
