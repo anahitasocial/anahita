@@ -260,8 +260,10 @@
         //validate user
     	if ( get_viewer()->guest() && !$this->person->validateEntity() )
     	{
-    	   $url = JRoute::_( 'option=com_subscriptions&view=signup&layout=login&id='.$package->id );    
+    	   $url = JRoute::_( 'option=com_subscriptions&view=signup&layout=login&id='.$package->id );   
+            
     	   $context->response->setRedirect( $url );
+    	   
     	   return false;
         }    	
 
@@ -276,7 +278,9 @@
     public function fetchEntity(KCommandContext $context)
     {
     	$entity = $this->getBehavior('identifiable')->fetchEntity($context);
+        
     	$this->instantiateDataFromSession($context);
+    	
     	return $entity;
     }
     
@@ -286,9 +290,13 @@
     public function execute($name, KCommandContext $context)
     {
         $data = $context->data;
+        
         $data->append(KRequest::get('session.signup', 'raw', array()));
+        
         KRequest::set('session.signup', $data->toArray());
+        
         $result = parent::execute($name, $context);
+        
         return $result;
     }
 
@@ -300,6 +308,7 @@
     public function instantiateDataFromSession(KCommandContext $context)
     {
     	$data 		= $context->data;
+        
     	$package 	= $this->getItem();
     	
     	//create a dummy transaction
@@ -312,7 +321,9 @@
 		$this->order->setPackage($package, $viewer->hasSubscription() ? $viewer->subscription->package : null);
 		        
 		$this->_instantiateCoupon($data);		
+		
 		$this->_instantiateUser($data);
+		
 		$this->_instantiateCreditCard($data);		    
     }
         
@@ -327,13 +338,16 @@
     {
         $this->coupon_code = $data->coupon_code;
         
-        $this->coupon = $this->getService('repos://site/subscriptions.coupon')
-            ->find(array('code'=>$this->coupon_code));
+        $this->coupon = $this->getService('repos://site/subscriptions.coupon')->find( array( 'code' => $this->coupon_code));
         
         if ( !$this->coupon )
+        {
             $this->coupon_code = '';
+        }
         else
+        {    
             $this->order->setCoupon($this->coupon);
+        }
     }
         
     /**
@@ -438,7 +452,7 @@
             $person = get_viewer();    
         }
         
-		$this->order->setSubscriber($person);
+		$this->order->setSubscriber( $person );
 		
 		$this->person = $person;
 		$this->user   = $person;

@@ -91,6 +91,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         }
         
         $person  = $this->_order->getSubscriber();
+        
         $package = $this->_order->getPackage();
         
         $set = new AnObjectSet();
@@ -102,6 +103,8 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             $person->reset();
             
             $user = $person->getJUserObject();
+            
+            $user->set('password', $person->getPassword(true));
             
             $user->save();
             
