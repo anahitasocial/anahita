@@ -38,7 +38,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 	{
 		parent::__construct($config);
 					
-		$this->registerCallback('after.add', array($this, 'notifyAdminsNewUser'));
+		$this->registerCallback( 'after.add', array( $this, 'notifyAdminsNewUser' ) );
 	}
 		
     /**
@@ -53,7 +53,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 	protected function _initialize(KConfig $config)
 	{	
 		$config->append(array(			
-			'behaviors'	=> array('validatable', 'com://site/mailer.controller.behavior.mailer')		    
+		    'behaviors'	=> array('validatable', 'com://site/mailer.controller.behavior.mailer')		    
 		));
 		
 		parent::_initialize($config);
@@ -61,9 +61,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 		AnHelperArray::unsetValues($config->behaviors, 'ownable');
 		
         //if it's a person view , set the default id to person
-        if ( $config->request->view == 'person' )
+        if( $config->request->view == 'person' )
         {
-            $config->append(array(
+            $config->append( array(
                 'request' => array(
 				'id' => get_viewer()->id
                 )
@@ -79,7 +79,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 	{	  
         $this->getToolbar('menubar')->setTitle(null);
         
-        if ( $this->modal ) 
+        if( $this->modal ) 
         {
             $this->getView()->layout('add_modal');
         }
@@ -94,16 +94,17 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return AnDomainEntityAbstract
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete( KCommandContext $context )
     {
-    	parent::_actionDelete($context);
+    	parent::_actionDelete( $context );
         
         $this->commit();        
         
         $userId = $this->getItem()->userId;
         
-        JFactory::getUser($userId)->delete();  
-		JFactory::getApplication()->logout($userId);                  
+        JFactory::getUser( $userId )->delete();  
+        
+		JFactory::getApplication()->logout( $userId );                  
     }
     
     /**
@@ -113,10 +114,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return AnDomainEntityAbstract
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd( KCommandContext $context )
     {    	
         //we are not saving this person but just validating it
-        $person = parent::_actionAdd($context);
+        $person = parent::_actionAdd( $context );
+        
         $data   = $context->data;        
         
         $person->userId = PHP_INT_MAX; //is assiged automatically
@@ -124,22 +126,25 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         
         //manually set the password to make sure there's a password
         
-        $person->setPassword($data->password);
+        $person->setPassword( $data->password );
         
         //add the validations here
-        $this->getRepository()->getValidator()
-             ->addValidation('username','uniqueness')
-             ->addValidation('email',   'uniqueness');
+        $this->getRepository()
+        ->getValidator()
+        ->addValidation('username','uniqueness')
+        ->addValidation('email', 'uniqueness');
                 
         if ( $person->validate() === false ) 
         {
-            throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+            throw new AnErrorException( $person->getErrors(), KHttpResponse::BAD_REQUEST );
         }
 
         $person->reset();
         
-        $firsttime = !(bool) $this->getService('repos://site/users')->getQuery(true)->fetchValue('id');
+        $firsttime = !(bool) $this->getService('repos://site/users')->getQuery( true )->fetchValue( 'id' );
+        
         $user = clone JFactory::getUser();
+        
         $authorize  =& JFactory::getACL();
                 
         if ( $firsttime ) {
@@ -153,71 +158,91 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             }
             
             $datbase = $this->getService('koowa:database.adapter.mysqli');
+            
             //joomla legacy. don't know what happens if it's set to 1
             $query = "INSERT INTO #__users VALUES (62, 'admin', 'admin', 'admin@example.com', '', 'Super Administrator', 0, 1, 25, '', '', '', '')";
-            $datbase->execute($query);
+            
+            $datbase->execute( $query );
+            
             $query = "INSERT INTO #__core_acl_aro VALUES (10,'users','62',0,'Administrator',0)";
-            $datbase->execute($query);
+            
+            $datbase->execute( $query );
+            
             $query = "INSERT INTO #__core_acl_groups_aro_map VALUES (25,'',10)";
-            $datbase->execute($query);
+            
+            $datbase->execute( $query );
+            
             $user  =& JFactory::getUser();
-            $user  = JUser::getInstance(62);
-            $this->unregisterCallback('after.add', array($this, 'notifyAdminsNewUser'));
+            
+            $user  = JUser::getInstance( 62 );
+            
+            $this->unregisterCallback( 'after.add', array( $this, 'notifyAdminsNewUser' ) );
         
         } 
         else 
         {        
-            $user->set('id', 0);
+            $user->set( 'id', 0 );
             
             $config = &JComponentHelper::getParams( 'com_users' );
-            $user->set('usertype', $config->get( 'new_usertype' ));
-            $user->set('gid', $authorize->get_group_id( '', $config->get( 'new_usertype' ), 'ARO' ));
+            
+            $user->set( 'usertype', $config->get( 'new_usertype' ) );
+            
+            $user->set( 'gid', $authorize->get_group_id( '', $config->get( 'new_usertype' ), 'ARO' ) );
             
             if ( $this->activationRequired() )
             {
-                jimport('joomla.user.helper');
-                $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()) );
-                $user->set('block', '1');
+                jimport( 'joomla.user.helper' );
+                
+                $user->set( 'activation', JUtility::getHash( JUserHelper::genRandomPassword() ) );
+                
+                $user->set( 'block', '1' );
             }
         }
 
-        $user->set('name', $person->name);
-        $user->set('username', $person->username);
-        $user->set('email', $person->email);
-        $user->set('password', $person->getPassword(true));
+        $user->set( 'name', $person->name );
+        
+        $user->set( 'username', $person->username );
+        
+        $user->set( 'email', $person->email );
+        
+        $user->set( 'password', $person->getPassword( true ) );
+        
         $date =& JFactory::getDate();
-        $user->set('registerDate', $date->toMySQL());        
+        
+        $user->set( 'registerDate', $date->toMySQL() );        
         
         $user->save();
-        $person = $this->getRepository()->find(array('userId'=>$user->id));
+        
+        $person = $this->getRepository()->find( array( 'userId' => $user->id ) );
         
         //if person is null then user has not been saved
-        if ( !$person ) {
+        if ( !$person ) 
+        {
             throw new RuntimeException('Unexpected error when saving user');
         }
         
         //set the portrait image
         if ( $file = KRequest::get('files.portrait', 'raw') ) 
         {
-            $person->setPortraitImage(array('url'=>$file['tmp_name'], 'mimetype'=>$file['type']));
+            $person->setPortraitImage( array( 'url' => $file['tmp_name'], 'mimetype' => $file['type'] ) );
         }
                             
         //set the status
         $this->getResponse()->status  = KHttpResponse::CREATED; 
         
-        $this->setItem($person);
+        $this->setItem( $person );
         
         if ( !$person->enabled ) 
         {
-            $this->registerCallback('after.add', array($this, 'mailActivationLink'));
+            $this->registerCallback( 'after.add', array( $this, 'mailActivationLink' ) );
         }
-        
         elseif ( $this->isDispatched() ) 
         {
             if ( $context->request->getFormat() == 'html' ) 
             {
                 $context->response->status = 200;
-                $this->registerCallback('after.add', array($this, 'login'));
+                
+                $this->registerCallback( 'after.add', array( $this, 'login' ) );
             }
         }
                 
@@ -235,52 +260,63 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionEdit(KCommandContext $context)
     {        
         //add the validations here
-        $this->getRepository()->getValidator()
-                ->addValidation('username', 'uniqueness')
-                ->addValidation('email', 'uniqueness');
+        $this->getRepository()
+        ->getValidator()
+        ->addValidation( 'username', 'uniqueness' )
+        ->addValidation( 'email', 'uniqueness' );
                         
         $data   = $context->data;
         
-        $person = parent::_actionEdit($context);
+        $person = parent::_actionEdit( $context );
               
         //manually set the password to make sure there's a password
-        if ( !empty($data->password) ) {
-            $person->setPassword($data->password);
+        if ( !empty( $data->password ) ) 
+        {
+            $person->setPassword( $data->password );
         }
                 
-        if ( $person->validate() === false ) {
-            throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+        if ( $person->validate() === false ) 
+        {
+            throw new AnErrorException( $person->getErrors(), KHttpResponse::BAD_REQUEST );
         }
         
-        $user = JFactory::getUser($person->userId);
+        $user = JFactory::getUser( $person->userId );
         
-        if ( $person->getModifiedData()->name ) {
-            $user->set('name', $person->name);
+        if ( $person->getModifiedData()->name ) 
+        {
+            $user->set( 'name', $person->name );
         }
         
-        if ( $person->getModifiedData()->username ) {
-            $user->set('username', $person->username);   
+        if ( $person->getModifiedData()->username ) 
+        {
+            $user->set( 'username', $person->username );   
         }
         
-        if ( $person->getModifiedData()->email ) {
-            $user->set('email', $person->email);               
+        if ( $person->getModifiedData()->email ) 
+        {
+            $user->set( 'email', $person->email );               
         }
         
-        if ( !empty($data->password) ) {
-            $user->set('password', $person->getPassword(true));
+        if ( !empty( $data->password ) ) 
+        {
+            $user->set( 'password', $person->getPassword( true ) );
         }
         
         //save language
-        if ( @$data->params->language ) {            
-            $user->_params->set('language', $data->params->language);              
+        if ( @$data->params->language ) 
+        {            
+            $user->_params->set( 'language', $data->params->language );              
         }
 
-        if ( !$user->save() ) {
+        if ( !$user->save() ) 
+        {
             throw new RuntimeException('Unexpected error when saving user');
+            
             return false;               
         }
         
-        if ( !$person->save() ) {
+        if ( !$person->save() ) 
+        {
             throw new RuntimeException('Unexpected error when saving user');
         }
         
@@ -296,21 +332,23 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return void
      */    
-    public function mailActivationLink(KCommandContext $context)
+    public function mailActivationLink( KCommandContext $context )
     {    	    	
 		$person = $context->result;
 		
 		$this->user = $person->getUserObject();
         
-		$this->mail(array(
+		$this->mail( array (
             'to' => $this->user->email,
     		'subject' => JText::_('COM-PEOPLE-ACTIVATION-SUBJECT'),
     		'template' => 'account_activate'
 		));
         
-		$context->response->setHeader('X-User-Activation-Required', true);
-		$this->setMessage( JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $this->user->name), 'success');
-		$context->response->setRedirect( JRoute::_('option=com_people&view=session') );
+		$context->response->setHeader( 'X-User-Activation-Required', true );
+        
+		$this->setMessage( JText::sprintf( 'COM-PEOPLE-ACTIVATION-LINK-SENT', $this->user->name ), 'success');
+		
+		$context->response->setRedirect( JRoute::_( 'option=com_people&view=session' ) );
     }
     
     /**
@@ -323,9 +361,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function notifyAdminsNewUser(KCommandContext $context)
     {        
         $person = $context->result;
+        
         $this->user = $person->getUserObject();
-        $this->mailAdmins(array(            				
-            'subject'	=> JText::sprintf('COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT', $this->user->name),
+        $this->mailAdmins( array (            				
+            'subject'	=> JText::sprintf( 'COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT', $this->user->name ),
             'template'	=> 'new_user'
         ));
     }
@@ -334,7 +373,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * (non-PHPdoc)
      * @see ComActorsControllerAbstract::redirect()
      */
-    public function redirect(KCommandContext $context)
+    public function redirect( KCommandContext $context )
     {
         if ( $context->action != 'add' ) 
         {
@@ -351,13 +390,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     public function login()
     {
-    	$user = (array)JFactory::getUser($this->getItem()->userId);
+    	$user = (array) JFactory::getUser( $this->getItem()->userId );
     	
-    	$this->getService()->set('com:people.viewer', $this->getItem());
+    	$this->getService()->set( 'com:people.viewer', $this->getItem() );
     	
-    	$controller = $this->getService('com://site/people.controller.session', array('response'=>$this->getResponse()));
+    	$controller = $this->getService( 'com://site/people.controller.session', array( 'response' => $this->getResponse() ) );
     	
-    	return $controller->login($user);
+    	return $controller->login( $user );
     }
     
     /**
@@ -367,13 +406,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return void
      */
-    public function onSettingDisplay(KEvent $event)
+    public function onSettingDisplay( KEvent $event )
     {   
         $tabs = $event->tabs;   
         
         if ( JFactory::getUser()->id == $event->actor->userId ) 
         {     
-            $tabs->insert('account', array('label'=>JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));                    
+            $tabs->insert( 'account', array( 'label' => JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT') ) );                    
         } 
     }    
 }
