@@ -1,4 +1,5 @@
-<?php 
+<?php
+ 
 /**
  * @version     $Id$
  * @category	Com_Subscriptions

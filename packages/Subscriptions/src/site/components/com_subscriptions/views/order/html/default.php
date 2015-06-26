@@ -12,6 +12,12 @@
         
             <div class="entity-description">
             	<dl>
+            	    <dt><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></dt>
+            	    <dd><?= @escape( $actor->name ) ?></dd>
+            	    
+            	    <dt><?= @text('COM-SUBSCRIPTIONS-INVOICE-SUBSCRIBED-TO') ?></dt>
+            	    <dd><?= @escape( $order->itemName ) ?></dd>
+            	    
             		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-ID'); ?></dt>
             		<dd><?= $order->itemId ?></dd>
             		
@@ -41,7 +47,9 @@
             		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DURATION'); ?></dt>
             		<dd><?= round(AnHelperDate::secondsTo('day', $order->duration)) ?> <?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DAYS') ?></dd>
             
-            	</dl>
+                    <dt><?= @text('COM-SUBSCRIPTIONS-BILLING-COUNTRY') ?></dt>
+                    <dd><?= $order->country ?></dd>
+            	</dl>  
         	</div>
         </div>
 	</div>

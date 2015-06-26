@@ -5,7 +5,7 @@
 <?php if($viewer->admin()): ?>        
 <?= @template('_edit') ?>        
 <?php elseif(!$actor->hasSubscription()): ?>
-<div class="alert alert-warning">
+<div class="alert alert-block alert-warning">
     <p><?= @text('COM-SUBSCRIPTIONS-SUBSCRIPTIONS-NOT-SUBSCRIBED') ?></p>
     <p>
         <a href="<?= @route('view=packages') ?>" class="btn">
@@ -15,7 +15,7 @@
 </div>
 
 <?php elseif( $subscription->expired() ): ?>
-<div class="alert alert-error">
+<div class="alert alert-block alert-error">
     <p><?= @text('COM-SUBSCRIPTIONS-PACKAGE-HAS-EXPIRED') ?></p>
     
     <p>
@@ -67,7 +67,7 @@
 
 <?php if( !$package->recurring ): ?>
 <?php $daysLeft = ceil( AnHelperDate::secondsTo('day', $subscription->getTimeLeft())); ?>
-<div class="alert alert-<?= ($daysLeft < 31) ? 'warning' : 'info' ?>">
+<div class="alert alert-block alert-<?= ($daysLeft < 31) ? 'warning' : 'info' ?>">
     <p><?= sprintf(@text('COM-SUBSCRIPTIONS-PACKAGE-ABOUT-TO-EXPIRE'), $daysLeft); ?></p>
     
     <?php if( $daysLeft < 31 ) : ?>
