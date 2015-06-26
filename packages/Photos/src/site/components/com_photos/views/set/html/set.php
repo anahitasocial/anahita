@@ -2,7 +2,11 @@
 
 <?php @commands('toolbar') ?>
 
-<div class="an-entity an-photos-set editable" data-url="<?= @route($set->getURL()) ?>">             
+<?php if( $set->authorize('edit') ) : ?>
+<div class="an-entity an-photos-set editable" data-url="<?= @route( $set->getURL() ) ?>">    
+<?php else : ?>
+<div class="an-entity an-photos-set">
+<?php endif; ?>         
     <div class="entity-description-wrapper">
         <h3 class="entity-title">
             <?= @escape( $set->title ) ?>

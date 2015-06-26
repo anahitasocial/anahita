@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if($photo->authorize('edit')) : ?>
-<div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
+<?php if( $photo->authorize('edit') ) : ?>
+<div class="an-entity editable" data-url="<?= @route( $photo->getURL() ) ?>">
 <?php else : ?>
 <div class="an-entity">
 <?php endif; ?>
