@@ -37,7 +37,7 @@
         </div>
         <?php elseif ( $package->authorize('subscribepackage') ) : ?>
         <div class="entity-actions">
-            <a href="<?=@route('view=signup&id='.$package->id)?>" class="btn btn-block">
+            <a href="<?=@route('view=signup&id='.$package->id)?>" class="btn btn-success btn-block">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-SUBSCRIBE-NOW') ?>
             </a>
         </div>
