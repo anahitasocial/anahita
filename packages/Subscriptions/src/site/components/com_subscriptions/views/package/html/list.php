@@ -25,7 +25,7 @@
     </div>
     
     <div class="entity-description">
-        <?= $package->description ?>
+        <?= @content( $package->description ) ?>
     </div>
     
     <?php if( !$package->authorize('administration') ): ?>
