@@ -73,6 +73,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
     protected function _configureGraphBar()
     {   
         $entity = $this->getController()->getItem();
+        $viewer = get_viewer();
         $types = array();
 
         if($entity->isFollowable())
@@ -82,8 +83,10 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
         {
             $types[] = 'Leaders';
 
-            if(!$entity->eql(get_viewer()))
+            if( !$viewer->guest() && !$entity->eql( $viewer ) )
+            {
                 $types[] = 'CommonLeaders';
+            }
         }
 
         if($entity->authorize('administration', array('strict'=>true)))
