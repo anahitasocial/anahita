@@ -19,10 +19,6 @@
             </h3>
             
             <div class="entity-description">
-                <?= $item->description ?>
-            </div>
-            
-            <div class="entity-description">
                 
                 <dl>
                     <?php if($item->recurring): ?>
@@ -110,9 +106,11 @@
     		<input type="hidden" name="action" value="process">
     		
     		<div class="form-actions">
+    		    <?php if ( $order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard ) : ?>
     			<a class="btn" href="<?= @route(array('layout'=>'payment','id'=>$item->id)) ?>">
                     <?= @text('COM-SUBSCRIPTIONS-EDIT-INFORMATION') ?>      
     			</a>
+    			<?php endif; ?>  
     			
     			<button class="btn btn-primary" type="submit">
     			    <?= @text('COM-SUBSCRIPTIONS-PROCESS-PAYMENT') ?>

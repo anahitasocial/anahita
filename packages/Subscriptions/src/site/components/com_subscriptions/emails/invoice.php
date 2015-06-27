@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<h1><?= @text('COM-SUBSCRIPTIONS-INVOICE') ?></h1>
+<?= get_config_value('subscriptions.welcome_message'); ?>
 
-<p><?= sprintf( get_config_value('subscriptions.welcome_message'), @name( $order->getSubscriber() ) ) ?></p>
+<h1><?= @text('COM-SUBSCRIPTIONS-INVOICE') ?></h1>
 
 <p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></strong>: <?= @name( $order->getSubscriber() ) ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-SUBSCRIBED-TO') ?></strong>: <?= stripslashes($order->itemName) ?></p>

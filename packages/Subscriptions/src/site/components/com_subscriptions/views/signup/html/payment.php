@@ -23,10 +23,6 @@
         	</h2>
         	
         	<div class="entity-description">
-                <?= $item->description ?>
-            </div>
-        	
-        	<div class="entity-description">
             	<dl>
             		<?php if($item->recurring): ?>
             		<dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt> 

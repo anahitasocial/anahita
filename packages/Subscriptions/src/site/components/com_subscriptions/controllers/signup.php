@@ -123,6 +123,7 @@
 	protected function _actionXpayment($context)
 	{
 		$data = $context->data;
+        
 		$package = $this->getItem();
 
 		$gateway = $this->getService('com://site/subscriptions.controller.subscription')->getGateway();
@@ -134,9 +135,9 @@
 		        JRoute::_( 'option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true ) );
                 
 		    $context->response->setRedirect($url, KHttpResponse::SEE_OTHER);
-		} 
-		
-		catch(Exception $e) {
+		}
+		catch( Exception $e ) 
+		{
 		    throw new RuntimeException();
 		}
 	}
