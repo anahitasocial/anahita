@@ -110,12 +110,6 @@ class PackageCommand extends Command
         }                        
     }
     
-    protected function _installModule($manifest, $output)
-    {
-        $name = strtolower((string)$manifest->name[0]);
-        $output->writeLn("<info>...installing module $name</info>");
-    }
-    
     protected function _installPlugin($manifest, $output)
     {
         $plugins = \KService::get('repos:cli.plugin', array('resources'=>'plugins'));

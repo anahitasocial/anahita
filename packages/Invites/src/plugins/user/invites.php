@@ -55,14 +55,18 @@ class plgUserInvites extends JPlugin
 	 */
 	public function onAfterStoreUser($user, $isnew, $succes, $msg)
 	{		
-		if ( !$isnew ) 
+		if( !$isnew )
+        { 
 			return;	
-			
+        }
+        	
 		$invite_token = KRequest::get('session.invite_token', 'string', null);
 		
 		if(!$invite_token)
+        {
 			return;
-			
+        }
+        	
 		KRequest::set('session.invite_token', null);
 		
 		$token = KService::get('repos:invites.token')->fetch(array('value'=>$invite_token));
