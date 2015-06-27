@@ -105,7 +105,7 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
             
         if( count( $actorIds ) )
         {
-            $actors = $this->getService('repos://site/actors.actor')->getQuery()->where( 'id', 'IN', $actorIds )->fetchSet();
+            $actors = $this->getService('repos://site/actors.actor')->getQuery(true)->where( 'id', 'IN', $actorIds )->fetchSet();
                        
             foreach( $actors as $actor )
             {
@@ -127,7 +127,7 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
             
         if( count( $actorIds ) )
         {
-            $actors = $this->getService('repos://site/actors.actor')->getQuery()->where( 'id', 'IN', $actorIds )->fetchSet();
+            $actors = $this->getService('repos://site/actors.actor')->getQuery(true)->where( 'id', 'IN', $actorIds )->fetchSet();
                        
             foreach( $actors as $actor )
             {
