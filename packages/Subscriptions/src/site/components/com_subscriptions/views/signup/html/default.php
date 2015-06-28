@@ -6,6 +6,27 @@
 	<div class="span8">
 	    
 	    <h1>Terms Of Service</h1>
+	    
+	    <div class="an-entity">
+            <h2 class="entity-title">
+                <?= @escape( $item->name ) ?>
+            </h2>
+            
+            <div class="entity-description">
+                <dl>
+                    <?php if($item->recurring): ?>
+                    <dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt> 
+                    <dd><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
+                    <?php else: ?>
+                    <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-DURATION') ?>:</dt>
+                    <dd><?= round(AnHelperDate::secondsTo('day', $item->duration)) ?> <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DAYS') ?></dd>
+                    <?php endif; ?>
+                
+                    <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>: </dt>
+                    <dd><?= $item->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
+                </dl>
+            </div>
+        </div>
 
         <?php
     
