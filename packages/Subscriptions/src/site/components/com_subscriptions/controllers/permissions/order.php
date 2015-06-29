@@ -35,6 +35,11 @@ class ComSubscriptionsControllerPermissionOrder extends ComSubscriptionsControll
             return false;
         }
         
+        if( !$viewer->admin() && !$viewer->eql( $this->actor ) )
+        {
+            return false;
+        }
+        
         return true;
     }
     
