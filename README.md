@@ -2,9 +2,9 @@
 
 # Anahita
 
-*Version:* 4.1.2 Birth Release
+*Version:* 4.1.3 Birth Release
 
-Anahita is a social networking platform for building knowledge sharing apps and services. Use Anahita to launch:
+Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
 1. online learning and knowledge sharing networks
 2. information access networks about people, places, and things

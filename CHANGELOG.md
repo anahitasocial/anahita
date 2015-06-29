@@ -1,5 +1,16 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.3 Birth Release
+=============================
+* major updates to the Subscriptions app. We are now using it ourselves.
+* fixed editable bug in Photos app set title and description
+* removed access plugin from Subscriptions app
+* deleted more Joomla legacy files such as com_cache
+* added Pinnable behaviour so the Pages and Topics can use it
+* fixed gist JQuery plugin which couldn't parse multiple urls
+* fixed favicon overwrite bug
+
+
 Anahita 4.1.2 Birth Release
 =============================
 * Upgraded facebook OAth API
