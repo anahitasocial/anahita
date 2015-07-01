@@ -67,9 +67,9 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
 		{
 			$gadgets->insert('photos', array(
 					'title' 	    => JText::_('COM-PHOTOS-GADGET-DASHBOARD'),
-					'url'   	    => 'option=com_photos&view=photos&filter=leaders&layout=gadget&oid='.$actor->uniqueAlias,
+					'url'   	    => 'option=com_photos&view=photos&layout=gadget&filter=leaders',
 					'action'        => JText::_('LIB-AN-GADGET-VIEW-ALL'),
-					'action_url' 	=> 'option=com_photos&view=photos&filter=leaders&oid='.$actor->uniqueAlias,
+					'action_url' 	=> 'option=com_photos&view=photos&filter=leaders',
 			));
 		}
 	}

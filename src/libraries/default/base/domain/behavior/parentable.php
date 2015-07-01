@@ -45,12 +45,14 @@ class LibBaseDomainBehaviorParentable extends AnDomainBehaviorAbstract
 	    $relationship['polymorphic'] = $config->polymorphic;
 	    
 		//if parent is set, then set the base parent
-		if(isset($config['parent'])) 
+		if( isset( $config['parent'] ) ) 
 		{
-		    if(strpos($config['parent'], '.') === false)
+		    if( strpos( $config['parent'], '.' ) === false )
 		    {
 		        $identifier = clone $config->service_identifier;
+                
 		        $identifier->path = array('domain','entity');
+		        
 		        $identifier->name = $config['parent'];		        
 		    } 
 		    else 
@@ -59,6 +61,7 @@ class LibBaseDomainBehaviorParentable extends AnDomainBehaviorAbstract
 		    }			    
 		    		
 			$relationship['parent'] = $identifier;
+            
 			unset($config['parent']);
 			
 			$config->append(array(
@@ -72,6 +75,6 @@ class LibBaseDomainBehaviorParentable extends AnDomainBehaviorAbstract
 			)
 		));
 		
-		parent::_initialize($config);
+		parent::_initialize( $config );
 	}	
 }
