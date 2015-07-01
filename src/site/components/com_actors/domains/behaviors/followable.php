@@ -132,11 +132,20 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     {
         $leader = $this->_mixer;
         
-        if($requester->following($leader))
+        if( $leader->eql( $requester ) )
+        {
             return false;
+        }
+        
+        if( $requester->following( $leader ) )
+        {
+            return false;
+        } 
             
-        if($leader->blocking($requester))
+        if ( $leader->blocking( $requester ) )
+        {
             return false;
+        }
         
         $edge = $this->getService('repos:actors.request')->findOrAddNew(array(
                 'requester'   => $requester,                   
@@ -155,7 +164,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
      * 
      * @return void
      */
-    public function removeRequester($requester)
+    public function removeRequester( $requester )
     {
         $leader = $this->_mixer;
         
@@ -164,8 +173,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
             'requestee'   => $leader 
         );
         
-        $this->getService('repos:actors.request')->destroy($data);
-        $this->resetStats(array($leader, $requester));
+        $this->getService('repos:actors.request')->destroy( $data );
+        
+        $this->resetStats( array( $leader, $requester ) );
     }
         
 	/**
@@ -175,19 +185,30 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 	 * 
 	 * @return void
 	 */	
-	public function addFollower($follower)
+	public function addFollower( $follower )
 	{		
     	$leader = $this->_mixer;
     	
-    	if($leader->blocking($follower))
+        if( $leader->eql( $follower ) )
+        {
+            return false;
+        }
+        
+    	if( $leader->blocking( $follower ) )
+        {
     	    return false;
-    	        
-        if($follower->requested($leader))
-            $leader->removeRequester($follower);
+        } 
+                
+        if( $follower->requested( $leader ) )
+        {
+            $leader->removeRequester( $follower );
+        }
         
         //add a subscriber
-        if($this->_subscribe_after_follow)
-            $leader->addSubscriber($follower);
+        if( $this->_subscribe_after_follow )
+        {
+            $leader->addSubscriber( $follower );
+        }
                 
 		$edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
 		        	'leader'	=> $leader,
@@ -215,18 +236,22 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         
         $leader = $this->_mixer;
 
-        if($leader->isSubscribable())
-        	$leader->removeSubscriber($follower);
+        if( $leader->isSubscribable() )
+        {
+        	$leader->removeSubscriber( $follower );
+        }
           
         $this->removeNodeSubscriptions($leader, $follower);
              			        
-        if($leader->isAdministrable())
-            $leader->removeAdministrator($follower);
-		 
+        if( $leader->isAdministrable() )
+        {
+            $leader->removeAdministrator( $follower );
+        }
+         
 		$this->getService('repos:actors.follow')
-		    ->destroy(array(
-	            'follower'	  => $follower,
-	            'leader'	  => $leader		        
+		    ->destroy( array(
+	            'follower' => $follower,
+	            'leader' => $leader		        
             ));
 		
 		$this->resetStats(array($leader, $follower));
@@ -243,15 +268,26 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 	{		
     	$follower = $this->_mixer;
     	
-    	if($leader->blocking($follower))
+        if( $follower->eql( $leader ) )
+        {
+            return false;
+        }
+        
+    	if( $leader->blocking( $follower ) )
+        {
     	    return false;
-    	        
-        if($follower->requested($leader))
-            $leader->removeRequester($follower);
+        } 
+                
+        if( $follower->requested( $leader ) )
+        {
+            $leader->removeRequester( $follower );
+        }
         
         //add a subscriber
-        if($this->_subscribe_after_follow)
-            $leader->addSubscriber($follower);
+        if( $this->_subscribe_after_follow )
+        {
+            $leader->addSubscriber( $follower );
+        }
                 
 		$edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
 		        	'leader' => $leader,
@@ -260,7 +296,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
 		$edge->save();
 		
-		$this->resetStats(array($leader, $follower));
+		$this->resetStats( array( $leader, $follower ) );
 		
 		return $edge;
 	}
@@ -279,21 +315,25 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         
         $follower = $this->_mixer;
 
-        if($leader->isSubscribable())
-        	$leader->removeSubscriber($follower);
-          
-        $this->removeNodeSubscriptions($leader, $follower);
+        if( $leader->isSubscribable() )
+        {
+            $leader->removeSubscriber( $follower );    
+        }
+        	
+        $this->removeNodeSubscriptions( $leader, $follower );
              			        
-        if($leader->isAdministrable())
-            $leader->removeAdministrator($follower);
-		 
+        if( $leader->isAdministrable() )
+        {
+            $leader->removeAdministrator( $follower );
+        }
+         
 		$this->getService('repos:actors.follow')
 		    ->destroy(array(
 	            'follower' => $follower,
 	            'leader' => $leader		        
             ));
 		
-		$this->resetStats(array($leader, $follower));
+		$this->resetStats( array( $leader, $follower ) );
 	}
 	
     /**
@@ -308,22 +348,28 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     	//if A blocks B, then A must remove B as a follower 
     	//need to keep track of this since the mixin is a singleton
     	$leader = $this->_mixer;
+        
+        if( $leader->eql( $person ) )
+        {
+            return false;
+        }
     	
-        $person->removeFollower($leader);
-    	$leader->removeFollower($person);
+        $person->removeFollower( $leader );
+        
+    	$leader->removeFollower( $person );
     	
 		//just in case
-        $person->removeRequester($leader);
-        $leader->removeRequester($person);
+        $person->removeRequester( $leader );
+        $leader->removeRequester( $person );
                 
-		$edge = $this->getService('repos:actors.block')->findOrAddNew(array(
-				'blocker'	  => $leader,					
-				'blocked'	  => $person		        
+		$edge = $this->getService('repos:actors.block')->findOrAddNew( array(
+				'blocker' => $leader,					
+				'blocked' => $person		        
             ));
 		
 		$edge->save();
 		
-		$this->resetStats(array($leader, $person));
+		$this->resetStats( array( $leader, $person ) );
 
 		return $edge;
     }    
@@ -344,9 +390,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 			'blocked' => $person
 		);
 		
-		$this->getService('repos:actors.block')->destroy($data);
+		$this->getService('repos:actors.block')->destroy( $data );
 				
-		$this->resetStats(array($leader, $person));
+		$this->resetStats( array( $leader, $person ) );
     }
 
 	/**
