@@ -79,12 +79,19 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
     	//need to keep track of this since the mixin is a singleton
     	$person = $this->_mixer;
         
-        $person->removeFollower($actor);
-    	$actor->removeFollower($person);
+        if( $person->eql( $actor ) )
+        {
+            return false;
+        }
+        
+        $person->removeFollower( $actor );
+        
+    	$actor->removeFollower( $person );
     	
 		//just in case
-        $person->removeRequester($actor);
-        $actor->removeRequester($person);
+        $person->removeRequester( $actor );
+        
+        $actor->removeRequester( $person );
                 
 		$edge = $this->getService('repos:actors.block')->findOrAddNew(array(
 				'blocker'	  => $actor,					
@@ -114,9 +121,9 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 			'blocked' => $person
 		);
 		
-		$this->getService('repos:actors.block')->destroy($data);
+		$this->getService('repos:actors.block')->destroy( $data );
 				
-		$this->resetStats(array($actor, $person));
+		$this->resetStats( array( $actor, $person ) );
     }
 		
 	/**
@@ -168,7 +175,7 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 	 */
 	public function mutuallyLeading($person)
 	{
-		return $this->leading($person) && $this->following($person);
+		return $this->leading( $person ) && $this->following( $person );
 	}
 
 	/**
@@ -180,6 +187,6 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 	 */	
 	public function following($actor)
 	{
-		return $this->_mixer->leaderIds->offsetExists($actor->id);
+		return $this->_mixer->leaderIds->offsetExists( $actor->id );
 	}
 }

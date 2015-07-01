@@ -57,7 +57,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {        
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->addRequester($this->actor);
+        $this->getItem()->addRequester( $this->actor );
         
         $this->createNotification(array('subject'=>$this->actor,'target'=>$this->getItem(),'name'=>'actor_request'));
         
@@ -75,7 +75,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->removeRequester($this->actor);
+        $this->getItem()->removeRequester( $this->actor );
     }    
             
 	/**
@@ -90,9 +90,9 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-		if(!$this->getItem()->leading($this->actor))
+		if(!$this->getItem()->leading( $this->actor ) )
 		{
-		    $this->getItem()->addFollower($this->actor);
+		    $this->getItem()->addFollower( $this->actor );
 		    
 	    	$story = $this->createStory(array(
 	    		'name' => 'actor_follow',
@@ -101,11 +101,15 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	        	'target' => $this->getItem()
 	    	));
 
-	    	if($this->getItem()->isAdministrable())
+	    	if( $this->getItem()->isAdministrable() )
+            {
 	    		$subscribers = $this->getItem()->administratorIds->toArray();
+            }
 	    	else
+            {    
 	    		$subscribers = array($this->getItem()->id);
-	    	
+            }
+            
 	    	$this->createNotification(array(
 	    		'name' => 'actor_follow',
 	    		'subject' => $this->actor, 
@@ -128,7 +132,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	{
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-		$this->getItem()->removeFollower($this->actor);
+		$this->getItem()->removeFollower( $this->actor );
         
 		return $this->getItem();
 	}
@@ -144,11 +148,11 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	{
 		$this->getResponse()->status = KHttpResponse::RESET_CONTENT;
 		
-		if(!$this->getItem()->following($this->actor))
+		if( !$this->getItem()->following( $this->actor ) )
 		{
 		    $this->getItem()->addLeader($this->actor);
 		    
-	    	$this->createStory(array(
+	    	$this->createStory( array (
 	    		'name' => 'actor_follower_add',
 	    		'owner' => $this->actor,
 	    		'subject' => $this->viewer,
@@ -157,10 +161,14 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
 	    	));
 	    		
 	    	if($this->actor->isAdministrable())
+            {
 	    		$subscribers = $this->actor->administratorIds->toArray();
+            }
 	    	else
+            {    
 	    		$subscribers = array($this->actor->id);
-	    		
+            }
+            	
 	    	$this->createNotification(array(
 	    		'name' => 'actor_follower_add',
 	    		'subject' => $this->viewer,
@@ -200,7 +208,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->addBlocker($this->actor);
+        $this->getItem()->addBlocker( $this->actor );
         
         return $this->getItem();
     }
@@ -216,7 +224,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         
-        $this->getItem()->removeBlocker($this->actor);    
+        $this->getItem()->removeBlocker( $this->actor );    
         
         return $this->getItem();
     }        
@@ -234,32 +242,35 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
         
         $filters  = array();
         $entities = array();
+        
         $entity = $this->getItem();
+        
         $viewer = get_viewer();
         
-        if($this->getItem()->isFollowable())
+        if( $this->getItem()->isFollowable() )
         {
             if($this->type == 'followers') 
             {
                 $entities = $this->getItem()->followers;
             } 
-            elseif($this->type == 'blockeds' && $entity->authorize('administration')) 
+            elseif( $this->type == 'blockeds' && $entity->authorize( 'administration' ) ) 
             {
                 $entities = $this->getItem()->blockeds;
             }
-            elseif($this->type == 'leadables')
+            elseif( $this->type == 'leadables' )
             {
-            	if(!$entity->authorize('leadable'))
+            	if( !$entity->authorize('leadable') )
             	{
             		throw new LibBaseControllerExceptionForbidden('Forbidden');
 
             		return false;
             	}	
             	
-            	$excludeIds = KConfig::unbox($entity->followers->id);
-            	$excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));
+            	$excludeIds = KConfig::unbox( $entity->followers->id );
+                
+            	$excludeIds = array_merge( $excludeIds, KConfig::unbox( $entity->blockeds->id ) );
             	
-            	if($viewer->admin())
+            	if( $viewer->admin() )
             	{
             		$entities = $this->_mixer->getService('com://site/people.domain.entity.person')
             					->getRepository()->getQuery()
@@ -273,36 +284,42 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             }
         }
         
-        if($this->getItem()->isLeadable()) 
+        if( $this->getItem()->isLeadable() ) 
         {
-            if($this->type == 'leaders') 
+            if( $this->type == 'leaders' ) 
             {
                 $entities = $this->getItem()->leaders;
             } 
-            elseif($this->type == 'mutuals')
+            elseif( $this->type == 'mutuals' )
             {
                 $entities = $this->getItem()->getMutuals();
             }
-            elseif($this->type == 'commonleaders') 
+            elseif( $this->type == 'commonleaders' ) 
             {             
-                $entities = $this->getItem()->getCommonLeaders(get_viewer());
+                $entities = $this->getItem()->getCommonLeaders( get_viewer() );
             }
         }
         
-        if(!$entities)
+        if( !$entities )
+        {
             return false;
+        }
             
         $xid = (array) KConfig::unbox($this->getState()->xid);
         
-        if(!empty($xid))
+        if( !empty( $xid ) )
+        {
             $entities->where('id','NOT IN', $xid);
-            
+        }
+    
         $entities->limit($this->limit, $this->start);
             
-        if($this->q)
-            $entities->keyword($this->q);    
+        if( $this->q )
+        {
+            $entities->keyword( $this->q );    
+        }
             
-        $this->setList($entities->fetchSet())->actor($this->getItem());
+        $this->setList( $entities->fetchSet() )->actor( $this->getItem() );
        
         return $entities;
     }
@@ -314,13 +331,13 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      * 
      * @return ComActorsDomainEntityActor object
      */
-    public function getActor(KCommandContext $context)
+    public function getActor( KCommandContext $context )
     {
         $data = $context->data;
         
-        if($data->actor)
+        if( $data->actor )
         {         
-            $ret = $this->getService('repos:actors.actor')->fetch($data->actor);        
+            $ret = $this->getService('repos:actors.actor')->fetch( $data->actor );        
         }
         else
         { 

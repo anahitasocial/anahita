@@ -58,7 +58,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 	 */
 	protected function _actionRemoveadmin(KCommandContext $context)
 	{
-        $this->getItem()->removeAdministrator($this->admin);          
+        $this->getItem()->removeAdministrator( $this->admin );          
 	}
 
 	/**
@@ -70,7 +70,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 	 */
 	protected function _actionAddadmin(KCommandContext $context)
 	{
-        $this->getItem()->addAdministrator($this->admin);		    
+        $this->getItem()->addAdministrator( $this->admin );		    
 	}
 
 	/**
@@ -87,14 +87,16 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 			
 			$canditates = $this->getItem()->getAdminCanditates();
 			
-			$canditates->keyword($this->value)->limit(10);
+			$canditates->keyword($this->value)->limit( 10 );
 			
 			$people = array();
 		    
 			foreach($canditates as $person)
-				$people[] = array('id'=>$person->id, 'value'=>$person->name);
-			
-			$this->getView()->set($people);
+            {
+				$people[] = array( 'id' => $person->id, 'value' => $person->name );
+            }
+            
+			$this->getView()->set( $people );
 			
 			return $people;
 		}
@@ -189,8 +191,10 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
     {
         $data = $context->data;
         
-        if($this->getItem())            
-            $this->getState()->requester = $this->getItem()->requesters->fetch($data->requester);
+        if( $this->getItem() )   
+        {         
+            $this->getState()->requester = $this->getItem()->requesters->fetch( $data->requester );
+        }
     } 
     
     /**
@@ -204,7 +208,9 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
     {
         $data = $context->data;
         
-        if($this->getItem()) 
-            $this->getState()->admin = $this->getService('repos://site/people.person')->fetch($data->adminid);
+        if( $this->getItem() ) 
+        {
+            $this->getState()->admin = $this->getService('repos://site/people.person')->fetch( $data->adminid );
+        }
     }
 }
