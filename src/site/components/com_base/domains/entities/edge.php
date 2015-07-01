@@ -46,7 +46,7 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 		        'ignore'   => array(),
             ),
 			'resources' => array(
-				array('name'=>'anahita_edges', 'alias'=>$this->getIdentifier()->name)
+				array('name'=>'anahita_edges', 'alias' => $this->getIdentifier()->name )
 			),
 			'attributes' => array(
 				'id' => array('key'=>true)
@@ -69,10 +69,12 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 	 * @param  KCommandContext $context
 	 * @return void
 	 */
-	protected function _validateInsert(KCommandContext $context)
+	protected function _beforeEntityInsert(KCommandContext $context)
 	{
 		//@TODO temporary move it to a repository validators ??
-		if ($this->nodeA->id == $this->nodeB->id)
+		if( $this->nodeA->id == $this->nodeB->id )
+        {
 			return false;
+        }
 	}
 }
