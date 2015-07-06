@@ -7,6 +7,6 @@ CREATE TABLE `#__todos_todos` (
   `open_status_change_by` bigint(11) DEFAULT NULL,
   PRIMARY KEY (`todos_todo_id`),
   UNIQUE KEY `node_id` (`node_id`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'todos') ON DUPLICATE KEY UPDATE `version` = 1;
