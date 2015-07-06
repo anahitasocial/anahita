@@ -1,5 +1,13 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.4 Birth Release
+=============================
+* fixed validation of whether an edge had the same node at both ends
+* migration script to remove all the edges in the database which had the same node at both ends
+* UI refinements
+* migration script to change todos_todos table to InnoDB
+* added an editable placeholder for the photos which had no title or description 
+
 Anahita 4.1.3 Birth Release
 =============================
 * major updates to the Subscriptions app. We are now using it ourselves.
