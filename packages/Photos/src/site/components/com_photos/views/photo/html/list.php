@@ -29,7 +29,11 @@
 	
 	<div class="entity-description-wrapper">
 		<h3 class="entity-title">
-			<?= @escape($photo->title) ?>
+		    <?php if( $photo->title ): ?>
+			<?= @escape( $photo->title ) ?>
+			<?php else : ?>
+			<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>    
+			<?php endif; ?>    
 		</h3>
 		
 		<div class="entity-description">
