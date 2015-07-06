@@ -43,6 +43,7 @@ CREATE TABLE `#__anahita_nodes` (
   `last_comment_on` datetime DEFAULT NULL,
   `ordering` int(11) DEFAULT NULL,
   `enabled` tinyint(1) DEFAULT NULL,
+  `pinned` tinyint(1) NOT NULL DEFAULT 0,
   `is_default` tinyint(1) DEFAULT NULL,
   `meta` text,
   `hits` int(11) unsigned DEFAULT NULL,
