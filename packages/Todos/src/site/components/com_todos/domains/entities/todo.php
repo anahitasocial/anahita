@@ -30,23 +30,11 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	/*
 	 * Priorities values
 	 */
-	const PRIORITY_HIGHEST	= 2;
-	const PRIORITY_HIGH		= 1;
-	const PRIORITY_NORMAL	= 0; 
-	const PRIORITY_LOW		= -1;
-	const PRIORITY_LOWEST	= -2;
-	
-	/**
-	 * Constructor.
-	 *
-	 * @param KConfig $config An optional KConfig object with configuration options.
-	 *
-	 * @return void
-	 */
-	public function __construct(KConfig $config)
-	{
-	    parent::__construct($config);
-	}
+	const PRIORITY_HIGHEST =  2;
+	const PRIORITY_HIGH	   =  1;
+	const PRIORITY_NORMAL  =  0; 
+	const PRIORITY_LOW     = -1;
+	const PRIORITY_LOWEST  = -2;
 		
 	/**
 	 * Initializes the default configuration for the object
@@ -57,17 +45,17 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	 *
 	 * @return void
 	 */
-	protected function _initialize(KConfig $config)
+	protected function _initialize( KConfig $config )
 	{				
 		$config->append(array(
-			'resources'		=> array('todos_todos'),
+			'resources'		=> array( 'todos_todos' ),
 			'attributes' => array(
-				'name' => array('required'=>true),
-				'openStatusChangeTime' => array('column'=>'open_status_change_time','default'=>'date', 'type'=>'date', 'write'=>'private'),
-				'priority' => array('column'=>'ordering',  'default'=>self::PRIORITY_NORMAL, 'type'=>'integer')
+				'name' => array( 'required' => true ),
+				'openStatusChangeTime' => array( 'column'=>'open_status_change_time','default'=>'date', 'type'=>'date', 'write'=>'private'),
+				'priority' => array( 'column'=>'ordering',  'default'=>self::PRIORITY_NORMAL, 'type'=>'integer')
 				),
 			'relationships' => array(
-				'lastChanger' => array('parent'=>'com:people.domain.entity.person', 'child_column'=>'open_status_change_by'),
+				'lastChanger' => array( 'parent'=>'com:people.domain.entity.person', 'child_column'=>'open_status_change_by'),
 				),
 			'behaviors' => array(
 				'enableable'
@@ -77,7 +65,7 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 			)
 		));
 			
-		parent::_initialize($config);		
+		parent::_initialize( $config );		
 	}
 	
 	/**
@@ -85,10 +73,10 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	 * 
 	 * @return null
 	 */
-	public function open($changer)
+	public function open( $changer )
 	{
 		$this->open = true;
-		$this->setLastChanger($changer);		
+		$this->setLastChanger( $changer );		
 	}
 	
 	/**
@@ -96,10 +84,10 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	 * 
 	 * @return null
 	 */
-	public function close($changer)
+	public function close( $changer )
 	{
 		$this->open = false;
-		$this->setLastChanger($changer);		
+		$this->setLastChanger( $changer );		
 	}
 	
 	/**
@@ -111,7 +99,7 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
 	 */
 	public function setLastChanger($changer)
 	{
-		$this->set('lastChanger', $changer);
-		$this->set('openStatusChangeTime', AnDomainAttribute::getInstance('date'));
+		$this->set( 'lastChanger', $changer );
+		$this->set( 'openStatusChangeTime', AnDomainAttribute::getInstance('date') );
 	}
 }
