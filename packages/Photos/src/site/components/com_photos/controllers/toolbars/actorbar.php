@@ -41,7 +41,6 @@ class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActor
 		$viewer = $this->getController()->viewer;
 		$actor = pick($this->getController()->actor, $viewer);
 		$layout = pick($this->getController()->getRequest()->layout, 'default');
-		
 		$name = $this->getController()->getIdentifier()->name;
 
 		//create title

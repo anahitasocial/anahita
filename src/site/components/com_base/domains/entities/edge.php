@@ -72,10 +72,12 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 	//protected function _beforeEntityInsert(KCommandContext $context)
 	protected function _onEntityValidate(KCommandContext $context)
 	{
-		//@TODO temporary move it to a repository validators ??
+
 		if( $this->nodeA->id == $this->nodeB->id )
         {
 			return false;
         }
+        
+        return true;
 	}
 }

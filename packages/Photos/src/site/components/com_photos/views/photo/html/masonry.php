@@ -30,9 +30,13 @@
 	
 	<div class="entity-description-wrapper">
     	<h4 class="entity-title">
-    		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
-    		<?= @escape($photo->title) ?>
-    		</a>
+    		<?php if( $photo->title ): ?>
+            <a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
+            <?= @escape($photo->title) ?>
+            </a>
+            <?php else : ?>
+            <span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>    
+            <?php endif; ?>  
     	</h4>
     		
     	<div class="entity-description">

@@ -32,7 +32,8 @@ if ( $session && !$session->validateToken() )
             $session = null;
         }
         ?>
-		<div>
+		
+		<div class="entity-actions">
     		<form action="<?= @route( array( 'option' => 'com_connect', 'view' => 'setting', 'oid' => $actor->uniqueAlias, 'server' => $api->getName())) ?>" method="post">
     			<?php if ( !$session ) : ?>	
     			<input type="hidden" name="get" value="accesstoken" />

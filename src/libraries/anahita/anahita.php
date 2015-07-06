@@ -36,7 +36,7 @@ class Anahita
      * 
      * @var string
      */
-    static protected $_version = '4.1.3';
+    static protected $_version = '4.1.4';
     
     /**
      * Path to Anahita libraries
