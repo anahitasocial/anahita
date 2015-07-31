@@ -44,7 +44,7 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
 		parent::_initialize($config);
 		
 		$config->append(array(
-            'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_actor/settings')
+            'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_actors/settings')
 		));
 	}	
 	
