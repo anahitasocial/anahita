@@ -43,12 +43,12 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     protected $_password;
     
     /*
-     * Hashtag regex pattern
+     * Mention regex pattern
      */
     const PATTERN_MENTION = '/@([A-Za-z][A-Za-z0-9_-]{3,})/';
     
     /*
-     * Roles
+     * User types
      */ 
      const USERTYPE_GUEST = 'guest';
      const USERTYPE_REGISTERED = 'registered';
@@ -69,7 +69,6 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 		$config->append(array(	        
 			'attributes' => array(
 				'administratingIds' => array('type'=>'set', 'default'=>'set'),				
-				'userId' => array('column'=>'person_userid', 'key'=>true, 'type'=>'integer', 'default'=>rand()),
 				'username' => array('column'=>'person_username', 'key'=>true, 'format'=>'username'),
 				'userType' => array('column'=>'person_usertype', 'default'=>self::USERTYPE_REGISTERED),
 				'email'	=> array('column'=>'person_useremail', 'key'=>true, 'format'=>'email'),
@@ -88,14 +87,15 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 			    'describable' => array('searchable_properties'=>array('username')),
                 'administrator',
                 'notifiable',					
-				'leadable'
+				'leadable',
+				'user'
 			))
 		));
 				
 		$config->behaviors->append(array('followable' => array('subscribe_after_follow'=>false)));
 		
 		parent::_initialize($config);
-        
+
         AnHelperArray::unsetValues($config->behaviors, array('administrable'));
 	}
 
@@ -110,151 +110,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 		)));
 		
 		parent::_afterEntityInstantiate($config);
-	}
-    
-    /**
-     * before creating the person node, create the user object
-     * 
-     * @return boolean
-     */
-    protected function _beforeEntityInsert(KCommandContext $context)
-    {
-        $viewer = get_viewer();    
-        $firsttime = !(bool) $this->getService('repos://site/users')->getQuery(true)->fetchValue('id');
-
-        //for now lets make the com_notes assigable to always
-        if ($firsttime)
-        {
-            $component = KService::get('repos://site/components')->find(array('component' => 'com_notes'));
-            
-            if ($component) 
-            {
-                $component->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
-            }
-        }
-        
-        jimport('joomla.user.helper');
-        $user = clone JFactory::getUser();
-        
-        $user->set('id', 0);
-        $user->set('name', $this->name);
-        $user->set('username', $this->username);
-        $user->set('email', $this->email);
-        
-        if($this->password == '')
-        {
-            $password = JUserHelper::genRandomPassword();    
-            $user->set('password', $password);   
-            $user->set('password2', $password);
-            $this->setPassword = $password;     
-        } 
-        else 
-        {
-            $user->password = $this->getPassword(true);    
-        }
-        
-        $date =& JFactory::getDate();        
-        $user->set( 'registerDate', $date->toMySQL());
-        
-        if ($firsttime || ($viewer->superadmin() && $this->userType == self::USERTYPE_SUPER_ADMINISTRATOR))
-        { 
-            $user->set('usertype', self::USERTYPE_SUPER_ADMINISTRATOR);
-        }
-        elseif ($viewer->admin() && $this->userType == self::USERTYPE_ADMINISTRATOR)
-        {
-            $user->set('usertype', self::USERTYPE_ADMINISTRATOR);
-        }
-        else 
-        {
-           $user->set('usertype', self::USERTYPE_REGISTERED);
-        }
-        
-        $activationRequired = (bool) get_config_value('users.useractivation');                
-        
-        if ($viewer->admin() || $activationRequired)
-        {
-            $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()));
-            $user->set('block', '1');
-        }
-        
-        if(!$user->save())
-        {
-            throw new RuntimeException('Unexpected error when saving user');
-            return false;
-        }
-        
-        $this->userId = $user->id;
-        $this->userType = $user->usertype;
-        $this->enabled = ($user->block) ? false : true;
-        
-        return true;
-    }
-
-    /**
-     * Update the user object before updating the person node
-     * 
-     * @return boolean
-     */
-    protected function _afterEntityUpdate(KCommandContext $context)
-    {
-        jimport('joomla.user.helper');    
-        $viewer = get_viewer();
-        $user = clone JFactory::getUser( $this->userId );  
-        
-        if ($this->getModifiedData()->name) 
-        {
-            $user->set('name', $this->name);
-        }  
-        
-        if ($this->getModifiedData()->username) 
-        {
-            $user->set('username', $this->username);   
-        }
-        
-        if ($this->getModifiedData()->email) 
-        {
-            $user->set('email', $this->email);               
-        }
-        
-        if ($this->getModifiedData()->enabled) 
-        {
-            $user->set('block', !$this->enabled);               
-        }
-
-        if ($this->getModifiedData()->userType)
-        {
-            if ($viewer->superadmin() && $this->userType == self::USERTYPE_SUPER_ADMINISTRATOR)
-            { 
-                $user->set('usertype', self::USERTYPE_SUPER_ADMINISTRATOR);
-            }
-            elseif ($viewer->admin() && $this->userType == self::USERTYPE_ADMINISTRATOR)
-            {
-                $user->set('usertype', self::USERTYPE_ADMINISTRATOR);
-            }
-            else 
-            {
-               $user->set('usertype', self::USERTYPE_REGISTERED);
-            }
-        }
-        
-        if (! empty($this->password) && $this->getModifiedData()->password) 
-        {
-            $user->set('password', $this->getPassword(true));
-        }
-
-        if (@$this->params->language) 
-        {            
-            $user->_params->set( 'language', $this->params->language );              
-        }
-               
-        if (! $user->save()) 
-        {
-            throw new RuntimeException('Unexpected error when saving user');
-            return false;
-        }
-        
-        return true;
-    }   
+	}   
     
 	/**
 	 * Set the name, given name and family name of the person
@@ -402,56 +258,6 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         }
         
         return $password;
-    }
-    
-    /**
-     * Return the user object of the person
-     * 
-     * @return LibUsersDomainEntityUser
-     */
-    public function getUserObject()
-    {
-    	//@TODO we should use a belongs to relationship for this
-    	$user = $this->getService('repos://'.$this->getIdentifier()->application.'/users.user')
-    		         ->fetch(array('id'=>$this->userId));	
-    	
-    	return $user;
-    }
-    
-    /**
-     * Return a juser object
-     * 
-     * @return boolean
-     */
-    public function getJUserObject()
-    {
-        $user = clone JFactory::getUser();
-        
-        if ($this->persisted()) 
-        {         
-            $user->set('id', $this->id);
-        }
-        
-        $user->set('name', $this->name);
-        $user->set('username', $this->username);
-        $user->set('email', $this->email);
-        
-        if ($this->_password)
-        {
-            $user->set('password',  $this->getPassword());
-            $user->set('password2', $this->getPassword());
-            $user->set('password_clear', $this->getPassword());
-        }
-        
-        $user->set('usertype', self::USERTYPE_REGISTERED);
-        
-        if (! $this->persisted()) 
-        {
-            $date =& JFactory::getDate();
-            $user->set('registerDate', $date->toMySQL());
-        }
-        
-        return $user;
     }
     
 	/**
