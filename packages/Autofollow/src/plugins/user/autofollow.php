@@ -22,29 +22,34 @@ class plgUserAutoFollow extends JPlugin
 	 * @param	string		message
 	 */
 	public function onAfterStoreUser($user, $isnew, $succes, $msg)
-	{
-		global $mainframe;
-		
-		if( !$succes ) 
-		       return false;
-		
-		$uid = $user['id'];
-
-		$person = KService::get('com://site/people.helper.person')->getPerson($uid);
-	   				
-		if($person) 
+	{	
+		if (! $succes) 
+        {
+            return false;    
+        }
+		       
+        $person = KService::get('repos://site/people.person')
+                  ->getQuery()
+                  ->disableChain()
+                  ->userId($user['id'])
+                  ->fetch();            
+                    
+		if ($person) 
 		{
 			$actor_ids = explode(',', $this->params->get('actor_ids'));
 			
-			foreach($actor_ids as $actor_id)
+			foreach ($actor_ids as $actor_id)
 			{		
                 $actor_id = (int) $actor_id;
                 
-                if($actor_id)
+                if ($actor_id)
                 {
-                    $actor = KService::get('repos://site/actors.actor')->getQuery()->disableChain()->fetch($actor_id);
+                    $actor = KService::get('repos://site/actors.actor')
+                             ->getQuery()
+                             ->disableChain()
+                             ->fetch($actor_id);
                     
-                    if($actor && $actor->isFollowable()) 
+                    if ($actor && $actor->isFollowable()) 
                     {
                         $actor->addFollower($person);
                         $actor->save();
