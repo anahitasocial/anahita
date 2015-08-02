@@ -39,6 +39,13 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * @var boolean
      */
     protected $_activation_required;
+    
+    /**
+     * Viewer object
+     * 
+     * @var ComPeopleDomainEntityPerson
+     */ 
+    protected $_viewer;
         
     /**
      * Constructor.
@@ -72,6 +79,8 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
             'can_register' => (bool) get_config_value('users.allowUserRegistration', true)
         ));
     
+        $this->_viewer = get_viewer();
+    
         parent::_initialize($config);
     }
 
@@ -100,12 +109,12 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
         
         if ($this->getRequest()->get('layout') == 'signup')
         {     
-            return $this->canSignup();
+            return $this->_viewer->guest();
         }
         
         if ($this->getRequest()->get('layout') == 'add')
         {     
-            return $this->canAdd();
+            return $this->_viewer->admin();
         }
 
         return parent::canRead();
