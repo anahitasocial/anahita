@@ -1,19 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_Actors
- * @subpackage Controller
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- * @link       http://www.anahitapolis.com
- */
-
 /**
  * Abstract Actor Controller
  *
@@ -105,10 +91,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
         $query = $context->query;        
 
-        if($this->q)
+        if ($this->q)
+        {
             $query->keyword($this->getService('anahita:filter.term')->sanitize($this->q));
+        }
         
-        if($this->ids) 
+        if ($this->ids) 
         {
             $ids = KConfig::unbox($this->ids);
             $query->id($ids);
@@ -121,17 +109,17 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         $entities = $query->toEntitySet();
         
         
-        if($this->isOwnable() && $this->actor) 
+        if ($this->isOwnable() && $this->actor) 
         {
             $this->_state->append(array(
                 'filter' => 'following'
             ));
 
-            if($this->filter == 'administering' && $this->getRepository()->hasBehavior('administrable'))
+            if ($this->filter == 'administering' && $this->getRepository()->hasBehavior('administrable'))
             {
                 $entities->where('administrators.id', 'IN', array($this->actor->id));
             }
-            elseif($this->actor->isFollowable()) 
+            elseif ($this->actor->isFollowable()) 
             {
                 $entities->where('followers.id','IN', array($this->actor->id));
             }
@@ -153,7 +141,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionAdd($context);
         
-        if($entity->isPortraitable() && KRequest::has('files.portrait')) 
+        if ($entity->isPortraitable() && KRequest::has('files.portrait')) 
         {
             $file = KRequest::get('files.portrait', 'raw'); 
             
@@ -245,10 +233,13 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        $this->getService('repos://site/components')->fetchSet()
-             ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));            
+        $this->getService('repos://site/components')
+             ->fetchSet()
+             ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
+                         
         $result = parent::_actionDelete($context);
-        $this->getService('anahita:event.dispatcher')->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()->id));
+        $this->getService('anahita:event.dispatcher')
+             ->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()->id));
         
         return $result;
     }
@@ -260,7 +251,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     public function getToolbar($toolbar, $config = array())
     {
-        if(is_string($toolbar))
+        if (is_string($toolbar))
         {
             //if actorbar or menu alawys default to the base
             if (in_array($toolbar, array('actorbar')))
