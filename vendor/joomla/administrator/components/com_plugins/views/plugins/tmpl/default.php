@@ -50,9 +50,6 @@
 			<?php echo JHTML::_('grid.sort',   'Order', 'p.ordering', @$this->lists['order_Dir'], @$this->lists['order'] ); ?>
 			<?php if ($ordering) echo JHTML::_('grid.order',  $rows ); ?>
 		</th>
-		<th nowrap="nowrap" width="10%">
-			<?php echo JHTML::_('grid.sort',   'Access', 'groupname', @$this->lists['order_Dir'], @$this->lists['order'] ); ?>
-		</th>
 		<th nowrap="nowrap"  width="10%" class="title">
 			<?php echo JHTML::_('grid.sort',   'Type', 'p.folder', @$this->lists['order_Dir'], @$this->lists['order'] ); ?>
 		</th>
@@ -78,8 +75,6 @@
 	$row 	= $rows[$i];
 
 	$link = 'index.php?option=com_plugins&view=plugin&task=edit&cid[]='. $row->id;
-
-	$access 	= JHTML::_('grid.access',   $row, $i );
 	$checked 	= JHTML::_('grid.checkedout',   $row, $i );
 	$published 	= JHTML::_('grid.published', $row, $i );
 
@@ -110,9 +105,6 @@
 			<span><?php echo $this->pagination->orderDownIcon( $i, $n, ($row->folder == @$rows[$i+1]->folder && $row->ordering > -10000 && $row->ordering < 10000), 'orderdown', 'Move Down', $ordering ); ?></span>
 			<?php $disabled = $ordering ?  '' : 'disabled="disabled"'; ?>
 			<input type="text" name="order[]" size="5" value="<?php echo $row->ordering; ?>"  <?php echo $disabled ?> class="text_area" style="text-align: center" />
-		</td>
-		<td align="center">
-			<?php echo $access;?>
 		</td>
 		<td nowrap="nowrap">
 			<?php echo $row->folder;?>

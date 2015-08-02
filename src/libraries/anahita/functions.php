@@ -17,27 +17,27 @@
  */ 
 function isSSL()
 {
-    if ( isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' )
+    if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on')
     {
          return true;
     }
     
-    if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1 )
+    if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1)
     {
          return true;
     } 
     
-    if ( isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443 ) ) 
+    if (isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443)) 
     {
          return true;
     } 
     
-    if ( isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on' ) 
+    if (isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on') 
     {
         return true;
     }
     
-    if ( isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true ) 
+    if (isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true) 
     {
         return true;
     }
@@ -62,37 +62,54 @@ function deprecated($msg = null)
 
     $called_method = '';
 
-    if ( isset($trace['class']) ) {
+    if (isset($trace['class'])) 
+    {
         $called_method = $trace['class'].'::';
     }
-    if ( isset($trace['function']))
+    
+    if (isset($trace['function']))
+    {
         $called_method .= $trace['function'].'()';
-
+    }
+    
     $trace = array_shift($traces);
-
     $calling_method = '';
 
-    if ( isset($trace['class']) ) {
+    if (isset($trace['class'])) 
+    {
         $calling_method = $trace['class'].'::';
     }
 
-    if ( isset($trace['function']) && $trace['function'] != 'include') {
+    if (isset($trace['function']) && $trace['function'] != 'include') 
+    {
         $calling_method .= $trace['function'].'()';
     }
-    if ( empty($calling_method) && isset($trace['file']) ) {
-        if ( isset($trace['function']) && $trace['function'] == 'include') {
+
+    if (empty($calling_method) && isset($trace['file'])) 
+    {
+        if (isset($trace['function']) && $trace['function'] == 'include') 
+        {
             $calling_method = $trace['args'][0];
-        } else
+        } 
+        else
+        {    
             $calling_method = $trace['file'];
+        }
     }
 
-    if ( isset($trace['line']) )
+    if (isset($trace['line']))
+    {
         $calling_method = $calling_method.' line:'.$trace['line'];
+    }
+    
     //called from $calling_method
     $message = "$called_method has been deprecated";
-    if ( $msg )
+    
+    if ($msg)
+    {
         $message .= '. '.$msg;
-
+    }
+    
     trigger_error($message, E_USER_WARNING);
 }
 
@@ -773,7 +790,7 @@ function clean_ap_user_cache()
  */
 function is_guest($actor)
 {
-   return is_person($actor) && $actor->userType == 'Guest';
+   return is_person($actor) && $actor->userType == ComPeopleDomainEntityPerson::USERTYPE_GUEST;
 }
 
 /**
@@ -785,7 +802,7 @@ function is_guest($actor)
  */
 function is_admin($actor)
 {
-    return is_person($actor) && ($this->userType == 'Administrator' || $this->userType == 'Super Administrator');  
+    return is_person($actor) && ($this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR || $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);  
 }
 
 /**

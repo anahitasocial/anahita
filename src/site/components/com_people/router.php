@@ -42,10 +42,12 @@ class ComPeopleRouter extends ComActorsRouterDefault
     {
     	$query = array();
     	$path  = implode('/', $segments);
-    	if ( $path == 'signup' ) {
-    	    return array('view'=>'person','layout'=>'add');
+        
+    	if ($path == 'signup') 
+    	{
+    	    return array('view'=>'person','layout'=>'signup');
     	}
-    	elseif(count($segments) && !is_numeric($segments[0]) && !in_array(KInflector::singularize($segments[0]), array('person','session','token'))) 
+    	elseif (count($segments) && ! is_numeric($segments[0]) && ! in_array(KInflector::singularize($segments[0]), array('person','session','token'))) 
     	{
     		$query['username'] = $segments[0];
     		//@TODO the parent::parse wants a numeric ID in order
@@ -55,15 +57,17 @@ class ComPeopleRouter extends ComActorsRouterDefault
     		$query = array_merge(parent::parse($segments), $query);
     		unset($query['id']);
     	}
-    	
     	else 
     	{    	
-    	    if ( preg_match('/tokens\/.*/',$path) ) 
+    	    if (preg_match('/tokens\/.*/',$path)) 
     	    {
     	        $query['view'] = 'token';
-    	        $query['id']   = array_pop($segments);
+    	        $query['id']   = array_pop( $segments );
     	    }
-    		else $query = parent::parse($segments);
+    		else
+            {     
+    		    $query = parent::parse( $segments );
+            }
     	}
    	
     	return $query;

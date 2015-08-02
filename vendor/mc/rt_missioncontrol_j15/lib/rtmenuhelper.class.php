@@ -27,18 +27,16 @@ class RTMenuHelper {
 
 		$lang		= & JFactory::getLanguage();
 		$user		= & JFactory::getUser();
+        $viewer     = get_viewer();
 		$db			= & JFactory::getDBO();
 		$usertype	= $user->get('usertype');
 
 		// cache some acl checks
-		$canConfig			= $user->authorize('com_config', 'manage');
-		$manageTemplates	= $user->authorize('com_templates', 'manage');
-		$manageLanguages	= $user->authorize('com_languages', 'manage');
-		$installPlugins		= $user->authorize('com_installer', 'plugin');
-		$editAllPlugins		= $user->authorize('com_plugins', 'manage');
-		$installComponents	= $user->authorize('com_installer', 'component');
-		$editAllComponents	= $user->authorize('com_components', 'manage');
-		$canManageUsers		= $user->authorize('com_users', 'manage');
+		$canConfig			= $viewer->superadmin();
+		$manageTemplates	= $viewer->admin();
+		$manageLanguages	= $viewer->admin();
+		$editAllPlugins		= $viewer->admin();
+		$editAllComponents	= $viewer->admin();
 
 		/*
 		 * Get the menu object
@@ -51,13 +49,6 @@ class RTMenuHelper {
 		 * Dashboard
 		 */
 		$menu->addChild(new JMenuNode(JText::_('Dashboard'), 'index.php?', 'dashboard'));
-		
-		/*
-		 * Manage Users
-		 */
-		if ($canManageUsers) {
-			$menu->addChild(new JMenuNode(JText::_('Users'), 'index.php?option=com_users&task=view', 'users'));
-		}
 
 		/*
 		 * Extend SubMenu
@@ -118,24 +109,21 @@ class RTMenuHelper {
 
 			foreach ($comps as $row)
 			{
-				if ($editAllComponents | $user->authorize('administration', 'edit', 'components', $row->option))
+				if ($viewer->admin() && $row->parent == 0 && (trim($row->admin_menu_link) || array_key_exists($row->id, $subs)))
 				{
-					if ($row->parent == 0 && (trim($row->admin_menu_link) || array_key_exists($row->id, $subs)))
-					{
-						$text = $lang->hasKey($row->option) ? JText::_($row->option) : $row->name;
-						$link = $row->admin_menu_link ? "index.php?$row->admin_menu_link" : "index.php?option=$row->option";
-						if (array_key_exists($row->id, $subs)) {
-							$menu->addChild(new JMenuNode($text, $link, $row->admin_menu_img), true);
-							foreach ($subs[$row->id] as $sub) {
-								$key  = $row->option.'.'.$sub->name;
-								$text = $lang->hasKey($key) ? JText::_($key) : $sub->name;
-								$link = $sub->admin_menu_link ? "index.php?$sub->admin_menu_link" : null;
-								$menu->addChild(new JMenuNode($text, $link, $sub->admin_menu_img));
-							}
-							$menu->getParent();
-						} else {
-							$menu->addChild(new JMenuNode($text, $link, $row->admin_menu_img));
+					$text = $lang->hasKey($row->option) ? JText::_($row->option) : $row->name;
+					$link = $row->admin_menu_link ? "index.php?$row->admin_menu_link" : "index.php?option=$row->option";
+					if (array_key_exists($row->id, $subs)) {
+						$menu->addChild(new JMenuNode($text, $link, $row->admin_menu_img), true);
+						foreach ($subs[$row->id] as $sub) {
+							$key  = $row->option.'.'.$sub->name;
+							$text = $lang->hasKey($key) ? JText::_($key) : $sub->name;
+							$link = $sub->admin_menu_link ? "index.php?$sub->admin_menu_link" : null;
+							$menu->addChild(new JMenuNode($text, $link, $sub->admin_menu_img));
 						}
+						$menu->getParent();
+					} else {
+						$menu->addChild(new JMenuNode($text, $link, $row->admin_menu_img));
 					}
 				}
 			}
@@ -160,15 +148,15 @@ class RTMenuHelper {
 	function buildDisabledMenu()
 	{
 		$lang	 =& JFactory::getLanguage();
+        $viewer  = get_viewer();
 		$user	 =& JFactory::getUser();
 		$usertype = $user->get('usertype');
 
-		$canConfig			= $user->authorize('com_config', 'manage');
-		$installPlugins		= $user->authorize('com_installer', 'plugin');
-		$editAllPlugins		= $user->authorize('com_plugins', 'manage');
-		$installComponents	= $user->authorize('com_installer', 'component');
-		$editAllComponents	= $user->authorize('com_components', 'manage');
-		$canManageUsers		= $user->authorize('com_users', 'manage');
+		$canConfig          = $viewer->superadmin();
+        $manageTemplates    = $viewer->admin();
+        $manageLanguages    = $viewer->admin();
+        $editAllPlugins     = $viewer->admin();
+        $editAllComponents  = $viewer->admin();
 
 		$text = JText::_('Menu inactive for this Page', true);
 
@@ -180,13 +168,8 @@ class RTMenuHelper {
 		// Dashboard SubMenu
 		$menu->addChild(new JMenuNode(JText::_('Dashboard'), null, 'disabled'));
 
-		// Users SubMenu
-		if ($canManageUsers) {
-			$menu->addChild(new JMenuNode(JText::_('Users'), null, 'disabled'));
-		}
-
 		// Extend SubMenu
-		if ($installComponents || $editAllPlugins) {
+		if ($editAllComponents || $editAllPlugins) {
 			$menu->addChild(new JMenuNode(JText::_('Extend'), null, 'disabled daddy'));
 		}
 
@@ -200,10 +183,8 @@ class RTMenuHelper {
 	
 	function __construct() {
 		// menu data
-		$menus['Users'] = array('com_users');
 		$menus['Extend'] = array('com_plugins','com_templates','com_languages');
 		$menus['Config'] = array('com_config');
-		$menus['Tools'] = array('com_checkin','com_cache');
 		
 		$this->menudata = $menus;
 	}

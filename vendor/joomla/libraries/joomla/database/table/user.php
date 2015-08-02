@@ -76,20 +76,6 @@ class JTableUser extends JTable
 	/**
 	 * Description
 	 *
-	 * @var int
-	 */
-	var $sendEmail		= null;
-
-	/**
-	 * The group id number
-	 *
-	 * @var int
-	 */
-	var $gid			= null;
-
-	/**
-	 * Description
-	 *
 	 * @var datetime
 	 */
 	var $registerDate	= null;
@@ -124,8 +110,6 @@ class JTableUser extends JTable
 
 		//initialise
 		$this->id        = 0;
-		$this->gid       = 0;
-		$this->sendEmail = 0;
 	}
 
 	/**
@@ -197,8 +181,6 @@ class JTableUser extends JTable
 
 	function store( $updateNulls=false )
 	{
-		$acl =& JFactory::getACL();
-
 		$section_value = 'users';
 		$k = $this->_tbl_key;
 		$key =  $this->$k;
@@ -207,25 +189,11 @@ class JTableUser extends JTable
 		{
 			// existing record
 			$ret = $this->_db->updateObject( $this->_tbl, $this, $this->_tbl_key, $updateNulls );
-
-			// syncronise ACL
-			// single group handled at the moment
-			// trivial to expand to multiple groups
-			$object_id = $acl->get_object_id( $section_value, $this->$k, 'ARO' );
-
-			$groups = $acl->get_object_groups( $object_id, 'ARO' );
-			$acl->del_group_object( $groups[0], $section_value, $this->$k, 'ARO' );
-			$acl->add_group_object( $this->gid, $section_value, $this->$k, 'ARO' );
-
-			$acl->edit_object( $object_id, $section_value, $this->_db->getEscaped( $this->name ), $this->$k, 0, 0, 'ARO' );
 		}
 		else
 		{
 			// new record
 			$ret = $this->_db->insertObject( $this->_tbl, $this, $this->_tbl_key );
-			// syncronise ACL
-			$acl->add_object( $section_value, $this->name, $this->$k, null, null, 'ARO' );
-			$acl->add_group_object( $this->gid, $section_value, $this->$k, 'ARO' );
 		}
 
 		if( !$ret )
@@ -241,45 +209,27 @@ class JTableUser extends JTable
 
 	function delete( $oid=null )
 	{
-		$acl =& JFactory::getACL();
-
 		$k = $this->_tbl_key;
-		if ($oid) {
+		
+		if ($oid) 
+		{
 			$this->$k = intval( $oid );
 		}
-		$aro_id = $acl->get_object_id( 'users', $this->$k, 'ARO' );
-		$acl->del_object( $aro_id, 'ARO', true );
 
 		$query = 'DELETE FROM '. $this->_tbl
 		. ' WHERE '. $this->_tbl_key .' = '. (int) $this->$k
 		;
+        
 		$this->_db->setQuery( $query );
 
-		if ($this->_db->query()) {
-			// cleanup related data
-
-			// private messaging
-			/*
-			$query = 'DELETE FROM #__messages_cfg'
-			. ' WHERE user_id = '. (int) $this->$k
-			;
-			$this->_db->setQuery( $query );
-			if (!$this->_db->query()) {
-				$this->setError( $this->_db->getErrorMsg() );
-				return false;
-			}
-			$query = 'DELETE FROM #__messages'
-			. ' WHERE user_id_to = '. (int) $this->$k
-			;
-			$this->_db->setQuery( $query );
-			if (!$this->_db->query()) {
-				$this->setError( $this->_db->getErrorMsg() );
-				return false;
-			}*/
-
+		if ($this->_db->query()) 
+		{
 			return true;
-		} else {
+		} 
+		else 
+		{
 			$this->setError( $this->_db->getErrorMsg() );
+			
 			return false;
 		}
 	}

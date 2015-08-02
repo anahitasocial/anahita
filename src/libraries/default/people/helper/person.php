@@ -37,9 +37,13 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function synchronizeWithUser($person, $user)
 	{
-		if($person->userId != $user->id)
+		return;    
+            
+		if ($person->userId != $user->id)
+        {
 			return;
-
+        }
+        
 		$params = new JParameter($user->params);
 			
 		$person->setData(array(	
@@ -65,24 +69,34 @@ class LibPeopleHelperPerson extends KObject
 	 */
 	public function getPerson($uid)
 	{
-		if(is_object($uid) && !$uid->id)
+		if (is_object($uid) && !$uid->id)
+        {
 			return null;
-		
+        }
+        
 		$user = JFactory::getUser($uid);
 		
-		if(!$user->id) 
+		if (! $user->id)
+        { 
 			return null;
-		
-	    $query = $this->getService('repos://site/people.person')->getQuery()->disableChain()->userId($user->id);		
+        }
+        
+	    $query = $this->getService('repos://site/people.person')
+	                  ->getQuery()
+	                  ->disableChain()
+	                  ->userId($user->id);		
 		
 	    if($person = $query->fetch())
+        {
 			return $person;
-			
+        }
+        /*	
 		$person = self::createFromUser($user);
 		
 		$person->saveEntity();		
 		
 		return $person;
+        */
 	}
 	
 	/**
@@ -93,23 +107,25 @@ class LibPeopleHelperPerson extends KObject
 	 * @return void
 	 */
 	public function createFromUser($user)
-	{
+	{             
 		if(!$user->id)
+        {
 			return null;
-			
+        }
+        	
 		$params = new JParameter($user->params);
 
 		$person = $this->getService('repos://site/people.person')->getEntity()->setData(array(
 			'component' => 'com_people',
-			'name' => $user->name ,
-			'userId' => $user->id   ,
-			'username' => $user->username ,
-			'email' => $user->email	   ,
-			'userType' => $user->usertype ,
+			'name' => $user->name,
+			'userId' => $user->id,
+			'username' => $user->username,
+			'email' => $user->email,
+			'userType' => $user->usertype,
 			'registrationDate' => AnDomainAttribute::getInstance('date')->setDate($user->registerDate),
 			'lastVisitDate' => AnDomainAttribute::getInstance('date')->setDate($user->lastvisitDate),
-			'language' => $params->get('language') ,
-			'timezone' => $params->get('timezone')	,
+			'language' => $params->get('language'),
+			'timezone' => $params->get('timezone'),
 		    'enabled' => !$user->block		        
 		), AnDomain::ACCESS_PROTECTED);
 			
@@ -139,12 +155,16 @@ class LibPeopleHelperPerson extends KObject
     	
     	$results = JFactory::getApplication()->triggerEvent('onLoginUser', array($user, $options));
     	
-		foreach($results as $result)
+		foreach ($results as $result)
+        {
 			if ($result instanceof JException || $result instanceof Exception || $result === false)
+            {
 				return false;
+            }
+        }
 		
     	//if remember is true, create a remember cookie that contains the ecrypted username and password
-		if($remember)
+		if ($remember)
 		{
     		// Set the remember me cookie if enabled
 			jimport('joomla.utilities.simplecrypt');
@@ -152,14 +172,13 @@ class LibPeopleHelperPerson extends KObject
 				
 			$key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT','raw'));
 				
-			if($key)
+			if ($key)
 			{
 				$crypt = new JSimpleCrypt($key);				
 				$cookie = $crypt->encrypt(serialize(array(
 					'username' =>$user['username'],
 					'password' =>$user['password']
 				)));				
-				
 				$lifetime = time() + AnHelperDate::yearToSeconds();
 				setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
 			}

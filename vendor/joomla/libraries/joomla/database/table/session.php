@@ -56,12 +56,6 @@ class JTableSession extends JTable
 
 	/**
 	 *
-	 * @var time
-	 */
-	var $gid				= null;
-
-	/**
-	 *
 	 * @var int
 	 */
 	var $guest				= null;
@@ -88,7 +82,6 @@ class JTableSession extends JTable
 
 		$this->guest 	= 1;
 		$this->username = '';
-		$this->gid 		= 0;
 	}
 
 	function insert($sessionId, $clientId)

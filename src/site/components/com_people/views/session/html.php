@@ -28,32 +28,6 @@
 class ComPeopleViewSessionHtml extends ComBaseViewHtml
 {	
 	/**
-	 * Constructor.
-	 *
-	 * @param KConfig $config An optional KConfig object with configuration options.
-	 *
-	 * @return void
-	 */
-	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);
-	}
-		
-	/**
-	 * Initializes the default configuration for the object
-	 *
-	 * Called from {@link __construct()} as a first step of object instantiation.
-	 *
-	 * @param KConfig $config An optional KConfig object with configuration options.
-	 *
-	 * @return void
-	 */
-	protected function _initialize(KConfig $config)
-	{	
-		parent::_initialize($config);
-	}
-		
-	/**
 	 * (non-PHPdoc)
 	 * @see LibBaseViewHtml::display()
 	 */
@@ -61,8 +35,9 @@ class ComPeopleViewSessionHtml extends ComBaseViewHtml
 	{
 		if ( $this->_state->getItem() ) 
 		{
-		    $url = $this->getRoute($this->_state->getItem()->getURL());
-			$this->getService('application')->redirect($url);			
+		    $url = $this->getRoute( $this->_state->getItem()->getURL() );
+            
+			$this->getService('application')->redirect( $url );			
 		}
 		
 		return parent::display();

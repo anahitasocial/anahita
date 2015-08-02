@@ -14,7 +14,7 @@
             
             <p>
                 <?php $return = base64UrlEncode( KRequest::url() ); ?>
-                <a data-trigger="OpenModal" class="btn btn-primary btn-large" href="#" data-url="<?= @route('option=people&view=session&layout=modal&connect=1&return='.$return ) ?>" >
+                <a class="btn btn-primary btn-large" href="<?= @route('option=people&view=session&connect=1&return='.$return ) ?>" >
                     <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
                 </a>
             </p>

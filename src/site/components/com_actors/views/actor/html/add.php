@@ -6,13 +6,13 @@
 
 <div class="row">
 	<div class="span8">
-		<form data-behavior="FormValidator" action="<?= @route($entity->getURL()) ?>" method="post" enctype="multipart/form-data">			
+		<form action="<?= @route( $entity->getURL() ) ?>" method="post" enctype="multipart/form-data">			
 			<div class="control-group">
 				<label class="label-group"  for="actor-name">
 					<?= @text('COM-ACTORS-NAME') ?>
 				</label>
 				<div class="controls">
-					<input data-validators="required" class="input-block-level" size="30" maxlength="100" name="name" value="<?=$entity->name?>" type="text" />
+					<input required class="input-block-level" size="30" maxlength="100" name="name" value="<?=$entity->name?>" type="text" />
 				</div>
 			</div>
 			
@@ -21,7 +21,7 @@
 					<?= @text('COM-ACTORS-BODY') ?>
 				</label>
 				<div class="controls">
-					<textarea data-validators="required maxLength:1000" class="input-block-level" name="body" rows="5"><?= $entity->body?></textarea>
+					<textarea required maxlength="1000" class="input-block-level" name="body" rows="5"><?= $entity->body?></textarea>
 				</div>
 			</div>
 			

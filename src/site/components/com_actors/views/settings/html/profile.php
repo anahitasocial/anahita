@@ -15,25 +15,6 @@
 				<input type="text" class="input-block-level" id="actor-name" size="50" maxlength="100" name="name" value="<?=$item->name?>" required />
 			</div>
 		</div>
-		
-		<?php if ( is_person($item) ) : ?>
-		<div class="control-group">
-			<label class="control-label" for="gender">
-				<?= @text('COM-ACTORS-PROFILE-GENDER') ?>
-			</label>
-			<div class="controls">
-				<?php 
-				$genderOptions = array(
-					'' => @text('COM-ACTORS-GENDER-UNDEFINED'), 
-					'male' => @text('COM-ACTORS-GENDER-MALE'), 
-					'female' => @text('COM-ACTORS-GENDER-FEMALE'), 
-					'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'), 
-					'other' => @text('COM-ACTORS-GENDER-OTHER')); 
-				?>
-				<?= @html('select', 'gender', array( 'options' => $genderOptions, 'selected' => $item->gender )) ?>
-			</div>
-		</div>
-		<?php endif;?>
 			
 		<div class="control-group">
 			<label class="control-label" for="actor-body">
@@ -44,13 +25,44 @@
 			</div>
 		</div>
 		
+		<?php if( is_person($item) && $viewer->admin() ): ?>
+        <div class="control-group">
+            <label class="control-label" for="person-group">
+                <?= @text('COM-PEOPLE-USERTYPE'); ?>
+            </label>
+            <div class="controls">
+                <?php $userType = strtolower(str_replace( ' ', '-', $item->userType)) ?>
+                <?= @helper('usertypes', array('selected'=>$userType)) ?>
+            </div>    
+        </div>
+        <?php endif; ?>
+        
+        <?php if ( is_person($item) ) : ?>
+        <div class="control-group">
+            <label class="control-label" for="gender">
+                <?= @text('COM-ACTORS-PROFILE-GENDER') ?>
+            </label>
+            <div class="controls">
+                <?php 
+                $genderOptions = array(
+                    '' => @text('COM-ACTORS-GENDER-UNDEFINED'), 
+                    'male' => @text('COM-ACTORS-GENDER-MALE'), 
+                    'female' => @text('COM-ACTORS-GENDER-FEMALE'), 
+                    'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'), 
+                    'other' => @text('COM-ACTORS-GENDER-OTHER')); 
+                ?>
+                <?= @html('select', 'gender', array( 'options' => $genderOptions, 'selected' => $item->gender ))->class('input-block-level') ?>
+            </div>
+        </div>
+        <?php endif;?>
+		
 		<?php if ( $item->isEnableable() ) : ?>
 		<div class="control-group">
 			<label class="control-label" for="enabled">
 				<?= @text('COM-ACTORS-ENABLED') ?>
 			</label>
 			<div class="controls">
-				<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>$item->enabled)) ?>
+				<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>$item->enabled))->class('input-block-level') ?>
 			</div>
 		</div>
 		<?php endif;?>

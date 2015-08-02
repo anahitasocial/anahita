@@ -120,7 +120,8 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      */
     public function getErrors()
     {                
-        if ( !isset($this->_errors[$this->_mixer]) ) {
+        if (! isset($this->_errors[$this->_mixer])) 
+        {
             $this->_errors[$this->_mixer] = new AnObjectSet();
         }
         

@@ -75,16 +75,6 @@
 		</tr>
 		<tr>
 			<td valign="top" class="key">
-				<label for="access">
-					<?php echo JText::_( 'Access Level' ); ?>:
-				</label>
-			</td>
-			<td>
-				<?php echo $this->lists['access']; ?>
-			</td>
-		</tr>
-		<tr>
-			<td valign="top" class="key">
 				<?php echo JText::_( 'Order' ); ?>:
 			</td>
 			<td>

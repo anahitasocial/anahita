@@ -82,8 +82,10 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$key = $this->getIdentifier().'-permissions';
 		
 		if(!$registry->offsetExists($key))
+        {
 			$registry->offsetSet($key, self::_getDefaultPermissions($this));
-		
+        }
+        
 		return $registry->offsetGet($key);
 	}
 	
@@ -129,7 +131,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
 		$menuItems = $event->menuItems;		
 		
 		if($this->activeForActor($actor))
+        {
 			$this->_setMenuLinks($actor, $menuItems);
+        }
 	}
 		
 	/**

@@ -38,11 +38,17 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
     	parent::__construct($config);
   
-        $this->registerCallback('after.login', array($this, 'redirect'), 
-                array('url'=>$config->redirect_to_after_login));
+        $this->registerCallback(
+            'after.login', 
+            array($this, 'redirect'), 
+            array('url'=>$config->redirect_to_after_login)
+            );
         
-        $this->registerCallback('after.delete', array($this, 'redirect'),
-                array('url'=>$config->redirect_to_after_logout));    
+        $this->registerCallback(
+            'after.delete', 
+            array($this, 'redirect'),
+            array('url'=>$config->redirect_to_after_logout)
+            );    
     }
     
     /**
@@ -91,9 +97,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	
     	$this->_state->setItem($person);
     	
-    	if(isset($_SESSION['return']))
-    	    $this->_state->append(array('return'=>$this->getService('com://site/people.filter.return')->sanitize($_SESSION['return'])));
-    	
+    	if (isset($_SESSION['return'])) {
+    	    $this->_state->append(array(
+    	        'return'=>$this->getService('com://site/people.filter.return')->sanitize($_SESSION['return']))
+                );
+        }
+        
     	return $person;
     }
 
@@ -106,16 +115,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionPost(KCommandContext $context)
     {
-        try 
-        {
+        try {
+                
             $result = $this->execute('add', $context);
             
             return $result;
-        } 
-        catch(RuntimeException $e) 
-        {
-            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
             
+        } catch(RuntimeException $e) {
+                
+            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
+     
             throw $e;
         }
     }
@@ -154,13 +163,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $options = array();
         $authResponse = $authentication->authenticate($credentials, $options);
         
-        if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS && $this->login((array) $authResponse, (bool) $data->remember))
-        {
+        if (
+            $authResponse->status === JAUTHENTICATE_STATUS_SUCCESS && $this->login((array) $authResponse, 
+            (bool) $data->remember)
+            ) {
+        	    
         	$this->getResponse()->status = KHttpResponse::CREATED;
             $_SESSION['return'] = null;
-        }
-        else 
-        {
+        
+        } else {
+                
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
         	JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $authResponse));
         	throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');        	
@@ -179,8 +191,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     protected function _actionDelete(KCommandContext $context)
     {
     	//we don't care if a useris logged in or not just delete
-        if($this->getService('com:people.helper.person')->logout())
+        if ($this->getService('com:people.helper.person')->logout()) {
         	$context->response->status = KHttpResponse::NO_CONTENT;
+        }
     }
     
        /**
@@ -197,24 +210,22 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     public function login(array $user, $remember = false)
     {       
-        if(!$this->getService('com:people.helper.person')->login($user, $remember))
-        {
+        if (!$this->getService('com:people.helper.person')->login($user, $remember)) {
+                
             $user = $this->getService('repos://site/users.user')->fetch(array('username'=>$user['username']));
             
-            if(!isset($user))
-            {
+            if (!isset($user)) {
                 $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');
                             
                 throw new RuntimeException('Unkown Error');
-            }
-            elseif(isset($user) && $user->block) 
-            {
+            
+            } elseif (isset($user) && $user->block) {
+                
                 $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error'); 
                     
                 throw new LibBaseControllerExceptionUnauthorized('User is blocked');
-            }
-            else 
-            {
+            
+            } else {
                 // Trigger onLoginFailure Event
                 JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $user));
                         
@@ -245,12 +256,13 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
     	parent::setRequest($request);
     	
-    	if(isset($this->_request->return))
-    	{
+    	if (isset($this->_request->return)) {
+    		    
     		$return = $this->getService('com://site/people.filter.return')->sanitize( $this->_request->return );
     		$this->_request->return = $return;
     		$this->return = $return;
-    	}
+    	
+        }
     	
     	return $this;
     }

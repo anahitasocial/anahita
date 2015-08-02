@@ -31,26 +31,28 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 * (non-PHPdoc)
 	 * @see ComBaseDispatcherDefault::_actionDispatch()
 	 */
-	protected function _actionDispatch(KCommandContext $context)
+	protected function _actionDispatch( KCommandContext $context )
 	{
-	    if($this->token && $this->getController()->getIdentifier()->name == 'person')
+	    if( $this->token && $this->getController()->getIdentifier()->name == 'person' )
 	    {
-	        if($this->getController()->canRead()) 
+	        if( $this->getController()->canRead() ) 
 	        {
 	            $this->getController()->login();
 
-	            if($this->reset_password) 
+	            if( $this->reset_password ) 
 	            {
-	                $url = JRoute::_($this->getController()->getItem()->getURL().'&get=settings&edit=account&reset_password=1');
+	                $url = JRoute::_( $this->getController()->getItem()->getURL().'&get=settings&edit=account&reset_password=1' );
+	                
 	                $this->getController()->getResponse()->location = $url;
 	            }
 	            
 	            $this->getController()->getResponse()->send();
-	            exit(0);
+                
+	            exit( 0 );
 	        }
 	    }
 	    	    
-	    return parent::_actionDispatch($context);
+	    return parent::_actionDispatch( $context );
 	}
 	
 	/**
@@ -61,13 +63,17 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 * (non-PHPdoc)
 	 * @see ComBaseDispatcherDefault::_actionException()
 	 */
-	protected function _actionException(KCommandContext $context)
+	protected function _actionException( KCommandContext $context )
 	{
-	    if($context->data instanceof LibBaseControllerExceptionUnauthorized && $this->getController() instanceof ComPeopleControllerSession)
+	    if( $context->data instanceof LibBaseControllerExceptionUnauthorized && $this->getController() instanceof ComPeopleControllerSession )
 	    {
 	       $context->response->send();
-	       exit(0);           
+           
+	       exit( 0 );           
 	    }
-	    else parent::_actionException($context);   
+	    else
+        {     
+	       parent::_actionException( $context );
+        }   
 	}
 }

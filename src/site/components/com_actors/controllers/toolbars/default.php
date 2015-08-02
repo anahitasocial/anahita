@@ -51,7 +51,9 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     public function onAfterControllerBrowse(KEvent $event)
     {
         if($this->getController()->canAdd())
-            $this->addCommand('new');     
+        {
+            $this->addCommand('new');    
+        } 
     }
     
     /**

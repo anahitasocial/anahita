@@ -32,37 +32,7 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
      * 
      * @var string
      */
-    protected $_validator;    
-    
-    /**
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);        
-    }
-        
-    /**
-     * Initializes the default configuration for the object
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
-     */
-    protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-            
-        ));
-    
-        parent::_initialize($config);
-    }
+    protected $_validator;
     
     /**
      * Return the validator
@@ -74,7 +44,8 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
        if ( !$this->_validator instanceof LibBaseControllerValidatorAbstract )
        {
            //Make sure we have a view identifier
-           if(!($this->_validator instanceof KServiceIdentifier)) {
+           if (! ($this->_validator instanceof KServiceIdentifier)) 
+           {
                $this->setValidator($this->_validator);
            }
            
@@ -125,8 +96,10 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
      */
     protected function _beforeControllerValidate()
     {
-        if ( !isset($this->_validator) )
+        if (! isset($this->_validator))
+        {
             $this->setValidator($this->_mixer->getIdentifier()->name);
+        }
     }
     
 	/**
@@ -138,20 +111,27 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
 	 */
 	protected function _actionValidate($context)
 	{
-		$data 	   = $context->data;		
-		$key	   = $data->key;
-		$value	   = $data->value;		
-		$method    = 'validate'.ucfirst($key);
-		$result    = true;		
-		$result    = $this->getValidator()->$method($value);
-        $output    = $this->getValidator()->getMessage();
-		if ( $result === false ) 
+		$data = $context->data;		
+		$key = $data->key;
+		$value = $data->value;		
+		$method = 'validate'.ucfirst($key);
+		$result = true;		
+		$result = $this->getValidator()->$method($value);
+        $output = $this->getValidator()->getMessage();
+		
+		if ($result === false) 
 		{
-			$context->response->status     = KHttpResponse::PRECONDITION_FAILED;
-			if ( is_string($output)  ) 
+			$context->response->status = KHttpResponse::PRECONDITION_FAILED;
+            
+			if (is_string($output))
+            { 
 			    $output = array('errorMsg'=>$output);
+            }
+            
 			$context->response->validation = json_encode($output);			
-		} else {
+		} 
+		else 
+		{
 		    $context->response->validation = json_encode($output);;
 		}
 	}	

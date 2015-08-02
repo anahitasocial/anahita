@@ -89,7 +89,8 @@ class Anahita
                        
         //if caching is not enabled then reset the apc cache to
         //to prevent corrupt identifier        
-        if ( !$config['cache_enabled'] ) {
+        if (! $config['cache_enabled']) 
+        {
             clean_apc_with_prefix($config['cache_prefix']);
         }
                 

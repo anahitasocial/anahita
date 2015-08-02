@@ -1,18 +1,58 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php @service('application.dispatcher')->getRequest()->tmpl = 'component' ?>
-<?php $user = @service('repos://site/users')->getQuery(true)->fetchValue('id'); ?>
+<?= @helper('ui.header', array()) ?>
 
 <div class="row">
-	<div class="offset3 span6">	
+    <div class="span6">
         
-        <?php if(!$user): ?>
-        <div class="alert alert-info alert-block">
-            <h4><?= @text('COM-PEOPLE-WELCOME1') ?></h4>
-            <p><?= @text('COM-PEOPLE-WELCOME2') ?></p>
-        </div>
-        <?php endif; ?>	
-        
-		<?= @template('form') ?>
-	</div>
+        <form action="<?= @route('view=person') ?>" method="post" name="person-form" id="person-form" autocomplete="off">
+            <input type="hidden" name="action" value="add" />
+            
+            <div class="control-group">
+                <label class="control-label"  for="person-name">
+                    <?= @text( 'COM-PEOPLE-NAME' ); ?>
+                </label>
+                <div class="controls">
+                    <input class="input-block-level" type="text" id="person-name" name="name" maxlength="25" minlength="6" required />
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label"  for="person-username">
+                    <?= @text('COM-PEOPLE-USERNAME'); ?>
+                </label>
+                <div class="controls">
+                    <?php $usernamePattern = "^[A-Za-z][A-Za-z0-9_-]*$"; ?>
+                    <input data-validate="username" data-url="<?= @route('view=person', false ) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="100" minlength="6" required />
+                </div>
+            </div>
+                    
+            <div class="control-group">
+                <label class="control-label"  for="person-email">
+                    <?= @text('COM-PEOPLE-EMAIL'); ?>
+                </label>
+                <div class="controls">
+                   <?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
+                   <input data-validate="email" data-url="<?= @route('view=person', false) ?>" type="email" name="email" pattern="<?= $emailPattern ?>" id="person-email" class="input-block-level" maxlength="100" minlength="10" required  />
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="person-usertype">
+                    <?= @text('COM-PEOPLE-USERTYPE'); ?>
+                </label>
+                <div class="controls">
+                    <?= @helper('usertypes') ?>
+                </div>    
+            </div>
+            
+            <div class="form-actions">
+                <a href="javascript:history.go(-1)" class="btn"><?= @text('LIB-AN-ACTION-CANCEL') ?></a>            
+                <button type="submit" class="btn btn-primary">
+                    <?= @text('LIB-AN-ACTION-ADD') ?>
+                </button>
+            </div>   
+        </form>
+
+    </div>
 </div>

@@ -211,26 +211,6 @@ class JFactory
 	}
 
 	/**
-	 * Get an authorization object
-	 *
-	 * Returns a reference to the global {@link JAuthorization} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @return object JAuthorization
-	 */
-	static public function &getACL( )
-	{
-		static $instance;
-
-		if (!is_object($instance)) {
-			$instance = JFactory::_createACL();
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get a database object
 	 *
 	 * Returns a reference to the global {@link JDatabase} object, only creating it
@@ -454,30 +434,6 @@ class JFactory
 		}
 
 		return $session;
-	}
-
-	/**
-	 * Create an ACL object
-	 *
-	 * @access private
-	 * @return object JAuthorization
-	 * @since 1.5
-	 */
-	static private function &_createACL()
-	{
-		//TODO :: take the authorization class out of the application package
-		jimport( 'joomla.user.authorization' );
-
-		$db =&  JFactory::getDBO();
-
-		$options = array(
-			'db'				=> &$db,
-			'db_table_prefix'	=> $db->getPrefix() . 'core_acl_',
-			'debug'				=> 0
-		);
-		$acl = new JAuthorization( $options );
-
-		return $acl;
 	}
 
 	/**

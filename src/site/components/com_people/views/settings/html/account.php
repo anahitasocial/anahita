@@ -43,6 +43,17 @@
 	    	<?= @helper('password.input', array( 'required' => false ) ) ?>	    		
 	    </div>
 	</div>
+	
+	<?php if( $viewer->admin() ): ?>
+    <div class="control-group">
+        <label class="control-label" for="person-group">
+            <?= @text('COM-PEOPLE-ROLE'); ?>
+        </label>
+        <div class="controls">
+            <?= @helper('usertypes') ?>
+        </div>    
+    </div>
+    <?php endif; ?>
 
 	<?php        
 	$user = JFactory::getUser($item->userId);

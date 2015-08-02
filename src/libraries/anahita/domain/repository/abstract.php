@@ -265,31 +265,39 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 				return;
 		}
 				
-		$context			 = $this->getCommandContext();	
-		$context->operation  = $operation;
-		$context->entity	 = $entity;			
-		$context->data		 = array();
-		$store	 			 = $this->getStore();
+		$context = $this->getCommandContext();	
+		$context->operation = $operation;
+		$context->entity = $entity;			
+		$context->data = array();
+		$store = $this->getStore();
 		
-		if ( $context->result = $this->getCommandChain()->run('before.'.$command, $context) !== false ) 
+		if ($context->result = $this->getCommandChain()->run('before.'.$command, $context) !== false) 
 		{
-			$context->data    = $entity->getAffectedRowData();
+			$context->data = $entity->getAffectedRowData();
 			
 			switch($operation)
 			{
 				case(AnDomain::OPERATION_INSERT) :
-					if ( !count($context->data) ) {
+					if (! count($context->data)) 
+					{
 						throw new AnDomainRepositoryException('Attempting to store an entity with empty data');
 					}
+                    
 					$context->result = $store->insert($this, $context->data);
 					break;
+                    
 				case(AnDomain::OPERATION_UPDATE) :					
 				case(AnDomain::OPERATION_DELETE) :
+					
 					$keys = $this->_description->getIdentityProperty()->serialize($entity->getIdentityId());
 					$keys = array($this->_description->getIdentityProperty()->getName() => $entity->getIdentityId());
-					if ( $operation & AnDomain::OPERATION_UPDATE) {
+					
+					if ($operation & AnDomain::OPERATION_UPDATE) 
+					{
 						$context->result = count($context->data) ? $this->update($context->data, $keys) : true;
-					} else {
+					} 
+					else 
+					{
 						$context->result = $this->destroy($keys);
 					}
 			}

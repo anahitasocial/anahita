@@ -154,10 +154,6 @@ class RTAdminCSSMenu extends JTree
 				if ($option == 'com_cpanel') return true;
 				break;
 				
-			case 'Users':
-				if (RTAdminCSSMenu::_isOption($menus['Users'])) return true;
-				break;
-				
 			case 'Extend':
 				if (RTAdminCSSMenu::_isOption($menus['Extend'])) return true;
 				break;

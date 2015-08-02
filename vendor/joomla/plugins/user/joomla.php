@@ -38,7 +38,8 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onAfterDeleteUser($user, $succes, $msg)
 	{
-		if(!$succes) {
+		if (! $succes) 
+		{
 			return false;
 		}
 
@@ -66,45 +67,23 @@ class plgUserJoomla extends JPlugin
 		$instance =& $this->_getUser($user, $options);
 		
 		// if _getUser returned an error, then pass it back.
-		if (JError::isError( $instance )) {
+		if (JError::isError($instance)) 
+		{
 			return $instance;
 		}
 		
 		// If the user is blocked, redirect with an error
-		if ($instance->get('block') == 1) {
+		if ($instance->get('block') == 1) 
+		{
 			return new JException('SOME_ERROR_CODE', JText::_('E_NOLOGIN_BLOCKED'));
 		}
 
 		// Get an ACL object
-		$acl =& JFactory::getACL();
-
-		// Get the user group from the ACL
-		if ($instance->get('tmp_user') == 1) {
-			$grp = new JObject;
-			// This should be configurable at some point
-			$grp->set('name', 'Registered');
-		} else {
-			$grp = $acl->getAroGroup($instance->get('id'));
-		}
-
-		//Authorise the user based on the group information
-		if(!isset($options['group'])) {
-			$options['group'] = 'USERS';
-		}
-
-		if(!$acl->is_group_child_of( $grp->name, $options['group'])) {
-			return new JException('SOME_ERROR_CODE', JText::_('E_NOLOGIN_ACCESS'));
-		}
+        $grp = new JObject();
+        $grp->set('name', 'registered');
 
 		//Mark the user as logged in
-		$instance->set( 'guest', 0);
-		$instance->set('aid', 1);
-
-		// Fudge Authors, Editors, Publishers and Super Administrators into the special access group
-		if ($acl->is_group_child_of($grp->name, 'Registered')      ||
-		    $acl->is_group_child_of($grp->name, 'Public Backend'))    {
-			$instance->set('aid', 2);
-		}
+		$instance->set('guest', 0);
 
 		//Set the usertype based on the ACL group name
 		$instance->set('usertype', $grp->name);
@@ -117,11 +96,10 @@ class plgUserJoomla extends JPlugin
 		$table = & JTable::getInstance('session');
 		$table->load($session->getId());
 
-		$table->guest 		= $instance->get('guest');
-		$table->username 	= $instance->get('username');
-		$table->userid 		= intval($instance->get('id'));
-		$table->usertype 	= $instance->get('usertype');
-		$table->gid 		= intval($instance->get('gid'));
+		$table->guest = $instance->get('guest');
+		$table->username = $instance->get('username');
+		$table->userid 	= intval($instance->get('id'));
+		$table->usertype = $instance->get('usertype');
 		
 		$table->update();		
 		
@@ -143,12 +121,15 @@ class plgUserJoomla extends JPlugin
 	public function onLogoutUser($user, $options = array())
 	{
 		$my =& JFactory::getUser();
+        
 		//Make sure we're a valid user first
-		if($user['id'] == 0 && !$my->get('tmp_user')) 
+		if ($user['id'] == 0 && !$my->get('tmp_user'))
+        { 
 			return true;
-
+        }
+        
 		//Check to see if we're deleting the current session
-		if($my->get('id') == $user['id'])
+		if ($my->get('id') == $user['id'])
 		{
 			// Hit the user last visit field
 			$my->setLastVisit();
@@ -156,11 +137,14 @@ class plgUserJoomla extends JPlugin
 			// Destroy the php session for this user
 			$session =& JFactory::getSession();
 			$session->destroy();
-		} else {
+		} 
+		else 
+		{
 			// Force logout all users with that userid
 			$table = & JTable::getInstance('session');
 			$table->destroy($user['id'], $options['clientid']);
 		}
+        
 		return true;
 	}
 
@@ -178,7 +162,9 @@ class plgUserJoomla extends JPlugin
 	private function &_getUser($user, $options = array())
 	{
 		$instance = new JUser();
-		if($id = intval(JUserHelper::getUserId($user['username'])))  {
+        
+		if ($id = intval(JUserHelper::getUserId($user['username'])))
+		{
 			$instance->load($id);
 			return $instance;
 		}
@@ -187,21 +173,21 @@ class plgUserJoomla extends JPlugin
 		jimport('joomla.application.component.helper');
 		$config   = &JComponentHelper::getParams( 'com_users' );
 		$usertype = $config->get( 'new_usertype', 'Registered' );
-
 		$acl =& JFactory::getACL();
 
-		$instance->set( 'id'				, 0 );
-		$instance->set( 'name'				, $user['fullname'] );
-		$instance->set( 'username'			, $user['username'] );
-		$instance->set( 'password_clear'	, $user['password_clear'] );
-		$instance->set( 'email'				, $user['email'] );	// Result should contain an email (check)
-		$instance->set( 'gid'				, $acl->get_group_id( '', $usertype));
-		$instance->set( 'usertype'			, $usertype );
+		$instance->set( 'id' , 0 );
+		$instance->set( 'name' ,$user['fullname']);
+		$instance->set( 'username' , $user['username']);
+		$instance->set( 'password_clear', $user['password_clear']);
+        
+        // Result should contain an email (check)
+		$instance->set( 'email', $user['email']);	
+		$instance->set( 'usertype', $usertype);
 
 		//If autoregister is set let's register the user
 		$autoregister = isset($options['autoregister']) ? $options['autoregister'] :  $this->params->get('autoregister', 1);
 
-		if($autoregister && !$instance->save())
+		if ($autoregister && !$instance->save())
 		{
 			return JError::raiseWarning('SOME_ERROR_CODE', $instance->getError());
 		} 

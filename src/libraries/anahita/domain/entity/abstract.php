@@ -1057,18 +1057,20 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 	 */
 	public function execute($command, $context)
 	{
-        if (!$context instanceof  KCommandContext)
+        if (! $context instanceof  KCommandContext)
+        {
             $context = new KCommandContext($context);
+        }
         
 		$parts = explode('.', $command);
-   
 		$method = '_'.$parts[0].'Entity'.ucfirst($parts[1]);   
-		     
 		$result = null;
 				
 		if(method_exists($this, $method))
+        {
 			$result = $this->$method($context);
-		
+        }
+        
 		return $result;
 	}
 		

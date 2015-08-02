@@ -174,13 +174,14 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         
         $component = $this->getRequest()->get('option');
         
-        $user =& JFactory::getUser();
-        
-        if(!$user->authorize('login', 'administrator'))
+        if(get_viewer()->guest())
+        {
             $component = 'com_login';
-        
-        if(empty($component))
+        }
+        elseif(empty($component))
+        {
             $component = 'com_cpanel';
+        }
         
         $this->getRequest()->set('option',  $component);
         JRequest::set($this->getRequest()->toArray(),'get');
@@ -206,5 +207,5 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         }
         JError::customErrorPage($error);
         exit(0);
-    }    
+    }   
 }

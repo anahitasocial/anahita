@@ -42,10 +42,13 @@
      {
          $response = $this->getResponse();
          $headers  = $response->getHeaders();
-         if ( isset($headers['Location'])
-                 && $response->isSuccess()
-                 && !$response->getRequest()->isAjax()
-         ) {
+         
+         if ( 
+              isset($headers['Location']) && 
+              $response->isSuccess() && 
+              !$response->getRequest()->isAjax()
+         ) 
+         {
              $response->setStatus(KHttpResponse::SEE_OTHER);
          }
          

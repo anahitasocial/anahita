@@ -102,38 +102,6 @@ class JHTMLList
 	}
 
 	/**
-	* Select list of active users
-	*/
-	public static function users( $name, $active, $nouser = 0, $javascript = NULL, $order = 'name', $reg = 1 )
-	{
-		$db =& JFactory::getDBO();
-
-		$and = '';
-		if ( $reg ) {
-		// does not include registered users in the list
-			$and = ' AND gid > 18';
-		}
-
-		$query = 'SELECT id AS value, name AS text'
-		. ' FROM #__users'
-		. ' WHERE block = 0'
-		. $and
-		. ' ORDER BY '. $order
-		;
-		$db->setQuery( $query );
-		if ( $nouser ) {
-			$users[] = JHTML::_('select.option',  '0', '- '. JText::_( 'No User' ) .' -' );
-			$users = array_merge( $users, $db->loadObjectList() );
-		} else {
-			$users = $db->loadObjectList();
-		}
-
-		$users = JHTML::_('select.genericlist',   $users, $name, 'class="inputbox" size="1" '. $javascript, 'value', 'text', $active );
-
-		return $users;
-	}
-
-	/**
 	* Select list of positions - generally used for location of images
 	*/
 	public static function positions( $name, $active = NULL, $javascript = NULL, $none = 1, $center = 1, $left = 1, $right = 1, $id = false )

@@ -55,11 +55,7 @@ class ComDefaultControllerBehaviorExecutable extends KControllerBehaviorExecutab
 
         if(parent::canAdd())
         {
-            if(version_compare(JVERSION,'1.6.0','ge')) {
-                $result = JFactory::getUser()->authorise('core.create') === true;
-            } else {
-                $result = JFactory::getUser()->get('gid') > 22;
-            }
+            return get_viwer()->admin();
         }
 
         return $result;
@@ -76,11 +72,7 @@ class ComDefaultControllerBehaviorExecutable extends KControllerBehaviorExecutab
 
         if(parent::canEdit())
         {
-            if(version_compare(JVERSION,'1.6.0','ge')) {
-                $result = JFactory::getUser()->authorise('core.edit') === true;
-            } else {
-                $result = JFactory::getUser()->get('gid') > 22;
-            }
+           return get_viwer()->admin();
         }
 
         return $result;
@@ -97,11 +89,7 @@ class ComDefaultControllerBehaviorExecutable extends KControllerBehaviorExecutab
 
         if(parent::canDelete())
         {
-            if(version_compare(JVERSION,'1.6.0','ge')) {
-                $result = JFactory::getUser()->authorise('core.delete') === true;
-            } else {
-                $result = JFactory::getUser()->get('gid') > 22;
-            }
+            return get_viwer()->admin();
         }
 
         return $result;

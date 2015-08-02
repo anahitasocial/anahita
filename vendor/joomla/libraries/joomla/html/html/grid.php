@@ -62,34 +62,6 @@ class JHTMLGrid
 		}
 	}
 
-	public static function access( &$row, $i, $archived = NULL )
-	{
-		if ( !$row->access )  {
-			$color_access = 'style="color: green;"';
-			$task_access = 'accessregistered';
-		} else if ( $row->access == 1 ) {
-			$color_access = 'style="color: red;"';
-			$task_access = 'accessspecial';
-		} else {
-			$color_access = 'style="color: black;"';
-			$task_access = 'accesspublic';
-		}
-
-		if ($archived == -1)
-		{
-			$href = JText::_( $row->groupname );
-		}
-		else
-		{
-			$href = '
-			<a href="javascript:void(0);" onclick="return listItemTask(\'cb'. $i .'\',\''. $task_access .'\')" '. $color_access .'>
-			'. JText::_( $row->groupname ) .'</a>'
-			;
-		}
-
-		return $href;
-	}
-
 	public static function checkedOut( &$row, $i, $identifier = 'id' )
 	{
 		$user   =& JFactory::getUser();

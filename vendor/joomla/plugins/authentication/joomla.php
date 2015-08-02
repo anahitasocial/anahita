@@ -38,7 +38,8 @@ class plgAuthenticationJoomla extends JPlugin
      * @param array  $config  An array that holds the plugin configuration
      * @since 1.5
      */
-    function plgAuthenticationJoomla(& $subject, $config) {
+    function plgAuthenticationJoomla(& $subject, $config) 
+    {
         parent::__construct($subject, $config);
     }
 
@@ -52,12 +53,12 @@ class plgAuthenticationJoomla extends JPlugin
      * @return  boolean
      * @since 1.5
      */
-    function onAuthenticate( &$credentials, $options, &$response )
+    function onAuthenticate(&$credentials, $options, &$response)
     {
         jimport('joomla.user.helper');
 
         // Joomla does not like blank passwords
-        if(empty($credentials['password']))
+        if (empty($credentials['password']))
         {
             $response->status = JAUTHENTICATE_STATUS_FAILURE;
             $response->error_message = 'Empty password not allowed';
@@ -71,28 +72,30 @@ class plgAuthenticationJoomla extends JPlugin
         $db =& JFactory::getDBO();
         $username = $db->Quote($credentials['username']);
         
-        $query = 'SELECT `username`,`id`, `password`, `gid`'
+        $query = 'SELECT `username`,`id`, `password`'
             . ' FROM `#__users`'
             . ' WHERE username=' . $username;
             
         //if an email
-        if(strpos($username,'@'))
+        if (strpos($username,'@'))
+        {
             $query .= ' OR email='.$username;
+        }
         
         $db->setQuery($query);
         
         $result = $db->loadObject();
         
-        if($result)
+        if ($result)
         {
             //if login with email then set the username credential
             $credentials['username'] = $result->username;           
-            $parts  = explode( ':', $result->password );
-            $crypt  = $parts[0];
-            $salt   = @$parts[1];
+            $parts = explode( ':', $result->password );
+            $crypt = $parts[0];
+            $salt = @$parts[1];
             $testcrypt = JUserHelper::getCryptedPassword($credentials['password'], $salt);
             
-            if($crypt == $testcrypt) 
+            if ($crypt == $testcrypt) 
             {             
                 $user = JUser::getInstance($result->id); // Bring this in line with the rest of the system
                 $response->email = $user->email;

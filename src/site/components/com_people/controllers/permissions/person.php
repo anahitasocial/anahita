@@ -1,7 +1,6 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
  * 
  * @category   Anahita
  * @package    Com_People
@@ -52,9 +51,9 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     {
         parent::__construct($config);
         
-        $this->_can_register        = $config->can_register;        
+        $this->_can_register = $config->can_register;        
         $this->_activation_required = $config->activation_required;
-        $this->_mixer->permission   = $this;
+        $this->_mixer->permission = $this;
     }
         
     /**
@@ -70,8 +69,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     {
         $config->append(array(
             'activation_required' => get_config_value('users.useractivation'),                
-            'can_register' => (bool)get_config_value('users.allowUserRegistration', true)
-
+            'can_register' => (bool) get_config_value('users.allowUserRegistration', true)
         ));
     
         parent::_initialize($config);
@@ -84,14 +82,15 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * @see ComActorsControllerPermissionAbstract::canRead()
      */
     public function canRead()
-    {
+    {    
         //if there's a 
-        if ( $this->token ) 
+        if ($this->token) 
         {
-           $user = $this->getService('repos://site/users.user')->find(array('activation'=>$this->token));
-           if ( $user ) 
+           $user = $this->getService('repos://site/users.user')->find(array('activation' => $this->token));
+           
+           if ($user) 
            {
-               $this->setItem($this->getRepository()->find(array('userId'=>$user->id)));
+               $this->setItem($this->getRepository()->find(array('userId' => $user->id)));
                $this->getItem()->enabled = true;                
                $user->activation = null;
                $user->block = false;
@@ -99,8 +98,35 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
            }
         }
         
+        if ($this->getRequest()->get('layout') == 'signup')
+        {     
+            return $this->canSignup();
+        }
+        
+        if ($this->getRequest()->get('layout') == 'add')
+        {     
+            return $this->canAdd();
+        }
+
         return parent::canRead();
-    }    
+    }  
+    
+    /**
+     * return true if viewer is an admin or a guest
+     * 
+     * @return boolean
+     */
+    public function canAdd()
+    {
+        $viewer = get_viewer();
+        
+        if( $viewer->guest() || $viewer->admin() )
+        {
+            return true;
+        }
+        
+        return false;
+    }  
 
     /**
      * Return whether the action is required or not
@@ -119,7 +145,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * 
      * @return void
      */
-    public function setActivationRequired($activation_required)
+    public function setActivationRequired( $activation_required )
     {
         $this->_activation_required = $activation_required;
     }
@@ -131,9 +157,10 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * 
      * @return void
      */
-    public function setCanRegister($can_register)
+    public function setRegistrationOpen( $can_register )
     {
         $this->_can_register = $can_register;
+        
         return $this;
     }
     
@@ -142,25 +169,8 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * 
      * @return boolean
      */
-    public function canRegister()
+    public function isRegistrationOpen()
     {
         return $this->_can_register;
     }
-    
-	/**
-	 * Returns whether registration is possible or not. The user can not
-	 * registered if it's already logged in or the configuration value
-	 * 'users.allowUserRegistration' is set to no
-	 *
-	 * @return boolean Returns whether registration is possible or not.
-	 */
-	public function canAdd()
-	{	    
-		//if user is alrready logged in
-		if ( JFactory::getUser()->id > 0 ) {
-			return false;
-		}
-	
-		return $this->canRegister();
-	}	
 }

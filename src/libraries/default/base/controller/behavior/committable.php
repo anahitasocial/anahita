@@ -89,6 +89,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
             {                
                 $this->setMessage($message, $type, true);    
             }
+            
             if ( $result === false ) 
             {
                 if ( $this->isIdentifiable() && $this->getItem() ) 
@@ -98,7 +99,8 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
                         throw new AnErrorException($this->getItem()->getErrors(), KHttpResponse::BAD_REQUEST);
                     }
                 }
-                else {
+                else 
+                {
                     $errors = AnHelperArray::getValues($this->getCommitErrors());
                     throw new AnErrorException($errors, KHttpResponse::BAD_REQUEST);
                 }
@@ -125,7 +127,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
      * @return string Return the built message
      */
     protected function _makeStatusMessage($action, $type = 'success')
-    {
+    {            
         $messages    = array();
         $messages[]  = strtoupper('COM-'.$this->_mixer->getIdentifier()->package.'-PROMPT-'.$this->_mixer->getIdentifier()->name.'-'.$action.'-'.$type);
         $messages[]  = strtoupper('LIB-AN-MESSAGE-'.$this->_mixer->getIdentifier()->name.'-'.$action.'-'.$type);

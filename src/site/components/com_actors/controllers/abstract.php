@@ -153,13 +153,17 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionAdd($context);
         
-        if ($entity->isPortraitable() && KRequest::has('files.portrait')) 
+        if($entity->isPortraitable() && KRequest::has('files.portrait')) 
         {
             $file = KRequest::get('files.portrait', 'raw'); 
             
-           if( $this->bellowSizeLimit( $file ) && $file['error'] == 0 ) 
+            if ($this->bellowSizeLimit($file) && $file['error'] == 0) 
             {
-               $entity->setPortrait(array('url'=>$file['tmp_name'], 'mimetype'=>$file['type'])); 
+               $entity->setPortrait(array(
+                   'url'=>$file['tmp_name'], 
+                   'mimetype'=>$file['type']
+                   )
+               ); 
             }             
         }
         
@@ -181,9 +185,13 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         {         
             $file = KRequest::get('files.portrait', 'raw'); 
             
-            if( $this->bellowSizeLimit( $file ) && $file['error'] == 0 ) 
+            if ($this->bellowSizeLimit($file) && $file['error'] == 0) 
             {
-                $this->getItem()->setPortrait(array('url'=>$file['tmp_name'], 'mimetype'=>$file['type']));
+                $this->getItem()->setPortrait(array(
+                    'url'=>$file['tmp_name'], 
+                    'mimetype'=>$file['type']
+                    )
+                );
                                 
                 $story = $this->createStory(array(
                    'name'   => 'avatar_edit',
@@ -197,7 +205,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             }
         }
                         
-        if($entity->save($context)) 
+        if ($entity->save($context)) 
         {
             dispatch_plugin('profile.onSave', array('actor'=>$entity, 'data'=>$context->data));  
         }
@@ -216,12 +224,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         parent::setView($view);
         
-        if(!$this->_view instanceof ComBaseViewAbstract) 
+        if (!$this->_view instanceof ComBaseViewAbstract) 
         {
-            $name  = KInflector::isPlural($this->view) ? 'actors' : 'actor';
+            $name = KInflector::isPlural($this->view) ? 'actors' : 'actor';
             $defaults[] = 'ComActorsView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComActorsView'.ucfirst($name).ucfirst($this->_view->name);
-            
             register_default(array('identifier'=>$this->_view, 'default'=>$defaults));
         }
         
@@ -239,12 +246,10 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _actionDelete(KCommandContext $context)
     {
         $this->getService('repos://site/components')->fetchSet()
-        ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
-                         
+             ->registerEventDispatcher($this->getService('anahita:event.dispatcher'));            
         $result = parent::_actionDelete($context);
+        $this->getService('anahita:event.dispatcher')->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()->id));
         
-        $this->getService('anahita:event.dispatcher')->dispatchEvent('onDeleteActor', array('actor_id'=>$this->getItem()));
-                
         return $result;
     }
     
@@ -282,14 +287,14 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionSetPrivacy(KCommandContext $context)
     {
-        if($this->hasBehavior('privatable'))
+        if ($this->hasBehavior('privatable'))
         {
            $this->getBehavior('privatable')->execute('action.setprivacy', $context); 
         }
 
         $data = $context->data;
         
-        if($data->access != 'followers')
+        if ($data->access != 'followers')
         {
            $data->allowFollowRequest = false; 
         }  
@@ -308,16 +313,16 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $url = null;
         
-        if( $context->action == 'delete' ) 
+        if ($context->action == 'delete') 
         {
             $url = 'option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name);
         }
-        elseif( $context->action == 'add' ) 
+        elseif ($context->action == 'add') 
         {
             $url = $context->result->getURL().'&get=settings';
         }
         
-        if($url)
+        if ($url)
         {
             $context->response->setRedirect(JRoute::_($url)); 
         }
@@ -333,15 +338,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     public function bellowSizeLimit( $file ) {
         
         $content = @file_get_contents($file['tmp_name']);
-        
         $filesize = strlen($content);
-        
         $uploadlimit = $this->_max_upload_limit * 1024 * 1024; 
         
-        if($filesize > $uploadlimit)
+        if ($filesize > $uploadlimit)
         {
             throw new LibBaseControllerExceptionBadRequest('Exceed maximum size');  
-
             return false;
         }
         

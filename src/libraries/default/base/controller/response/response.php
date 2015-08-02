@@ -102,11 +102,11 @@
      protected function _initialize(KConfig $config)
      {
          $config->append(array(
-             'content'          => '',
-             'content_type'     => 'text/html',
-             'status_code'      => KHttpResponse::OK,
-             'status_message'   => 'OK',
-             'headers'          => array()
+             'content' => '',
+             'content_type' => 'text/html',
+             'status_code' => KHttpResponse::OK,
+             'status_message' => 'OK',
+             'headers' => array()
          ));
      
          parent::_initialize($config);
@@ -142,11 +142,13 @@
      */
      public function setStatus($status, $message = null) 
      {        
-        if ( !$status ) {
+        if (! $status) 
+        {
             throw new InvalidArgumentException('Response status is missing');    
         }
         
-        if ( !$message && !KHttpResponse::getMessage($status) ) {
+        if (! $message && !KHttpResponse::getMessage($status)) 
+        {
             throw new InvalidArgumentException('Response message is missing');
         }
         
@@ -164,16 +166,20 @@
       */
      public function __set($key, $value)
      {
-         if ( $key == 'status' ) {
+         if ($key == 'status') 
+         {
              $this->setStatus($value);
          } 
-         elseif ( $key == 'redirect' ) {
+         elseif ($key == 'redirect') 
+         {
              $this->setRedirect($value);
          }
-         elseif ( $key == 'content' ) {
+         elseif ($key == 'content') 
+         {
              $this->setContent($value);
          }
-         else {
+         else 
+         {
              $key = implode('-', array_map('ucfirst', KInflector::explode($key)));
              $this->setHeader($key, $value);
          }
@@ -197,11 +203,12 @@
             if (!is_string($location) && !is_numeric($location) && !is_callable(array($location, '__toString')))
             {
                 throw new \UnexpectedValueException(
-                        'The Response location must be a string or object implementing __toString(), "'.gettype($location).'" given.'
+                    'The Response location must be a string or object implementing __toString(), "'.gettype($location).'" given.'
                 );
             }
 
-            if ( !$code ) {
+            if (! $code) 
+            {
                 $code = $this->_status_code;    
             }
             
