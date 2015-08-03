@@ -126,10 +126,23 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * @return boolean
      */
     public function canAdd()
-    {
-        $viewer = get_viewer();
+    { 
+        if( $this->_viewer->guest() || $this->_viewer->admin() )
+        {
+            return true;
+        }
         
-        if( $viewer->guest() || $viewer->admin() )
+        return false;
+    }
+    
+    /**
+     * return true if viewer is an admin or the same as the item being edited
+     * 
+     * @return boolean
+     */
+    public function canEdit()
+    {            
+        if( $this->_viewer->admin() || $this->_viewer->eql($this->getItem()) )
         {
             return true;
         }

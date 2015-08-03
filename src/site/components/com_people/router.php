@@ -23,11 +23,12 @@ class ComPeopleRouter extends ComActorsRouterDefault
      */
     public function build(&$query)
     {
-    	if(isset($query['uniqueAlias'])) 
+    	if (isset($query['uniqueAlias'])) 
     	{
     		$query['id'] = $query['uniqueAlias'];
     		unset($query['uniqueAlias']);    		
     	}
+        
     	return parent::build($query);        
     }
         
@@ -62,11 +63,11 @@ class ComPeopleRouter extends ComActorsRouterDefault
     	    if (preg_match('/tokens\/.*/',$path)) 
     	    {
     	        $query['view'] = 'token';
-    	        $query['id']   = array_pop( $segments );
+    	        $query['id']   = array_pop($segments);
     	    }
     		else
             {     
-    		    $query = parent::parse( $segments );
+    		    $query = parent::parse($segments);
             }
     	}
    	

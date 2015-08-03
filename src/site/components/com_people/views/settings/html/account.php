@@ -2,19 +2,7 @@
 
 <h3><?= @text('COM-PEOPLE-PROFILE-EDIT-ACCOUNT-INFORMATION') ?></h3>
 
-<?php $user = $item->getJUserObject() ?>
-
-<form action="<?= @route('view=person&id='.$item->id) ?>" method="post" name="person-form" id="person-form" autocomplete="off">
-
-	<div class="control-group">
-		<label class="control-label"  for="person-name">
-		<?= @text( 'COM-ACTORS-NAME' ); ?>:
-	    </label>
-	    <div class="controls">
-	    	<input required type="text" id="person-name" class="input-block-level" name="name" value="<?= $item->name?>" maxlength="25" />
-	    </div>
-	</div>
-	
+<form action="<?= @route($item->getURL(false)) ?>" method="post" autocomplete="off">
 	<div class="control-group">
 		<label class="control-label"  for="person-username">
 		<?= @text('COM-PEOPLE-USERNAME'); ?>:
@@ -40,39 +28,13 @@
 	    	<?= @text('COM-PEOPLE-PASSWORD'); ?>:
 	    </label>
 	    <div class="controls">
-	    	<?= @helper('password.input', array( 'required' => false ) ) ?>	    		
+	    	<?= @helper('password.input') ?>	    		
 	    </div>
-	</div>
+	</div>              
 	
-	<?php if( $viewer->admin() ): ?>
-    <div class="control-group">
-        <label class="control-label" for="person-group">
-            <?= @text('COM-PEOPLE-ROLE'); ?>
-        </label>
-        <div class="controls">
-            <?= @helper('usertypes') ?>
-        </div>    
-    </div>
-    <?php endif; ?>
-
-	<?php        
-	$user = JFactory::getUser($item->userId);
-	$params = $user->getParameters(true)->renderToArray();        
-	?>                
-	
-	<div class="control-group">
-		<label class="control-label" for="paramslanguage">
-			<?= @text('COM-PEOPLE-LANGUAGE') ?>
-		</label>
-		<div class="controls">
-			<?= $params['language'][1] ?>
-		</div>
-	</div>
-	        
 	<div class="form-actions">
 		<button type="submit" class="btn" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">
-		    <?= @text('LIB-AN-ACTION-SAVE'); ?>
-		</button>
+            <?= @text('LIB-AN-ACTION-SAVE'); ?>
+        </button>
 	</div>
-    
 </form>

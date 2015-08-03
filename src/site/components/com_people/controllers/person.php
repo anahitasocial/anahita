@@ -30,16 +30,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         parent::_initialize($config);
         
         AnHelperArray::unsetValues($config->behaviors, 'ownable');
-        
-        //if it's a person view , set the default id to person
-        if ($config->request->view == 'person')
-        {
-            $config->append(array(
-                'request' => array(
-                'id' => get_viewer()->id
-                )
-            ));
-        }
     }
     
     /**
@@ -98,7 +88,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {                        
         $data = $context->data;
         $person = parent::_actionEdit( $context );
-             
+    
         //add the validations here
         $this->getRepository()
         ->getValidator()
@@ -204,8 +194,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function onSettingDisplay( KEvent $event )
     {   
         $tabs = $event->tabs;   
+        $viewer = get_viewer();
         
-        if (JFactory::getUser()->id == $event->actor->userId) 
+        if ($viewer->admin() || $viewer->eql($this->getItem())) 
         {     
             $tabs->insert('account', array('label' => JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));                    
         } 

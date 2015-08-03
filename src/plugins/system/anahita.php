@@ -112,12 +112,18 @@ class PlgSystemAnahita extends JPlugin
      */
     public function onAfterInitialise()
     {
+        global $mainframe;    
         $viewer = get_viewer();
 
         // No remember me for admin
-        if (! $viewer->guest() && $viewer->admin())
+        if ($mainframe->isAdmin())
         {
             return;  
+        }
+        
+        if ($viewer->guest())
+        {
+            return;
         }
         
         jimport('joomla.utilities.utility');
