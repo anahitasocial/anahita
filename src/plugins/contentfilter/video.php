@@ -103,15 +103,13 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 		$matches = array();
 
 		if(preg_match_all('%http[s]?://\S*(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $text, $matches))
-		{
-			  
-                			
+		{			
 			foreach($matches[1] as $index => $id)
 			{
-
-                $video = file_get_contents('https://gdata.youtube.com/feeds/api/videos/'.$id.'?alt=json');
-				$video = json_decode($video, true);
-
+                $options = array(
+                    'title' => ''
+                );
+                
 				$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
 
                 $maxres = get_headers($thumbBase.'maxresdefault.jpg');
@@ -128,11 +126,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 				else 
 				    return;
 
-				$options = array(						
-				    'title' => $video['entry']['title']['$t'],
+				$options = array_merge(array(						
 					'url' => 'https://www.youtube.com/watch?v='.$id,
 					'thumbnail' => $thumbnail
-				);
+				), $options);
 			
 				$video = $this->_createVideo( $options );
 				$text = str_replace($matches[0][$index], $video, $text);
