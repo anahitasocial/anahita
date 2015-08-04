@@ -37,7 +37,6 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-    
         $this->registerCallback('after.add', array($this, 'mailConfirmation'));
     }
     
@@ -53,7 +52,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-                'behaviors' => array('com://site/mailer.controller.behavior.mailer')
+            'behaviors' => array('com://site/mailer.controller.behavior.mailer')
         ));
     
         parent::_initialize($config);
@@ -68,7 +67,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
      */
     protected function _actionPost(KCommandContext $context)
     {
-        $result = $this->execute('add',  $context);
+        $result = $this->execute('add', $context);
         return $result;
     }        
     
@@ -85,19 +84,20 @@ class ComPeopleControllerToken extends ComBaseControllerResource
         $email = $data->email;
         //an email
         $user  = $this->getService('repos://site/users.user')
-                    ->getQuery()
-                    ->email($email)
-                    ->where('IF(@col(block),@col(activation) <> \'\',1)')
-                    ->fetch();
+                      ->getQuery()
+                      ->email($email)
+                      ->where('IF(@col(block),@col(activation) <> \'\',1)')
+                      ->fetch();
         
-        if ( $user ) 
+        if ($user) 
         {            
             $this->setMessage('COM-PEOPLE-TOKEN-SENT','success', false);            
             $user->requiresActivation()->save();
             $this->getResponse()->status = KHttpResponse::CREATED;
             $this->user = $user;
         }
-        else {
+        else 
+        {
             $this->setMessage('COM-PEOPLE-TOKEN-INVALID-EMAIL','error', false);
             throw new LibBaseControllerExceptionNotFound('Email Not Found');            
         }
@@ -112,12 +112,12 @@ class ComPeopleControllerToken extends ComBaseControllerResource
      */
     public function mailConfirmation(KCommandContext $context)
     {
-        if ( $this->user )
+        if ($this->user)
         {
             $this->mail(array(
-                    'to' 	   => $this->user->email,
-                    'subject'  => sprintf(JText::_('COM-PEOPLE-PASSWORD-RESET-SUBJECT'), JFactory::getConfig()->getValue('sitename')),
-                    'template' => $this->user->block ? 'account_activate' : 'password_reset'
+                'to' => $this->user->email,
+                'subject' => sprintf(JText::_('COM-PEOPLE-PASSWORD-RESET-SUBJECT'), JFactory::getConfig()->getValue('sitename')),
+                'template' => $this->user->block ? 'account_activate' : 'password_reset'
             ));
         }
     }    

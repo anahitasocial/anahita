@@ -58,17 +58,15 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         if (! $person->enabled) 
         {    
             $this->registerCallback( 'after.add', array($this, 'mailActivationLink'));
-            
-            if ($viewer->guest())
-            {
-                $context->response->setHeader('X-User-Activation-Required', true);
-        
-                $this->setMessage(JText::sprintf( 'COM-PEOPLE-ACTIVATION-LINK-SENT', $person->name ), 'success');
-        
-                $context->response->setRedirect(JRoute::_('option=com_people&view=session')); 
-            }
+            $context->response->setHeader('X-User-Activation-Required', true);
+            $this->setMessage(JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $person->name), 'success');
+            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
         }
-        elseif ($viewer->guest() && $this->isDispatched() && $context->request->getFormat() == 'html') 
+        elseif (
+            $viewer->guest() && 
+            $this->isDispatched() && 
+            $context->request->getFormat() == 'html'
+        ) 
         {
             $context->response->status = 200;
             $this->registerCallback( 'after.add', array($this, 'login'));
@@ -116,10 +114,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return AnDomainEntityAbstract
      */
-    protected function _actionDelete( KCommandContext $context )
+    protected function _actionDelete(KCommandContext $context)
     {
-        parent::_actionDelete( $context );
-        
+        parent::_actionDelete($context);
+       
         $this->commit();        
         
         $userId = $this->getItem()->userId;
@@ -135,10 +133,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return void
      */    
-    public function mailActivationLink( KCommandContext $context )
+    public function mailActivationLink(KCommandContext $context)
     {               
         $person = $context->result;
-        
         $this->user = $person->getUserObject();
         
         $this->mail(array(
@@ -158,9 +155,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function notifyAdminsNewUser(KCommandContext $context)
     {        
         $person = $context->result;
-        
         $this->user = $person->getUserObject();
-        $this->mailAdmins( array (                          
+        $this->mailAdmins(array (                          
             'subject' => JText::sprintf('COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT', $this->user->name),
             'template' => 'new_user'
         ));
@@ -176,12 +172,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function login()
     {
         $user = (array) JFactory::getUser( $this->getItem()->userId );
-        
-        $this->getService()->set( 'com:people.viewer', $this->getItem());
-        
+        $this->getService()->set('com:people.viewer', $this->getItem());
         $controller = $this->getService('com://site/people.controller.session', array('response' => $this->getResponse()));
         
-        return $controller->login( $user );
+        return $controller->login($user);
     }
     
     /**
@@ -191,7 +185,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return void
      */
-    public function onSettingDisplay( KEvent $event )
+    public function onSettingDisplay(KEvent $event)
     {   
         $tabs = $event->tabs;   
         $viewer = get_viewer();

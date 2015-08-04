@@ -35,12 +35,10 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-        
-        //parse route
         $this->registerCallback('before.run',   array($this, 'load'));      
     }
-        
-    /**
+    
+        /**
     * Initializes the default configuration for the object
     *
     * Called from {@link __construct()} as a first step of object instantiation.
@@ -56,8 +54,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         ));   
 
         parent::_initialize($config);
-    }
-  
+    } 
+    
     /**
      * Run the application dispatcher
      *
@@ -69,20 +67,20 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     {
         jimport('joomla.application.component.helper');
         jimport('joomla.document.renderer');
+        
         require_once(JPATH_LIBRARIES.'/joomla/document/renderer.php');
         require_once(JPATH_BASE.'/includes/toolbar.php');
         
         //initialize the application and load system plugins
         $this->_application->initialise();
-         
+     
         JPluginHelper::importPlugin('system');
         
         $this->_application->triggerEvent('onAfterInitialise');
-    
         $this->route();
     }
     
-    /**
+        /**
      * Dispatches the component
      * 
      * @param KCommandContext $context Command chain context
@@ -92,14 +90,14 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     protected function _actionDispatch(KCommandContext $context)
     {        
         parent::_actionDispatch($context);
-        
         $this->_application->triggerEvent('onAfterDispatch', array($context));
         
         //render if it's only an HTML
         //otherwise just send back the request
-        if ( !$context->response->isRedirect() &&
-              $context->request->getFormat() == 'html' &&
-             !$context->request->isAjax()
+        if (!
+            $context->response->isRedirect() &&
+            $context->request->getFormat() == 'html' &&
+            !$context->request->isAjax()
         )
         {
             $this->render($context);
@@ -109,8 +107,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         
         $this->send($context);
     }
-        
-    /**
+    
+        /**
      * Renders the output
      * 
      * @param KCommandContext $context Command chain context
@@ -158,7 +156,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
                 
         $context->response->setContent($content);       
     }
-    
+
     /**
      * Router action
      * 
@@ -168,7 +166,9 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     {     
         //legacy
         if(KRequest::has('post.option'))
+        {
             KRequest::set('get.option',KRequest::get('post.option', 'cmd'));
+        }
         
         parent::_actionRoute($context);
         
@@ -187,8 +187,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         JRequest::set($this->getRequest()->toArray(),'get');
         $this->setComponent(substr($component, 4));
         $this->dispatch();
-    }
-        
+    }  
+    
     /**
      * Callback to handle both JError and Exception
      * 
@@ -207,5 +207,5 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         }
         JError::customErrorPage($error);
         exit(0);
-    }   
+    }     
 }

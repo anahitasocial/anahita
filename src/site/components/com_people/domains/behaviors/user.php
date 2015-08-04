@@ -26,7 +26,12 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
     {
         $config->append(array(          
             'attributes' => array(
-                'userId' => array('column'=>'person_userid', 'key'=>true, 'type'=>'integer', 'default'=>rand()),
+                'userId' => array(
+                    'column' => 'person_userid', 
+                    'key' => true, 
+                    'type' => 'integer', 
+                    'default'=>mt_rand()
+                    ),
             )
         ));
         
@@ -41,7 +46,9 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
     protected function _beforeEntityInsert(KCommandContext $context)
     {
         $viewer = get_viewer();    
-        $firsttime = !(bool) $this->getService('repos://site/users')->getQuery(true)->fetchValue('id');
+        $firsttime = !(bool) $this->getService('repos://site/users')
+                                  ->getQuery(true)
+                                  ->fetchValue('id');
 
         //for now lets make the com_notes assigable to always
         if ($firsttime)
@@ -77,14 +84,18 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $date =& JFactory::getDate();        
         $user->set( 'registerDate', $date->toMySQL());
         
+        // if this is the first user being added or 
+        // (viewer is a super admin and she is adding another super admin)
         if ($firsttime || ($viewer->superadmin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR))
         { 
             $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
         }
+        // if viewer is an admin and she is going to add another admin
         elseif ($viewer->admin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR)
         {
             $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);
         }
+        //default user type is registered
         else 
         {
            $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_REGISTERED);
@@ -92,6 +103,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         
         $activationRequired = (bool) get_config_value('users.useractivation');                
         
+        //if viewer is admin or activation is required, then create an activation token
         if ($viewer->admin() || $activationRequired)
         {
             $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()));
@@ -144,10 +156,12 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         if ($this->getModifiedData()->userType)
         {
+            // if viewer is super admin and she is updating another super admin's account    
             if ($viewer->superadmin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR)
             { 
                 $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
             }
+            // if viewer is admin and she is updating another admin's account
             elseif ($viewer->admin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR)
             {
                 $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);

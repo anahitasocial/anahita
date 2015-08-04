@@ -95,7 +95,8 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
         //if there's a 
         if ($this->token) 
         {
-           $user = $this->getService('repos://site/users.user')->find(array('activation' => $this->token));
+           $user = $this->getService('repos://site/users.user')
+                        ->find(array('activation' => $this->token));
            
            if ($user) 
            {
@@ -127,7 +128,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canAdd()
     { 
-        if( $this->_viewer->guest() || $this->_viewer->admin() )
+        if ($this->_viewer->guest() || $this->_viewer->admin())
         {
             return true;
         }
@@ -142,7 +143,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canEdit()
     {            
-        if( $this->_viewer->admin() || $this->_viewer->eql($this->getItem()) )
+        if ($this->_viewer->admin() || $this->_viewer->eql($this->getItem()))
         {
             return true;
         }
@@ -182,7 +183,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     public function setRegistrationOpen( $can_register )
     {
         $this->_can_register = $can_register;
-        
         return $this;
     }
     
