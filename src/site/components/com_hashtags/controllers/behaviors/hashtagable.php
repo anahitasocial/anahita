@@ -112,8 +112,8 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 			$edgeType = 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag';
 			
 			$query
-			->join('left', 'anahita_edges AS hashtag_edge', '('.$entityType.'.id = hashtag_edge.node_b_id AND hashtag_edge.type=\''.$edgeType.'\')')
-			->join('left', 'anahita_nodes AS hashtag', 'hashtag_edge.node_a_id = hashtag.id');
+			->join('left', 'edges AS hashtag_edge', '('.$entityType.'.id = hashtag_edge.node_b_id AND hashtag_edge.type=\''.$edgeType.'\')')
+			->join('left', 'nodes AS hashtag', 'hashtag_edge.node_a_id = hashtag.id');
 			
 			foreach($this->hashtag as $hashtag)
 			{

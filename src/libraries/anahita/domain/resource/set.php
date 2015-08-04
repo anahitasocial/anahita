@@ -72,18 +72,17 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 	 */
 	public function insert($config)
 	{
-		if ( is_string($config) )
+		if (is_string($config))
+        {
 			$config = array('name'=>$config);
-									
-		$config   = new KConfig($config);
+        }
+        							
+		$config = new KConfig($config);
 		
-		//if more than one resource is added but there's no
-		//link then try to infer the link by using the main
-		//table {main_table_name}_id
-		if (  empty($config->link) && !empty($this->_resources) ) 
+		if (empty($config->link) && !empty($this->_resources)) 
 		{
-			$parts = explode('_',KInflector::singularize($this->main()->getName()));
-			$config->link = array('child'=>$parts[1].'_id','parent'=>'id');
+            $name = KInflector::singularize($this->main()->getName());    
+			$config->link = array('child'=>$name.'_id','parent'=>'id');
 		}
 		
 		$config->append(array(

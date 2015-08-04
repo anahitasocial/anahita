@@ -45,14 +45,22 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
 		        'column' => 'type',
 		        'ignore' => array(),
             ),
-			'resources' => array( array(
-			     'alias'=>$this->getIdentifier()->name, 
-			     'name'=>'anahita_nodes'
+			'resources' => array( 
+			    array(
+			        'alias'=>$this->getIdentifier()->name, 
+			        'name'=>'nodes'
                  )),
 		    'identity_property' => 'id',
 			'attributes' => array(
-				'id' => array('key'=>true, 'type'=>'integer', 'read'=>'public'),				
-				'component' => array('required'=>true,'read'=>'public')
+				'id' => array(
+				    'key'=>true, 
+				    'type'=>'integer', 
+				    'read'=>'public'
+                    ),				
+				'component' => array(
+				    'required'=>true,
+				    'read'=>'public'
+                    )
 			),
 		   'behaviors' => to_hash(array('node'))
 		));

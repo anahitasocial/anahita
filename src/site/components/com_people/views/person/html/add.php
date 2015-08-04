@@ -48,7 +48,9 @@
             </fieldset>
             
             <div class="form-actions">
-                <a href="javascript:history.go(-1)" class="btn"><?= @text('LIB-AN-ACTION-CANCEL') ?></a>            
+                <a href="<?= @route('view=people') ?>" class="btn">
+                    <?= @text('LIB-AN-ACTION-CANCEL') ?>
+                </a>            
                 <button type="submit" class="btn btn-primary">
                     <?= @text('LIB-AN-ACTION-ADD') ?>
                 </button>

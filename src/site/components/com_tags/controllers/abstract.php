@@ -83,7 +83,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $query = $context->query;
         
 		$query->select('COUNT(*) AS count')
-		->join('RIGHT', 'anahita_edges AS edge', 'hashtag.id = edge.node_a_id')
+		->join('RIGHT', 'edges AS edge', 'hashtag.id = edge.node_a_id')
 		->order('count', 'DESC')
 		->limit($this->limit, $this->start);
 		

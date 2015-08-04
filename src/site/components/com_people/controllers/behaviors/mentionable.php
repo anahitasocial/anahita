@@ -136,8 +136,8 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 			$edgeType = 'ComTagsDomainEntityTag,ComPeopleDomainEntityMention,com:people.domain.entity.mention';
 			
 			$query
-			->join('left', 'anahita_edges AS mention_edge', '('.$entityType.'.id = mention_edge.node_b_id AND mention_edge.type=\''.$edgeType.'\')')
-			->join('left', 'anahita_nodes AS mention', 'mention_edge.node_a_id = mention.id');	
+			->join('left', 'edges AS mention_edge', '('.$entityType.'.id = mention_edge.node_b_id AND mention_edge.type=\''.$edgeType.'\')')
+			->join('left', 'nodes AS mention', 'mention_edge.node_a_id = mention.id');	
 			
 			foreach($this->mention as $mention)
 			{

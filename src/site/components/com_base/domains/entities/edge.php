@@ -45,8 +45,11 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 		        'column'   => 'type',
 		        'ignore'   => array(),
             ),
-			'resources' => array(
-				array('name'=>'anahita_edges', 'alias' => $this->getIdentifier()->name )
+			'resources' => array( 
+			    array(
+				    'name'=>'edges', 
+			        'alias' => $this->getIdentifier()->name 
+                    )
 			),
 			'attributes' => array(
 				'id' => array('key'=>true)
@@ -55,8 +58,16 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 				'modifiable'
 			),		
 			'relationships' => array(				
-				'nodeA' => array('required' =>true,  'polymorphic'=>true, 'parent'=>'com:base.domain.entity.node'),
-				'nodeB' => array('required' =>true,  'polymorphic'=>true, 'parent'=>'com:base.domain.entity.node')			
+				'nodeA' => array(
+				        'required' =>true, 
+				        'polymorphic'=>true, 
+				        'parent'=>'com:base.domain.entity.node'
+                    ),
+				'nodeB' => array(
+				    'required' =>true, 
+				    'polymorphic'=>true, 
+				    'parent'=>'com:base.domain.entity.node'
+                    )			
 			)
 		));
 		

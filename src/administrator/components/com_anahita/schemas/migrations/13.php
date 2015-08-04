@@ -42,6 +42,10 @@ class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion
        dbexec('DROP TABLE #__core_acl_aro_sections');
        dbexec('DROP TABLE #__core_acl_groups_aro_map');
        dbexec('DROP TABLE #__groups');
+       
+       //remove anahita from nodes and edges table names
+       dbexec('RENAME TABLE #__anahita_nodes TO #__nodes');
+       dbexec('RENAME TABLE #__anahita_edges TO #__edges');
     }
 
    /**
