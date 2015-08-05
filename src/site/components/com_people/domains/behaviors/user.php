@@ -74,7 +74,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
             $password = JUserHelper::genRandomPassword();    
             $user->set('password', $password);   
             $user->set('password2', $password);
-            $this->setPassword = $password;     
+            $this->setPassword($password);     
         } 
         else 
         {
@@ -132,8 +132,8 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
     {
         jimport('joomla.user.helper');    
         $viewer = get_viewer();
-        $user = clone JFactory::getUser( $this->userId );  
-        
+        $user = clone JFactory::getUser($this->userId);  
+
         if ($this->getModifiedData()->name) 
         {
             $user->set('name', $this->name);
@@ -157,12 +157,16 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         if ($this->getModifiedData()->userType)
         {
             // if viewer is super admin and she is updating another super admin's account    
-            if ($viewer->superadmin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR)
+            if (
+                $viewer->superadmin() && 
+                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR)
             { 
                 $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
             }
             // if viewer is admin and she is updating another admin's account
-            elseif ($viewer->admin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR)
+            elseif (
+                $viewer->admin() && 
+                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR)
             {
                 $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);
             }
@@ -171,15 +175,15 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_REGISTERED);
             }
         }
-        
-        if (! empty($this->password) && $this->getModifiedData()->password) 
-        {
+
+        if ($this->getPassword()) 
+        {        
             $user->set('password', $this->getPassword(true));
         }
 
         if (@$this->params->language) 
         {            
-            $user->_params->set( 'language', $this->params->language );              
+            $user->_params->set('language', $this->params->language);              
         }
                
         if (! $user->save()) 

@@ -63,13 +63,13 @@ class JSite extends JApplication
     {
         // if a language was specified it has priority
         // otherwise use user or default language settings
-        if( empty( $options['language'] ) )
+        if( empty($options['language']))
         {
             $user = &JFactory::getUser();
             $lang = $user->getParam( 'language' );
 
             // Make sure that the user's language exists
-            if( $lang && JLanguage::exists( $lang ) ) 
+            if ($lang && JLanguage::exists($lang)) 
             {
                 $options['language'] = $lang;
             } 
@@ -82,7 +82,7 @@ class JSite extends JApplication
         }
 
         // One last check to make sure we have something
-        if( !JLanguage::exists( $options['language'] ) )
+        if( !JLanguage::exists( $options['language']))
         {
             $options['language'] = 'en-GB';
         }
@@ -101,9 +101,11 @@ class JSite extends JApplication
     public function login($credentials, $options = array())
     {
          //Set the application login entry point
-         if(!array_key_exists('entry_url', $options))
-             $options['entry_url'] = JURI::base().'index.php?option=com_people&view=session&action=login';
-
+        if(! array_key_exists('entry_url', $options))
+        {
+            $options['entry_url'] = JURI::base().'index.php?option=com_people&view=session&action=login';
+        }
+        
         return parent::login($credentials, $options);
     }
 
@@ -120,17 +122,20 @@ class JSite extends JApplication
         
         $hash = '__default';
         
-        if(!empty($option)) 
+        if(! empty($option))
+        { 
         	$hash = $option;
+        }
         
-        if(!isset($params[$hash]))
+        if(! isset($params[$hash]))
         {
             // Get component parameters
-            if(!$option)
+            if(! $option)
+            {
                 $option = JRequest::getCmd('option');
+            }
             
             $params[$hash] =& JComponentHelper::getParams($option);
-
             $title = htmlspecialchars_decode($this->getCfg('sitename' ));
             $description = $this->getCfg('MetaDesc');
 
@@ -148,22 +153,21 @@ class JSite extends JApplication
      */
     public function getTemplate()
     {
-        if(!isset($this->_template)) 
+        if(! isset($this->_template)) 
         {
-        	if(!KService::get('application.registry')->offsetExists('application-template'))
+        	if(! KService::get('application.registry')->offsetExists('application-template'))
         	{
         		//get the template
         		$template = KService::get('repos://site/templates.menu', array(
-        			'resources' => 'templates_menu',
-        			'identity_property' => 'menuid'
+                    'resources' => 'templates_menu',
+                    'identity_property' => 'menuid'
         		))->getQuery()->clientId(0)->fetchValue('template');
 
         		KService::get('application.registry')->offsetSet('application-template', $template);
         	}
         		
         	$template = KService::get('application.registry')->offsetGet('application-template');
-            
-            $this->setTemplate( pick( $template, 'base' ) );
+            $this->setTemplate(pick($template, 'base'));
         }
         
         return $this->_template;
@@ -202,7 +206,7 @@ class JSite extends JApplication
      */
     function &getRouter($name = null, $options = array())
     {
-        if( !isset( $this->_router ) )
+        if(! isset($this->_router))
         {
             $this->_router = KService::get('com://site/application.router', array('enable_rewrite'=>JFactory::getConfig()->getValue('sef_rewrite')));
         }

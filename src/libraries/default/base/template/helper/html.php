@@ -216,9 +216,9 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
      * 
 	 * @return LibBaseTemplateHelperHtmlElement
 	 */
-	public function passwordfield($name, $value = '', $attributes=array())
+	public function passwordfield($name, $attributes=array())
 	{
-		return $this->input('password',$name, $value, $attributes);
+		return $this->input('password',$name, '', $attributes);
 	}	
 	
 	/**

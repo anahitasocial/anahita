@@ -38,7 +38,7 @@ class ComBaseTemplateHelperPrevious extends LibBaseTemplateHelperPrevious
 	{				
 		parent::__construct($config);
 
-		$this->_paths = $this->getService('application.registry',
-				array('key' => 'template-paths-'.$this->getIdentifier()));		
+		$this->_paths = $this->getService('application.registry', 
+		array('key' => 'template-paths-'.$this->getIdentifier()));		
 	}
 }

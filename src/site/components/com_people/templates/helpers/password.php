@@ -33,16 +33,22 @@ class ComPeopleTemplateHelperPassword extends KTemplateHelperAbstract
      * 
      * @return void
      */
-    public function input($required = true)
+    public function input($options = array())
     {
-        $validators = '';
+        $options   = new KConfig( $options );
+        $options->append(array(
+            'id' => 'person-password',
+            'name' => 'password',
+            'class' => 'input-block-level',
+            'required' => 'required',
+            'minlength' => ComPeopleFilterPassword::$MIN_LENGTH 
+        ));    
         
-        $min = ComPeopleFilterPassword::$MIN_LENGTH;
-        
-        if ( $required ) {
-            $validators .= 'required  minLength="'.$min.'" ';
-        }
-        
-        return '<input '.$validators.' class="input-block-level"  data-validate="password" type="password" id="password" value="" name="password" />';
+        $html = $this->getService('com:base.template.helper.html');
+        return $html->passwordfield($options['name'], $options)
+                    ->class($options['class'])
+                    ->id($options['id'])
+                    ->required($options['required'])
+                    ->minlength($options['minlength']);
     }
 }

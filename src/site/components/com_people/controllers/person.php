@@ -86,22 +86,24 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {                        
         $data = $context->data;
         $person = parent::_actionEdit( $context );
-    
+        
         //add the validations here
         $this->getRepository()
         ->getValidator()
         ->addValidation( 'username', 'uniqueness' )
         ->addValidation( 'email', 'uniqueness' );     
-              
-        //manually set the password to make sure there's a password
-        if (! empty($data->password)) 
-        {
-            $person->setPassword($data->password);
-        }
                 
         if ($person->validate() === false) 
         {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+        }
+        
+        $person->timestamp();
+        
+        //manually set the password to make sure there's a password
+        if ($data->password) 
+        {
+            $person->setPassword($data->password);
         }
         
         return $person;      

@@ -73,10 +73,10 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     protected function _initialize(KConfig $config)
     {       
     	$config->append(array(
-            'redirect_to_after_login'  => '',
+            'redirect_to_after_login' => '',
             'redirect_to_after_logout' => '',   
             //by default the format is json
-            'request'   => array(
+            'request' => array(
             	'format'=> 'json'
         	)          
         ));
@@ -153,6 +153,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         {
         	$_SESSION['return'] = $this->getService('com://site/people.filter.return')
         	                           ->sanitize($data->return);
+                                       
             $url = base64UrlDecode($data->return);            
             $this->registerCallback('after.login', array($this, 'redirect'), array('url'=>$url));            
         }

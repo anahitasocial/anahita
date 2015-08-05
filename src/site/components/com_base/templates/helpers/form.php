@@ -37,11 +37,11 @@ class ComBaseTemplateHelperForm extends LibBaseTemplateHelperForm
 	protected function _render($parameter, $config)
 	{
 		$params = $parameter->getParams($config->name, $config->group);
-		foreach($params as $key => $param) {
+		foreach($params as $key => $param) 
+		{
 			$params[$key] = array($param[0]=>$param[1]) ;
 		}
 		return $this->_template->renderHelper('ui.form', $params[0]);
-		return $parameter->render($config->name, $config->group);
 	}	
 			
 }

@@ -100,20 +100,20 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
            
            if ($user) 
            {
-               $this->setItem($this->getRepository()->find(array('userId' => $user->id)));
-               $this->getItem()->enabled = true;                
+               $this->_mixer->setItem($this->_mixer->getRepository()->find(array('userId' => $user->id)));
+               $this->_mixer->getItem()->enabled = true;                
                $user->activation = null;
                $user->block = false;
                $user->save();
            }
         }
         
-        if ($this->getRequest()->get('layout') == 'signup')
+        if ($this->_mixer->getRequest()->get('layout') == 'signup')
         {     
             return $this->_viewer->guest();
         }
         
-        if ($this->getRequest()->get('layout') == 'add')
+        if ($this->_mixer->getRequest()->get('layout') == 'add')
         {     
             return $this->_viewer->admin();
         }

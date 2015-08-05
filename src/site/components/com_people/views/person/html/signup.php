@@ -61,7 +61,7 @@
                         <?= @text('COM-PEOPLE-SIGNUP-PASSWORD'); ?>
                     </label>
                     <div class="controls">
-                        <?= @helper('password.input', array('required'=>true)) ?>               
+                        <?= @helper('password.input') ?>               
                     </div>
                 </div>
             </fieldset>

@@ -215,6 +215,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     	}
         
         $this->_password = $password;
+        
         return $this;
     }
     

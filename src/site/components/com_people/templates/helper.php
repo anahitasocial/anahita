@@ -38,7 +38,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
      * @param array of options
      * @return html select
      */
-    public function usertypes( $options = array() )
+    public function usertypes($options = array())
     {
         $viewer = get_viewer();    
         $options   = new KConfig( $options );    
@@ -52,7 +52,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
         
         $selected  = $options->selected;
         
-        unset( $options->selected );
+        unset($options->selected);
         
         $usertypes = array(
             ComPeopleDomainEntityPerson::USERTYPE_REGISTERED => JText::_('COM-PEOPLE-USERTYPE-REGISTERED'),
@@ -65,7 +65,6 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
         }
         
         $html = $this->getService('com:base.template.helper.html');
-        
-        return $html->select( $options->name, array('options'=>$usertypes, 'selected'=>$selected), KConfig::unbox($options));
+        return $html->select($options->name, array('options'=>$usertypes, 'selected'=>$selected), KConfig::unbox($options));
     }
 }

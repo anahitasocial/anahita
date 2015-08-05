@@ -41,12 +41,12 @@
 	</small>
 	<?php endif; ?>
 </h4>
-<?= @template('_grid', array('actors'=>$actor->followers->limit($limit))) ?>
+<?= @template('_grid', array('actors'=>$actor->followers->order('updateTime', 'DESC')->limit($limit))) ?>
 <?php endif; ?>
 
 <?php if( $actor->leaderCount ) : ?>
 <h4><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></h4>
-<?= @template('_grid', array('actors'=>$actor->leaders->limit($limit))) ?>
+<?= @template('_grid', array('actors'=>$actor->leaders->order('updateTime', 'DESC')->limit($limit))) ?>
 <?php endif; ?>
 
 <?php if(count($actor->administrators)): ?>

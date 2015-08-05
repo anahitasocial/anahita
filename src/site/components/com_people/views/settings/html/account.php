@@ -2,7 +2,9 @@
 
 <h3><?= @text('COM-PEOPLE-PROFILE-EDIT-ACCOUNT-INFORMATION') ?></h3>
 
-<form action="<?= @route($item->getURL(false)) ?>" method="post" autocomplete="off">
+<form action="<?= @route('view=person&id='.$item->id) ?>" method="post" autocomplete="off">
+    <input type="hidden" name="action" value="edit" />
+    
 	<div class="control-group">
 		<label class="control-label"  for="person-username">
 		<?= @text('COM-PEOPLE-USERNAME'); ?>:
@@ -28,7 +30,7 @@
 	    	<?= @text('COM-PEOPLE-PASSWORD'); ?>:
 	    </label>
 	    <div class="controls">
-	    	<?= @helper('password.input') ?>	    		
+	    	 <?= @helper('password.input') ?> 	    		
 	    </div>
 	</div>              
 	
