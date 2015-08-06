@@ -35,7 +35,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-        $this->registerCallback('before.run',   array($this, 'load'));      
+        $this->registerCallback('before.run', array($this, 'load'));      
     }
     
         /**
@@ -123,20 +123,20 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         $template = $this->_application->getTemplate();
         $file = $this->_request->get('tmpl','index');
 
-        if($component == 'login')
+        if ($component == 'login')
+        {
             $file = 'login';
-        
+        }
+
         $config = array(
-            'template'  => $template,
-            'file'      => $file.'.php',
+            'template' => $template,
+            'file' => $file.'.php',
             'directory' => JPATH_THEMES
         );
         
         $document =& JFactory::getDocument();
         $document->addScript( JURI::root(true).'/administrator/includes/joomla.javascript.js');
-        $document->setTitle( htmlspecialchars_decode($this->_application->getCfg('sitename' )). ' - ' .JText::_( 'Administration' ));
-        $document->setDescription( $this->_application->getCfg('MetaDesc') );
-        
+        $document->setTitle(htmlspecialchars_decode($this->_application->getCfg('sitename' )). ' - ' .JText::_( 'Administration' ));
         $document->setBuffer($context->response->getContent(), 'component');
         $content = $document->render(false, $config);
         
@@ -165,25 +165,25 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     protected function _actionRoute(KCommandContext $context)
     {     
         //legacy
-        if(KRequest::has('post.option'))
+        if (KRequest::has('post.option'))
         {
-            KRequest::set('get.option',KRequest::get('post.option', 'cmd'));
+            KRequest::set('get.option', KRequest::get('post.option', 'cmd'));
         }
         
         parent::_actionRoute($context);
         
         $component = $this->getRequest()->get('option');
         
-        if(get_viewer()->guest())
+        if (get_viewer()->guest())
         {
             $component = 'com_login';
         }
-        elseif(empty($component))
+        elseif (empty($component))
         {
             $component = 'com_cpanel';
         }
         
-        $this->getRequest()->set('option',  $component);
+        $this->getRequest()->set('option', $component);
         JRequest::set($this->getRequest()->toArray(),'get');
         $this->setComponent(substr($component, 4));
         $this->dispatch();
@@ -200,11 +200,13 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     protected function _actionException($context)
     {
         $error = $context->data;
-        if ( $context->response->getHeader('Location') ) 
+        
+        if ($context->response->getHeader('Location')) 
         {
             $context->response->send();
             exit(0);
         }
+        
         JError::customErrorPage($error);
         exit(0);
     }     

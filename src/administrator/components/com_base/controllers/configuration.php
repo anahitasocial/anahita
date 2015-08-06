@@ -69,16 +69,22 @@ class ComBaseControllerConfiguration extends ComBaseControllerResource
     protected function _actionSave(KCommandContext $context)
     {
         $context->append(array('data'=>array('params'=>array())));
+        
         //find or create a new component        
         $component = $this->getService('repos://admin/components.component')
             ->findOrAddNew(array('option'=>'com_'.$this->getIdentifier()->package), 
                     array('data'=>array(
                          'name' => ucfirst($this->getIdentifier()->package)   
                     )));
+                    
         $params = new JParameter('');
-        $params->loadArray((array)$context->data['params']);
+        $params->loadArray((array) $context->data['params']);
         $component->params = $params->toString();        
         $component->save();
+        
+        $redirect = 'index.php?option=com_'.$this->getIdentifier()->package.'&view=configurations';
+        
+        $context->response->setRedirect($redirect);
     }
     
     /**
@@ -95,7 +101,8 @@ class ComBaseControllerConfiguration extends ComBaseControllerResource
     {
         parent::setView($view);
         
-        if( !($this->_view instanceof LibBaseViewAbstract) ) {
+        if (! ($this->_view instanceof LibBaseViewAbstract)) 
+        {
             unregister_default($this->_view);
         }
     }    

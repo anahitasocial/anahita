@@ -22,9 +22,11 @@
 				data : form.serialize(),
 				success : function () {
 					
-					if ( action == 'apply' ) {
+					if ( action == 'apply' || action == 'save' ) {
 						window.location.reload();
-					} else {
+					} 
+					
+					if ( action == 'cancel' ) {
 						window.history.back();
 					}
 					

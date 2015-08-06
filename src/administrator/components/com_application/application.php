@@ -85,8 +85,10 @@ class JAdministrator extends JApplication
 
 		// One last check to make sure we have something
 		if(!JLanguage::exists($options['language']))
+        {
 			$options['language'] = 'en-GB';
-			
+        }
+        	
 		parent::initialise($options);
 	}
 
@@ -101,7 +103,7 @@ class JAdministrator extends JApplication
         
 		//forward to https
 		$scheme = (isSSL()) ? 'https' : 'http';
-		$uri->setScheme( $scheme );
+		$uri->setScheme($scheme);
 		$this->redirect($uri->toString());
 	}
 
@@ -114,7 +116,8 @@ class JAdministrator extends JApplication
 	 */
 	function &getRouter($name = NULL, $options = Array())
 	{
-	    if ( !isset($this->_router) ) {
+	    if (! isset($this->_router)) 
+	    {
 	        $router = KService::get('com://admin/application.router');    
 	    }
 		
@@ -131,18 +134,22 @@ class JAdministrator extends JApplication
 	*/
 	function login($credentials, $options = array())
 	{
-		//The minimum group
-		$options['group'] = 'Public Backend';
-
 		 //Make sure users are not autoregistered
 		$options['autoregister'] = false;
 
 		//Set the application login entry point
-		if(!array_key_exists('entry_url', $options)) {
+		if (! array_key_exists('entry_url', $options)) 
+		{
 			$options['entry_url'] = JURI::base().'index.php?option=com_user&task=login';
 		}
 
 		$result = parent::login($credentials, $options);
+
+        //if the user isn't admin, them out
+        if($result && !get_viewer()->admin())
+        {
+            parent::logout();
+        }
 
 		if(!JError::isError($result))
 		{
@@ -162,7 +169,9 @@ class JAdministrator extends JApplication
     public function getTemplate()
     {
         if(!isset($this->_template)) 
+        {
         	$this->setTemplate('rt_missioncontrol_j15');
+        }
         
         return $this->_template;
     }

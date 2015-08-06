@@ -95,6 +95,6 @@ class ComBaseControllerResource extends LibBaseControllerResource
 	protected function _actionSave(KCommandContext $context)
 	{
 	    $this->execute('post', $context);
-	    $context->response->setRedirect( 'index.php?option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name ));
+	    $context->response->setRedirect('index.php?option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name));
 	}	
 }
