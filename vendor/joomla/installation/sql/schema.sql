@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 
-CREATE TABLE `#__anahita_edges` (
+CREATE TABLE `#__edges` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
   `node_a_id` bigint(11) unsigned NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE `#__anahita_edges` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__anahita_nodes` (
+CREATE TABLE `#__nodes` (
   `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
   `type` varchar(255) NOT NULL,
   `component` varchar(100) NOT NULL,
@@ -151,76 +151,6 @@ CREATE TABLE `#__components` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__core_acl_aro` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `section_value` varchar(240) NOT NULL DEFAULT '0',
-  `value` varchar(240) NOT NULL DEFAULT '',
-  `order_value` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `hidden` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `jos_section_value_value_aro` (`section_value`(100),`value`(100)),
-  KEY `jos_gacl_hidden_aro` (`hidden`),
-  KEY `value` (`value`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__core_acl_aro_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `parent_id` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `lft` int(11) NOT NULL DEFAULT '0',
-  `rgt` int(11) NOT NULL DEFAULT '0',
-  `value` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `jos_gacl_parent_id_aro_groups` (`parent_id`),
-  KEY `jos_gacl_lft_rgt_aro_groups` (`lft`,`rgt`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__core_acl_aro_map` (
-  `acl_id` int(11) NOT NULL DEFAULT '0',
-  `section_value` varchar(230) NOT NULL DEFAULT '0',
-  `value` varchar(100) NOT NULL DEFAULT '',
-  PRIMARY KEY (`acl_id`,`section_value`,`value`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__core_acl_aro_sections` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `value` varchar(230) NOT NULL DEFAULT '',
-  `order_value` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(230) NOT NULL DEFAULT '',
-  `hidden` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `jos_gacl_value_aro_sections` (`value`),
-  KEY `jos_gacl_hidden_aro_sections` (`hidden`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__core_acl_groups_aro_map` (
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `section_value` varchar(240) NOT NULL DEFAULT '',
-  `aro_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `group_id_aro_id_groups_aro_map` (`group_id`,`section_value`,`aro_id`),
-  KEY `group_id` (`group_id`),
-  KEY `aro_id` (`aro_id`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
-CREATE TABLE `#__groups` (
-  `id` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `name` varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__migrator_versions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `component` varchar(255) NOT NULL,
@@ -257,7 +187,6 @@ CREATE TABLE `#__session` (
   `guest` tinyint(4) DEFAULT '1',
   `userid` int(11) DEFAULT '0',
   `usertype` varchar(50) DEFAULT '',
-  `gid` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `client_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `data` longtext,
   PRIMARY KEY (`session_id`(64)),
@@ -285,8 +214,6 @@ CREATE TABLE `#__users` (
   `password` varchar(100) NOT NULL DEFAULT '',
   `usertype` varchar(25) NOT NULL DEFAULT '',
   `block` tinyint(4) NOT NULL DEFAULT '0',
-  `sendEmail` tinyint(4) DEFAULT '0',
-  `gid` tinyint(3) unsigned NOT NULL DEFAULT '1',
   `registerDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `lastvisitDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `activation` varchar(100) NOT NULL DEFAULT '',
@@ -294,9 +221,6 @@ CREATE TABLE `#__users` (
   PRIMARY KEY (`id`),
   KEY `usertype` (`usertype`),
   KEY `idx_name` (`name`),
-  KEY `gid_block` (`gid`,`block`),
   KEY `username` (`username`),
   KEY `email` (`email`)
 ) ENGINE=MyISAM CHARACTER SET=utf8;
-
-INSERT INTO #__migrator_versions (`version`,`component`) VALUES(3, 'anahita') ON DUPLICATE KEY UPDATE `version` = 3;

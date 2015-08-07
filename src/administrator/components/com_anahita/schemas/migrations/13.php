@@ -46,6 +46,9 @@ class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion
        //remove anahita from nodes and edges table names
        dbexec('RENAME TABLE #__anahita_nodes TO #__nodes');
        dbexec('RENAME TABLE #__anahita_edges TO #__edges');
+       
+       //legacy component cleanup
+       dbexec('DELETE FROM #__components WHERE `option` IN (\'com_users\', \'com_user\') ');
     }
 
    /**
