@@ -69,7 +69,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         ) 
         {
             $context->response->status = 200;
-            $this->registerCallback( 'after.add', array($this, 'login'));
+            //$this->registerCallback( 'after.add', array($this, 'autoLogin'));
         }
         
         return $person;   
@@ -165,18 +165,17 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
     
     /**
-     * Login the user after creating it
+     * Autologin the user after creating it
      *
      * @param KCommandContext $context The context parameter
      * 
      * @return void
      */
-    public function login()
+    public function autoLogin()
     {
         $user = (array) JFactory::getUser( $this->getItem()->userId );
         $this->getService()->set('com:people.viewer', $this->getItem());
         $controller = $this->getService('com://site/people.controller.session', array('response' => $this->getResponse()));
-        
         return $controller->login($user);
     }
     

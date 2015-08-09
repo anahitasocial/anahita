@@ -25,13 +25,8 @@ class ConfigApplicationView
 	{
 		global $mainframe;
 
-		
-
 		// Load component specific configurations
-		$table =& JTable::getInstance('component');
-		$table->loadByOption( 'com_users' );
-		$userparams = new JParameter( $table->params, JPATH_ADMINISTRATOR.DS.'components'.DS.'com_users'.DS.'config.xml' );		
-
+		
 		// Build the component's submenu
 		$contents = '';
 		$tmplpath = dirname(__FILE__).DS.'tmpl';
@@ -54,42 +49,17 @@ class ConfigApplicationView
 					<tr>
 						<td width="66%">
 							<?php require_once($tmplpath.DS.'config_site.php'); ?>
-						</td>
-						<td width="36%">
-							<?php require_once($tmplpath.DS.'config_seo.php'); ?>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div id="page-system">
-				<table class="noshow">
-					<tr>
-						<td width="66%">
 							<?php require_once($tmplpath.DS.'config_system.php'); ?>
-							<fieldset class="adminform">
-								<legend><?php echo JText::_( 'User Settings' ); ?></legend>
-								<?php echo $userparams->render('userparams'); ?>
-							</fieldset>							
+							<?php require_once($tmplpath.DS.'config_server.php'); ?>
+                            <?php require_once($tmplpath.DS.'config_locale.php'); ?>
 						</td>
 						<td width="33%">
+							<?php require_once($tmplpath.DS.'config_seo.php'); ?>
 							<?php require_once($tmplpath.DS.'config_debug.php'); ?>
-							<?php require_once($tmplpath.DS.'config_cache.php'); ?>
-							<?php require_once($tmplpath.DS.'config_session.php'); ?>
-						</td>
-					</tr>
-				</table>
-			</div>
-			<div id="page-server">
-				<table class="noshow">
-					<tr>
-						<td width="65%">
-							<?php require_once($tmplpath.DS.'config_server.php'); ?>
-							<?php require_once($tmplpath.DS.'config_locale.php'); ?>
-							
-						</td>
-						<td width="35%">
-							<?php require_once($tmplpath.DS.'config_database.php'); ?>
-							<?php require_once($tmplpath.DS.'config_mail.php'); ?>
+                            <?php require_once($tmplpath.DS.'config_cache.php'); ?>
+                            <?php require_once($tmplpath.DS.'config_session.php'); ?>
+                            <?php require_once($tmplpath.DS.'config_database.php'); ?>
+                            <?php require_once($tmplpath.DS.'config_mail.php'); ?>
 						</td>
 					</tr>
 				</table>

@@ -101,14 +101,9 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
            $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_REGISTERED);
         }
         
-        $activationRequired = (bool) get_config_value('users.useractivation');                
-        
-        //if viewer is admin or activation is required, then create an activation token
-        if ($viewer->admin() || $activationRequired)
-        {
-            $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()));
-            $user->set('block', '1');
-        }
+        //create an activation token
+        $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()));
+        $user->set('block', '1');
         
         if(! $user->save())
         {

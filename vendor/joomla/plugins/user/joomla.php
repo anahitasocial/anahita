@@ -61,50 +61,53 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onLoginUser($user, $options = array())
 	{
-		
+		global $mainframe;
+        
 		jimport('joomla.user.helper');
-		
-		$instance =& $this->_getUser($user, $options);
-		
-		// if _getUser returned an error, then pass it back.
-		if (JError::isError($instance)) 
-		{
-			return $instance;
-		}
-		
-		// If the user is blocked, redirect with an error
-		if ($instance->get('block') == 1) 
-		{
-			return new JException('SOME_ERROR_CODE', JText::_('E_NOLOGIN_BLOCKED'));
-		}
+        $viewer =& JFactory::getUser($user['username']);
 
-		// Get an ACL object
-        $grp = new JObject();
-        $grp->set('name', 'registered');
-
-		//Mark the user as logged in
-		$instance->set('guest', 0);
-
-		//Set the usertype based on the ACL group name
-		$instance->set('usertype', $grp->name);
+        if (! $viewer->id)
+        {
+            return JError::raiseWarning(401, "Did not find a user with username: ".$user['username']);
+        }
+        
+        if ( 
+            $mainframe->isAdmin() && 
+            $viewer->usertype != ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR && 
+            $viewer->usertype != ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR  
+        )   
+        {    
+            return JError::raiseWarning(403, "Not authorized to access the admin side");
+        }
+        
+        if ($viewer->block == 1)
+        {
+            return JError::raiseWarning(403, "Not authorized to access this site");
+            return false;
+        }
 
 		// Register the needed session variables
 		$session =& JFactory::getSession();		
-		$session->set('user', $instance);		
+		$session->set('user', $viewer);		
 		
 		// Get the session object
 		$table = & JTable::getInstance('session');
 		$table->load($session->getId());
 
-		$table->guest = $instance->get('guest');
-		$table->username = $instance->get('username');
-		$table->userid 	= intval($instance->get('id'));
-		$table->usertype = $instance->get('usertype');
+		$table->guest = $viewer->get('guest');
+		$table->username = $viewer->get('username');
+		$table->userid 	= intval($viewer->get('id'));
+		$table->usertype = $viewer->get('usertype');
 		
 		$table->update();		
 		
 		// Hit the user last visit field
-		$instance->setLastVisit();
+		$viewer->setLastVisit();
+        
+        //cleanup session table from guest users
+        $db =& JFactory::getDBO();
+        $db->setQuery('DELETE FROM #__session WHERE userid = 0 ');
+        $db->Query();
 
 		return true;
 	}
@@ -120,19 +123,18 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onLogoutUser($user, $options = array())
 	{
-		$my =& JFactory::getUser();
-        
-		//Make sure we're a valid user first
-		if ($user['id'] == 0 && !$my->get('tmp_user'))
+		if ($user['id'] == 0)
         { 
-			return true;
+			return false;
         }
         
+        $viewer =& JFactory::getUser();
+        
 		//Check to see if we're deleting the current session
-		if ($my->get('id') == $user['id'])
+		if ($viewer->id == (int) $user['id'])
 		{
 			// Hit the user last visit field
-			$my->setLastVisit();
+			$viewer->setLastVisit();
 
 			// Destroy the php session for this user
 			$session =& JFactory::getSession();
@@ -142,61 +144,9 @@ class plgUserJoomla extends JPlugin
 		{
 			// Force logout all users with that userid
 			$table = & JTable::getInstance('session');
-			$table->destroy($user['id'], $options['clientid']);
+			$table->destroy((int) $user['id'], (int) $options['clientid']);
 		}
         
 		return true;
-	}
-
-	/**
-	 * This method will return a user object
-	 *
-	 * If options['autoregister'] is true, if the user doesn't exist yet he will be created
-	 *
-	 * @access	public
-	 * @param   array   holds the user data
-	 * @param 	array   array holding options (remember, autoregister, group)
-	 * @return	object	A JUser object
-	 * @since	1.5
-	 */
-	private function &_getUser($user, $options = array())
-	{
-		$instance = new JUser();
-        
-		if ($id = intval(JUserHelper::getUserId($user['username'])))
-		{
-			$instance->load($id);
-			return $instance;
-		}
-
-		//TODO : move this out of the plugin
-		jimport('joomla.application.component.helper');
-		$config   = &JComponentHelper::getParams( 'com_users' );
-		$usertype = $config->get( 'new_usertype', 'Registered' );
-		$acl =& JFactory::getACL();
-
-		$instance->set( 'id' , 0 );
-		$instance->set( 'name' ,$user['fullname']);
-		$instance->set( 'username' , $user['username']);
-		$instance->set( 'password_clear', $user['password_clear']);
-        
-        // Result should contain an email (check)
-		$instance->set( 'email', $user['email']);	
-		$instance->set( 'usertype', $usertype);
-
-		//If autoregister is set let's register the user
-		$autoregister = isset($options['autoregister']) ? $options['autoregister'] :  $this->params->get('autoregister', 1);
-
-		if ($autoregister && !$instance->save())
-		{
-			return JError::raiseWarning('SOME_ERROR_CODE', $instance->getError());
-		} 
-		else 
-		{
-			// No existing user and autoregister off, this is a temporary user.
-			$instance->set( 'tmp_user', true );
-		}
-
-		return $instance;
 	}
 }

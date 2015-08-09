@@ -88,25 +88,6 @@ class JSite extends JApplication
         }
         
         parent::initialise($options);
-    }    
-
-   /**
-    * Login authentication function
-    *
-    * @param array $credentials Array( 'username' => string, 'password' => string )
-    * @param array $options     Array( 'remember' => boolean )
-    * 
-    * @see JApplication::login
-    */
-    public function login($credentials, $options = array())
-    {
-         //Set the application login entry point
-        if(! array_key_exists('entry_url', $options))
-        {
-            $options['entry_url'] = JURI::base().'index.php?option=com_people&view=session&action=login';
-        }
-        
-        return parent::login($credentials, $options);
     }
 
     /**

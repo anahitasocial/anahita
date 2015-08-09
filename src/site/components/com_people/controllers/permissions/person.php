@@ -34,13 +34,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     protected $_can_register;
     
     /**
-     * Flag to whether an activation is required or not
-     *
-     * @var boolean
-     */
-    protected $_activation_required;
-    
-    /**
      * Viewer object
      * 
      * @var ComPeopleDomainEntityPerson
@@ -59,7 +52,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
         parent::__construct($config);
         
         $this->_can_register = $config->can_register;        
-        $this->_activation_required = $config->activation_required;
         $this->_mixer->permission = $this;
     }
         
@@ -74,9 +66,8 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     protected function _initialize(KConfig $config)
     {
-        $config->append(array(
-            'activation_required' => get_config_value('users.useractivation'),                
-            'can_register' => (bool) get_config_value('users.allowUserRegistration', true)
+        $config->append(array(             
+            'can_register' => (bool) get_config_value('people.allowUserRegistration', true)
         ));
     
         $this->_viewer = get_viewer();
@@ -108,7 +99,10 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
            }
         }
         
-        if ($this->_mixer->getRequest()->get('layout') == 'signup')
+        if (
+            $this->_mixer->getRequest()->get('layout') == 'signup' && 
+            $this->isRegistrationOpen()
+        )
         {     
             return $this->_viewer->guest();
         }
@@ -127,8 +121,13 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * @return boolean
      */
     public function canAdd()
-    { 
-        if ($this->_viewer->guest() || $this->_viewer->admin())
+    {
+        if($this->_viewer->admin())
+        {
+            return true;
+        }    
+             
+        if ($this->_viewer->guest() && $this->isRegistrationOpen())
         {
             return true;
         }
@@ -150,28 +149,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
         
         return false;
     }  
-
-    /**
-     * Return whether the action is required or not
-     *
-     * @return boolean
-     */
-    public function activationRequired()
-    {
-        return $this->_activation_required;
-    }
-    
-    /**
-     * Set if an activation is required
-     * 
-     * @param boolean $activation_required
-     * 
-     * @return void
-     */
-    public function setActivationRequired( $activation_required )
-    {
-        $this->_activation_required = $activation_required;
-    }
     
     /**
      * Set if the controller allows to register

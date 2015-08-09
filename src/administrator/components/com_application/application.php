@@ -145,17 +145,11 @@ class JAdministrator extends JApplication
 
 		$result = parent::login($credentials, $options);
 
-        //if the user isn't admin, them out
-        if($result && !get_viewer()->admin())
-        {
-            parent::logout();
-        }
-
-		if(!JError::isError($result))
+		if (! JError::isError($result))
 		{
 			$lang = JRequest::getCmd('lang');
-			$lang = preg_replace( '/[^A-Z-]/i', '', $lang );
-			$this->setUserState( 'application.lang', $lang  );			
+			$lang = preg_replace('/[^A-Z-]/i', '', $lang);
+			$this->setUserState('application.lang', $lang);			
 		}
 
 		return $result;

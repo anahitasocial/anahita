@@ -6,7 +6,7 @@ INSERT INTO `#__components` (`id`, `name`, `link`, `menuid`, `parent`, `admin_me
 (5, 'Control Panel', '', 0, 0, '', 'Control Panel', 'com_cpanel', 0, '', 1, '', 1),
 (6, 'Components', 'option=com_components', 0, 0, 'option=com_components', 'Components', 'com_components', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (7, 'Dashboard', 'option=com_dashboard', 0, 0, '', 'Dashboard', 'com_dashboard', 0, '', 1, '', 1),
-(8, 'People', 'option=com_people', 0, 0, '', 'People', 'com_people', 0, '', 1, '', 1),
+(8, 'People', 'option=com_people', 0, 0, 'option=com_people', 'People', 'com_people', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (9, 'Stories', '', 0, 0, '', 'Stories', 'com_stories', 0, '', 1, '', 1),
 (10, 'Notifications', 'option=com_notifications', 0, 0, 'option=com_notifications', 'Notifications', 'com_notifications', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (11, 'Notes', 'option=com_notes', 0, 0, '', 'Notes', 'com_notes', 0, '', 1, '', 1),

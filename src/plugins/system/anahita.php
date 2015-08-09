@@ -112,7 +112,8 @@ class PlgSystemAnahita extends JPlugin
      */
     public function onAfterInitialise()
     {
-        global $mainframe;    
+        global $mainframe; 
+           
         $viewer = get_viewer();
 
         // No remember me for admin
@@ -144,9 +145,9 @@ class PlgSystemAnahita extends JPlugin
             $user['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
         }
         elseif (isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '')
-        {      	
+        {          	
             $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));    
-            
+
             if($key)
             {
             	$crypt = new JSimpleCrypt($key);
@@ -156,18 +157,10 @@ class PlgSystemAnahita extends JPlugin
         }
         
         if (! empty($user)) 
-        {
-            jimport('joomla.user.authentication');
-            $authentication =& JAuthentication::getInstance();
-            
+        { 
         	try
             {
-                $authResponse = $authentication->authenticate($user, array());
-                
-            	if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS)
-                {
-            		KService::get('com://site/people.helper.person')->login($user, true);
-                }
+                KService::get('com://site/people.helper.person')->login($user, true);
             }
             catch (RuntimeException $e) 
             {

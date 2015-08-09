@@ -291,29 +291,6 @@ class JFactory
 	}
 
 	/**
-	* Get an editor object
-	*
-	* @access public
-	* @param string $editor The editor to load, depends on the editor plugins that are installed
-	* @return object JEditor
-	*/
-	static public function &getEditor($editor = null)
-	{
-		jimport( 'joomla.html.editor' );
-
-		//get the editor configuration setting
-		if(is_null($editor))
-		{
-			$conf =& JFactory::getConfig();
-			$editor = $conf->getValue('config.editor');
-		}
-
-		$instance =& JEditor::getInstance($editor);
-
-		return $instance;
-	}
-
-	/**
 	 * Return a reference to the {@link JURI} object
 	 *
 	 * @access public
