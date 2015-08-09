@@ -49,6 +49,7 @@ class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion
        
        //legacy component cleanup
        dbexec('DELETE FROM #__components WHERE `option` IN (\'com_users\', \'com_user\') ');
+       dbexec('UPDATE #__components SET `admin_menu_link`=\'option=com_people\', `admin_menu_alt`=\'People\', `admin_menu_img`=\'js/ThemeOffice/component.png\' WHERE `option`=\'com_people\' ');
     }
 
    /**
