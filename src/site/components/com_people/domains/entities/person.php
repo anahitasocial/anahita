@@ -1,19 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_People
- * @subpackage Domain_Entity
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id$
- * @link       http://www.anahitapolis.com
- */
-
 /**
  * Person object. It's the main actor node that represents the social network users. A person can added 
  * applications to their profile  
@@ -22,7 +8,7 @@
  * <code>
  * //fetches a peron with $id
  * $person = KService::get('repos://site/people.person')->fetch($id); 
- * $person->name = 'James Bond';
+ * $person->name = 'Doctor Who';
  * $person->save();
  * </code>
  * @category   Anahita
@@ -33,7 +19,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @link       http://www.anahitapolis.com
  */
-class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor 
+final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor 
 {
     /*
      * Clear string passwrod.
@@ -105,7 +91,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 	protected function _afterEntityInstantiate(KConfig $config)
 	{
 		$config->append(array('data'=>array(
-			'author'     => $this,
+			'author' => $this,
 		    'component' => 'com_people'		        
 		)));
 		
@@ -123,12 +109,9 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 	{
 		$familyName = $givenName = '';
 		
-		if (strpos($name, ' '))	
-        {		
+		if (strpos($name, ' '))	{		
 		    list($givenName, $familyName) = explode(' ', $name, 2);
-		}
-		else
-        {     
+		} else {     
 			$givenName = $name;
         }
         	
@@ -171,10 +154,10 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 	 */
 	public function __get($key)
 	{
-		if ($key == 'uniqueAlias') 
-		{
+		if ($key == 'uniqueAlias') {
 			return $this->username;
 		}
+        
 		return parent::__get($key);
 	}
 	
@@ -186,12 +169,9 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function __set($key, $value)
     {
-        if ($key == 'password' && !empty($value)) 
-        {
+        if ($key == 'password' && !empty($value)) {
            return $this->setPassword($value);
-        }
-        else
-        {
+        } else {
            return parent::__set($key, $value);
         }
     }
@@ -209,8 +189,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     public function setPassword($password)
     {
     	//make sure the passowrd is set to an empty string 
-    	if (empty($password)) 
-    	{
+    	if (empty($password)) {
     		$password = ' ';
     	}
         
@@ -230,8 +209,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $url = 'option=com_people&view=person&id='.$this->id;
         
-        if ($use_username)
-        {
+        if ($use_username) {
             $url .= '&uniqueAlias='.$this->username;
         }
         
@@ -250,8 +228,7 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $password = $this->_password;
         
-        if ($hash) 
-        {
+        if ($hash) {
             jimport('joomla.user.helper');
             $salt = JUserHelper::genRandomPassword(32);
             $crypt = JUserHelper::getCryptedPassword($password, $salt);
@@ -278,7 +255,8 @@ class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 	 */
 	public function admin()
 	{
-		return $this->userType == self::USERTYPE_ADMINISTRATOR || $this->userType == self::USERTYPE_SUPER_ADMINISTRATOR;
+		return $this->userType == self::USERTYPE_ADMINISTRATOR || 
+		       $this->userType == self::USERTYPE_SUPER_ADMINISTRATOR;
 	}	
     
     /**

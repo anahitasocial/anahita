@@ -68,10 +68,8 @@ class ComPeopleDomainValidatorPerson extends AnDomainValidatorAbstract
     public function validateEntity($person)
     {
         //if a password is set then validate the password
-        if ( $password = $person->getPassword() ) 
-        {
-            if ( !$this->getFilter('password')->validate($password) )
-            {
+        if ($password = $person->getPassword()) {
+            if (! $this->getFilter('password')->validate($password)) {
                 $person->addError(array(
                     'message'  => 'Invalid password format',
                     'code'     => AnError::INVALID_FORMAT,

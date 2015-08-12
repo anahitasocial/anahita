@@ -84,13 +84,11 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     public function canRead()
     {    
         //if there's a 
-        if ($this->token) 
-        {
+        if ($this->token) {
            $user = $this->getService('repos://site/users.user')
                         ->find(array('activation' => $this->token));
            
-           if ($user) 
-           {
+           if ($user) {
                $this->_mixer->setItem($this->_mixer->getRepository()->find(array('userId' => $user->id)));
                $this->_mixer->getItem()->enabled = true;                
                $user->activation = null;
@@ -102,13 +100,11 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
         if (
             $this->_mixer->getRequest()->get('layout') == 'signup' && 
             $this->isRegistrationOpen()
-        )
-        {     
+        ) {     
             return $this->_viewer->guest();
         }
         
-        if ($this->_mixer->getRequest()->get('layout') == 'add')
-        {     
+        if ($this->_mixer->getRequest()->get('layout') == 'add') {     
             return $this->_viewer->admin();
         }
 
@@ -122,13 +118,11 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canAdd()
     {
-        if($this->_viewer->admin())
-        {
+        if($this->_viewer->admin()) {
             return true;
         }    
              
-        if ($this->_viewer->guest() && $this->isRegistrationOpen())
-        {
+        if ($this->_viewer->guest() && $this->isRegistrationOpen()) {
             return true;
         }
         
@@ -142,8 +136,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canEdit()
     {            
-        if ($this->_viewer->admin() || $this->_viewer->eql($this->getItem()))
-        {
+        if ($this->_viewer->admin() || $this->_viewer->eql($this->getItem())) {
             return true;
         }
         
@@ -157,7 +150,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      * 
      * @return void
      */
-    public function setRegistrationOpen( $can_register )
+    public function setRegistrationOpen($can_register)
     {
         $this->_can_register = $can_register;
         return $this;

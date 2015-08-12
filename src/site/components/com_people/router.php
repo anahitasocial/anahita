@@ -23,8 +23,7 @@ class ComPeopleRouter extends ComActorsRouterDefault
      */
     public function build(&$query)
     {
-    	if (isset($query['uniqueAlias'])) 
-    	{
+    	if (isset($query['uniqueAlias'])) {
     		$query['id'] = $query['uniqueAlias'];
     		unset($query['uniqueAlias']);    		
     	}
@@ -44,12 +43,13 @@ class ComPeopleRouter extends ComActorsRouterDefault
     	$query = array();
     	$path  = implode('/', $segments);
         
-    	if ($path == 'signup') 
-    	{
+    	if ($path == 'signup') {
     	    return array('view'=>'person','layout'=>'signup');
-    	}
-    	elseif (count($segments) && ! is_numeric($segments[0]) && ! in_array(KInflector::singularize($segments[0]), array('person','session','token'))) 
-    	{
+    	} elseif ( 
+    	     count($segments) && 
+    	     ! is_numeric($segments[0]) && 
+    	     ! in_array(KInflector::singularize($segments[0]), array('person','session','token'))
+        ) {
     		$query['username'] = $segments[0];
     		//@TODO the parent::parse wants a numeric ID in order
     		//to parse correctly. For now lets hack it
@@ -57,16 +57,11 @@ class ComPeopleRouter extends ComActorsRouterDefault
     		$query['view'] = 'person';
     		$query = array_merge(parent::parse($segments), $query);
     		unset($query['id']);
-    	}
-    	else 
-    	{    	
-    	    if (preg_match('/tokens\/.*/',$path)) 
-    	    {
+    	} else {    	
+    	    if (preg_match('/tokens\/.*/',$path)) {
     	        $query['view'] = 'token';
     	        $query['id']   = array_pop($segments);
-    	    }
-    		else
-            {     
+    	    } else {     
     		    $query = parent::parse($segments);
             }
     	}

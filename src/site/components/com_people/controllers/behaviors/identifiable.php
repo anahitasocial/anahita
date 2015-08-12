@@ -33,12 +33,10 @@ class ComPeopleControllerBehaviorIdentifiable extends ComBaseControllerBehaviorI
 	 */
 	public function fetchEntity(KCommandContext $context)
 	{
-		if ($this->isDispatched()) 
-		{
+		if ($this->isDispatched()) {
 			$username = $this->getRequest()->username;
             
-			if ($username && $this->getRequest()->get('layout') != 'add') 
-			{
+			if ($username && $this->getRequest()->get('layout') != 'add') {
 				$this->setIdentifiableKey('username');
 			}
 		}

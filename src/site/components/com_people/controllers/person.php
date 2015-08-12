@@ -50,13 +50,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         ->addValidation('username','uniqueness')
         ->addValidation('email', 'uniqueness');
         
-        if ($person->validate() === false) 
-        {
+        if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
         }
         
-        if (! $person->enabled) 
-        {    
+        if (! $person->enabled) {    
             $this->registerCallback( 'after.add', array($this, 'mailActivationLink'));
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $person->name), 'success');
@@ -66,10 +64,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $viewer->guest() && 
             $this->isDispatched() && 
             $context->request->getFormat() == 'html'
-        ) 
-        {
+        ) {
             $context->response->status = 200;
-            //$this->registerCallback( 'after.add', array($this, 'autoLogin'));
+            $this->registerCallback( 'after.add', array($this, 'autoLogin'));
         }
         
         return $person;   
@@ -93,16 +90,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         ->addValidation( 'username', 'uniqueness' )
         ->addValidation( 'email', 'uniqueness' );     
                 
-        if ($person->validate() === false) 
-        {
+        if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
         }
         
         $person->timestamp();
         
         //manually set the password to make sure there's a password
-        if ($data->password) 
-        {
+        if ($data->password) {
             $person->setPassword($data->password);
         }
         
@@ -191,8 +186,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $tabs = $event->tabs;   
         $viewer = get_viewer();
         
-        if ($viewer->admin() || $viewer->eql($this->getItem())) 
-        {     
+        if ($viewer->admin() || $viewer->eql($this->getItem())) {     
             $tabs->insert('account', array('label' => JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));                    
         } 
     }   

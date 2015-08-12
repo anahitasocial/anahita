@@ -21,7 +21,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
      * 
      * @return array LibBaseTemplateObjectContainer
      */
-    public function viewerMenuLinks( $actor )
+    public function viewerMenuLinks($actor)
     {
 		$context = new KCommandContext();
 		$context->menuItems = new LibBaseTemplateObjectContainer();
@@ -41,7 +41,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
     public function usertypes($options = array())
     {
         $viewer = get_viewer();    
-        $options   = new KConfig( $options );    
+        $options = new KConfig($options);    
 
         $options->append(array(
             'id' => 'person-userType',
@@ -59,8 +59,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
             ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR => JText::_('COM-PEOPLE-USERTYPE-ADMINISTRATOR')
         );
         
-        if($viewer->superadmin())
-        {
+        if($viewer->superadmin()) {
             $usertypes[ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR] = JText::_('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR');
         }
         

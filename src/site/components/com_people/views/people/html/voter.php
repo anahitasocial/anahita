@@ -6,15 +6,15 @@
 	<?= $entity->voteUpCount?> +1s
 </div>
 <div class="popover-content">
-<?php if (  $entity->voteUpCount == 1 ) : ?>
-		<?php if ( $entity->voterUpIds->offsetExists($viewer->id) ) : ?>	
+<?php if ($entity->voteUpCount == 1) : ?>
+		<?php if ($entity->voterUpIds->offsetExists($viewer->id)) : ?>	
 			<?= @text('LIB-AN-VOTE-ONLY-YOU-VOTED')?>
 		<?php else :?>			
 			<?= sprintf(@text('LIB-AN-VOTE-ONE-VOTED'), @name(@service('repos:actors.actor')->fetch(end($entity->voterUpIds->toArray()))))?>
 		<?php endif;?>	
-	<?php elseif ( $entity->voteUpCount > 1 ) : ?>
-		<?php if ( $entity->voterUpIds->offsetExists($viewer->id) ) : ?>	
-			<?php if (  $entity->voteUpCount == 2 ) : ?>
+	<?php elseif ($entity->voteUpCount > 1) : ?>
+		<?php if ($entity->voterUpIds->offsetExists($viewer->id)) : ?>	
+			<?php if ($entity->voteUpCount == 2) : ?>
 				<?php 
 					$ids = $entity->voterUpIds->toArray();
 					unset($ids[$viewer->id]);					

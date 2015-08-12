@@ -34,8 +34,10 @@ class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
     {
         $data = parent::toSerializableArray($entity);
         $data['username'] = $entity->username;
-        if ( KService::has('com:people.viewer') && 
-             KService::get('com:people.viewer')->eql($entity) ) {            
+        if ( 
+            KService::has('com:people.viewer') && 
+            KService::get('com:people.viewer')->eql($entity) 
+        ) {            
             $data['email']    = $entity->email;            
         }
         

@@ -38,14 +38,11 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	        $this->getController()
 	             ->getIdentifier()
 	             ->name == 'person'
-        )
-	    {
-	        if ($this->getController()->canRead()) 
-	        {
+        ) {
+	        if ($this->getController()->canRead()) {
 	            $this->getController()->login();
 
-	            if ($this->reset_password) 
-	            {
+	            if ($this->reset_password) {
 	                $url = JRoute::_($this->getController()
 	                                      ->getItem()
 	                                      ->getURL().'&get=settings&edit=account&reset_password=1');
@@ -78,13 +75,10 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	    if (
 	        $context->data instanceof LibBaseControllerExceptionUnauthorized && 
 	        $this->getController() instanceof ComPeopleControllerSession 
-        )
-	    {
+        ) {
 	       $context->response->send();
 	       exit(0);           
-	    }
-	    else
-        {     
+	    } else {     
 	       parent::_actionException($context);
         }   
 	}

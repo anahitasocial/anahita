@@ -42,9 +42,8 @@ class ComPeopleFilterPassword extends KFilterRaw
     {
         $ret = parent::_validate($value);
         
-        if ( $ret ) 
-        {
-            if ( strlen($value) < self::$MIN_LENGTH ) {
+        if ($ret) {
+            if (strlen($value) < self::$MIN_LENGTH) {
                 $ret = false;
             }
         }

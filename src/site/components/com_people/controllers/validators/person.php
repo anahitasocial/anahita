@@ -39,8 +39,7 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
         $user = $this->getService('repos://site/users.user')
                      ->find(array('email'=>$email));
         
-        if ($user && $user->id != JFactory::getUser()->id) 
-        {
+        if ($user && $user->id != JFactory::getUser()->id) {
             $this->setMessage('Email is already in use');
             return false;
         }
@@ -60,8 +59,7 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
         $user = $this->getService('repos://site/users.user')
                      ->find(array('username'=>$username));
         
-        if ($user && $user->id != JFactory::getUser()->id) 
-        {
+        if ($user && $user->id != JFactory::getUser()->id) {
             $this->setMessage('Username is already in use');
             return false;
         }
