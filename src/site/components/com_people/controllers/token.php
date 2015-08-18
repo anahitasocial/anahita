@@ -89,13 +89,11 @@ class ComPeopleControllerToken extends ComBaseControllerResource
                       ->where('IF(@col(block),@col(activation) <> \'\',1)')
                       ->fetch();
         
-        if ($user) {            
-            $this->setMessage('COM-PEOPLE-TOKEN-SENT','success', false);            
+        if ($user) {              
             $user->requiresActivation()->save();
             $this->getResponse()->status = KHttpResponse::CREATED;
             $this->user = $user;
         } else {
-            $this->setMessage('COM-PEOPLE-TOKEN-INVALID-EMAIL','error', false);
             throw new LibBaseControllerExceptionNotFound('Email Not Found');            
         }
     }
@@ -112,8 +110,8 @@ class ComPeopleControllerToken extends ComBaseControllerResource
         if ($this->user) {
             $this->mail(array(
                 'to' => $this->user->email,
-                'subject' => sprintf(JText::_('COM-PEOPLE-PASSWORD-RESET-SUBJECT'), JFactory::getConfig()->getValue('sitename')),
-                'template' => $this->user->block ? 'account_activate' : 'password_reset'
+                'subject' => sprintf(JText::_('COM-PEOPLE-MAIL-SUBJECT-PASSWORD-RESET'), JFactory::getConfig()->getValue('sitename')),
+                'template' => 'password_reset'
             ));
         }
     }    

@@ -776,8 +776,12 @@ class JApplication extends JObject
 	 * @return	int A client identifier.
 	 * @since	1.5
 	 */
-	function getClientId( )
+	function getClientId()
 	{
+		$viewer = get_viewer();
+        
+        $this->_clientId = ($viewer->admin()) ? 1 : 0;
+            
 		return $this->_clientId;
 	}
 

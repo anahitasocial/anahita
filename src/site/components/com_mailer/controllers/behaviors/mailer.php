@@ -59,11 +59,9 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	{
 		parent::__construct($config);
 		
-		$this->_template_view  = $config->template_view;		
-		
-		$this->_base_url       = $config->base_url;
-		
-		$this->_test_options   = $config->test_options;
+		$this->_template_view = $config->template_view;		
+		$this->_base_url = $config->base_url;
+		$this->_test_options = $config->test_options;
 	}
 		
 	/**
@@ -107,10 +105,8 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	 */
 	public function getEmailTemplateView()
 	{
-	    if (!$this->_template_view instanceof LibBaseViewTemplate ) 
-	    {
-	        if (!isset($this->_template_view)) 
-	        {
+	    if (! $this->_template_view instanceof LibBaseViewTemplate) {
+	        if (!isset($this->_template_view)) {
 	            $this->_template_view = clone $this->_mixer->getIdentifier();
 	            $this->_template_view->path = array('emails');
 	            $this->_template_view->name = 'template';
@@ -149,16 +145,13 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         ));
 	    
 	    $layout = $config->layout;
-	    
 	    $data = $this->getState()->toArray();
 	    
-	    if ($this->getState()->getItem()) 
-	    {
+	    if ($this->getState()->getItem()) {
 	        $data[$this->_mixer->getIdentifier()->name] = $this->getState()->getItem();
 	    }
 	    
-	    if ($this->getState()->getList()) 
-	    {
+	    if ($this->getState()->getList()) {
 	        $data[KInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
 	    }
 	    
@@ -167,13 +160,10 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	    ));	  
 	      
 	    $template = $this->getEmailTemplateView()->getTemplate();
-	    
 	    $data = array_merge($config['data'], array('config'=>$config));	    
-	    
 	    $output = $template->loadTemplate($config->template, $data)->render();
         
-        if ($layout && $template->findTemplate($layout)) 
-        {
+        if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, array('output'=>$output))->render();            
         }
 
@@ -191,7 +181,6 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	{
 	    $admins = $this->getService('repos://site/users.user')
 	                   ->fetchSet(array('usertype'=>'Super Administrator'));
-	    
 	    $config['to'] = $admins->email;
 	    
 	    return $this->mail($config);
@@ -214,8 +203,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 	    $config = new KConfig($config);
 	    $emails	= (array) $config['to'];
 	    
-	    if ($this->_test_options->enabled) 
-	    {
+	    if ($this->_test_options->enabled) {
 	        $emails = $this->_test_options->email;
 	    }
 	    
@@ -225,8 +213,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		    'is_html' => true        
         ));
 		
-		if (! empty($emails))
-		{
+		if (! empty($emails)) {
 		    $subject = KService::get('koowa:filter.string')->sanitize( $config->subject );
 		    
 		    //Supposed to fix the random exclamation points
@@ -240,14 +227,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 		    $mailer->Send();		    
 		}
 		
-		if ($this->_test_options->enabled && $this->_test_options->log) 
-		{
+		if ($this->_test_options->enabled && $this->_test_options->log) {
 		    $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ','_',$config->subject));
-		
             $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
 		
-            if (! file_exists(dirname($file))) 
-            {
+            if (! file_exists(dirname($file))) {
 		        mkdir(dirname($file), 0755);
 		    }
 		

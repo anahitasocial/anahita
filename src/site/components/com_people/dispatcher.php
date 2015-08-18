@@ -32,29 +32,26 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 * @see ComBaseDispatcherDefault::_actionDispatch()
 	 */
 	protected function _actionDispatch(KCommandContext $context)
-	{
+	{                           
 	    if (
 	        $this->token && 
 	        $this->getController()
 	             ->getIdentifier()
 	             ->name == 'person'
-        ) {
+        ) {   
 	        if ($this->getController()->canRead()) {
-	            $this->getController()->login();
-
 	            if ($this->reset_password) {
+	                $this->getController()->autologin();    
 	                $url = JRoute::_($this->getController()
 	                                      ->getItem()
 	                                      ->getURL().'&get=settings&edit=account&reset_password=1');
 	                $this->getController()
 	                     ->getResponse()
 	                     ->location = $url;
-	            }
-	            
+	            } 
 	            $this->getController()
 	                 ->getResponse()
 	                 ->send();
-                     
 	            exit(0);
 	        }
 	    }

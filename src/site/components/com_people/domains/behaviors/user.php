@@ -31,7 +31,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                     'key' => true, 
                     'type' => 'integer', 
                     'default'=>mt_rand()
-                    ),
+                    )
             )
         ));
         
@@ -51,12 +51,10 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                                   ->fetchValue('id');
 
         //for now lets make the com_notes assigable to always
-        if ($firsttime)
-        {
+        if ($firsttime) {
             $component = KService::get('repos://site/components')->find(array('component' => 'com_notes'));
             
-            if ($component) 
-            {
+            if ($component) {
                 $component->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
             }
         }
@@ -69,15 +67,12 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $user->set('username', $this->username);
         $user->set('email', $this->email);
         
-        if ($this->password == '')
-        {
+        if ($this->password == '') {
             $password = JUserHelper::genRandomPassword();    
             $user->set('password', $password);   
             $user->set('password2', $password);
             $this->setPassword($password);     
-        } 
-        else 
-        {
+        } else {
             $user->password = $this->getPassword(true);    
         }
         
@@ -86,27 +81,29 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         
         // if this is the first user being added or 
         // (viewer is a super admin and she is adding another super admin)
-        if ($firsttime || ($viewer->superadmin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR))
-        { 
+        if (
+            $firsttime || 
+            (
+                $viewer->superadmin() && 
+                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
+            )
+        ) { 
             $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
-        }
-        // if viewer is an admin and she is going to add another admin
-        elseif ($viewer->admin() && $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR)
-        {
+        } elseif (
+            $viewer->admin() && 
+            $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR
+        ) {
             $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);
-        }
-        //default user type is registered
-        else 
-        {
+        } else {
            $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_REGISTERED);
         }
         
         //create an activation token
+        //@todo we need a global token generator to handle creation and destruction of tokens
         $user->set('activation', JUtility::getHash( JUserHelper::genRandomPassword()));
         $user->set('block', '1');
         
-        if(! $user->save())
-        {
+        if(! $user->save()) {
             throw new RuntimeException('Unexpected error when saving user');
             return false;
         }
@@ -129,28 +126,23 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $viewer = get_viewer();
         $user = clone JFactory::getUser($this->userId);  
 
-        if ($this->getModifiedData()->name) 
-        {
+        if ($this->getModifiedData()->name) {
             $user->set('name', $this->name);
         }  
         
-        if ($this->getModifiedData()->username) 
-        {
+        if ($this->getModifiedData()->username) {
             $user->set('username', $this->username);   
         }
         
-        if ($this->getModifiedData()->email) 
-        {
+        if ($this->getModifiedData()->email) {
             $user->set('email', $this->email);               
         }
         
-        if ($this->getModifiedData()->enabled) 
-        {
+        if ($this->getModifiedData()->enabled) {
             $user->set('block', !$this->enabled);               
         }
 
-        if ($this->getModifiedData()->userType)
-        {
+        if ($this->getModifiedData()->userType) {
             // if viewer is super admin and she is updating another super admin's account    
             if (
                 $viewer->superadmin() && 
@@ -164,25 +156,20 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                 $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR)
             {
                 $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);
-            }
-            else 
-            {
+            } else {
                $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_REGISTERED);
             }
         }
 
-        if ($this->getPassword()) 
-        {        
+        if ($this->getPassword()) {        
             $user->set('password', $this->getPassword(true));
         }
 
-        if (@$this->params->language) 
-        {            
+        if (@$this->params->language) {            
             $user->_params->set('language', $this->params->language);              
         }
                
-        if (! $user->save()) 
-        {
+        if (! $user->save()) {
             throw new RuntimeException('Unexpected error when saving user');
             return false;
         }
@@ -197,8 +184,9 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
      */
     public function getUserObject()
     {
-        $user = $this->getService('repos://site/users.user')->fetch(array('id'=>$this->userId));   
-
+        $user = $this->getService('repos://site/users.user')
+                     ->fetch(array('id'=>$this->userId));
+                        
         return $user;
     }
     
@@ -211,8 +199,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
     {
         $user = clone JFactory::getUser();
         
-        if ($this->persisted()) 
-        {         
+        if ($this->persisted()) {         
             $user->set('id', $this->id);
         }
         
@@ -220,17 +207,15 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $user->set('username', $this->username);
         $user->set('email', $this->email);
         
-        if ($this->_password)
-        {
-            $user->set('password',  $this->getPassword());
+        if ($this->_password) {
+            $user->set('password', $this->getPassword());
             $user->set('password2', $this->getPassword());
             $user->set('password_clear', $this->getPassword());
         }
         
         $user->set('usertype', self::USERTYPE_REGISTERED);
         
-        if (! $this->persisted()) 
-        {
+        if (! $this->persisted()) {
             $date =& JFactory::getDate();
             $user->set('registerDate', $date->toMySQL());
         }

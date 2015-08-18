@@ -25,7 +25,7 @@
 				</div>
 			</div>
 			
-			<?php if ( $entity->isEnableable() ) : ?>
+			<?php if ( $entity->isEnableable() && $entity->authorize('administration') ) : ?>
 			<div class="control-group">
 				<label class="label-group"  for="actor-enabled">
 					<?= @text('COM-ACTORS-ENABLED') ?>

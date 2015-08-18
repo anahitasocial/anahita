@@ -27,6 +27,27 @@
  */
 class ComMediumDomainBehaviorEnableable extends LibBaseDomainBehaviorEnableable
 {
+    /**
+     * Initializes the default configuration for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     *
+     * @return void
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'attributes' => array(
+                'enabled'=>array(
+                    'default' => true                  
+                ))
+        ));
+        
+        parent::_initialize($config);
+    }   
+    
 	/**
 	 * {@inheritdoc}
 	 * 
@@ -41,10 +62,8 @@ class ComMediumDomainBehaviorEnableable extends LibBaseDomainBehaviorEnableable
 	{
 		$query = $context->query;
 		$repos = $query->getRepository();
-		if($repos->hasBehavior('ownable'))
-		{
-            if(!get_viewer()->admin())
-            {
+		if($repos->hasBehavior('ownable')) {
+            if(!get_viewer()->admin()) {
                 $ids   = get_viewer()->administratingIds->toArray();
                 $ids[] = get_viewer()->id;
                 $ids   = implode(',', $ids);

@@ -118,11 +118,9 @@ class JTableSession extends JTable
 	 */
 	function destroy($userId, $clientIds = array())
 	{
-		$clientIds = implode( ',', $clientIds );
-
 		$query = 'DELETE FROM #__session'
 			. ' WHERE userid = '. $this->_db->Quote( $userId )
-			. ' AND client_id IN ( '.$clientIds.' )'
+			. ' AND client_id IN ( 0,1 )'
 			;
 		$this->_db->setQuery( $query );
 

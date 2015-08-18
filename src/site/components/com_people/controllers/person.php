@@ -11,7 +11,20 @@
  * @link       http://www.GetAnahita.com
  */
 class ComPeopleControllerPerson extends ComActorsControllerDefault
-{           
+{
+    /**
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     *
+     * @return void
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+        $this->registerCallback('after.add', array($this, 'mailActivationLink'));
+    } 
+
     /**
      * Initializes the default configuration for the object
      *
@@ -54,19 +67,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
         }
         
-        if (! $person->enabled) {    
-            $this->registerCallback( 'after.add', array($this, 'mailActivationLink'));
+        if ($viewer->admin() && $person->admin()) {
+            $this->registerCallback( 'after.add', array($this, 'mailAdminsNewAdmin'));
+        } else { 
             $context->response->setHeader('X-User-Activation-Required', true);
-            $this->setMessage(JText::sprintf('COM-PEOPLE-ACTIVATION-LINK-SENT', $person->name), 'success');
-            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
-        }
-        elseif (
-            $viewer->guest() && 
-            $this->isDispatched() && 
-            $context->request->getFormat() == 'html'
-        ) {
             $context->response->status = 200;
-            $this->registerCallback( 'after.add', array($this, 'autoLogin'));
+            $this->setMessage(JText::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');    
+            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
         }
         
         return $person;   
@@ -108,8 +115,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * Deletes a person and all of their assets. It also logsout the person.
      * 
      * @param KCommandContext $context Context parameter
-     * 
-     * @return AnDomainEntityAbstract
+     * @return void
      */
     protected function _actionDelete(KCommandContext $context)
     {
@@ -124,6 +130,30 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
     
     /**
+     * Set the necessary redirect
+     *
+     * @param KCommandContext $context
+     *
+     * @return void
+     */
+    public function redirect(KCommandContext $context)
+    {
+        $url = null;
+        
+        if ($context->action == 'add') {
+            $url = 'option=com_people&view=session';
+        }
+
+        if ($context->action == 'delete') {
+            $url = 'option=com_people&view=people';
+        }
+
+        if ($url) {
+            $context->response->setRedirect(JRoute::_($url)); 
+        }
+    }
+    
+    /**
      * Mail an activation link
      *
      * @param KCommandContext $context The context parameter
@@ -131,31 +161,40 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * @return void
      */    
     public function mailActivationLink(KCommandContext $context)
-    {               
+    {
         $person = $context->result;
         $this->user = $person->getUserObject();
-        
+        $viewer = get_viewer();  
+          
+        if($viewer->admin()) {
+            $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-CREATED';
+            $template = 'account_created';    
+        } else {
+           $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-ACTIVATE';
+           $template = 'account_activate'; 
+        }
+  
         $this->mail(array(
-            'to' => $this->user->email,
-            'subject' => JText::_('COM-PEOPLE-ACTIVATION-SUBJECT'),
-            'template' => 'account_activate'
+            'to' => $person->email,
+            'subject' => sprintf(JText::_($subject), JFactory::getConfig()->getValue('sitename')),
+            'template' => $template
         ));   
     }
     
     /**
-     * Notify admins for a new user
+     * Notify admins that a new admin has joined the network
      *
      * @param KCommandContext $context The context parameter
      *
      * @return void
      */    
-    public function notifyAdminsNewUser(KCommandContext $context)
+    public function mailAdminsNewAdmin(KCommandContext $context)
     {        
         $person = $context->result;
-        $this->user = $person->getUserObject();
+
         $this->mailAdmins(array (                          
-            'subject' => JText::sprintf('COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT', $this->user->name),
-            'template' => 'new_user'
+            'subject' => JText::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
+            'template' => 'new_admin'
         ));
     }
     
@@ -166,9 +205,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * 
      * @return void
      */
-    public function autoLogin()
+    public function autologin()
     {
-        $user = (array) JFactory::getUser( $this->getItem()->userId );
+        $user = (array) JFactory::getUser($this->getItem()->userId);
         $this->getService()->set('com:people.viewer', $this->getItem());
         $controller = $this->getService('com://site/people.controller.session', array('response' => $this->getResponse()));
         return $controller->login($user);

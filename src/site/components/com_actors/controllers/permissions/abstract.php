@@ -249,4 +249,24 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
                 
         return $this->getItem()->authorize('administration');
     }
+
+    /**
+     * Only admins can enable
+     *
+     * @return boolean
+     */
+    public function canEnable()
+    {
+        return $this->canAdminister();
+    }
+    
+    /**
+     * Only admins can disable
+     *
+     * @return boolean
+     */
+    public function canDisable()
+    {
+        return $this->canAdminister();
+    }
 }
