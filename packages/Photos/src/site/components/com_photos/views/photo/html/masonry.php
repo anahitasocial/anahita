@@ -29,15 +29,17 @@
 	</div>
 	
 	<div class="entity-description-wrapper">
-    	<h4 class="entity-title">
-    		<?php if( $photo->title ): ?>
-            <a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
-            <?= @escape($photo->title) ?>
-            </a>
-            <?php else : ?>
-            <span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>    
-            <?php endif; ?>  
-    	</h4>
+		<?php if( $photo->title ): ?>
+			<h4 class="entity-title">
+				<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
+					<?= @escape($photo->title) ?>
+				</a>
+			</h4>
+		<?php elseif( $photo->authorize('edit') ) : ?>
+			<h4 class="entity-title">
+				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
+			</h4>
+		<?php endif; ?>
     		
     	<div class="entity-description">
     	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude'=>array('gist','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
