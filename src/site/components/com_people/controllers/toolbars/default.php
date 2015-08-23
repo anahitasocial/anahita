@@ -22,7 +22,7 @@ class ComPeopleControllerToolbarDefault extends ComActorsControllerToolbarDefaul
      */
     public function onAfterControllerBrowse(KEvent $event)
     {
-        if($this->getController()->canAdminister())
+        if(get_viewer()->admin())
         {
             $this->addCommand('new');    
         } 

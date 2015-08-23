@@ -222,7 +222,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         }
         
         if ($this->reset_password){ 
-            $context->response->setRedirect(JRoute::_($person->getURL().'&get=settings&edit=account'));
+            $context->response->setRedirect($person->getURL().'&get=settings&edit=account');
         }
         
         $context->append(array(

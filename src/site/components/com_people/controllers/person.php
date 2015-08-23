@@ -57,6 +57,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $data = $context->data; 
         $viewer = get_viewer();
         $person = parent::_actionAdd($context);
+        $redirectUrl = 'option=com_people';
         
         $this->getRepository()
         ->getValidator()
@@ -65,16 +66,22 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+            return false;
         }
-        
-        if ($viewer->admin() && $person->admin()) {
-            $this->registerCallback( 'after.add', array($this, 'mailAdminsNewAdmin'));
+
+        if ($viewer->admin()) {
+            $redirectUrl .= '&view=people';
+            if ($person->admin()) {
+               $this->registerCallback( 'after.add', array($this, 'mailAdminsNewAdmin')); 
+            }
         } else { 
             $context->response->setHeader('X-User-Activation-Required', true);
-            $context->response->status = 200;
-            $this->setMessage(JText::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');    
-            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
+            $this->setMessage(JText::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
+            $redirectUrl .= '&view=session'; 
         }
+        
+        $context->response->setRedirect(JRoute::_($redirectUrl));
+        $context->response->status = 200;
         
         return $person;   
     }    
@@ -139,10 +146,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function redirect(KCommandContext $context)
     {
         $url = null;
-        
-        if ($context->action == 'add') {
-            $url = 'option=com_people&view=session';
-        }
 
         if ($context->action == 'delete') {
             $url = 'option=com_people&view=people';
@@ -191,7 +194,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function mailAdminsNewAdmin(KCommandContext $context)
     {        
         $person = $context->result;
-
         $this->mailAdmins(array (                          
             'subject' => JText::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
             'template' => 'new_admin'
