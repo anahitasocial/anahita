@@ -1,19 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_People
- * @subpackage Controller
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- * @link       http://www.anahitapolis.com
- */
-
 /**
  * Session Controller. Manages a session of a person
  *
@@ -23,7 +9,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
 class ComPeopleControllerSession extends ComBaseControllerResource
 {
@@ -39,7 +25,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	parent::__construct($config);
   
         $this->registerCallback(
-            'after.login', 
+            'after.add', 
             array($this, 'redirect'), 
             array('url'=>$config->redirect_to_after_login)
             );
@@ -145,74 +131,15 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         $data = $context->data;
         
-        //if there's a sign up then 
-        //change the redirect url
-        if ($data->return) {
-        	$_SESSION['return'] = $this->getService('com://site/people.filter.return')
-        	                           ->sanitize($data->return);
-                                       
-            $url = base64UrlDecode($data->return);            
-            $this->registerCallback('after.login', array($this, 'redirect'), array('url'=>$url));            
-        }
+        $user = array(
+            'username' => $data->username,
+            'password' => $data->password,
+            'remember' => $data->remember
+        );
         
-        jimport('joomla.user.authentication');
-           
-        $authentication =& JAuthentication::getInstance();
-        $credentials = KConfig::unbox($data);
-        
-        $options = array();
-        $authResponse = $authentication->authenticate($credentials, $options);
-        
-        if (
-            $authResponse->status === JAUTHENTICATE_STATUS_SUCCESS && 
-            $this->login( 
-                (array) $authResponse, 
-                (bool) $data->remember
-            )
-        ) {	    
-        	$this->getResponse()->status = KHttpResponse::CREATED;
-            $_SESSION['return'] = null;
-        } else {        
-            $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
-        	JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $authResponse));
-        	throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');        	
-        }
-        
-        return;
-    }
-    
-    /**
-     * Deletes a session and logs out the user
-     * 
-     * @param KCommandContext $context Command chain context 
-     * 
-     * @return void
-     */
-    protected function _actionDelete(KCommandContext $context)
-    {
-    	//we don't care if a useris logged in or not just delete
-        if ($this->getService('com:people.helper.person')->logout()) {
-        	$context->response->status = KHttpResponse::NO_CONTENT;
-        }
-    }
-    
-       /**
-     * Creates a new session
-     * 
-     * @param array   $user     The user as an array
-     * @param boolean $remember Flag to whether remember the user or not
-     * 
-     * @return boolean
-     * 
-     * @throws LibBaseControllerExceptionUnauthorized If authentication failed
-     * @throws LibBaseControllerExceptionForbidden    If person is authenticated but forbidden
-     * @throws RuntimeException code for unkown error
-     */
-    public function login(array $user, $remember = false)
-    {       
-        if (!$this->getService('com:people.helper.person')->login($user, $remember)) {        
+        if (!$this->getService('com:people.helper.person')->login($user, $user['remember'])) {        
             $user = $this->getService('repos://site/users.user')
-                         ->fetch(array('username'=>$user['username']));
+                         ->fetch(array('username'=>$user['remember']));
             
             if (! $user) {
                 $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');     
@@ -230,12 +157,85 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             return false;
         }
         
-        $context = $this->getCommandContext();
+        $this->getResponse()->status = KHttpResponse::CREATED;
         $context->result = true;
         
-        $this->getCommandChain()->run('after.login', $context);
+        if ($data->return) {
+            $_SESSION['return'] = $this->getService('com://site/people.filter.return')
+                                       ->sanitize($data->return);             
+            $context->url = base64UrlDecode($data->return);                      
+        } else {
+            $_SESSION['return'] = null;
+        }
         
         return true;
+    }  
+    
+    /**
+     * Deletes a session and logs out the user
+     * 
+     * @param KCommandContext $context Command chain context 
+     * 
+     * @return void
+     */
+    protected function _actionDelete(KCommandContext $context)
+    {
+    	//we don't care if a useris logged in or not just delete
+        if ($this->getService('com:people.helper.person')->logout()) {
+        	$context->response->status = KHttpResponse::NO_CONTENT;
+        }
+        
+        $this->setRedirect(JRoute::_('index.php'));
+    }
+
+    /**
+     * Logs in a user if an activation token is provided
+     * 
+     * @return boolean true on success
+     */
+    protected function _actionTokenlogin(KCommandContext $context)
+    {
+        if ($this->token == '') {
+           throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN); 
+           return false;
+        }        
+        
+        $user = $this->getService('repos://site/users.user')
+                     ->find(array(
+                         'activation'=>$this->token
+                         ));
+        
+        if (! $user) {
+           throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND); 
+           return false;
+        }
+        
+        $user->activation = '';
+        $user->block = 0;
+        $user->save();
+        
+        $person = $this->getService('repos://site/people.person')->find(array('userId'=>$user->id));
+        
+        if ($this->account_activate) {
+            $person->enabled = 1;
+            $person->save();
+        }
+        
+        if ($this->reset_password){ 
+            $context->response->setRedirect(JRoute::_($person->getURL().'&get=settings&edit=account'));
+        }
+        
+        $context->append(array(
+            'data'=>array(
+               'username' => $user->username,
+               'password' => $user->password,
+               'remember' => true,
+               'return' => null
+               )
+            )
+        );
+        
+        return $this->execute('add', $context);
     }
     
 	/**
@@ -244,7 +244,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      * @param array An associative array of request information
      * 
      * @return LibBaseControllerAbstract
-     */
+     */ 
     public function setRequest(array $request)
     {
     	parent::setRequest($request);
@@ -258,7 +258,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     	
     	return $this;
     }
-
+    
+    
     /**
      * Redirect a user after login
      * 
@@ -270,5 +271,5 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         $url = JRoute::_($context->url);
         $context->response->setRedirect($url);
-    }
+    }  
 }

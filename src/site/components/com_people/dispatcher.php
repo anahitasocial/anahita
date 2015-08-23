@@ -32,32 +32,16 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 * @see ComBaseDispatcherDefault::_actionDispatch()
 	 */
 	protected function _actionDispatch(KCommandContext $context)
-	{                           
-	    if (
-	        $this->token && 
-	        $this->getController()
-	             ->getIdentifier()
-	             ->name == 'person'
-        ) {   
-	        if ($this->getController()->canRead()) {
-	            if ($this->reset_password) {
-	                $this->getController()->autologin();    
-	                $url = JRoute::_($this->getController()
-	                                      ->getItem()
-	                                      ->getURL().'&get=settings&edit=account&reset_password=1');
-	                $this->getController()
-	                     ->getResponse()
-	                     ->location = $url;
-	            } 
-	            $this->getController()
-	                 ->getResponse()
-	                 ->send();
-	            exit(0);
-	        }
-	    }
-	    	    
-	    return parent::_actionDispatch($context);
-	}
+    {    
+        if (
+            $this->getController()->getIdentifier()->name == 'session' && 
+            $this->token != ''
+            ) {
+            $this->getController()->execute('tokenlogin', $context);
+        }
+                
+        return parent::_actionDispatch($context);
+    }
 	
 	/**
 	 * If session throws LibBaseControllerExceptionUnauthorized exception

@@ -1,18 +1,5 @@
 <?php
 
-/** 
- * 
- * @category   Anahita
- * @package    Com_People
- * @subpackage Controller_Permission
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- * @link       http://www.anahitapolis.com
- */
-
 /**
  * People Permissions
  *
@@ -83,20 +70,10 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canRead()
     {    
-        if ($this->token) {
-           $user = $this->getService('repos://site/users.user')
-                        ->find(array('activation' => $this->token));  
-           if ($user) {
-               $this->_mixer->setItem($this->_mixer->getRepository()->find(array('userId' => $user->id)));
-               $this->_mixer->getItem()->enabled = true;                
-               $user->activation = null;
-               $user->block = false;
-               $user->save();
-           }
-        }
-        
         if (
-            $this->_mixer->getRequest()->get('layout') == 'signup' && 
+            $this->_mixer
+                 ->getRequest()
+                 ->get('layout') == 'signup' && 
             $this->isRegistrationOpen()
         ) {     
             return $this->_viewer->guest();
@@ -114,7 +91,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canAdd()
     {
-        if($this->_viewer->admin()) {
+        if ($this->_viewer->admin()) {
             return true;
         }    
              

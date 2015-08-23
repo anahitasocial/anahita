@@ -44,12 +44,12 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
 	 */
 	public function canRead()
 	{	    
-	    if( $this->getRequest()->get('layout') == 'add' )
+	    if ($this->getRequest()->get('layout') == 'add')
         {
 	        return $this->_mixer->canAdd();
         }
        
-        if( !$this->getItem() )  
+        if (! $this->getItem())  
         {  	    
             return false;    
         }

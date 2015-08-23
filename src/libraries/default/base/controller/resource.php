@@ -51,8 +51,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         $this->registerActionAlias('display', 'get');
         
         // Mixin the toolbar
-        if($config->dispatch_events)
+        if ($config->dispatch_events){
             $this->mixin(new KMixinToolbar($config->append(array('mixer' => $this))));
+        }
         
         JFactory::getLanguage()->load($this->getIdentifier()->package);
     }
