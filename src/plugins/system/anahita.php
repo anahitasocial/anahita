@@ -115,15 +115,17 @@ class PlgSystemAnahita extends JPlugin
         global $mainframe; 
            
         $viewer = get_viewer();
+        
+        if(!$viewer->enabled){
+            KService::get('com://site/people.helper.person')->logout();    
+        }
 
         // No remember me for admin
-        if ($mainframe->isAdmin())
-        {
+        if ($mainframe->isAdmin()){
             return;  
         }
         
-        if ($viewer->guest())
-        {
+        if ($viewer->guest()){
             return;
         }
         

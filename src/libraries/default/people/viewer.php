@@ -54,7 +54,7 @@ class LibPeopleViewer extends KObject implements KServiceInstantiatable
             {   
                 $viewer = $container
                           ->get('repos://site/people.person')
-                          ->find(array('userId'=>$id));                                
+                          ->find(array('userId'=>$id));                                          
             }
             
             $container->set(

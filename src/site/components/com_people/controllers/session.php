@@ -38,6 +38,27 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     }
     
     /**
+     * Set the request information
+     *
+     * @param array An associative array of request information
+     * 
+     * @return LibBaseControllerAbstract
+     */ 
+    public function setRequest(array $request)
+    {
+        parent::setRequest($request);
+        
+        if (isset($this->_request->return)) {       
+            $return = $this->getService('com://site/people.filter.return')
+                           ->sanitize($this->_request->return);
+            $this->_request->return = $return;
+            $this->return = $return;
+        }
+        
+        return $this;
+    }
+    
+    /**
     * Initializes the default configuration for the object
     *
     * you can set the redirect url for when a user is logged in
@@ -129,36 +150,13 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionAdd(KCommandContext $context)
     {
-        $data = $context->data;
+        $data = $context->data;        
         
-        $user = array(
-            'username' => $data->username,
-            'password' => $data->password,
-            'remember' => $data->remember
-        );
-        
-        if (!$this->getService('com:people.helper.person')->login($user, $user['remember'])) {        
-            $user = $this->getService('repos://site/users.user')
-                         ->fetch(array('username'=>$user['remember']));
-            
-            if (! $user) {
-                $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');     
-                throw new RuntimeException('Unkown Error');
-            } elseif ($user && $user->block) {
-                $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error'); 
-                throw new LibBaseControllerExceptionUnauthorized('User is blocked');
-            } else {
-                // Trigger onLoginFailure Event
-                JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $user));            
-                $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
-                throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
-            }
-            
+        if(! $this->_login($context)) {
             return false;
         }
         
-        $this->getResponse()->status = KHttpResponse::CREATED;
-        $context->result = true;
+        $this->getResponse()->status = KHttpResponse::ACCEPTED;
         
         if ($data->return) {
             $_SESSION['return'] = $this->getService('com://site/people.filter.return')
@@ -180,17 +178,15 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionDelete(KCommandContext $context)
     {
-    	//we don't care if a useris logged in or not just delete
-        if ($this->getService('com:people.helper.person')->logout()) {
-        	$context->response->status = KHttpResponse::NO_CONTENT;
-        }
-        
-        $this->setRedirect(JRoute::_('index.php'));
+       //we don't care if a useris logged in or not just delete
+       $this->getService('com:people.helper.person')->logout();
+       $context->response->setRedirect(JRoute::_('index.php?'));
     }
 
     /**
      * Logs in a user if an activation token is provided
      * 
+     * @param KCommandContext $context Command chain context
      * @return boolean true on success
      */
     protected function _actionTokenlogin(KCommandContext $context)
@@ -210,19 +206,24 @@ class ComPeopleControllerSession extends ComBaseControllerResource
            return false;
         }
         
-        $user->activation = '';
-        $user->block = 0;
-        $user->save();
+        $person = $this->getService('repos://site/people.person')
+                       ->find(array('userId'=>$user->id));
         
-        $person = $this->getService('repos://site/people.person')->find(array('userId'=>$user->id));
+        $redirectUrl = $person->getURL();
         
         if ($this->account_activate) {
-            $person->enabled = 1;
+            //if this is a first time user, then unblock them
+            $user->block = ($user->lastvisitDate->compare($user->registerDate) < 0) ? 0 : 1;
+            $user->block = 0;
+            $person->enabled = (boolean) !$user->block;
             $person->save();
         }
         
-        if ($this->reset_password){ 
-            $context->response->setRedirect($person->getURL().'&get=settings&edit=account');
+        $user->activation = '';
+        $user->save();
+
+        if ($this->reset_password) {
+            $redirectUrl .= '&get=settings&edit=account';
         }
         
         $context->append(array(
@@ -235,41 +236,54 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             )
         );
         
-        return $this->execute('add', $context);
-    }
-    
-	/**
-     * Set the request information
-     *
-     * @param array An associative array of request information
-     * 
-     * @return LibBaseControllerAbstract
-     */ 
-    public function setRequest(array $request)
-    {
-    	parent::setRequest($request);
-    	
-    	if (isset($this->_request->return)) {	    
-    		$return = $this->getService('com://site/people.filter.return')
-    		               ->sanitize($this->_request->return);
-    		$this->_request->return = $return;
-    		$this->return = $return;
+        if (! $this->_login($context)) {
+            return false;    
         }
-    	
-    	return $this;
-    }
-    
-    
+
+        $msg = JText::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
+        $this->getResponse()->setRedirect(JRoute::_($redirectUrl), $msg);
+        $this->getResponse()->status = KHttpResponse::ACCEPTED;
+
+        return true;    
+    } 
+
     /**
-     * Redirect a user after login
+     * This is a helper function to be used by the add and token login actions
      * 
-     * @param KCommandContext $context
-     * 
-     * @return void
+     * @param KCommandContext $context Command chain context 
+     * @return true on success
      */
-    public function redirect(KCommandContext $context)
+    protected function _login(KCommandContext $context)
     {
-        $url = JRoute::_($context->url);
-        $context->response->setRedirect($url);
-    }  
+        $data = $context->data;     
+            
+        $user = array(
+            'username' => $data->username,
+            'password' => $data->password,
+            'remember' => $data->remember
+        ); 
+        
+        if (!$this->getService('com:people.helper.person')->login($user , $user['remember'])) {        
+            $user = $this->getService('repos://site/users.user')
+                         ->fetch(array('username'=>$user['username']));
+            
+            if (! $user) {
+                $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');     
+                throw new RuntimeException('Unkown Error');
+            } elseif ($user && $user->block) {    
+                $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error'); 
+                $this->execute('delete', $context);
+                //throw new LibBaseControllerExceptionUnauthorized('User is blocked');
+            } else {
+                // Trigger onLoginFailure Event
+                JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $user));            
+                $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
+                throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
+            }
+                        
+            return false;
+        }
+        
+        return true;
+    }
 }

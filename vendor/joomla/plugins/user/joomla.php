@@ -79,12 +79,6 @@ class plgUserJoomla extends JPlugin
         {    
             return JError::raiseWarning(403, "Not authorized to access the admin side");
         }
-        
-        if ($viewer->block == 1)
-        {
-            return JError::raiseWarning(403, "Not authorized to access this site");
-            return false;
-        }
 
 		// Register the needed session variables
 		$session =& JFactory::getSession();		

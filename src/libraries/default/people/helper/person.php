@@ -49,7 +49,7 @@ class LibPeopleHelperPerson extends KObject
 		
     	$options = array();	    	
     	$results = JFactory::getApplication()->triggerEvent('onLoginUser', array($user, $options));
-    	
+        
 		foreach ($results as $result){
 			if (
 			    $result instanceof JException || 

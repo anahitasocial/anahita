@@ -32,12 +32,13 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
 	 * @see ComBaseDispatcherDefault::_actionDispatch()
 	 */
 	protected function _actionDispatch(KCommandContext $context)
-    {    
+    {   
         if (
-            $this->getController()->getIdentifier()->name == 'session' && 
+            $this->getController()->getIdentifier()->name === 'session' && 
             $this->token != ''
             ) {
             $this->getController()->execute('tokenlogin', $context);
+            $context->response->send();
         }
                 
         return parent::_actionDispatch($context);

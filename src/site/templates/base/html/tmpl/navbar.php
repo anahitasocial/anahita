@@ -17,7 +17,7 @@
 	            <span class="viewer pull-right">
 	            	<?php if(get_viewer()->guest()): ?>
 	            	<?php $return = base64UrlEncode( KRequest::url() ); ?>    
-					<a class="btn btn-primary" href="<?= @route('option=people&view=session&connect=1&return='.$return) ?>" >
+					<a class="btn btn-primary" href="<?= @route('option=people&view=session&return='.$return) ?>" >
     				    <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
 					</a>
 	            	<?php else: ?>
