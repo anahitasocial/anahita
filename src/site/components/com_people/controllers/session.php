@@ -152,13 +152,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         $data = $context->data;        
         
-        if(! $this->_login($context)) {
-            $this->getResponse()->setRedirect(JRoute::_('option=com_people&view=session'));    
-            return false;
-        }
-        
-        $this->getResponse()->status = KHttpResponse::ACCEPTED;
-        
         if ($data->return) {
             $_SESSION['return'] = $this->getService('com://site/people.filter.return')
                                        ->sanitize($data->return);             
@@ -166,6 +159,31 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         } else {
             $_SESSION['return'] = null;
         }
+        
+        jimport('joomla.user.authentication');
+        $authentication =& JAuthentication::getInstance();
+        $credentials = array(
+            'username' => $data->username,
+            'password' => $data->password,
+            'remember' => $data->remember
+        );
+        $options = array();
+        $authResponse = $authentication->authenticate($credentials, $options);     
+            
+        if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS)
+        {
+            $this->getService('com:people.helper.person')->login($credentials , $credentials['remember']);    
+            $this->getResponse()->status = KHttpResponse::ACCEPTED;
+            $_SESSION['return'] = null;
+        }
+        else 
+        {
+            $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
+            JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $authResponse));
+            throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
+            $this->getResponse()->status = KHttpResponse::FORBIDDEN; 
+            $this->getResponse()->setRedirect(JRoute::_('option=com_people&view=session'));        
+        }    
         
         return true;
     }  
@@ -191,7 +209,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      * @return boolean true on success
      */
     protected function _actionTokenlogin(KCommandContext $context)
-    {
+    {    
         if ($this->token == '') {
            throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN); 
            return false;
@@ -230,19 +248,13 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $redirectUrl .= '&get=settings&edit=account';
         }
         
-        $context->append(array(
-            'data'=>array(
-               'username' => $user->username,
-               'password' => $user->password,
-               'remember' => true,
-               'return' => null
-               )
-            )
+        $credentials = array(
+            'username' => $user->username,
+            'password' => $user->password,
+            'remember' => true
         );
         
-        if (! $this->_login($context)) {
-            return false;    
-        }
+        $this->getService('com:people.helper.person')->login($credentials , $credentials['remember']);
 
         $msg = JText::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
         $this->getResponse()->setRedirect(JRoute::_($redirectUrl), $msg);
@@ -250,45 +262,4 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         return true;    
     } 
-
-    /**
-     * This is a helper function to be used by the add and token login actions
-     * 
-     * @param KCommandContext $context Command chain context 
-     * @return true on success
-     */
-    private function _login(KCommandContext $context)
-    {
-        $data = $context->data;     
-            
-        $user = array(
-            'username' => $data->username,
-            'password' => $data->password,
-            'remember' => $data->remember
-        ); 
-        
-        if (! $this->getService('com:people.helper.person')->login($user , $user['remember'])) {
-        /*                
-            $user = $this->getService('repos://site/users.user')
-                         ->fetch(array('username'=>$user['username']));
-            
-            if (! $user) {
-                $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-UNKOWN', 'error');     
-                throw new RuntimeException('Unkown Error');
-            } elseif ($user && $user->block) {    
-                $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error'); 
-                $this->execute('delete', $context);
-                throw new LibBaseControllerExceptionUnauthorized('User is blocked');
-            } else {
-                // Trigger onLoginFailure Event
-                JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $user));            
-                $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
-                throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
-            }
-        */                
-            return false;
-        }
-        
-        return true;
-    }
 }

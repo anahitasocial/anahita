@@ -36,7 +36,7 @@ class LibPeopleHelperPerson extends KObject
      * @return boolean
      */
 	public function login(array $user, $remember = false)
-    {	
+    {   	
 		$session = &JFactory::getSession();
     		
 		// we fork the session to prevent session fixation issues
