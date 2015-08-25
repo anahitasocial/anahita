@@ -66,9 +66,9 @@ class plgUserJoomla extends JPlugin
 		jimport('joomla.user.helper');
         $viewer =& JFactory::getUser($user['username']);
 
-        if (! $viewer->id)
+        if (! $viewer )
         {
-            return JError::raiseWarning(401, "Did not find a user with username: ".$user['username']);
+            return JError::raiseWarning(401, "Did not find a user with username: ".$viewer['username']);
         }
         
         if ( 
