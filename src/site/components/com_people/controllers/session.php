@@ -209,18 +209,21 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $person = $this->getService('repos://site/people.person')
                        ->find(array('userId'=>$user->id));
         
+        $newUser = ($user->lastvisitDate->compare($user->registerDate)) ? true : false;
         $redirectUrl = $person->getURL();
         
-        if ($this->account_activate) {
-            //if this is a first time user, then unblock them
-            $user->block = ($user->lastvisitDate->compare($user->registerDate) < 0) ? 0 : 1;
-            $user->block = 0;
+        //if this is a first time user, then unblock them
+        if ($newUser) {
+            $user->block = ($newUser) ? 0 : 1;
             $person->enabled = (boolean) !$user->block;
             $person->save();
         }
         
         $user->activation = '';
         $user->save();
+        
+        $this->token = null;
+        $this->_request->token = null;
 
         if ($this->reset_password) {
             $redirectUrl .= '&get=settings&edit=account';
@@ -263,7 +266,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             'remember' => $data->remember
         ); 
         
-        if (!$this->getService('com:people.helper.person')->login($user , $user['remember'])) {        
+        if (!$this->getService('com:people.helper.person')->login($user , $user['remember'])) {
+                        
             $user = $this->getService('repos://site/users.user')
                          ->fetch(array('username'=>$user['username']));
             
@@ -273,7 +277,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             } elseif ($user && $user->block) {    
                 $this->setMessage('COM-PEOPLE-AUTHENTICATION-PERSON-BLOCKED', 'error'); 
                 $this->execute('delete', $context);
-                //throw new LibBaseControllerExceptionUnauthorized('User is blocked');
+                throw new LibBaseControllerExceptionUnauthorized('User is blocked');
             } else {
                 // Trigger onLoginFailure Event
                 JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $user));            
