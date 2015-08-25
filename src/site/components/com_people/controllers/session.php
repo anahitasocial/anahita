@@ -153,6 +153,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $data = $context->data;        
         
         if(! $this->_login($context)) {
+            $this->getResponse()->setRedirect(JRoute::_('option=com_people&view=session'));    
             return false;
         }
         
@@ -256,7 +257,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      * @param KCommandContext $context Command chain context 
      * @return true on success
      */
-    protected function _login(KCommandContext $context)
+    private function _login(KCommandContext $context)
     {
         $data = $context->data;     
             
@@ -266,8 +267,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             'remember' => $data->remember
         ); 
         
-        if (!$this->getService('com:people.helper.person')->login($user , $user['remember'])) {
-                        
+        if (! $this->getService('com:people.helper.person')->login($user , $user['remember'])) {
+        /*                
             $user = $this->getService('repos://site/users.user')
                          ->fetch(array('username'=>$user['username']));
             
@@ -284,7 +285,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
                 $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
                 throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             }
-                        
+        */                
             return false;
         }
         
