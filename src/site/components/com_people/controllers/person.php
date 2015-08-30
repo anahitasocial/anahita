@@ -46,6 +46,30 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
     
     /**
+     * Post service
+     * 
+     * @param KCommandContext $context Commaind chain context
+     * 
+     * @return AnDomainEntityAbstract
+     */
+    protected function _actionPost(KCommandContext $context)
+    {
+        $data = $context->data;    
+        
+        $userTypes = array(
+            ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR,
+            ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR,
+            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED
+        );
+            
+        if (!$this->getItem()->authorize('changeUserType') || !in_array($data->userType, $userTypes)){
+            $data->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+        }
+
+        return parent::_actionPost($context);
+    }
+    
+    /**
      * Person add action creates a new person object.
      * 
      * @param KCommandContext $context Commaind chain context

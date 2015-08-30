@@ -38,7 +38,7 @@
         </div>
     </div>
     
-    <?php if($viewer->admin()): ?>
+    <?php if($item->authorize('changeUserType')): ?>
     <div class="control-group">
         <label class="control-label" for="person-group">
             <?= @text('COM-PEOPLE-ROLE'); ?>

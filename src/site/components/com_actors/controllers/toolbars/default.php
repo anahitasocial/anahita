@@ -141,7 +141,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             ->href($actor->getURL().'&get=settings');
         }
         
-        if ($actor->authorize('changeenabled')) {
+        if ($actor->authorize('changeEnabled')) {
             $action = ($actor->enabled) ? 'disable' : 'enable';
             $this->addCommand($action.'-actor', array('label' => JText::_('LIB-AN-ACTION-'.$action), 'entity' => $actor))
             ->getCommand($action.'-actor')

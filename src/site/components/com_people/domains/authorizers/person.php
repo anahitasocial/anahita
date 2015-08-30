@@ -11,11 +11,63 @@
  */
 class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault 
 {
+    /**
+     * Check if the actor authorize adminisrating it
+     * 
+     * @param KCommandContext $context Context parameter
+     * 
+     * @return boolean
+     */ 
+    protected function _authorizeAdministration(KCommandContext $context)
+    {
+        //if viewer is the same as the person    
+        if ($this->_viewer->eql($this->_entity)) {
+            return true;
+        }  
+        
+        //if viewer is super admin
+        if ($this->_viewer->superadmin()) {
+            return true;
+        }  
+        
+        //if viewer is admin and the person is not a super admin
+        if ($this->_viewer->admin() && !$this->_entity->superadmin()) {
+            return true;
+        }
+                
+        return false;
+    }    
+        
+    /**
+     * Check to see if viewer can change the user type of this person
+     * 
+     * @param KCommandContext $context Context parameter
+     * 
+     * @return boolean
+     */    
+    protected function _authorizeChangeUserType(KCommandContext $context)
+    {
+        if ($this->_viewer->eql($this->_entity)){
+            return false;
+        }    
+            
+        if ($this->_viewer->superadmin()) {
+            return true;
+        }    
+        
+        if ($this->_viewer->admin && !$this->_entity->superadmin()) {
+            return true;
+        }
+            
+        return false;
+    }  
+      
         
     /**
      * Check to see if viewer can enable or disable a person's account
      * 
      * @param KCommandContext $context Context parameter
+     * 
      * @return boolean
      */           
     protected function _authorizeChangeEnabled(KCommandContext $context)
@@ -31,12 +83,9 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
         }     
         
         //only super-admins can change the enable status of another super-admin    
-        if ( 
-            ! $this->_viewer->superadmin() && 
-            $this->_entity->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
-            ) {
-                return false;
-            } 
+        if (! $this->_viewer->superadmin() && $this->_entity->superadmin()) {
+            return false;
+        } 
             
         return true;
     }
@@ -50,10 +99,7 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     protected function _authorizeDelete(KCommandContext $context)
     {
         //if viewer same as the person whose profile being vieweed and viewer is a super admin don't allow to delete
-        if (
-            $this->_viewer->eql($this->_entity) && 
-            $this->_entity->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
-            ) {
+        if ($this->_viewer->eql($this->_entity) && $this->_entity->superadmin()) {
         	return false;   
         }
         

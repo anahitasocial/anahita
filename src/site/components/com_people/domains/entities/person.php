@@ -96,7 +96,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 		)));
 		
 		parent::_afterEntityInstantiate($config);
-	}   
+	}  
     
 	/**
 	 * Set the name, given name and family name of the person
@@ -168,7 +168,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      * @{inheritdoc}
      */
     public function __set($key, $value)
-    {
+    {            
         if ($key == 'password' && !empty($value)) {
            return $this->setPassword($value);
         } else {
