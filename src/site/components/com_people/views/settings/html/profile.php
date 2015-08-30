@@ -49,17 +49,6 @@
     </div>
     <?php endif; ?>
 	
-	<?php if ( $item->isEnableable() ) : ?>
-	<div class="control-group">
-		<label class="control-label" for="enabled">
-			<?= @text('COM-ACTORS-ENABLED') ?>
-		</label>
-		<div class="controls">
-			<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>$item->enabled))->class('input-block-level') ?>
-		</div>
-	</div>
-	<?php endif;?>
-	
 	<?php foreach($profile as $header => $fields)  : ?>		
 	<fieldset>
 		<legend><?= @text($header) ?></legend>

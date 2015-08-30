@@ -11,7 +11,7 @@
  * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
 
 /**
@@ -23,7 +23,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
 class ComBaseControllerBehaviorEnablable extends KControllerBehaviorAbstract
 {
@@ -36,8 +36,8 @@ class ComBaseControllerBehaviorEnablable extends KControllerBehaviorAbstract
 	protected function _actionEnable($context)
 	{
 	    $context->response->status = KHttpResponse::RESET_CONTENT;
-		$this->getItem()->enabled = 1;
-        return $this->getItem();
+        $this->getItem()->enable();
+        return;
 	}
 	
 	/**
@@ -49,7 +49,27 @@ class ComBaseControllerBehaviorEnablable extends KControllerBehaviorAbstract
 	protected function _actionDisable($context)
 	{
 	    $context->response->status = KHttpResponse::RESET_CONTENT;
-		$this->getItem()->enabled = 0;
-        return $this->getItem();		
+		$this->getItem()->disable();
+        return;		
 	}
+    
+    /**
+     * Authorize enable
+     * 
+     * @return boolean
+     */
+    public function canEnable()
+    {
+        return $this->canEdit();
+    }
+    
+    /**
+     * Authorize disable
+     * 
+     * @return boolean
+     */
+    public function canDisable()
+    {
+        return $this->canEdit();
+    }
 }

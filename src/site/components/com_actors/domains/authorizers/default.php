@@ -9,10 +9,21 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
 class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 {
+    /**
+     * Check to see if viewer can enable or disable a person's account
+     * 
+     * @param KCommandContext $context Context parameter
+     * @return boolean
+     */           
+    protected function _authorizeChangeEnabled(KCommandContext $context)
+    {   
+        return $this->_authorizeAdministration($context);   
+    }
+    
 	/**
 	 * Check if the actor authorize adminisrating it
 	 * 
@@ -35,7 +46,6 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
 	    }
 		
 		return (bool) $ret;
-		
 	}
 	
     /**

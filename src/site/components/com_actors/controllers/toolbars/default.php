@@ -9,7 +9,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.anahitapolis.com
+ * @link       http://www.GetAnahita.com
  */
 class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 {   
@@ -128,7 +128,8 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      * 
      * @return void
      */
-    public function addToolbarCommands() {        
+    public function addToolbarCommands() {
+                    
         $actor = $this->getController()->getItem();
         $viewer = get_viewer();
         $this->_use_post = true;
@@ -138,6 +139,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             $this->addCommand('edit-actor', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
             ->getCommand('edit-actor')
             ->href($actor->getURL().'&get=settings');
+        }
+        
+        if ($actor->authorize('changeenabled')) {
+            $action = ($actor->enabled) ? 'disable' : 'enable';
+            $this->addCommand($action.'-actor', array('label' => JText::_('LIB-AN-ACTION-'.$action), 'entity' => $actor))
+            ->getCommand($action.'-actor')
+            ->href($actor->getURL().'&action='.$action)
+            ->dataTrigger('PostLink');
         }
         
         if ($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor)) {
