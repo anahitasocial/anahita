@@ -14,13 +14,15 @@
 	</div>
 	
 	<div class="entity-description-wrapper">
-		<h3 class="entity-title">
-			<?php if( $photo->title ): ?>
-            <?= @escape( $photo->title ) ?>
-            <?php else : ?>
-            <span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>    
-            <?php endif; ?> 
-		</h3>
+		<?php if( $photo->title ): ?>
+			<h3 class="entity-title">
+				<?= @escape( $photo->title ) ?>
+			</h3>
+		<?php elseif( $photo->authorize('edit') ) : ?>
+			<h3 class="entity-title">
+				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
+			</h3>
+		<?php endif; ?>
 		
 		<div class="entity-description">
 			<?= @content( nl2br($photo->description), array('exclude'=>array('gist','video'))) ?>

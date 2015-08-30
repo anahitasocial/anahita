@@ -103,7 +103,13 @@ class Map
     
     public function unlink()
     {        
-         unlink($this->_target);   
+        //unlink($this->_target);   
+		
+		if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
+			rmdir($this->_target);
+		} else {
+			unlink($this->_target);
+		}
     }
     
     public function symlink()
@@ -114,7 +120,7 @@ class Map
             mkdir($path, 0755, true);
         }
         elseif ( is_link($this->_target) ) {
-            unlink($this->_target);
+            $this->unlink();
         }
         elseif (is_dir($this->_target)) {
             exec("rm -rf {$this->_target}");
