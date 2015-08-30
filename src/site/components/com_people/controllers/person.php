@@ -55,15 +55,19 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionPost(KCommandContext $context)
     {
         $data = $context->data;    
+        $viewer = get_viewer();
         
-        $userTypes = array(
-            ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR,
+        $allowedUserTypes = array(
             ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR,
             ComPeopleDomainEntityPerson::USERTYPE_REGISTERED
         );
+        
+        if($viewer->superadmin()) {
+            $allowedUserTypes[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
+        }
             
-        if (!$this->getItem()->authorize('changeUserType') || !in_array($data->userType, $userTypes)){
-            $data->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+        if (!$this->getItem()->authorize('changeUserType') || !in_array($data->userType, $allowedUserTypes)){
+            $data->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
         return parent::_actionPost($context);
