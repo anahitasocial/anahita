@@ -64,7 +64,7 @@ class ComSearchDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
         $query->where($where);
         
         //comments privacy depends on their parent
-   		$query->join('left', 'anahita_nodes AS parent', 'parent.id = node.parent_id');
+   		$query->join('left', 'nodes AS parent', 'parent.id = node.parent_id');
    		
    		$c1 = $this->buildCondition('@col(owner.id)', $config, '@col(parent.access)');
         $c2 = $this->buildCondition('@col(owner.id)', $config, $config->use_access_column);
