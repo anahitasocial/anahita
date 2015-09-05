@@ -1,25 +1,22 @@
 <?php
 
 /**
- * Person Controller
+ * Person Controller.
  *
  * @category   Anahita
- * @package    Com_People
- * @subpackage Controller
+ *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3
+ *
  * @link       http://www.GetAnahita.com
  */
 class ComPeopleControllerPerson extends ComActorsControllerDefault
 {
-
     protected $_allowed_user_types;
     /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
      */
     public function __construct(KConfig $config)
     {
@@ -28,18 +25,16 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Initializes the default configuration for the object
+     * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
      */
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('validatable', 'com://site/mailer.controller.behavior.mailer')
+            'behaviors' => array('validatable', 'com://site/mailer.controller.behavior.mailer'),
         ));
 
         parent::_initialize($config);
@@ -48,17 +43,17 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->_allowed_user_types = array(
             ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR,
-            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED
+            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
         );
 
         $viewer = get_viewer();
-        if($viewer->superadmin()) {
+        if ($viewer->superadmin()) {
             $this->_allowed_user_types[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         }
     }
 
     /**
-     * Browse Action
+     * Browse Action.
      *
      * @param KCommandContext $context Context parameter
      *
@@ -70,21 +65,20 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $viewer = get_viewer();
 
-        if(($this->q || $this->filter) && $viewer->admin()){
-
-            if(
+        if (($this->q || $this->filter) && $viewer->admin()) {
+            if (
                 $this->filter['usertype'] &&
                 in_array($this->filter['usertype'], $this->_allowed_user_types)
                 ) {
                 $entities->where('userType', '=', $this->getService('koowa:filter.cmd')->sanitize($this->filter['usertype']));
             }
 
-            if($this->filter['disabled']) {
-               $entities->where('enabled', '=', 0);
+            if ($this->filter['disabled']) {
+                $entities->where('enabled', '=', 0);
             }
 
-            if($this->q) {
-          //    $email = $this->getService('koowa:filter.email')->sanitize($this->q);
+            if ($this->q) {
+                //    $email = $this->getService('koowa:filter.email')->sanitize($this->q);
           //    $entities->where('email', 'LIKE', '%'.$email.'%');
             }
         }
@@ -96,7 +90,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Post service
+     * Post service.
      *
      * @param KCommandContext $context Commaind chain context
      *
@@ -106,7 +100,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
 
-        if (!$this->getItem()->authorize('changeUserType') || !in_array($data->userType, $this->_allowed_user_types)){
+        if (!$this->getItem()->authorize('changeUserType') || !in_array($data->userType, $this->_allowed_user_types)) {
             $data->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
@@ -114,7 +108,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Edit a person's data and synchronize with the person with the user entity
+     * Edit a person's data and synchronize with the person with the user entity.
      *
      * @param KCommandContext $context Context parameter
      *
@@ -123,13 +117,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionEdit(KCommandContext $context)
     {
         $data = $context->data;
-        $person = parent::_actionEdit( $context );
+        $person = parent::_actionEdit($context);
 
         //add the validations here
         $this->getRepository()
         ->getValidator()
-        ->addValidation( 'username', 'uniqueness' )
-        ->addValidation( 'email', 'uniqueness' );
+        ->addValidation('username', 'uniqueness')
+        ->addValidation('email', 'uniqueness');
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
@@ -161,18 +155,19 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->getRepository()
         ->getValidator()
-        ->addValidation('username','uniqueness')
+        ->addValidation('username', 'uniqueness')
         ->addValidation('email', 'uniqueness');
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+
             return false;
         }
 
         if ($viewer->admin()) {
             $redirectUrl .= '&view=people';
             if ($person->admin()) {
-               $this->registerCallback( 'after.add', array($this, 'mailAdminsNewAdmin'));
+                $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
             }
         } else {
             $context->response->setHeader('X-User-Activation-Required', true);
@@ -190,7 +185,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * Deletes a person and all of their assets. It also logsout the person.
      *
      * @param KCommandContext $context Context parameter
-     * @return void
      */
     protected function _actionDelete(KCommandContext $context)
     {
@@ -205,11 +199,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Set the necessary redirect
+     * Set the necessary redirect.
      *
      * @param KCommandContext $context
-     *
-     * @return void
      */
     public function redirect(KCommandContext $context)
     {
@@ -225,11 +217,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Mail an activation link
+     * Mail an activation link.
      *
      * @param KCommandContext $context The context parameter
-     *
-     * @return void
      */
     public function mailActivationLink(KCommandContext $context)
     {
@@ -237,43 +227,39 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $this->user = $person->getUserObject();
         $viewer = get_viewer();
 
-        if($viewer->admin()) {
+        if ($viewer->admin()) {
             $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-CREATED';
             $template = 'account_created';
         } else {
-           $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-ACTIVATE';
-           $template = 'account_activate';
+            $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-ACTIVATE';
+            $template = 'account_activate';
         }
 
         $this->mail(array(
             'to' => $person->email,
             'subject' => sprintf(JText::_($subject), JFactory::getConfig()->getValue('sitename')),
-            'template' => $template
+            'template' => $template,
         ));
     }
 
     /**
-     * Notify admins that a new admin has joined the network
+     * Notify admins that a new admin has joined the network.
      *
      * @param KCommandContext $context The context parameter
-     *
-     * @return void
      */
     public function mailAdminsNewAdmin(KCommandContext $context)
     {
         $person = $context->result;
-        $this->mailAdmins(array (
+        $this->mailAdmins(array(
             'subject' => JText::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
-            'template' => 'new_admin'
+            'template' => 'new_admin',
         ));
     }
 
     /**
-     * Called before the setting page is displayed
+     * Called before the setting page is displayed.
      *
      * @param KEvent $event
-     *
-     * @return void
      */
     public function onSettingDisplay(KEvent $event)
     {

@@ -1,67 +1,57 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_People
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- * @link       http://www.GetAnahita.com
- */
-
 /**
- * People Dispatcher
+ * People Dispatcher.
  *
  * @category   Anahita
- * @package    Com_People
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
 class ComPeopleDispatcher extends ComBaseDispatcherDefault
-{   	
-	/**
-	 * Handles passowrd token before dispatching 
-	 * 
-	 * (non-PHPdoc)
-	 * @see ComBaseDispatcherDefault::_actionDispatch()
-	 */
-	protected function _actionDispatch(KCommandContext $context)
-    {   
+{
+    /**
+     * Handles passowrd token before dispatching.
+     *
+     * (non-PHPdoc)
+     *
+     * @see ComBaseDispatcherDefault::_actionDispatch()
+     */
+    protected function _actionDispatch(KCommandContext $context)
+    {
         if (
-            $this->getController()->getIdentifier()->name === 'session' && 
+            $this->getController()->getIdentifier()->name === 'session' &&
             $this->token != ''
             ) {
             $this->getController()->execute('tokenlogin', $context);
             $context->response->send();
         }
-                
+
         return parent::_actionDispatch($context);
     }
-	
-	/**
-	 * If session throws LibBaseControllerExceptionUnauthorized exception
-	 * that means the user has entere wrong credentials. In that case
-	 * let the application handle the error 
-	 * 
-	 * (non-PHPdoc)
-	 * @see ComBaseDispatcherDefault::_actionException()
-	 */
-	protected function _actionException(KCommandContext $context)
-	{
-	    if (
-	        $context->data instanceof LibBaseControllerExceptionUnauthorized && 
-	        $this->getController() instanceof ComPeopleControllerSession 
+
+    /**
+     * If session throws LibBaseControllerExceptionUnauthorized exception
+     * that means the user has entere wrong credentials. In that case
+     * let the application handle the error.
+     *
+     * (non-PHPdoc)
+     *
+     * @see ComBaseDispatcherDefault::_actionException()
+     */
+    protected function _actionException(KCommandContext $context)
+    {
+        if (
+            $context->data instanceof LibBaseControllerExceptionUnauthorized &&
+            $this->getController() instanceof ComPeopleControllerSession
         ) {
-	       $context->response->send();
-	       exit(0);           
-	    } else {     
-	       parent::_actionException($context);
-        }   
-	}
+            $context->response->send();
+            exit(0);
+        } else {
+            parent::_actionException($context);
+        }
+    }
 }

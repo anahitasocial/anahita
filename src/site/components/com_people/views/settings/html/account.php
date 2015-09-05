@@ -10,8 +10,8 @@
 		<?= @text('COM-PEOPLE-USERNAME'); ?>:
 	    </label>
 	    <div class="controls">
-	        <? $usernamePattern = "^[A-Za-z][A-Za-z0-9_-]*$"; ?>
-	        <input required data-validate="username" data-url="<?= @route('view=person', false ) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" value="<?= $item->username ?>" maxlength="25" minlength="6" />
+	        <?php $usernamePattern = '^[A-Za-z][A-Za-z0-9_-]*$'; ?>
+	        <input required data-validate="username" data-url="<?= @route('view=person', false) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" value="<?= $item->username ?>" maxlength="25" minlength="6" />
 	    </div>
 	</div>
 	        

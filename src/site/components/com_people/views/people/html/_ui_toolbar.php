@@ -8,11 +8,11 @@
         '' => JText::_('COM-PEOPLE-FILTER-USERTYPE'),
         ComPeopleDomainEntityPerson::USERTYPE_REGISTERED => @text('COM-PEOPLE-USERTYPE-REGISTERED'),
         ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR => @text('COM-PEOPLE-USERTYPE-ADMINISTRATOR'),
-        ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR => @text('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR')
-    ); 
+        ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR => @text('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR'),
+    );
     $html = $this->getService('com:base.template.helper.html');
     ?>    
-    <?= $html->select('filter[usertype]', array('options'=>$usertypes)) ?>
+    <?= $html->select('filter[usertype]', array('options' => $usertypes)) ?>
     <label class="checkbox">
         <input type="checkbox" name="filter[disabled]"> 
         <?= @text('COM-PEOPLE-FILTER-DISABLED') ?>

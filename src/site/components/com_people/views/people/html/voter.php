@@ -16,9 +16,9 @@
 		<?php if ($entity->voterUpIds->offsetExists($viewer->id)) : ?>	
 			<?php if ($entity->voteUpCount == 2) : ?>
 				<?php 
-					$ids = $entity->voterUpIds->toArray();
-					unset($ids[$viewer->id]);					
-				?>
+                    $ids = $entity->voterUpIds->toArray();
+                    unset($ids[$viewer->id]);
+                ?>
 				<?= sprintf(@text('LIB-AN-VOTE-YOU-AND-ONE-PERSON'),  @name(@service('repos:actors.actor')->fetch(end($ids))))?>
 			<?php else : ?>
 				<?= sprintf(@text('LIB-AN-VOTE-YOU-AND-OTHER-VOTED'), $entity->voteUpCount - 1)?>
@@ -27,5 +27,5 @@
 			<?= sprintf(@text('LIB-AN-VOTE-OTHER-VOTED'), $entity->voteUpCount)?>
 		<?php endif;?>
 	<?php endif;?>
-<?= @template('gadget', array('actors'=>$entity->voteups->voter)) ?>
+<?= @template('gadget', array('actors' => $entity->voteups->voter)) ?>
 </div>

@@ -1,55 +1,57 @@
 <?php
 
 /**
- * Person Validator
+ * Person Validator.
  *
  * @category   Anahita
- * @package    Com_People
- * @subpackage Controller_Validator
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
 class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefault
 {
     /**
-     * Validates an email
+     * Validates an email.
      *
-     * @param string $email   Email to validate
+     * @param string $email Email to validate
      * 
-     * @return boolean
+     * @return bool
      */
     public function validateEmail($email)
     {
         $user = $this->getService('repos://site/users.user')
-                     ->find(array('email'=>$email));
-        
+                     ->find(array('email' => $email));
+
         if ($user && $user->id != JFactory::getUser()->id) {
             $this->setMessage('Email is already in use');
+
             return false;
         }
-    
+
         return true;
     }
-    
+
     /**
-     * Validates a username
+     * Validates a username.
      *
-     * @param string $email   Email to validate     * 
+     * @param string $email Email to validate     * 
      *
-     * @return boolean
+     * @return bool
      */
     public function validateUsername($username)
     {
         $user = $this->getService('repos://site/users.user')
-                     ->find(array('username'=>$username));
-        
+                     ->find(array('username' => $username));
+
         if ($user && $user->id != JFactory::getUser()->id) {
             $this->setMessage('Username is already in use');
+
             return false;
         }
-    
+
         return true;
     }
 }

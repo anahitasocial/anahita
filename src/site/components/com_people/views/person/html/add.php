@@ -10,7 +10,7 @@
                 <legend><?= @text('COM-PEOPLE-ADD-TITLE') ?></legend>
                 <div class="control-group">
                     <label class="control-label"  for="person-name">
-                        <?= @text( 'COM-PEOPLE-NAME' ); ?>
+                        <?= @text('COM-PEOPLE-NAME'); ?>
                     </label>
                     <div class="controls">
                         <input class="input-block-level" type="text" id="person-name" name="name" maxlength="25" minlength="6" required />
@@ -22,8 +22,8 @@
                         <?= @text('COM-PEOPLE-USERNAME'); ?>
                     </label>
                     <div class="controls">
-                        <?php $usernamePattern = "^[A-Za-z][A-Za-z0-9_-]*$"; ?>
-                        <input data-validate="username" data-url="<?= @route('view=person', false ) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="100" minlength="6" required />
+                        <?php $usernamePattern = '^[A-Za-z][A-Za-z0-9_-]*$'; ?>
+                        <input data-validate="username" data-url="<?= @route('view=person', false) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="100" minlength="6" required />
                     </div>
                 </div>
                         
