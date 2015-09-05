@@ -22,7 +22,7 @@
 		</div>
 	</div>
 	
-	<?php if(!empty($item->parent->title)): ?>
+	<?php if (!empty($item->parent->title)): ?>
 	<h3 class="entity-title">
 		<a href="<?= @route($item->parent->getURL()).'#permalink='.$item->id ?>">
 			<?= @escape($item->parent->title) ?>
@@ -31,7 +31,7 @@
 	<?php endif; ?>
 	
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($item->body), array('length'=>400, 'consider_html'=>true)) ?>
+		<?= @helper('text.truncate', @content($item->body), array('length' => 400, 'consider_html' => true)) ?>
 	</div>
 	
 	<div class="entity-meta">		

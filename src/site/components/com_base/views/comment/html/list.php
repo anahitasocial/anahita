@@ -13,19 +13,19 @@
 			
 			<div class="an-meta">
 				<?= @date($comment->creationTime) ?> 
-				<a href="<?= @route($comment->parent->getURL().'&permalink='.$comment->id ) ?>" >
+				<a href="<?= @route($comment->parent->getURL().'&permalink='.$comment->id) ?>" >
 				    <?= @text('LIB-AN-COMMENT-PERMALINK') ?>
 				</a>
 			</div>
 		</div>
 	</div>
 				
-	<?php $body = nl2br( $comment->body ); ?>	
+	<?php $body = nl2br($comment->body); ?>	
 	
-	<?php $exclude = ( empty($content_filter_exclude) ) ? array() : $content_filter_exclude; ?>	
-	<?php $body = @content( $body, array( 'exclude' => $exclude )); ?>
+	<?php $exclude = (empty($content_filter_exclude)) ? array() : $content_filter_exclude; ?>	
+	<?php $body = @content($body, array('exclude' => $exclude)); ?>
 	
-	<?php if (!empty($truncate_body) ) : ?>
+	<?php if (!empty($truncate_body)) : ?>
 	<?php $body = @helper('text.truncate', $body, $truncate_body) ?>	
 	<?php endif;?>
 	

@@ -1,34 +1,35 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: ##LICENSE##.
  * 
  * @category   Anahita
- * @package    Com_Base
- * @subpackage Controller_Behavior
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
+ *
  * @link       http://www.GetAnahita.com
  */
 
 /**
- * Identifiable Behavior
+ * Identifiable Behavior.
  *
  * @category   Anahita
- * @package    Com_Base
- * @subpackage Controller_Behavior
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
 class ComBaseControllerBehaviorIdentifiable extends LibBaseControllerBehaviorIdentifiable
-{	    	
+{
     /**
-     * Fetches an entity
+     * Fetches an entity.
      *
      * @param KCommandContext $context Context parameter
      * 
@@ -36,12 +37,13 @@ class ComBaseControllerBehaviorIdentifiable extends LibBaseControllerBehaviorIde
      */
     public function fetchEntity(KCommandContext $context)
     {
-    	$entity = parent::fetchEntity($context);
-    	
-    	//set the entity owner as the context actor of the controller
-    	if($entity && $this->getRepository()->isOwnable() && $this->isOwnable())
+        $entity = parent::fetchEntity($context);
+
+        //set the entity owner as the context actor of the controller
+        if ($entity && $this->getRepository()->isOwnable() && $this->isOwnable()) {
             $this->setActor($entity->owner);
-    	
-    	return $entity;
-    }	
+        }
+
+        return $entity;
+    }
 }

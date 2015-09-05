@@ -1,5 +1,5 @@
 <?php defined('KOOWA') or die; ?>
-<?php if( $entity->voteUpCount > 0 ) : ?>
+<?php if ($entity->voteUpCount > 0) : ?>
 
 <div class="modal-header">
 	<?= $entity->voteUpCount == 1 ? @text('LIB-AN-VOTE-ONE-VOTED') : sprintf(@text('LIB-AN-VOTE-OTHER-VOTED'), $entity->voteUpCount)?>
@@ -7,7 +7,7 @@
 
 <div class="modal-body">
 	<div class="an-entities">
-		<?php foreach($entity->voteups->voter as $actor) : ?>
+		<?php foreach ($entity->voteups->voter as $actor) : ?>
 		<div class="an-entity">		
 			<div class="entity-portrait-square">
 				<?= @avatar($actor) ?>
@@ -16,7 +16,7 @@
 				<h4 class="entity-title"><?= @name($actor) ?></h4>
 				
 				<div class="entity-description">
-					<?= @helper('text.truncate', strip_tags($actor->description), array('length'=>200)); ?>
+					<?= @helper('text.truncate', strip_tags($actor->description), array('length' => 200)); ?>
 				</div>
 				
 				<div class="entity-meta">
