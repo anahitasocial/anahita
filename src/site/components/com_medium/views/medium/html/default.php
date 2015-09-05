@@ -1,1 +1,1 @@
-<?php defined('KOOWA') or die ?>
+<?php defined('KOOWA') or die;

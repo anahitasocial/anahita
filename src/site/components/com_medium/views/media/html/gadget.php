@@ -3,10 +3,11 @@
 <?php
 $url = array();
 
-if(isset($filter))
-	$url['filter'] = $filter;
-elseif (isset($actor))
-	$url['oid'] = $actor->id;
+if (isset($filter)) {
+    $url['filter'] = $filter;
+} elseif (isset($actor)) {
+    $url['oid'] = $actor->id;
+}
 ?>
 
 <div data-behavior="InfiniteScroll" data-InfiniteScroll-options="{'url':'<?= @route($url) ?>'}" class="an-entities">
