@@ -61,32 +61,20 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        $entities = parent::_actionBrowse($context);
+        $query = $this->getService('com://site/people.domain.query.person')
+        $query->filter_term = $this->q;
 
-        $viewer = get_viewer();
-
-        if (($this->q || $this->filter) && $viewer->admin()) {
-            if (
-                $this->filter['usertype'] &&
-                in_array($this->filter['usertype'], $this->_allowed_user_types)
-                ) {
-                $entities->where('userType', '=', $this->getService('koowa:filter.cmd')->sanitize($this->filter['usertype']));
+        if ($this->filter) {
+            if ($this->filter['usertype'] && in_array($this->filter['usertype'],$this->_allowed_user_types)) {
+                $query->filter_usertype = $this->getService('koowa:filter.cmd')->sanitize($this->filter['usertype'])
             }
 
             if ($this->filter['disabled']) {
-                $entities->where('enabled', '=', 0);
-            }
-
-            if ($this->q) {
-                //    $email = $this->getService('koowa:filter.email')->sanitize($this->q);
-          //    $entities->where('email', 'LIKE', '%'.$email.'%');
+                $query->filter_enabled = true;
             }
         }
 
-        //$username = $this->getService('koowa:filter.string')->sanitize($this->q);
-        //$entities->where('username', 'LIKE', '%'.$username.'%');
-
-        return $entities;
+        return parent::_actionBrowse($context);
     }
 
     /**
