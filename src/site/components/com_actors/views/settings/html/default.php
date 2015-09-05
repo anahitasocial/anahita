@@ -7,7 +7,7 @@
 			<li class="nav-header">
 		          <?= @text('COM-ACTORS-PROFILE-EDIT') ?>
 		    </li>    
-		<?php foreach($tabs as $tab) : ?>
+		<?php foreach ($tabs as $tab) : ?>
 			<li class="<?= $tab->active ? 'active' : ''?>">        
 				<a href="<?=@route($tab->url)?>">            
 		            <?= $tab->label ?>

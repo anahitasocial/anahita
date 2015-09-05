@@ -26,15 +26,15 @@
 		</div>
 	</fieldset>
 	
-	<?php foreach($profile as $header => $fields)  : ?>		
+	<?php foreach ($profile as $header => $fields)  : ?>		
 	<fieldset>
 		<legend><?= @text($header) ?></legend>
-		<?php foreach($fields as $label => $field) : ?>	
+		<?php foreach ($fields as $label => $field) : ?>	
 		<div class="control-group">
 			<label><?= @text($label) ?></label>
 			<div class="controls">
 				<?php if (is_object($field)) : ?>
-				<?php $class = ( in_array($field->name, array('textarea', 'input')) ) ? 'input-block-level' : '' ?>
+				<?php $class = (in_array($field->name, array('textarea', 'input'))) ? 'input-block-level' : '' ?>
 				<?= $field->class($class)->rows(5)->cols(5) ?>
 				<?php else : ?>
 				<?= $field ?>

@@ -9,8 +9,8 @@
 	</label>
 	
 	<div class="controls">
-		<?= @helper('ui.privacy',array('auto_submit'=>false, 'entity'=>$item))?>
-        <?php if($item->isFollowable()) : ?>
+		<?= @helper('ui.privacy', array('auto_submit' => false, 'entity' => $item))?>
+        <?php if ($item->isFollowable()) : ?>
         <label class="checkbox">
             <input type="checkbox" name="allowFollowRequest" value="1" <?= $item->allowFollowRequest ? 'checked' : ''?> >
             <?= @text('COM-ACTORS-PERMISSION-CAN-SEND-FOLLOW-REQUEST') ?>
@@ -34,27 +34,27 @@
 	</div>
 </div>
 
-<?php if($item->isAdministrable()): ?>
+<?php if ($item->isAdministrable()): ?>
 <div class="control-group">
 	<label class="control-label"  for="leadables">
 		<?= @text('COM-ACTORS-PERMISSION-CAN-ADD-LEADABLES') ?>
 	</label>
 	
 	<div class="controls">
-		<?= @helper('ui.privacy',array('entity'=>$item, 'name'=>'leadable:add', 'auto_submit'=>false))?>
+		<?= @helper('ui.privacy', array('entity' => $item, 'name' => 'leadable:add', 'auto_submit' => false))?>
 	</div>
 </div>
 <?php endif; ?>
 
-<?php foreach($components as $component) : ?>
+<?php foreach ($components as $component) : ?>
 	<input type="hidden" name="action"  value="setprivacy" />
 	<fieldset>		
 		<legend><?= $component->name ?></legend>
-		<?php foreach($component->permissions as $permission) : ?>
+		<?php foreach ($component->permissions as $permission) : ?>
 			<div class="control-group">
 				<label class="control-label" ><?= $permission->label ?></label>
 				<div class="controls">
-					<?= @helper('ui.privacy',array('entity'=>$item, 'name'=>$permission->name,'auto_submit'=>false))?>
+					<?= @helper('ui.privacy', array('entity' => $item, 'name' => $permission->name, 'auto_submit' => false))?>
 				</div>
 			</div>
 		<?php endforeach;?>

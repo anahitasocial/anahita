@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die ?>
 
-<?php if(count($items)) :?>
+<?php if (count($items)) :?>
 	<?php @listItemView()->layout('list') ?>
-	<?php foreach($items as $item ) : ?>
+	<?php foreach ($items as $item) : ?>
 		<?= @listItemView()->item($item)?>
 	<?php endforeach; ?>
 <?php else : ?>

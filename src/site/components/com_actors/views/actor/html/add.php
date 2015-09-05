@@ -2,11 +2,11 @@
 
 <?= @helper('ui.header', array()) ?>
 
-<?php $entity = empty($entity) ?@controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $entity; ?>
+<?php $entity = empty($entity) ? @controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $entity; ?>
 
 <div class="row">
 	<div class="span8">
-		<form action="<?= @route( $entity->getURL() ) ?>" method="post" enctype="multipart/form-data">			
+		<form action="<?= @route($entity->getURL()) ?>" method="post" enctype="multipart/form-data">			
 			<div class="control-group">
 				<label class="label-group"  for="actor-name">
 					<?= @text('COM-ACTORS-NAME') ?>
@@ -25,24 +25,24 @@
 				</div>
 			</div>
 			
-			<?php if ( $entity->isEnableable() && $entity->authorize('administration') ) : ?>
+			<?php if ($entity->isEnableable() && $entity->authorize('administration')) : ?>
 			<div class="control-group">
 				<label class="label-group"  for="actor-enabled">
 					<?= @text('COM-ACTORS-ENABLED') ?>
 				</label>
 				<div class="controls">
-					<?= @html('select','enabled', array('options'=>array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected'=>$entity->enabled))->class('input-small') ?>
+					<?= @html('select', 'enabled', array('options' => array(@text('LIB-AN-NO'), @text('LIB-AN-YES')), 'selected' => $entity->enabled))->class('input-small') ?>
 				</div>
 			</div>
 			<?php endif;?>
 			
-			<?php if ( $entity->isPrivatable() ) : ?>
+			<?php if ($entity->isPrivatable()) : ?>
 			<div class="control-group">
 				<label class="label-group"  for="actor-privacy">
 					<?= @text('COM-ACTORS-PRIVACY') ?>
 				</label>
 				<div class="controls">
-					<?= @helper('ui.privacy',array('auto_submit'=>false, 'entity'=>$entity))?>
+					<?= @helper('ui.privacy', array('auto_submit' => false, 'entity' => $entity))?>
 				</div>
 			</div>	
 			<?php endif;?>

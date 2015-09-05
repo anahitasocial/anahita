@@ -6,7 +6,7 @@
 
 <div class="an-entities" id="an-entities-main">
 	<div id="an-actors" class="an-entities">
-		<?php foreach($items as $item ) : ?>
+		<?php foreach ($items as $item) : ?>
             <div class="an-entity">
             	<div class="clearfix">
             		<div class="entity-portrait-square">
@@ -22,7 +22,7 @@
             			<?= $item->followerCount ?>
             			<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span>
 
-            			<?php if($item->isLeadable()): ?>
+            			<?php if ($item->isLeadable()): ?>
             			/ <?= $item->leaderCount ?>
             			<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
             			<?php endif; ?>

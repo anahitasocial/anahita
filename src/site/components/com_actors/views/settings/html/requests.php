@@ -3,7 +3,7 @@
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-REQUESTS') ?></h3>
 
 <div id="an-actors" class="an-entities an-actors">
-    <?php foreach($item->requesters as $actor ) : ?>
+    <?php foreach ($item->requesters as $actor) : ?>
     <div class="an-entity">
         <div class="entity-portrait-square">
             <?= @avatar($actor) ?>
@@ -20,7 +20,7 @@
             </div>
             
             <div class="entity-description">
-            <?= @helper('text.truncate',strip_tags($actor->description), array('length'=>200)); ?>
+            <?= @helper('text.truncate', strip_tags($actor->description), array('length' => 200)); ?>
             </div>
                 
             <div class="entity-actions">
