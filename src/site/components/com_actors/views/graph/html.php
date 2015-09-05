@@ -43,6 +43,8 @@ class ComActorsViewGraphHtml extends ComActorsViewActorsHtml
 		
 		parent::_initialize($config);
 		
-		$config->template_paths = AnHelperArray::insert($config->template_paths, dirname(__FILE__).'/html', 1);				
+		$config->append(array(
+			'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_actors/graph')			
+		));				
 	}
 }
