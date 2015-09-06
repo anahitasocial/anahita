@@ -61,20 +61,45 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        $query = $this->getService('com://site/people.domain.query.person');
-        $query->filter_term = $this->q;
+      if (!$context->query) {
+          $context->query = $this->getRepository()->getQuery();
+      }
+
+      $query = $context->query;
 
         if ($this->filter) {
-            if ($this->filter['usertype'] && in_array($this->filter['usertype'],$this->_allowed_user_types)) {
-                $query->filter_usertype = $this->getService('koowa:filter.cmd')->sanitize($this->filter['usertype']);
+            if (
+                $this->filter['usertype'] &&
+                in_array($this->filter['usertype'], $this->_allowed_user_types)
+                ) {
+                $query->filterUsertype($this->getService('koowa:filter.cmd')
+                      ->sanitize($this->filter['usertype']));
             }
 
             if ($this->filter['disabled']) {
-                $query->filter_enabled = true;
+                $query->filterDisabledAccounts(true);
             }
         }
 
-        return parent::_actionBrowse($context);
+        if($this->getService('koowa:filter.email')->validate($this->q)){
+            $query->filterEmail($this->q);
+        }
+
+        if($this->getService('com://site/people.filter.username')->validate($this->q)){
+            $query->filterUsername($this->q);
+        }
+
+        if ($this->q) {
+            $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
+        }
+
+        $query->limit($this->limit, $this->start);
+
+        $entities = $this->getState()->setList($query->toEntityset())->getList();
+
+        //print str_replace('#_', 'jos', $entities->getQuery());
+
+        return $entities;
     }
 
     /**

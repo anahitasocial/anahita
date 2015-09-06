@@ -37,7 +37,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
     /**
      * before creating the person node, create the user object.
-     * 
+     *
      * @return bool
      */
     protected function _beforeEntityInsert(KCommandContext $context)
@@ -76,7 +76,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $date = &JFactory::getDate();
         $user->set('registerDate', $date->toMySQL());
 
-        // if this is the first user being added or 
+        // if this is the first user being added or
         // (viewer is a super admin and she is adding another super admin)
         if (
             $firsttime ||
@@ -115,7 +115,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
     /**
      * Update the user object before updating the person node.
-     * 
+     *
      * @return bool
      */
     protected function _afterEntityUpdate(KCommandContext $context)
@@ -141,11 +141,12 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         }
 
         if ($this->getModifiedData()->userType) {
-            // if viewer is super admin and she is updating another super admin's account    
+            // if viewer is super admin and she is updating another super admin's account
             if (
                 $viewer->superadmin() &&
-                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR) {
-                $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
+                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
+                ) {
+                $user->set('usertype', $this->userType);
             }
             // if viewer is admin and she is updating another admin's account
             elseif (
@@ -176,7 +177,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
     /**
      * Return the user object of the person.
-     * 
+     *
      * @return LibUsersDomainEntityUser
      */
     public function getUserObject()
@@ -189,7 +190,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
     /**
      * Return a juser object.
-     * 
+     *
      * @return bool
      */
     public function getJUserObject()

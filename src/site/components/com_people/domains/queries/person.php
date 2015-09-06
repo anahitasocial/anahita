@@ -17,14 +17,31 @@ class ComPeopleDomainQueryPerson extends AnDomainQueryDefault
      */
     protected function _beforeQuerySelect()
     {
-        /*
-        if($this->filter_usertype) {
+        $viewer = get_viewer();
+
+        if($this->filter_usertype && $viewer->admin()) {
             $this->where('person.person_usertype', '=', $this->filter_usertype);
         }
 
-        if($this->filter_disabled_accounts) {
+        if($this->filter_email && $viewer->admin()) {
+            $this->where('person.person_useremail', '=', $this->filter_email);
+        } else {
+
+            $subclause = $this->clause();
+
+            if($this->filter_username) {
+              $subclause->where('person.person_username', 'LIKE', '%'.$this->filter_username.'%');
+            }
+
+            if($this->keyword) {
+              $subclause->where('person.name', 'LIKE', '%'.$this->keyword.'%', 'OR');
+            }
+        }
+
+        if($this->filter_disabled_accounts && $viewer->admin()) {
             $this->where('person.enabled', '=', 0);
         }
-        */
+
+        $this->order('updateTime', 'DESC');
     }
 }
