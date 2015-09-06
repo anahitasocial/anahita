@@ -15,12 +15,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 {
     /**
      * The max upload limit.
-     * 
+     *
      * @var int
      */
     protected $_max_upload_limit;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -34,7 +34,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             'after.add',
             ), array($this, 'redirect'));
 
-        //set filter state  
+        //set filter state
         $this->getState()->insert('filter');
 
         $this->_max_upload_limit = $config->max_upload_limit;
@@ -76,9 +76,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
     /**
      * Browse Action.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return AnDomainEntitysetDefault
      */
     protected function _actionBrowse(KCommandContext $context)
@@ -125,9 +125,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
     /**
      * Add an actor.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     protected function _actionAdd(KCommandContext $context)
@@ -151,9 +151,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
     /**
      * Edit's an actor data.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     protected function _actionEdit(KCommandContext $context)
@@ -192,9 +192,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
     /**
      * Set the default Actor View.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return ComActorsControllerDefault
      */
     public function setView($view)
@@ -215,11 +215,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     }
 
     /**
-     * Deletes an actor and all of the necessary cleanup. It also dispatches all the apps to 
+     * Deletes an actor and all of the necessary cleanup. It also dispatches all the apps to
      * clean up after the deleted actor.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     protected function _actionDelete(KCommandContext $context)
@@ -264,9 +264,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
     /**
      * Overwrite the setPrivacy action in privatable behavior.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @see   ComActorsDomainBehaviorPrivatable
      */
     protected function _actionSetPrivacy(KCommandContext $context)
@@ -306,9 +306,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
     /**
      * Checks to see whether the uploaded file exceeds the allowed limit.
-     * 
+     *
      * @param posted file request
-     * 
+     *
      * @return bool
      */
     public function bellowSizeLimit($file)

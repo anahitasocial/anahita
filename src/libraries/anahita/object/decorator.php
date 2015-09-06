@@ -1,33 +1,36 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: ##LICENSE##.
  * 
  * @category   Anahita
- * @package    Anahita_Object
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @version    SVN: $Id$
+ *
  * @link       http://www.GetAnahita.com
  */
 
 /**
  * It's the same as {@link KObjectDecorator} but implements some of the PHP interfaces
- * and forward the calls to the object 
+ * and forward the calls to the object.
  *  
  * @category   Anahita
- * @package    Anahita_Object
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
 class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAccess, Countable, Serializable
 {
     /**
-     * Defined by IteratorAggregate
+     * Defined by IteratorAggregate.
      *
      * @return \ArrayIterator
      */
@@ -37,20 +40,21 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Rewind the Iterator to the first element
+     * Rewind the Iterator to the first element.
      *
-     * @return  \KObjectArray
+     * @return \KObjectArray
      */
     public function rewind()
     {
         $this->getObject()->rewind();
+
         return $this;
     }
 
     /**
-     * Checks if current position is valid
+     * Checks if current position is valid.
      *
-     * @return  boolean
+     * @return bool
      */
     public function valid()
     {
@@ -58,9 +62,9 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Return the key of the current element
+     * Return the key of the current element.
      *
-     * @return  mixed
+     * @return mixed
      */
     public function key()
     {
@@ -68,9 +72,9 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Return the current element
+     * Return the current element.
      *
-     * @return  mixed
+     * @return mixed
      */
     public function current()
     {
@@ -78,15 +82,13 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Move forward to next element
-     *
-     * @return  void
+     * Move forward to next element.
      */
     public function next()
     {
         return $this->getObject()->next();
-    }   
-    
+    }
+
     /**
      * Returns the number of elements in the collection.
      *
@@ -97,10 +99,10 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     public function count()
     {
         return $this->getObject()->count();
-    }    
-    
+    }
+
     /**
-     * Check if the object exists in the queue
+     * Check if the object exists in the queue.
      *
      * Required by interface ArrayAccess
      *
@@ -112,7 +114,7 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Returns the object from the set
+     * Returns the object from the set.
      *
      * Required by interface ArrayAccess
      *
@@ -124,12 +126,12 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Store an object in the set
+     * Store an object in the set.
      *
      * Required by interface ArrayAccess
      *
-     * @param   KObjectHandlable  $offset
-     * @param   mixed             $data 
+     * @param KObjectHandlable $offset
+     * @param mixed            $data
      */
     public function offsetSet($offset, $data)
     {
@@ -137,7 +139,7 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Removes an object from the set
+     * Removes an object from the set.
      *
      * Required by interface ArrayAccess
      *
@@ -146,14 +148,14 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     public function offsetUnset($offset)
     {
         $this->getObject()->offsetUnset($offset);
-    }   
-    
+    }
+
     /**
-     * Return a string representation of the set
+     * Return a string representation of the set.
      *
      * Required by interface Serializable
      *
-     * @return  string  A serialized object
+     * @return string A serialized object
      */
     public function serialize()
     {
@@ -161,14 +163,14 @@ class AnObjectDecorator extends KObjectDecorator implements Iterator, ArrayAcces
     }
 
     /**
-     * Unserializes a set from its string representation
+     * Unserializes a set from its string representation.
      *
      * Required by interface Serializable
      *
-     * @param   string  $serialized The serialized data
+     * @param string $serialized The serialized data
      */
     public function unserialize($serialized)
     {
         $this->getObject()->unserialize($serialized);
-    }     
+    }
 }
