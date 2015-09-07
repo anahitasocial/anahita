@@ -61,11 +61,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-      if (!$context->query) {
-          $context->query = $this->getRepository()->getQuery();
-      }
+        if (!$context->query) {
+            $context->query = $this->getRepository()->getQuery();
+        }
 
-      $query = $context->query;
+        $query = $context->query;
 
         if ($this->filter) {
             if (
@@ -81,11 +81,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             }
         }
 
-        if($this->getService('koowa:filter.email')->validate($this->q)){
+        if ($this->getService('koowa:filter.email')->validate($this->q)) {
             $query->filterEmail($this->q);
         }
 
-        if($this->getService('com://site/people.filter.username')->validate($this->q)){
+        if ($this->getService('com://site/people.filter.username')->validate($this->q)) {
             $query->filterUsername($this->q);
         }
 
@@ -113,7 +113,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
 
-        if (!$this->getItem()->authorize('changeUserType') || !in_array($data->userType, $this->_allowed_user_types)) {
+        if (in_array($data->userType, $this->_allowed_user_types)) {
+            $data->userType = $data->userType;
+        } else {
             $data->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 

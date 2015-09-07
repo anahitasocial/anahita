@@ -31,7 +31,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $this->registerCallback('after.edit', array($this, 'updateMentionsFromBody'));
         $this->registerCallback(array(
             'after.add',
-            'after.edit'), array($this, 'notifyMentioned'));
+            'after.edit', ), array($this, 'notifyMentioned'));
     }
 
     /**
@@ -74,7 +74,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
                   $entity->removeMention($mention);
               }
           }
-       }
+      }
 
        //remove the body mentions that already exists in the entity mentions
       if (is_array($entity_mentions)) {

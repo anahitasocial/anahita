@@ -100,27 +100,24 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     }
 
     /**
-     * return true if viewer is an admin or the same as the item being edited.
+     * return true if viewer has administration rights to the profile.
      *
      * @return bool
      */
     public function canEdit()
     {
-        if ($this->_viewer->admin() || $this->_viewer->eql($this->getItem())) {
-            return true;
-        }
-
-        return false;
+        return $this->getItem()->authorize('administration');
     }
 
     /**
-     * Set if the controller allows to register.
+     * See if the controller allows to register.
      *
      * @param bool $can_register The value whether the user can register or not
      */
     public function setRegistrationOpen($can_register)
     {
         $this->_can_register = $can_register;
+
         return $this;
     }
 
@@ -134,6 +131,11 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
         return $this->_can_register;
     }
 
+    /**
+     * Return true if viewer is a guest.
+     *
+     * @return bool
+     */
     public function canResetPassword()
     {
         return $this->_viewer->guest();

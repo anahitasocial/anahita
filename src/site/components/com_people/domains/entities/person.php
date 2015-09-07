@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Person object. It's the main actor node that represents the social network users. A person can added 
+ * Person object. It's the main actor node that represents the social network users. A person can added
  * applications to their profile.
- * 
+ *
  * Here's how to get a person object, set a property and save
  * <code>
  * //fetches a peron with $id
- * $person = KService::get('repos://site/people.person')->fetch($id); 
+ * $person = KService::get('repos://site/people.person')->fetch($id);
  * $person->name = 'Doctor Who';
  * $person->save();
  * </code>
@@ -24,10 +24,15 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 {
     /*
      * Clear string passwrod.
-     * 
+     *
      * @var string
      */
     protected $_password;
+
+    /*
+    * Allowed user types array
+    */
+    protected $_allowed_user_types;
 
     /*
      * Mention regex pattern
@@ -99,7 +104,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Set the name, given name and family name of the person.
-     * 
+     *
      * @param string $name The name of the person
      */
     public function setName($name)
@@ -119,7 +124,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Set the name, given name and family name of the person.
-     * 
+     *
      * @param string $name The name of the person
      */
     public function setFamilyName($name)
@@ -130,7 +135,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Set the name, given name and family name of the person.
-     * 
+     *
      * @param string $name The name of the person
      */
     public function setGivenName($name)
@@ -141,7 +146,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Return the username as unique alias.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see AnDomainEntityAbstract::__get()
@@ -158,7 +163,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     /**
      * Captures the password value when password is set through
      * magic methods.
-     * 
+     *
      * {@inheritdoc}
      */
     public function __set($key, $value)
@@ -178,12 +183,12 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      * </code>.
      *
      * @param string $password Clear password
-     * 
+     *
      * @return ComPeopleDomainEntityPerson
      */
     public function setPassword($password)
     {
-        //make sure the passowrd is set to an empty string 
+        //make sure the passowrd is set to an empty string
         if (empty($password)) {
             $password = ' ';
         }
@@ -195,9 +200,9 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Return a person URL.
-     * 
-     * @param bool $use_username A flag whether to use the username in the URL or not 
-     * 
+     *
+     * @param bool $use_username A flag whether to use the username in the URL or not
+     *
      * @return string
      */
     public function getURL($use_username = true)
@@ -214,9 +219,9 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     /**
      * Return the clear password set for validation. If a hash is set to true
      * then it first hash the password and then return it.
-     * 
+     *
      * @param bool $hash.
-     * 
+     *
      * @return string
      */
     public function getPassword($hash = false)
@@ -235,7 +240,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Return whether this person is a guest.
-     * 
+     *
      * @return bool
      */
     public function guest()
@@ -245,7 +250,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * Return if the person user role is Administrator or Super Administrator.
-     * 
+     *
      * @return bool
      */
     public function admin()
@@ -256,7 +261,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     /**
      * return true if the person's role is super admin.
-     * 
+     *
      * @return bool
      */
     public function superadmin()
