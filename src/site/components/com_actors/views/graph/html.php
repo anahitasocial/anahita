@@ -39,6 +39,7 @@ class ComActorsViewGraphHtml extends ComActorsViewActorsHtml
 	{
 		$config->append(array(
 			'list_item_view' => KInflector::singularize($this->getIdentifier()->package),
+			'template_paths' => array(dirname(__FILE__).'/html')
 		));
 
 		parent::_initialize($config);
