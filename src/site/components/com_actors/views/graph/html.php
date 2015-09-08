@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -35,14 +35,16 @@ class ComActorsViewGraphHtml extends ComActorsViewActorsHtml
      *
      * @param 	object 	An optional KConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-            'list_item_view' => KInflector::singularize($this->getIdentifier()->package),
-        ));
+	protected function _initialize(KConfig $config)
+	{
+		$config->append(array(
+			'list_item_view' => KInflector::singularize($this->getIdentifier()->package),
+		));
 
-        parent::_initialize($config);
+		parent::_initialize($config);
 
-        $config->template_paths = AnHelperArray::insert($config->template_paths, dirname(__FILE__).'/html', 1);
-    }
+		$config->append(array(
+			'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_actors/graph')
+		));
+	}
 }
