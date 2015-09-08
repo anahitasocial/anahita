@@ -14,7 +14,7 @@
 			
 			<ul class="an-meta inline">
 				<li><?= @date($todo->creationTime) ?></li>
-				<?php if(!$todo->owner->eql($todo->author)): ?>
+				<?php if (!$todo->owner->eql($todo->author)): ?>
 				<li><?= @name($todo->owner) ?></li>
 				<?php endif; ?>
 			</ul>
@@ -27,18 +27,18 @@
 		</a>
 	</h3>
 	
-	<?php if($todo->description): ?>
+	<?php if ($todo->description): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($todo->description), array('length'=>500, 'consider_html'=>true, 'read_more'=>true)); ?>
+		<?= @helper('text.truncate', @content($todo->description), array('length' => 500, 'consider_html' => true, 'read_more' => true)); ?>
 	</div>
 	<?php endif; ?>
 	
 	<div class="entity-meta">
 		<ul class="an-meta inline">
 			<li><?= @text('COM-TODOS-TODO-PRIORITY') ?>: <span class="priority <?= @helper('priorityLabel', $todo) ?>"><?= @helper('priorityLabel', $todo) ?></span></li> 
-			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $todo->numOfComments) ?></li>
+			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $todo->numOfComments) ?></li>
 			
-			<?php if(!$todo->open) : ?>			
+			<?php if (!$todo->open) : ?>			
 			<li><?= sprintf(@text('COM-TODOS-TODO-COMPLETED-BY-REPORT'), @date($todo->openStatusChangeTime), @name($todo->lastChanger)) ?></li>
 		<?php endif; ?>
 		</ul>

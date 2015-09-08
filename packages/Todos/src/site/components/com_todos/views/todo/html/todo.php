@@ -15,9 +15,9 @@
 	
 	<h3 class="entity-title"><?= @escape($todo->title) ?></h3>
 		
-	<?php if($todo->description): ?>
+	<?php if ($todo->description): ?>
 	<div class="entity-description">
-	<?= @content( nl2br($todo->description) ); ?>
+	<?= @content(nl2br($todo->description)); ?>
 	</div>
 	<?php endif; ?>
 		
