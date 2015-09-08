@@ -69,6 +69,11 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      */
     protected function _actionFollow(KCommandContext $context)
     {
+        if ($this->getItem()->eql($this->actor)) {
+            throw new LibBaseControllerExceptionForbidden('Forbidden');
+            return false;
+        }
+
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
 
         if (!$this->getItem()->leading($this->actor)) {
@@ -120,6 +125,11 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      */
     protected function _actionLead(KCommandContext $context)
     {
+        if ($this->getItem()->eql($this->actor)) {
+            throw new LibBaseControllerExceptionForbidden('Forbidden');
+            return false;
+        }
+
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
 
         if (!$this->getItem()->following($this->actor)) {
