@@ -53,6 +53,7 @@ class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion
 
        dbexec('ALTER TABLE #__nodes MODIFY `enabled` tinyint(1) NOT NULL DEFAULT 0');
        dbexec('ALTER TABLE #__nodes MODIFY `is_default` tinyint(1) NOT NULL DEFAULT 0');
+       dbexec('UPDATE #__nodes SET `story_subject_id` = `created_by` WHERE `story_subject_id` = `story_target_id` AND `name` = \'actor_follow\'');
     }
 
    /**
