@@ -39,6 +39,11 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
      */
     protected function _actionAddrequest(KCommandContext $context)
     {
+        if ($this->getItem()->eql($this->actor)) {
+            throw new LibBaseControllerExceptionForbidden('Forbidden');
+            return false;
+        }
+
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->addRequester($this->actor);
         $this->createNotification(array(
