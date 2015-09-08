@@ -103,26 +103,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Post service.
-     *
-     * @param KCommandContext $context Commaind chain context
-     *
-     * @return AnDomainEntityAbstract
-     */
-    protected function _actionPost(KCommandContext $context)
-    {
-        $data = $context->data;
-
-        if (in_array($data->userType, $this->_allowed_user_types)) {
-            $data->userType = $data->userType;
-        } else {
-            $data->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
-        }
-
-        return parent::_actionPost($context);
-    }
-
-    /**
      * Edit a person's data and synchronize with the person with the user entity.
      *
      * @param KCommandContext $context Context parameter
@@ -151,6 +131,12 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $person->setPassword($data->password);
         }
 
+        if ($person->authorize('changeUserType') && in_array($data->userType, $this->_allowed_user_types)) {
+            $person->userType = $data->userType;
+        } else {
+            $person->userType = $person->userType;
+        }
+
         return $person;
     }
 
@@ -175,8 +161,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
-
             return false;
+        }
+
+        if (in_array($data->userType, $this->_allowed_user_types)) {
+            $person->userType = $data->userType;
+        } else {
+            $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
         if ($viewer->admin()) {

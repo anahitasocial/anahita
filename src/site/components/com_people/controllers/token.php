@@ -47,9 +47,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
      */
     protected function _actionPost(KCommandContext $context)
     {
-        $result = $this->execute('add', $context);
-
-        return $result;
+        return $this->execute('add', $context);
     }
 
     /**

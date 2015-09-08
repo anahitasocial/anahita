@@ -40,6 +40,26 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     }
 
     /**
+    * Check to see if viewer has permission to change usertype
+    */
+    protected function _authorizeChangeUserType(KCommandContext $context)
+    {
+        if ($this->_entity->eql($this->_viewer)) {
+            return false;
+        }
+
+        if ($this->_viewer->superadmin()) {
+            return true;
+        }
+
+        if ($this->viewer->admin() && !$this->_entity->superadmin()) {
+          return true;
+        }
+
+        return false;
+    }
+
+    /**
      * Check to see if viewer can enable or disable a person's account.
      *
      * @param KCommandContext $context Context parameter
