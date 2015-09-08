@@ -2,14 +2,14 @@
 
 <?php $dates = @helper('notifications.group', $notifications); ?>
 
-<?php foreach($dates as $date => $notifications) : ?>
+<?php foreach ($dates as $date => $notifications) : ?>
 
 <div class="an-meta">
     <?= $date ?>
 </div>
 
 <div class="an-entities">
-    <?php foreach($notifications as $notification) : ?>
+    <?php foreach ($notifications as $notification) : ?>
     <?php $data = @helper('parser.parse', $notification, $actor); ?>
     <div class="an-entity">
 	    <div class="entity-portrait-square">

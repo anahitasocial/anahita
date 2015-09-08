@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Ownable Behavior. It feches an owner wherenever there's an oid.
  *
@@ -30,7 +15,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 {
     /**
      * Default owner.
-     * 
+     *
      * @var mixed
      */
     protected $_default;
@@ -38,12 +23,12 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
     /**
      * Identifiable key. If this key exists in the request then this behavior
      * will fetch the actor entity using this key.
-     * 
+     *
      * @return string
      */
     protected $_identifiable_key;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -60,7 +45,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
         //set the identifiable key. By default its set to oid
         $this->_identifiable_key = $config->identifiable_key;
 
-        //$this->_default ? $this->_default->id : null                                                        
+        //$this->_default ? $this->_default->id : null
         $this->getState()->insert($this->_identifiable_key);
     }
 
@@ -84,11 +69,11 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 
     /**
      * Command handler.
-     * 
+     *
      * @param   string      The command name
      * @param   object      The command context
      *
-     * @return bool Can return both true or false.  
+     * @return bool Can return both true or false.
      */
     public function execute($name, KCommandContext $context)
     {
@@ -102,11 +87,11 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
     }
 
     /**
-     * If the context->data actor is not already set them set the owner to the data 
-     * before controller add. 
-     * 
+     * If the context->data actor is not already set them set the owner to the data
+     * before controller add.
+     *
      * @param KCommandContext $context
-     * 
+     *
      * @return bool
      */
     protected function _beforeControllerAdd(KCommandContext $context)
@@ -120,9 +105,9 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 
     /**
      * Set the actor conect.
-     * 
+     *
      * @param ComActorsDomainEntiyActor $actor Set the actor context
-     * 
+     *
      * @return ComBaseControllerBehaviorOwnable
      */
     public function setActor($actor)
@@ -134,7 +119,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 
     /**
      * Return the actor context.
-     * 
+     *
      * @return ComActorsDomainEntiyActor
      */
     public function getActor()
@@ -146,7 +131,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
      * Fetches an entity.
      *
      * @param KCommandContext $context
-     * 
+     *
      * @return ComActorsDomainEntityActor
      */
     protected function _fetchOwner(KCommandContext $context)
@@ -163,7 +148,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
                 $actor = $this->getService('repos://site/actors.actor')->fetch((int) $value);
             }
 
-            //guest actor can never be a context actor                
+            //guest actor can never be a context actor
             if (is_person($actor) && $actor->guest()) {
                 $actor = null;
             }
@@ -181,9 +166,9 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 
     /**
      * Sets the identifiable key.
-     * 
+     *
      * @param string $key The identifiable key
-     * 
+     *
      * @return LibBaseControllerBehaviorIdentifiable
      */
     public function setIdentifiableKey($key)
@@ -193,7 +178,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 
     /**
      * Return the identifiable key.
-     * 
+     *
      * @return string
      */
     public function getIdentifiableKey()
@@ -203,7 +188,7 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
 
     /**
      * Return the object handle.
-     * 
+     *
      * @return string
      */
     public function getHandle()

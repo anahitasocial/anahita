@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Followable Behavior.
- * 
+ *
  * This behavior provides methods for an actor object to add/remove follower and at
  * same time block/unblock unwanted connetions.
  *
@@ -26,18 +11,18 @@
  * $actor  = KService::get('repos://site/actors.actor')->fetch($some_actor_id);
  * $person = KService::get('repos://site/people.person')->fetch($some_person_id);
  * if ( $actor->isFollowable() )
- * { 
+ * {
  *      //adding the person as a follower
- *      $actor->addFollower($person); 
+ *      $actor->addFollower($person);
  *      //if the person is following the actor, then actor is leading
  *      //the person
  *      if ( $actor->leading($person) )
  *          print 'actor is leading the person or person is following the actor'
- *      
- *      $actor->followers //return the actors followers      
+ *
+ *      $actor->followers //return the actors followers
  * }
  * </code>
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -51,7 +36,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     /**
      * A flag to whether subscribe to an actor after following
      * or not.
-     * 
+     *
      * @var bool
      */
     protected $_subscribe_after_follow;
@@ -120,7 +105,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Add a follow requester to the actor.
-     * 
+     *
      * @param ComActorsDomainEntityActor $requester
      */
     public function addRequester($requester)
@@ -151,7 +136,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Removes an actor from the list of blocked.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor to block
      */
     public function removeRequester($requester)
@@ -170,7 +155,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Add a follower to the actor.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor to block
      */
     public function addFollower($follower)
@@ -207,10 +192,10 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     }
 
     /**
-     * Remove an actor to from list of the followers. If the 
+     * Remove an actor to from list of the followers. If the
      * leader is subscribable then it will remove the follower from the list
      * of it's subscribers.
-     * 
+     *
      * @param ComActorsDomainEntityActor $follower
      */
     public function removeFollower($follower)
@@ -228,17 +213,17 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         }
 
         $this->getService('repos:actors.follow')
-            ->destroy(array(
-                'follower' => $follower,
-                'leader' => $leader,
-            ));
+        ->destroy(array(
+            'follower' => $follower,
+            'leader' => $leader,
+        ));
 
         $this->resetStats(array($leader, $follower));
     }
 
     /**
      * Add a leader to the actor.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor to block
      */
     public function addLeader($leader)
@@ -275,10 +260,10 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     }
 
     /**
-     * Removes a leader from the list of the leaders. If the 
+     * Removes a leader from the list of the leaders. If the
      * leader is subscribable then it will remove the follower from the list
      * of it's subscribers.
-     * 
+     *
      * @param ComActorsDomainEntityActor $follower
      */
     public function removeLeader($leader)
@@ -306,12 +291,12 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Adds an $person to a list of blocked actors.
-     * 
+     *
      * @param ComActorsDomainEntityActor $person
      */
     public function addBlocked($person)
     {
-        //if A blocks B, then A must remove B as a follower 
+        //if A blocks B, then A must remove B as a follower
         //need to keep track of this since the mixin is a singleton
         $leader = $this->_mixer;
 
@@ -341,7 +326,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Removes a person from the list of blocked.
-     * 
+     *
      * @param ComActorsDomainEntityActor $person
      */
     public function removeBlocked($person)
@@ -360,9 +345,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Return true if mixer is leading the actor else return false.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor to block
-     * 
+     *
      * @return bool
      */
     public function leading($actor)
@@ -372,9 +357,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Return true if the actor has been requested to be followed.
-     * 
+     *
      * @param ComActorsDomainEntityActor $requester The requested
-     * 
+     *
      * @return bool
      */
     public function requested($leader)
@@ -384,9 +369,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Return true if the mixer is blocking another actor else return false.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor to block
-     * 
+     *
      * @return bool
      */
     public function blocking($actor)
@@ -414,7 +399,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
     /**
      * Remove all the subscriptions of a follower to the nodes owned by a leader.
-     * 
+     *
      * @param ComActorsDomainEntityActor $leader
      * @param ComActorsDomainEntityActor $follower
      */

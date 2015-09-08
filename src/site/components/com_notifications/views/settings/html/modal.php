@@ -3,20 +3,20 @@
 </mheader>
 
 <mbody>
-<?php if ( $actor->authorize('subscribe') ) : ?>
+<?php if ($actor->authorize('subscribe')) : ?>
 <form action="<?=@route($actor->getURL())?>" method="post">
 	<label class="control-label"><?= @text('COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS')?></label>                   
     <input type="hidden" name="action" value="togglesubscription" />
     <select class="autosubmit">
-    	<?= @html('options', array(@text('COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS-NEW-SB'),@text('COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS-ONLY-SB')),$actor->subscribed($viewer) ? 0 : 1) ?>
+    	<?= @html('options', array(@text('COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS-NEW-SB'), @text('COM-NOTIFICATIONS-ACTOR-RECIEVE-NOTIFICATIONS-ONLY-SB')), $actor->subscribed($viewer) ? 0 : 1) ?>
     </select>
 </form>  
 <?php endif; ?>
 <?php 
-	$setting = @service('repos:notifications.setting')->findOrAddNew(array(
-    	'person' => $viewer,
-        'actor'  => $actor
-    ))->reset();      
+    $setting = @service('repos:notifications.setting')->findOrAddNew(array(
+        'person' => $viewer,
+        'actor' => $actor,
+    ))->reset();
 ?>
 <form action="<?= @route('option=com_notifications&view=setting&oid='.$actor->id)?>" method="post">                      
 	<label class="control-label"><?= @text('COM-NOTIFICATIONS-ACTOR-SEND-EMAIL')?></label>

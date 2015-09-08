@@ -1,12 +1,12 @@
 <?php defined('KOOWA') or die ?>
 
 <?php
-$subject = is_array( $subject ) ? array_shift( $subject ) : $subject;
+$subject = is_array($subject) ? array_shift($subject) : $subject;
 
-if (! is_array( $item->target ) && !$item->target->eql($item->subject)){
-   $target_to_show = $item->target;
+if (!is_array($item->target) && !$item->target->eql($item->subject)) {
+    $target_to_show = $item->target;
 } else {
-   $target_to_show = null;
+    $target_to_show = null;
 }
 ?>
 
@@ -17,7 +17,7 @@ if (! is_array( $item->target ) && !$item->target->eql($item->subject)){
 	    </div>
 
     	<div class="entity-container">
-    		<?php if(!empty($title)): ?>
+    		<?php if (!empty($title)): ?>
     		<h4 class="story-title">
     			<?= $title ?>
     		</h4>
@@ -28,8 +28,8 @@ if (! is_array( $item->target ) && !$item->target->eql($item->subject)){
     		<?php endif; ?>
 
     		<ul class="an-meta inline">
-    		    <li><?= @date( $timestamp ) ?></li>
-    			<?php if( $target_to_show ): ?>
+    		    <li><?= @date($timestamp) ?></li>
+    			<?php if ($target_to_show): ?>
 				<li>
 					<a href="<?= @route($target_to_show->getURL()) ?>">
 					    <?= @name($target_to_show) ?>
@@ -40,7 +40,7 @@ if (! is_array( $item->target ) && !$item->target->eql($item->subject)){
     	</div>
     </div>
 
-    <?php if(!empty($body)) : ?>
+    <?php if (!empty($body)) : ?>
     <div class="story-body">
     	<?= $body ?>
     </div>
@@ -49,13 +49,12 @@ if (! is_array( $item->target ) && !$item->target->eql($item->subject)){
     <?php
     $votable_item = null;
 
-    if(!$item->aggregated() && $item->object && $item->object->isVotable())
-    {
-       $votable_item = $item->object;
+    if (!$item->aggregated() && $item->object && $item->object->isVotable()) {
+        $votable_item = $item->object;
     }
     ?>
 
-    <?php if($votable_item): ?>
+    <?php if ($votable_item): ?>
 	<div class="vote-count-wrapper entity-meta" id="vote-count-wrapper-<?= $votable_item->id ?>">
         <?= @helper('ui.voters', $votable_item); ?>
 	</div>
@@ -66,11 +65,11 @@ if (! is_array( $item->target ) && !$item->target->eql($item->subject)){
         <?= @helper('ui.commands', $commands)?>
     </div>
 
-	<?php if(!empty($comments) || $can_comment) : ?>
-    <?= @helper('ui.comments', $item->object, array('comments'=>$comments, 'can_comment'=>$can_comment, 'content_filter_exclude' => array('gist'), 'pagination'=>false, 'show_guest_prompt'=>false, 'truncate_body'=>array('length'=>220, 'consider_html'=>true, 'read_more'=>true))) ?>
+	<?php if (!empty($comments) || $can_comment) : ?>
+    <?= @helper('ui.comments', $item->object, array('comments' => $comments, 'can_comment' => $can_comment, 'content_filter_exclude' => array('gist'), 'pagination' => false, 'show_guest_prompt' => false, 'truncate_body' => array('length' => 220, 'consider_html' => true, 'read_more' => true))) ?>
     <?php endif;?>
 
-    <?php if(!empty($comments) && $can_comment): ?>
+    <?php if (!empty($comments) && $can_comment): ?>
     <div class="comment-overtext-box">
     	<a class="action-comment-overtext" storyid="<?= $item->id ?>" href="<?= @route($item->object->getURL()) ?>">
         	<?= @text('COM-STORIES-ADD-A-COMMENT') ?>
