@@ -22,8 +22,14 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
     {
         parent::__construct($config);
 
-        $this->registerCallback(array('before.enable', 'before.disable'), array($this, 'setLastChanger'));
-        $this->registerCallback(array('after.enable', 'after.disable'), array($this, 'createStoryCallback'));
+        $this->registerCallback(array(
+            'before.enable',
+            'before.disable'),
+            array($this, 'setLastChanger'));
+        $this->registerCallback(array(
+            'after.enable',
+            'after.disable'),
+            array($this, 'createStoryCallback'));
     }
 
     /**
@@ -69,7 +75,6 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
         }
 
         $query = $context->query;
-
         $query->order('open', 'DESC');
 
         if ($this->sort == 'priority') {

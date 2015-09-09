@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?= @template('_steps', array('current_step'=>'default')) ?>
+<?= @template('_steps', array('current_step' => 'default')) ?>
 
 <div class="row">
 	<div class="span8">
@@ -9,12 +9,12 @@
 	    
 	    <div class="an-entity">
             <h2 class="entity-title">
-                <?= @escape( $item->name ) ?>
+                <?= @escape($item->name) ?>
             </h2>
             
             <div class="entity-description">
                 <dl>
-                    <?php if($item->recurring): ?>
+                    <?php if ($item->recurring): ?>
                     <dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt> 
                     <dd><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
                     <?php else: ?>
@@ -23,22 +23,21 @@
                     <?php endif; ?>
                 
                     <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>: </dt>
-                    <dd><?= $item->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
+                    <dd><?= $item->price.' '.get_config_value('subscriptions.currency', 'US') ?></dd>
                 </dl>
             </div>
         </div>
 
         <?php
-    
+
         $tos_layout = get_config_value('subscriptions.tos_content_layout');
         $tos_replace = '<a href="'.@route('option=com_html&view=content&layout='.$tos_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-TERMS-SERVICE').'</a>';
 
         $privacy_layout = get_config_value('subscriptions.privacy_content_layout');
         $privacy_replace = '<a href="'.@route('option=com_html&view=content&layout='.$privacy_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-PRIVACY-POLICY').'</a>';
-        
-        
+
         $body = sprintf(@text('COM-SUBSCRIPTIONS-TERMS-DESCRIPTION'), $tos_replace, $privacy_replace);
-        
+
         ?>
         
         <p class="lead well">

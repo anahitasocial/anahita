@@ -7,7 +7,7 @@
 	<?= @helper('ui.comments', $topic) ?>
 	</div>
 	
-	<?php if($actor->authorize('administration')): ?>
+	<?php if ($actor->authorize('administration')): ?>
 	<div class="span4 visible-desktop">
 		<h4 class="block-title">
 		    <?= @text('COM-TOPICS-TOPIC-PRIVACY') ?>

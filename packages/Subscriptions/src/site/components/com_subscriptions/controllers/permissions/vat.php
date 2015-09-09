@@ -1,38 +1,29 @@
-<?php 
-/**
- * @category    Com_Subscriptions
- * @package     Controller
- * @copyright   (C) 2008 - 2015 rmdStudio Inc. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link        http://www.GetAnahita.com
- */
+<?php
 
 /**
- * Vat Controller
- * 
- * @package     Com_Subscriptions
+ * Vat Controller.
+ *
  * @category    Controller
  */
 class ComSubscriptionsControllerPermissionVat extends ComSubscriptionsControllerPermissionDefault
 {
     /**
-     * Authorize if viewer can Browse
+     * Authorize if viewer can Browse.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canBrowse()
     {
         return $this->canAdminister();
     }
-    
+
     /**
-     * Authorize if viewer can read
+     * Authorize if viewer can read.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canRead()
     {
         return $this->canAdminister();
     }
 }
-    

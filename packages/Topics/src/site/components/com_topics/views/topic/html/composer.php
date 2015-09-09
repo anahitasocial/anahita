@@ -22,15 +22,15 @@
             </label>
             <div class="controls">
                 <?= @editor(array(
-                    'name'=>'body',
-                    'content'=> '', 
-                    'html' => array(    
-                        'maxlength'=>'20000', 
-                        'cols'=>'5',
-                        'rows'=>'5', 
-                        'class'=>'input-block-level', 
-                        'id'=>'topic-body' 
-                        )
+                    'name' => 'body',
+                    'content' => '',
+                    'html' => array(
+                        'maxlength' => '20000',
+                        'cols' => '5',
+                        'rows' => '5',
+                        'class' => 'input-block-level',
+                        'id' => 'topic-body',
+                        ),
                 )); ?>
             </div>
         </div>
@@ -41,7 +41,7 @@
 			</label>
 			
 			<div class="controls">
-				<?= @helper('ui.privacy',array('entity'=>$topic, 'auto_submit'=>false, 'options'=>$actor)) ?>
+				<?= @helper('ui.privacy', array('entity' => $topic, 'auto_submit' => false, 'options' => $actor)) ?>
 			</div>
 		</div>
 			

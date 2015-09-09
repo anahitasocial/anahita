@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?= @template('_steps', array('current_step'=>'confirm')) ?>
+<?= @template('_steps', array('current_step' => 'confirm')) ?>
 
 <div class="row">
 	<div class="span8">
@@ -21,7 +21,7 @@
             <div class="entity-description">
                 
                 <dl>
-                    <?php if($item->recurring): ?>
+                    <?php if ($item->recurring): ?>
                     <dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt> 
                     <dd><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
                     <?php else: ?>
@@ -35,14 +35,14 @@
                     <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>: </dt>
                     <dd>
                         <?= $item->price ?> 
-                        <?= get_config_value('subscriptions.currency','US') ?>
+                        <?= get_config_value('subscriptions.currency', 'US') ?>
                     </dd>
                     
-                    <?php if( $order->getDiscountAmount() ): ?>
+                    <?php if ($order->getDiscountAmount()): ?>
                     <dt><?=@text('COM-SUBSCRIPTIONS-PACKAGE-DISCOUNT')?></dt>
                     <dd>
                         <?= round($order->getDiscountAmount(), 2) ?> 
-                        <?= get_config_value('subscriptions.currency','US') ?>
+                        <?= get_config_value('subscriptions.currency', 'US') ?>
                     </dd>
                     <?php endif; ?>
                     
@@ -52,7 +52,7 @@
                     <dt><?=@text('COM-SUBSCRIPTIONS-PACKAGE-TOTAL')?></dt>
                     <dd>
                         <?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?>,  
-                        <?= ( $item->recurring ) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$item->billingPeriod) ?>
+                        <?= ($item->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$item->billingPeriod) ?>
                     </dd>
                 </dl>
                 
@@ -62,7 +62,7 @@
         
 
     		
-		<?php if ( $order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard ) : ?>
+		<?php if ($order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard) : ?>
 		<h3><?= @text('COM-SUBSCRIPTIONS-CREDITCARD-INFORMATION') ?></h3>
    
 			<dl class="dl-horizontal">
@@ -102,12 +102,12 @@
 		</dl>
 		<?php endif; ?>	
     		
-    	<form action="<?= @route( array( 'id'=>$item->id ) ); ?>" method="post">
+    	<form action="<?= @route(array('id' => $item->id)); ?>" method="post">
     		<input type="hidden" name="action" value="process">
     		
     		<div class="form-actions">
-    		    <?php if ( $order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard ) : ?>
-    			<a class="btn" href="<?= @route(array('layout'=>'payment','id'=>$item->id)) ?>">
+    		    <?php if ($order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard) : ?>
+    			<a class="btn" href="<?= @route(array('layout' => 'payment', 'id' => $item->id)) ?>">
                     <?= @text('COM-SUBSCRIPTIONS-EDIT-INFORMATION') ?>      
     			</a>
     			<?php endif; ?>  

@@ -1,11 +1,11 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<?php $coupon = empty( $coupon ) ? @service('repos:subscriptions.coupon')->getEntity()->reset() : $coupon; ?>
+<?php $coupon = empty($coupon) ? @service('repos:subscriptions.coupon')->getEntity()->reset() : $coupon; ?>
 
-<form method="post" action="<?= @route( $coupon->getURL() ) ?>" class="an-entity">
+<form method="post" action="<?= @route($coupon->getURL()) ?>" class="an-entity">
     
     <fieldset>
-        <legend><?= ( $coupon->persisted() ) ? @text('COM-SUBSCRIPTIONS-COUPON-EDIT') : @text('COM-SUBSCRIPTIONS-COUPON-ADD') ?></legend>
+        <legend><?= ($coupon->persisted()) ? @text('COM-SUBSCRIPTIONS-COUPON-EDIT') : @text('COM-SUBSCRIPTIONS-COUPON-ADD') ?></legend>
     
         <div class="control-group">
             <label class="control-label" for="coupon-code">
@@ -32,9 +32,9 @@
             </label>
             
             <div class="controls">
-                <?= @helper('selector.day', array( 'name'=>'expiresOnDay', 'required'=>'', 'selected'=> $expiresOn->day, 'class'=>'span2')) ?>
-                <?= @helper('selector.month', array( 'name'=>'expiresOnMonth', 'required'=>'', 'selected'=> $expiresOn->month, 'class'=>'span2')) ?>
-                <?= @helper('selector.year', array( 'name'=>'expiresOnYear', 'required'=>'', 'selected'=> $expiresOn->year, 'class'=>'span2')) ?>
+                <?= @helper('selector.day', array('name' => 'expiresOnDay', 'required' => '', 'selected' => $expiresOn->day, 'class' => 'span2')) ?>
+                <?= @helper('selector.month', array('name' => 'expiresOnMonth', 'required' => '', 'selected' => $expiresOn->month, 'class' => 'span2')) ?>
+                <?= @helper('selector.year', array('name' => 'expiresOnYear', 'required' => '', 'selected' => $expiresOn->year, 'class' => 'span2')) ?>
             </div>
         </div>
         
@@ -50,9 +50,9 @@
     </fieldset>
     
     <div class="form-actions">
-        <?php if($coupon->persisted()): ?>
-            <?php if(KRequest::type() == 'AJAX'): ?>
-            <a data-action="cancel" class="btn" href="<?= @route( $coupon->getURL().'&layout=list' ) ?>">
+        <?php if ($coupon->persisted()): ?>
+            <?php if (KRequest::type() == 'AJAX'): ?>
+            <a data-action="cancel" class="btn" href="<?= @route($coupon->getURL().'&layout=list') ?>">
                 <?= @text('LIB-AN-ACTION-CANCEL') ?>
             </a> 
             <?php else : ?>

@@ -7,7 +7,7 @@
 		</div>
 			
 		<div class="entity-container">
-		    <?php if( $topic->owner->authorize('administration') && $topic->pinned ): ?>
+		    <?php if ($topic->owner->authorize('administration') && $topic->pinned): ?>
             <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
             <?php endif; ?>
 			<h4 class="entity-author"><?= @name($topic->author) ?></h4>
@@ -25,12 +25,12 @@
 		
 	<div class="entity-meta">
 		<ul class="an-meta inline">
-			<?php if ( $topic->numOfComments ) : ?> 
+			<?php if ($topic->numOfComments) : ?> 
 			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $topic->numOfComments); ?></li>
 			<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($topic->lastCommenter), @date($topic->lastCommentTime)) ?></li>
 			<?php endif; ?>
 			
-			<?php if($topic->voteUpCount): ?>
+			<?php if ($topic->voteUpCount): ?>
 			<li>
 				<div class="vote-count-wrapper" id="vote-count-wrapper-<?= $topic->id ?>">
 					<?= @helper('ui.voters', $topic); ?>

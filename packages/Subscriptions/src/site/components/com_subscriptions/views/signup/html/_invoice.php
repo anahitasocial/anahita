@@ -15,7 +15,7 @@
 
 <p>&nbsp;</p>
 
-<?php if(!empty($contact) && !empty($contact->address)) : ?>
+<?php if (!empty($contact) && !empty($contact->address)) : ?>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-ADDR') ?></strong>: <?= $contact->address ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-CITY') ?></strong>: <?= $contact->city ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-STATE') ?></strong>: <?= $contact->state ?></p>

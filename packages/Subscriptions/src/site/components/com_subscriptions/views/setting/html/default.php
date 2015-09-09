@@ -2,9 +2,9 @@
 
 <h3><?= @text('COM-SUBSCRIPTIONS-PROFILE-INFORMATION') ?></h3>
         
-<?php if($viewer->admin()): ?>        
+<?php if ($viewer->admin()): ?>        
 <?= @template('_edit') ?>        
-<?php elseif(!$actor->hasSubscription()): ?>
+<?php elseif (!$actor->hasSubscription()): ?>
 <div class="alert alert-block alert-warning">
     <p><?= @text('COM-SUBSCRIPTIONS-SUBSCRIPTIONS-NOT-SUBSCRIBED') ?></p>
     <p>
@@ -14,7 +14,7 @@
     </p>
 </div>
 
-<?php elseif( $subscription->expired() ): ?>
+<?php elseif ($subscription->expired()): ?>
 <div class="alert alert-block alert-error">
     <p><?= @text('COM-SUBSCRIPTIONS-PACKAGE-HAS-EXPIRED') ?></p>
     
@@ -42,22 +42,22 @@
             <dd><?= round(AnHelperDate::secondsTo('day', $package->duration)) ?> <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DAYS') ?></dd>
 
             <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>:</dt> 
-            <dd><?= $package->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
+            <dd><?= $package->price.' '.get_config_value('subscriptions.currency', 'US') ?></dd>
         </dl>
     </div>
     
     <div class="entity-description">
-        <?= @content( $package->description ) ?>
+        <?= @content($package->description) ?>
     
-        <?php if ( !$package->recurring && $package->authorize('upgradepackage') ) : ?>
+        <?php if (!$package->recurring && $package->authorize('upgradepackage')) : ?>
         <p>
-            <a href="<?=@route(array('view'=>'signup','id'=>$package->id))?>" class="btn">
+            <a href="<?=@route(array('view' => 'signup', 'id' => $package->id))?>" class="btn">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-UPGRADE-NOW') ?>
             </a>
         </p>
-        <?php elseif ( $package->authorize('subscribepackage') ) : ?>
+        <?php elseif ($package->authorize('subscribepackage')) : ?>
         <p>
-            <a href="<?=@route(array('view'=>'signup','id'=>$package->id))?>" class="btn">
+            <a href="<?=@route(array('view' => 'signup', 'id' => $package->id))?>" class="btn">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-SUBSCRIBE-NOW') ?>
             </a>
         </p>    
@@ -65,12 +65,12 @@
     </div>
 </div>
 
-<?php if( !$package->recurring ): ?>
-<?php $daysLeft = ceil( AnHelperDate::secondsTo('day', $subscription->getTimeLeft())); ?>
+<?php if (!$package->recurring): ?>
+<?php $daysLeft = ceil(AnHelperDate::secondsTo('day', $subscription->getTimeLeft())); ?>
 <div class="alert alert-block alert-<?= ($daysLeft < 31) ? 'warning' : 'info' ?>">
     <p><?= sprintf(@text('COM-SUBSCRIPTIONS-PACKAGE-ABOUT-TO-EXPIRE'), $daysLeft); ?></p>
     
-    <?php if( $daysLeft < 31 ) : ?>
+    <?php if ($daysLeft < 31) : ?>
     <p>
         <a href="<?= @route('view=packages') ?>" class="btn btn-warning">
             <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-SUBSCRIBE-RENEW') ?>
