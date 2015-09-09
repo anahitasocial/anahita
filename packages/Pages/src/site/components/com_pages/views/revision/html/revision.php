@@ -7,7 +7,7 @@
 		<?= @escape($revision->title) ?>
 	</h1>
 	
-	<?php if($revision->body): ?>
+	<?php if ($revision->body): ?>
 	<div class="entity-description">
 		<?= @content($revision->body) ?>
 	</div>

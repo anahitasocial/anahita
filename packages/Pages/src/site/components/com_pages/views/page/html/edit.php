@@ -8,9 +8,9 @@
 	<?php if ($actor->authorize('administration')) : ?>
 	<div class="span4">
 	<?= @helper('ui.gadget', LibBaseTemplateObject::getInstance('revisions', array(
-		'title' => @text('COM-PAGES-PAGE-REVISIONS'),
-		'url'	=> 'view=revisions&layout=gadget&pid='.$page->id.'&oid='.$actor->id
-	))); ?>
+        'title' => @text('COM-PAGES-PAGE-REVISIONS'),
+        'url' => 'view=revisions&layout=gadget&pid='.$page->id.'&oid='.$actor->id,
+    ))); ?>
 	</div>
 	<?php endif; ?>
 </div>

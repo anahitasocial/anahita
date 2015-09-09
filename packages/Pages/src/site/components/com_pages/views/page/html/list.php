@@ -8,13 +8,13 @@
 		</div>
 		
 		<div class="entity-container">
-		    <?php if( $page->owner->authorize('administration') && $page->pinned ): ?>
+		    <?php if ($page->owner->authorize('administration') && $page->pinned): ?>
             <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
             <?php endif; ?>
 			<h4 class="author-name"><?= @name($page->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($page->creationTime) ?></li>
-				<?php if(!$page->owner->eql($page->author)): ?>
+				<?php if (!$page->owner->eql($page->author)): ?>
 				<li><?= @name($page->owner) ?></li>
 				<?php endif; ?>
 			</ul>
@@ -27,23 +27,23 @@
 		</a>
 	</h3>
 	
-	<?php if($page->excerpt): ?>
+	<?php if ($page->excerpt): ?>
 	<div class="entity-excerpt">
-		<?= @escape( $page->excerpt ) ?>
+		<?= @escape($page->excerpt) ?>
 	</div>
 	<?php endif; ?>
 	
 	<div class="entity-meta">
-		<?php if(!$page->isPublished()): ?>
+		<?php if (!$page->isPublished()): ?>
 		<p class="label label-warning">
 			<?= @text('COM-PAGES-PAGE-IS-UNPUBLISHED') ?>
 		</p>
 		<?php endif; ?>
 		
 		<ul class="an-meta inline">
-			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $page->numOfComments) ?></li>
-			<?php if(isset($page->editor)) : ?>
-			<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($page->updateTime), @name($page->editor)) ?></li>
+			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $page->numOfComments) ?></li>
+			<?php if (isset($page->editor)) : ?>
+			<li><?= sprintf(@text('LIB-AN-ENTITY-EDITOR'), @date($page->updateTime), @name($page->editor)) ?></li>
 			<?php endif; ?>
 		</ul>
 	

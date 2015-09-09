@@ -14,12 +14,12 @@
 		
 		<div class="block-content">
     		<ul class="an-meta">
-    			<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($page->updateTime), @name($page->editor)) ?></li>
-    			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $page->numOfComments) ?></li>
+    			<li><?= sprintf(@text('LIB-AN-ENTITY-EDITOR'), @date($page->updateTime), @name($page->editor)) ?></li>
+    			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $page->numOfComments) ?></li>
     		</ul>
 		</div>
 		
-		<?php if($actor->authorize('administration')): ?>
+		<?php if ($actor->authorize('administration')): ?>
 		<h4 class="block-title">
 		<?= @text('COM-PAGES-PAGE-PRIVACY') ?>
 		</h4>

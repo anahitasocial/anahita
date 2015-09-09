@@ -2,7 +2,7 @@
 
 <?php $page = empty($page) ? @service('repos:pages.page')->getEntity()->reset() : $page; ?>
 
-<form action="<?= @route( $page->getURL().'&oid='.$actor->id ) ?>" method="post">
+<form action="<?= @route($page->getURL().'&oid='.$actor->id) ?>" method="post">
 	<fieldset>
 		<legend><?= ($page->persisted()) ? @text('COM-PAGES-PAGE-EDIT') : @text('COM-PAGES-PAGE-ADD') ?></legend>
 	
@@ -12,7 +12,7 @@
 			</label> 
 			
 			<div class="controls">
-				<input required class="input-block-level" id="page-title" name="title" value="<?= stripslashes( $page->title ) ?>" size="50" maxlength="255" type="text">
+				<input required class="input-block-level" id="page-title" name="title" value="<?= stripslashes($page->title) ?>" size="50" maxlength="255" type="text">
 			</div>
 		</div>
 		
@@ -23,15 +23,15 @@
 			
 			<div class="controls">
 				<?= @editor(array(
-				    'name'=>'description',
-				    'content'=> @escape($page->description), 
-				    'html' => array(    
-				        'maxlength'=>'20000', 
-				        'cols'=>'5',
-				        'rows'=>'5', 
-				        'class'=>'input-block-level', 
-				        'id'=>'page-description' 
-                        )
+                    'name' => 'description',
+                    'content' => @escape($page->description),
+                    'html' => array(
+                        'maxlength' => '20000',
+                        'cols' => '5',
+                        'rows' => '5',
+                        'class' => 'input-block-level',
+                        'id' => 'page-description',
+                        ),
                 )); ?>
 			</div>
 		</div>
@@ -42,14 +42,14 @@
 			</label> 
 			
 			<div class="controls">
-				<textarea required maxlength="500" class="input-block-level" name="excerpt" cols="10" rows="5" id="page-excerpt"><?= @escape( $page->excerpt ) ?></textarea>
+				<textarea required maxlength="500" class="input-block-level" name="excerpt" cols="10" rows="5" id="page-excerpt"><?= @escape($page->excerpt) ?></textarea>
 			</div>
 		</div>
 		
 		<div class="control-group">
 			<label class="control-label" id="privacy" ><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
 			<div class="controls">
-				<?= @helper('ui.privacy',array('entity'=>$page, 'auto_submit'=>false, 'options'=>$actor)) ?>
+				<?= @helper('ui.privacy', array('entity' => $page, 'auto_submit' => false, 'options' => $actor)) ?>
 			</div>
 		</div>
 		
