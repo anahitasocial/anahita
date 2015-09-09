@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php 
-$btn     = <<<EOF
+$btn = <<<EOF
   text-decoration:none;
   cursor:pointer;
   display:inline-block;
@@ -19,7 +19,7 @@ $btn_primary = $btn.<<<EOF
   background-color:#076da0;
   border-color:#076da0 #076da0 #043b57;  
 EOF;
-$well    = <<<EOF
+$well = <<<EOF
   background-color:#f2f2f2;
   margin-bottom:20px;  
   padding:10px;  
