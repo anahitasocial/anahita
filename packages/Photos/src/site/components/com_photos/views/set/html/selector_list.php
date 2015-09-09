@@ -1,12 +1,13 @@
 <?php defined('KOOWA') or die ?>
 
 <?php 
-if(!isset($assigned_sets))
-{
-	$assigned_sets = array();
-	if(count($photo->top()->sets))
-		foreach($photo->top()->sets as $set)
-			$assigned_sets[] = $set->id;
+if (!isset($assigned_sets)) {
+    $assigned_sets = array();
+    if (count($photo->top()->sets)) {
+        foreach ($photo->top()->sets as $set) {
+            $assigned_sets[] = $set->id;
+        }
+    }
 }
 
 $highlight = (in_array($set->id, $assigned_sets)) ? true : false;
@@ -20,7 +21,7 @@ $action = (in_array($set->id, $assigned_sets)) ? 'removephoto' : 'addphoto';
 	
 	<div class="entity-container">
 		<h4 class="entity-title">
-			<?= @helper('text.truncate',  @escape($set->title), array('length'=>25, 'omission'=>'...') ) ?>
+			<?= @helper('text.truncate',  @escape($set->title), array('length' => 25, 'omission' => '...')) ?>
 		</h4>
 		
 		<div class="entity-meta">

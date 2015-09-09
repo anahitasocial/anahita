@@ -4,17 +4,18 @@
 
 <?= @message(@text('COM-PHOTOS-SELECTOR-INSTRUCTIONS')) ?>
 
-<?php if(!empty($exclude_set)): ?>
+<?php if (!empty($exclude_set)): ?>
 <div class="form-actions">
 	<a data-trigger="ClosePhotoSelector" href="#" class="btn"><?= @text('LIB-AN-ACTION-CLOSE') ?></a>
 </div>
 <?php endif; ?>
 
 <?php
-$url = array('view'=>'photos', 'layout'=>'selector_list', 'oid'=>$actor->id);
+$url = array('view' => 'photos', 'layout' => 'selector_list', 'oid' => $actor->id);
 
-if(!empty($exclude_set))
-	$url['exclude_set'] = $exclude_set;
+if (!empty($exclude_set)) {
+    $url['exclude_set'] = $exclude_set;
+}
 ?>
 <div id="photo-selector-list" class="an-entities media-grid">
 <?= @template('selector_list') ?>	

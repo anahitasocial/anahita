@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>	
 	
-<?php if(count($photos)) :?>
-<?php foreach( $photos as $photo) : ?>
+<?php if (count($photos)) :?>
+<?php foreach ($photos as $photo) : ?>
 <div class="thumbnail-wrapper" photo="<?= $photo->id ?>">
 	<a data-trigger="MediaViewer" class="thumbnail-link" href="<?= $photo->getPortraitURL('original') ?>" title="<?= @escape($photo->title) ?>">
 		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8') ?>

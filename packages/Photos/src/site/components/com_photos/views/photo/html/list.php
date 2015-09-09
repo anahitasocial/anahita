@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if( $photo->authorize('edit') ) : ?>
-<div class="an-entity editable" data-url="<?= @route( $photo->getURL() ) ?>">
+<?php if ($photo->authorize('edit')) : ?>
+<div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
 <?php else : ?>
 <div class="an-entity">
 <?php endif; ?>
@@ -14,7 +14,7 @@
 			<h4 class="author-name"><?= @name($photo->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($photo->creationTime) ?></li>
-				<?php if(!$photo->owner->eql($viewer)): ?>
+				<?php if (!$photo->owner->eql($viewer)): ?>
 				<li><?= @name($photo->owner) ?></li>
 				<?php endif; ?>
 			</ul>
@@ -28,27 +28,27 @@
 	</div>
 	
 	<div class="entity-description-wrapper">
-		<?php if( $photo->title ): ?>
+		<?php if ($photo->title): ?>
 			<h3 class="entity-title">
 				<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
-					<?= @escape( $photo->title ) ?>
+					<?= @escape($photo->title) ?>
 				</a>
 			</h3>
-		<?php elseif( $photo->authorize('edit') ) : ?>
+		<?php elseif ($photo->authorize('edit')) : ?>
 			<h3 class="entity-title">
 				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
 			</h3>
 		<?php endif; ?>
 		
 		<div class="entity-description">
-			<?= @content(nl2br($photo->description), array('exclude'=>array('gist','video'))) ?>
+			<?= @content(nl2br($photo->description), array('exclude' => array('gist', 'video'))) ?>
 		</div>
 	</div>
 	
 	<div class="entity-meta">		
 		<ul class="an-meta inline">
-			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
-			<?php if($photo->lastCommenter): ?>
+			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
+			<?php if ($photo->lastCommenter): ?>
 			<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
 			<?php endif; ?>
 		</ul>

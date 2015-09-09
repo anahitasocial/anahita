@@ -9,7 +9,7 @@
 		<div class="entity-container">
 			<h4 class="author-name"><?= @name($set->author) ?></h4>
 			<div class="an-meta">
-				<?= @date( $set->creationTime ) ?>
+				<?= @date($set->creationTime) ?>
 			</div>
 		</div>
 	</div>
@@ -26,9 +26,9 @@
 		</a>
 	</h3>
 	
-	<?php if(!empty($set->description)): ?>
+	<?php if (!empty($set->description)): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate',  @content( nl2br( $set->description ), array( 'exclude' => array('gist','video') ) ), array('length'=>150, 'consider_html'=>true, 'omission'=>'...') ) ?>
+		<?= @helper('text.truncate',  @content(nl2br($set->description), array('exclude' => array('gist', 'video'))), array('length' => 150, 'consider_html' => true, 'omission' => '...')) ?>
 	</div>
 	<?php endif; ?>
 	

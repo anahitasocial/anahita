@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_photos/js/organizer.js" />
 <?php else: ?>
 <script src="com_photos/js/min/organizer.min.js" />
@@ -45,7 +45,7 @@
     		</div>
     			
     		<div class="form-actions">
-    			<a class="btn" href="<?= @route(array('view'=>'sets', 'oid'=>$actor->id)) ?>">
+    			<a class="btn" href="<?= @route(array('view' => 'sets', 'oid' => $actor->id)) ?>">
     			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
     			</a> 
     			<button type="submit" class="btn btn-primary">
