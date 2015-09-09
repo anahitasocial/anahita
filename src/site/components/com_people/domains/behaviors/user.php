@@ -28,7 +28,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                     'key' => true,
                     'type' => 'integer',
                     'default' => mt_rand(),
-                    ),
+                ),
             ),
         ));
 
@@ -102,7 +102,6 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         if (!$user->save()) {
             throw new RuntimeException('Unexpected error when saving user');
-
             return false;
         }
 
@@ -168,7 +167,6 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         if (!$user->save()) {
             throw new RuntimeException('Unexpected error when saving user');
-
             return false;
         }
 
@@ -184,7 +182,6 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
     {
         $user = $this->getService('repos://site/users.user')
                      ->fetch(array('id' => $this->userId));
-
         return $user;
     }
 

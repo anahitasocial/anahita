@@ -58,13 +58,36 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $config->append(array(
             'attributes' => array(
-                'administratingIds' => array('type' => 'set', 'default' => 'set'),
-                'username' => array('column' => 'person_username', 'key' => true, 'format' => 'username'),
-                'userType' => array('column' => 'person_usertype', 'default' => self::USERTYPE_REGISTERED),
-                'email' => array('column' => 'person_useremail', 'key' => true, 'format' => 'email'),
-                'givenName' => array('column' => 'person_given_name', 'format' => 'string'),
-                'familyName' => array('column' => 'person_family_name', 'format' => 'string'),
-                'lastVisitDate' => array('type' => 'date', 'column' => 'person_lastvisitdate'),
+                'administratingIds' => array(
+                    'type' => 'set',
+                    'default' => 'set'
+                ),
+                'username' => array(
+                    'column' => 'person_username',
+                    'key' => true,
+                    'format' => 'username'
+                ),
+                'userType' => array(
+                    'column' => 'person_usertype',
+                    'default' => self::USERTYPE_REGISTERED
+                ),
+                'email' => array(
+                    'column' => 'person_useremail',
+                    'key' => true,
+                    'format' => 'email'
+                ),
+                'givenName' => array(
+                    'column' => 'person_given_name',
+                    'format' => 'string'
+                ),
+                'familyName' => array(
+                    'column' => 'person_family_name',
+                    'format' => 'string'
+                ),
+                'lastVisitDate' => array(
+                    'type' => 'date',
+                    'column' => 'person_lastvisitdate'
+                ),
                 'language' => array('column' => 'person_language'),
                 'timezone' => array('column' => 'person_time_zone'),
                 'gender' => array('column' => 'actor_gender'),
