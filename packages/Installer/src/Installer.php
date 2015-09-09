@@ -1,13 +1,14 @@
-<?php 
+<?php
+
 namespace Console\Composer;
 
 use Composer\Package\PackageInterface;
 use Composer\Installer\LibraryInstaller;
 
-class AnahitaInstaller extends LibraryInstaller
+class Installer extends LibraryInstaller
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getInstallPath(PackageInterface $package)
     {
@@ -26,14 +27,13 @@ class AnahitaInstaller extends LibraryInstaller
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supports($packageType)
     {
         print $packageType;
         die;
+
         return 'phpdocumentor-template' === $packageType;
     }
 }
-
-?>
