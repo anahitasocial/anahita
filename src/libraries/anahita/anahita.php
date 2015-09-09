@@ -1,19 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
 define('ANAHITA', 1);
 
 /**
@@ -24,7 +10,7 @@ require_once JPATH_LIBRARIES.'/anahita/functions.php';
 
 /**
  * Service Class.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -37,14 +23,14 @@ class anahita
 {
     /**
      * Version.
-     * 
+     *
      * @var string
      */
-    protected static $_version = '4.1.4';
+    protected static $_version = '4.1.5';
 
     /**
      * Path to Anahita libraries.
-     * 
+     *
      * @var string
      */
     protected $_path;
@@ -95,7 +81,7 @@ class anahita
         ));
 
         //if caching is not enabled then reset the apc cache to
-        //to prevent corrupt identifier        
+        //to prevent corrupt identifier
         if (!$config['cache_enabled']) {
             clean_apc_with_prefix($config['cache_prefix']);
         }
@@ -114,13 +100,13 @@ class anahita
         //a workaround to remove the applicaiton path from an identifier
         KServiceIdentifier::setApplication('', '');
 
-        //create a central event dispatcher           
+        //create a central event dispatcher
         KService::set('anahita:event.dispatcher', KService::get('koowa:event.dispatcher'));
     }
 
     /**
      * Get the version of the Anahita library.
-     * 
+     *
      * @return string
      */
     public static function getVersion()
