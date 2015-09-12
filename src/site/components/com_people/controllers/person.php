@@ -93,7 +93,12 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
         }
 
-        $query->limit($this->limit, $this->start);
+        if ($this->ids) {
+            $ids = KConfig::unbox($this->ids);
+            $query->id($ids);
+        } else {
+            $query->limit($this->limit, $this->start);
+        }
 
         $entities = $this->getState()->setList($query->toEntityset())->getList();
 
