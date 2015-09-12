@@ -208,7 +208,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
             $user->set('password_clear', $this->getPassword());
         }
 
-        $user->set('usertype', self::USERTYPE_REGISTERED);
+        $user->set('usertype', $this->userType);
 
         if (!$this->persisted()) {
             $date = &JFactory::getDate();
