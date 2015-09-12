@@ -174,8 +174,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         if ($firsttime) {
-            $user = $person->getUserObject();
-            $redirectUrl .= '&view=session&token='.$user->activation;
+          $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
             if ($person->admin()) {
@@ -266,6 +265,20 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             'subject' => JText::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
             'template' => 'new_admin',
         ));
+    }
+
+    /**
+    * Autologin the first user which is also the first super admin
+    *
+    * @param KCommandContext $context The context parameter
+    */
+    public function activateFirstAdmin(KCommandContext $context)
+    {
+        $person = $context->result;
+        $user = $this->getService('repos://site/users.user')
+                     ->find(array('id' => $person->userId));
+        $context->response
+        ->setRedirect(JRoute::_('option=com_people&view=session&token='.$user->activation));
     }
 
     /**
