@@ -151,6 +151,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
         $viewer = get_viewer();
+        $firsttime = !(bool) $this->getService('repos://site/users')
+                                  ->getQuery(true)
+                                  ->fetchValue('id');
         $person = parent::_actionAdd($context);
         $redirectUrl = 'option=com_people';
 
@@ -170,7 +173,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
-        if ($viewer->admin()) {
+        if ($firsttime) {
+            $user = $person->getUserObject();
+            $redirectUrl .= '&view=session&token='.$user->activation;
+        } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
             if ($person->admin()) {
                 $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
