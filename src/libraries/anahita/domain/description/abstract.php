@@ -1,25 +1,10 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Entity Description.
  *
  * Contains properrty/aliases/classname and other information about an entity
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -32,63 +17,63 @@ abstract class AnDomainDescriptionAbstract
 {
     /**
      * Return whether the entity is abstract or not.
-     * 
+     *
      * @var bool
      */
     protected $_is_abstract = false;
 
     /**
      * Property Description.
-     * 
+     *
      * @var array
      */
     protected $_properties = array();
 
     /**
      * The identity property.
-     * 
+     *
      * @var AnDomainAttributeScalar
      */
     protected $_identity_property;
 
     /**
      * Type column.
-     * 
+     *
      * @var string
      */
     protected $_inheritance_column;
 
     /**
      * Inheritance column value.
-     * 
+     *
      * @var string
      */
     protected $_inheritance_column_value;
 
     /**
      * Property Alias.
-     * 
+     *
      * @var array
      */
     protected $_alias;
 
     /**
      * Key Properties.
-     * 
+     *
      * @var array
      */
     protected $_identifying_properties = array();
 
     /**
      * Entity identifier.
-     * 
+     *
      * @var KServiceIdentifier
      */
     protected $_entity_identifier;
 
     /**
      * An array of unique identifiers.
-     * 
+     *
      * @var array
      */
     protected $_unique_identifiers;
@@ -96,26 +81,26 @@ abstract class AnDomainDescriptionAbstract
     /**
      * An associative array of class alias. This value is used when
      * building the class heirarchy (tree) in the inheritance tree.
-     * 
+     *
      * @var array
      */
     protected $_class_alias = array();
 
     /**
      * Repository.
-     * 
+     *
      * @var AnDomainRepositoryAbstract
      */
     protected $_repository;
 
     /**
      * Retains an array of has relatinships.
-     * 
+     *
      * @var array
      */
     private static $__has_relationships;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -141,7 +126,7 @@ abstract class AnDomainDescriptionAbstract
             $this->_inheritance_column = $config->inheritance->column;
 
             //an object can only be abstract if it's
-            //supports single table inheritance		    
+            //supports single table inheritance
             $this->_is_abstract = $config->inheritance->abstract;
             if ($config->inheritance->ignore) {
                 $ignore = (array) $config->inheritance['ignore'];
@@ -172,7 +157,7 @@ abstract class AnDomainDescriptionAbstract
         //try to generate some of the propreties
         //from the database columns
         if ($config->auto_generate) {
-            //if auto generate default set the identity property with the primary key 
+            //if auto generate default set the identity property with the primary key
             $config->append(array(
                 'attributes' => array(
                     $this->_identity_property => array('key' => true),
@@ -226,7 +211,7 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Return if the entity is inheritable.
-     * 
+     *
      * @return bool
      */
     public function isInheritable()
@@ -236,9 +221,9 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Set a property description.
-     * 
+     *
      * @param AnDomainPropertyAbstract $property The property to set
-     * 
+     *
      * @return AnDomainDescriptionAbstract
      */
     public function setProperty($property)
@@ -257,11 +242,11 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Return a property or all the properties if name is null. if a property is not defined
-     * it will look in the parent descritpion to see if the property is 
+     * it will look in the parent descritpion to see if the property is
      * defined in them. If yes, it will add it the list of its properties.
-     * 
+     *
      * @param  string                   $name The name of the property
-     *                                         
+     *
      * @return AnDomainPropertyAbstract
      */
     public function getProperty($name = null)
@@ -282,7 +267,7 @@ abstract class AnDomainDescriptionAbstract
             $classes = self::$__has_relationships[$name];
             foreach ($classes as $class => $instance) {
                 if (is_subclass_of($this->_entity_identifier->classname, $class)) {
-                    //clone the property 
+                    //clone the property
                     $property = clone $instance;
                     $this->_properties[$name] = $property;
                     break;
@@ -298,7 +283,7 @@ abstract class AnDomainDescriptionAbstract
      *
      * @param string $property The property name
      * @param string $alias    The alias for hte property
-     * 
+     *
      * @return AnDomainDescriptionAbstract
      */
     public function setAlias($property, $alias)
@@ -366,9 +351,9 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Materialize an array of identifying values from a row data.
-     * 
+     *
      * @param array $data Row data
-     * 
+     *
      * @return array
      */
     public function getIdentifyingValues(array $data)
@@ -386,7 +371,7 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Return an array of properties that uniquely define an entity.
-     * 
+     *
      * @return array
      */
     public function getIdentifyingProperties()
@@ -410,7 +395,7 @@ abstract class AnDomainDescriptionAbstract
         }
 
         if ($property) {
-            //an identitying property can be used as 
+            //an identitying property can be used as
             //an identifying property
             $this->addIdentifyingProperty($property);
 
@@ -425,7 +410,7 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Return an identity property that uniquely identifies an entity.
-     * 
+     *
      * @return AnDomainAttributeScalar
      */
     public function getIdentityProperty()
@@ -449,7 +434,7 @@ abstract class AnDomainDescriptionAbstract
             $classes = get_parents($classname, 'AnDomainEntity');
             $classes[] = $classname;
             //remove the first class because it's parent and
-            //in STI (single table inheritane) we don't store the 
+            //in STI (single table inheritane) we don't store the
             //orginal enitty class
             array_shift($classes);
             foreach ($classes as $key => $class) {
@@ -477,7 +462,7 @@ abstract class AnDomainDescriptionAbstract
 
     /**
      * Return the type column that discriminates an entity.
-     * 
+     *
      * @return string
      */
     public function getInheritanceColumn()
@@ -521,7 +506,7 @@ abstract class AnDomainDescriptionAbstract
      *
      * @param string $name   The name of the attributes or an array of name/option value
      * @param array  $config The attribute options
-     * 
+     *
      * @return AnDomainAttributeAbstract
      */
     public function setAttribute($name, $config = array())
@@ -572,7 +557,7 @@ abstract class AnDomainDescriptionAbstract
             if ($property instanceof AnDomainRelationshipOnetomany) {
                 //if the entity is abstract then
                 //keep track of all the has relationships
-                //this relationship will propgate through children 
+                //this relationship will propgate through children
                 if ($this->isAbstract()) {
                     self::$__has_relationships[$property->getName()][$this->_entity_identifier->classname] = $property;
                 }

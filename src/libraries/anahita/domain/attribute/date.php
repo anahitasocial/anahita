@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Date Attribute.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -29,7 +14,7 @@
 class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
 {
     /**
-     * Factory Method. 
+     * Factory Method.
      *
      * @param 	object 	An optional KConfig object with configuration options
      */
@@ -72,8 +57,8 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
 
     /**
      * Sets the Date's internal date.
-     * 
-     * @param $mixed date 
+     *
+     * @param $mixed date
      * @param $format Object[optional]
      */
     public function setDate($date, $format = DATE_FORMAT_ISO)
@@ -93,9 +78,9 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
 
     /**
      * Return a new date with hour:minute:second to 00:00:00.
-     * 	 
+     *
      * @param bool $clone If set to true then clone the date and return a new one
-     * 
+     *
      * @return AnDomainAttributeDate
      */
     public function toDate($clone = true)
@@ -110,7 +95,7 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
     }
 
     /**
-     * Compare the reciever with another date. If receiver is the same date as the 
+     * Compare the reciever with another date. If receiver is the same date as the
      * date it returns 0 if receiver is before the dat it returns 1 and if it's after the date
      * it returns -1.
      *
@@ -130,7 +115,7 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
      * Returns a modified date object.
      *
      * @param string $change Modify string
-     * 
+     *
      * @return AnDomainAttributeDate
      */
     public function modify($change)
@@ -145,7 +130,7 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
      * Values loaded from the database.
      *
      * @param string $date The date data
-     * 
+     *
      * @return AnDomainAttributeDate
      */
     public function unserialize($date)
@@ -155,7 +140,7 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
 
     /**
      * Return a string date.
-     * 
+     *
      * @return string
      */
     public function serialize()

@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Attribute Type factory.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,14 +15,14 @@ class AnDomainAttributeType
 {
     /**
      * Array of classnames.
-     * 
+     *
      * @var array
      */
     private static $__classnames = array();
 
     /**
      * Instances.
-     * 
+     *
      * @var array
      */
     private static $__instances = array();
@@ -68,7 +53,7 @@ class AnDomainAttributeType
      *
      * @param string $type The type of the attribute
      * @param string $data serialized data to load
-     * 
+     *
      * @return AnDomainAttributeInterface
      */
     public static function getInstance($type, $data = null)

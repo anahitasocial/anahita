@@ -26,8 +26,9 @@ class LibBaseDomainBehaviorEnableable extends AnDomainBehaviorAbstract
             'attributes' => array(
                 'enabled' => array(
                     'default' => false,
-                    'write_access' => 'private',
-                ), ),
+                    'write_access' => 'private'
+                )
+              )
         ));
 
         parent::_initialize($config);

@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Attribute Factory.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,14 +15,14 @@ class AnDomainAttribute
 {
     /**
      * Array of classnames.
-     * 
+     *
      * @var array
      */
     private static $__classnames = array();
 
     /**
      * Instances.
-     * 
+     *
      * @var array
      */
     private static $__instances = array();
@@ -46,7 +31,7 @@ class AnDomainAttribute
      * If type is one of the aliases type then return the complete type name.
      *
      * @param string $type The attribute type
-     * 
+     *
      * @return string
      */
     public static function getClassname($type)
@@ -67,7 +52,7 @@ class AnDomainAttribute
      * Return the complete type of an composite attribute.
      *
      * @param string $type The type of the attribute
-     * 
+     *
      * @return AnDomainAttributeInterface
      */
     public static function getInstance($type)

@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract Domain Entity.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +15,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 {
     /**
      * Static cache to store runtime information of an entity.
-     * 
+     *
      * @return ArrayObject
      */
     protected static function _cache($entity)
@@ -50,21 +35,21 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Stores the properties of the entity that have been modified.
-     * 
+     *
      * @var array();
      */
     protected $_modified = array();
 
     /**
      * Repository.
-     * 
+     *
      * @var AnDomainRepositoryAbstract
      */
     protected $_repository;
 
     /**
      * Entity properties.
-     * 
+     *
      * @var AnDomainEntityData
      */
     protected $_data;
@@ -72,7 +57,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Flag to determine if an entity has been persisted into the database or not
      * this flag is only set after an entity has been fetched from the database.
-     * 
+     *
      * @var bool
      */
     protected $_persisted = false;
@@ -85,7 +70,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     public function __construct(KConfig $config)
     {
         //very crucial to first store this instance in the service container
-        //as this instnace will be used to clone other instances	    
+        //as this instnace will be used to clone other instances
         $config->service_container->set($config->service_identifier, $this);
 
         parent::__construct($config);
@@ -134,12 +119,12 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Sets the enity data after it has been fetched from the database storage.
-     * 
+     *
      * @param KCommandContext $context Context
      */
     protected function _afterEntityFetch(KCommandContext $context)
     {
-        //set the persistd flag        
+        //set the persistd flag
         $this->setPersisted(true);
 
         //set the raw data
@@ -153,7 +138,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Returns the state of the entity. It returns one of the constants.
-     * 
+     *
      * @return string
      */
     public function getEntityState()
@@ -163,7 +148,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Return if the state of the entity is AnDomain::STATE_NEW.
-     * 
+     *
      * @return bool
      */
     public function isNew()
@@ -173,7 +158,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Return if the state of the entity is AnDomain::STATE_MODIFIED.
-     * 
+     *
      * @return bool
      */
     public function isModified()
@@ -204,9 +189,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Forwards the call to the space validate entities. However only return
      * true/false depending whether the entity has failed validation.
-     * 
+     *
      * @param  mixed &$failed Return the failed set
-     *                         
+     *
      * @return bool
      */
     public function validate(&$failed = null)
@@ -218,7 +203,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Tries to only save the entity.
-     * 
+     *
      * @return bool
      */
     public function saveEntity()
@@ -234,9 +219,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Forwards the call to the space commit entities.
-     * 
+     *
      * @param mixed &$failed Return the failed set
-     * 
+     *
      * @return bool
      */
     public function save(&$failed = null)
@@ -246,7 +231,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Return an array of property => name that has been modified.
-     * 
+     *
      * @return array
      */
     public function getModifiedData()
@@ -256,7 +241,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Reset the state of a entity to clean state.
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function reset()
@@ -279,7 +264,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Return if the entity is persisted,  it's not a new record and it was not destroyed.
-     * 
+     *
      * @return bool
      */
     public function persisted()
@@ -289,7 +274,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Return the entity identity property name.
-     * 
+     *
      * @return string
      */
     public function getIdentityProperty()
@@ -299,7 +284,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Return an array of data that can be used to identify this entity.
-     * 
+     *
      * @return array
      */
     public function getIdentifyingData()
@@ -323,7 +308,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Returns the value of the entity identity property.
-     * 
+     *
      * @return int
      */
     public function getIdentityId()
@@ -333,10 +318,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
      /**
       * Get the raw value of a property or return the default value passed.
-      * 
+      *
       * @param  string $name    Then name of the property
       * @param  mixed  $default The default value
-      * 
+      *
       * @return mixed
       */
      public function get($name = null, $default = null)
@@ -373,7 +358,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Set the raw value of a property.
-     * 
+     *
      * @param string $name
      * @param mixed  $value
      */
@@ -416,7 +401,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
                 //is always saved before child
                 //example if $topic->author = new author
                 //then save the new author first before saving topic
-                //only set the dependency 
+                //only set the dependency
                 if ($value->getEntityState() == AnDomain::STATE_NEW) {
                     //save the child before saving the parent
                     $this->getRepository()->getSpace()->setSaveOrder($value, $this);
@@ -434,14 +419,14 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             $child = $property->getChildProperty();
             $current = $this->get($property->getName());
 
-            //if there's a current value and it's existence depends on 
+            //if there's a current value and it's existence depends on
             //the parent entity then remove the current
             if ($current && $child->isRequired()) {
                 $current->delete();
             }
 
             //if a one-to-one relationship then there must be a child key for the property
-            //then must set the inverse			
+            //then must set the inverse
             if ($value) {
                 $value->set($child->getName(), $this);
             }
@@ -480,7 +465,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
                 $this->_modified[$name]['new'] = $value;
 
-                //check if the new value is the same as the old one then remove the 			
+                //check if the new value is the same as the old one then remove the
                 if (is_eql($this->_modified[$name]['old'], $this->_modified[$name]['new'])) {
                     //if there are no modified then reset the entity
                     unset($this->_modified[$name]);
@@ -505,7 +490,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * ReLoad the entity properties from storage. Overriding any changes.
-     * 
+     *
      * @param array $properties An array of properties. If no properties is passed then
      *                          all of the properites are loaded
      */
@@ -517,9 +502,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             throw new AnDomainEntityException('Trying to load an entity without any identifying data');
         }
 
-        //prevent from creating two differne entities	    	    
+        //prevent from creating two differne entities
         if (!$this->_persisted) {
-            //if found another entity 
+            //if found another entity
             $entity = $this->getRepository()->find($keys, false);
 
             if ($entity && $entity !== $this) {
@@ -567,7 +552,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             //if a persisted entity can not be loaded then
             //it must mean the data doesn't exists in the store
             //can we assume then the data has been somehow deleted ?
-            //if that's the case then we need to set the state to destroyed	        
+            //if that's the case then we need to set the state to destroyed
             if ($this->persisted()) {
                 $this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_DESTROYED);
             } else {
@@ -579,9 +564,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     }
 
     /**
-     * This method is used to return an array of entity row data that have either 
+     * This method is used to return an array of entity row data that have either
      * been changed or are new.
-     * 
+     *
      * @return array
      */
     public function getAffectedRowData()
@@ -641,8 +626,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Return an array of row data. If a value is passed for $column then it returns
      * the value of the column wihtin the row.
-     * 
-     * @param string $column The column name. Optional can be null 
+     *
+     * @param string $column The column name. Optional can be null
      */
     public function getRowData($column = null)
     {
@@ -656,10 +641,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     }
 
     /**
-     * Set the value of a property by checking for custom setter. An array 
+     * Set the value of a property by checking for custom setter. An array
      * can be passed to set multiple properties.
-     * 
-     * @param string|array $property Property name 
+     *
+     * @param string|array $property Property name
      * @param mixd         $value    Property value
      */
     public function setData($property, $value = null)
@@ -702,7 +687,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             if ($this->methodExists($method)) {
                 $this->$method($value);
             } else {
-                //only set the property if it's not write proteced (write != private )       		
+                //only set the property if it's not write proteced (write != private )
                 if ($property->getWriteAccess() < AnDomain::ACCESS_PROTECTED) {
                     throw new KException(get_class($this).'::$'.$name.' is write protected');
                 }
@@ -717,10 +702,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * get the value of a property by checking for custom getter. If no property
      * is passed an array of properties is returend.
-     * 
+     *
      * @param string $property Property name
-     * @param string $default  Default value 
-     * 
+     * @param string $default  Default value
+     *
      * @return mixed
      */
     public function getData($property = AnDomain::ACCESS_PUBLIC, $default = null)
@@ -774,7 +759,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Get a property value {@link self::setData}.
-     * 
+     *
      * @param string $property
      *
      * @return mixed
@@ -792,7 +777,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Check if a property has been set.
-     * 
+     *
      * @param string $property
      *
      * @return bool
@@ -885,7 +870,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * @see self::__unset
-     * 
+     *
      * @param   int     The offset of the item
      *
      * @return object
@@ -899,7 +884,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * To be used instead of the === operator for deep object comparison.
-     * 
+     *
      * @param AnDomainAbstractEntity $entity
      *
      * @return bool
@@ -919,8 +904,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Set the state of the entity to deleted. Not the entity is not persisted but
-     * its state only changed to deleted. 
-     *  
+     * its state only changed to deleted.
+     *
      * @return bool
      */
     public function delete()
@@ -932,10 +917,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Implements magic method. Dynamically mixes a mixin.
-     * 
+     *
      * @param string $method Method name
      * @param array  $args   Array of arugments
-     * 
+     *
      * @return mixed
      */
     public function __call($method, $args)
@@ -992,10 +977,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Executes a command on entity.
-     * 
+     *
      * @param string                $command The command to execute. It must of form part1.part2
      * @param KCommandContext|array $context The command context
-     * 
+     *
      * @return bool
      */
     public function execute($command, $context)
@@ -1016,8 +1001,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     }
 
     /**
-     * Checks if the object or one of it's mixins inherits from a class. 
-     * 
+     * Checks if the object or one of it's mixins inherits from a class.
+     *
      * @param 	string|object 	The class to check
      *
      * @return bool Returns TRUE if the object inherits from the class
@@ -1046,7 +1031,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Get the entity repository.
-     * 
+     *
      * @return AnDomainRepositoryAbstract
      */
     public function getRepository()
@@ -1060,7 +1045,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Get the entity description.
-     * 
+     *
      * @return AnDomainRepositoryAbstract
      */
     public function getEntityDescription()
@@ -1070,9 +1055,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Inspects an enttiy. $dump is passed as true. the result is passed to the method var_dump.
-     * 
+     *
      * @param bool $dump Flag to whether dump the data or not
-     * 
+     *
      * @return array;
      */
     public function inspect($dump = true)
@@ -1127,9 +1112,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      * Make a clone of the entity with it's attributes. The unique properties are
      * not copied. If deep copy is selected, then this method tries to replicate
      * all the ony-to-many relationships as well.
-     * 
+     *
      * @param bool $deep Flag to determine to whether to deep copy.
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function cloneEntity($deep = true)
@@ -1152,7 +1137,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             if ($property->isAttribute()) {
                 $copy->set($name, $property->isScalar() ? $this->get($name) : clone $this->get($name));
             } elseif ($property->isRelationship()) {
-                //if it's a belongs to then set the value in the 
+                //if it's a belongs to then set the value in the
                 //copy as  the original
                 if ($property->isManyToOne()) {
                     $copy->set($name, $this->get($name));
@@ -1174,8 +1159,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     }
 
     /**
-     * Return an array of methods.  
-     *  
+     * Return an array of methods.
+     *
      * (non-PHPdoc)
      *
      * @see KObject::getMethods()
@@ -1194,7 +1179,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Return an array of raw data from which the object can be
      * recreated.
-     * 
+     *
      * @return array
      */
     public function serialize()
@@ -1207,7 +1192,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     }
 
     /**
-     * 
+     *
      */
     public function unserialize($data)
     {
@@ -1221,8 +1206,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
     /**
      * Clones a model - this is for when creating a list of models and we don't want to instantiate them.
-     * 
-     * @return 
+     *
+     * @return
      */
     public function __clone()
     {
@@ -1232,7 +1217,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Check if method exists between the entities and all its behavior. It caches
      * the result once for the whole repository in order to improve performance.
-     * 
+     *
      * @return bool
      */
     public function methodExists($method)

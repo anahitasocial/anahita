@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Attribute. Attributes are immutable (or mutable) vaule object properties of an entity.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,14 +15,14 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 {
     /**
      * The property type.
-     * 
+     *
      * @var KServiceIdentifier
      */
     protected $_type;
 
     /**
      * The defaut value of an attribute.
-     * 
+     *
      * @var mixed
      */
     protected $_default;
@@ -59,7 +44,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration 
+     * @param KConfig $config Property Configuration
      */
     public function setConfig(KConfig $config)
     {
@@ -104,9 +89,9 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 
     /**
      * Set default value.
-     * 
-     * @param mixed $value The default value 
-     * 
+     *
+     * @param mixed $value The default value
+     *
      * @return AnDomainAttributeProperty
      */
     public function setDefault($value)
@@ -138,7 +123,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 
     /**
      * Return the property type.
-     * 
+     *
      * @return string
      */
     public function getType()
@@ -156,7 +141,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 
     /**
      * Clones the default value or create a new one if a type is given.
-     * 
+     *
      * @return mixed
      */
     public function getDefaultValue()
@@ -175,7 +160,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
      * Return an database storable column/value array.
      *
      * @param mixed $value The value of the attribute
-     * 
+     *
      * @return array
      */
     public function serialize($value)
