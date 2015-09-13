@@ -52,7 +52,7 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
             return true;
         }
 
-        if ($this->viewer->admin() && !$this->_entity->superadmin()) {
+        if ($this->_viewer->admin() && !$this->_entity->superadmin()) {
           return true;
         }
 
