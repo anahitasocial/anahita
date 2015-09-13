@@ -140,21 +140,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         }
 
         if ($this->getModifiedData()->userType) {
-            // if viewer is super admin and she is updating another super admin's account
-            if (
-                $viewer->superadmin() &&
-                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
-                ) {
-                $user->set('usertype', $this->userType);
-            }
-            // if viewer is admin and she is updating another admin's account
-            elseif (
-                $viewer->admin() &&
-                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR) {
-                $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);
-            } else {
-                $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_REGISTERED);
-            }
+            $user->set('usertype', $this->userType);
         }
 
         if ($this->getPassword()) {

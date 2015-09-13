@@ -69,7 +69,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'userType' => array(
                     'column' => 'person_usertype',
-                    'default' => self::USERTYPE_REGISTERED
+                    'default' => self::USERTYPE_REGISTERED,
+                    'write_access' => 'private'
                 ),
                 'email' => array(
                     'column' => 'person_useremail',

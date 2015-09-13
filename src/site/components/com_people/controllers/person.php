@@ -117,6 +117,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionEdit(KCommandContext $context)
     {
         $data = $context->data;
+
+        //dont' set the usertype yet, until we find the conditions are met
+        $userType = null;
+        if ($data->userType) {
+            $userType = $data->userType;
+            unset($context->data->userType);
+        }
+
         $person = parent::_actionEdit($context);
 
         //add the validations here
@@ -129,18 +137,12 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
         }
 
+        //now check to see if usertype can be set, otherwise the value is unchanged
+        if(in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
+            $person->userType = $userType;
+        }
+
         $person->timestamp();
-
-        //manually set the password to make sure there's a password
-        if ($data->password) {
-            $person->setPassword($data->password);
-        }
-
-        if ($person->authorize('changeUserType') && in_array($data->userType, $this->_allowed_user_types)) {
-            $person->userType = $data->userType;
-        } else {
-            $person->userType = $person->userType;
-        }
 
         return $person;
     }
@@ -172,7 +174,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             return false;
         }
 
-        if (in_array($data->userType, $this->_allowed_user_types)) {
+        if ($viewer->admin() && in_array($data->userType, $this->_allowed_user_types)) {
             $person->userType = $data->userType;
         } else {
             $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
