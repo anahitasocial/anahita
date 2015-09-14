@@ -127,6 +127,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $person = parent::_actionEdit($context);
 
+        //just to make sure password is set
+        if($data->password) {
+          $person->setPassword($data->password);
+        }
+
         //add the validations here
         $this->getRepository()
         ->getValidator()
@@ -161,7 +166,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $firsttime = !(bool) $this->getService('repos://site/users')
                                   ->getQuery(true)
                                   ->fetchValue('id');
+
         $person = parent::_actionAdd($context);
+
+        //just to make sure password is set
+        if($data->password) {
+          $person->setPassword($data->password);
+        }
+
         $redirectUrl = 'option=com_people';
 
         $this->getRepository()

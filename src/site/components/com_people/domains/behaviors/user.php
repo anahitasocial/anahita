@@ -64,14 +64,12 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $user->set('username', $this->username);
         $user->set('email', $this->email);
 
-        if ($this->password == '') {
-            $password = JUserHelper::genRandomPassword();
-            $user->set('password', $password);
-            $user->set('password2', $password);
-            $this->setPassword($password);
-        } else {
-            $user->password = $this->getPassword(true);
+        if (empty($data->password)) {
+            $this->setPassword(JUserHelper::genRandomPassword(32));
         }
+
+        $user->set('password', $this->getPassword(true));
+        $user->set('password_clear', $this->getPassword());
 
         $date = &JFactory::getDate();
         $user->set('registerDate', $date->toMySQL());
@@ -107,7 +105,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         $this->userId = $user->id;
         $this->userType = $user->usertype;
-        $this->enabled = ($user->block) ? false : true;
+        $this->enabled = ($user->block) ? 0 : 1;
 
         return true;
     }
@@ -119,6 +117,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
      */
     protected function _afterEntityUpdate(KCommandContext $context)
     {
+        $data = $context->data;
         jimport('joomla.user.helper');
         $viewer = get_viewer();
         $user = clone JFactory::getUser($this->userId);
@@ -143,7 +142,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
             $user->set('usertype', $this->userType);
         }
 
-        if ($this->getPassword()) {
+        if (! empty($data->password)) {
             $user->set('password', $this->getPassword(true));
         }
 

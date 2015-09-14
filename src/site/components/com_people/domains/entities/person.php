@@ -111,6 +111,11 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         parent::_initialize($config);
 
         AnHelperArray::unsetValues($config->behaviors, array('administrable'));
+
+        $this->_password = array(
+            'clear' => null,
+            'hashed' => null
+        );
     }
 
     /**
@@ -217,7 +222,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
             $password = ' ';
         }
 
-        $this->_password = $password;
+        $this->_password['clear'] = $password;
 
         return $this;
     }
@@ -250,16 +255,17 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function getPassword($hash = false)
     {
-        $password = $this->_password;
-
         if ($hash) {
-            jimport('joomla.user.helper');
-            $salt = JUserHelper::genRandomPassword(32);
-            $crypt = JUserHelper::getCryptedPassword($password, $salt);
-            $password = $crypt.':'.$salt;
+            if (!$this->_password['hashed']) {
+                jimport('joomla.user.helper');
+                $salt = JUserHelper::genRandomPassword(32);
+                $crypt = JUserHelper::getCryptedPassword($password, $salt);
+                $this->_password['hashed'] = $crypt.':'.$salt;
+            }
+            return $this->_password['hashed'];
+        } else {
+           return $this->_password['clear'];
         }
-
-        return $password;
     }
 
     /**
@@ -269,7 +275,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function guest()
     {
-        return $this->userType == self::USERTYPE_GUEST;
+        return $this->userType === self::USERTYPE_GUEST;
     }
 
     /**
@@ -279,8 +285,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function admin()
     {
-        return $this->userType == self::USERTYPE_ADMINISTRATOR ||
-               $this->userType == self::USERTYPE_SUPER_ADMINISTRATOR;
+        return $this->userType === self::USERTYPE_ADMINISTRATOR ||
+               $this->userType === self::USERTYPE_SUPER_ADMINISTRATOR;
     }
 
     /**
@@ -290,6 +296,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function superadmin()
     {
-        return $this->userType == self::USERTYPE_SUPER_ADMINISTRATOR;
+        return $this->userType === self::USERTYPE_SUPER_ADMINISTRATOR;
     }
 }
