@@ -1,19 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_Connect
- * @subpackage OAuth
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id$
- * @link       http://www.GetAnahita.com
- */
-
 require_once('core.php');
 
 /**
@@ -28,7 +14,7 @@ require_once('core.php');
  * @link       http://www.GetAnahita.com
  */
 class ComConnectOauthConsumer extends OAuthConsumer
-{	
+{
 	/**
 	 * Constructor.
 	 *
@@ -38,20 +24,20 @@ class ComConnectOauthConsumer extends OAuthConsumer
 	{
 		parent::__construct($config->key, $config->secret, $config->callback_url);
 	}
-	
+
 	/**
 	 * Return if the consumer key/secret is set
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isValid()
 	{
-		return !empty($this->key) && !empty($this->secret);		
+		return !empty($this->key) && !empty($this->secret);
 	}
-	
+
 	/**
  	 * Set the consumer callback URL
- 	 * 
+ 	 *
  	 * @param string $url
  	 * @return void
 	 */
