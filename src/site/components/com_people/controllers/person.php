@@ -129,7 +129,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         //just to make sure password is set
         if($data->password) {
-          $person->setPassword($data->password);
+           $person->setPassword($data->password);
         }
 
         //add the validations here
@@ -171,7 +171,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         //just to make sure password is set
         if($data->password) {
-          $person->setPassword($data->password);
+           $person->setPassword($data->password);
         }
 
         $redirectUrl = 'option=com_people';

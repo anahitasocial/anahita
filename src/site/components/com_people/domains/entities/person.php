@@ -219,7 +219,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         //make sure the passowrd is set to an empty string
         if (empty($password)) {
-            $password = ' ';
+            $password = null;
         }
 
         $this->_password['clear'] = $password;
@@ -255,11 +255,11 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function getPassword($hash = false)
     {
-        if ($hash) {
+        if ($hash && $this->_password['clear']) {
             if (!$this->_password['hashed']) {
                 jimport('joomla.user.helper');
                 $salt = JUserHelper::genRandomPassword(32);
-                $crypt = JUserHelper::getCryptedPassword($password, $salt);
+                $crypt = JUserHelper::getCryptedPassword($this->_password['clear'], $salt);
                 $this->_password['hashed'] = $crypt.':'.$salt;
             }
             return $this->_password['hashed'];

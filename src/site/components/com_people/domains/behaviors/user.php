@@ -64,12 +64,14 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $user->set('username', $this->username);
         $user->set('email', $this->email);
 
-        if (empty($data->password)) {
+        if (!$this->getPassword()) {
             $this->setPassword(JUserHelper::genRandomPassword(32));
         }
 
-        $user->set('password', $this->getPassword(true));
-        $user->set('password_clear', $this->getPassword());
+        if ($this->getPassword()) {
+            $user->set('password', $this->getPassword(true));
+            $user->set('password_clear', $this->getPassword());
+        }
 
         $date = &JFactory::getDate();
         $user->set('registerDate', $date->toMySQL());
@@ -142,8 +144,9 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
             $user->set('usertype', $this->userType);
         }
 
-        if (! empty($data->password)) {
+        if ($this->getPassword()) {
             $user->set('password', $this->getPassword(true));
+            $user->set('password_clear', $this->getPassword());
         }
 
         if (@$this->params->language) {
