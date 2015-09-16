@@ -42,6 +42,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
 
             if (!$token || !isset($token->inviter)) {
                 throw new LibBaseControllerExceptionNotFound('Token not found');
+
                 return;
             }
 
@@ -72,6 +73,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
 
         if (empty($data->value) || $value != $data->value) {
             throw new LibBaseControllerExceptionBadRequest('Invalid token signature');
+
             return;
         }
 
@@ -86,6 +88,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
 
         if (!$token->save()) {
             throw new LibBaseControllerExceptionInternal();
+
             return;
         }
     }

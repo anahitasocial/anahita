@@ -24,6 +24,7 @@ class ComInvitesControllerConnection extends ComInvitesControllerDefault
 
         if (!ComConnectHelperApi::enabled($serviceType)) {
             throw new LibBaseControllerExceptionBadRequest('Service is not enabled');
+
             return;
         }
 

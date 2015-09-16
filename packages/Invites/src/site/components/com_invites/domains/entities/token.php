@@ -27,12 +27,12 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
                 'id' => array('key' => true),
                 'serviceName' => array(
                     'required' => true,
-                    'column' => 'service'
+                    'column' => 'service',
                 ),
                 'value' => array(
                     'required' => true,
                     'unique' => true,
-                    'column' => 'token'
+                    'column' => 'token',
                 ),
                 'used' => array('default' => '0'),
             ),
@@ -60,6 +60,7 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
     public function incrementUsed()
     {
         $this->used = $this->used + 1;
+
         return $this;
     }
 

@@ -18,14 +18,12 @@ $body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name(
 $url = @route()->getUrl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT);
 ?>
 $('body').invitesFacebook({
-	
-	'appId' :  <?= $service->getAppID() ?>,
-    'subject' : '<?= $subject ?>',
-    'body' : '<?= $body ?>',
-    'appURL' : '<?= $url ?>',
-    'picture' : '<?= $viewer->getPortraitURL() ?>'
+		'appId' :  <?= $service->getAppID() ?>,
+		'subject' : '<?= $subject ?>',
+  	'body' : '<?= $body ?>',
+  	'appURL' : '<?= $url ?>',
+  	'picture' : '<?= $viewer->getPortraitURL() ?>'
 });
-
 </script>
 
 <?= $url ?>
@@ -36,8 +34,8 @@ $('body').invitesFacebook({
 	+ <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
 </a>
 
-<div class="an-entities masonry">	
-<?php 
+<div class="an-entities masonry">
+<?php
 $controller = @service('com://site/people.controller.person', array('request' => array('view' => 'people')));
 $controller->getState()->setList($items);
 ?>
@@ -46,7 +44,3 @@ $controller->getState()->setList($items);
 <?php else: ?>
 <?= @template('add') ?>
 <?php endif; ?>
-
-
-
-
