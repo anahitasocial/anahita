@@ -37,7 +37,7 @@ class ComPagesControllerToolbarActorbar extends ComMediumControllerToolbarActorb
                         array(
                             'option' => 'com_pages',
                             'view' => 'pages',
-                            'oid' => $actor->id),
+                            'oid' => $actor->id, ),
                         $name == 'page');
     }
 }

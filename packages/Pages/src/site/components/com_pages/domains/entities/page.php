@@ -27,7 +27,7 @@ class ComPagesDomainEntityPage extends ComMediumDomainEntityMedium
                 'name' => array('required' => true),
                 'excerpt' => array(
                     'required' => true,
-                    'format' => 'string'
+                    'format' => 'string',
                 ),
                 'body' => array('format' => 'post'),
             ),
