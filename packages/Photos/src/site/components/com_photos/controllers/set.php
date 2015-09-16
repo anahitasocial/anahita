@@ -23,22 +23,22 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
         parent::__construct($config);
 
         $this->registerCallback(array(
-                                  'before.browse',
-                                  'before.read',
-                                  'before.add',
-                                  'before.addphoto',
-                                  'before.removephoto',
-                                  'before.updatephotos',
-                                  'before.updatecover'
-                                ),
-                                array($this, 'fetchPhoto'));
+            'before.browse',
+            'before.read',
+            'before.add',
+            'before.addphoto',
+            'before.removephoto',
+            'before.updatephotos',
+            'before.updatecover'
+        ),
+        array($this, 'fetchPhoto'));
 
         $this->registerCallback(array(
-                                  'after.addphoto',
-                                  'after.removephoto',
-                                  'after.updatephotos'
-                                ),
-                                array($this, 'reorder'));
+          'after.addphoto',
+          'after.removephoto',
+          'after.updatephotos'
+        ),
+        array($this, 'reorder'));
     }
 
     /**

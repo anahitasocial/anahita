@@ -109,10 +109,10 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
         }
 
         $data['portrait'] = array(
-                              'data' => $content,
-                              'rotation' => $orientation,
-                              'mimetype' => isset($file['type']) ? $file['type'] : null
-                            );
+            'data' => $content,
+            'rotation' => $orientation,
+            'mimetype' => isset($file['type']) ? $file['type'] : null
+        );
 
         $photo = $this->actor->photos->addNew($data);
         $photo->setExifData($exif);
