@@ -32,7 +32,7 @@
 
         $this->getService('repos://site/people.person')->getValidator()
              ->addValidation('username', 'uniqueness')
-             ->addValidation('email',   'uniqueness');
+             ->addValidation('email', 'uniqueness');
     }
 
     /**
@@ -66,7 +66,9 @@
             'layout' => 'default',
         ));
 
-        $this->getCommandChain()->run('layout.'.$this->getRequest()->get('layout'), $context);
+        $this->getCommandChain()
+             ->run('layout.'.$this->getRequest()
+             ->get('layout'), $context);
 
         if ($this->getRequest()->get('layout') == 'login' && !$this->viewer->guest()) {
             $context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
@@ -128,9 +130,9 @@
      */
     protected function _actionLogin()
     {
-        $this->getService('com://site/people.controller.person', array('response' => $this->getResponse()))
+        $this->getService('com://site/people.controller.session', array('response' => $this->getResponse()))
              ->setItem($this->person)
-             ->login();
+             ->execute('add');
     }
 
     /**
@@ -194,14 +196,13 @@
             //validate contact
             $contact = $this->contact;
 
-            if (! (
-                      $contact->address &&
-                      $contact->city &&
-                      $contact->country &&
-                      $contact->state &&
-                      $contact->zip
-                    )
-            ) {
+            if (!(
+                  $contact->address &&
+                  $contact->city &&
+                  $contact->country &&
+                  $contact->state &&
+                  $contact->zip
+            )) {
                 $this->storeValue('address_error', JText::_('COM-SUBSCRIPTIONS-BILLING-INVALID'));
             }
 
@@ -270,8 +271,8 @@
 
         //create a dummy transaction
         $this->order = $this->getService('repos://site/subscriptions.order')
-                        ->getEntity()
-                        ->reset();
+                            ->getEntity()
+                            ->reset();
 
         $viewer = get_viewer();
         $this->order->setPackage($package, $viewer->hasSubscription() ? $viewer->subscription->package : null);
@@ -288,8 +289,8 @@
     protected function _instantiateCoupon(KConfig $data)
     {
         $this->coupon_code = $data->coupon_code;
-        $this->coupon = $this->getService('repos://site/subscriptions.coupon')->find(array('code' => $this->coupon_code));
-
+        $this->coupon = $this->getService('repos://site/subscriptions.coupon')
+                             ->find(array('code' => $this->coupon_code));
         if (!$this->coupon) {
             $this->coupon_code = '';
         } else {
@@ -377,15 +378,15 @@
     {
         if (get_viewer()->guest()) {
             $data->append(array(
-                    'user' => new KConfig(),
+                'user' => new KConfig(),
             ));
 
             $user_data = array(
-                    'userId' => PHP_INT_MAX,
-                    'email' => $data->user->email,
-                    'username' => $data->user->username,
-                    'password' => $data->user->password,
-                    'name' => $data->user->name,
+                'userId' => PHP_INT_MAX,
+                'email' => $data->user->email,
+                'username' => $data->user->username,
+                'password' => $data->user->password,
+                'name' => $data->user->name
             );
 
             $person = $this->getService('repos://site/people.person')
