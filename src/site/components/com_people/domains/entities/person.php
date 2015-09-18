@@ -42,7 +42,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     /*
      * User types
      */
-     const USERTYPE_GUEST = 'guest';
+    const USERTYPE_GUEST = 'guest';
     const USERTYPE_REGISTERED = 'registered';
     const USERTYPE_ADMINISTRATOR = 'administrator';
     const USERTYPE_SUPER_ADMINISTRATOR = 'super-administrator';

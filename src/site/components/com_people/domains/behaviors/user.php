@@ -43,12 +43,12 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
     protected function _beforeEntityInsert(KCommandContext $context)
     {
         $viewer = get_viewer();
-        $firsttime = !(bool) $this->getService('repos://site/users')
+        $firstUser = !(bool) $this->getService('repos://site/users')
                                   ->getQuery(true)
                                   ->fetchValue('id');
 
         //for now lets make the com_notes assigable to always
-        if ($firsttime) {
+        if ($firstUser) {
             $component = KService::get('repos://site/components')->find(array('component' => 'com_notes'));
 
             if ($component) {
@@ -79,7 +79,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         // if this is the first user being added or
         // (viewer is a super admin and she is adding another super admin)
         if (
-            $firsttime ||
+            $firstUser ||
             (
                 $viewer->superadmin() &&
                 $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
@@ -142,6 +142,10 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         if ($this->getModifiedData()->userType) {
             $user->set('usertype', $this->userType);
+        }
+
+        if ($this->getModifiedData()->enabled) {
+            $user->set('block', !$this->enabled);
         }
 
         if ($this->getPassword()) {
