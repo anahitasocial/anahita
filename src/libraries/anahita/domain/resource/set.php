@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Represent a set of resources. The first resource is considered the main resource.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,21 +15,21 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 {
     /**
      * Resources.
-     * 
+     *
      * @var array
      */
     protected $_resources;
 
     /**
      * Space Store.
-     * 
+     *
      * @var AnDomainStoreInterface
      */
     protected $_store;
 
     /**
      * Links.
-     * 
+     *
      * @var array
      */
     protected $_links;
@@ -95,9 +80,9 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 
     /**
      * Return the resource with name.
-     * 
+     *
      * @param string $name The name of the resource
-     * 
+     *
      * @return AnDomainResource
      */
     public function getResource($name)
@@ -111,7 +96,7 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 
     /**
      * Return the main resource.
-     * 
+     *
      * @return AnDomainResourceInterface
      */
     public function main()
@@ -124,7 +109,7 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
     /**
      * Return an array of key/value pair that connects two reosurcs
      * together.
-     * 
+     *
      * @return array
      */
     public function getLinks()
@@ -185,7 +170,7 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 
     /**
      * Return the count of the resources.
-     * 
+     *
      * @return int
      */
     public function count()
@@ -195,7 +180,7 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
 
     /**
      * Return an iterator.
-     * 
+     *
      * @return Iterator
      */
     public function getIterator()
