@@ -40,6 +40,8 @@ class LibBaseDomainBehaviorEnableable extends AnDomainBehaviorAbstract
     public function enable()
     {
         $this->enabled = 1;
+
+        return $this;
     }
 
     /**
@@ -48,5 +50,7 @@ class LibBaseDomainBehaviorEnableable extends AnDomainBehaviorAbstract
     public function disable()
     {
         $this->enabled = 0;
+
+        return $this;
     }
 }
