@@ -82,7 +82,10 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         $actorIds = $this->package->getActorIds();
 
         if (count($actorIds)) {
-            $actors = $this->getService('repos://site/actors.actor')->getQuery(true)->where('id', 'IN', $actorIds)->fetchSet();
+            $actors = $this->getService('repos://site/actors.actor')
+                           ->getQuery(true)
+                           ->where('id', 'IN', $actorIds)
+                           ->fetchSet();
 
             foreach ($actors as $actor) {
                 $actor->addFollower($this->person);
@@ -100,7 +103,10 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         $actorIds = $this->package->getActorIds();
 
         if (count($actorIds)) {
-            $actors = $this->getService('repos://site/actors.actor')->getQuery(true)->where('id', 'IN', $actorIds)->fetchSet();
+            $actors = $this->getService('repos://site/actors.actor')
+                           ->getQuery(true)
+                           ->where('id', 'IN', $actorIds)
+                           ->fetchSet();
 
             foreach ($actors as $actor) {
                 $actor->removeFollower($this->person);
