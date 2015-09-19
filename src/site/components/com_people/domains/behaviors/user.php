@@ -172,41 +172,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
      */
     public function getUserObject()
     {
-        $user = $this->getService('repos://site/users.user')
+        return $this->getService('repos://site/users.user')
                      ->fetch(array('id' => $this->userId));
-        return $user;
-    }
-
-    /**
-     * Return a juser object.
-     *
-     * @return bool
-     */
-    public function getJUserObject()
-    {
-        $user = clone JFactory::getUser();
-
-        if ($this->persisted()) {
-            $user->set('id', $this->id);
-        }
-
-        $user->set('name', $this->name);
-        $user->set('username', $this->username);
-        $user->set('email', $this->email);
-
-        if ($this->_password) {
-            $user->set('password', $this->getPassword());
-            $user->set('password2', $this->getPassword());
-            $user->set('password_clear', $this->getPassword());
-        }
-
-        $user->set('usertype', $this->userType);
-
-        if (!$this->persisted()) {
-            $date = &JFactory::getDate();
-            $user->set('registerDate', $date->toMySQL());
-        }
-
-        return $user;
     }
 }
