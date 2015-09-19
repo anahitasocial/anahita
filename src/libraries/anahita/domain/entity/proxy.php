@@ -1,24 +1,9 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Entity Proxy is a proxy object for unloaded entities in the belong to/one-to-one
  * relationships. It uses a lazy loading mechanism to load all the entities at once.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -31,40 +16,40 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 {
     /**
      * An array of similar uniques.
-     * 
+     *
      * @var array
      */
     protected static $_values = array();
 
     /**
      * Entity Identifier.
-     * 
+     *
      * @var KServiceIdentifier
      */
     protected $_identifier;
 
     /**
      * Unique Property.
-     * 
+     *
      * @var string
      */
     protected $_property;
 
     /**
      * Unique Property Value.
-     * 
+     *
      * @var mixed
      */
     protected $_value;
 
     /**
      * Relationship that created the proxy.
-     * 
+     *
      * @var AnDomainRelationshipProperty
      */
     protected $_relationship;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -84,7 +69,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 
     /**
      * Delays retriveing the object to the last moment by checking the property.
-     * 
+     *
      * @return bool
      */
     public function __isset($key)
@@ -98,7 +83,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 
     /**
      * Delays retriveing the object to the last moment by checking the property.
-     * 
+     *
      * @return mixed
      */
     public function __get($key)
@@ -157,7 +142,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 
     /**
      * @see self::__unset
-     * 
+     *
      * @param   int     The offset of the item
      *
      * @return object
@@ -171,7 +156,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 
     /**
      * Get a property value directly from the entity.
-     * 
+     *
      * @return mixed
      */
     public function get($key = null, $default = null)
@@ -185,7 +170,7 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 
     /**
      * Set a property value directly.
-     * 
+     *
      * @return class instance
      */
     public function set($key = null, $value = null)
@@ -207,9 +192,9 @@ class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
 
     /**
      * Get the proxied entity. Since there could many entities proxied. The getObject method will try to
-     * load all the proxied entities of the same type in order to reduce the number of calls 
+     * load all the proxied entities of the same type in order to reduce the number of calls
      * to the storage later on.
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function getObject()

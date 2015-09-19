@@ -1,24 +1,9 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
- * A repository acts as the in-memory class for the domain obejcts. can be extended by subclasses. 
+ * A repository acts as the in-memory class for the domain obejcts. can be extended by subclasses.
  * An entity uses a default repository unless specified otherwise.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -31,35 +16,35 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 {
     /**
      * Entity Description.
-     * 
+     *
      * @var AnDomainDescriptionAbstract
      */
     protected $_description;
 
     /**
      * Collection Identifier.
-     * 
+     *
      * @var KServiceIdentifier
      */
     protected $_entityset;
 
     /**
      * Entity Behaviors.
-     * 
+     *
      * @var array
      */
     protected $_behaviors = array();
 
     /**
      * Return the repository validator.
-     * 
+     *
      * @var string|KServiceIdentifier|AnDomainValidatorAbstract
      */
     protected $_validator;
 
     /**
      * An entity prototype from which all other entites are created from.
-     * 
+     *
      * @var AnDomainEntityAbstract
      */
     protected $_prototype;
@@ -73,26 +58,26 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Repository space.
-     * 
+     *
      * @var AnDomainSpaceAbstract
      */
     protected $_space;
 
     /**
      * Query Identifier.
-     * 
+     *
      * @var KServiceIdentifier
      */
     protected $_query;
 
     /**
      * Resources.
-     * 
+     *
      * @var KObjectQeueue
      */
     protected $_resources;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -146,15 +131,22 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
         $entityset = clone $this->getIdentifier();
         $entityset->path = array('domain','entityset');
-        register_default(array('identifier' => $entityset, 'prefix' => $config->prototype));
+        register_default(array(
+            'identifier' => $entityset,
+            'prefix' => $config->prototype
+          ));
 
         $description = clone $this->getIdentifier();
         $description->path = array('domain','description');
-        register_default(array('identifier' => $description, 'prefix' => $config->prototype));
+        register_default(array(
+            'identifier' => $description,
+            'prefix' => $config->prototype));
 
         $query = clone $this->getIdentifier();
         $query->path = array('domain','query');
-        register_default(array('identifier' => $query, 'prefix' => $config->prototype));
+        register_default(array(
+            'identifier' => $query,
+            'prefix' => $config->prototype));
 
         $config->append(array(
             'query' => $query,
@@ -166,7 +158,11 @@ abstract class AnDomainRepositoryAbstract extends KCommand
             'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
             'dispatch_events' => true,
             'enable_callbacks' => true,
-            'behaviors' => array('validatable', 'cachable', 'serializable'),
+            'behaviors' => array(
+                'validatable',
+                'cachable',
+                'serializable'
+            )
         ));
 
         //set the resources
@@ -179,11 +175,11 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Command handler.
-     * 
+     *
      * @param string          $name    The command name
      * @param KCommandContext $context The command context
-     * 
-     * @return bool Can return both true or false.  
+     *
+     * @return bool Can return both true or false.
      */
     final public function execute($command, KCommandContext $context)
     {
@@ -214,9 +210,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Validates an entity.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity The entity to be validatd
-     * 
+     *
      * @return bool
      */
     public function validate($entity)
@@ -234,15 +230,15 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Commits an entity into the data store (database).
-     * 
+     *
      * @param AnDomainEntityAbstract $entity The entity to be committed
-     * 
+     *
      * @return bool Return whether a commit has been succesfull or not
      */
     public function commit($entity)
     {
         switch ($entity->getEntityState()) {
-            case AnDomain::STATE_NEW :
+            case AnDomain::STATE_NEW:
                 $operation = AnDomain::OPERATION_INSERT;
                 $command = 'insert';
                 break;
@@ -298,15 +294,15 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Destroy all the entities from a repository withouth instantiating them.
-     * 
+     *
      * This method disables the chain in order to ensure the query is not modified by the
-     * behaviors for unexpected results 
-     * 
-     * If a boolean value true is passed as condition then all the records within the repository is 
-     * updated 
-     *  
+     * behaviors for unexpected results
+     *
+     * If a boolean value true is passed as condition then all the records within the repository is
+     * updated
+     *
      * @param array|AnDomainQuery|bool A condition object. Can be an array or domain query object
-     * 
+     *
      * @return bool
      */
     public function destroy($conditions)
@@ -322,13 +318,13 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     }
 
     /**
-     * Updates a set of entities without instantiating them. 
-     * 
+     * Updates a set of entities without instantiating them.
+     *
      * This method disables the chain in order to ensure the query is not modified by the
-     * behaviors for unexpected results 
-     * 
-     * If a boolean value true is passed as condition then all the records within the repository is 
-     * updated 
+     * behaviors for unexpected results
+     *
+     * If a boolean value true is passed as condition then all the records within the repository is
+     * updated
      *
      * @param array|string             $values     The update values. Can be an array of key/value pairs or just an update string
      * @param array|AnDomainQuery|bool $conditions An array of conditions or a domain query or a boolean vaule.
@@ -346,12 +342,12 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     }
 
     /**
-     * Fetch an entity. The condition can be a query object, an associative array or an id 
+     * Fetch an entity. The condition can be a query object, an associative array or an id
      * of an entity.
      *
      * @param mixed $condition The condition for fetching data
      * @param int   $mode      The mode of fetching data. Can be single entity, entity set, value, etc
-     * 
+     *
      * @return mixed
      */
     public function fetch($condition = null, $mode = AnDomain::FETCH_ENTITY)
@@ -407,9 +403,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Fetch a set of entities. The condition can be a query object, an associative array or an  array of ids.
-     * 
+     *
      * @param mixed $condition The condition for fetching data
-     * 
+     *
      * @return AnDomainEntityset
      */
     public function fetchSet($condition = null)
@@ -419,9 +415,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return a new entity initialized with the new properties.
-     * 
+     *
      * @param array $config An array of configuration for the entity
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function getEntity($config = array())
@@ -456,7 +452,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return the entityset Identifier.
-     * 
+     *
      * @return KServiceIdentifier
      */
     public function getEntitySet()
@@ -466,7 +462,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return the repository persistent store.
-     * 
+     *
      * @return AnDomainStoreInterface
      */
     public function getStore()
@@ -476,7 +472,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return the repository space.
-     * 
+     *
      * @return AnDomainStoreInterface
      */
     public function getSpace()
@@ -486,7 +482,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return the entity description.
-     * 
+     *
      * @return AnDomainDescriptionAbstract
      */
     public function getDescription()
@@ -496,11 +492,11 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return the repostiroy query object.
-     * 
+     *
      * @param bool  $disable_chain If set to to true then the chain is disabled for
-     *                             the query instance           
+     *                             the query instance
      * @param array $condition     A default condition to set for the query
-     * 
+     *
      * @return AnDomainQuery
      */
     public function getQuery($disable_chain = false, $condition = array())
@@ -544,9 +540,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     }
 
     /**
-     * Extracts an entity from the repository and the space and deletes an entity if 
+     * Extracts an entity from the repository and the space and deletes an entity if
      * it's persisted.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity The entity to extract
      */
     public function extract($entity)
@@ -564,7 +560,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
      *
      * @param scalar|array $needle The needle to look for
      * @param bool         $fetch  Boolean flag to whether to fetch entity or not if not found
-     * 
+     *
      * @return AnDomainEntityAbstract|null
      */
     public function find($needle, $fetch = true)
@@ -598,7 +594,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return the entities of this repository.
-     * 
+     *
      * @return array
      */
     public function getEntities()
@@ -607,12 +603,12 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     }
 
     /**
-     * Tries to find an entity from the $data, if not then creates an entity and 
+     * Tries to find an entity from the $data, if not then creates an entity and
      * set the properties.
      *
-     * @param array $data   Data to look or create the entity if not found 
+     * @param array $data   Data to look or create the entity if not found
      * @param array $config An array of configuration to initialize the new entity instance
-     * 
+     *
      * @return AnDomainEntityAbstract|null
      */
     public function findOrAddNew($data, $config = array())
@@ -637,7 +633,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return an array of resources.
-     * 
+     *
      * @return AnDomainResourceSet
      */
     public function getResources()
@@ -647,9 +643,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Check if an entity inhertis an interface.
-     * 
+     *
      * @param mixed $interface The name of an interface or class
-     * 
+     *
      * @return bool
      */
     public function entityInherits($interface)
@@ -663,9 +659,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Check if an entity method exist.
-     * 
+     *
      * @param string $method The name of a method
-     * 
+     *
      * @return bool
      */
     public function entityMethodExists($method)
@@ -675,7 +671,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Return a clone of a prototype.
-     * 
+     *
      * @return AnDomainEntitysetAbstract
      */
     public function getClone()
@@ -685,9 +681,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Materialize raw data into an entity. It {@uses self::_instantiate} to instantiate the entity.
-     * 
+     *
      * @param array $data The data to create an entity from
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     protected function _createEntity(array $data)
@@ -738,12 +734,12 @@ abstract class AnDomainRepositoryAbstract extends KCommand
 
     /**
      * Searches a repository to see if it behave as.
-     * 
-     * If a method has the form of is[Behavior Name] it check if the repository behave 
+     *
+     * If a method has the form of is[Behavior Name] it check if the repository behave
      *
      * @param string $method The mising method
      * @param array  $args   Method arguments
-     * 
+     *
      * @return bool|mixed
      */
     public function __call($method, $args)
@@ -769,7 +765,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
      *
      * @param AnDomainQuery $query Domain Query
      * @param int           $mode  The mode of the query
-     * 
+     *
      * @return mixed Return the result
      */
     protected function _fetchResult($query, $mode)
@@ -781,7 +777,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
      * If a query is unique then repository tries to search existing entities.
      *
      * @param KCommandContext $context Context
-     * 
+     *
      * @return bool
      */
     protected function _beforeRepositoryFetch(KCommandContext $context)
@@ -799,16 +795,16 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     }
 
     /**
-     * Instantiate a new entity based on the passed data This method is called from _create. 
-     * 
+     * Instantiate a new entity based on the passed data This method is called from _create.
+     *
      * @param string $identifier The identifier of the entity to instantiate
      * @param array  $data       The raw data
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     protected function _instantiateEntity($identifier, $data)
     {
-        //since the identifier doesn't have an 
+        //since the identifier doesn't have an
         //application set, it gets the application of the parent
         //repository
         $identifier = KService::getIdentifier($identifier);

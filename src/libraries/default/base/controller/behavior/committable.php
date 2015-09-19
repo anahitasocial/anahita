@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Commitable behavior provides API to interace with domain context and storing
  * the last save result.
@@ -31,7 +16,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
 {
     /**
      * Failed entities in the last commit.
-     * 
+     *
      * @var KObjectSet
      */
     protected $_failed_commits;
@@ -55,11 +40,11 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
     /**
      * Executes a commit after each action. This prevents having too many
      * manuall commit.
-     * 
+     *
      * @param string          $name    The command name
      * @param KCommandContext $context The command context
-     * 
-     * @return bool Can return both true or false.  
+     *
+     * @return bool Can return both true or false.
      */
     public function execute($name, KCommandContext $context)
     {
@@ -101,7 +86,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
 
     /**
      * Commits all the entities in the space.
-     * 
+     *
      * @return bool
      */
     public function commit()
@@ -114,7 +99,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
      *
      * @param string $action The action name whose message is being built
      * @param string $type   The type of the message. The type can be success, error or info
-     * 
+     *
      * @return string Return the built message
      */
     protected function _makeStatusMessage($action, $type = 'success')
@@ -131,7 +116,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
 
     /**
      * Return an array of commit errors.
-     * 
+     *
      * @return array
      */
     public function getCommitErrors()
@@ -149,7 +134,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
 
     /**
      * Return a set of entities that failed the commits.
-     * 
+     *
      * @return KObjectSet
      */
     public function getFailedCommits()
@@ -159,7 +144,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
 
     /**
      * Return the object handle.
-     * 
+     *
      * @return string
      */
     public function getHandle()

@@ -1,24 +1,9 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Entity data container. It contains all the storable data of an entity. It also
  * handle materializing the data on demand.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -31,14 +16,14 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 {
     /**
      * Synchornization locks.
-     * 
+     *
      * @var array
      */
     protected static $_locks = array();
 
     /**
      * Set a lock for a repository.
-     * 
+     *
      * @param KObject $object
      * @param bool    $lock
      */
@@ -53,7 +38,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 
     /**
      * Return if a repository is locked.
-     * 
+     *
      * @param KObject $object
      *
      * @return bool
@@ -65,28 +50,28 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 
     /**
      * Domain Description.
-     * 
+     *
      * @var AnDomainDescriptionAbstract
      */
     protected $_description;
 
     /**
      * Domain Entity.
-     * 
+     *
      * @var AnDomainEntityAbstract
      */
     protected $_entity;
 
     /**
      * Columns(row) data.
-     * 
+     *
      * @var array
      */
     protected $_row = array();
 
     /**
      * Property Data.
-     * 
+     *
      * @var array
      */
     protected $_property = array();
@@ -111,7 +96,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     }
 
     /**
-     * Set the row data. 
+     * Set the row data.
      *
      * @param array $data Set the row data
      */
@@ -178,9 +163,9 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 
     /**
      * Return whether a key has been materialized.
-     * 
+     *
      * @param string $key
-     * 
+     *
      * @return bool
      */
     public function isMaterialized($key)
@@ -247,7 +232,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 
     /**
      * Return an array of properties.
-     * 
+     *
      * @return array
      */
     public function toArray()
@@ -263,8 +248,8 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     protected function _materialize($key)
     {
         if (empty($this->_row)) {
-            //no data has been set, the entity is property 
-            //in the new state lets set the default value accordinly 
+            //no data has been set, the entity is property
+            //in the new state lets set the default value accordinly
             return;
         }
 

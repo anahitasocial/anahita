@@ -1,26 +1,11 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Anahita Domain.
  *
- * Domain offers classes for domain driven programming. Domain Package implements 
- * Unit of Work, Data Mapper, Domain Query patterns 
- * 
+ * Domain offers classes for domain driven programming. Domain Package implements
+ * Unit of Work, Data Mapper, Domain Query patterns
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -92,19 +77,19 @@ class AnDomain
     const OPERATION_COMMIT = 30;
 
     /**
-     * Require Flags. A NOT_NULL value can be empty such as 0 or '' 
-     * A NOT_EMPTy value can not be '', 0 or null. The requireds are by 
+     * Require Flags. A NOT_NULL value can be empty such as 0 or ''
+     * A NOT_EMPTy value can not be '', 0 or null. The requireds are by
      * default VALUE_NO_NULL unless explicitly set in the entity description.
      */
     const VALUE_NOT_NULL = true;
     const VALUE_NOT_EMPTY = 1;
 
     /**
-     * Entity Identifers must have application in their path. This method set the 
+     * Entity Identifers must have application in their path. This method set the
      * application of an identifier if the path is missing.
      *
      * @param string $identifier Entity Identifier
-     * 
+     *
      * @return KServiceIdentifier
      */
     public static function getEntityIdentifier($identifier)
@@ -129,8 +114,8 @@ class AnDomain
      * Helper mehtod to return a repository for an entity.
      *
      * @param string $identifier Entity Identifier
-     * @param array  $config     Configuration 
-     * 
+     * @param array  $config     Configuration
+     *
      * @return AnDomainRepositoryAbstract
      */
     public static function getRepository($identifier, $config = array())

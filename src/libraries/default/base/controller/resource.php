@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * View Controller. This conroller doesn't require domain entities.
  *
@@ -84,9 +69,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
     /**
      * Get action.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return string
      */
     protected function _actionGet(KCommandContext $context)
@@ -131,7 +116,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
     /**
      * Get the view object attached to the controller.
-     * 
+     *
      * @return LibBaseViewAbstract
      */
     public function getView()
@@ -162,11 +147,11 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     /**
      * Method to set a view object attached to the controller.
      *
-     * @param  mixed                    $view An object that implements KObjectIdentifiable, an object that 
+     * @param  mixed                    $view An object that implements KObjectIdentifiable, an object that
      *                                        implements KIndentifierInterface or valid identifier string
-     *                                         
+     *
      * @throws KDatabaseRowsetException If the identifier is not a view identifier
-     * 
+     *
      * @return KControllerAbstract
      */
     public function setView($view)
@@ -192,7 +177,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
     /**
      * Set the state property of the controller.
-     * 
+     *
      * @param string $key   The property name
      * @param string $value The property value
      */
@@ -214,7 +199,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
     /**
      * Executes a GET request and display the view.
-     * 
+     *
      * @return string
      */
     public function __toString()

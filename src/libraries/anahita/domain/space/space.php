@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Domain Space. Implements unit of work and domain entitis states.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,28 +15,28 @@ class AnDomainSpace extends KObject
 {
     /**
      * Entity set.
-     * 
+     *
      * @var KObjectQueue
      */
     protected $_entities;
 
     /**
      * Entity States.
-     * 
+     *
      * @var AnObjectArray
      */
     protected $_states;
 
     /**
      * State Machine.
-     * 
+     *
      * @var AnDomainRegistryState
      */
     protected $_state_machine;
 
     /**
      * Tracks the identifies within a space. Any entity is a unique entity.
-     * 
+     *
      * @var array
      */
     protected $_identity_map = array();
@@ -74,17 +59,18 @@ class AnDomainSpace extends KObject
      * Validates all the entities in the space. Return true if all the entities
      * pass the validation or a set of entities that failed the validation.If a $failed variable
      * is passed by reference, then a set of failed entities will be returend.
-     * 
+     *
      * @param mixed &$failed Return the failed set
-     * 
+     *
      * @return bool Return if all the entities passed the validations
      */
     public function validateEntities(&$failed = null)
     {
         $restult = true;
         $failed = new AnObjectSet();
+        $entities = $this->getCommitables();
 
-        foreach ($this->getCommitables() as $entity) {
+        foreach ($entities as $entity) {
             $restult = $entity->getRepository()->validate($entity);
 
             if ($restult === false) {
@@ -99,22 +85,25 @@ class AnDomainSpace extends KObject
      * Commits all the entities in the space. Return true if all the entities
      * commit succesfully or a set of entities that failed the commit. If a $failed variable
      * is passed by reference, then a set of failed entities will be returend.
-     * 
+     *
      * @param mixed &$failed Return the failed set
-     * 
+     *
      * @return bool Return if all the entities passed the validations
      */
     public function commitEntities(&$failed = null)
     {
         $result = $this->validateEntities($failed);
 
-        while ($result && count($entities = $this->getCommitables())) {
-            foreach ($entities as $entity) {
-                $result = $entity->getRepository()->commit($entity);
+        if(!$result) {
+          return false;
+        }
 
-                if ($result === false) {
-                    $failed->insert($entity);
-                }
+        $entities = $this->getCommitables();
+
+        foreach ($entities as $entity) {
+            $result = $entity->getRepository()->commit($entity);
+            if ($result === false) {
+                $failed->insert($entity);
             }
         }
 
@@ -123,10 +112,10 @@ class AnDomainSpace extends KObject
 
     /**
      * Set an entity state return whether if the state change was succesful.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity Domain entity
      * @param int                    $new    New state
-     * 
+     *
      * @return bool Return whether the state for the entity has been set sucesfully
      */
     public function setEntityState($entity, $new)
@@ -149,9 +138,9 @@ class AnDomainSpace extends KObject
 
     /**
      * Return an entity state.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity Domain entity
-     * 
+     *
      * @return bool
      */
     public function getEntityState($entity)
@@ -165,7 +154,7 @@ class AnDomainSpace extends KObject
 
     /**
      * Set the save order.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity1 Lower priorty index (Higher) domain entity
      * @param AnDomainEntityAbstract $entity2 Higher priorty index (Lower) domain entity
      */
@@ -205,7 +194,7 @@ class AnDomainSpace extends KObject
 
     /**
      * Inserts an entity into the identity map. It uses the keys to uniquely identifies an entity.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity      The entity to insert
      * @param array                  $identifiers An array of identifiying keys that uniquely identifies an entity
      */
@@ -218,7 +207,7 @@ class AnDomainSpace extends KObject
             $this->_entities->enqueue($entity, $priority);
         }
 
-        //get all the entity parent classes		
+        //get all the entity parent classes
         $classes = $entity->getEntityDescription()->getUniqueIdentifiers();
         $description = $entity->getEntityDescription();
 
@@ -248,10 +237,10 @@ class AnDomainSpace extends KObject
      * Checks to see if an entity of a class with passed in keys exists
      * in the map. If it exist it will return the entity if not it will return
      * null.
-     * 
+     *
      * @param AnDomainDescriptionAbstract $description The entity description
      * @param array                       $identifiers The keys that uniquely identifies the entity
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function findEntity($description, $identifiers)
@@ -293,7 +282,7 @@ class AnDomainSpace extends KObject
 
     /**
      * Extracts an entity from the space all together.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity Extracts an entity from the domain space
      */
     public function extractEntity($entity)
@@ -303,9 +292,9 @@ class AnDomainSpace extends KObject
     }
 
     /**
-     * Return an array of entities. If the repository is set then return entities for the 
+     * Return an array of entities. If the repository is set then return entities for the
      * repository.
-     * 
+     *
      * @param AnDomainRepositoryAbstract $repository If the repository is set then return the entities
      *                                               for the $repository
      *

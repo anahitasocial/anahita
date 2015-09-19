@@ -102,7 +102,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'administrator',
                 'notifiable',
                 'leadable',
-                'user',
+                'user'
             )),
         ));
 
