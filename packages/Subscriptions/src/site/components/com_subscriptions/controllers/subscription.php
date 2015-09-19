@@ -82,31 +82,24 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         }
 
         $person = $this->_order->getSubscriber();
-
         $package = $this->_order->getPackage();
 
         $set = new AnObjectSet();
-
         $set->insert($this->_order);
 
         if (!$person->persisted()) {
-            $person->reset();
-            $user = $person->getJUserObject();
 
-            //encrypt the password
-            $user->set('password', $person->getPassword(true));
-            $user->set('block', '0');
-            $user->save();
+            $this->getService('repos://site/people.person')
+                 ->getSpace()
+                 ->setEntityState($person, AnDomain::STATE_NEW);
 
-            $person = $this->getService('repos://site/people.person')->find(array('userId' => $user->id));
-
-            if ($person) {
-                $set->insert($person);
-                $this->_order->setSubscriber($person);
-            }
+            $person->enable()->save();
         }
 
-        if (!$package->recurring && $person->hasSubscription()) {
+        $set->insert($person);
+        $this->_order->setSubscriber($person);
+
+        if ($person->hasSubscription() && !$package->recurring) {
             $subscription = $person->changeSubscriptionTo($package);
         } else {
             $subscription = $person->subscribeTo($package);
@@ -119,7 +112,8 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             $subscription->setValue('profileStatus', $payload->getRecurring()->profile_status);
         }
 
-        if (!$this->commit()) {
+        //something is going wrong
+        if (!$subscription->saveEntity()) {
             $set->delete();
             $this->commit();
             throw new RuntimeException('Subscription can not be added');

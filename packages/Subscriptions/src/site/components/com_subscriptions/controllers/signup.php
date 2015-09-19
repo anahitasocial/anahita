@@ -382,17 +382,18 @@
             ));
 
             $user_data = array(
-                'userId' => PHP_INT_MAX,
                 'email' => $data->user->email,
                 'username' => $data->user->username,
                 'password' => $data->user->password,
-                'name' => $data->user->name
+                'name' => $data->user->name,
+                'userType' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED
             );
 
             $person = $this->getService('repos://site/people.person')
             ->getEntity()
             ->reset()
             ->setData($user_data);
+
         } else {
             $person = get_viewer();
         }
