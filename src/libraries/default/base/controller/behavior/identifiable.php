@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Identifiable Behavior.
  *
@@ -38,12 +23,12 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
     /**
      * Identifiable key. If this key exists in the request then this behavior
      * will fetch the entity using this key.
-     * 
+     *
      * @return string
      */
     protected $_identifiable_key;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -60,7 +45,7 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
         $this->_identifiable_key = $config->identifiable_key;
 
-        //add the identifiable_key 
+        //add the identifiable_key
         $this->getState()->insert($this->_identifiable_key, null, true);
     }
 
@@ -83,11 +68,11 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Command handler.
-     * 
+     *
      * @param   string      The command name
      * @param   object      The command context
      *
-     * @return bool Can return both true or false.  
+     * @return bool Can return both true or false.
      */
     public function execute($name, KCommandContext $context)
     {
@@ -102,9 +87,9 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * A list of items that are each identifiable.
-     * 
-     * @param mixed $list list of resources 
-     * 
+     *
+     * @param mixed $list list of resources
+     *
      * @return LibBaseControllerBehaviorIdentifiable
      */
     public function setList($list)
@@ -116,7 +101,7 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Return the controller list of identifiable objects.
-     * 
+     *
      * @return mixed
      */
     public function getList()
@@ -126,9 +111,9 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Set the controller identitable item.
-     * 
+     *
      * @param mixed $item The identifiable Item
-     * 
+     *
      * @return LibBaseControllerBehaviorIdentifiable
      */
     public function setItem($item)
@@ -140,9 +125,9 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Return the controller identifiable item.
-     * 
-     * @param bool $create Return an entity if there's none  
-     * 
+     *
+     * @param bool $create Return an entity if there's none
+     *
      * @return mixed
      */
     public function getItem($create = false)
@@ -163,9 +148,9 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Set the controller repository.
-     * 
+     *
      * @param string|AnDomainRepositoryAbstract $repository The domain repository
-     * 
+     *
      * @return LibBaseControllerResource
      */
     public function setRepository($repository)
@@ -189,7 +174,7 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Return the controller repository.
-     * 
+     *
      * @return AnDomainRepositoryAbstract
      */
     public function getRepository()
@@ -260,9 +245,9 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Sets the identifiable key.
-     * 
+     *
      * @param string $key The identifiable key
-     * 
+     *
      * @return LibBaseControllerBehaviorIdentifiable
      */
     public function setIdentifiableKey($key)
@@ -272,7 +257,7 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Return the identifiable key.
-     * 
+     *
      * @return string
      */
     public function getIdentifiableKey()
@@ -282,7 +267,7 @@ class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
 
     /**
      * Return the object handle.
-     * 
+     *
      * @return string
      */
     public function getHandle()

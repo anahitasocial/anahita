@@ -72,7 +72,6 @@
 
         if ($this->getRequest()->get('layout') == 'login' && !$this->viewer->guest()) {
             $context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
-
             return false;
         }
 
@@ -151,13 +150,13 @@
         }
 
         if ($ret) {
-            //clreat the sesion
+           //clreat the sesion
            $_SESSION['signup'] = null;
             KRequest::set('session.subscriber_id', $ret->person->id);
             $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
             $context->response->setRedirect($url);
         } else {
-            throw new RuntimeException('Couldn\'t subscribe');
+            throw new RuntimeException("Couldn't subscribe");
         }
     }
 

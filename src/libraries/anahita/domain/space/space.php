@@ -302,7 +302,6 @@ class AnDomainSpace extends KObject
      */
     public function getEntities($repository = null)
     {
-        return $repository ? $this->_entities->getRepositoryEntities($repository) :
-                    $this->_entities;
+        return $repository ? $this->_entities->getRepositoryEntities($repository) : $this->_entities;
     }
 }

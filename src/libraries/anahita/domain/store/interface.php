@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Store Interface.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -33,7 +18,7 @@ interface AnDomainStoreInterface
      *
      * @param AnDomainQuery $query Query object
      * @param int           $mode  Fetch Mode
-     * 
+     *
      * @return mixed
      */
     public function fetch($query, $mode);
@@ -43,7 +28,7 @@ interface AnDomainStoreInterface
      *
      * @param AnDomainRepositoryAbstract $repository
      * @param array                      $data
-     * 
+     *
      * @return int
      */
     public function insert($repository, $data);
@@ -62,7 +47,7 @@ interface AnDomainStoreInterface
      *
      * @param AnDomainRepositoryAbstract $repositoy
      * @param array                      $keys
-     * 
+     *
      * @return bool
      */
     public function delete($repository, $keys);
@@ -70,8 +55,8 @@ interface AnDomainStoreInterface
     /**
      * Quotes a value.
      *
-     * @param string $value A value 
-     * 
+     * @param string $value A value
+     *
      * @return
      */
     public function quoteValue($value);
@@ -89,16 +74,16 @@ interface AnDomainStoreInterface
      * Return an array of columns for a resource.
      *
      * @param $resource Resrouce name
-     * 
+     *
      * @return array
      */
     public function getColumns($resource);
 
     /**
-     * Executes a query. 
+     * Executes a query.
      *
      * @param string $query
-     * 
+     *
      * @return bool
      */
     public function execute($query);

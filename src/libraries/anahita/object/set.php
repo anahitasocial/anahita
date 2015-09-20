@@ -1,36 +1,21 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * It's the same as {@link KObjectSet} but on __get, __set and __call method calls
  * it iterates through its members to perform the same calls.
- * 
+ *
  * For example
- * 
+ *
  * <code>
  * $object1 = new KObject();
  * $object->name = 'This is object 1';
  * $object2 = new KObject();
  * $object2->name = 'This is object 2';
- * 
+ *
  * $set = new AnObjectSet();
  * $set->insert($object1);
  * $set->insert($object2);
- * 
+ *
  * $set->name; //return an array of ['This is object 1','This is object 2'];
  * </code>
  *
@@ -72,7 +57,7 @@ class AnObjectSet extends KObjectSet
      *
      * @param  string      $column The column to set a value for
      * @param  mixed       $value  The column Value
-     *                              
+     *
      * @return AnObjectSet
      */
     public function __set($column, $value)
@@ -98,7 +83,7 @@ class AnObjectSet extends KObjectSet
     /**
      * Forwards the $method to each of the objects and return an array of
      * objects, scarlar or a single boolean value.
-     * 
+     *
      * @param string $method
      * @param array  $arguments
      *
@@ -115,7 +100,7 @@ class AnObjectSet extends KObjectSet
 
     /**
      * Forward a request to all the objects in the object set.
-     * 
+     *
      * @return mixed
      */
     protected function _forward($type, $callable, $arguments = array(), $return = null)

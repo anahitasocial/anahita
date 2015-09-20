@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Database storage.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,14 +15,14 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 {
     /**
      * Resource columns.
-     * 
+     *
      * @var array
      */
     protected $_columns = array();
 
     /**
      * Database adapter.
-     * 
+     *
      * @var object KDatabaseAbtract
      */
     protected $_adapter;
@@ -60,24 +45,24 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
         'numeric' => 'integer',
         'dec' => 'float',
         'decimal' => 'float',
-        'float' => 'float'  ,
-        'double' => 'float'  ,
-        'real' => 'float'  ,
+        'float' => 'float',
+        'double' => 'float',
+        'real' => 'float',
 
         // boolean
         'bool' => 'boolean',
         'boolean' => 'boolean',
 
         // date & time
-        'date' => 'date'     ,
-        'time' => 'date'     ,
+        'date' => 'date',
+        'time' => 'date',
         'datetime' => 'date',
-        'timestamp' => 'date'  ,
-        'year' => 'integer'  ,
+        'timestamp' => 'date',
+        'year' => 'integer',
 
         //other
         'set' => 'string',
-        'enum' => 'string',
+        'enum' => 'string'
     );
 
     /**
@@ -126,7 +111,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
      *
      * @param AnDomainQuery $query Query object
      * @param int           $mode  Fetch Mode
-     * 
+     *
      * @return mixed
      */
     public function fetch($query, $mode)
@@ -295,7 +280,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 
     /**
      * Return an array of columns for a resource.
-     * 
+     *
      * @see    AnDomainStoreInterface::getColumns()
      *
      * @param  AnDomainResourceTable
@@ -333,7 +318,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
      * Quote Value.
      *
      * @param string $value The value to quote
-     * 
+     *
      * @return mixed Return the quoted value
      */
     public function quoteValue($value)

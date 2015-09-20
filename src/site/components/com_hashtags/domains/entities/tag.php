@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##
- * 
+ *
  * @category   Anahita
  * @package    Com_Hashtags
  * @subpackage Domain_Entity
@@ -13,8 +13,8 @@
  */
 
 /**
- * Hashtag association   
- * 
+ * Hashtag association
+ *
  * @category   Anahita
  * @package    Com_Hashtags
  * @subpackage Domain_Entity
@@ -37,51 +37,51 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     {
         $config->append(array(
         	'relationships' => array(
-				'hashtag' => array('parent'=>'com:hashtags.domain.entity.hashtag')
-			),
+				      'hashtag' => array('parent'=>'com:hashtags.domain.entity.hashtag')
+			    ),
         	'aliases' => array(
                 'hashtag' => 'nodeA'
             )
         ));
-        
-        parent::_initialize($config);           
+
+        parent::_initialize($config);
     }
-    
+
     /**
      * After entity insert reset stats
      *
      * KCommandContext $context Context
-     * 
+     *
      * @return void
      */
     protected function _afterEntityInsert(KCommandContext $context)
     {
     	$this->resetStats();
     }
-    
+
     /**
      * After entity delete reset stats
      *
      * KCommandContext $context Context
-     * 
+     *
      * @return void
      */
     protected function _afterEntityDelete(KCommandContext $context)
-    {       
+    {
 		$this->resetStats();
     }
-    
+
     /**
      * Resets the hashtag
      *
      * KCommandContext $context Context
-     * 
+     *
      * @return void
      */
     private function resetStats()
     {
     	$this->hashtag->resetStats(array($this->hashtag));
-    	
+
     	if(count($this->hashtag->tagables) === 0)
 			$this->hashtag->delete();
     }

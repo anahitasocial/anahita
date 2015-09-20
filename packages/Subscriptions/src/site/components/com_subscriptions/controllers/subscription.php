@@ -3,7 +3,7 @@
 /**
  * @category	Com_Subscriptions
  *
- * @copyright   (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
+ * @copyright   (C) 2008 - 2015 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link        http://www.GetAnahita.com
@@ -44,7 +44,6 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         }
 
         $this->_gateway = $config->gateway;
-
         $this->registerCallback('after.add', array($this, 'mailInvoice'));
     }
 
@@ -58,11 +57,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-
             'serviceable' => array('except' => array('browse', 'read', 'edit')),
             'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
-            'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal',
-
+            'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal'
         ));
 
         parent::_initialize($config);
@@ -77,27 +74,18 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     {
         $payload = $this->_order->getPayload();
 
-        if (!$this->_gateway->process($payload)) {
-            throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
-        }
+    //    if (!$this->_gateway->process($payload)) {
+    //        throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
+    //    }
 
         $person = $this->_order->getSubscriber();
         $package = $this->_order->getPackage();
 
-        $set = new AnObjectSet();
-        $set->insert($this->_order);
-
         if (!$person->persisted()) {
-
-            $this->getService('repos://site/people.person')
-                 ->getSpace()
-                 ->setEntityState($person, AnDomain::STATE_NEW);
-
-            $person->enable()->save();
+            $person->getRepository()->getSpace()
+            ->setEntityState($person, AnDomain::STATE_NEW);
+            $person->enable();
         }
-
-        $set->insert($person);
-        $this->_order->setSubscriber($person);
 
         if ($person->hasSubscription() && !$package->recurring) {
             $subscription = $person->changeSubscriptionTo($package);
@@ -105,18 +93,14 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             $subscription = $person->subscribeTo($package);
         }
 
-        $set->insert($subscription);
-
         if ($payload->getRecurring()) {
             $subscription->setValue('profileId', $payload->getRecurring()->profile_id);
             $subscription->setValue('profileStatus', $payload->getRecurring()->profile_status);
         }
 
-        //something is going wrong
-        if (!$subscription->saveEntity()) {
-            $set->delete();
-            $this->commit();
-            throw new RuntimeException('Subscription can not be added');
+        if (!$this->commit()) {
+            throw new RuntimeException("Couldn't add subscription");
+            return;
         }
 
         $this->getResponse()->status = KHttpResponse::CREATED;

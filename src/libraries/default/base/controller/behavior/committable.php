@@ -49,22 +49,19 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
     public function execute($name, KCommandContext $context)
     {
         $parts = explode('.', $name);
-
         $result = $context->result;
 
         //after an action save
         if ($parts[0] == 'after' && $parts[1] != 'cancel') {
-            //if there are not any commitable
-            //skip
+
+            //skip if there are not any commitable
             if (count($this->getRepository()->getSpace()->getCommitables()) == 0) {
                 return;
             }
 
-            //do a commit
             $result = $this->commit();
 
             $type = $result === false ? 'error' : 'success';
-
             $message = $this->_makeStatusMessage($context->action, $type);
 
             if ($message) {
@@ -91,7 +88,9 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
      */
     public function commit()
     {
-        return $this->getRepository()->getSpace()->commitEntities($this->_failed_commits);
+        return $this->getRepository()
+        ->getSpace()
+        ->commitEntities($this->_failed_commits);
     }
 
     /**
