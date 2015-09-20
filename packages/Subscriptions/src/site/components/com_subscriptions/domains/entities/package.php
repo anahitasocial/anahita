@@ -34,8 +34,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
     {
         parent::__construct($config);
 
-        $this
-        ->getService('repos:people.person')
+        $this->getService('repos:people.person')
         ->addBehavior('com://site/subscriptions.domain.behavior.subscriber');
     }
 
@@ -53,7 +52,10 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
             'attributes' => array(
                 'name' => array('required' => true),
                 'body' => array('format' => 'html'),
-                'price' => array('type' => 'float', 'required' => true),
+                'price' => array(
+                    'type' => 'float',
+                    'required' => true
+                ),
                 'duration' => array(
                     'type' => 'integer',
                     'required' => true
@@ -70,8 +72,8 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
             'relationships' => array(
                 //let the cleaner to take care of it
                 'subscriptions' => array(
-                    'parent_delete' => 'ignore',
-                 ),
+                    'parent_delete' => 'ignore'
+                 )
             ),
             'behaviors' => array(
                 'authorizer',
@@ -79,7 +81,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
                 'describable',
                 'enableable',
                 'dictionariable',
-                'modifiable',
+                'modifiable'
             ),
         ));
 
@@ -178,7 +180,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
         }
 
         $package = $viewer->subscription->package;
-        
+
         return !$this->eql($package) &&
         (
             $package->duration < $this->duration ||

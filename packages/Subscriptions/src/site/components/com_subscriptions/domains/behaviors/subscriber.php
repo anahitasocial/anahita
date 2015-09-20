@@ -65,11 +65,14 @@
     public function subscribeTo($package)
     {
         if (!$this->hasSubscription(false)) {
-            $this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')->getEntity(
-            array(
-              'data' => array(
-                  'package' => $package,
-             ), ));
+            $this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')
+            ->getEntity(array(
+                'data' => array(
+                    'package' => $package,
+                    'author' => $this->_mixer,
+                    'editor' => $this->_mixer
+                  )
+            ));
         }
 
         return $this->_mixer->subscription;
