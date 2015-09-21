@@ -74,10 +74,12 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     {
         $payload = $this->_order->getPayload();
 
-    //    if (!$this->_gateway->process($payload)) {
-    //        throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
-    //    }
+        if (!$this->_gateway->process($payload)) {
+            throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
+        }
 
+        $this->getService('repos:people.person')
+        ->addBehavior('com://site/subscriptions.domain.behavior.subscriber');
         $person = $this->_order->getSubscriber();
         $package = $this->_order->getPackage();
 
@@ -100,7 +102,6 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 
         if (!$this->commit()) {
             throw new RuntimeException("Couldn't add subscription");
-            return;
         }
 
         $this->getResponse()->status = KHttpResponse::CREATED;

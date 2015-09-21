@@ -151,7 +151,7 @@
 
         if ($ret) {
            //clreat the sesion
-           $_SESSION['signup'] = null;
+            $_SESSION['signup'] = null;
             KRequest::set('session.subscriber_id', $ret->person->id);
             $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
             $context->response->setRedirect($url);
