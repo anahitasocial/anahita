@@ -8,27 +8,27 @@
         		<span class="icon-bar"></span>
         		<span class="icon-bar"></span>
         	</button>
-            
+
 			<?= @render('logo') ?>
-            
+
             <div id="desktop-main-menu" class="nav-collapse collapse">
             	<?= @searchbox('searchbox') ?>
 	            <?= @template('menus/main') ?>
 	            <span class="viewer pull-right">
 	            	<?php if(get_viewer()->guest()): ?>
-	            	<?php $return = base64UrlEncode( KRequest::url() ); ?>    
+	            	<?php $return = base64UrlEncode(KRequest::url()); ?>
 					<a class="btn btn-primary" href="<?= @route('option=people&view=session&return='.$return) ?>" >
-    				    <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
+    				    <?= @text('LIB-AN-ACTION-LOGIN') ?>
 					</a>
 	            	<?php else: ?>
 	            	<?= @template('menus/viewer') ?>
 	            	<?php endif; ?>
 	            </span>
             </div>
-            
+
             <div id="mobile-main-menu" class="nav-collapse collapse menu-mobile hidden-desktop">
             <?= @template('menus/mobile') ?>
             </div>
         </div>
-    </div>            
+    </div>
 </div>

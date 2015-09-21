@@ -148,6 +148,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         $person->timestamp();
+        $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
         return $person;
     }

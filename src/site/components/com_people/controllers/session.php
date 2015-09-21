@@ -25,14 +25,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $this->registerCallback(
             'after.add',
             array($this, 'redirect'),
-            array('url' => $config->redirect_to_after_login)
-            );
+            array('url' => $config->redirect_to_after_login));
 
         $this->registerCallback(
             'after.delete',
             array($this, 'redirect'),
-            array('url' => $config->redirect_to_after_logout)
-            );
+            array('url' => $config->redirect_to_after_logout));
     }
 
     /**
@@ -95,17 +93,14 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     protected function _actionRead(KCommandContext $context)
     {
         $person = $this->getService('repos://site/people.person')
-                       ->find(array(
-                           'userId' => JFactory::getUser()->id,
-                           ));
+                       ->find(array('userId' => JFactory::getUser()->id));
 
         $this->_state->setItem($person);
 
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
                 'return' => $this->getService('com://site/people.filter.return')
-                               ->sanitize($_SESSION['return']), )
-                );
+                                 ->sanitize($_SESSION['return'])));
         }
 
         return $person;
@@ -124,6 +119,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             return $result;
         } catch (RuntimeException $e) {
             $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
+
             throw $e;
         }
     }
@@ -162,6 +158,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS) {
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
             $this->getResponse()->status = KHttpResponse::ACCEPTED;
+            $this->getResponse()->setRedirect($context->url);
             $_SESSION['return'] = null;
         } else {
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
@@ -197,16 +194,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         if ($this->token == '') {
             throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);
+
             return false;
         }
 
         $user = $this->getService('repos://site/users.user')
-                     ->find(array(
-                         'activation' => $this->token,
-                         ));
+                     ->find(array('activation' => $this->token));
 
         if (!$user) {
             throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
+
             return false;
         }
 
@@ -236,10 +233,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $credentials = array(
             'username' => $user->username,
             'password' => $user->password,
-            'remember' => true,
+            'remember' => true
         );
 
-        $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
+        $this->getService('com:people.helper.person')
+        ->login($credentials, $credentials['remember']);
 
         $msg = JText::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
         $this->getResponse()->setRedirect(JRoute::_($redirectUrl), $msg);

@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Person Helper. Provides some helper functions suchs as creating a person object from a user.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,10 +15,10 @@ class LibPeopleHelperPerson extends KObject
 {
     /**
      * Logs in a user.
-     * 
+     *
      * @param array $user     The user as an array
      * @param bool  $remember Flag to whether remember the user or not
-     * 
+     *
      * @return bool
      */
     public function login(array $user, $remember = false)
@@ -85,7 +70,7 @@ class LibPeopleHelperPerson extends KObject
 
     /**
      * Deletes a session and logs out the viewer.
-     
+
      * @return bool
      */
     public function logout()
