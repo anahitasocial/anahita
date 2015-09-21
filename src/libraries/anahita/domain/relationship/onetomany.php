@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * One to many relationship.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,28 +15,28 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 {
     /**
      * The collection type identifier to use.
-     * 
+     *
      * @var string
      */
     protected $_entityset;
 
     /**
      * The cardinality of relationship.
-     * 
+     *
      * @var string|int
      */
     protected $_cardinality;
 
     /**
      * Delete rule for entities with one to many relationships.
-     * 
+     *
      * @var string can be cascade, nullify, deny
      */
     protected $_delete_rule;
 
     /**
      * Child Property in the Relationship.
-     * 
+     *
      * @var string
      */
     protected $_child_key;
@@ -59,14 +44,13 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration 
+     * @param KConfig $config Property Configuration
      */
     public function setConfig(KConfig $config)
     {
         parent::setConfig($config);
 
         $this->_entityset = $config->entityset;
-
         $this->_cardinality = $config->cardinality;
 
         if (is_numeric($this->_cardinality)) {
@@ -103,7 +87,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Set the delete rule.
-     * 
+     *
      * @return class instance
      */
     public function setDeleteRule($rule)
@@ -115,7 +99,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Return the delete rule for the child entities.
-     * 
+     *
      * @return int
      */
     public function getDeleteRule()
@@ -125,7 +109,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Return cardinality.
-     * 
+     *
      * @return mixed
      */
     public function getCardinality()
@@ -135,7 +119,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Set the collection class KServiceIdentifier.
-     * 
+     *
      * @param KServiceIdentifier|string $collection
      *
      * @return class instance
@@ -159,7 +143,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Materialize a relationship for the parent entity.
-     * 
+     *
      * @param AnDomainAbstract $entity
      * @param array            $data
      *
@@ -183,7 +167,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Serialize an entity.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity
      *
      * @return array
@@ -195,7 +179,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Return the child property in the relationship.
-     * 
+     *
      * @return string
      */
     public function getChildKey()
@@ -205,7 +189,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Returns the child property.
-     * 
+     *
      * @return AnDomainPropertyAbstract
      */
     public function getChildProperty()
@@ -215,7 +199,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
 
     /**
      * Instantiate an aggregated entity set from a root object.
-     * 
+     *
      * @return AnDomainDecoratorManytomany
      */
     public function getSet($root)

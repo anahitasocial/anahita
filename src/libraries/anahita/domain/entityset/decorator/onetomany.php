@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Onetomany set decorator decorates an entityset with one to many aggregated relationship.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -49,14 +34,14 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
 
     /**
      * The aggregate root.
-     * 
+     *
      * @var AnDomainEntityAbstract
      */
     protected $_root;
 
     /**
      * Child property in the many set.
-     * 
+     *
      * @var string
      */
     protected $_property;
@@ -73,15 +58,15 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
         $this->_property = $config->property;
 
         $config->object = $config->service_container
-            ->get($config->repository->getEntityset(), $config->toArray());
+        ->get($config->repository->getEntityset(), $config->toArray());
 
         parent::__construct($config);
     }
 
     /**
-     * Return an entity of the aggregated type and set the initial 
+     * Return an entity of the aggregated type and set the initial
      * property.
-     * 
+     *
      * @param array $data
      * @param array $config Extra configuation for instantiating the object
      *
@@ -100,7 +85,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
 
     /**
      * Find an entity with the passed condition.
-     * 
+     *
      * @param array $conditions
      *
      * @return AnDomainEntityAbstract
@@ -120,7 +105,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      *
      * @param array $data
      * @param array $config Extra configuation for instantiating the object
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function addNew($data = array(), $config = array())
@@ -135,14 +120,14 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
 
     /**
      * Insert an entity to the aggregation.
-     * 
+     *
      * @see KObjectSet::insert()
      */
     public function insert($entity)
     {
         $entity->set($this->_property, $this->getRoot());
 
-        //only add the entity into the entityset if it has 
+        //only add the entity into the entityset if it has
         //already been loaded
         //otherwise don't
         if ($this->getObject()->isLoaded()) {
@@ -154,13 +139,16 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
 
     /**
      * Removes an object from the aggregation.
-     * 
+     *
      * @see KObjectSet::extract()
      */
     public function extract($entity)
     {
         //if entity is required then delete the entity
-        $property = $this->getRepository()->getDescription()->getProperty($this->_property);
+        $property = $this->getRepository()
+                         ->getDescription()
+                         ->getProperty($this->_property);
+                         
         if ($property->isRequired()) {
             $entity->delete();
         } else {
@@ -170,7 +158,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
 
     /**
      * Return the aggregate root.
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function getRoot()
@@ -179,7 +167,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     }
 
     /**
-     * Overloaded call function to handle behaviors and forward all 
+     * Overloaded call function to handle behaviors and forward all
      * calls to to the object regardless.
      *
      * @param  string   The function name

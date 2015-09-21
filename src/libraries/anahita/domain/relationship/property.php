@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract Relationship Property.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,21 +15,21 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 {
     /**
      * Parent Entity.
-     * 
+     *
      * @var KIdentfier
      */
     protected $_parent;
 
     /**
      * Parent Property in the Relationship.
-     * 
+     *
      * @var string
      */
     protected $_parent_key;
 
     /**
      * Child Entity.
-     * 
+     *
      * @var KIdentfier
      */
     protected $_child;
@@ -60,7 +45,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration 
+     * @param KConfig $config Property Configuration
      */
     public function setConfig(KConfig $config)
     {
@@ -84,7 +69,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
                 $config->child = $identifier;
             }
             $this->_child = KService::getIdentifier($config->child);
-            //adopt the parent application 
+            //adopt the parent application
             if (!$this->_child->application) {
                 $this->_child->application = $identifier->application;
             }
@@ -118,7 +103,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 
     /**
      * Return the parent property in the relationship.
-     * 
+     *
      * @return string
      */
     public function getParentKey()
@@ -138,7 +123,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 
     /**
      * Return the parent entity identifier.
-     * 
+     *
      * @return string
      */
     public function getParent()
@@ -158,7 +143,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 
     /**
      * Return the child entity identifier.
-     * 
+     *
      * @return string
      */
     public function getChild()
@@ -168,7 +153,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 
     /**
      * Return the entity repository.
-     * 
+     *
      * @return AnDomainRepositoryAbstract
      */
     public function getChildRepository()
@@ -178,7 +163,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
 
     /**
      * Return the entity repository.
-     * 
+     *
      * @return AnDomainRepositoryAbstract
      */
     public function getParentRepository()

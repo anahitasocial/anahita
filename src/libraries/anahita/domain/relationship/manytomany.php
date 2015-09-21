@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Many to many relationship.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,28 +15,28 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 {
     /**
      * Target identifier.
-     * 
+     *
      * @var string
      */
     protected $_target;
 
     /**
      * Target key in the link entity.
-     * 
+     *
      * @var string
      */
     protected $_target_child_key;
 
     /**
      * Target key in the link entity.
-     * 
+     *
      * @var string
      */
     protected $_target_parent_key;
 
     /**
      * Junction Alias.
-     *  
+     *
      * @var string
      */
     protected $_junction_alias;
@@ -59,7 +44,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration 
+     * @param KConfig $config Property Configuration
      */
     public function setConfig(KConfig $config)
     {
@@ -113,7 +98,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Materialize a relationship for the parent entity.
-     * 
+     *
      * @param AnDomainAbstract $entity
      * @param array            $data
      *
@@ -126,7 +111,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Serialize an entity.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity
      *
      * @return array
@@ -138,7 +123,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Return the target repository.
-     * 
+     *
      * @return AnDomainRepositoryAbstract
      */
     public function getTargetRepository()
@@ -148,7 +133,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Returns the child property.
-     * 
+     *
      * @return AnDomainPropertyAbstract
      */
     public function getTargetChildProperty()
@@ -158,7 +143,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Returns the target parent property.
-     * 
+     *
      * @return AnDomainPropertyAbstract
      */
     public function getTargetParentProperty()
@@ -168,7 +153,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Returns the child property.
-     * 
+     *
      * @return AnDomainPropertyAbstract
      */
     public function getTargetChildKey()
@@ -178,7 +163,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Return the target identifier.
-     * 
+     *
      * @return KServiceIdentifier
      */
     public function getTarget()
@@ -188,7 +173,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Returns the parent property.
-     * 
+     *
      * @return AnDomainPropertyAbstract
      */
     public function getTargetParentKey()
@@ -198,7 +183,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Return an alias for the junction model.
-     * 
+     *
      * @return string
      */
     public function getJunctionAlias()
@@ -208,7 +193,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
     /**
      * Instantiate an aggregated entity set from a root object.
-     * 
+     *
      * @return AnDomainDecoratorManytomany
      */
     public function getSet($root)

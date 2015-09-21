@@ -1,25 +1,10 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * A Queriable entityset. If no data is set then the queriable data
- * will wait until one of the iteration mehtod is called to load 
+ * will wait until one of the iteration mehtod is called to load
  * the data.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -32,7 +17,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 {
     /**
      * The query that represents this entity set.
-     * 
+     *
      * @var AnDomainQuery
      */
     protected $_set_query;
@@ -51,7 +36,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 
     /**
      * Revert the query back to the original.
-     * 
+     *
      * @return AnDomainQuery
      */
     public function reset()
@@ -66,10 +51,10 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
     /**
      * Return the entityset query. If $clone is passed it will return a clone instance of the entityset
      * query is returned.
-     * 
+     *
      * @param bool $clone         If set to true then it will return a new clone instance of entityset
      * @param bool $disable_chain Disable the chain
-     * 
+     *
      * @return AnDomainQuery
      */
     public function getQuery($clone = false, $disable_chain = false)
@@ -82,7 +67,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
                 AnDomainQueryHelper::applyFilters($query, $this->_query);
             }
 
-            //if clone is set, then return the qury object 
+            //if clone is set, then return the qury object
             if ($clone) {
                 if ($disable_chain) {
                     $query->disableChain();
@@ -90,7 +75,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 
                 return $query;
             }
-            //if not then set the entity query object    
+            //if not then set the entity query object
             $this->_set_query = $query;
         }
 
@@ -99,7 +84,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 
     /**
      * Return the total number of entities that match the entityset query.
-     * 
+     *
      * @return int
      */
     public function getTotal()
@@ -132,7 +117,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
 
     /**
      * If the missed method is implemented by the query object then delegate the call to the query object.
-     * 
+     *
      * @see KObject::__call()
      */
     public function __call($method, $arguments = array())

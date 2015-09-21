@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Many to one  or Belongs to Relationship.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -29,9 +14,9 @@
 class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty implements AnDomainPropertySerializable
 {
     /**
-     * The name of the column(field) in the database that reprsents the 
+     * The name of the column(field) in the database that reprsents the
      * type for the polymorphic many to one relationships.
-     * 
+     *
      * @var AnDomainResourceColumn
      */
     protected $_type_column = null;
@@ -39,7 +24,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     /**
      * The child column in the database that contains the reference value that uniquly
      * identifies the parent object.
-     * 
+     *
      * @var AnDomainResourceColumn
      */
     protected $_child_column = null;
@@ -54,7 +39,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration 
+     * @param KConfig $config Property Configuration
      */
     public function setConfig(KConfig $config)
     {
@@ -90,7 +75,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
     /**
      * Serialize an entity.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity
      *
      * @return array
@@ -118,7 +103,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
     /**
      * Return whether the relationship is polymorphic.
-     * 
+     *
      * @return bool
      */
     public function isPolymorphic()
@@ -128,7 +113,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
     /**
      * Returns the child column.
-     * 
+     *
      * @return AnDomainResourceColumn
      */
     public function getChildColumn()
@@ -138,7 +123,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
     /**
      * Returns the type column in a polymorphic relationship.
-     * 
+     *
      * @return AnDomainResourceColumn
      */
     public function getTypeColumn()
@@ -148,7 +133,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
     /**
      * Set an invere relationship. ie. if x belongs to y, then y has at least one x.
-     * 
+     *
      * @param array $config An array of configuration
      */
     public function setInverse($config = array())
@@ -183,7 +168,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
     /**
      * Return an array of the table fields(column).
-     * 
+     *
      * @return array
      */
     public function getColumns()
@@ -210,12 +195,12 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     }
 
     /**
-     * Materialize a many-to-one relationship for the entity and the data from 
+     * Materialize a many-to-one relationship for the entity and the data from
      * the database.
-     * 
+     *
      * @param  AnDomainEntityAbstract $instance The entity whose relationship it's materializing for
      * @param  array                  $data     The row data
-     *                                           
+     *
      * @return AnDomainProxyEntity
      */
     public function materialize(array $data, $instance)

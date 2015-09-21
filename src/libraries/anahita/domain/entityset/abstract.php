@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract Domain Entityset.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,13 +15,13 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 {
     /**
      * Repository.
-     * 
+     *
      * @var AnDomainRepositoryAbstract
      */
     protected $_repository;
 
     /**
-     * The query that will load the set. If an array is 
+     * The query that will load the set. If an array is
      * passed it will be used as query conditions.
      *
      * @var AnDomainQuery|array
@@ -83,7 +68,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * If the method has a format is[A-Z] then it's a behavior name.
-     * 
+     *
      * @param string $method
      * @param array  $arguments
      *
@@ -145,12 +130,15 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
             return;
         }
 
-        return new AnDomainEntityset(new KConfig(array('data' => $entities, 'repository' => $this->_repository)));
+        return new AnDomainEntityset(new KConfig(array(
+            'data' => $entities,
+            'repository' => $this->_repository
+          )));
     }
 
     /**
      * Inspects the entityset.
-     * 
+     *
      * @param bool $dump
      *
      * @return array;
@@ -171,7 +159,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Return the entityset repository.
-     * 
+     *
      * @return AnDomainAbstractRepository
      */
     public function getRepository()
@@ -189,7 +177,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Set the repository using identifier or a repository object.
-     * 
+     *
      * @param mixed $repository
      */
     public function setRepository($repository)
@@ -212,7 +200,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Return the entityset an an array of entities.
-     * 
+     *
      * @return array
      */
     public function toArray()
@@ -330,10 +318,10 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Count Data.
-     * 
+     *
      * @param booelan $load If the flag is set to on. If the qurey is set, it will
      *                      perform a count query instead of loading all the objects
-     * 
+     *
      * @return int
      */
     public function count($load = true)
@@ -436,7 +424,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Returns whether a the set has been loaded or not.
-     * 
+     *
      * @return bool
      */
     public function isLoaded()
@@ -471,7 +459,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Returns the data.
-     * 
+     *
      * @return array
      */
     protected function _getData()
@@ -486,7 +474,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     }
 
     /**
-     * Deletes all the entities by loading them and marking them for 
+     * Deletes all the entities by loading them and marking them for
      * deletion.
      */
     public function delete()
@@ -500,9 +488,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
     /**
      * Forwards the call to the space commit entities.
-     * 
+     *
      * @param mixed &$failed Return the failed set
-     * 
+     *
      * @return bool
      */
     public function save(&$failed = null)
