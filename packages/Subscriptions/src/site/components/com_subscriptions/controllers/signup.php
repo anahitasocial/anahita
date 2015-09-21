@@ -274,7 +274,7 @@
                             ->reset();
 
         $viewer = get_viewer();
-        $this->order->setPackage($package, $viewer->hasSubscription() ? $viewer->subscription->package : null);
+        $this->order->setPackage($package, $viewer->hasSubscription() ? $viewer->packagesubscription->package : null);
         $this->_instantiateCoupon($data);
         $this->_instantiateUser($data);
         $this->_instantiateCreditCard($data);
