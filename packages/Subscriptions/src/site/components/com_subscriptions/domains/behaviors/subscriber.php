@@ -24,7 +24,7 @@
     {
         $config->append(array(
             'relationships' => array(
-                'packagesubscription' => array(
+                'subscription' => array(
                     'type' => 'has',
                     'child' => 'com:subscriptions.domain.entity.subscription'
                 ))));
@@ -42,17 +42,17 @@
      */
     public function changeSubscriptionTo($package)
     {
-        if ($this->_mixer->hasSubscription(false) && !$this->_mixer->packagesubscription->package->eql($package)) {
-            $diff = max(0, $package->duration - $this->_mixer->packagesubscription->package->duration);
+        if ($this->_mixer->hasSubscription(false) && !$this->_mixer->subscription->package->eql($package)) {
+            $diff = max(0, $package->duration - $this->_mixer->subscription->package->duration);
 
-            $end_date = clone $this->_mixer->packagesubscription->endDate;
+            $end_date = clone $this->_mixer->subscription->endDate;
             $end_date->addSeconds($diff);
 
-            $this->_mixer->packagesubscription->package = $package;
-            $this->_mixer->packagesubscription->endDate = $end_date;
+            $this->_mixer->subscription->package = $package;
+            $this->_mixer->subscription->endDate = $end_date;
         }
 
-        return $this->_mixer->packagesubscription;
+        return $this->_mixer->subscription;
     }
 
     /**
@@ -63,7 +63,7 @@
     public function subscribeTo($package)
     {
         if (!$this->hasSubscription(false)) {
-            $this->_mixer->packagesubscription = $this->getService('repos://site/subscriptions.subscription')
+            $this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')
             ->getEntity(array(
                 'data' => array(
                     'package' => $package
@@ -71,7 +71,7 @@
             ));
         }
 
-        return $this->_mixer->packagesubscription;
+        return $this->_mixer->subscription;
     }
 
     /**
@@ -83,11 +83,11 @@
      */
     public function hasSubscription($checkValidity = true)
     {
-        if (!isset($this->_mixer->packagesubscription)) {
+        if (!isset($this->_mixer->subscription)) {
             return false;
         }
 
-        if ($checkValidity && $this->_mixer->packagesubscription->getTimeLeft() <= 0) {
+        if ($checkValidity && $this->_mixer->subscription->getTimeLeft() <= 0) {
             return false;
         }
 
@@ -99,7 +99,7 @@
      */
     public function unsubscribe()
     {
-        $this->_mixer->packagesubscription->delete();
+        $this->_mixer->subscription->delete();
     }
 
     /**
@@ -111,6 +111,6 @@
      */
     public function isSubscribedTo($package)
     {
-        return $this->hasSubscription() && $this->_mixer->packagesubscription->package->eql($package);
+        return $this->hasSubscription() && $this->_mixer->subscription->package->eql($package);
     }
  }
