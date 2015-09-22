@@ -59,7 +59,7 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
           'data' => array(
               'orderId' => substr(uniqid(rand(), true), 0, 10),
               'createdOn' => AnDomainAttributeDate::getInstance(),
-        ), ));
+        )));
     }
 
     /**

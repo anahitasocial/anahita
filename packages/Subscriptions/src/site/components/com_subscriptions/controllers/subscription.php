@@ -86,7 +86,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         if (!$person->persisted()) {
             $person->getRepository()->getSpace()
             ->setEntityState($person, AnDomain::STATE_NEW);
-            $person->enable();
+            $person->enable()->saveEntity();
+            
+            $this->_order->setSubscriber($person);
         }
 
         if ($person->hasSubscription() && !$package->recurring) {
@@ -101,7 +103,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         }
 
         if (!$this->commit()) {
-            throw new RuntimeException("Couldn't add subscription");
+            throw new RuntimeException("Subscription can not be added");
         }
 
         $this->getResponse()->status = KHttpResponse::CREATED;
