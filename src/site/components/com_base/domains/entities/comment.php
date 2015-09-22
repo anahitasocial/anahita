@@ -24,21 +24,21 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'inheritance' => array(
-                'abstract' => $this->getIdentifier()->package == 'base'),
+                'abstract' => $this->getIdentifier()->package == 'base', ),
             'attributes' => array(
                 'body' => array(
                 'required' => AnDomain::VALUE_NOT_EMPTY,
-                'format' => 'string'),
+                'format' => 'string', ),
             ),
             'behaviors' => array(
                 'parentable' => array(
-                    'parent' => 'com:base.domain.entity.node'),
+                    'parent' => 'com:base.domain.entity.node', ),
                     'com://site/hashtags.domain.behavior.hashtagable',
                     'com://site/people.domain.behavior.mentionable',
                     'modifiable',
                     'authorizer',
                     'locatable',
-                    'votable'),
+                    'votable', ),
         ));
 
         parent::_initialize($config);

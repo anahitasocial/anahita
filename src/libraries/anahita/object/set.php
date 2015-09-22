@@ -55,8 +55,8 @@ class AnObjectSet extends KObjectSet
     /**
      * Individually set the column value of each object.
      *
-     * @param  string      $column The column to set a value for
-     * @param  mixed       $value  The column Value
+     * @param string $column The column to set a value for
+     * @param mixed  $value  The column Value
      *
      * @return AnObjectSet
      */

@@ -102,6 +102,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         if (!$user->save()) {
             throw new RuntimeException('Unexpected error when saving user');
+
             return false;
         }
 
@@ -159,6 +160,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         if (!$user->save()) {
             throw new RuntimeException('Unexpected error when saving user');
+
             return false;
         }
 

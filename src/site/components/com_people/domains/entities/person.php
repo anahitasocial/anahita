@@ -60,34 +60,34 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
             'attributes' => array(
                 'administratingIds' => array(
                     'type' => 'set',
-                    'default' => 'set'
+                    'default' => 'set',
                 ),
                 'username' => array(
                     'column' => 'person_username',
                     'key' => true,
-                    'format' => 'username'
+                    'format' => 'username',
                 ),
                 'userType' => array(
                     'column' => 'person_usertype',
                     'default' => self::USERTYPE_REGISTERED,
-                    'write_access' => 'private'
+                    'write_access' => 'private',
                 ),
                 'email' => array(
                     'column' => 'person_useremail',
                     'key' => true,
-                    'format' => 'email'
+                    'format' => 'email',
                 ),
                 'givenName' => array(
                     'column' => 'person_given_name',
-                    'format' => 'string'
+                    'format' => 'string',
                 ),
                 'familyName' => array(
                     'column' => 'person_family_name',
-                    'format' => 'string'
+                    'format' => 'string',
                 ),
                 'lastVisitDate' => array(
                     'type' => 'date',
-                    'column' => 'person_lastvisitdate'
+                    'column' => 'person_lastvisitdate',
                 ),
                 'language' => array('column' => 'person_language'),
                 'timezone' => array('column' => 'person_time_zone'),
@@ -102,7 +102,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'administrator',
                 'notifiable',
                 'leadable',
-                'user'
+                'user',
             )),
         ));
 
@@ -114,7 +114,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
         $this->_password = array(
             'clear' => null,
-            'hashed' => null
+            'hashed' => null,
         );
     }
 
@@ -262,9 +262,10 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 $crypt = JUserHelper::getCryptedPassword($this->_password['clear'], $salt);
                 $this->_password['hashed'] = $crypt.':'.$salt;
             }
+
             return $this->_password['hashed'];
         } else {
-           return $this->_password['clear'];
+            return $this->_password['clear'];
         }
     }
 

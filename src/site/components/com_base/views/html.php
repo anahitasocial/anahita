@@ -45,7 +45,7 @@ class ComBaseViewHtml extends LibBaseViewHtml
                       JFactory::getApplication()->getTemplate(),
                       'html',
                       $this->getIdentifier()->type.'_'.$this->getIdentifier()->package,
-                      $this->getName()));
+                      $this->getName(), ));
 
         $config->append(array(
             'template_paths' => $paths,

@@ -245,7 +245,7 @@ abstract class AnDomainDescriptionAbstract
      * it will look in the parent descritpion to see if the property is
      * defined in them. If yes, it will add it the list of its properties.
      *
-     * @param  string                   $name The name of the property
+     * @param string $name The name of the property
      *
      * @return AnDomainPropertyAbstract
      */

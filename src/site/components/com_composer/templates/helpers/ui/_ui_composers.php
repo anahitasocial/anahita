@@ -1,6 +1,6 @@
-<?php if ( count($composers) ) : ?>
+<?php if (count($composers)) : ?>
 
-<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_composer/js/composer.js" />
 <?php else: ?>
 <script src="com_composer/js/min/composer.min.js" />
@@ -17,7 +17,7 @@
             </button>
             
             <ul id="composer-menu" class="dropdown-menu">  
-            <?php foreach($composers as $composer) : ?>
+            <?php foreach ($composers as $composer) : ?>
                 <li>
                 	<a href="#" title="<?= $composer->title ?>">
                 	<?= $composer->title ?>
@@ -28,7 +28,7 @@
         </div>
     </div>
     <div class="tab-content">   
-    <?php foreach($composers as $index=>$composer) : ?>
+    <?php foreach ($composers as $index => $composer) : ?>
         <div class="tab-content-item" data-url="<?=@route($composer->url) ?>">
             <a class="form-placeholder"><?= $composer->placeholder ?></a>
         </div>

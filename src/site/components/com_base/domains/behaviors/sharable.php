@@ -1,5 +1,6 @@
 <?php
 
+
  /**
   * A sharable behavior alllows a node to be shared with several owners.
   *
@@ -36,10 +37,10 @@
                 'sharedOwnerIds' => array(
                     'type' => 'set',
                     'default' => 'set',
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'sharedOwnerCount' => array(
                     'type' => 'integer',
-                    'write' => 'private'),
+                    'write' => 'private', ),
             ),
         ));
 

@@ -1,5 +1,6 @@
 <?php
 
+
  /**
   * Votable Behavior.
   *
@@ -26,28 +27,28 @@
             'attributes' => array(
                 'voteUpCount' => array(
                     'default' => 0,
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'voteDownCount' => array(
                     'default' => 0,
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'voterUpIds' => array(
                     'type' => 'set',
                     'default' => 'set',
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'voterDownIds' => array(
                     'type' => 'set',
                     'default' => 'set',
-                    'write' => 'private'),
+                    'write' => 'private', ),
             ),
             'relationships' => array(
                 'voteups' => array(
                     'child' => 'com:base.domain.entity.voteup',
                     'child_key' => 'votee',
-                    'parent_delete' => 'ignore'),
+                    'parent_delete' => 'ignore', ),
                 'votedowns' => array(
                     'child' => 'com:base.domain.entity.votedown',
                     'child_key' => 'votee',
-                    'parent_delete' => 'ignore'),
+                    'parent_delete' => 'ignore', ),
             ),
         ));
 
@@ -99,7 +100,7 @@
             $votedown = $this->votedowns
                              ->findOrAddNew(array(
                                'voter' => $voter,
-                               'votee' => $this));
+                               'votee' => $this, ));
         }
     }
 

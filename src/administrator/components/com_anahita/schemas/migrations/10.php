@@ -1,23 +1,17 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
- * 
- * @package    Com_Anahita
- * @subpackage Schema_Migration
+ * LICENSE: ##LICENSE##.
  */
 
 /**
- * Schema Migration
- *
- * @package    Com_Anahita
- * @subpackage Schema_Migration
+ * Schema Migration.
  */
 class ComAnahitaSchemaMigration10 extends ComMigratorMigrationVersion
 {
-   /**
-    * Called when migrating up
-    */
+    /**
+     * Called when migrating up.
+     */
     public function up()
     {
         dbexec('ALTER TABLE #__anahita_nodes
@@ -26,9 +20,9 @@ class ComAnahitaSchemaMigration10 extends ComMigratorMigrationVersion
                 ADD `cover_mimetype` VARCHAR(100) NULL AFTER `cover_filesize`');
     }
 
-   /**
-    * Called when rolling back a migration
-    */        
+    /**
+     * Called when rolling back a migration.
+     */
     public function down()
     {
         //add your migration here        

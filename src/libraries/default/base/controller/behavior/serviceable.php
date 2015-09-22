@@ -60,7 +60,7 @@ class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
         $config->append(array(
             'identifiable' => array(),
             'validatable' => array(),
-            'committable' => array()
+            'committable' => array(),
         ));
 
         $this->_mixer->addBehavior('identifiable', $config['identifiable']);

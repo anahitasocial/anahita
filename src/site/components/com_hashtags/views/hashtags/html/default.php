@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if(count($items)): ?>
+<?php if (count($items)): ?>
 <ul class="nav nav-pills">
-<?php foreach($items as $item): ?>
+<?php foreach ($items as $item): ?>
 	<li>
 		<a href="<?= @route($item->getURL()) ?>">#<?= $item->name ?></a>
 	</li>

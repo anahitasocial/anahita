@@ -132,7 +132,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
 
         return new AnDomainEntityset(new KConfig(array(
             'data' => $entities,
-            'repository' => $this->_repository
+            'repository' => $this->_repository,
           )));
     }
 

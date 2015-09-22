@@ -97,7 +97,7 @@ class ComBaseControllerToolbarCommand extends LibBaseTemplateObject
      * Set the command method of submittion. The method must be one of the
      * KHttpRequest.
      *
-     * @param  string                          $method The post method. Must be one of the @see KHttpRequest
+     * @param string $method The post method. Must be one of the @see KHttpRequest
      *
      * @return ComBaseControllerToolbarCommand
      */

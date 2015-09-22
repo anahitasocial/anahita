@@ -1,5 +1,6 @@
 <?php
 
+
  /**
   * An ownable node by an actor is a node that can have one main owner and multiple shared owner.
   *

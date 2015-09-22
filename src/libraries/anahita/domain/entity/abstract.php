@@ -190,7 +190,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      * Forwards the call to the space validate entities. However only return
      * true/false depending whether the entity has failed validation.
      *
-     * @param  mixed &$failed Return the failed set
+     * @param mixed &$failed Return the failed set
      *
      * @return bool
      */

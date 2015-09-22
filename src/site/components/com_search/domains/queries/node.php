@@ -133,6 +133,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     public function orderByRelevance()
     {
         $this->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC');
+
         return $this;
     }
 

@@ -1,3 +1,5 @@
-<?php if (!defined('KOOWA')) die; ?>
+<?php if (!defined('KOOWA')) {
+    die;
+} ?>
  
 <?= @template('errors/401')?>

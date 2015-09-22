@@ -14,30 +14,28 @@
 class LibPeopleViewer extends KObject implements KServiceInstantiatable
 {
     /**
-     * Force creation of a singleton.
-     *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
-     *
-     * @return KServiceInstantiatable
-     */
+      * Force creation of a singleton.
+      *
+      * @param KConfigInterface  $config    An optional KConfig object with configuration options
+      * @param KServiceInterface $container A KServiceInterface object
+      *
+      * @return KServiceInstantiatable
+      */
      public static function getInstance(KConfigInterface $config, KServiceInterface $container)
      {
          if (!$container->has($config->service_identifier)) {
-
              $id = JFactory::getUser()->id;
 
              if (!$id) {
                  $viewer = $container->get('repos://site/people.person')
                  ->getEntity()
                  ->setData(array(
-                   'userType' => ComPeopleDomainEntityPerson::USERTYPE_GUEST),
+                   'userType' => ComPeopleDomainEntityPerson::USERTYPE_GUEST, ),
                    AnDomain::ACCESS_PROTECTED
                  );
 
                  $viewer->set('id', 0);
                  $viewer->getRepository()->extract($viewer);
-                 
              } else {
                  $viewer = $container->get('repos://site/people.person')->find(array('userId' => $id));
              }

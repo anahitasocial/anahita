@@ -198,8 +198,8 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
      * Materialize a many-to-one relationship for the entity and the data from
      * the database.
      *
-     * @param  AnDomainEntityAbstract $instance The entity whose relationship it's materializing for
-     * @param  array                  $data     The row data
+     * @param AnDomainEntityAbstract $instance The entity whose relationship it's materializing for
+     * @param array                  $data     The row data
      *
      * @return AnDomainProxyEntity
      */

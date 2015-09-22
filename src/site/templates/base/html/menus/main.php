@@ -10,7 +10,7 @@
 
 // remove this if statement for the menu to render
 
-if(false): ?>
+if (false): ?>
 <ul class="nav">
 	<li>
 		<a href="<?= @route('option=com_html&view=content&layout=examples/article') ?>">

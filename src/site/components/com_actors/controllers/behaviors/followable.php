@@ -41,6 +41,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
+
             return false;
         }
 
@@ -76,6 +77,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
+
             return false;
         }
 
@@ -132,6 +134,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
+
             return false;
         }
 

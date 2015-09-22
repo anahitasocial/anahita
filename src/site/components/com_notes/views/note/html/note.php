@@ -15,11 +15,11 @@
 	</div>
 
 	<div class="entity-description">
-		<?= @content( nl2br($note->body) ) ?>
+		<?= @content(nl2br($note->body)) ?>
 	</div>
 	
 	<div class="entity-meta">
-		<?php if ( $note->numOfComments ) : ?> 
+		<?php if ($note->numOfComments) : ?> 
 		<ul class="an-meta">
 			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $note->numOfComments); ?></li> 
 			<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($note->lastCommenter), @date($note->lastCommentTime)) ?></li>

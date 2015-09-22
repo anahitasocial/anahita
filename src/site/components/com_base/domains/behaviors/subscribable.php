@@ -26,17 +26,17 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
             'attributes' => array(
                 'subscriberCount' => array(
                     'default' => 0,
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'subscriberIds' => array(
                     'type' => 'set',
                     'default' => 'set',
-                    'write' => 'private'),
+                    'write' => 'private', ),
             ),
             'relationships' => array(
                 'subscriptions' => array(
                     'child' => 'com:base.domain.entity.subscription',
                     'child_key' => 'subscribee',
-                    'parent_delete' => 'ignore'),
+                    'parent_delete' => 'ignore', ),
             ),
         ));
 
@@ -80,7 +80,7 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
      */
     public function addSubscriber($person)
     {
-        if($this->eql($person)) {
+        if ($this->eql($person)) {
             return;
         }
 
@@ -103,7 +103,7 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
         $subscription = $this->subscriptions
                              ->find(array(
                                 'subscriber' => $person,
-                                'subscribee' => $mixer));
+                                'subscribee' => $mixer, ));
 
         if ($subscription) {
             $this->subscriptions->extract($subscription);

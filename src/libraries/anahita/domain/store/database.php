@@ -62,7 +62,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 
         //other
         'set' => 'string',
-        'enum' => 'string'
+        'enum' => 'string',
     );
 
     /**

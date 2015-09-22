@@ -44,14 +44,14 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
         $config->append(array(
             'story_aggregation' => array(
                 'cover_edit' => 'target',
-                'avatar_edit' => 'target'),
+                'avatar_edit' => 'target', ),
             'behaviors' => array(
                 'scopeable' => array(
                     'class' => 'ComActorsDomainEntityActor',
-                    'type' => 'actor'),
+                    'type' => 'actor', ),
                 'hashtagable' => array(
                     'class' => 'ComActorsDomainEntityActor',
-                    'type' => 'actor'),
+                    'type' => 'actor', ),
             ),
         ));
 

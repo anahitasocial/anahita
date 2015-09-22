@@ -45,27 +45,27 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
                 'openToComment' => array(
                     'column' => 'comment_status',
                     'default' => true,
-                    'write' => 'protected'),
+                    'write' => 'protected', ),
                 'numOfComments' => array(
                     'column' => 'comment_count',
                     'default' => 0,
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'lastCommentTime' => array(
                     'column' => 'last_comment_on',
-                    'write' => 'private'),
+                    'write' => 'private', ),
             ),
             'relationships' => array(
                 'lastComment' => array(
                     'parent' => 'comment',
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'lastCommenter' => array(
                     'parent' => 'com:people.domain.entity.person',
                     'child_column' => 'last_comment_by',
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'comments' => array(
                     'child' => 'comment',
                     'child_key' => 'parent',
-                    'parent_delete' => 'ignore'),
+                    'parent_delete' => 'ignore', ),
             ),
             'comment' => array(),
         ));
@@ -101,6 +101,7 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
     {
         $this->getRepository()->getStore()->execute('set @i = 0');
         $query = clone $this->comments->getQuery();
+
         return $query->where('@col(id) < '.(int) $cid)->fetchValue('MAX(@i := @i + 1)');
     }
 

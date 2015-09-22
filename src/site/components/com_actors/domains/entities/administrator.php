@@ -47,7 +47,7 @@ class ComActorsDomainEntityAdministrator extends ComBaseDomainEntityEdge
                             ->getBehavior('administrable')
                             ->resetStats(array(
                               $this->administrable,
-                              $this->administrator));
+                              $this->administrator, ));
     }
 
     /**
@@ -59,6 +59,6 @@ class ComActorsDomainEntityAdministrator extends ComBaseDomainEntityEdge
                             ->getBehavior('administrable')
                             ->resetStats(array(
                               $this->administrable,
-                              $this->administrator));
+                              $this->administrator, ));
     }
 }

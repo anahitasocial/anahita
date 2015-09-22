@@ -70,7 +70,7 @@ class LibPeopleHelperPerson extends KObject
 
     /**
      * Deletes a session and logs out the viewer.
-
+     
      * @return bool
      */
     public function logout()

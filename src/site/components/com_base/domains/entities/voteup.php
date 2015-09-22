@@ -25,7 +25,7 @@ class ComBaseDomainEntityVoteup extends ComBaseDomainEntityEdge
         $config->append(array(
             'aliases' => array(
                 'voter' => 'nodeA',
-                'votee' => 'nodeB')));
+                'votee' => 'nodeB', ), ));
 
         parent::_initialize($config);
     }

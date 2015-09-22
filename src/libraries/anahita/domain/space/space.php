@@ -94,8 +94,8 @@ class AnDomainSpace extends KObject
     {
         $result = $this->validateEntities($failed);
 
-        if(!$result) {
-          return false;
+        if (!$result) {
+            return false;
         }
 
         $entities = $this->getCommitables();

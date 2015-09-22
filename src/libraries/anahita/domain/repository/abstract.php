@@ -133,20 +133,20 @@ abstract class AnDomainRepositoryAbstract extends KCommand
         $entityset->path = array('domain','entityset');
         register_default(array(
             'identifier' => $entityset,
-            'prefix' => $config->prototype
+            'prefix' => $config->prototype,
           ));
 
         $description = clone $this->getIdentifier();
         $description->path = array('domain','description');
         register_default(array(
             'identifier' => $description,
-            'prefix' => $config->prototype));
+            'prefix' => $config->prototype, ));
 
         $query = clone $this->getIdentifier();
         $query->path = array('domain','query');
         register_default(array(
             'identifier' => $query,
-            'prefix' => $config->prototype));
+            'prefix' => $config->prototype, ));
 
         $config->append(array(
             'query' => $query,
@@ -161,8 +161,8 @@ abstract class AnDomainRepositoryAbstract extends KCommand
             'behaviors' => array(
                 'validatable',
                 'cachable',
-                'serializable'
-            )
+                'serializable',
+            ),
         ));
 
         //set the resources

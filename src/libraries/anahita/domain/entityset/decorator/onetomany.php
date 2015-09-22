@@ -148,7 +148,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
         $property = $this->getRepository()
                          ->getDescription()
                          ->getProperty($this->_property);
-                         
+
         if ($property->isRequired()) {
             $entity->delete();
         } else {

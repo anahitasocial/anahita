@@ -1,28 +1,29 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: ##LICENSE##.
  * 
  * @category   Anahita
- * @package    Com_Anahita
- * @subpackage Schema_Migration
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
+ *
  * @link       http://www.GetAnahita.com
  */
 
 /**
- * Anahita Schema Migration
+ * Anahita Schema Migration.
  *
  * @category   Anahita
- * @package    Com_Anahita
- * @subpackage Schema_Migration
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
 class ComAnahitaSchemaMigration1 extends ComMigratorMigrationVersion
@@ -47,9 +48,7 @@ class ComAnahitaSchemaMigration1 extends ComMigratorMigrationVersion
                    ("todos",1)
                    ');
     }
-    
 }
-
 
 //story migration
 function anahita_20()
@@ -64,7 +63,7 @@ function anahita_20()
             '`alias` = ""',
             '`component` = "com_notes"',
     );
-    $set   = implode($set,',');
+    $set = implode($set, ',');
     $query = 'UPDATE jos_anahita_nodes SET '.$set." where type like 'ComMediumDomainEntityMedium,ComStoriesDomainEntityStory,com:stories.domain.entity.story' and (name = 'story_add' or name = 'private_message')";
     dbexec($query);
 
@@ -91,7 +90,7 @@ function anahita_20()
     //delete any remaining story edge. storeis shouldn't have any edge (since they are no longer subscribable,votable)
     $query = "delete edge.* from jos_anahita_edges as edge where node_b_type like 'com:stories.domain.entity.story'";
     dbexec($query);
-     
+
     //somehow we have stories for commenting on a sotry we need to delete those
     $query = "delete edge.* from jos_anahita_edges as edge where node_a_id IN (select id from jos_anahita_nodes where story_object_type like 'com:stories.domain.entity.story') or node_b_id IN (select id from jos_anahita_nodes where story_object_type like 'com:stories.domain.entity.story')";
     dbexec($query);
@@ -113,7 +112,6 @@ function anahita_20()
     //delete legacy plugins
     dbexec("DELETE from jos_plugins WHERE CONCAT_WS('.',folder,element) IN ('system.legacy','system.cache','system.mtupgrade','system.remember','system.mailer','content.emailcloak','content.loadmodule','content.pagenavigation','search.content','search.categories','search.sections','system.log')");
     dbexec("DELETE from jos_modules WHERE client_id = 1 AND module IN ('mod_rokquicklinks','mod_popular','mod_latest','mod_unread','mod_online','mod_logged','mod_footer','mod_status','mod_quickicon','mod_feed','mod_title','mod_toolbar')");
-
 }
 
 //tag migration
@@ -122,7 +120,6 @@ function anahita_21()
     dbexec('ALTER TABLE jos_anahita_nodes
                 ADD tag_count INT(11) UNSIGNED NULL AFTER blocked_ids,
                 ADD tag_ids TEXT NULL AFTER tag_count');
-
 }
 
 function anahita_22()
@@ -155,27 +152,27 @@ EOF;
     dbexec($query);
     //add com_notes as always to all actortypes
     dbexec("insert into jos_anahita_nodes(component,type,name,access) select distinct 'com_notes','ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment',node_a_type,'1' from jos_anahita_edges where type like 'ComAppsDomainEntityEnable,com:apps.domain.entity.enable'");
-	dbexec("delete from jos_anahita_nodes where type like 'ComApps%'");
-	dbexec("delete from jos_anahita_edges where type like 'ComApps%'");
+    dbexec("delete from jos_anahita_nodes where type like 'ComApps%'");
+    dbexec("delete from jos_anahita_edges where type like 'ComApps%'");
 
-	dbexec("delete from jos_components where `option` like 'com_apps'");
-	dbexec("INSERT INTO `jos_components` VALUES(0, 'Components', 'option=com_components', 0, 0, 'option=com_components', 'Components', 'com_components', 0, 'js/ThemeOffice/component.png', 1, '', 1);");
+    dbexec("delete from jos_components where `option` like 'com_apps'");
+    dbexec("INSERT INTO `jos_components` VALUES(0, 'Components', 'option=com_components', 0, 0, 'option=com_components', 'Components', 'com_components', 0, 'js/ThemeOffice/component.png', 1, '', 1);");
     //order the assignable components
-	dbexec("set @order := 0");
-	dbexec("update jos_components set ordering = (@order := @order + 1) where parent = 0 and `option` IN (SELECT distinct component from jos_anahita_nodes where type LIKE 'ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment')");
+    dbexec('set @order := 0');
+    dbexec("update jos_components set ordering = (@order := @order + 1) where parent = 0 and `option` IN (SELECT distinct component from jos_anahita_nodes where type LIKE 'ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment')");
 }
 
 function anahita_24()
 {
-	dbexec("DELETE FROM jos_modules_menu WHERE moduleid IN (SELECT id FROM jos_modules WHERE module IN ('mod_search', 'mod_feed','mod_login', 'mod_search', 'mod_breadcrumbs', 'mod_sections', 'mod_syndicate', 'mod_latestnews', 'mod_newsflash', 'mod_related_items'))");
-	dbexec("DELETE FROM jos_modules WHERE module IN ('mod_search', 'mod_feed', 'mod_login', 'mod_breadcrumbs', 'mod_sections', 'mod_syndicate', 'mod_latestnews', 'mod_newsflash', 'mod_related_items')");
+    dbexec("DELETE FROM jos_modules_menu WHERE moduleid IN (SELECT id FROM jos_modules WHERE module IN ('mod_search', 'mod_feed','mod_login', 'mod_search', 'mod_breadcrumbs', 'mod_sections', 'mod_syndicate', 'mod_latestnews', 'mod_newsflash', 'mod_related_items'))");
+    dbexec("DELETE FROM jos_modules WHERE module IN ('mod_search', 'mod_feed', 'mod_login', 'mod_breadcrumbs', 'mod_sections', 'mod_syndicate', 'mod_latestnews', 'mod_newsflash', 'mod_related_items')");
 }
 
 function anahita_25()
 {
-    dbexec("create index group_id on jos_core_acl_groups_aro_map (group_id)");
-    dbexec("create index aro_id on jos_core_acl_groups_aro_map (aro_id)");
-    dbexec("create index value on jos_core_acl_aro (value)");
+    dbexec('create index group_id on jos_core_acl_groups_aro_map (group_id)');
+    dbexec('create index aro_id on jos_core_acl_groups_aro_map (aro_id)');
+    dbexec('create index value on jos_core_acl_aro (value)');
 
     dbexec("INSERT INTO `jos_components` VALUES(0, 'Mailer', 'option=com_mailer', 0, 0, 'option=mailer', 'Mailer', 'com_mailer', 0, 'js/ThemeOffice/component.png', 1, '', 1);");
     /*
@@ -191,22 +188,22 @@ function anahita_26()
     dbexec('update jos_anahita_nodes as n inner join jos_users as u on u.id = n.person_userid set n.person_username = u.username where u.username <> n.person_username');
     //header
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'header', '1') WHERE `position` LIKE 'header%' ");
-    
+
     //showcase
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'showcase', '1') WHERE `position` LIKE 'showcase%' ");
-    
+
     //utility
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'utility', '1') WHERE `position` LIKE 'utility%' ");
-    
+
     //maintop
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'maintop', '4') WHERE `position` LIKE 'maintop%' ");
-    
+
     //mainbottom
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'mainbottom', '4') WHERE `position` LIKE 'mainbottom%' ");
-    
+
     //bottom
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'bottom', '5') WHERE `position` LIKE 'bottom%' ");
-    
+
     //footer
     dbexec("UPDATE jos_modules SET `position` = REPLACE(`position`, 'footer', '5') WHERE `position` LIKE 'footer%' ");
 }

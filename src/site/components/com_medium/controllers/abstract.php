@@ -27,7 +27,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
         $this->getState()->insert('filter')->insert('grid')->insert('order');
         $this->registerCallback(array(
                                   'after.delete',
-                                  'after.add'),
+                                  'after.add', ),
                                 array($this, 'redirect'));
     }
 
@@ -68,7 +68,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     /**
      * Browse Action.
      *
-     * @param  KCommandContext $context Context Parameter
+     * @param KCommandContext $context Context Parameter
      *
      * @return AnDomainQuery
      */

@@ -20,7 +20,7 @@
         <?= $this->getView()->content; ?>
         </div>
         
-        <?php if($this->getView()->getParams()->poweredby): ?>
+        <?php if ($this->getView()->getParams()->poweredby): ?>
         <div class="container">
         	<div class="row">
         		<div class="span12">

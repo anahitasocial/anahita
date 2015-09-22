@@ -128,8 +128,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $person = parent::_actionEdit($context);
 
         //just to make sure password is set
-        if($data->password) {
-           $person->setPassword($data->password);
+        if ($data->password) {
+            $person->setPassword($data->password);
         }
 
         //add the validations here
@@ -143,7 +143,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         //now check to see if usertype can be set, otherwise the value is unchanged
-        if(in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
+        if (in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
             $person->userType = $userType;
         }
 
@@ -171,8 +171,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $person = parent::_actionAdd($context);
 
         //just to make sure password is set
-        if($data->password) {
-           $person->setPassword($data->password);
+        if ($data->password) {
+            $person->setPassword($data->password);
         }
 
         $redirectUrl = 'option=com_people';
@@ -184,6 +184,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+
             return false;
         }
 
@@ -194,7 +195,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         if ($firsttime) {
-          $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
+            $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
             if ($person->admin()) {
@@ -288,10 +289,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-    * Autologin the first user which is also the first super admin
-    *
-    * @param KCommandContext $context The context parameter
-    */
+     * Autologin the first user which is also the first super admin.
+     *
+     * @param KCommandContext $context The context parameter
+     */
     public function activateFirstAdmin(KCommandContext $context)
     {
         $person = $context->result;

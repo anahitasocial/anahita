@@ -23,7 +23,7 @@ class ComBaseControllerComment extends ComBaseControllerService
         parent::__construct($config);
         $this->registerCallback(array(
             'after.voteup',
-            'after.votedown'),
+            'after.votedown', ),
             array($this, 'getvoters'));
     }
 
@@ -84,6 +84,7 @@ class ComBaseControllerComment extends ComBaseControllerService
     {
         $data = $context->data;
         $this->getItem()->body = $data->body;
+
         return $this->getItem();
     }
 
@@ -103,7 +104,7 @@ class ComBaseControllerComment extends ComBaseControllerService
             $defaults[] = 'ComBaseView'.ucfirst($view).ucfirst($this->_view->name);
             register_default(array(
                 'identifier' => $this->_view,
-                'default' => $defaults));
+                'default' => $defaults, ));
         }
 
         return $this;

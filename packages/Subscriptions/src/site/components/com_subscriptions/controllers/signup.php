@@ -154,7 +154,16 @@
             $_SESSION['signup'] = null;
             KRequest::set('session.subscriber_id', $ret->person->id);
             $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
+
+            if (get_viewer()->guest()) {
+                $return = base64UrlEncode($url);
+                $user = $ret->person->getUserObject();
+                $token = $user->activation;
+                $url = JRoute::_('option=com_people&view=session&token='.$token.'&return='.$return);
+            }
+
             $context->response->setRedirect($url);
+
         } else {
             throw new RuntimeException("Couldn't subscribe");
         }

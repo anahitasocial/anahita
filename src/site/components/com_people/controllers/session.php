@@ -100,7 +100,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
                 'return' => $this->getService('com://site/people.filter.return')
-                                 ->sanitize($_SESSION['return'])));
+                                 ->sanitize($_SESSION['return']), ));
         }
 
         return $person;
@@ -233,7 +233,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $credentials = array(
             'username' => $user->username,
             'password' => $user->password,
-            'remember' => true
+            'remember' => true,
         );
 
         $this->getService('com:people.helper.person')

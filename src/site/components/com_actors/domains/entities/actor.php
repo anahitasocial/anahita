@@ -35,7 +35,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'),
+                    'read' => 'public', ),
                 'body' => array('format' => 'string'),
                 'status',
                 'statusUpdateTime',

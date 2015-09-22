@@ -27,6 +27,7 @@ abstract class ComMediumControllerPermissionAbstract extends LibBaseControllerPe
             in_array($this->getRequest()->get('layout'), array('add', 'edit', 'form', 'composer'))
         ) {
             $result = ($this->getItem()) ? $this->canEdit() : $this->canAdd();
+
             return $result;
         }
 

@@ -46,10 +46,10 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
                 'assignable' => array(),
                 'scopeable' => array(
                     'class' => 'ComMediumDomainEntityMedium',
-                    'type' => 'post'),
+                    'type' => 'post', ),
                 'hashtagable' => array(
                     'class' => 'ComMediumDomainEntityMedium',
-                    'type' => 'post'),
+                    'type' => 'post', ),
             ),
         ));
 

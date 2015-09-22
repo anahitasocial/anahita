@@ -1,79 +1,83 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##
+ * LICENSE: ##LICENSE##.
  * 
  * @category   Anahita
- * @package    Com_Application
- * @subpackage Controller_Behavior
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
+ *
  * @link       http://www.GetAnahita.com
  */
 
 /**
- * Flash memory. Can contain key value pairs
+ * Flash memory. Can contain key value pairs.
  *
  * @category   Anahita
- * @package    Com_Application
- * @subpackage Controller_Behavior
+ *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
 class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 {
     /**
-     * A flash can contain only one message
+     * A flash can contain only one message.
      * 
-     * @param boolean $unset Unset the message after getting it
+     * @param bool $unset Unset the message after getting it
      * 
      * @return array
      */
     public function getMessage($unset = false)
     {
         $message = $this->offsetGet('message');
-        
-        if ( $unset ) {
+
+        if ($unset) {
             unset($this['message']);
         }
-        
-        return $message; 
+
+        return $message;
     }
-    
+
     /**
-     * Unsets an offset
+     * Unsets an offset.
      * 
      * (non-PHPdoc)
+     *
      * @see ArrayObject::offsetUnset()
      */
     public function offsetUnset($key)
     {
-        if ( $this->offsetExists($key) ) {
+        if ($this->offsetExists($key)) {
             parent::offsetUnset($key);
         }
     }
-    
+
     /**
-     * Return null if the offset doesn't exits
+     * Return null if the offset doesn't exits.
      * 
      * (non-PHPdoc)
+     *
      * @see ArrayObject::offsetGet()
      */
     public function offsetGet($key)
     {
-        if ( $this->offsetExists($key) ) {
+        if ($this->offsetExists($key)) {
             return parent::offsetGet($key);
         }
-        return null;
+
+        return;
     }
-    
+
     /**
-     * Forward to offsetGet
+     * Forward to offsetGet.
      * 
      * @param string $key
      * 
@@ -83,9 +87,9 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
     {
         return $this[$key];
     }
-    
+
     /**
-     * Forward to offsetGet
+     * Forward to offsetGet.
      *
      * @param string $key
      *
@@ -93,15 +97,15 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
      */
     public function __set($key, $value)
     {
-        if ( $key == 'message' ) {
+        if ($key == 'message') {
             return $this->getMessage();
-        }
-        else 
+        } else {
             return $this[$key] = $value;
+        }
     }
 
     /**
-     * Forward to offsetGet
+     * Forward to offsetGet.
      *
      * @param string $key
      *
@@ -110,10 +114,10 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
     public function __isset($key)
     {
         return isset($this[$key]);
-    }    
-    
+    }
+
     /**
-     * Forwards to unset
+     * Forwards to unset.
      * 
      * @param string $key
      * 

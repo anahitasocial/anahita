@@ -47,6 +47,6 @@ class ComBaseTemplateHelperDate extends LibBaseTemplateHelperDate
         return $this->humanize($date, array(
                                       'format' => $format,
                                       'relative' => $relative,
-                                      'offset' => $offset));
+                                      'offset' => $offset, ));
     }
 }

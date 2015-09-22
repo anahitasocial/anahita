@@ -6,7 +6,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 ?>
 
 <ul class="nav">
-<?php if($viewer->guest()): ?>
+<?php if ($viewer->guest()): ?>
 	<li>
 		<a href="<?= @route('option=com_people&view=session') ?>">
 		<?= @text('LIB-AN-ACTION-LOGIN') ?>
@@ -24,7 +24,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 		</a>
 	</li>
 
-<?php if(KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
+<?php if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
     <li class="divider"></li>
     <li>
     	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
@@ -33,9 +33,9 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
     </li>
  	<?php endif; ?>
             
-	<?php if(count($components)): ?>
+	<?php if (count($components)): ?>
 	<li class="divider"></li>
-    <?php foreach($components as $component): ?>
+    <?php foreach ($components as $component): ?>
     <li>
     	<a href="<?= @route($component->url) ?>">
     	<?= $component->title ?>

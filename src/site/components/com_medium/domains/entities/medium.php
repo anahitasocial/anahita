@@ -29,7 +29,7 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
                   'author' => array(
                       'parent' => 'com:people.domain.entity.person',
                       'child_column' => 'created_by',
-                      'required' => true),
+                      'required' => true, ),
             ),
             'attributes' => array(
                 'name' => array('read' => 'public'),

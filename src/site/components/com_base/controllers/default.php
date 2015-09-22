@@ -41,7 +41,7 @@ final class ComBaseControllerDefault extends ComBaseControllerService implements
                   'default' => array(
                       $default,
                       'ComBaseControllerResource',
-                      ));
+                      ), );
             }
 
             $default['identifier'] = $config->service_identifier;

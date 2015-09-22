@@ -22,29 +22,27 @@
 	
 	<div class="clearfix">
 		<span class="connect">
-    	<?php $app = @service('repos://site/components.component')->find(array('component'=>'com_connect')); ?>
-		<?php if ($app && $app->authorize('echo', array('actor'=>$actor))) : ?>
-            <?php               
+    	<?php $app = @service('repos://site/components.component')->find(array('component' => 'com_connect')); ?>
+		<?php if ($app && $app->authorize('echo', array('actor' => $actor))) : ?>
+            <?php 
             $services = ComConnectHelperApi::getServices();
-            @service('repos://site/connect.session'); 
-            $sessions  = $actor->sessions->toArray();
-            foreach($sessions as $key => $session) 
-            {
-                if($session->getApi()->isReadOnly()) 
-                {
+            @service('repos://site/connect.session');
+            $sessions = $actor->sessions->toArray();
+            foreach ($sessions as $key => $session) {
+                if ($session->getApi()->isReadOnly()) {
                     unset($sessions[$key]);
                 }
-            }                
+            }
             ?>    	        
-			<?php if ( count($sessions) > 0 ) : ?>
-				<?php foreach($sessions as $session) : ?>
+			<?php if (count($sessions) > 0) : ?>
+				<?php foreach ($sessions as $session) : ?>
 				<span>
     				<a class="btn btn-<?= $session->api->getName() ?> connect-link" data-behavior="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?= $session->getName() ?>" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
     					<?= @helper('com://site/connect.template.helper.service.icon', $session->api->getName())?>    			            			         
     			    </a>
 			    </span> 
 				<?php endforeach;?>
-			<?php elseif (count($services) > 0 ) : ?>
+			<?php elseif (count($services) > 0) : ?>
 			<a href="<?= @route($actor->getURL().'&get=settings&edit=connect') ?>" class="btn">
 			    <?= @text('COM-CONNECT-ENABLE-SHARE')?>
 			</a>
