@@ -70,7 +70,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
         $session = $this->getService('repos://site/connect.session')
                         ->findOrAddNew(array(
                             'profileId' => $user->id,
-                            'api' => $this->getAPI()->getName()
+                            'api' => $this->getAPI()->getName(),
                           )
                         );
 
@@ -79,7 +79,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
         if (!empty($token)) {
             $session->setData(array(
                 'component' => 'com_connect',
-                'owner' => $this->actor
+                'owner' => $this->actor,
             ))->setToken($token)->save();
         }
 

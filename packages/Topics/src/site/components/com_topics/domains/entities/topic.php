@@ -27,7 +27,7 @@ class ComTopicsDomainEntityTopic extends ComMediumDomainEntityMedium
                 'name' => array('required' => AnDomain::VALUE_NOT_EMPTY),
                 'body' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'post'
+                    'format' => 'post',
                 ),
             ),
             'behaviors' => array(

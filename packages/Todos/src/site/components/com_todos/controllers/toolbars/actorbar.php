@@ -36,6 +36,6 @@ class ComTodosControllerToolbarActorbar extends ComMediumControllerToolbarActorb
         $this->addNavigation('todos', JText::_('COM-TODOS-LINK-TODOS'), array(
           'option' => 'com_todos',
           'view' => 'todos',
-          'oid' => $actor->id), $name == 'todo');
+          'oid' => $actor->id, ), $name == 'todo');
     }
 }

@@ -106,7 +106,7 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
             if ($edge = $this->getService('repos://site/photos.edge')
                               ->fetch(array(
                                         'set' => $this,
-                                        'photo.id' => $photo_ids[0]
+                                        'photo.id' => $photo_ids[0],
                                       ))
             ) {
                 $edge->ordering = $this->photos->getTotal();
@@ -119,7 +119,7 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
             if ($edge = $this->getService('repos://site/photos.edge')
                              ->fetch(array(
                                       'set' => $this,
-                                      'photo.id' => $photo_id))
+                                      'photo.id' => $photo_id, ))
             ) {
                 $edge->ordering = $index + 1;
             }

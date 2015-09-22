@@ -1,5 +1,6 @@
 <?php
 
+
  /**
   * Subscriber Behavior. Mixed in with Person entity.
   *
@@ -26,8 +27,8 @@
             'relationships' => array(
                 'subscription' => array(
                     'type' => 'has',
-                    'child' => 'com:subscriptions.domain.entity.subscription'
-                ))));
+                    'child' => 'com:subscriptions.domain.entity.subscription',
+                ), ), ));
 
         parent::_initialize($config);
     }
@@ -66,8 +67,8 @@
             $this->_mixer->subscription = $this->getService('repos://site/subscriptions.subscription')
             ->getEntity(array(
                 'data' => array(
-                    'package' => $package
-                  )
+                    'package' => $package,
+                  ),
             ));
         }
 

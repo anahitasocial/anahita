@@ -94,11 +94,13 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
 
         if ($filesize == 0) {
             throw new LibBaseControllerExceptionBadRequest('File is missing');
+
             return;
         }
 
         if ($filesize > $uploadlimit) {
             throw new LibBaseControllerExceptionBadRequest('Exceed maximum size');
+
             return;
         }
 
@@ -111,7 +113,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
         $data['portrait'] = array(
             'data' => $content,
             'rotation' => $orientation,
-            'mimetype' => isset($file['type']) ? $file['type'] : null
+            'mimetype' => isset($file['type']) ? $file['type'] : null,
         );
 
         $photo = $this->actor->photos->addNew($data);

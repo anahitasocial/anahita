@@ -27,12 +27,12 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
                 'id',
                 'country' => array(
                     'required' => true,
-                    'unique' => true
+                    'unique' => true,
                 ),
                 'meta' => array(
                     'type' => 'json',
                     'column' => 'data',
-                    'default' => 'json'
+                    'default' => 'json',
                 ),
             ),
             'behaviors' => array(

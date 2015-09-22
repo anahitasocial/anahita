@@ -23,7 +23,7 @@ class ComSubscriptionsControllerVat extends ComBaseControllerService
         parent::__construct($config);
         $this->registerCallback(array(
                                   'after.edit',
-                                  'after.add'),
+                                  'after.add', ),
                                   array($this, 'setTaxInfo'));
     }
 

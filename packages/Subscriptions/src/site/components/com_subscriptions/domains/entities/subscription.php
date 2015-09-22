@@ -38,35 +38,36 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         $config->append(array(
             'relationships' => array(
                 'person' => array('parent' => 'com:people.domain.entity.person'),
-                'package' => array('parent' => 'com:subscriptions.domain.entity.package')
+                'package' => array('parent' => 'com:subscriptions.domain.entity.package'),
             ),
             'aliases' => array(
                 'person' => 'nodeA',
-                'package' => 'nodeB'
+                'package' => 'nodeB',
             ),
             'behaviors' => array(
                 'expirable',
-                'dictionariable'
+                'dictionariable',
             ),
         ));
 
         parent::_initialize($config);
     }
 
-  /**
-	 * Set the subscription package
-	 *
-	 * @param ComSubscriptionsDomainEntityPackageDefault $package Package
-	 *
-	 * @return ComSubscriptionsDomainEntitySubscription object
-	 */
-	public function setNodeB( $package )
-	{
+    /**
+     * Set the subscription package.
+     *
+     * @param ComSubscriptionsDomainEntityPackageDefault $package Package
+     *
+     * @return ComSubscriptionsDomainEntitySubscription object
+     */
+    public function setNodeB($package)
+    {
         $this->set('nodeB', $package);
         $this->set('endDate', clone $this->startDate);
         $this->endDate->addSeconds($package->duration);
+
         return $this;
-	}
+    }
 
     /**
      * Returns the timeleft from a subscription in the number of seconds.
@@ -119,7 +120,6 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         $actorIds = $this->package->getActorIds();
 
         if (count($actorIds)) {
-
             $actors = $this->getService('repos://site/actors.actor')
                            ->getQuery(true)
                            ->where('id', 'IN', $actorIds)

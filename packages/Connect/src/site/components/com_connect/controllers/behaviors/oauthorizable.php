@@ -62,7 +62,7 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
         KRequest::set('session.oauth', array(
                     'api' => $this->getAPI()->getName(),
                     'token' => $token,
-                    'consumer' => $consumer));
+                    'consumer' => $consumer, ));
 
         $return = KRequest::get('session.return', 'raw', null);
 
@@ -129,7 +129,7 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
                     'option=com_'.$this->_mixer->getIdentifier()->package,
                      'view='.$this->_mixer->getIdentifier()->name,
                      'server='.$this->server,
-                     'get=accesstoken'
+                     'get=accesstoken',
                 );
 
                 if ($this->oid) {
@@ -141,7 +141,7 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
                 $this->_consumer = new ComConnectOauthConsumer(new KConfig(array(
                     'key' => $key,
                     'secret' => $secret,
-                    'callback_url' => (string) $callback
+                    'callback_url' => (string) $callback,
                 )));
             }
 

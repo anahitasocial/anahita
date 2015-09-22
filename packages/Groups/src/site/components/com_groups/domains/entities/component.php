@@ -1,6 +1,5 @@
 <?php
 
-
  /**
   * Group Actor.
   *

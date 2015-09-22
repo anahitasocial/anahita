@@ -41,26 +41,26 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
                 'body' => array('format' => 'html'),
                 'price' => array(
                     'type' => 'float',
-                    'required' => true
+                    'required' => true,
                 ),
                 'duration' => array(
                     'type' => 'integer',
-                    'required' => true
+                    'required' => true,
                 ),
                 'recurring' => array(
                     'type' => 'integer',
-                    'default' => 0
+                    'default' => 0,
                 ),
                 'billingPeriod' => array(
                     'column' => 'billing_period',
-                    'required' => true
+                    'required' => true,
                 ),
             ),
             'relationships' => array(
                 //let the cleaner to take care of it
                 'subscriptions' => array(
-                    'parent_delete' => 'ignore'
-                 )
+                    'parent_delete' => 'ignore',
+                 ),
             ),
             'behaviors' => array(
                 'authorizer',
@@ -68,7 +68,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
                 'describable',
                 'enableable',
                 'dictionariable',
-                'modifiable'
+                'modifiable',
             ),
         ));
 
@@ -135,6 +135,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
 
         $discount = (float) min(1, max(0, $discount));
         $this->setValue('upgrade_discount', $discount);
+
         return $this;
     }
 
@@ -148,6 +149,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
     public function authorizeSubscribePackage(KCommandContext $context)
     {
         $viewer = $context->viewer;
+
         return !$viewer->hasSubscription(false) || $this->authorize('upgradepackage');
     }
 

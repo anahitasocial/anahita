@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die ?>
 
 <?php $alert_title = sprintf(@text('COM-CONNECT-LOGIN-PROMPT-HI'), $api->getUser()->name, ucfirst($api->getName())) ?>
-<?php $return = base64UrlEncode( KRequest::url() ); ?>
+<?php $return = base64UrlEncode(KRequest::url()); ?>
 
 <div class="row">
 	<div class="span8">

@@ -25,7 +25,7 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
             'behaviors' => array(
                 'assignable' => array(
                     'assignment_option' => ComComponentsDomainBehaviorAssignable::OPTION_NOT_OPTIONAL,
-                    'actor_identifiers' => array('com:people.domain.entity.person')
+                    'actor_identifiers' => array('com:people.domain.entity.person'),
                 ),
             ),
         ));
@@ -44,7 +44,7 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
         if (!$actor->admin()) {
             $tabs->insert('subscription', array(
                 'label' => JText::_('COM-SUBSCRIPTIONS-PROFILE-EDIT'),
-                'controller' => 'com://site/subscriptions.controller.setting'
+                'controller' => 'com://site/subscriptions.controller.setting',
             ));
         }
     }

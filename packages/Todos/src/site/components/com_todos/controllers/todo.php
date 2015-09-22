@@ -24,11 +24,11 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
 
         $this->registerCallback(array(
             'before.enable',
-            'before.disable'),
+            'before.disable', ),
             array($this, 'setLastChanger'));
         $this->registerCallback(array(
             'after.enable',
-            'after.disable'),
+            'after.disable', ),
             array($this, 'createStoryCallback'));
     }
 

@@ -36,7 +36,7 @@ class ComTopicsControllerToolbarActorbar extends ComMediumControllerToolbarActor
                 array(
                     'option' => 'com_topics',
                     'view' => 'topics',
-                    'oid' => $actor->id
+                    'oid' => $actor->id,
                 ),
                 $name == 'topic');
     }

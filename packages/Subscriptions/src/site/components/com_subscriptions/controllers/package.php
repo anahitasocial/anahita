@@ -28,7 +28,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
 
         $this->registerCallback(array(
                                   'before.edit',
-                                  'after.add'), array($this, 'setMeta'));
+                                  'after.add', ), array($this, 'setMeta'));
 
         $this->registerCallback(array(
                 'before.editsubscription',
@@ -106,6 +106,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
 
             if (!$this->_subscriber) {
                 throw new LibBaseControllerExceptionNotFound('Subscriber Not Found');
+
                 return false;
             }
         }

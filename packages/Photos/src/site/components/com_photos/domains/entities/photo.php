@@ -69,6 +69,7 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
     public function setExifData($data = array())
     {
         $this->setValue('exif_data', $data);
+
         return $this;
     }
 

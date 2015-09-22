@@ -1,5 +1,6 @@
 <?php
 
+
  /**
   * Signup Controller.
   *
@@ -72,6 +73,7 @@
 
         if ($this->getRequest()->get('layout') == 'login' && !$this->viewer->guest()) {
             $context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
+
             return false;
         }
 
@@ -150,7 +152,7 @@
         }
 
         if ($ret) {
-           //clreat the sesion
+            //clreat the sesion
             $_SESSION['signup'] = null;
             KRequest::set('session.subscriber_id', $ret->person->id);
             $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
@@ -163,7 +165,6 @@
             }
 
             $context->response->setRedirect($url);
-
         } else {
             throw new RuntimeException("Couldn't subscribe");
         }
@@ -237,6 +238,7 @@
         if (get_viewer()->guest() && !$this->person->validateEntity()) {
             $url = JRoute::_('option=com_subscriptions&view=signup&layout=login&id='.$package->id);
             $context->response->setRedirect($url);
+
             return false;
         }
 
@@ -252,6 +254,7 @@
     {
         $entity = $this->getBehavior('identifiable')->fetchEntity($context);
         $this->instantiateDataFromSession($context);
+
         return $entity;
     }
 
@@ -264,6 +267,7 @@
         $data->append(KRequest::get('session.signup', 'raw', array()));
         KRequest::set('session.signup', $data->toArray());
         $result = parent::execute($name, $context);
+
         return $result;
     }
 
@@ -394,14 +398,13 @@
                 'username' => $data->user->username,
                 'password' => $data->user->password,
                 'name' => $data->user->name,
-                'userType' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED
+                'userType' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
             );
 
             $person = $this->getService('repos://site/people.person')
             ->getEntity()
             ->reset()
             ->setData($user_data);
-
         } else {
             $person = get_viewer();
         }

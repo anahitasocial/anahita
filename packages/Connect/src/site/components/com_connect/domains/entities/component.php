@@ -43,7 +43,7 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
         if (count($services)) {
             $tabs->insert('connect', array(
                 'label' => JText::_('COM-CONNECT-PROFILE-EDIT'),
-                'controller' => 'com://site/connect.controller.setting'));
+                'controller' => 'com://site/connect.controller.setting', ));
         }
     }
 

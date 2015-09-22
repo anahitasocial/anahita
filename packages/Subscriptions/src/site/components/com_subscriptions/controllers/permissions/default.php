@@ -15,6 +15,7 @@ class ComSubscriptionsControllerPermissionDefault extends LibBaseControllerPermi
     public function canAdminister()
     {
         $viewer = get_viewer();
+
         return $viewer->admin() ? true : false;
     }
 

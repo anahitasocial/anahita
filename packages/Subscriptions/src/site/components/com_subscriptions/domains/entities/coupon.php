@@ -29,15 +29,15 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
                 'discount' => array('default' => '0.1'),
                 'code' => array(
                     'required' => true,
-                    'unique' => true
+                    'unique' => true,
                 ),
                 'limit' => array(
                     'default' => 100,
-                    'require' => true
+                    'require' => true,
                 ),
                 'usage' => array(
                     'default' => 0,
-                    'write_access' => 'private'
+                    'write_access' => 'private',
                 ),
                 'expiresOn',
             ),

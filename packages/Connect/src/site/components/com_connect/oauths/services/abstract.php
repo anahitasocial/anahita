@@ -463,7 +463,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
         $response = $this->getRequest(array(
             'url' => $resource,
             'method' => $method,
-            'data' => $data))->send();
+            'data' => $data, ))->send();
         $result = null;
         if (strlen($response)) {
             $result = $response->{'parse'.$this->_response_format}();

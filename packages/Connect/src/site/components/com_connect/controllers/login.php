@@ -69,7 +69,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
         $token = $this->getService('repos://site/connect.session')
                       ->find(array(
                           'profileId' => $userid,
-                          'api' => $service
+                          'api' => $service,
                         )
                       );
         $return_url = KRequest::get('session.return', 'raw');

@@ -29,14 +29,14 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
             'before.addphoto',
             'before.removephoto',
             'before.updatephotos',
-            'before.updatecover'
+            'before.updatecover',
         ),
         array($this, 'fetchPhoto'));
 
         $this->registerCallback(array(
           'after.addphoto',
           'after.removephoto',
-          'after.updatephotos'
+          'after.updatephotos',
         ),
         array($this, 'reorder'));
     }
@@ -88,6 +88,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
     {
         $photo_ids = (array) KConfig::unbox($context->data->photo_id);
         $this->getItem()->reorder($photo_ids);
+
         return $this->getItem();
     }
 
@@ -102,6 +103,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
     {
         $this->getItem()->addPhoto($this->photo);
         $context->response->setRedirect(JRoute::_($this->getItem()->getURL()));
+
         return $this->getItem();
     }
 
@@ -119,6 +121,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
 
         if ($lastPhoto) {
             $this->getResponse()->status = 204;
+
             return;
         } else {
             return $this->getItem();

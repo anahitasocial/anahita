@@ -39,21 +39,21 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
                     'column' => 'open_status_change_time',
                     'default' => 'date',
                     'type' => 'date',
-                    'write' => 'private'),
+                    'write' => 'private', ),
                 'priority' => array(
                     'column' => 'ordering',
                     'default' => self::PRIORITY_NORMAL,
-                    'type' => 'integer'
-                  )
+                    'type' => 'integer',
+                  ),
                 ),
                 'relationships' => array(
                     'lastChanger' => array(
                         'parent' => 'com:people.domain.entity.person',
-                        'child_column' => 'open_status_change_by'
-                    )
+                        'child_column' => 'open_status_change_by',
+                    ),
                 ),
             'behaviors' => array('enableable'),
-            'aliases' => array('open' => 'enabled')
+            'aliases' => array('open' => 'enabled'),
         ));
 
         parent::_initialize($config);

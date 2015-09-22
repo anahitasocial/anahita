@@ -59,7 +59,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         $config->append(array(
             'serviceable' => array('except' => array('browse', 'read', 'edit')),
             'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
-            'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal'
+            'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal',
         ));
 
         parent::_initialize($config);

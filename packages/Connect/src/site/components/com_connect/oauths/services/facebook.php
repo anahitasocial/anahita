@@ -157,6 +157,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
 
         $data = $cache->get(function ($session) {
             $info = $session->get('/app');
+
             return $info;
         }, array($this), '/app'.$key);
 
