@@ -1,24 +1,8 @@
 <?php
 
-
 /**
- * LICENSE: ##LICENSE##.
+ * Contentfilter Chain.
  *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Contentfilter Chain. 
- * 
  * It filters a text by running the text through a chain of contentfilter commands
  *
  * @category   Anahita
@@ -32,9 +16,9 @@
 class PlgContentfilterChain extends KObject
 {
     /**
-     * Return the singleton instnace of PlgContentfilterChain. This method also imports all the 
+     * Return the singleton instnace of PlgContentfilterChain. This method also imports all the
      * content filter plugins.
-     * 
+     *
      * @return PlgContentfilterChain
      */
     public static function getInstance()
@@ -52,12 +36,12 @@ class PlgContentfilterChain extends KObject
 
     /**
      * Command Chain.
-     * 
+     *
      * @var KCommandChain
      */
     protected $_chain;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -71,10 +55,10 @@ class PlgContentfilterChain extends KObject
 
     /**
      * Alias for the sanitize method.
-     * 
+     *
      * @param string $text   The text to be filtered
-     * @param array  $config An Array of config 
-     * 
+     * @param array  $config An Array of config
+     *
      * @return string
      */
     public function filter($text, $config = array())
@@ -94,9 +78,9 @@ class PlgContentfilterChain extends KObject
 
     /**
      * Adds a content fitler to the content filter chain.
-     * 
+     *
      * @param PlgContentfilterInterface $filter Filter to be added
-     * 
+     *
      * @return PlgContentfilterChain
      */
     public function addFilter(PlgContentfilterInterface $filter)
@@ -108,9 +92,9 @@ class PlgContentfilterChain extends KObject
 
     /**
      * Removes an exsiting content filter fro the content filter chain.
-     * 
+     *
      * @param PlgContentfilterInterface $filter Filter to be removed
-     * 
+     *
      * @return PlgContentfilterChain
      */
     public function removeFilter(PlgContentfilterInterface $filter)

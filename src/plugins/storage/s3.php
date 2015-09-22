@@ -1,24 +1,10 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
 require_once 's3lib.php';
 
 /**
- * Amazon S3 storage plugin. 
- * 
+ * Amazon S3 storage plugin.
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -31,7 +17,7 @@ class PlgStorageS3 extends PlgStorageAbstract
 {
     /**
      * S3 storage.
-     * 
+     *
      * @var S3
      */
     protected $_s3;

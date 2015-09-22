@@ -1,17 +1,5 @@
 <?php
 
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
 jimport('joomla.plugin.plugin');
 
 /**
@@ -53,9 +41,9 @@ class PlgSystemAnahita extends JPlugin
 
             //Checking if the whitelist is ok
             if (
-                                    !@ini_get('suhosin.executor.include.whitelist') ||
-                                    strpos(@ini_get('suhosin.executor.include.whitelist'), 'tmpl://') === false
-                        ) {
+                  !@ini_get('suhosin.executor.include.whitelist') ||
+                  strpos(@ini_get('suhosin.executor.include.whitelist'), 'tmpl://') === false
+            ) {
                 $url = KService::get('application')->getRouter()->getBaseUrl();
                 $url .= '/templates/system/error_suhosin.html';
 
@@ -68,21 +56,21 @@ class PlgSystemAnahita extends JPlugin
 
         //Safety Extender compatibility
         if (
-                        extension_loaded('safeex') &&
-                        strpos('tmpl', ini_get('safeex.url_include_proto_whitelist')) === false
-                ) {
+            extension_loaded('safeex') &&
+            strpos('tmpl', ini_get('safeex.url_include_proto_whitelist')) === false
+        ) {
             $whitelist = ini_get('safeex.url_include_proto_whitelist');
             $whitelist = (strlen($whitelist) ? $whitelist.',' : '').'tmpl';
             ini_set('safeex.url_include_proto_whitelist', $whitelist);
         }
 
         if (
-                            !JFactory::getApplication()->getCfg('caching') ||
-              (
-                  JFactory::getUser()->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR &&
-                  KRequest::get('get.clearapc', 'cmd')
-              )
-           ) {
+            !JFactory::getApplication()->getCfg('caching') ||
+            (
+                JFactory::getUser()->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR &&
+                KRequest::get('get.clearapc', 'cmd')
+            )
+        ) {
             //clear apc cache for components
             //@NOTE If apc is shared across multiple services
             //this causes the caceh to be cleared for all of them

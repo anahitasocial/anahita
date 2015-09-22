@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Video content filter.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -46,9 +31,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 
     /**
      * Filter a value.
-     * 
+     *
      * @param string The text to filter
-     * 
+     *
      * @return string
      */
     public function filter($text)
@@ -61,9 +46,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 
     /**
      * Checks the text for a vimeo URL.
-     * 
+     *
      * @param string $text The text to filter
-     * 
+     *
      * @return string
      */
     protected function _vimeo(&$text)
@@ -91,9 +76,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 
     /**
      * Checks the text for a youtube URL.
-     * 
+     *
      * @param string $text The text to filter
-     * 
+     *
      * @return string
      */
     protected function _youtube(&$text)
@@ -131,10 +116,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
     }
 
     /**
-     * Return a HTML tag for the video to be displayed. 
-     * 
+     * Return a HTML tag for the video to be displayed.
+     *
      * @param array $options The options to be passed, it must contait the video URL, video thumbnail and width and height
-     * 
+     *
      * @return string
      */
     protected function _createVideo(array $options)

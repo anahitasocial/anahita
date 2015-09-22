@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract storage plugin.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +15,7 @@ abstract class PlgStorageAbstract extends KObject
 {
     /**
      * Storage Parameter Configuration.
-     * 
+     *
      * @var KConfig
      */
     protected $_params;
@@ -75,10 +60,10 @@ abstract class PlgStorageAbstract extends KObject
     /**
      * Return the content of a path. The boolean value determins whether to look for the
      * path in the public or protected folder.
-     * 
+     *
      * @param string $path   The path to read the content for
      * @param bool   $public Determines if the path is in the public/protected folder
-     * 
+     *
      * @return string
      */
     public function read($path, $public = true)
@@ -92,7 +77,7 @@ abstract class PlgStorageAbstract extends KObject
      * Write data to a path. The boolean value determins whether to look for the
      * path in the public or protected folder.
      *
-     * @param string $path   The path 
+     * @param string $path   The path
      * @param string $data   The data to write to the path
      * @param bool   $public Determines if the path is in the public/protected folder
      *
@@ -107,7 +92,7 @@ abstract class PlgStorageAbstract extends KObject
     /**
      * Delete the content stored at path.
      *
-     * @param string $path   The path 
+     * @param string $path   The path
      * @param bool   $public Determines if the path is in the public/protected folder
      *
      * @return string
@@ -121,7 +106,7 @@ abstract class PlgStorageAbstract extends KObject
     /**
      * Return whether a path exists or not.
      *
-     * @param string $path   The path 
+     * @param string $path   The path
      * @param bool   $public Determines if the path is in the public/protected folder
      *
      * @return string
@@ -136,7 +121,7 @@ abstract class PlgStorageAbstract extends KObject
     /**
      * Return a path URL (unique resource locator).
      *
-     * @param string $path   The path 
+     * @param string $path   The path
      * @param bool   $public Determines if the path is in the public/protected folder
      *
      * @return string
@@ -164,7 +149,7 @@ abstract class PlgStorageAbstract extends KObject
 
     /**
      * Abstract Read Method. Impleneted by subsclasses.
-     * 
+     *
      * Return the content of a path
      *
      * @param string $path The path
@@ -181,7 +166,7 @@ abstract class PlgStorageAbstract extends KObject
      * @param string $path   The path
      * @param string $data   The data to store
      * @param bool   $public If the data is accessible by public
-     * 
+     *
      * @return string
      */
     abstract protected function _write($path, $data, $public);

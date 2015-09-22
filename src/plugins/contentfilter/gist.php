@@ -1,19 +1,5 @@
 <?php
 
-
-
- /**
-  * LICENSE: ##LICENSE##.
-  *
-  * @category   Anahita
-  *
-  * @author     Rastin Mehr <rastin@anahitapolis.com>
-  * @copyright  2008 - 2015 rmdStudio Inc.
-  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
-  *
-  * @link       http://www.GetAnahita.com
-  */
-
  /**
   * Creates a hyperlink from the URLs.
   *
@@ -43,10 +29,10 @@
     }
 
     /**
-     * Filter a value. 
-     * 
+     * Filter a value.
+     *
      * @param string The text to filter
-     * 
+     *
      * @return string
      */
     public function filter($text)

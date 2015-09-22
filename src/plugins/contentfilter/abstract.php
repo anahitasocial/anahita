@@ -1,23 +1,7 @@
 <?php
 
-
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Abstract Contentfilter Command. 
+ * Abstract Contentfilter Command.
  *
  * @category   Anahita
  *
@@ -31,21 +15,21 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 {
     /**
      * Array of stripped tags.
-     * 
+     *
      * @var array
      */
     protected $_stripped_tags = array();
 
     /**
      * The filter name.
-     * 
+     *
      * @var string
      */
     protected $_name;
 
-    /** 
+    /**
      * Constructor.
-     * 
+     *
      * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional KConfig object with configuration options.
      */
@@ -62,11 +46,11 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 
     /**
      * Command handler.
-     * 
+     *
      * @param string          $name    The command name
      * @param KCommandContext $context The command context
-     * 
-     * @return bool Can return both true or false.  
+     *
+     * @return bool Can return both true or false.
      */
     final public function execute($name, KCommandContext $context)
     {
@@ -91,7 +75,7 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 
     /**
      * Strip the tags from a block of text.
-     * 
+     *
      * @param string $text Text to string the tags from
      */
     protected function _stripTags(&$text)
@@ -115,7 +99,7 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
 
     /**
      * Put the stipped tags back in their oringal place.
-     * 
+     *
      * @param string $text Replace the tag back into the text
      */
     protected function _replaceTags(&$text)
