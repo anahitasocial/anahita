@@ -239,8 +239,17 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $this->getService('com:people.helper.person')
         ->login($credentials, $credentials['remember']);
 
-        $msg = JText::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
-        $this->getResponse()->setRedirect(JRoute::_($redirectUrl), $msg);
+        if ($this->return) {
+            $_SESSION['return'] = $this->getService('com://site/people.filter.return')
+                                       ->sanitize($this->return);
+            $returnUrl = base64UrlDecode($this->return);
+            $this->getResponse()->setRedirect($returnUrl);
+        } else {
+            $_SESSION['return'] = null;
+            $msg = JText::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
+            $this->getResponse()->setRedirect(JRoute::_($redirectUrl), $msg);
+        }
+
         $this->getResponse()->status = KHttpResponse::ACCEPTED;
 
         return true;
