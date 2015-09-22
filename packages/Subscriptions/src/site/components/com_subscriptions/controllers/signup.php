@@ -125,41 +125,33 @@
     }
 
     /**
-     * Logins the user.
-     *
-     * @param KCommandContext $context
-     */
-    protected function _actionLogin()
-    {
-        $this->getService('com://site/people.controller.session', array('response' => $this->getResponse()))
-             ->setItem($this->person)
-             ->execute('add');
-    }
-
-    /**
      * Process Action.
      *
      * @param KCommandContext $context
+     *
+     * @return boolean
      */
     protected function _actionProcess($context)
     {
         try {
             $identifier = 'com://site/subscriptions.controller.subscription';
-            $ret = $this->getService($identifier)->setOrder($this->order->cloneEntity())->add();
+            $subscription = $this->getService($identifier)->setOrder($this->order->cloneEntity())->add();
         } catch (ComSubscriptionsDomainPaymentException $exception) {
             $this->setMessage('COM-SUBSCRIPTIONS-TRANSACTION-ERROR', 'error');
             throw new RuntimeException('Payment process error');
+
+            return false;
         }
 
-        if ($ret) {
+        if ($subscription) {
             //clreat the sesion
             $_SESSION['signup'] = null;
-            KRequest::set('session.subscriber_id', $ret->person->id);
+            KRequest::set('session.subscriber_id', $subscription->person->id);
             $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
 
             if (get_viewer()->guest()) {
                 $return = base64UrlEncode($url);
-                $user = $ret->person->getUserObject();
+                $user = $subscription->person->getUserObject();
                 $token = $user->activation;
                 $url = JRoute::_('option=com_people&view=session&token='.$token.'&return='.$return);
             }
@@ -167,7 +159,11 @@
             $context->response->setRedirect($url);
         } else {
             throw new RuntimeException("Couldn't subscribe");
+
+            return false;
         }
+
+        return true;
     }
 
     /**
