@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -14,7 +14,7 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        //delete open social table    
+        //delete open social table
         dbexec('DROP TABLE #__opensocial_profiles');
 
         //delete legacy com_cache and com_opensocial
@@ -29,9 +29,16 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
         //Delete legacy plugins
         dbexec('DELETE FROM #__plugins WHERE `element` IN ( \'ptag\', \'syntax\', \'opensocial\', \'mtupgrade\', \'usertype\' ) ');
 
-        //add pinned field to the nodes table
-        dbexec('ALTER TABLE jos_anahita_nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');
+        //remove anahita from nodes and edges table names
+        if (!dbexists('SHOW TABLES LIKE "#__nodes"')) {
+            dbexec('RENAME TABLE #__anahita_nodes TO #__nodes');
+        }
 
+        //add pinned field to the nodes table
+        if(!dbexists('SHOW COLUMNS FROM #__nodes LIKE "pinned"')) {
+            dbexec('ALTER TABLE #__nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');
+        }
+        
         //add github gist plugin
         dbexec("INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES (50, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '')");
 
@@ -50,6 +57,6 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

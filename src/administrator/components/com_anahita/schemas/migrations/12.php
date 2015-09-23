@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -14,7 +14,12 @@ class ComAnahitaSchemaMigration12 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        dbexec('DELETE FROM #__anahita_edges WHERE node_a_id = node_b_id');
+
+        if (!dbexists('SHOW TABLES LIKE "#__edges"')) {
+            dbexec('RENAME TABLE #__anahita_edges TO #__edges');
+        }
+
+        dbexec('DELETE FROM #__edges WHERE node_a_id = node_b_id');
     }
 
     /**
@@ -22,6 +27,6 @@ class ComAnahitaSchemaMigration12 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

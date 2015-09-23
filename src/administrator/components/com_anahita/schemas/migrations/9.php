@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -14,7 +14,7 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        //looks like these two didn't work in previous migrations    
+        //looks like these two didn't work in previous migrations
         dbexec('DROP TABLE #__content_rating');
         dbexec("DELETE FROM #__components WHERE `option` IN  ('com_media', 'com_menus', 'com_modules')");
 
@@ -24,25 +24,34 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         //remove the syntax plugin
         dbexec("DELETE FROM #__plugins WHERE `element` IN ('syntax', 'ptag') ");
 
+        //remove anahita from nodes and edges table names
+        if (!dbexists('SHOW TABLES LIKE "#__nodes"')) {
+            dbexec('RENAME TABLE #__anahita_nodes TO #__nodes');
+        }
+
+        if (!dbexists('SHOW TABLES LIKE "#__edges"')) {
+            dbexec('RENAME TABLE #__anahita_edges TO #__edges');
+        }
+
         //UTF-8 conversions
         dbexec('ALTER DATABASE CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__anahita_edges CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__anahita_nodes CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__edges CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__nodes CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE name name VARBINARY(255)');
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE name name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__nodes CHANGE name name VARBINARY(255)');
+        dbexec('ALTER TABLE #__nodes CHANGE name name VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE alias alias VARBINARY(255)');
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE alias alias VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__nodes CHANGE alias alias VARBINARY(255)');
+        dbexec('ALTER TABLE #__nodes CHANGE alias alias VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMBLOB');
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE body body MEDIUMTEXT CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__nodes CHANGE body body MEDIUMBLOB');
+        dbexec('ALTER TABLE #__nodes CHANGE body body MEDIUMTEXT CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARBINARY(255)');
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE person_given_name person_given_name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__nodes CHANGE person_given_name person_given_name VARBINARY(255)');
+        dbexec('ALTER TABLE #__nodes CHANGE person_given_name person_given_name VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARBINARY(255)');
-        dbexec('ALTER TABLE #__anahita_nodes CHANGE person_family_name person_family_name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE #__nodes CHANGE person_family_name person_family_name VARBINARY(255)');
+        dbexec('ALTER TABLE #__nodes CHANGE person_family_name person_family_name VARCHAR(255) CHARACTER SET utf8');
 
         dbexec('ALTER TABLE #__migrator_migrations CHARACTER SET utf8');
         dbexec('ALTER TABLE #__migrator_versions CHARACTER SET utf8');
@@ -69,8 +78,8 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         $timeThen = microtime(true);
         $db = KService::get('koowa:database.adapter.mysqli');
 
-        //change comment formats from html to string    
-        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "ComBaseDomainEntityComment%" ');
+        //change comment formats from html to string
+        $entities = dbfetch('SELECT id, body FROM #__nodes WHERE type LIKE "ComBaseDomainEntityComment%" ');
 
         dboutput("Updating comments. This WILL take a while ...\n");
 
@@ -92,6 +101,6 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

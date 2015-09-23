@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -15,6 +15,17 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
     public function up()
     {
         $timeThen = microtime(true);
+
+        //remove anahita from nodes and edges table names
+        dbexec('RENAME TABLE #__anahita_nodes TO #__nodes');
+        dbexec('RENAME TABLE #__anahita_edges TO #__edges');
+
+        dbexec('ALTER TABLE #__nodes
+                ADD `cover_filename` VARCHAR(255) NULL AFTER `filesize`,
+                ADD `cover_filesize` INT(11) NULL AFTER `cover_filename`,
+                ADD `cover_mimetype` VARCHAR(100) NULL AFTER `cover_filesize`');
+
+        dbexec('ALTER TABLE #__nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');        
 
         //some legacy cleanup
         $legacyTables = array(
@@ -33,15 +44,15 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
             dbexec('DROP TABLE IF EXISTS #__'.$legacyTable);
         }
 
-        //delete a legacy record	
+        //delete a legacy record
         dbexec('DELETE FROM #__components WHERE `option` = \'com_mailto\' ');
 
         //add the hashtag contentfilter
         dbexec('INSERT INTO #__plugins (name,element,folder,iscore) VALUES (\'Hashtag\', \'hashtag\',\'contentfilter\',1)');
 
         //create the fields required for creating hashtag nodes
-        dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_count`');
-        dbexec('ALTER TABLE #__anahita_nodes DROP COLUMN `tag_ids`');
+        dbexec('ALTER TABLE #__nodes DROP COLUMN `tag_count`');
+        dbexec('ALTER TABLE #__nodes DROP COLUMN `tag_ids`');
 
         //install the hashtag related extensions
         dbexec('INSERT INTO #__components (`name`,`link`,`option`,`iscore`,`enabled`) VALUES (\'Hashtags\',\'option=com_hashtags\',\'com_hashtags\',1,1)');
@@ -53,7 +64,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
 
         dboutput("\nActors' Hashtags\n");
         //extracting hashtag terms from actors
-        $ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComActorsDomainEntityActor%\' AND '.$query_regexp);
+        $ids = dbfetch('SELECT id FROM #__nodes WHERE type LIKE \'ComActorsDomainEntityActor%\' AND '.$query_regexp);
 
         foreach ($ids as $id) {
             $entity = KService::get('com://site/actors.domain.entity.actor')->getRepository()->getQuery()->disableChain()->fetch($id);
@@ -67,7 +78,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
 
         dboutput("\nComments' hashtags\n");
         //extracting hashtag terms from comments
-        $ids = dbfetch('SELECT id FROM #__anahita_nodes WHERE type LIKE \'ComBaseDomainEntityComment%\' AND '.$query_regexp);
+        $ids = dbfetch('SELECT id FROM #__nodes WHERE type LIKE \'ComBaseDomainEntityComment%\' AND '.$query_regexp);
 
         foreach ($ids as $id) {
             $entity = KService::get('com://site/base.domain.entity.comment')->getRepository()->getQuery()->disableChain()->fetch($id);
@@ -81,7 +92,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
 
         dboutput("\nMedia's Hashtags\n");
         //extracting hashtag terms from mediums: notes, topics, pages, and todos
-        $query = 'SELECT id FROM #__anahita_nodes WHERE '.$query_regexp.' AND ( '.
+        $query = 'SELECT id FROM #__nodes WHERE '.$query_regexp.' AND ( '.
                     'type LIKE \'%com:notes.domain.entity.note\' '.
                     'OR type LIKE \'%com:topics.domain.entity.topic\' '.
                     'OR type LIKE \'%com:photos.domain.entity.photo\' '.
@@ -114,12 +125,12 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 
     /**
      * extracts a list of hashtag terms from a given text.
-     * 
+     *
      * @return array
      */
     private function extractHashtagTerms($text)
