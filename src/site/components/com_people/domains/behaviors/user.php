@@ -47,15 +47,6 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                                   ->getQuery(true)
                                   ->fetchValue('id');
 
-        //for now lets make the com_notes assigable to always
-        if ($firstUser) {
-            $component = KService::get('repos://site/components')->find(array('component' => 'com_notes'));
-
-            if ($component) {
-                $component->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
-            }
-        }
-
         jimport('joomla.user.helper');
         $user = clone JFactory::getUser();
 

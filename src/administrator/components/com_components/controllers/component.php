@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * List of assignable components.
  *
@@ -63,7 +48,7 @@ class ComComponentsControllerComponent extends ComBaseControllerService
 
     /**
      * Only bring assignable components.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see ComBaseControllerService::_actionBrowse()
@@ -114,7 +99,7 @@ class ComComponentsControllerComponent extends ComBaseControllerService
 
     /**
      * Can't delete the component.
-     * 
+     *
      * @return bool
      */
     public function canDelete()
@@ -124,7 +109,7 @@ class ComComponentsControllerComponent extends ComBaseControllerService
 
     /**
      * Can't add a new component.
-     * 
+     *
      * @return bool
      */
     public function canAdd()

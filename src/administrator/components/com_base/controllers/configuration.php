@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Configuration Controller (Resourceless).
  *
@@ -48,7 +33,7 @@ class ComBaseControllerConfiguration extends ComBaseControllerResource
 
     /**
      * Empty action so the before/after browse is invoked.
-     * 
+     *
      * @param KCommandContext $context Context parameter
      */
     protected function _actionBrowse(KCommandContext $context)
@@ -58,16 +43,16 @@ class ComBaseControllerConfiguration extends ComBaseControllerResource
 
     /**
      * Saves a configuration.
-     * 
+     *
      * @param KCommandContext $context
-     * 
-     * @return 
+     *
+     * @return
      */
     protected function _actionSave(KCommandContext $context)
     {
         $context->append(array('data' => array('params' => array())));
 
-        //find or create a new component        
+        //find or create a new component
         $component = $this->getService('repos://admin/components.component')
             ->findOrAddNew(array('option' => 'com_'.$this->getIdentifier()->package),
                     array('data' => array(
@@ -87,11 +72,11 @@ class ComBaseControllerConfiguration extends ComBaseControllerResource
     /**
      * Method to set a view object attached to the controller.
      *
-     * @param  mixed                    $view An object that implements KObjectIdentifiable, an object that 
+     * @param  mixed                    $view An object that implements KObjectIdentifiable, an object that
      *                                        implements KIndentifierInterface or valid identifier string
-     *                                         
+     *
      * @throws KDatabaseRowsetException If the identifier is not a view identifier
-     * 
+     *
      * @return KControllerAbstract
      */
     public function setView($view)

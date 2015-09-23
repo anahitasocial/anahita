@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Resource Controller.
  *
@@ -72,15 +57,10 @@ class ComBaseControllerToolbarDefault extends KControllerToolbarAbstract
         if ($this->getController()->getState()->isUnique()) {
             $saveable = $this->getController()->canEdit();
             $title = 'Edit '.$name;
-        } else {
-            $saveable = $this->getController()->canAdd();
-            $title = 'New '.$name;
         }
 
         if ($saveable) {
-            $this->setTitle($title)
-                ->addCommand('save')
-                ->addCommand('apply');
+            $this->setTitle($title)->addCommand('save');
         }
 
         $this->addCommand('cancel',  array('attribs' => array('data-novalidate' => 'novalidate')));
@@ -94,17 +74,6 @@ class ComBaseControllerToolbarDefault extends KControllerToolbarAbstract
      */
     public function onAfterControllerBrowse(KEvent $event)
     {
-        if ($this->getController()->canAdd()) {
-            $identifier = $this->getController()->getIdentifier();
-            $config = array('attribs' => array(
-                    'href' => 'index.php?option=com_'.$identifier->package.'&view='.$identifier->name,
-            ));
-
-            $this->addCommand('new', $config);
-        }
-
-        if ($this->getController()->canDelete()) {
-            $this->addCommand('delete');
-        }
+        return;
     }
 }

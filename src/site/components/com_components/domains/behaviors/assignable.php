@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Assignable Behavior.
  *
@@ -30,14 +15,14 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 {
     /**
      * Assignment option.
-     * 
+     *
      * @var int
      */
     protected $_assignment_option;
 
     /*
      * can only assigned to these actors
-     * 
+     *
      */
     protected $_actor_identifiers;
 
@@ -50,7 +35,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Description of the component when enabled on a profile.
-     * 
+     *
      * @var string
      */
     protected $_profile_description;
@@ -132,7 +117,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
             }
         } else {
             //not a real identifier just the
-            //the name part. 
+            //the name part.
             //we need to infer the whole identifier
             //com:[pluralized name].domain.entity.[name]
 
@@ -164,11 +149,11 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Return whether the component is active for actor. A component is active, if
-     * it has been assigned as awlays for the actor type or it has been enabled for the 
+     * it has been assigned as awlays for the actor type or it has been enabled for the
      * actor.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor object
-     * 
+     *
      * @return bool
      */
     public function activeForActor($actor)
@@ -190,9 +175,9 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Return whether the component is enabled for actor.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor The actor object
-     * 
+     *
      * @return bool
      */
     public function enabledForActor($actor)
@@ -202,7 +187,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Set the assignment option.
-     * 
+     *
      * @param int $option
      */
     public function setAssignmentOption($option)
@@ -222,7 +207,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
      /**
       * Return an array of allowed actors for this component to associate with.
-      * 
+      *
       * @return array
       */
      public function getActorIdentifiers()
@@ -242,7 +227,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Retunr an empty array.
-     * 
+     *
      * @return array
      */
     public function getPermissions()
@@ -252,7 +237,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Description of the app when assigned to a profile.
-     * 
+     *
      * @return string
      */
     public function getProfileDescription()
@@ -262,7 +247,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
 
     /**
      * Return an array of features that would be available when enabled for a profile.
-     * 
+     *
      * @return array
      */
     public function getProfileFeatures()
