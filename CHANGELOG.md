@@ -10,7 +10,10 @@ Anahita 4.1.5 Birth Release
 * we now have nodes and edges tables without the anahita prefix
 * refactored com_people MVC. We are still relying on JUser, but we are closer to a fully native user manager
 * Only admins and super admins can enable and disable accounts.
-* refactored the user activation and password reset workflows 
+* refactored the user activation and password reset workflows
+* update the migration files and fixed the issues that was causing the older releases of Anahita to break during the migration process.
+* updated the Subscriptions app to work with the new person entities.
+* beautified the code using php-cs-fixer
 
 Anahita 4.1.4 Birth Release
 =============================
