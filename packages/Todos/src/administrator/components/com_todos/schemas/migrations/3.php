@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -18,14 +18,14 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
 
         $db = KService::get('koowa:database.adapter.mysqli');
 
-        //change todo formats from html to string    
-        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:todos.domain.entity.todo" ');
+        //change todo formats from html to string
+        $entities = dbfetch('SELECT id, body FROM #__nodes WHERE type LIKE "%com:todos.domain.entity.todo" ');
 
         foreach ($entities as $entity) {
             $id = $entity['id'];
             $body = strip_tags($entity['body']);
 
-            $db->update('anahita_nodes', array('body' => $body), ' WHERE id='.$id);
+            $db->update('nodes', array('body' => $body), ' WHERE id='.$id);
         }
 
         $timeDiff = microtime(true) - $timeThen;
@@ -37,6 +37,6 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

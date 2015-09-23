@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -21,7 +21,7 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
         dboutput("Updating Topics. This may take a while ...\n");
 
         //Use p tags instead of inlines for topics
-        $entities = dbfetch('SELECT id, body FROM #__anahita_nodes WHERE type LIKE "%com:topics.domain.entity.topic" ');
+        $entities = dbfetch('SELECT id, body FROM #__nodes WHERE type LIKE "%com:topics.domain.entity.topic" ');
 
         foreach ($entities as $entity) {
             $id = $entity['id'];
@@ -31,7 +31,7 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
             $body = preg_replace('/\n(\s*\n)+/', "</p>\n<p>", $entity['body']);
             $body = '<p>'.$body.'</p>';
 
-            $db->update('anahita_nodes', array('body' => $body), ' WHERE id='.$id);
+            $db->update('nodes', array('body' => $body), ' WHERE id='.$id);
         }
 
         dboutput("Topics updated!\n");
@@ -45,6 +45,6 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

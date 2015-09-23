@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -14,7 +14,7 @@ class ComPagesSchemaMigration1 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        dbexec('UPDATE #__anahita_nodes SET access=\'admins\' WHERE enabled=0 AND type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
+        dbexec('UPDATE #__nodes SET access=\'admins\' WHERE enabled=0 AND type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
     }
 
     /**
@@ -22,6 +22,6 @@ class ComPagesSchemaMigration1 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

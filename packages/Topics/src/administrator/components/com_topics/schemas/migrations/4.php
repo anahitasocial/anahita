@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -14,7 +14,7 @@ class ComTopicsSchemaMigration4 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        dbexec('UPDATE #__anahita_nodes AS node SET node.pinned = ( SELECT tt.sticky FROM #__topics_topics AS tt WHERE tt.node_id = node.id AND tt.sticky = 1 )');
+        dbexec('UPDATE #__nodes AS node SET node.pinned = ( SELECT tt.sticky FROM #__topics_topics AS tt WHERE tt.node_id = node.id AND tt.sticky = 1 )');
         dbexec('DROP TABLE #__topics_topics');
     }
 
@@ -23,6 +23,6 @@ class ComTopicsSchemaMigration4 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }
