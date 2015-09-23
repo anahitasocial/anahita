@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Component object.
  *
@@ -30,7 +15,7 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
 {
     /**
      * Subscriptions.
-     * 
+     *
      * @var array
      */
     private $__subscriptions = array();
@@ -120,9 +105,9 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
 
     /**
      * Return an array of identifiers within the component.
-     * 
-     * @param string $class The class from which the entities are inherting 
-     * 
+     *
+     * @param string $class The class from which the entities are inherting
+     *
      * @return array()
      */
     public function getEntityIdentifiers($class)

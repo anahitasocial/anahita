@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * JAdministrator application. Temporary until merged with the dispatcher.
  *
@@ -30,7 +15,7 @@ class JAdministrator extends JApplication
 {
     /**
      * Template.
-     * 
+     *
      * @var string
      */
     protected $_template;
@@ -38,7 +23,7 @@ class JAdministrator extends JApplication
     /**
      * Application Router.
      *
-     * @var 
+     * @var
      */
     protected $_router;
 
@@ -148,7 +133,7 @@ class JAdministrator extends JApplication
 
     /**
      * Get the template.
-     * 
+     *
      * @return string The template name
      */
     public function getTemplate()

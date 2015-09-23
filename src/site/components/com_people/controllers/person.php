@@ -130,7 +130,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $person = parent::_actionEdit($context);
 
-        //just to make sure password is set
         if ($data->password) {
             $person->setPassword($data->password);
             $_SESSION['reset_password_prompt'] = 0;
@@ -168,13 +167,12 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
         $viewer = get_viewer();
-        $firsttime = !(bool) $this->getService('repos://site/users')
+        $isFirstUser = !(bool) $this->getService('repos://site/users')
                                   ->getQuery(true)
                                   ->fetchValue('id');
 
         $person = parent::_actionAdd($context);
 
-        //just to make sure password is set
         if ($data->password) {
             $person->setPassword($data->password);
         }
@@ -198,13 +196,15 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
-        if ($firsttime) {
+        if ($isFirstUser) {
             $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
+
             if ($person->admin()) {
                 $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
             }
+
         } else {
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(JText::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');

@@ -1,17 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2014 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Scope Object.
  *
@@ -33,7 +21,7 @@ class ComComponentsDomainEntityScope extends KObject
 
     /**
      * Scope type. Can be posts, actors or others.
-     * 
+     *
      * @var string
      */
     public $type;
@@ -68,14 +56,14 @@ class ComComponentsDomainEntityScope extends KObject
 
     /**
      * Returns how many result count there are per scope.
-     * 
+     *
      * @var int
      */
     public $result_count;
 
     /**
      * Constructor.
-     * 
+     *
      * If a repository is passed, the scope can guess some of the values
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -131,7 +119,7 @@ class ComComponentsDomainEntityScope extends KObject
 
     /**
      * The package and name portion of the identifier concatinated together using a dot.
-     * 
+     *
      * @return string
      */
     public function getKey()

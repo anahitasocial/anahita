@@ -1,17 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Search Scopes.
  *
@@ -74,7 +62,7 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
 
     /**
      * Return total.
-     * 
+     *
      * @return int
      */
     public function getTotal()
@@ -84,7 +72,7 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
 
     /**
      * Set the total of the scope.
-     * 
+     *
      * @param int $total
      */
     public function setTotal($total)
@@ -94,9 +82,9 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
 
     /**
      * Return a scope using a key or not if not found.
-     * 
+     *
      * @param string $scope
-     * 
+     *
      * @return ComSearchDomainScope
      */
     public function find($scope)

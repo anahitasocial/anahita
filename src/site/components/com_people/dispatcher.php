@@ -25,7 +25,7 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
         if (
             $this->getController()->getIdentifier()->name === 'session' &&
             $this->token != ''
-            ) {
+        ) {
             $this->getController()->execute('tokenlogin', $context);
             $context->response->send();
         }
