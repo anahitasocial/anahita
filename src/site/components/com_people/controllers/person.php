@@ -35,6 +35,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $config->append(array(
             'behaviors' => array('validatable', 'com://site/mailer.controller.behavior.mailer'),
+            'request' => array(
+                'reset_password' => 0
+            )
         ));
 
         parent::_initialize($config);
@@ -130,6 +133,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         //just to make sure password is set
         if ($data->password) {
             $person->setPassword($data->password);
+            $_SESSION['reset_password_prompt'] = 0;
         }
 
         //add the validations here

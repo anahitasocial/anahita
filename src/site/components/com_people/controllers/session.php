@@ -228,6 +228,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         if ($this->reset_password) {
             $redirectUrl .= '&get=settings&edit=account';
+            $_SESSION['reset_password_prompt'] = 1;
         }
 
         $credentials = array(
