@@ -27,6 +27,7 @@ INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering
 (10, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
 (11, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', '');
 
+INSERT INTO `#__nodes` (`id`, `type`, `component`, `name`, `access`) VALUES (1, 'ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment', 'com_notes', 'com:people.domain.entity.person', 1);
 
 INSERT INTO `#__templates_menu` (`template`, `menuid`, `client_id`) VALUES
 ('shiraz', 0, 0),

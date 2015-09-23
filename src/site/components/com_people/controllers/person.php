@@ -197,12 +197,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         if ($isFirstUser) {
-
-            if ($component = KService::get('repos://site/components')->find(array('component' => 'com_notes'))) {
-                $component->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
-                $component->save();
-            }
-
             $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
