@@ -87,7 +87,7 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
             $id = $entity['id'];
             $body = strip_tags($entity['body']);
 
-            $db->update('anahita_nodes', array('body' => $body), ' WHERE id='.$id);
+            $db->update('nodes', array('body' => $body), ' WHERE id='.$id);
         }
 
         dboutput("Comments updated!\n");

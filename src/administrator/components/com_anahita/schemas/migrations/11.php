@@ -38,9 +38,9 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
         if(!dbexists('SHOW COLUMNS FROM #__nodes LIKE "pinned"')) {
             dbexec('ALTER TABLE #__nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');
         }
-        
+
         //add github gist plugin
-        dbexec("INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES (50, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '')");
+        dbexec("INSERT INTO `#__plugins` (`name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES ('Content Filter - Medium', 'medium', 'contentfilter', 0, 1, 1, 0, 0, 0, '0000-00-00 00:00:00', '')");
 
         //remove the photo plugin
         dbexec("DELETE FROM #__plugins WHERE `element` = 'photo' ");
