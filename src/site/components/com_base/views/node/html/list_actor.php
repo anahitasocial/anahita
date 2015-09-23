@@ -15,7 +15,7 @@
 				<li>
 					<?= $item->followerCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span> 
-					<?php if($item->isLeadable()): ?>
+					<?php if ($item->isLeadable()): ?>
 					/ <?= $item->leaderCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
 					<?php endif; ?>
@@ -25,6 +25,6 @@
 	</div>
 	
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>400, 'consider_html'=>true)) ?>
+		<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 400, 'consider_html' => true)) ?>
 	</div>
 </div>

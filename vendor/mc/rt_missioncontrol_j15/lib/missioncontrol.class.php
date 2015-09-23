@@ -138,48 +138,6 @@ class MissionControl extends RTCore {
 	
 	}
 	
-	public function displayUserInfo() {
-	
-		$db			=& JFactory::getDBO();
-        $user       =& JFactory::getUser();
-		$task 		= JRequest::getString('task');
-		
-		$disabled = ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu'));
-		$disabled_class = $disabled ? ' disabled' : ' active';
-        $output = '';
-
-		$lastvisit = $this->user->lastvisitDate;
-
-		// Get the number of unread messages in your inbox
-	
-		$messages = '';
-		
-		if (!$disabled)
-			$edit_link = '<a href="index.php?option=com_users&view=user&task=edit&cid[]='.$this->user->id.'">';
-		else
-			$edit_link = '<a>';
-		if ($this->params->get('enableGravatar') && false) 
-		{
-			$gravatar = get_viewr()->avatar;
-			/*
-            $gravatar = $this->_getGravatar($this->user->email,46);		    
-			*/
-			$output .= '<div class="gravatar"><img style="width:46px !important" src="'.$gravatar.'" alt="gravatar" /></div>';
-        }
-
-		$output .= '<div class="userinfo'.$disabled_class.'">';
-		$output .= '<b>Logged in: ' . $this->user->name . '</b>';
-		$output .= '<span class="mc-button">'.$edit_link.'edit</a></span><br />';
-        $output .= $messages . '<br />';
-		$output .= 'last visit ' . $lastvisit;
-		$output .= '</div>';
-
-
-		
-		echo $output;
-	
-	}
-	
 	public function displayTitle() {
 		global $mainframe, $option;
 		
@@ -213,10 +171,11 @@ class MissionControl extends RTCore {
 		$task 		= JRequest::getString('task');
 		
 		$user		= $this->user;
+        $viewer = get_viewer();
 		$db			=& JFactory::getDBO();
 		$output 	= array();
 		
-		$canConfig	= $user->authorize('com_config', 'manage');
+		$canConfig	= $viewer->superadmin();
 		$disabled = ($task == 'edit' || $task == 'editA' || JRequest::getInt('hidemainmenu'));
 		$disabled_class = $disabled ? 'disabled' : 'active';
 		

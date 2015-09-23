@@ -2,12 +2,12 @@
 
 <div class="an-entity">
     <h3 class="entity-title">
-        <?php if( $package->authorize('administration') ): ?>
-        <a href="<?= @route( $package->getURL() ) ?>">
-            <?= @escape( $package->name ); ?>
+        <?php if ($package->authorize('administration')): ?>
+        <a href="<?= @route($package->getURL()) ?>">
+            <?= @escape($package->name); ?>
         </a>
         <?php else: ?>
-        <?= @escape( $package->name ); ?>    
+        <?= @escape($package->name); ?>    
         <?php endif; ?>    
     </h3>   
 
@@ -20,22 +20,22 @@
             <dd><?= round(AnHelperDate::secondsTo('day', $package->duration)) ?> <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DAYS') ?></dd>
 
             <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>:</dt> 
-            <dd><?= $package->price.' '.get_config_value('subscriptions.currency','US') ?></dd>
+            <dd><?= $package->price.' '.get_config_value('subscriptions.currency', 'US') ?></dd>
         </dl>
     </div>
     
     <div class="entity-description">
-        <?= @content( $package->description ) ?>
+        <?= @content($package->description) ?>
     </div>
     
-    <?php if( !$package->authorize('administration') ): ?>
-        <?php if ( $package->authorize('upgradepackage') ) : ?>
+    <?php if (!$package->authorize('administration')): ?>
+        <?php if ($package->authorize('upgradepackage')) : ?>
         <div class=entity-actions>
             <a href="<?=@route('view=signup&id='.$package->id)?>" class="btn btn-block btn-warning">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-UPGRADE-NOW') ?>
             </a>
         </div>
-        <?php elseif ( $package->authorize('subscribepackage') ) : ?>
+        <?php elseif ($package->authorize('subscribepackage')) : ?>
         <div class="entity-actions">
             <a href="<?=@route('view=signup&id='.$package->id)?>" class="btn btn-success btn-block">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ACTION-SUBSCRIBE-NOW') ?>
@@ -44,7 +44,7 @@
         <?php endif; ?>
     <?php endif; ?>
     
-    <?php if( $package->authorize('administration') ): ?>
+    <?php if ($package->authorize('administration')): ?>
     <div class="entity-actions">
         <?= @helper('ui.commands', @commands('list')) ?>
     </div>

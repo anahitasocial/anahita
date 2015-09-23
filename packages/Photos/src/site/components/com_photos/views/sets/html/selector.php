@@ -29,14 +29,16 @@
 
 <?php 
 $assigned_sets = array();
-if(count($photo->top()->sets))
-	foreach($photo->top()->sets as $set)
-		$assigned_sets[] = $set->id;
+if (count($photo->top()->sets)) {
+    foreach ($photo->top()->sets as $set) {
+        $assigned_sets[] = $set->id;
+    }
+}
 ?>
 
 <div id="sets" class="an-entities">
-<?php if(count($sets)): ?>
-	<?php foreach($sets as $set): ?>
+<?php if (count($sets)): ?>
+	<?php foreach ($sets as $set): ?>
 	<?= @view('set')->layout('selector_list')->set('set', $set)->assignedSets($assigned_sets); ?>
 	<?php endforeach; ?>
 <?php else: ?>

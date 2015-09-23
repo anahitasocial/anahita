@@ -2,18 +2,18 @@
 
 <?php @commands('toolbar') ?>
 
-<?php if( $set->authorize('edit') ) : ?>
-<div class="an-entity an-photos-set editable" data-url="<?= @route( $set->getURL() ) ?>">    
+<?php if ($set->authorize('edit')) : ?>
+<div class="an-entity an-photos-set editable" data-url="<?= @route($set->getURL()) ?>">    
 <?php else : ?>
 <div class="an-entity an-photos-set">
 <?php endif; ?>         
     <div class="entity-description-wrapper">
         <h3 class="entity-title">
-            <?= @escape( $set->title ) ?>
+            <?= @escape($set->title) ?>
         </h3>
         
         <div class="entity-description">
-            <?= @content( nl2br( $set->description ), array( 'exclude' => array('gist','video') ) ) ?>
+            <?= @content(nl2br($set->description), array('exclude' => array('gist', 'video'))) ?>
         </div>
     </div>
     
@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<?php if( $set->authorize('edit') ) : ?>
+<?php if ($set->authorize('edit')) : ?>
 <div id="photo-selector"></div>
 <?php endif; ?>
 

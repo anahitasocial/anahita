@@ -77,18 +77,6 @@ class JUser extends JObject
 
 	/**
 	 * Description
-	 * @var int
-	 */
-	var $sendEmail		= null;
-
-	/**
-	 * The group id number
-	 * @var int
-	 */
-	var $gid			= null;
-
-	/**
-	 * Description
 	 * @var datetime
 	 */
 	var $registerDate	= null;
@@ -110,12 +98,6 @@ class JUser extends JObject
 	 * @var string
 	 */
 	var $params			= null;
-
-	/**
-	 * Description
-	 * @var string integer
-	 */
-	var $aid 		= null;
 
 	/**
 	 * Description
@@ -154,9 +136,6 @@ class JUser extends JObject
 		{
 			//initialise
 			$this->id        = 0;
-			$this->gid       = 0;
-			$this->sendEmail = 0;
-			$this->aid       = 0;
 			$this->guest     = 1;
 		}
 	}
@@ -240,27 +219,6 @@ class JUser extends JObject
 	function defParam( $key, $value )
 	{
 		return $this->_params->def( $key, $value );
-	}
-
-	/**
-	 * Method to check JUser object authorization against an access control
-	 * object and optionally an access extension object
-	 *
-	 * @access 	public
-	 * @param	string	$acoSection	The ACO section value
-	 * @param	string	$aco		The ACO value
-	 * @param	string	$axoSection	The AXO section value	[optional]
-	 * @param	string	$axo		The AXO value			[optional]
-	 * @return	boolean	True if authorized
-	 * @since	1.5
-	 */
-	function authorize( $acoSection, $aco, $axoSection = null, $axo = null )
-	{
-		// the native calls (Check Mode 1) work on the user id, not the user type
-		$acl	= & JFactory::getACL();
-		$value	= $acl->getCheckMode() == 1 ? $this->id : $this->usertype;
-
-		return $acl->acl_check( $acoSection, $aco,	'users', $value, $axoSection, $axo );
 	}
 
 	/**
@@ -445,15 +403,6 @@ class JUser extends JObject
 		// TODO: this will be deprecated as of the ACL implementation
 		$db =& JFactory::getDBO();
 
-		$gid = array_key_exists('gid', $array ) ? $array['gid'] : $this->get('gid');
-
-		$query = 'SELECT name'
-		. ' FROM #__core_acl_aro_groups'
-		. ' WHERE id = ' . (int) $gid
-		;
-		$db->setQuery( $query );
-		$this->set( 'usertype', $db->loadResult());
-
 		if ( array_key_exists('params', $array) )
 		{
 			$params	= '';
@@ -498,24 +447,6 @@ class JUser extends JObject
 		if(!$table->check()) 
 		{
 			$this->setError($table->getError());
-			return false;
-		}
-		
-		// If user is made a Super Admin group and user is NOT a Super Admin
-		$my =& JFactory::getUser();
-		
-		if($this->get('gid') == 25 && $my->get('gid') != 25)
-		{
-			// disallow creation of Super Admin by non Super Admin users
-			$this->setError(JText::_( 'WARNSUPERADMINCREATE' ));
-			return false;
-		}
-		
-		// If user is made an Admin group and user is NOT a Super Admin
-		if($this->get('gid') == 24 && !($my->get('gid') == 25 || ($this->get('id') == $my->id && $my->get('gid') == 24)))
-		{
-			// disallow creation of Admin by non Super Admin users
-			$this->setError(JText::_( 'WARNSUPERADMINCREATE' ));
 			return false;
 		}
 		

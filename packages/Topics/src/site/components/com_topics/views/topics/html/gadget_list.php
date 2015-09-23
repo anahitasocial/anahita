@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>	
 	
-<?php if(count($topics)) :?>
-	<?php foreach( $topics as $topic) : ?>
+<?php if (count($topics)) :?>
+	<?php foreach ($topics as $topic) : ?>
 	<?= @view('topic')->layout('list')->topic($topic)->filter($filter) ?>
 	<?php endforeach; ?>
 <?php else: ?>

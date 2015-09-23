@@ -14,7 +14,6 @@
 		<![CDATA[
 			<?=str_replace('administrator/','',JURI::base())?>components/com_notifications/process.php <br/>
 		]]>
-		</param>		
-		 		
+		</param>			
 	</params>
 </config>

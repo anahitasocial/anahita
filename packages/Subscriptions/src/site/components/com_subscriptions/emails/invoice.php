@@ -4,7 +4,7 @@
 
 <h1><?= @text('COM-SUBSCRIPTIONS-INVOICE') ?></h1>
 
-<p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></strong>: <?= @name( $order->getSubscriber() ) ?></p>
+<p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></strong>: <?= @name($order->getSubscriber()) ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-INVOICE-SUBSCRIBED-TO') ?></strong>: <?= stripslashes($order->itemName) ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DATE') ?></strong>: <?= $order->createdOn->format('%D') ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PAID') ?></strong>: <?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?></p>
@@ -16,7 +16,7 @@
 
 <p>&nbsp;</p>
 
-<?php if(!empty($contact) && !empty($contact->address)) : ?>
+<?php if (!empty($contact) && !empty($contact->address)) : ?>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-ADDR') ?></strong>: <?= $contact->address ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-CITY') ?></strong>: <?= $contact->city ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-STATE') ?></strong>: <?= $contact->state ?></p>

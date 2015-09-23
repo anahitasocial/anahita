@@ -4,7 +4,7 @@
 	<div class="span8">	
 		<?= @helper('ui.header', array()) ?>
 	
-		<?php if($actor && $actor->authorize('action', 'todo:add')) : ?>
+		<?php if ($actor && $actor->authorize('action', 'todo:add')) : ?>
 		<div id="entity-form-wrapper" class="hide">
 		<?= @view('todo')->layout('form')->actor($actor) ?>
 		</div>
@@ -20,7 +20,7 @@
 		       <?= @text('LIB-AN-SORT-TITLE') ?>
 		    </li>
 		    <?php $sorts = array('newest', 'priority', 'updated') ?>
-		    <?php foreach($sorts as $sort): ?>
+		    <?php foreach ($sorts as $sort): ?>
 			<?php $active = ($sort == 'newest') ? 'active' : '' ?>
 			<li class="sort-option <?= $active ?>">
 				<a href="<?= @route('layout=list&sort='.$sort) ?>">

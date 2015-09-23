@@ -7,13 +7,13 @@
 		</div>
 		
 		<div class="entity-container">
-		    <?php if( $topic->owner->authorize('administration') && $topic->pinned ): ?>
+		    <?php if ($topic->owner->authorize('administration') && $topic->pinned): ?>
             <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
             <?php endif; ?>
 			<h4 class="author-name"><?= @name($topic->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($topic->creationTime) ?></li>
-				<?php if(!$topic->owner->eql($topic->author)): ?>
+				<?php if (!$topic->owner->eql($topic->author)): ?>
 				<li><?= @name($topic->owner) ?></li>
 				<?php endif; ?>
 			</ul>
@@ -27,16 +27,16 @@
 	</h3>
 	
 	<div class="entity-description">
-	<?= @helper( 'text.truncate', 
-	    @content( $topic->body, 
-	       array('exclude'=>'gist')), 
-	       array('length'=>200, 'consider_html'=>true)); 
-	?>
+	<?= @helper('text.truncate',
+        @content($topic->body,
+           array('exclude' => 'gist')),
+           array('length' => 200, 'consider_html' => true));
+    ?>
 	</div>
 	
 	<div class="entity-meta">
 		<ul class="an-meta inline">	
-			<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $topic->numOfComments) ?></li>
+			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $topic->numOfComments) ?></li>
 		</ul>
 		
 		<div class="an-meta vote-count-wrapper" id="vote-count-wrapper-<?= $topic->id ?>">

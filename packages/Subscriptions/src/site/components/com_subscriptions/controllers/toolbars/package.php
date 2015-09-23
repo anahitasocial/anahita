@@ -1,69 +1,52 @@
 <?php
 
-/** 
- * 
- * @category   Anahita
- * @package    Com_Subscriptions
- * @subpackage Controller_Toolbar
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2015 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.GetAnahita.com
- */
-
 /**
- * Actorbar. 
+ * Actorbar.
  *
  * @category   Anahita
- * @package    Com_Subscriptions
- * @subpackage Controller_Toolbar
+ *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
  * @link       http://www.GetAnahita.com
  */
-
 class ComSubscriptionsControllerToolbarPackage extends ComSubscriptionsControllerToolbarDefault
-{    
+{
     /**
-     * New button toolbar
+     * New button toolbar.
      *
      * @param LibBaseTemplateObject $command The action object
-     *
-     * @return void
      */
     protected function _commandNew($command)
     {
-        $name   = $this->getController()->getIdentifier()->name;
+        $name = $this->getController()->getIdentifier()->name;
         $labels = array();
         $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
         $labels[] = 'New';
         $label = translate($labels);
         $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
-        
+
         $command
-        ->append(array('label'=>$label))
+        ->append(array('label' => $label))
         ->href(JRoute::_($url));
     }
-    
+
     /**
-     * Edit Command for an entity
+     * Edit Command for an entity.
      *
      * @param LibBaseTemplateObject $command The action object
-     *
-     * @return void
      */
     protected function _commandEdit($command)
     {
         $entity = $this->getController()->getItem();
         $view = $this->getController()->getView()->getName();
- 
+
         $layout = pick($command->layout, 'edit');
-    
-        $command->append(array('label'=>JText::_('LIB-AN-ACTION-EDIT')))
-        ->href($entity->getURL().'&layout='.$layout);
-        
-        if(KInflector::isPlural($view))
-        {
+
+        $command->append(array('label' => JText::_('LIB-AN-ACTION-EDIT')))
+                ->href($entity->getURL().'&layout='.$layout);
+
+        if (KInflector::isPlural($view)) {
             $command->setAttribute('data-action', 'edit');
         }
     }

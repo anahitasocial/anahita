@@ -1,87 +1,73 @@
-<?php 
-/**
- * @category    Com_Subscriptions
- * @package     Controller
- * @copyright   (C) 2008 - 2015 rmdStudio Inc. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link        http://www.GetAnahita.com
- */
+<?php
 
 /**
- * Package Controller
- * 
- * @package     Com_Subscriptions
+ * Package Controller.
+ *
  * @category    Controller
  */
 class ComSubscriptionsControllerPermissionOrder extends ComSubscriptionsControllerPermissionDefault
 {
-    
     /**
-     * Authorize if viewer can browse
+     * Authorize if viewer can browse.
      *
-     * @return boolean
-     */         
+     * @return bool
+     */
     public function canBrowse()
     {
         $viewer = get_viewer();
-        
-        if( $viewer->guest() )
-        {
+
+        if ($viewer->guest()) {
             return false;
         }
-        
-        if( !$viewer->admin() && !isset($this->actor->id) )
-        {
+
+        if (!$viewer->admin() && !isset($this->actor->id)) {
             return false;
         }
-        
-        if( !$viewer->admin() && !$viewer->eql( $this->actor ) )
-        {
+
+        if (!$viewer->admin() && !$viewer->eql($this->actor)) {
             return false;
         }
-        
+
         return true;
     }
-    
+
     /**
-     * Authorize if viewer can read
+     * Authorize if viewer can read.
      *
-     * @return boolean
+     * @return bool
      */
     public function canRead()
-    { 
+    {
         $viewer = get_viewer();
-        
-        if($viewer->admin())
-        {
+
+        if ($viewer->admin()) {
             return true;
         }
 
-        if( $this->getItem()->actorId == $viewer->id )
-        {
+        if ($this->getItem()->actorId == $viewer->id) {
             return true;
         }
-        
-        return false;  
+
+        return false;
     }
-    
+
     /**
-     * Authorize if viewer can add
+     * Authorize if viewer can add.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canAdd()
     {
         return false;
     }
-    
+
     /**
-     * Authorize if viewer can edit
+     * Authorize if viewer can edit.
      *
-     * @return boolean
+     * @return bool
      */
     public function canEdit()
     {
         return false;
-    }        
-}    
+    }
+}

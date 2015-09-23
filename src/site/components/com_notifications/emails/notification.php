@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 <?php 
-$btn     = <<<EOF
+$btn = <<<EOF
   text-decoration:none;
   cursor:pointer;
   display:inline-block;
@@ -23,7 +23,7 @@ $btn_danger = $btn.<<<EOF
   background-color:#c43c35;  
   border-color:#c43c35 #c43c35 #882a25;
 EOF;
-$well    = <<<EOF
+$well = <<<EOF
   background-color:#f2f2f2;
   margin-bottom:20px;  
   padding:10px;  
@@ -47,7 +47,7 @@ EOF;
                 <table cellspacing="0" cellpadding="0" border="0" style="">
                      <tbody>
                       <tr>
-                      	  <?php if ( $subject ) : ?>
+                      	  <?php if ($subject) : ?>
                           <td valign="top">
                               <a href="<?= @route($subject->getURL())?>">
                                   <img src="<?= @helper('com://site/actors.template.helper.getAvatarURL', $subject) ?>" />
@@ -55,7 +55,7 @@ EOF;
                           </td>
                           <?php endif;?>
                           <td valign="top" style="padding-left:10px">
-                              <?php if ( $title) : ?><div style="font-size:16px"><?= $title ?></div><?php endif;?>
+                              <?php if ($title) : ?><div style="font-size:16px"><?= $title ?></div><?php endif;?>
                               <?php if ($body)   : ?><div style="padding-top:10px;font-size:12px"><?= (trim($body)) ?></div><?php endif;?>
                           </td>
                       </tr>
@@ -63,13 +63,13 @@ EOF;
                 </table>
 		      </td>
 		   </tr>			   
-		   <?php if ( $commands && count($commands) > 0 ) : ?>
+		   <?php if ($commands && count($commands) > 0) : ?>
 		   <?php 
-		       $setting_command = $commands->extract('notification_setting');		       
-		   ?>
+               $setting_command = $commands->extract('notification_setting');
+           ?>
 			<tr>
 				<td style="<?= $well?>">
-					<?php foreach($commands as $command) :  ?>						
+					<?php foreach ($commands as $command) :  ?>						
 						<a href="<?= @route($command->attribs->href) ?>" style="<?= $btn_primary  ?>"><?= $command->label?></a>
 					<?php endforeach;?>
 				</td>
@@ -78,11 +78,11 @@ EOF;
 			<tr>
     			<td>
     			<small>
-        			<?php if ( !empty($setting_command) ) : ?>
-        			    <?= sprintf(@text('COM-NOTIFICATIONS-SETTING-URL'), 
-        			            @route('option=notifications&view=settings&oid='.$setting_command->actor->id),
-        			            @route($setting_command->actor->getURL()),
-        			            $setting_command->actor->name)?>
+        			<?php if (!empty($setting_command)) : ?>
+        			    <?= sprintf(@text('COM-NOTIFICATIONS-SETTING-URL'),
+                                @route('option=notifications&view=settings&oid='.$setting_command->actor->id),
+                                @route($setting_command->actor->getURL()),
+                                $setting_command->actor->name)?>
         			<?php endif;?>
     			</small>
     			</td>

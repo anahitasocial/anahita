@@ -7,16 +7,16 @@
 	    
         <div class="an-entity">
         	<h2 class="entity-title">
-        	    <?= @escape( $order->itemName ) ?>
+        	    <?= @escape($order->itemName) ?>
         	</h2>
         
             <div class="entity-description">
             	<dl>
             	    <dt><?= @text('COM-SUBSCRIPTIONS-INVOICE-BILLED-TO') ?></dt>
-            	    <dd><?= @escape( $actor->name ) ?></dd>
+            	    <dd><?= @escape($actor->name) ?></dd>
             	    
             	    <dt><?= @text('COM-SUBSCRIPTIONS-INVOICE-SUBSCRIBED-TO') ?></dt>
-            	    <dd><?= @escape( $order->itemName ) ?></dd>
+            	    <dd><?= @escape($order->itemName) ?></dd>
             	    
             		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-ID'); ?></dt>
             		<dd><?= $order->itemId ?></dd>
@@ -24,7 +24,7 @@
             		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PRICE'); ?></dt>
             		<dd><?= $order->itemAmount ?></dd>
             		
-            		<?php if($order->discountAmount): ?>
+            		<?php if ($order->discountAmount): ?>
             		<dt><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-DISCOUNT'); ?></dt>
             		<dd>- <?= round($order->discountAmount, 2) ?></dd>
             		<?php endif; ?>

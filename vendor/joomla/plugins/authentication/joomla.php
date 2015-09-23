@@ -66,41 +66,42 @@ class plgAuthenticationJoomla extends JPlugin
 
         // Initialize variables
         $conditions = '';
-        
+
         // Get a database object
         $db =& JFactory::getDBO();
         $username = $db->Quote($credentials['username']);
-        
-        $query = 'SELECT `username`,`id`, `password`, `gid`'
+
+        $query = 'SELECT `username`,`id`, `password`'
             . ' FROM `#__users`'
             . ' WHERE username=' . $username;
-            
+
         //if an email
         if(strpos($username,'@'))
             $query .= ' OR email='.$username;
-        
+
         $db->setQuery($query);
-        
+
         $result = $db->loadObject();
-        
+
         if($result)
         {
             //if login with email then set the username credential
-            $credentials['username'] = $result->username;           
+            $credentials['username'] = $result->username;
             $parts  = explode( ':', $result->password );
             $crypt  = $parts[0];
             $salt   = @$parts[1];
             $testcrypt = JUserHelper::getCryptedPassword($credentials['password'], $salt);
-            
-            if($crypt == $testcrypt) 
-            {             
-                $user = JUser::getInstance($result->id); // Bring this in line with the rest of the system
+
+            if($crypt == $testcrypt)
+            {
+                // Bring this in line with the rest of the system
+                $user = JUser::getInstance($result->id);
                 $response->email = $user->email;
                 $response->fullname = $user->name;
                 $response->status = JAUTHENTICATE_STATUS_SUCCESS;
                 $response->error_message = '';
-            } 
-            else 
+            }
+            else
             {
                 $response->status = JAUTHENTICATE_STATUS_FAILURE;
                 $response->error_message = 'Invalid password';

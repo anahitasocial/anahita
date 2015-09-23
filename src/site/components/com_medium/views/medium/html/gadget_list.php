@@ -10,7 +10,7 @@
 			<h4 class="author-name"><?= @name($item->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($item->creationTime) ?></li>
-				<?php if(!$item->owner->eql($item->author)): ?>
+				<?php if (!$item->owner->eql($item->author)): ?>
 				<li><?= @name($item->owner) ?></li>
 				<?php endif; ?>
 			</ul>
@@ -21,9 +21,9 @@
 		<a href="<?= @route($item->getURL()) ?>"><?= @escape($item->title) ?></a>
 	</h3>
 	
-	<?php if($item->description): ?>
+	<?php if ($item->description): ?>
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($item->description), array('length'=>500, 'consider_html'=>true, 'read_more'=>true)); ?>
+		<?= @helper('text.truncate', @content($item->description), array('length' => 500, 'consider_html' => true, 'read_more' => true)); ?>
 	</div>
 	<?php endif; ?>
 	

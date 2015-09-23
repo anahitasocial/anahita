@@ -1,33 +1,32 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @package    Com_Anahita
- * @subpackage Schema_Migration
+/**
+ * LICENSE: ##LICENSE##.
  */
 
 /**
- * Schema Migration
- *
- * @package    Com_Anahita
- * @subpackage Schema_Migration
+ * Schema Migration.
  */
 class ComAnahitaSchemaMigration12 extends ComMigratorMigrationVersion
 {
-   /**
-    * Called when migrating up
-    */
+    /**
+     * Called when migrating up.
+     */
     public function up()
     {
-        dbexec("DELETE FROM #__anahita_edges WHERE node_a_id = node_b_id");
+
+        if (!dbexists('SHOW TABLES LIKE "#__edges"')) {
+            dbexec('RENAME TABLE #__anahita_edges TO #__edges');
+        }
+
+        dbexec('DELETE FROM #__edges WHERE node_a_id = node_b_id');
     }
 
-   /**
-    * Called when rolling back a migration
-    */        
+    /**
+     * Called when rolling back a migration.
+     */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

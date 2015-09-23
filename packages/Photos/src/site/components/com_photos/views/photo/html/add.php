@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script  src="com_photos/js/upload.js" />
 <?php else: ?>
 <script  src="com_photos/js/min/upload.min.js" />
@@ -14,12 +14,12 @@
 	    	<div class="dropzone"></div>
 	    	
 	    	<form>
-        	    <?php if ( $actor->authorize('administration')) : ?>
+        	    <?php if ($actor->authorize('administration')) : ?>
         		<div id="photo-privacy-selector" class="control-group">
         			<label class="control-label" for="privacy" id="privacy"><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
         			<div class="controls">
         				<?php $entity = @service('repos:photos.photo')->getEntity()->reset() ?>
-        				<?= @helper('ui.privacy',array('entity'=>$entity, 'auto_submit'=>false, 'options'=>$actor)) ?>
+        				<?= @helper('ui.privacy', array('entity' => $entity, 'auto_submit' => false, 'options' => $actor)) ?>
         			</div>
         		</div>
                 <?php endif;?>
@@ -37,7 +37,7 @@
 <script>
 $('#photos-add').photoUpload({
 	filedrop : '.dropzone',
-	url : "<?= @route( 'view=photo&format=json&oid='.$actor->id ) ?>",
+	url : "<?= @route('view=photo&format=json&oid='.$actor->id) ?>",
 	setsUrl : "<?= @route('view=sets&oid='.$actor->id.'&layout=add_photos') ?>",
 	parallelUploads : 2,
 	maxFilesize : <?= get_config_value('photos.uploadlimit', 4) ?>,

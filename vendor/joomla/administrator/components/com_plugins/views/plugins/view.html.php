@@ -100,10 +100,9 @@ class PluginsViewPlugins extends JView
 		jimport('joomla.html.pagination');
 		$pagination = new JPagination( $total, $limitstart, $limit );
 
-		$query = 'SELECT p.*, u.name AS editor, g.name AS groupname'
+		$query = 'SELECT p.*, u.name AS editor'
 			. ' FROM #__plugins AS p'
 			. ' LEFT JOIN #__users AS u ON u.id = p.checked_out'
-			. ' LEFT JOIN #__groups AS g ON g.id = p.access'
 			. $where
 			. ' GROUP BY p.id'
 			. $orderby

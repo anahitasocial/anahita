@@ -5,8 +5,7 @@ $url = empty($comment) ?  $parent->getURL() : $comment->getURL();
 $action = empty($comment)  ? 'addcomment' : 'editcomment';
 $editor = !isset($editor) ? false : $editor;
 
-if ( $editor ) 
-{
+if ($editor) {
     $url .= '&comment[editor]=1';
 }
 ?>
@@ -30,7 +29,7 @@ if ( $editor )
 		</div>
 
 		<div class="comment-actions">
-			<?php if(isset($comment)) : ?>			
+			<?php if (isset($comment)) : ?>			
 			<a class="btn action-cancel" data-action="cancelcomment" href="<?= @route($comment->getURL().'&comment[layout]=list')?>">
 				<?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</a> 

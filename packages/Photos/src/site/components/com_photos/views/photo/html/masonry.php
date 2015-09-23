@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if($photo->authorize('edit')) : ?>
+<?php if ($photo->authorize('edit')) : ?>
 <div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
 <?php else : ?>
 <div class="an-entity">
@@ -14,7 +14,7 @@
 			<h4 class="author-name"><?= @name($photo->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($photo->creationTime) ?></li>
-				<?php if(!$photo->owner->eql($photo->author)): ?>
+				<?php if (!$photo->owner->eql($photo->author)): ?>
 				<li><?= @name($photo->owner) ?></li>
 				<?php endif; ?>
 			</ul>
@@ -29,20 +29,20 @@
 	</div>
 	
 	<div class="entity-description-wrapper">
-		<?php if( $photo->title ): ?>
+		<?php if ($photo->title): ?>
 			<h4 class="entity-title">
 				<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
 					<?= @escape($photo->title) ?>
 				</a>
 			</h4>
-		<?php elseif( $photo->authorize('edit') ) : ?>
+		<?php elseif ($photo->authorize('edit')) : ?>
 			<h4 class="entity-title">
 				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
 			</h4>
 		<?php endif; ?>
     		
     	<div class="entity-description">
-    	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude'=>array('gist','video'))), array('length'=>200, 'read_more'=>true, 'consider_html'=>true)); ?>
+    	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude' => array('gist', 'video'))), array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
     	</div>
 	</div>
 		
@@ -50,10 +50,10 @@
 		<ul class="an-meta inline">
 			<li>
 				<a href="<?= @route($photo->getURL()) ?>">
-				<?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
+				<?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
 				</a>
 			</li>
-			<?php if($photo->lastCommenter): ?>
+			<?php if ($photo->lastCommenter): ?>
 		 	<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
 			<?php endif; ?>
 		</ul>
@@ -63,7 +63,7 @@
 		</div>
 	</div>
 	
-	<?php if( $photo->authorize('edit') ) : ?>
+	<?php if ($photo->authorize('edit')) : ?>
 	<div class="entity-actions">
 		<?= @helper('ui.commands', @commands('list')) ?>
 	</div>

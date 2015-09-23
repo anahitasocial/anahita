@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<params>	
-					
+	<params>			
 		<param name="debug" size="60" type="list" default="" label="Redirect All Emails" >
 		      <option value="0">No</option>
 		      <option value="1">Yes</option>    
@@ -15,9 +14,5 @@
                <p>This is meant for debugging email and should be turned-off for production server</p>                     
         ]]>
         </param>
-
-		
-		
-		 		
 	</params>
 </config>

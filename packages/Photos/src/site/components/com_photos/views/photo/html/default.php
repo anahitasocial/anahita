@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if($photo->authorize('edit')) : ?>
+<?php if ($photo->authorize('edit')) : ?>
 
-<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_photos/js/photoset.js" />
 <?php else: ?>
 <script src="com_photos/js/min/photoset.min.js" />
@@ -34,20 +34,20 @@
         
         <div class="block-content">
         	<ul class="an-meta">
-        		<li><?= sprintf( @text('LIB-AN-ENTITY-AUTHOR'), @date($photo->creationTime), @name($photo->author)) ?></li>
-        		<li><?= sprintf( @text('LIB-AN-ENTITY-EDITOR'), @date($photo->updateTime), @name($photo->editor)) ?></li>
-        		<li><?= sprintf( @text('COM-PHOTOS-PHOTO-META-SETS'), $photo->sets->getTotal()) ?></li>
-        		<li><?= sprintf( @text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
+        		<li><?= sprintf(@text('LIB-AN-ENTITY-AUTHOR'), @date($photo->creationTime), @name($photo->author)) ?></li>
+        		<li><?= sprintf(@text('LIB-AN-ENTITY-EDITOR'), @date($photo->updateTime), @name($photo->editor)) ?></li>
+        		<li><?= sprintf(@text('COM-PHOTOS-PHOTO-META-SETS'), $photo->sets->getTotal()) ?></li>
+        		<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
         	</ul>
     	</div>
     	
-    	<?php if($actor->authorize('administration')) : ?>	
+    	<?php if ($actor->authorize('administration')) : ?>	
     	<h4 class="block-title">
     	<?= @text('COM-PHOTOS-PHOTO-PRIVACY') ?>
     	</h4>
     	
     	<div class="block-content">
-    	<?= @helper('ui.privacy',$photo) ?>
+    	<?= @helper('ui.privacy', $photo) ?>
     	</div>
     	<?php endif; ?>		
 	</div>

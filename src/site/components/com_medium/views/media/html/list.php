@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die ?>
 
 <div class="an-entities" id="an-entities-main">
-<?php if(count($items)): ?>
-	<?php foreach($items as $item) : ?>
+<?php if (count($items)): ?>
+	<?php foreach ($items as $item) : ?>
 		<?= @listItemView()->layout('list')->item($item)->filter($filter) ?>
 	<?php endforeach; ?>
 <?php else : ?>
@@ -10,4 +10,4 @@
 <?php endif; ?>
 </div>
 
-<?= @pagination($items, array('url'=>@route('layout=list'))) ?>
+<?= @pagination($items, array('url' => @route('layout=list'))) ?>

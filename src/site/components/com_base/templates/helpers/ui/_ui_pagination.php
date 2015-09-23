@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<?php if ( count($pages) > 1 ) : ?>
+<?php if (count($pages) > 1) : ?>
 <div class="pagination" data-behavior="pagination" data-pagination-options="<?= htmlspecialchars(json_encode($options), ENT_QUOTES, 'UTF-8') ?>">
 	<ul>	    	
 		<li class="prev <?= $paginator['offset'] == 0 ? 'disabled' : ''?>">
@@ -8,7 +8,7 @@
 				<?= @text('PREV') ?>
 			</a>
 		</li>			
-		<?php foreach($pages as $page) : ?>
+		<?php foreach ($pages as $page) : ?>
 			<li class="<?= $page['current'] ? 'active' : ''?>">			
 				<a href="<?=$page['url']?>">
 					<?= $page['number'] ?>

@@ -17,7 +17,7 @@
 			<?= $item->followerCount ?>
 			<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span> 
 			
-			<?php if($item->isLeadable()): ?>
+			<?php if ($item->isLeadable()): ?>
 			/ <?= $item->leaderCount ?>
 			<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
 			<?php endif; ?>
@@ -26,18 +26,18 @@
 	</div>
 
 	<div class="entity-description">
-		<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>200, 'consider_html'=>true)); ?>
+		<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
 	</div>
 			
-	<?php if ( count($commands) ) : ?>
+	<?php if (count($commands)) : ?>
 	<div class="entity-actions">
-		<?php if ( $action = $commands->extract('follow') ) : ?>
+		<?php if ($action = $commands->extract('follow')) : ?>
 			<?= @helper('ui.command', $action->class('btn btn-primary')) ?> 
-		<?php elseif ( $action = $commands->extract('unfollow') ) : ?>
+		<?php elseif ($action = $commands->extract('unfollow')) : ?>
 			<?= @helper('ui.command', $action->class('btn'))?> 
 		<?php endif;?>
 		
-		<?php foreach($commands as $action) : ?>
+		<?php foreach ($commands as $action) : ?>
 			<?= @helper('ui.command', $action->class('btn')) ?>
 		<?php endforeach;?>
 	</div>

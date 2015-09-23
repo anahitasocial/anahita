@@ -29,7 +29,7 @@
 			    <?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?>
 			</label>
 			<div class="controls">
-				<?= @helper('ui.privacy', array('entity'=>$photo, 'auto_submit'=>false, 'options'=>$actor)) ?>
+				<?= @helper('ui.privacy', array('entity' => $photo, 'auto_submit' => false, 'options' => $actor)) ?>
 			</div>
 		</div>
                 		

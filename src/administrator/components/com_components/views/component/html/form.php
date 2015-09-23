@@ -6,7 +6,7 @@
 	<div class="col width-50">
 	
 		<fieldset class="adminform">
-			<legend><?= JText::_( 'AN-APPS-APP-DETAILS' ); ?></legend>
+			<legend><?= JText::_('AN-APPS-APP-DETAILS'); ?></legend>
 			
 			<table class="admintable">
 				<tr>
@@ -26,14 +26,14 @@
 		</fieldset>
 		
 		<fieldset class="adminform">
-			<legend><?= @text( 'AN-APPS-APP-ACTOR-ACCESS-CONTROL-LIST' ); ?></legend>
+			<legend><?= @text('AN-APPS-APP-ACTOR-ACCESS-CONTROL-LIST'); ?></legend>
 		
 			<table class="admintable">		
 			    
 		        <?php $allowedActors = $component->getActorIdentifiers()->toArray(); ?>
-				<?php foreach($actor_identifiers as $identifier) : ?>
+				<?php foreach ($actor_identifiers as $identifier) : ?>
     				
-    				<?php if( count($allowedActors) && !in_array($identifier, $allowedActors) ): ?>
+    				<?php if (count($allowedActors) && !in_array($identifier, $allowedActors)): ?>
     				<?php continue; ?>    
     				<?php endif; ?>   
     				 
@@ -42,17 +42,17 @@
     					    <?= ucfirst($identifier->name) ?>
     					</td>
     					<td>				    
-    					    <?php if ( $component->getAssignmentOption() == ComComponentsDomainBehaviorAssignable::OPTION_OPTIONAL ) : ?>
-        						<?= @html('select', 'identifiers['.$identifier.']', array('options'=>array(
-        								0 => @text('AN-APPS-APP-ACTOR-ACCESS-OPTIONAL'),
-        								1 => @text('AN-APPS-APP-ACTOR-ACCESS-ALWAYS'),
-        								2 => @text('AN-APPS-APP-ACTOR-ACCESS-NEVER')
-        							), 'selected' => $component->getAssignmentForIdentifier($identifier)) ) ?>
+    					    <?php if ($component->getAssignmentOption() == ComComponentsDomainBehaviorAssignable::OPTION_OPTIONAL) : ?>
+        						<?= @html('select', 'identifiers['.$identifier.']', array('options' => array(
+                                        0 => @text('AN-APPS-APP-ACTOR-ACCESS-OPTIONAL'),
+                                        1 => @text('AN-APPS-APP-ACTOR-ACCESS-ALWAYS'),
+                                        2 => @text('AN-APPS-APP-ACTOR-ACCESS-NEVER'),
+                                    ), 'selected' => $component->getAssignmentForIdentifier($identifier))) ?>
     						<?php else : ?>
-        						<?= @html('select', 'identifiers['.$identifier.']', array('options'=>array(    								
-        								1 => @text('AN-APPS-APP-ACTOR-ACCESS-ALWAYS'),
-        								2 => @text('AN-APPS-APP-ACTOR-ACCESS-NEVER')
-        							), 'selected' => $component->getAssignmentForIdentifier($identifier)) )?>						
+        						<?= @html('select', 'identifiers['.$identifier.']', array('options' => array(
+                                        1 => @text('AN-APPS-APP-ACTOR-ACCESS-ALWAYS'),
+                                        2 => @text('AN-APPS-APP-ACTOR-ACCESS-NEVER'),
+                                    ), 'selected' => $component->getAssignmentForIdentifier($identifier)))?>						
     						<?php endif;?>
     					</td>
     				</tr>

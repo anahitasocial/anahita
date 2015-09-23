@@ -17,7 +17,7 @@
 					<?= $item->followerCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span> 
 					
-					<?php if($item->isLeadable()): ?>
+					<?php if ($item->isLeadable()): ?>
 					/ <?= $item->leaderCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
 					<?php endif; ?>
@@ -26,19 +26,19 @@
 			</div>
 			
 			<div class="entity-description">
-				<?= @helper('text.truncate', @content($item->body, array('exclude'=>array('syntax', 'video'))), array('length'=>200)); ?>
+				<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 200)); ?>
 			</div>
 		</div>
 		
 		<?php $followers = $item->followers->where('filename', '!=', '')->limit(15) ?>
 		
 		<div class="media-grid">
-			<?php foreach($followers as $item) : ?>
+			<?php foreach ($followers as $item) : ?>
 			<div><?= @avatar($item) ?></div>	
 			<?php endforeach; ?>
 		</div>
 		
-		<?php if ( count($commands) > 0 ) : ?>
+		<?php if (count($commands) > 0) : ?>
 		<div class="actions">
 		<?= @helper('ui.commands', $commands)?>
 		</div>

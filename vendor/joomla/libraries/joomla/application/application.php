@@ -142,7 +142,7 @@ class JApplication extends JObject
                 $error = JError::raiseError(500, 'Unable to load application: '.$client);
                 return $error;
             }
-            
+
             $instance = new $classname($config);
 
 			$instances[$client] =& $instance;
@@ -317,7 +317,7 @@ class JApplication extends JObject
 		if (headers_sent()) {
 			echo "<script>document.location.href='$url';</script>\n";
 		}
-		else 
+		else
 		{
 			if (!$moved && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'webkit') !== false) {
 				// WebKit browser - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
@@ -535,14 +535,13 @@ class JApplication extends JObject
 		$authenticate = & JAuthentication::getInstance();
 		$response	  = $authenticate->authenticate($credentials, $options);
 
-		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS)
-		{
+		if ($response->status === JAUTHENTICATE_STATUS_SUCCESS) {
 			$session = &JFactory::getSession();
 
 			// we fork the session to prevent session fixation issues
 			$session->fork();
 			$this->_createSession($session->getId());
-			
+
 			// Import the user plugin group
 			JPluginHelper::importPlugin('user');
 
@@ -637,7 +636,7 @@ class JApplication extends JObject
 			setcookie( JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, '/' );
 			return true;
 		}
-		
+
 
 		// Trigger onLoginFailure Event
 		$this->triggerEvent('onLogoutFailure', array($parameters));
@@ -776,7 +775,7 @@ class JApplication extends JObject
 	 * @return	int A client identifier.
 	 * @since	1.5
 	 */
-	function getClientId( )
+	function getClientId()
 	{
 		return $this->_clientId;
 	}

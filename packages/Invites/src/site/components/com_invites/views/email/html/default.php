@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?php if(defined('JDEBUG') && JDEBUG ) : ?>
+<?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="media://com_invites/js/email.js" />
 <?php else: ?>
 <script src="media://com_invites/js/min/email.min.js" />
@@ -14,11 +14,11 @@
 		<?= @helper('ui.header', array()) ?>
 	    	
         <form id="invites-email" name="invites-email" action="<?= @route() ?>" method="post">
-        	<?php for ( $i=0; $i < $numEmails; $i++ ) : ?>
+        	<?php for ($i = 0; $i < $numEmails; ++$i) : ?>
         	
         	<div class="control-group">
         	    <label class="control-label"  for="email-<?= $i ?>">
-                    <?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i + 1 ) ?>
+                    <?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i + 1) ?>
                 </label>
         		<div class="controls">
         			<?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>

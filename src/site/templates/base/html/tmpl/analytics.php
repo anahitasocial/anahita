@@ -2,7 +2,7 @@
 
 <?php $gid = $this->getView()->getParams()->analytics; ?>
 
-<?php if ( !empty($gid) ) : ?>
+<?php if (!empty($gid)) : ?>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '<?= $gid ?>']);

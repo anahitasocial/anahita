@@ -6,9 +6,9 @@
 		<?= @template('list') ?>
 	</div>
 	
-	<?php if($actor && $actor->id > 0 && empty($filter)): ?>
+	<?php if ($actor && $actor->id > 0 && empty($filter)): ?>
 	<?php $sets = $actor->sets->order('updateTime', 'DESC')->limit(20); ?>
-	<?php if(count($sets)): ?>
+	<?php if (count($sets)): ?>
 	<div class="span4 visible-desktop">
 		<h4 class="block-title">
 		<?= @text('COM-PHOTOS-MODULE-HEADER-SETS') ?>

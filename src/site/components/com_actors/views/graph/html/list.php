@@ -2,9 +2,8 @@
 
 <?php 
 //set the actor as state
-if($item->isAdministrable())
-{
-    @listItemView()->getState()->actor = $item;        
+if ($item->isAdministrable()) {
+    @listItemView()->getState()->actor = $item;
 }
 ?>
 

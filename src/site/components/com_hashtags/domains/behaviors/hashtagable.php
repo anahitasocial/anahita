@@ -1,102 +1,100 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_Hashtags
- * @subpackage Domain_Behavior
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2014 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.GetAnahita.com
- */
+ /** 
+  * LICENSE: ##LICENSE##.
+  * 
+  * @category   Anahita
+  *
+  * @author     Rastin Mehr <rastin@anahitapolis.com>
+  * @copyright  2008 - 2014 rmdStudio Inc.
+  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+  *
+  * @link       http://www.GetAnahita.com
+  */
 
-/**
- * Hashtagable Behavior
- *
- * @category   Anahita
- * @package    Com_Hashtags
- * @subpackage Domain_Behavior
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.GetAnahita.com
- */
+ /**
+  * Hashtagable Behavior.
+  *
+  * @category   Anahita
+  *
+  * @author     Rastin Mehr <rastin@anahitapolis.com>
+  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+  *
+  * @link       http://www.GetAnahita.com
+  */
  class ComHashtagsDomainBehaviorHashtagable extends AnDomainBehaviorAbstract
  {
- /**
-     * Initializes the default configuration for the object
+     /**
+     * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
-     *
-     * @return void
      */
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
             'relationships' => array(
                 'hashtags' => array(
-                    'through' => 'com:hashtags.domain.entity.tag',                    
+                    'through' => 'com:hashtags.domain.entity.tag',
                     'target' => 'com:base.domain.entity.node',
                     'child_key' => 'tagable',
                     'target_child_key' => 'hashtag',
-            		'inverse' => true
-                )
-            )
+                    'inverse' => true,
+                ),
+            ),
         ));
-        
+
         parent::_initialize($config);
     }
-    
+
     /**
-     * Adds a hashtag to a hashtagable mixer entity
+     * Adds a hashtag to a hashtagable mixer entity.
      * 
      * @param a word
-     * @return void 
      */
     public function addHashtag($term)
     {
-    	$term = trim($term);
-    	
-    	//@todo implement is_hashtag filter method
-    	if(!is_string($term))
-    		return;
-    	
-    	if($hashtag = $this->getService('repos://site/hashtags.hashtag')->findOrAddNew(array('name'=>$term)))
-    	{
-    		$this->hashtags->insert($hashtag);
-    		return $this;
-    	}
-    			
-    	return;
+        $term = trim($term);
+
+        //@todo implement is_hashtag filter method
+        if (!is_string($term)) {
+            return;
+        }
+
+        if ($hashtag = $this->getService('repos://site/hashtags.hashtag')->findOrAddNew(array('name' => $term))) {
+            $this->hashtags->insert($hashtag);
+
+            return $this;
+        }
+
+        return;
     }
-    
- 	/**
-     * Removes a hashtag from a hashtagable mixer entity
+
+    /**
+     * Removes a hashtag from a hashtagable mixer entity.
      * 
      * @param a word
-     * @return void 
      */
     public function removeHashtag($term)
     {
-    	$term = trim($term);
-    	
-    	//@todo implement is_hashtag filter method
-    	if(!is_string($term))
-    		return;
-    	
-    	if($hashtag = $this->getService('repos://site/hashtags.hashtag')->find(array('name'=>$term)))
-    	{
-    		$this->hashtags->extract($hashtag);
-    		return $this;
-    	}
-    			
-    	return;
+        $term = trim($term);
+
+        //@todo implement is_hashtag filter method
+        if (!is_string($term)) {
+            return;
+        }
+
+        if ($hashtag = $this->getService('repos://site/hashtags.hashtag')->find(array('name' => $term))) {
+            $this->hashtags->extract($hashtag);
+
+            return $this;
+        }
+
+        return;
     }
-    
- 	/**
+
+    /**
      * Change the query to include name. 
      * 
      * Since the target is a simple node. The name field is not included. By ovewriting the
@@ -107,6 +105,7 @@
     public function getHashtags()
     {
         $this->get('hashtags')->getQuery()->select('name');
+
         return $this->get('hashtags');
     }
  }

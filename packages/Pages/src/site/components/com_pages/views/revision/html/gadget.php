@@ -8,6 +8,6 @@
 	</h4>
 	
 	<div class="entity-meta">
-		<?= sprintf( @text('COM-PAGES-PAGE-REVISION-LIST-ITEM'), @date($revision->creationTime, @date($revision->creationTime, '%B %d %Y - %l:%M %p')), @name($revision->editor) ) ?>
+		<?= sprintf(@text('COM-PAGES-PAGE-REVISION-LIST-ITEM'), @date($revision->creationTime, @date($revision->creationTime, '%B %d %Y - %l:%M %p')), @name($revision->editor)) ?>
 	</div>
 </div>

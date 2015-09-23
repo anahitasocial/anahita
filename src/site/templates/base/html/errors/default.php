@@ -1,4 +1,6 @@
-<?php if (!defined('KOOWA')) die; ?>
+<?php if (!defined('KOOWA')) {
+    die;
+} ?>
 
 <div class="page-header">
     <h1><?= @text('TMPL-ERROR-DEFAULT-HEADER') ?></h1>

@@ -20,15 +20,15 @@
             
             <div class="controls">
                 <?= @editor(array(
-                    'name'=>'description',
-                    'content'=> '', 
-                    'html' => array(    
-                        'maxlength'=>'20000', 
-                        'cols'=>'5',
-                        'rows'=>'5', 
-                        'class'=>'input-block-level', 
-                        'id'=>'page-description' 
-                        )
+                    'name' => 'description',
+                    'content' => '',
+                    'html' => array(
+                        'maxlength' => '20000',
+                        'cols' => '5',
+                        'rows' => '5',
+                        'class' => 'input-block-level',
+                        'id' => 'page-description',
+                        ),
                 )); ?>
             </div>
         </div>
@@ -43,7 +43,7 @@
 		<div class="control-group">
 			<label class="control-label" id="privacy" ><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
 			<div class="controls">
-				<?= @helper('ui.privacy',array('entity'=>$page, 'auto_submit'=>false, 'options'=>$actor)) ?>
+				<?= @helper('ui.privacy', array('entity' => $page, 'auto_submit' => false, 'options' => $actor)) ?>
 			</div>
 		</div>
 		

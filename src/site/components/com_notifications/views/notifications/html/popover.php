@@ -11,7 +11,7 @@
 
 <div class="popover-content">
 	<div id="an-notifications" class="an-entities">
-        <?php foreach($notifications as $notification) : ?>
+        <?php foreach ($notifications as $notification) : ?>
         <?php $class = $actor->notificationViewed($notification) ? '' : 'an-highlight'; ?>    
         <div class="an-entity <?= $class ?>">
         	<div class="entity-portrait-square">

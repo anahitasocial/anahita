@@ -1,18 +1,18 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<?php $vat = empty( $vat ) ? @service('repos:subscriptions.vat')->getEntity()->reset() : $vat; ?>
+<?php $vat = empty($vat) ? @service('repos:subscriptions.vat')->getEntity()->reset() : $vat; ?>
 
-<form method="post" action="<?= @route( $vat->getURL() ) ?>" class="an-entity">
+<form method="post" action="<?= @route($vat->getURL()) ?>" class="an-entity">
     
     <fieldset>
-        <legend><?= ( $vat->persisted() ) ? @text('COM-SUBSCRIPTIONS-VAT-EDIT') : @text('COM-SUBSCRIPTIONS-VAT-ADD') ?></legend>
+        <legend><?= ($vat->persisted()) ? @text('COM-SUBSCRIPTIONS-VAT-EDIT') : @text('COM-SUBSCRIPTIONS-VAT-ADD') ?></legend>
     
         <div class="control-group">
             <label class="control-label" for="country">
                 <?= @text('COM-SUBSCRIPTIONS-VAT-COUNTRY') ?>
             </label>
             <div class="controls">
-                <?= @helper('selector.country', array( 'use_country_code'=>true, 'selected'=> $vat->country ) ) ?>
+                <?= @helper('selector.country', array('use_country_code' => true, 'selected' => $vat->country)) ?>
             </div>
         </div>
         
@@ -21,8 +21,8 @@
                <?= @text('COM-SUBSCRIPTIONS-VAT-TAXES') ?> 
             </label>
             
-            <?php $i=0; ?>
-            <?php foreach( $vat->getFederalTaxes() as $tax ) : ?>
+            <?php $i = 0; ?>
+            <?php foreach ($vat->getFederalTaxes() as $tax) : ?>
             <div class="input-append controlls"> 
                 <input class="span2" type="text" name="federal_tax[<?= $i ?>][name]" value="<?= $tax->name ?>" maxlength="20" placeholder="<?= @text('COM-SUBSCRIPTIONS-VAT-TAX-NAME') ?>" /> 
                 <input class="span2" type="number" name="federal_tax[<?= $i ?>][value]" value="<?= $tax->value * 100 ?>" maxlength="20" placeholder="<?= @text('COM-SUBSCRIPTIONS-VAT-TAX-AMOUNT') ?>" />   
@@ -41,9 +41,9 @@
     </fieldset>
     
     <div class="form-actions">
-        <?php if($vat->persisted()): ?>
-            <?php if(KRequest::type() == 'AJAX'): ?>
-            <a data-action="cancel" class="btn" href="<?= @route( $vat->getURL().'&layout=list' ) ?>">
+        <?php if ($vat->persisted()): ?>
+            <?php if (KRequest::type() == 'AJAX'): ?>
+            <a data-action="cancel" class="btn" href="<?= @route($vat->getURL().'&layout=list') ?>">
                 <?= @text('LIB-AN-ACTION-CANCEL') ?>
             </a> 
             <?php else : ?>

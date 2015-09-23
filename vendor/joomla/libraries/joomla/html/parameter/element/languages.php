@@ -36,11 +36,13 @@ class JElementLanguages extends JElement
 	function fetchElement($name, $value, &$node, $control_name)
 	{
 		$user	= & JFactory::getUser();
+        $viewer = get_viewer();
 
 		/*
 		 * @TODO: change to acl_check method
 		 */
-		if(!($user->get('gid') >= 23) && $node->attributes('client') == 'administrator') {
+		if(! ($viewer->admin() && $node->attributes('client') == 'administrator')) 
+		{
 			return JText::_('No Access');
 		}
 

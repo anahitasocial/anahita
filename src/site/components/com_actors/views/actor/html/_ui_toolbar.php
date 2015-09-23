@@ -2,7 +2,7 @@
 
 <?php $commands = $toolbar->getCommands() ?>
 
-<?php if(count($commands)): ?>
+<?php if (count($commands)): ?>
     <div class="actor-profile-toolbar btn-toolbar clearfix">
     	<?php if ($command = $commands->extract('addrequest')): ?>
             <?= @helper('ui.command', $command->class('btn btn-primary')) ?>
@@ -16,7 +16,7 @@
             <?= @helper('ui.command', $command->class('btn btn-primary')) ?>
         <?php endif ?>
         
-        <?php if($commands->count() > 0): ?>
+        <?php if ($commands->count() > 0): ?>
             <div class="btn-group">
                 <?= @helper('ui.dropdown', $commands) ?>
             </div>

@@ -38,7 +38,8 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onAfterDeleteUser($user, $succes, $msg)
 	{
-		if(!$succes) {
+		if (! $succes) 
+		{
 			return false;
 		}
 
@@ -60,73 +61,47 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onLoginUser($user, $options = array())
 	{
-		
+		global $mainframe;
+        
 		jimport('joomla.user.helper');
-		
-		$instance =& $this->_getUser($user, $options);
-		
-		// if _getUser returned an error, then pass it back.
-		if (JError::isError( $instance )) {
-			return $instance;
-		}
-		
-		// If the user is blocked, redirect with an error
-		if ($instance->get('block') == 1) {
-			return new JException('SOME_ERROR_CODE', JText::_('E_NOLOGIN_BLOCKED'));
-		}
+        $viewer =& JFactory::getUser($user['username']);
 
-		// Get an ACL object
-		$acl =& JFactory::getACL();
-
-		// Get the user group from the ACL
-		if ($instance->get('tmp_user') == 1) {
-			$grp = new JObject;
-			// This should be configurable at some point
-			$grp->set('name', 'Registered');
-		} else {
-			$grp = $acl->getAroGroup($instance->get('id'));
-		}
-
-		//Authorise the user based on the group information
-		if(!isset($options['group'])) {
-			$options['group'] = 'USERS';
-		}
-
-		if(!$acl->is_group_child_of( $grp->name, $options['group'])) {
-			return new JException('SOME_ERROR_CODE', JText::_('E_NOLOGIN_ACCESS'));
-		}
-
-		//Mark the user as logged in
-		$instance->set( 'guest', 0);
-		$instance->set('aid', 1);
-
-		// Fudge Authors, Editors, Publishers and Super Administrators into the special access group
-		if ($acl->is_group_child_of($grp->name, 'Registered')      ||
-		    $acl->is_group_child_of($grp->name, 'Public Backend'))    {
-			$instance->set('aid', 2);
-		}
-
-		//Set the usertype based on the ACL group name
-		$instance->set('usertype', $grp->name);
+        if (! $viewer )
+        {
+            return JError::raiseWarning(401, "Did not find a user with username: ".$viewer['username']);
+        }
+        
+        if ( 
+            $mainframe->isAdmin() && 
+            $viewer->usertype != ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR && 
+            $viewer->usertype != ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR  
+        )   
+        {    
+            return JError::raiseWarning(403, "Not authorized to access the admin side");
+        }
 
 		// Register the needed session variables
 		$session =& JFactory::getSession();		
-		$session->set('user', $instance);		
+		$session->set('user', $viewer);		
 		
 		// Get the session object
 		$table = & JTable::getInstance('session');
 		$table->load($session->getId());
 
-		$table->guest 		= $instance->get('guest');
-		$table->username 	= $instance->get('username');
-		$table->userid 		= intval($instance->get('id'));
-		$table->usertype 	= $instance->get('usertype');
-		$table->gid 		= intval($instance->get('gid'));
+		$table->guest = $viewer->get('guest');
+		$table->username = $viewer->get('username');
+		$table->userid 	= intval($viewer->get('id'));
+		$table->usertype = $viewer->get('usertype');
 		
 		$table->update();		
 		
 		// Hit the user last visit field
-		$instance->setLastVisit();
+		$viewer->setLastVisit();
+        
+        //cleanup session table from guest users
+        $db =& JFactory::getDBO();
+        $db->setQuery('DELETE FROM #__session WHERE userid = 0 ');
+        $db->Query();
 
 		return true;
 	}
@@ -142,75 +117,30 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onLogoutUser($user, $options = array())
 	{
-		$my =& JFactory::getUser();
-		//Make sure we're a valid user first
-		if($user['id'] == 0 && !$my->get('tmp_user')) 
-			return true;
-
+		if ($user['id'] == 0)
+        { 
+			return false;
+        }
+        
+        $viewer =& JFactory::getUser();
+        
 		//Check to see if we're deleting the current session
-		if($my->get('id') == $user['id'])
+		if ($viewer->id == (int) $user['id'])
 		{
 			// Hit the user last visit field
-			$my->setLastVisit();
+			$viewer->setLastVisit();
 
 			// Destroy the php session for this user
 			$session =& JFactory::getSession();
 			$session->destroy();
-		} else {
-			// Force logout all users with that userid
-			$table = & JTable::getInstance('session');
-			$table->destroy($user['id'], $options['clientid']);
-		}
-		return true;
-	}
-
-	/**
-	 * This method will return a user object
-	 *
-	 * If options['autoregister'] is true, if the user doesn't exist yet he will be created
-	 *
-	 * @access	public
-	 * @param   array   holds the user data
-	 * @param 	array   array holding options (remember, autoregister, group)
-	 * @return	object	A JUser object
-	 * @since	1.5
-	 */
-	private function &_getUser($user, $options = array())
-	{
-		$instance = new JUser();
-		if($id = intval(JUserHelper::getUserId($user['username'])))  {
-			$instance->load($id);
-			return $instance;
-		}
-
-		//TODO : move this out of the plugin
-		jimport('joomla.application.component.helper');
-		$config   = &JComponentHelper::getParams( 'com_users' );
-		$usertype = $config->get( 'new_usertype', 'Registered' );
-
-		$acl =& JFactory::getACL();
-
-		$instance->set( 'id'				, 0 );
-		$instance->set( 'name'				, $user['fullname'] );
-		$instance->set( 'username'			, $user['username'] );
-		$instance->set( 'password_clear'	, $user['password_clear'] );
-		$instance->set( 'email'				, $user['email'] );	// Result should contain an email (check)
-		$instance->set( 'gid'				, $acl->get_group_id( '', $usertype));
-		$instance->set( 'usertype'			, $usertype );
-
-		//If autoregister is set let's register the user
-		$autoregister = isset($options['autoregister']) ? $options['autoregister'] :  $this->params->get('autoregister', 1);
-
-		if($autoregister && !$instance->save())
-		{
-			return JError::raiseWarning('SOME_ERROR_CODE', $instance->getError());
 		} 
 		else 
 		{
-			// No existing user and autoregister off, this is a temporary user.
-			$instance->set( 'tmp_user', true );
+			// Force logout all users with that userid
+			$table = & JTable::getInstance('session');
+			$table->destroy((int) $user['id'], (int) $options['clientid']);
 		}
-
-		return $instance;
+        
+		return true;
 	}
 }

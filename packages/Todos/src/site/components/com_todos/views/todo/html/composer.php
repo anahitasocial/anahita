@@ -9,14 +9,14 @@
 		<div class="control-group">
 			<label class="control-label" for="todo-title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
 			<div class="controls">
-				<input id="todo-title" name="title" class="input-block-level" value="<?= @escape( $todo->title ) ?>" size="50" maxlength="255" type="text" required autofocus />
+				<input id="todo-title" name="title" class="input-block-level" value="<?= @escape($todo->title) ?>" size="50" maxlength="255" type="text" required autofocus />
 			</div>
 		</div>
 		
 		<div class="control-group">
 			<label class="control-label" for="todo-description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
 			<div class="controls">
-				<textarea id="todo-description" class="input-block-level" name="description" cols="5" rows="3" maxlength="5000" required><?= @escape( $todo->description ) ?></textarea>
+				<textarea id="todo-description" class="input-block-level" name="description" cols="5" rows="3" maxlength="5000" required><?= @escape($todo->description) ?></textarea>
 			</div>
 		</div>
 		
@@ -30,7 +30,7 @@
 		<div class="control-group">
 			<label class="control-label" id="privacy" ><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
 			<div class="controls">
-				<?= @helper('ui.privacy', array('entity'=>$todo, 'auto_submit'=>false, 'options'=>$actor)) ?>
+				<?= @helper('ui.privacy', array('entity' => $todo, 'auto_submit' => false, 'options' => $actor)) ?>
 			</div>
 		</div>
 		

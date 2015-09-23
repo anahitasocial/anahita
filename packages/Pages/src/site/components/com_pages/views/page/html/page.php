@@ -9,7 +9,7 @@
 		</div>
 		
 		<div class="entity-container">
-		    <?php if( $page->owner->authorize('administration') && $page->pinned ): ?>
+		    <?php if ($page->owner->authorize('administration') && $page->pinned): ?>
             <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span> 
             <?php endif; ?>
 			<h4 class="author-name"><?= @name($page->author) ?></h4>
@@ -20,12 +20,12 @@
 	</div>
 	
 	<h1 class="entity-title"> 
-		<?= @escape( $page->title ) ?> 
+		<?= @escape($page->title) ?> 
 	</h1>
 	
-	<?php if($page->description): ?>
+	<?php if ($page->description): ?>
 	<div class="entity-description">
-		<?= @content( $page->description ) ?>
+		<?= @content($page->description) ?>
 	</div>
 	<?php endif; ?>
 	

@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.1.4 Birth Release
+*Version:* 4.1.5 Birth Release
 
 Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
@@ -23,7 +23,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 4. **stories:** updates created by actors for their followers
 
 ### Graphs
-1. **social graph:** people and groups can be followed by other people. 
+1. **social graph:** people and groups can be followed by other people.
 2. **hashtags:** for actors, media, and comments
 3. **mentions:** tag people in media and comments
 4. **notifications:** a person receives an email notification whenever a comment is posted on an item they are subscribed to.
@@ -34,7 +34,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 - notifications
 
 ### RAD Framework
-1. MVC rapid app development framework specialized for building social apps 
+1. MVC rapid app development framework specialized for building social apps
 2. fully customizable theme and user interfaces
 3. extendable by social apps and components
 4. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
@@ -65,7 +65,7 @@ http://getcomposer.org/ or just run the following command:
 2. If you have Zend Optimizer on your server *disable it*!
 3. Anahita is installed and managed via command line interface, because this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
-### Installing a stable package 
+### Installing a stable package
 
 ![Installing Anahita using the Birth release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
 
@@ -109,7 +109,7 @@ In order to initiate the installation process run the following command and prov
 
 `php anahita site:init`
 
-The Anahita installation is created in the _PATH-TO-YOUR-DIRECTORY/myproject/www_ directory. You need to configure your server to use this directory as the public directory. 
+The Anahita installation is created in the _PATH-TO-YOUR-DIRECTORY/myproject/www_ directory. You need to configure your server to use this directory as the public directory.
 
 The first account that is created on this installation becomes the _Super Administrator_ account. Go to the _http://www.YOUR-DOMAIN-NAME.com/people/signup_ and create an account.
 
@@ -117,7 +117,7 @@ Congratulations! You have installed Anahita successfully. Now you need to config
 
 ## Configuring Your Anahita Installation
 
-Now you need to make some configurations before you can use your Anahita for development or production server. Go to _/administrator_ to access the administration back-end. 
+Now you need to make some configurations before you can use your Anahita for development or production server. Go to _/administrator_ to access the administration back-end.
 
 **Please Note:** the administration back-end will be removed in Anahita 4.3 and all the administration features will be available on the front to the users with _admin_ and _super admin_ privileges.
 
@@ -127,13 +127,13 @@ In the admin back-end go to the _Configure_ tab. Here are the main settings that
 
 **Site Name:** the name of your site. This will show up in all the notifications emailed out to people.
 
-**User Settings:** 
+**User Settings:**
 
 - **Allow User Registration:** normally it should be _yes_ unless you are using Anahita for a small team and adding   the members to your network one by one or adding members automatically using an Anahita app such as the Subscriptions app.
 
 - **New User Registration Type:** we recommend _registered_ as the default
-  
-- **New User Account Activation:** If set to _yes_ people who sign up receive a link which they have to click on in order to activate their account. 
+
+- **New User Account Activation:** If set to _yes_ people who sign up receive a link which they have to click on in order to activate their account.
 
 **Route Setting:** Set to _yes_ to get nice urls. If you are on an Apache server, you need to rename the _htaccess.txt_ file in the _www_ directory to _.htaccess_ for this feature to work.
 
@@ -145,7 +145,7 @@ In the admin back-end go to the _Configure_ tab. Here are the main settings that
 
 **Session Settings:** We prefer _Database_ as the default setting.
 
-**Mail Settings:** We prefer _PHP Mail Function_ as the default setting. Enter a valid email address for _Mail From_ this will show up in all the email notifications that people receive from Anahita. A valid email address will reduce the possibility of them getting picked up by spam filters. Enter your server's _SMTP_ settings in the appropriate fields so notification emails get sent out. 
+**Mail Settings:** We prefer _PHP Mail Function_ as the default setting. Enter a valid email address for _Mail From_ this will show up in all the email notifications that people receive from Anahita. A valid email address will reduce the possibility of them getting picked up by spam filters. Enter your server's _SMTP_ settings in the appropriate fields so notification emails get sent out.
 
 Don't forget to _Save_ or _Apply_ or settings. Your settings are saved in the _www/configuration.php_ file so make sure that this file has the appropriate write permissions.
 
@@ -179,7 +179,7 @@ Congratulations! You have just installed some apps and extensions on your Anahit
 
 ### Amazon S3 Storage
 
-Nearly in all cases you wouldn't want to store the uploaded files on your own server. They add up very quickly and that makes it very difficult to maintain or migrate your Anahita installation. Anahita provides a plugin which allows all the uploaded files to be stored in the AWS or [Amazon S3](https://aws.amazon.com/s3/) cloud. 
+Nearly in all cases you wouldn't want to store the uploaded files on your own server. They add up very quickly and that makes it very difficult to maintain or migrate your Anahita installation. Anahita provides a plugin which allows all the uploaded files to be stored in the AWS or [Amazon S3](https://aws.amazon.com/s3/) cloud.
 
 Under the _Extend_ tab go to the _Plugin Manager_ and then from the _type_ list select _Storage_. Disable the _Storage - Local_ plugin by clicking on the checkmark under the Published column. Then click on the _Storage - Amazon S3_ to edit the plugin. Configure the plugin with the following setting:
 
@@ -192,7 +192,7 @@ Under the _Extend_ tab go to the _Plugin Manager_ and then from the _type_ list 
 Now click save to store the settings. Try uploading your avatar in the front-end and see if it gets uploaded properly. Check the image src to make sure it is an AWS url.
 
 ## Join the Anahita Tribe
-Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](http://www.GetAnahita.com/join) 
+Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](http://www.GetAnahita.com/join)
 
 **Please Note:** we do not answer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](http://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
 
@@ -202,7 +202,7 @@ There are so many ways that you can report us a bug:
 
 - open an issue here on our repository
 - start a topic on [Anahita Project](http://www.getanahita.com/groups/42242-anahita-project) group
-- send us a [friendly email](http://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug 
+- send us a [friendly email](http://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug
 
 ## Contribute to Anahita
 
@@ -214,4 +214,4 @@ Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like 
 
 ## Credits
 
-Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver software development company specialized in knowledge sharing cloud and mobile apps. 
+Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver software development company specialized in knowledge sharing cloud and mobile apps.

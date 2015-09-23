@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if($photo->authorize('edit')) : ?>
+<?php if ($photo->authorize('edit')) : ?>
 <div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">
 <?php else : ?>
 <div class="an-entity">
@@ -14,18 +14,18 @@
 	</div>
 	
 	<div class="entity-description-wrapper">
-		<?php if( $photo->title ): ?>
+		<?php if ($photo->title): ?>
 			<h3 class="entity-title">
-				<?= @escape( $photo->title ) ?>
+				<?= @escape($photo->title) ?>
 			</h3>
-		<?php elseif( $photo->authorize('edit') ) : ?>
+		<?php elseif ($photo->authorize('edit')) : ?>
 			<h3 class="entity-title">
 				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
 			</h3>
 		<?php endif; ?>
 		
 		<div class="entity-description">
-			<?= @content( nl2br($photo->description), array('exclude'=>array('gist','video'))) ?>
+			<?= @content(nl2br($photo->description), array('exclude' => array('gist', 'video'))) ?>
 		</div>
 	</div>
 	

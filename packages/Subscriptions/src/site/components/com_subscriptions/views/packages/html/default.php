@@ -6,7 +6,7 @@
 	    <?= @helper('ui.header', array()); ?>
 	    
         <div class="an-entities">
-        <?php foreach($packages as $package) : ?>
+        <?php foreach ($packages as $package) : ?>
             <?= @view('package')->layout('list')->package($package) ?>
         <?php endforeach; ?>
         </div>

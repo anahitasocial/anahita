@@ -3,13 +3,15 @@
 <?= @helper('ui.header', array()) ?>
 
 <?php 
-$paginationUrl = $item->getURL().'&layout=list'; 
+$paginationUrl = $item->getURL().'&layout=list';
 
-if(!empty($sort))
-	$paginationUrl .= '&sort='.$sort;
-	
-if(!empty($scope))
-	$paginationUrl .= '&scope='.$scope;	
+if (!empty($sort)) {
+    $paginationUrl .= '&sort='.$sort;
+}
+
+if (!empty($scope)) {
+    $paginationUrl .= '&scope='.$scope;
+}
 ?>
 
 

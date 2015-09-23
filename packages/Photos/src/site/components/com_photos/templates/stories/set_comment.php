@@ -6,7 +6,7 @@
 
 <?php if ($type != 'notification') :?>
 <data name="body">
-	<?php if( !empty($object->title) ): ?>
+	<?php if (!empty($object->title)): ?>
 	<h4 class="entity-title">
     	<a href="<?= @route($object->getURL()) ?>">
     		<?= $object->title ?>
@@ -21,7 +21,7 @@
 <?php endif;?>
 
 <?php if ($type == 'notification') :?>
-<?php $commands->insert('viewcomment', array('label'=>@text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id) ?>
+<?php $commands->insert('viewcomment', array('label' => @text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id) ?>
 <data name="email_body">	
     <table cellspacing="0" cellpadding="0">
         <tr>
@@ -31,7 +31,7 @@
         		</a>            
             </td>
             <td valign="top">
-               <?= nl2br( $comment->body ) ?>
+               <?= nl2br($comment->body) ?>
             </td>
     </table>	
 </data>

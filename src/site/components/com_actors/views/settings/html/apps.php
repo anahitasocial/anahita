@@ -3,7 +3,7 @@
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-APPS') ?></h3>
 
 <div class="an-entities">
-	<?php foreach($enablable_apps as $component ) : ?>
+	<?php foreach ($enablable_apps as $component) : ?>
 	<div class="an-entity">
 		<h4 class="entity-title">
 			<?= $component->getProfileName() ?>
@@ -14,7 +14,7 @@
 		</div>
 		
 		<div class="entity-actions">
-    		<?php if ( !$component->enabledForActor($item) ) : ?>
+    		<?php if (!$component->enabledForActor($item)) : ?>
     		<a  class="btn btn-primary" data-action="addapp" data-app="<?= $component->component ?>" href="<?= @route($item->getURL()) ?>">
     			<?= @text('COM-ACTORS-APP-ACTION-INSTALL') ?>
     		</a>						

@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die ?>
 
-<?php if(count($sets)): ?>
+<?php if (count($sets)): ?>
 	<div id="sets" class="an-entities">
-	<?php foreach($sets as $set): ?>
+	<?php foreach ($sets as $set): ?>
 	<div class="an-entity an-record">
 
 		<div class="entity-portrait-square">
@@ -14,7 +14,7 @@
 		<div class="entity-container">
 			<h4 class="entity-title">
 				<a href="<?= @route($set->getURL()) ?>">
-					<?= @helper('text.truncate',  @escape($set->title), array('length'=>25, 'omission'=>'...') ) ?>
+					<?= @helper('text.truncate',  @escape($set->title), array('length' => 25, 'omission' => '...')) ?>
 				</a>
 			</h4>
 			

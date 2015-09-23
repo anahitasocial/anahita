@@ -1,59 +1,49 @@
-<?php 
-/**
- * @category    Com_Subscriptions
- * @package     Controller
- * @copyright   (C) 2008 - 2015 rmdStudio Inc. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link        http://www.GetAnahita.com
- */
+<?php
 
 /**
- * Package Controller
- * 
- * @package     Com_Subscriptions
+ * Package Controller.
+ *
  * @category    Controller
  */
 class ComSubscriptionsControllerPermissionPackage extends ComSubscriptionsControllerPermissionDefault
 {
-    
     /**
-     * Authorize if viewer can read
+     * Authorize if viewer can read.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canRead()
     {
         return $this->canAdminister();
     }
-    
-     /**
-     * Authorize if viewer can add subscriber
+
+    /**
+     * Authorize if viewer can add subscriber.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canAddsubscriber()
     {
         return $this->canAdminister();
-    } 
-    
+    }
+
     /**
-     * Authorize if viewer can delete subscriber
+     * Authorize if viewer can delete subscriber.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canDeletesubscriber()
     {
         return $this->canAdminister();
     }
-    
+
     /**
-     * Authorize if viewer can change subscription
+     * Authorize if viewer can change subscription.
      *
-     * @return boolean
-     */    
+     * @return bool
+     */
     public function canChangesubscription()
     {
         return $this->canAdminister();
     }
 }
-    

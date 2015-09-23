@@ -2,7 +2,7 @@
 
 <?php if (!empty($commands)) : ?>
 <ul class="an-actions">
-<?php foreach($commands as $command) : ?>
+<?php foreach ($commands as $command) : ?>
 <li><?= $helper->command($command) ?></li> 
 <?php endforeach; ?>
 </ul>

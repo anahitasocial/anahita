@@ -4,7 +4,7 @@
 <?php $connect = empty($connect) ? false : true; ?>
 
 <form action="<?= @route() ?>" name="person-form" id="person-form" method="post" class="well">
-    <?php if( $return ) : ?>
+    <?php if ($return) : ?>
     <input type="hidden" name="return" value="<?= $return; ?>" />
     <?php endif; ?>
 
@@ -14,16 +14,16 @@
         <legend>
             <?= @text('COM-PEOPLE-SESSION-TITLE') ?>
             
-            <?php if(@service('com://site/people.controller.person')->permission->canRegister()): ?>
+            <?php if (@service('com://site/people.controller.person')->permission->isRegistrationOpen()): ?>
             <small>
-                <a class="pull-right" href="<?= @route('option=com_people&view=person&layout=add'.( ( $return ) ? "&return=$return" : '')) ?>">
+                <a class="pull-right" href="<?= @route('option=com_people&view=person&layout=signup'.(($return) ? "&return=$return" : '')) ?>">
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>
                 </a>
             </small>
             <?php endif;?>
         </legend>    
         
-        <?php if( $connect && KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
+        <?php if ($connect && KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
         <p class="lead">
             <?= @text('COM-PEOPLE-SOCIALMEDIA-LOGIN') ?>
         </p>
@@ -42,7 +42,7 @@
         
         <div class="control-group">             
             <div class="controls">
-                <?= @helper('password.input', array('required'=>true)) ?>
+                <?= @helper('password.input', array('required' => true)) ?>
                 <a href="<?= @route('view=token') ?>">
                     <?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
                 </a> 

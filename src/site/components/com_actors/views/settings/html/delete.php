@@ -6,7 +6,7 @@
 	<input type="hidden" name="action" value="delete" />	
 	
 	<div class="alert alert-warning">
-  		<p><?= sprintf(translate(array($item->component.'-DELETE-PROMPT','COM-ACTORS-DELETE-PROMPT'))) ?></p>
+  		<p><?= sprintf(translate(array($item->component.'-DELETE-PROMPT', 'COM-ACTORS-DELETE-PROMPT'))) ?></p>
 	</div>
 	
 	<div class="form-actions">

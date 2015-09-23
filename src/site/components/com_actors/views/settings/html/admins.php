@@ -14,7 +14,7 @@
 </form>
 
 <div id="an-actors" class="an-entities">
-	<?php foreach($item->administrators as $actor ) : ?>
+	<?php foreach ($item->administrators as $actor) : ?>
 	<div class="an-entity">
 		<div class="entity-portrait-square">
 			<?= @avatar($actor) ?>
@@ -26,7 +26,7 @@
 			</h3>
 			
 			<div class="entity-description">
-			    <?= @helper('text.truncate',strip_tags($actor->description), array('length'=>200)); ?>
+			    <?= @helper('text.truncate', strip_tags($actor->description), array('length' => 200)); ?>
 			</div>
 			
 			<div class="entity-meta">
@@ -37,7 +37,7 @@
 			</div>
 				
 			<div class="entity-actions">
-                <?php if ( $item->authorize('remove.admin', array('admin'=>$actor)) ) : ?>
+                <?php if ($item->authorize('remove.admin', array('admin' => $actor))) : ?>
                 <a class="btn btn-danger" data-action="removeadmin" href="<?= @route($item->getURL()) ?>" data-adminid="<?= $actor->id ?>">
                 	<?= @text('LIB-AN-ACTION-REMOVE') ?>
                 </a>

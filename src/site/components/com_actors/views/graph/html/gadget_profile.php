@@ -1,23 +1,23 @@
 <?php defined('KOOWA') or die ?>
 
 <div class="an-socialgraph-stat">
-    <?php if($actor->isFollowable()) : ?> 
+    <?php if ($actor->isFollowable()) : ?> 
     <div class="stat-count">
         <?= $actor->followerCount ?>
         <span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span>
     </div>
     <?php endif; ?>
     
-    <?php if($actor->isLeadable()) : ?>    
+    <?php if ($actor->isLeadable()) : ?>    
     <div class="stat-count">
         <?= $actor->leaderCount ?>
         <span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
     </div>
     <?php endif; ?>
     
-    <?php if($actor->isLeadable() && $viewer->isLeadable()) : ?>
+    <?php if ($actor->isLeadable() && $viewer->isLeadable()) : ?>
         <?php $commons = $actor->getCommonLeaders($viewer); ?>    
-        <?php if( isset($commons) && !$viewer->eql($actor) && $commons->getTotal() ) : ?>
+        <?php if (isset($commons) && !$viewer->eql($actor) && $commons->getTotal()) : ?>
         <div class="stat-count">
             <?= $commons->getTotal() ?>
             <span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-COMMON') ?></span>
@@ -28,12 +28,12 @@
 
 <?php $limit = 7; ?>
          
-<?php if($actor->leaderCount + $actor->followerCount) : ?>  
+<?php if ($actor->leaderCount + $actor->followerCount) : ?>  
 <div class="an-gadget-socialgraph">
-<?php if( $actor->followerCount ) : ?>
+<?php if ($actor->followerCount) : ?>
 <h4>
 	<?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?> 
-	<?php if($actor->authorize('lead')): ?> - 
+	<?php if ($actor->authorize('lead')): ?> - 
 	<small>
 		<a href="<?= @route($actor->getURL().'&get=graph&type=leadables') ?>">
 			<?= @text('LIB-AN-ACTION-ADD') ?>
@@ -41,17 +41,17 @@
 	</small>
 	<?php endif; ?>
 </h4>
-<?= @template('_grid', array('actors'=>$actor->followers->limit($limit))) ?>
+<?= @template('_grid', array('actors' => $actor->followers->order('updateTime', 'DESC')->limit($limit))) ?>
 <?php endif; ?>
 
-<?php if( $actor->leaderCount ) : ?>
+<?php if ($actor->leaderCount) : ?>
 <h4><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></h4>
-<?= @template('_grid', array('actors'=>$actor->leaders->limit($limit))) ?>
+<?= @template('_grid', array('actors' => $actor->leaders->order('updateTime', 'DESC')->limit($limit))) ?>
 <?php endif; ?>
 
-<?php if(count($actor->administrators)): ?>
+<?php if (count($actor->administrators)): ?>
 <h4><?= @text('COM-ACTORS-PROFILE-ADMINS') ?></h4>
-<?= @template('_grid', array('actors'=>$actor->administrators)) ?>
+<?= @template('_grid', array('actors' => $actor->administrators)) ?>
 <?php endif; ?>
 </div>
 <?php else : ?>

@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php 
-$num_notifications = empty($num_notifications) ? get_viewer()->numOfNewNotifications() : $num_notifications; 
+$num_notifications = empty($num_notifications) ? get_viewer()->numOfNewNotifications() : $num_notifications;
 $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
@@ -33,10 +33,10 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 				<a href="<?= @route($viewer->getURL().'&get=graph'); ?>">
 				<?= @text('TMPL-MENU-ITEM-VIEWER-SOCIALGRAPH') ?>
 				</a>
-			</li>
+			</li>   
 			
-			<?php if(KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
-            <li class="divider"></li>
+			<?php if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
+			<li class="divider"></li>
             <li>
             	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
             	<?= @text('TMPL-MENU-ITEM-VIEWER-GROUPS') ?>
@@ -44,9 +44,18 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             </li>
             <?php endif; ?>
             
-			<?php if(count($components)): ?>
+            <?php if ($viewer->admin()): ?>
+            <li class="divider"></li>    
+            <li>
+                <a href="<?= @route('option=com_people&view=people') ?>">
+                    <?= @text('TMPL-MENU-ITEM-VIEWER-PEOPLE') ?>
+                </a>
+            </li>    
+            <?php endif; ?> 
+            
+			<?php if (count($components)): ?>
 			<li class="divider"></li>
-            <?php foreach($components as $component): ?>
+            <?php foreach ($components as $component): ?>
             <li>
             	<a href="<?= @route($component->url) ?>">
             	<?= $component->title ?>
@@ -57,7 +66,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 
             <li class="divider"></li>
 
-            <?php if(KService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
+            <?php if (KService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
             <li>
             	<a href="<?= @route('option=com_invites&view=email') ?>">
             	<?= @text('TMPL-MENU-ITEM-VIEWER-INVITE') ?>
@@ -65,12 +74,12 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             </li>
             <?php endif; ?>
             
-            <?php if( KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder') ): ?>
+            <?php if (KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>
             <li> 
-                 <?php if( $viewer->admin()): ?>
-                 <a href="<?= @route( 'option=com_subscriptions&view=orders' ) ?>">  
+                 <?php if ($viewer->admin()): ?>
+                 <a href="<?= @route('option=com_subscriptions&view=orders') ?>">  
                  <?php else: ?>    
-                 <a href="<?= @route( 'option=com_subscriptions&view=orders&oid='.$viewer->id ) ?>">
+                 <a href="<?= @route('option=com_subscriptions&view=orders&oid='.$viewer->id) ?>">
                  <?php endif; ?>  
                  <?= @text('TMPL-MENU-ITEM-VIEWER-SUBSCRIPTIONS-ORDERS-HISTORY') ?>
                  </a>  

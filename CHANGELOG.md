@@ -1,12 +1,27 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.5 Birth Release
+=============================
+* people management is now happening all in the front-end
+* removed legacy user manager from the back-end
+* removed legacy joomla ACL
+* implemented simple and natively supported ACL and 4 user types: public, registered, administrator, super adminstrator
+* updated database schema and dropped legacy tables
+* we now have nodes and edges tables without the anahita prefix
+* refactored com_people MVC. We are still relying on JUser, but we are closer to a fully native user manager
+* Only admins and super admins can enable and disable accounts.
+* refactored the user activation and password reset workflows
+* update the migration files and fixed the issues that was causing the older releases of Anahita to break during the migration process.
+* updated the Subscriptions app to work with the new person entities.
+* beautified the code using php-cs-fixer
+
 Anahita 4.1.4 Birth Release
 =============================
 * fixed validation of whether an edge had the same node at both ends
 * migration script to remove all the edges in the database which had the same node at both ends
 * UI refinements
 * migration script to change todos_todos table to InnoDB
-* added an editable placeholder for the photos which had no title or description 
+* added an editable placeholder for the photos which had no title or description
 
 Anahita 4.1.3 Birth Release
 =============================
@@ -22,7 +37,7 @@ Anahita 4.1.3 Birth Release
 Anahita 4.1.2 Birth Release
 =============================
 * Upgraded facebook OAth API
-* Upgraded linkedIn OAuth API 
+* Upgraded linkedIn OAuth API
 * fixed inline edit and cancel issue where nested an-entity layers were being created
 * major upgrade of the Subscriptions App. No it isn't ready yet. Wait for the next release.
 * discontinued OpenSocial plugin
@@ -51,8 +66,8 @@ Anahita 4.1.0 Birth Release
 * simplified and improved the social graph API
 * removed ptag content filter
 * all comments do not support html content. They do however use content filters
-* users can no longer add a and img tags in posts. 
-* added grunt.js file for compressing the js files 
+* users can no longer add a and img tags in posts.
+* added grunt.js file for compressing the js files
 
 Anahita 4.0.4 Birth Release
 ============================
@@ -87,7 +102,7 @@ Anahita 4.0.0 Birth Release
 * viewer menu is now generated dynamically
 * legacy com_modules has been removed
 * removed all module positions from the Shiraz template
-* no more support for <module> tags in the layouts. We are using generic Bootstrap grids from now on 
+* no more support for <module> tags in the layouts. We are using generic Bootstrap grids from now on
 * removed milestones MVC from the Todos app
 * refinements to the wysiwyg editor
 * improvements to the Pages app
@@ -180,7 +195,7 @@ Anahita 3.0.0
 * Removed the com_content, com_section, com_categories. If you have existing aricles you can migrate them into
 html and use it within the com_html. Read https://github.com/anahitasocial/article-exporter/blob/master/README.md
 After updating you need to resymlink the site using the command `php anahita site:init -n`
-* Removed  back-end components: com_checking,com_admin and unused libraires (SimplePIE, DOMit, Geshi). Editors 
+* Removed  back-end components: com_checking,com_admin and unused libraires (SimplePIE, DOMit, Geshi). Editors
 plugins, search and content plugins
 If you are using these libriares in your apps then use the composer to install them  
 * Moved the HTML component to the core that way the basic installation anahita can use the HTML component
@@ -188,6 +203,6 @@ for building landing pages. After updating you need to resymlink the site using 
 * Prevent having dot in username. A migration has been added to remove all the dots in the username. A username
 can only contain ^[A-Za-z0-9][A-Za-z0-9_-]*$. The migration will replace all the . with the work dot. If you want a different
 strategy you need to rewrite this migration and add your own policy
-* Removed Joomla Installer 
+* Removed Joomla Installer
 * Fixed a installation issue in the data.sql. Renamed all instances of com_posts in the 41 component record
 to com_notes. Didn't write a migration for it since it was alreay in the migration 1  

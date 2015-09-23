@@ -2,14 +2,14 @@
 
 <div class="an-entities">
 
-	<?php foreach($vats as $vat) : ?>
-	<?= @view('vat')->layout('list')->vat( $vat ) ?>
+	<?php foreach ($vats as $vat) : ?>
+	<?= @view('vat')->layout('list')->vat($vat) ?>
 	<?php endforeach; ?>
     
-    <?php if( count( $vats ) == 0): ?>
+    <?php if (count($vats) == 0): ?>
 	<?= @message(@text('COM-SUBSCRIPTIONS-VATS-EMPTY-LIST-MESSAGE')) ?>
     <?php endif; ?>
     
 </div>
 
-<?= @pagination( $vats, array('url' => @route( 'layout=list') ) ) ?>
+<?= @pagination($vats, array('url' => @route('layout=list'))) ?>

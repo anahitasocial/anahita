@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 
-	<?php foreach($orders as $order): ?>
+	<?php foreach ($orders as $order): ?>
 	<tr>
 		<td>
 			<a href="<?= @route('view=order&id='.$order->id) ?>">
@@ -30,7 +30,7 @@
 	<?php endforeach; ?>
 </table>
 
-<?php if(count($orders) == 0): ?>
+<?php if (count($orders) == 0): ?>
 <div class="alert alert-info">
 <?= @text('COM-SUBSCRIPTIONS-TRANSACTION-EMPTY-LIST') ?>
 </div>

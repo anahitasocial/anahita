@@ -1,418 +1,323 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @category   Anahita
- * @package    Com_People
- * @subpackage Controller
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- * @link       http://www.anahitapolis.com
- */
-
 /**
- * Person Controller
+ * Person Controller.
  *
  * @category   Anahita
- * @package    Com_People
- * @subpackage Controller
- * @author     Arash Sanieyan <ash@anahitapolis.com>
+ *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @link       http://www.anahitapolis.com
+ * @license    GNU GPLv3
+ *
+ * @link       http://www.GetAnahita.com
  */
 class ComPeopleControllerPerson extends ComActorsControllerDefault
-{	
-	/**
-	 * Constructor.
-	 *
-	 * @param KConfig $config An optional KConfig object with configuration options.
-	 *
-	 * @return void
-	 */
-	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);
-					
-		$this->registerCallback( 'after.add', array( $this, 'notifyAdminsNewUser' ) );
-	}
-		
+{
+    protected $_allowed_user_types;
     /**
-     * Initializes the default configuration for the object
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+        $this->registerCallback('after.add', array($this, 'mailActivationLink'));
+    }
+
+    /**
+     * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
-     * 
-     * @return void
      */
-	protected function _initialize(KConfig $config)
-	{	
-		$config->append(array(			
-		    'behaviors'	=> array('validatable', 'com://site/mailer.controller.behavior.mailer')		    
-		));
-		
-		parent::_initialize($config);
-		
-		AnHelperArray::unsetValues($config->behaviors, 'ownable');
-		
-        //if it's a person view , set the default id to person
-        if( $config->request->view == 'person' )
-        {
-            $config->append( array(
-                'request' => array(
-				'id' => get_viewer()->id
-                )
-            ));
-        }
-	}
-	
-    /**
-     * Hides the menubar title
-     * {@inheritdoc}
-     */
-	protected function _actionGet(KCommandContext $context)
-	{	  
-        $this->getToolbar('menubar')->setTitle(null);
-        
-        if( $this->modal ) 
-        {
-            $this->getView()->layout('add_modal');
-        }
-        
-		return parent::_actionGet($context);
-	}
-
-    /**
-     * Deletes a person and all of their assets. It also logsout the person.
-     * 
-     * @param KCommandContext $context Context parameter
-     * 
-     * @return AnDomainEntityAbstract
-     */
-    protected function _actionDelete( KCommandContext $context )
+    protected function _initialize(KConfig $config)
     {
-    	parent::_actionDelete( $context );
-        
-        $this->commit();        
-        
-        $userId = $this->getItem()->userId;
-        
-        JFactory::getUser( $userId )->delete();  
-        
-		JFactory::getApplication()->logout( $userId );                  
-    }
-    
-    /**
-     * Person add action creates a new person object.
-     * 
-     * @param KCommandContext $context Commaind chain context
-     * 
-     * @return AnDomainEntityAbstract
-     */
-    protected function _actionAdd( KCommandContext $context )
-    {    	
-        //we are not saving this person but just validating it
-        $person = parent::_actionAdd( $context );
-        
-        $data   = $context->data;        
-        
-        $person->userId = PHP_INT_MAX; //is assiged automatically
-        
-        
-        //manually set the password to make sure there's a password
-        
-        $person->setPassword( $data->password );
-        
-        //add the validations here
-        $this->getRepository()
-        ->getValidator()
-        ->addValidation('username','uniqueness')
-        ->addValidation('email', 'uniqueness');
-                
-        if ( $person->validate() === false ) 
-        {
-            throw new AnErrorException( $person->getErrors(), KHttpResponse::BAD_REQUEST );
-        }
+        $config->append(array(
+            'behaviors' => array('validatable', 'com://site/mailer.controller.behavior.mailer'),
+            'request' => array(
+                'reset_password' => 0
+            )
+        ));
 
-        $person->reset();
-        
-        $firsttime = !(bool) $this->getService('repos://site/users')->getQuery( true )->fetchValue( 'id' );
-        
-        $user = clone JFactory::getUser();
-        
-        $authorize  =& JFactory::getACL();
-                
-        if ( $firsttime ) {
-            
-            //for now lets make the com_notes assigable to always
-            $component = $this->getService('repos://site/components')->find( array( 'component' => 'com_notes' ));
-            
-            if ( $component ) 
-            {
-                $component->setAssignmentForIdentifier('person', ComComponentsDomainBehaviorAssignable::ACCESS_ALWAYS);
-            }
-            
-            $datbase = $this->getService('koowa:database.adapter.mysqli');
-            
-            //joomla legacy. don't know what happens if it's set to 1
-            $query = "INSERT INTO #__users VALUES (62, 'admin', 'admin', 'admin@example.com', '', 'Super Administrator', 0, 1, 25, '', '', '', '')";
-            
-            $datbase->execute( $query );
-            
-            $query = "INSERT INTO #__core_acl_aro VALUES (10,'users','62',0,'Administrator',0)";
-            
-            $datbase->execute( $query );
-            
-            $query = "INSERT INTO #__core_acl_groups_aro_map VALUES (25,'',10)";
-            
-            $datbase->execute( $query );
-            
-            $user  =& JFactory::getUser();
-            
-            $user  = JUser::getInstance( 62 );
-            
-            $this->unregisterCallback( 'after.add', array( $this, 'notifyAdminsNewUser' ) );
-        
-        } 
-        else 
-        {        
-            $user->set( 'id', 0 );
-            
-            $config = &JComponentHelper::getParams( 'com_users' );
-            
-            $user->set( 'usertype', $config->get( 'new_usertype' ) );
-            
-            $user->set( 'gid', $authorize->get_group_id( '', $config->get( 'new_usertype' ), 'ARO' ) );
-            
-            if ( $this->activationRequired() )
-            {
-                jimport( 'joomla.user.helper' );
-                
-                $user->set( 'activation', JUtility::getHash( JUserHelper::genRandomPassword() ) );
-                
-                $user->set( 'block', '1' );
-            }
-        }
+        parent::_initialize($config);
 
-        $user->set( 'name', $person->name );
-        
-        $user->set( 'username', $person->username );
-        
-        $user->set( 'email', $person->email );
-        
-        $user->set( 'password', $person->getPassword( true ) );
-        
-        $date =& JFactory::getDate();
-        
-        $user->set( 'registerDate', $date->toMySQL() );        
-        
-        $user->save();
-        
-        $person = $this->getRepository()->find( array( 'userId' => $user->id ) );
-        
-        //if person is null then user has not been saved
-        if ( !$person ) 
-        {
-            throw new RuntimeException('Unexpected error when saving user');
+        AnHelperArray::unsetValues($config->behaviors, 'ownable');
+
+        $this->_allowed_user_types = array(
+            ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR,
+            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
+        );
+
+        $viewer = get_viewer();
+        if ($viewer->superadmin()) {
+            $this->_allowed_user_types[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         }
-        
-        //set the portrait image
-        if ( $file = KRequest::get('files.portrait', 'raw') ) 
-        {
-            $person->setPortraitImage( array( 'url' => $file['tmp_name'], 'mimetype' => $file['type'] ) );
-        }
-                            
-        //set the status
-        $this->getResponse()->status  = KHttpResponse::CREATED; 
-        
-        $this->setItem( $person );
-        
-        if ( !$person->enabled ) 
-        {
-            $this->registerCallback( 'after.add', array( $this, 'mailActivationLink' ) );
-        }
-        elseif ( $this->isDispatched() ) 
-        {
-            if ( $context->request->getFormat() == 'html' ) 
-            {
-                $context->response->status = 200;
-                
-                $this->registerCallback( 'after.add', array( $this, 'login' ) );
-            }
-        }
-                
-        return $person;
-        
     }
-    
+
     /**
-     * Edit a person's data and synchronize with the person with the user entity
-     * 
+     * Browse Action.
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
+     * @return ComPeopleDomainEntityPerson
+     */
+    protected function _actionBrowse(KCommandContext $context)
+    {
+        if (!$context->query) {
+            $context->query = $this->getRepository()->getQuery();
+        }
+
+        $query = $context->query;
+
+        if ($this->filter) {
+            if (
+                $this->filter['usertype'] &&
+                in_array($this->filter['usertype'], $this->_allowed_user_types)
+                ) {
+                $query->filterUsertype($this->getService('koowa:filter.cmd')
+                      ->sanitize($this->filter['usertype']));
+            }
+
+            if ($this->filter['disabled']) {
+                $query->filterDisabledAccounts(true);
+            }
+        }
+
+        if ($this->getService('koowa:filter.email')->validate($this->q)) {
+            $query->filterEmail($this->q);
+        }
+
+        if ($this->getService('com://site/people.filter.username')->validate($this->q)) {
+            $query->filterUsername($this->q);
+        }
+
+        if ($this->q) {
+            $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
+        }
+
+        if ($this->ids) {
+            $ids = KConfig::unbox($this->ids);
+            $query->id($ids);
+        } else {
+            $query->limit($this->limit, $this->start);
+        }
+
+        $entities = $this->getState()->setList($query->toEntityset())->getList();
+
+        //print str_replace('#_', 'jos', $entities->getQuery());
+
+        return $entities;
+    }
+
+    /**
+     * Edit a person's data and synchronize with the person with the user entity.
+     *
+     * @param KCommandContext $context Context parameter
+     *
      * @return AnDomainEntityAbstract
      */
     protected function _actionEdit(KCommandContext $context)
-    {        
+    {
+        $data = $context->data;
+
+        //dont' set the usertype yet, until we find the conditions are met
+        $userType = null;
+        if ($data->userType) {
+            $userType = $data->userType;
+            unset($context->data->userType);
+        }
+
+        $person = parent::_actionEdit($context);
+
+        //just to make sure password is set
+        if ($data->password) {
+            $person->setPassword($data->password);
+            $_SESSION['reset_password_prompt'] = 0;
+        }
+
         //add the validations here
         $this->getRepository()
         ->getValidator()
-        ->addValidation( 'username', 'uniqueness' )
-        ->addValidation( 'email', 'uniqueness' );
-                        
-        $data   = $context->data;
-        
-        $person = parent::_actionEdit( $context );
-              
-        //manually set the password to make sure there's a password
-        if ( !empty( $data->password ) ) 
-        {
-            $person->setPassword( $data->password );
-        }
-                
-        if ( $person->validate() === false ) 
-        {
-            throw new AnErrorException( $person->getErrors(), KHttpResponse::BAD_REQUEST );
-        }
-        
-        $user = JFactory::getUser( $person->userId );
-        
-        if ( $person->getModifiedData()->name ) 
-        {
-            $user->set( 'name', $person->name );
-        }
-        
-        if ( $person->getModifiedData()->username ) 
-        {
-            $user->set( 'username', $person->username );   
-        }
-        
-        if ( $person->getModifiedData()->email ) 
-        {
-            $user->set( 'email', $person->email );               
-        }
-        
-        if ( !empty( $data->password ) ) 
-        {
-            $user->set( 'password', $person->getPassword( true ) );
-        }
-        
-        //save language
-        if ( @$data->params->language ) 
-        {            
-            $user->_params->set( 'language', $data->params->language );              
+        ->addValidation('username', 'uniqueness')
+        ->addValidation('email', 'uniqueness');
+
+        if ($person->validate() === false) {
+            throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
         }
 
-        if ( !$user->save() ) 
-        {
-            throw new RuntimeException('Unexpected error when saving user');
-            
-            return false;               
+        //now check to see if usertype can be set, otherwise the value is unchanged
+        if (in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
+            $person->userType = $userType;
         }
-        
-        if ( !$person->save() ) 
-        {
-            throw new RuntimeException('Unexpected error when saving user');
-        }
-        
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
-         
-        return $person;      
+
+        $person->timestamp();
+        $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
+
+        return $person;
     }
-     
+
     /**
-     * Mail an activation link
+     * Person add action creates a new person object.
+     *
+     * @param KCommandContext $context Commaind chain context
+     *
+     * @return AnDomainEntityAbstract
+     */
+    protected function _actionAdd(KCommandContext  $context)
+    {
+        $data = $context->data;
+        $viewer = get_viewer();
+        $firsttime = !(bool) $this->getService('repos://site/users')
+                                  ->getQuery(true)
+                                  ->fetchValue('id');
+
+        $person = parent::_actionAdd($context);
+
+        //just to make sure password is set
+        if ($data->password) {
+            $person->setPassword($data->password);
+        }
+
+        $redirectUrl = 'option=com_people';
+
+        $this->getRepository()
+        ->getValidator()
+        ->addValidation('username', 'uniqueness')
+        ->addValidation('email', 'uniqueness');
+
+        if ($person->validate() === false) {
+            throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+
+            return false;
+        }
+
+        if ($viewer->admin() && in_array($data->userType, $this->_allowed_user_types)) {
+            $person->userType = $data->userType;
+        } else {
+            $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+        }
+
+        if ($firsttime) {
+            $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
+        } elseif ($viewer->admin()) {
+            $redirectUrl .= '&view=people';
+            if ($person->admin()) {
+                $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
+            }
+        } else {
+            $context->response->setHeader('X-User-Activation-Required', true);
+            $this->setMessage(JText::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
+            $redirectUrl .= '&view=session';
+        }
+
+        $context->response->setRedirect(JRoute::_($redirectUrl));
+        $context->response->status = 200;
+
+        return $person;
+    }
+
+    /**
+     * Deletes a person and all of their assets. It also logsout the person.
+     *
+     * @param KCommandContext $context Context parameter
+     */
+    protected function _actionDelete(KCommandContext $context)
+    {
+        parent::_actionDelete($context);
+
+        $this->commit();
+
+        $userId = $this->getItem()->userId;
+
+        JFactory::getApplication()->logout($userId);
+        JFactory::getUser($userId)->delete();
+    }
+
+    /**
+     * Set the necessary redirect.
+     *
+     * @param KCommandContext $context
+     */
+    public function redirect(KCommandContext $context)
+    {
+        $url = null;
+
+        if ($context->action == 'delete') {
+            $url = 'option=com_people&view=people';
+        }
+
+        if ($url) {
+            $context->response->setRedirect(JRoute::_($url));
+        }
+    }
+
+    /**
+     * Mail an activation link.
      *
      * @param KCommandContext $context The context parameter
-     * 
-     * @return void
-     */    
-    public function mailActivationLink( KCommandContext $context )
-    {    	    	
-		$person = $context->result;
-		
-		$this->user = $person->getUserObject();
-        
-		$this->mail( array (
-            'to' => $this->user->email,
-    		'subject' => JText::_('COM-PEOPLE-ACTIVATION-SUBJECT'),
-    		'template' => 'account_activate'
-		));
-        
-		$context->response->setHeader( 'X-User-Activation-Required', true );
-        
-		$this->setMessage( JText::sprintf( 'COM-PEOPLE-ACTIVATION-LINK-SENT', $this->user->name ), 'success');
-		
-		$context->response->setRedirect( JRoute::_( 'option=com_people&view=session' ) );
-    }
-    
-    /**
-     * Notify admins for a new user
-     *
-     * @param KCommandContext $context The context parameter
-     *
-     * @return void
-     */    
-    public function notifyAdminsNewUser(KCommandContext $context)
-    {        
+     */
+    public function mailActivationLink(KCommandContext $context)
+    {
         $person = $context->result;
-        
         $this->user = $person->getUserObject();
-        $this->mailAdmins( array (            				
-            'subject'	=> JText::sprintf( 'COM-PEOPLE-NEW-USER-NOTIFICATION-SUBJECT', $this->user->name ),
-            'template'	=> 'new_user'
+        $viewer = get_viewer();
+
+        if ($viewer->admin()) {
+            $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-CREATED';
+            $template = 'account_created';
+        } else {
+            $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-ACTIVATE';
+            $template = 'account_activate';
+        }
+
+        $this->mail(array(
+            'to' => $person->email,
+            'subject' => sprintf(JText::_($subject), JFactory::getConfig()->getValue('sitename')),
+            'template' => $template,
         ));
     }
-    
+
     /**
-     * (non-PHPdoc)
-     * @see ComActorsControllerAbstract::redirect()
-     */
-    public function redirect( KCommandContext $context )
-    {
-        if ( $context->action != 'add' ) 
-        {
-            return parent::redirect($context);
-        }
-    }
-    
-    /**
-     * Login the user after creating it
+     * Notify admins that a new admin has joined the network.
      *
      * @param KCommandContext $context The context parameter
-     * 
-     * @return void
      */
-    public function login()
+    public function mailAdminsNewAdmin(KCommandContext $context)
     {
-    	$user = (array) JFactory::getUser( $this->getItem()->userId );
-    	
-    	$this->getService()->set( 'com:people.viewer', $this->getItem() );
-    	
-    	$controller = $this->getService( 'com://site/people.controller.session', array( 'response' => $this->getResponse() ) );
-    	
-    	return $controller->login( $user );
+        $person = $context->result;
+        $this->mailAdmins(array(
+            'subject' => JText::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
+            'template' => 'new_admin',
+        ));
     }
-    
+
     /**
-     * Called before the setting page is displayed
-     * 
-     * @param KEvent $event
-     * 
-     * @return void
+     * Autologin the first user which is also the first super admin.
+     *
+     * @param KCommandContext $context The context parameter
      */
-    public function onSettingDisplay( KEvent $event )
-    {   
-        $tabs = $event->tabs;   
-        
-        if ( JFactory::getUser()->id == $event->actor->userId ) 
-        {     
-            $tabs->insert( 'account', array( 'label' => JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT') ) );                    
-        } 
-    }    
+    public function activateFirstAdmin(KCommandContext $context)
+    {
+        $person = $context->result;
+        $user = $this->getService('repos://site/users.user')
+                     ->find(array('id' => $person->userId));
+        $context->response
+        ->setRedirect(JRoute::_('option=com_people&view=session&token='.$user->activation));
+    }
+
+    /**
+     * Called before the setting page is displayed.
+     *
+     * @param KEvent $event
+     */
+    public function onSettingDisplay(KEvent $event)
+    {
+        $tabs = $event->tabs;
+        $viewer = get_viewer();
+
+        if ($viewer->admin() || $viewer->eql($this->getItem())) {
+            $tabs->insert('account', array('label' => JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));
+        }
+    }
 }

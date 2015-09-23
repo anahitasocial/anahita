@@ -59,14 +59,6 @@ class PluginsViewPlugin extends JView
 			$where = "client_id='0'";
 		}
 
-		// get list of groups
-		if ($row->access == 99 || $row->client_id == 1) {
-			$lists['access'] = 'Administrator<input type="hidden" name="access" value="99" />';
-		} else {
-			// build the html select list for the group access
-			$lists['access'] = JHTML::_('list.accesslevel',  $row );
-		}
-
 		if ($cid[0])
 		{
 			$row->checkout( $user->get('id') );
