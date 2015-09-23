@@ -56,7 +56,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
     /**
      * Redners the login form.
      */
-    protected function _actionRead($context)
+    protected function _actionRead(KCommandContext $context)
     {
         if (!$this->getAPI()) {
             $context->response->setRedirect(JRoute::_('option=com_people&view=person&get=settings&edit=connect'));
@@ -70,16 +70,23 @@ class ComConnectControllerLogin extends ComBaseControllerResource
                       ->find(array(
                           'profileId' => $userid,
                           'api' => $service,
-                        )
-                      );
+                        ));
+
         $return_url = KRequest::get('session.return', 'raw');
+
         if ($token) {
             $person = $token->owner;
             KRequest::set('session.oauth', null);
-            $this->getService(
-                    'com://site/people.controller.person',
-                    array('response' => $context->response))
-                    ->setItem($person)->login();
+
+            $credentials = array(
+                'username' => $person->username,
+                //it doesn't matter what password is used, but let's use something long and encrypted
+                'password' => $person->getPassword(true)
+            );
+
+            if($this->getService('com:people.helper.person')->login($credentials, true)) {
+                $context->response->setRedirect(base64_decode($return_url));
+            }
 
             return false;
         }

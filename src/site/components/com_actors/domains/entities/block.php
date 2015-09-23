@@ -1,24 +1,9 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
- * Social Edge represents an edge between two nodes that will be used to the act of nodeA following 
+ * Social Edge represents an edge between two nodes that will be used to the act of nodeA following
  * activities of nodeB. This edge maybe used to find relevant stories for nodeA from the nodes it is
- * following. 
+ * following.
  *
  * @category   Anahita
  *
