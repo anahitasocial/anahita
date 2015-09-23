@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -17,7 +17,7 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
         $timeThen = microtime(true);
 
         //converting the old boards as hashtags
-        $boards = dbfetch('SELECT `id`, `alias` FROM #__anahita_nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\' ');
+        $boards = dbfetch('SELECT `id`, `alias` FROM #__nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\' ');
 
         foreach ($boards as $board) {
             $terms = explode('-', $board['alias']);
@@ -44,9 +44,9 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
             }
         }
 
-        dbexec('UPDATE #__anahita_nodes SET `parent_id` = 0 WHERE `type` LIKE \'%com:topics.domain.entity.topic\'');
-        dbexec('DELETE FROM #__anahita_nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\'');
-        dbexec('DELETE FROM #__anahita_edges WHERE `node_b_type` LIKE \'%com:topics.domain.entity.board\'');
+        dbexec('UPDATE #__nodes SET `parent_id` = 0 WHERE `type` LIKE \'%com:topics.domain.entity.topic\'');
+        dbexec('DELETE FROM #__nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\'');
+        dbexec('DELETE FROM #__edges WHERE `node_b_type` LIKE \'%com:topics.domain.entity.board\'');
         dbexec('DROP TABLE #__topics_boards');
 
         $timeDiff = microtime(true) - $timeThen;
@@ -58,6 +58,6 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

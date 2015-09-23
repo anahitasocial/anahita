@@ -25,7 +25,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
                 ADD `cover_filesize` INT(11) NULL AFTER `cover_filename`,
                 ADD `cover_mimetype` VARCHAR(100) NULL AFTER `cover_filesize`');
 
-        dbexec('ALTER TABLE #__nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');        
+        dbexec('ALTER TABLE #__nodes ADD `pinned` TINYINT(1) NOT NULL DEFAULT \'0\' AFTER `enabled`');
 
         //some legacy cleanup
         $legacyTables = array(
@@ -104,7 +104,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         $ids = dbfetch($query);
 
         foreach ($ids as $id) {
-            $entity = KService::get('com://site/medium.domain.entity.medium')->getRepository()->getQuery()->disableChain()->fetch($id);
+            $entity = KService::get("repos://site/medium.medium")->getQuery()->disableChain()->find(array('id'=> $id));
 
             $hashtagTerms = $this->extractHashtagTerms($entity->description);
 

@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -15,7 +15,7 @@ class ComPhotosSchemaMigration1 extends ComMigratorMigrationVersion
     public function up()
     {
         //add your migration here
-        dbexec("UPDATE jos_anahita_nodes SET filename = CONCAT(MD5(id),'.jpg') WHERE type LIKE '%com:photos.domain.entity.photo%' AND filename = ''");
+        dbexec("UPDATE jos_nodes SET filename = CONCAT(MD5(id),'.jpg') WHERE type LIKE '%com:photos.domain.entity.photo%' AND filename = ''");
     }
 
     /**
@@ -23,6 +23,6 @@ class ComPhotosSchemaMigration1 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }
