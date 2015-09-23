@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -23,11 +23,12 @@ class ComAnahitaSchemaMigration2 extends ComMigratorMigrationVersion
         } catch (Exception $e) {
         }
 
-        $query = 'DROP TABLE IF EXISTS `jos_core_log_items`, `jos_core_log_searches`, '.
-                    '`jos_stats_agents`, `jos_tagmeta`, `jos_migration_backlinks`, `jos_migrations`, '.
-                    '';
-
-        dbexec($query);
+        dbexec('DROP TABLE IF EXISTS `jos_core_log_items`');
+        dbexec('DROP TABLE IF EXISTS `jos_core_log_searches`');
+        dbexec('DROP TABLE IF EXISTS `jos_stats_agents`');
+        dbexec('DROP TABLE IF EXISTS `jos_tagmeta`');
+        dbexec('DROP TABLE IF EXISTS `jos_migration_backlinks`');
+        dbexec('DROP TABLE IF EXISTS `jos_migrations`');
 
         dbexec("DELETE FROM `jos_modules_menu` WHERE `moduleid` IN (SELECT `id` FROM `jos_modules` WHERE `module` IN ('mod_bazaar','mod_footer','mod_login','mod_rokquicklinks'))");
         dbexec("DELETE FROM `jos_modules` WHERE `module` IN ('mod_bazaar','mod_footer','mod_login','mod_rokquicklinks')");
@@ -50,6 +51,6 @@ class ComAnahitaSchemaMigration2 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }
