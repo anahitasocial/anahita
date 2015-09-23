@@ -1,7 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php if (isset($service)) : ?>
-<script data-inline src="http://connect.facebook.net/en_US/all.js"></script>
+<script data-inline src="https://connect.facebook.net/en_US/all.js"></script>
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="media://com_invites/js/facebook.js" />
@@ -25,8 +25,6 @@ $('body').invitesFacebook({
   	'picture' : '<?= $viewer->getPortraitURL() ?>'
 });
 </script>
-
-<?= $url ?>
 
 <?= @helper('ui.header', array()) ?>
 
