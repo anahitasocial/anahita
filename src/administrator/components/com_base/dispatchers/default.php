@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,9 +30,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 {
     /**
      * Dispatches the component.
-     * 
+     *
      * @param KCommandContext $context Command chain context
-     * 
+     *
      * @return bool
      */
     protected function _actionDispatch(KCommandContext $context)
@@ -42,11 +42,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 
         $legacyComponents = array(
         'com_cpanel',
-        'com_users',
         'com_plugins',
         'com_languages',
         'com_config',
-        'com_cache',
         'com_login',
         'com_templates', );
 
@@ -58,7 +56,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
             } elseif (file_exists(JPATH_COMPONENT.'/views')) {
                 $query['view'] = str_replace('com_', '', $option);
             } else {
-                //this shouldn't happen    
+                //this shouldn't happen
                 $query['view'] = '';
             }
 
@@ -70,7 +68,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 
     /**
      * After dispatching legacy render the toolbar.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see LibBaseDispatcherComponent::_actionRenderlegacy()

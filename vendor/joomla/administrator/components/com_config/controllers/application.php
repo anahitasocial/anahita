@@ -55,7 +55,7 @@ class ConfigControllerApplication extends ConfigController
 
 		$show_hide		= array (JHTML::_('select.option', 1, JText::_('Hide')), JHTML::_('select.option', 0, JText::_('Show')));
 		$show_hide_r 	= array (JHTML::_('select.option', 0, JText::_('Hide')), JHTML::_('select.option', 1, JText::_('Show')));
-	
+
 		// DEBUG
 		$lists['debug'] 		= JHTML::_('select.booleanlist', 'debug', 'class="inputbox"', $row->debug);
 		$lists['debug_lang'] 	= JHTML::_('select.booleanlist', 'debug_lang', 'class="inputbox"', $row->debug_lang);
@@ -64,7 +64,7 @@ class ConfigControllerApplication extends ConfigController
 
 		// SERVER SETTINGS
 		$errors 				= array (JHTML::_('select.option', -1, JText::_('System Default')), JHTML::_('select.option', 0, JText::_('None')), JHTML::_('select.option', E_ERROR | E_WARNING | E_PARSE, JText::_('Simple')), JHTML::_('select.option', E_ALL ^ E_STRICT, JText::_('Maximum')));
-		
+
 		$lists['error_reporting'] = JHTML::_('select.genericlist',  $errors, 'error_reporting', 'class="inputbox" size="1"', 'value', 'text', $row->error_reporting);
 		$lists['enable_ftp'] 	= JHTML::_('select.booleanlist', 'ftp_enable', 'class="inputbox"', intval($row->ftp_enable));
 
@@ -146,7 +146,7 @@ class ConfigControllerApplication extends ConfigController
 		$lists['sef'] 		= JHTML::_('select.booleanlist', 'sef', 'class="inputbox"', $row->sef);
 		$lists['sef_rewrite'] 	= JHTML::_('select.booleanlist', 'sef_rewrite', 'class="inputbox"', $row->sef_rewrite);
 		$lists['sef_suffix'] 	= JHTML::_('select.booleanlist', 'sef_suffix', 'class="inputbox"', $row->sef_suffix);
-		
+
 		// SESSION SETTINGS
 		$stores = JSession::getStores();
 		$options = array();
@@ -177,35 +177,6 @@ class ConfigControllerApplication extends ConfigController
 		//Save user and media manager settings
 		$table =& JTable::getInstance('component');
 
-		$userpost['params'] = JRequest::getVar('userparams', array(), 'post', 'array');
-		$userpost['option'] = 'com_users';
-		$table->loadByOption( 'com_users' );
-		$table->bind( $userpost );
-
-		// pre-save checks
-		if (!$table->check()) {
-			JError::raiseWarning( 500, $table->getError() );
-			return false;
-		}
-
-		// save the changes
-		if (!$table->store()) {
-			JError::raiseWarning( 500, $table->getError() );
-			return false;
-		}
-
-		// pre-save checks
-		if (!$table->check()) {
-			JError::raiseWarning( 500, $table->getError() );
-			return false;
-		}
-
-		// save the changes
-		if (!$table->store()) {
-			JError::raiseWarning( 500, $table->getError() );
-			return false;
-		}
-
 		$config = new JRegistry('config');
 		$config_array = array();
 
@@ -227,7 +198,7 @@ class ConfigControllerApplication extends ConfigController
 		$config_array['log_path']			= JRequest::getVar('log_path', JPATH_ROOT.DS.'logs', 'post', 'string');
 		$config_array['tmp_path']			= JRequest::getVar('tmp_path', JPATH_ROOT.DS.'tmp', 'post', 'string');
 		$config_array['live_site'] 			= preg_replace('/\/administrator.*/','',JURI::getInstance()->toString(array('scheme','host','port','path')));//rtrim(JRequest::getVar('live_site','','post','string'), );
-	
+
 		// LOCALE SETTINGS
 		$config_array['offset']				= JRequest::getVar('offset', 0, 'post', 'float');
 

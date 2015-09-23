@@ -166,15 +166,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
                 $this->getItem()->setPortrait(array(
                     'url' => $file['tmp_name'],
-                    'mimetype' => $file['type'],
-                    )
-                );
+                    'mimetype' => $file['type']));
 
                 $story = $this->createStory(array(
                    'name' => 'avatar_edit',
                    'owner' => $entity,
-                   'target' => $entity,
-                ));
+                   'target' => $entity));
             } else {
                 $this->getItem()->removePortraitImage();
             }
