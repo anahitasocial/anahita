@@ -43,7 +43,7 @@ class LibUsersDomainEntityUser extends AnDomainEntityDefault
     {
         jimport('joomla.user.helper');
         $token = JUtility::getHash(JUserHelper::genRandomPassword());
-        $salt = JUserHelper::getSalt('ssha');
+        $salt = JUserHelper::getSalt();
         $hashedToken = sha1($token.$salt).':'.$salt;
         $this->activation = $hashedToken;
 
