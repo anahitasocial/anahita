@@ -2,6 +2,17 @@
 
 <h3><?= @text('COM-PEOPLE-PROFILE-EDIT-ACCOUNT-INFORMATION') ?></h3>
 
+<ul>
+    <li>
+      <b><?= @text('COM-PERSON-META-CREATED-ON') ?>: </b>
+      <?= @date($item->createdOn) ?>
+    </li>
+    <li>
+      <b><?= @text('COM-PERSON-META-LAST-LOGIN') ?>: </b>
+      <?= @date($item->getLastLoginDate()) ?>
+    </li>
+</ul>
+
 <?php if(isset($_SESSION['reset_password_prompt']) && $_SESSION['reset_password_prompt'] == 1): ?>
 <?= @message(@text('COM-PEOPLE-PROMPT-RESET-PASSWORD'), array('type'=>'alert')) ?>
 <?php endif; ?>
@@ -44,10 +55,3 @@
         </button>
 	</div>
 </form>
-
-<dl>
-    <dt><?= @text('COM-PERSON-META-CREATED-ON') ?></dt>
-    <dd><?= @date($item->createdOn) ?></dd>
-    <dt><?= @text('COM-PERSON-META-LAST-LOGIN') ?></dt>
-    <dd><?= @date($item->getLastLoginDate()) ?></dd>
-</dl>
