@@ -168,4 +168,15 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         return $this->getService('repos://site/users.user')
                      ->fetch(array('id' => $this->userId));
     }
+
+    /**
+    *   Return last visit date from the user object
+    *
+    *   @return AnDomainAttributeDate object
+    */
+    public function getLastLoginDate()
+    {
+        $user = $this->getUserObject();
+        return $user->get('lastvisitDate');
+    }
 }
