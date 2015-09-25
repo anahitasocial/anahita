@@ -44,3 +44,10 @@
         </button>
 	</div>
 </form>
+
+<dl>
+    <dt><?= @text('COM-PERSON-META-CREATED-ON') ?></dt>
+    <dd><?= @date($item->createdOn) ?></dd>
+    <dt><?= @text('COM-PERSON-META-LAST-LOGIN') ?></dt>
+    <dd><?= @date($item->getLastLoginDate()) ?></dd>
+</dl>
