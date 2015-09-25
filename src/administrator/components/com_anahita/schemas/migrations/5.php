@@ -38,7 +38,8 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
             'sections',
             'stats_agents',
             'tagmeta',
-            'core_log_searches', );
+            'core_log_searches',
+            'anahita_oauths');
 
         foreach ($legacyTables as $legacyTable) {
             dbexec('DROP TABLE IF EXISTS #__'.$legacyTable);
