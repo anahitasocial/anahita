@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die;?>
 
-<?php 
+<?php
 $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
@@ -8,12 +8,13 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 <ul class="nav">
 <?php if ($viewer->guest()): ?>
 	<li>
-		<a href="<?= @route('option=com_people&view=session') ?>">
+		<?php $return = base64UrlEncode(KRequest::url()); ?>
+		<a href="<?= @route('option=com_people&view=session&return='.$return) ?>">
 		<?= @text('LIB-AN-ACTION-LOGIN') ?>
 		</a>
-	</li>	
+	</li>
 <?php else : ?>
-	<li> 
+	<li>
 		<a href="<?=@route($viewer->getURL())?>">
 		<?= @avatar(get_viewer(), 'square', false) ?>
 		</a>
@@ -32,7 +33,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
         </a>
     </li>
  	<?php endif; ?>
-            
+
 	<?php if (count($components)): ?>
 	<li class="divider"></li>
     <?php foreach ($components as $component): ?>
@@ -49,5 +50,5 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
         <?= @text('LIB-AN-ACTION-LOGOUT') ?>
 		</a>
 	</li>
-<?php endif; ?>	
+<?php endif; ?>
 </ul>
