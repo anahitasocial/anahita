@@ -67,7 +67,7 @@ http://getcomposer.org/ or just run the following command:
 
 ### Installing a stable package
 
-![Installing Anahita using the Birth release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
+![Installing Anahita using the Birth release code](https://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
 
 Stable packages are called _Birth_ releases. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
@@ -81,7 +81,7 @@ Continue with [Initiating Installation] (#initiating-installation) from this poi
 
 ### Installing from the master branch
 
-![Installing Anahita using the Embryo release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-embryo.gif)
+![Installing Anahita using the Embryo release code](https://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-embryo.gif)
 
 The master branch always contains the _Embryo_ release. Using the following command, clone the Anahita repository from the master branch:
 
@@ -99,7 +99,7 @@ Continue with *Initiating Installation* from this point.
 
 ## Initiating Installation
 
-![Initiating Anahita installation](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-init.gif)
+![Initiating Anahita installation](https://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-init.gif)
 
 If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. If the command didn't work, perhaps the symlink to the anahita command line tool isn't created. In this case run the following command to create a symlink. Otherwise move to the next step which is initiating the installation process.
 
@@ -147,7 +147,7 @@ Anahita emails out a lot of email notifications. In order for the notifications 
 
 ### Installing Social Apps
 
-![Installing Anahita social apps](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-apps-install.gif)
+![Installing Anahita social apps](https://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-apps-install.gif)
 
 Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
 
@@ -184,21 +184,21 @@ Under the _Extend_ tab go to the _Plugin Manager_ and then from the _type_ list 
 Now click save to store the settings. Try uploading your avatar in the front-end and see if it gets uploaded properly. Check the image src to make sure it is an AWS url.
 
 ## Join the Anahita Tribe
-Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](http://www.GetAnahita.com/join)
+Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](https://www.GetAnahita.com/join)
 
-**Please Note:** we do not answer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](http://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
+**Please Note:** we do not answer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](https://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
 
 ## Report Bugs or Issues
 
 There are so many ways that you can report us a bug:
 
 - open an issue here on our repository
-- start a topic on [Anahita Project](http://www.getanahita.com/groups/42242-anahita-project) group
-- send us a [friendly email](http://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug
+- start a topic on [Anahita Project](https://www.getanahita.com/groups/42242-anahita-project) group
+- send us a [friendly email](https://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug
 
 ## Contribute to Anahita
 
-Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a [complete guideline](http://www.getanahita.com/html/tribes/contribute) of how you can contribute to Anahita.
+Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a [complete guideline](https://www.getanahita.com/html/tribes/contribute) of how you can contribute to Anahita.
 
 ## Follow us, Like us
 
