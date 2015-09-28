@@ -66,6 +66,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
 
         $date = &JFactory::getDate();
         $user->set('registerDate', $date->toMySQL());
+        $user->set('lastvisitDate', '0000-00-00 00:00:00');
 
         // if this is the first user being added or
         // (viewer is a super admin and she is adding another super admin)
