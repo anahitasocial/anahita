@@ -215,8 +215,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         //if this is a first time user, then unblock them
         if ($newUser) {
-            $user->block = ($newUser) ? 0 : 1;
-            $person->enabled = (boolean) !$user->block;
+            $user->block = 0;
+            $person->enable();
             $person->save();
         }
 
