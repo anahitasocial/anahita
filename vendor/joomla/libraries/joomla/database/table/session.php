@@ -28,49 +28,49 @@ class JTableSession extends JTable
 	 *
 	 * @var int Primary key
 	 */
-	var $session_id			= null;
+	var $session_id	= null;
 
 	/**
 	 *
 	 * @var string
 	 */
-	var $time				= null;
+	var $time	= null;
 
 	/**
 	 *
 	 * @var string
 	 */
-	var $userid				= null;
+	var $userid	= null;
 
 	/**
 	 *
 	 * @var string
 	 */
-	var $usertype			= null;
+	var $usertype	= null;
 
 	/**
 	 *
 	 * @var string
 	 */
-	var $username			= null;
+	var $username	= null;
 
 	/**
 	 *
 	 * @var int
 	 */
-	var $guest				= null;
+	var $guest = null;
 
 	/**
 	 *
 	 * @var int
 	 */
-	var $client_id			= null;
+	var $client_id = null;
 
 	/**
 	 *
 	 * @var string
 	 */
-	var $data				= null;
+	var $data	= null;
 
 	/**
 	 * Constructor
@@ -82,10 +82,38 @@ class JTableSession extends JTable
 
 		$this->guest 	= 1;
 		$this->username = '';
+		$this->usertype = 'public';
+	}
+
+	function loadByUser( $userId = 0 )
+	{
+		$userId = intval($userId);
+
+		if(!$userId) {
+				return false;
+		}
+
+		$this->reset();
+
+		$db =& $this->getDBO();
+
+		$query = 'SELECT *'
+		. ' FROM '.$this->_tbl
+		. ' WHERE userid = '.$userId;
+		$db->setQuery( $query );
+
+		if ($result = $db->loadAssoc( )) {
+			return $this->bind($result);
+		}
+		else
+		{
+			$this->setError( $db->getErrorMsg() );
+			return false;
+		}
 	}
 
 	function insert($sessionId, $clientId)
-	{		
+	{
 		$this->session_id	= $sessionId;
 		$this->client_id	= $clientId;
 
@@ -119,14 +147,14 @@ class JTableSession extends JTable
 	function destroy($userId, $clientIds = array())
 	{
 		$query = 'DELETE FROM #__session'
-			. ' WHERE userid = '. $this->_db->Quote( $userId )
-			. ' AND client_id IN ( 0,1 )'
-			;
+			. ' WHERE userid = '. $this->_db->Quote($userId)
+			. ' AND client_id IN ( 0,1 )';
+
 		$this->_db->setQuery( $query );
 
-		if ( !$this->_db->query() ) {
-			$this->setError( $this->_db->stderr());
-			return false;
+		if (!$this->_db->query()) {
+				$this->setError( $this->_db->stderr());
+				return false;
 		}
 
 		return true;
@@ -138,10 +166,11 @@ class JTableSession extends JTable
 	* @param int 	Session age in seconds
 	* @return mixed Resource on success, null on fail
 	*/
-	function purge( $maxLifetime = 1440 )
+	function purge($maxLifetime = 1440)
 	{
 		$past = time() - $maxLifetime;
-		$query = 'DELETE FROM '. $this->_tbl .' WHERE ( time < \''. (int) $past .'\' )'; // Index on 'VARCHAR'
+		// Index on 'VARCHAR'
+		$query = 'DELETE FROM '. $this->_tbl .' WHERE ( time < \''. (int) $past .'\' )';
 		$this->_db->setQuery($query);
 
 		return $this->_db->query();

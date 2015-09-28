@@ -60,7 +60,7 @@ class LibPeopleHelperPerson extends KObject
                     'username' => $user['username'],
                     'password' => $user['password'],
                 )));
-                $lifetime = time() + AnHelperDate::yearToSeconds();
+                $lifetime = time() + (365 * 24 * 3600);
                 setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
             }
         }
@@ -70,7 +70,7 @@ class LibPeopleHelperPerson extends KObject
 
     /**
      * Deletes a session and logs out the viewer.
-     
+
      * @return bool
      */
     public function logout()

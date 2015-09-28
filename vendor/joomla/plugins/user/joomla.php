@@ -38,7 +38,7 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onAfterDeleteUser($user, $succes, $msg)
 	{
-		if (! $succes) 
+		if (! $succes)
 		{
 			return false;
 		}
@@ -61,49 +61,52 @@ class plgUserJoomla extends JPlugin
 	 */
 	public function onLoginUser($user, $options = array())
 	{
-		global $mainframe;
-        
-		jimport('joomla.user.helper');
-        $viewer =& JFactory::getUser($user['username']);
+			global $mainframe;
 
-        if (! $viewer )
-        {
-            return JError::raiseWarning(401, "Did not find a user with username: ".$viewer['username']);
-        }
-        
-        if ( 
-            $mainframe->isAdmin() && 
-            $viewer->usertype != ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR && 
-            $viewer->usertype != ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR  
-        )   
-        {    
-            return JError::raiseWarning(403, "Not authorized to access the admin side");
-        }
+			jimport('joomla.user.helper');
+		  $juser =& JFactory::getUser($user['username']);
 
-		// Register the needed session variables
-		$session =& JFactory::getSession();		
-		$session->set('user', $viewer);		
-		
-		// Get the session object
-		$table = & JTable::getInstance('session');
-		$table->load($session->getId());
+		  if (!$juser){
+		      JError::raiseWarning(401, "Did not find a user with username: ".$juser['username']);
 
-		$table->guest = $viewer->get('guest');
-		$table->username = $viewer->get('username');
-		$table->userid 	= intval($viewer->get('id'));
-		$table->usertype = $viewer->get('usertype');
-		
-		$table->update();		
-		
-		// Hit the user last visit field
-		$viewer->setLastVisit();
-        
-        //cleanup session table from guest users
-        $db =& JFactory::getDBO();
-        $db->setQuery('DELETE FROM #__session WHERE userid = 0 ');
-        $db->Query();
+					return false;
+		  }
 
-		return true;
+		  if (
+		      $mainframe->isAdmin() &&
+		      $juser->usertype != ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR &&
+		      $juser->usertype != ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
+		  )
+		  {
+		      JError::raiseWarning(403, "Not authorized to access the admin side");
+
+					return false;
+		  }
+
+			// Register the needed session variables
+			$session =& JFactory::getSession();
+			$session->set('user', $juser);
+
+			// Get the session object
+			$table = & JTable::getInstance('session');
+			if($table->load($session->getId()))
+			{
+					$table->guest = 0;
+					$table->username = $juser->get('username');
+					$table->userid = intval($juser->get('id'));
+					$table->usertype = $juser->get('usertype');
+					$table->update();
+			}
+
+			// Hit the user last visit field
+			$juser->setLastVisit();
+
+      //cleanup session table from guest users
+      $db =& JFactory::getDBO();
+      $db->setQuery('DELETE FROM #__session WHERE userid = 0 ');
+      $db->Query();
+
+			return true;
 	}
 
 	/**
@@ -118,12 +121,12 @@ class plgUserJoomla extends JPlugin
 	public function onLogoutUser($user, $options = array())
 	{
 		if ($user['id'] == 0)
-        { 
+        {
 			return false;
         }
-        
+
         $viewer =& JFactory::getUser();
-        
+
 		//Check to see if we're deleting the current session
 		if ($viewer->id == (int) $user['id'])
 		{
@@ -133,14 +136,14 @@ class plgUserJoomla extends JPlugin
 			// Destroy the php session for this user
 			$session =& JFactory::getSession();
 			$session->destroy();
-		} 
-		else 
+		}
+		else
 		{
 			// Force logout all users with that userid
 			$table = & JTable::getInstance('session');
 			$table->destroy((int) $user['id'], (int) $options['clientid']);
 		}
-        
+
 		return true;
 	}
 }

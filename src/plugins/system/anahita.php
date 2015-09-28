@@ -108,10 +108,6 @@ class PlgSystemAnahita extends JPlugin
             return;
         }
 
-        if ($viewer->guest()) {
-            return;
-        }
-
         jimport('joomla.utilities.utility');
         jimport('joomla.utilities.simplecrypt');
 
@@ -121,13 +117,18 @@ class PlgSystemAnahita extends JPlugin
         // for json requests obtain the username and password from the $_SERVER array
         // else if the remember me cookie exists, decrypt and obtain the username and password from it
         if (
+               $viewer->guest() &&
                KRequest::has('server.PHP_AUTH_USER') &&
                KRequest::has('server.PHP_AUTH_PW') &&
                KRequest::format() == 'json'
            ) {
             $user['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
             $user['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
-        } elseif (isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '') {
+        } elseif (
+              $viewer->guest() &&
+              isset($_COOKIE[$remember]) &&
+              $_COOKIE[$remember] != ''
+        ) {
             $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
 
             if ($key) {
@@ -135,15 +136,18 @@ class PlgSystemAnahita extends JPlugin
                 $cookie = $crypt->decrypt($_COOKIE[$remember]);
                 $user = (array) @unserialize($cookie);
             }
+        } else {
+            return;
         }
 
-        if (!empty($user)) {
+        if ($viewer->guest() && count($user)) {
+
             try {
                 jimport('joomla.user.authentication');
                 $authentication = &JAuthentication::getInstance();
                 $authResponse = $authentication->authenticate($user, array());
 
-                if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS) {
+                if ($authResponse->status == JAUTHENTICATE_STATUS_SUCCESS) {
                     KService::get('com://site/people.helper.person')->login($user, true);
                 }
             } catch (RuntimeException $e) {
