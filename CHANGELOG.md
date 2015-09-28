@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.6 Birth Release
+=============================
+* fixed bug which was preventing new users to update their password after token login
+* fixed remember me bug
+
 Anahita 4.1.5 Birth Release
 =============================
 * people management is now happening all in the front-end
