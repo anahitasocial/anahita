@@ -1,5 +1,12 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.7 Birth Release
+=============================
+* fixed the issue which was breaking the actor social graph pagination
+* fixed the issue which was preventing notification settings to be stored in default layout
+* changed the lable follow/unfollow to get/stop notifications for medium node Subscriptions
+* medium nodes are enabled by default
+
 Anahita 4.1.6 Birth Release
 =============================
 * fixed bug which was preventing new users to update their password after token login
