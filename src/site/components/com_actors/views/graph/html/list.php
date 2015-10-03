@@ -1,11 +1,13 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php 
+<?php
 //set the actor as state
 if ($item->isAdministrable()) {
     @listItemView()->getState()->actor = $item;
 }
 ?>
 
-<?= @previous() ?>
-
+<?php @listItemView()->layout('list') ?>
+<?php foreach ($items as $item) : ?>
+<?= @listItemView()->item($item)?>
+<?php endforeach; ?>
