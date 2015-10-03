@@ -33,6 +33,7 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
             ),
             'attributes' => array(
                 'name' => array('read' => 'public'),
+                'enabled' => array('default' => 1)
              ),
             'behaviors' => array(
                 'votable',

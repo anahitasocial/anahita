@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Default Actors View.
  *
@@ -38,7 +23,7 @@ class ComActorsViewActorsHtml extends ComBaseViewHtml
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'list_item_view' => KInflector::singularize($this->getName()),
+            'list_item_view' => KInflector::singularize($this->getIdentifier()->package),
             'template_paths' => array(dirname(__FILE__).'/html'),
         ));
 
