@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<install type="plugin" group="contentfilter" method="upgrade">
+    <name>Location</name>
+    <author>Anahita</author>
+    <creationDate>October 2015</creationDate>
+    <copyright>rmd Studio</copyright>
+    <license>GPL3</license>
+    <authoremai />
+    <authorurl>GetAnahita.com</authorurl>
+    <description>Converts !location names to links to the location pages.</description>
+    <params />
+    <files>
+        <filename plugin="location">location.php</filename>
+    </files>
+</install>
