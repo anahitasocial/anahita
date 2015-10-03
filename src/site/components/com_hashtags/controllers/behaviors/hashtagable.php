@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -24,7 +24,7 @@
  */
 class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstract
 {
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -38,7 +38,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
     }
 
     /**
-     * Extracts hashtag terms from the entity body and add them to the item. 
+     * Extracts hashtag terms from the entity body and add them to the item.
      */
     public function addHashtagsFromBody()
     {
@@ -55,7 +55,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
      *
      * @param KCommandContext $context
      *
-     * @return bool
+     * @return void
      */
     public function updateHashtagsFromBody(KCommandContext $context)
     {
@@ -79,7 +79,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 
     /**
      * extracts a list of hashtag terms from a given text.
-     * 
+     *
      * @return array
      */
     public function extractHashtagTerms($text)
@@ -95,7 +95,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
 
     /**
      * Applies the hashtag filtering to the browse query.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _beforeControllerBrowse(KCommandContext $context)
