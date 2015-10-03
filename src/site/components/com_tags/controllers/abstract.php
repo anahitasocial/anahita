@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -44,7 +44,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
     /**
      * Read Service.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionRead(KCommandContext $context)
@@ -70,7 +70,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
     /**
      * Browse Service.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionBrowse(KCommandContext $context)
@@ -81,8 +81,10 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
         $query = $context->query;
 
+        $name = $this->getIdentifier()->name;
+
         $query->select('COUNT(*) AS count')
-        ->join('RIGHT', 'edges AS edge', 'hashtag.id = edge.node_a_id')
+        ->join('RIGHT', 'edges AS edge', $name.'.id = edge.node_a_id')
         ->order('count', 'DESC')
         ->limit($this->limit, $this->start);
 
