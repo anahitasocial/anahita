@@ -21,7 +21,7 @@ CREATE TABLE `#__edges` (
   KEY `node_b_id` (`node_b_id`),
   KEY `start_date` (`start_date`),
   KEY `end_date` (`end_date`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -147,7 +147,7 @@ CREATE TABLE `#__components` (
   `enabled` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent_option` (`parent`,`option`(32))
-) ENGINE=MyISAM;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -157,7 +157,7 @@ CREATE TABLE `#__migrator_versions` (
   `version` text NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `component` (`component`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -176,7 +176,7 @@ CREATE TABLE `#__plugins` (
   `params` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_folder` (`published`,`client_id`,`access`,`folder`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -193,7 +193,7 @@ CREATE TABLE `#__session` (
   KEY `whosonline` (`guest`,`usertype`),
   KEY `userid` (`userid`),
   KEY `time` (`time`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -202,7 +202,7 @@ CREATE TABLE `#__templates_menu` (
   `menuid` int(11) NOT NULL DEFAULT '0',
   `client_id` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`menuid`,`client_id`,`template`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
@@ -223,4 +223,4 @@ CREATE TABLE `#__users` (
   KEY `idx_name` (`name`),
   KEY `username` (`username`),
   KEY `email` (`email`)
-) ENGINE=MyISAM CHARACTER SET=utf8;
+) ENGINE=InnoDB CHARACTER SET=utf8;
