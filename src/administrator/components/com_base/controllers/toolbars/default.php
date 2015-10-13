@@ -53,6 +53,7 @@ class ComBaseControllerToolbarDefault extends KControllerToolbarAbstract
     public function onAfterControllerRead(KEvent $event)
     {
         $name = ucfirst($this->getController()->getIdentifier()->name);
+        $saveable = false;
 
         if ($this->getController()->getState()->isUnique()) {
             $saveable = $this->getController()->canEdit();
