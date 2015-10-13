@@ -1,22 +1,18 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<p><?= sprintf(@text('COM-INVITES-INVITED-BY'), @name($token->inviter)) ?></p>
+<div class="alert alert-block alert-success">
+    <p><?= sprintf(@text('COM-INVITES-INVITED-BY'), @name($token->inviter)) ?></p>
+    <p>
+    <?php if ($viewer->guest()): ?>
+    <a class="btn btn-primary" href="<?= @route('option=people&view=person&layout=signup&return='.base64_encode(@route('token='.$token->value))) ?>" >
+    <?= @text('COM-INVITES-SIGN-UP') ?>
+    </a>
+    <?php endif; ?>
+    </p>
+</div>
 
-<style>
-#inviter-list #block {
-    display:none;
-}
-</style>
-
-<div id="inviter-list">
+<div class="an-entities masonry">
 <?= @service('com://site/people.controller.person')->setItem($token->inviter)->layout('list'); ?>
-</div>    
-<?php if ($viewer->guest()): ?>
-<a class="btn btn-large" data-trigger="PersonAuthenticationModal" data-url="<?= @route('option=people&view=session&layout=modal&return='.base64_encode(@route('token='.$token->value))) ?>" >
-<?= @text('COM-INVITES-LOGIN') ?>
-</a>
+</div>
 
-<a class="btn btn-large btn-primary" data-trigger="PersonRegistrationModal" data-url="<?=@route('option=people&view=person&modal=1&layout=add&return='.base64_encode(@route('token='.$token->value)))?>" >
-<?= @text('COM-INVITES-SIGN-UP') ?>
-</a>
-<?php endif;?>
+<p></p>
