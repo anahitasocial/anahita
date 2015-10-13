@@ -49,52 +49,42 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
     protected function _actionInvite($context)
     {
         $data = $context->data;
+        $viewer = get_viewer();
         $siteConfig = JFactory::getConfig();
-        $filter = $this->getService('koowa:filter.email');
-        $emails = array_filter((array) $data['email'], function ($email) use ($filter) {
-            return $filter->validate($email);
-        });
-        $payloads = array();
-        $sent_one = false;
+
+        $emails = $data->email;
 
         foreach ($emails as $email) {
-            $token = $this->getService('repos://site/invites.token')->getEntity(array(
+
+            if ($this->getService('koowa:filter.email')->validate($email)) {
+
+                $person = $this->getService('repos://site/people')->find(array('email' => $email));
+
+                if (!$person) {
+
+                    $token = $this->getService('repos://site/invites.token')->getEntity(array(
                         'data' => array(
-                            'inviter' => get_viewer(),
+                            'inviter' => $viewer,
                             'serviceName' => 'email',
                         ),
                     ));
 
-            $person = $this->getService('repos://site/people')->find(array('email' => $email));
-            $payload = array('email' => $email, 'sent' => false);
+                    $token->save();
 
-            if (!$person && $token->save()) {
-                $payload['sent'] = true;
-                $sent_one = true;
+                    $this->mail(array(
+                        'subject' => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+                        'to' => $email,
+                        'layout' => false,
+                        'template' => 'invite',
+                        'data' => array(
+                            'invite_url' => $token->getURL(),
+                            'site_name' => $siteConfig->getValue('sitename'),
+                            'sender' => $viewer,
+                        ),
+                    ));
 
-                $this->mail(array(
-                    'subject' => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
-                    'to' => $email,
-                    'layout' => false,
-                    'template' => 'invite',
-                    'data' => array(
-                        'invite_url' => $token->getURL(),
-                        'site_name' => $siteConfig->getValue('sitename'),
-                        'sender' => $this->viewer,
-                    ),
-                ));
-            } else {
-                $payload['person'] = $person;
-            }
-
-            $payloads[] = $payload;
-        }
-
-        $content = $this->getView()->set(array('data' => $payloads))->display();
-        $context->response->setContent($content);
-
-        if ($sent_one) {
-            $this->setMessage('COM-INVITES-EMAIL-INVITES-SENT', 'info', false);
-        }
+                }// if person doesn't exists
+            }// email validation
+        }//foreach
     }
 }

@@ -36,8 +36,9 @@ class ComInvitesControllerToken extends ComBaseControllerService
      */
     protected function _actionRead(KCommandContext $context)
     {
-        if ($this->token) {
-            $token = $this->getRepository()->find(array('value' => $this->token));
+        if ($this->invitetoken) {
+
+            $token = $this->getRepository()->find(array('value' => $this->invitetoken));
             $this->getToolbar('menubar')->setTitle(null);
 
             if (!$token || !isset($token->inviter)) {
@@ -51,6 +52,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
             }
 
             $this->setItem($token);
+
         } else {
             $service = pick($this->service, 'facebook');
             $token = $this->getRepository()->getEntity()->reset();

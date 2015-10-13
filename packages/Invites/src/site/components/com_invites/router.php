@@ -22,8 +22,9 @@ class ComInvitesRouter extends ComBaseRouterAbstract
 
         if (preg_match('#(connections|token)(/\w+)?#', $path)) {
             return array(
-                   'view' => array_shift($segments),
-                   'service' => pick('facebook', array_pop($segments)), );
+                'view' => array_shift($segments),
+                'service' => pick('facebook', array_pop($segments)),
+            );
         }
 
         return parent::parse($segments);

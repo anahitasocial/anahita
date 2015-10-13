@@ -3,11 +3,10 @@
 jimport('joomla.plugin.plugin');
 
 /**
- * Subscription system plugins. Validates the viewer subscriptions.
+ * Invites user plugin.
  *
- * @category   Anahita
+ * @category   Anahita Invites App
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -40,20 +39,10 @@ class plgUserInvites extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser($user, $isnew, $success, $message)
     {
-        if (!$isnew) {
-            return;
+        if(!$isnew && $success){
+            KRequest::set('session.invite_token', null);
         }
-
-        $invite_token = KRequest::get('session.invite_token', 'string', null);
-
-        if (!$invite_token) {
-            return;
-        }
-
-        KRequest::set('session.invite_token', null);
-        $token = KService::get('repos:invites.token')->fetch(array('value' => $invite_token));
-        $token->incrementUsed()->save();
     }
 }

@@ -26,22 +26,13 @@ class plgSystemInvites extends JPlugin
             return;
         }
 
-        if ((
-              $token = KRequest::get('get.token', 'string')) &&
-              KRequest::get('get.option', 'cmd') != 'com_invites'
+        if(
+            KRequest::get('session.invite_token', 'string', null) &&
+            KRequest::get('get.option', 'string', null) == 'com_people' &&
+            get_viewer()->guest()
         ) {
-            $token = KService::get('repos:invites.token')->fetch(array('value' => $token));
-
-            if ($token) {
-                $response = KService::get('application.dispatcher')->getResponse();
-                $response->setRedirect(JRoute::_('option=com_invites&view=token&token='.$token->value));
-                $response->send();
-                exit(0);
-            }
-
-            return;
-        }
-
-        $invite_token = KRequest::get('session.invite_token', 'string', null);
+    		    $personConfig = &JComponentHelper::getParams('com_people');
+    		    $personConfig->set('allowUserRegistration', true);
+    		}
     }
 }
