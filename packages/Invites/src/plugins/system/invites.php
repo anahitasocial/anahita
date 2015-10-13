@@ -25,11 +25,10 @@ class plgSystemInvites extends JPlugin
         if ($mainframe->isAdmin()) {
             return;
         }
-        
+
         if(
             KRequest::get('session.invite_token', 'string', null) &&
             KRequest::get('get.option', 'string', null) == 'com_people' &&
-            KRequest::get('get.view', 'cmd', null) == 'session' &&
             get_viewer()->guest()
         ) {
     		    $personConfig = &JComponentHelper::getParams('com_people');
