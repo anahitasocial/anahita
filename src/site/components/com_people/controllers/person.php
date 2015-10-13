@@ -168,8 +168,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $data = $context->data;
         $viewer = get_viewer();
         $isFirstUser = !(bool) $this->getService('repos://site/users')
-                                  ->getQuery(true)
-                                  ->fetchValue('id');
+                                    ->getQuery(true)
+                                    ->fetchValue('id');
 
         $person = parent::_actionAdd($context);
 
