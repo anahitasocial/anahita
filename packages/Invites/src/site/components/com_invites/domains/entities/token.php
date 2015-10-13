@@ -51,7 +51,7 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
      */
     public function getURL()
     {
-        return 'option=com_invites&view=token&token='.$this->value;
+        return 'option=com_invites&view=token&invitetoken='.$this->value;
     }
 
     /**

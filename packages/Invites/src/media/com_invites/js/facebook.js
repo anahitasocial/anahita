@@ -7,34 +7,34 @@
  */
 
 ;(function ($, window, document) {
-    
+
     'use strict';
-    
+
     $.widget('anahita.invitesFacebook', {
-        
+
         options : {
-            
+
             appId : 0,
             subject : 'Message Subject',
             body : 'Message Body',
             appURL : 'http://',
             picture : ''
         },
-        
+
         _create : function ( ) {
-            
+
             var self = this;
-            
+
             FB.init({ appId: this.options.appId, xfbml: true });
-    
+
             this._on({
                 'click [data-trigger="Invite"]' : function ( event ) {
-                    
+
                     event.preventDefault();
 
                    $.ajax({
                        method : 'get',
-                       headers: { 
+                       headers: {
                             accept: 'application/json'
                        },
                        url : 'index.php/invites/token/facebook',
@@ -45,29 +45,29 @@
                 }
             });
         },
-        
+
         _openDialog : function ( token ) {
-            
+
             var self = this;
             var msgLink = this.options.appURL;
-            msgLink += '?token=' + token ;
-            
+            msgLink += '?invitetoken=' + token ;
+
             //console.log( msgLink );
-            
+
             FB.ui({
-                
+
                 display : 'iframe',
                 method : 'send',
                 link : msgLink,
-                picture : this.options.picture,              
+                picture : this.options.picture,
                 name : this.options.subject,
                 description : this.options.body
-                
+
             },
             function(response) {
-                
+
                 if(response && response.success) {
-                    
+
                     $.ajax({
                         method : 'post',
                         url : 'index.php/invites/token/facebook',
@@ -76,23 +76,23 @@
                         },
                         complete : function ( xhr, status ) {
                             if ( status == 'error' ) {
-                            
+
                                 //global alert
                                 //console.log( 'error' );
-                            
+
                             } else {
-                            
+
                                 //global alert
                                 //console.log( 'success' );
-                            
+
                             }
                         }
                     });
                 }
-                               
+
             }.bind(this));
         }
 
     });
-    
+
 }(jQuery, window, document));

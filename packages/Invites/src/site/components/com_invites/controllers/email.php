@@ -66,7 +66,10 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
                     ));
 
             $person = $this->getService('repos://site/people')->find(array('email' => $email));
-            $payload = array('email' => $email, 'sent' => false);
+            $payload = array(
+                'email' => $email,
+                'sent' => false
+            );
 
             if (!$person && $token->save()) {
                 $payload['sent'] = true;
