@@ -4,7 +4,7 @@
     <p><?= sprintf(@text('COM-INVITES-INVITED-BY'), @name($token->inviter)) ?></p>
     <p>
     <?php if ($viewer->guest()): ?>
-    <a class="btn btn-primary" href="<?= @route('option=people&view=person&layout=signup&return='.base64_encode(@route('token='.$token->value))) ?>" >
+    <a class="btn btn-primary" href="<?= @route('option=people&view=person&layout=signup&return='.base64_encode(@route('invitetoken='.$token->value))) ?>" >
     <?= @text('COM-INVITES-SIGN-UP') ?>
     </a>
     <?php endif; ?>
