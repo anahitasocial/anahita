@@ -60,7 +60,6 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
     public function incrementUsed()
     {
         $this->used = $this->used + 1;
-
         return $this;
     }
 

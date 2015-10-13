@@ -6,16 +6,16 @@
 <script src="media://com_invites/js/min/email.min.js" />
 <?php endif; ?>
 
-<?php $numEmails = 5; ?>
+<?php $numEmails = 3; ?>
 
 <div class="row">
 	<div class="span8">
-	    
+
 		<?= @helper('ui.header', array()) ?>
-	    	
+
         <form id="invites-email" name="invites-email" action="<?= @route() ?>" method="post">
         	<?php for ($i = 0; $i < $numEmails; ++$i) : ?>
-        	
+
         	<div class="control-group">
         	    <label class="control-label"  for="email-<?= $i ?>">
                     <?= sprintf(@text('COM-INVITES-EMAIL-FIELD'), $i + 1) ?>
@@ -26,7 +26,7 @@
         		</div>
         	</div>
         	<?php endfor; ?>
-        	
+
         	<div class="form-actions">
         		<button type="submit" class="btn btn-primary">
         			<?= @text('COM-INVITES-EMAIL-SEND-INVITES') ?>
