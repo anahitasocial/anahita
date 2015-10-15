@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.8 Birth Release
+=============================
+* fixed issue with the db table coalitions problem. Now all the tables are set to utf-8 and Engine=InnoDB
+* fixed issues in the Invites app tokens and UIs 
+
 Anahita 4.1.7 Birth Release
 =============================
 * fixed the issue which was breaking the actor social graph pagination
