@@ -1,7 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##
  *
  * @package    Com_Anahita
  * @subpackage Schema_Migration

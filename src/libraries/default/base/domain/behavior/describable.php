@@ -1,23 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Decribable Behavior.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,12 +15,12 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
 {
     /**
      * An array of properties that can be searched.
-     * 
+     *
      * @var array
      */
     protected $_searchable_properties = array();
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -74,7 +59,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
 
     /**
      * Override the name setter to set the alias at the same time.
-     * 
+     *
      * @param string $name
      */
     public function setName($name)
@@ -85,7 +70,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
 
     /**
      * Returns the node URL.
-     * 
+     *
      * @return string
      */
     public function getURL()

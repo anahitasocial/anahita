@@ -1,10 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- */
-
-/**
  * Schema Migration.
  */
 class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion

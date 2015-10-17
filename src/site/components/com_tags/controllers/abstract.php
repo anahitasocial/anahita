@@ -1,21 +1,12 @@
 <?php
 
-/** 
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2014 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract Tag Controller.
  *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2014 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -44,7 +35,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
     /**
      * Read Service.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionRead(KCommandContext $context)
@@ -70,7 +61,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
     /**
      * Browse Service.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionBrowse(KCommandContext $context)
@@ -81,8 +72,10 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
         $query = $context->query;
 
+        $name = $this->getIdentifier()->name;
+
         $query->select('COUNT(*) AS count')
-        ->join('RIGHT', 'edges AS edge', 'hashtag.id = edge.node_a_id')
+        ->join('RIGHT', 'edges AS edge', $name.'.id = edge.node_a_id')
         ->order('count', 'DESC')
         ->limit($this->limit, $this->start);
 

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -29,16 +29,6 @@
 abstract class LibBaseControllerPermissionAbstract extends KControllerBehaviorAbstract
 {
     /**
-     * Constructor.
-     *
-     * @param   object  An optional KConfig object with configuration options
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
-    }
-
-    /**
      * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -57,11 +47,11 @@ abstract class LibBaseControllerPermissionAbstract extends KControllerBehaviorAb
 
     /**
      * Command handler.
-     * 
+     *
      * @param string          $name    The command name
      * @param KCommandContext $context The command context
-     * 
-     * @return bool Can return both true or false.  
+     *
+     * @return bool Can return both true or false.
      */
     public function execute($name, KCommandContext $context)
     {
@@ -90,7 +80,7 @@ abstract class LibBaseControllerPermissionAbstract extends KControllerBehaviorAb
 
     /**
      * Return the object handle.
-     * 
+     *
      * @return string
      */
     public function getHandle()

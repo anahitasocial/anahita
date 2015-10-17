@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Tag association
+ * Locations component entity
  *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2015 rmd Studio Inc.
+ * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
  */
-class ComTagsDomainEntityTag extends ComBaseDomainEntityEdge
+class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityComponent
 {
     /**
      * Initializes the default configuration for the object.
@@ -23,13 +23,24 @@ class ComTagsDomainEntityTag extends ComBaseDomainEntityEdge
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'inheritance' => array('abstract' => $this->getIdentifier()->classname === __CLASS__),
-            'aliases' => array(
-                'tag' => 'nodeA',
-                'tagable' => 'nodeB',
+            'behaviors' => array(
+                'assignable' => array(),
             ),
         ));
 
         parent::_initialize($config);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function onSettingDisplay(KEvent $event)
+    {
+        $actor = $event->actor;
+        $tabs = $event->tabs;
+        $tabs->insert('locations', array(
+            'label' => JText::_('COM-LOCATIONS-PROFILE-EDIT'),
+            'controller' => 'com://site/locations.controller.setting',
+        ));
     }
 }

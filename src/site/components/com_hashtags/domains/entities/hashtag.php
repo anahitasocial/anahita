@@ -1,23 +1,12 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
+/**
+ * A hashtag.
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @copyright  2008 - 2014 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * A hashtag.
- * 
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -40,7 +29,12 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'attributes' => array(
-                'name' => array('required' => AnDomain::VALUE_NOT_EMPTY, 'format' => 'string', 'read' => 'public', 'unique' => true),
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'string',
+                    'read' => 'public',
+                    'unique' => true
+                  ),
             ),
             'behaviors' => to_hash(array(
                 'modifiable',

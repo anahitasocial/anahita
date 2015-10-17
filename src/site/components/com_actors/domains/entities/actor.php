@@ -52,6 +52,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'dictionariable',
                 'followable',
                 'com://site/hashtags.domain.behavior.hashtagable',
+                'com://site/locations.domain.behavior.geolocatable',
                 'coverable',
                 'portraitable' => array(
                         'sizes' => array(

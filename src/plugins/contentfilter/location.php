@@ -1,17 +1,16 @@
 <?php
 
 /**
- * Tag association
+ * Converts !location terms to links
  *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2015 rmd Studio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
  */
-class ComTagsDomainEntityTag extends ComBaseDomainEntityEdge
+class PlgContentfilterLocation extends PlgContentfilterAbstract
 {
     /**
      * Initializes the default configuration for the object.
@@ -23,13 +22,26 @@ class ComTagsDomainEntityTag extends ComBaseDomainEntityEdge
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'inheritance' => array('abstract' => $this->getIdentifier()->classname === __CLASS__),
-            'aliases' => array(
-                'tag' => 'nodeA',
-                'tagable' => 'nodeB',
-            ),
+            'priority' => KCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);
+    }
+
+    /**
+     * Filter a value.
+     *
+     * @param string The text to filter
+     *
+     * @return string
+     */
+    public function filter($text)
+    {
+        $text = preg_replace(
+            ComLocationsDomainEntityLocation::PATTERN_LOCATION,
+            '<a class="location" href="'.JRoute::_('option=com_locations&view=location&alias=$1').'">$0</a>',
+            $text);
+
+        return $text;
     }
 }
