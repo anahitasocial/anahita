@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2014 rmdStudio Inc.
+ * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -25,12 +25,14 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $config->append(array(
             'request' => array(
                 'scope' => '',
-                'sort' => 'trending',
+                'sort' => 'top',
                 'days' => KRequest::get('get.days', 'int', 1),
             ),
         ));
 
         parent::_initialize($config);
+
+        JFactory::getLanguage()->load('com_tags');
     }
 
     /**
@@ -42,17 +44,20 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionRead($context);
 
-        if ($this->scope) {
-            $entity->tagables->scope($this->scope);
-        }
+        if (!empty($entity->tagables)) {
 
-        if ($this->sort == 'top') {
-            $entity->tagables->sortTop();
-        } else {
-            $entity->tagables->sortRecent();
-        }
+            if ($this->scope) {
+                $entity->tagables->scope($this->scope);
+            }
 
-        $entity->tagables->limit($this->limit, $this->start);
+            if ($this->sort == 'top') {
+                $entity->tagables->sortTop();
+            } else {
+                $entity->tagables->sortRecent();
+            }
+
+            $entity->tagables->limit($this->limit, $this->start);
+        }
 
         //print str_replace('#_', 'jos', $entity->tagables->getQuery());
 
@@ -85,5 +90,26 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         }
 
         return $this->getState()->setList($query->toEntityset())->getList();
+    }
+
+    /**
+     * Set the default Actor View.
+     *
+     * @param KCommandContext $context Context parameter
+     *
+     * @return ComActorsControllerDefault
+     */
+    public function setView($view)
+    {
+        parent::setView($view);
+
+        if (!$this->_view instanceof ComBaseViewAbstract) {
+            $name = KInflector::isPlural($this->view) ? 'tags' : 'tag';
+            $defaults[] = 'ComTagsView'.ucfirst($view).ucfirst($this->_view->name);
+            $defaults[] = 'ComTagsView'.ucfirst($name).ucfirst($this->_view->name);
+            register_default(array('identifier' => $this->_view, 'default' => $defaults));
+        }
+
+        return $this;
     }
 }

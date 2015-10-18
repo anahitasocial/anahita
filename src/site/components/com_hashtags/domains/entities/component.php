@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -45,7 +45,7 @@ class ComHashtagsDomainEntityComponent extends ComComponentsDomainEntityComponen
         if ($mode == 'dashboard') {
             $gadgets->insert('hashtags-trending', array(
                 'title' => JText::_('COM-HASHTAGS-GADGET-TRENDING'),
-                'url' => 'option=com_hashtags&view=hashtags&layout=list&limit=10',
+                'url' => 'option=com_hashtags&view=hashtags&layout=list&sort=trending&limit=10',
             ));
         }
     }

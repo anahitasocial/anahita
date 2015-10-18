@@ -12,15 +12,6 @@
  */
 class ComHashtagsControllerHashtag extends ComTagsControllerDefault
 {
-    protected function _actionRead(KCommandContext $context)
-    {
-        $entity = parent::_actionRead($context);
-
-        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-HASHTAGS-HEADER-HASHTAG'), $entity->name));
-
-        return $entity;
-    }
-
     /**
      * Applies the browse sorting.
      *
