@@ -11,6 +11,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMediumControllerPermissionDefault extends ComMediumControllerPermissionAbstract
-{
-}
+class ComMediumControllerPermissionDefault extends ComMediumControllerPermissionAbstract{}
