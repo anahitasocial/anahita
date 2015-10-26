@@ -42,46 +42,21 @@
      *
      * @param a word
      */
-    public function addGeolocation($name)
-    {
-        $name = trim($name);
-
-        //@todo implement is_location filter method
-        if (!is_string($name)) {
-            return;
-        }
-
-        if ($location = $this->getService('repos://site/locations.location')->findOrAddNew(array('name' => $name))) {
-            $this->locations->insert($location);
-
-            return $this;
-        }
-
-        return;
-    }
+     public function addLocation(ComLocationsDomainEntityLocation $location)
+     {
+        //@todo implement addLocation
+     }
 
     /**
-     * Removes a location from a geolocatable mixer entity
+     * Deletes a location from a geolocatable mixer entity
      *
      * @param a word
      */
-    public function removeGeolocation($name)
-    {
-        $name = trim($name);
+     public function deleteLocation(ComLocationsDomainEntityLocation $location)
+     {
+        //@todo implement deleteLocation
+     }
 
-        //@todo implement is_location filter method
-        if (!is_string($name)) {
-            return;
-        }
-
-        if ($location = $this->getService('repos://site/locations.location')->find(array('name' => $name))) {
-            $this->locations->extract($location);
-
-            return $this;
-        }
-
-        return;
-    }
 
     /**
      * Change the query to include name
@@ -94,7 +69,6 @@
     public function getLocations()
     {
         $this->get('locations')->getQuery()->select('name');
-
         return $this->get('locations');
     }
  }

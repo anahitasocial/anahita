@@ -39,7 +39,7 @@ abstract class ComTagsControllerPermissionAbstract extends LibBaseControllerPerm
     */
     public function canEdit()
     {
-        return $this->_viewer->admin();
+        return $this->getItem()->authorize('edit');
     }
 
     /**

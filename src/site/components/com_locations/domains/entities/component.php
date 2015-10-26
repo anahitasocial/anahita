@@ -24,7 +24,7 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
     {
         $config->append(array(
             'behaviors' => array(
-                'assignable' => array(),
+                'assignable'
             ),
         ));
 
@@ -42,5 +42,31 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
             'label' => JText::_('COM-LOCATIONS-PROFILE-EDIT'),
             'controller' => 'com://site/locations.controller.setting',
         ));
+    }
+
+    /**
+     * On Dashboard event.
+     *
+     * @param KEvent $event The event parameter
+     */
+    public function onDashboardDisplay(KEvent $event)
+    {
+        $actor = $event->actor;
+        $gadgets = $event->gadgets;
+        $composers = $event->composers;
+        $this->_setGadgets($actor, $gadgets, 'dashboard');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _setGadgets($actor, $gadgets, $mode)
+    {
+        if ($mode == 'dashboard') {
+            $gadgets->insert('locations-trending', array(
+                'title' => JText::_('COM-LOCATIONS-GADGET-TRENDING'),
+                'url' => 'option=com_locations&view=locations&layout=list&sort=trending&limit=10',
+            ));
+        }
     }
 }

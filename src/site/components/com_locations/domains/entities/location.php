@@ -52,6 +52,10 @@ final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
                     'format' => 'string',
                     'read' => 'public'
                 ),
+                'state_province' => array(
+                    'format' => 'string',
+                    'read' => 'public'
+                ),
                 'country' => array(
                     'format' => 'string',
                     'read' => 'public'

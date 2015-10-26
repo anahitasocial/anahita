@@ -12,114 +12,64 @@
  */
 class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbstract
 {
+
     /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function ______construct(KConfig $config)
     {
         parent::__construct($config);
 
-        $this->registerCallback('after.add', array($this, 'addLocationsFromBody'));
-        $this->registerCallback('after.edit', array($this, 'updateLocationsFromBody'));
+        $this->registerCallback(array(
+          'before.addLocation',
+          'before.deleteLocation'
+        ), array($this, 'fetchLocation'));
     }
 
     /**
-     *  Extracts location names from the entity body and add them to the item
-     *
-     *  @return void
-     */
-    public function addLocationsFromBody()
+    *  Method to add a location to a geolocatable node.
+    *  If the location node doesn't exist, create it.
+    *
+    *  @param KCommandContext $context
+    *  @return instance of ComBaseDomainEntityNode entity with gelocatable behavior
+    */
+    protected function _actionAddLocation(KCommandContext $context)
     {
-        $entity = $this->getItem();
-        $names = $this->extractLocationNames($entity->body);
-
-        foreach ($names as $name) {
-            $entity->addLocation(trim($name));
-        }
-
-        return;
+        return $this->getItem()->addLocation($this->location);
     }
 
     /**
-     * Extracts locations from the entity body and updates the entity.
-     *
-     * @param KCommandContext $context
-     *
-     * @return void
-     */
-    public function updateLocationsFromBody(KCommandContext $context)
+    *  Method to remove a location from a geolocatable node
+    *
+    *
+    *  @param KCommandContext $context
+    *  @return instance of ComBaseDomainEntityNode entity with gelocatable behavior
+    */
+    protected function _actionDeleteLocation(KCommandContext $context)
     {
-        $entity = $this->getItem();
-        $names = $this->extractLocationNames($entity->body);
-
-        if (is_array($names)) {
-            $names_search = array_map('strtolower', $names);
-
-            foreach ($entity->locations as $location) {
-                if (!in_array($location->name, $names_search)) {
-                    $entity->removeLocation($location->name);
-                }
-            }
-        }
-
-        foreach ($names as $name) {
-            $entity->addLocation(trim($name));
-        }
+        return $this->getItem()->deleteLocation($this->location);
     }
 
     /**
-     * extracts a list of location names from a given text.
-     *
-     * @return array
-     */
-    public function extractLocationNames($text)
+    *   Method to fetch or create a location enitty
+    *
+    *   @param KCommandContext $context
+    *   @return ComLocationsDomainEntityLocation entity
+    */
+    public function fetchLocation(KCommandContext $context)
     {
-        $matches = array();
+        $data = $context->data;
 
-        if (preg_match_all(ComLocationsDomainEntityLocation::PATTERN_LOCATION, $text, $matches)) {
-            return array_unique($matches[1]);
-        } else {
-            return array();
-        }
-    }
+        $data->append(array(
+            'id' => $data->location_id
+        ));
 
-    /**
-     * Applies the location filtering to the browse query.
-     *
-     * @param KCommandContext $context
-     */
-    protected function _beforeControllerBrowse(KCommandContext $context)
-    {
-        if (!$context->query) {
-            $context->query = $this->_mixer->getRepository()->getQuery();
-        }
+        $this->location = $this->getService('repos://locations/location')
+                               ->getRepository()
+                               ->findOrAddNew($data);
 
-        if ($this->location) {
-            $query = $context->query;
-            $locations = array();
-            $entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
-            $this->location = (is_string($this->location)) ? array($this->location) : $this->location;
-
-            $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
-
-            $query
-            ->join('left', 'edges AS location_edge', '('.$entityType.'.id = location_edge.node_b_id AND location_edge.type=\''.$edgeType.'\')')
-            ->join('left', 'nodes AS location', 'location_edge.node_a_id = location.id');
-
-            foreach ($this->location as $location) {
-                $location = $this->getService('com://site/locations.filter.location')->sanitize($location);
-                if ($location != '') {
-                    $locations[] = $location;
-                }
-            }
-
-            $query
-            ->where('location.name', 'IN', $locations)
-            ->group($entityType.'.id');
-
-            //print str_replace('#_', 'jos', $query);
-        }
+        return $this->location;
     }
 }

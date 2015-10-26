@@ -23,7 +23,8 @@ class ComAnahitaSchemaMigration15 extends ComMigratorMigrationVersion
       //Create new fields for com_locations
       dbexec("ALTER TABLE jos_nodes ADD `address` VARCHAR(255) DEFAULT NULL AFTER `geo_longitude`");
       dbexec("ALTER TABLE jos_nodes ADD `city` VARCHAR(50) DEFAULT NULL AFTER `address`");
-      dbexec("ALTER TABLE jos_nodes ADD `country` VARCHAR(30) DEFAULT NULL AFTER `city`");
+      dbexec("ALTER TABLE jos_nodes ADD `state_province` VARCHAR(50) DEFAULT NULL AFTER `city`");
+      dbexec("ALTER TABLE jos_nodes ADD `country` VARCHAR(30) DEFAULT NULL AFTER `state_province`");
       dbexec("ALTER TABLE jos_nodes ADD `postalcode` VARCHAR(15) DEFAULT NULL AFTER `country`");
 
       //add extension records
