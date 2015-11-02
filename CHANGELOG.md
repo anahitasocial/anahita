@@ -1,9 +1,13 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.1.9 Birth Release
+=============================
+* com_pages is now com_articles therefore we call it the Articles app.
+
 Anahita 4.1.8 Birth Release
 =============================
 * fixed issue with the db table coalitions problem. Now all the tables are set to utf-8 and Engine=InnoDB
-* fixed issues in the Invites app tokens and UIs 
+* fixed issues in the Invites app tokens and UIs
 
 Anahita 4.1.7 Birth Release
 =============================
