@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<install type="component" version="##BUILD_PLATFORM_VERSION##" social_app="1" method="upgrade">
+    <name>Articles</name>  
+    <author>Scott Crawford</author>
+    <copyright>Copyright 2015 BeerLovers</copyright>
+    <license>n/a</license>
+    <authoremail>scott@beerlovers.com</authoremail>
+    <authorurl>BeerLovers.com</authorurl>
+    <description>Social app for creating and maintaining Articles on a collaborative or individual basis.</description>
+    <menu>true</menu>
+</install>
