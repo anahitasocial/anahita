@@ -18,7 +18,7 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
      *
      * @param KConfig $config An optional KConfig object with configuration options.
      */
-    public function ______construct(KConfig $config)
+    public function __construct(KConfig $config)
     {
         parent::__construct($config);
 
@@ -61,15 +61,18 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
     public function fetchLocation(KCommandContext $context)
     {
         $data = $context->data;
-
-        $data->append(array(
-            'id' => $data->location_id
-        ));
-
-        $this->location = $this->getService('repos://locations/location')
-                               ->getRepository()
-                               ->findOrAddNew($data);
-
+        $this->location = $this->getService('repos://site/locations.location')
+                               ->findOrAddNew(array(
+                                  'id' => $data->location_id,
+                                  'geoLatitude' => $data->geoLatitude,
+                                  'geoLongitude' => $data->geoLongitude,
+                                  'name' => $data->name,
+                                  'address' => $data->address,
+                                  'city' => $data->city,
+                                  'state_province' => $data->state_province,
+                                  'country' => $data->country,
+                                  'postalcode' => $data->postalcode
+                               ));
         return $this->location;
     }
 }

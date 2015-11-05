@@ -44,7 +44,8 @@
      */
      public function addLocation(ComLocationsDomainEntityLocation $location)
      {
-        //@todo implement addLocation
+        $this->locations->insert($location);
+        return $this;
      }
 
     /**
@@ -54,7 +55,8 @@
      */
      public function deleteLocation(ComLocationsDomainEntityLocation $location)
      {
-        //@todo implement deleteLocation
+        $this->locations->extract($location);
+        return $this;
      }
 
 
