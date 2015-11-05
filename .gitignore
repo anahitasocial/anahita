@@ -5,7 +5,6 @@ composer.lock
 vendor/autoload.php
 vendor/composer/*
 vendor/dg/*
-vendor/easybook/*
 vendor/symfony/*
 www/*
 node_modules/*
