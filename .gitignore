@@ -1,7 +1,6 @@
 .*
 !.gitignore
 src/site/templates/shiraz/params.ini
-anahita
 composer.lock
 vendor/autoload.php
 vendor/composer/*
