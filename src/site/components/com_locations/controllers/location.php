@@ -14,33 +14,51 @@
 class ComLocationsControllerLocation extends ComTagsControllerDefault
 {
     /**
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+
+        if ($this->getView()->getLayout() == 'selector') {
+            $this->registerCallback('before.browse', array($this, 'fetchLocatable'));
+        }
+    }
+
+    /**
      * Browse Service
+     * @todo move all queries to the query class
      *
      * @param KCommandContext $context
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        $entities = parent::_actionBrowse($context);
-        $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
-        $entities->where('edge.type', '=', $edgeType)->group('location.id');
-
-        return $entities;
-    }
-
-    /**
-     * Read Service
-     *
-     * @param KCommandContext $context
-     */
-    protected function _actionRead(KCommandContext $context)
-    {
-        $entity = parent::_actionRead($context);
-
         if ($this->getView()->getLayout() == 'selector') {
-            $this->registerCallback('after.read', array($this, 'fetchLocatable'));
+
+            $query = $this->getService('repos:locations.location')
+                          ->getQuery()
+                          ->limit($this->limit, $this->offset)
+                          ->order('name'); //@todo should be closeby locations
+
+            $excludeIds = AnHelperArray::collect($this->locatable->locations, 'id');
+
+            if (count($excludeIds)) {
+              $query->where('location.id', 'NOT IN', $exclude_ids);
+            }
+
+            return $this->getState()->setList($query->toEntityset())->getList();
+
+        } else {
+            $entities = parent::_actionBrowse($context);
+            $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
+            $entities->where('edge.type', '=', $edgeType)->group('location.id');
         }
 
-        return $entity;
+        //print str_replace('#_', 'jos', $entities);
+
+        return $entities;
     }
 
     /**

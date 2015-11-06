@@ -39,19 +39,19 @@
               url : $(this.locationsContainer).data('url'),
               success : function (response) {
 
-									var entity = $(response).find('.an-entity');
+									var entities = $(response).filter('.an-entity');
 
-									if (entity.length) {
+console.log(response);
 
-											self.formContainer.hide();
+									if (entities.length) {
 
-											self.locationsContainer.show();
+											//self.formContainer.hide();
+											//self.locationsContainer.show();
 
 									} else {
 
-											self.formContainer.show();
-
-											self.locationsContainer.hide();
+											//self.formContainer.show();
+											//self.locationsContainer.hide();
 									}
               }
           });

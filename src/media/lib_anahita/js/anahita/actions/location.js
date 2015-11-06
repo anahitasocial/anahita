@@ -10,32 +10,32 @@
 
     'use strict';
 
-    $.fn.anahitaLocation = function ( action ) {
+    $.fn.anahitaLocation = function () {
 
         var elem = $( this );
+        var action = elem.data('action');
 
-        if( action == 'delete' ) {
+        $.ajax({
+            method : 'post',
+            'url' : elem.attr('href'),
+            'data' : {
+                action : action,
+                location_id : elem.data('location')
+            },
+            success : function () {
 
-            $.ajax({
-                method : 'post',
-                'url' : elem.attr('href'),
-                'data' : {
-                    action : elem.data('action'),
-                    location_id : elem.data('location')
-                },
-                success : function () {
+                if ( action == 'deleteLocation' ) {
                     elem.closest('.an-entity').fadeOut();
                 }
-            });
-
-        }
+            }
+        });
 
         return;
     };
 
-    $( 'body' ).on( 'click', '[data-action="deleteLocation"]', function( event ) {
+    $( 'body' ).on( 'click', '[data-action="addLocation"],[data-action="deleteLocation"]', function( event ) {
   		  event.preventDefault();
-  		  $(this).anahitaLocation('delete');
+  		  $(this).anahitaLocation();
   	});
 
 }(jQuery, window, document));

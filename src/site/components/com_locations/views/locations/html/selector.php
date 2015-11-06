@@ -39,20 +39,20 @@
                 </div>
 
                 <div class="control-group">
+                    <label class="label-group"  for="location-province">
+                    <?= @text('COM-LOCATIONS-LOCATION-COUNTRY') ?>
+                    </label>
+                    <div class="controls">
+                    <?= @helper('selector.country', array('name' => 'country', 'id' => 'select-country')) ?>
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label class="label-group"  for="location-state-province">
                     <?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
                     </label>
                     <div class="controls">
                     <input required class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" type="text" />
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="label-group"  for="location-province">
-                    <?= @text('COM-LOCATIONS-LOCATION-COUNTRY') ?>
-                    </label>
-                    <div class="controls">
-                    <?= @helper('selector.country', array('name' => 'country', 'id' => 'country-selector')) ?>
                     </div>
                 </div>
 
@@ -72,10 +72,10 @@
 
         <?php // @todo add por[longitude] and por[latitude] to the url ?>
 
-        <div id="locations-container" data-url="<?= @route('option=com_locations&view=locations&layout=list') ?>">
-            <?= @helper('ui.filterbox', @route('layout=list')) ?>
-            <div class="an-entities masonry">
-                <?= @view('locations')->layout('_selector_list')->locations($locations) ?>
+        <div id="locations-container">
+            <?= @helper('ui.filterbox', @route('layout=selector_list')) ?>
+            <div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route('layout=selector_list') ?>">
+                <?= @template('selector_list') ?>
             </div>
         </div>
     </div>

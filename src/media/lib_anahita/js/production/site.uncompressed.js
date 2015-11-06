@@ -21012,32 +21012,32 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
     'use strict';
 
-    $.fn.anahitaLocation = function ( action ) {
+    $.fn.anahitaLocation = function () {
 
         var elem = $( this );
+        var action = elem.data('action');
 
-        if( action == 'delete' ) {
+        $.ajax({
+            method : 'post',
+            'url' : elem.attr('href'),
+            'data' : {
+                action : action,
+                location_id : elem.data('location')
+            },
+            success : function () {
 
-            $.ajax({
-                method : 'post',
-                'url' : elem.attr('href'),
-                'data' : {
-                    action : elem.data('action'),
-                    location_id : elem.data('location')
-                },
-                success : function () {
+                if ( action == 'deleteLocation' ) {
                     elem.closest('.an-entity').fadeOut();
                 }
-            });
-
-        }
+            }
+        });
 
         return;
     };
 
-    $( 'body' ).on( 'click', '[data-action="deleteLocation"]', function( event ) {
+    $( 'body' ).on( 'click', '[data-action="addLocation"],[data-action="deleteLocation"]', function( event ) {
   		  event.preventDefault();
-  		  $(this).anahitaLocation('delete');
+  		  $(this).anahitaLocation();
   	});
 
 }(jQuery, window, document));
@@ -21084,19 +21084,19 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
               url : $(this.locationsContainer).data('url'),
               success : function (response) {
 
-									var entity = $(response).find('.an-entity');
+									var entities = $(response).filter('.an-entity');
 
-									if (entity.length) {
+console.log(response);
 
-											self.formContainer.hide();
+									if (entities.length) {
 
-											self.locationsContainer.show();
+											//self.formContainer.hide();
+											//self.locationsContainer.show();
 
 									} else {
 
-											self.formContainer.show();
-
-											self.locationsContainer.hide();
+											//self.formContainer.show();
+											//self.locationsContainer.hide();
 									}
               }
           });

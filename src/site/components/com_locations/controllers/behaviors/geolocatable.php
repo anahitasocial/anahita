@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 /**
  * Geolocatable Behavior.
@@ -12,6 +12,10 @@
  */
 class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbstract
 {
+    /*
+    *   temporary location object for adding and removing to a gelocatable
+    */
+    protected $_location = null;
 
     /**
      * Constructor.
@@ -61,18 +65,24 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
     public function fetchLocation(KCommandContext $context)
     {
         $data = $context->data;
-        $this->location = $this->getService('repos://site/locations.location')
-                               ->findOrAddNew(array(
-                                  'id' => $data->location_id,
-                                  'geoLatitude' => $data->geoLatitude,
-                                  'geoLongitude' => $data->geoLongitude,
-                                  'name' => $data->name,
-                                  'address' => $data->address,
-                                  'city' => $data->city,
-                                  'state_province' => $data->state_province,
-                                  'country' => $data->country,
-                                  'postalcode' => $data->postalcode
-                               ));
+
+        if($data->location_id){
+            $attr = array('id' => $data->location_id);
+        } else {
+            $attr = array(
+               'geoLatitude' => $data->geoLatitude,
+               'geoLongitude' => $data->geoLongitude,
+               'name' => $data->name,
+               'address' => $data->address,
+               'city' => $data->city,
+               'state_province' => $data->state_province,
+               'country' => $data->country,
+               'postalcode' => $data->postalcode
+            );
+        }
+
+        $this->location = $this->getService('repos:locations.location')->findOrAddNew($attr);
+
         return $this->location;
     }
 }
