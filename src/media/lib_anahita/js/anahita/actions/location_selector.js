@@ -41,12 +41,16 @@
 
 									var entity = $(response).find('.an-entity');
 
-									if(entity.length){
+									if (entity.length) {
+
 											self.formContainer.hide();
+
 											self.locationsContainer.show();
 
 									} else {
+
 											self.formContainer.show();
+
 											self.locationsContainer.hide();
 									}
               }
@@ -61,17 +65,20 @@
       event.preventDefault();
 
       var modal = $('#an-modal');
+
 			modal.find('.modal-footer').hide();
 
   		var header = modal.find('.modal-header').find('h3');
+
   		var body = modal.find('.modal-body');
 
       $.get($(this).attr('href'), function (response){
 
     			header.html($(response).filter('.modal-header').html());
+
     			body.html($(response).filter('.modal-body').html());
 
-    			modal.modal('show');
+					modal.modal('show');
 
           var selector = $("[data-behavior='LocationSelector']").locationSelector();
   		});

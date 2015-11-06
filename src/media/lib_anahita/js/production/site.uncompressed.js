@@ -20999,6 +20999,49 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     $('body').stateSelector();
     
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/actions/location.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+
+    'use strict';
+
+    $.fn.anahitaLocation = function ( action ) {
+
+        var elem = $( this );
+
+        if( action == 'delete' ) {
+
+            $.ajax({
+                method : 'post',
+                'url' : elem.attr('href'),
+                'data' : {
+                    action : elem.data('action'),
+                    location_id : elem.data('location')
+                },
+                success : function () {
+                    elem.closest('.an-entity').fadeOut();
+                }
+            });
+
+        }
+
+        return;
+    };
+
+    $( 'body' ).on( 'click', '[data-action="deleteLocation"]', function( event ) {
+  		  event.preventDefault();
+  		  $(this).anahitaLocation('delete');
+  	});
+
+}(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/actions/location_selector.js
 /**
 * Author: Rastin Mehr
@@ -21043,12 +21086,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 									var entity = $(response).find('.an-entity');
 
-									if(entity.length){
+									if (entity.length) {
+
 											self.formContainer.hide();
+
 											self.locationsContainer.show();
 
 									} else {
+
 											self.formContainer.show();
+
 											self.locationsContainer.hide();
 									}
               }
@@ -21063,17 +21110,20 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       event.preventDefault();
 
       var modal = $('#an-modal');
+
 			modal.find('.modal-footer').hide();
 
   		var header = modal.find('.modal-header').find('h3');
+
   		var body = modal.find('.modal-body');
 
       $.get($(this).attr('href'), function (response){
 
     			header.html($(response).filter('.modal-header').html());
+
     			body.html($(response).filter('.modal-body').html());
 
-    			modal.modal('show');
+					modal.modal('show');
 
           var selector = $("[data-behavior='LocationSelector']").locationSelector();
   		});

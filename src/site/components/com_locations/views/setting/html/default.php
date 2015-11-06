@@ -9,19 +9,31 @@
 </div>
 
 <div class="an-entities">
-    <?php for($i=0; $i<3; $i++) : ?>
+    <?php $locations = $actor->locations ?>
+    <?php foreach($locations as $location) : ?>
     <div class="an-entity">
-        <h4 class="entity-title">Location Title</h4>
+        <h4 class="entity-title"><?= @escape($location->name) ?></h4>
+
+        <?php if($location->description): ?>
         <div class="entity-description">
-        Location Address goes here
+        <?= @escape($location->description) ?>
         </div>
+        <?php endif; ?>
+
+        <div class="entity-meta">
+        <?php //@todo create a helper for outputting an address ?>
+        <?= @escape($location->address) ?>, <?= $location->city ?>, <?= $location->state_province ?>, <?= $location->country ?>
+        </div>
+
         <div class="entity-actions">
             <ul class="an-actions">
                 <li>
-                    <a href="#">Remove</a>
+                    <a href="<?= @route($actor->getURL()) ?>" data-action="deleteLocation" data-location="<?= $location->id ?>">
+                      <?= @text('LIB-AN-ACTION-DELETE') ?>
+                    </a>
                 </li>
             </ul>
         </div>
     </div>
-   <?php endfor; ?>
+  <?php endforeach; ?>
 </div>
