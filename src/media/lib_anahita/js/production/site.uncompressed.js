@@ -20010,18 +20010,18 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-	
+
 	'use strict';
-	
+
 	$.fn.anahitaEntity = function ( action ) {
-		
+
 		var entity = $(this).closest('.an-entity');
-		
+
 		//read entity
 		if ( action == 'read' ) {
-			
+
 			var url = $(this).attr('href');
-			
+
 			$.ajax({
 				method : 'get',
 				url : url,
@@ -20032,16 +20032,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					entity.replaceWith($(response));
 				}
 			});
-			
+
 			return this;
 		}
-		
+
 		//edit enable
 		if ( action == 'enable' ) {
-		    
-		    var url = $(this).attr('href'); 
+
+		    var url = $(this).attr('href');
 		    var action = $(this).data('action');
-		    
+
 		    $.ajax({
 		        method : 'post',
 		        url : url,
@@ -20056,12 +20056,12 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                 }
 		    });
 		}
-		
+
 		//edit entity
 		if ( action == 'edit' ) {
-			
+
 			var form = $(this);
-			
+
 			$.ajax({
 				method : 'post',
 				url : form.attr('action') + '?' + 'layout=list',
@@ -20076,16 +20076,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                    form.find(':submit').button('reset');
                 }
 			});
-			
+
 			return this;
 		}
-		
+
 		//add entity
 		if ( action == 'add' ) {
-			
+
 			var form = $(this);
 			var entities = $('.an-entities');
-			
+
 			$.ajax({
 				method : 'post',
 				url : form.attr('action') + '?' + 'layout=list',
@@ -20101,28 +20101,28 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				   form.find(':submit').button('reset');
 				}
 			});
-			
+
 			return this;
 		}
-		
+
 		if ( action == 'delete' ) {
-			
+
 			var entity = $( this );
-			
+
 			var confirmModal = $('#an-modal');
 			var header = confirmModal.find('.modal-header').find('h3');
 			var body = confirmModal.find('.modal-body');
-			var footer = confirmModal.find('.modal-footer'); 
-			
+			var footer = confirmModal.find('.modal-footer');
+
 			header.text(StringLibAnahita.action.delete);
 			body.text(StringLibAnahita.prompt.delete);
-			
+
 			var triggerBtn = $('<button class="btn btn-danger"></button>').text(StringLibAnahita.action.delete);
-			
+
 			footer.append(triggerBtn);
-			
+
 			triggerBtn.on('click', function ( event ) {
-				
+
 				$.ajax({
 					method : 'post',
 					url : entity.attr('href'),
@@ -20137,22 +20137,22 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 							entity.closest('.an-entity').fadeOut();
 						} else {
 							window.location.href = entity.data('redirect');
-						}	
+						}
 					}
 				});
 			});
-			
+
 			confirmModal.modal('show');
-			
+
 			return this;
 		}
-		
+
 		//add comment entity
 		if ( action == 'addcomment' ) {
-			
+
 			var form = $(this);
 			var comments = form.siblings('.an-comments');
-			
+
 			$.ajax({
 				method : 'post',
 				url : form.attr('action'),
@@ -20161,69 +20161,70 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 					form.find(':submit').button('loading');
 				},
 				success : function ( response ) {
-				
+
 					form.trigger('reset');
 					comments.append($(response).fadeIn('slow'));
-				
+
 				},
 				complete : function ( xhr, status ) {
-				    
+
 				    form.find(':submit').button('reset');
 				}
 			});
-			
+
 			return this;
-		}	
+		}
 	};
-	
-	var readSelectors = 
+
+	var readSelectors =
 		'a[data-action="edit"],' +
 		'a[data-action="cancel"],' +
 		'a[data-action="editcomment"],' +
-		'a[data-action="cancelcomment"]';	
-	
+		'a[data-action="cancelcomment"]';
+
 	//Read Entity Actions
 	$('body').on('click', readSelectors, function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('read');
 	});
-	
+
 	$('body').on('click', 'a[data-action="enable"], a[data-action="disable"]', function ( event ) {
 	    event.preventDefault();
-        $(this).anahitaEntity('enable');
+      $(this).anahitaEntity('enable');
 	});
-	
+
 	//Edit Entity Action
 	$('body').on('submit', '.an-entities > form.an-entity', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('edit');
 	});
-	
+
 	//Add Entity Action
 	$('body').on('submit', '#entity-form-wrapper > form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('add');
 	});
-	
+
 	//Delete Entity Action
 	$( 'body' ).on( 'click', 'a[data-action="delete"], a[data-action="deletecomment"]', function( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('delete');
 	});
-	
+
 	//Show/Hide Add Form
 	$('body').on('click', '[data-trigger="ReadForm"], [data-trigger="CancelAdd"]', function ( event ) {
 		event.preventDefault();
 		$('#entity-form-wrapper').slideToggle();
 	});
-	
+
 	//Add Comment Action
 	$('body').on('submit', '.an-comments-wrapper > form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('addcomment');
 	});
-	
+
 }(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/actions/postlink.js
 /**
  * Author: Rastin Mehr
@@ -21012,6 +21013,126 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
     'use strict';
 
+    $.widget("anahita.locations", {
+
+        options : {
+            formContainer : '#location-form-container',
+            locationsContainer : '#locations-container',
+            entities : '.an-entities'
+        },
+
+        _create : function() {
+          this.locationsContainer = $(this.options.locationsContainer);
+          this.formContainer = $(this.options.formContainer);
+          this.formContainer.hide();
+          this._browse();
+        },
+
+        _browse : function() {
+
+            var self = this;
+            var entities = self.locationsContainer.find(this.options.entities);
+
+            $.ajax({
+                'method' : 'GET',
+                url : entities.data('url'),
+                success : function (response) {
+
+                    var entity = $(response).filter('.an-entity');
+
+                    if (entity.length) {
+
+                        self.formContainer.hide();
+                        self.locationsContainer.show();
+                        $(entities).html(entity);
+
+                    } else {
+
+                        self.formContainer.show();
+                        self.locationsContainer.hide();
+                    }
+                }
+            });
+        },
+
+        _add : function() {
+
+        }
+    });
+
+    $('body').on('click', 'a[data-toggle*="LocationSelector"]', function ( event ){
+
+        event.preventDefault();
+
+        var modal = $('#an-modal');
+  			modal.find('.modal-footer').hide();
+
+    		var header = modal.find('.modal-header').find('h3');
+    		var body = modal.find('.modal-body');
+
+        $.get($(this).attr('href'), function (response){
+
+      			header.html($(response).filter('.modal-header').html());
+      			body.html($(response).filter('.modal-body').html());
+  					modal.modal('show');
+
+            $(this).locations();
+    		});
+    });
+
+    $.fn.anahitaLocatable = function ( action ) {
+
+        if( action == 'addLocation' || action == 'deleteLocation' ) {
+
+            var elem = $(this);
+
+            var response = $.ajax({
+                method : 'post',
+                url : elem.attr('href'),
+                data : {
+                    action : elem.data('action'),
+                    location_id : elem.data('location')
+                },
+                success : function (response) {
+
+                    if ( elem.data('action') == 'deleteLocation' ) {
+                        elem.closest('.an-entity').fadeOut();
+                    } else {
+                        window.location.reload();
+                    }
+
+                    return true;
+                },
+                error : function (jqXHR, textStatus, errorThrown) {
+                    console.log(errorThrown);
+                    return false;
+                }
+            });
+
+        }
+
+        return false;
+    };
+
+    // Add Location to the locatable
+    $( 'body' ).on( 'click', '[data-action="addLocation"]', function( event ) {
+  		  event.preventDefault();
+        $(this).anahitaLocatable('addLocation');
+    });
+
+    // Remove Location from the locatable
+    $( 'body' ).on( 'click', '[data-action="deleteLocation"]', function( event ) {
+  		  event.preventDefault();
+        $(this).anahitaLocatable('deleteLocation');
+    });
+
+}(jQuery, window, document));
+
+/*
+;(function ($, window, document) {
+
+    'use strict';
+
     $.widget("anahita.locationSelector", {
 
         options : {
@@ -21024,10 +21145,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
             this.locations = null;
 
-            this.formContainer = this.element.find(this.options.formContainer);
+            this.locationsContainer = $(this.options.locationsContainer);
+            this.formContainer = $(this.options.formContainer);
             this.formContainer.hide();
 
-            this.locationsContainer = this.element.find(this.options.locationsContainer);
+            this.entities = this.locationsContainer.find(this.options.entities);
 
             this._browse();
         },
@@ -21038,21 +21160,23 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
   					$.ajax({
                 'method' : 'GET',
-                url : $(this.locationsContainer).data('url'),
+                url : $(self.entities).data('url'),
                 success : function (response) {
 
   									var entities = $(response).filter('.an-entity');
 
   									if (entities.length) {
 
-  											//self.formContainer.hide();
-  											//self.locationsContainer.show();
+  											self.formContainer.hide();
+  											self.locationsContainer.show();
 
   									} else {
 
-  											//self.formContainer.show();
-  											//self.locationsContainer.hide();
+  											self.formContainer.show();
+  											self.locationsContainer.hide();
   									}
+
+                    $(self.entities).html(entities);
                 }
             });
 
@@ -21082,7 +21206,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         });
   	});
 
-    //show voters in a modal
   	$('body').on('click', 'a[data-toggle*="LocationSelector"]', function ( event ){
 
         event.preventDefault();
@@ -21108,4 +21231,5 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
 
 }(jQuery, window, document));
+*/
 

@@ -76,7 +76,7 @@
             <?php $url = 'layout=selector_list&locatable_id='.$locatable->id; ?>
             <?= @helper('ui.filterbox', @route($url)) ?>
             <div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-                <?= @template('selector_list') ?>
+                
             </div>
         </div>
     </div>
