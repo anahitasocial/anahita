@@ -73,8 +73,9 @@
         <?php // @todo add por[longitude] and por[latitude] to the url ?>
 
         <div id="locations-container">
-            <?= @helper('ui.filterbox', @route('layout=selector_list')) ?>
-            <div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route('layout=selector_list') ?>">
+            <?php $url = 'layout=selector_list&locatable_id='.$locatable->id; ?>
+            <?= @helper('ui.filterbox', @route($url)) ?>
+            <div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
                 <?= @template('selector_list') ?>
             </div>
         </div>

@@ -22,7 +22,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
     {
         parent::__construct($config);
 
-        if ($this->getView()->getLayout() == 'selector') {
+        if (in_array($this->getView()->getLayout(), array('selector', 'selector_list'))) {
             $this->registerCallback('before.browse', array($this, 'fetchLocatable'));
         }
     }
@@ -35,17 +35,21 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        if ($this->getView()->getLayout() == 'selector') {
+        if (in_array($this->getView()->getLayout(), array('selector', 'selector_list'))) {
 
             $query = $this->getService('repos:locations.location')
                           ->getQuery()
                           ->limit($this->limit, $this->offset)
                           ->order('name'); //@todo should be closeby locations
 
+            if ($this->q) {
+                $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
+            }
+
             $excludeIds = AnHelperArray::collect($this->locatable->locations, 'id');
 
             if (count($excludeIds)) {
-              $query->where('location.id', 'NOT IN', $exclude_ids);
+              $query->where('location.id', 'NOT IN', $excludeIds);
             }
 
             return $this->getState()->setList($query->toEntityset())->getList();
