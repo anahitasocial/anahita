@@ -30,6 +30,6 @@ class ComLocationsControllerToolbarDefault extends ComBaseControllerToolbarDefau
      */
     public function addListCommands()
     {
-        return;
+        
     }
 }

@@ -8,31 +8,5 @@
     </a>
 </div>
 
-<div class="an-entities">
-    <?php $locations = $actor->locations ?>
-    <?php foreach($locations as $location) : ?>
-    <div class="an-entity">
-        <h4 class="entity-title"><?= @escape($location->name) ?></h4>
-
-        <?php if($location->description): ?>
-        <div class="entity-description">
-        <?= @escape($location->description) ?>
-        </div>
-        <?php endif; ?>
-
-        <div class="entity-meta">
-            <?= @helper('address', $location) ?>
-        </div>
-
-        <div class="entity-actions">
-            <ul class="an-actions">
-                <li>
-                    <a href="<?= @route($actor->getURL()) ?>" data-action="deleteLocation" data-location="<?= $location->id ?>">
-                      <?= @text('LIB-AN-ACTION-DELETE') ?>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-  <?php endforeach; ?>
-</div>
+<?php $url = 'option=com_locations&view=locations&layout=list&locatable_id='.$actor->id ?>
+<div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>"></div>
