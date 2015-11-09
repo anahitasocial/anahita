@@ -9,8 +9,7 @@
     </div>
 
     <div class="entity-meta">
-    <?php //@todo create a helper for outputting an address ?>
-    <?= @escape($location->address) ?>, <?= $location->city ?>, <?= $location->state_province ?>, <?= $location->country ?>
+        <?= @helper('address', $location) ?>
     </div>
 </div>
 <?php endforeach; ?>
