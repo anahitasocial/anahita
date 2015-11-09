@@ -8,5 +8,6 @@
     </a>
 </div>
 
-<?php $url = 'option=com_locations&view=locations&layout=list&locatable_id='.$actor->id ?>
-<div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>"></div>
+<div class="an-entities setting-locations" data-url="<?= @route('option=com_locations&view=locations&layout=list&locatable_id='.$actor->id) ?>">
+    <?= @view('locations')->layout('list')->locatable($actor)->locations($actor->locations) ?>
+</div>

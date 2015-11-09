@@ -3,7 +3,7 @@
 <?php foreach($locations as $location) : ?>
 <div class="an-entity">
     <div class="entity-title">
-        <a data-action="addLocation" data-location="<?= $location->id ?>" href="<?= @route($locatable->getURL()) ?>">
+        <a href="<?= @route($location->getURL()) ?>" title="<?= $location->name ?>">
             <?= $location->name ?>
         </a>
     </div>
