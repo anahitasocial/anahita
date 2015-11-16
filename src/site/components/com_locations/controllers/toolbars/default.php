@@ -13,23 +13,90 @@
  */
 class ComLocationsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 {
+    /*
+    *  holds the locatable object if exists
+    */
+    protected $_locatable = null;
+
     /**
-     * Called after controller browse.
+    * Initializes the default configuration for the object.
+    *
+    * Called from {@link __construct()} as a first step of object instantiation.
+    *
+    * @param KConfig $config An optional KConfig object with configuration options.
+    */
+    protected function _initialize(KConfig $config)
+    {
+        //@todo not crazy about this approach, but there was no way
+        //that I could obtain the locatable from the controller
+        $locatable_id = KRequest::get('get.locatable_id', 'int', 0);
+
+        if(!$this->_locatable && $locatable_id)
+        {
+            $this->_locatable = KService::get('repos:nodes.node')
+            ->getQuery()
+            ->id($locatable_id)
+            ->fetch();
+        }
+
+        parent::_initialize($config);
+    }
+
+
+    /**
+     * Before Controller _actionRead is executed.
      *
      * @param KEvent $event
      */
-    public function onAfterControllerBrowse(KEvent $event)
+    public function onBeforeControllerRead(KEvent $event)
     {
-        if ($this->getController()->canAdd()) {
-            $this->addCommand('new');
+        if ($this->getController()->getItem()) {
+            $this->addToolbarCommands();
         }
     }
 
     /**
-     * Called before list commands.
-     */
+    * Called before list commands.
+    */
     public function addListCommands()
     {
-        
+        $this->getLocationCommands();
+    }
+
+    /**
+    * Set the toolbar commands.
+    */
+    public function addToolbarCommands()
+    {
+        $this->getLocationCommands();
+    }
+
+    public function getLocationCommands()
+    {
+        $location = $this->getController()->getItem();
+
+        if(!empty($this->_locatable)){
+            $this->addCommand('deleteLocation', array('locatable' => $this->_locatable));
+        } else {
+          if ($location->authorize('edit')) {
+              $this->addCommand('edit');
+          }
+
+          if ($location->authorize('delete')) {
+              $this->addCommand('delete');
+          }
+        }
+    }
+
+    protected function _commandDeleteLocation($command)
+    {
+        $location = $this->getController()->getItem();
+        $locatable = $command->locatable;
+
+        $command->setAttribute('data-action', 'deleteLocation')
+        ->setAttribute('data-location', $location->id)
+        ->href($locatable->getURL());
+
+        $command->label = translate('LIB-AN-ACTION-DELETE');
     }
 }

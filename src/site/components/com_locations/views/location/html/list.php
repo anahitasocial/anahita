@@ -1,3 +1,17 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<?= $item->id ?>
+<div class="an-entity">
+    <div class="entity-title">
+        <a href="<?= @route($location->getURL()) ?>" title="<?= $location->name ?>">
+            <?= $location->name ?>
+        </a>
+    </div>
+
+    <div class="entity-meta">
+        <?= @helper('address', $location) ?>
+    </div>
+
+    <div class="entity-actions">
+  		<?= @helper('ui.commands', @commands('list')) ?>
+  	</div>
+</div>

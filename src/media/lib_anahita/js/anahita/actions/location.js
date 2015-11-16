@@ -79,9 +79,15 @@
 
     $.fn.anahitaLocatable = function ( action ) {
 
-        if( action == 'addLocation' || action == 'deleteLocation' ) {
+        var elem = $(this);
+        var modal = $('#an-modal');
+        var container = $('#locatable-locations');
 
-            var elem = $(this);
+        if ( action == 'refresh' ) {
+            container.load(container.data('url'));
+        }
+
+        if( action == 'addLocation' || action == 'deleteLocation' ) {
 
             var response = $.ajax({
                 method : 'post',
@@ -94,8 +100,9 @@
 
                     if ( elem.data('action') == 'deleteLocation' ) {
                         elem.closest('.an-entity').fadeOut();
-                    } else {
-                        window.location.reload();
+                    } else if ( elem.data('action') == 'addLocation' ) {
+                        container.load(container.data('url'));
+                        modal.modal('hide');
                     }
 
                     return true;
@@ -121,6 +128,10 @@
     $( 'body' ).on( 'click', '[data-action="deleteLocation"]', function( event ) {
   		  event.preventDefault();
         $(this).anahitaLocatable('deleteLocation');
+    });
+
+    $('document').ready(function(event){
+        $(this).anahitaLocatable('refresh');
     });
 
 }(jQuery, window, document));

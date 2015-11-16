@@ -8,6 +8,5 @@
     </a>
 </div>
 
-<div class="an-entities setting-locations" data-url="<?= @route('option=com_locations&view=locations&layout=list&locatable_id='.$actor->id) ?>">
-    <?= @view('locations')->layout('list')->locatable($actor)->locations($actor->locations) ?>
+<div class="an-entities" id="locatable-locations" data-url="<?= @route('option=com_locations&view=locations&layout=list&locatable_id='.$actor->id) ?>">
 </div>

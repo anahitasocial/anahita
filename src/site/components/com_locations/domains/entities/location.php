@@ -68,6 +68,7 @@ final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
             'behaviors' => to_hash(array(
                 'modifiable',
                 'describable',
+                'authorizer',
             )),
             'relationships' => array(
                 'tagables' => array(

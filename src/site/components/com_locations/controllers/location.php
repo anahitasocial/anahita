@@ -23,7 +23,10 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
         parent::__construct($config);
 
         if ($this->locatable_id) {
-            $this->registerCallback('before.browse', array($this, 'fetchLocatable'));
+            $this->registerCallback(
+                array('before.browse', 'before.read'),
+                array($this, 'fetchLocatable')
+            );
         }
     }
 
@@ -35,7 +38,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        if ($this->locatable_id) {
+        if ($this->locatable) {
 
             if (in_array($this->getView()->getLayout(), array('selector', 'selector_list'))) {
                 $query = $this->getService('repos:locations.location')->getQuery();
@@ -81,7 +84,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                            ->getQuery()
                            ->disableChain()
                            ->id($this->locatable_id)
-                           ->fetch();
+                           ->fetch();                   
 
         if(!$this->locatable) {
             throw new LibBaseControllerExceptionNotFound('Locatable object does not exist');
