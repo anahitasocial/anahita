@@ -15,14 +15,27 @@
         options : {
             formContainer : '#location-form-container',
             locationsContainer : '#locations-container',
-            entities : '.an-entities'
+            entities : '.an-entities',
+            entity : '.an-entity'
         },
 
         _create : function() {
-          this.locationsContainer = $(this.options.locationsContainer);
-          this.formContainer = $(this.options.formContainer);
-          this.formContainer.hide();
-          this._browse();
+
+            var self = this;
+            this.locationsContainer = $(this.options.locationsContainer);
+            this.formContainer = $(this.options.formContainer);
+            this.formContainer.hide();
+            this._browse();
+
+            //listen to the filter box. If no locations are available, show the form
+            this._on( $(document) , {
+                'afterFilterbox' : function( event ) {
+                    var entity = self.locationsContainer.find(this.options.entity);
+                    if(entity.length == 0){
+                        self._showForm();
+                    }
+                }
+            });
         },
 
         _browse : function() {
@@ -34,28 +47,25 @@
                 'method' : 'GET',
                 url : entities.data('url'),
                 success : function (response) {
-
-                    var entity = $(response).filter('.an-entity');
-
+                    var entity = $(response).filter(self.options.entity);
                     if (entity.length) {
-
-                        self.formContainer.hide();
-                        self.locationsContainer.show();
+                        self._hideForm();
                         $(entities).html(entity);
-
                     } else {
-
-                        self.formContainer.show();
-                        self.locationsContainer.hide();
+                        self._showForm();
                     }
                 }
             });
         },
 
         _showForm : function() {
-
             this.formContainer.show();
             this.locationsContainer.hide();
+        },
+
+        _hideForm : function() {
+            this.formContainer.hide();
+            this.locationsContainer.show();
         }
     });
 

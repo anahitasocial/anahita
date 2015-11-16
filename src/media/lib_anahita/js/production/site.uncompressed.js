@@ -19048,11 +19048,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-	
+
 	'use strict';
-	
+
 	$.fn.AnFilterbox = function() {
-	    
+
 	    var form = $(this);
 
         $.ajax({
@@ -19060,43 +19060,46 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             url : form.attr('action'),
             data : form.serialize(),
             beforeSend : function (){
-                form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+								$(document).trigger('beforeFilterbox');
+								form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
             },
             success : function ( response ) {
-                
+
                 if( $(response).filter('.an-entity').length ) {
-                    
+
                   form.siblings('.an-entities').html($(response).filter('.an-entity'));
-                  form.siblings('.pagination').html($(response).filter('.pagination'));  
-                    
+                  form.siblings('.pagination').html($(response).filter('.pagination'));
+
                 } else {
-                  
+
                   form.siblings('.an-entities').html($(response).find('.an-entity'));
                   form.siblings('.pagination').html($(response).find('.pagination'));
-                    
+
                 }
             },
             complete : function () {
                 form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
                 var newUrl = form.attr('action') + '&' + form.serialize();
                 $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
+								$(document).trigger('afterFilterbox');
             }
         });
-	    
+
 	};
-	
+
 	$('body').on('submit', '#an-filterbox', function( event ){
 		event.preventDefault();
 		$(this).AnFilterbox();
 	});
-	
+
 	$('body').on('change', '#an-filterbox select, #an-filterbox input[type=checkbox]', function( event ){
 	    event.preventDefault();
         var form = $(this).closest('form');
         form.AnFilterbox();
 	});
-	
-}(jQuery, window, document));	
+
+}(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/checkbox.js
 /**
  * Author: Rastin Mehr
@@ -21018,14 +21021,25 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         options : {
             formContainer : '#location-form-container',
             locationsContainer : '#locations-container',
-            entities : '.an-entities'
+            entities : '.an-entities',
+            entity : '.an-entity'
         },
 
         _create : function() {
+          var self = this;
           this.locationsContainer = $(this.options.locationsContainer);
           this.formContainer = $(this.options.formContainer);
           this.formContainer.hide();
           this._browse();
+
+          this._on( $(document) , {
+              'afterFilterbox' : function( event ) {
+                  var entity = self.locationsContainer.find(this.options.entity);
+                  if(entity.length == 0){
+                      self._showForm();
+                  }
+              }
+          });
         },
 
         _browse : function() {
@@ -21037,28 +21051,25 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                 'method' : 'GET',
                 url : entities.data('url'),
                 success : function (response) {
-
-                    var entity = $(response).filter('.an-entity');
-
+                    var entity = $(response).filter(self.options.entity);
                     if (entity.length) {
-
-                        self.formContainer.hide();
-                        self.locationsContainer.show();
+                        self._hideForm();
                         $(entities).html(entity);
-
                     } else {
-
-                        self.formContainer.show();
-                        self.locationsContainer.hide();
+                        self._showForm();
                     }
                 }
             });
         },
 
         _showForm : function() {
-
             this.formContainer.show();
             this.locationsContainer.hide();
+        },
+
+        _hideForm : function() {
+            this.formContainer.hide();
+            this.locationsContainer.show();
         }
     });
 
