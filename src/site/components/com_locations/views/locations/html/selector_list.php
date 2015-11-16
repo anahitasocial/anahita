@@ -13,3 +13,11 @@
     </div>
 </div>
 <?php endforeach; ?>
+
+<?php if(count($locations) == 0) : ?>
+<div class="an-entity">
+    <a class="btn" href="#" data-action="location-form-show">
+      <?= @text('COM-LOCATIONS-ACTION-ADD') ?>
+    </a>
+</div>
+<?php endif; ?>
