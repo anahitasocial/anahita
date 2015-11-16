@@ -18,10 +18,8 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
      *
      * @param KEvent $event
      */
-    public function onBeforeControllerGet(KEvent $event)
+    public function onBeforeControllerRead(KEvent $event)
     {
-        parent::onBeforeControllerGet($event);
-
         if ($this->getController()->getItem()) {
             $this->addToolbarCommands();
         }
@@ -72,8 +70,8 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Called before list commands.
      */
-    public function addListCommands()
-    {
+     public function addListCommands()
+     {
         $entity = $this->getController()->getItem();
 
         if ($entity->authorize('vote')) {
