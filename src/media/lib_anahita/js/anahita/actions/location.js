@@ -13,8 +13,10 @@
     $.widget("anahita.locations", {
 
         options : {
+            modal : '#an-modal',
             formContainer : '#location-form-container',
             locationsContainer : '#locations-container',
+            locatableLocations : '#locatable-locations',
             entities : '.an-entities',
             entity : '.an-entity'
         },
@@ -22,7 +24,9 @@
         _create : function() {
 
             var self = this;
+            this.modal = $(this.options.modal);
             this.locationsContainer = $(this.options.locationsContainer);
+            this.locatableLocations = $(this.options.locatableLocations);
             this.formContainer = $(this.options.formContainer);
             this.formContainer.hide();
             this._browse();
@@ -58,9 +62,39 @@
             });
         },
 
+        _add : function(){
+            var self = this;
+            var form = self.formContainer.find('form');
+
+            $.ajax({
+        				method : 'post',
+        				url : form.attr('action'),
+        				data : form.serialize(),
+        				beforeSend : function (){
+        					form.find(':submit').button('loading');
+        				},
+        				success : function ( response ) {
+                  $('document').anahitaLocatable('refresh');
+                  self.modal.modal('hide');
+        				},
+        				complete : function ( xhr, status ) {
+        				    form.find(':submit').button('reset');
+        				}
+      			});
+        },
+
         _showForm : function() {
+
+            var self = this;
             this.formContainer.show();
             this.locationsContainer.hide();
+
+            this._on(this.formContainer.find('form'), {
+                submit : function(event){
+                    event.preventDefault();
+                    self._add();
+                }
+            });
         },
 
         _hideForm : function() {

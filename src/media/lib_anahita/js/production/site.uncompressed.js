@@ -21019,27 +21019,33 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     $.widget("anahita.locations", {
 
         options : {
+            modal : '#an-modal',
             formContainer : '#location-form-container',
             locationsContainer : '#locations-container',
+            locatableLocations : '#locatable-locations',
             entities : '.an-entities',
             entity : '.an-entity'
         },
 
         _create : function() {
-          var self = this;
-          this.locationsContainer = $(this.options.locationsContainer);
-          this.formContainer = $(this.options.formContainer);
-          this.formContainer.hide();
-          this._browse();
 
-          this._on( $(document) , {
-              'afterFilterbox' : function( event ) {
-                  var entity = self.locationsContainer.find(this.options.entity);
-                  if(entity.length == 0){
-                      self._showForm();
-                  }
-              }
-          });
+            var self = this;
+            this.modal = $(this.options.modal);
+            this.locationsContainer = $(this.options.locationsContainer);
+            this.locatableLocations = $(this.options.locatableLocations);
+            this.formContainer = $(this.options.formContainer);
+            this.formContainer.hide();
+            this._browse();
+
+            //listen to the filter box. If no locations are available, show the form
+            this._on( $(document) , {
+                'afterFilterbox' : function( event ) {
+                    var entity = self.locationsContainer.find(this.options.entity);
+                    if(entity.length == 0){
+                        self._showForm();
+                    }
+                }
+            });
         },
 
         _browse : function() {
@@ -21062,9 +21068,40 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             });
         },
 
+        _add : function(){
+            var self = this;
+            var form = self.formContainer.find('form');
+
+            $.ajax({
+        				method : 'post',
+        				url : form.attr('action'),
+        				data : form.serialize(),
+        				beforeSend : function (){
+        					form.find(':submit').button('loading');
+        				},
+        				success : function ( response ) {
+                  //self.locatableLocations.load(self.locatableLocations.data('url'));
+                  $('document').anahitaLocatable('refresh');
+                  self.modal.modal('hide');
+        				},
+        				complete : function ( xhr, status ) {
+        				    form.find(':submit').button('reset');
+        				}
+      			});
+        },
+
         _showForm : function() {
+
+            var self = this;
             this.formContainer.show();
             this.locationsContainer.hide();
+
+            this._on(this.formContainer.find('form'), {
+                submit : function(event){
+                    event.preventDefault();
+                    self._add();
+                }
+            });
         },
 
         _hideForm : function() {
