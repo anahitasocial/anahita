@@ -50,7 +50,7 @@
                 if ($medium->getRepository()->hasBehavior('portraitable')) {
                     $caption = htmlspecialchars($medium->title, ENT_QUOTES, 'UTF-8');
 
-                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/articles\/'.$medium->id.'[-\w\-]*/';
+                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/photos\/'.$medium->id.'[-\w\-]*/';
 
                     $text = preg_replace($pattern,
                     '<a data-trigger="MediaViewer" href="'.$medium->getPortraitURL('original').'" title="'.$caption.'" >'
@@ -58,7 +58,7 @@
                     .'</a> ',
                     $text);
                 } else {
-                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/pages\/'.$medium->id.'[-\w\-]*/';
+                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/articles\/'.$medium->id.'[-\w\-]*/';
 
                     $template = '<div class="alert alert-block alert-success">';
 
