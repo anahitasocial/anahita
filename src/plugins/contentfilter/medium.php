@@ -37,7 +37,7 @@
      */
     public function filter($text)
     {
-        preg_match_all('/(pages|topics|photos|todos|notes)\/([0-9]+)[-]?/', $text, $matches);
+        preg_match_all('/(articles|topics|photos|todos|notes)\/([0-9]+)[-]?/', $text, $matches);
 
         $ids = $matches[2];
 
@@ -50,7 +50,7 @@
                 if ($medium->getRepository()->hasBehavior('portraitable')) {
                     $caption = htmlspecialchars($medium->title, ENT_QUOTES, 'UTF-8');
 
-                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/photos\/'.$medium->id.'[-\w\-]*/';
+                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/articles\/'.$medium->id.'[-\w\-]*/';
 
                     $text = preg_replace($pattern,
                     '<a data-trigger="MediaViewer" href="'.$medium->getPortraitURL('original').'" title="'.$caption.'" >'
