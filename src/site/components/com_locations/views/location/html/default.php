@@ -2,16 +2,22 @@
 
 <div class="row">
   <div class="span12">
-  <?= @helper('ui.header', array()) ?>
+      <?= @helper('ui.header', array()) ?>
   </div>
 </div>
 
 <div class="an-entity">
     <h2 class="entity-title">
-  		<?= @escape($location->name) ?>
-  	</h2>
+      <?= @escape($location->name) ?>
+    </h2>
 
     <div class="entity-meta">
         <?= @helper('address', $location) ?>
     </div>
+
+    <?php if($location->description) : ?>
+    <div class="entity-description">
+  		<?= @helper('text.truncate', @content($location->description, array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
+  	</div>
+    <?php endif; ?>
 </div>
