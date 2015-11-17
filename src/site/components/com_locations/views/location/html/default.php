@@ -7,9 +7,9 @@
 </div>
 
 <div class="an-entity">
-    <h3 class="entity-title">
+    <h2 class="entity-title">
   		<?= @escape($location->name) ?>
-  	</h3>
+  	</h2>
 
     <div class="entity-meta">
         <?= @helper('address', $location) ?>

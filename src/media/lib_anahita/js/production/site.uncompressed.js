@@ -21022,7 +21022,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             modal : '#an-modal',
             formContainer : '#location-form-container',
             locationsContainer : '#locations-container',
-            locatableLocations : '#locatable-locations',
             entities : '.an-entities',
             entity : '.an-entity'
         },
@@ -21080,7 +21079,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
         					form.find(':submit').button('loading');
         				},
         				success : function ( response ) {
-                  //self.locatableLocations.load(self.locatableLocations.data('url'));
                   $('document').anahitaLocatable('refresh');
                   self.modal.modal('hide');
         				},

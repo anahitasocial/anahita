@@ -1,11 +1,11 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
 <div class="an-entity">
-    <div class="entity-title">
+    <h3 class="entity-title">
         <a href="<?= @route($location->getURL()) ?>" title="<?= $location->name ?>">
             <?= $location->name ?>
         </a>
-    </div>
+  	</h3>
 
     <div class="entity-meta">
         <?= @helper('address', $location) ?>

@@ -16,7 +16,6 @@
             modal : '#an-modal',
             formContainer : '#location-form-container',
             locationsContainer : '#locations-container',
-            locatableLocations : '#locatable-locations',
             entities : '.an-entities',
             entity : '.an-entity'
         },
