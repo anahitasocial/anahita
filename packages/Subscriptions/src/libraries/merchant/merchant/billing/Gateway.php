@@ -9,7 +9,7 @@
 abstract class merchant_billing_Gateway
 {
     protected $money_format = 'dollars'; # or cents
-  protected $default_currency;
+    protected $default_currency;
     protected $supported_countries = array();
     protected $supported_cardtypes = array('visa', 'master', 'american_express', 'switch', 'solo', 'maestro');
     protected $homepage_url;

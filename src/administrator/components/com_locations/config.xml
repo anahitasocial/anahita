@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-    <params></params>
+    <params>
+        <param menu="hide"  name="service" type="radio" default="0" label="Enable Service" description="Enable Facebook Service">
+            <option value="0">NO</option>
+            <option value="1">YES</option>
+        </param>
+    </params>
 </config>

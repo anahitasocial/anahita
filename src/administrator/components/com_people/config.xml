@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <config>
-	<params>			
-		<param name="allowUserRegistration" size="60" type="list" default="1" label="Allow user registration" >
-		      <option value="0">No</option>
-		      <option value="1">Yes</option>    
-        </param>
-	</params>
+		<params>
+				<param name="allowUserRegistration" size="60" type="list" default="1" label="Allow user registration" >
+						<option value="0">No</option>
+						<option value="1">Yes</option>    
+				</param>
+		</params>
 </config>

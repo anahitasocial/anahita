@@ -92,4 +92,41 @@ final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
             $location->timestamp();
         }
     }
+
+    /**
+    *
+    * @return void
+    */
+    protected function _beforeEntityUpdate()
+    {
+        $keys = array_keys(KConfig::unbox($this->getModifiedData()));
+
+        if (count(array_intersect($keys, array('city', 'address','postalcode')))){
+            KService::get('com://site/locations.geocoder')->geocode($this);
+        }
+    }
+
+    /**
+    *
+    * @return void
+    */
+    /*
+    public function updateGeolocations()
+    {
+        $geocoder = KService::get('com://site/locations.geocoder');
+        return $geocoder->geocode($this);
+
+
+        $city = KInflector::humanize(str_replace('-',' ',$this->city));
+        $region = KInflector::humanize(str_replace('-',' ',$this->region));
+        $gecode = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($this->address.','.$city.',British Columbia '.$this->postalcode).'&sensor=true';
+        $data = json_decode(file_get_contents($gecode),true);
+
+        if ($data && isset($data['results']) && count($data['results']) > 0) {
+            $address = $data['results'][0];
+            $this->set('geoLatitude', $address['geometry']['location']['lat']);
+            $this->set('geoLongitude', $address['geometry']['location']['lng']);
+        }
+    }
+    */
 }
