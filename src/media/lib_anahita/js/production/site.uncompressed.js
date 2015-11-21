@@ -21094,12 +21094,18 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             this.formContainer.show();
             this.locationsContainer.hide();
 
-            this._on(this.formContainer.find('form'), {
+            var form = this.formContainer.find('form');
+
+            this._on(form, {
                 submit : function(event){
                     event.preventDefault();
                     self._add();
                 }
             });
+
+            if ($('#an-search-query').val()) {
+                $(form).find('input[name="name"]').val($('#an-search-query').val());
+            }
         },
 
         _hideForm : function() {

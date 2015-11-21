@@ -14,10 +14,15 @@
 final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
 {
 
-  /*
-   * location regex pattern
+  /**
+   * @param location regex pattern
    */
   const PATTERN_LOCATION = '/(?<=\W|^)!([^\d_\s\W][\p{L}\d]{2,})/';
+
+  /**
+  *  @param geocoder object
+  */
+  protected $_geocoder = null;
 
   /**
    * Initializes the default configuration for the object.
@@ -81,6 +86,8 @@ final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
         ));
 
         parent::_initialize($config);
+
+        $this->_geocoder = KService::get('com://site/locations.geocoder')->getInstance($config);
     }
 
     /**
@@ -93,6 +100,11 @@ final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
         }
     }
 
+    protected function _beforeEntityInsert()
+    {
+        $this->_geocoder->geocode($this);
+    }
+
     /**
     *
     * @return void
@@ -101,32 +113,26 @@ final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
     {
         $keys = array_keys(KConfig::unbox($this->getModifiedData()));
 
-        if (count(array_intersect($keys, array('city', 'address','postalcode')))){
-            KService::get('com://site/locations.geocoder')->geocode($this);
+        if (count(array_intersect($keys, array('address','city','state_province','country','postalcode')))){
+            $this->_geocoder->geocode($this);
         }
     }
 
     /**
+    *  returns address as an array
     *
-    * @return void
+    *  @return array
     */
-    /*
-    public function updateGeolocations()
+    public function addressToArray()
     {
-        $geocoder = KService::get('com://site/locations.geocoder');
-        return $geocoder->geocode($this);
-
-
-        $city = KInflector::humanize(str_replace('-',' ',$this->city));
-        $region = KInflector::humanize(str_replace('-',' ',$this->region));
-        $gecode = 'https://maps.googleapis.com/maps/api/geocode/json?address='.urlencode($this->address.','.$city.',British Columbia '.$this->postalcode).'&sensor=true';
-        $data = json_decode(file_get_contents($gecode),true);
-
-        if ($data && isset($data['results']) && count($data['results']) > 0) {
-            $address = $data['results'][0];
-            $this->set('geoLatitude', $address['geometry']['location']['lat']);
-            $this->set('geoLongitude', $address['geometry']['location']['lng']);
-        }
+        return array(
+            'address' => $this->address,
+            'city' => $this->city,
+            'state_province' => $this->state_province,
+            'country' => $this->country,
+            'postalcode' => $this->postalcode,
+            'geoLatitude' => $this->geoLatitude,
+            'geoLongitude' => $this->geoLongitude
+        );
     }
-    */
 }

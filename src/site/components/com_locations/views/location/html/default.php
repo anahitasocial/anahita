@@ -17,7 +17,7 @@
 
     <?php if($location->description) : ?>
     <div class="entity-description">
-  		<?= @helper('text.truncate', @content($location->description, array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
+  		<?= @helper('text.truncate', @content( nl2br($location->description), array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
   	</div>
     <?php endif; ?>
 </div>
