@@ -112,18 +112,4 @@ abstract class ComLocationsGeocoderAdapterAbstract extends KObject implements Co
     {
         return $this->_status;
     }
-
-    /**
-    * obtains longitude and latitude values given an address
-    *
-    * @param string "address, city, state_province, country, zip_postalcode"
-    * @return ARRAY = array (
-    *                    longitude => (float) xxx.xx,
-    *                    latitude => (float) yyy.yy
-    *                 )
-    */
-    public function geocode($address = '')
-    {
-        return;
-    }
 }

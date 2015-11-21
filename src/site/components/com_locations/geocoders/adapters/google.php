@@ -38,8 +38,26 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
     * @param string "address, city, state_province, country, zip_postalcode"
     * @return boolean true on success
     */
-    public function geocode(ComLocationsDomainEntityLocation $address)
+    public function geocode(ComLocationsDomainEntityLocation $location)
     {
-        return;
+        $address = implode(',', $location->addressToArray());
+        $gecode = $this->_url.'address='.urlencode($address);
+
+        if($this->_key){
+            $gecode .= '&key='.$this->_key;
+        }
+
+        $data = json_decode(file_get_contents($gecode),true);
+
+        $this->_status = $data['status'];
+
+        if ($this->_status === 'OK') {
+            $results = $data['results'][0]['geometry']['location'];
+            $location->geoLatitude = $results['lat'];
+            $location->geoLongitude = $results['lng'];
+            return true;
+        } else {
+            return false;
+        }
     }
 }
