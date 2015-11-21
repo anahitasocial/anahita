@@ -13,7 +13,7 @@ INSERT INTO `#__components` (`id`, `name`, `link`, `menuid`, `parent`, `admin_me
 (12, 'Html', 'option=com_html', 0, 0, 'option=com_html', 'Html', 'com_html', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (13, 'Mailer', 'option=com_mailer', 0, 0, 'option=com_mailer', 'Mailer', 'com_mailer', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (14, 'Hashtags', 'option=com_hashtags', 0, 0, '', '', 'com_hashtags', 0, '', 1, '', 1),
-(15, 'Locations', 'option=com_locations', 0, 0, '', '', 'com_locations', 0, '', 1, '', 1);
+(15, 'Locations', 'option=com_locations', 0, 0, 'option=com_locations', 'Locations', 'com_locations', 0, 'js/ThemeOffice/component.png', 1, '', 1);
 
 INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES
 (1, 'Authentication - Joomla', 'joomla', 'authentication', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
