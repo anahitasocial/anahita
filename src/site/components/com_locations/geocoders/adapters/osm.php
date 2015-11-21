@@ -13,5 +13,35 @@
  */
 class ComLocationsGeocoderAdapterOsm extends ComLocationsGeocoderAdapterAbstract
 {
+    /**
+     * Initializes the options for the object.
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param 	object 	An optional KConfig object with configuration options.
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+            'name' => 'osm',
+            'version' => '0.6',
+            'url' => 'https://nominatim.openstreetmap.org/search/',
+            'key' => get_config_value('locations.service_key', null)
+        ));
 
+        parent::_initialize($config);
+    }
+
+    /**
+    * obtains longitude and latitude values given an address
+    *
+    * @param string "address, city, state_province, country, zip_postalcode"
+    * @return boolean true on success
+    */
+    public function geocode(ComLocationsDomainEntityLocation $location)
+    {
+        //visit https://wiki.openstreetmap.org/wiki/Nominatim for implementation
+
+        return false;
+    }
 }

@@ -26,7 +26,7 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
             'name' => 'google',
             'version' => '3',
             'url' => 'https://maps.googleapis.com/maps/api/geocode/json?',
-            'key' => get_config_value('locations.google_key', null)
+            'key' => get_config_value('locations.service_key', null)
         ));
 
         parent::_initialize($config);
