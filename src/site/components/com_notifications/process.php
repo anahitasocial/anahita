@@ -17,7 +17,7 @@ class ComNotificationsRouterApplication extends ComApplicationRouter
      *
      * @see ComApplicationRouter::build()
      */
-    public function build($query, $fqr = false)
+    public function build(&$query = '', $fqr = false)
     {
         return parent::build($query, true);
     }
