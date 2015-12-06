@@ -1,57 +1,16 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
+<?php $service = get_config_value('locations.service', 'google') ?>
+
+<?php if ($service == 'google'): ?>
 <script src="https://maps.googleapis.com/maps/api/js" />
-<script>
-(function ($, window, document) {
+<?php endif; ?>
 
-    $('document').ready(function(){
-
-        var mapContainers = $('.entity-map');
-
-        $.each(mapContainers, function(index, elem){
-
-            $(elem).css('height', $(elem).closest('.an-entity').width() / 2);
-
-            var map = new google.maps.Map(
-                elem,
-                options = {
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                }
-            );
-
-            $(elem).data('map', map);
-
-            var bounds = new google.maps.LatLngBounds();
-            var dataLocations = $(elem).data('locations');
-
-            $.each(dataLocations, function(index, dataLocation){
-
-                var location = new google.maps.LatLng(
-                    dataLocation.latitude,
-                    dataLocation.longitude
-                );
-
-                bounds.extend(location);
-
-                var marker = new google.maps.Marker({
-                    position: location,
-                    title: dataLocation.name
-                }).setMap(map);
-
-            });
-
-            map.setCenter(bounds.getCenter());
-
-            if(dataLocations.length == 1){
-                map.setZoom(18);
-            } else {
-                map.fitBounds(bounds);
-            }
-        });
-    });
-
-}(jQuery, window, document));
-</script>
+<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<script src="com_locations/js/map.<?= $service ?>.js" />
+<?php else: ?>
+<script src="com_locations/js/min/map.<?= $service ?>.min.js" />
+<?php endif; ?>
 
 <div class="row">
   <div class="span12">
@@ -61,17 +20,12 @@
 
 <div class="an-entity">
     <?php
-    $locations = array(
-        array(
-            'longitude' => $location->geoLongitude,
-            'latitude' => $location->geoLatitude,
-            'name' => $location->name
-        )
-    );
-
+    $locations[] = array(
+          'longitude' => $location->geoLongitude,
+          'latitude' => $location->geoLatitude,
+          'name' => $location->name );
     $locations = htmlspecialchars(json_encode($locations), ENT_QUOTES, 'UTF-8');
     ?>
-
     <div class="entity-map" data-zoom="18" data-locations="<?= $locations ?>"></div>
 
     <h2 class="entity-title">
