@@ -1,3 +1,5 @@
+<?php defined('KOOWA') or die('Restricted access') ?>
+
 <?php if (count($composers)) : ?>
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
@@ -6,7 +8,7 @@
 <script src="com_composer/js/min/composer.min.js" />
 <?php endif; ?>
 
-<div id="com-composer-container" data-behavior="Composer">   
+<div id="com-composer-container" data-behavior="Composer">
     <div class="clearfix">
         <div class="btn-group pull-right">
             <?php $array = array_values($composers->getObjects()); ?>
@@ -15,8 +17,8 @@
             	<span class="composer-button-title"><?=$array[0]->title?></span>
             	<span class="caret"></span>
             </button>
-            
-            <ul id="composer-menu" class="dropdown-menu">  
+
+            <ul id="composer-menu" class="dropdown-menu">
             <?php foreach ($composers as $composer) : ?>
                 <li>
                 	<a href="#" title="<?= $composer->title ?>">
@@ -24,10 +26,10 @@
                 	</a>
                 </li>
             <?php endforeach;?>
-            </ul>    
+            </ul>
         </div>
     </div>
-    <div class="tab-content">   
+    <div class="tab-content">
     <?php foreach ($composers as $index => $composer) : ?>
         <div class="tab-content-item" data-url="<?=@route($composer->url) ?>">
             <a class="form-placeholder"><?= $composer->placeholder ?></a>
