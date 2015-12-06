@@ -12,26 +12,41 @@
 
             $(elem).css('height', $(elem).closest('.an-entity').width() / 2);
 
-            var location = new google.maps.LatLng(
-                $(elem).data('latitude'),
-                $(elem).data('longitude')
-            );
-
             var map = new google.maps.Map(
                 elem,
                 options = {
-                  zoom: $(elem).data('zoom'),
-                  center: location,
-                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
                 }
             );
 
             $(elem).data('map', map);
 
-            var marker = new google.maps.Marker({
-                position: location,
-                title: $(elem).data('name')
-            }).setMap(map);
+            var bounds = new google.maps.LatLngBounds();
+            var dataLocations = $(elem).data('locations');
+
+            $.each(dataLocations, function(index, dataLocation){
+
+                var location = new google.maps.LatLng(
+                    dataLocation.latitude,
+                    dataLocation.longitude
+                );
+
+                bounds.extend(location);
+
+                var marker = new google.maps.Marker({
+                    position: location,
+                    title: dataLocation.name
+                }).setMap(map);
+
+            });
+
+            map.setCenter(bounds.getCenter());
+
+            if(dataLocations.length == 1){
+                map.setZoom(18);
+            } else {
+                map.fitBounds(bounds);
+            }
         });
     });
 
@@ -45,14 +60,19 @@
 </div>
 
 <div class="an-entity">
+    <?php
+    $locations = array(
+        array(
+            'longitude' => $location->geoLongitude,
+            'latitude' => $location->geoLatitude,
+            'name' => $location->name
+        )
+    );
 
-    <div
-      class="entity-map"
-      data-latitude="<?= $location->geoLatitude ?>"
-      data-longitude="<?= $location->geoLongitude ?>",
-      data-name="<?= @escape($location->name) ?>"
-      data-zoom="18"
-    ></div>
+    $locations = htmlspecialchars(json_encode($locations), ENT_QUOTES, 'UTF-8');
+    ?>
+
+    <div class="entity-map" data-zoom="18" data-locations="<?= $locations ?>"></div>
 
     <h2 class="entity-title">
       <?= @escape($location->name) ?>
