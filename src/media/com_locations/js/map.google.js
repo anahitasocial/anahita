@@ -10,17 +10,13 @@
 
   'use strict';
 
-  $('document').ready(function(){
+  $.fn.mapRender = function () {
 
-      var mapContainers = $('.entity-map');
-
-      $.each(mapContainers, function(index, elem){
+      this.each(function(index, elem){
 
           $(elem).css('height', $(elem).closest('.an-entity').width() / 2);
 
-          var map = new google.maps.Map(
-              elem,
-              {
+          var map = new google.maps.Map( elem, {
                   mapTypeId: google.maps.MapTypeId.ROADMAP
               }
           );
@@ -43,7 +39,6 @@
                   position: location,
                   title: dataLocation.name
               }).setMap(map);
-
           });
 
           map.setCenter(bounds.getCenter());
@@ -53,7 +48,13 @@
           } else {
               map.fitBounds(bounds);
           }
+
       });
+
+  };
+
+  $('document').ready(function(){
+      $('.entity-map').mapRender();
   });
 
 }(jQuery, window, document));
