@@ -1,46 +1,42 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
 <script src="https://maps.googleapis.com/maps/api/js" />
-
 <script>
 (function ($, window, document) {
 
     $('document').ready(function(){
 
-        var myLatlng = new google.maps.LatLng(
-            <?= $location->geoLatitude ?>,
-            <?= $location->geoLongitude ?>
-        );
+        var mapContainers = $('.entity-map');
 
-        var myOptions = {
-          zoom: 17,
-          center: myLatlng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+        $.each(mapContainers, function(index, elem){
 
-        var map = new google.maps.Map(
-            document.getElementById("map-canvas"),
-            myOptions
-        );
+            $(elem).css('height', $(elem).closest('.an-entity').width() / 2);
 
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            title: "<?= @escape($location->title) ?>"
+            var location = new google.maps.LatLng(
+                $(elem).data('latitude'),
+                $(elem).data('longitude')
+            );
+
+            var map = new google.maps.Map(
+                elem,
+                options = {
+                  zoom: $(elem).data('zoom'),
+                  center: location,
+                  mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+            );
+
+            $(elem).data('map', map);
+
+            var marker = new google.maps.Marker({
+                position: location,
+                title: $(elem).data('name')
+            }).setMap(map);
         });
-
-        marker.setMap(map);
     });
 
 }(jQuery, window, document));
 </script>
-
-<style>
-.map-canvas {
-   height: 350px;
-   border-top: 1px solid #ebebeb;
-   border-bottom: 1px solid #ebebeb;
-}
-</style>
 
 <div class="row">
   <div class="span12">
@@ -49,11 +45,18 @@
 </div>
 
 <div class="an-entity">
+
+    <div
+      class="entity-map"
+      data-latitude="<?= $location->geoLatitude ?>"
+      data-longitude="<?= $location->geoLongitude ?>",
+      data-name="<?= @escape($location->name) ?>"
+      data-zoom="18"
+    ></div>
+
     <h2 class="entity-title">
       <?= @escape($location->name) ?>
     </h2>
-
-    <div id="map-canvas" class="map-canvas"></div>
 
     <div class="entity-meta">
         <?= @helper('address', $location) ?>
