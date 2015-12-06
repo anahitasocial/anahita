@@ -7,8 +7,6 @@
 </div>
 
 <div class="an-entity">
-
-    <?php // @helper('ui.map', $location ) ?>
     <?= @map($location) ?>
 
     <h2 class="entity-title">
