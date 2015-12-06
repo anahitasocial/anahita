@@ -1,17 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<?php $service = get_config_value('locations.service', 'google') ?>
-
-<?php if ($service == 'google'): ?>
-<script src="https://maps.googleapis.com/maps/api/js" />
-<?php endif; ?>
-
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
-<script src="com_locations/js/map.<?= $service ?>.js" />
-<?php else: ?>
-<script src="com_locations/js/min/map.<?= $service ?>.min.js" />
-<?php endif; ?>
-
 <div class="row">
   <div class="span12">
       <?= @helper('ui.header', array()) ?>
@@ -19,14 +7,9 @@
 </div>
 
 <div class="an-entity">
-    <?php
-    $locations[] = array(
-          'longitude' => $location->geoLongitude,
-          'latitude' => $location->geoLatitude,
-          'name' => $location->name );
-    $locations = htmlspecialchars(json_encode($locations), ENT_QUOTES, 'UTF-8');
-    ?>
-    <div class="entity-map" data-zoom="18" data-locations="<?= $locations ?>"></div>
+
+    <?php // @helper('ui.map', $location ) ?>
+    <?= @map($location) ?>
 
     <h2 class="entity-title">
       <?= @escape($location->name) ?>
