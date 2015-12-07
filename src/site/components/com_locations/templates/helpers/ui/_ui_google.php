@@ -8,4 +8,4 @@
 <script src="com_locations/js/min/map.google.min.js" />
 <?php endif; ?>
 
-<div class="entity-map" data-locations="<?= $locations ?>"></div>
+<div class="an-map" data-locations="<?= $locations ?>"></div>

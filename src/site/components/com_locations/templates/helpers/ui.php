@@ -44,7 +44,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function map($locations, $config = array())
     {
-        if(!is_array($locations)){
+        if($locations instanceof ComLocationsDomainEntityLocation){
             $locations = array($locations);
         }
 

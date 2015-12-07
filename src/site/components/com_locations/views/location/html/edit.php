@@ -2,10 +2,10 @@
 
 <div class="row">
     <div class="span8">
-      <div class="an-entity">
+      <div class="well">
           <?= @map($location) ?>
       </div>
-
+      
       <?= @template('form') ?>
     </div>
 </div>

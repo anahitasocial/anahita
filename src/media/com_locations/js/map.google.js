@@ -14,7 +14,7 @@
 
       this.each(function(index, elem){
 
-          $(elem).css('height', $(elem).closest('.an-entity').width() / 2);
+          $(elem).css('height', $(elem).width() / 2);
 
           var map = new google.maps.Map( elem, {
                   mapTypeId: google.maps.MapTypeId.ROADMAP
@@ -54,7 +54,7 @@
   };
 
   $('document').ready(function(){
-      $('.entity-map').mapRender();
+      $('.an-map').mapRender();
   });
 
 }(jQuery, window, document));

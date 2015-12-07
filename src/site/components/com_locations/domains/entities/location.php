@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-final class ComLocationsDomainEntityLocation extends ComBaseDomainEntityNode
+final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
 {
 
   /**

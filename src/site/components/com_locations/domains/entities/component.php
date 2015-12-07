@@ -58,6 +58,19 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
     }
 
     /**
+     * On Play event.
+     *
+     * @param KEvent $event The event parameter
+     */
+    public function onProfileDisplay(KEvent $event)
+    {
+        $actor = $event->actor;
+        $gadgets = $event->gadgets;
+        $composers = $event->composers;
+        $this->_setGadgets($actor, $gadgets, 'profile');
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function _setGadgets($actor, $gadgets, $mode)
@@ -66,6 +79,13 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
             $gadgets->insert('locations-trending', array(
                 'title' => JText::_('COM-LOCATIONS-GADGET-TRENDING'),
                 'url' => 'option=com_locations&view=locations&layout=list_gadget&sort=trending&limit=10',
+            ));
+        }
+
+        if ($mode == 'profile') {
+            $gadgets->insert('locations-profile', array(
+                'title' => JText::_('COM-LOCATIONS-GADGET-PROFILE'),
+                'url' => 'option=com_locations&view=locations&layout=profile_gadget&locatable_id='.$actor->id,
             ));
         }
     }

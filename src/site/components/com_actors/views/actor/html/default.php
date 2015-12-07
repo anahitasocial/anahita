@@ -1,4 +1,6 @@
-<?php defined('KOOWA') or die; ?>
+<?php defined('KOOWA') or die('Restricted access') ?>
+
+<script src="https://maps.googleapis.com/maps/api/js" />
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_actors/js/cover.js" />
@@ -6,7 +8,8 @@
 <script src="com_actors/js/min/cover.min.js" />
 <?php endif; ?>
 
-<?php $socialgraphGadget = $gadgets->extract('socialgraph') ?>   
+<?php $socialgraphGadget = $gadgets->extract('socialgraph') ?>
+<?php $locationsGadget = $gadgets->extract('locations-profile') ?>
 
 <?php if ($item->coverSet()): ?>
 <div class="profile-cover" data-src-large="<?= $item->getCoverURL('large'); ?>" data-src-medium="<?= $item->getCoverURL('medium'); ?>"></div>
@@ -17,8 +20,8 @@
 		<div id="actor-avatar">
 		<?= @avatar($item, 'medium', false) ?>
 		</div>
-		
-		<?php if (count($gadgets) > 1) : ?>	
+
+		<?php if (count($gadgets) > 1) : ?>
 		<ul class="nav nav-pills nav-stacked streams">
 			<li class="nav-header">
             <?=  @text('LIB-AN-STREAMS') ?>
@@ -31,9 +34,9 @@
 		</ul>
 		<?php endif; ?>
 	</div>
-	
+
 	<div class="span6" id="container-main">
-	
+
 		<?php if ($item->isEnableable() && !$item->enabled): ?>
 		<?= @message(@text('COM-ACTORS-PROFILE-DISABLED-PROMPT'), array('type' => 'warning')) ?>
 		<?php endif; ?>
@@ -41,8 +44,8 @@
 		<?= @helper('ui.toolbar', array()) ?>
 
 		<h2 id="actor-name">
-		<?= @name($item, false) ?> 
-		<?php if (is_person($item)): ?> 
+		<?= @name($item, false) ?>
+		<?php if (is_person($item)): ?>
 		<small>@<?= $item->username ?></small>
 		<?php endif; ?>
 		</h2>
@@ -59,14 +62,15 @@
 
 		<div class="tab-content">
             <?php foreach ($gadgets as $index => $gadget) : ?>
-            <div class="tab-pane fade <?= ($index == 'stories') ? 'active in' : ''; ?>" id="<?= $index ?>">	
+            <div class="tab-pane fade <?= ($index == 'stories') ? 'active in' : ''; ?>" id="<?= $index ?>">
             	<?= @helper('ui.gadget', $gadget) ?>
             </div>
             <?php endforeach;?>
         </div>
 	</div>
-	
+
 	<div class="span4 visible-desktop">
-		  <?= @helper('ui.gadget', $socialgraphGadget) ?>	
+		  <?= @helper('ui.gadget', $socialgraphGadget) ?>
+			<?= @helper('ui.gadget', $locationsGadget) ?>
 	</div>
 </div>

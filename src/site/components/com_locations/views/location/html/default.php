@@ -7,20 +7,22 @@
 </div>
 
 <div class="an-entity">
+    <div class="entity-meta">
     <?= @map($location) ?>
+    </div>
 
     <h2 class="entity-title">
-      <?= @escape($location->name) ?>
+    <?= @escape($location->name) ?>
     </h2>
 
     <div class="entity-meta">
-        <?= @helper('address', $location) ?>
+    <?= @helper('address', $location) ?>
     </div>
 
     <?php if($location->description) : ?>
     <div class="entity-description">
-  		<?= @helper('text.truncate', @content( nl2br($location->description), array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
-  	</div>
+    <?= @helper('text.truncate', @content( nl2br($location->description), array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
+    </div>
     <?php endif; ?>
 </div>
 
