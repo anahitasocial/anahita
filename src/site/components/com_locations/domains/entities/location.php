@@ -114,7 +114,15 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
         $keys = array_keys(KConfig::unbox($this->getModifiedData()));
 
         if (count(array_intersect($keys, array('address','city','state_province','country','postalcode')))){
-            $this->_geocoder->geocode($this);
+            $address = $this->addressToArray();
+            unset($address['geoLatitude']);
+            unset($address['geoLongitude']);
+            $address = implode(',', $address);
+
+            if($location = $this->_geocoder->geocode($address)) {
+                $this->geoLatitude = $location['latitude'];
+                $this->geoLongitude = $location['longitude'];
+            }
         }
     }
 

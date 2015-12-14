@@ -36,9 +36,9 @@ class ComLocationsGeocoderAdapterOsm extends ComLocationsGeocoderAdapterAbstract
     * obtains longitude and latitude values given an address
     *
     * @param string "address, city, state_province, country, zip_postalcode"
-    * @return boolean true on success
+    * @return array(long, lat) or else false
     */
-    public function geocode(ComLocationsDomainEntityLocation $location)
+    public function geocode($address)
     {
         //visit https://wiki.openstreetmap.org/wiki/Nominatim for implementation
 

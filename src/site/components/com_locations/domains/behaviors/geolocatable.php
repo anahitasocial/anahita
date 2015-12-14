@@ -37,28 +37,71 @@
         parent::_initialize($config);
     }
 
-    /**
-     * Adds a location to a geolocatable mixer entity
+     /**
+     * Set locations to a locatable node
      *
-     * @param a word
+     * @param entity set of location entities
      */
-     public function addLocation(ComLocationsDomainEntityLocation $location)
+     public function editLocations($locations)
      {
-        $this->locations->insert($location);
-        return $this;
+         $new_ids = (array) KConfig::unbox($locations->id);
+
+         foreach ($this->locations as $location) {
+             if (!in_array($location->id, $new_ids)) {
+                 if ($edge = $this->locations->find($location)) {
+                     $edge->delete();
+                 }
+             }
+         }
+
+         $newItems = AnHelperArray::getIterator($locations);
+
+         foreach ($newItems as $item) {
+             if (! $this->locations->find($item)) {
+                 $this->locations->insert( $item );
+             }
+         }
+
+         return $this;
      }
 
-    /**
-     * Deletes a location from a geolocatable mixer entity
+     /**
+     * add locations to a locatable node
      *
-     * @param a word
+     * @param entity set of location entities
      */
-     public function deleteLocation(ComLocationsDomainEntityLocation $location)
+     public function addLocation($locations)
      {
-        $this->locations->extract($location);
-        return $this;
+         $newItems = AnHelperArray::getIterator($locations);
+
+         foreach ($newItems as $item) {
+             if (! $this->locations->find($item)) {
+                 $this->locations->insert( $item );
+             }
+         }
+
+         return $this;
      }
 
+     /**
+     * Set locations to a locatable node
+     *
+     * @param entity set of location entities
+     */
+     public function deleteLocation($locations)
+     {
+         $delete_ids = (array) KConfig::unbox($locations->id);
+
+         foreach ($this->locations as $location) {
+             if (in_array($location->id, $delete_ids)) {
+                 if ($edge = $this->locations->find($location)) {
+                     $edge->delete();
+                 }
+             }
+         }
+
+         return $this;
+     }
 
     /**
      * Change the query to include name
@@ -72,5 +115,49 @@
     {
         $this->get('locations')->getQuery()->select('name');
         return $this->get('locations');
+    }
+
+    /**
+    * Filter the nodes nearby a particular longitude and latitude
+    */
+    protected function _beforeRepositoryFetch(KCommandContext $context)
+    {
+        $query = $context->query;
+
+        if ($query->search_nearby) {
+
+            $location = $query->near;
+            $lat = $location['latitude'];
+            $lng = $location['longitude'];
+
+            $radius = 10;
+
+            // Constants related to the surface of the Earth
+            $earths_radius = 6371;
+            $surface_distance_coeffient = 111.320;
+
+            // Spherical Law of Cosines
+            $distance_formula = "$earths_radius * ACOS( SIN(RADIANS(latitude)) * SIN(RADIANS($lat)) + COS(RADIANS(longitude - $lng)) * COS(RADIANS(latitude)) * COS(RADIANS($lat)) )";
+
+            // Create a bounding box to reduce the scope of our search
+            $lng_b1 = ($lng - $radius) / abs(cos(deg2rad($lat)) * $surface_distance_coeffient);
+            $lng_b2 = ($lng + $radius) / abs(cos(deg2rad($lat)) * $surface_distance_coeffient);
+            $lat_b1 = ($lat - $radius) / $surface_distance_coeffient;
+            $lat_b2 = ($lat + $radius) / $surface_distance_coeffient;
+
+            $lng_b1 = $lng_b1 * 1000;
+            $lng_b2 = $lng_b2 * 1000;
+
+            $lat_b1 = $lat_b1 * 1000;
+            $lat_b2 = $lat_b2 * 1000;
+
+            $query->where("(@col(locations.geo_latitude) BETWEEN $lat_b2 AND $lat_b1) AND (@col(locations.geo_longitude) BETWEEN $lng_b2 AND $lng_b1)");
+
+            $query->select('GROUP_CONCAT(@col(locations.id)) AS location_ids');
+
+            $query->group('@col(id)');
+
+            //print $query;
+        }
     }
  }

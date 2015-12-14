@@ -28,7 +28,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             'node.alias', 'node.body', 'node.created_on', 'node.modified_on', 'node.modified_by', 'node.person_usertype',
             'node.blocker_ids', 'node.blocked_ids', 'node.access', 'node.follower_count', 'node.leader_count',
             'node.parent_id', 'node.parent_type',
-            'node.filename',
+            'node.filename'
         ));
     }
 
@@ -42,7 +42,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'repository' => 'repos://site/search.node',
+            'repository' => 'repos://site/search.node'
         ));
 
         parent::_initialize($config);

@@ -84,7 +84,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                            ->getQuery()
                            ->disableChain()
                            ->id($this->locatable_id)
-                           ->fetch();                   
+                           ->fetch();
 
         if(!$this->locatable) {
             throw new LibBaseControllerExceptionNotFound('Locatable object does not exist');

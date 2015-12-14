@@ -36,11 +36,10 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
     * obtains longitude and latitude values given an address
     *
     * @param string "address, city, state_province, country, zip_postalcode"
-    * @return boolean true on success
+    * @return array(long, lat) or else false
     */
-    public function geocode(ComLocationsDomainEntityLocation $location)
+    public function geocode($address)
     {
-        $address = implode(',', $location->addressToArray());
         $gecode = $this->_url.'address='.urlencode($address);
 
         if($this->_key){
@@ -53,9 +52,11 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
 
         if ($this->_status === 'OK') {
             $results = $data['results'][0]['geometry']['location'];
-            $location->geoLatitude = $results['lat'];
-            $location->geoLongitude = $results['lng'];
-            return true;
+            $location = array(
+                'longitude' => $results['lng'],
+                'latitude' => $results['lat']
+            );
+            return $location;
         } else {
             return false;
         }

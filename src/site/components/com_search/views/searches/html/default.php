@@ -16,26 +16,29 @@
     <?= @template('scopes') ?>
     <?php endif;?>
     </div>
-    
-	<div class="span8">	
-	
+
+	<div class="span8">
+
 		<?= @helper('ui.header', array()) ?>
-	
-		<form action="<?= @route('view=searches') ?>">
-			<select data-trigger="SortOption" id="SortOptions" name="sort">
-				<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
-					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
-				</option>
-				<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
-					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
-				</option>
-			</select>
-			
-			<label class="checkbox">
-				<input data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
-				<?= @text('COM-SEARCH-OPTION-COMMENTS') ?>
-		    </label>
-		</form>
+
+    <fieldset>
+        <label name="nearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
+        <input type="text" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
+
+        <select data-trigger="SortOption" id="SortOptions" name="sort">
+    				<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
+    					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
+    				</option>
+    				<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
+    					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
+    				</option>
+  			</select>
+
+  			<label class="checkbox">
+    				<input data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
+    				<?= @text('COM-SEARCH-OPTION-COMMENTS') ?>
+  		  </label>
+   </fieldset>
 
 		<?php
         $url = array('layout' => 'list');
@@ -54,4 +57,3 @@
 		</div>
 	</div>
 </div>
-

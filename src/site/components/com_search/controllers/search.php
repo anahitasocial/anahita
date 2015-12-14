@@ -20,6 +20,13 @@
 class ComSearchControllerSearch extends ComBaseControllerResource
 {
     /**
+    * used to geocode an address
+    *
+    * @param ComLocationsGeocoderAdapterAbstract object
+    */
+    protected $_geocoder = null;
+
+    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -35,9 +42,14 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'limit' => 20,
                 'sort' => 'relevant',
                 'direction' => 'ASC',
+                'term' => '',
+                'search_nearby' => '',
+                'search_comments' => false,
                 'scope' => 'all',
             ),
         ));
+
+        $this->_geocoder = KService::get('com://site/locations.geocoder')->getInstance($config);
 
         parent::_initialize($config);
     }
@@ -58,14 +70,12 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $this->getService()->set('com://site/search.owner', $this->actor);
         }
 
-        $this->_state->append(array(
-            'search_comments' => false,
-        ));
-
-        $this->_state->insert('term')
-            ->insert('scope')
-            ->insert('search_comments')
-            ->insert('search_leaders');
+        $this->_state
+             ->insert('term')
+             ->insert('scope')
+             ->insert('search_comments')
+             ->insert('search_nearby')
+             ->insert('search_leaders');
 
         JFactory::getLanguage()->load('com_actors');
 
@@ -76,10 +86,22 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         $this->current_scope = $this->scopes->find($this->scope);
 
         $query = $this->getService('com://site/search.domain.query.node')
-                    ->ownerContext($this->actor)
-                    ->searchTerm($this->term)
-                    ->searchComments($this->search_comments)
-                    ->limit($this->limit, $this->start);
+                      ->searchTerm($this->term)
+                      ->limit($this->limit, $this->start);
+
+        if ($this->actor) {
+           $query->ownerContext($this->actor);
+        }
+
+        if ($this->search_comments) {
+            $query->searchComments($this->search_comments);
+        }
+
+        if ($this->search_nearby) {
+            if ($lnglat = $this->_geocoder->geocode($this->search_nearby)) {
+                $query->searchNearby($lnglat);
+            }
+        }
 
         if ($this->current_scope) {
             $query->scope($this->current_scope);

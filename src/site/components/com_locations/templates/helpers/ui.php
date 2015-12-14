@@ -62,6 +62,6 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
         $config['locations'] = htmlspecialchars(json_encode($data), ENT_QUOTES, 'UTF-8');
         $config['service'] = get_config_value('locations.service', 'google');
 
-        return $this->_render($config['service'], $config);
+        return $this->_render('map_'.$config['service'], $config);
     }
 }
