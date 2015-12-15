@@ -124,40 +124,27 @@
     {
         $query = $context->query;
 
-        if ($query->search_nearby) {
+        if ($query->search_nearby && false) {
 
-            $location = $query->near;
+            $location = $query->search_nearby;
             $lat = $location['latitude'];
             $lng = $location['longitude'];
 
-            $radius = 10;
+            $range = 10 * 1000;
 
-            // Constants related to the surface of the Earth
-            $earths_radius = 6371;
-            $surface_distance_coeffient = 111.320;
+            $lng_b1 = $lng - ($range / 111302.62);
+            $lng_b2 = $lng + ($range / 111302.62);
 
-            // Spherical Law of Cosines
-            $distance_formula = "$earths_radius * ACOS( SIN(RADIANS(latitude)) * SIN(RADIANS($lat)) + COS(RADIANS(longitude - $lng)) * COS(RADIANS(latitude)) * COS(RADIANS($lat)) )";
+            $lat_b1 = $lat - ($range / 110574.61);
+            $lat_b2 = $lat + ($range / 110574.61);
 
-            // Create a bounding box to reduce the scope of our search
-            $lng_b1 = ($lng - $radius) / abs(cos(deg2rad($lat)) * $surface_distance_coeffient);
-            $lng_b2 = ($lng + $radius) / abs(cos(deg2rad($lat)) * $surface_distance_coeffient);
-            $lat_b1 = ($lat - $radius) / $surface_distance_coeffient;
-            $lat_b2 = ($lat + $radius) / $surface_distance_coeffient;
-
-            $lng_b1 = $lng_b1 * 1000;
-            $lng_b2 = $lng_b2 * 1000;
-
-            $lat_b1 = $lat_b1 * 1000;
-            $lat_b2 = $lat_b2 * 1000;
-
-            $query->where("(@col(locations.geo_latitude) BETWEEN $lat_b2 AND $lat_b1) AND (@col(locations.geo_longitude) BETWEEN $lng_b2 AND $lng_b1)");
+            $query->where("(@col(locations.geo_latitude) BETWEEN $lat_b1 AND $lat_b2) AND (@col(locations.geo_longitude) BETWEEN $lng_b1 AND $lng_b2)");
 
             $query->select('GROUP_CONCAT(@col(locations.id)) AS location_ids');
 
             $query->group('@col(id)');
-
-            //print $query;
         }
+
+        print str_replace('#_', 'jos', $query);
     }
  }
