@@ -82,7 +82,7 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
                   ->limit(0, 0)
                   ->group(array('node.type', 'node.parent_type'));
 
-            print $query;
+            //print $query;
 
             $rows = $query->fetchRows();
 

@@ -44,7 +44,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'direction' => 'ASC',
                 'term' => '',
                 'search_nearby' => '',
-                'search_range' => 10,
+                'search_range' => 5,
                 'search_comments' => false,
                 'scope' => 'all',
             ),
@@ -105,6 +105,10 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             }
         }
 
+        if ($this->search_range) {
+            $query->searchRange($this->search_range);
+        }
+
         if ($this->current_scope) {
             $query->scope($this->current_scope);
         }
@@ -139,6 +143,12 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $term = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
             $this->_request->term = $term;
             $this->term = $term;
+        }
+
+        if (isset($this->_request->search_range)) {
+            $range = (int) $this->_request->search_range;
+            $this->_request->search_range = $range;
+            $this->search_range = $range;
         }
 
         return $this;
