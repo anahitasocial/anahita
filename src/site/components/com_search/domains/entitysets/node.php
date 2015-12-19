@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Request edge represents a follow request between two actors. 
+ * Request edge represents a follow request between two actors.
  *
  * @category   Anahita
  *
@@ -15,14 +15,14 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 {
     /**
      * Tracks the scopes count.
-     * 
+     *
      * @var array
      */
     protected $_scopes_count;
 
     /**
      * Scopes.
-     * 
+     *
      * @var array
      */
     protected $_scopes;
@@ -45,7 +45,7 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 
     /**
      * Return an array of scopes with a count per each scope.
-     * 
+     *
      * @return array
      */
     public function getScopes()
@@ -67,9 +67,9 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 
     /**
      * Return the scope count for a type.
-     * 
-     * @param string $scope The scope to 
-     * 
+     *
+     * @param string $scope The scope to
+     *
      * @return array
      */
     public function getScopeCount($scope)

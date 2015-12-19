@@ -72,17 +72,13 @@ class ComComponentsDomainEntityScope extends KObject
     {
         parent::__construct($config);
 
-        $this->identifier = $config->identifier;
-
-        $this->node_type = $config->node_type;
-
-        $this->commentable = $config->commentable;
-
-        $this->type = $config->type;
-
-        $this->ownable = $config->ownable;
-
-        $this->hashtagable = $config->hashtagable;
+        $this->identifier   = $config->identifier;
+        $this->node_type    = $config->node_type;
+        $this->commentable  = $config->commentable;
+        $this->type         = $config->type;
+        $this->ownable      = $config->ownable;
+        $this->hashtagable  = $config->hashtagable;
+        $this->geolocatable = $config->geolocatable;
 
         JFactory::getLanguage()->load('com_'.$this->identifier->package);
     }
@@ -103,6 +99,7 @@ class ComComponentsDomainEntityScope extends KObject
                 'commentable' => $config->repository->isCommentable(),
                 'ownable' => $config->repository->isOwnable(),
                 'hashtagable' => $config->repository->isHashtagable(),
+                'geolocatable' => $config->repository->isGeolocatable()
             ));
         }
 

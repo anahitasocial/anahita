@@ -44,6 +44,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'direction' => 'ASC',
                 'term' => '',
                 'search_nearby' => '',
+                'search_range' => 10,
                 'search_comments' => false,
                 'scope' => 'all',
             ),
@@ -75,6 +76,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
              ->insert('scope')
              ->insert('search_comments')
              ->insert('search_nearby')
+             ->insert('search_range')
              ->insert('search_leaders');
 
         JFactory::getLanguage()->load('com_actors');
@@ -107,7 +109,10 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->scope($this->current_scope);
         }
 
-        if ($this->sort == 'recent') {
+        //@todo move this to the query class if possible
+        if ($this->search_nearby) {
+           $query->searchRange($this->search_range)->order('distance', 'ASC');
+        } elseif ($this->sort == 'recent') {
             $query->order('node.created_on', 'DESC');
         } else {
             $query->orderByRelevance();
