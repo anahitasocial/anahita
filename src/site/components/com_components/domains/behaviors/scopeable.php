@@ -1,8 +1,8 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
+/**
+ * Scopeable behavior.
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -11,29 +11,18 @@
  *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * Scopeable behavior.
- *
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
 class ComComponentsDomainBehaviorScopeable extends LibBaseDomainBehaviorEnableable
 {
     /**
      * Search Scope.
-     * 
+     *
      * @var array
      */
     protected $_scope_identifier = array();
 
     /**
      * Scope t.
-     * 
+     *
      * @var string
      */
     protected $_scope_type;
@@ -80,7 +69,7 @@ class ComComponentsDomainBehaviorScopeable extends LibBaseDomainBehaviorEnableab
 
     /**
      * Return the nodes scopes.
-     * 
+     *
      * @return array
      */
     public function getScopes()

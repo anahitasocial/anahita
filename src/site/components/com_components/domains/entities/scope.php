@@ -13,46 +13,53 @@
 class ComComponentsDomainEntityScope extends KObject
 {
     /**
-     * The entity type.
+     * The entity type
      *
      * @var string
      */
     public $node_type;
 
     /**
-     * Scope type. Can be posts, actors or others.
+     * Scope type. Can be posts, actors or others
      *
      * @var string
      */
     public $type;
 
     /**
-     * The entity identifier.
+     * The entity identifier
      *
      * @var KIdentifier
      */
     public $identifier;
 
     /**
-     * A flag whether to scope is commetnable.
+     * A flag whether to scope is commetnable
      *
      * @var bool
      */
     public $commentable;
 
     /**
-     * A flag whether to scope is ownable.
+     * A flag whether to scope is ownable
      *
      * @var bool
      */
     public $ownable;
 
     /**
-     * A flag whether to scope is hashtagable.
+     * A flag whether to scope is hashtagable
      *
      * @var bool
      */
     public $hashtagable;
+
+    /**
+     * A flag whether to scope is geolocatable
+     *
+     * @var bool
+     */
+    public $geolocatable;
 
     /**
      * Returns how many result count there are per scope.

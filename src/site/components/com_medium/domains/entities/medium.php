@@ -45,6 +45,7 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
                 'describable',
                  'com://site/hashtags.domain.behavior.hashtagable',
                  'com://site/people.domain.behavior.mentionable',
+                 'com://site/locations.domain.behavior.geolocatable'
             ),
         ));
 

@@ -49,7 +49,12 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
                     'type' => 'post', ),
                 'hashtagable' => array(
                     'class' => 'ComMediumDomainEntityMedium',
-                    'type' => 'post', ),
+                    'type' => 'post',
+                ),
+                'geolocatable' => array(
+                    'class' => 'ComMediumDomainEntityMedium',
+                    'type' => 'post',
+                )
             ),
         ));
 

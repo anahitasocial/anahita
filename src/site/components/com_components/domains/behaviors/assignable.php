@@ -70,13 +70,9 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
         parent::__construct($config);
 
         $this->_assignment_option = $config->assignment_option;
-
         $this->_actor_identifiers = $config->actor_identifiers;
-
         $this->_profile_features = $config->profile_features;
-
         $this->_profile_name = $config->profile_name;
-
         $this->_profile_description = $config->profile_description;
     }
 

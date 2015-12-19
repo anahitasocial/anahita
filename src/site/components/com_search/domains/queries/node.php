@@ -84,10 +84,10 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             }
         }
 
-        $scopes = $this->getService('com://site/components.domain.entityset.scope');
-
         if ($this->scope instanceof ComComponentsDomainEntityScope) {
             $scopes = array($this->scope);
+        } else {
+            $scopes = $this->getService('com://site/components.domain.entityset.scope');
         }
 
         $comments = array();
@@ -146,6 +146,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     {
         return KService::get('com://site/search.domain.entityset.node', array(
                   'query' => clone $this,
-                  'repository' => $this->getRepository(), ));
+                  'repository' => $this->getRepository()
+                ));
     }
 }
