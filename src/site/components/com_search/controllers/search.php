@@ -115,7 +115,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         //@todo move this to the query class if possible
         if ($this->search_nearby) {
-           $query->searchRange($this->search_range)->order('distance', 'ASC');
+           $query->searchRange($this->search_range);
         } elseif ($this->sort == 'recent') {
             $query->order('node.created_on', 'DESC');
         } else {
@@ -123,6 +123,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         }
 
         $entities = $query->toEntitySet();
+        
         $this->_state->setList($entities);
 
         parent::_actionGet($context);

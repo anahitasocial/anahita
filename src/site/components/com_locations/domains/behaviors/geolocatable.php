@@ -14,7 +14,7 @@
  class ComLocationsDomainBehaviorGeolocatable extends AnDomainBehaviorAbstract
  {
     /**
-    *  Earth's radius in k
+    *  Earth's radius in meters
     */
     const EARTH_RADIUS = 6371000;
 
@@ -122,20 +122,18 @@
         return $this->get('locations');
     }
 
-    /**
-    * Filter the nodes nearby a particular longitude and latitude
-    */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeQuerySelect(KCommandContext $context)
     {
         $query = $context->query;
 
         if ($query->search_nearby) {
             $this->_filterDistance($context);
         }
-
-        //print str_replace('#_', 'jos', $query);
     }
 
+    /**
+    * Filter the nodes nearby a particular longitude and latitude
+    */
     protected function _filterDistance(KCommandContext $context)
     {
         $query = $context->query;
@@ -144,6 +142,7 @@
         $lat = $location['latitude'];
         $lng = $location['longitude'];
 
+        //range in kilometers
         $range = $query->search_range * 1000;
 
         //Spherical Law of Cosines
