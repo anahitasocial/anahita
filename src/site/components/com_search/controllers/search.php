@@ -121,9 +121,9 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         } else {
             $query->orderByRelevance();
         }
-
+        //print str_replace('#_', 'jos', $query);
         $entities = $query->toEntitySet();
-        
+
         $this->_state->setList($entities);
 
         parent::_actionGet($context);
@@ -141,16 +141,25 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         parent::setRequest($request);
 
         if (isset($this->_request->term)) {
-            $term = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
-            $this->_request->term = $term;
-            $this->term = $term;
+            $value = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
+            $this->_request->term = $value;
+            $this->term = $value;
         }
 
         if (isset($this->_request->search_range)) {
-            $range = (int) $this->_request->search_range;
-            $this->_request->search_range = $range;
-            $this->search_range = $range;
+            $value = (int) $this->_request->search_range;
+            $this->_request->search_range = $value;
+            $this->search_range = $value;
         }
+
+        if ($this->_request->search_comments === 1 || $this->_request->search_comments === 'true') {
+           $value = true;
+        } else {
+           $value = false;
+        }
+
+        $this->_request->search_comments = $value;
+        $this->search_comments = $value;
 
         return $this;
     }

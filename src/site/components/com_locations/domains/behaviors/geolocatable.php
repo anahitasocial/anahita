@@ -148,9 +148,9 @@
         //Spherical Law of Cosines
         $calc_distance = 'CEIL((ACOS(SIN('.$lat.'*PI()/180) * SIN(@col(locations.geo_latitude)*PI()/180) + COS('.$lat.'*PI()/180) * COS(@col(locations.geo_latitude)*PI()/180) * COS(('.$lng.'*PI()/180) - (@col(locations.geo_longitude)*PI()/180) )) *'.self::EARTH_RADIUS.'))';
 
-        $query->select($calc_distance.' AS `distance`');
+        $query->select(array($calc_distance.' AS `distance`', 'locations.geo_latitude', 'locations.geo_longitude'));
 
-        $query->group('@col(id)');
+        $query->group('@col(node.id)');
 
         $query->having('distance < '.$range);
     }

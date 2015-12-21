@@ -22,6 +22,8 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     {
         parent::__construct($config);
 
+        $this->distinct = true;
+
         //lets add all the common fields
         $this->select(array(
             'node.created_by', 'node.owner_id', 'node.owner_type', 'node.name', 'node.person_username',
@@ -91,21 +93,25 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             $owner_query = 'node.owner_id = '.$this->owner_context->id.' AND ';
         }
 
+        if ($this->scope instanceof ComComponentsDomainEntityScope) {
+            $scopes = array($this->scope);
+        } else {
+            $scopes = $this->getService('com://site/components.domain.entityset.scope');
+        }
+
+        $types = array();
+        foreach ($scopes as $scope) {
+            $types[] = $scope->node_type;
+        }
+        $this->bind('types', $types);
+
         //search comments
+        $comment_query = '';
+        $comments = array();
+
         if ($this->_state->search_comments) {
 
-            if ($this->scope instanceof ComComponentsDomainEntityScope) {
-                $scopes = array($this->scope);
-            } else {
-                $scopes = $this->getService('com://site/components.domain.entityset.scope');
-            }
-
-            $comments = array();
-            $types = array();
-
             foreach ($scopes as $scope) {
-                $types[] = $scope->node_type;
-
                 if ($scope->commentable) {
                     $comments[] = (string) $scope->identifier;
                 }
@@ -113,20 +119,18 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 
             if (count($comments) > 0) {
 
-              $comment_query = 'OR (@col(node.type) LIKE :comment_type AND node.parent_type IN (:parent_types) )';
+                $comment_query = 'OR (@col(node.type) LIKE :comment_type AND node.parent_type IN (:parent_types) )';
 
-              if ($this->owner_context && !empty($comment_query)) {
-                  $this->distinct = true;
-                  $this->join('LEFT', 'nodes AS comment_parent', 'node.type LIKE :comment_type AND comment_parent.id = node.parent_id');
-                  $comment_query = preg_replace('/\)$/', ' AND comment_parent.owner_id = '.$this->owner_context->id.')', $comment_query);
-              }
-
-              $this->where('( '.$owner_query.' @col(node.type) IN (:types) '.$comment_query.')')
-                   ->bind('types', $types)
-                   ->bind('comment_type', 'ComBaseDomainEntityComment%')
-                   ->bind('parent_types', $comments);
+                if ($this->owner_context) {
+                    $comment_query = preg_replace('/\)$/', ' AND comment_parent.owner_id = '.$this->owner_context->id.')', $comment_query);
+                }
             }
         }
+
+        $this->where('( '.$owner_query.' @col(node.type) IN (:types) '.$comment_query.')')
+             ->bind('types', $types)
+             ->bind('comment_type', 'ComBaseDomainEntityComment%')
+             ->bind('parent_types', $comments);
     }
 
     /**

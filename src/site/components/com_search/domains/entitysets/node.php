@@ -64,7 +64,7 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 
             $query->distinct = true;
 
-            $query->select(array('node.type', 'count(*) AS count', 'node.parent_type'))
+            $query->select(array('count(*) AS count', 'node.parent_type'))
                   ->scope(null)
                   ->limit(0, 0)
                   ->group(array('node.type', 'node.parent_type'));
@@ -77,7 +77,7 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
                 $identifier = array_pop($identifier);
                 $identifier = $this->getIdentifier($identifier);
 
-                if ($identifier->name == 'comment') {
+                if ($identifier->name === 'comment') {
                     if (isset($row['parent_type'])) {
                         $identifier = $this->getIdentifier($row['parent_type']);
                     }
@@ -89,11 +89,10 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
                     $this->_scopes_count[$key] = 0;
                 }
 
-                $increment = ($row['count']) ? 1 : 0;
-                $this->_scopes_count[$key] = $this->_scopes_count[$key] + $increment;
+                $this->_scopes_count[$key] = $this->_scopes_count[$key] + $row['count'];
             }
         }
 
-        return isset($this->_scopes_count[$scope->getKey()]) ? $this->_scopes_count[$scope->getKey()] : 0;
+        return isset($this->_scopes_count[$scope->getKey()]) ? $this->_scopes_count[$scope->getKey()] : null;
     }
 }
