@@ -152,7 +152,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $this->search_range = $value;
         }
 
-        if ($this->_request->search_comments === 1 || $this->_request->search_comments === 'true') {
+        if ($this->_request->search_comments == 1 || $this->_request->search_comments == 'true') {
            $value = true;
         } else {
            $value = false;

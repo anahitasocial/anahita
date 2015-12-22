@@ -26,11 +26,12 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 
         //lets add all the common fields
         $this->select(array(
-            'node.created_by', 'node.owner_id', 'node.owner_type', 'node.name', 'node.person_username',
-            'node.alias', 'node.body', 'node.created_on', 'node.modified_on', 'node.modified_by', 'node.person_usertype',
-            'node.blocker_ids', 'node.blocked_ids', 'node.access', 'node.follower_count', 'node.leader_count',
-            'node.parent_id', 'node.parent_type',
-            'node.filename'
+            'node.created_by', 'node.owner_id', 'node.owner_type', 'node.name',
+            'node.person_username', 'node.alias', 'node.body', 'node.created_on',
+            'node.modified_on', 'node.modified_by', 'node.person_usertype',
+            'node.blocker_ids', 'node.blocked_ids', 'node.access',
+            'node.follower_count', 'node.leader_count', 'node.parent_id',
+            'node.parent_type', 'node.filename'
         ));
     }
 
@@ -86,59 +87,45 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             }
         }
 
-        //owner context
-        $owner_query = '';
-        if ($this->owner_context) {
-            $owner_query = 'node.owner_id = '.$this->owner_context->id.' AND ';
-        }
+        $scopes = $this->getService('com://site/components.domain.entityset.scope');
 
         if ($this->scope instanceof ComComponentsDomainEntityScope) {
             $scopes = array($this->scope);
-        } else {
-            $scopes = $this->getService('com://site/components.domain.entityset.scope');
         }
 
+        $comments = array();
         $types = array();
 
-        if ($this->_state->search_comments) {
-            $types[] = "ComBaseDomainEntityComment,com:notes.domain.entity.comment";
-        }
-
         foreach ($scopes as $scope) {
+            $types[] = $scope->node_type;
 
-            if($this->owner_context && strstr($scope->node_type, 'ComActorsDomainEntityActor')) {
-                continue;
-            } else {
-                $types[] = $scope->node_type;
+            if ($scope->commentable) {
+                $comments[] = (string) $scope->identifier;
             }
         }
 
         $comment_query = '';
-        $comment_parent_types = array();
 
-        if ($this->_state->search_comments) {
+        if (count($comments) && $this->_state->search_comments) {
+            $comment_query = 'OR (@col(node.type) LIKE :comment_type AND node.parent_type IN (:parent_types) )';
+        }
 
-            foreach ($scopes as $scope) {
-                if ($scope->commentable) {
-                    $comment_parent_types[] = (string) $scope->identifier;
-                }
-            }
+        $owner_query = '';
 
-            if (count($comment_parent_types) > 0) {
+        if ($this->owner_context) {
+            $owner_query = 'node.owner_id = '.$this->owner_context->id.' AND ';
 
-                $this->join('LEFT', 'nodes AS comment_parent', 'node.type IN (:parent_types) AND comment_parent.id = node.parent_id');
-                $comment_query = 'OR node.parent_type IN (:parent_types)';
-
-                //Why do we do this?
-                if ($this->owner_context) {
-                //    $comment_query = preg_replace('/\)$/', ' AND comment_parent.owner_id = '.$this->owner_context->id.')', $comment_query);
-                }
+            if (!empty($comment_query)) {
+                $this->distinct = true;
+                $this->join('LEFT', 'nodes AS comment_parent', 'node.type LIKE :comment_type AND comment_parent.id = node.parent_id');
+                $comment_query = preg_replace('/\)$/', ' AND comment_parent.owner_id = '.$this->owner_context->id.')', $comment_query);
             }
         }
 
         $this->where('( '.$owner_query.' @col(node.type) IN (:types) '.$comment_query.')')
              ->bind('types', $types)
-             ->bind('parent_types', $comment_parent_types);
+             ->bind('comment_type', 'ComBaseDomainEntityComment%')
+             ->bind('parent_types', $comments);
     }
 
     /**
