@@ -99,13 +99,8 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->searchComments($this->search_comments);
         }
 
-        if ($this->search_nearby) {
-            if ($lnglat = $this->_geocoder->geocode($this->search_nearby)) {
-                $query->searchNearby($lnglat);
-            }
-        }
-
-        if ($this->search_range) {
+        if ($this->search_nearby && ($lnglat = $this->_geocoder->geocode($this->search_nearby))) {
+            $query->searchNearby($lnglat);
             $query->searchRange($this->search_range);
         }
 
@@ -113,10 +108,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->scope($this->current_scope);
         }
 
-        //@todo move this to the query class if possible
-        if ($this->search_nearby) {
-           $query->searchRange($this->search_range);
-        } elseif ($this->sort == 'recent') {
+        if ($this->sort == 'recent') {
             $query->order('node.created_on', 'DESC');
         } else {
             $query->orderByRelevance();
