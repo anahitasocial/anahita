@@ -24,28 +24,36 @@
 	<div class="span8">
 
 		<?= @helper('ui.header', array()) ?>
-
     <fieldset>
-        <label name="nearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
-        <input type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
-
+        <label name="SortOptions"><?= @text('COM-SEARCH-OPTION-SORT') ?></label>
         <select data-trigger="SortOption" id="SortOptions" name="sort">
     				<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
     					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
     				</option>
+
     				<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
     					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
     				</option>
 
-            <option <?= ($sort == 'nearby') ? 'selected' : '' ?> value="distance">
+            <option <?= ($sort == 'distance') ? '' : 'disabled' ?> <?= ($sort == 'distance') ? 'selected' : '' ?> value="distance">
     					<?= @text('COM-SEARCH-OPTION-SORT-DISTANCE') ?>
     				</option>
   			</select>
 
-  			<label class="checkbox">
-    				<input data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
-    				<?= @text('COM-SEARCH-OPTION-COMMENTS') ?>
-  		  </label>
+        <label name="SearchNearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
+        <input type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
+
+        <?php $ranges = array(100,50,25,10,5); ?>
+        <select disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">
+            <?php foreach($ranges as $index=>$range) : ?>
+            <option value="<?= $range ?>"><?= $range ?> km</option>
+            <?php endforeach; ?>
+        </select>
+
+        <label class="checkbox">
+            <input data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
+            <?= @text('COM-SEARCH-OPTION-COMMENTS') ?>
+        </label>
    </fieldset>
 
 		<?php

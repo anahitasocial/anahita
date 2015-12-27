@@ -17,6 +17,7 @@
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
 			nearbyOption : 'input[data-trigger="SearchNearby"',
+			rangeOption : 'select[data-trigger="SearchRange"]',
 			scope : '[data-trigger="ChangeScope"]',
 			results : '#an-search-results',
 			searchScopes : '.search-scopes'
@@ -29,6 +30,7 @@
 			var elemSort = $(this.options.sortOption);
 			var elemComment = $(this.options.commentOption);
 			var elemNearby = $(this.options.nearbyOption);
+			var elemRange = $(this.options.rangeOption);
 			var elemScope = $(this.options.scope);
 
 			this.searchOptions = {
@@ -51,7 +53,7 @@
 			this._on( elemSort, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.searchOptions.sort = $(event.currentTarget).find('option:selected').val();
+					this.searchOptions.sort = $(event.currentTarget).val();
 					this.submit($(event.currentTarget));
 				}
 			});
@@ -68,9 +70,42 @@
 			//nearby options search
 			this._on( $(document), {
 				 'SearchNearby' : function ( event ) {
+
+						elemRange.prop('disabled', false);
+						elemSort.find('option[value="distance"]').prop('disabled', false);
+						elemSort.val('distance');
+
+						this.searchOptions.range = elemRange.val();
 						this.searchOptions.search_nearby = elemNearby.val();
+						this.searchOptions.sort = 'distance';
 						this.submit(elemNearby);
 				 }
+			});
+
+			//removing nearby options search
+			this._on( elemNearby, {
+				 change : function ( event ) {
+					 	event.preventDefault();
+						if($(event.currentTarget).val() == '') {
+								elemRange.prop('disabled', true);
+								elemSort.find('option[value="distance"]').prop('disabled', true);
+								elemSort.val('relevant');
+
+								this.searchOptions.search_nearby = null;
+								this.searchOptions.search_range = null;
+								this.searchOptions.sort = 'relevant';
+								this.submit(this.form);
+						}
+				 }
+			});
+
+			//elem range
+			this._on( elemRange, {
+				change : function ( event ) {
+					event.preventDefault();
+					this.searchOptions.search_range = elemRange.val();
+					this.submit($(event.currentTarget));
+				}
 			});
 
 			this._initScopes();
