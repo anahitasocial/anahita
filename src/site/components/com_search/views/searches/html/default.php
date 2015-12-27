@@ -36,6 +36,10 @@
     				<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
     					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
     				</option>
+
+            <option <?= ($sort == 'nearby') ? 'selected' : '' ?> value="distance">
+    					<?= @text('COM-SEARCH-OPTION-SORT-DISTANCE') ?>
+    				</option>
   			</select>
 
   			<label class="checkbox">

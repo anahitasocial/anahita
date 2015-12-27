@@ -110,10 +110,14 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         if ($this->sort == 'recent') {
             $query->order('node.created_on', 'DESC');
+        } elseif ($this->search_nearby && $this->sort == 'distance' ) {
+            $query->order('distance', 'ASC');
         } else {
             $query->orderByRelevance();
         }
+
         //print str_replace('#_', 'jos', $query);
+
         $entities = $query->toEntitySet();
 
         $this->_state->setList($entities);
