@@ -66,12 +66,11 @@
 			});
 
 			//nearby options search
-			this._on( elemNearby, {
-				change : function ( event ) {
-					event.preventDefault();
-					this.searchOptions.search_nearby = $(event.currentTarget).val();
-					this.submit($(event.currentTarget));
-				}
+			this._on( $(document), {
+				 'SearchNearby' : function ( event ) {
+						this.searchOptions.search_nearby = elemNearby.val();
+						this.submit(elemNearby);
+				 }
 			});
 
 			this._initScopes();
