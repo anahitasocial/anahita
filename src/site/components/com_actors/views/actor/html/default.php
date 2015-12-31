@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<script src="https://maps.googleapis.com/maps/api/js" />
+<?= @map_api(array()) ?>
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_actors/js/cover.js" />

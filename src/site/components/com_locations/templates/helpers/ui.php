@@ -14,6 +14,8 @@
  */
 class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
 {
+    protected $_service;
+
     /**
      * Initializes the options for the object.
      *
@@ -32,13 +34,49 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
         $paths = KConfig::unbox($config->paths);
         array_unshift($paths, JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_locations/ui');
         $config->paths = $paths;
+
+        $this->_service = get_config_value('locations.service', 'google');
+    }
+
+    /**
+    * includes location api javascript
+    *
+    * @param array of configuration params
+    *
+    * @return string html
+    */
+    public function api($config = array())
+    {
+        $config = array_merge_recursive($config, array(
+            'key' => get_config_value('locations.service_key'),
+            'service' => $this->_service,
+            'libraries' => array()
+        ));
+
+        return $this->_render('api_'.$config['service'], $config);
+    }
+
+    /**
+    * includes places autocomplete javascript
+    *
+    * @param array of configuration params
+    *
+    * @return string html
+    */
+    public function nearby($config = array())
+    {
+        $config = array_merge_recursive($config, array(
+            'service' => $this->_service
+        ));
+
+        return $this->_render('nearby', $config);
     }
 
     /**
     * renders a map
     *
     * @param array of ComLocationsDomainEntityLocation entities
-    * @param array of configurations
+    * @param array of configuration params: longitude, latitude, name, url
     *
     * @return string html
     */

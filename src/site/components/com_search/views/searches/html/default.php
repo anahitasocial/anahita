@@ -4,13 +4,12 @@
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_search/js/search.js" />
-<script src="com_locations/js/nearby.google.js" />
 <?php else: ?>
 <script src="com_search/js/min/search.min.js" />
-<script src="com_locations/js/min/nearby.google.min.js" />
 <?php endif; ?>
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places" />
+<?= @map_api_nearby(array()) ?>
+<?= @map_api(array('libraries'=>'places')) ?>
 
 <?php endif;?>
 

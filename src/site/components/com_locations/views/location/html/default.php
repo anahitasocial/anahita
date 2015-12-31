@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
+<?= @map_api(array()) ?>
+
 <div class="row">
   <div class="span12">
       <?= @helper('ui.header', array()) ?>
@@ -21,7 +23,7 @@
 
     <?php if($location->description) : ?>
     <div class="entity-description">
-    <?= @helper('text.truncate', @content( nl2br($location->description), array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
+    <?= @helper('text.truncate', @content(nl2br($location->description), array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
     </div>
     <?php endif; ?>
 </div>

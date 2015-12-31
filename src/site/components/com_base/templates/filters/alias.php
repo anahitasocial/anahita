@@ -36,6 +36,9 @@ class ComBaseTemplateFilterAlias extends LibBaseTemplateFilterAlias
             '@message(' => '$this->renderHelper(\'ui.message\',',
             '@date(' => '$this->renderHelper(\'date.format\',',
             '@searchbox(' => '$this->renderHelper(\'ui.search\',',
+            '@map(' => '$this->renderHelper(\'com://site/locations.template.helper.ui.map\',',
+            '@map_api(' => '$this->renderHelper(\'com://site/locations.template.helper.ui.api\',',
+            '@map_api_nearby(' => '$this->renderHelper(\'com://site/locations.template.helper.ui.nearby\',',
         ));
     }
 }
