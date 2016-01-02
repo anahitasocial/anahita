@@ -85,7 +85,7 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
         if ($mode == 'profile') {
             $gadgets->insert('locations-profile', array(
                 'title' => JText::_('COM-LOCATIONS-GADGET-PROFILE'),
-                'url' => 'option=com_locations&view=locations&layout=profile_gadget&locatable_id='.$actor->id,
+                'url' => 'option=com_locations&view=locations&layout=gadget_profile&locatable_id='.$actor->id,
             ));
         }
     }
