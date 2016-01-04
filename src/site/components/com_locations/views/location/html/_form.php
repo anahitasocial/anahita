@@ -17,7 +17,7 @@
 						<?= @text('LIB-AN-ENTITY-DESCRIPTION') ?>
 						</label>
 						<div class="controls">
-						<textarea required maxlength="1000" id="entity-description" class="input-block-level" name="body" rows="5"><?= $location->body?></textarea>
+						<textarea maxlength="1000" id="entity-description" class="input-block-level" name="body" rows="5"><?= $location->body?></textarea>
 						</div>
 				</div>
 

@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
+<div></div>
+
 <?php if (count($items)) :?>
 	<?php $view = @view('node'); ?>
 	<?php foreach ($items as $item): ?>

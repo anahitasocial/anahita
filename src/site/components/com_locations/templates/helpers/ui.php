@@ -102,4 +102,25 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
 
         return $this->_render('map_'.$config['service'], $config);
     }
+
+    /**
+    * Displays location(s) of a locatable entity or a link to
+    * associate the entity to a location
+    *
+    * @param an entity with geolocatable behaviour
+    * @param array of configuration params: longitude, latitude, name, url
+    *
+    * @return string html
+    */
+    public function location($entity, $config = array())
+    {
+        if(!$entity->isGeolocatable()) {
+           throw new Exception('Entity is not locatable');
+           return false;
+        }
+
+        $config['locations'] = $entity->locations;
+
+        return $this->_render('location', $config);
+    }
 }

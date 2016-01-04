@@ -85,7 +85,7 @@
              }
          }
 
-         return $this;
+         return $item;
      }
 
      /**
@@ -104,8 +104,6 @@
                  }
              }
          }
-
-         return $this;
      }
 
     /**
