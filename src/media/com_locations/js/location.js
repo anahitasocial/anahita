@@ -12,196 +12,253 @@
 
     $.widget("anahita.locations", {
 
-        options : {
-            modal : '#an-modal',
-            formContainer : '#location-form-container',
-            selectorLocationsContainer : '#locations-container',
-            locatableLocations : '.an-locations',
-            entities : '.an-entities',
-            entity : '.an-entity'
-        },
+      options : {
 
-        _create : function() {
+        //selector's modal
+        modal : '#an-modal',
 
-            var self = this;
-            this.modal = $(this.options.modal);
-            this.selectorLocationsContainer = $(this.options.selectorLocationsContainer);
-            this.locatableLocations = this.closest(this.options.locatableLocations);
-            this.formContainer = $(this.options.formContainer);
-            this.formContainer.hide();
-            this._browse();
+        //selector's form container
+        formContainer : '#location-form-container',
 
-            //listen to the filter box. If no locations are available, show the form
-            this._on( $(document) , {
-                'afterFilterbox' : function( event ) {
-                    var entity = self.selectorLocationsContainer.find(this.options.entity);
-                    if(entity.length == 0){
-                        self._showForm();
-                    }
-                }
-            });
+        //selector's locations container
+        locationsContainer : '#locations-container',
 
-            this._on('body [data-action="addLocation"]', {
-              click : function ( event ) {
-                 event.preventDefault();
-                 this._addLocationToLocatable();
-              }
-            });
+        //selector's search box
+        searchQuery : '#an-search-query',
 
-            this._on('body [data-action="deleteLocation"]', {
-              click : function ( event ) {
-                 event.preventDefault();
-                 this._deleteLocationFromLocatable();
-              }
-            });
-        },
+        //location entities
+        entities : '.an-entities',
 
-        _browse : function() {
+        //location entity
+        entity : '.an-entity',
 
-            var self = this;
-            var entities = self.selectorLocationsContainer.find(this.options.entities);
+        //locatable's location list
+        locationsList : '.an-locations'
+      },
 
-            $.ajax({
-                'method' : 'GET',
-                url : entities.data('url'),
-                success : function (response) {
-                    var entity = $(response).filter(self.options.entity);
-                    if (entity.length) {
-                        self._hideForm();
-                        $(entities).html(entity);
-                    } else {
-                        self._showForm();
-                    }
-                }
-            });
-        },
+      _create : function () {
 
-        _add : function(){
-            var self = this;
-            var form = self.formContainer.find('form');
+        var self = this;
+        this.modal = $(this.options.modal);
 
-            $.ajax({
-        				method : 'post',
-        				url : form.attr('action'),
-        				data : form.serialize(),
-        				beforeSend : function (){
-        					form.find(':submit').button('loading');
-        				},
-        				success : function ( response ) {
-                  $('document').anahitaLocatable('refresh');
-                  self.modal.modal('hide');
-        				},
-        				complete : function ( xhr, status ) {
-        				    form.find(':submit').button('reset');
-        				}
-      			});
-        },
+        this.formContainer = null;
+        this.locationsContainer = null;
+        this.currentList = null;
+      },
 
-        _showForm : function() {
+      _init : function () {
 
-            var self = this;
-            this.formContainer.show();
-            this.selectorLocationsContainer.hide();
-
-            var form = this.formContainer.find('form');
-
-            this._on(form, {
-                submit : function(event){
-                    event.preventDefault();
-                    self._add();
-                }
-            });
-
-            if ($('#an-search-query').val()) {
-                $(form).find('input[name="name"]').val($('#an-search-query').val());
+          //show selector event
+          this._on('a[data-toggle*="LocationSelector"]', {
+            click : function ( event ) {
+              event.preventDefault();
+              this._showSelector( event.currentTarget );
             }
-        },
+          });
 
-        _hideForm : function() {
-            this.formContainer.hide();
-            this.selectorLocationsContainer.show();
-        },
+          //add a location to locatable
+          this._on('a[data-action="addLocation"]', {
+            click : function ( event ) {
+              event.preventDefault();
+              this._addLocation( event.currentTarget );
+            }
+          });
 
-        _addLocationToLocatable : function() {
+          //delete location from locatable
+          this._on('a[data-action="deleteLocation"]', {
+            click : function ( event ) {
+              event.preventDefault();
+              this._deleteLocation( event.currentTarget );
+            }
+          });
 
-        },
-
-        _deleteLocationFromLocatable : function() {
-
-        },
-
-        _refreshLocations : function() {
-
-        }
-    });
-
-    $('body').on('click', 'a[data-toggle*="LocationSelector"]', function ( event ){
-
-        event.preventDefault();
-
-        var modal = $('#an-modal');
-  			modal.find('.modal-footer').hide();
-
-    		var header = modal.find('.modal-header').find('h3');
-    		var body = modal.find('.modal-body');
-
-        $.get($(this).attr('href'), function (response){
-
-      			header.html($(response).filter('.modal-header').html());
-      			body.html($(response).filter('.modal-body').html());
-  					modal.modal('show');
-
-            $(this).locations();
-    		});
-    });
-
-    $.fn.anahitaLocatable = function ( action ) {
-
-        var elem = $(this);
-        var modal = $('#an-modal');
-        var container = elem.closest('.an-locations');
-
-        console.log(elem);
-
-        if ( action == 'refresh' ) {
-            //container.load(container.data('url'));
-
-            $.ajax({
-              url : container.data('url'),
-              dataType : 'json',
-              success : function (response) {
-                  console.log(response);
+          //listen to the filter box. If no locations are available, show the form
+          this._on( $(document), {
+            'afterFilterbox' : function( event ) {
+              var entity = self.locationsContainer.find(this.options.entity);
+              if (entity.length == 0) {
+                  self._showForm();
               }
-            });
-        }
+            }
+          });
+      },
 
-        if( action == 'addLocation' || action == 'deleteLocation' ) {
+      _showSelector : function ( actionLink ) {
 
-            var response = $.ajax({
-                method : 'post',
-                url : elem.attr('href'),
-                data : {
-                    action : elem.data('action'),
-                    location_id : elem.data('location')
-                },
-                success : function (response) {
+        var self = this;
 
-                    if ( elem.data('action') == 'deleteLocation' ) {
-                        elem.closest('li').fadeOut();
-                    } else if ( elem.data('action') == 'addLocation' ) {
-                        modal.modal('hide');
-                    }
+        this.modal.find('.modal-footer').hide();
 
-                    return true;
-                },
-                error : function (jqXHR, textStatus, errorThrown) {
-                    console.log(errorThrown);
-                    return false;
+        var header = this.modal.find('.modal-header').find('h3');
+
+    		var body = this.modal.find('.modal-body');
+
+        $.get( $(actionLink).attr('href'), function (response) {
+
+            header.html($(response).filter('.modal-header').html());
+
+            body.html($(response).filter('.modal-body').html());
+
+            self.modal.modal('show');
+
+            self.formContainer = $(self.options.formContainer);
+
+            self.locationsContainer = $(self.options.locationsContainer);
+
+            self.searchQuery = $(self.options.searchQuery);
+
+            self.formContainer.hide();
+
+            self._browse();
+    		});
+
+        //identity the current locatable's location list
+        $(document).data('editingLocationList', $(actionLink).closest(this.options.locationsList));
+      },
+
+      _browse : function () {
+
+        var self = this;
+        var entities = self.locationsContainer.find(this.options.entities);
+
+        $.ajax({
+            method : 'GET',
+            url : entities.data('url'),
+            success : function (response) {
+
+                var entity = $(response).filter(self.options.entity);
+
+                if (entity.length) {
+                    self._hideForm();
+                    $(entities).html(entity);
+                    self._init();
+                } else {
+                    self._showForm();
                 }
-            });
-        }
+            }
+        });
 
-        return false;
-    };
+      },
+
+      _add : function(){
+
+        var self = this;
+
+        var form = self.formContainer.find('form');
+
+        $.ajax({
+          method : 'POST',
+          url : form.attr('action'),
+          data : form.serialize(),
+          beforeSend : function (){
+            form.find(':submit').button('loading');
+          },
+          success : function ( response ) {
+            self._refresh();
+            self.modal.modal('hide');
+          },
+          complete : function ( xhr, status ) {
+              form.find(':submit').button('reset');
+          }
+        });
+      },
+
+      _showForm : function() {
+
+        var self = this;
+
+        this.formContainer.show();
+
+        this.locationsContainer.hide();
+
+        var form = this.formContainer.find('form');
+
+        this._on(form, {
+            submit : function(event){
+                event.preventDefault();
+                self._add();
+            }
+        });
+
+        if ( this.searchQuery.val() ) {
+            $(form).find('input[name="name"]').val(this.searchQuery.val());
+        }
+      },
+
+      _hideForm : function() {
+
+        this.formContainer.hide();
+        this.locationsContainer.show();
+      },
+
+      _addLocation : function ( actionLink ) {
+
+        var self = this;
+        var elem = $(actionLink);
+
+        $.ajax({
+          method : 'POST',
+          url : elem.data('url'),
+          data : {
+            action : elem.data('action'),
+            location_id : elem.data('location')
+          },
+          success : function ( response ) {
+            self.modal.modal('hide');
+            self._refresh();
+          }
+        });
+      },
+
+      _deleteLocation : function ( actionLink ) {
+
+        var self = this;
+        var elem = $(actionLink);
+
+        $.ajax({
+          method : 'POST',
+          url : elem.data('url'),
+          data : {
+            action : elem.data('action'),
+            location_id : elem.data('location')
+          },
+          success : function ( response ) {
+            elem.closest('li').fadeOut();
+          }
+        });
+      },
+
+      _refresh : function () {
+
+        var self = this;
+        var locationList = $(document).data('editingLocationList');
+
+        $.ajax({
+          method : 'GET',
+          url : locationList.data('url'),
+          success : function ( response ) {
+             locationList.html(response);
+             self._init();
+          }
+        });
+      }
+    });
+
+    var locationsWidget = null;
+
+    $(document).ready(function ( event ){
+      $('.an-locations').each(function(index, list){
+        $.ajax({
+          url : $(list).data('url'),
+          success : function ( response ) {
+            $(list).html(response);
+
+            if (!locationsWidget) {
+              locationsWidget = $('body').locations();
+            }
+          }
+        });
+      });
+    });
 
 }(jQuery, window, document));

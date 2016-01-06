@@ -41,8 +41,8 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
         if ($this->locatable) {
 
             if (in_array($this->getView()->getLayout(), array('selector', 'list_selector'))) {
-                $query = $this->getService('repos:locations.location')->getQuery();
 
+                $query = $this->getService('repos:locations.location')->getQuery();
                 $excludeIds = AnHelperArray::collect($this->locatable->locations, 'id');
 
                 if (count($excludeIds)) {

@@ -119,7 +119,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
            return false;
         }
 
-        $config['locations'] = $entity->locations;
+        $config['locations'] = $entity->locations->order('name');
 
         return $this->_render('location', $config);
     }
