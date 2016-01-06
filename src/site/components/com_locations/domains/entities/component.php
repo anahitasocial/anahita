@@ -81,12 +81,5 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
                 'url' => 'option=com_locations&view=locations&layout=list_gadget&sort=trending&limit=10',
             ));
         }
-
-        if ($mode == 'profile') {
-            $gadgets->insert('locations-profile', array(
-                'title' => JText::_('COM-LOCATIONS-GADGET-PROFILE'),
-                'url' => 'option=com_locations&view=locations&layout=gadget_profile&locatable_id='.$actor->id,
-            ));
-        }
     }
 }

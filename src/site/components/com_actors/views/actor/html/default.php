@@ -1,7 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<?= @map_api(array()) ?>
-
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_actors/js/cover.js" />
 <?php else: ?>
@@ -70,7 +68,7 @@
 	</div>
 
 	<div class="span4 visible-desktop">
-		  <?= @helper('ui.gadget', $socialgraphGadget) ?>
-			<?= @helper('ui.gadget', $locationsGadget) ?>
+		  <?= @helper('ui.gadget', $socialgraphGadget); ?>
+			<?// @location($item); ?>
 	</div>
 </div>
