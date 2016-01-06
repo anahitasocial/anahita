@@ -85,4 +85,26 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
 
        return $this->_location;
    }
+
+   /**
+   * returns true if the viewer can add a location to this locatable
+   *
+   * @return boolean
+   */
+   public function canAddLocation()
+   {
+      //@todo implement this
+      return true;
+   }
+
+   /**
+   * returns true if the viewer can delete a location from this locatable
+   *
+   * @return boolean
+   */
+   public function canDeleteLocation()
+   {
+      //@todo implement this
+      return true;
+   }
 }

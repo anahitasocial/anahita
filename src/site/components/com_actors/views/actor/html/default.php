@@ -69,6 +69,6 @@
 
 	<div class="span4 visible-desktop">
 		  <?= @helper('ui.gadget', $socialgraphGadget); ?>
-			<?// @location($item); ?>
+			<?= @location($item); ?>
 	</div>
 </div>
