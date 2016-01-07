@@ -3,6 +3,7 @@
 <?php foreach($locations as $location) : ?>
 <li>
     <a href="<?= @route($location->getURL()) ?>">
+      <i class="icon-map-marker"></i> 
       <?= @escape($location->name) ?>
     </a>
 </li>

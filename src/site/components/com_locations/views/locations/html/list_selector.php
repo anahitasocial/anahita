@@ -4,6 +4,7 @@
 <div class="an-entity">
     <div class="entity-title">
         <a data-action="addLocation" data-location="<?= $location->id ?>" href="<?= @route($locatable->getURL()) ?>">
+            <i class="icon-map-marker"></i> 
             <?= $location->name ?>
         </a>
     </div>

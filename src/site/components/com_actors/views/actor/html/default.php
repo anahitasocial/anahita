@@ -7,7 +7,6 @@
 <?php endif; ?>
 
 <?php $socialgraphGadget = $gadgets->extract('socialgraph') ?>
-<?php $locationsGadget = $gadgets->extract('locations-profile') ?>
 
 <?php if ($item->coverSet()): ?>
 <div class="profile-cover" data-src-large="<?= $item->getCoverURL('large'); ?>" data-src-medium="<?= $item->getCoverURL('medium'); ?>"></div>
@@ -69,6 +68,13 @@
 
 	<div class="span4 visible-desktop">
 		  <?= @helper('ui.gadget', $socialgraphGadget); ?>
-			<?= @location($item); ?>
+
+			<h4 class="block-title">
+				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
+			</h4>
+
+			<div class="block-content">
+			<?= @location($item) ?>
+			</div>
 	</div>
 </div>

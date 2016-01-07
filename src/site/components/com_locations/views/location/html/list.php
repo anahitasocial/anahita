@@ -3,6 +3,7 @@
 <div class="an-entity">
     <h4 class="entity-title">
         <a href="<?= @route($location->getURL()) ?>" title="<?= $location->name ?>">
+            <i class="icon-map-marker"></i> 
             <?= $location->name ?>
         </a>
   	</h4>

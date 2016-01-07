@@ -32,19 +32,6 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function onSettingDisplay(KEvent $event)
-    {
-        $actor = $event->actor;
-        $tabs = $event->tabs;
-        $tabs->insert('locations', array(
-            'label' => JText::_('COM-LOCATIONS-PROFILE-EDIT'),
-            'controller' => 'com://site/locations.controller.setting',
-        ));
-    }
-
-    /**
      * On Dashboard event.
      *
      * @param KEvent $event The event parameter

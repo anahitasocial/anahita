@@ -5,7 +5,8 @@
 <?php foreach ($items as $item): ?>
 	<li>
 		<a href="<?= @route($item->getURL()) ?>">
-      <?= $item->name ?>
+			<i class="icon-map-marker"></i> 
+			<?= $item->name ?>
     </a>
 	</li>
 <?php endforeach; ?>
