@@ -17,17 +17,15 @@ hr
 {
     &.nav-pills
     {
-	    a:hover
-	    {
+	    a:hover {
 	        background-color: lighten( @borderColor, 4%);
 	    }
-	    
+
 	    .active > a,
-		.active > a:hover 
-		{
-		    background-color: @linkColor;
-		}
-    }	
+  		.active > a:hover {
+  		    background-color: @linkColor;
+  		}
+    }
 }
 
 //NAVTABS
@@ -37,7 +35,7 @@ hr
 }
 
 // Actions (the buttons)
-.actions 
+.actions
 {
   background: @grayLighter;
   border-top: 1px solid @borderColor;
@@ -50,11 +48,11 @@ hr
     {
         background-color: @white;
     }
-    
+
     a
     {
         border: 0;
-    }	
+    }
 }
 
 .container
@@ -62,7 +60,7 @@ hr
     .hero-unit
     {
         background-color: transparent;
-        
+
         &.hero-unit-light
         {
             background-color: @white;
@@ -71,7 +69,7 @@ hr
                 color: @gray;
             }
         }
-        
+
         &.hero-unit-dark
         {
             background-color: @grayDark;
@@ -98,17 +96,17 @@ hr
     }
 }
 
-.an-highlight 
-{ 
-    background-color: @yellow !important 
+.an-highlight
+{
+    background-color: @yellow !important
 }
 
 a.form-placeholder,
 a.action-comment-overtext
 {
     border: 1px solid @grayLighter;
-    color: @grayLight;  
-    
+    color: @grayLight;
+
     &:hover
     {
        border-color: darken(@grayLighter, 15%);
@@ -116,23 +114,23 @@ a.action-comment-overtext
 }
 
 .an-media-header
-{ 
+{
    #gradient > .vertical(@navbarBackgroundHighlight, @navbarBackground);
    border: 1px solid @navbarBorder;
-  .box-shadow(0 1px 1px rgba(0,0,0, .065)); 
+  .box-shadow(0 1px 1px rgba(0,0,0, .065));
 }
 
 .an-meta,
 .entity-meta
-{ 
+{
     font-weight:normal;
-    color: @grayLight; 
+    color: @grayLight;
 }
 
 .an-entity
 {
     background-color: @white;
-    
+
     &.editable
     {
         .entity-title:hover,
@@ -147,15 +145,15 @@ a.action-comment-overtext
 .entity-name,
 .entity-description,
 .entity-body
-{            
+{
     blockquote
-    { 
-        border-right: @grayLighter; 
+    {
+        border-right: @grayLighter;
     }
 }
 
 .an-comments
-{    
+{
     .an-comment
 	{
 	    border-top: 1px solid @bodyBackground;
@@ -169,7 +167,7 @@ form.an-comment-form
 
 // GADGET
 .an-gadget
-{ 
+{
     .gadget-title
     {
         border-bottom: 1px solid @borderColor;
@@ -178,20 +176,20 @@ form.an-comment-form
 
 // POPOVER
 .popover-content
-{   
+{
     .an-entity
     {
         border-top: 1px solid @bodyBackground;
-    }   
+    }
 }
 
 // MODAL
 .modal-body
-{   
+{
     .an-entity
     {
         border-top: 1px solid @bodyBackground;
-    }   
+    }
 }
 
 // Fixing the link button disabled view
@@ -200,7 +198,7 @@ a.btn-primary
     &.disabled
     {
         color: @white;
-    }   
+    }
 }
 
 // AUTO COMPLETE
@@ -209,14 +207,14 @@ ul.autocompleter-choices
     background-color: @grayLight;
     color: @white;
     border: 1px solid @grayLighter;
-    
+
     li
     {
         &.autocompleter-selected
         {
             background-color: @grayDark;
             color: @white;
-            
+
             span.autocompleter-queried
             {
                 color: @linkColor;
@@ -227,15 +225,15 @@ ul.autocompleter-choices
 
 // STORIES
 #com-composer-container
-{ 
+{
     .box-shadow(inset 0 2px 5px rgba(0,0,0,.065));
     border: 1px solid @navbarBorder;
     background-color: @white;
-    
+
     .nav-tabs
     {
         border-color: @grayLighter;
-        
+
         li.active
         {
             a
@@ -243,7 +241,7 @@ ul.autocompleter-choices
                 border-color: @grayLighter @grayLighter transparent
             }
         }
-        
+
         li
         {
            a:hover
@@ -252,10 +250,10 @@ ul.autocompleter-choices
            }
         }
     }
-    
+
     .editor
     {
-        border: 1px solid @borderColor; 
+        border: 1px solid @borderColor;
     }
 }
 
@@ -264,7 +262,7 @@ ul.autocompleter-choices
     .story-title
     {
         color: @grayLight;
-    }	
+    }
 
     .an-comments
     {
@@ -274,7 +272,7 @@ ul.autocompleter-choices
             border-top: 1px solid @bodyBackground;
             background-color: transparent;
         }
-        
+
         .an-comment:last-child
         {
             border-bottom: 1px solid @bodyBackground;
@@ -283,11 +281,11 @@ ul.autocompleter-choices
 }
 
 ol.sub-steps
-{ 
+{
     > li
     {
         background-color: @grayLighter;
-        
+
         &.active
         {
             background-color: @grayDark;
@@ -302,5 +300,9 @@ ol.sub-steps
 }
 
 .profile-cover{
-  background-color: @grayDark; 
+  background-color: @grayDark;
+}
+
+.map-container {
+  border: 1px solid @borderColor;
 }

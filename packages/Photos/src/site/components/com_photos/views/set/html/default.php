@@ -16,26 +16,32 @@
     <?= @template('set') ?>
     <?= @helper('ui.comments', $set) ?>
 	</div>
-	
-	<div class="span4 visible-desktop">	
-			
+
+	<div class="span4 visible-desktop">
+
     	<div id="set-cover-wrapper">
                 <?= @template('cover') ?>
             </div>
-    	
+
     	<h4 class="block-title">
     	    <?= @text('LIB-AN-META') ?>
     	</h4>
-    	  
-    	<div class="block-content">  
+
+    	<div class="block-content">
         	<ul class="an-meta">
         		<li><?= sprintf(@text('LIB-AN-ENTITY-AUTHOR'), @date($set->creationTime), @name($set->author)) ?></li>
         		<li><?= sprintf(@text('LIB-AN-ENTITY-EDITOR'), @date($set->updateTime), @name($set->editor)) ?></li>
         		<li><?= sprintf(@text('COM-PHOTOS-SET-META-PHOTOS'), $set->getPhotoCount()) ?></li>
         		<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $set->numOfComments) ?></li>
-        	</ul>	
-    	</div>		
+        	</ul>
+    	</div>
+
+			<h4 class="block-title">
+				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
+			</h4>
+
+			<div class="block-content">
+			<?= @location($set) ?>
+			</div>
 	</div>
 </div>
-
-

@@ -42,7 +42,7 @@
     	</div>
 
 			<h4 class="block-title">
-				<?= @text('LIB-AN-ENTITY-LOCATION') ?>
+				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
 			</h4>
 
 			<div class="block-content">

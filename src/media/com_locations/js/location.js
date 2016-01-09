@@ -44,31 +44,35 @@
         this.formContainer = null;
         this.locationsContainer = null;
         this.currentList = null;
+        this.locatableId = null;
+
+        //show selector event
+        this._on('a[data-toggle*="LocationSelector"]', {
+          click : function ( event ) {
+            event.preventDefault();
+            self.locatableId = $(event.currentTarget).data('locatable');
+            self._showSelector( event.currentTarget );
+          }
+        });
       },
 
       _init : function () {
 
-          //show selector event
-          this._on('a[data-toggle*="LocationSelector"]', {
-            click : function ( event ) {
-              event.preventDefault();
-              this._showSelector( event.currentTarget );
-            }
-          });
+          var self = this;
 
           //add a location to locatable
-          this._on('a[data-action="addLocation"]', {
+          this._on('a[data-action="add-location"]', {
             click : function ( event ) {
               event.preventDefault();
-              this._addLocation( event.currentTarget );
+              self._addLocation( event.currentTarget );
             }
           });
 
           //delete location from locatable
-          this._on('a[data-action="deleteLocation"]', {
+          this._on('a[data-action="delete-location"]', {
             click : function ( event ) {
               event.preventDefault();
-              this._deleteLocation( event.currentTarget );
+              self._deleteLocation( event.currentTarget );
             }
           });
 
@@ -111,9 +115,6 @@
 
             self._browse();
     		});
-
-        //identity the current locatable's location list
-        $(document).data('editingLocationList', $(actionLink).closest(this.options.locationsList));
       },
 
       _browse : function () {
@@ -200,7 +201,7 @@
           method : 'POST',
           url : elem.data('url'),
           data : {
-            action : elem.data('action'),
+            action : 'addLocation',
             location_id : elem.data('location')
           },
           success : function ( response ) {
@@ -219,7 +220,7 @@
           method : 'POST',
           url : elem.data('url'),
           data : {
-            action : elem.data('action'),
+            action : 'deleteLocation',
             location_id : elem.data('location')
           },
           success : function ( response ) {
@@ -231,7 +232,7 @@
       _refresh : function () {
 
         var self = this;
-        var locationList = $(document).data('editingLocationList');
+        var locationList = $('#locations-' + this.locatableId);
 
         $.ajax({
           method : 'GET',

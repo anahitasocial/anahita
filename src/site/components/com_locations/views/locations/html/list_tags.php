@@ -3,14 +3,11 @@
 <?php foreach($locations as $location) : ?>
 <li>
     <a href="<?= @route($location->getURL()) ?>">
-      <i class="icon-map-marker"></i> 
+      <i class="icon-map-marker"></i>
       <?= @escape($location->name) ?>
+    </a> 
+    - <a data-action="delete-location" href="<?= @route($locatable->getURL()) ?>" data-location="<?= $location->id ?>">
+      <small><?= @text('LIB-AN-ACTION-REMOVE') ?></small>
     </a>
 </li>
 <?php endforeach; ?>
-<?php $selector_url = 'option=com_locations&view=locations&layout=selector&locatable_id='.$locatable->id; ?>
-<li>
-    <a href="<?= @route($selector_url) ?>" data-toggle="LocationSelector">
-      + <?= @text('LIB-AN-ACTION-ADD-LOCATION') ?>
-    </a>
-</li>
