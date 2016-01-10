@@ -68,6 +68,15 @@
 
 	<div class="span4 visible-desktop">
 		  <?= @helper('ui.gadget', $socialgraphGadget); ?>
-			<?= @template('_locations') ?>
+
+			<?php if(count($item->locations) || $item->authorize('edit')): ?>
+			<h4 class="block-title">
+				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
+			</h4>
+
+			<div class="block-content">
+			<?= @location($item) ?>
+			</div>
+			<?php endif; ?>
 	</div>
 </div>
