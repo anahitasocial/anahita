@@ -33,7 +33,6 @@ class ComHashtagsDomainEntityComponent extends ComComponentsDomainEntityComponen
     {
         $actor = $event->actor;
         $gadgets = $event->gadgets;
-        $composers = $event->composers;
         $this->_setGadgets($actor, $gadgets, 'dashboard');
     }
 
