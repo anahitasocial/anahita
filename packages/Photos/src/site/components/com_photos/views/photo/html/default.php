@@ -41,6 +41,7 @@
         	</ul>
     	</div>
 
+			<?php if(count($photo->locations) || $photo->authorize('edit')): ?>
 			<h4 class="block-title">
 				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
 			</h4>
@@ -48,6 +49,7 @@
 			<div class="block-content">
 			<?= @location($photo) ?>
 			</div>
+			<?php endif; ?>
 
     	<?php if ($actor->authorize('administration')) : ?>
     	<h4 class="block-title">

@@ -9,4 +9,16 @@
 	<?= @template('note') ?>
 	<?= @helper('ui.comments', $note) ?>
 	</div>
+
+	<div class="span4">
+			<?php if(count($note->locations) || $note->authorize('edit')): ?>
+			<h4 class="block-title">
+				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
+			</h4>
+
+			<div class="block-content">
+			<?= @location($note) ?>
+			</div>
+			<?php endif; ?>
+	</div>
 </div>

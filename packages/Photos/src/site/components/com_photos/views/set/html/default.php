@@ -36,6 +36,7 @@
         	</ul>
     	</div>
 
+			<?php if(count($set->locations) || $set->authorize('edit')): ?>
 			<h4 class="block-title">
 				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
 			</h4>
@@ -43,5 +44,6 @@
 			<div class="block-content">
 			<?= @location($set) ?>
 			</div>
+			<?php endif; ?>
 	</div>
 </div>
