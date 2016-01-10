@@ -82,6 +82,8 @@
               var entity = self.locationsContainer.find(this.options.entity);
               if (entity.length == 0) {
                   self._showForm();
+              } else {
+                self._init();
               }
             }
           });
@@ -201,7 +203,7 @@
           method : 'POST',
           url : elem.data('url'),
           data : {
-            action : 'addLocation',
+            action : 'addlocation',
             location_id : elem.data('location')
           },
           success : function ( response ) {
@@ -220,7 +222,7 @@
           method : 'POST',
           url : elem.data('url'),
           data : {
-            action : 'deleteLocation',
+            action : 'deletelocation',
             location_id : elem.data('location')
           },
           success : function ( response ) {

@@ -39,7 +39,7 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
    *  @param KCommandContext $context
    *  @return instance of ComBaseDomainEntityNode entity with gelocatable behavior
    */
-   protected function _actionAddLocation(KCommandContext $context)
+   protected function _actionAddlocation(KCommandContext $context)
    {
        return $this->getItem()->addLocation($this->_location);
    }
@@ -51,7 +51,7 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
    *  @param KCommandContext $context
    *  @return instance of ComBaseDomainEntityNode entity with gelocatable behavior
    */
-   protected function _actionDeleteLocation(KCommandContext $context)
+   protected function _actionDeletelocation(KCommandContext $context)
    {
        return $this->getItem()->deleteLocation($this->_location);
    }
@@ -91,10 +91,9 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
    *
    * @return boolean
    */
-   public function canAddLocation()
+   public function canAddlocation()
    {
-      //@todo implement this
-      return true;
+      return $this->getItem()->authorize('edit');
    }
 
    /**
@@ -102,9 +101,8 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
    *
    * @return boolean
    */
-   public function canDeleteLocation()
+   public function canDeletelocation()
    {
-      //@todo implement this
-      return true;
+      return $this->getItem()->authorize('edit');
    }
 }

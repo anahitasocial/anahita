@@ -68,13 +68,6 @@
 
 	<div class="span4 visible-desktop">
 		  <?= @helper('ui.gadget', $socialgraphGadget); ?>
-
-			<h4 class="block-title">
-				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
-			</h4>
-
-			<div class="block-content">
-			<?= @location($item) ?>
-			</div>
+			<?= @template('_locations') ?>
 	</div>
 </div>

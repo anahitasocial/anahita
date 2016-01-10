@@ -31,6 +31,8 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
         $config->append(array(
             'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_actors/actor'),
         ));
+
+        $this->enabled_apps = null;
     }
 
     /**
@@ -53,6 +55,7 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
         ));
 
         if ($context->actor->authorize('access')) {
+
             $context->actor->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
 
             $this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
