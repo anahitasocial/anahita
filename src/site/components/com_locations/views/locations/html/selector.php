@@ -43,7 +43,11 @@
                     <?= @text('COM-LOCATIONS-LOCATION-COUNTRY') ?>
                     </label>
                     <div class="controls">
-                    <?= @helper('selector.country', array('name' => 'country', 'id' => 'select-country')) ?>
+                    <?= @helper('selector.country', array(
+                        'name' => 'country',
+                        'id' => 'select-country',
+                        'requred' => 'required'
+                      )) ?>
                     </div>
                 </div>
 
@@ -52,7 +56,7 @@
                     <?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
                     </label>
                     <div class="controls">
-                    <input required class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" type="text" />
+                    <input class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" type="text" />
                     </div>
                 </div>
 

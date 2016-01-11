@@ -47,6 +47,7 @@
 						<?= @helper('selector.country', array(
 									'name' => 'country',
 									'id' => 'select-country',
+									'required' => 'required',
 									'selected' => $location->country
 								))
 						?>
@@ -58,7 +59,7 @@
 						<?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
 						</label>
 						<div class="controls">
-						<input required class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" value="<?= $location->state_province ?>" type="text" />
+						<input class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" value="<?= $location->state_province ?>" type="text" />
 						</div>
 				</div>
 

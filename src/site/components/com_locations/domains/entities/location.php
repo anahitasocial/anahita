@@ -15,11 +15,6 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
 {
 
   /**
-   * @param location regex pattern
-   */
-  const PATTERN_LOCATION = '/(?<=\W|^)!([^\d_\s\W][\p{L}\d]{2,})/';
-
-  /**
   *  @param geocoder object
   */
   protected $_geocoder = null;
@@ -102,7 +97,12 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
 
     protected function _beforeEntityInsert()
     {
-        $this->_geocoder->geocode($this);
+        $address = implode(',', $this->addressToArray());
+
+        if ($location = $this->_geocoder->geocode($address)) {
+            $this->geoLatitude = $location['latitude'];
+            $this->geoLongitude = $location['longitude'];
+        }
     }
 
     /**
