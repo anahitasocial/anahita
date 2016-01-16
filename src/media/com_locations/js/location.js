@@ -54,9 +54,23 @@
             self._showSelector( event.currentTarget );
           }
         });
+
+        //listen to the filter box. If no locations are available, show the form
+        this._on( $(document), {
+          'afterFilterbox' : function( event ) {
+            var entity = self.locationsContainer.find(this.options.entity);
+            if (entity.length == 0) {
+                self._showForm();
+            } else {
+              self._init();
+            }
+          }
+        });
       },
 
       _init : function () {
+
+          console.log('initiated');
 
           var self = this;
 
@@ -73,18 +87,6 @@
             click : function ( event ) {
               event.preventDefault();
               self._deleteLocation( event.currentTarget );
-            }
-          });
-
-          //listen to the filter box. If no locations are available, show the form
-          this._on( $(document), {
-            'afterFilterbox' : function( event ) {
-              var entity = self.locationsContainer.find(this.options.entity);
-              if (entity.length == 0) {
-                  self._showForm();
-              } else {
-                self._init();
-              }
             }
           });
       },
@@ -250,6 +252,7 @@
     var locationsWidget = null;
 
     $(document).ready(function ( event ){
+      console.log('document loaded');
       $('.an-locations').each(function(index, list){
         $.ajax({
           url : $(list).data('url'),
@@ -263,5 +266,7 @@
         });
       });
     });
+
+
 
 }(jQuery, window, document));
