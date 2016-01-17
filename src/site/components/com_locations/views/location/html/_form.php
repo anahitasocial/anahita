@@ -40,6 +40,15 @@
 				</div>
 
 				<div class="control-group">
+						<label class="label-group"  for="location-state-province">
+						<?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
+						</label>
+						<div class="controls">
+						<input class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" value="<?= $location->state_province ?>" type="text" />
+						</div>
+				</div>
+
+				<div class="control-group">
 						<label class="label-group"  for="location-province">
 						<?= @text('COM-LOCATIONS-LOCATION-COUNTRY') ?>
 						</label>
@@ -55,11 +64,11 @@
 				</div>
 
 				<div class="control-group">
-						<label class="label-group"  for="location-state-province">
-						<?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
+						<label class="label-group"  for="location-postal-code">
+						<?= @text('COM-LOCATIONS-LOCATION-POSTAL-CODE') ?>
 						</label>
 						<div class="controls">
-						<input class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" value="<?= $location->state_province ?>" type="text" />
+						<input class="input-block-level" id="location-postal-code" size="30" maxlength="10" name="postalcode" value="<?= $location->postalcode ?>" type="text" />
 						</div>
 				</div>
 

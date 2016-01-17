@@ -39,6 +39,15 @@
                 </div>
 
                 <div class="control-group">
+                    <label class="label-group"  for="location-state-province">
+                    <?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
+                    </label>
+                    <div class="controls">
+                    <input class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" type="text" />
+                    </div>
+                </div>
+
+                <div class="control-group">
                     <label class="label-group"  for="location-province">
                     <?= @text('COM-LOCATIONS-LOCATION-COUNTRY') ?>
                     </label>
@@ -48,15 +57,6 @@
                         'id' => 'select-country',
                         'requred' => 'required'
                       )) ?>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label class="label-group"  for="location-state-province">
-                    <?= @text('COM-LOCATIONS-LOCATION-STATE-PROVINCE') ?>
-                    </label>
-                    <div class="controls">
-                    <input class="input-block-level" id="location-state-province" size="30" maxlength="100" name="state_province" type="text" />
                     </div>
                 </div>
 

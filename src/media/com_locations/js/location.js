@@ -267,6 +267,4 @@
       });
     });
 
-
-
 }(jQuery, window, document));

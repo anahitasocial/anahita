@@ -1,11 +1,5 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
-<script src="com_locations/js/location.js" />
-<?php else: ?>
-<script src="com_locations/js/min/location.min.js" />
-<?php endif; ?>
-
 <?= @map_api(array()) ?>
 
 <?php if(count($entity->locations)): ?>

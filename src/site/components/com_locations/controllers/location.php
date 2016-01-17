@@ -38,39 +38,44 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
+        $keyword = ($this->q) ? $this->getService('anahita:filter.term')->sanitize($this->q) : '';
+
         if ($this->locatable) {
 
-            if (in_array($this->getView()->getLayout(), array('selector', 'list_selector'))) {
+          if (in_array($this->getView()->getLayout(), array('selector', 'list_selector'))) {
 
-                $query = $this->getService('repos:locations.location')->getQuery();
-                $excludeIds = AnHelperArray::collect($this->locatable->locations, 'id');
+              $query = $this->getService('repos:locations.location')->getQuery();
+              $excludeIds = AnHelperArray::collect($this->locatable->locations, 'id');
 
-                if (count($excludeIds)) {
-                  $query->where('location.id', 'NOT IN', $excludeIds);
-                }
+              if (count($excludeIds)) {
+                $query->where('location.id', 'NOT IN', $excludeIds);
+              }
 
-            } else {
-                $query = $this->locatable->locations;
-            }
+              if ($keyword != '') {
+                  $query->keyword = $keyword;
+              }
 
-            if ($this->q) {
-                $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
-            }
+          } else {
+              $query = $this->locatable->locations;
+          }
 
-            //@todo should be closeby locations
-            $query->limit($this->limit, $this->offset)->order('name');
+          $query->order('name');
 
-            return $this->getState()->setList($query->toEntityset())->getList();
-
+        } elseif ($keyword != '') {
+            $query = $this->getService('repos:locations.location')->getQuery();
+            $query->keyword = $keyword;
         } else {
-            $entities = parent::_actionBrowse($context);
-            $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
-            $entities->where('edge.type', '=', $edgeType)->group('location.id');
+          $entities = parent::_actionBrowse($context);
+          $query = $entities->getQuery();
+          $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
+          $query->where('edge.type', '=', $edgeType)->group('location.id');
         }
 
-        //print str_replace('#_', 'jos', $entities);
+        $query->limit($this->limit, $this->offset);
 
-        return $entities;
+        //print str_replace('#_', 'jos', $query);
+
+        return $this->getState()->setList($query->toEntityset())->getList();
     }
 
     /**
