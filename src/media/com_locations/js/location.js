@@ -17,11 +17,13 @@
         //selector's modal
         modal : '#an-modal',
 
+        formSelector : 'a[data-trigger="FormSelector"]',
+
         //selector's form container
         formContainer : '#location-form-container',
 
         //link that opens the location selector modal
-        loationsSelector : 'a[data-toggle*="LocationSelector"]',
+        loationsSelector : 'a[data-trigger*="LocationSelector"]',
 
         //selector's locations container
         locationsContainer : '#locations-container',
@@ -199,13 +201,20 @@
             }
         });
 
+        //show form event
+        this._on(this.options.formSelector, {
+          click : function ( event ) {
+            event.preventDefault();
+            self._hideForm();
+          }
+        });
+
         if ( this.searchQuery.val() ) {
             $(form).find('input[name="name"]').val(this.searchQuery.val());
         }
       },
 
       _hideForm : function() {
-
         this.formContainer.hide();
         this.locationsContainer.show();
       },

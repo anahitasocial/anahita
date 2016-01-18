@@ -69,6 +69,10 @@
                         <button class="btn btn-primary" type="submit">
                             <?= @text('LIB-AN-ACTION-ADD') ?>
                         </button>
+
+                        <a class="btn btn-link" href="#" data-trigger="FormSelector">
+                            <?= @text('LIB-AN-ACTION-SEARCH') ?>
+                        </a>
                     </div>
                 </div>
             </form>
