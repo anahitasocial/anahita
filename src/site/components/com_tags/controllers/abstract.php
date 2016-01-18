@@ -26,7 +26,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
             'request' => array(
                 'scope' => '',
                 'sort' => 'top',
-                'days' => KRequest::get('get.days', 'int', 1),
+                'days' => KRequest::get('get.days', 'int', 7),
             ),
         ));
 
