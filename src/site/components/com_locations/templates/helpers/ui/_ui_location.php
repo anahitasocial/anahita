@@ -7,7 +7,7 @@
 <script src="com_locations/js/location.js" />
 <?php else: ?>
   <?php if($entity->authorize('edit')): ?>
-  <script src="com_locations/js/geoposition.min.js" />
+  <script src="com_locations/js/min/geoposition.min.js" />
   <?php endif; ?>
 <script src="com_locations/js/min/location.min.js" />
 <?php endif; ?>
