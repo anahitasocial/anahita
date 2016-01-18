@@ -88,6 +88,27 @@ class ComLocationsControllerToolbarDefault extends ComBaseControllerToolbarDefau
         }
     }
 
+    /**
+     * Delete Command for an entity.
+     *
+     * @param LibBaseTemplateObject $command The action object
+     */
+    protected function _commandDelete($command)
+    {
+        $entity = $this->getController()->getItem();
+
+        $command->append(array('label' => JText::_('LIB-AN-ACTION-DELETE')))
+        ->href(JRoute::_($entity->getURL()))
+        ->setAttribute('data-action', 'delete')
+        ->setAttribute('data-redirect', JRoute::_('index.php?option=com_locations&view=locations'))
+        ->class('action-delete');
+    }
+
+    /**
+     * Delete a location from a locatable entity
+     *
+     * @param LibBaseTemplateObject $command The action object
+     */
     protected function _commandDeleteLocation($command)
     {
         $location = $this->getController()->getItem();
