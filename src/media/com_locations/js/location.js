@@ -20,6 +20,9 @@
         //selector's form container
         formContainer : '#location-form-container',
 
+        //link that opens the location selector modal
+        loationsSelector : 'a[data-toggle*="LocationSelector"]',
+
         //selector's locations container
         locationsContainer : '#locations-container',
 
@@ -47,7 +50,7 @@
         this.locatableId = null;
 
         //show selector event
-        this._on('a[data-toggle*="LocationSelector"]', {
+        this._on(this.options.loationsSelector, {
           click : function ( event ) {
             event.preventDefault();
             self.locatableId = $(event.currentTarget).data('locatable');
@@ -69,8 +72,6 @@
       },
 
       _init : function () {
-
-          console.log('initiated');
 
           var self = this;
 
@@ -126,9 +127,22 @@
         var self = this;
         var entities = self.locationsContainer.find(this.options.entities);
 
+        var browser_latitude = null;
+        var browser_longitude = null;
+
+        if($('body').data('browser_coords')){
+            var browser_coords = $('body').data('browser_coords');
+            var browser_latitude = browser_coords.latitude;
+            var browser_longitude = browser_coords.longitude;
+        }
+
         $.ajax({
             method : 'GET',
             url : entities.data('url'),
+            data : {
+              'nearby_latitude' : browser_latitude,
+              'nearby_longitude' : browser_longitude
+            },
             success : function (response) {
 
                 var entity = $(response).filter(self.options.entity);
@@ -252,7 +266,6 @@
     var locationsWidget = null;
 
     $(document).ready(function ( event ){
-      console.log('document loaded');
       $('.an-locations').each(function(index, list){
         $.ajax({
           url : $(list).data('url'),

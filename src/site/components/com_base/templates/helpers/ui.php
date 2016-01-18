@@ -486,11 +486,14 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 
         $path = (string) $uri;
 
+        $placeholder = isset($config['placeholder']) ? $config['placeholder'] : JText::_('LIB-AN-FILTER-PLACEHOLDER');
+
         $config = new KConfig($config);
 
         $config->append(array(
             'search_action' => $path,
             'update_element' => false,
+            'placeholder' => $placeholder
         ));
 
         return $this->_render('filterbox',  $config);

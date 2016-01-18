@@ -35,10 +35,20 @@
 
               bounds.extend(location);
 
+              var infowindow = new google.maps.InfoWindow({
+                  content: '<a href="' + dataLocation.url.path + '">' + dataLocation.name + '</a>',
+                  maxWidth : 200
+              });
+
               var marker = new google.maps.Marker({
                   position: location,
+                  map : map,
                   title: dataLocation.name
-              }).setMap(map);
+              });
+
+              marker.addListener('click', function() {
+                  infowindow.open(map, marker);
+              });
           });
 
           map.setCenter(bounds.getCenter());

@@ -55,6 +55,17 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                   $query->keyword = $keyword;
               }
 
+              if($this->nearby_latitude && $this->nearby_longitude) {
+
+                $earth_radius = 6371000;
+                $lat = (float) $this->nearby_latitude;
+                $lng = (float) $this->nearby_longitude;
+                $calc_distance = 'CEIL((ACOS(SIN('.$lat.'*PI()/180) * SIN(location.geo_latitude*PI()/180) + COS('.$lat.'*PI()/180) * COS(location.geo_latitude*PI()/180) * COS(('.$lng.'*PI()/180) - (location.geo_longitude*PI()/180) )) *'.$earth_radius.'))';
+
+                $query->select(array($calc_distance.' AS `distance`'));
+                $query->having('distance < 1000');
+              }
+
           } else {
               $query = $this->locatable->locations;
           }
