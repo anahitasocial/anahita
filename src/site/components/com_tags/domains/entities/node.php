@@ -24,7 +24,12 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'inheritance' => array('ignore' => __CLASS__),
-            'behaviors' => array('privatable'),
+            'behaviors' => array(
+              'privatable'
+            ),
+            'attributes' => array(
+                'enabled' => array('default' => 1)
+             ),
         ));
 
         parent::_initialize($config);
