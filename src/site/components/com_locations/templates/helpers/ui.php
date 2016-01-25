@@ -90,8 +90,8 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
 
         foreach($locations as $location){
             $data[] = array(
-                'longitude' => $location->geoLongitude,
-                'latitude' => $location->geoLatitude,
+                'longitude' => $location->longitude,
+                'latitude' => $location->latitude,
                 'name' => $location->name,
                 'url' => JRoute::_($location->getURL())
             );

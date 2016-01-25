@@ -38,6 +38,8 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
+        // @todo move these queries to query classes
+        
         $keyword = ($this->q) ? $this->getService('anahita:filter.term')->sanitize($this->q) : '';
 
         if ($this->locatable) {
