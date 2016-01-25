@@ -22,13 +22,16 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     {
         parent::__construct($config);
 
+        $this->distinct = true;
+
         //lets add all the common fields
         $this->select(array(
-            'node.created_by', 'node.owner_id', 'node.owner_type', 'node.name', 'node.person_username',
-            'node.alias', 'node.body', 'node.created_on', 'node.modified_on', 'node.modified_by', 'node.person_usertype',
-            'node.blocker_ids', 'node.blocked_ids', 'node.access', 'node.follower_count', 'node.leader_count',
-            'node.parent_id', 'node.parent_type',
-            'node.filename',
+            'node.created_by', 'node.owner_id', 'node.owner_type', 'node.name',
+            'node.person_username', 'node.alias', 'node.body', 'node.created_on',
+            'node.modified_on', 'node.modified_by', 'node.person_usertype',
+            'node.blocker_ids', 'node.blocked_ids', 'node.access',
+            'node.follower_count', 'node.leader_count', 'node.parent_id',
+            'node.parent_type', 'node.filename'
         ));
     }
 
@@ -42,7 +45,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'repository' => 'repos://site/search.node',
+            'repository' => 'repos://site/search.node'
         ));
 
         parent::_initialize($config);
@@ -146,6 +149,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     {
         return KService::get('com://site/search.domain.entityset.node', array(
                   'query' => clone $this,
-                  'repository' => $this->getRepository(), ));
+                  'repository' => $this->getRepository()
+                ));
     }
 }

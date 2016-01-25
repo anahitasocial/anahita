@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Request edge represents a follow request between two actors. 
+ * Request edge represents a follow request between two actors.
  *
  * @category   Anahita
  *
@@ -15,37 +15,21 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 {
     /**
      * Tracks the scopes count.
-     * 
+     *
      * @var array
      */
     protected $_scopes_count;
 
     /**
      * Scopes.
-     * 
+     *
      * @var array
      */
     protected $_scopes;
 
     /**
-     * Initializes the default configuration for the object.
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     */
-    protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-            'repository' => 'repos://site/base.node',
-        ));
-
-        parent::_initialize($config);
-    }
-
-    /**
      * Return an array of scopes with a count per each scope.
-     * 
+     *
      * @return array
      */
     public function getScopes()
@@ -67,17 +51,20 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
 
     /**
      * Return the scope count for a type.
-     * 
-     * @param string $scope The scope to 
-     * 
+     *
+     * @param string $scope The scope to
+     *
      * @return array
      */
     public function getScopeCount($scope)
     {
         if (!isset($this->_scopes_count)) {
+
             $query = clone $this->_query;
 
-            $query->columns(array('node.type', 'count(*) AS count', 'node.parent_type'))
+            $query->distinct = true;
+
+            $query->select(array('count(*) AS count', 'node.parent_type'))
                   ->scope(null)
                   ->limit(0, 0)
                   ->group(array('node.type', 'node.parent_type'));
@@ -85,12 +72,15 @@ class ComSearchDomainEntitysetNode extends AnDomainEntitysetDefault
             $rows = $query->fetchRows();
 
             foreach ($rows as $row) {
+
                 $identifier = explode(',', $row['type']);
                 $identifier = array_pop($identifier);
                 $identifier = $this->getIdentifier($identifier);
 
-                if ($identifier->name == 'comment') {
-                    $identifier = $this->getIdentifier($row['parent_type']);
+                if ($identifier->name === 'comment') {
+                    if (isset($row['parent_type'])) {
+                        $identifier = $this->getIdentifier($row['parent_type']);
+                    }
                 }
 
                 $key = $identifier->package.'.'.$identifier->name;

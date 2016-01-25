@@ -20,6 +20,13 @@
 class ComSearchControllerSearch extends ComBaseControllerResource
 {
     /**
+    * used to geocode an address
+    *
+    * @param ComLocationsGeocoderAdapterAbstract object
+    */
+    protected $_geocoder = null;
+
+    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -35,9 +42,15 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'limit' => 20,
                 'sort' => 'relevant',
                 'direction' => 'ASC',
+                'term' => '',
+                'search_nearby' => '',
+                'search_range' => 5,
+                'search_comments' => false,
                 'scope' => 'all',
             ),
         ));
+
+        $this->_geocoder = KService::get('com://site/locations.geocoder')->getInstance($config);
 
         parent::_initialize($config);
     }
@@ -58,14 +71,13 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $this->getService()->set('com://site/search.owner', $this->actor);
         }
 
-        $this->_state->append(array(
-            'search_comments' => false,
-        ));
-
-        $this->_state->insert('term')
-            ->insert('scope')
-            ->insert('search_comments')
-            ->insert('search_leaders');
+        $this->_state
+             ->insert('term')
+             ->insert('scope')
+             ->insert('search_comments')
+             ->insert('search_nearby')
+             ->insert('search_range')
+             ->insert('search_leaders');
 
         JFactory::getLanguage()->load('com_actors');
 
@@ -76,10 +88,21 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         $this->current_scope = $this->scopes->find($this->scope);
 
         $query = $this->getService('com://site/search.domain.query.node')
-                    ->ownerContext($this->actor)
-                    ->searchTerm($this->term)
-                    ->searchComments($this->search_comments)
-                    ->limit($this->limit, $this->start);
+                      ->searchTerm($this->term)
+                      ->limit($this->limit, $this->start);
+
+        if ($this->actor) {
+           $query->ownerContext($this->actor);
+        }
+
+        if ($this->search_comments) {
+            $query->searchComments($this->search_comments);
+        }
+
+        if ($this->search_nearby && ($lnglat = $this->_geocoder->geocode($this->search_nearby))) {
+            $query->searchNearby($lnglat);
+            $query->searchRange($this->search_range);
+        }
 
         if ($this->current_scope) {
             $query->scope($this->current_scope);
@@ -87,11 +110,16 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         if ($this->sort == 'recent') {
             $query->order('node.created_on', 'DESC');
+        } elseif ($this->search_nearby && $this->sort == 'distance' ) {
+            $query->order('distance', 'ASC');
         } else {
             $query->orderByRelevance();
         }
 
+        //print str_replace('#_', 'jos', $query);
+
         $entities = $query->toEntitySet();
+
         $this->_state->setList($entities);
 
         parent::_actionGet($context);
@@ -109,10 +137,25 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         parent::setRequest($request);
 
         if (isset($this->_request->term)) {
-            $term = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
-            $this->_request->term = $term;
-            $this->term = $term;
+            $value = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
+            $this->_request->term = $value;
+            $this->term = $value;
         }
+
+        if (isset($this->_request->search_range)) {
+            $value = (int) $this->_request->search_range;
+            $this->_request->search_range = $value;
+            $this->search_range = $value;
+        }
+
+        if ($this->_request->search_comments == 1 || $this->_request->search_comments == 'true') {
+           $value = true;
+        } else {
+           $value = false;
+        }
+
+        $this->_request->search_comments = $value;
+        $this->search_comments = $value;
 
         return $this;
     }

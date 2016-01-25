@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?php 
+<?php
 $num_notifications = empty($num_notifications) ? get_viewer()->numOfNewNotifications() : $num_notifications;
 $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
@@ -11,12 +11,12 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
         <a data-trigger="notifications-popover" href="<?= @route('option=com_notifications&view=notifications&layout=popover&new=1&limit=20') ?>">
             <span data-url="<?= @route('option=com_notifications&view=notifications&get=count') ?>" data-interval="30000" id="notifications-counter" class="badge <?= ($num_notifications) ? 'badge-important' : '' ?>">
             <?= $num_notifications ?>
-			</span>           
+			</span>
         </a>
 	</li>
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
-		<?= @avatar(get_viewer(), 'square', false) ?> <b class="caret"></b>           
+		<?= @avatar(get_viewer(), 'square', false) ?> <b class="caret"></b>
 		</a>
 		<ul class="dropdown-menu">
 			<li>
@@ -33,8 +33,8 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 				<a href="<?= @route($viewer->getURL().'&get=graph'); ?>">
 				<?= @text('TMPL-MENU-ITEM-VIEWER-SOCIALGRAPH') ?>
 				</a>
-			</li>   
-			
+			</li>
+
 			<?php if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
 			<li class="divider"></li>
             <li>
@@ -43,16 +43,15 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             	</a>
             </li>
             <?php endif; ?>
-            
-            <?php if ($viewer->admin()): ?>
-            <li class="divider"></li>    
+
+            <?php if ($viewer->admin()): ?> 
             <li>
                 <a href="<?= @route('option=com_people&view=people') ?>">
                     <?= @text('TMPL-MENU-ITEM-VIEWER-PEOPLE') ?>
                 </a>
-            </li>    
-            <?php endif; ?> 
-            
+            </li>
+            <?php endif; ?>
+
 			<?php if (count($components)): ?>
 			<li class="divider"></li>
             <?php foreach ($components as $component): ?>
@@ -73,19 +72,19 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             	</a>
             </li>
             <?php endif; ?>
-            
+
             <?php if (KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>
-            <li> 
+            <li>
                  <?php if ($viewer->admin()): ?>
-                 <a href="<?= @route('option=com_subscriptions&view=orders') ?>">  
-                 <?php else: ?>    
+                 <a href="<?= @route('option=com_subscriptions&view=orders') ?>">
+                 <?php else: ?>
                  <a href="<?= @route('option=com_subscriptions&view=orders&oid='.$viewer->id) ?>">
-                 <?php endif; ?>  
+                 <?php endif; ?>
                  <?= @text('TMPL-MENU-ITEM-VIEWER-SUBSCRIPTIONS-ORDERS-HISTORY') ?>
-                 </a>  
-            </li>              
+                 </a>
+            </li>
             <?php endif; ?>
-            
+
 			<li>
 				<a data-trigger="PostLink" href="<?= @route('option=com_people&view=session&action=delete') ?>">
 				    <?= @text('LIB-AN-ACTION-LOGOUT') ?>

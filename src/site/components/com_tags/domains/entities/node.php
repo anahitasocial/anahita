@@ -1,27 +1,12 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
- * Search Node.
+ * Tag entity
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2015 rmd Studio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -39,7 +24,12 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'inheritance' => array('ignore' => __CLASS__),
-            'behaviors' => array('privatable'),
+            'behaviors' => array(
+              'privatable'
+            ),
+            'attributes' => array(
+                'enabled' => array('default' => 1)
+             ),
         ));
 
         parent::_initialize($config);

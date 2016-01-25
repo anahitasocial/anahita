@@ -35,8 +35,8 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     {
         $config->append(array(
             'relationships' => array(
-                      'hashtag' => array('parent' => 'com:hashtags.domain.entity.hashtag'),
-                ),
+                'hashtag' => array('parent' => 'com:hashtags.domain.entity.hashtag'),
+            ),
             'aliases' => array(
                 'hashtag' => 'nodeA',
             ),

@@ -4,11 +4,11 @@
     <div class="pull-right btn-group">
         <a class="btn <?= ($sort != 'top') ? 'disabled' : '' ?>" href="<?= @route(array('sort' => 'trending')) ?>">
             <i class="icon-time"></i>
-            <?= @text('COM-HASHTAGS-SORT-TRENDING') ?>
+            <?= @text('COM-TAGS-SORT-TRENDING') ?>
         </a>
         <a class="btn <?= ($sort == 'top') ? 'disabled' : '' ?>" href="<?= @route(array('sort' => 'top')) ?>">
             <i class="icon-fire"></i>
             <?= @text('LIB-AN-SORT-TOP') ?>
-        </a> 
+        </a>
     </div>
 </div>

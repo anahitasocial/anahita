@@ -22,6 +22,6 @@ class ComNotesDomainAuthorizerNote extends ComMediumDomainAuthorizerDefault
      */
     protected function _authorizeEdit($context)
     {
-        return false;
+        return true;
     }
 }

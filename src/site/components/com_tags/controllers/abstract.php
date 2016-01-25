@@ -1,21 +1,12 @@
 <?php
 
-/** 
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2014 rmdStudio Inc.
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract Tag Controller.
  *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -34,34 +25,39 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $config->append(array(
             'request' => array(
                 'scope' => '',
-                'sort' => 'trending',
-                'days' => KRequest::get('get.days', 'int', 1),
+                'sort' => 'top',
+                'days' => KRequest::get('get.days', 'int', 7),
             ),
         ));
 
         parent::_initialize($config);
+
+        JFactory::getLanguage()->load('com_tags');
     }
 
     /**
      * Read Service.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionRead(KCommandContext $context)
     {
         $entity = parent::_actionRead($context);
 
-        if ($this->scope) {
-            $entity->tagables->scope($this->scope);
-        }
+        if (!empty($entity->tagables)) {
 
-        if ($this->sort == 'top') {
-            $entity->tagables->sortTop();
-        } else {
-            $entity->tagables->sortRecent();
-        }
+            if ($this->scope) {
+                $entity->tagables->scope($this->scope);
+            }
 
-        $entity->tagables->limit($this->limit, $this->start);
+            if ($this->sort == 'top') {
+                $entity->tagables->sortTop();
+            } else {
+                $entity->tagables->sortRecent();
+            }
+
+            $entity->tagables->limit($this->limit, $this->start);
+        }
 
         //print str_replace('#_', 'jos', $entity->tagables->getQuery());
 
@@ -70,7 +66,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
     /**
      * Browse Service.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionBrowse(KCommandContext $context)
@@ -81,8 +77,10 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
         $query = $context->query;
 
+        $name = $this->getIdentifier()->name;
+
         $query->select('COUNT(*) AS count')
-        ->join('RIGHT', 'edges AS edge', 'hashtag.id = edge.node_a_id')
+        ->join('RIGHT', 'edges AS edge', $name.'.id = edge.node_a_id')
         ->order('count', 'DESC')
         ->limit($this->limit, $this->start);
 
@@ -92,5 +90,26 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         }
 
         return $this->getState()->setList($query->toEntityset())->getList();
+    }
+
+    /**
+     * Set the default Actor View.
+     *
+     * @param KCommandContext $context Context parameter
+     *
+     * @return ComActorsControllerDefault
+     */
+    public function setView($view)
+    {
+        parent::setView($view);
+
+        if (!$this->_view instanceof ComBaseViewAbstract) {
+            $name = KInflector::isPlural($this->view) ? 'tags' : 'tag';
+            $defaults[] = 'ComTagsView'.ucfirst($view).ucfirst($this->_view->name);
+            $defaults[] = 'ComTagsView'.ucfirst($name).ucfirst($this->_view->name);
+            register_default(array('identifier' => $this->_view, 'default' => $defaults));
+        }
+
+        return $this;
     }
 }

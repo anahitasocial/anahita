@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+    <params>
+        <param menu="hide"  name="service" type="list" default="google" label="Service" description="Select a location service">
+            <option value="google">Google</option>
+            <option value="osm">OpenStreetMap</option>
+        </param>
+
+        <param name="service_key" size="60" type="text" default="" label="Key"  description="Service API Key"></param>
+    </params>
+</config>

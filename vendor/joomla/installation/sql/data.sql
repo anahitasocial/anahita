@@ -12,7 +12,8 @@ INSERT INTO `#__components` (`id`, `name`, `link`, `menuid`, `parent`, `admin_me
 (11, 'Notes', 'option=com_notes', 0, 0, '', 'Notes', 'com_notes', 0, '', 1, '', 1),
 (12, 'Html', 'option=com_html', 0, 0, 'option=com_html', 'Html', 'com_html', 0, 'js/ThemeOffice/component.png', 1, '', 1),
 (13, 'Mailer', 'option=com_mailer', 0, 0, 'option=com_mailer', 'Mailer', 'com_mailer', 0, 'js/ThemeOffice/component.png', 1, '', 1),
-(14, 'Hashtags', 'option=com_hashtags', 0, 0, '', '', 'com_hashtags', 0, '', 1, '', 1);
+(14, 'Hashtags', 'option=com_hashtags', 0, 0, '', '', 'com_hashtags', 0, '', 1, '', 1),
+(15, 'Locations', 'option=com_locations', 0, 0, 'option=com_locations', 'Locations', 'com_locations', 0, 'js/ThemeOffice/component.png', 1, '', 1);
 
 INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES
 (1, 'Authentication - Joomla', 'joomla', 'authentication', 0, 1, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
@@ -25,7 +26,8 @@ INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering
 (8, 'Content Filter - Hashtag', 'hashtag', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
 (9, 'Content Filter - Mention', 'mention', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
 (10, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', ''),
-(11, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', '');
+(11, 'Content Filter - Medium', 'medium', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', ''),
+(12, 'Content Filter - Location', 'location', 'contentfilter', 0, 0, 1, 1, 0, 0, '0000-00-00 00:00:00', '');
 
 INSERT INTO `#__nodes` (`id`, `type`, `component`, `name`, `access`) VALUES (1, 'ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment', 'com_notes', 'com:people.domain.entity.person', 1);
 

@@ -30,11 +30,6 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
     protected function _initialize(KConfig $config)
     {
         JFactory::getLanguage()->load('com_'.$this->getIdentifier()->package);
-
-        $config->append(array(
-
-        ));
-
         parent::_initialize($config);
     }
 

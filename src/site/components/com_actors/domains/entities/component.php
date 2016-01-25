@@ -51,7 +51,12 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
                     'type' => 'actor', ),
                 'hashtagable' => array(
                     'class' => 'ComActorsDomainEntityActor',
-                    'type' => 'actor', ),
+                    'type' => 'actor',
+                ),
+                'geolocatable' => array(
+                    'class' => 'ComActorsDomainEntityActor',
+                    'type' => 'actor',
+                ),
             ),
         ));
 

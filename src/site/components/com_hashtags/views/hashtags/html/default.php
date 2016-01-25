@@ -1,5 +1,7 @@
 <?php defined('KOOWA') or die; ?>
 
+<?= @helper('ui.header', array()) ?>
+
 <?php if (count($items)): ?>
 <ul class="nav nav-pills">
 <?php foreach ($items as $item): ?>

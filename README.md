@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.1.8 Birth Release
+*Version:* 4.2.0 Embryo Release
 
 Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
@@ -20,14 +20,16 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 1. **actors:** people, groups, or build your own custom actor
 2. **media:** notes, topics, todos, photos, pages, or build your own custom media
 3. **hashtags:** all actors, media, and comments are hashtagable  
-4. **stories:** updates created by actors for their followers
+4. **locations:** all actors and media are geolocatable
+5. **stories:** updates created by actors for their followers
 
 ### Graphs
 1. **social graph:** people and groups can be followed by other people.
 2. **hashtags:** for actors, media, and comments
 3. **mentions:** tag people in media and comments
-4. **notifications:** a person receives an email notification whenever a comment is posted on an item they are subscribed to.
-5. **votes:** people can Like/Unlike media and comments
+4. **locations:** tag locations in media and actors  
+5. **notifications:** a person receives an email notification whenever a comment is posted on an item they are subscribed to.
+6. **votes:** people can Like/Unlike media and comments
 
 ### Stories
 - story feeds on dashboard and actor profiles
@@ -150,8 +152,6 @@ Anahita emails out a lot of email notifications. In order for the notifications 
 ![Installing Anahita social apps](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-apps-install.gif)
 
 Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
-
-**Please Note:** the _Subscriptions_ app has not yet been upgraded for the Anahita 4.1. The updated version should be available by June 2015.
 
 To get a list of available apps simply type the following command:
 
