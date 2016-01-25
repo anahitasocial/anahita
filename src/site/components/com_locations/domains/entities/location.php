@@ -44,26 +44,35 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                     'format' => 'float',
                     'read' => 'public'
                 ),
-                'address' => array(
+                'geoAddress' => array(
                     'format' => 'string',
                     'read' => 'public'
                 ),
-                'city' => array(
+                'geoCity' => array(
                     'format' => 'string',
                     'read' => 'public'
                 ),
-                'state_province' => array(
+                'geoState_province' => array(
                     'format' => 'string',
                     'read' => 'public'
                 ),
-                'country' => array(
+                'geoCountry' => array(
                     'format' => 'string',
                     'read' => 'public'
                 ),
-                'postalcode' => array(
+                'geoPostalcode' => array(
                     'format' => 'string',
                     'read' => 'public'
                 )
+            ),
+            'aliases' => array(
+                'latitude' => 'geoLatitude',
+                'longitude' => 'geoLongitude',
+                'address' => 'geoAddress',
+                'city' => 'geoCity',
+                'state_province' => 'geoState_province',
+                'country' => 'geoCountry',
+                'postalcode' => 'geoPostalcode'
             ),
             'behaviors' => to_hash(array(
                 'modifiable',
@@ -100,8 +109,8 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
         $address = implode(',', $this->addressToArray());
 
         if ($location = $this->_geocoder->geocode($address)) {
-            $this->geoLatitude = $location['latitude'];
-            $this->geoLongitude = $location['longitude'];
+            $this->latitude = $location['latitude'];
+            $this->longitude = $location['longitude'];
         }
     }
 
@@ -115,13 +124,13 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
 
         if (count(array_intersect($keys, array('address','city','state_province','country','postalcode')))){
             $address = $this->addressToArray();
-            unset($address['geoLatitude']);
-            unset($address['geoLongitude']);
+            unset($address['latitude']);
+            unset($address['longitude']);
             $address = implode(',', $address);
 
             if($location = $this->_geocoder->geocode($address)) {
-                $this->geoLatitude = $location['latitude'];
-                $this->geoLongitude = $location['longitude'];
+                $this->latitude = $location['latitude'];
+                $this->longitude = $location['longitude'];
             }
         }
     }
@@ -139,8 +148,8 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
             'state_province' => $this->state_province,
             'country' => $this->country,
             'postalcode' => $this->postalcode,
-            'geoLatitude' => $this->geoLatitude,
-            'geoLongitude' => $this->geoLongitude
+            'latitude' => $this->latitude,
+            'longitude' => $this->longitude
         );
     }
 }

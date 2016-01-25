@@ -70,8 +70,8 @@ class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbst
            $attr = array('id' => $data->location_id);
        } else {
            $attr = array(
-              'geoLatitude' => $data->geoLatitude,
-              'geoLongitude' => $data->geoLongitude,
+              'latitude' => $data->latitude,
+              'longitude' => $data->longitude,
               'name' => $data->name,
               'address' => $data->address,
               'city' => $data->city,
