@@ -39,7 +39,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
     protected function _actionBrowse(KCommandContext $context)
     {
         // @todo move these queries to query classes
-        
+
         $keyword = ($this->q) ? $this->getService('anahita:filter.term')->sanitize($this->q) : '';
 
         if ($this->locatable) {
@@ -65,7 +65,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                 $calc_distance = 'CEIL((ACOS(SIN('.$lat.'*PI()/180) * SIN(location.geo_latitude*PI()/180) + COS('.$lat.'*PI()/180) * COS(location.geo_latitude*PI()/180) * COS(('.$lng.'*PI()/180) - (location.geo_longitude*PI()/180) )) *'.$earth_radius.'))';
 
                 $query->select(array($calc_distance.' AS `distance`'));
-                $query->having('distance < 1000');
+                $query->having('distance < 10000');
               }
 
           } else {
