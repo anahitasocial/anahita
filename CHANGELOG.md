@@ -3,13 +3,13 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.1.8 Birth Release
 =============================
 * fixed issue with the db table coalitions problem. Now all the tables are set to utf-8 and Engine=InnoDB
-* fixed issues in the Invites app tokens and UIs 
+* fixed issues in the Invites app tokens and UIs
 
 Anahita 4.1.7 Birth Release
 =============================
 * fixed the issue which was breaking the actor social graph pagination
 * fixed the issue which was preventing notification settings to be stored in default layout
-* changed the lable follow/unfollow to get/stop notifications for medium node Subscriptions
+* changed the label follow/unfollow to get/stop notifications for medium node Subscriptions
 * medium nodes are enabled by default
 
 Anahita 4.1.6 Birth Release
@@ -22,7 +22,7 @@ Anahita 4.1.5 Birth Release
 * people management is now happening all in the front-end
 * removed legacy user manager from the back-end
 * removed legacy joomla ACL
-* implemented simple and natively supported ACL and 4 user types: public, registered, administrator, super adminstrator
+* implemented simple and natively supported ACL and 4 user types: public, registered, administrator, super administrator
 * updated database schema and dropped legacy tables
 * we now have nodes and edges tables without the anahita prefix
 * refactored com_people MVC. We are still relying on JUser, but we are closer to a fully native user manager
