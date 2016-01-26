@@ -33,7 +33,7 @@ class ComLocationsDomainEntityComponent extends ComComponentsDomainEntityCompone
         if ($mode == 'dashboard') {
             $gadgets->insert('locations-trending', array(
                 'title' => JText::_('COM-LOCATIONS-GADGET-TRENDING'),
-                'url' => 'option=com_locations&view=locations&layout=list_gadget&sort=trending&limit=10',
+                'url' => 'option=com_locations&view=locations&layout=list_gadget&sort=trending&limit=5',
             ));
         }
     }

@@ -29,7 +29,7 @@
 </div>
 
 <?php
-$paginationUrl = $location->getURL().'&layout=list';
+$paginationUrl = $location->getURL().'&layout=taggables';
 
 if (!empty($sort)) {
     $paginationUrl .= '&sort='.$sort;
@@ -41,5 +41,5 @@ if (!empty($scope)) {
 ?>
 
 <div id="an-locatables" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route($paginationUrl) ?>">
-	<?= @template('_locatables') ?>
+	<?= @template('taggables') ?>
 </div>

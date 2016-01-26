@@ -2,8 +2,8 @@
 
 <?= @helper('ui.header', array()) ?>
 
-<?php 
-$paginationUrl = $item->getURL().'&layout=list';
+<?php
+$paginationUrl = $item->getURL().'&layout=taggables';
 
 if (!empty($sort)) {
     $paginationUrl .= '&sort='.$sort;
@@ -16,5 +16,5 @@ if (!empty($scope)) {
 
 
 <div id="an-hashtags" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route($paginationUrl) ?>">
-	<?= @template('list') ?>
+	<?= @template('taggables') ?>
 </div>
