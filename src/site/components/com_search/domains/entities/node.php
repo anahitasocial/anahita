@@ -27,7 +27,7 @@ class ComSearchDomainEntityNode extends ComBaseDomainEntityNode
             'behaviors' => array(
                 'privatable',
                 'com://site/locations.domain.behavior.geolocatable',
-            ),
+            )
         ));
 
         parent::_initialize($config);

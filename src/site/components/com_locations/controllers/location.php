@@ -65,14 +65,14 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                 $calc_distance = 'CEIL((ACOS(SIN('.$lat.'*PI()/180) * SIN(location.geo_latitude*PI()/180) + COS('.$lat.'*PI()/180) * COS(location.geo_latitude*PI()/180) * COS(('.$lng.'*PI()/180) - (location.geo_longitude*PI()/180) )) *'.$earth_radius.'))';
 
                 $query->select(array($calc_distance.' AS `distance`'));
-                $query->having('distance < 10000');
+                $query->having('distance < 5000');
+                $query->order('distance');
               }
 
           } else {
               $query = $this->locatable->locations;
+              $query->order('name');
           }
-
-          $query->order('name');
 
         } elseif ($keyword != '') {
             $query = $this->getService('repos:locations.location')->getQuery();

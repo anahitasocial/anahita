@@ -78,6 +78,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'modifiable',
                 'describable',
                 'authorizer',
+                'dictionariable'
             )),
             'relationships' => array(
                 'tagables' => array(
@@ -111,6 +112,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
         if ($location = $this->_geocoder->geocode($address)) {
             $this->latitude = $location['latitude'];
             $this->longitude = $location['longitude'];
+            $this->setValue('results', $location['results']);
         }
     }
 
@@ -139,6 +141,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
             if($location = $this->_geocoder->geocode($address)) {
                 $this->latitude = $location['latitude'];
                 $this->longitude = $location['longitude'];
+                $this->setValue('results', $location['results']);
             }
         }
     }
