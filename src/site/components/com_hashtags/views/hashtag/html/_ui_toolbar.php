@@ -9,6 +9,6 @@
         <a class="btn <?= ($sort == 'top') ? 'disabled' : '' ?>" href="<?= @route(array('view' => 'hashtag', 'alias' => $item->name, 'sort' => 'top')) ?>">
             <i class="icon-fire"></i>
             <?= @text('LIB-AN-SORT-TOP') ?>
-        </a> 
+        </a>
     </div>
 </div>
