@@ -44,6 +44,10 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionRead($context);
 
+        $pkg = $this->getIdentifier()->package;
+
+        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-'.$pkg.'-HEADER'), $entity->name));
+
         if (!empty($entity->tagables)) {
 
             if ($this->scope) {
