@@ -54,7 +54,8 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
             $results = $data['results'][0]['geometry']['location'];
             $location = array(
                 'longitude' => $results['lng'],
-                'latitude' => $results['lat']
+                'latitude' => $results['lat'],
+                'results' => $data['results'],
             );
             return $location;
         } else {

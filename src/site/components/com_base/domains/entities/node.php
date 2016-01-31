@@ -45,6 +45,7 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
                     'required' => true,
                     'read' => 'public',
                     ),
+                'enabled' => array('default' => 1)
             ),
            'behaviors' => to_hash(array('node')),
         ));
