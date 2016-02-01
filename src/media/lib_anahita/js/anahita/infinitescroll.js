@@ -105,7 +105,7 @@
 		},
 
 		_setNewLimit : function ( limit ) {
-		    this._limit = limit * this.options.preload;
+		    this._limit = limit;
 		}
 	});
 
