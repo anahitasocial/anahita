@@ -18950,6 +18950,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 			this._setNewLimit( limit );
 
+			console.log(limit);
+
 			$.ajax({
 			    method : 'get',
 			    url : this.url + '&' + limit,
@@ -18981,7 +18983,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		},
 
 		_setNewLimit : function ( limit ) {
-		    this._limit = limit * this.options.preload;
+		    this._limit = limit;
 		}
 	});
 
