@@ -84,7 +84,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
           $query->where('edge.type', '=', $edgeType)->group('location.id');
         }
 
-        $query->limit($this->limit, $this->offset);
+        $query->limit($this->limit, $this->start);
 
         //print str_replace('#_', 'jos', $query);
 

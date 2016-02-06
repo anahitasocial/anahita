@@ -13,7 +13,9 @@ if (isset($filter)) {
 ?>
 
 <div id="an-photos" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-<?= @template('masonry_list') ?>
+  <div class="row">
+    <?= @template('masonry_list') ?>
+  </div>
 </div>
 <?php else: ?>
 <?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>

@@ -64,7 +64,7 @@ class ComBaseControllerService extends ComBaseControllerResource
             'toolbars' => array($this->getIdentifier()->name, 'menubar', 'actorbar'),
             'request' => array(
                 'limit' => 20,
-                'offset' => 0,
+                'start' => 0,
                 'sort' => 'recent',
                 'scope' => '',
             ),

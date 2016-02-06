@@ -2,12 +2,12 @@
 .author-name,
 .editor-name
 {
-   font-size: @baseFontSize; 	
+   font-size: @baseFontSize;
    line-height: @baseLineHeight;
 }
 
 .entity-portrait-square
-{        
+{
     float: left;
     margin: 10px;
 }
@@ -28,19 +28,19 @@ h1.entity-name
 
 h2.entity-title,
 h2.entity-name
-{ 
+{
     font-size: @baseFontSize + 4;
 }
 
 h3.entity-title,
 h3.entity-name
-{ 
+{
     font-size: @baseFontSize + 3;
 }
 
 h4.entity-title,
 h4.entity-name,
-{ 
+{
     font-size: @baseFontSize + 2;
 }
 
@@ -49,12 +49,12 @@ h4.entity-name,
 {
     word-wrap: break-word;
     margin: 10px;
-    
-    code 
-    { 
-        padding: 10px; 
+
+    code
+    {
+        padding: 10px;
     }
-    
+
     h1 { font-size: @baseFontSize + 7 }
     h2 { font-size: @baseFontSize + 3 }
     h3 { font-size: @baseFontSize + 2 }
@@ -67,7 +67,7 @@ h4.entity-name,
   {
      padding: 10px;
      margin: 0;
-     
+
      .form-actions
      {
         margin: 0;
@@ -82,18 +82,18 @@ h4.entity-name,
 
 .entity-excerpt
 {
-    margin: 10px;	
+    margin: 10px;
 }
 
 .entity-meta
-{ 
+{
     .an-meta;
     margin: 10px;
 }
 
 .entity-actions
 {
-    margin: 10px;    
+    margin: 10px;
 }
 
 .entity-container
@@ -112,36 +112,36 @@ form.an-entity
     .clearfix;
     margin: 10px 0;
     .border-radius(@baseBorderRadius);
-    
+
     &.an-entity-select-option
     {
         cursor: pointer;
-        
+
         &:hover
         {
             .an-highlight;
         }
     }
-    
+
     .entity-portrait-square
-  	{        	        
+  	{
   	    img
-  	    {           
+  	    {
   	        .square(50px);
   	        .border-radius(3px);
   	    }
   	}
-    
+
     .entity-portrait-medium
-     {   
+     {
          margin: 10px;
      }
-	
+
   	dl
-      {   
+      {
           .clearfix;
           font-size: @baseFontSize;
-              
+
           dt
           {
               float: left;
@@ -151,7 +151,7 @@ form.an-entity
               padding-left: 120px;
           }
       }
-    
+
     ul.inline
     {
         li:first-child
@@ -159,7 +159,7 @@ form.an-entity
             padding-left: 0;
         }
     }
-    
+
     i.pull-right
     {
         margin-right: 10px;
@@ -170,46 +170,28 @@ form.an-entity
 {
 	.an-entity
 	{
-	   
+
 	   &:first-child
 	    {
 	       border-top: 0;
 	    }
-	    
+
 	    &:last-child
 	    {
 	       border-bottom: 0;
 	    }
     }
-    
+
     &.masonry
     {
-        -moz-column-gap: 15px;
-        -webkit-column-gap: 15px;
-        column-gap: 15px;
-        
-        @media (min-width: 767px) 
-        {
-            -moz-column-count: 2;
-            -webkit-column-count: 2;
-            column-count: 2;
-        }
-        
-        .an-entity
-        {
-            display: inline-block; /* Display inline-block, and absolutely NO FLOATS! */
-            margin-bottom: 0;
-            width: 100%;
-       
-            .entity-portrait-medium
-	        {            
-	            margin: 0;
-	            
-	            img
-	            {
-	                .border-radius(0);
-	            }
-	        }
-        }
+      .entity-portrait-medium
+      {
+          margin: 0;
+
+          img
+          {
+              .border-radius(0);
+          }
+      }
     }
 }

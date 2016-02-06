@@ -58,5 +58,7 @@ if (!empty($scope)) {
 ?>
 
 <div id="an-locatables" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route($paginationUrl) ?>">
-	<?= @template('taggables') ?>
+	<div class="row">
+  <?= @template('taggables') ?>
+  </div>
 </div>

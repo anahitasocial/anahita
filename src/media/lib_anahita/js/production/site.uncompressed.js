@@ -18889,106 +18889,116 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	$.widget("anahita.infinitescroll", {
 
 		options: {
-			record : '.an-entity',
 			window : window,
 			scrollable : document,
-			preload: 3,
+			item : '.an-entity',
+			preload : 3,
 			limit : 20,
 			url : null
 		},
 
 		_create: function() {
 
-			if (this.element.children(this.options.record).length < this.options.limit )
+				var self = this;
+				var scrollable = this.element.data('scrollable') || this.options.scrollable;
+
+				this.element.data('fetched-items', null);
+				this.url = this.element.data('url') || this.options.url;
+			  this.waiting = false;
+				this.endOfRecords = false;
+				this.batchSize = this.options.limit * this.options.preload;
+	      this.start = this.element.find(this.options.item).length;
+				this.items = new Array();
+
+				this._getItems();
+
+				// listen to the "urlChange" event
+        // if there is one, update the url and refresh records.
+        this._on( $(document) , {
+
+            'urlChange' : function( event ) {
+                self.element.data('url', $(document).data('newUrl'));
+                self.url = this.element.data('url');
+								self.items = null;
+								self.start = 0;
+								self._getItems();
+            }
+        });
+
+				$(scrollable).scroll(function(){
+						if (
+								!self.waiting &&
+								self.element.is(':visible') &&
+								$(window).scrollTop() + ($(window).height() * 1.3 ) >= $(scrollable).height()
+						) {
+								self._render();
+								self._getItems();
+						}
+				});
+		},
+
+		_getItems : function() {
+
+				if(this.endOfRecords) {
+					 return;
+				}
+
+				var self = this;
+
+				var limit = $.param({
+						start : this.start,
+						limit : this.batchSize
+				});
+
+				$.ajax({
+						method : 'get',
+						url : this.url + '&' + limit,
+						beforeSend : function () {
+							self.waiting = true;
+						},
+						success : function ( response ) {
+							 self.waiting = false;
+							 response = $(response);
+
+							 var newItems = response.find( self.options.item );
+
+							 if(newItems.length > 0) {
+									self.items = $.merge(self.items, newItems);
+									self.start += self.batchSize;
+									self._render();
+							 } else {
+								 	self.endOfRecords = true;
+							 }
+						}
+				});
+		},
+
+		_render : function() {
+
+			if(this.element.data('fetched-items')) {
+				$(document).trigger('masonry');
 				return;
-
-            this.url = this.element.data('url') || this.options.url;
-            this.records = this.element.children(this.options.record);
-            this.start = this.records.length;
-
-            this._preload();
-
-			var self = this;
-
-			// listen to the "urlChange" event
-            // if there is one, update the url and refresh records.
-            this._on( $(document) , {
-
-                'urlChange' : function( event ) {
-
-                    self.element.data('url', $(document).data('newUrl'));
-                    this.url = this.element.data('url');
-                    this.records = this.element.children(this.options.record);
-                    this.start = this.records.length;
-
-                    this._setNewLimit(null);
-
-                    this._preload();
-                }
-            });
-
-			var scrollable = $(this.options.scrollable);
-
-			scrollable.scroll(function(){
-
-				if ( self.element.is(':visible') && $(window).scrollTop() + ($(window).height() * 1.3 ) >= $(scrollable).height()) {
-					self._getNextPage();
-				}
-			});
-		},
-
-		_preload: function(){
-
-			var limit = $.param({
-				start : this.records.length,
-				limit : this.options.limit * this.options.preload,
-			});
-
-			if(!this._isNewLimit( limit )) {
-			    return false;
 			}
 
-			this._setNewLimit( limit );
+			var items = new Array();
+			var limit = this.options.limit;
 
-			console.log(limit);
-
-			$.ajax({
-			    method : 'get',
-			    url : this.url + '&' + limit,
-			    success : function ( response ) {
-
-			       response = $(response);
-             this.records = $.merge( this.records, response.filter( this.options.record ));
-
-			    }.bind( this )
-			});
-		},
-
-		_getNextPage: function() {
-
-			if ( this.start < this.records.length ) {
-
-				for ( var i = 0; i < this.options.limit; i++ ) {
-					this.element.append(this.records[ this.start + i ]);
-				}
-
-				this.start += this.options.limit;
+			while(limit && this.items.length) {
+				items.push(this.items.shift());
+				limit--;
 			}
 
-			this._preload();
-		},
+			this.element.data('fetched-items', items);
 
-		_isNewLimit : function ( limit ) {
-		    return this._limit != limit;
-		},
-
-		_setNewLimit : function ( limit ) {
-		    this._limit = limit;
+			$(document).trigger('masonry');
 		}
 	});
 
-	if ( $('[data-trigger="InfiniteScroll"]').length ) {
-	   $('[data-trigger="InfiniteScroll"]').infinitescroll();
+	var elements = $('[data-trigger="InfiniteScroll"]');
+
+	if ( elements.length ) {
+		 elements.find('.InfiniteScrollReadmore').hide();
+		 elements.infinitescroll();
 	}
 
 	$(document).ajaxSuccess(function() {
@@ -18999,6 +19009,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 		    if( !$(element).is(":data('anahita-infinitescroll')") ) {
 
+					$(element).find('.InfiniteScrollReadmore').hide();
 		      $(element).infinitescroll();
 
 		    }
@@ -21006,3 +21017,131 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     $('body').stateSelector();
     
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/ui/masonry.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2016 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+ ;(function ($, window, document) {
+
+ 	'use strict';
+
+  $.widget("anahita.masonry", {
+
+    options: {
+      item : '.an-entity',
+      row : '.row',
+      span : 'div[class*="span"]',
+      columns : 2,
+      mobileWidth : 620
+    },
+
+    _create: function() {
+
+      var self = this;
+      this.items = new Array();
+      this.row = null;
+      this.spans = null;
+      this.total = 0;
+
+      this._setGrid();
+
+      this.total = this.element.find(this.options.item).length;
+
+      //when masonry event is triggered, render the items
+      this._on( $(document) , {
+          'masonry' : function( event ) {
+            self._render();
+          }
+      });
+
+      //refresh the layout after window resize
+      $(window).one("resize", function () {
+        self._refresh();
+      });
+    },
+
+    _setGrid : function() {
+      if (this.element.find(this.options.row).length == 0) {
+
+          this.element.append('<div class="row"></div>');
+          this.row = this.element.find(this.options.row);
+
+          var columns = this.options.columns;
+
+          if( this.element.width() < this.options.mobileWidth ) {
+            columns = 1;
+          }
+
+          var span = 12 / columns;
+
+          for(var i = 0; i < columns; i++ ) {
+             this.row.append('<div class="span' + span + '"></div>');
+          }
+
+          this.spans = this.row.find('.span' + span);
+
+      } else {
+
+        this.row = this.element.find(this.options.row);
+        this.spans = this.row.find(this.options.span);
+        this.total = this.row.find(this.options.item).length;
+
+        if(this.total > 0){
+
+          var self = this;
+          var columns = new Array();
+          $.each(this.spans, function(index, span) {
+            columns.push($(span).find(self.options.item).toArray());
+          });
+
+          for(var i=0; i < this.total; i++) {
+            var column = columns[ i % columns.length ];
+            this.items.push(column.shift());
+          }
+        }
+      }
+    },
+
+    _render : function() {
+
+      var self = this;
+      var newItems = this.element.data('fetched-items');
+      var columns = this.spans.length;
+
+      $.each(newItems, function(index, item){
+        var span = self.spans[ self.total % columns];
+        $(span).append(item);
+        self.items.push(item);
+        self.total++;
+      });
+
+      this.element.data('fetched-items', null);
+		},
+
+    _refresh : function(){
+
+        this.element.empty();
+        this.total = 0;
+        this._setGrid();
+
+        var self = this;
+        var columns = this.spans.length;
+
+        $.each(this.items, function(index, item){
+            var span = self.spans[ self.total % columns];
+            $(span).append(item);
+            self.total++;
+        });
+    }
+
+  });
+
+  var elements = $('.masonry').masonry();
+
+}(jQuery, window, document));
+
