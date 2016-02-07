@@ -7,12 +7,12 @@
  */
 
 ;(function($, window) {
-    
-    'use strict';
-    
-    var swipebox = $('[data-trigger="MediaViewer"]').swipebox({
-		autoplayVideos : true,
-		closeOnClick : true
-	});
-    
+
+  'use strict';
+
+  $('[data-trigger="MediaViewer"]').swipebox({
+    autoplayVideos : true,
+    closeOnClick : true
+  });
+
 }(jQuery, window));

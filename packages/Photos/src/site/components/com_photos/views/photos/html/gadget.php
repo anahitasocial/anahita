@@ -2,7 +2,7 @@
 
 <?php if (count($photos)) : ?>
 <?php
-$url['layout'] = 'masonry';
+$url['layout'] = 'gadget_list';
 
 if (isset($filter)) {
     $url['filter'] = $filter;

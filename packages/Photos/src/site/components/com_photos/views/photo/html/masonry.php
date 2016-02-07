@@ -9,7 +9,7 @@
 		<div class="entity-portrait-square">
 			<?= @avatar($photo->author) ?>
 		</div>
-		
+
 		<div class="entity-container">
 			<h4 class="author-name"><?= @name($photo->author) ?></h4>
 			<ul class="an-meta inline">
@@ -20,14 +20,14 @@
 			</ul>
 		</div>
 	</div>
-	
+
 	<div class="entity-portrait-medium">
 		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
 		<a data-rel="media-photos" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>
-	
+
 	<div class="entity-description-wrapper">
 		<?php if ($photo->title): ?>
 			<h4 class="entity-title">
@@ -40,12 +40,12 @@
 				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
 			</h4>
 		<?php endif; ?>
-    		
+
     	<div class="entity-description">
     	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude' => array('gist', 'video'))), array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
     	</div>
 	</div>
-		
+
 	<div class="entity-meta">
 		<ul class="an-meta inline">
 			<li>
@@ -57,12 +57,12 @@
 		 	<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
 			<?php endif; ?>
 		</ul>
-		
+
 		<div class="vote-count-wrapper an-meta" id="vote-count-wrapper-<?= $photo->id ?>">
 			<?= @helper('ui.voters', $photo); ?>
 		</div>
 	</div>
-	
+
 	<?php if ($photo->authorize('edit')) : ?>
 	<div class="entity-actions">
 		<?= @helper('ui.commands', @commands('list')) ?>

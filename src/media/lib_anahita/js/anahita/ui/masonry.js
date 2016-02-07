@@ -135,6 +135,8 @@
             $(span).append(item);
             self.total++;
         });
+
+        $(document).trigger('entities-rendered');
     }
 
   });

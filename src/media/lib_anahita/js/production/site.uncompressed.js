@@ -19483,15 +19483,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function($, window) {
-    
-    'use strict';
-    
-    var swipebox = $('[data-trigger="MediaViewer"]').swipebox({
-		autoplayVideos : true,
-		closeOnClick : true
-	});
-    
+
+  'use strict';
+
+  $('[data-trigger="MediaViewer"]').swipebox({
+    autoplayVideos : true,
+    closeOnClick : true
+  });
+
 }(jQuery, window));
+
 ///media/lib_anahita/js/anahita/sort.js
 /**
  * Author: Nick Swinford
@@ -21175,6 +21176,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             $(span).append(item);
             self.total++;
         });
+
+        $(document).trigger('entities-rendered');
     }
 
   });
