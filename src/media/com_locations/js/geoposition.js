@@ -30,7 +30,7 @@
     }
 
     $(document).ready(function ( event ){
-        $('body').geoposition();
+        $(document).geoposition();
     });
 
 }(jQuery, window, document));

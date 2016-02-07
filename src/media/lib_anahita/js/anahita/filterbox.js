@@ -19,7 +19,7 @@
           url : form.attr('action'),
           data : form.serialize(),
           beforeSend : function (){
-							$(document).trigger('beforeFilterbox');
+							$(form).trigger('beforeFilterbox');
 							form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
           },
           success : function ( response ) {
@@ -31,10 +31,11 @@
 							}
 
 							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+
 								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
 								 $(container).data('fetched-items', items);
-								 form.siblings('.an-entities').find('.an-entity').remove();
-								 $(document).trigger('masonry-reset-render');
+								 $(container).trigger('masonry-reset-render');
+								 
 								 return;
 							}
 
@@ -49,10 +50,15 @@
 							form.siblings('.pagination').html(pagination);
           },
           complete : function () {
-              form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
-							var newUrl = form.attr('action') + '&' + form.serialize();
-              $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
-							$(document).trigger('afterFilterbox');
+
+							form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+
+							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+									var container = form.siblings('[data-trigger="InfiniteScroll"]');
+									var newUrl = form.attr('action') + '&' + form.serialize();
+              		$(container).data( 'newUrl',  newUrl ).trigger('urlChange');
+									$(container).trigger('afterFilterbox');
+							}
           }
       });
 	};

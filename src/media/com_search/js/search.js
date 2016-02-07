@@ -68,7 +68,7 @@
 			});
 
 			//nearby options search
-			this._on( $(document), {
+			this._on( this.form, {
 				 'SearchNearby' : function ( event ) {
 
 						elemRange.prop('disabled', false);
@@ -133,7 +133,7 @@
 
 					$(self.options.results).data('fetched-items', response.filter('.an-entity'))
 
-					$(document).trigger('masonry-reset-render');
+					$(self.element).trigger('masonry-reset-render');
 
 					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
 
@@ -144,13 +144,13 @@
 
 					var newUrl = self.form.attr('action') + '?' + self.form.serialize() + '&' + $.param(self.searchOptions);
 
-					$(document).data( 'newUrl',  newUrl ).trigger('urlChange');
+					$(self.element).data( 'newUrl',  newUrl ).trigger('urlChange');
 				}
 			});
 		}
 	});
 
-	var search = $('body').search();
+	var search = $('#an-search-results').search();
 
 	$('body').on('click', '[data-trigger="ChangeScope"]', function ( event ) {
 			event.preventDefault();

@@ -34,7 +34,7 @@
       this.total = this.element.find(this.options.item).length;
 
       //when masonry event is triggered, render the items
-      this._on( $(document) , {
+      this._on( $(this.element) , {
           'masonry-render' : function( event ) {
             self._render();
           },
@@ -53,7 +53,6 @@
     _setGrid : function() {
 
       if (this.element.find(this.options.row).length == 0) {
-
           this.element.append('<div class="row-fluid"></div>');
           this.row = this.element.find(this.options.row);
 
@@ -94,9 +93,8 @@
     },
 
     _reset : function() {
-      this.items = new Array();
       this.spans.empty();
-      this.total = 0;
+      this.items = new Array();
       this.total = 0;
     },
 
@@ -118,7 +116,7 @@
       });
 
       this.element.data('fetched-items', null);
-      $(document).trigger('entities-rendered');
+      $(this.element).trigger('entities-rendered');
 		},
 
     _refresh : function(){
@@ -136,7 +134,7 @@
             self.total++;
         });
 
-        $(document).trigger('entities-rendered');
+        $(this.element).trigger('entities-rendered');
     }
 
   });

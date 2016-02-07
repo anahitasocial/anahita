@@ -11,7 +11,6 @@
     'use strict';
 
     var input = document.getElementById('SearchNearby');
-
     var autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', function (){
@@ -22,7 +21,7 @@
           console.log("Autocomplete's returned place contains no geometry");
           return false;
         } else {
-          $(document).trigger('SearchNearby');
+          $(input.form).trigger('SearchNearby');
         }
 
         return true;

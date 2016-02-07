@@ -61,11 +61,11 @@
         });
 
         $(this.options.locationsList).each(function(index, list){
-          $(list).load($(list).data('url'));
+            $(list).load($(list).data('url'));
         });
 
         //listen to the filter box. If no locations are available, show the form
-        this._on( $(document), {
+        this._on( this.element, {
           'afterFilterbox' : function( event ) {
             var results = self.locationsContainer.find(this.options.entity);
             if (results.length == 0) {
@@ -113,8 +113,8 @@
         var browser_latitude = null;
         var browser_longitude = null;
 
-        if($('body').data('browser_coords')){
-            var browser_coords = $('body').data('browser_coords');
+        if($(document).data('browser_coords')){
+            var browser_coords = $(document).data('browser_coords');
             var browser_latitude = browser_coords.latitude;
             var browser_longitude = browser_coords.longitude;
         }
@@ -128,11 +128,12 @@
             },
             success : function (response) {
 
-                var entity = $(response).filter(self.options.entity);
+                var items = $(response).filter(self.options.entity);
 
-                if (entity.length) {
+                if (items.length) {
                     self._hideForm();
-                    $(entities).html(entity);
+                    $(self.element).data('fetched-items', items);
+                    $(self.element).trigger('masonry-reset-render');
                 } else {
                     self._showForm();
                 }

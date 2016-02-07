@@ -38,10 +38,10 @@
 
 				// listen to the "urlChange" event
         // if there is one, update the url and refresh records.
-        this._on( $(document) , {
+        this._on( this.element , {
 
             'urlChange' : function( event ) {
-                self.element.data('url', $(document).data('newUrl'));
+								self.element.data('url', self.element.data('newUrl'));
                 self.url = this.element.data('url');
 								self.items = self.element.find(self.options.item).toArray();
 								self.start = self.element.find(self.options.item).length;
@@ -111,7 +111,7 @@
 		_render : function() {
 
 			if(this.element.data('fetched-items')) {
-				$(document).trigger('masonry-render');
+				this.element.trigger('masonry-render');
 				return;
 			}
 
@@ -124,8 +124,7 @@
 			}
 
 			this.element.data('fetched-items', items);
-
-			$(document).trigger('masonry-render');
+			this.element.trigger('masonry-render');
 		}
 	});
 

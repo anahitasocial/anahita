@@ -18914,10 +18914,10 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 				// listen to the "urlChange" event
         // if there is one, update the url and refresh records.
-        this._on( $(document) , {
+        this._on( this.element , {
 
             'urlChange' : function( event ) {
-                self.element.data('url', $(document).data('newUrl'));
+								self.element.data('url', self.element.data('newUrl'));
                 self.url = this.element.data('url');
 								self.items = self.element.find(self.options.item).toArray();
 								self.start = self.element.find(self.options.item).length;
@@ -18987,7 +18987,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 		_render : function() {
 
 			if(this.element.data('fetched-items')) {
-				$(document).trigger('masonry-render');
+				this.element.trigger('masonry-render');
 				return;
 			}
 
@@ -19000,8 +19000,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			}
 
 			this.element.data('fetched-items', items);
-
-			$(document).trigger('masonry-render');
+			this.element.trigger('masonry-render');
 		}
 	});
 
@@ -19083,7 +19082,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
           url : form.attr('action'),
           data : form.serialize(),
           beforeSend : function (){
-							$(document).trigger('beforeFilterbox');
+							$(form).trigger('beforeFilterbox');
 							form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
           },
           success : function ( response ) {
@@ -19095,10 +19094,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 							}
 
 							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+
 								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
 								 $(container).data('fetched-items', items);
-								 form.siblings('.an-entities').find('.an-entity').remove();
-								 $(document).trigger('masonry-reset-render');
+								 $(container).trigger('masonry-reset-render');
+								 
 								 return;
 							}
 
@@ -19113,10 +19113,15 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 							form.siblings('.pagination').html(pagination);
           },
           complete : function () {
-              form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
-							var newUrl = form.attr('action') + '&' + form.serialize();
-              $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
-							$(document).trigger('afterFilterbox');
+
+							form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+
+							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+									var container = form.siblings('[data-trigger="InfiniteScroll"]');
+									var newUrl = form.attr('action') + '&' + form.serialize();
+              		$(container).data( 'newUrl',  newUrl ).trigger('urlChange');
+									$(container).trigger('afterFilterbox');
+							}
           }
       });
 	};
@@ -21075,7 +21080,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       this.total = this.element.find(this.options.item).length;
 
       //when masonry event is triggered, render the items
-      this._on( $(document) , {
+      this._on( $(this.element) , {
           'masonry-render' : function( event ) {
             self._render();
           },
@@ -21094,7 +21099,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     _setGrid : function() {
 
       if (this.element.find(this.options.row).length == 0) {
-
           this.element.append('<div class="row-fluid"></div>');
           this.row = this.element.find(this.options.row);
 
@@ -21135,9 +21139,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     },
 
     _reset : function() {
-      this.items = new Array();
       this.spans.empty();
-      this.total = 0;
+      this.items = new Array();
       this.total = 0;
     },
 
@@ -21159,7 +21162,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       });
 
       this.element.data('fetched-items', null);
-      $(document).trigger('entities-rendered');
+      $(this.element).trigger('entities-rendered');
 		},
 
     _refresh : function(){
@@ -21177,7 +21180,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             self.total++;
         });
 
-        $(document).trigger('entities-rendered');
+        $(this.element).trigger('entities-rendered');
     }
 
   });
