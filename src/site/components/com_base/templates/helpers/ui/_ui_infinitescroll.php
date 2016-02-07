@@ -9,7 +9,7 @@
     <div class="span<?= 12 / $columns ?>">
     <?php $k = 0; ?>
     <?php foreach ($entities as $entity) : ?>
-    		<?php if(($k % 2) == $i) : ?>
+    		<?php if(($k % $columns) == $i) : ?>
     		<?= $view->$entity_type($entity); ?>
     		<?php endif; ?>
     		<?php $k++; ?>
