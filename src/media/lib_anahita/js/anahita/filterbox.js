@@ -30,10 +30,6 @@
 								items = $(response).find('.an-entity');
 							}
 
-							if(items.length == 0) {
-								return;
-							}
-
 							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
 								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
 								 $(container).data('fetched-items', items);
@@ -54,7 +50,7 @@
           },
           complete : function () {
               form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
-              var newUrl = form.attr('action') + '&' + form.serialize();
+							var newUrl = form.attr('action') + '&' + form.serialize();
               $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
 							$(document).trigger('afterFilterbox');
           }

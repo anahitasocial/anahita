@@ -67,7 +67,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
 
                 $query->select(array($calc_distance.' AS `distance`'));
                 $query->having('distance < 5000');
-                $query->order('distance', 'DESC');
+                $query->order('distance', 'ASC');
               }
 
           } else {

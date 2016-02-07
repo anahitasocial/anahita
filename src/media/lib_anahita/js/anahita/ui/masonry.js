@@ -118,6 +118,7 @@
       });
 
       this.element.data('fetched-items', null);
+      $(document).trigger('entities-rendered');
 		},
 
     _refresh : function(){
