@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
 
-<?php 
+<?php
 $view = @view('story')->layout('list');
 
 if (isset($actor)) {
@@ -8,10 +8,6 @@ if (isset($actor)) {
 }
 ?>
 
-<?php if (count($stories)) :?>
 <?php foreach ($stories as $story) : ?>
-	<?= $view->item($story) ?>
+<?= $view->item($story) ?>
 <?php endforeach; ?>
-<?php else: ?>
-<?= @message(@text('LIB-AN-PROMPT-NO-MORE-RECORDS-AVAILABLE')) ?>
-<?php endif; ?>

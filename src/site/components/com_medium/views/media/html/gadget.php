@@ -1,7 +1,8 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php
-$url = array();
+
+$url = array('layout=gadget_list');
 
 if (isset($filter)) {
     $url['filter'] = $filter;
@@ -10,10 +11,7 @@ if (isset($filter)) {
 }
 ?>
 
-<div data-behavior="InfiniteScroll" data-InfiniteScroll-options="{'url':'<?= @route($url) ?>'}" class="an-entities">
-<?= @template('gadget_list') ?>
-</div>
-
-<div class="an-loading-prompt hide">
-	<?= @message(@text('LIB-AN-LOADING-PROMPT')) ?>
-</div>
+<?= @infinitescroll(null, array(
+  'url' => $url,
+  'id' => 'an-media'
+)) ?>

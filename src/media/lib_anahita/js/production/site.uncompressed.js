@@ -18958,17 +18958,23 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 						},
 						success : function ( response ) {
 							 self.waiting = false;
-							 response = $(response);
 
-							 var newItems = response.find( self.options.item );
+							 var newItems = null;
 
-							 if(newItems.length > 0) {
-									self.items = $.merge(self.items, newItems);
-									self.start += self.batchSize;
-									self._render();
-							 } else {
-								 	self.endOfRecords = true;
+							 newItems = $(response).filter( self.options.item )
+
+							 if(newItems.length == 0) {
+								 newItems = $(response).find( self.options.item );
 							 }
+
+							 if(newItems.length == 0) {
+								 self.endOfRecords = true;
+								 return;
+							 }
+
+							 self.items = $.merge(self.items, newItems);
+							 self.start += self.batchSize;
+							 self._render();
 						}
 				});
 		},
@@ -19028,29 +19034,27 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-	
+
 	'use strict';
 
 	$.fn.gadget = function () {
-		
+
 	   this.filter( this.selector ).each(function(){
-			
+
 			var gadget = $(this);
 			var content = gadget.find(".gadget-content");
-			
-			if(content.children('div').length === 0)
+
+			if(content.children('div').length === 0) {
 				content.load(gadget.data('url'));
+			}
 		});
-		
 	};
-	
+
 	if ( $('.an-gadget').length ) {
-	  $('.an-gadget').gadget();  
+	  $('.an-gadget').gadget();
 	}
-	
+
 }(jQuery, window, document));
-
-
 
 ///media/lib_anahita/js/anahita/filterbox.js
 /**
@@ -21033,8 +21037,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
   $.widget("anahita.masonry", {
 
     options: {
-      item : '.an-entity',
-      row : '.row',
+      item : 'div[class*="an-entity"]',
+      row : '.row-fluid',
       span : 'div[class*="span"]',
       columns : 2,
       mobileWidth : 620
@@ -21047,6 +21051,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       this.row = null;
       this.spans = null;
       this.total = 0;
+      this.columns = this.element.data('columns') || this.options.columns;
 
       this._setGrid();
 
@@ -21060,20 +21065,21 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       });
 
       //refresh the layout after window resize
-      $(window).one("resize", function () {
+      $(window).on("resize", function () {
         self._refresh();
       });
     },
 
     _setGrid : function() {
+
       if (this.element.find(this.options.row).length == 0) {
 
-          this.element.append('<div class="row"></div>');
+          this.element.append('<div class="row-fluid"></div>');
           this.row = this.element.find(this.options.row);
 
-          var columns = this.options.columns;
+          var columns = this.columns;
 
-          if( this.element.width() < this.options.mobileWidth ) {
+          if( this.element.width() <= this.options.mobileWidth ) {
             columns = 1;
           }
 
@@ -21113,6 +21119,10 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       var newItems = this.element.data('fetched-items');
       var columns = this.spans.length;
 
+      if(!newItems) {
+        return;
+      }
+
       $.each(newItems, function(index, item){
         var span = self.spans[ self.total % columns];
         $(span).append(item);
@@ -21142,6 +21152,15 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
   });
 
   var elements = $('.masonry').masonry();
+
+  $(document).ajaxSuccess(function() {
+		var elements = $('.masonry');
+		$.each(elements, function( index, element ){
+        if( !$(element).is(":data('anahita-masonry')") ) {
+		      $(element).masonry();
+		    }
+		});
+	});
 
 }(jQuery, window, document));
 

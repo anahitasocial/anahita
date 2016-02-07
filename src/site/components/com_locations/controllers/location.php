@@ -57,6 +57,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                   $query->keyword = $keyword;
               }
 
+              //nearby
               if($this->nearby_latitude && $this->nearby_longitude) {
 
                 $earth_radius = 6371000;
@@ -66,7 +67,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
 
                 $query->select(array($calc_distance.' AS `distance`'));
                 $query->having('distance < 5000');
-                $query->order('distance');
+                $query->order('distance', 'DESC');
               }
 
           } else {

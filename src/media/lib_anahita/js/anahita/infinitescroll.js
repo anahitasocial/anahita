@@ -82,17 +82,23 @@
 						},
 						success : function ( response ) {
 							 self.waiting = false;
-							 response = $(response);
 
-							 var newItems = response.find( self.options.item );
+							 var newItems = null;
 
-							 if(newItems.length > 0) {
-									self.items = $.merge(self.items, newItems);
-									self.start += self.batchSize;
-									self._render();
-							 } else {
-								 	self.endOfRecords = true;
+							 newItems = $(response).filter( self.options.item )
+
+							 if(newItems.length == 0) {
+								 newItems = $(response).find( self.options.item );
 							 }
+
+							 if(newItems.length == 0) {
+								 self.endOfRecords = true;
+								 return;
+							 }
+
+							 self.items = $.merge(self.items, newItems);
+							 self.start += self.batchSize;
+							 self._render();
 						}
 				});
 		},

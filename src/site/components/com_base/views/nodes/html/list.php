@@ -1,14 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<div></div>
-
-<?php $view = @view('node'); ?>
+<?php $view = @view('node')->layout('list'); ?>
 <?php foreach ($items as $item): ?>
-<?php if ($item->inherits('ComBaseDomainEntityComment')): ?>
-<?= $view->layout('list_comment')->item($item) ?>
-<?php elseif ($item->inherits('ComActorsDomainEntityActor')): ?>
-<?= $view->layout('list_actor')->item($item) ?>
-<?php else: ?>
-<?= $view->layout('list')->item($item) ?>
-<?php endif; ?>
+<?= $view->item($item) ?>
 <?php endforeach; ?>

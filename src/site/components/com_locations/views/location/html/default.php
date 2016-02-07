@@ -46,19 +46,18 @@
 </div>
 
 <?php
-$paginationUrl = $location->getURL().'&layout=taggables';
+$url = $location->getURL().'&layout=taggables';
 
 if (!empty($sort)) {
-    $paginationUrl .= '&sort='.$sort;
+    $url .= '&sort='.$sort;
 }
 
 if (!empty($scope)) {
-    $paginationUrl .= '&scope='.$scope;
+    $url .= '&scope='.$scope;
 }
 ?>
 
-<div id="an-locatables" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route($paginationUrl) ?>">
-	<div class="row">
-  <?= @template('taggables') ?>
-  </div>
-</div>
+<?= @infinitescroll($item->tagables->fetchSet(), array(
+  'url' => $url,
+  'id' => 'an-geolocatables'
+)) ?>

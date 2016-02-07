@@ -13,8 +13,8 @@
   $.widget("anahita.masonry", {
 
     options: {
-      item : '.an-entity',
-      row : '.row',
+      item : 'div[class*="an-entity"]',
+      row : '.row-fluid',
       span : 'div[class*="span"]',
       columns : 2,
       mobileWidth : 620
@@ -27,6 +27,7 @@
       this.row = null;
       this.spans = null;
       this.total = 0;
+      this.columns = this.element.data('columns') || this.options.columns;
 
       this._setGrid();
 
@@ -40,20 +41,21 @@
       });
 
       //refresh the layout after window resize
-      $(window).one("resize", function () {
+      $(window).on("resize", function () {
         self._refresh();
       });
     },
 
     _setGrid : function() {
+
       if (this.element.find(this.options.row).length == 0) {
 
-          this.element.append('<div class="row"></div>');
+          this.element.append('<div class="row-fluid"></div>');
           this.row = this.element.find(this.options.row);
 
-          var columns = this.options.columns;
+          var columns = this.columns;
 
-          if( this.element.width() < this.options.mobileWidth ) {
+          if( this.element.width() <= this.options.mobileWidth ) {
             columns = 1;
           }
 
@@ -93,6 +95,10 @@
       var newItems = this.element.data('fetched-items');
       var columns = this.spans.length;
 
+      if(!newItems) {
+        return;
+      }
+
       $.each(newItems, function(index, item){
         var span = self.spans[ self.total % columns];
         $(span).append(item);
@@ -122,5 +128,14 @@
   });
 
   var elements = $('.masonry').masonry();
+
+  $(document).ajaxSuccess(function() {
+		var elements = $('.masonry');
+		$.each(elements, function( index, element ){
+        if( !$(element).is(":data('anahita-masonry')") ) {
+		      $(element).masonry();
+		    }
+		});
+	});
 
 }(jQuery, window, document));

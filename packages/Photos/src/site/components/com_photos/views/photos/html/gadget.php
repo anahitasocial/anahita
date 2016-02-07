@@ -1,9 +1,8 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
 <?php if (count($photos)) : ?>
-
 <?php
-$url = array('layout' => 'masonry_list');
+$url['layout'] = 'masonry';
 
 if (isset($filter)) {
     $url['filter'] = $filter;
@@ -12,11 +11,11 @@ if (isset($filter)) {
 }
 ?>
 
-<div id="an-photos" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-  <div class="row">
-    <?= @template('masonry_list') ?>
-  </div>
-</div>
+<?= @infinitescroll(null, array(
+  'layout_item' => 'masonry',
+  'url' => $url,
+  'id' => 'an-photos'
+)) ?>
 <?php else: ?>
 <?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
 <?php endif; ?>

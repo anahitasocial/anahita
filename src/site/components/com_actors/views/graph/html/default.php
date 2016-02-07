@@ -9,9 +9,10 @@
         <?php endif; ?>
 		<?php $url = $actor->getURL().'&layout=list&get=graph&type='.$type.'&id='.$actor->id; ?>
         <?= @helper('ui.filterbox', @route($url)) ?>
-		<div id="an-actor-socialgraph" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-	       <?= @template('list') ?>
-		</div>
+				<?= @infinitescroll(null, array(
+					'url' => $url,
+					'id' => 'an-actor-socialgraph'
+				)) ?>
 	</div>
 
 	<div class="span4 visible-desktop">
