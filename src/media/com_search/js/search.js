@@ -16,7 +16,7 @@
 			searchForm : 'form[data-trigger="SearchRequest"]',
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
-			nearbyOption : 'input[data-trigger="SearchNearby"',
+			nearbyOption : 'input[data-trigger="SearchNearby"]',
 			rangeOption : 'select[data-trigger="SearchRange"]',
 			scope : '[data-trigger="ChangeScope"]',
 			results : '#an-search-results',
