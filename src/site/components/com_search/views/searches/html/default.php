@@ -56,19 +56,20 @@
    </fieldset>
 
 		<?php
-        $url = array('layout' => 'list');
+    $url = array('layout' => 'list');
 
-        if (!empty($sort)) {
-            $url['sort'] = $sort;
-        }
+    if (!empty($sort)) {
+        $url['sort'] = $sort;
+    }
 
-        if (!empty($scope)) {
-            $url['scope'] = $scope;
-        }
-        ?>
+    if (!empty($scope)) {
+        $url['scope'] = $scope;
+    }
+    ?>
 
-		<div id="an-search-results" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-	    <?= @template('list') ?>
-		</div>
+    <?= @infinitescroll(null, array(
+      'url' => $url,
+      'id' => 'an-search-results'
+    )) ?>
 	</div>
 </div>

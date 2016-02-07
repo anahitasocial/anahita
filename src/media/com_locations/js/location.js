@@ -253,8 +253,6 @@
 
     if($('.an-locations').length){
 
-
-
         var locationWidget = $('body').locations();
 
         $('body').on('click', 'a[data-action="add-location"]', function( event ) {
