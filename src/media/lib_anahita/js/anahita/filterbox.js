@@ -14,36 +14,51 @@
 
 	    var form = $(this);
 
-        $.ajax({
-            method : 'get',
-            url : form.attr('action'),
-            data : form.serialize(),
-            beforeSend : function (){
-								$(document).trigger('beforeFilterbox');
-								form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-            },
-            success : function ( response ) {
+      $.ajax({
+          method : 'get',
+          url : form.attr('action'),
+          data : form.serialize(),
+          beforeSend : function (){
+							$(document).trigger('beforeFilterbox');
+							form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+          },
+          success : function ( response ) {
 
-                if( $(response).filter('.an-entity').length ) {
+							var items = $(response).filter('.an-entity');
 
-                  form.siblings('.an-entities').html($(response).filter('.an-entity'));
-                  form.siblings('.pagination').html($(response).filter('.pagination'));
+							if(items.length == 0) {
+								items = $(response).find('.an-entity');
+							}
 
-                } else {
+							if(items.length == 0) {
+								return;
+							}
 
-                  form.siblings('.an-entities').html($(response).find('.an-entity'));
-                  form.siblings('.pagination').html($(response).find('.pagination'));
+							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
+								 $(container).data('fetched-items', items);
+								 form.siblings('.an-entities').find('.an-entity').remove();
+								 $(document).trigger('masonry-reset-render');
+								 return;
+							}
 
-                }
-            },
-            complete : function () {
-                form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
-                var newUrl = form.attr('action') + '&' + form.serialize();
-                $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
-								$(document).trigger('afterFilterbox');
-            }
-        });
+							form.siblings('.an-entities').html(items);
 
+							var pagination = $(response).filter('.pagination');
+
+							if(pagination.length == 0) {
+								pagination = $(response).find('.pagination');
+							}
+
+							form.siblings('.pagination').html(pagination);
+          },
+          complete : function () {
+              form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+              var newUrl = form.attr('action') + '&' + form.serialize();
+              $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
+							$(document).trigger('afterFilterbox');
+          }
+      });
 	};
 
 	$('body').on('submit', '#an-filterbox', function( event ){

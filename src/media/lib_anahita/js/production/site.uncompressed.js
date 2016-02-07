@@ -18919,8 +18919,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             'urlChange' : function( event ) {
                 self.element.data('url', $(document).data('newUrl'));
                 self.url = this.element.data('url');
-								self.items = null;
-								self.start = 0;
+								self.items = self.element.find(self.options.item).toArray();
+								self.start = self.element.find(self.options.item).length;
+								self.endOfRecords = false;
 								self._getItems();
             }
         });
@@ -18979,10 +18980,14 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 				});
 		},
 
+		render : function () {
+			this._render();
+		},
+
 		_render : function() {
 
 			if(this.element.data('fetched-items')) {
-				$(document).trigger('masonry');
+				$(document).trigger('masonry-render');
 				return;
 			}
 
@@ -18996,7 +19001,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 			this.element.data('fetched-items', items);
 
-			$(document).trigger('masonry');
+			$(document).trigger('masonry-render');
 		}
 	});
 
@@ -19073,36 +19078,51 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 	    var form = $(this);
 
-        $.ajax({
-            method : 'get',
-            url : form.attr('action'),
-            data : form.serialize(),
-            beforeSend : function (){
-								$(document).trigger('beforeFilterbox');
-								form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-            },
-            success : function ( response ) {
+      $.ajax({
+          method : 'get',
+          url : form.attr('action'),
+          data : form.serialize(),
+          beforeSend : function (){
+							$(document).trigger('beforeFilterbox');
+							form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+          },
+          success : function ( response ) {
 
-                if( $(response).filter('.an-entity').length ) {
+							var items = $(response).filter('.an-entity');
 
-                  form.siblings('.an-entities').html($(response).filter('.an-entity'));
-                  form.siblings('.pagination').html($(response).filter('.pagination'));
+							if(items.length == 0) {
+								items = $(response).find('.an-entity');
+							}
 
-                } else {
+							if(items.length == 0) {
+								return;
+							}
 
-                  form.siblings('.an-entities').html($(response).find('.an-entity'));
-                  form.siblings('.pagination').html($(response).find('.pagination'));
+							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
+								 $(container).data('fetched-items', items);
+								 form.siblings('.an-entities').find('.an-entity').remove();
+								 $(document).trigger('masonry-reset-render');
+								 return;
+							}
 
-                }
-            },
-            complete : function () {
-                form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
-                var newUrl = form.attr('action') + '&' + form.serialize();
-                $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
-								$(document).trigger('afterFilterbox');
-            }
-        });
+							form.siblings('.an-entities').html(items);
 
+							var pagination = $(response).filter('.pagination');
+
+							if(pagination.length == 0) {
+								pagination = $(response).find('.pagination');
+							}
+
+							form.siblings('.pagination').html(pagination);
+          },
+          complete : function () {
+              form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+              var newUrl = form.attr('action') + '&' + form.serialize();
+              $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
+							$(document).trigger('afterFilterbox');
+          }
+      });
 	};
 
 	$('body').on('submit', '#an-filterbox', function( event ){
@@ -21059,7 +21079,11 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
       //when masonry event is triggered, render the items
       this._on( $(document) , {
-          'masonry' : function( event ) {
+          'masonry-render' : function( event ) {
+            self._render();
+          },
+          'masonry-reset-render' : function ( event ) {
+            self._reset();
             self._render();
           }
       });
@@ -21111,6 +21135,13 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
           }
         }
       }
+    },
+
+    _reset : function() {
+      this.items = new Array();
+      this.spans.empty();
+      this.total = 0;
+      this.total = 0;
     },
 
     _render : function() {

@@ -35,7 +35,11 @@
 
       //when masonry event is triggered, render the items
       this._on( $(document) , {
-          'masonry' : function( event ) {
+          'masonry-render' : function( event ) {
+            self._render();
+          },
+          'masonry-reset-render' : function ( event ) {
+            self._reset();
             self._render();
           }
       });
@@ -87,6 +91,13 @@
           }
         }
       }
+    },
+
+    _reset : function() {
+      this.items = new Array();
+      this.spans.empty();
+      this.total = 0;
+      this.total = 0;
     },
 
     _render : function() {

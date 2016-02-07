@@ -43,8 +43,9 @@
             'urlChange' : function( event ) {
                 self.element.data('url', $(document).data('newUrl'));
                 self.url = this.element.data('url');
-								self.items = null;
-								self.start = 0;
+								self.items = self.element.find(self.options.item).toArray();
+								self.start = self.element.find(self.options.item).length;
+								self.endOfRecords = false;
 								self._getItems();
             }
         });
@@ -103,10 +104,14 @@
 				});
 		},
 
+		render : function () {
+			this._render();
+		},
+
 		_render : function() {
 
 			if(this.element.data('fetched-items')) {
-				$(document).trigger('masonry');
+				$(document).trigger('masonry-render');
 				return;
 			}
 
@@ -120,7 +125,7 @@
 
 			this.element.data('fetched-items', items);
 
-			$(document).trigger('masonry');
+			$(document).trigger('masonry-render');
 		}
 	});
 
