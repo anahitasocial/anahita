@@ -14,7 +14,7 @@
 
 		options : {
 			searchForm : 'form[data-trigger="SearchRequest"]',
-			query : 'input[name=q]',
+			term : 'input[name=term]',
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
 			nearbyOption : 'input[data-trigger="SearchNearby"]',
@@ -27,7 +27,7 @@
 		_create : function() {
 
 			this.form = $(this.options.searchForm);
-			var query = this.form.find(this.options.query);
+			var term = this.form.find(this.options.term);
 			var elemSort = $(this.options.sortOption);
 			var elemComment = $(this.options.commentOption);
 			var elemNearby = $(this.options.nearbyOption);
@@ -40,7 +40,7 @@
 			};
 
 			//search form
-			this._on( query, {
+			this._on( term, {
 				change : function( event ) {
 					event.preventDefault();
 					this.submit(this.form);
