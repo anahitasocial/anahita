@@ -21091,10 +21091,9 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
       });
 
       //refresh the layout after window resize
-      $(window).on("resize", function ( event ) {
-        console.log(event);
+      //$(window).on("resize", function ( event ) {
         //self._refresh();
-      });
+      //});
     },
 
     _setGrid : function() {
