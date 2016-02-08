@@ -12,7 +12,7 @@
 <div class="profile-cover" data-src-large="<?= $item->getCoverURL('large'); ?>" data-src-medium="<?= $item->getCoverURL('medium'); ?>"></div>
 <?php endif; ?>
 
-<div class="row<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">
+<div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">
 	<div class="span2">
 		<div id="actor-avatar">
 		<?= @avatar($item, 'medium', false) ?>

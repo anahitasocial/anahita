@@ -1,7 +1,6 @@
-<?php defined('KOOWA') or die ?>
+<?php defined('KOOWA') or die('Restricted access');?>
 
 <?php if (count($pages)) : ?>
-
 <?php
 $url = array('layout' => 'gadget_list');
 
@@ -12,9 +11,10 @@ if (isset($filter)) {
 }
 ?>
 
-<div id="an-pages" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-<?= @template('gadget_list') ?>
-</div>
+<?= @infinitescroll(null, array(
+  'url' => $url,
+  'topic' => 'an-pages'
+)) ?>
 <?php else: ?>
 <?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
 <?php endif; ?>

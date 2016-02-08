@@ -16,7 +16,7 @@
 			searchForm : 'form[data-trigger="SearchRequest"]',
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
-			nearbyOption : 'input[data-trigger="SearchNearby"',
+			nearbyOption : 'input[data-trigger="SearchNearby"]',
 			rangeOption : 'select[data-trigger="SearchRange"]',
 			scope : '[data-trigger="ChangeScope"]',
 			results : '#an-search-results',
@@ -68,7 +68,7 @@
 			});
 
 			//nearby options search
-			this._on( $(document), {
+			this._on( this.form, {
 				 'SearchNearby' : function ( event ) {
 
 						elemRange.prop('disabled', false);
@@ -107,24 +107,13 @@
 					this.submit($(event.currentTarget));
 				}
 			});
-
-			this._initScopes();
 		},
 
-		_initScopes : function() {
+		changeScope : function( target ) {
 
-			//change scope
-			this._on( $(this.options.scope) , {
+				this.searchOptions.scope = $(target).data('scope');
 
-				click : function ( event ) {
-
-					event.preventDefault();
-
-					this.searchOptions.scope = $(event.currentTarget).data('scope');
-
-					this.submit($(event.currentTarget));
-				}
-			});
+				this.submit($(target));
 		},
 
 		submit : function( currentTarget ) {
@@ -141,21 +130,31 @@
 				success : function ( response, b, c ) {
 
 					response = $(response);
-					$(self.options.results).html(response.filter('.an-entity'));
+
+					$(self.options.results).data('fetched-items', response.filter('.an-entity'))
+
+					$(self.element).trigger('masonry-reset-render');
+
 					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
-					self._initScopes();
 
 				},
 				complete : function () {
 
 					currentTarget.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+
 					var newUrl = self.form.attr('action') + '?' + self.form.serialize() + '&' + $.param(self.searchOptions);
-					$(document).data( 'newUrl',  newUrl ).trigger('urlChange');
+
+					$(self.element).data( 'newUrl',  newUrl ).trigger('urlChange');
 				}
 			});
 		}
 	});
 
-	$('body').search();
+	var search = $('#an-search-results').search();
+
+	$('body').on('click', '[data-trigger="ChangeScope"]', function ( event ) {
+			event.preventDefault();
+			search.search('changeScope', this);
+	});
 
 }(jQuery, window, document));

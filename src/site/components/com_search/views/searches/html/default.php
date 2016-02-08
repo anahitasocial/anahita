@@ -25,7 +25,7 @@
 		<?= @helper('ui.header', array()) ?>
     <fieldset>
         <label name="SortOptions"><?= @text('COM-SEARCH-OPTION-SORT') ?></label>
-        <select data-trigger="SortOption" id="SortOptions" name="sort">
+        <select form="navbar-search" data-trigger="SortOption" id="SortOptions" name="sort">
     				<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
     					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
     				</option>
@@ -40,35 +40,36 @@
   			</select>
 
         <label name="SearchNearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
-        <input type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
+        <input form="navbar-search" type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
 
         <?php $ranges = array(100,50,25,10,5); ?>
-        <select disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">
+        <select form="navbar-search" disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">
             <?php foreach($ranges as $index=>$range) : ?>
             <option value="<?= $range ?>"><?= $range ?> km</option>
             <?php endforeach; ?>
         </select>
 
         <label class="checkbox">
-            <input data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
+            <input form="navbar-search" data-trigger="SearchOption" <?= $search_comments ? 'checked' : ''?> type="checkbox" name="search_comments" value="1" >
             <?= @text('COM-SEARCH-OPTION-COMMENTS') ?>
         </label>
    </fieldset>
 
 		<?php
-        $url = array('layout' => 'list');
+    $url = array('layout' => 'list');
 
-        if (!empty($sort)) {
-            $url['sort'] = $sort;
-        }
+    if (!empty($sort)) {
+        $url['sort'] = $sort;
+    }
 
-        if (!empty($scope)) {
-            $url['scope'] = $scope;
-        }
-        ?>
+    if (!empty($scope)) {
+        $url['scope'] = $scope;
+    }
+    ?>
 
-		<div id="an-search-results" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-	    <?= @template('list') ?>
-		</div>
+    <?= @infinitescroll(null, array(
+      'url' => $url,
+      'id' => 'an-search-results'
+    )) ?>
 	</div>
 </div>

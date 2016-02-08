@@ -23,7 +23,7 @@
         formContainer : '#location-form-container',
 
         //link that opens the location selector modal
-        loationsSelector : 'a[data-trigger*="LocationSelector"]',
+        loationsSelector : '[data-trigger*="LocationSelector"]',
 
         //selector's locations container
         locationsContainer : '#locations-container',
@@ -60,41 +60,22 @@
           }
         });
 
+        $(this.options.locationsList).each(function(index, list){
+            $(list).load($(list).data('url'));
+        });
+
         //listen to the filter box. If no locations are available, show the form
-        this._on( $(document), {
+        this._on( this.element, {
           'afterFilterbox' : function( event ) {
-            var entity = self.locationsContainer.find(this.options.entity);
-            if (entity.length == 0) {
+            var results = self.locationsContainer.find(this.options.entity);
+            if (results.length == 0) {
                 self._showForm();
-            } else {
-              self._init();
             }
           }
         });
       },
 
-      _init : function () {
-
-          var self = this;
-
-          //add a location to locatable
-          this._on('a[data-action="add-location"]', {
-            click : function ( event ) {
-              event.preventDefault();
-              self._addLocation( event.currentTarget );
-            }
-          });
-
-          //delete location from locatable
-          this._on('a[data-action="delete-location"]', {
-            click : function ( event ) {
-              event.preventDefault();
-              self._deleteLocation( event.currentTarget );
-            }
-          });
-      },
-
-      _showSelector : function ( actionLink ) {
+      _showSelector : function ( target ) {
 
         var self = this;
 
@@ -104,7 +85,7 @@
 
     		var body = this.modal.find('.modal-body');
 
-        $.get( $(actionLink).attr('href'), function (response) {
+        $.get( $(target).data('url'), function (response) {
 
             header.html($(response).filter('.modal-header').html());
 
@@ -132,8 +113,8 @@
         var browser_latitude = null;
         var browser_longitude = null;
 
-        if($('body').data('browser_coords')){
-            var browser_coords = $('body').data('browser_coords');
+        if($(document).data('browser_coords')){
+            var browser_coords = $(document).data('browser_coords');
             var browser_latitude = browser_coords.latitude;
             var browser_longitude = browser_coords.longitude;
         }
@@ -147,12 +128,12 @@
             },
             success : function (response) {
 
-                var entity = $(response).filter(self.options.entity);
+                var items = $(response).filter(self.options.entity);
 
-                if (entity.length) {
+                if (items.length) {
                     self._hideForm();
-                    $(entities).html(entity);
-                    self._init();
+                    $(self.element).data('fetched-items', items);
+                    $(self.element).trigger('masonry-reset-render');
                 } else {
                     self._showForm();
                 }
@@ -219,7 +200,7 @@
         this.locationsContainer.show();
       },
 
-      _addLocation : function ( actionLink ) {
+      addLocation : function ( actionLink ) {
 
         var self = this;
         var elem = $(actionLink);
@@ -238,7 +219,7 @@
         });
       },
 
-      _deleteLocation : function ( actionLink ) {
+      deleteLocation : function ( actionLink ) {
 
         var self = this;
         var elem = $(actionLink);
@@ -266,27 +247,25 @@
           url : locationList.data('url'),
           success : function ( response ) {
              locationList.html(response);
-             self._init();
           }
         });
       }
     });
 
-    var locationsWidget = null;
+    if($('.an-locations').length){
 
-    $(document).ready(function ( event ){
-      $('.an-locations').each(function(index, list){
-        $.ajax({
-          url : $(list).data('url'),
-          success : function ( response ) {
-            $(list).html(response);
+        var locationWidget = $('body').locations();
 
-            if (!locationsWidget) {
-              locationsWidget = $('body').locations();
-            }
-          }
+        $('body').on('click', 'a[data-action="add-location"]', function( event ) {
+            event.preventDefault();
+            locationWidget.locations('addLocation', this);
         });
-      });
-    });
+
+        $('body').on('click', 'a[data-action="delete-location"]', function( event ) {
+            event.preventDefault();
+            locationWidget.locations('deleteLocation', this);
+        });
+    }
+
 
 }(jQuery, window, document));

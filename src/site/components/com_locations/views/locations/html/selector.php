@@ -81,7 +81,10 @@
         <div id="locations-container">
             <?php $url = 'layout=list_selector&locatable_id='.$locatable->id; ?>
             <?= @helper('ui.filterbox', @route($url), array('placeholder' => @text('LIB-AN-SEARCH-PLACEHOLDER'))) ?>
-            <div class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>"></div>
+            <?= @infinitescroll(null, array(
+              'url' => $url,
+              'id' => 'an-locations-selector'
+            )) ?>
         </div>
     </div>
 </div>

@@ -241,6 +241,33 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
     }
 
     /**
+    * Renders an InfinitScroll and Masonry layout if there are more than one columns
+    *
+    * @param an entity set extended from AnDomainEntitysetAbstract class
+    * @param array of configs
+    *
+    * @return html
+    */
+    public function infinitescroll($entities, $config = array())
+    {
+        $config = array_merge(array(
+            'entities' => (isset($entities)) ? $entities : null,
+            'filter' => null,
+            'entity_type' => (isset($entities)) ? $entities->getIdentifier()->name : null,
+            'id' => null,
+            'columns' => 2,
+            'layout_list' => 'default',
+            'layout_item' => 'list',
+            'url' => 'layout=list',
+            'start' => (isset($entities)) ? count($entities) : 0,
+            'limit' => 20,
+            'hiddenlink' => false,
+        ), $config);
+
+        return $this->_render('infinitescroll', $config);
+    }
+
+    /**
      * Renders a pagination using the paginator object.
      *
      * @param AnDomainEntitysetDefault|KConfigPaginator $paginator Paginator object

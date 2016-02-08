@@ -29,6 +29,7 @@ class ComBaseTemplateFilterAlias extends LibBaseTemplateFilterAlias
             '@commands(' => '$this->getHelper(\'toolbar\')->commands(',
             '@content(' => 'PlgContentfilterChain::getInstance()->filter(',
             '@pagination(' => '$this->renderHelper(\'ui.pagination\',',
+            '@infinitescroll(' => '$this->renderHelper(\'ui.infinitescroll\',',
             '@avatar(' => '$this->renderHelper(\'com://site/actors.template.helper.avatar\',',
             '@cover(' => '$this->renderHelper(\'com://site/actors.template.helper.cover\',',
             '@name(' => '$this->renderHelper(\'com://site/actors.template.helper.name\',',

@@ -56,5 +56,11 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
         if ($entity->authorize('delete')) {
             $this->addCommand('delete');
         }
+
+        if ($entity->authorize('edit')) {
+          $this->addCommand('view', JText::_('LIB-AN-MEDIUM-VIEW'))
+               ->getCommand('view')
+               ->href(JRoute::_($entity->getURL()));
+        }
     }
 }

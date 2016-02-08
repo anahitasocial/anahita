@@ -2,6 +2,7 @@
 
 <?= @helper('ui.header', array()) ?>
 
-<div id="an-actors" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route('layout=list') ?>">
-<?= @template('list') ?>
-</div>
+<?= @infinitescroll($people, array(
+  'id' => 'an-people',
+  'hiddenlink' => true,
+)) ?>

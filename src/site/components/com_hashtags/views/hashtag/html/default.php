@@ -3,18 +3,18 @@
 <?= @helper('ui.header', array()) ?>
 
 <?php
-$paginationUrl = $item->getURL().'&layout=taggables';
+$url = $item->getURL().'&layout=taggables';
 
 if (!empty($sort)) {
-    $paginationUrl .= '&sort='.$sort;
+    $url .= '&sort='.$sort;
 }
 
 if (!empty($scope)) {
-    $paginationUrl .= '&scope='.$scope;
+    $url .= '&scope='.$scope;
 }
 ?>
 
-
-<div id="an-hashtags" class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route($paginationUrl) ?>">
-	<?= @template('taggables') ?>
-</div>
+<?= @infinitescroll($item->tagables->fetchSet(), array(
+  'url' => $url,
+  'id' => 'an-hashtag-taggables'
+)) ?>

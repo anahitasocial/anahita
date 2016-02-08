@@ -7,26 +7,24 @@
  */
 
 ;(function ($, window, document) {
-	
+
 	'use strict';
 
 	$.fn.gadget = function () {
-		
+
 	   this.filter( this.selector ).each(function(){
-			
+
 			var gadget = $(this);
 			var content = gadget.find(".gadget-content");
-			
-			if(content.children('div').length === 0)
+
+			if(content.children('div').length === 0) {
 				content.load(gadget.data('url'));
+			}
 		});
-		
 	};
-	
+
 	if ( $('.an-gadget').length ) {
-	  $('.an-gadget').gadget();  
+	  $('.an-gadget').gadget();
 	}
-	
+
 }(jQuery, window, document));
-
-

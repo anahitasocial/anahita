@@ -18889,106 +18889,126 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	$.widget("anahita.infinitescroll", {
 
 		options: {
-			record : '.an-entity',
 			window : window,
 			scrollable : document,
-			preload: 3,
+			item : '.an-entity',
+			preload : 3,
 			limit : 20,
 			url : null
 		},
 
 		_create: function() {
 
-			if (this.element.children(this.options.record).length < this.options.limit )
+				var self = this;
+				var scrollable = this.element.data('scrollable') || this.options.scrollable;
+
+				this.element.data('fetched-items', null);
+				this.url = this.element.data('url') || this.options.url;
+			  this.waiting = false;
+				this.endOfRecords = false;
+				this.batchSize = this.options.limit * this.options.preload;
+	      this.start = this.element.find(this.options.item).length;
+				this.items = new Array();
+
+				this._getItems();
+
+				// listen to the "urlChange" event
+        // if there is one, update the url and refresh records.
+        this._on( this.element , {
+
+            'urlChange' : function( event ) {
+								self.element.data('url', self.element.data('newUrl'));
+                self.url = this.element.data('url');
+								self.items = self.element.find(self.options.item).toArray();
+								self.start = self.element.find(self.options.item).length;
+								self.endOfRecords = false;
+								self._getItems();
+            }
+        });
+
+				$(scrollable).scroll(function(){
+						if (
+								!self.waiting &&
+								self.element.is(':visible') &&
+								$(window).scrollTop() + ($(window).height() * 1.3 ) >= $(scrollable).height()
+						) {
+								self._render();
+								self._getItems();
+						}
+				});
+		},
+
+		_getItems : function() {
+
+				if(this.endOfRecords) {
+					 return;
+				}
+
+				var self = this;
+
+				var limit = $.param({
+						start : this.start,
+						limit : this.batchSize
+				});
+
+				$.ajax({
+						method : 'get',
+						url : this.url + '&' + limit,
+						beforeSend : function () {
+							self.waiting = true;
+						},
+						success : function ( response ) {
+							 self.waiting = false;
+
+							 var newItems = null;
+
+							 newItems = $(response).filter( self.options.item )
+
+							 if(newItems.length == 0) {
+								 newItems = $(response).find( self.options.item );
+							 }
+
+							 if(newItems.length == 0) {
+								 self.endOfRecords = true;
+								 return;
+							 }
+
+							 self.items = $.merge(self.items, newItems);
+							 self.start += self.batchSize;
+							 self._render();
+						}
+				});
+		},
+
+		render : function () {
+			this._render();
+		},
+
+		_render : function() {
+
+			if(this.element.data('fetched-items')) {
+				this.element.trigger('masonry-render');
 				return;
-
-            this.url = this.element.data('url') || this.options.url;
-            this.records = this.element.children(this.options.record);
-            this.start = this.records.length;
-
-            this._preload();
-
-			var self = this;
-
-			// listen to the "urlChange" event
-            // if there is one, update the url and refresh records.
-            this._on( $(document) , {
-
-                'urlChange' : function( event ) {
-
-                    self.element.data('url', $(document).data('newUrl'));
-                    this.url = this.element.data('url');
-                    this.records = this.element.children(this.options.record);
-                    this.start = this.records.length;
-
-                    this._setNewLimit(null);
-
-                    this._preload();
-                }
-            });
-
-			var scrollable = $(this.options.scrollable);
-
-			scrollable.scroll(function(){
-
-				if ( self.element.is(':visible') && $(window).scrollTop() + ($(window).height() * 1.3 ) >= $(scrollable).height()) {
-					self._getNextPage();
-				}
-			});
-		},
-
-		_preload: function(){
-
-			var limit = $.param({
-				start : this.records.length,
-				limit : this.options.limit * this.options.preload,
-			});
-
-			if(!this._isNewLimit( limit )) {
-			    return false;
 			}
 
-			this._setNewLimit( limit );
+			var items = new Array();
+			var limit = this.options.limit;
 
-			console.log(limit);
-
-			$.ajax({
-			    method : 'get',
-			    url : this.url + '&' + limit,
-			    success : function ( response ) {
-
-			       response = $(response);
-             this.records = $.merge( this.records, response.filter( this.options.record ));
-
-			    }.bind( this )
-			});
-		},
-
-		_getNextPage: function() {
-
-			if ( this.start < this.records.length ) {
-
-				for ( var i = 0; i < this.options.limit; i++ ) {
-					this.element.append(this.records[ this.start + i ]);
-				}
-
-				this.start += this.options.limit;
+			while(limit && this.items.length) {
+				items.push(this.items.shift());
+				limit--;
 			}
 
-			this._preload();
-		},
-
-		_isNewLimit : function ( limit ) {
-		    return this._limit != limit;
-		},
-
-		_setNewLimit : function ( limit ) {
-		    this._limit = limit;
+			this.element.data('fetched-items', items);
+			this.element.trigger('masonry-render');
 		}
 	});
 
-	if ( $('[data-trigger="InfiniteScroll"]').length ) {
-	   $('[data-trigger="InfiniteScroll"]').infinitescroll();
+	var elements = $('[data-trigger="InfiniteScroll"]');
+
+	if ( elements.length ) {
+		 elements.find('.InfiniteScrollReadmore').hide();
+		 elements.infinitescroll();
 	}
 
 	$(document).ajaxSuccess(function() {
@@ -18999,6 +19019,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 		    if( !$(element).is(":data('anahita-infinitescroll')") ) {
 
+					$(element).find('.InfiniteScrollReadmore').hide();
 		      $(element).infinitescroll();
 
 		    }
@@ -19017,29 +19038,27 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-	
+
 	'use strict';
 
 	$.fn.gadget = function () {
-		
+
 	   this.filter( this.selector ).each(function(){
-			
+
 			var gadget = $(this);
 			var content = gadget.find(".gadget-content");
-			
-			if(content.children('div').length === 0)
+
+			if(content.children('div').length === 0) {
 				content.load(gadget.data('url'));
+			}
 		});
-		
 	};
-	
+
 	if ( $('.an-gadget').length ) {
-	  $('.an-gadget').gadget();  
+	  $('.an-gadget').gadget();
 	}
-	
+
 }(jQuery, window, document));
-
-
 
 ///media/lib_anahita/js/anahita/filterbox.js
 /**
@@ -19058,36 +19077,53 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 	    var form = $(this);
 
-        $.ajax({
-            method : 'get',
-            url : form.attr('action'),
-            data : form.serialize(),
-            beforeSend : function (){
-								$(document).trigger('beforeFilterbox');
-								form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-            },
-            success : function ( response ) {
+      $.ajax({
+          method : 'get',
+          url : form.attr('action'),
+          data : form.serialize(),
+          beforeSend : function (){
+							$(form).trigger('beforeFilterbox');
+							form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+          },
+          success : function ( response ) {
 
-                if( $(response).filter('.an-entity').length ) {
+							var items = $(response).filter('.an-entity');
 
-                  form.siblings('.an-entities').html($(response).filter('.an-entity'));
-                  form.siblings('.pagination').html($(response).filter('.pagination'));
+							if(items.length == 0) {
+								items = $(response).find('.an-entity');
+							}
 
-                } else {
+							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
 
-                  form.siblings('.an-entities').html($(response).find('.an-entity'));
-                  form.siblings('.pagination').html($(response).find('.pagination'));
+								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
+								 $(container).data('fetched-items', items);
+								 $(container).trigger('masonry-reset-render');
+								 
+								 return;
+							}
 
-                }
-            },
-            complete : function () {
-                form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
-                var newUrl = form.attr('action') + '&' + form.serialize();
-                $(document).data( 'newUrl',  newUrl ).trigger('urlChange');
-								$(document).trigger('afterFilterbox');
-            }
-        });
+							form.siblings('.an-entities').html(items);
 
+							var pagination = $(response).filter('.pagination');
+
+							if(pagination.length == 0) {
+								pagination = $(response).find('.pagination');
+							}
+
+							form.siblings('.pagination').html(pagination);
+          },
+          complete : function () {
+
+							form.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+
+							if(form.siblings('[data-trigger="InfiniteScroll"]').length) {
+									var container = form.siblings('[data-trigger="InfiniteScroll"]');
+									var newUrl = form.attr('action') + '&' + form.serialize();
+              		$(container).data( 'newUrl',  newUrl ).trigger('urlChange');
+									$(container).trigger('afterFilterbox');
+							}
+          }
+      });
 	};
 
 	$('body').on('submit', '#an-filterbox', function( event ){
@@ -19452,15 +19488,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function($, window) {
-    
-    'use strict';
-    
-    var swipebox = $('[data-trigger="MediaViewer"]').swipebox({
-		autoplayVideos : true,
-		closeOnClick : true
-	});
-    
+
+  'use strict';
+
+  $('[data-trigger="MediaViewer"]').swipebox({
+    autoplayVideos : true,
+    closeOnClick : true
+  });
+
 }(jQuery, window));
+
 ///media/lib_anahita/js/anahita/sort.js
 /**
  * Author: Nick Swinford
@@ -21006,3 +21043,165 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     $('body').stateSelector();
     
 }(jQuery, window, document));
+///media/lib_anahita/js/anahita/ui/masonry.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2016 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+ ;(function ($, window, document) {
+
+ 	'use strict';
+
+  $.widget("anahita.masonry", {
+
+    options: {
+      item : 'div[class*="an-entity"]',
+      row : '.row-fluid',
+      span : 'div[class*="span"]',
+      columns : 2,
+      mobileWidth : 620
+    },
+
+    _create: function() {
+
+      var self = this;
+      this.items = new Array();
+      this.row = null;
+      this.spans = null;
+      this.total = 0;
+      this.columns = this.element.data('columns') || this.options.columns;
+
+      this._setGrid();
+
+      this.total = this.element.find(this.options.item).length;
+
+      //when masonry event is triggered, render the items
+      this._on( $(this.element) , {
+          'masonry-render' : function( event ) {
+            self._render();
+          },
+          'masonry-reset-render' : function ( event ) {
+            self._reset();
+            self._render();
+          }
+      });
+
+      //refresh the layout after window resize
+      //$(window).on("resize", function ( event ) {
+        //self._refresh();
+      //});
+    },
+
+    _setGrid : function() {
+
+      if (this.element.find(this.options.row).length == 0) {
+          this.element.append('<div class="row-fluid"></div>');
+          this.row = this.element.find(this.options.row);
+
+          var columns = this.columns;
+
+          if( this.element.width() <= this.options.mobileWidth ) {
+            columns = 1;
+          }
+
+          var span = 12 / columns;
+
+          for(var i = 0; i < columns; i++ ) {
+             this.row.append('<div class="span' + span + '"></div>');
+          }
+
+          this.spans = this.row.find('.span' + span);
+
+      } else {
+
+        this.row = this.element.find(this.options.row);
+        this.spans = this.row.find(this.options.span);
+        this.total = this.row.find(this.options.item).length;
+
+        if(this.total > 0){
+
+          var self = this;
+          var columns = new Array();
+          $.each(this.spans, function(index, span) {
+            columns.push($(span).find(self.options.item).toArray());
+          });
+
+          for(var i=0; i < this.total; i++) {
+            var column = columns[ i % columns.length ];
+            this.items.push(column.shift());
+          }
+
+          // if the screen size is small, but there are more than 1 columns,
+          // then refresh to have one column instead
+          if( this.element.width() <= this.options.mobileWidth && this.spans.length > 1 ) {
+              this._refresh();
+              return;
+          }
+        }
+      }
+    },
+
+    _reset : function() {
+      this.spans.empty();
+      this.items = new Array();
+      this.total = 0;
+    },
+
+    _render : function() {
+
+      var self = this;
+      var newItems = this.element.data('fetched-items');
+      var columns = this.spans.length;
+
+      if(!newItems) {
+        return;
+      }
+
+      $.each(newItems, function(index, item){
+        var span = self.spans[ self.total % columns];
+        $(span).append(item);
+        self.items.push(item);
+        self.total++;
+      });
+
+      this.element.data('fetched-items', null);
+      $(this.element).trigger('entities-rendered');
+		},
+
+    _refresh : function(){
+
+        this.element.empty();
+        this.total = 0;
+        this._setGrid();
+
+        var self = this;
+        var columns = this.spans.length;
+
+        $.each(this.items, function(index, item){
+            var span = self.spans[ self.total % columns];
+            $(span).append(item);
+            self.total++;
+        });
+
+        $(this.element).trigger('entities-rendered');
+    }
+
+  });
+
+  var elements = $('.masonry').masonry();
+
+  $(document).ajaxSuccess(function() {
+		var elements = $('.masonry');
+		$.each(elements, function( index, element ){
+        if( !$(element).is(":data('anahita-masonry')") ) {
+		      $(element).masonry();
+		    }
+		});
+	});
+
+}(jQuery, window, document));
+

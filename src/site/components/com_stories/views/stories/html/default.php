@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<?php 
+<?php
 $url = array('layout' => 'list');
 
 if (isset($filter)) {
@@ -9,6 +9,9 @@ if (isset($filter)) {
     $url['oid'] = $actor->id;
 }
 ?>
-<div id="an-stories" class="an-entities" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
-	<?= @template('list') ?>
-</div>
+
+<?= @infinitescroll($stories, array(
+  'url' => $url,
+  'id' => 'an-stories',
+  'columns' => 1
+)) ?>
