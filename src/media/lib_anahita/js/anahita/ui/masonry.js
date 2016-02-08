@@ -45,9 +45,9 @@
       });
 
       //refresh the layout after window resize
-      $(window).on("resize", function () {
-        self._refresh();
-      });
+      //$(window).on("resize", function ( event ) {
+        //self._refresh();
+      //});
     },
 
     _setGrid : function() {
@@ -87,6 +87,13 @@
           for(var i=0; i < this.total; i++) {
             var column = columns[ i % columns.length ];
             this.items.push(column.shift());
+          }
+
+          // if the screen size is small, but there are more than 1 columns,
+          // then refresh to have one column instead
+          if( this.element.width() <= this.options.mobileWidth && this.spans.length > 1 ) {
+              this._refresh();
+              return;
           }
         }
       }
