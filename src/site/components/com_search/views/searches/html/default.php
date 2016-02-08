@@ -67,7 +67,7 @@
     }
     ?>
 
-    <?= @infinitescroll(null, array(
+    <?= @infinitescroll($items, array(
       'url' => $url,
       'id' => 'an-search-results'
     )) ?>

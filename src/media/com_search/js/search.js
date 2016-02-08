@@ -14,6 +14,7 @@
 
 		options : {
 			searchForm : 'form[data-trigger="SearchRequest"]',
+			query : 'input[name=q]',
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
 			nearbyOption : 'input[data-trigger="SearchNearby"]',
@@ -26,7 +27,7 @@
 		_create : function() {
 
 			this.form = $(this.options.searchForm);
-
+			var query = this.form.find(this.options.query);
 			var elemSort = $(this.options.sortOption);
 			var elemComment = $(this.options.commentOption);
 			var elemNearby = $(this.options.nearbyOption);
@@ -35,15 +36,12 @@
 
 			this.searchOptions = {
 				layout : 'results',
-				sort : $(elemSort).find('option:selected').val(),
-				'search_comments' : $(elemComment).is(':checked'),
-				'search_nearby' : $(elemNearby).val(),
 				scope : $(elemScope).data('scope')
 			};
 
 			//search form
-			this._on(this.form, {
-				submit : function( event ) {
+			this._on( query, {
+				change : function( event ) {
 					event.preventDefault();
 					this.submit(this.form);
 				}
