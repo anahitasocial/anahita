@@ -35,7 +35,7 @@
 								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
 								 $(container).data('fetched-items', items);
 								 $(container).trigger('masonry-reset-render');
-								 
+
 								 return;
 							}
 
@@ -57,8 +57,11 @@
 									var container = form.siblings('[data-trigger="InfiniteScroll"]');
 									var newUrl = form.attr('action') + '&' + form.serialize();
               		$(container).data( 'newUrl',  newUrl ).trigger('urlChange');
-									$(container).trigger('afterFilterbox');
+							} else {
+									var container = form.siblings('.an-entities');
 							}
+
+							$(container).trigger('afterFilterbox');
           }
       });
 	};

@@ -26,7 +26,7 @@
 <?php if($entity->authorize('edit')) : ?>
 <?php $selector_url = 'option=com_locations&view=locations&layout=selector&locatable_id='.$entity->id; ?>
 <div class="toolbar">
-  <button class="btn btn-small" data-url="<?= @route($selector_url) ?>" data-trigger="LocationSelector" data-locatable="<?= $entity->id ?>">
+  <button disabled class="btn btn-small" data-url="<?= @route($selector_url) ?>" data-trigger="LocationSelector" data-locatable="<?= $entity->id ?>">
   + <?= @text('LIB-AN-ACTION-ADD-LOCATION') ?>
   </button>
 </div>

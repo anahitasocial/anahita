@@ -17,6 +17,7 @@
       navigator.geolocation.getCurrentPosition(
         function success( position ) {
           self.data('browser_coords', position.coords).trigger('geopositioned');
+          $(document).trigger('geoposition');
         },
         function error(error){
           console.log(error.message);
