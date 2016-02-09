@@ -51,6 +51,13 @@
         this.currentList = null;
         this.locatableId = null;
 
+        //display the add location button after geoposition data is obtained
+        this._on( $(document), {
+          geoposition : function( event ) {
+            $(self.options.loationsSelector).prop( "disabled", false );
+          }
+        });
+
         //show selector event
         this._on(this.options.loationsSelector, {
           click : function ( event ) {
@@ -108,32 +115,33 @@
       _browse : function () {
 
         var self = this;
-        var entities = self.locationsContainer.find(this.options.entities);
+        var entities = this.locationsContainer.find(this.options.entities);
 
         var browser_latitude = null;
         var browser_longitude = null;
+        var url = entities.data('url');
 
         if($(document).data('browser_coords')){
             var browser_coords = $(document).data('browser_coords');
-            var browser_latitude = browser_coords.latitude;
-            var browser_longitude = browser_coords.longitude;
+            var coords = $.param({
+    						nearby_latitude : browser_coords.latitude,
+    						nearby_longitude : browser_coords.longitude
+    				});
+            url = url + '&' + coords;
+            entities.data('url', url);
+            this.locationsContainer.find('form#an-filterbox').attr('action', url);
         }
 
         $.ajax({
             method : 'GET',
-            url : entities.data('url'),
-            data : {
-              'nearby_latitude' : browser_latitude,
-              'nearby_longitude' : browser_longitude
-            },
+            url : url,
             success : function (response) {
 
                 var items = $(response).filter(self.options.entity);
 
                 if (items.length) {
                     self._hideForm();
-                    $(self.element).data('fetched-items', items);
-                    $(self.element).trigger('masonry-reset-render');
+                    $(entities).html(items);
                 } else {
                     self._showForm();
                 }
