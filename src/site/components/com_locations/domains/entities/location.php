@@ -33,8 +33,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public',
-                    'unique' => true
+                    'read' => 'public'
                 ),
                 'geoLatitude' => array(
                     'format' => 'float',
@@ -63,7 +62,8 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'geoPostalcode' => array(
                     'format' => 'string',
                     'read' => 'public'
-                )
+                ),
+                'enabled' => array('default' => 1)
             ),
             'aliases' => array(
                 'latitude' => 'geoLatitude',
