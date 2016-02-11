@@ -5,7 +5,7 @@
 <ul>
     <li>
       <b><?= @text('COM-PERSON-META-CREATED-ON') ?>: </b>
-      <?= @date($item->createdOn) ?>
+      <?= @date($item->creationTime) ?>
     </li>
     <li>
       <b><?= @text('COM-PERSON-META-LAST-LOGIN') ?>: </b>
