@@ -111,7 +111,7 @@
 		_render : function() {
 
 			if(this.element.data('fetched-items')) {
-				this.element.trigger('masonry-render');
+				this.element.trigger('entities-render');
 				return;
 			}
 
@@ -124,7 +124,7 @@
 			}
 
 			this.element.data('fetched-items', items);
-			this.element.trigger('masonry-render');
+			this.element.trigger('entities-render');
 		}
 	});
 
