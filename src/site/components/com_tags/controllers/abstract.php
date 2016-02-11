@@ -25,7 +25,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $config->append(array(
             'request' => array(
                 'scope' => '',
-                'sort' => 'top',
+                'sort' => 'recent',
                 'days' => KRequest::get('get.days', 'int', 7),
             ),
         ));
@@ -46,7 +46,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
         $pkg = $this->getIdentifier()->package;
 
-        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-'.$pkg.'-HEADER'), $entity->name));
+        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-'.$pkg.'-TERM'), $entity->name));
 
         if (!empty($entity->tagables)) {
 
