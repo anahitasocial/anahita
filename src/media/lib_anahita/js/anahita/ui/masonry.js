@@ -21,7 +21,7 @@
     },
 
     _create: function() {
-
+console.log('asdf');
       var self = this;
       this.items = new Array();
       this.row = null;
@@ -35,10 +35,10 @@
 
       //when masonry event is triggered, render the items
       this._on( $(this.element) , {
-          'masonry-render' : function( event ) {
+          'entities-render' : function( event ) {
             self._render();
           },
-          'masonry-reset-render' : function ( event ) {
+          'entities-reset-render' : function ( event ) {
             self._reset();
             self._render();
           }

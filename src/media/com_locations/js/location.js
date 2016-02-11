@@ -50,6 +50,7 @@
         this.locationsContainer = null;
         this.currentList = null;
         this.locatableId = null;
+        this.browser_coords = null;
 
         //display the add location button after geoposition data is obtained
         this._on( $(document), {
@@ -72,11 +73,27 @@
         });
 
         //listen to the filter box. If no locations are available, show the form
+        /**
+        * @todo add a custom input field and write custom code for it here.
+        */
         this._on( this.element, {
-          'afterFilterbox' : function( event ) {
+          afterFilterbox : function( event ) {
             var results = self.locationsContainer.find(this.options.entity);
             if (results.length == 0) {
                 self._showForm();
+            }
+          },
+          beforeFilterbox : function (event) {
+
+            var entities = self.locationsContainer.find(self.options.entities);
+            var filterboxForm = $(self.options.locationsContainer).find('form');
+
+            console.log($(self.options.searchQuery).val());
+
+            if($(self.options.searchQuery).val() == '') {
+                filterboxForm.attr('action', entities.data('url') + '&' + self.browser_coords);
+            } else {
+                filterboxForm.attr('action', entities.data('url'));
             }
           }
         });
@@ -119,22 +136,20 @@
 
         var browser_latitude = null;
         var browser_longitude = null;
+
         var url = entities.data('url');
 
         if($(document).data('browser_coords')){
             var browser_coords = $(document).data('browser_coords');
-            var coords = $.param({
+            this.browser_coords = $.param({
     						nearby_latitude : browser_coords.latitude,
     						nearby_longitude : browser_coords.longitude
     				});
-            url = url + '&' + coords;
-            entities.data('url', url);
-            this.locationsContainer.find('form#an-filterbox').attr('action', url);
         }
 
         $.ajax({
             method : 'GET',
-            url : url,
+            url : url + '&' + self.browser_coords,
             success : function (response) {
 
                 var items = $(response).filter(self.options.entity);

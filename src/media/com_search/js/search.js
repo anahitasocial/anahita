@@ -131,7 +131,7 @@
 
 					$(self.options.results).data('fetched-items', response.filter('.an-entity'))
 
-					$(self.element).trigger('masonry-reset-render');
+					$(self.element).trigger('entities-reset-render');
 
 					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
 

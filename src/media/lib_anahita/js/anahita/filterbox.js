@@ -14,12 +14,13 @@
 
 	    var form = $(this);
 
+			$(form).trigger('beforeFilterbox');
+
       $.ajax({
           method : 'get',
           url : form.attr('action'),
           data : form.serialize(),
           beforeSend : function (){
-							$(form).trigger('beforeFilterbox');
 							form.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
           },
           success : function ( response ) {
@@ -34,7 +35,7 @@
 
 								 var container = form.siblings('[data-trigger="InfiniteScroll"]');
 								 $(container).data('fetched-items', items);
-								 $(container).trigger('masonry-reset-render');
+								 $(container).trigger('entities-reset-render');
 
 								 return;
 							}

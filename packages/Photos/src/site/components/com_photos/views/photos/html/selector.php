@@ -18,13 +18,13 @@ if (!empty($exclude_set)) {
 }
 ?>
 <div id="photo-selector-list" class="an-entities media-grid">
-<?= @template('selector_list') ?>	
+<?= @template('selector_list') ?>
 </div>
 
 <script>
 $('#photo-selector-list').infinitescroll({
 	url : '<?= @route($url) ?>',
-	record : '.thumbnail-wrapper',
+	item : '.thumbnail-wrapper',
 	scrollable : '#photo-selector-list',
 	window: '#photo-selector'
 });
