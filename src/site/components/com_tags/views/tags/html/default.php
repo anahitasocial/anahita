@@ -2,6 +2,7 @@
 
 <?= @helper('ui.header', array()) ?>
 
-<div class="an-entities masonry" data-trigger="InfiniteScroll" data-url="<?= @route('layout=list&sort='.$sort) ?>">
-<?= @template('list') ?>
-</div>
+<?= @infinitescroll($items, array(
+  'url' => 'layout=list&sort='.$sort,
+  'id' => 'an-tags'
+)) ?>
