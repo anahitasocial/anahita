@@ -21,7 +21,7 @@
     },
 
     _create: function() {
-console.log('asdf');
+
       var self = this;
       this.items = new Array();
       this.row = null;

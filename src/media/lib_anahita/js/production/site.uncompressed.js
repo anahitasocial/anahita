@@ -21071,7 +21071,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     },
 
     _create: function() {
-console.log('asdf');
+
       var self = this;
       this.items = new Array();
       this.row = null;

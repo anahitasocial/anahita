@@ -43,6 +43,7 @@
 			this._on( term, {
 				change : function( event ) {
 					event.preventDefault();
+					this.searchOptions.term = $(event.currentTarget).val();
 					this.submit(this.form);
 				}
 			});
@@ -73,7 +74,7 @@
 						elemSort.find('option[value="distance"]').prop('disabled', false);
 						elemSort.val('distance');
 
-						this.searchOptions.range = elemRange.val();
+						this.searchOptions.search_range = elemRange.val();
 						this.searchOptions.search_nearby = elemNearby.val();
 						this.searchOptions.sort = 'distance';
 						this.submit(elemNearby);
@@ -110,7 +111,6 @@
 		changeScope : function( target ) {
 
 				this.searchOptions.scope = $(target).data('scope');
-
 				this.submit($(target));
 		},
 
@@ -120,7 +120,7 @@
 
 			$.ajax({
 				method : 'get',
-				url : this.form.attr('action') + '?' + this.form.serialize(),
+				url : this.form.attr('action'),
 				data : this.searchOptions,
 				beforeSend : function () {
 					currentTarget.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
@@ -132,15 +132,12 @@
 					$(self.options.results).data('fetched-items', response.filter('.an-entity'))
 
 					$(self.element).trigger('entities-reset-render');
-
-					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
-
 				},
 				complete : function () {
 
 					currentTarget.fadeTo('fast', 1).removeClass('uiActivityIndicator');
 
-					var newUrl = self.form.attr('action') + '?' + self.form.serialize() + '&' + $.param(self.searchOptions);
+					var newUrl = self.form.attr('action') + '?' + $.param(self.searchOptions);
 
 					$(self.element).data( 'newUrl',  newUrl ).trigger('urlChange');
 				}

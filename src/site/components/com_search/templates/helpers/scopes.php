@@ -25,13 +25,11 @@ class ComSearchTemplateHelperScopes extends KTemplateHelperAbstract
         $groups = array('posts' => array(),'actors' => array(),'other' => array());
         $current = $this->_template->getView()->current_scope;
         foreach ($scopes as $scope) {
-            if ($scope->result_count > 0 || $current === $scope) {
                 if ($scope->type == 'post') {
                     $groups['posts'][] = $scope;
                 } else {
                     $groups['actors'][] = $scope;
                 }
-            }
         }
 
         return $groups;
