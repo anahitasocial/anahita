@@ -26,42 +26,40 @@
 
 		_create : function() {
 
+			var self = this;
 			this.form = $(this.options.searchForm);
-			var term = this.form.find(this.options.term);
-			var elemSort = $(this.options.sortOption);
-			var elemComment = $(this.options.commentOption);
-			var elemNearby = $(this.options.nearbyOption);
-			var elemRange = $(this.options.rangeOption);
-			var elemScope = $(this.options.scope);
+			this.term = this.form.find(this.options.term);
+			this.sort = $(this.options.sortOption);
+			this.comments = $(this.options.commentOption);
+			this.nearby = $(this.options.nearbyOption);
+			this.range = $(this.options.rangeOption);
+			this.scope = $(this.options.scope);
 
 			this.searchOptions = {
 				layout : 'results',
-				scope : $(elemScope).data('scope')
+				scope : 'all'
 			};
 
 			//search form
-			this._on( term, {
+			this._on( this.term, {
 				change : function( event ) {
 					event.preventDefault();
-					this.searchOptions.term = term.val();
 					this.submit(this.form);
 				}
 			});
 
 			//sort options recent/relevant
-			this._on( elemSort, {
+			this._on( this.sort, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.searchOptions.sort = $(event.currentTarget).val();
 					this.submit($(event.currentTarget));
 				}
 			});
 
 			//sort options search comments
-			this._on( elemComment, {
+			this._on( this.comments, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.searchOptions.search_comments = $(event.currentTarget).is(':checked');
 					this.submit($(event.currentTarget));
 				}
 			});
@@ -70,25 +68,22 @@
 			this._on( this.form, {
 				 'SearchNearby' : function ( event ) {
 
-						elemRange.prop('disabled', false);
-						elemSort.find('option[value="distance"]').prop('disabled', false);
-						elemSort.val('distance');
-
-						this.searchOptions.search_range = elemRange.val();
-						this.searchOptions.search_nearby = elemNearby.val();
+						this.range.prop('disabled', false);
+						this.sort.find('option[value="distance"]').prop('disabled', false);
+						this.sort.val('distance');
 						this.searchOptions.sort = 'distance';
-						this.submit(elemNearby);
+						this.submit(this.nearby);
 				 }
 			});
 
 			//removing nearby options search
-			this._on( elemNearby, {
+			this._on( this.nearby, {
 				 change : function ( event ) {
 					 	event.preventDefault();
 						if($(event.currentTarget).val() == '') {
-								elemRange.prop('disabled', true);
-								elemSort.find('option[value="distance"]').prop('disabled', true);
-								elemSort.val('relevant');
+								this.range.prop('disabled', true);
+								this.sort.find('option[value="distance"]').prop('disabled', true);
+								this.sort.val('relevant');
 
 								this.searchOptions.search_nearby = null;
 								this.searchOptions.search_range = null;
@@ -99,10 +94,9 @@
 			});
 
 			//elem range
-			this._on( elemRange, {
+			this._on( this.range, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.searchOptions.search_range = elemRange.val();
 					this.submit($(event.currentTarget));
 				}
 			});
@@ -119,6 +113,16 @@
 		submit : function( currentTarget ) {
 
 			var self = this;
+
+			this.searchOptions = $.extend(this.searchOptions, {
+					term : this.term.val(),
+					sort : this.sort.val(),
+					search_comments : this.comments.is(':checked'),
+					search_nearby : this.nearby.val(),
+					search_range : (this.nearby.val()) ? this.range.val() : null,
+			});
+
+			console.log(this.searchOptions);
 
 			$.ajax({
 				method : 'get',
