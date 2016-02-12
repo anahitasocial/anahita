@@ -43,7 +43,7 @@
 			this._on( term, {
 				change : function( event ) {
 					event.preventDefault();
-					this.searchOptions.term = $(event.currentTarget).val();
+					this.searchOptions.term = term.val();
 					this.submit(this.form);
 				}
 			});
@@ -109,7 +109,7 @@
 		},
 
 		changeScope : function( target ) {
-			
+
 				$(this.options.searchScopes).find('li').removeClass('active');
 				$(target).parent().addClass('active');
 				this.searchOptions.scope = $(target).data('scope');
