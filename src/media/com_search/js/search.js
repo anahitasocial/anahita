@@ -43,6 +43,7 @@
 			this._on( term, {
 				change : function( event ) {
 					event.preventDefault();
+					this.searchOptions.term = $(event.currentTarget).val();
 					this.submit(this.form);
 				}
 			});
@@ -110,7 +111,6 @@
 		changeScope : function( target ) {
 
 				this.searchOptions.scope = $(target).data('scope');
-
 				this.submit($(target));
 		},
 
@@ -132,9 +132,6 @@
 					$(self.options.results).data('fetched-items', response.filter('.an-entity'))
 
 					$(self.element).trigger('entities-reset-render');
-
-					$(self.options.searchScopes).replaceWith(response.filter(self.options.searchScopes));
-
 				},
 				complete : function () {
 
