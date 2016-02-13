@@ -37,6 +37,16 @@
                     'inverse' => true,
                 ),
             ),
+            'attributes' => array(
+              'geoLatitude' => array(
+                  'format' => 'float',
+                  'read' => 'public'
+              ),
+              'geoLongitude' => array(
+                  'format' => 'float',
+                  'read' => 'public'
+              ),
+            ),
         ));
 
         parent::_initialize($config);

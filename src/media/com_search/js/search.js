@@ -36,8 +36,11 @@
 			this.scope = $(this.options.scope);
 
 			this.searchOptions = {
-				layout : 'results',
-				scope : 'all'
+				scope : 'all',
+				sort : 'recent',
+				search_comments : false,
+				search_nearby : null,
+				search_range : null,
 			};
 
 			//search form

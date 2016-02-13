@@ -58,7 +58,23 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
               }
 
               //nearby
-              if($this->nearby_latitude && $this->nearby_longitude) {
+              $nearby_latitude = null;
+              $nearby_longitude = null;
+
+              //nearby
+              if( $this->locatable->geoLongitude && $this->locatable->geoLatitude ) {
+
+                $nearby_latitude = $this->locatable->geoLongitude;
+                $nearby_longitude = $this->locatable->geoLatitude;
+
+              } elseif($this->nearby_latitude && $this->nearby_longitude) {
+
+                  $nearby_latitude = $this->nearby_latitude;
+                  $nearby_longitude = $this->nearby_longitude;
+              }
+
+              //nearby
+              if( $query->keyword == '' && $nearby_latitude && $nearby_longitude) {
 
                 $earth_radius = 6371000;
                 $lat = (float) $this->nearby_latitude;
