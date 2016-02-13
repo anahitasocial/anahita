@@ -88,8 +88,6 @@
             var entities = self.locationsContainer.find(self.options.entities);
             var filterboxForm = $(self.options.locationsContainer).find('form');
 
-            console.log($(self.options.searchQuery).val());
-
             if($(self.options.searchQuery).val() == '') {
                 filterboxForm.attr('action', entities.data('url') + '&' + self.browser_coords);
             } else {

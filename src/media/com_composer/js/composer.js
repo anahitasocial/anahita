@@ -44,6 +44,12 @@
 							formData.append('file', file);
 				    });
 
+						if($(document).data('browser_coords')){
+		            var browser_coords = $(document).data('browser_coords');
+								formData.append('geoLatitude', browser_coords.latitude);
+								formData.append('geoLongitude', browser_coords.longitude);
+		        }
+
 						$.ajax({
 							url : form.attr('action'),
 							processData: false,
@@ -76,15 +82,19 @@
 
 						form.trigger('beforeSubmit');
 
+						if($(document).data('browser_coords')){
+		            var browser_coords = $(document).data('browser_coords');
+								form.append('<input type="hidden" name="geoLatitude" value="' + browser_coords.latitude + '" />');
+								form.append('<input type="hidden" name="geoLongitude" value="' + browser_coords.longitude + '" />');
+		        }
+
 						$.ajax({
 
 							url : form.attr('action'),
 							data : form.serialize() + '&composed=1',
 							method : 'post',
 							beforeSend : function () {
-
 							    form.find(':submit').button('loading');
-
 							},
 							success : function (html) {
 
