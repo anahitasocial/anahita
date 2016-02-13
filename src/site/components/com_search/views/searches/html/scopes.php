@@ -5,7 +5,8 @@
 		</a>
 	</li>
 
-	<?php $groups = @helper('scopes.group', $items->getScopes()) ?>
+	<?php $global = !isset($actor) ?>
+	<?php $groups = @helper('scopes.group', $items->getScopes(), $global) ?>
 	<?php foreach ($groups as $name => $scopes): ?>
 	<?php if (count($scopes)): ?>
 	<li class="nav-header">
