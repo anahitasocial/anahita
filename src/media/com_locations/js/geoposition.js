@@ -19,7 +19,7 @@
           self.data('browser_coords', position.coords).trigger('geopositioned');
           $(document).trigger('geoposition');
         },
-        function error(error){
+        function showError(error){
           console.log(error.message);
           self.data('browser_coords', null);
         },
