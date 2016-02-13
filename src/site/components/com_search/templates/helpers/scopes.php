@@ -20,16 +20,22 @@ class ComSearchTemplateHelperScopes extends KTemplateHelperAbstract
      *
      * @return array
      */
-    public function group($scopes)
+    public function group($scopes, $global = true)
     {
-        $groups = array('posts' => array(),'actors' => array(),'other' => array());
+        $groups = array(
+          'posts' => array(),
+          'actors' => array(),
+          'other' => array()
+        );
+
         $current = $this->_template->getView()->current_scope;
+
         foreach ($scopes as $scope) {
-                if ($scope->type == 'post') {
-                    $groups['posts'][] = $scope;
-                } else {
-                    $groups['actors'][] = $scope;
-                }
+          if ($scope->type == 'post') {
+              $groups['posts'][] = $scope;
+          } elseif($scope->type == 'actor' && $global) {
+              $groups['actors'][] = $scope;
+          }
         }
 
         return $groups;
