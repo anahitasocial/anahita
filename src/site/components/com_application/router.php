@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +30,7 @@ class ComApplicationRouter extends LibApplicationRouter
 {
     /**
      * Parses the URI.
-     * 
+     *
      * @param JURI $uri
      */
     public function parse(&$url)
@@ -38,7 +38,7 @@ class ComApplicationRouter extends LibApplicationRouter
         $this->_fixUrlForParsing($url);
 
         if (empty($url->path) && !isset($url->query['option'])) {
-            $url->path = (get_viewer()->guest()) ? 'html' : 'dashboard';
+            $url->path = (get_viewer()->guest()) ? 'pages' : 'dashboard';
         }
 
         $this->_parse($url);
