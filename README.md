@@ -18,7 +18,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 
 ### Nodes
 1. **actors:** people, groups, or build your own custom actor
-2. **media:** notes, topics, todos, photos, pages, or build your own custom media
+2. **media:** notes, topics, todos, photos, articles, or build your own custom media
 3. **hashtags:** all actors, media, and comments are hashtagable  
 4. **locations:** all actors and media are geolocatable
 5. **stories:** updates created by actors for their followers
@@ -27,7 +27,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 1. **social graph:** people and groups can be followed by other people.
 2. **hashtags:** for actors, media, and comments
 3. **mentions:** tag people in media and comments
-4. **locations:** tag locations in media and actors  
+4. **locations:** tag locations in media and actors and search nearby nodes  
 5. **notifications:** a person receives an email notification whenever a comment is posted on an item they are subscribed to.
 6. **votes:** people can Like/Unlike media and comments
 
