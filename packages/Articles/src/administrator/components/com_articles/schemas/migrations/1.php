@@ -28,6 +28,9 @@ class ComArticlesSchemaMigration1 extends ComMigratorMigrationVersion
         // parent types
         dbexec('UPDATE `#__nodes` SET parent_type=\'com:articles.domain.entity.article\' WHERE parent_type=\'com:pages.domain.entity.page\' ');
 
+        // update permissions
+        dbexec('UPDATE `#__nodes` SET `permissions` = REPLACE(`permissions`, \'com_pages:page\', \'com_articles:article\')');
+
         // story_object_type
         dbexec('UPDATE `#__nodes` SET story_object_type=\'com:articles.domain.entity.article\' WHERE story_object_type=\'com:pages.domain.entity.page\' ');
 
