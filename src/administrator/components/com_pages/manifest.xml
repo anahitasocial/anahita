@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<install type="component" version="##BUILD_PLATFORM_VERSION##" social_app="1" method="upgrade">
-    <name>Html</name>  
+<install type="component" social_app="1" method="upgrade">
+    <name>Pages</name>
     <author>Anahita Social Networking Platform and Framework</author>
-    <copyright>(C) 2013 rmd Studio, Peerglobe Technology</copyright>
+    <copyright>(C) 2016 rmd Studio, Peerglobe Technology</copyright>
     <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
     <authoremail>info@anahitapolis.com</authoremail>
     <authorurl>http://www.Anahitapolis.com</authorurl>
-    <description>Static HTML content</description>
-    <administration> 
-        <menu>Static HTML Content</menu>
+    <description>Renders custom php/html pages</description>
+    <administration>
+        <menu>Pages</menu>
     </administration>
     <menu>true</menu>
 </install>

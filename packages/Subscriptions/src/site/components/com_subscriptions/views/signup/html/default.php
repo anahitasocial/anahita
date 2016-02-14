@@ -31,10 +31,10 @@
         <?php
 
         $tos_layout = get_config_value('subscriptions.tos_content_layout');
-        $tos_replace = '<a href="'.@route('option=com_html&view=content&layout='.$tos_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-TERMS-SERVICE').'</a>';
+        $tos_replace = '<a href="'.@route('option=com_pages&view=content&layout='.$tos_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-TERMS-SERVICE').'</a>';
 
         $privacy_layout = get_config_value('subscriptions.privacy_content_layout');
-        $privacy_replace = '<a href="'.@route('option=com_html&view=content&layout='.$privacy_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-PRIVACY-POLICY').'</a>';
+        $privacy_replace = '<a href="'.@route('option=com_pages&view=content&layout='.$privacy_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-PRIVACY-POLICY').'</a>';
 
         $body = sprintf(@text('COM-SUBSCRIPTIONS-TERMS-DESCRIPTION'), $tos_replace, $privacy_replace);
 

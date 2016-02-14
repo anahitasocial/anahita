@@ -11,19 +11,19 @@
     <license>GPL3 - http://www.gnu.org/licenses/gpl-3.0.html</license>
     <description>
        <![CDATA[
-			<b>Shiraz [ʃiːˈrɒːz]</b> Named after the ancient city of poets, mathematicians, flowers, and wine 
+			<b>Shiraz [ʃiːˈrɒːz]</b> Named after the ancient city of poets, mathematicians, flowers, and wine
 			in south of Persia which dates back to 4000 BCE.
-			
+
 			<br/>
 			<br/>
-			
-			This template is developed for the Anahita social networking platform and framework and the   
-		    apps distributed by <a href="http://www.anahitapolis.com" target="_blank">Anahitapolis.com</a>. 
+
+			This template is developed for the Anahita social networking platform and framework and the
+		    apps distributed by <a href="http://www.GetAnahita.com" target="_blank">GetAnahita.com</a>.
 			It is available to you under the <a href="http://gplv3.fsf.org/" target="_blank">GPL3</a> license.
-			
+
 			<br/>
 			<br/>
-			
+
 			This template provides styling for the following social apps:
 			<ol>
 				<li>Topics</li>
@@ -31,15 +31,15 @@
 				<li>Groups</li>
 				<li>Connect</li>
 				<li>Todos</li>
-				<li>Pages</li>
+				<li>Articles</li>
 			</ol>
-			
+
 			The Anahita Shiraz template is developed by extending the <a target="_blank" href="http://twitter.github.com/bootstrap/">Twitter Bootstrap</a> library.
-			]]>			
+			]]>
     </description>
     <exceptions>
         <filename type="noreplace">params.ini</filename>
-    </exceptions>     
+    </exceptions>
         <params addpath="/templates/shiraz/elements">
             <param name="cssStyle" type="list" default="style1" label="Style">
                 <option value="style1">Style 1</option>
@@ -53,7 +53,7 @@
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </param>
-            <param name="favicon" type="text" default="favicon.ico" label="Favicon" description="Favicon file name" />                        
+            <param name="favicon" type="text" default="favicon.ico" label="Favicon" description="Favicon file name" />
             <param name="navbarInverse" type="list" default="0" label="Navbar Theme">
                 <option value="0">Light</option>
                 <option value="1">Dark</option>
@@ -69,7 +69,7 @@
             </param>
             <param name="analytics" type="text" default="" label="Analytics ID" description="Enter your google analytics tracking ID which is in the format of UA-XXXXX-Y or UA-XXXXX-YY." />
         </params>
-    
+
     <files>
         <folder>css</folder>
         <folder>html</folder>

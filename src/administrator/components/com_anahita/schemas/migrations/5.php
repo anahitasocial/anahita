@@ -92,13 +92,13 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         }
 
         dboutput("\nMedia's Hashtags\n");
-        //extracting hashtag terms from mediums: notes, topics, pages, and todos
+        //extracting hashtag terms from mediums: notes, topics, articles, and todos
         $query = 'SELECT id FROM #__nodes WHERE '.$query_regexp.' AND ( '.
                     'type LIKE \'%com:notes.domain.entity.note\' '.
                     'OR type LIKE \'%com:topics.domain.entity.topic\' '.
                     'OR type LIKE \'%com:photos.domain.entity.photo\' '.
                     'OR type LIKE \'%com:photos.domain.entity.set\' '.
-                    'OR type LIKE \'%com:pages.domain.entity.page\' '.
+                    'OR type LIKE \'%com:articles.domain.entity.article\' '.
                     'OR type LIKE \'%com:todos.domain.entity.todo\' '.
                     ' ) ';
 
