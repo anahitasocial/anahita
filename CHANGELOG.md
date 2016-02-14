@@ -1,8 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.1.9 Birth Release
+Anahita 4.2.* Embryo Release
 =============================
+* Location graph implemented. We can now tag actors and media with locations and search nearby actors and media nodes.
+* Implemented integration with google maps and location api to render maps, geolocate, etc.
 * com_pages is now com_articles therefore we call it the Articles app.
+* com_html is now com_pages
 
 Anahita 4.1.8 Birth Release
 =============================

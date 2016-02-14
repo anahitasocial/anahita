@@ -13,8 +13,6 @@ class ComArticlesSchemaMigration1 extends ComMigratorMigrationVersion
     */
     public function up()
     {
-        dbexec('UPDATE `#__components` SET name=\'Articles\', link=\'option=com_articles\', `option`=\'com_articles\' WHERE `option` = \'com_pages\' ');
-
         // node types
         dbexec('UPDATE `#__nodes` SET type=\'ComMediumDomainEntityMedium,ComArticlesDomainEntityArticle,com:articles.domain.entity.article\' WHERE type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
 
@@ -29,9 +27,6 @@ class ComArticlesSchemaMigration1 extends ComMigratorMigrationVersion
 
         // story_object_type
         dbexec('UPDATE `#__nodes` SET story_object_type=\'com:articles.domain.entity.article\' WHERE story_object_type=\'com:pages.domain.entity.page\' ');
-
-		    // Update nodes: component
-        dbexec('UPDATE `#__nodes` SET component=\'com_articles\' WHERE component=\'com_pages\'');
 
         // Update edges
         dbexec('UPDATE `#__edges` SET `node_b_type` = \'com:articles.domain.entity.article\' WHERE `node_b_type` = \'com:pages.domain.entity.page\' ');

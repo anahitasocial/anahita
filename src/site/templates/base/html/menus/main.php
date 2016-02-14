@@ -13,12 +13,12 @@
 if (false): ?>
 <ul class="nav">
 	<li>
-		<a href="<?= @route('option=com_html&view=content&layout=examples/article') ?>">
+		<a href="<?= @route('option=com_pages&view=content&layout=examples/article') ?>">
 		<?= @text('Article') ?>
 		</a>
 	</li>			
 	<li>
-		<a href="<?= @route('option=com_html&view=content&layout=examples/actor-gadget') ?>">
+		<a href="<?= @route('option=com_pages&view=content&layout=examples/actor-gadget') ?>">
 		<?= @text('Actor Gadget') ?>
 		</a>
 	</li>
@@ -28,12 +28,12 @@ if (false): ?>
 		</a>
 		<ul class="dropdown-menu">							
 			<li>
-				<a href="<?= @route('option=com_html&view=content&layout=examples/landing') ?>">
+				<a href="<?= @route('option=com_pages&view=content&layout=examples/landing') ?>">
 				<?= @text('Landing') ?>
 				</a>
 			</li>						
 			<li>
-				<a href="<?= @route('option=com_html&view=content&layout=examples/nonavbar') ?>">
+				<a href="<?= @route('option=com_pages&view=content&layout=examples/nonavbar') ?>">
 				<?= @text('No Navbar') ?>
 				</a>
 			</li>						
