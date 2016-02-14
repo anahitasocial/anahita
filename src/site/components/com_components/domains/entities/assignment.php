@@ -29,8 +29,18 @@ class ComComponentsDomainEntityAssignment extends ComBaseDomainEntityNode
                 'access',
              ),
             'relationships' => array(
-                'componentEntity' => array('type' => 'belongs_to', 'child_column' => 'component', 'parent_key' => 'component', 'parent' => 'com:components.domain.entity.assignment'),
-                'actor' => array('type' => 'belongs_to', 'child_column' => 'owner_id', 'type_column' => 'owner_type', 'polymorphic' => true),
+                'componentEntity' => array(
+                    'type' => 'belongs_to',
+                    'child_column' => 'component',
+                    'parent_key' => 'component',
+                    'parent' => 'com:components.domain.entity.assignment'
+                ),
+                'actor' => array(
+                    'type' => 'belongs_to',
+                    'child_column' => 'owner_id',
+                    'type_column' => 'owner_type',
+                    'polymorphic' => true
+                ),
              ),
         ));
 

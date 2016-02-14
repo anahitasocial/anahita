@@ -13,6 +13,9 @@ class ComArticlesSchemaMigration1 extends ComMigratorMigrationVersion
     */
     public function up()
     {
+        //component
+        dbexec('UPDATE `#__nodes` SET `component` = \'com_articles\' WHERE `component` = \'com_pages\' ');
+
         // node types
         dbexec('UPDATE `#__nodes` SET type=\'ComMediumDomainEntityMedium,ComArticlesDomainEntityArticle,com:articles.domain.entity.article\' WHERE type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
 
