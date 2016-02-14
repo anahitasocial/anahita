@@ -1,12 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##
- * 
- * @package    Com_Articles
- * @subpackage Schema_Migration
- */
-
 /**
  * Schema Migration
  *
@@ -20,14 +13,39 @@ class ComArticlesSchemaMigration1 extends ComMigratorMigrationVersion
     */
     public function up()
     {
-        dbexec('UPDATE #__anahita_nodes SET access=\'admins\' WHERE enabled=0 AND type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
+        dbexec('UPDATE `#__components` SET name=\'Articles\', link=\'option=com_articles\', `option`=\'com_articles\' WHERE `option` = \'com_pages\' ');
+
+        // node types
+        dbexec('UPDATE `#__nodes` SET type=\'ComMediumDomainEntityMedium,ComArticlesDomainEntityArticle,com:articles.domain.entity.article\' WHERE type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityPage,com:pages.domain.entity.page\'');
+
+        // revision nodes
+        dbexec('UPDATE `#__nodes` SET type=\'ComMediumDomainEntityMedium,ComArticlesDomainEntityRevision,com:articles.domain.entity.revision\' WHERE type=\'ComMediumDomainEntityMedium,ComPagesDomainEntityRevision,com:pages.domain.entity.revision\'');
+
+        // comments
+        dbexec('UPDATE `#__nodes` SET type=\'ComBaseDomainEntityComment,com:articles.domain.entity.comment\' WHERE type=\'ComBaseDomainEntityComment,com:pages.domain.entity.comment\' ');
+
+        // parent types
+        dbexec('UPDATE `#__nodes` SET parent_type=\'com:articles.domain.entity.article\' WHERE parent_type=\'com:pages.domain.entity.page\' ');
+
+        // story_object_type
+        dbexec('UPDATE `#__nodes` SET story_object_type=\'com:articles.domain.entity.article\' WHERE story_object_type=\'com:pages.domain.entity.page\' ');
+
+		    // Update nodes: component
+        dbexec('UPDATE `#__nodes` SET component=\'com_articles\' WHERE component=\'com_pages\'');
+
+        // Update edges
+        dbexec('UPDATE `#__edges` SET `node_b_type` = \'com:articles.domain.entity.article\' WHERE `node_b_type` = \'com:pages.domain.entity.page\' ');
+
+		    // Update stories and notifications
+		    dbexec('UPDATE `#__nodes` SET name=\'article_add\' WHERE name=\'page_add\'');
+		    dbexec('UPDATE `#__nodes` SET name=\'article_comment\' WHERE name=\'page_comment\'');
     }
 
    /**
     * Called when rolling back a migration
-    */        
+    */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }
