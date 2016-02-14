@@ -215,8 +215,8 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
             $entities[] = $mixer;
         }
 
-        foreach ($entities as $enttiy) {
-            $permissions = explode(',', $enttiy->getPermission($action, $default));
+        foreach ($entities as $entity) {
+            $permissions = explode(',', $entity->getPermission($action, $default));
             $result = $this->checkPermissions($actor, $permissions, $owner);
             if ($result === false) {
                 return false;

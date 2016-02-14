@@ -37,7 +37,7 @@
      */
     public function filter($text)
     {
-        preg_match_all('/(pages|topics|photos|todos|notes)\/([0-9]+)[-]?/', $text, $matches);
+        preg_match_all('/(articles|topics|photos|todos|notes)\/([0-9]+)[-]?/', $text, $matches);
 
         $ids = $matches[2];
 
@@ -58,7 +58,7 @@
                     .'</a> ',
                     $text);
                 } else {
-                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/pages\/'.$medium->id.'[-\w\-]*/';
+                    $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/articles\/'.$medium->id.'[-\w\-]*/';
 
                     $template = '<div class="alert alert-block alert-success">';
 
