@@ -2,7 +2,7 @@
 
 /**
  * People Template Helper.
- * 
+ *
  * Provides methods to for rendering avatar/name for an actor
  *
  * @category   Anahita
@@ -16,9 +16,9 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
 {
     /**
      * Return the list of enabled app links on an actor's profile.
-     * 
+     *
      * @param actor object ComActorsDomainEntityActor
-     * 
+     *
      * @return array LibBaseTemplateObjectContainer
      */
     public function viewerMenuLinks($actor)
@@ -34,7 +34,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
 
     /**
      * Displays selector for person usertypes.
-     * 
+     *
      * @param array of options
      *
      * @return html select
