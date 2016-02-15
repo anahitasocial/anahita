@@ -22,11 +22,10 @@ class ComTopicsFilterPost extends KFilterHtml
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'tag_list' => array('p', 'strike', 'u', 'pre', 'address', 'blockquote', 'b', 'i', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
+            //whilte list these tags
             'tag_method' => 0,
+            'tag_list' => array('p', 'strike', 'u', 'pre', 'address', 'blockquote', 'b', 'i', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5'),
         ));
-
-        parent::_initialize($config);
 
         if ($config->tag_list) {
             $config['tag_list'] = KConfig::unbox($config->tag_list);
@@ -35,6 +34,11 @@ class ComTopicsFilterPost extends KFilterHtml
         if ($config->tag_method) {
             $config['tag_method'] = KConfig::unbox($config->tag_method);
         }
+
+        $config['attribute_method'] = 0;
+        $config['attribute_list'] = array();
+
+        parent::_initialize($config);
     }
 
 //end class
