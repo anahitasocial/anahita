@@ -26,8 +26,6 @@ class ComArticlesFilterPost extends KFilterHtml
             'tag_method' => 0,
         ));
 
-        parent::_initialize($config);
-
         if ($config->tag_list) {
             $config['tag_list'] = KConfig::unbox($config->tag_list);
         }
@@ -35,6 +33,11 @@ class ComArticlesFilterPost extends KFilterHtml
         if ($config->tag_method) {
             $config['tag_method'] = KConfig::unbox($config->tag_method);
         }
+
+        $config['attribute_method'] = 0;
+        $config['attribute_list'] = array();
+
+        parent::_initialize($config);
     }
 
 //end class

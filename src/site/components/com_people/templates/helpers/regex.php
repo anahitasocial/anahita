@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Javascript Regex for forms
+ *
+ * @category   Anahita
+ *
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
+ * @link       http://www.GetAnahita.com
+ */
+class ComPeopleTemplateHelperRegex extends KTemplateHelperAbstract
+{
+    /**
+    * email Javascript regex
+    *
+    * @return string regex
+    */
+    public function email()
+    {
+        return "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,16}";
+    }
+
+    /**
+    * username Javascript regex
+    *
+    * @return string regex
+    */
+    public function username()
+    {
+        return "[A-Za-z][A-Za-z0-9_-]*";
+    }
+}

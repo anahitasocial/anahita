@@ -15,7 +15,14 @@
 
 		<?php $return = empty($return) ? null : $return; ?>
 
-        <form action="<?= @route('view=person') ?>" method="post" name="person-form" id="person-form" class="well" autocomplete="off">
+        <form
+						action="<?= @route('view=person') ?>"
+						method="post"
+						name="person-form"
+						id="person-form"
+						class="well"
+						autocomplete="off"
+				>
             <input type="hidden" name="action" value="add" />
 
             <fieldset>
@@ -28,7 +35,15 @@
                         <?= @text('COM-PEOPLE-SIGNUP-NAME'); ?>
                     </label>
                     <div class="controls">
-                        <input class="input-block-level" type="text" id="person-name" name="name" maxlength="25" minlength="6" required />
+                        <input
+														required
+														class="input-block-level"
+														type="text"
+														id="person-name"
+														name="name"
+														maxlength="25"
+														minlength="6"
+												 />
                     </div>
                 </div>
 
@@ -37,8 +52,18 @@
                         <?= @text('COM-PEOPLE-SIGNUP-USERNAME'); ?>
                     </label>
                     <div class="controls">
-                        <?php $usernamePattern = '^[A-Za-z][A-Za-z0-9_-]*$'; ?>
-                        <input data-validate="username" data-url="<?= @route('view=person', false) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" maxlength="100" minlength="6" required />
+                        <input
+														required
+														data-validate="username"
+														data-url="<?= @route('view=person', false) ?>"
+														type="text"
+														id="person-username"
+														class="input-block-level"
+														name="username"
+														pattern="<?= @helper('regex.username') ?>"
+														maxlength="100"
+														minlength="6"
+												/>
                     </div>
                 </div>
 
@@ -47,8 +72,18 @@
                         <?= @text('COM-PEOPLE-SIGNUP-EMAIL'); ?>
                     </label>
                     <div class="controls">
-                       <?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
-                       <input data-validate="email" data-url="<?= @route('view=person', false) ?>" type="email" name="email" pattern="<?= $emailPattern ?>" id="person-email" class="input-block-level" maxlength="100" minlength="10" required  />
+                       <input
+											 		required
+											 		data-validate="email"
+													data-url="<?= @route('view=person', false) ?>"
+													type="email"
+													name="email"
+													pattern="<?= @helper('regex.email') ?>"
+													id="person-email"
+													class="input-block-level"
+													maxlength="100"
+													minlength="10"
+												/>
                     </div>
                 </div>
 
@@ -63,7 +98,11 @@
             </fieldset>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-large pull-right" data-loading-text="<?= @text('LIB-AN-ACTION-PLEASE-WAIT') ?>">
+                <button
+										type="submit"
+										class="btn btn-primary btn-large pull-right"
+										data-loading-text="<?= @text('LIB-AN-ACTION-PLEASE-WAIT') ?>"
+								>
                     <?= @text('COM-PEOPLE-ACTION-REGISTER') ?>
                 </button>
             </div>

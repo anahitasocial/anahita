@@ -9,7 +9,12 @@
     </li>
     <li>
       <b><?= @text('COM-PERSON-META-LAST-LOGIN') ?>: </b>
-      <?= @date($item->getLastLoginDate()) ?>
+      <?php $lastLoginDate = $item->getLastLoginDate() ?>
+      <?php if($lastLoginDate->compare($item->creationTime) < 0): ?>
+      <?= @text('COM-PERSON-META-NEVER-LOGGED-IN') ?>
+      <?php else : ?>
+      <?= @date($lastLoginDate) ?>
+      <?php endif; ?>
     </li>
 </ul>
 
@@ -25,8 +30,19 @@
 		<?= @text('COM-PEOPLE-USERNAME'); ?>:
 	    </label>
 	    <div class="controls">
-	        <?php $usernamePattern = '^[A-Za-z][A-Za-z0-9_-]*$'; ?>
-	        <input required data-validate="username" data-url="<?= @route('view=person', false) ?>" type="text" id="person-username" class="input-block-level" name="username" pattern="<?= $usernamePattern ?>" value="<?= $item->username ?>" maxlength="25" minlength="6" />
+	        <input
+              required
+              data-validate="username"
+              data-url="<?= @route('view=person', false) ?>"
+              type="text"
+              id="person-username"
+              class="input-block-level"
+              name="username"
+              pattern="<?= @helper('regex.username') ?>"
+              value="<?= $item->username ?>"
+              maxlength="25"
+              minlength="6"
+           />
 	    </div>
 	</div>
 
@@ -35,8 +51,18 @@
 			<?= @text('COM-PEOPLE-EMAIL'); ?>:
 		</label>
 	    <div class="controls">
-	       <?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
-	       <input required data-validate="email" data-url="<?= @route('view=person', false) ?>" type="email" name="email" pattern="<?= $emailPattern ?>" id="person-email" class="input-block-level" maxlength="100" value="<?= $item->email ?>"  />
+	       <input
+            required
+            data-validate="email"
+            data-url="<?= @route('view=person', false) ?>"
+            type="email"
+            name="email"
+            pattern="<?= @helper('regex.email') ?>"
+            id="person-email"
+            class="input-block-level"
+            maxlength="100"
+            value="<?= $item->email ?>"
+         />
 	    </div>
 	</div>
 

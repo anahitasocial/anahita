@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Date Helper.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -49,7 +49,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
 
     /**
      * current time.
-     * 
+     *
      * @var KDate
      */
     protected $_current_time;
@@ -63,7 +63,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
     {
         parent::__construct($config);
 
-        //load the com_Anahita_SocialCore language for the date related string		
+        //load the com_Anahita_SocialCore language for the date related string
         $this->_current_time = AnDomainAttributeDate::getInstance();
     }
 
@@ -132,9 +132,9 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
 
     /**
      * Return a human friendly format of the date.
-     * 
+     *
      * @param KDate $date
-     * @param array $config Optional array to pass format 
+     * @param array $config Optional array to pass format
      *
      * @return string
      */
@@ -154,6 +154,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
 
         if ($config->relative) {
             $timeLeft = ($diff < 0) ? '-FUTURE' : '';
+
             $diff = abs($diff);
 
             if ($diff < 1) {

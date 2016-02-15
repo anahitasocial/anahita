@@ -13,7 +13,7 @@
 				<input required class="input-block-level" id="topic-title" name="title" value="<?= @escape($topic->title) ?>" size="50" maxlength="255" type="text" />
 			</div>
 		</div>
-		
+
 		<div class="control-group">
 			<label class="control-label" for="topic-body">
 			    <?= @text('LIB-AN-MEDIUM-BODY') ?>
@@ -27,25 +27,25 @@
                         'cols' => '10',
                         'rows' => '5',
                         'class' => 'input-block-level',
-                        'id' => 'topic-body',
+                        'id' => 'topic-body'
                         ),
                 )); ?>
             </div>
 		</div>
-		
+
 		<div class="control-group">
 			<label class="control-label" id="privacy" ><?= @text('LIB-AN-PRIVACY-FORM-LABEL') ?></label>
 			<div class="controls">
 				<?= @helper('ui.privacy', array('entity' => $topic, 'auto_submit' => false, 'options' => $actor)) ?>
 			</div>
 		</div>
-			
+
 		<div class="form-actions">
 			<?php $cancelURL = ($topic->persisted()) ? $topic->getURL() : 'view=topics&oid='.$actor->id ?>
 			<a class="btn" href="<?= @route($cancelURL) ?>">
 			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
-			</a>  
-			
+			</a>
+
 			<?php $action = ($topic->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
 			<?php $actionLoading = ($topic->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
 			<button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">

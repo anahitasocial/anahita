@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Fileable Behavior.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -39,8 +39,16 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
     {
         $config->append(array(
             'attributes' => array(
-                'filesize' => array('column' => 'medium_excerpt',   'type' => 'integer',     'write' => 'private'),
-                'mimeType' => array('column' => 'medium_mime_type', 'match' => '/\w+\/\w+/', 'write' => 'private'),
+                'filesize' => array(
+                    'column' => 'filesize',
+                    'type' => 'integer',
+                    'write' => 'private'
+                ),
+                'mimeType' => array(
+                    'column' => 'medium_mime_type',
+                    'match' => '/\w+\/\w+/',
+                    'write' => 'private'
+                ),
             ),
         ));
 
@@ -73,7 +81,7 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return the file content;.
-     * 
+     *
      * @return string
      */
     public function getFileContent()
@@ -85,7 +93,7 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return the original file name.
-     * 
+     *
      * @return string
      */
     public function getFileName()

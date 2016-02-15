@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,21 +30,21 @@ abstract class AnDomainValidatorAbstract extends KObject
 {
     /**
      * Validations.
-     * 
+     *
      * @var KConfig
      */
     protected $_validations;
 
     /**
      * Filters.
-     * 
+     *
      * @var array
      */
     protected $_filters;
 
     /**
      * Entity Description.
-     * 
+     *
      * @var AnDomainDescriptionAbstract
      */
     protected $_description;
@@ -103,11 +103,11 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Sanitize an entity property value against an array of passed validations.
      *
-     * @param AnDomainEntityAbstract $entity      Entity 
+     * @param AnDomainEntityAbstract $entity      Entity
      * @param string                 $property    Property Name
-     * @param array                  $value       Property Value   
+     * @param array                  $value       Property Value
      * @param array                  $validations An array of validations. If no validation are passed. Default validations are used
-     * 
+     *
      * @return bool
      */
     public function sanitizeData($entity, $property, $value, $validations = array())
@@ -149,16 +149,16 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Called to validate an entity. By deafult it validates all the entity
      * properties.
-     * 
+     *
      * @param AnDomainEntityAbstract $entity The entity that is being validated
-     * 
+     *
      * @return bool
      */
     public function validateEntity($entity)
     {
         $description = $entity->getEntityDescription();
 
-        //if entity is persisted only look at the modified 
+        //if entity is persisted only look at the modified
         //properties
         if ($entity->isModified()) {
             $properties = array_intersect_key($description->getProperty(), KConfig::unbox($entity->getModifiedData()));
@@ -177,11 +177,11 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validates an entity property value against an array of passed validations.
      *
-     * @param AnDomainEntityAbstract $entity      Entity 
+     * @param AnDomainEntityAbstract $entity      Entity
      * @param string                 $property    Property Name
-     * @param array                  $value       Property Value   
+     * @param array                  $value       Property Value
      * @param array                  $validations An array of validations. If no validation are passed. Default validations are used
-     * 
+     *
      * @return bool
      */
     public function validateData($entity, $property, $value, $validations = array())
@@ -221,7 +221,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Adds a property validation. It overwrites an existing validation with the same name.
-     * 
+     *
      * @param string $property   The property to validate
      * @param string $validation The validation name
      * @param array  $options    Validation options
@@ -236,7 +236,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Removes a property validation.
-     * 
+     *
      * @param string $property   The property to validate
      * @param string $validation The validation name
      */
@@ -250,9 +250,9 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Return an array of validations for a property.
-     * 
+     *
      * @param AnDomainPropertyAbstract|string $property Property
-     * 
+     *
      * @return KConfig
      */
     public function getValidations($property)
@@ -274,7 +274,7 @@ abstract class AnDomainValidatorAbstract extends KObject
      * Return a filter object.
      *
      * @param string $filter Filter name
-     * 
+     *
      * @return KFilterChain
      */
     public function getFilter($filter)
@@ -304,8 +304,8 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Sanitize length.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _sanitizeLength(KConfig $config)
@@ -329,8 +329,8 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Sanitizes format of a property using a KFilter.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _sanitizeFormat(KConfig $config)
@@ -348,9 +348,9 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Validate format of a property using a KFilter.
-     * 
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     *
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _validateFormat(KConfig $config)
@@ -378,9 +378,9 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Validate scope of a property.
-     * 
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     *
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _validateScope(KConfig $config)
@@ -407,8 +407,8 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validate precense.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _validateRequired(KConfig $config)
@@ -418,16 +418,18 @@ abstract class AnDomainValidatorAbstract extends KObject
         $value = KConfig::unbox($config['value']);
         $present = true;
 
-        if ($entity->getEntityState() & AnDomain::STATE_DELETED) {
+        if ($entity->getEntityState() === AnDomain::STATE_DELETED) {
             return true;
         }
 
         //if the serial id is missing for a new entity, then don't validate
         //@TODO this causes no-incremental primary keys
-        //to pass the validation. Need a new serial type the represet 
+        //to pass the validation. Need a new serial type the represet
         //incremental identity property
-        if ($property === $entity->getEntityDescription()
-                    ->getIdentityProperty() && !$entity->persisted()) {
+        if (
+            $property === $entity->getEntityDescription()->getIdentityProperty() &&
+            ! $entity->persisted())
+        {
             return true;
         }
 
@@ -435,26 +437,42 @@ abstract class AnDomainValidatorAbstract extends KObject
             //if string and value can not be null
             //then return false if values are either empty strings
             //or just whitespace
-            if ($property->getType() == 'string' &&
-                    $property->isRequired() === AnDomain::VALUE_NOT_EMPTY) {
+            if (
+                $property->getType() === 'string' &&
+                $property->isRequired() === AnDomain::VALUE_NOT_EMPTY
+            ) {
+
+                //strip out html tags before measuring the lenght
+                $value = strip_tags($value);
+
                 //check if the value exists
                 if (KHelperString::strlen($value) <= 0 || ctype_space($value)) {
+
                     $entity->addError(array(
-                        'message' => sprintf(JText::_('%s %s can not be empty!'), $entity->getIdentifier()->name, $property->getName()),
+                        'message' => sprintf(
+                            JText::_('%s %s can not be empty!'),
+                            $entity->getIdentifier()->name,
+                            $property->getName()
+                        ),
                         'code' => AnError::MISSING_VALUE,
                         'key' => $property->getName(),
                     ));
 
                     return false;
                 }
+
             } else {
+
                 if ($property->isRequired() === AnDomain::VALUE_NOT_EMPTY) {
                     $present = !empty($value);
                 } else {
                     $present = !is_null($value);
                 }
+
             }
+
         } elseif ($property->isRelationship() && $property->isManyToOne()) {
+
             $present = !is_null($value);
             //if not null and the entity state is not new then check if it's serilized values are acceptable
             //i.e. not null or having an id = 0
@@ -463,7 +481,9 @@ abstract class AnDomainValidatorAbstract extends KObject
             if ($present && $value->getEntityState() != AnDomain::STATE_NEW) {
                 //check if the many to one object is null or not
                 $values = $property->serialize($value);
+
                 foreach ($values as $value) {
+
                     if (!$value) {
                         $present = false;
                         break;
@@ -473,8 +493,13 @@ abstract class AnDomainValidatorAbstract extends KObject
         }
 
         if (!$present) {
+
             $entity->addError(array(
-                'message' => sprintf(JText::_('%s %s can not be empty!'), $entity->getIdentifier()->name, $property->getName()),
+                'message' => sprintf(
+                    JText::_('%s %s can not be empty!'),
+                    $entity->getIdentifier()->name,
+                    $property->getName()
+                ),
                 'code' => AnError::MISSING_VALUE,
                 'key' => $property->getName(),
             ));
@@ -485,9 +510,9 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Validate length.
-     * 
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     *
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _validateLength(KConfig $config)
@@ -506,11 +531,20 @@ abstract class AnDomainValidatorAbstract extends KObject
             if (is_array($options)) {
                 //check the min/max length
                 if (isset($options['max']) || isset($options['min'])) {
+
                     if (isset($options['max'])) {
+
                         $greater = KHelperString::strlen($value) > (int) $options['max'];
+
                         if ($greater) {
+
                             $entity->addError(array(
-                                'message' => sprintf(JText::_('%s %s can not be greater than %d characters'), $this->getIdentifier()->name, $property->getName(), $options['max']),
+                                'message' => sprintf(
+                                    JText::_('%s %s can not be greater than %d characters'),
+                                    $this->getIdentifier()->name,
+                                    $property->getName(),
+                                    $options['max']
+                                ),
                                 'code' => AnError::INVALID_LENGTH,
                                 'key' => $property->getName(),
                                 'max_lenght' => $options['max'],
@@ -519,12 +553,20 @@ abstract class AnDomainValidatorAbstract extends KObject
                             return false;
                         }
                     }
+
                     if (isset($options['min'])) {
+
                         $lesser = KHelperString::strlen($value) < (int) $options['min'];
 
                         if ($lesser) {
+
                             $entity->addError(array(
-                                'message' => sprintf(JText::_('%s %s can not be less than %d characters'), $this->getIdentifier()->name, $property->getName(), $options['min']),
+                                'message' => sprintf(
+                                    JText::_('%s %s can not be less than %d characters'),
+                                    $this->getIdentifier()->name,
+                                    $property->getName(),
+                                    $options['min']
+                                ),
                                 'code' => AnError::INVALID_LENGTH,
                                 'key' => $property->getName(),
                                 'min_length' => $options['min'],
@@ -535,9 +577,16 @@ abstract class AnDomainValidatorAbstract extends KObject
                     }
                 }
             } else {
+
                 if (KHelperString::strlen($value) != (int) $options) {
+
                     $entity->addError(array(
-                        'message' => sprintf(JText::_('%s %s must be %d characters'), $this->getIdentifier()->name, $property->getName(), $options),
+                        'message' => sprintf(
+                            JText::_('%s %s must be %d characters'),
+                            $this->getIdentifier()->name,
+                            $property->getName(),
+                            $options
+                        ),
                         'code' => AnError::INVALID_LENGTH,
                         'key' => $property->getName(),
                         'length' => (int) $options,
@@ -551,9 +600,9 @@ abstract class AnDomainValidatorAbstract extends KObject
 
     /**
      * Validate uniquess.
-     * 
-     * @param KConfig $config Configuration. Contains keys property,value,entity 
-     * 
+     *
+     * @param KConfig $config Configuration. Contains keys property,value,entity
+     *
      * @return bool Return true if it's valid or false if it's not
      */
     protected function _validateUniqueness(KConfig $config)
@@ -583,8 +632,13 @@ abstract class AnDomainValidatorAbstract extends KObject
         $query->where($conditions);
 
         if ($query->disableChain()->fetch()) {
+
             $entity->addError(array(
-                'message' => sprintf(JText::_('%s %s is not unique'), $this->getIdentifier()->name, $property->getName()),
+                'message' => sprintf(
+                    JText::_('%s %s is not unique'),
+                    $this->getIdentifier()->name,
+                    $property->getName()
+                ),
                 'code' => AnError::NOT_UNIQUE,
                 'key' => $property->getName(),
             ));
