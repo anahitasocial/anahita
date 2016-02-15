@@ -195,15 +195,15 @@
 
 				        tab.append(response);
 
-                        $(tab).find('form.composer-form').composerform();
+                $(tab).find('form.composer-form').composerform();
 
-                        tab.data('content', tab.find(self.options.composerForm));
+                tab.data('content', tab.find(self.options.composerForm));
 
-                        if ( self.firstTime ) {
+                if ( self.firstTime ) {
 
-                            self.firstTime = false;
-                            self.hideTabContent(self.currentTabIndex);
-                        }
+                    self.firstTime = false;
+                    self.hideTabContent(self.currentTabIndex);
+                }
 				    },
 				    complete : function () {
 

@@ -51,6 +51,16 @@
 				}
 			});
 
+			//change scope
+			this._on( this.scope, {
+				click : function( event ) {
+					 event.preventDefault();
+					 $(this.options.searchScopes).find('li').removeClass('active');
+	 				 $(event.currentTarget).parent().addClass('active');
+					 this.submit($(event.currentTarget));
+				}
+			});
+
 			//sort options recent/relevant
 			this._on( this.sort, {
 				change : function ( event ) {
@@ -105,14 +115,6 @@
 			});
 		},
 
-		changeScope : function( target ) {
-
-				$(this.options.searchScopes).find('li').removeClass('active');
-				$(target).parent().addClass('active');
-				this.searchOptions.scope = $(target).data('scope');
-				this.submit($(target));
-		},
-
 		submit : function( currentTarget ) {
 
 			var self = this;
@@ -120,15 +122,13 @@
 			this.searchOptions = $.extend(this.searchOptions, {
 					term : this.term.val(),
 					sort : this.sort.val(),
+					scope : currentTarget.data('scope'),
 					search_comments : this.comments.is(':checked'),
 					search_nearby : this.nearby.val(),
 					search_range : (this.nearby.val()) ? this.range.val() : null,
 			});
 
-			console.log(this.searchOptions);
-
 			$.ajax({
-				method : 'get',
 				url : this.form.attr('action'),
 				data : this.searchOptions,
 				beforeSend : function () {
@@ -155,10 +155,10 @@
 	});
 
 	var search = $('#an-search-results').search();
-
+/*
 	$('body').on('click', '[data-trigger="ChangeScope"]', function ( event ) {
 			event.preventDefault();
 			search.search('changeScope', this);
 	});
-
+*/
 }(jQuery, window, document));
