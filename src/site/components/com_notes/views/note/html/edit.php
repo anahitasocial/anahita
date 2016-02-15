@@ -5,7 +5,14 @@
 		<legend><?= @text('COM-NOTES-NOTE-EDIT') ?></legend>
 			<div class="control-group">
 				<div class="controls">
-				<textarea name="body" class="input-block-level" maxlength="5000" rows="5" cols="25"><?= @escape($item->body) ?></textarea>
+						<textarea
+								required
+								name="body"
+								class="input-block-level"
+								maxlength="5000"
+								rows="5"
+								cols="25"
+						><?= @escape($item->body) ?></textarea>
 				</div>
 			</div>
 
