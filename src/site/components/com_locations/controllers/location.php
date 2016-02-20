@@ -38,67 +38,38 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        // @todo move these queries to query classes
-
         $keyword = ($this->q) ? $this->getService('anahita:filter.term')->sanitize($this->q) : '';
 
         if ($this->locatable) {
 
           if (in_array($this->getView()->getLayout(), array('selector', 'list_selector'))) {
 
-              $query = $this->getService('repos:locations.location')->getQuery();
-              $excludeIds = AnHelperArray::collect($this->locatable->locations, 'id');
-
-              if (count($excludeIds)) {
-                $query->where('location.id', 'NOT IN', $excludeIds);
-              }
-
-              if ($keyword != '') {
-                  $query->keyword = $keyword;
-              }
-
-              //nearby
-              $nearby_latitude = null;
-              $nearby_longitude = null;
-
-              //nearby
-              if( $this->locatable->geoLongitude && $this->locatable->geoLatitude ) {
-
-                $nearby_latitude = $this->locatable->geoLongitude;
-                $nearby_longitude = $this->locatable->geoLatitude;
-
-              } elseif($this->nearby_latitude && $this->nearby_longitude) {
-
-                  $nearby_latitude = $this->nearby_latitude;
-                  $nearby_longitude = $this->nearby_longitude;
-              }
-
-              //nearby
-              if( $query->keyword == '' && $nearby_latitude && $nearby_longitude) {
-
-                $earth_radius = 6371000;
-                $lat = (float) $this->nearby_latitude;
-                $lng = (float) $this->nearby_longitude;
-                $calc_distance = 'CEIL((ACOS(SIN('.$lat.'*PI()/180) * SIN(location.geo_latitude*PI()/180) + COS('.$lat.'*PI()/180) * COS(location.geo_latitude*PI()/180) * COS(('.$lng.'*PI()/180) - (location.geo_longitude*PI()/180) )) *'.$earth_radius.'))';
-
-                $query->select(array($calc_distance.' AS `distance`'));
-                $query->having('distance < 5000');
-                $query->order('distance', 'ASC');
-              }
+              $query = $this->getService('com://site/locations.domain.query.selector')
+                            ->keyword($keyword)
+                            ->excludeIds(AnHelperArray::collect($this->locatable->locations, 'id'))
+                            ->locatable($this->locatable)
+                            ->nearbyLatitude($this->nearby_latitude)
+                            ->nearbyLongitude($this->nearby_longitude);
 
           } else {
-              $query = $this->locatable->locations;
-              $query->order('name');
+              $query = $this->locatable->locations->order('name');
           }
 
         } elseif ($keyword != '') {
+
             $query = $this->getService('repos:locations.location')->getQuery();
+
             $query->keyword = $keyword;
+
         } else {
-          $entities = parent::_actionBrowse($context);
-          $query = $entities->getQuery();
-          $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
-          $query->where('edge.type', '=', $edgeType)->group('location.id');
+
+            $entities = parent::_actionBrowse($context);
+
+            $query = $entities->getQuery();
+
+            $edgeType = 'ComTagsDomainEntityTag,ComLocationsDomainEntityTag,com:locations.domain.entity.tag';
+
+            $query->where('edge.type', '=', $edgeType)->group('location.id');
         }
 
         $query->limit($this->limit, $this->start);

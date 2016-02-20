@@ -25,7 +25,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $config->append(array(
             'request' => array(
                 'scope' => '',
-                'sort' => 'recent',
+                'sort' => 'trending',
                 'days' => KRequest::get('get.days', 'int', 7),
             ),
         ));
