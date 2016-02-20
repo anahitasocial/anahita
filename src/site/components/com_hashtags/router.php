@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -14,7 +14,7 @@
 
 /**
  * Hashtag Router.
- * 
+ *
  * @category   Anahita
  */
 class ComHashtagsRouter extends ComBaseRouterDefault
@@ -58,7 +58,7 @@ class ComHashtagsRouter extends ComBaseRouterDefault
     {
         $segments = array();
 
-        if (isset($query['view']) && !KInflector::isPlural($query['view'])) {
+        if (isset($query['view'])) {
             unset($query['view']);
         }
 

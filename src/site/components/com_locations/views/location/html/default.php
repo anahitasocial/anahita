@@ -32,11 +32,11 @@
     <div class="span12">
       <div class="btn-toolbar clearfix">
           <div class="pull-right btn-group">
-              <a class="btn <?= ($sort != 'top') ? 'disabled' : '' ?>" href="<?= @route(array('sort' => 'recent')) ?>">
+              <a class="btn <?= ($sort != 'top') ? 'disabled' : '' ?>" href="<?= @route($location->getURL().'&sort=recent') ?>">
                   <i class="icon-time"></i>
                   <?= @text('LIB-AN-SORT-RECENT') ?>
               </a>
-              <a class="btn <?= ($sort == 'top') ? 'disabled' : '' ?>" href="<?= @route(array('sort' => 'top')) ?>">
+              <a class="btn <?= ($sort == 'top') ? 'disabled' : '' ?>" href="<?= @route($location->getURL().'&sort=top') ?>">
                   <i class="icon-fire"></i>
                   <?= @text('LIB-AN-SORT-TOP') ?>
               </a>
