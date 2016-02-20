@@ -23,7 +23,7 @@
 
 	<div class="entity-portrait-medium">
 		<?php $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
-		<a data-rel="media-photos-<?= $photo->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">			
+		<a data-rel="media-photos-<?= $photo->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>
@@ -63,9 +63,7 @@
 		</div>
 	</div>
 
-	<?php if ($photo->authorize('edit')) : ?>
 	<div class="entity-actions">
 		<?= @helper('ui.commands', @commands('list')) ?>
 	</div>
-	<?php endif; ?>
 </div>
