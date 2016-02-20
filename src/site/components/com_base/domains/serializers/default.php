@@ -96,6 +96,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         }
 
         if ($entity->isModifiable() && !is_person($entity)) {
+
             $data->append(array(
                 'author' => null,
                 'creationTime' => null,
@@ -149,6 +150,11 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
 
         if ($entity->isOwnable()) {
             $data['owner'] = $entity->owner->toSerializableArray();
+        }
+
+        if ($entity->inherits('ComLocationsDomainEntityLocation')) {
+            $data['longitude'] = $entity->geoLongitude;
+            $data['latitude'] = $entity->geoLatitude;
         }
 
         return KConfig::unbox($data);
