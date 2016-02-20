@@ -44,9 +44,9 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
             }
         }
 
-        dbexec('UPDATE #__nodes SET `parent_id` = 0 WHERE `type` LIKE \'%com:topics.domain.entity.topic\'');
-        dbexec('DELETE FROM #__nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\'');
-        dbexec('DELETE FROM #__edges WHERE `node_b_type` LIKE \'%com:topics.domain.entity.board\'');
+        dbexec('UPDATE `#__nodes` SET `parent_id` = 0 WHERE `type` LIKE \'%com:topics.domain.entity.topic\'');
+        dbexec('DELETE FROM `#__nodes` WHERE `type` LIKE \'%com:topics.domain.entity.board\'');
+        dbexec('DELETE FROM `#__edges` WHERE `node_b_type` LIKE \'%com:topics.domain.entity.board\'');
         dbexec('DROP TABLE #__topics_boards');
 
         $timeDiff = microtime(true) - $timeThen;
