@@ -50,14 +50,10 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
      */
     protected function _afterEntityInsert(KCommandContext $context)
     {
-        if (!empty($this->author)) {
-            $this->addSubscriber($this->author);
-        }
-
-        //if the owner is notifiable (can be notified) then
-        //add it as a subscriber
-        if ($this->isOwnable() && $this->owner->isNotifiable()) {
+        if ($this->isOwnable() && $this->owner->isNotifiable() && !$this->owner->eql($this->author)) {
             $this->addSubscriber($this->owner);
+        } elseif (!empty($this->author)) {
+            $this->addSubscriber($this->author);
         }
     }
 
@@ -81,7 +77,7 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
     public function addSubscriber($person)
     {
         if ($this->eql($person)) {
-            return;
+            return false;
         }
 
         $subscription = $this->subscriptions->addNew(array(
@@ -90,6 +86,8 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
             'component' => $this->component,
             'author' => $person,
         ), AnDomain::ACCESS_PROTECTED);
+
+        return $this->_mixer;
     }
 
     /**
@@ -107,6 +105,7 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
 
         if ($subscription) {
             $this->subscriptions->extract($subscription);
+            return $this->_mixer;
         }
     }
 
