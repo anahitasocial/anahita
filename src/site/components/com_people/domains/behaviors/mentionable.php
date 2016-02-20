@@ -40,10 +40,10 @@
 
     /**
      * Adds a person to a mentionable mixer entity.
-     * 
+     *
      * @param a person username
      *
-     * @return mixer entity if a valid username is given 
+     * @return mixer entity if a valid username is given
      */
     public function addMention($username)
     {
@@ -53,7 +53,7 @@
         ) {
             $this->mentions->insert($mentioned);
 
-            if ($this->_mixer->isSubscribable()) {
+            if ($this->_mixer->isSubscribable() && !$this->_mixer->subscribed($mentioned)) {
                 $this->_mixer->addSubscriber($mentioned);
             }
 
@@ -67,7 +67,7 @@
 
     /**
      * Removes a person from a mentionable mixer entity.
-     * 
+     *
      * @param a word
      *
      * @return mixer entity if a valid username is given
@@ -80,7 +80,7 @@
         ) {
             $this->mentions->extract($mentioned);
 
-            if ($this->_mixer->isSubscribable()) {
+            if ($this->_mixer->isSubscribable() && $this->_mixer->subscribed($mentioned)) {
                 $this->_mixer->removeSubscriber($mentioned);
             }
 
@@ -94,7 +94,7 @@
 
     /**
      * Removes the @ symbol from a username in the body of the node.
-     * 
+     *
      * @param string username
      */
     protected function invalidateUsername($username)
@@ -103,11 +103,11 @@
     }
 
     /**
-     * Change the query to include name. 
-     * 
+     * Change the query to include name.
+     *
      * Since the target is a simple node. The name field is not included. By ovewriting the
      * tags method we can change the query to include name in the $taggable->tags query
-     * 
+     *
      * @return AnDomainEntitySet
      */
     public function getMentions()

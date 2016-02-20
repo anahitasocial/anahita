@@ -84,7 +84,7 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
             return;
         }
 
-        $this->subscriptions->findOrAddNew(array(
+        $subscription = $this->subscriptions->addNew(array(
             'subscriber' => $person,
         ))->setData(array(
             'component' => $this->component,
@@ -107,7 +107,6 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
 
         if ($subscription) {
             $this->subscriptions->extract($subscription);
-            $this->resetStats(array($mixer));
         }
     }
 
@@ -116,15 +115,17 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
      *
      * @param array $entities
      */
-    public function resetStats(array $entities)
-    {
-        foreach ($entities as $entity) {
+     public function resetStats(array $entities)
+     {
+         foreach ($entities as $entity) {
             $ids = $entity->subscriptions
                           ->getQuery()
                           ->disableChain()
                           ->fetchValues('subscriber.id');
+
             $entity->set('subscriberCount', count($ids));
             $entity->set('subscriberIds', AnDomainAttribute::getInstance('set')->setData($ids));
+            $entity->save();
         }
     }
 }

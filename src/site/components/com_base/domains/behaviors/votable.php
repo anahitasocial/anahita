@@ -71,9 +71,9 @@
             $votedown->delete();
         } else {
             //find ore create a voteup
-            $voteup = $this->voteups->findOrAddNew(array('voter' => $voter, 'votee' => $this));
+            $voteup = $this->voteups->addNew(array('voter' => $voter, 'votee' => $this));
             //if the votee is suscribable then subscribe the voter
-            if ($this->isSubscribable()) {
+            if ($this->isSubscribable() && !$this->subscribed($voter)) {
                 $this->addSubscriber($voter);
             }
             $this->_mixer->execute('after.voteup', new KCommandContext(array('vote' => $voteup)));
@@ -164,6 +164,7 @@
                         ->votee($entity)
                         ->disableChain()
                         ->fetchValues('voter.id');
+
             $entity->set('voteUpCount', count($ids));
             $entity->set('voterUpIds', AnDomainAttribute::getInstance('set')->setData($ids));
 
@@ -172,6 +173,7 @@
                         ->votee($entity)
                         ->disableChain()
                         ->fetchValues('voter.id');
+
             $entity->set('voteDownCount', count($ids));
             $entity->set('voterDownIds', AnDomainAttribute::getInstance('set')->setData($ids));
         }
