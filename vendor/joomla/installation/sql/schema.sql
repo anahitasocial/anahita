@@ -20,7 +20,8 @@ CREATE TABLE `#__edges` (
   KEY `node_a_id` (`node_a_id`),
   KEY `node_b_id` (`node_b_id`),
   KEY `start_date` (`start_date`),
-  KEY `end_date` (`end_date`)
+  KEY `end_date` (`end_date`),
+  CONSTRAINT uc_edge UNIQUE(`type`,`node_a_id`,`node_a_type`,`node_b_id`,`node_b_type`) 
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------

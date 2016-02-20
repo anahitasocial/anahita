@@ -126,7 +126,7 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
 
         $comment = $this->_mixer->comments->addNew($comment);
 
-        if ($this->_mixer->isSubscribable()) {
+        if ($this->_mixer->isSubscribable() && !$this->_mixer->subscribed($comment->author)) {
             $this->_mixer->addSubscriber($comment->author);
         }
 

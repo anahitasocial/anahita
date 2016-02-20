@@ -66,7 +66,7 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
     //protected function _beforeEntityInsert(KCommandContext $context)
     protected function _onEntityValidate(KCommandContext $context)
     {
-        if ($this->nodeA->id == $this->nodeB->id) {
+        if ($this->nodeA->id === $this->nodeB->id) {
             return false;
         }
 
