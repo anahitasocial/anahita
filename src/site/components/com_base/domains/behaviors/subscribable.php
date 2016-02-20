@@ -80,6 +80,10 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
             return false;
         }
 
+        if($this->subscribed($person)){
+           return false;
+        }
+
         $subscription = $this->subscriptions->addNew(array(
             'subscriber' => $person,
         ))->setData(array(
