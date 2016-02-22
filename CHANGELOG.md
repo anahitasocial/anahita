@@ -1,11 +1,18 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.2.* Embryo Release
+Anahita 4.2.0 Birth Release
 =============================
-* Location graph implemented. We can now tag actors and media with locations and search nearby actors and media nodes.
-* Implemented integration with google maps and location api to render maps, geolocate, etc.
+* Tag actors and media with locations
+* Capture browser's geolocation data and store them in media nodes 
+* List top and trending locations
+* Search nearby actors and media nodes
+* Integration with google maps and location api to render maps, geolocate, etc.
 * com_pages is now com_articles therefore we call it the Articles app.
 * com_html is now com_pages
+* Improved com_tags implementation
+* Updated Shiraz template to contain com_pages layouts
+* Fixed bugs which allowed creation of duplicate edges
+* Improved the implementation of javascript InfiniteScrolls and Masonry layout rendering
 
 Anahita 4.1.8 Birth Release
 =============================
