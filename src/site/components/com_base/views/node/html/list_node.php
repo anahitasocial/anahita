@@ -1,10 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<div
-	class="an-entity"
-	data-latitude="<?= $item->latitude ?>"
-	data-longitude="<?= $item->longitude ?>"
->
+<div class="an-entity">
 	<div class="clearfix">
 		<div class="entity-portrait-square">
 			<?= @avatar($item->author) ?>
@@ -16,8 +12,6 @@
 			</h4>
 
 			<ul class="an-meta inline">
-				<li><?= count($item->locations) ?></li>
-
 				<li><?= @date($item->creationTime) ?></li>
 				<?php if ($item->isOwnable() && !$item->owner->eql($item->author)): ?>
 				<li><?= @name($item->owner) ?></li>
