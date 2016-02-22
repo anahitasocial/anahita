@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -46,5 +46,15 @@ class ComBaseViewNodeHtml extends ComBaseViewHtml
         $config->append(array(
             'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_base/node'),
         ));
+    }
+
+    protected function _layoutList()
+    {
+       $locations = array();
+       $item = $this->_state->getItem();
+       if($item->isGeolocatable()) {
+          $locations = $item->locations->order('name');
+       }
+       $this->set('locations', $locations);
     }
 }
