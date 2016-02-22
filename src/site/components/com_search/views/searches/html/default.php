@@ -42,10 +42,10 @@
         <label name="SearchNearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
         <input form="navbar-search" type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
 
-        <?php $ranges = array(25,10,5); ?>
+        <?php $ranges = array(100,50,25,10,5); ?>
         <select form="navbar-search" disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">
             <?php foreach($ranges as $index=>$range) : ?>
-            <option value="<?= $range ?>"><?= $range ?> km</option>
+            <option <?= ($range === 25) ? 'selected' : '' ?> value="<?= $range ?>"><?= $range ?> km</option>
             <?php endforeach; ?>
         </select>
 
