@@ -11,8 +11,10 @@
     	</a>
     </h4>
     <div class="entity-body">
+			<blockquote>
 	    <?= @helper('text.truncate', @content(nl2br($object->body), array('exclude' => 'gist')), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
-	</div>	
+			</blockquote>
+	</div>
 </data>
 
 <?php if ($type == 'notification') :?>
@@ -23,11 +25,6 @@
     </h4>
     <div class="entity-body">
 	    <?= $comment->body ?>
-	</div>		
+	</div>
 </data>
 <?php endif;?>
-
-
-
-
-

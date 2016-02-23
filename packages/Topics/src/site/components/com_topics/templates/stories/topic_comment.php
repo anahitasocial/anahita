@@ -1,17 +1,19 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<data name="title">		
+<data name="title">
 	<?= sprintf(@text('COM-TOPICS-STORY-COMMENT'), @name($subject), @route($object->getURL().'&permalink='.$comment->id)); ?>
 </data>
 
-<data name="body">	 
+<data name="body">
     <h4 class="entity-title">
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
+			<blockquote>
         <?php $body = @content($object->body, array('exclude' => 'gist')); ?>
         <?= @helper('text.truncate', $body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
-    </div>	
+			</blockquote>
+    </div>
 </data>
 
 <?php if ($type == 'notification') :?>
@@ -22,6 +24,6 @@
     </h4>
     <div class="entity-body">
 	    <?= $comment->body ?>
-	</div>		
+	</div>
 </data>
 <?php endif;?>
