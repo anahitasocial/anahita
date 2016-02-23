@@ -2,7 +2,7 @@
 
 <?php if(count($locations)) : ?>
 <ul class="an-meta inline">
-    <li><?= @text('LIB-AN-ENTITY-LOCATION') ?>: </li>
+    <li><?= (count($locations) == 1) ? @text('LIB-AN-ENTITY-LOCATION') : @text('LIB-AN-ENTITY-LOCATIONS') ?>: </li>
     <?php foreach($locations as $location) : ?>
     <li>
       <a

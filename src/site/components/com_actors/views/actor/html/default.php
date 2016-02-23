@@ -71,7 +71,7 @@
 
 			<?php if(count($item->locations) || $item->authorize('edit')): ?>
 			<h4 class="block-title">
-				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
+				<?= (count($item->locations) == 1) ? @text('LIB-AN-ENTITY-LOCATION') : @text('LIB-AN-ENTITY-LOCATIONS') ?>
 			</h4>
 
 			<div class="block-content">
