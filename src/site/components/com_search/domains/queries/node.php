@@ -118,7 +118,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             if (!empty($comment_query)) {
                 $this->distinct = true;
                 $this->join('LEFT', 'nodes AS comment_parent', 'node.type LIKE :comment_type AND comment_parent.id = node.parent_id');
-                $comment_query = preg_replace('/\)$/', ' AND comment_parent.owner_id = '.$this->owner_context->id.')', $comment_query);
+                $comment_query = preg_replace_callback('/\)$/', function($matches) { return ' AND comment_parent.owner_id = '.$this->owner_context->id.')'; }, $comment_query);
             }
         }
 

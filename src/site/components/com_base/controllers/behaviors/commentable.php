@@ -49,7 +49,7 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 
             return false;
         } elseif ($this->permalink && !$context->request->isAjax()) {
-            $cid = (int) preg_replace('/[^\d]+/', '', $this->permalink);
+            $cid = (int) preg_replace_callback('/[^\d]+/', function($matches) { return ''; }, $this->permalink);
             $offset = $this->getItem()->getCommentOffset($cid);
             $start = (int) ($offset / $this->limit) * $this->limit;
             $url = KRequest::url();
