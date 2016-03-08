@@ -126,7 +126,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 
         $description = strip_tags($description);
 
-        $description = preg_replace('/\s+/', ' ', $description);
+        $description = preg_replace_callback('/\s+/', function($matches) { return ' ';}, $description);
 
         $description = $view->getTemplate()->renderHelper('text.truncate', $description, array('length' => 160));
 

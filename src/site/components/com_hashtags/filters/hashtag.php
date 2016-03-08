@@ -51,6 +51,6 @@ class ComHashtagsFilterHashtag extends KFilterAbstract
         $value = trim($value);
         $pattern = ComHashtagsDomainEntityHashtag::PATTERN_HASHTAG;
 
-        return preg_replace($pattern, '', $value);
+        return preg_replace_callback($pattern, function($matches) { return '';}, $value);
     }
 }

@@ -23,7 +23,7 @@ class ComPeopleFilterReturn extends KFilterInternalurl
     {
         $value = parent::_sanitize($value);
         $pattern = '/[()<\/>\"\']*/';
-        $value = preg_replace($pattern, '', $value);
+        $value = preg_replace_callback($pattern, function($matches) { return '';} , $value);
 
         return $value;
     }
