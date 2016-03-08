@@ -157,7 +157,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS) {
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
-            $this->getResponse()->status = KHttpResponse::ACCEPTED;
+            $this->getResponse()->status = KHttpResponse::CREATED;
             $this->getResponse()->setRedirect($context->url);
             $_SESSION['return'] = null;
         } else {
