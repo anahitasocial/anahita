@@ -20,19 +20,19 @@ class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion
       }
 
         //migrate users usertype
-       dbexec('UPDATE #__users SET `usertype`=\'registered\' WHERE `usertype` NOT LIKE \'%admin%\' ');
-        dbexec('UPDATE #__users SET `usertype`=\'administrator\' WHERE `usertype`=\'Administrator\' ');
-        dbexec('UPDATE #__users SET `usertype`=\'super-administrator\' WHERE `usertype`=\'Super Administrator\' ');
-        dbexec('ALTER TABLE #__users DROP COLUMN `gid` ');
-        dbexec('ALTER TABLE #__users DROP COLUMN `sendEmail` ');
+       dbexec('UPDATE `#__users` SET `usertype`=\'registered\' WHERE `usertype` NOT LIKE \'%admin%\' ');
+        dbexec('UPDATE `#__users` SET `usertype`=\'administrator\' WHERE `usertype`=\'Administrator\' ');
+        dbexec('UPDATE `#__users` SET `usertype`=\'super-administrator\' WHERE `usertype`=\'Super Administrator\' ');
+        dbexec('ALTER TABLE `#__users` DROP COLUMN `gid` ');
+        dbexec('ALTER TABLE `#__users` DROP COLUMN `sendEmail` ');
 
        //migrate people usertype
-       dbexec('UPDATE #__nodes SET `person_usertype`=\'registered\' WHERE `person_usertype` NOT LIKE \'%admin%\' ');
-        dbexec('UPDATE #__nodes SET `person_usertype`=\'administrator\' WHERE `person_usertype`=\'Administrator\' ');
-        dbexec('UPDATE #__nodes SET `person_usertype`=\'super-administrator\' WHERE `person_usertype`=\'Super Administrator\' ');
+       dbexec('UPDATE `#__nodes` SET `person_usertype`=\'registered\' WHERE `person_usertype` NOT LIKE \'%admin%\' ');
+        dbexec('UPDATE `#__nodes` SET `person_usertype`=\'administrator\' WHERE `person_usertype`=\'Administrator\' ');
+        dbexec('UPDATE `#__nodes` SET `person_usertype`=\'super-administrator\' WHERE `person_usertype`=\'Super Administrator\' ');
 
        //migrate session table
-       dbexec('ALTER TABLE #__session DROP COLUMN `gid` ');
+       dbexec('ALTER TABLE `#__session` DROP COLUMN `gid` ');
 
        //drop legacy tables
        dbexec('DROP TABLE #__core_acl_aro');

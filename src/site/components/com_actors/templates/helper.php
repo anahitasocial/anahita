@@ -52,18 +52,6 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
     }
 
     /**
-     * Return the actor URL. Can be overwritten to return custom URLs.
-     *
-     * @param ComActorsDomainEntityActor $actor Actor object
-     *
-     * @return string
-     */
-    public function getActorURL($actor)
-    {
-        return JRoute::_($actor->getURL());
-    }
-
-    /**
      * Return an avatar URL of an actor. If actor doesn't have an avatar, then it reurns the
      * default avatar.
      *
@@ -105,21 +93,23 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
                               ->getURL('lib_anahita/images/avatar/'.$size.'_default.gif');
 
         if (is_null($actor) || !isset($actor->id)) {
-            return '<a class="actor-avatar-link" href="#"><img '.$width.' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'" size="'.$size.'" class="actor-avatar '.$size.'" /></a>';
+            return '<img '.$width.' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'" size="'.$size.'" class="actor-avatar '.$size.'" />';
         }
 
         if ($actor->portraitSet()) {
             $src = $actor->getPortraitURL($size);
 
             $name = KHelperString::ucwords($actor->name);
-            $img = '<img '.$width.' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-avatar-'.$actor->id.'" size="'.$size.'" class="actor-avatar actor-avatar-'.$actor->id.' '.$size.'" />';
+            $verified = ($actor->verified) ? 'verified' : '';
+            $img = '<img '.$width.' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-avatar-'.$actor->id.'" size="'.$size.'" class="actor-avatar actor-avatar-'.$actor->id.' '.$size.' '.$verified.'" />';
         } else {
             $img = '<img '.$width.' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'-'.$actor->id.'" size="'.$size.'" class="actor-avatar '.$size.'" />';
         }
 
         if ($linked && $actor->authorize('access')) {
-            $url = $this->getActorURL($actor);
-            $img = '<a class="actor-avatar-link" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
+            $url = JRoute::_($actor->getURL());
+            $verified = ($actor->verified) ? 'verified' : '';
+            $img = '<a class="actor-avatar-link '.$verified.'" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
         }
 
         return $img;
@@ -152,7 +142,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
         }
 
         if ($linked && $actor->authorize('access')) {
-            $url = $this->getActorURL($actor);
+            $url = JRoute::_($actor->getURL());
             $img = '<a '.$this->_buildAttribute($attr).' data-actor="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
         }
 
@@ -175,13 +165,16 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
             $name = '<span class="actor-name">'.JText::_('LIB-AN-UNKOWN-PERSON').'</span>';
         } else {
             $name = '<span class="actor-name" actorid="'.$actor->id.'">'.$actor->name.'</span>';
+            if($actor->verified){
+              $name = $name.' <span class="icon icon-ok-sign"></span>';
+            }
         }
 
         if (!$linked || !$actor->authorize('access')) {
             return (string) $name;
         }
 
-        $url = $this->getActorURL($actor);
+        $url = JRoute::_($actor->getURL());
 
         if (is_person($actor)) {
             $attr['title'] = '@'.$actor->username;
