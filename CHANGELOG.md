@@ -3,7 +3,7 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.2.0 Birth Release
 =============================
 * Tag actors and media with locations
-* Capture browser's geolocation data and store them in media nodes 
+* Capture browser's geolocation data and store them in media nodes
 * List top and trending locations
 * Search nearby actors and media nodes
 * Integration with google maps and location api to render maps, geolocate, etc.
@@ -13,6 +13,7 @@ Anahita 4.2.0 Birth Release
 * Updated Shiraz template to contain com_pages layouts
 * Fixed bugs which allowed creation of duplicate edges
 * Improved the implementation of javascript InfiniteScrolls and Masonry layout rendering
+* Ability for site admins to mark actor profiles as verified
 
 Anahita 4.1.8 Birth Release
 =============================

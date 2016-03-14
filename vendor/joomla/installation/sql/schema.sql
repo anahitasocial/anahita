@@ -21,7 +21,7 @@ CREATE TABLE `#__edges` (
   KEY `node_b_id` (`node_b_id`),
   KEY `start_date` (`start_date`),
   KEY `end_date` (`end_date`),
-  CONSTRAINT uc_edge UNIQUE(`type`,`node_a_id`,`node_a_type`,`node_b_id`,`node_b_type`) 
+  CONSTRAINT uc_edge UNIQUE(`type`,`node_a_id`,`node_a_type`,`node_b_id`,`node_b_type`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
@@ -43,6 +43,7 @@ CREATE TABLE `#__nodes` (
   `last_comment_by` bigint(11) unsigned DEFAULT NULL,
   `last_comment_on` datetime DEFAULT NULL,
   `ordering` int(11) DEFAULT 0,
+  `enabled` tinyint(1) NOT NULL DEFAULT 0,
   `enabled` tinyint(1) NOT NULL DEFAULT 0,
   `pinned` tinyint(1) NOT NULL DEFAULT 0,
   `is_default` tinyint(1) NOT NULL DEFAULT 0,

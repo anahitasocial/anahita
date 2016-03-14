@@ -15,14 +15,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 {
     /**
      * Method type flag.
-     * 
+     *
      * @var bool
      */
     protected $_use_post = false;
 
     /**
      * If set to true, the element will be updated.
-     * 
+     *
      * @var bool
      */
     protected $_update = true;
@@ -133,6 +133,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             ->href($actor->getURL().'&get=settings');
         }
 
+        if (get_viewer()->admin()) {
+            $action = ($actor->verified) ? 'deverify' : 'verify';
+            $this->addCommand($action.'-actor', array('label' => JText::_('COM-ACTORS-PROFILE-'.$action), 'entity' => $actor))
+            ->getCommand($action.'-actor')
+            ->href($actor->getURL().'&action='.$action)
+            ->dataTrigger('PostLink');
+        }
+
         if ($actor->authorize('changeEnabled')) {
             $action = ($actor->enabled) ? 'disable' : 'enable';
             $this->addCommand($action.'-actor', array('label' => JText::_('LIB-AN-ACTION-'.$action), 'entity' => $actor))
@@ -151,7 +159,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Return commands follow/unfollow if $actor1 (context) can perform follow/unfollow actions on $actor2.
      *
-     * @param ComActorsDomainEntityActor  $actor1 Actor who's performing the action 
+     * @param ComActorsDomainEntityActor  $actor1 Actor who's performing the action
      * @param ComPeopleDomainEntityPerson $actor2 Actor that actions is being performed on
      *
      * @return LibBaseTemplateObject
@@ -194,7 +202,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Return commands block/unblock if $actor1 (context) can perform unblock/block commands on $actor2.
      *
-     * @param ComActorsDomainEntityActor  $actor1 Actor who's performing the action 
+     * @param ComActorsDomainEntityActor  $actor1 Actor who's performing the action
      * @param ComPeopleDomainEntityPerson $actor2 Actor that actions is being performed on
      *
      * @return LibBaseTemplateObject
@@ -225,7 +233,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Lead a person command.
      *
-     * @param ComActorsDomainEntityActor  $actor  that is going to be followed 
+     * @param ComActorsDomainEntityActor  $actor  that is going to be followed
      * @param ComPeopleDomainEntityPerson $person person that is going to be added as a follower to the $actor
      *
      * @return LibBaseTemplateObject
