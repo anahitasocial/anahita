@@ -46,7 +46,7 @@ class ComBaseDomainBehaviorVerifiable extends AnDomainBehaviorAbstract
     /**
      * Set verified to false
      */
-    public function deverify()
+    public function unverify()
     {
         $this->verified = 0;
 

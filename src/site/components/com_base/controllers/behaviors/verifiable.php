@@ -31,10 +31,10 @@ class ComBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
     *
     * @return void
     */
-    protected function _actionDeverify($context)
+    protected function _actionUnverify($context)
     {
         $context->response->status = KHttpResponse::RESET_CONTENT;
-        $this->getItem()->deverify();
+        $this->getItem()->unverify();
 
         return;
     }
@@ -51,13 +51,12 @@ class ComBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
     }
 
     /**
-     * Authorize deverify
+     * Authorize Unverify
      *
      * @return bool
      */
-    public function canDeverify()
+    public function canUnverify()
     {
-        $viewer = get_viewer();
-        return $viewer->admin();
+        return $this->canVerify();
     }
 }
