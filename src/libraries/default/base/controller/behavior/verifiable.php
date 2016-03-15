@@ -11,7 +11,7 @@
 *
 * @link       http://www.GetAnahita.com
 */
-class ComBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
 {
     /**
     * set verify to true

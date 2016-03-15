@@ -65,7 +65,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'ownable',
                 'privatable',
                 'enablable',
-                'verifiable',
+                //'verifiable',
                 'subscribable',
                 'com://site/hashtags.controller.behavior.hashtagable',
                 'com://site/locations.controller.behavior.geolocatable',

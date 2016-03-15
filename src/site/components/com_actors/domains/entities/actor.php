@@ -49,7 +49,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'privatable',
                 'administrable',
                 'enableable',
-                'verifiable',
+                //'verifiable',
                 'dictionariable',
                 'followable',
                 'com://site/hashtags.domain.behavior.hashtagable',

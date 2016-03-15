@@ -10,7 +10,7 @@
 *
 * @link       http://www.GetAnahita.com
 */
-class ComBaseDomainBehaviorVerifiable extends AnDomainBehaviorAbstract
+class LibBaseDomainBehaviorVerifiable extends AnDomainBehaviorAbstract
 {
     /**
      * Initializes the default configuration for the object.
