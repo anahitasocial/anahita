@@ -44,7 +44,7 @@ CREATE TABLE `#__nodes` (
   `last_comment_on` datetime DEFAULT NULL,
   `ordering` int(11) DEFAULT 0,
   `enabled` tinyint(1) NOT NULL DEFAULT 0,
-  `enabled` tinyint(1) NOT NULL DEFAULT 0,
+  `verified` tinyint(1) NOT NULL DEFAULT 0,
   `pinned` tinyint(1) NOT NULL DEFAULT 0,
   `is_default` tinyint(1) NOT NULL DEFAULT 0,
   `meta` text,
