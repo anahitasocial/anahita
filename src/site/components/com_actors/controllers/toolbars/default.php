@@ -133,7 +133,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
             ->href($actor->getURL().'&get=settings');
         }
 
-        if (false && get_viewer()->admin()) {
+        if (get_viewer()->admin()) {
             $action = ($actor->verified) ? 'unverify' : 'verify';
             $this->addCommand($action.'-actor', array('label' => JText::_('COM-ACTORS-PROFILE-'.$action), 'entity' => $actor))
             ->getCommand($action.'-actor')
