@@ -11,7 +11,7 @@
 *
 * @link       http://www.GetAnahita.com
 */
-class LibBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
 {
     /**
     * set verify to true
@@ -22,7 +22,6 @@ class LibBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
     {
         $context->response->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->verify();
-
         return;
     }
 
@@ -35,7 +34,6 @@ class LibBaseControllerBehaviorVerifiable extends KControllerBehaviorAbstract
     {
         $context->response->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->unverify();
-
         return;
     }
 

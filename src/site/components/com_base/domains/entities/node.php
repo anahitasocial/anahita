@@ -45,12 +45,14 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
                     'required' => true,
                     'read' => 'public',
                     ),
-                'enabled' => array('default' => 1)
+                'enabled' => array(
+                  'default' => 1
+                ),
+                'verified' => array(
+                  'default' => 0
+                )
             ),
-           'behaviors' => to_hash(array(
-             'node',
-             'verifiable'
-           )),
+           'behaviors' => to_hash('node'),
         ));
 
         parent::_initialize($config);
