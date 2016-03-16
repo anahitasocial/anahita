@@ -26,7 +26,7 @@ class ComLocationsGeocoderAdapterOsm extends ComLocationsGeocoderAdapterAbstract
             'name' => 'osm',
             'version' => '0.6',
             'url' => 'https://nominatim.openstreetmap.org/search/',
-            'key' => get_config_value('locations.service_key', null)
+            'key' => get_config_value('locations.server_key', null)
         ));
 
         parent::_initialize($config);

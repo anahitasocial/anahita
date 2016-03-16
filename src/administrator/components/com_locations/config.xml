@@ -3,9 +3,10 @@
     <params>
         <param menu="hide"  name="service" type="list" default="google" label="Service" description="Select a location service">
             <option value="google">Google</option>
-            <option value="osm">OpenStreetMap</option>
+            <!-- <option value="osm">OpenStreetMap</option> -->
         </param>
 
-        <param name="service_key" size="60" type="text" default="" label="Key"  description="Service API Key"></param>
+        <param name="browser_key" size="60" type="text" default="" label="Browser API Key"  description="Browser API Key"></param>
+        <param name="server_key" size="60" type="text" default="" label="Server API Key"  description="Server API Key"></param>
     </params>
 </config>
