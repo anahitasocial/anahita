@@ -70,6 +70,7 @@
                     'package' => $package,
                   ),
             ));
+            $this->_mixer->verified = 1;
         }
 
         return $this->_mixer->subscription;
@@ -101,6 +102,7 @@
     public function unsubscribe()
     {
         $this->_mixer->subscription->delete();
+        $this->_mixer->verified = 0;
     }
 
     /**
