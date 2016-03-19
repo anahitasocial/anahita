@@ -174,17 +174,17 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
             $leader->removeRequester($follower);
         }
 
-        //add a subscriber
-        if ($this->_subscribe_after_follow && !$leader->subscribed($follower)) {
-            $leader->addSubscriber($follower);
-        }
-
         $edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
                     'leader' => $leader,
                     'follower' => $follower,
                 ));
 
         $edge->save();
+
+        //add a subscriber
+        if ($this->_subscribe_after_follow && !$leader->subscribed($follower)) {
+            $leader->addSubscriber($follower);
+        }
 
         $this->resetStats(array($leader, $follower));
 
@@ -242,17 +242,17 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
             $leader->removeRequester($follower);
         }
 
-        //add a subscriber
-        if ($this->_subscribe_after_follow && !$leader->subscribed($follower)) {
-            $leader->addSubscriber($follower);
-        }
-
         $edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
                     'leader' => $leader,
                     'follower' => $follower,
                 ));
 
         $edge->save();
+
+        //add a subscriber
+        if ($this->_subscribe_after_follow && !$leader->subscribed($follower)) {
+            $leader->addSubscriber($follower);
+        }
 
         $this->resetStats(array($leader, $follower));
 
