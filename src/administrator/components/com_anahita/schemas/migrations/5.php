@@ -20,6 +20,10 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         dbexec('RENAME TABLE #__anahita_nodes TO #__nodes');
         dbexec('RENAME TABLE #__anahita_edges TO #__edges');
 
+        if(!dbexists('SHOW COLUMNS FROM `#__nodes` LIKE "verified"')) {
+          dbexec("ALTER TABLE `#__nodes` ADD `verified` TINYINT(1) NOT NULL DEFAULT 0 AFTER `enabled`");
+        }
+
         dbexec('ALTER TABLE #__nodes
                 ADD `cover_filename` VARCHAR(255) NULL AFTER `filesize`,
                 ADD `cover_filesize` INT(11) NULL AFTER `cover_filename`,

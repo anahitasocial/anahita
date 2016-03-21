@@ -20,7 +20,9 @@ class ComAnahitaSchemaMigration18 extends ComMigratorMigrationVersion
     */
     public function up()
     {
-        dbexec("ALTER TABLE `#__nodes` ADD `verified` TINYINT(1) NOT NULL DEFAULT 0 AFTER `enabled`");
+        if(!dbexists('SHOW COLUMNS FROM `#__nodes` LIKE "verified"')) {
+          dbexec("ALTER TABLE `#__nodes` ADD `verified` TINYINT(1) NOT NULL DEFAULT 0 AFTER `enabled`");
+        }
     }
 
    /**

@@ -45,6 +45,8 @@ class ComBaseControllerComment extends ComBaseControllerService
             ),
         ));
 
+        AnHelperArray::unsetValues($config->behaviors, 'verifiable');
+
         parent::_initialize($config);
     }
 
