@@ -2,7 +2,8 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.2.1 Birth Release
 =============================
-* fixed issue which was preventing authentication with email instead of username 
+* fixed issue which was preventing authentication with email instead of username
+* fixed issue which was including search and composer js files twice
 
 Anahita 4.2.0 Birth Release
 =============================
