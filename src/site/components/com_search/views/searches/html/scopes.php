@@ -1,3 +1,5 @@
+<?php defined('KOOWA') or die; ?>
+
 <ul class="search-scopes nav nav-tabs nav-stacked">
 	<li class="<?= empty($current_scope) ? 'active' : ''; ?>" >
 		<a data-trigger="ChangeScope" data-scope="all" href="<?= @route('layout=list&scope=all') ?>">

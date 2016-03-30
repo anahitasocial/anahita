@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,19 +30,19 @@ class JSite extends JApplication
 {
     /**
      * Template.
-     * 
+     *
      * @var string
      */
     protected $_template;
 
     /**
      * Application Router.
-     * 
+     *
      * @var JRouter
      */
     protected $_router;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param array $config An optional KConfig object with configuration options.
@@ -122,7 +122,7 @@ class JSite extends JApplication
 
     /**
      * Get the template.
-     * 
+     *
      * @return string The template name
      */
     public function getTemplate()
@@ -157,7 +157,7 @@ class JSite extends JApplication
 
     /**
      * Set the application router.
-     * 
+     *
      * @param mixed $router
      */
     public function setRouter($router)

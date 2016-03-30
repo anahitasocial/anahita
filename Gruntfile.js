@@ -34,11 +34,11 @@ module.exports = function ( grunt ) {
                 'src/media/com_actors/js/min/permissions.min.js' :
                 ['src/media/com_actors/js/permissions.js'],
 
-                'src/media/com_search/js/min/search.min.js' :
-                ['src/media/com_search/js/search.js'],
+                'src/media/com_search/js/min/_search.min.js' :
+                ['src/media/com_search/js/_search.js'],
 
-                'src/media/com_composer/js/min/composer.min.js' :
-                ['src/media/com_composer/js/composer.js'],
+                'src/media/com_composer/js/min/_composer.min.js' :
+                ['src/media/com_composer/js/_composer.js'],
 
                 'src/media/com_locations/js/min/geoposition.min.js' :
                 ['src/media/com_locations/js/geoposition.js'],

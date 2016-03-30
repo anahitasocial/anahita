@@ -3,9 +3,9 @@
 <?php if (!empty($keywords)) : ?>
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
-<script src="com_search/js/search.js" />
+<script src="com_search/js/_search.js" />
 <?php else: ?>
-<script src="com_search/js/min/search.min.js" />
+<script src="com_search/js/min/_search.min.js" />
 <?php endif; ?>
 
 <?= @map_api_nearby(array()) ?>
