@@ -71,13 +71,14 @@ class plgAuthenticationJoomla extends JPlugin
         $db =& JFactory::getDBO();
         $username = $db->Quote($credentials['username']);
 
-        $query = 'SELECT `username`,`id`, `password`'
+        $query = 'SELECT `id`, `username`, `password`, `email`'
             . ' FROM `#__users`'
             . ' WHERE username=' . $username;
 
         //if an email
-        if(strpos($username,'@'))
+        if(strpos($username,'@')) {
             $query .= ' OR email='.$username;
+        }
 
         $db->setQuery($query);
 
@@ -85,17 +86,18 @@ class plgAuthenticationJoomla extends JPlugin
 
         if($result)
         {
-            //if login with email then set the username credential
             $credentials['username'] = $result->username;
-            $parts  = explode( ':', $result->password );
+            $parts  = explode(':', $result->password);
             $crypt  = $parts[0];
-            $salt   = @$parts[1];
+            $salt   = isset($parts[1]) ? $parts[1] : '';
             $testcrypt = JUserHelper::getCryptedPassword($credentials['password'], $salt);
 
-            if($crypt == $testcrypt)
+            if($crypt === $testcrypt)
             {
                 // Bring this in line with the rest of the system
                 $user = JUser::getInstance($result->id);
+
+                $response->username = $user->username;
                 $response->email = $user->email;
                 $response->fullname = $user->name;
                 $response->status = JAUTHENTICATE_STATUS_SUCCESS;

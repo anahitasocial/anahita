@@ -156,6 +156,10 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $authResponse = $authentication->authenticate($credentials, $options);
 
         if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS) {
+
+            $credentials['username'] = $authResponse->username;
+            $credentials['password'] = $authResponse->password;
+
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
             $this->getResponse()->status = KHttpResponse::CREATED;
             $this->getResponse()->setRedirect($context->url);
