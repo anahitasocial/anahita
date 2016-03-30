@@ -3,10 +3,10 @@
 <?php if (count($composers)) : ?>
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
-<script src="com_composer/js/composer.js" />
+<script src="com_composer/js/_composer.js" />
 <script src="com_locations/js/geoposition.js" />
 <?php else: ?>
-<script src="com_composer/js/min/composer.min.js" />
+<script src="com_composer/js/min/_composer.min.js" />
 <script src="com_locations/js/min/geoposition.min.js" />
 <?php endif; ?>
 

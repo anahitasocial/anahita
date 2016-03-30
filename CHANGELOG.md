@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.2.1 Birth Release
+=============================
+* fixed issue which was preventing authentication with email instead of username 
+
 Anahita 4.2.0 Birth Release
 =============================
 * Tag actors and media with locations
