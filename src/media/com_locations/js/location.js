@@ -17,8 +17,6 @@
         //selector's modal
         modal : '#an-modal',
 
-        formSelector : 'a[data-trigger="FormSelector"]',
-
         //selector's form container
         formContainer : '#location-form-container',
 
@@ -64,7 +62,7 @@
           click : function ( event ) {
             event.preventDefault();
             self.locatableId = $(event.currentTarget).data('locatable');
-            self._showSelector( event.currentTarget );
+            self.showSelector( event.currentTarget );
           }
         });
 
@@ -80,7 +78,7 @@
           afterFilterbox : function( event ) {
             var results = self.locationsContainer.find(this.options.entity);
             if (results.length == 0) {
-                self._showForm();
+                self.showForm();
             }
           },
           beforeFilterbox : function (event) {
@@ -97,7 +95,7 @@
         });
       },
 
-      _showSelector : function ( target ) {
+      showSelector : function ( target ) {
 
         var self = this;
 
@@ -123,11 +121,11 @@
 
             self.formContainer.hide();
 
-            self._browse();
+            self.browse();
     		});
       },
 
-      _browse : function () {
+      browse : function () {
 
         var self = this;
         var entities = this.locationsContainer.find(this.options.entities);
@@ -153,17 +151,17 @@
                 var items = $(response).filter(self.options.entity);
 
                 if (items.length) {
-                    self._hideForm();
+                    self.hideForm();
                     $(entities).html(items);
                 } else {
-                    self._showForm();
+                    self.showForm();
                 }
             }
         });
 
       },
 
-      _add : function(){
+      add : function(){
 
         var self = this;
 
@@ -177,7 +175,7 @@
             form.find(':submit').button('loading');
           },
           success : function ( response ) {
-            self._refresh();
+            self.refresh();
             self.modal.modal('hide');
           },
           complete : function ( xhr, status ) {
@@ -186,7 +184,7 @@
         });
       },
 
-      _showForm : function() {
+      showForm : function() {
 
         var self = this;
 
@@ -196,27 +194,12 @@
 
         var form = this.formContainer.find('form');
 
-        this._on(form, {
-            submit : function(event){
-                event.preventDefault();
-                self._add();
-            }
-        });
-
-        //show form event
-        this._on(this.options.formSelector, {
-          click : function ( event ) {
-            event.preventDefault();
-            self._hideForm();
-          }
-        });
-
         if ( this.searchQuery.val() ) {
             $(form).find('input[name="name"]').val(this.searchQuery.val());
         }
       },
 
-      _hideForm : function() {
+      hideForm : function() {
         this.formContainer.hide();
         this.locationsContainer.show();
       },
@@ -235,7 +218,7 @@
           },
           success : function ( response ) {
             self.modal.modal('hide');
-            self._refresh();
+            self.refresh();
           }
         });
       },
@@ -258,7 +241,7 @@
         });
       },
 
-      _refresh : function () {
+      refresh : function () {
 
         var self = this;
         var locationList = $('#locations-' + this.locatableId);
@@ -285,6 +268,16 @@
         $('body').on('click', 'a[data-action="delete-location"]', function( event ) {
             event.preventDefault();
             locationWidget.locations('deleteLocation', this);
+        });
+
+        $('body').on('submit', '#location-form-container form', function( event ) {
+            event.preventDefault();
+            locationWidget.locations('add', this);
+        });
+
+        $('body').on('click', 'a[data-trigger="FormSelector"]', function( event ) {
+            event.preventDefault();
+            locationWidget.locations('hideForm', this);
         });
     }
 
