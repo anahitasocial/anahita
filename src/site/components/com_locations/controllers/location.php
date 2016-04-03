@@ -42,6 +42,8 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
 
             if (in_array($this->getView()->getLayout(), array('selector', 'list_selector'))) {
 
+                $keyword = ($this->q) ? $this->getService('anahita:filter.term')->sanitize($this->q) : '';
+
                 $query = $this->getService('com://site/locations.domain.query.selector')
                               ->keyword($keyword)
                               ->excludeIds(AnHelperArray::collect($this->locatable->locations, 'id'))
