@@ -259,7 +259,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             'layout_list' => 'default',
             'layout_item' => 'list',
             'url' => 'layout=list',
-            'start' => (isset($entities)) ? count($entities) : 0,
+            'start' => 0,
             'limit' => 20,
             'hiddenlink' => false,
         ), $config);

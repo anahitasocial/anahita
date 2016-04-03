@@ -18,11 +18,10 @@
     <?php endfor; ?>
   </div>
   <?php endif; ?>
-
-  <?php if($hiddenlink) : ?>
+  <?php if($hiddenlink && count($entities) >= $limit) : ?>
   <div class="well InfiniteScrollReadmore">
       <?php $start += $limit; ?>
-      <a href="<?= @route('layout='.$layout_list.'&start='.$start.'&limit='.$limit) ?>">
+      <a href="<?= @route($url.'&start='.$start.'&limit='.$limit) ?>">
         <?= @text('LIB-AN-READMORE') ?>
       </a>
   </div>
