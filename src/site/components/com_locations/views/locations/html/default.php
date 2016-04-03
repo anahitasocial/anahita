@@ -1,8 +1,8 @@
 <?php defined('KOOWA') or die; ?>
 
 <?= @helper('ui.header', array()) ?>
-<?= @helper('ui.filterbox', @route('layout=list')) ?>
-
+<?= @helper('ui.filterbox', @route('layout=list&sort='.$sort)) ?>
 <?= @infinitescroll($locations, array(
-  'url' => 'sort='.$sort
+  'url' => 'sort='.$sort,
+  'hiddenlink' => true,
 )) ?>

@@ -32,9 +32,11 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      *
      * @param KEvent $event
      */
-    public function onAfterControllerBrowse(KEvent $event)
+    public function onBeforeControllerBrowse(KEvent $event)
     {
-        $this->addCommand('new');
+        if ($this->getController()->canAdd()) {
+            $this->addCommand('new');
+        }
     }
 
     /**
@@ -92,13 +94,12 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
      */
     protected function _commandNew($command)
     {
-        $actor = $this->getController()->actor;
         $name = $this->getController()->getIdentifier()->name;
         $labels = array();
         $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
         $labels[] = 'New';
         $label = translate($labels);
-        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&oid='.$actor->id.'&layout=add';
+        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
 
         $command
         ->append(array('label' => $label))

@@ -10,21 +10,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComHashtagsControllerHashtag extends ComTagsControllerDefault
-{
-    /**
-     * Applies the browse sorting.
-     *
-     * @param KCommandContext $context
-     */
-    protected function _actionBrowse(KCommandContext $context)
-    {
-        $entities = parent::_actionBrowse($context);
-
-        $edgeType = 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag';
-
-        $entities->where('edge.type', '=', $edgeType)->group('hashtag.id');
-
-        return $entities;
-    }
-}
+class ComHashtagsControllerHashtag extends ComTagsControllerDefault{}
