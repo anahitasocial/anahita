@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComLocationsControllerToolbarDefault extends ComBaseControllerToolbarDefault
+class ComLocationsControllerToolbarDefault extends ComTagsControllerToolbarDefault
 {
     /*
     *  holds the locatable object if exists
@@ -41,7 +41,6 @@ class ComLocationsControllerToolbarDefault extends ComBaseControllerToolbarDefau
 
         parent::_initialize($config);
     }
-
 
     /**
      * Before Controller _actionRead is executed.

@@ -14,6 +14,21 @@
 abstract class ComTagsControllerAbstract extends ComBaseControllerService
 {
     /**
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+
+        $this->registerCallback(array(
+            'after.delete',
+            'after.add', ),
+            array($this, 'redirect'));
+    }
+
+    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -45,8 +60,9 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $entity = parent::_actionRead($context);
 
         $pkg = $this->getIdentifier()->package;
+        $name = $this->getIdentifier()->name;
 
-        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-'.$pkg.'-TERM'), $entity->name));
+        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-'.$pkg.'-TERM'), $name));
 
         if (!empty($entity->tagables)) {
 
@@ -75,25 +91,25 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        if (!$context->query) {
-            $context->query = $this->getRepository()->getQuery();
+        $entities = parent::_actionBrowse($context);
+
+        if(in_array($this->sort, array('top', 'trending')) && $this->q == '') {
+
+            $package = $this->getIdentifier()->package;
+            $name = $this->getIdentifier()->name;
+
+            $entities->select('COUNT(*) AS count')
+            ->join('RIGHT', 'edges AS edge', $name.'.id = edge.node_a_id')
+            ->where('edge.type', 'LIKE', '%com:'.$package.'.domain.entity.tag')->group($name.'.id')
+            ->order('count', 'DESC');
+
+            if ($this->sort == 'trending') {
+                $now = new KDate();
+                $entities->where('edge.created_on', '>', $now->addDays(-(int) $this->days)->getDate());
+            }
         }
 
-        $query = $context->query;
-
-        $name = $this->getIdentifier()->name;
-
-        $query->select('COUNT(*) AS count')
-        ->join('RIGHT', 'edges AS edge', $name.'.id = edge.node_a_id')
-        ->order('count', 'DESC')
-        ->limit($this->limit, $this->start);
-
-        if ($this->sort == 'trending') {
-            $now = new KDate();
-            $query->where('edge.created_on', '>', $now->addDays(-(int) $this->days)->getDate());
-        }
-
-        return $this->getState()->setList($query->toEntityset())->getList();
+        return $entities;
     }
 
     /**
@@ -115,5 +131,23 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         }
 
         return $this;
+    }
+
+    /**
+     * Set the necessary redirect.
+     *
+     * @param KCommandContext $context
+     */
+    public function redirect(KCommandContext $context)
+    {
+        $url = array();
+        $url['view'] = KInflector::pluralize($this->getIdentifier()->name);
+        $url['option'] = $this->getIdentifier()->package;
+
+        if ($context->action == 'add') {
+            $url['id'] = $this->getItem()->id;
+        }
+
+        $this->getResponse()->setRedirect(JRoute::_($url));
     }
 }

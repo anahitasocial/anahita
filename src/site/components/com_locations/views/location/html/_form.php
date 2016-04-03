@@ -1,8 +1,11 @@
 <?php defined('KOOWA') or die; ?>
 
+<?php $location = empty($location) ? @service('repos:locations.location')->getEntity()->reset() : $location; ?>
+
 <form action="<?= @route($location->getURL()) ?>" method="post">
 		<fieldset>
-				<legend><?= @text('LIB-AN-ACTION-EDIT') ?></legend>
+			<legend><?= ($location->persisted()) ? @text('COM-LOCATIONS-FORM-EDIT') : @text('COM-LOCATIONS-FORM-NEW') ?></legend>
+
 				<div class="control-group">
 						<label class="label-group"  for="entity-name">
 						<?= @text('LIB-AN-ENTITY-NAME') ?>
@@ -73,7 +76,7 @@
 				</div>
 
 				<div class="form-actions">
-						<a href="<?= @route($location->getURL()) ?>" class="btn">
+						<a href="<?= @route('view=locations') ?>" class="btn">
 						<?= @text('LIB-AN-ACTION-CANCEL') ?>
 						</a>
 						<button type="submit" class="btn btn-primary">

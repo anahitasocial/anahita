@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Default Tag Permission
+ * Location Permissions
  *
  * @category   Anahita
  *
@@ -13,9 +13,19 @@
 class ComLocationsControllerPermissionLocation extends ComTagsControllerPermissionDefault
 {
     /**
-    *  tags cannot be deleted via the controller
+    *  location cannot be added via the controller
     *
-    *  @return boolean ALWAYS FALSE
+    *  @return boolean TRUE if viewer is site admin
+    */
+    public function canAdd()
+    {
+       return $this->_viewer->admin();
+    }
+
+    /**
+    *  location cannot be deleted via the controller
+    *
+    *  @return boolean
     */
     public function canDelete()
     {

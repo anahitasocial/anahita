@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -20,6 +20,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComTagsControllerDefault extends ComTagsControllerAbstract
-{
-}
+class ComTagsControllerDefault extends ComTagsControllerAbstract{}

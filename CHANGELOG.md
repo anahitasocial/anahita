@@ -4,6 +4,9 @@ Anahita 4.2.1 Birth Release
 =============================
 * fixed issue which was preventing authentication with email instead of username
 * fixed issue which was including search and composer js files twice
+* feature: site admins can now manually add new locations to be used by the community
+* feature: recently added tags can now be shown for hashtags and locations
+* refactored the code in com_tags and com_medium components
 
 Anahita 4.2.0 Birth Release
 =============================
