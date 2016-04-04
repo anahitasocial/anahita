@@ -38,28 +38,28 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     {
         $config = array_merge_recursive($config, array(
           'tabs' => array(
-              'configurations' => array(
-                  'label' => 'COM-SETTINGS-CONFIGURATIONS',
-                  'url' => '#'
+              'settings' => array(
+                  'label' => 'COM-SETTINGS-SYSTEM',
+                  'url' => 'option=com_settings&view=settings'
               ),
               'apps' => array(
                   'label' => 'COM-SETTINGS-APPS',
-                  'url' => '#'
+                  'url' => 'option=com_settings&view=apps'
               ),
               'plugins' => array(
                   'label' => 'COM-SETTINGS-PLUGINS',
-                  'url' => '#'
+                  'url' => 'option=com_settings&view=plugins'
               ),
               'templates' => array(
                   'label' => 'COM-SETTINGS-TEMPLATES',
-                  'url' => '#'
+                  'url' => 'option=com_settings&view=templates'
               ),
               'about' => array(
                   'label' => 'COM-SETTINGS-ABOUT',
-                  'url' => '#'
+                  'url' => 'option=com_settings&view=about'
               ),
           ),
-          'selected' => 'configurations'
+          'selected' => 'settings'
         ));
 
         return $this->_render('navigation', $config);

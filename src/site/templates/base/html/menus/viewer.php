@@ -89,7 +89,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 						<li class="divider"></li>
 						<li>
 								<a href="<?= @route('option=com_settings&view=settings') ?>">
-									<?= @text('TMPL-MENU-ITEM-VIEWER-GENERAL-SETTINGS') ?>
+									<?= @text('TMPL-MENU-ITEM-VIEWER-SITE-SETTINGS') ?>
 								</a>
 						</li>
 						<li class="divider"></li>
