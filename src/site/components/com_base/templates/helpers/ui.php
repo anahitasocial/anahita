@@ -55,6 +55,18 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
     }
 
     /**
+     * Renders a header
+     *
+     * @param array $config
+     *
+     * @return string
+     */
+    public function header($config = array())
+    {
+      return $this->_render('header', $config);
+    }
+
+    /**
      * Render the message in the flash.
      *
      * @param array $config

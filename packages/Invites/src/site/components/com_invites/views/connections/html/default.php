@@ -26,7 +26,7 @@ $('body').invitesFacebook({
 });
 </script>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <a href="#" data-trigger="Invite" class="btn btn-primary">
 	+ <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>

@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="span8">	
-		<?= @helper('ui.header', array()) ?>
+		<?= @helper('ui.header') ?>
 	
 		<?php if ($actor && $actor->authorize('action', 'todo:add')) : ?>
 		<div id="entity-form-wrapper" class="hide">

@@ -4,7 +4,7 @@
 
 <div class="row">
   <div class="span12">
-      <?= @helper('ui.header', array()) ?>
+      <?= @helper('ui.header') ?>
   </div>
 </div>
 

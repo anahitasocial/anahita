@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access'); ?>
 
-<?= @helper('ui.header', array()); ?>
+<?= @helper('ui.header'); ?>
 
 <table class="table table-striped">
 	<thead>

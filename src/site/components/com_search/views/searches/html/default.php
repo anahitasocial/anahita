@@ -22,7 +22,7 @@
 
 	<div class="span8">
 
-		<?= @helper('ui.header', array()) ?>
+		<?= @helper('ui.header') ?>
     <fieldset>
         <label name="SortOptions"><?= @text('COM-SEARCH-OPTION-SORT') ?></label>
         <select form="navbar-search" data-trigger="SortOption" id="SortOptions" name="sort">

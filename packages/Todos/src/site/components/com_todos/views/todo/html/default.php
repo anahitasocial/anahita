@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="span8">
-	<?= @helper('ui.header', array()); ?>
+	<?= @helper('ui.header'); ?>
 	<?= @template('todo'); ?>
 	<?php @commands('toolbar') ?>
 	<?= @helper('ui.comments', $todo, array('pagination' => true)); ?>

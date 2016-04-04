@@ -5,7 +5,7 @@ $actorbar->setDescription(@text('COM-NOTIFICATIONS-ACTOR-EDIT-NOTIFICATION-SETTI
 $actorbar->setActor($actor);
 ?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <div class="row">
 	<div class="span12">
