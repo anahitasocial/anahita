@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <?= @helper('ui.filterbox', @route('layout=list')) ?>
 

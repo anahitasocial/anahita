@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <?php
 $url = $item->getURL().'&layout=taggables';

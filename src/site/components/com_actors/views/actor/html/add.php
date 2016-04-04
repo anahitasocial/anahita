@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <?php $entity = empty($entity) ? @controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $entity; ?>
 

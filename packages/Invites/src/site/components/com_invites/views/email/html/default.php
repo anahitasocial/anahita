@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="span8">
 
-		<?= @helper('ui.header', array()) ?>
+		<?= @helper('ui.header') ?>
 
         <form id="invites-email" name="invites-email" action="<?= @route() ?>" method="post">
         	<?php for ($i = 0; $i < $numEmails; ++$i) : ?>
