@@ -4,7 +4,7 @@
     <div class="span8">
       
         <div class="clearfix">
-            <?= @helper('ui.header', array()); ?>
+            <?= @helper('ui.header'); ?>
         </div>
         
         <div class="an-entity">

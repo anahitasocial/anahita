@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="span6">
 	    
-	    <?= @helper('ui.header', array()); ?>
+	    <?= @helper('ui.header'); ?>
 	    
         <div class="an-entities">
         <?php foreach ($packages as $package) : ?>

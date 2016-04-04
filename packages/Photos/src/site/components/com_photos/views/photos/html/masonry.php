@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die('Restricted access');?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 <?= @infinitescroll($photos, array(
   'id' => 'an-photos',
   'url' => 'layout=masonry_list',

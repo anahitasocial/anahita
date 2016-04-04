@@ -12,7 +12,7 @@
 
 <div class="row">
 	<div class="span8">
-	<?= @helper('ui.header', array()) ?>
+	<?= @helper('ui.header') ?>
     <?= @template('set') ?>
     <?= @helper('ui.comments', $set) ?>
 	</div>

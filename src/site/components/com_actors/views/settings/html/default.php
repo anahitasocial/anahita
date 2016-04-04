@@ -18,8 +18,7 @@
 	</div>
 
 	<div class="span8">
-        <?= @helper('ui.header', array()) ?>
-
+        <?= @helper('ui.header') ?>
         <div class="actor-settings">
             <?= $content ?>
         </div>

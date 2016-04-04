@@ -8,7 +8,7 @@
 
 <div class="row">
 	<div class="span8">   
-		<?= @helper('ui.header', array()) ?>
+		<?= @helper('ui.header') ?>
 	    
 	    <div id="photos-add">
 	    	<div class="dropzone"></div>

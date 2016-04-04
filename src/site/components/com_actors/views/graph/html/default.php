@@ -2,7 +2,7 @@
 
 <div class="row">
 	<div class="span8">
-		<?= @helper('ui.header', array()) ?>
+		<?= @helper('ui.header') ?>
 
 		<?php if ($type == 'leadables'): ?>
 		<h3><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS-ADD-TITLE') ?></h3>

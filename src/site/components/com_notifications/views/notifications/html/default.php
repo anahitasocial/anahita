@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die ?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <div class="row">
 	<div class="span8" id="an-entities-wrapper">

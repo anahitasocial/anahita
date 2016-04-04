@@ -1,6 +1,6 @@
 <?php defined('KOOWA') or die; ?>
 
-<?= @helper('ui.header', array()) ?>
+<?= @helper('ui.header') ?>
 
 <?= @infinitescroll($items, array(
   'url' => 'layout=list&sort='.$sort,

@@ -9,7 +9,7 @@
 <div class="row">
 	<div class="span8">
 
-    <?= @helper('ui.header', array()) ?>
+    <?= @helper('ui.header') ?>
 
     <form id="set-form" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
     	<input type="hidden" value="addphoto" name="action" />
