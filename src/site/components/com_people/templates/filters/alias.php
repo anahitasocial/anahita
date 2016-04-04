@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsTemplateFilterAlias extends LibBaseTemplateFilterAlias
+class ComPeopleTemplateFilterAlias extends LibBaseTemplateFilterAlias
 {
     /**
      * Constructor.
