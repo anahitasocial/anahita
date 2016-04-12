@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Global Config Controller.
+ * System settings Controller.
  *
  * @category   Anahita
  *
@@ -14,5 +14,25 @@
 
 class ComSettingsControllerSetting extends ComBaseControllerResource
 {
+    /**
+    *   browse service
+    *
+    *  @param KCommandContext $context Context Parameter
+    *  @return void
+    */
+    protected function _actionBrowse(KCommandContext $context)
+    {
 
+    }
+
+    /**
+    *   edit service
+    *
+    *  @param KCommandContext $context Context Parameter
+    *  @return void
+    */
+    protected function _actionEdit(KCommandContext $context)
+    {
+
+    }
 }

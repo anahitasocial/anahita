@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -29,7 +29,7 @@ define('JPATH_LIBRARIES',      JPATH_ROOT.'/libraries');
 define('JPATH_PLUGINS',        JPATH_ROOT.'/plugins');
 define('JPATH_INSTALLATION',   JPATH_ROOT.'/installation');
 define('JPATH_THEMES',         JPATH_BASE.'/templates');
-define('JPATH_CACHE',           JPATH_BASE.DS.'cache');
+define('JPATH_CACHE',          JPATH_BASE.DS.'cache');
 define('JPATH_VENDOR',         JPATH_BASE.'/vendor');
 
 /*
