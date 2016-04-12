@@ -42,6 +42,10 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                   'label' => 'COM-SETTINGS-SYSTEM',
                   'url' => 'option=com_settings&view=settings'
               ),
+              'actors' => array(
+                  'label' => 'COM-SETTINGS-ACTORS',
+                  'url' => 'option=com_settings&view=actors'
+              ),
               'apps' => array(
                   'label' => 'COM-SETTINGS-APPS',
                   'url' => 'option=com_settings&view=apps'
