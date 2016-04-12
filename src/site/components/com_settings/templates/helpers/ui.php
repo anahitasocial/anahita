@@ -36,7 +36,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
     public function navigation($config = array())
     {
-        $config = array_merge_recursive($config, array(
+        $config = array_merge($config, array(
           'tabs' => array(
               'settings' => array(
                   'label' => 'COM-SETTINGS-SYSTEM',
@@ -63,8 +63,11 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                   'url' => 'option=com_settings&view=about'
               ),
           ),
-          'selected' => 'settings'
         ));
+
+        if(!isset($config['selected'])) {
+          $config['selected'] = 'settings';
+        }
 
         return $this->_render('navigation', $config);
     }
