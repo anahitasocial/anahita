@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -72,7 +72,7 @@ class LibBaseViewHtml extends LibBaseViewTemplate
 
     /**
      * Sets the.
-     * 
+     *
      * @return string
      */
     public function display()

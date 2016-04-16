@@ -4,7 +4,8 @@
   <div class="span4">
       <?= @helper('ui.navigation') ?>
   </div>
-  <div class="8">
+  <div class="span8">
       <?= @helper('ui.header') ?>
+      <?= @template('_settings') ?>
   </div>
 </div>

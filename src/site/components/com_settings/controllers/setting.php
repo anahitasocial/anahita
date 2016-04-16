@@ -20,9 +20,10 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     *  @param KCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionRead(KCommandContext $context)
     {
-
+        $setting = new JConfig();
+        $this->getView()->set('setting', $setting);
     }
 
     /**

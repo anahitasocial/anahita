@@ -71,4 +71,51 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
         return $this->_render('navigation', $config);
     }
+
+    /**
+    *   renders a text form field
+    *
+    *   @param array attributes
+    *   @return html form field
+    */
+    public function formfield_text($config = array())
+    {
+        $config = new KConfig($config);
+
+        $config->append(array(
+            'class' => 'input-block-level',
+            'maxlength' => 200,
+            'name' => '',
+            'id' => '',
+            'label' => '',
+            'placeholder' => '',
+            'disabled' => false,
+            'pattern' => '',
+        ));
+
+        return $this->_render('formfield_text', $config);
+    }
+
+    /**
+    *   renders a select form field
+    *
+    *   @param array attributes
+    *   @return html form field
+    */
+    public function formfield_select($config = array())
+    {
+        $config = new KConfig($config);
+
+        $config->append(array(
+            'class' => 'input-block-level',
+            'name' => '',
+            'selected' => '',
+            'id' => '',
+            'label' => '',
+            'options' => array(),
+            'disabled' => false,
+        ));
+
+        return $this->_render('formfield_select', $config);
+    }
 }
