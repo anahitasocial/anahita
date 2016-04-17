@@ -124,6 +124,8 @@ class ComSettingsDomainEntitySetting extends KObject
             } catch (Exception $e) {
                 throw new \RuntimeException($e->getMessage());
             }
+
+            chmod($this->config_file_path, 0444);
         }
 
         return $this;
