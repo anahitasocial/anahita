@@ -14,6 +14,21 @@
 
 class ComSettingsControllerSetting extends ComBaseControllerResource
 {
+    protected $_entity;
+
+    /**
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+
+        $this->registerCallback('before.read', array($this, 'fetchEntity'));
+        $this->registerCallback('before.edit', array($this, 'fetchEntity'));
+    }
+
     /**
     *   browse service
     *
@@ -22,9 +37,7 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     */
     protected function _actionRead(KCommandContext $context)
     {
-
-        $setting = new JConfig();
-        $this->getView()->set('setting', $setting);
+        $this->getView()->set('setting', $this->_entity);
     }
 
     /**
@@ -35,87 +48,34 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     */
     protected function _actionEdit(KCommandContext $context)
     {
-        $settings = new JConfig();
         $data = $context->data;
 
+        //don't overwrite these two
         unset($data->secret);
         unset($data->dbtype);
 
-        $strings = array(
-          'sitename',
-          'log_path',
-          'tmp_path',
-          'fromname',
-          'sendmail',
-          'smtpport',
-          'smtpuser',
-          'smtphost',
-          'db',
-          'user',
-          'host',
-        );
-
-        $integers = array(
-          'error_reporting',
-          'sef_rewrite',
-          'debug',
-          'caching',
-          'cachetime',
-          'lifetime',
-          'smtpauth',
-        );
-
-        $cmds = array(
-          'cache_handler',
-          'session_handler',
-          'mailer',
-          'smtpsecure',
-        );
-
-        $emails = array(
-          'mailfrom'
-        );
-
-        foreach($data as $key=>$value){
-
-          if(in_array($key, $strings)){
-            $settings->$key = KRequest::get('post.'.$key, 'string');
-          }
-
-          if(in_array($key, $integers)){
-            $settings->$key = KRequest::get('post.'.$key, 'int');
-          }
-
-          if(in_array($key, $cmds)){
-            $settings->$key = KRequest::get('post.'.$key, 'cmd');
-          }
-
-          if(in_array($key, $emails)){
-            $settings->$key = KRequest::get('post.'.$key, 'email');
-          }
+        foreach($data as $key => $value){
+            $this->_entity->$key = $value;
         }
 
-        $config_file = JPATH_CONFIGURATION.DS.'configuration.php';
-
-        if(file_exists($config_file)){
-
-            chmod($config_file, 0644);
-
-            $content = "<?php\nclass JConfig{\n";
-            foreach($settings as $key=>$value) {
-              if(!is_array($value)){
-                $content .= "    var \$$key = '$value';\n";
-              }
-            }
-            $content .= "}\n";
-
-            try {
-              file_put_contents($config_file, $content);
-            } catch (Exception $e) {
-                throw new \RuntimeException($e->getMessage());
-            }
-
+        if ($this->_entity->save()) {
             $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
         }
+    }
+
+    /**
+    * method to fetch setting entity
+    *
+    *  @param KCommandContext $context Context Parameter
+    *
+    *  @return ComSettingsDomainEntitySetting object
+    */
+    public function fetchEntity(KCommandContext $context)
+    {
+        if (!$this->_entity) {
+            $this->_entity = $this->getService('com://site/settings.domain.entity.setting')->load();
+        }
+
+        return $this->_entity;
     }
 }

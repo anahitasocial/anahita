@@ -11,8 +11,18 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsDomainEntitySetting extends AnDomainEntityDefault
+class ComSettingsDomainEntitySetting extends KObject
 {
+    /**
+    * @param entity atributes
+    */
+    protected $attributes;
+
+    /**
+    * @param path to the configuration file
+    */
+    protected $config_file_path;
+
     /**
      * Initializes the default configuration for the object.
      *
@@ -22,54 +32,52 @@ class ComSettingsDomainEntitySetting extends AnDomainEntityDefault
      */
     protected function _initialize(KConfig $config)
     {
-        $config->append(array(
-          'attributes' => array(
+
+        $this->attributes = array(
 
               // site
-              'sitename',
-              'debug' => array('default' => 0),
-              'sef_rewrite' => array('default' => 0),
-              'secret',
-              'error_reporting' => array('default' => 0),
-              'log_path',
-              'tmp_path',
-              'live_site',
+              'sitename' => 'Anahita',
+              'debug' => 0,
+              'sef_rewrite' => 0,
+              'secret' => '',
+              'error_reporting' => 0,
+              'log_path' => '',
+              'tmp_path' => '',
+              'live_site' => 'https://',
 
               // caching
-              'caching',
-              'cachetime',
-              'cache_handler' => array('default' => 'file'),
-              'memcache_settings',
+              'caching' => 0,
+              'cachetime' => 1440,
+              'cache_handler' => 'file',
 
               // database
-              'dbtype' => array('default' => 'mysqli'),
-              'host',
-              'user',
-              'password',
-              'db',
-              'dbprefix' => array('default' => 'an_'),
+              'dbtype' => 'mysqli',
+              'host' => '',
+              'user' => '',
+              'password' => '',
+              'db' => '',
+              'dbprefix' => '_an',
 
               // mailer
-              'mailer',
-              'mailfrom',
-              'fromname',
-              'sendmail' => array('default' => '/usr/sbin/sendmail'),
+              'mailer' => '',
+              'mailfrom' => '',
+              'fromname' => '',
+              'sendmail' => '/usr/sbin/sendmail',
 
               //smtp mail
-              'smtpauth',
-              'smtpsecure',
-              'smtpport',
-              'smtpuser',
-              'smtppass',
-              'smtphost',
+              'smtpauth' => 0,
+              'smtpsecure' => '',
+              'smtpport' => '',
+              'smtpuser' => '',
+              'smtppass' => '',
+              'smtphost' => '',
 
               //session
-              'session_handler' => array('default' => 'database'),
-              'lifetime' => array('default' => '60'),
-           ),
-        ));
+              'session_handler' => 'database',
+              'lifetime' => 1440,
+            );
 
-        parent::_initialize($config);
+            $this->config_file_path = JPATH_CONFIGURATION.DS.'configuration.php';
     }
 
     /**
@@ -79,20 +87,125 @@ class ComSettingsDomainEntitySetting extends AnDomainEntityDefault
      *
      * @return ComSettingsDomainEntitySetting entity object
      */
-    public function load($properties = array())
+    public function load()
     {
+        $setting = new JConfig();
+
+        foreach($this->attributes as $key => $value) {
+          $this->attributes[$key] = $setting->$key;
+        }
+
         return $this;
     }
 
     /**
      * Forwards the call to the space commit entities.
      *
-     * @param mixed &$failed Return the failed set
-     *
-     * @return bool
+     * @return ComSettingsDomainEntitySetting entity object
      */
-    public function save(&$failed = null)
+    public function save()
     {
+        if(file_exists($this->config_file_path)){
 
+            chmod($this->config_file_path, 0644);
+
+            $content = "<?php\nclass JConfig{\n";
+
+            foreach($this->attributes as $key=>$value) {
+              if(!is_array($value)){
+                $content .= "    var \$$key = '$value';\n";
+              }
+            }
+
+            $content .= "}\n";
+
+            try {
+              file_put_contents($this->config_file_path, $content);
+            } catch (Exception $e) {
+                throw new \RuntimeException($e->getMessage());
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+    *  Magic function for getting an attribute
+    *
+    *  @param string attribute name
+    *  @return attribute value
+    */
+    public function __get($name)
+    {
+        return $this->attributes[$name];
+    }
+
+    /**
+    *  Magic function for setting an attribute
+    *
+    *  @param string attribute name
+    *  @param attribute value
+    *
+    *  @return ComSettingsDomainEntitySetting object
+    */
+    public function __set($name, $value)
+    {
+        if (array_key_exists($name, $this->attributes)) {
+
+            $strings = array(
+              'sitename',
+              'log_path',
+              'tmp_path',
+              'fromname',
+              'sendmail',
+              'smtpport',
+              'smtpuser',
+              'smtphost',
+              'db',
+              'user',
+              'host',
+            );
+
+            $integers = array(
+              'error_reporting',
+              'sef_rewrite',
+              'debug',
+              'caching',
+              'cachetime',
+              'lifetime',
+              'smtpauth',
+            );
+
+            $cmds = array(
+              'cache_handler',
+              'session_handler',
+              'mailer',
+              'smtpsecure',
+            );
+
+            $emails = array(
+              'mailfrom'
+            );
+
+            if(in_array($name, $strings)){
+              $value = $this->getService('koowa:filter.string')->sanitize($value);
+            }
+
+            if(in_array($name, $integers)){
+              $value = $this->getService('koowa:filter.int')->sanitize($value);
+            }
+
+            if(in_array($name, $cmds)){
+              $value = $this->getService('koowa:filter.cmd')->sanitize($value);
+            }
+
+            if(in_array($name, $emails)){
+              $value = $this->getService('koowa:filter.email')->sanitize($value);
+            }
+
+            $this->attributes[$name] = $value;
+        }
+
+        return $this;
     }
 }
