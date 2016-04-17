@@ -7,16 +7,16 @@
 
   <div class="controls">
     <input
-      required
       name="<?= $name ?>"
       id="<?= $id ?>"
       class="<?= $class ?>"
       value="<?= $value ?>"
       maxlength="<?= $maxlength ?>"
-      type="text"
+      type="<?= $type ?>"
       placeholder="<?= $placeholder ?>"
-      <?= ($disabled) ? 'disabled' : '' ?>
       pattern="<?= $pattern ?>"
+      <?= ($disabled) ? 'disabled' : '' ?>
+      <?= ($required) ? 'required' : '' ?>
     />
   </div>
 </div>

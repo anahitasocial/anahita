@@ -90,7 +90,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
             'label' => '',
             'placeholder' => '',
             'disabled' => false,
-            'pattern' => '',
+            'type' => 'text',
+            'pattern' => '*',
+            'required' => true,
         ));
 
         return $this->_render('formfield_text', $config);
