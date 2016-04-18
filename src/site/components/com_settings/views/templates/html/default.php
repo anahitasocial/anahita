@@ -1,10 +1,10 @@
 <? defined('KOOWA') or die; ?>
 
 <div class="row">
-  <div class="span4">
+  <div class="span2">
       <?= @helper('ui.navigation', array('selected' => 'templates')) ?>
   </div>
-  <div class="8">
+  <div class="span10">
       <?= @helper('ui.header') ?>
   </div>
 </div>
