@@ -38,6 +38,10 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     {
         $config = array_merge($config, array(
           'tabs' => array(
+              'about' => array(
+                  'label' => 'COM-SETTINGS-ABOUT',
+                  'url' => 'option=com_settings&view=about'
+              ),
               'settings' => array(
                   'label' => 'COM-SETTINGS-SYSTEM',
                   'url' => 'option=com_settings&view=settings'
@@ -57,10 +61,6 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
               'templates' => array(
                   'label' => 'COM-SETTINGS-TEMPLATES',
                   'url' => 'option=com_settings&view=templates'
-              ),
-              'about' => array(
-                  'label' => 'COM-SETTINGS-ABOUT',
-                  'url' => 'option=com_settings&view=about'
               ),
           ),
         ));
