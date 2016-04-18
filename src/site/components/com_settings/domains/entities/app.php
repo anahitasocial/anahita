@@ -1,32 +1,17 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
+ * App Domain Entity.
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
+ * @copyright  2008-2016 rmd Studio Inc.
+ * @license    GNU GPLv3
  *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * Component object.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibComponentsDomainEntityComponent extends AnDomainEntityDefault
+class ComSettingsDomainEntityApp extends AnDomainEntityDefault
 {
     /**
      * Initializes the default configuration for the object.
@@ -44,15 +29,21 @@ class LibComponentsDomainEntityComponent extends AnDomainEntityDefault
                     'required' => false,
                     'default' => ''
                 ),
-                'enabled',
+                'enabled' => array('default' => true),
             ),
             'behaviors' => array(
                 'orderable',
                 'authorizer',
+                'locatable',
             ),
-            'query_options' => array('where' => array('parent' => 0)),
+            'query_options' => array(
+                'where' => array(
+                    'parent' => 0,
+                    'iscore' => 0
+                )
+            ),
             'aliases' => array(
-                'component' => 'option',
+                'package' => 'option',
              ),
             'auto_generate' => true,
         ));

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Default Domain Entity.
+ * Setting Domain Entity.
  *
  * @category   Anahita
  *
@@ -126,6 +126,22 @@ class ComSettingsDomainEntitySetting extends KObject
             }
 
             chmod($this->config_file_path, 0444);
+        }
+
+        return $this;
+    }
+
+    /**
+    * method to set an array of data to attributes
+    *
+    *  @param array of key => value data
+    *
+    *  @return ComSettingsDomainEntitySetting object
+    */
+    public function setData(array $data)
+    {
+        foreach($data as $key => $value){
+            $this->$key = $value;
         }
 
         return $this;

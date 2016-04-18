@@ -14,6 +14,10 @@
 
 class ComSettingsControllerSetting extends ComBaseControllerResource
 {
+
+    /**
+    *  @param entity object
+    */
     protected $_entity;
 
     /**
@@ -30,7 +34,38 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     }
 
     /**
-    *   browse service
+     * Initializes the options for the object.
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param 	object 	An optional KConfig object with configuration options.
+     */
+    protected function _initialize(KConfig $config)
+    {
+        parent::_initialize($config);
+
+        $config->append(array(
+            'toolbars' => array($this->getIdentifier()->name, 'menubar'),
+        ));
+    }
+
+    /**
+    *   read service
+    *
+    *  @param KCommandContext $context Context Parameter
+    *  @return void
+    */
+    protected function _actionGet(KCommandContext $context)
+    {
+        $title = JText::_('COM-SETTINGS-HEADER-SYSTEM');
+
+        $this->getToolbar('menubar')->setTitle($title);
+
+        parent::_actionGet($context);
+    }
+
+    /**
+    *   read service
     *
     *  @param KCommandContext $context Context Parameter
     *  @return void
@@ -54,9 +89,7 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
         unset($data->secret);
         unset($data->dbtype);
 
-        foreach($data as $key => $value){
-            $this->_entity->$key = $value;
-        }
+        $this->_entity->setData(KConfig::unbox($data));
 
         if ($this->_entity->save()) {
             $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');

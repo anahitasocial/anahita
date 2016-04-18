@@ -18,4 +18,14 @@ class ComSettingsControllerPermissionDefault extends LibBaseControllerPermission
     {
         return get_viewer()->superadmin();
     }
+
+    public function canAdd($action)
+    {
+        return false;
+    }
+
+    public function canDelete($action)
+    {
+        return false;
+    }
 }
