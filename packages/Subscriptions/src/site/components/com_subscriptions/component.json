@@ -1,0 +1,17 @@
+{
+    "install": {
+        "name": "Subscriptions",
+        "author": "Anahita Social Networking Platform and Framework",
+        "copyright": "(C) 2015 rmd Studio",
+        "license": "GPL3 - http://www.gnu.org/licenses/gpl-3.0.html",
+        "authorurl": "www.GetAnahita.com",
+        "description": "Create and offer paid membership plans to your members",
+        "administration": {
+            "menu": "Subscriptions"
+        },
+        "_type": "component",
+        "_enforce": "1",
+        "_social_app": "1",
+        "_method": "upgrade"
+    }
+}

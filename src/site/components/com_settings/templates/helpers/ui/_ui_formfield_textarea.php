@@ -6,17 +6,16 @@
   </label>
 
   <div class="controls">
-    <input
+    <textarea
       name="<?= $name ?>"
       id="<?= $id ?>"
       class="<?= $class ?>"
-      value="<?= @escape($value) ?>"
-      maxlength="<?= $maxlength ?>"
-      type="<?= $type ?>"
       placeholder="<?= $placeholder ?>"
-      pattern="<?= $pattern ?>"
+      maxlength="<?= $maxlength ?>"
+      cols="<?= $cols ?>"
+      rows="<?= $rows ?>"
       <?= ($disabled) ? 'disabled' : '' ?>
       <?= ($required) ? 'required' : '' ?>
-    />
+    ><?= @escape(str_replace('\n', "\n", $value)) ?></textarea>
   </div>
 </div>

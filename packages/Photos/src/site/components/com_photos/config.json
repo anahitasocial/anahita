@@ -1,0 +1,15 @@
+{
+    "config": {
+        "params": {
+            "param": {
+                "_menu": "hide",
+                "_name": "uploadlimit",
+                "_type": "uploadlimit",
+                "_default": "2",
+                "_label": "Upload Limit (MB)",
+                "_description": ""
+            },
+            "_addpath": "/administrator/components/com_photos/elements"
+        }
+    }
+}

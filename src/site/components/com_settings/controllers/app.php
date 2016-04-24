@@ -26,7 +26,8 @@ class ComSettingsControllerApp extends ComBaseControllerService
         $config->append(array(
              'behaviors' => array('serviceable' => array('read_only' => true)),
              'request' => array(
-                'sort' => 'ordering',
+                'sort' => 'name',
+                'limit' => 99
              ),
         ));
 
@@ -52,7 +53,7 @@ class ComSettingsControllerApp extends ComBaseControllerService
     {
         $entities = parent::_actionBrowse($context);
 
-        $entities->order('ordering');
+        $entities->order($this->sort);
 
         return $entities;
     }

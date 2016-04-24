@@ -99,6 +99,32 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     }
 
     /**
+    *   renders a textarea form field
+    *
+    *   @param array attributes
+    *   @return html form field
+    */
+    public function formfield_textarea($config = array())
+    {
+        $config = new KConfig($config);
+
+        $config->append(array(
+            'class' => 'input-block-level',
+            'maxlength' => 1000,
+            'name' => '',
+            'id' => '',
+            'label' => '',
+            'placeholder' => '',
+            'disabled' => false,
+            'required' => true,
+            'rows' => 5,
+            'cols' => 3,
+        ));
+
+        return $this->_render('formfield_textarea', $config);
+    }
+
+    /**
     *   renders a select form field
     *
     *   @param array attributes
@@ -119,5 +145,84 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         ));
 
         return $this->_render('formfield_select', $config);
+    }
+
+    public function params($config = array())
+    {
+        $config = new KConfig($config);
+
+        $config->append(array(
+            'type' => 'component',
+            'package' => $config->entity->option,
+        ));
+
+        $entity = $config->entity;
+        $package = $entity->option;
+        $config_file_path = JPATH_SITE.DS.'components'.DS.$package.DS.'config.json';
+
+        if(!file_exists($config_file_path)) {
+           return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
+        }
+
+        $html = '';
+        JFactory::getLanguage()->load($package);
+        $app_config = json_decode(file_get_contents($config_file_path));
+
+        foreach ($app_config->fields as $field) {
+
+            switch($field->type){
+
+                case 'text' :
+                    $html .= $this->formfield_text(array(
+                        'name' => $field->name,
+                        'id' => 'param-'.$field->name,
+                        'label' => JText::_($field->label),
+                        'placeholder' => isset($field->description) ? JText::_($field->description) : '',
+                        'maxlength' => isset($field->size) ? $field->size : 200,
+                        'value' => $entity->getValue($field->name),
+                    ));
+                break;
+
+                case 'list' :
+                case 'radio':
+
+                   $options = array();
+                   foreach($field->option as $i=>$option){
+                     $options[] = array(
+                        'name' => $option->text,
+                        'value' => $option->value,
+                     );
+                   }
+
+                   $value = $entity->getValue($field->name);
+
+                   $html .= $this->formfield_select(array(
+                     'name' => $field->name,
+                     'id' => 'param-'.$field->name,
+                     'label' => JText::_($field->label),
+                     'selected' => ($value) ? $value : $field->default,
+                     'options' => $options,
+                   ));
+
+                break;
+
+                case 'textarea' :
+                    $html .= $this->formfield_textarea(array(
+                        'name' => $field->name,
+                        'id' => 'param-'.$field->name,
+                        'label' => JText::_($field->label),
+                        'placeholder' => isset($field->description) ? JText::_($field->description) : '',
+                        'maxlength' => isset($field->size) ? $field->size : 200,
+                        'value' => $entity->getValue($field->name),
+                    ));
+                break;
+
+                case 'legend' :
+                  $html .= "<legend>".$field->default."</legend>\n\n";
+                break;
+            }
+        }
+
+        return $html;
     }
 }

@@ -1,0 +1,24 @@
+{
+    "config": {
+        "params": {
+            "param": {
+                "option": [
+                    {
+                        "_value": "0",
+                        "__text": "Site Admins"
+                    },
+                    {
+                        "_value": "2",
+                        "__text": "Site Admins, Registered Members"
+                    }
+                ],
+                "_menu": "hide",
+                "_name": "can_publish",
+                "_type": "list",
+                "_default": "0",
+                "_label": "Who can create a new group",
+                "_description": ""
+            }
+        }
+    }
+}
