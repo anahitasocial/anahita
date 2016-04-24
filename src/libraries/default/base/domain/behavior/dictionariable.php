@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Dictionariable Behavior.
- * 
+ *
  * Dictionariable allows to store key/value pairs for an entity
  *
  * @category   Anahita
@@ -41,7 +41,11 @@ class LibBaseDomainBehaviorDictionariable extends AnDomainBehaviorAbstract
     {
         $config->append(array(
             'attributes' => array(
-                'meta' => array('type' => 'json', 'default' => 'json', 'write' => 'private'),
+                'meta' => array(
+                    'type' => 'json',
+                    'default' => 'json',
+                    'write' => 'private'
+                ),
             ),
         ));
 
@@ -51,10 +55,10 @@ class LibBaseDomainBehaviorDictionariable extends AnDomainBehaviorAbstract
     /**
      * Sets a key value in the object dictionary, If $key is array
      * the it iterates through the array to set the values.
-     * 
+     *
      * @param string $key   The dictionary key value
      * @param string $value The value to be stored
-     * 
+     *
      * @return LibBaseDomainBehaviorDictionariable
      */
     public function setValue($key, $value = null)
@@ -78,12 +82,12 @@ class LibBaseDomainBehaviorDictionariable extends AnDomainBehaviorAbstract
     }
 
     /**
-     * Returns the dictionary value of a given key. If there are no values then return the default 
+     * Returns the dictionary value of a given key. If there are no values then return the default
      * value.
-     * 
+     *
      * @param string $key     The dictionary key value
      * @param string $default Default value to return if there are no values
-     * 
+     *
      * @return mixed
      */
     public function getValue($key, $default = null)

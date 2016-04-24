@@ -24,7 +24,6 @@ class ComSettingsControllerApp extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-             'behaviors' => array('serviceable' => array('read_only' => true)),
              'request' => array(
                 'sort' => 'name',
                 'limit' => 99
@@ -41,6 +40,15 @@ class ComSettingsControllerApp extends ComBaseControllerService
         $this->getToolbar('menubar')->setTitle($title);
 
         return parent::_actionGet($context);
+    }
+
+    protected function _actionEdit(KCommandContext $context)
+    {
+        parent::_actionEdit($context);
+
+        if (!$context->getError()) {
+            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
+        }
     }
 
     /**

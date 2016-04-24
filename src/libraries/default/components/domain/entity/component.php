@@ -40,7 +40,7 @@ class LibComponentsDomainEntityComponent extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('components'),
             'attributes' => array(
-                'params' => array(
+                'meta' => array(
                     'required' => false,
                     'default' => ''
                 ),

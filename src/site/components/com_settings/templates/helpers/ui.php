@@ -179,7 +179,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                         'label' => JText::_($field->label),
                         'placeholder' => isset($field->description) ? JText::_($field->description) : '',
                         'maxlength' => isset($field->size) ? $field->size : 200,
-                        'value' => $entity->getValue($field->name),
+                        'value' => $entity->getValue($field->name, $field->default),
+                        'disabled' => isset($field->disabled) ? $field->disabled : 0,
+                        'required' => isset($field->required) ? $field->required : 0,
                     ));
                 break;
 
@@ -200,8 +202,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                      'name' => $field->name,
                      'id' => 'param-'.$field->name,
                      'label' => JText::_($field->label),
-                     'selected' => ($value) ? $value : $field->default,
+                     'selected' => ($value === '') ? $field->default : $value,
                      'options' => $options,
+                     'disabled' => isset($field->disabled) ? 1 : 0,
                    ));
 
                 break;
@@ -213,7 +216,10 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                         'label' => JText::_($field->label),
                         'placeholder' => isset($field->description) ? JText::_($field->description) : '',
                         'maxlength' => isset($field->size) ? $field->size : 200,
-                        'value' => $entity->getValue($field->name),
+                        'value' => html_entity_decode($entity->getValue($field->name)),
+                        'disabled' => isset($field->disabled) ? 1 : 0,
+                        'cols' => $field->cols,
+                        'rows' => $field->rows,
                     ));
                 break;
 

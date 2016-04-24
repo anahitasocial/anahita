@@ -1,6 +1,7 @@
 {
     "fields": [
         {
+            "name": "spacer",
             "type": "legend",
             "default": "Facebook Connect"
         },
@@ -39,6 +40,7 @@
             "description": "Facebook Client Secret"
         },
         {
+            "name": "spacer",
             "type": "legend",
             "default": "Twitter Connect"
         },
@@ -77,6 +79,7 @@
             "description": "Twitter Client Secret"
         },
         {
+            "name": "spacer",
             "type": "legend",
             "default": "LinkedIn Connect"
         },
@@ -91,7 +94,7 @@
                     "text": "YES"
                 }
             ],
-            
+
             "name": "linkedin_enable",
             "type": "list",
             "default": "0",
@@ -113,12 +116,6 @@
             "default": "",
             "label": "Consumer Secret",
             "description": "LinkedIn Client Secret"
-        },
-        {
-            "name": "spacer",
-            "type": "spacer",
-            "default": " ",
-            "description": ""
         }
     ]
 }

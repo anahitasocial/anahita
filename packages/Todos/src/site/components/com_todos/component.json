@@ -1,0 +1,16 @@
+{
+    "install": {
+        "name": "Todos",
+        "author": "Anahita Social Networking Platform and Framework",
+        "copyright": "(C) 2013 rmd Studio, Peerglobe Technology",
+        "license": "GPL3 - http://www.gnu.org/licenses/gpl-3.0.html",
+        "authoremail": "info@anahitapolis.com",
+        "authorurl": "http://www.Anahitapolis.com",
+        "description": "Create and manage list of to-dos",
+        "menu": "true",
+        "_type": "component",
+        "_version": "##BUILD_PLATFORM_VERSION##",
+        "_social_app": "1",
+        "_method": "upgrade"
+    }
+}

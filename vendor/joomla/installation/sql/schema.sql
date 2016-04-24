@@ -47,7 +47,7 @@ CREATE TABLE `#__nodes` (
   `verified` tinyint(1) NOT NULL DEFAULT 0,
   `pinned` tinyint(1) NOT NULL DEFAULT 0,
   `is_default` tinyint(1) NOT NULL DEFAULT 0,
-  `meta` text,
+  `meta` text DEFAULT NULL,
   `hits` int(11) unsigned DEFAULT NULL,
   `parent_id` bigint(11) unsigned DEFAULT NULL,
   `parent_type` varchar(255) DEFAULT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE `#__components` (
   `ordering` int(11) NOT NULL DEFAULT '0',
   `admin_menu_img` varchar(255) NOT NULL DEFAULT '',
   `iscore` tinyint(4) NOT NULL DEFAULT '0',
-  `params` text NOT NULL,
+  `meta` text DEFAULT NULL,
   `enabled` tinyint(4) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `parent_option` (`parent`,`option`(32))

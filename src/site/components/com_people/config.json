@@ -1,0 +1,21 @@
+{
+    "fields": [
+      {
+        "option": [
+            {
+                "value": "0",
+                "text": "No"
+            },
+            {
+                "value": "1",
+                "text": "Yes"
+            }
+        ],
+        "name": "allowUserRegistration",
+        "size": "60",
+        "type": "list",
+        "default": "1",
+        "label": "Allow user registration"
+      }
+    ]
+}

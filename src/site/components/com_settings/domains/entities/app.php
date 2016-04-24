@@ -25,49 +25,59 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('components'),
             'attributes' => array(
-                'params' => array(
-                    'required' => false,
-                    'default' => ''
-                ),
-                'enabled' => array('default' => true),
+                  'id',
+                  'enabled' => array(
+                    'default' => 1
+                  ),
+                  'meta' => array(
+                      'type' => 'json',
+                      'default' => 'json',
+                      'write' => 'private'
+                  ),
             ),
             'behaviors' => array(
-                'orderable',
                 'authorizer',
+                'orderable',
+                'dictionariable',
                 'locatable',
-                'dictionariable'
-            ),
-            'query_options' => array(
-                'where' => array(
-                    'parent' => 0
-                )
             ),
             'aliases' => array(
                 'package' => 'option',
-                'meta' => 'params'
              ),
             'auto_generate' => true,
         ));
 
-        return parent::_initialize($config);
+        parent::_initialize($config);
     }
 
-    public function getValue($key, $default = '')
+    /**
+     * Set the value of a property by checking for custom setter. An array
+     * can be passed to set multiple properties.
+     *
+     * @param string|array $property Property name
+     * @param mixd         $value    Property value
+     */
+    public function setData($property = AnDomain::ACCESS_PUBLIC, $default = null)
     {
-       $value = parent::getValue($key, $default);
 
-       if(is_null($value) || $value == ''){
-          $lines = explode("\n", $this->meta);
-          foreach($lines as $line){
-              $line = explode('=', $line, 2);
-              if($line[0] == $key){
-                  $value = $line[1];
-              }
-          }
-       }
+        $config_file_path = JPATH_SITE.DS.'components'.DS.$this->package.DS.'config.json';
 
-       return $value;
+        if(file_exists($config_file_path)) {
+
+            $app_config = json_decode(file_get_contents($config_file_path));
+            $fields = $app_config->fields;
+
+            foreach ($fields as $field) {
+                $key = $field->name;
+                if(isset($property[$key])){
+                  $this->setValue($key, $property[$key]);
+                }
+            }
+        }
+
+        parent::setData($property, $default);
     }
+
 
     /**
      * (non-PHPdoc).

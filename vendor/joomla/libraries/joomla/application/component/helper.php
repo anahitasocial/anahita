@@ -81,7 +81,7 @@ class JComponentHelper
 		if (!isset( $instances[$name] ))
 		{
 			$component = &JComponentHelper::getComponent( $name );
-			$instances[$name] = new JParameter($component->params);
+			$instances[$name] = new JParameter($component->meta);
 		}
 		return $instances[$name];
 	}
@@ -89,7 +89,7 @@ class JComponentHelper
 	static function renderComponent($name, $params = array())
 	{
 		global $mainframe, $option;
-		
+
 		// Define component path
 		define( 'JPATH_COMPONENT',					JPATH_BASE.DS.'components'.DS.$name);
 		define( 'JPATH_COMPONENT_SITE',				JPATH_SITE.DS.'components'.DS.$name);
@@ -100,22 +100,22 @@ class JComponentHelper
 		}
 
 		$file = substr( $name, 4 );
-		
+
 		// get component path
 		if ( $mainframe->isAdmin() && file_exists(JPATH_COMPONENT.DS.'admin.'.$file.'.php') ) {
 			$path = JPATH_COMPONENT.DS.'admin.'.$file.'.php';
 		} else {
 			$path = JPATH_COMPONENT.DS.$file.'.php';
 		}
-		
+
         $identifier = KService::getIdentifier("com:$file.aliases");
-        $identifier->application = $mainframe->isAdmin()  ? 'admin' : 'site';        
+        $identifier->application = $mainframe->isAdmin()  ? 'admin' : 'site';
         $lang =& JFactory::getLanguage();
         $lang->load($name);
         KLoader::getInstance()->loadIdentifier($identifier);
-        
+
         //new way of doing it
-        if ( !file_exists($path) ) 
+        if ( !file_exists($path) )
         {
             $identifier->name = 'dispatcher';
             register_default(array('identifier'=>$identifier,'default'=>'ComBaseDispatcherDefault'));
@@ -124,30 +124,30 @@ class JComponentHelper
             KService::set('component.dispatcher', $dispatcher);
             return $dispatcher->dispatch();
         }
-        else 
+        else
         {
             $contents = self::_renderComponent($path);
-                      
+
             // Build the component toolbar
             jimport( 'joomla.application.helper' );
             if (($path = JApplicationHelper::getPath( 'toolbar' )) && $mainframe->isAdmin())
             {
                 // Get the task again, in case it has changed
                 $task = JRequest::getString( 'task' );
-            
+
                 // Make the toolbar
                 include_once( $path );
             }
-                        
-            return $contents;            
+
+            return $contents;
         }
 	}
-	
+
 	/**
 	 * Render the contents of a component
-	 * 
+	 *
 	 * @param string $path
-	 * 
+	 *
 	 * @return string
 	 */
 	static protected function _renderComponent($path)
@@ -158,7 +158,7 @@ class JComponentHelper
 	    require_once $path;
 	    $contents = ob_get_contents();
 	    ob_end_clean();
-	    return $contents;	    
+	    return $contents;
 	}
 
 	/**

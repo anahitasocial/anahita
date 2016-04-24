@@ -5,21 +5,24 @@
             "type": "text",
             "label": "AN-SB-PAYPAL-LOGIN",
             "description": "",
-            "size": "70"
+            "size": "70",
+            "default": ""
         },
         {
             "name": "password",
             "type": "text",
             "label": "AN-SB-PAYPAL-PASSWORD",
             "description": "",
-            "size": "70"
+            "size": "70",
+            "default": ""
         },
         {
             "name": "signature",
             "type": "text",
             "label": "AN-SB-PAYPAL-SIGNATURE",
             "description": "",
-            "size": "70"
+            "size": "70",
+            "default": ""
         },
         {
             "option": [
@@ -43,7 +46,8 @@
             "default": "30",
             "label": "AN-SB-RENEW-NOTICE",
             "description": "AN-SB-RENEW-NOTICE-DESC",
-            "size": "10"
+            "size": "10",
+            "default": ""
         },
         {
             "option": [
@@ -476,7 +480,8 @@
             "type": "text",
             "label": "AN-SB-TOS-URL",
             "size": "70",
-            "default": "tos"
+            "default": "tos",
+            "default": ""
         },
         {
             "name": "privacy_content_layout",
@@ -490,8 +495,9 @@
             "type": "textarea",
             "label": "AN-SB-WELCOME-MESSAGE",
             "description": "",
-            "cols": "70",
-            "rows": "5"
+            "cols": "10",
+            "rows": "20",
+            "size": "5000"
         }
     ]
 }
