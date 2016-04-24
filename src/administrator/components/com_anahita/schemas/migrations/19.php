@@ -23,6 +23,12 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE `#__nodes` CHANGE `meta` `meta` text DEFAULT NULL');
         dbexec('ALTER TABLE `#__edges` CHANGE `meta` `meta` text DEFAULT NULL');
         dbexec('ALTER TABLE `#__components` CHANGE `params` `meta` text DEFAULT NULL');
+        //dbexec('ALTER TABLE `#__components` DROP COLUMN `link`');
+        dbexec('ALTER TABLE `#__components` DROP COLUMN `menuid`');
+        //dbexec('ALTER TABLE `#__components` DROP COLUMN `parent`');
+        //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_link`');
+        //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_alt`');
+        //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_img`');
 
         $rows = dbfetch('SELECT `id`,`meta` FROM `#__components`');
 

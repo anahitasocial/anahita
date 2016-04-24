@@ -13,6 +13,7 @@
  */
 class ComSettingsDomainEntityApp extends AnDomainEntityDefault
 {
+
     /**
      * Initializes the default configuration for the object.
      *
@@ -59,7 +60,6 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
      */
     public function setData($property = AnDomain::ACCESS_PUBLIC, $default = null)
     {
-
         $config_file_path = JPATH_SITE.DS.'components'.DS.$this->package.DS.'config.json';
 
         if(file_exists($config_file_path)) {
