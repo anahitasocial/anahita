@@ -18,5 +18,8 @@
       <?= ($disabled) ? 'disabled' : '' ?>
       <?= ($required) ? 'required' : '' ?>
     />
+    <? if( $description ) : ?>
+    <span class="help-inline"><?= @escape($description) ?></span>
+    <? endif; ?>
   </div>
 </div>

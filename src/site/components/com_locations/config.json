@@ -5,7 +5,7 @@
             "type": "text",
             "default": "google",
             "label": "Service",
-            "description": "Select a location service",
+            "placeholder": "Select a location service",
             "disabled": 1
         },
         {
@@ -14,7 +14,7 @@
             "type": "text",
             "default": "",
             "label": "Browser API Key",
-            "description": "Browser API Key"
+            "placeholder": "Browser API Key"
         },
         {
             "name": "server_key",
@@ -22,7 +22,7 @@
             "type": "text",
             "default": "",
             "label": "Server API Key",
-            "description": "Server API Key"
+            "placeholder": "Server API Key"
         }
     ]
 }

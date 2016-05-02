@@ -6,6 +6,9 @@
   </label>
 
   <div class="controls">
+    <? if( $description ) : ?>
+    <span class="help-inline"><?= @escape($description) ?></span>
+    <? endif; ?>
     <textarea
       name="<?= $name ?>"
       id="<?= $id ?>"
