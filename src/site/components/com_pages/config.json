@@ -6,7 +6,7 @@
         "type": "text",
         "default": "",
         "label": "Content Path",
-        "description": "Content Path",
+        "description": "Path to the static content directory",
         "required": 0
       }
     ]
