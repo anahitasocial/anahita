@@ -147,6 +147,17 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         return $this->_render('formfield_select', $config);
     }
 
+    public function formfield_custom($config)
+    {
+      $config = new KConfig($config);
+
+      $config->append(array(
+          'class' => 'input-block-level'
+      ));
+
+       return $this->_render('formfield_custom', $config);
+    }
+
     public function params($config = array())
     {
         $config = new KConfig($config);
@@ -225,6 +236,21 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
                 case 'legend' :
                   $html .= "<legend>".$field->default."</legend>\n\n";
+                break;
+
+                case 'custom' :
+
+                   $value = $entity->getValue($field->name);
+
+                   $html .= $this->formfield_custom(array(
+                     'name' => $field->name,
+                     'id' => 'param-'.$field->name,
+                     'label' => JText::_($field->label),
+                     'value' => ($value === '') ? $field->default : $value,
+                     'disabled' => isset($field->disabled) ? 1 : 0,
+                     'identifier' => $field->identifier,
+                     'placeholder' => isset($field->description) ? JText::_($field->description) : '',
+                   ));
                 break;
             }
         }

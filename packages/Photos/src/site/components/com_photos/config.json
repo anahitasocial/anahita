@@ -1,15 +1,10 @@
 {
-    "config": {
-        "params": {
-            "param": {
-                "_menu": "hide",
-                "_name": "uploadlimit",
-                "_type": "uploadlimit",
-                "_default": "2",
-                "_label": "Upload Limit (MB)",
-                "_description": ""
-            },
-            "_addpath": "/administrator/components/com_photos/elements"
-        }
-    }
+    "fields": [{
+        "name": "uploadlimit",
+        "type": "custom",
+        "label": "Upload Limit (MB)",
+        "description": "Sets the file size upload limit",
+        "default" : "4",
+        "identifier": "com://site/photos.template.helper.ui.uploadlimit"
+    }]
 }
