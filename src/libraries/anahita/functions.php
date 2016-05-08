@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -226,7 +226,7 @@ function is()
  * When __toString throws error it's a headahce for debuggin
  * this method safely converts an object to string that if it
  * throws an error it can be caught.
- * 
+ *
  * @param mixed $object
  */
 function to_str($object)
@@ -336,7 +336,7 @@ function translate($texts, $force = true)
  * @param array  $arguments An array of arugments to be passed to method
  *
  * @return mixed
- * 
+ *
  * @deprecated Use invoke_callback instead
  */
 function call_object_method($object, $method, array $arguments)
@@ -576,10 +576,17 @@ function get_config_value($extension, $key = null, $default = null)
     list($type, $name) = explode('_', $extension);
 
     if ($type == 'com') {
-        $params = JComponentHelper::getParams('com_'.$name);
+
+        $meta = KService::get('com://site/settings.template.helper')->getMeta($name);
+
+        if ($key) {
+          return isset($meta->$key) ? $meta->$key : $default;
+        } else {
+          return $meta;
+        }
     }
 
-    return $key ?  $params->get($key, $default) : $params;
+    return false;
 }
 
 /**
@@ -744,9 +751,9 @@ function clean_ap_user_cache()
 
 /**
  * Check if an actor is a person type and also is guest.
- * 
+ *
  * @param ComActorsDomainEntityActor $actor Actor entity
- * 
+ *
  * @return bool
  */
 function is_guest($actor)
@@ -756,9 +763,9 @@ function is_guest($actor)
 
 /**
  * Check if an actor is a person type and also is admin.
- * 
+ *
  * @param ComActorsDomainEntityActor $actor Actor entity
- * 
+ *
  * @return bool
  */
 function is_admin($actor)
@@ -878,9 +885,9 @@ function is_hash_array($array)
 
 /**
  * Return the value of an array at $index or null of not found. A negative number
- * can be passed to return the value from am index counting from the end of the 
+ * can be passed to return the value from am index counting from the end of the
  * array.
- * 
+ *
  * @param array           $array   The array
  * @param int             $index   The index
  * @param mixed[optional] $default Value to return if index is not found
@@ -896,9 +903,9 @@ function array_value($array, $index, $default = null)
 
 /**
  * Fix config bug when hash array and list array are mixed together.
- * 
+ *
  * @param array $array
- * 
+ *
  * @return array
  */
 function to_hash($array, $default = array())
@@ -918,7 +925,7 @@ function to_hash($array, $default = array())
 
 /**
  * Return an array group by the value returned by the callback.
- * 
+ *
  * @param array $array
  * @param mixed $callback
  */

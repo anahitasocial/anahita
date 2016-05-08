@@ -31,8 +31,8 @@ class plgSystemInvites extends JPlugin
             KRequest::get('get.option', 'string', null) == 'com_people' &&
             get_viewer()->guest()
         ) {
-    		    $personConfig = &JComponentHelper::getParams('com_people');
-    		    $personConfig->set('allowUserRegistration', true);
+            $personConfig = KService::get('com://site/settings.template.helper')->getMeta('people');
+    		    $personConfig->allowUserRegistration = true;
     		}
     }
 }

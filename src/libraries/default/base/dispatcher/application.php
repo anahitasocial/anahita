@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -134,19 +134,20 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
     {
         $name = 'com_'.$this->getComponent()->getIdentifier()->package;
 
-        //legacy
-        global $option;
-        $option = $name;
+        define('JPATH_COMPONENT', JPATH_BASE.DS.'components'.DS.$name);
+        define('JPATH_COMPONENT_SITE', JPATH_SITE.DS.'components'.DS.$name);
+        define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_ADMINISTRATOR.DS.'components'.DS.$name);
 
-        define('JPATH_COMPONENT',                    JPATH_BASE.DS.'components'.DS.$name);
-        define('JPATH_COMPONENT_SITE',                JPATH_SITE.DS.'components'.DS.$name);
-        define('JPATH_COMPONENT_ADMINISTRATOR',    JPATH_ADMINISTRATOR.DS.'components'.DS.$name);
         if (!file_exists(JPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound('Component not found');
         }
-        if (!JComponentHelper::isEnabled($name)) {
+
+        $app = KService::get('repos://site/settings.app')->find(array('package' => $name));
+
+        if (isset($app) && $app->enabled != 1) {
             throw new LibBaseControllerExceptionForbidden('Component is disabled');
         }
+
         $this->getComponent()->dispatch($context);
     }
 
