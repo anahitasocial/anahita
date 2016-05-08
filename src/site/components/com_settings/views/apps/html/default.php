@@ -2,9 +2,9 @@
 
 <? if ($sort == 'ordering') : ?>
     <? if (defined('JDEBUG') && JDEBUG) : ?>
-    <script src="media/com_settings/js/orderable.js" />
+    <script src="com_settings/js/orderable.js" />
     <? else: ?>
-    <script src="com_settings/js/orderable.min.js" />
+    <script src="com_settings/js/min/orderable.min.js" />
     <? endif; ?>
 <? endif; ?>
 
@@ -23,9 +23,9 @@
           </thead>
           <tbody data-behavior="orderable">
           <? foreach ($items as $item) : ?>
-          <tr data-url="<?= @route($item->getURL().'&layout=edit') ?>">
+          <tr>
               <td style="width: 100%;">
-                <a href="<?= @route('view=app&layout=edit&id='.$item->id) ?>">
+                <a class="js-edit" href="<?= @route($item->getURL().'&layout=edit') ?>">
                   <?= @escape($item->name) ?>
                 </a>
               </td>

@@ -20,7 +20,7 @@
       cursor: 'move',
       start: function ( event, ui ) {
           startIndex = ui.item.context.rowIndex;
-          url = ui.item.data('url');
+          url = ui.item.find('a.js-edit').attr('href');
       },
       stop: function ( event, ui) {
 

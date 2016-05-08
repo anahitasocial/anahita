@@ -2,9 +2,9 @@
 
 <? if ($sort == 'ordering') : ?>
     <? if (defined('JDEBUG') && JDEBUG) : ?>
-    <script src="media/com_settings/js/orderable.js" />
+    <script src="com_settings/js/orderable.js" />
     <? else: ?>
-    <script src="com_settings/js/orderable.min.js" />
+    <script src="com_settings/js/min/orderable.min.js" />
     <? endif; ?>
 <? endif; ?>
 
@@ -36,8 +36,8 @@
           <? foreach ($items as $item) : ?>
           <tr>
               <td style="width: 100%;">
-                <a href="<?= @route('view=plugin&layout=edit&id='.$item->id) ?>">
-                  <?= @escape($item->name) ?> <?= $item->assignable ?>
+                <a class="js-edit" href="<?= @route($item->getURL().'&layout=edit') ?>">
+                  <?= @escape($item->name) ?>
                 </a>
               </td>
               <td><?= @escape($item->element) ?></td>
