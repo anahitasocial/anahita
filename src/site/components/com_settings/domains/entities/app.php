@@ -77,19 +77,4 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
 
         parent::setData($property, $default);
     }
-
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see AnDomainEntityAbstract::__get()
-     */
-    public function __get($key)
-    {
-        if ($key == 'name') {
-            return ucfirst(str_replace('com_', '', $this->option));
-        }
-
-        return parent::__get($key);
-    }
 }

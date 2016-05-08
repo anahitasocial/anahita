@@ -34,6 +34,11 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         $config->paths = $paths;
     }
 
+    public function sorting($config = array())
+    {
+        return $this->_render('sorting', $config);
+    }
+
     public function navigation($config = array())
     {
         $config = array_merge($config, array(
