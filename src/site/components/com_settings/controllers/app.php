@@ -65,14 +65,4 @@ class ComSettingsControllerApp extends ComBaseControllerService
 
         return $entities;
     }
-
-    protected function _actionOrder(KCommandContext $context)
-    {
-        $apps = $this->getRepository()->fetchSet(array(
-          'id' => KConfig::unbox($this->id)
-        ));
-
-        $apps->setData(KConfig::unbox($context->data));
-        $apps->save();
-    }
 }

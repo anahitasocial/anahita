@@ -24,9 +24,9 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-             'behaviors' => array('serviceable' => array('read_only' => true)),
              'request' => array(
                 'sort' => 'name',
+                'limit' => 99
              ),
         ));
 
@@ -55,15 +55,5 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
         $entities->order($this->sort);
 
         return $entities;
-    }
-
-    protected function _actionOrder(KCommandContext $context)
-    {
-        $plugins = $this->getRepository()->fetchSet(array(
-          'id' => KConfig::unbox($this->id)
-        ));
-
-        $plugins->setData(KConfig::unbox($context->data));
-        $plugins->save();
     }
 }
