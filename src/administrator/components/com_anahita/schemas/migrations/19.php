@@ -30,7 +30,24 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_alt`');
         //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_img`');
 
-        $rows = dbfetch('SELECT `id`,`meta` FROM `#__components`');
+        $this->_updateMeta('components');
+
+        //dbexec('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
+
+        //$this->_updateMeta('plugins');
+    }
+
+   /**
+    * Called when rolling back a migration
+    */
+    public function down()
+    {
+        //add your migration here
+    }
+
+    protected function _updateMeta($type)
+    {
+        $rows = dbfetch('SELECT `id`,`meta` FROM `#__'.$type.'`');
 
         foreach($rows as $row) {
 
@@ -53,17 +70,9 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
 
                 if (count($json)) {
                     $json = json_encode($json);
-                    dbexec('UPDATE `#__components` SET `meta` = \''.$json.'\' WHERE `id` = '.$row['id']);
+                    dbexec('UPDATE `#__'.$type.'` SET `meta` = \''.$json.'\' WHERE `id` = '.$row['id']);
                 }
             }
         }
-    }
-
-   /**
-    * Called when rolling back a migration
-    */
-    public function down()
-    {
-        //add your migration here
     }
 }

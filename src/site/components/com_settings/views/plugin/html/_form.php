@@ -12,8 +12,13 @@
       </dl>
   </fieldset>
 
+  <h3><?= @text('COM-SETTINGS-APP-CONFIGURATIONS') ?></h3>
+
   <fieldset>
-      <legend><?= @text('COM-SETTINGS-PLUGIN-CONFIGURATIONS') ?></legend>
+      <?= @helper('ui.params', array(
+        'entity' => $item,
+        'type' => 'plugin'
+      )) ?>
   </fieldset>
 
   <div class="form-actions">

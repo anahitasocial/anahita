@@ -1,0 +1,18 @@
+{
+    "name": "Anahita Invites",
+    "author": "Anahita",
+    "creationDate": "May 2016",
+    "copyright": "rmd Studio Inc., Peerglobe Technology Inc.",
+    "license": "GNU/GPLv3",
+    "authoremail": "rastin@anahitapolis.com",
+    "authorurl": "www.GetAnahita.com",
+    "version": "4.3",
+    "description": "Anahita Invites user plugin",
+    "install": {
+        "files": [
+            "invites.php"
+        ],
+        "type": "plugin",
+        "group": "user"
+    }
+}
