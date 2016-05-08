@@ -36,6 +36,12 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
     public function sorting($config = array())
     {
+        $config = new KConfig($config);
+        
+        $config->append(array(
+          'label' => 'LIB-AN-SORT-'.strtoupper($config['field'])
+        ));
+
         return $this->_render('sorting', $config);
     }
 

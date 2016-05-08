@@ -32,6 +32,9 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
                 'authorizer',
                 'locatable',
             ),
+            'aliases' => array(
+                'type' => 'folder',
+             ),
             'auto_generate' => true,
         ));
 

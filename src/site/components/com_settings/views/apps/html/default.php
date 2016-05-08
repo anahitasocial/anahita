@@ -10,19 +10,16 @@
 
 <div class="row">
   <div class="span2">
-      <?= @helper('ui.navigation', array('selected' => 'apps')) ?>
+      <?= @helper('ui.navigation', array('selected' => $view)) ?>
   </div>
   <div class="span10">
       <?= @helper('ui.header') ?>
-      <?= @helper('ui.sorting') ?>
 
       <table class="table table-hover">
           <thead>
-              <th><?= @text('LIB-AN-ENTITY-NAME') ?></th>
+              <th><?= @helper('ui.sorting', array('field' => 'name')) ?></th>
               <th><?= @text('LIB-AN-ENTITY-PACKAGE') ?></th>
-              <? if ($sort == 'ordering') : ?>
-              <th><?= @text('LIB-AN-ENTITY-ORDERING') ?></th>
-              <? endif; ?>
+              <th><?= @helper('ui.sorting', array('field' => 'ordering')) ?></th>
           </thead>
           <tbody data-behavior="orderable">
           <? foreach ($items as $item) : ?>
@@ -33,13 +30,14 @@
                 </a>
               </td>
               <td><?= @escape($item->package) ?></td>
-              <? if ($sort == 'ordering') : ?>
               <td>
-                <a class="js-orderable-handle" style="cursor: move">
+                <a
+                  class="js-orderable-handle"
+                  style="cursor: <?= ($sort == 'ordering') ? 'move' : 'not-allowed' ?>"
+                >
                   <i class="icon icon-resize-vertical"></i>
                 </a>
               </td>
-              <? endif; ?>
           </tr>
           <? endforeach; ?>
           </tbody>
