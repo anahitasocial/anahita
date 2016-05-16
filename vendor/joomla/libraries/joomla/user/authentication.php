@@ -145,6 +145,7 @@ class JAuthentication extends JObservable
 				break;
 			}
 		}
+
 		return $response;
 	}
 }
@@ -213,60 +214,6 @@ class JAuthenticationResponse extends JObject
 	 * @access public
 	 */
 	var $fullname 		= '';
-
-	/**
-	 * The End User's date of birth as YYYY-MM-DD. Any values whose representation uses
-	 * fewer than the specified number of digits should be zero-padded. The length of this
-	 * value MUST always be 10. If the End User user does not want to reveal any particular
-	 * component of this value, it MUST be set to zero.
-	 *
-	 * For instance, if a End User wants to specify that his date of birth is in 1980, but
-	 * not the month or day, the value returned SHALL be "1980-00-00".
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $birthdate	 	= '';
-
-	/**
-	 * The End User's gender, "M" for male, "F" for female.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $gender 		= '';
-
-	/**
-	 * UTF-8 string free text that SHOULD conform to the End User's country's postal system.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $postcode 		= '';
-
-	/**
-	 * The End User's country of residence as specified by ISO3166.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $country 		= '';
-
-	/**
-	 * End User's preferred language as specified by ISO639.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $language 		= '';
-
-	/**
-	 * ASCII string from TimeZone database
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $timezone 		= '';
 
 	/**
 	 * Constructor

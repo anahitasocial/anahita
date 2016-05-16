@@ -542,11 +542,11 @@ class JApplication extends JObject
 			$session->fork();
 			$this->_createSession($session->getId());
 
-			// Import the user plugin group
-			JPluginHelper::importPlugin('user');
-
 			// OK, the credentials are authenticated.  Lets fire the onLogin event
-			$results = $this->triggerEvent('onLoginUser', array((array)$response, $options));
+			$results = $this->triggerEvent('onLoginUser', array(
+										'user' => (array) $response,
+										'options' => $options)
+									);
 
 			/*
 			 * If any of the user plugins did not successfully complete the login routine
@@ -620,11 +620,10 @@ class JApplication extends JObject
 			$options['clientid'][] = $this->getClientId();
 		}
 
-		// Import the user plugin group
-		JPluginHelper::importPlugin('user');
-
-		// OK, the credentials are built. Lets fire the onLogout event
-		$results = $this->triggerEvent('onLogoutUser', array($parameters, $options));
+		$results = dispatch_plugin('user.onLogoutUser', array(
+									'user' => $parameters,
+									'options' => $options
+								));
 
 		/*
 		 * If any of the authentication plugins did not successfully complete
@@ -632,7 +631,7 @@ class JApplication extends JObject
 		 * should be done in the plugin as this provides the ability to provide
 		 * much more information about why the routine may have failed.
 		 */
-		if (!in_array(false, $results, true)) {
+		if (!$results) {
 			setcookie( JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, '/' );
 			return true;
 		}

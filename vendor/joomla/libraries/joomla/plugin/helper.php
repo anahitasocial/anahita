@@ -164,7 +164,7 @@ class JPluginHelper
 		{
 			$aid = $user->get('aid', 0);
 
-			$query = 'SELECT folder AS type, element AS name, meta AS '.$metaField
+			$query = 'SELECT folder AS type, element AS name, '.$metaField.' AS meta'
 				. ' FROM #__plugins'
 				. ' WHERE published >= 1'
 				. ' AND access <= ' . (int) $aid
@@ -172,7 +172,7 @@ class JPluginHelper
 		}
 		else
 		{
-			$query = 'SELECT folder AS type, element AS name, meta AS '.$metaField
+			$query = 'SELECT folder AS type, element AS name, '.$metaField.' AS meta'
 				. ' FROM #__plugins'
 				. ' WHERE published >= 1'
 				. ' ORDER BY ordering';

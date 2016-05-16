@@ -10,6 +10,8 @@
 class plgAuthenticationJoomla extends PlgAnahitaDefault
 {
 
+    public $name;
+
     /**
      * This method should handle any authentication and report back to the subject
      *
@@ -20,11 +22,8 @@ class plgAuthenticationJoomla extends PlgAnahitaDefault
      * @return  boolean
      * @since 1.5
      */
-    function onAuthenticate(KEvent $event)
+    function onAuthenticate(&$credentials, $options, &$response)
     {
-        $credentials = $event->credentials;
-        $options = $event->options;
-        $response = $event->response;
 
         jimport('joomla.user.helper');
 
@@ -68,7 +67,6 @@ class plgAuthenticationJoomla extends PlgAnahitaDefault
             {
                 // Bring this in line with the rest of the system
                 $user = JUser::getInstance($result->id);
-
                 $response->username = $user->username;
                 $response->email = $user->email;
                 $response->fullname = $user->name;
