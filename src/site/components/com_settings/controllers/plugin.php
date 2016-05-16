@@ -42,6 +42,15 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
         return parent::_actionGet($context);
     }
 
+    protected function _actionEdit(KCommandContext $context)
+    {
+        parent::_actionEdit($context);
+
+        if (!$context->getError()) {
+            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
+        }
+    }
+
     /**
     *   browse service
     *

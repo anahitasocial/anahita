@@ -32,6 +32,10 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
 
         $this->_updateMeta('components');
 
+        //legacy data clean up
+        dbexec('DELETE FROM `#__plugins` WHERE `element` = "invite" ');
+
+        //migrate meta data
         dbexec('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
 
         $this->_updateMeta('plugins');

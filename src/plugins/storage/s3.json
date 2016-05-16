@@ -8,31 +8,34 @@
 	"authorurl": "www.GetAnahita.com",
 	"version": "4.3",
 	"description": "Amazon S3 Storage",
+	"fields": [{
+		"type": "text",
+		"name": "folder",
+		"label": "The folder to store the data",
+		"default": "assets"
+	}, {
+		"name": "bucket",
+		"type": "text",
+		"label": "Bucket",
+		"description": "",
+		"size": "40",
+		"default": ""
+	}, {
+		"name": "access_key",
+		"type": "text",
+		"label": "Access  Key",
+		"description": "",
+		"size": "40",
+		"default": ""
+	}, {
+		"name": "secret_key",
+		"type": "text",
+		"label": "Secret Key",
+		"description": "",
+		"size": "60",
+		"default": ""
+	}],
 	"install": {
-		"fields": [{
-			"type": "input",
-			"name": "folder",
-			"label": "The folder to store the data",
-			"default": "assets"
-		}, {
-			"name": "bucket",
-			"type": "input",
-			"label": "Bucket",
-			"description": "",
-			"size": "40"
-		}, {
-			"name": "access_key",
-			"type": "input",
-			"label": "Access  Key",
-			"description": "",
-			"size": "40"
-		}, {
-			"name": "secret_key",
-			"type": "input",
-			"label": "Secret Key",
-			"description": "",
-			"size": "60"
-		}],
 		"files": [
 			"s3lib.php"
 		],

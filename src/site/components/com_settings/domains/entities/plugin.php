@@ -25,15 +25,25 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('plugins'),
             'attributes' => array(
-                'published' => array('default' => false),
+                  'id',
+                  'published' => array(
+                    'default' => 1
+                  ),
+                  'meta' => array(
+                      'type' => 'json',
+                      'default' => 'json',
+                      'write' => 'private'
+                  ),
             ),
             'behaviors' => array(
                 'orderable',
+                'dictionariable',
                 'authorizer',
                 'locatable',
             ),
             'aliases' => array(
                 'type' => 'folder',
+                'enabled' => 'published'
              ),
             'auto_generate' => true,
         ));

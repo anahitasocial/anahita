@@ -37,7 +37,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     public function sorting($config = array())
     {
         $config = new KConfig($config);
-        
+
         $config->append(array(
           'label' => 'LIB-AN-SORT-'.strtoupper($config['field'])
         ));
@@ -161,6 +161,12 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         return $this->_render('formfield_select', $config);
     }
 
+    /**
+    *  renders a custom developed form field
+    *
+    *   @param array attributes
+    *   @return html form field
+    */
     public function formfield_custom($config)
     {
       $config = new KConfig($config);
@@ -172,15 +178,32 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
        return $this->_render('formfield_custom', $config);
     }
 
+    /**
+    *  renders a component (app) or plugin paramters as form fields
+    *
+    *   @param array attributes
+    *   @return html form fields
+    */
     public function params($config = array())
     {
         $config = new KConfig($config);
 
         $config->append(array(
-            'type' => 'component',
-            'package' => $config->entity->option,
+            'type' => 'component'
         ));
 
+        $method = '_params'.ucfirst($config->type);
+        return $this->$method($config);
+    }
+
+    /**
+    *  renders a component's (app) paramters as form fields
+    *
+    *   @param array attributes
+    *   @return html form fields
+    */
+    protected function _paramsComponent($config)
+    {
         $entity = $config->entity;
         $package = $entity->option;
         $config_file_path = JPATH_SITE.DS.'components'.DS.$package.DS.'config.json';
@@ -189,11 +212,43 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
            return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
         }
 
-        $html = '';
         JFactory::getLanguage()->load($package);
         $app_config = json_decode(file_get_contents($config_file_path));
 
-        foreach ($app_config->fields as $field) {
+        return $this->_renderForm($app_config->fields, $entity);
+    }
+
+    /**
+    *  renders a plugin's paramters as form fields
+    *
+    *   @param array attributes
+    *   @return html form fields
+    */
+    protected function _paramsPlugin($config)
+    {
+        $entity = $config->entity;
+        $element = $entity->element;
+        $folder = $entity->folder;
+
+        $config_file_path = JPATH_SITE.DS.'plugins'.DS.$folder.DS.$element.'.json';
+
+        if(file_exists($config_file_path)) {
+            $plugin_config = json_decode(file_get_contents($config_file_path));
+            if(isset($plugin_config->fields)) {
+                return $this->_renderForm($plugin_config->fields, $entity);
+            } else {
+                return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
+            }
+        } else {
+            return JText::_("Couldn't find the {$element}.json file!");
+        }
+    }
+
+    protected function _renderForm($fields, $entity)
+    {
+        $html = '';
+
+        foreach ($fields as $field) {
 
             switch($field->type){
 
