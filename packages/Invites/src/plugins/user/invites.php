@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Invites user plugin.
  *
@@ -12,7 +10,7 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class plgUserInvites extends JPlugin
+class plgUserInvites extends PlgAnahitaDefault
 {
     /**
      * This method should handle any login logic and report back to the subject.
@@ -24,7 +22,7 @@ class plgUserInvites extends JPlugin
      *
      * @since	1.5
      */
-    public function onLoginUser($user, $options = array())
+    public function onLoginUser(KEvent $event)
     {
         KRequest::set('session.invite_token', null);
     }
@@ -39,9 +37,9 @@ class plgUserInvites extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $success, $message)
+    public function onAfterStoreUser(KEvent $event)
     {
-        if(!$isnew && $success){
+        if(!$event->isnew && $event->success){
             KRequest::set('session.invite_token', null);
         }
     }

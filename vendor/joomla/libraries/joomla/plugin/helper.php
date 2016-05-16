@@ -34,32 +34,23 @@ class JPluginHelper
 	 * @param string 	$plugin	The plugin name
 	 * @return mixed 	An array of plugin data objects, or a plugin data object
 	 */
-	static public function &getPlugin($type, $plugin = null)
+	static public function &getPlugin($type, $name = null)
 	{
-		$result = array();
+		$results = array();
 
 		$plugins = JPluginHelper::_load();
 
-		$total = count($plugins);
-		for($i = 0; $i < $total; $i++)
-		{
-			if(is_null($plugin))
-			{
-				if($plugins[$i]->type == $type) {
-					$result[] = $plugins[$i];
+		foreach($plugins as $plugin){
+			if (is_null($name)) {
+				if($plugin->type == $type) {
+					$results[] = $plugin;
 				}
+			} elseif($plugin->type === $type && $plugin->name === $name) {
+				 $results = $plugin;
 			}
-			else
-			{
-				if($plugins[$i]->type == $type && $plugins[$i]->name == $plugin) {
-					$result = $plugins[$i];
-					break;
-				}
-			}
-
 		}
 
-		return $result;
+		return $results;
 	}
 
 	/**
@@ -70,9 +61,9 @@ class JPluginHelper
 	 * @param string 	$plugin	The plugin name
 	 * @return	boolean
 	 */
-	static public function isEnabled( $type, $plugin = null )
+	static public function isEnabled( $type, $name = null )
 	{
-		$result = &JPluginHelper::getPlugin( $type, $plugin);
+		$result = &JPluginHelper::getPlugin( $type, $name);
 		return (!empty($result));
 	}
 
@@ -85,18 +76,16 @@ class JPluginHelper
 	* @param string 	$plugin	The plugin name
 	* @return boolean True if success
 	*/
-	static public function importPlugin($type, $plugin = null, $autocreate = true, $dispatcher = null)
+	static public function importPlugin($type, $name = null, $autocreate = true, $dispatcher = null)
 	{
 		$result = false;
-
 		$plugins = JPluginHelper::_load();
 
-		$total = count($plugins);
-		for($i = 0; $i < $total; $i++) {
-			if($plugins[$i]->type == $type && ($plugins[$i]->name == $plugin ||  $plugin === null)) {
-				JPluginHelper::_import( $plugins[$i], $autocreate, $dispatcher );
-				$result = true;
-			}
+		foreach ($plugins as $plugin) {
+				if ($plugin->type === $type /* && ($name === null || $plugin->name === $name) */) {
+					JPluginHelper::_import($plugin, $autocreate, $dispatcher);
+					$result = true;
+				}
 		}
 
 		return $result;
@@ -126,28 +115,21 @@ class JPluginHelper
 		{
 			if (file_exists( $path ))
 			{
-				//needed for backwards compatibility
-				global $_MAMBOTS, $mainframe;
-
 				jimport('joomla.plugin.plugin');
 				require_once( $path );
 				$paths[$path] = true;
 
 				if($autocreate)
 				{
-					// Makes sure we have an event dispatcher
-					if(!is_object($dispatcher)) {
-						$dispatcher = & JDispatcher::getInstance();
-					}
+					$className = 'plg'.ucfirst($plugin->type).ucfirst($plugin->name);
 
-					$className = 'plg'.$plugin->type.$plugin->name;
 					if(class_exists($className))
 					{
 						// load plugin parameters
 						$plugin =& JPluginHelper::getPlugin($plugin->type, $plugin->name);
 
 						// create the plugin
-						$instance = new $className($dispatcher, (array)($plugin));
+						$instance = new $className($dispatcher, (array) ($plugin));
 					}
 				}
 			}
@@ -174,11 +156,15 @@ class JPluginHelper
 		$db		=& JFactory::getDBO();
 		$user	=& JFactory::getUser();
 
+		//legacy field check
+		$tableFields = $db->getTableFields('#__plugins');
+		$metaField = isset($tableFields['#__plugins']['meta']) ? 'meta' : 'params';
+
 		if (isset($user))
 		{
 			$aid = $user->get('aid', 0);
 
-			$query = 'SELECT folder AS type, element AS name, params'
+			$query = 'SELECT folder AS type, element AS name, meta AS '.$metaField
 				. ' FROM #__plugins'
 				. ' WHERE published >= 1'
 				. ' AND access <= ' . (int) $aid
@@ -186,7 +172,7 @@ class JPluginHelper
 		}
 		else
 		{
-			$query = 'SELECT folder AS type, element AS name, params'
+			$query = 'SELECT folder AS type, element AS name, meta AS '.$metaField
 				. ' FROM #__plugins'
 				. ' WHERE published >= 1'
 				. ' ORDER BY ordering';
@@ -199,7 +185,13 @@ class JPluginHelper
 			return false;
 		}
 
+		foreach($plugins as $plugin){
+			if($plugin->meta != ''){
+					$meta = json_decode($plugin->meta, true);
+					$plugin->meta = new KConfig($meta);
+			}
+		}
+
 		return $plugins;
 	}
-
 }

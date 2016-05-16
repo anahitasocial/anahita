@@ -10,9 +10,8 @@
  *
  * @link     	http://www.GetAnahita.com
  */
-jimport('joomla.plugin.plugin');
 
-class plgUserAutoFollow extends JPlugin
+class plgUserAutoFollow extends PlgAnahitaDefault
 {
     /**
      * store user method.
@@ -24,20 +23,20 @@ class plgUserAutoFollow extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser(KEvent $event)
     {
-        if (!$succes) {
+        if (!$event->succes) {
             return false;
         }
 
         $person = KService::get('repos://site/people.person')
                   ->getQuery()
                   ->disableChain()
-                  ->userId($user['id'])
+                  ->userId($event->user['id'])
                   ->fetch();
 
         if ($person) {
-            $actor_ids = explode(',', $this->params->get('actor_ids'));
+            $actor_ids = explode(',', $this->params->actor_ids);
 
             foreach ($actor_ids as $actor_id) {
                 $actor_id = (int) $actor_id;

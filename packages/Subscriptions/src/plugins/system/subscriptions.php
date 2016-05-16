@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Subscription system plugins. Validates the viewer subscriptions.
  *
@@ -13,7 +11,7 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class PlgSystemSubscriptions extends JPlugin
+class PlgSystemSubscriptions extends PlgAnahitaDefault
 {
     /**
      * onAfterRender handler.

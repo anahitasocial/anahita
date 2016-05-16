@@ -32,9 +32,9 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
 
         $this->_updateMeta('components');
 
-        //dbexec('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
+        dbexec('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
 
-        //$this->_updateMeta('plugins');
+        $this->_updateMeta('plugins');
     }
 
    /**

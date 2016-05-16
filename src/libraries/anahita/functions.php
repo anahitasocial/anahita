@@ -607,11 +607,7 @@ function dispatch_plugin($plugin, $args = array(), $dispatcher = null)
         JPluginHelper::importPlugin($parts[0], isset($parts[1]) ? $parts[1] : null, true, $dispatcher);
     }
 
-    if ($dispatcher instanceof JDispatcher) {
-        return $dispatcher->trigger($event, $args);
-    } else {
-        return $dispatcher->dispatchEvent($event, $args);
-    }
+    return $dispatcher->dispatchEvent($event, $args);
 }
 
 /**

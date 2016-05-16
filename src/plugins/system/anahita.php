@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Anahita System Plugin.
  *
@@ -13,7 +11,7 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class PlgSystemAnahita extends JPlugin
+class PlgSystemAnahita extends PlgAnahitaDefault
 {
     /**
      * Constructor.
@@ -21,7 +19,7 @@ class PlgSystemAnahita extends JPlugin
      * @param mixed $subject Dispatcher
      * @param array $config  Array of configuration
      */
-    public function __construct($subject, $config = array())
+    public function __construct($dispatcher, $config = array())
     {
         // Command line fixes for Joomla
         if (PHP_SAPI === 'cli') {
@@ -65,9 +63,13 @@ class PlgSystemAnahita extends JPlugin
         }
 
         if (
+            /**
+            * @todo use native Anahita code to obtain caching from global config
+            */
             !JFactory::getApplication()->getCfg('caching') ||
             (
                 JFactory::getUser()->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR &&
+                // @todo incorporate this feature in the global settings
                 KRequest::get('get.clearapc', 'cmd')
             )
         ) {
@@ -87,23 +89,24 @@ class PlgSystemAnahita extends JPlugin
         JFactory::getLanguage()->load('overwrite', JPATH_ROOT);
         JFactory::getLanguage()->load('lib_anahita', JPATH_ROOT);
 
-        parent::__construct($subject, $config);
+        parent::__construct($dispatcher, $config);
     }
 
     /**
      * Remebers handling.
      */
-    public function onAfterInitialise()
+    public function onAfterDispatcherRun(KEvent $event)
     {
-        global $mainframe;
-
         $viewer = get_viewer();
 
         if (!$viewer->guest() && !$viewer->enabled) {
             KService::get('com://site/people.helper.person')->logout();
         }
 
-        // No remember me for admin
+        /**
+        * @todo remove this block after the admin back-end is removed
+        */
+        global $mainframe;
         if ($mainframe->isAdmin()) {
             return;
         }
@@ -172,7 +175,7 @@ class PlgSystemAnahita extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser(KEvent $event)
     {
         return true;
     }
@@ -184,9 +187,12 @@ class PlgSystemAnahita extends JPlugin
      *
      * @param 	array		holds the user data
      */
-    public function onBeforeDeleteUser($user)
+    public function onBeforeDeleteUser(KEvent $event)
     {
-        $person = KService::get('repos://site/people.person')->find(array('userId' => $user['id']));
+
+        $person = KService::get('repos://site/people.person')->find(array(
+                    'userId' => $event->user['id']
+                  ));
 
         if ($person) {
             KService::get('repos://site/components')
@@ -194,7 +200,9 @@ class PlgSystemAnahita extends JPlugin
             ->registerEventDispatcher(KService::get('anahita:event.dispatcher'));
 
             KService::get('anahita:event.dispatcher')
-            ->dispatchEvent('onDeleteActor', array('actor_id' => $person->id));
+            ->dispatchEvent('onDeleteActor', array(
+              'actor_id' => $person->id
+            ));
 
             $person->delete()->save();
         }

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -28,7 +28,7 @@
  */
 class ComApplicationDispatcher extends LibApplicationDispatcher
 {
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -59,9 +59,9 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Run the application dispatcher.
-     * 
+     *
      * @param KCommandContext $context Command chain context
-     * 
+     *
      * @return bool
      */
     protected function _actionRun(KCommandContext $context)
@@ -69,18 +69,16 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         //initialize the application and load system plugins
         $this->_application->initialise();
 
-        JPluginHelper::importPlugin('system');
-
-        $this->_application->triggerEvent('onAfterInitialise');
+        dispatch_plugin('system.onAfterDispatcherRun');
 
         $this->route();
     }
 
     /**
      * Dispatches the component.
-     * 
+     *
      * @param KCommandContext $context Command chain context
-     * 
+     *
      * @return bool
      */
     protected function _actionDispatch(KCommandContext $context)
@@ -116,7 +114,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Routers.
-     * 
+     *
      * @param KCommandContext $context Dispatcher context
      */
     protected function _actionRoute(KCommandContext $context)
@@ -134,10 +132,10 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Callback to handle both JError and Exception.
-     * 
+     *
      * @param KCommandContext $context Command chain context
      *                                 caller => KObject, data => mixed
-     * 
+     *
      * @return KException
      */
     protected function _actionException($context)

@@ -13,15 +13,16 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class plgSystemInvites extends JPlugin
+class plgSystemInvites extends PlgAnahitaDefault
 {
     /**
      * onAfterRender handler.
      */
     public function onAfterRoute()
     {
-        global $mainframe;
 
+        // @todo remove this block after admin back-end is removed
+        global $mainframe;
         if ($mainframe->isAdmin()) {
             return;
         }
