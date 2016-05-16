@@ -169,13 +169,15 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function formfield_custom($config)
     {
-      $config = new KConfig($config);
+        $config = new KConfig($config);
 
-      $config->append(array(
+        $config->append(array(
           'class' => 'input-block-level'
-      ));
+        ));
 
-       return $this->_render('formfield_custom', $config);
+        $config->name = 'meta['.$config->name.']';
+
+        return $this->_render('formfield_custom', $config);
     }
 
     /**

@@ -69,8 +69,8 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
 
             foreach ($fields as $field) {
                 $key = $field->name;
-                if(isset($property[$key])){
-                  $this->setValue($key, $property[$key]);
+                if(isset($property['meta'][$key])){
+                  $this->setValue($key, $property['meta'][$key]);
                 }
             }
         }

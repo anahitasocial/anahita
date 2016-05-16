@@ -13,7 +13,6 @@
  */
 class ComSettingsDomainEntityApp extends AnDomainEntityDefault
 {
-
     /**
      * Initializes the default configuration for the object.
      *
@@ -69,8 +68,8 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
 
             foreach ($fields as $field) {
                 $key = $field->name;
-                if(isset($property[$key])){
-                  $this->setValue($key, $property[$key]);
+                if(isset($property['meta'][$key])){
+                    $this->setValue($key, $property['meta'][$key]);
                 }
             }
         }

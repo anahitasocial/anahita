@@ -7,7 +7,7 @@
 
   <div class="controls">
     <select
-      name="<?= $name ?>"
+      name="meta[<?= $name ?>]"
       class="<?= $class ?>"
       id="<?= $id ?>"
       <?= ($disabled) ? 'disabled' : '' ?>

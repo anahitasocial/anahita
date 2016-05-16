@@ -7,7 +7,7 @@
 
   <div class="controls">
     <input
-      name="<?= $name ?>"
+      name="meta[<?= $name ?>]"
       id="<?= $id ?>"
       class="<?= $class ?>"
       value="<?= @escape($value) ?>"
