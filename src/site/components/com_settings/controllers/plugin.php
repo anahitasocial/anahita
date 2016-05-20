@@ -26,7 +26,8 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
         $config->append(array(
              'request' => array(
                 'sort' => 'name',
-                'limit' => 99
+                'limit' => 99,
+                'type' => ''
              ),
         ));
 
@@ -60,6 +61,10 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     protected function _actionBrowse(KCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
+
+        if ($this->type) {
+            $entities->where('folder', '=', $this->type);
+        }
 
         $entities->order($this->sort);
 

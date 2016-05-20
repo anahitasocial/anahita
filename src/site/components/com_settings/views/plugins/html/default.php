@@ -8,50 +8,60 @@
     <? endif; ?>
 <? endif; ?>
 
+<?
+  $url = array();
+
+  if($type){
+    $url['type'] = $type;
+  }
+
+  if($sort){
+    $url['sort'] = $sort;
+  }
+?>
+
 <div class="row">
   <div class="span2">
       <?= @helper('ui.navigation', array('selected' => $view)) ?>
   </div>
   <div class="span10">
       <?= @helper('ui.header') ?>
+      <?= @helper('ui.plugin_types', array(
+          'selected' => $type,
+          'params' => array(
+            'sort' => $sort
+          ),
+          'id' => 'plugin-type',
+          'label' => @text('COM-SETTINGS-PLUGIN-FILTER-TYPE')
+      )) ?>
 
       <table class="table table-hover">
           <thead>
-              <th><?= @helper('ui.sorting', array('field' => 'name')) ?></th>
+              <th><?= @helper('ui.sorting', array(
+                'field' => 'name',
+                'url' => $url
+              )) ?></th>
               <th>
                 <?= @helper('ui.sorting', array(
                   'field' => 'element',
-                  'label' => 'COM-SETTINGS-PLUGIN-ELEMENT'
+                  'label' => 'COM-SETTINGS-PLUGIN-ELEMENT',
+                  'url' => $url
                 )) ?>
               </th>
               <th>
                 <?= @helper('ui.sorting', array(
                   'field' => 'type',
-                  'label' => 'COM-SETTINGS-PLUGIN-TYPE'
-                )) ?>
+                  'label' => 'COM-SETTINGS-PLUGIN-TYPE',
+                  'url' => $url
+              )) ?>
               </th>
-              <th><?= @helper('ui.sorting', array('field' => 'ordering')) ?></th>
+              <th><?= @helper('ui.sorting', array(
+                'field' => 'ordering',
+                'url' => $url
+              )) ?></th>
           </thead>
           <tbody data-behavior="orderable">
-          <? foreach ($items as $item) : ?>
-          <tr>
-              <td style="width: 100%;">
-                <a class="js-edit" href="<?= @route($item->getURL().'&layout=edit') ?>">
-                  <?= @escape($item->name) ?>
-                </a>
-              </td>
-              <td><?= @escape($item->element) ?></td>
-              <td><?= @escape($item->type) ?></td>
-              <td>
-                <a
-                  class="js-orderable-handle"
-                  style="cursor: <?= ($sort == 'ordering') ? 'move' : 'not-allowed' ?>"
-                >
-                  <i class="icon icon-resize-vertical"></i>
-                </a>
-              </td>
-          </tr>
-          <? endforeach; ?>
+          <?= @template('list') ?>
           </tbody>
       </table>
   </div>

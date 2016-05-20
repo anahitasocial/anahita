@@ -39,8 +39,14 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         $config = new KConfig($config);
 
         $config->append(array(
-          'label' => 'LIB-AN-SORT-'.strtoupper($config['field'])
+          'label' => 'LIB-AN-SORT-'.strtoupper($config['field']),
+          'field' => '',
+          'url' => array()
         ));
+
+        if($config->field) {
+          $config->url['sort'] = $config->field;
+        }
 
         return $this->_render('sorting', $config);
     }
@@ -81,6 +87,29 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         }
 
         return $this->_render('navigation', $config);
+    }
+
+    /**
+    *   renders a list of plugin folders
+    */
+    public function plugin_types($config = array())
+    {
+        $config = new KConfig($config);
+
+        $config->append(array(
+          'selected' => '',
+          'name' => 'folder',
+          'label' => '',
+          'params' => array()
+        ));
+
+        $query = KService::get('repos:settings.plugin')->getQuery();
+
+        $query->order('name')->set('distinct', true);
+
+        $config->folders = $query->fetchValues('folder');
+
+        return $this->_render('plugin_types', $config);
     }
 
     /**

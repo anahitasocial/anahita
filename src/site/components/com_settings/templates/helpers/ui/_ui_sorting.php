@@ -3,7 +3,7 @@
 <? if ($sort == $field): ?>
 <u><?= @text($label) ?></u>
 <? else: ?>
-<a href="<?= @route('sort='.$field) ?>">
+<a href="<?= @route($url) ?>">
   <?= @text($label) ?>
 </a>
 <? endif; ?>
