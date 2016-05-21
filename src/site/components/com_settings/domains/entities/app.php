@@ -36,10 +36,10 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
                   ),
             ),
             'behaviors' => array(
-                'authorizer',
                 'orderable',
                 'dictionariable',
-                'locatable',
+                'authorizer',
+                'locatable'
             ),
             'aliases' => array(
                 'package' => 'option',

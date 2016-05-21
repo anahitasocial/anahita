@@ -10,35 +10,48 @@
 
  	'use strict';
 
-  var startIndex = null;
-  var url = null;
-
   $('[data-behavior="orderable"]').sortable({
       items: '> tr',
       handle: 'a.js-orderable-handle',
       axis: 'y',
       cursor: 'move',
-      start: function ( event, ui ) {
-          startIndex = ui.item.context.rowIndex;
-          url = ui.item.find('a.js-edit').attr('href');
-      },
       stop: function ( event, ui) {
 
-          var change = ui.item.context.rowIndex - startIndex;
+          var ordering = 0;
+          var url = ui.item.data('url') + '.json';
+          var direction = ui.position.top - ui.originalPosition.top;
+          var rows = $(event.target).children();
 
-          if (change > 0) {
-            change++;
+          // if direction > 0, item is moving up on the list
+          if( direction > 0 ) {
+              ordering = $(ui.item.context.previousSibling).data('ordering');
+          } else {
+              ordering = $(ui.item.context.nextSibling).data('ordering');
+          }
+
+          if ( ordering == 0 ) {
+             ordering = ui.item.context.rowIndex + 1;
           }
 
           $.ajax({
             method : 'post',
             url : url,
             data : {
-                ordering : change
+                ordering : ordering
             },
-            complete : function() {
-              startIndex = null;
-              url = null;
+            complete : function(response) {
+              $.ajax({
+                url: window.location.href,
+                data : {
+                    format : 'json'
+                },
+                success : function(response) {
+                    var entities = response.data;
+                    rows.each(function(index, row) {
+                        $(row).data('ordering', entities[index].ordering);
+                    });
+                }
+              });
             }
           });
       }

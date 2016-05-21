@@ -65,12 +65,14 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
         if(file_exists($config_file_path)) {
 
             $app_config = json_decode(file_get_contents($config_file_path));
-            $fields = $app_config->fields;
 
-            foreach ($fields as $field) {
-                $key = $field->name;
-                if(isset($property['meta'][$key])){
-                  $this->setValue($key, $property['meta'][$key]);
+            if(isset($app_config->fields)){
+                $fields = $app_config->fields;
+                foreach ($fields as $field) {
+                    $key = $field->name;
+                    if(isset($property['meta'][$key])){
+                      $this->setValue($key, $property['meta'][$key]);
+                    }
                 }
             }
         }

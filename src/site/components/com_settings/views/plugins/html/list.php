@@ -1,7 +1,7 @@
 <? defined('KOOWA') or die; ?>
 
 <? foreach ($items as $item) : ?>
-<tr>
+<tr data-ordering="<?= $item->ordering ?>" data-url="<?= @route($item->getURL()) ?>">
     <td style="width: 100%;">
       <a class="js-edit" href="<?= @route($item->getURL().'&layout=edit') ?>">
         <?= @escape($item->name) ?>

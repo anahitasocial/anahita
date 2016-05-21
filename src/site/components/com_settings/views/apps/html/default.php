@@ -22,24 +22,7 @@
               <th><?= @helper('ui.sorting', array('field' => 'ordering')) ?></th>
           </thead>
           <tbody data-behavior="orderable">
-          <? foreach ($items as $item) : ?>
-          <tr>
-              <td style="width: 100%;">
-                <a class="js-edit" href="<?= @route($item->getURL().'&layout=edit') ?>">
-                  <?= @escape($item->name) ?>
-                </a>
-              </td>
-              <td><?= @escape($item->package) ?></td>
-              <td>
-                <a
-                  class="js-orderable-handle"
-                  style="cursor: <?= ($sort == 'ordering') ? 'move' : 'not-allowed' ?>"
-                >
-                  <i class="icon icon-resize-vertical"></i>
-                </a>
-              </td>
-          </tr>
-          <? endforeach; ?>
+          <?= @template('list') ?>
           </tbody>
       </table>
   </div>

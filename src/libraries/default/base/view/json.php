@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -110,7 +110,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
 
     /**
      * Return the list.
-     * 
+     *
      * @return array
      */
     protected function _getList()
@@ -150,7 +150,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
 
     /**
      * Return the list.
-     * 
+     *
      * @return array
      */
     protected function _getItem()
@@ -171,7 +171,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
 
     /**
      * Serializes an item into an array.
-     * 
+     *
      * @return array
      */
     protected function _serializeToArray($item)
@@ -188,11 +188,11 @@ class LibBaseViewJson extends LibBaseViewAbstract
     }
 
     /**
-     * Gets the toolbar commands. This method checks if the view state has 
+     * Gets the toolbar commands. This method checks if the view state has
      * a toolbar.
-     * 
+     *
      * @param string $name The name of the commands
-     * 
+     *
      * @return array Return an array of commands
      */
     public function getToolbarCommands($name)
