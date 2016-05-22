@@ -75,8 +75,9 @@ class ComComponentsDomainBehaviorScopeable extends LibBaseDomainBehaviorEnableab
     public function getScopes()
     {
         $scopes = array();
+        $repositories = $this->getEntityRepositories($this->_scope_identifier);
 
-        foreach ($this->getEntityRepositories($this->_scope_identifier) as $repository) {
+        foreach ($repositories as $repository) {
             $scopes[] = array('repository' => $repository,'type' => $this->_scope_type);
         }
 

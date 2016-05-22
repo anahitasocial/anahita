@@ -140,7 +140,7 @@ class ComSettingsDomainEntitySetting extends KObject
     */
     public function setData(array $data)
     {
-        foreach($data as $key => $value){
+        foreach ($data as $key => $value) {
             $this->$key = $value;
         }
 

@@ -136,11 +136,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     {
         $assignment = $this->assignments->find(array('actortype' => (string) $identifier));
 
-        if ($assignment) {
-            return $assignment->access;
-        } else {
-            return self::ACCESS_ALWAYS;
-        }
+        return ($assignment) ? $assignment->access : self::ACCESS_ALWAYS;
     }
 
     /**
