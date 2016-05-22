@@ -23,20 +23,20 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE `#__nodes` CHANGE `meta` `meta` text DEFAULT NULL');
         dbexec('ALTER TABLE `#__edges` CHANGE `meta` `meta` text DEFAULT NULL');
         dbexec('ALTER TABLE `#__components` CHANGE `params` `meta` text DEFAULT NULL');
-        //dbexec('ALTER TABLE `#__components` DROP COLUMN `link`');
+        dbexec('ALTER TABLE `#__components` DROP COLUMN `link`');
         dbexec('ALTER TABLE `#__components` DROP COLUMN `menuid`');
-        //dbexec('ALTER TABLE `#__components` DROP COLUMN `parent`');
-        //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_link`');
-        //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_alt`');
-        //dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_img`');
+        dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_link`');
+        dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_alt`');
+        dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_img`');
 
         $this->_updateMeta('components');
 
         //legacy data clean up
         dbexec('DELETE FROM `#__plugins` WHERE `element` = "invite" ');
-
-        //migrate meta data
-        dbexec('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
+        dbexec('ALTER TABLE `#__plugins` DROP COLUMN `access`');
+        dbexec('ALTER TABLE `#__plugins` DROP COLUMN `client_id`');
+        dbexec('ALTER TABLE `#__plugins` DROP COLUMN `checked_out`');
+        dbexec('ALTER TABLE `#__plugins` DROP COLUMN `checked_out_time`');
 
         $this->_updateMeta('plugins');
     }

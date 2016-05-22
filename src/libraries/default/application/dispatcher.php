@@ -47,6 +47,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->_application = $config->application;
 
         if (PHP_SAPI == 'cli') {
+            $this->registerCallback('after.load', array($this, 'updateLegacyPluginsParams'));
             $this->registerCallback('after.load', array($this, 'prepclienv'));
         }
     }
@@ -87,11 +88,6 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->_application->triggerEvent('onAfterRoute');
 
         $url->query = KRequest::get('get', 'raw');
-
-        //globally set ItemId
-        global $Itemid;
-
-        $Itemid = KRequest::get('get.Itemid', 'int', 0);
 
         //set the request
         $this->getRequest()->append($url->query);
@@ -198,6 +194,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $_GET['format'] = 'json';
         KRequest::url()->format = 'json';
         KRequest::url()->setQuery($_GET);
+
         KService::get('com:plugins.helper')->import('cli');
         $this->_application->triggerEvent('onCli');
 
@@ -205,6 +202,24 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         if (!empty($file)) {
             KService::get('koowa:loader')->loadFile($file);
             exit(0);
+        }
+    }
+
+    /**
+    *  if the plugins table still has a legacy params field, rename it to meta
+    *  to be consistent with Anahita's convention
+    *  @todo remove this method in the future releases
+    */
+    public function updateLegacyPluginsParams()
+    {
+        //Renaming a legacy database table field otherwise cli would break
+        $db = KService::get('anahita:domain.store.database');
+        $pluginColumns = $db->getColumns('plugins');
+
+        if (isset($pluginColumns['params'])) {
+           $db->execute('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
+           print "Please run `db:migrate:up` one more time!\n";
+           exit(0);
         }
     }
 }
