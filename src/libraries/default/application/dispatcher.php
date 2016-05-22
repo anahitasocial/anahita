@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -35,7 +35,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
      */
     protected $_application;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -161,7 +161,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
     /**
      * Prepares the CLI mode.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionPrepclienv(KCommandContext $context)
@@ -198,9 +198,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $_GET['format'] = 'json';
         KRequest::url()->format = 'json';
         KRequest::url()->setQuery($_GET);
-
-        jimport('joomla.plugin.helper');
-        JPluginHelper::importPlugin('cli');
+        KService::get('com:plugins.helper')->import('cli');
         $this->_application->triggerEvent('onCli');
 
         //if there's a file then just load the file and exit

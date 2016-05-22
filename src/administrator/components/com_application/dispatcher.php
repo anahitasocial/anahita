@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -28,7 +28,7 @@
  */
 class ComApplicationDispatcher extends LibApplicationDispatcher
 {
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -73,7 +73,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         //initialize the application and load system plugins
         $this->_application->initialise();
 
-        JPluginHelper::importPlugin('system');
+        KService::get('com:plugins.helper')->import('system');
 
         $this->_application->triggerEvent('onAfterInitialise');
         $this->route();
@@ -81,9 +81,9 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Dispatches the component.
-     * 
+     *
      * @param KCommandContext $context Command chain context
-     * 
+     *
      * @return bool
      */
     protected function _actionDispatch(KCommandContext $context)
@@ -107,14 +107,14 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Renders the output.
-     * 
+     *
      * @param KCommandContext $context Command chain context
-     * 
+     *
      * @return bool
      */
     protected function _actionRender(KCommandContext $context)
     {
-        //old school of rendering for the backend for now        
+        //old school of rendering for the backend for now
         $component = $this->getComponent()->getIdentifier()->package;
 
         $template = $this->_application->getTemplate();
@@ -154,7 +154,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Router action.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionRoute(KCommandContext $context)
@@ -182,10 +182,10 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
     /**
      * Callback to handle both JError and Exception.
-     * 
+     *
      * @param KCommandContext $context Command chain context
      *                                 caller => KObject, data => mixed
-     * 
+     *
      * @return KException
      */
     protected function _actionException($context)

@@ -48,7 +48,7 @@ class JAuthentication extends JObservable
 	 */
 	function __construct()
 	{
-		$isLoaded = JPluginHelper::importPlugin('authentication');
+		$isLoaded = KService::get('com:plugins.helper')->import('authentication');
 
 		if (!$isLoaded) {
 			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JAuthentication::__construct: Could not load authentication libraries.'));
@@ -98,7 +98,7 @@ class JAuthentication extends JObservable
 		$auth = false;
 
 		// Get plugins
-		$plugins = JPluginHelper::getPlugin('authentication');
+		$plugins = KService::get('com:plugins.helper')->getPlugin('authentication');
 
 		// Create authencication response
 		$response = new JAuthenticationResponse();
@@ -112,9 +112,17 @@ class JAuthentication extends JObservable
 		 */
 		foreach ($plugins as $plugin)
 		{
-			$className = 'plg'.$plugin->type.$plugin->name;
+			$className = 'plg'.$plugin->type.$plugin->element;
 			if (class_exists( $className )) {
-				$plugin = new $className($this, (array)$plugin);
+
+				$plugin = new $className($this, array(
+					'id' => $plugin->id,
+					'name' => $plugin->name,
+					'type' => $plugin->type,
+					'element' => $plugin->element,
+					'meta' => $plugin->meta
+				));
+
 			} else {
 			    //the plugin class doesn't exists then skip
 			    continue;

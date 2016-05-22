@@ -604,7 +604,12 @@ function dispatch_plugin($plugin, $args = array(), $dispatcher = null)
     $dispatcher = pick($dispatcher, KService::get('anahita:event.dispatcher'));
 
     if (!empty($parts)) {
-        JPluginHelper::importPlugin($parts[0], isset($parts[1]) ? $parts[1] : null, true, $dispatcher);
+        KService::get('com:plugins.helper')->import(
+            $parts[0],
+            isset($parts[1]) ? $parts[1] : null,
+            true,
+            $dispatcher
+        );
     }
 
     return $dispatcher->dispatchEvent($event, $args);

@@ -28,7 +28,7 @@ class PlgContentfilterChain extends KObject
         if (!$_instance) {
             $_instance = new self(new KConfig(array('service_container' => KService::getInstance())));
             KService::set('plg:contentfilter.chain', $_instance);
-            JPluginHelper::importPlugin('contentfilter');
+            KService::get('com:plugins.helper')->import('contentfilter');
         }
 
         return $_instance;

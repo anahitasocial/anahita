@@ -168,12 +168,6 @@ class JApplication extends JObject
 		if(isset($options['language'])) {
 			$config->setValue('config.language', $options['language']);
 		}
-
-		// Set user specific editor
-		$user	 =& JFactory::getUser();
-		$editor	 = $user->getParam('editor', $this->getCfg('editor'));
-		$editor = JPluginHelper::isEnabled('editors', $editor) ? $editor : $this->getCfg('editor');
-		$config->setValue('config.editor', $editor);
 	}
 
 	/**

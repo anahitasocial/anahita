@@ -23,7 +23,7 @@ class PlgStorageDefault extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        JPluginHelper::importPlugin('storage');
+        KService::get('com:plugins.helper')->import('storage');
 
         if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
