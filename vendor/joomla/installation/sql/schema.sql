@@ -204,15 +204,6 @@ CREATE TABLE `#__session` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__templates_menu` (
-  `template` varchar(255) NOT NULL DEFAULT '',
-  `menuid` int(11) NOT NULL DEFAULT '0',
-  `client_id` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`menuid`,`client_id`,`template`)
-) ENGINE=InnoDB CHARACTER SET=utf8;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
