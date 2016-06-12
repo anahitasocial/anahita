@@ -38,4 +38,14 @@ class ComSettingsControllerActor extends ComBaseControllerResource
 
         return parent::_actionGet($context);
     }
+
+    protected function _actionEdit(KCommandContext $context)
+    {
+      $data = $context->data;
+
+      if ($app = $this->getService('repos:components.component')->fetch(array('id' => $data->app))) {
+          $app->setAssignmentForIdentifier($data->actor, $data->access);
+          $app->save();
+      }
+    }
 }

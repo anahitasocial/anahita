@@ -5,9 +5,9 @@
       <?= @helper('ui.navigation', array('selected' => 'actors')) ?>
   </div>
   <div class="span10">
-      <?= @helper('ui.header', array(
-        'description' => @text('COM-SETTINGS-HEADER-DESCRIPTION')
-      )) ?>
+      <?= @helper('ui.header') ?>
+
+      <p><?= @text('COM-SETTINGS-HEADER-ACTORS-DESCRIPTION') ?></p>
 
       <div class"an-entities">
       <? foreach ($items as $item) : ?>
@@ -26,7 +26,7 @@
 
                       <div class="controls">
                           <? $selected = $app->getAssignmentForIdentifier($item) ?>
-                          <select name="access" id="assignable-<?= $app->id ?>" class="input-block-level">
+                          <select name="access" id="assignable-<?= $app->id ?>" class="input-block-level autosubmit">
                               <? if ($app->getAssignmentOption() == ComComponentsDomainBehaviorAssignable::OPTION_OPTIONAL) : ?>
                               <option <?= ($selected === 0) ? 'selected' : '' ?> value="0">
                                 <?= @text('COM-SETTINGS-ACTOR-ASSIGNMENT-OPTIONAL') ?>

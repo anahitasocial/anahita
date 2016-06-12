@@ -108,9 +108,11 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     public function setAssignmentForIdentifier($identifier, $access = null)
     {
         if (is_array($identifier)) {
+
             foreach ($identifier as $identifier => $access) {
                 $this->setAssignmentForIdentifier($identifier, $access);
             }
+
         } else {
             //not a real identifier just the
             //the name part.
@@ -136,7 +138,9 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     {
         $assignment = $this->assignments->find(array('actortype' => (string) $identifier));
 
-        return ($assignment) ? $assignment->access : self::ACCESS_ALWAYS;
+        $access = ($assignment) ? $assignment->access : self::ACCESS_ALWAYS;
+
+        return (int) $access;
     }
 
     /**
