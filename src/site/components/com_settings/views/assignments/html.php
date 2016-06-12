@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsViewActorsHtml extends ComBaseViewHtml
+class ComSettingsViewAssignmentsHtml extends ComBaseViewHtml
 {
     /**
      * Default Layout.
@@ -24,16 +24,18 @@ class ComSettingsViewActorsHtml extends ComBaseViewHtml
                            ->order('name')
                            ->fetchSet();
 
-        $items = array();
+        $actors = array();
+
         foreach($components as $component) {
           $identifiers = $component->getEntityIdentifiers('ComActorsDomainEntityActor');
           foreach ($identifiers as $identifier) {
               $identifier->application = null;
-              $items[] = $identifier;
+              $actors[] = $identifier;
           }
         }
 
         $apps = array();
+
         foreach($components as $component) {
            if ($component->isAssignable()) {
               $apps[] = $component;
@@ -41,7 +43,7 @@ class ComSettingsViewActorsHtml extends ComBaseViewHtml
         }
 
         $this->set(array(
-            'items' => $items,
+            'actors' => $actors,
             'apps' => $apps
         ));
     }

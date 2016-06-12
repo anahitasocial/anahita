@@ -12,7 +12,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class ComSettingsControllerActor extends ComBaseControllerResource
+class ComSettingsControllerAssignment extends ComBaseControllerResource
 {
     /**
      * Initializes the options for the object.
@@ -32,7 +32,7 @@ class ComSettingsControllerActor extends ComBaseControllerResource
 
     protected function _actionGet(KCommandContext $context)
     {
-        $title = JText::_('COM-SETTINGS-HEADER-ACTORS');
+        $title = JText::_('COM-SETTINGS-HEADER-ASSIGNMENTS');
 
         $this->getToolbar('menubar')->setTitle($title);
 

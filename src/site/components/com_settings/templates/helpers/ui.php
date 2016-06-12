@@ -63,13 +63,13 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                   'label' => 'COM-SETTINGS-SYSTEM',
                   'url' => 'option=com_settings&view=settings'
               ),
-              'actors' => array(
-                  'label' => 'COM-SETTINGS-ACTORS',
-                  'url' => 'option=com_settings&view=actors'
-              ),
               'apps' => array(
                   'label' => 'COM-SETTINGS-APPS',
                   'url' => 'option=com_settings&view=apps'
+              ),
+              'assignments' => array(
+                  'label' => 'COM-SETTINGS-ASSIGNMENTS',
+                  'url' => 'option=com_settings&view=assignments'
               ),
               'plugins' => array(
                   'label' => 'COM-SETTINGS-PLUGINS',
