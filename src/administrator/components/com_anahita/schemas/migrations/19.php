@@ -42,6 +42,8 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE `#__plugins` DROP COLUMN `checked_out_time`');
 
         $this->_updateMeta('plugins');
+
+        dbexec('DROP TABLE IF EXISTS `#__templates_menu`');
     }
 
    /**

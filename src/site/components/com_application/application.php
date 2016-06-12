@@ -129,11 +129,9 @@ class JSite extends JApplication
     {
         if (!isset($this->_template)) {
             if (!KService::get('application.registry')->offsetExists('application-template')) {
-                //get the template
-                $template = KService::get('repos://site/templates.menu', array(
-                    'resources' => 'templates_menu',
-                    'identity_property' => 'menuid',
-                ))->getQuery()->clientId(0)->fetchValue('template');
+
+                $settings = new JConfig();
+                $template = (isset($settings->template)) ? $settings->template : 'shiraz';
 
                 KService::get('application.registry')->offsetSet('application-template', $template);
             }

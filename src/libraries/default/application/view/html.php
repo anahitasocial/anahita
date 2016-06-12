@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,19 +30,19 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 {
     /**
      * Page content to display.
-     * 
+     *
      * @return KException|string
      */
     public $content;
 
     /**
      * Template Parameters.
-     * 
+     *
      * KConfig
      */
     protected $_params;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -91,7 +91,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
     /**
      * Displays the template.
-     * 
+     *
      * @return string
      */
     public function display()
@@ -141,7 +141,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
     /**
      * Set the template parameters.
-     * 
+     *
      * @param array $params
      */
     public function setParams($params)
@@ -151,7 +151,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
     /**
      * Get template parameters.
-     * 
+     *
      * @return KConfig
      */
     public function getParams()

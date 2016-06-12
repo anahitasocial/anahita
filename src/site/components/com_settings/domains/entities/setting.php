@@ -44,6 +44,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'log_path' => '',
               'tmp_path' => '',
               'live_site' => 'https://',
+              'template' => 'shiraz',
 
               // caching
               'caching' => 0,
@@ -74,7 +75,7 @@ class ComSettingsDomainEntitySetting extends KObject
 
               //session
               'session_handler' => 'database',
-              'lifetime' => 1440,
+              'lifetime' => 1440
             );
 
             $this->config_file_path = JPATH_CONFIGURATION.DS.'configuration.php';
@@ -140,7 +141,9 @@ class ComSettingsDomainEntitySetting extends KObject
     */
     public function setData(array $data)
     {
-        foreach ($data as $key => $value) {
+        $meta = $data['meta'];
+
+        foreach ($meta as $key => $value) {
             $this->$key = $value;
         }
 
@@ -181,7 +184,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'smtphost',
               'db',
               'user',
-              'host',
+              'host'
             );
 
             $integers = array(
@@ -191,7 +194,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'caching',
               'cachetime',
               'lifetime',
-              'smtpauth',
+              'smtpauth'
             );
 
             $cmds = array(
@@ -199,6 +202,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'session_handler',
               'mailer',
               'smtpsecure',
+              'template'
             );
 
             $emails = array(

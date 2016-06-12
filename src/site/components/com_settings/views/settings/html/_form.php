@@ -14,6 +14,14 @@
           'id' => 'setting-sitename',
         )) ?>
 
+        <? //template ?>
+        <?= @helper('ui.templates', array(
+          'label' => @text('COM-SETTINGS-SYSTEM-TEMPLATE'),
+          'name' => 'template',
+          'value' => $setting->template,
+          'id' => 'setting-template',
+        )) ?>
+
         <? //log path ?>
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-SYSTEM-LOG-PATH'),

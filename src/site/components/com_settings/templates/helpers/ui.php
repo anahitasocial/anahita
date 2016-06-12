@@ -113,6 +113,37 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     }
 
     /**
+    *   renders a list of available templates
+    */
+    public function templates($config = array())
+    {
+          $config = new KConfig($config);
+
+          $exclude = array(
+            'base',
+            'system',
+            '.',
+            '..',
+            '.ds_store'
+          );
+          
+          $templates = array_diff(scandir(JPATH_THEMES), $exclude);
+
+          $options = array();
+
+          foreach($templates as $template){
+              $options[] = array(
+                'name' => KInflector::humanize($template),
+                'value' => $template
+              );
+          }
+
+          $config->options = $options;
+
+          return $this->formfield_select($config);
+    }
+
+    /**
     *   renders a text form field
     *
     *   @param array attributes
