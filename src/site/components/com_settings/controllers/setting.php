@@ -106,7 +106,7 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     public function fetchEntity(KCommandContext $context)
     {
         if (!$this->_entity) {
-            $this->_entity = $this->getService('com://site/settings.domain.entity.setting')->load();
+            $this->_entity = $this->getService('com:settings.domain.entity.setting')->load();
         }
 
         return $this->_entity;

@@ -5,12 +5,45 @@
       <?= @helper('ui.navigation', array('selected' => 'actors')) ?>
   </div>
   <div class="span10">
-      <?= @helper('ui.header') ?>
+      <?= @helper('ui.header', array(
+        'description' => @text('COM-SETTINGS-HEADER-DESCRIPTION')
+      )) ?>
 
       <div class"an-entities">
       <? foreach ($items as $item) : ?>
       <div class="an-entity">
-          <h4 class="entity-title"><?= ucfirst($item->identifier->package) ?></h4>
+          <h3 class="entity-title"><?= ucfirst($item->package) ?></h3>
+          <div class="entity-description">
+              <? foreach ($apps as $app) : ?>
+              <form action="<?= @route('view=actor') ?>">
+                  <input type="hidden" name="action" value="edit" />
+                  <input type="hidden" name="app" value="<?= $app->id ?>" />
+                  <input type="hidden" name="actor" value="<?= $item ?>" />
+                  <div class="control-group">
+                      <label class="control-label" for="assignable-<?= $app->id ?>">
+                        <?= $app->name  ?>
+                      </label>
+
+                      <div class="controls">
+                          <? $selected = $app->getAssignmentForIdentifier($item) ?>
+                          <select name="access" id="assignable-<?= $app->id ?>" class="input-block-level">
+                              <? if ($app->getAssignmentOption() == ComComponentsDomainBehaviorAssignable::OPTION_OPTIONAL) : ?>
+                              <option <?= ($selected === 0) ? 'selected' : '' ?> value="0">
+                                <?= @text('COM-SETTINGS-ACTOR-ASSIGNMENT-OPTIONAL') ?>
+                              </option>
+                              <? endif; ?>
+                              <option <?= ($selected === 1) ? 'selected' : '' ?> value="1">
+                                <?= @text('COM-SETTINGS-ACTOR-ASSIGNMENT-ALWAYS') ?>
+                              </option>
+                              <option <?= ($selected === 2) ? 'selected' : '' ?> value="2">
+                                <?= @text('COM-SETTINGS-ACTOR-ASSIGNMENT-NEVER') ?>
+                              </option>
+                          </select>
+                      </div>
+                  </div>
+              </form>
+              <? endforeach; ?>
+          </div>
       </div>
       <? endforeach; ?>
       </div>

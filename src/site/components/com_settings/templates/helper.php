@@ -27,7 +27,7 @@ class ComSettingsTemplateHelper extends KTemplateHelperAbstract
 
       if (!isset( $instances[$name] ))
       {
-          $app = KService::get('repos://site/settings.app')->find(array('package' => 'com_'.$name));
+          $app = KService::get('repos:settings.app')->find(array('package' => 'com_'.$name));
           $instances[$name] = json_decode($app->meta);
       }
 

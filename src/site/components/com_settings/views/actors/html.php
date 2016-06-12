@@ -18,18 +18,31 @@ class ComSettingsViewActorsHtml extends ComBaseViewHtml
      */
     protected function _layoutDefault()
     {
+        $components = $this->getService('repos:components.component')
+                           ->getQuery()
+                           ->enabled(true)
+                           ->order('name')
+                           ->fetchSet();
+
         $items = array();
+        foreach($components as $component) {
+          $identifiers = $component->getEntityIdentifiers('ComActorsDomainEntityActor');
+          foreach ($identifiers as $identifier) {
+              $identifier->application = null;
+              $items[] = $identifier;
+          }
+        }
 
-        $scopes = clone $this->getService('com://site/components.domain.entityset.scope');
-
-        foreach ($scopes as $scope) {
-           if ($scope->type === 'actor') {
-              $items[] = $scope;
+        $apps = array();
+        foreach($components as $component) {
+           if ($component->isAssignable()) {
+              $apps[] = $component;
            }
         }
 
         $this->set(array(
-            'items' => $items
+            'items' => $items,
+            'apps' => $apps
         ));
     }
 }
