@@ -60,21 +60,8 @@ class JSite extends JApplication
      */
     public function initialise($options = array())
     {
-        // if a language was specified it has priority
-        // otherwise use user or default language settings
-        if (empty($options['language'])) {
-            $user = &JFactory::getUser();
-            $lang = $user->getParam('language');
-
-            // Make sure that the user's language exists
-            if ($lang && JLanguage::exists($lang)) {
-                $options['language'] = $lang;
-            } else {
-                $params = JComponentHelper::getParams('com_languages');
-                $client = &JApplicationHelper::getClientInfo($this->getClientId());
-                $options['language'] = $params->get($client->name, 'en-GB');
-            }
-        }
+        $setting = new JConfig();
+        $options['language'] = $setting->language;
 
         // One last check to make sure we have something
         if (!JLanguage::exists($options['language'])) {
@@ -82,42 +69,6 @@ class JSite extends JApplication
         }
 
         parent::initialise($options);
-    }
-
-    /**
-     * Get the appliaction parameters.
-     *
-     * @param   string  The component option
-     *
-     * @return object The parameters object
-     *
-     * @since   1.5
-     */
-    public function &getParams($option = null)
-    {
-        static $params = array();
-
-        $hash = '__default';
-
-        if (!empty($option)) {
-            $hash = $option;
-        }
-
-        if (!isset($params[$hash])) {
-            // Get component parameters
-            if (!$option) {
-                $option = JRequest::getCmd('option');
-            }
-
-            $params[$hash] = &JComponentHelper::getParams($option);
-            $title = htmlspecialchars_decode($this->getCfg('sitename'));
-            $description = $this->getCfg('MetaDesc');
-
-            $params[$hash]->def('page_title', $title);
-            $params[$hash]->def('page_description', $description);
-        }
-
-        return $params[$hash];
     }
 
     /**

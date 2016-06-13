@@ -124,9 +124,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
             'system',
             '.',
             '..',
-            '.ds_store'
+            '.DS_Store'
           );
-          
+
           $templates = array_diff(scandir(JPATH_THEMES), $exclude);
 
           $options = array();
@@ -135,6 +135,36 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
               $options[] = array(
                 'name' => KInflector::humanize($template),
                 'value' => $template
+              );
+          }
+
+          $config->options = $options;
+
+          return $this->formfield_select($config);
+    }
+
+    /**
+    *   renders a list of available languages
+    */
+    public function languages($config = array())
+    {
+          $config = new KConfig($config);
+
+          $exclude = array(
+            '.',
+            '..',
+            '.DS_Store'
+          );
+
+          $path = JPATH_SITE.DS.'language';
+          $languages = array_diff(scandir($path), $exclude);
+          $options = array();
+
+          foreach($languages as $language){
+              $manifest = json_decode(file_get_contents($path.DS.$language.DS.$language.'.json'));
+              $options[] = array(
+                'name' => $manifest->name,
+                'value' => $language
               );
           }
 

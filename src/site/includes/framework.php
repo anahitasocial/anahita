@@ -47,17 +47,11 @@ jimport('joomla.application.application');
 jimport('joomla.application.router');
 jimport('joomla.user.user');
 jimport('joomla.environment.uri');
-jimport('joomla.html.html');
-jimport('joomla.html.parameter');
 jimport('joomla.utilities.utility');
-jimport('joomla.event.event');
-jimport('joomla.event.dispatcher');
 jimport('joomla.language.language');
 jimport('joomla.utilities.string');
-jimport('joomla.plugin.helper');
 
 require_once JPATH_CONFIGURATION.'/configuration.php';
-
 require_once JPATH_LIBRARIES.'/anahita/anahita.php';
 
 $config = new JConfig();

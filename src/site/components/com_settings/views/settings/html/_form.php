@@ -18,8 +18,16 @@
         <?= @helper('ui.templates', array(
           'label' => @text('COM-SETTINGS-SYSTEM-TEMPLATE'),
           'name' => 'template',
-          'value' => $setting->template,
+          'selected' => $setting->template,
           'id' => 'setting-template',
+        )) ?>
+
+        <? //language ?>
+        <?= @helper('ui.languages', array(
+          'label' => @text('COM-SETTINGS-SYSTEM-LANGUAGE'),
+          'name' => 'language',
+          'selected' => $setting->language,
+          'id' => 'setting-language',
         )) ?>
 
         <? //log path ?>

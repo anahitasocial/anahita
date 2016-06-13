@@ -45,6 +45,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'tmp_path' => '',
               'live_site' => 'https://',
               'template' => 'shiraz',
+              'language' => 'en-GB',
 
               // caching
               'caching' => 0,
@@ -202,7 +203,8 @@ class ComSettingsDomainEntitySetting extends KObject
               'session_handler',
               'mailer',
               'smtpsecure',
-              'template'
+              'template',
+              'language'
             );
 
             $emails = array(
