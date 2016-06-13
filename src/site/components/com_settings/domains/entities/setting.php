@@ -83,7 +83,7 @@ class ComSettingsDomainEntitySetting extends KObject
     }
 
     /**
-     * ReLoad the entity properties from storage. Overriding any changes.
+     * Load system setting attributes
      *
      * @param array $properties An array of properties.
      *
@@ -101,7 +101,7 @@ class ComSettingsDomainEntitySetting extends KObject
     }
 
     /**
-     * Forwards the call to the space commit entities.
+     * Save system setting attributes
      *
      * @return ComSettingsDomainEntitySetting entity object
      */
