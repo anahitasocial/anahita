@@ -83,7 +83,9 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
         $items = array();
 
         foreach($templates as $template) {
-            $items[] = $this->getService('com:settings.domain.entity.template')->load($template);
+            if ($item = $this->getService('com:settings.domain.entity.template')->load($template)) {
+               $items[] = $item;
+            }
         }
 
         $this->getView()->set('items', $items);
@@ -97,7 +99,7 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     */
     protected function _actionRead(KCommandContext $context)
     {
-        $this->getView()->set('setting', $this->_entity);
+        $this->getView()->set('item', $this->_entity);
     }
 
     /**
@@ -131,7 +133,9 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     public function fetchEntity(KCommandContext $context)
     {
         if (!$this->_entity) {
-            $this->_entity = $this->getService('com:settings.domain.entity.template')->load($this->template);
+            if ($entity = $this->getService('com:settings.domain.entity.template')->load($this->alias)) {
+                $this->_entity = $entity;
+            }
         }
 
         return $this->_entity;

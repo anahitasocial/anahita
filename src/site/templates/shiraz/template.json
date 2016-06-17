@@ -2,7 +2,7 @@
     "name": "Shiraz",
     "version": "4.3.0",
     "creationDate": "October 2016",
-    "author": "Anahitapolis.com",
+    "author": "GetAnahita.com",
     "authorEmail": "rastin@getanahita.com",
     "authorUrl": "https://www.GetAnahita.com",
     "copyright": "Copyright 2016 - rmdStudio Inc. and Peerglobe Technology Inc.",
@@ -139,6 +139,6 @@
             "html",
             "emails"
         ],
-        "file": "template_thumbnail.png"
+        "file": "thumbnail.png"
     }
 }

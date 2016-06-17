@@ -16,7 +16,7 @@ class ComSettingsDomainEntityTemplate extends KObject
     /**
     * @param entity atributes
     */
-    protected $attributes;
+    protected $_attributes;
 
     /**
      * Initializes the default configuration for the object.
@@ -27,16 +27,18 @@ class ComSettingsDomainEntityTemplate extends KObject
      */
     protected function _initialize(KConfig $config)
     {
-        $this->attributes = array(
-            'name' => '',
-            'version' => '',
+        $this->_attributes = array(
+            'name' => 'Untitled',
+            'alias' => null,
+            'thumbnail' => null,
+            'version' => '0.0.0',
             'creationDate' => '',
             'author' => '',
             'authorEmail' => '',
             'authorUrl' => '',
             'copyright' => '',
             'license' => '',
-            'description' => '',
+            'description' => '...',
             'fields' => array()
         );
     }
@@ -54,11 +56,14 @@ class ComSettingsDomainEntityTemplate extends KObject
 
         if (file_exists($path)) {
 
+            $this->alias = $template;
+            $this->thumbnail = KRequest::root().'/templates/'.$template.'/thumbnail.png';
+
             $manifest = json_decode(file_get_contents($path));
 
-            foreach ($this->attributes as $key=>$value) {
+            foreach ($this->_attributes as $key => $value) {
                 if (array_key_exists($key, $manifest)) {
-                    $this->attributes[$key] = $manifest->$key;
+                    $this->$key = $manifest->$key;
                 }
             }
 
@@ -66,6 +71,13 @@ class ComSettingsDomainEntityTemplate extends KObject
         }
 
         return false;
+    }
+
+    public function isDefault()
+    {
+        $config = new JConfig();
+
+        return $config->template == $this->alias;
     }
 
     /**
@@ -98,7 +110,7 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     public function __get($name)
     {
-        return $this->attributes[$name];
+        return $this->_attributes[$name];
     }
 
     /**
@@ -111,8 +123,8 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     public function __set($name, $value)
     {
-        $this->attributes[$name] = $value;
-        
+        $this->_attributes[$name] = $value;
+
         return $this;
     }
 }
