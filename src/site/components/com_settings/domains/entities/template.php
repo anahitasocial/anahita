@@ -19,11 +19,6 @@ class ComSettingsDomainEntityTemplate extends KObject
     protected $attributes;
 
     /**
-    * @param path to the configuration file
-    */
-    protected $config_file_path;
-
-    /**
      * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -32,21 +27,45 @@ class ComSettingsDomainEntityTemplate extends KObject
      */
     protected function _initialize(KConfig $config)
     {
-
+        $this->attributes = array(
+            'name' => '',
+            'version' => '',
+            'creationDate' => '',
+            'author' => '',
+            'authorEmail' => '',
+            'authorUrl' => '',
+            'copyright' => '',
+            'license' => '',
+            'description' => '',
+            'fields' => array()
+        );
     }
 
     /**
-     * ReLoad the entity properties from storage. Overriding any changes.
+     * Load the entity properties from template json file
      *
-     * @param array $properties An array of properties.
+     * @param string unique identifier
      *
      * @return ComSettingsDomainEntitySetting entity object
      */
     public function load($template)
     {
-        
+        $path = JPATH_THEMES.DS.$template.DS.'template.json';
 
-        return $this;
+        if (file_exists($path)) {
+
+            $manifest = json_decode(file_get_contents($path));
+
+            foreach ($this->attributes as $key=>$value) {
+                if (array_key_exists($key, $manifest)) {
+                    $this->attributes[$key] = $manifest->$key;
+                }
+            }
+
+            return $this;
+        }
+
+        return false;
     }
 
     /**
@@ -92,6 +111,8 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     public function __set($name, $value)
     {
+        $this->attributes[$name] = $value;
+        
         return $this;
     }
 }

@@ -83,7 +83,7 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
         $items = array();
 
         foreach($templates as $template) {
-            $items[] = clone $this->getService('com:settings.domain.entity.template')->load($template);
+            $items[] = $this->getService('com:settings.domain.entity.template')->load($template);
         }
 
         $this->getView()->set('items', $items);
