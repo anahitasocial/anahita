@@ -32,14 +32,14 @@ class ComSettingsDomainEntityTemplate extends KObject
             'alias' => null,
             'thumbnail' => null,
             'version' => '0.0.0',
-            'creationDate' => '',
+            'createdOn' => '',
             'author' => '',
             'authorEmail' => '',
             'authorUrl' => '',
             'copyright' => '',
             'license' => '',
             'description' => '...',
-            'fields' => array()
+            'params' => array()
         );
     }
 
@@ -52,19 +52,25 @@ class ComSettingsDomainEntityTemplate extends KObject
      */
     public function load($template)
     {
-        $path = JPATH_THEMES.DS.$template.DS.'template.json';
+        $path['manifest'] = JPATH_THEMES.DS.$template.DS.'template.json';
 
-        if (file_exists($path)) {
+        if (file_exists($path['manifest'])) {
 
             $this->alias = $template;
             $this->thumbnail = KRequest::root().'/templates/'.$template.'/thumbnail.png';
 
-            $manifest = json_decode(file_get_contents($path));
+            $manifest = json_decode(file_get_contents($path['manifest']));
 
             foreach ($this->_attributes as $key => $value) {
                 if (array_key_exists($key, $manifest)) {
                     $this->$key = $manifest->$key;
                 }
+            }
+
+            $path['params'] = JPATH_THEMES.DS.$template.DS.'params.ini';
+
+            if (file_exists($path['params'])) {
+                $this->params = parse_ini_file($path['params']);
             }
 
             return $this;
@@ -90,6 +96,11 @@ class ComSettingsDomainEntityTemplate extends KObject
         return $this;
     }
 
+    public function isDescribable()
+    {
+        return false;
+    }
+
     /**
     * method to set an array of data to attributes
     *
@@ -100,6 +111,31 @@ class ComSettingsDomainEntityTemplate extends KObject
     public function setData(array $data)
     {
         return $this;
+    }
+
+    /**
+    * Get a param value
+    *
+    * @param string key
+    *
+    * @return mixed value
+    */
+    public function getValue($name)
+    {
+       return $this->params[$name];
+    }
+
+    /**
+    * Set a param value
+    *
+    * @param string key
+    * @param mixed value
+    *
+    * @return null
+    */
+    public function setValue($name, $value)
+    {
+       $this->params[$name] = $value;
     }
 
     /**

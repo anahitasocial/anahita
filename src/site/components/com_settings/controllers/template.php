@@ -79,11 +79,11 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
           '.DS_Store'
         );
 
-        $templates = array_diff(scandir(JPATH_THEMES), $exclude);
+        $aliases = array_diff(scandir(JPATH_THEMES), $exclude);
         $items = array();
 
-        foreach($templates as $template) {
-            if ($item = $this->getService('com:settings.domain.entity.template')->load($template)) {
+        foreach ($aliases as $alias) {
+            if ($item = $this->getService('com:settings.domain.entity.template')->load($alias)) {
                $items[] = $item;
             }
         }

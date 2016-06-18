@@ -9,7 +9,7 @@
 
       <div class="an-entities">
           <? foreach($items as $item): ?>
-          <div class="an-entity <?= ($item->isDefault()) ? 'highlight' : ''; ?>">
+          <div class="an-entity <?= ($item->isDefault()) ? 'an-highlight' : ''; ?>">
               <div class="clearfix">
                   <div class="entity-portrait-square">
                       <a href="<?= @route('view=template&layout=edit&alias='.$item->alias) ?>">
@@ -32,7 +32,7 @@
                           <ul class="an-meta inline">
                               <li><?= @text('COM-SETTINGS-TEMPLATES-VERSION') ?>: <?= $item->version ?></li>
                               <li>
-                                <?= @text('COM-SETTINGS-TEMPLATES-CREATED-BY') ?>:
+                                <?= @text('COM-SETTINGS-TEMPLATES-AUTHOR') ?>:
                                 <a href="<?= $item->authorUrl ?>" target="_blank">
                                   <?= $item->author ?>
                                 </a>

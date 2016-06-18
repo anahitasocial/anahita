@@ -336,6 +336,27 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         }
     }
 
+    /**
+    *  renders a template's paramters as form fields
+    *
+    *   @param array attributes
+    *   @return html form fields
+    */
+    protected function _paramsTemplate($config)
+    {
+        $entity = $config->entity;
+        $template = $entity->alias;
+        $config_file_path = JPATH_THEMES.DS.$template.DS.'template.json';
+
+        if(!file_exists($config_file_path)) {
+           return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
+        }
+
+        $template_config = json_decode(file_get_contents($config_file_path));
+
+        return $this->_renderForm($template_config->fields, $entity);
+    }
+
     protected function _renderForm($fields, $entity)
     {
         $html = '';
