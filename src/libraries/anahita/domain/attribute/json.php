@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * JSON Class to represent a JSON object.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -32,12 +32,13 @@ class AnDomainAttributeJson extends KConfig implements AnDomainAttributeInterfac
      * Instantiate the json attribute with JSON values.
      *
      * @param string $data The string represntation of a json value
-     * 
+     *
      * @return AnDomainAttributeJson
      */
     public function unserialize($data)
     {
         $value = @json_decode($data, true);
+        
         if (!$value) {
             $value = array();
         }
@@ -47,7 +48,7 @@ class AnDomainAttributeJson extends KConfig implements AnDomainAttributeInterfac
 
     /**
      * Return a string date.
-     * 
+     *
      * @return string
      */
     public function serialize()

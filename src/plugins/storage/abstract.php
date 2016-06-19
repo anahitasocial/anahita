@@ -28,15 +28,11 @@ abstract class PlgStorageAbstract extends KObject
      */
     public function __construct($dispatcher = null,  $config = array())
     {
-        if (isset($config['params'])) {
-            $config = (array) JRegistryFormat::getInstance('ini')->stringToObject($config['params']);
-        }
-
         $config = new KConfig($config);
 
         parent::__construct($config);
 
-        $this->_params = $config;
+        $this->_params = $config->meta;
 
         KService::set('plg:storage.default', $this);
     }

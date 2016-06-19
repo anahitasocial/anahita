@@ -6,14 +6,14 @@
 		<?php $input = $label ?>
 		<?php $label = null?>
 	<?php endif;?>
-	<?php if ($label) : ?>	
+	<?php if ($label) : ?>
 		<?php if (strpos($label, '<label') === 0) : ?>
 			<?= $label ?>
 		<?php else :?>
 		 	<label class="control-label" for="<?= $label ?>"><?= @text($label) ?></label>
 		<?php endif;?>
 	<?php endif;?>
-	<?php 
+	<?php
         $input_class = 'input';
         if ($input instanceof LibBaseTemplateHelperHtmlElement) {
             $add_on = '';
@@ -28,4 +28,4 @@
     ?>
 	<div class="controls <?= $input_class ?>"><?= $input ?></div>
 </div>
-<?php endforeach;?> 
+<?php endforeach;?>

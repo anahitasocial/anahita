@@ -1,0 +1,28 @@
+{
+    "name": "User - Anahita Auto Follow Actor",
+    "author": "Anahita Social Networking Platform and Framework",
+    "copyright": "2013 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.",
+    "license": "GPL3",
+    "authoremail": "rastin@anahitapolis.com",
+    "authorurl": "www.GetAnahita.com",
+    "description": "Allows a site admin to set a list of actors to be automatically followed by the new registered members",
+    "version": "4.3",
+    "install": {
+        "files": [
+            "autofollow.php"
+        ],
+        "type": "plugin",
+        "group": "user"
+    },
+    "fields": [
+        {
+            "name": "actor_ids",
+            "type": "textarea",
+            "rows": "3",
+            "cols": "40",
+            "default": "",
+            "label": "Actor IDs",
+            "description": "Enter a comma seperated list of actor ids!"
+        }
+    ]
+}

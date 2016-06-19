@@ -48,7 +48,7 @@ class JAuthentication extends JObservable
 	 */
 	function __construct()
 	{
-		$isLoaded = JPluginHelper::importPlugin('authentication');
+		$isLoaded = KService::get('com:plugins.helper')->import('authentication');
 
 		if (!$isLoaded) {
 			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JAuthentication::__construct: Could not load authentication libraries.'));
@@ -98,7 +98,7 @@ class JAuthentication extends JObservable
 		$auth = false;
 
 		// Get plugins
-		$plugins = JPluginHelper::getPlugin('authentication');
+		$plugins = KService::get('com:plugins.helper')->getPlugin('authentication');
 
 		// Create authencication response
 		$response = new JAuthenticationResponse();
@@ -112,9 +112,17 @@ class JAuthentication extends JObservable
 		 */
 		foreach ($plugins as $plugin)
 		{
-			$className = 'plg'.$plugin->type.$plugin->name;
+			$className = 'plg'.$plugin->type.$plugin->element;
 			if (class_exists( $className )) {
-				$plugin = new $className($this, (array)$plugin);
+
+				$plugin = new $className($this, array(
+					'id' => $plugin->id,
+					'name' => $plugin->name,
+					'type' => $plugin->type,
+					'element' => $plugin->element,
+					'meta' => $plugin->meta
+				));
+
 			} else {
 			    //the plugin class doesn't exists then skip
 			    continue;
@@ -145,6 +153,7 @@ class JAuthentication extends JObservable
 				break;
 			}
 		}
+
 		return $response;
 	}
 }
@@ -213,60 +222,6 @@ class JAuthenticationResponse extends JObject
 	 * @access public
 	 */
 	var $fullname 		= '';
-
-	/**
-	 * The End User's date of birth as YYYY-MM-DD. Any values whose representation uses
-	 * fewer than the specified number of digits should be zero-padded. The length of this
-	 * value MUST always be 10. If the End User user does not want to reveal any particular
-	 * component of this value, it MUST be set to zero.
-	 *
-	 * For instance, if a End User wants to specify that his date of birth is in 1980, but
-	 * not the month or day, the value returned SHALL be "1980-00-00".
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $birthdate	 	= '';
-
-	/**
-	 * The End User's gender, "M" for male, "F" for female.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $gender 		= '';
-
-	/**
-	 * UTF-8 string free text that SHOULD conform to the End User's country's postal system.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $postcode 		= '';
-
-	/**
-	 * The End User's country of residence as specified by ISO3166.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $country 		= '';
-
-	/**
-	 * End User's preferred language as specified by ISO639.
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $language 		= '';
-
-	/**
-	 * ASCII string from TimeZone database
-	 *
-	 * @var fullname string
-	 * @access public
-	 */
-	var $timezone 		= '';
 
 	/**
 	 * Constructor

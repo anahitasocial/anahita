@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,12 +30,12 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 {
     /**
      * A property whose value can be used as scope.
-     * 
+     *
      * @var array
      */
     protected $_scopes;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -71,7 +71,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 
     /**
      * Before Update.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _beforeEntityUpdate(KCommandContext $context)
@@ -107,7 +107,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 
     /**
      * Set the order before inserting.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _beforeEntityInsert(KCommandContext $context)
@@ -118,7 +118,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 
     /**
      * Reorder After Update.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterEntityUpdate(KCommandContext $context)
@@ -130,7 +130,7 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 
     /**
      * Reorder After Delete.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterEntityDelete(KCommandContext $context)
@@ -140,9 +140,9 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
 
     /**
      * Return the query after applying the scope.
-     * 
-     * @param AnDomainEntityAbstract $entity The  entity 
-     * 
+     *
+     * @param AnDomainEntityAbstract $entity The  entity
+     *
      * @return AnDomainQuery
      */
     public function getScopedQuery($entity)

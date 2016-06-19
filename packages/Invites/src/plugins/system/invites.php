@@ -13,15 +13,16 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class plgSystemInvites extends JPlugin
+class plgSystemInvites extends PlgAnahitaDefault
 {
     /**
      * onAfterRender handler.
      */
     public function onAfterRoute()
     {
-        global $mainframe;
 
+        // @todo remove this block after admin back-end is removed
+        global $mainframe;
         if ($mainframe->isAdmin()) {
             return;
         }
@@ -31,8 +32,8 @@ class plgSystemInvites extends JPlugin
             KRequest::get('get.option', 'string', null) == 'com_people' &&
             get_viewer()->guest()
         ) {
-    		    $personConfig = &JComponentHelper::getParams('com_people');
-    		    $personConfig->set('allowUserRegistration', true);
+            $personConfig = KService::get('com://site/settings.template.helper')->getMeta('people');
+    		    $personConfig->allowUserRegistration = true;
     		}
     }
 }

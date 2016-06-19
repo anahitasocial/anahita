@@ -1,0 +1,16 @@
+{
+    "install": {
+        "name": "Invites",
+        "author": "Anahita Social Networking Platform and Framework",
+        "copyright": "(C) 2013 rmdStudio, Peerglobe Technology",
+        "license": "http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL",
+        "authoremail": "info@anahitapolis.com",
+        "authorurl": "www.Anahitapolis.com",
+        "description": "Enables people to invite their friends and followers from other social networks or find the ones who have already joined this social network.",
+        "_type": "component",
+        "_version": "##BUILD_PLATFORM_VERSION##",
+        "_enforce": "1",
+        "_social_app": "1",
+        "_method": "upgrade"
+    }
+}

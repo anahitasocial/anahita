@@ -375,7 +375,7 @@ class JUser extends JObject
 			if ( strlen($password) > 100 )
 			{
 				$password = substr( $password, 0, 100 );
-				$this->set( 'password', $password );
+				$this->set('password', $password );
 			}
 		}
 		else
@@ -442,29 +442,29 @@ class JUser extends JObject
 		$table 	=& $this->getTable();
 		$this->params = $this->_params->toString();
 		$table->bind($this->getProperties());
-		
+
 		// Check and store the object.
-		if(!$table->check()) 
+		if(!$table->check())
 		{
 			$this->setError($table->getError());
 			return false;
 		}
-		
+
 		//are we creating a new user
 		$isnew = !$this->id;
-		
+
 		// If we aren't allowed to create new users return
 		if($isnew && $updateOnly)
 			return false;
 
 		// Get the old user
 		$old = new JUser($this->id);
-		
-		// Fire the onBeforeStoreUser event.
-		JPluginHelper::importPlugin( 'user' );
-		$dispatcher =& JDispatcher::getInstance();
-		$dispatcher->trigger( 'onBeforeStoreUser', array($old->getProperties(), $isnew));
-		
+
+		dispatch_plugin('user.onBeforeStoreUser', array(
+			'user' => $old->getProperties(),
+			'isNew' => $isnew
+		));
+
 		//Store the user data in the database
 		if (!$result = $table->store()) {
 			$this->setError($table->getError());
@@ -476,7 +476,12 @@ class JUser extends JObject
 		}
 
 		//Fire the onAftereStoreUser event
-		$dispatcher->trigger( 'onAfterStoreUser', array( $this->getProperties(), $isnew, $result, $this->getError()));
+		dispatch_plugin('user.onAfterStoreUser', array(
+			'user' => $this->getProperties(),
+			'isNew' => $isnew,
+			'result' => $result,
+			'message' => $this->getError()
+		));
 
 		return $result;
 	}
@@ -489,13 +494,12 @@ class JUser extends JObject
 	 * @return 	boolean 			True on success
 	 * @since 1.5
 	 */
-	function delete( )
+	function delete()
 	{
-		JPluginHelper::importPlugin( 'user' );
 
-		//trigger the onBeforeDeleteUser event
-		$dispatcher =& JDispatcher::getInstance();
-		$dispatcher->trigger( 'onBeforeDeleteUser', array( $this->getProperties() ) );
+		dispatch_plugin('user.onBeforeDeleteUser', array(
+			'user' => $this->getProperties()
+		));
 
 		// Create the user table object
 		$table 	=& $this->getTable();
@@ -506,7 +510,12 @@ class JUser extends JObject
 		}
 
 		//trigger the onAfterDeleteUser event
-		$dispatcher->trigger( 'onAfterDeleteUser', array( $this->getProperties(), $result, $this->getError()) );
+		dispatch_plugin('user.onAfterDeleteUser', array(
+			'user' => $this->getProperties(),
+			'result' => $result,
+			'message' => $this->getError()
+		));
+
 		return $result;
 
 	}

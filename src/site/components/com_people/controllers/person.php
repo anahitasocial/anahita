@@ -13,6 +13,7 @@
 class ComPeopleControllerPerson extends ComActorsControllerDefault
 {
     protected $_allowed_user_types;
+
     /**
      * Constructor.
      *

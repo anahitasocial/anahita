@@ -51,6 +51,9 @@ module.exports = function ( grunt ) {
 
                 'src/media/com_locations/js/min/nearby.google.min.js' :
                 ['src/media/com_locations/js/nearby.google.js'],
+
+                'src/media/com_settings/js/min/orderable.min.js' :
+                ['src/media/com_settings/js/orderable.js'],
             }
         },
 

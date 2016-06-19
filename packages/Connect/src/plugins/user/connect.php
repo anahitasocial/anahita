@@ -1,20 +1,6 @@
 <?php
 
 /**
- * @version		1.0.3
- *
- * @category	Anahita Social Engine™
- *
- * @copyright	Copyright (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link     	http://www.GetAnahita.com
- */
-defined('_JEXEC') or die();
-
-jimport('joomla.plugin.plugin');
-
-/**
  * Anahita Tweets User Plugin.
  *
  * @author		Rastin Mehr  <info@rmdstudio.com>
@@ -23,7 +9,7 @@ jimport('joomla.plugin.plugin');
  *
  * @since 		1.5
  */
-class PlgUserConnect extends JPlugin
+class PlgUserConnect extends PlgAnahitaDefault
 {
     /**
      * API.
@@ -49,14 +35,16 @@ class PlgUserConnect extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser(KEvent $event)
     {
+        $user = $event->user;
+
         $this->_createToken($user['username']);
 
         $userId = $user['id'];
 
         if ($this->_person) {
-            //unblock the user	
+            //unblock the user
             $user = KService::get('repos://site/users')->find($userId);
 
             $user->block = false;
@@ -85,8 +73,10 @@ class PlgUserConnect extends JPlugin
      *
      * @since	1.5
      */
-    public function onLoginUser($user, $options)
+    public function onLoginUser(KEvent $event)
     {
+        $user = $event->user;
+
         if (isset($user['username'])) {
             $this->_createToken($user['username']);
         }
@@ -103,7 +93,7 @@ class PlgUserConnect extends JPlugin
 
         $api = $this->_getApi();
 
-        //if there's no api or the token are invalid then don't create 
+        //if there's no api or the token are invalid then don't create
         //session
         if (!$api || !$api->getUser()->id) {
             return;

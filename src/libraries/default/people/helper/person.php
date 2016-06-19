@@ -30,11 +30,11 @@ class LibPeopleHelperPerson extends KObject
 
         JFactory::getApplication()->_createSession($session->getId());
 
-        // Import the user plugin group
-        JPluginHelper::importPlugin('user');
-
         $options = array();
-        $results = JFactory::getApplication()->triggerEvent('onLoginUser', array($user, $options));
+        $results = dispatch_plugin('user.onLoginUser', array(
+                      'user' => $user,
+                      'options' => $options
+                    ));
 
         foreach ($results as $result) {
             if (

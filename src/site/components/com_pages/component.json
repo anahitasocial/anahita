@@ -1,0 +1,18 @@
+{
+    "install": {
+        "name": "Pages",
+        "author": "Anahita Social Networking Platform and Framework",
+        "copyright": "(C) 2016 rmd Studio, Peerglobe Technology",
+        "license": "GPL3 - http://www.gnu.org/licenses/gpl-3.0.html",
+        "authoremail": "info@anahitapolis.com",
+        "authorurl": "http://www.Anahitapolis.com",
+        "description": "Renders custom php/html pages",
+        "administration": {
+            "menu": "Pages"
+        },
+        "menu": "true",
+        "_type": "component",
+        "_social_app": "1",
+        "_method": "upgrade"
+    }
+}

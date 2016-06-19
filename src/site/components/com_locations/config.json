@@ -1,0 +1,28 @@
+{
+    "fields": [
+        {
+            "name": "service",
+            "type": "text",
+            "default": "google",
+            "label": "Service",
+            "placeholder": "Select a location service",
+            "disabled": 1
+        },
+        {
+            "name": "browser_key",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Browser API Key",
+            "placeholder": "Browser API Key"
+        },
+        {
+            "name": "server_key",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Server API Key",
+            "placeholder": "Server API Key"
+        }
+    ]
+}

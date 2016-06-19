@@ -1,0 +1,17 @@
+{
+    "name": "Anahita Subscriptions",
+    "author": "Anahita Social Networking Platform",
+    "copyright": "rmd Studio/Peerglobe Technology",
+    "license": "GPL3",
+    "authoremail": "rastin@anahitapolis.com",
+    "authorurl": "www.GetAnahita.com",
+    "description": "Anahita Subscriptions system plugin",
+    "version": "4.3",
+    "install": {
+        "files": [
+            "subscriptions.php"
+        ],
+        "type": "plugin",
+        "group": "system"
+    }
+}

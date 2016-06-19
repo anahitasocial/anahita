@@ -1,0 +1,27 @@
+{
+    "name": "System - Anahita Framework",
+    "author": "Anahita Social Networking Project",
+    "creationDate": "May 2016",
+    "copyright": "rmd Studio Inc., Peerglobe Technology Inc.",
+    "license": "GNU/GPL3",
+    "authoremai": "rastin@anahitapolis.com",
+    "authorurl": "www.GetAnahita.com",
+    "description": "Anahita Social Engine ™ system plugin",
+    "version": "4.3",
+    "install": {
+        "media": {
+            "folder": [
+                "js",
+                "css",
+                "images"
+            ],
+            "folder": "media",
+            "destination": "lib_anahita"
+        },
+        "files": [
+            "anahita.php"
+        ],
+        "type": "plugin",
+        "group": "system"
+    }
+}

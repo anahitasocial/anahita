@@ -1,0 +1,37 @@
+{
+    "name": "User - Joomla!",
+    "author": "Joomla! Project",
+    "creationDate": "December 2006",
+    "copyright": "Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.",
+    "license": "http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL",
+    "authorEmail": "admin@joomla.org",
+    "authorUrl": "www.joomla.org",
+    "version": "1.5",
+    "description": "PLG_USER_JOOMLA",
+    "install": {
+        "files": [
+            "joomla.php"
+        ],
+        "fields": [
+            {
+              "option": [
+                  {
+                      "value": "0",
+                      "text": "No"
+                  },
+                  {
+                      "value": "1",
+                      "text": "Yes"
+                  }
+              ],
+              "name": "autoregister",
+              "type": "select",
+              "default": "1",
+              "label": "Auto Create Users",
+              "description": "PARAMAUTOCREATEUSERS"
+            }
+        ],
+        "type": "plugin",
+        "group": "user"
+    }
+}

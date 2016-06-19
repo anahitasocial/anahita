@@ -1,21 +1,4 @@
 <?php
-/**
-* @version		$Id: joomla.php 14401 2010-01-26 14:10:00Z louis $
-* @package		Joomla
-* @subpackage	JFramework
-* @copyright	Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.
-* @license		GNU/GPL, see LICENSE.php
-* Joomla! is free software. This version may have been modified pursuant
-* to the GNU General Public License, and as distributed it includes or
-* is derivative of works licensed under the GNU General Public License or
-* other free or open source software licenses.
-* See COPYRIGHT.php for copyright notices and details.
-*/
-
-// Check to ensure this file is included in Joomla!
-defined('_JEXEC') or die( 'Restricted access' );
-
-jimport('joomla.plugin.plugin');
 
 /**
  * Joomla User plugin
@@ -24,7 +7,7 @@ jimport('joomla.plugin.plugin');
  * @subpackage	JFramework
  * @since 		1.5
  */
-class plgUserJoomla extends JPlugin
+class plgUserJoomla extends PlgAnahitaDefault
 {
 
 	/**
@@ -36,15 +19,14 @@ class plgUserJoomla extends JPlugin
 	 * @param	boolean		true if user was succesfully stored in the database
 	 * @param	string		message
 	 */
-	public function onAfterDeleteUser($user, $succes, $msg)
+	public function onAfterDeleteUser(KEvent $event)
 	{
-		if (! $succes)
-		{
+		if(!$event->succes) {
 			return false;
 		}
 
 		$db =& JFactory::getDBO();
-		$db->setQuery('DELETE FROM #__session WHERE userid = '.$db->Quote($user['id']));
+		$db->setQuery('DELETE FROM #__session WHERE userid = '.$db->Quote($event->user['id']));
 		$db->Query();
 
 		return true;
@@ -59,8 +41,11 @@ class plgUserJoomla extends JPlugin
 	 * @return	boolean	True on success
 	 * @since	1.5
 	 */
-	public function onLoginUser($user, $options = array())
+	public function onLoginUser(KEvent $event)
 	{
+			$user = $event->user;
+			$options = $event->options;
+
 			global $mainframe;
 
 			jimport('joomla.user.helper');
@@ -118,14 +103,16 @@ class plgUserJoomla extends JPlugin
 	 * @return object   True on success
 	 * @since 1.5
 	 */
-	public function onLogoutUser($user, $options = array())
+	public function onLogoutUser(KEvent $event)
 	{
-		if ($user['id'] == 0)
-        {
-			return false;
-        }
+		$user = $event->user;
+		$options = $event->options;
 
-        $viewer =& JFactory::getUser();
+		if ($user['id'] == 0) {
+			return false;
+    }
+
+    $viewer =& JFactory::getUser();
 
 		//Check to see if we're deleting the current session
 		if ($viewer->id == (int) $user['id'])

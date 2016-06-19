@@ -1,0 +1,29 @@
+{
+    "fields": [
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "No"
+                },
+                {
+                    "value": "1",
+                    "text": "Yes"
+                }
+            ],
+            "name": "debug",
+            "size": "60",
+            "type": "list",
+            "default": "",
+            "label": "Redirect All Emails"
+        },
+        {
+            "name": "redirect_email",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Emails",
+            "description": "Redirect all mail notification to this email"
+        }
+    ]
+}

@@ -10,14 +10,18 @@ class JInstallationHelper
 	 */
 	static public function detectDB()
 	{
-		$map = array ('mysql_connect' => 'mysql', 'mysqli_connect' => 'mysqli', 'mssql_connect' => 'mssql');
-		foreach ($map as $f => $db)
-		{
-			if (function_exists($f))
-			{
+		$map = array (
+			'mysql_connect' => 'mysql',
+			'mysqli_connect' => 'mysqli',
+			'mssql_connect' => 'mssql'
+		);
+
+		foreach ($map as $f => $db) {
+			if (function_exists($f)) {
 				return $db;
 			}
 		}
+
 		return 'mysql';
 	}
 
@@ -28,10 +32,11 @@ class JInstallationHelper
 	static public function errors2string(& $errors)
 	{
 		$buffer = '';
-		foreach ($errors as $error)
-		{
+
+		foreach ($errors as $error) {
 			$buffer .= 'SQL='.$error['msg'].":\n- - - - - - - - - -\n".$error['sql']."\n= = = = = = = = = =\n\n";
 		}
+
 		return $buffer;
 	}
 	/**
@@ -44,12 +49,9 @@ class JInstallationHelper
 	 */
 	static public function createDatabase(& $db, $DBname, $DButfSupport)
 	{
-		if ($DButfSupport)
-		{
+		if ($DButfSupport) {
 			$sql = "CREATE DATABASE `$DBname` CHARACTER SET `utf8`";
-		}
-		else
-		{
+		} else {
 			$sql = "CREATE DATABASE `$DBname`";
 		}
 
@@ -57,8 +59,7 @@ class JInstallationHelper
 		$db->query();
 		$result = $db->getErrorNum();
 
-		if ($result != 0)
-		{
+		if ($result != 0) {
 			return false;
 		}
 
@@ -75,8 +76,7 @@ class JInstallationHelper
 	 */
 	static public function setDBCharset(& $db, $DBname)
 	{
-		if ($db->hasUTF())
-		{
+		if ($db->hasUTF()) {
 			$sql = "ALTER DATABASE `$DBname` CHARACTER SET `utf8`";
 			$db->setQuery($sql);
 			$db->query();
@@ -85,6 +85,7 @@ class JInstallationHelper
 				return false;
 			}
 		}
+
 		return true;
 	}
 
@@ -102,63 +103,63 @@ class JInstallationHelper
 		$query = "SHOW TABLES FROM `$DBname`";
 		$db->setQuery($query);
 		$errors = array ();
-		if ($tables = $db->loadResultArray())
-		{
-			foreach ($tables as $table)
-			{
-				if (strpos($table, $DBPrefix) === 0)
-				{
+		if ($tables = $db->loadResultArray()) {
+
+			foreach ($tables as $table) {
+
+				if (strpos($table, $DBPrefix) === 0) {
 					$butable = str_replace($DBPrefix, $BUPrefix, $table);
 					$query = "DROP TABLE IF EXISTS `$butable`";
 					$db->setQuery($query);
 					$db->query();
-					if ($db->getErrorNum())
-					{
+
+					if ($db->getErrorNum()) {
 						$errors[$db->getQuery()] = $db->getErrorMsg();
 					}
+
 					$query = "RENAME TABLE `$table` TO `$butable`";
 					$db->setQuery($query);
 					$db->query();
-					if ($db->getErrorNum())
-					{
+
+					if ($db->getErrorNum()) {
 						$errors[$db->getQuery()] = $db->getErrorMsg();
 					}
+
 				}
 			}
 		}
 
 		return count($errors);
 	}
-	
+
 	/**
 	 * Return whether the any tables exists or not
-	 * 
+	 *
 	 * @param object $db
-	 * 
+	 *
 	 * @return boolean
 	 */
 	static public function databaseExists(&$db, $name)
-	{	    
+	{
 	    if ( !$db->select($name) ) {
 	        return false;
 	    }
 
 	    $query = "SHOW TABLES FROM `$name`";
-		$db->setQuery($query);
-		$errors = array ();
-		if ($tables = $db->loadResultArray())
-		{
-			foreach ($tables as $table)
-			{
-				if (strpos($table, $db->getPrefix()) === 0)
-				{
-					return true;
+			$db->setQuery($query);
+			$errors = array ();
+
+			if ($tables = $db->loadResultArray()) {
+				foreach ($tables as $table) {
+					if (strpos($table, $db->getPrefix()) === 0) {
+							return true;
+					}
 				}
 			}
-		}
-		return false;
+			
+			return false;
 	}
-	
+
 	/**
 	 * Deletes all database tables
 	 * @param object Database connector
@@ -204,7 +205,7 @@ class JInstallationHelper
 		foreach($queries as $query)
 		{
 			$query = trim($query);
-			
+
 			if ($query != '' && $query {0} != '#')
 			{
 				$db->setQuery($query);
@@ -214,7 +215,7 @@ class JInstallationHelper
 				JInstallationHelper::getDBErrors($errors, $db );
 			}
 		}
-		
+
 		return count($errors);
 	}
 
@@ -294,16 +295,16 @@ class JInstallationHelper
 		// Create random salt/password for the admin user
 		$salt = JUserHelper::genRandomPassword(32);
 		$crypt = JUserHelper::getCryptedPassword($adminPassword, $salt);
-		$cryptpass = $crypt.':'.$salt;		
+		$cryptpass = $crypt.':'.$salt;
 
 		$db = & JInstallationHelper::getDBO($DBtype, $DBhostname, $DBuserName, $DBpassword, $DBname, $DBPrefix);
 
 
 		$vars = array_merge(array('adminLogin'=>'admin', 'adminName'=>'Administrator'), $vars);
-		
+
 		$adminLogin = $vars['adminLogin'];
 		$adminName  = $vars['adminName'];
-				
+
 		// create the admin user
 		$installdate 	= date('Y-m-d H:i:s');
 		$nullDate 		= $db->getNullDate();
@@ -342,20 +343,20 @@ class JInstallationHelper
 			echo $db->getErrorMsg();
 			return;
 		}
-		
+
 		//Anahita Installation
-		
-        require_once( JPATH_LIBRARIES.'/anahita/anahita.php');        
-        
+
+        require_once( JPATH_LIBRARIES.'/anahita/anahita.php');
+
         //instantiate anahita and nooku
         Anahita::getInstance(array(
             'cache_prefix'  => uniqid(),
             'cache_enabled' => false
         ));
-        
+
         KServiceIdentifier::setApplication('site' , JPATH_SITE);
         KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
-        
+
         KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath'=>JPATH_BASE)));
         KServiceIdentifier::addLocator( KService::get('anahita:service.locator.component') );
 
@@ -365,7 +366,7 @@ class JInstallationHelper
         KService::set('koowa:database.adapter.mysqli', KService::get('koowa:database.adapter.mysqli', array('connection'=>$db->_resource, 'table_prefix'=>$DBPrefix)));
         KService::set('anahita:domain.store.database', KService::get('anahita:domain.store.database', array('adapter'=>KService::get('koowa:database.adapter.mysqli'))));
         KService::set('plg:storage.default', new KObject());
-        $person = KService::get('repos://site/people')
+        $person = KService::get('repos:people')
             ->getEntity()
             ->setData(array(
                 'name'     => $adminName,
@@ -374,22 +375,22 @@ class JInstallationHelper
                 'userType' => 'Super Administrator',
                 'email'    => $adminEmail
             ));
-            
-        $note = KService::get('repos://site/notes')
+
+        $note = KService::get('repos:notes')
             ->getEntity()
             ->setData(array(
                 'author' => $person,
                 'owner'  => $person,
                 'body'   => 'Welcome to Anahita!'
             ));
-            
+
         $comment = $note->addComment(array(
             'author'    => $person ,
             'body'      => 'The best Social Platform there is',
             'component' => 'com_notes'
         ));
-        
-        $story   = KService::get('repos://site/stories')->getEntity()
+
+        $story   = KService::get('repos:stories')->getEntity()
                 ->setData(array(
                     'component' => 'com_notes',
                     'name'      => 'note_comment',
@@ -397,12 +398,12 @@ class JInstallationHelper
                     'comment'   => $comment,
                     'target'    => $person,
                     'owner'     => $person,
-                    'subject'   => $person                      
+                    'subject'   => $person
                 ));
-        
+
         $entities = array();
         $comment->save($entities);
-        
+
 		return true;
 	}
 

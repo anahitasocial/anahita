@@ -1,0 +1,18 @@
+{
+    "name": "Content Filter - Video",
+    "description": "Video Content Filter Plugin",
+    "author": "Anahita Social Networking Project",
+    "creationDate": "May 2016",
+    "copyright": "rmd Studio Inc., Peerglobe Technology Inc.",
+    "license": "GNU/GPL3",
+    "authoremai": "rastin@anahitapolis.com",
+    "authorurl": "Anahitapolis.com",
+    "version": "4.3",
+    "install": {
+        "files": [
+            "video.php"
+        ],
+        "type": "plugin",
+        "group": "contentfilter"
+    }
+}

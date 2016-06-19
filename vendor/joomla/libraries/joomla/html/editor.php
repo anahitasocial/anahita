@@ -249,7 +249,7 @@ class JEditor extends JObservable
 		}
 
 		// Get plugins
-		$plugins = JPluginHelper::getPlugin('editors-xtd');
+		$plugins = KService::get('com:plugins.helper')->getPlugin('editors-xtd');
 
 		foreach($plugins as $plugin)
 		{
@@ -257,7 +257,7 @@ class JEditor extends JObservable
 				continue;
 			}
 
-			$isLoaded = JPluginHelper::importPlugin('editors-xtd', $plugin->name, false);
+			$isLoaded = KService::get('com:plugins.helper')->import('editors-xtd', $plugin->name, false);
 
 			$className = 'plgButton'.$plugin->name;
 			if(class_exists($className)) {
@@ -303,7 +303,7 @@ class JEditor extends JObservable
 		require_once $path;
 
 		// Get the plugin
-		$plugin   =& JPluginHelper::getPlugin('editors', $this->_name);
+		$plugin   =& KService::get('com:plugins.helper')->getPlugin('editors', $this->_name);
 		if ( $plugin ) {
 		    $params   = new JParameter($plugin->params);
 		    $params->loadArray($config);
@@ -315,7 +315,7 @@ class JEditor extends JObservable
 		{
 			// load plugin parameters
 			$this->initialise();
-			JPluginHelper::importPlugin('editors-xtd');
+			KService::get('com:plugins.helper')->import('editors-xtd');
 		}
 	}
 }

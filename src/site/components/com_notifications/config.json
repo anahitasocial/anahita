@@ -1,0 +1,20 @@
+{
+    "fields": [
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "No"
+                },
+                {
+                    "value": "1",
+                    "text": "Yes"
+                }
+            ],
+            "type": "list",
+            "name": "use_cron",
+            "label": "Use Cron",
+            "default": 0
+        }
+    ]
+}

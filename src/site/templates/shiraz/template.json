@@ -1,0 +1,144 @@
+{
+    "name": "Shiraz",
+    "version": "4.3.0",
+    "createdOn": "June 2016",
+    "author": "GetAnahita.com",
+    "authorEmail": "rastin@getanahita.com",
+    "authorUrl": "https://www.GetAnahita.com",
+    "copyright": "Copyright 2016 - rmdStudio Inc.",
+    "license": "GPLv3",
+    "description": "Shiraz [ʃiːˈrɒːz] is named after the ancient city of poets, mathematicians, flowers, and wine in south of Persia which dates back to 4000 BCE.",
+    "exceptions": {
+        "filename": {
+            "type": "noreplace",
+            "text": "params.ini"
+        }
+    },
+    "fields": [{
+          "option": [
+              {
+                  "value": "style1",
+                  "text": "Style 1"
+              },
+              {
+                  "value": "style2",
+                  "text": "Custom"
+              }
+          ],
+          "name": "cssStyle",
+          "type": "list",
+          "default": "style1",
+          "label": "Style"
+      },
+      {
+          "option": [
+              {
+                  "value": "0",
+                  "text": "Never (good for production)"
+              },
+              {
+                  "value": "1",
+                  "text": "Only if changed (good for development)"
+              }
+          ],
+          "name": "compilestyle",
+          "type": "list",
+          "default": "0",
+          "description": "Flag to when compile the less style file",
+          "label": "Compile Style"
+      },
+      {
+          "option": [
+              {
+                  "value": "0",
+                  "text": "No"
+              },
+              {
+                  "value": "1",
+                  "text": "Yes"
+              }
+          ],
+          "name": "compresstyle",
+          "type": "list",
+          "default": "1",
+          "description": "Compress the output style",
+          "label": "Compress Style"
+      },
+      {
+          "name": "favicon",
+          "type": "text",
+          "default": "favicon.ico",
+          "label": "Favicon",
+          "description": "Favicon file name"
+      },
+      {
+          "option": [
+              {
+                  "value": "0",
+                  "text": "Light"
+              },
+              {
+                  "value": "1",
+                  "text": "Dark"
+              }
+          ],
+          "name": "navbarInverse",
+          "type": "list",
+          "default": "0",
+          "label": "Navbar Theme"
+      },
+      {
+          "name": "brandName",
+          "type": "text",
+          "default": "Anahita",
+          "label": "Brand Name",
+          "description": "Enter the name of your brand"
+      },
+      {
+          "option": [
+              {
+                  "value": "0",
+                  "text": "Hide"
+              },
+              {
+                  "value": "1",
+                  "text": "Show"
+              }
+          ],
+          "name": "showLogo",
+          "type": "list",
+          "default": "1",
+          "label": "Display Logo"
+      },
+      {
+          "option": [
+              {
+                  "value": "0",
+                  "text": "Hide"
+              },
+              {
+                  "value": "1",
+                  "text": "Show"
+              }
+          ],
+          "name": "poweredby",
+          "type": "list",
+          "default": "1",
+          "label": "Powered By Anahita"
+      },
+      {
+          "name": "analytics",
+          "type": "text",
+          "default": "",
+          "label": "Analytics ID",
+          "description": "Enter your google analytics tracking ID which is in the format of UA-XXXXX-Y or UA-XXXXX-YY."
+    }],
+    "install": {
+        "folder": [
+            "css",
+            "html",
+            "emails"
+        ],
+        "file": "thumbnail.png"
+    }
+}

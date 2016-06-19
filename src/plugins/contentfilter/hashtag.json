@@ -1,0 +1,17 @@
+{
+    "name": "Hashtag",
+    "author": "Anahita",
+    "creationDate": "November 2014",
+    "copyright": "rmd Studio",
+    "license": "GPL3",
+    "authoremai": "",
+    "authorurl": "GetAnahita.com",
+    "description": "Converts #hashtag terms to links to the hashtag pages",
+    "install": {
+        "type": "plugin",
+        "group": "contentfilter",
+        "files": [
+            "hashtag.php"
+        ]
+    }
+}

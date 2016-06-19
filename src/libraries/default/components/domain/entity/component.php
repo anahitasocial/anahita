@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -40,7 +40,10 @@ class LibComponentsDomainEntityComponent extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('components'),
             'attributes' => array(
-                'params' => array('required' => false, 'default' => ''),
+                'meta' => array(
+                    'required' => false,
+                    'default' => ''
+                ),
                 'enabled',
             ),
             'behaviors' => array(
