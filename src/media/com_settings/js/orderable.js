@@ -10,27 +10,32 @@
 
  	'use strict';
 
+  var startIndex = 0;
+
   $('[data-behavior="orderable"]').sortable({
       items: '> tr',
       handle: 'a.js-orderable-handle',
       axis: 'y',
       cursor: 'move',
+      start: function(event, ui) {
+          startIndex = ui.item.index();
+      },
       stop: function ( event, ui) {
 
           var ordering = 0;
           var url = ui.item.data('url') + '.json';
-          var direction = ui.position.top - ui.originalPosition.top;
+          var direction = ui.item.index() - startIndex;
           var rows = $(event.target).children();
 
           // if direction > 0, item is moving up on the list
           if( direction > 0 ) {
-              ordering = $(ui.item.context.previousSibling).data('ordering');
+              ordering = $(ui.item).prev().data('ordering');
           } else {
-              ordering = $(ui.item.context.nextSibling).data('ordering');
+              ordering = $(ui.item).next().data('ordering');
           }
 
           if ( ordering == 0 ) {
-             ordering = ui.item.context.rowIndex + 1;
+             ordering = ui.item.index() + 1;
           }
 
           $.ajax({

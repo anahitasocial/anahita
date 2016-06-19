@@ -1,7 +1,8 @@
 <? defined('KOOWA') or die; ?>
 
 <form action="<?= @route('view=template&alias='.$item->alias) ?>" method="post">
-
+    <input type="hidden" name="action" value="edit" />
+    
     <fieldset>
         <legend><?= @text('COM-SETTINGS-TEMPLATES-CONFIGURATIONS') ?></legend>
         <?= @helper('ui.params', array(

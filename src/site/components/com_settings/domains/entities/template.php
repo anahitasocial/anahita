@@ -52,7 +52,7 @@ class ComSettingsDomainEntityTemplate extends KObject
      */
     public function load($template)
     {
-        $path['manifest'] = JPATH_THEMES.DS.$template.DS.'template.json';
+        $path['manifest'] = $this->_buildManifestPath($template);
 
         if (file_exists($path['manifest'])) {
 
@@ -67,7 +67,7 @@ class ComSettingsDomainEntityTemplate extends KObject
                 }
             }
 
-            $path['params'] = JPATH_THEMES.DS.$template.DS.'params.ini';
+            $path['params'] = $this->_buildParamsPath($template);
 
             if (file_exists($path['params'])) {
                 $this->params = parse_ini_file($path['params']);
@@ -93,6 +93,26 @@ class ComSettingsDomainEntityTemplate extends KObject
      */
     public function save()
     {
+        $path = $this->_buildParamsPath($this->alias);
+
+        if (file_exists($path)) {
+            chmod($path, 0644);
+        }
+
+        $params = '';
+
+        foreach ($this->params as $key => $value) {
+          $params .= $key.'='.$value."\n";
+        }
+
+        try {
+          file_put_contents($path, $params);
+        } catch (Exception $e) {
+            throw new \RuntimeException($e->getMessage());
+        }
+
+        chmod($path, 0444);
+
         return $this;
     }
 
@@ -110,6 +130,12 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     public function setData(array $data)
     {
+        $meta = $data['meta'];
+
+        foreach ($meta as $key => $value) {
+            $this->_attributes['params'][$key] = $value;
+        }
+
         return $this;
     }
 
@@ -122,7 +148,7 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     public function getValue($name)
     {
-       return $this->params[$name];
+       return $this->_attributes['params'][$name];
     }
 
     /**
@@ -135,7 +161,7 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     public function setValue($name, $value)
     {
-       $this->params[$name] = $value;
+       $this->_attributes['params'][$name] = $value;
     }
 
     /**
@@ -162,5 +188,29 @@ class ComSettingsDomainEntityTemplate extends KObject
         $this->_attributes[$name] = $value;
 
         return $this;
+    }
+
+    /**
+    *  constructs the path to the template.json file
+    *
+    * @param string template alias
+    *
+    * @return string path
+    */
+    protected function _buildManifestPath($alias)
+    {
+        return JPATH_THEMES.DS.$alias.DS.'template.json';
+    }
+
+    /**
+    *  constructs the path to the params.ini file
+    *
+    * @param string template alias
+    *
+    * @return string path
+    */
+    protected function _buildParamsPath($alias)
+    {
+        return JPATH_THEMES.DS.$alias.DS.'params.ini';
     }
 }
