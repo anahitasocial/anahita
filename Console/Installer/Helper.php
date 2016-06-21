@@ -156,7 +156,7 @@ class JInstallationHelper
 					}
 				}
 			}
-			
+
 			return false;
 	}
 
@@ -355,7 +355,6 @@ class JInstallationHelper
         ));
 
         KServiceIdentifier::setApplication('site' , JPATH_SITE);
-        KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
 
         KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath'=>JPATH_BASE)));
         KServiceIdentifier::addLocator( KService::get('anahita:service.locator.component') );

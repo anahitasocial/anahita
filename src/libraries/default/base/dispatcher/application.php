@@ -136,7 +136,6 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
 
         define('JPATH_COMPONENT', JPATH_BASE.DS.'components'.DS.$name);
         define('JPATH_COMPONENT_SITE', JPATH_SITE.DS.'components'.DS.$name);
-        define('JPATH_COMPONENT_ADMINISTRATOR', JPATH_ADMINISTRATOR.DS.'components'.DS.$name);
 
         if (!file_exists(JPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound('Component not found');

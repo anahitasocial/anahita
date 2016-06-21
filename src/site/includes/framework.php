@@ -24,7 +24,6 @@ define('DS', DIRECTORY_SEPARATOR);
 define('JPATH_ROOT',           JPATH_BASE);
 define('JPATH_SITE',           JPATH_ROOT);
 define('JPATH_CONFIGURATION',  JPATH_ROOT);
-define('JPATH_ADMINISTRATOR',  JPATH_ROOT.'/administrator');
 define('JPATH_LIBRARIES',      JPATH_ROOT.'/libraries');
 define('JPATH_PLUGINS',        JPATH_ROOT.'/plugins');
 define('JPATH_INSTALLATION',   JPATH_ROOT.'/installation');
@@ -63,8 +62,6 @@ Anahita::getInstance(array(
 ));
 
 KServiceIdentifier::setApplication('site', JPATH_SITE);
-KServiceIdentifier::setApplication('admin', JPATH_ADMINISTRATOR);
-
 KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => JPATH_BASE)));
 KServiceIdentifier::addLocator(KService::get('anahita:service.locator.component'));
 
@@ -74,7 +71,7 @@ KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
 KLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath' => JPATH_BASE)));
 KServiceIdentifier::addLocator(KService::get('anahita:service.locator.template'));
 
-KService::setAlias('koowa:database.adapter.mysqli', 'com://admin/default.database.adapter.mysqli');
+KService::setAlias('koowa:database.adapter.mysqli', 'com:default.database.adapter.mysqli');
 KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
 KService::setAlias('anahita:domain.space',          'com:base.domain.space');
 
