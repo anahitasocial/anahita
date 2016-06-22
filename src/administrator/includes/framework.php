@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -14,15 +14,14 @@
  *
  * @link       http://www.GetAnahita.com
  */
+
+
 // no direct access
 defined('JPATH_BASE') or die('Restricted access');
-
 defined('_JEXEC') or define('_JEXEC', 1);
 
 define('DS', DIRECTORY_SEPARATOR);
-
 define('JPATH_ROOT',           dirname(JPATH_BASE));
-
 define('JPATH_SITE',           JPATH_ROOT);
 define('JPATH_CONFIGURATION',  JPATH_ROOT);
 define('JPATH_ADMINISTRATOR',  JPATH_ROOT.DS.'administrator');

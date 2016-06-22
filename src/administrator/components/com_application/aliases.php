@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -19,7 +19,7 @@ $config = new JConfig();
 $config->cache_prefix = md5($config->secret).'-cache-system';
 $config->cache_enabled = $config->caching;
 
-KService::setAlias('application.registry', 'com://admin/application.registry');
+KService::setAlias('application.registry', 'com:application.registry');
 KService::setConfig('application.registry', array(
                                                 'cache_prefix' => $config->cache_prefix,
                                                 'cache_enabled' => $config->cache_enabled,

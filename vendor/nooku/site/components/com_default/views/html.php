@@ -27,8 +27,8 @@ class ComDefaultViewHtml extends KViewDefault
         parent::__construct($config);
 
         //Add alias filter for editor helper
-        $this->getTemplate()->getFilter('alias')->append(array(
-            '@editor(' => '$this->renderHelper(\'com://admin/default.template.helper.editor.display\', ')
-        );
+        //$this->getTemplate()->getFilter('alias')->append(array(
+        //    '@editor(' => '$this->renderHelper(\'com://admin/default.template.helper.editor.display\', ')
+        //);
     }
 }

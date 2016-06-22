@@ -28,19 +28,17 @@ class Symlink extends Command
         $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
 
         $patterns = array(
-                '#^(site|administrator)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                '#^(site)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                 '#^(components|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',
                 '#^(cli)/.+#'    => 'cli',
                 '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
-                '#^(administrator/)?(images)/.+#' => '\1\2',
-                '#^(site|administrator)/includes/.+#' => '\1/includes',
+                '#^(site)/includes/.+#' => '\1/includes',
                 '#^(vendors|migration)/.+#'    => '',
                 '#^configuration\.php-dist#'   => '',
                 '#^htaccess.txt#'   => '',
         );
 
         $patterns['#^installation/.+#'] = '';
-        $mapper->addMap('vendor/mc/rt_missioncontrol_j15','administrator/templates/rt_missioncontrol_j15');
         $mapper->addCrawlMap('vendor/joomla', $patterns);
         $mapper->addCrawlMap('vendor/nooku',  $patterns);
         $mapper->addCrawlMap('src',   $patterns);
@@ -48,12 +46,9 @@ class Symlink extends Command
         $mapper->getMap('vendor/joomla/index.php','index.php')->copy();
         $mapper->getMap('vendor/joomla/htaccess.txt','.htaccess')->copy();
 
-        $mapper->getMap('vendor/joomla/administrator/index.php','administrator/index.php')->copy();
-
         @mkdir($target.'/tmp',   0755);
         @mkdir($target.'/cache', 0755);
         @mkdir($target.'/log',   0755);
-        @mkdir($target.'/administrator/cache',   0755);
         $vendorLink = new \Installer\Map(COMPOSER_VENDOR_DIR, WWW_ROOT.'/vendor');
         $vendorLink->symlink();
     }
@@ -226,8 +221,6 @@ $console
             new InputOption('session-handler','', InputOption::VALUE_REQUIRED, 'What session handler use'),
             new InputOption('cache-handler','',   InputOption::VALUE_REQUIRED, 'What cache handler use'),
             new InputOption('use-apc','',   InputOption::VALUE_NONE, 'If set then both cache handler and session handle will use apc'),
-            new InputOption('offline','',   InputOption::VALUE_REQUIRED, 'set a site offline or online'),
-            //new InputOption('offline-message','',   InputOption::VALUE_REQUIRED, 'offline message to use'),
             new InputOption('enable-debug','',   InputOption::VALUE_NONE, 'Turn on the debug'),
             new InputOption('disable-debug','',   InputOption::VALUE_NONE, 'Turn off the debug'),
             new InputOption('new-secret','',   InputOption::VALUE_NONE, 'Generates a new secret'),

@@ -35,7 +35,7 @@ class PackageCommand extends Command
 
         $this->getApplication()->loadFramework();
         \KService::get('koowa:loader')
-            ->loadIdentifier('com://admin/migrator.helper');
+            ->loadIdentifier('com://site/migrator.helper');
 
         /*
         $helper = $this->getHelperSet();
@@ -146,9 +146,6 @@ class PackageCommand extends Command
         //remove any child component
         $components->getQuery()->option($name)->parent('0','>')->destroy();
 
-        $admin_menu = $manifest->administration->menu;
-        $site_menu  = $manifest->menu;
-
         $component->setData(array(
                 'name'      => (string)$manifest->name[0],
                 'enabled'   => 1,
@@ -158,32 +155,16 @@ class PackageCommand extends Command
                 'adminMenuImg'  => ''
         ));
 
-        if($site_menu)
-        {
-            $component->setData(array(
-                'link' => 'option='.$name
-            ));
-        }
-        elseif($admin_menu)
-        {
-            $component->setData(array(
-            	'link' => 'option='.$name,
-                'adminMenuLink' => 'option='.$name,
-                'adminMenuAlt' => (string)$admin_menu,
-                'adminMenuImg' => 'js/ThemeOffice/component.png'
-            ));
-        }
-
         //first time installing the component then
         //run the schema
-        if($component->isNew())
+        if ($component->isNew()) {
             $schema = true;
+        }
 
         $output->writeLn('<info>...installing '.str_replace('com_','',$name).' component</info>');
         $component->saveEntity();
 
-        if($schema && file_exists($path.'/schemas/schema.sql'))
-        {
+        if($schema && file_exists($path.'/schemas/schema.sql')) {
         	$output->writeLn('<info>...running schema for '.str_replace('com_','',$name).' component</info>');
             $queries = dbparse(file_get_contents($path.'/schemas/schema.sql'));
             foreach($queries as $query)

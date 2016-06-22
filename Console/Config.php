@@ -33,7 +33,6 @@ class Config
         'url_rewrite'        => 'sef_rewrite',
         'cache_lifetime'     => 'cachetime',
         'session_lifetime'   => 'lifetime',
-        'offline',
         'secret',
         'error_reporting',
         'session_handler',
@@ -87,17 +86,8 @@ class Config
             'tmp_path'     => $site_path.'/tmp',
             'offline_message' => 'This site is down for maintenance.<br /> Please check back again soon.',
             'sitename'        => 'Anahita',
-            //'memcache_settings' => array(),
-            'list_limit'        => 20,
-            'gzip'              => 0,
-            'xmlrpc_server'     => '',
-            'ftp_enable'        => 0,
-            'offset'            => 0,
-            'MetaAuthor'        => '',
-            'MetaTitle'         => '',
             'sef'               => '',
             'sef_suffix'        => '',
-            'feed_limit'        => 10
         );
 
         $this->set(array(
@@ -334,7 +324,7 @@ class Config
                 $file->fwrite("\n");
             }
         };
-        $write_group(array('offline','offline_message','sitename','editor'), 'Site Settings');
+        $write_group(array('sitename'), 'Site Settings');
         $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
         $write_group(array('secret','error_reporting','tmp_path','log_path','force_ssl'), 'Server Settings');
         $write_group(array('lifetime','session_handler'), 'Session Settings');

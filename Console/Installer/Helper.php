@@ -326,24 +326,6 @@ class JInstallationHelper
 			}
 		}
 
-		// add the ARO (Access Request Object)
-		$query = "INSERT INTO #__core_acl_aro VALUES (10,'users','62',0,'Administrator',0)";
-		$db->setQuery($query);
-		if (!$db->query())
-		{
-			echo $db->getErrorMsg();
-			return;
-		}
-
-		// add the map between the ARO and the Group
-		$query = "INSERT INTO #__core_acl_groups_aro_map VALUES (25,'',10)";
-		$db->setQuery($query);
-		if (!$db->query())
-		{
-			echo $db->getErrorMsg();
-			return;
-		}
-
 		//Anahita Installation
 
         require_once( JPATH_LIBRARIES.'/anahita/anahita.php');
