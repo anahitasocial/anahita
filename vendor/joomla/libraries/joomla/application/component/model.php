@@ -86,8 +86,6 @@ class JModel extends JObject
 		// set the default view search path
 		if (array_key_exists('table_path', $config)) {
 			$this->addTablePath($config['table_path']);
-		} else if (defined( 'JPATH_COMPONENT_ADMINISTRATOR' )){
-			$this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR.DS.'tables');
 		}
 	}
 

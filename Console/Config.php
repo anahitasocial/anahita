@@ -71,49 +71,48 @@ class Config
         }
         $this->_key_map = $map;
         $this->_data = array(
-            'debug_db'     => 0,
-            'debug_lang'   => 0,
-            'mailer'       => 'mail',
-            'mailfrom'     => '',
-            'fromname'     => '',
-            'sendmail'     => '/usr/sbin/sendmail',
-            'smtpauth'     => '0',
-            'smtpuser'     => '',
-            'smtppass'     => '',
-            'smtphost'     => 'localhost',
-            'force_ssl'    => 0,
-            'log_path'     => $site_path.'/log',
-            'tmp_path'     => $site_path.'/tmp',
-            'offline_message' => 'This site is down for maintenance.<br /> Please check back again soon.',
-            'sitename'        => 'Anahita',
-            'sef'               => '',
-            'sef_suffix'        => '',
+            'debug_db' => 0,
+            'mailer' => 'mail',
+            'mailfrom' => '',
+            'fromname' => '',
+            'sendmail' => '/usr/sbin/sendmail',
+            'smtpauth' => '0',
+            'smtpuser' => '',
+            'smtppass' => '',
+            'smtphost' => 'localhost',
+            'force_ssl' => 0,
+            'log_path' => $site_path.'/log',
+            'tmp_path' => $site_path.'/tmp',
+            'sitename' => 'Anahita',
+            'sef' => '',
+            'sef_suffix' => '',
         );
 
         $this->set(array(
-           'secret'           => '',
-           'offline'          => 0,
-           'enable_debug'     => 0,
-           'cache_lifetime'   => 60,
+           'secret' => '',
+           'offline' => 0,
+           'enable_debug' => 0,
+           'cache_lifetime' => 60,
            'session_lifetime' => 1440,
            'error_reporting' => 0,
-           'enable_caching'  => 0,
-           'url_rewrite'     => 0,
-           'session_handler'    => 'database',
-           'cache_handler'      => function_exists('apc_fetch') ? 'apc' : 'file'
+           'enable_caching' => 0,
+           'url_rewrite' => 0,
+           'session_handler' => 'database',
+           'cache_handler' => function_exists('apc_fetch') ? 'apc' : 'file'
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
-        if ( file_exists($this->_configuration_file) )
-        {
+
+        if (file_exists($this->_configuration_file)) {
+
             $classname = 'JConfig'.md5(uniqid());
-            $content   = file_get_contents($this->_configuration_file);
-            $content   = str_replace('JConfig', $classname, $content);
-            $content   = str_replace(array('<?php',''), '', $content);
+            $content = file_get_contents($this->_configuration_file);
+            $content = str_replace('JConfig', $classname, $content);
+            $content = str_replace(array('<?php',''), '', $content);
             $classname = '\\'.$classname;
             $return = @eval($content);
-            if ( class_exists($classname) )
-            {
+
+            if (class_exists($classname)) {
                 $config = new $classname;
                 $this->_data = array_merge($this->_data, get_object_vars($config));
             }
@@ -163,11 +162,12 @@ class Config
      */
     public function set($key ,$value = null)
     {
-        if ( is_array($key) )
-        {
+        if (is_array($key)) {
+
             foreach($key as $k => $v) {
                 $this->$k = $v;
             }
+
         } else {
             $this->$key = $value;
         }
@@ -182,10 +182,10 @@ class Config
      */
     public function __get($key)
     {
-        if ( isset($this->_key_map[$key]) )
-        {
+        if (isset($this->_key_map[$key])) {
             $key = $this->_key_map[$key];
         }
+
         return isset($this->_data[$key]) ? $this->_data[$key] : null;
     }
 
@@ -198,16 +198,19 @@ class Config
     public function __set($key , $value)
     {
         $matches = array();
-        if ( preg_match('/^\[(.*?)\]$/', $value, $matches) ) {
+
+        if (preg_match('/^\[(.*?)\]$/', $value, $matches)) {
             $value = explode(',', $matches[1]);
         }
 
-        if ( isset($this->_key_map[$key]) ){
+        if (isset($this->_key_map[$key])) {
             $key = $this->_key_map[$key];
         }
-        if ( $key == 'dbprefix' ) {
+
+        if ($key == 'dbprefix') {
             $value = str_replace('_', '', $value).'_';
         }
+
         $this->_data[$key] = $value;
     }
 
@@ -221,11 +224,15 @@ class Config
     public function setDatabaseInfo($data)
     {
         $data['host'] = $data['host'].':'.$data['port'];
+
         unset($data['port']);
+
         $keys = array_map(function($key) {
             return 'database_'.$key;
         }, array_keys($data));
+
         $data = array_combine($keys, array_values($data));
+
         $this->set($data);
     }
 
@@ -239,12 +246,12 @@ class Config
         $parts = explode(':', $this->database_host);
 
         return array(
-             'host'      => $parts[0],
-             'port'      => isset($parts[1]) ? $parts[1] : '3306',
-             'user'      => $this->database_user,
-             'password'  => $this->database_password,
-             'name'      => $this->database_name,
-             'prefix'    => $this->database_prefix
+            'host' => $parts[0],
+            'port' => isset($parts[1]) ? $parts[1] : '3306',
+            'user' => $this->database_user,
+            'password' => $this->database_password,
+            'name' => $this->database_name,
+            'prefix' => $this->database_prefix
         );
     }
 
@@ -266,64 +273,76 @@ class Config
     public function save()
     {
         $data   = $this->toData();
-        if ( file_exists($this->_configuration_file) &&
-                !is_writable($this->_configuration_file) ) {
+
+        if (file_exists($this->_configuration_file) && !is_writable($this->_configuration_file)) {
             chmod($this->_configuration_file,0755);
         }
-        $file   = new \SplFileObject($this->_configuration_file, 'w');
+
+        $file = new \SplFileObject($this->_configuration_file, 'w');
         $file->fwrite("<?php\n");
         $file->fwrite("class JConfig {\n\n");
+
         $print_array = function($array) use (&$print_array) {
-            if ( is_array($array) )
-            {
+
+            if (is_array($array)) {
+
                 $values = array();
                 $hash   = !is_numeric(key($array));
-                foreach($array as $key => $value)
-                {
+
+                foreach ($array as $key => $value) {
+
                     if ( !is_numeric($key) ) {
                         $key = "'".addslashes($key)."'";
                     }
+
                     if ( !is_numeric($value) ) {
                         $value = "'".addslashes($value)."'";
                     }
+
                     $values[] = $hash ? "$key=>$value" : $value;
                 }
+
                 return 'array('.implode(',', $values).')';
             }
         };
-        $write = function($data) use($file, $print_array)
-        {
-            foreach($data as $key => $value)
-            {
-                if ( is_array($value) ) {
+
+        $write = function($data) use($file, $print_array) {
+
+            foreach($data as $key => $value) {
+
+                if (is_array($value)) {
                     $value = $print_array($value);
-                }
-                elseif ( !is_numeric($value) ) {
+                } elseif ( !is_numeric($value) ) {
                     $value = "'".addslashes($value)."'";
                 }
+
                 $file->fwrite("   var \$$key = $value;\n");
             }
         };
-        $write_group = function($keys, $comment = null)
-             use (&$data, $file, $write)
-        {
+
+        $write_group = function($keys, $comment = null) use (&$data, $file, $write) {
+
             $values = array();
-            foreach($keys as $key)
-            {
+
+            foreach ($keys as $key) {
+
                 if (isset($data[$key])) {
                     $values[$key] = $data[$key];
                     unset($data[$key]);
                 }
             }
-            if ( !empty($values) )
-            {
-                if ( !empty($comment) ) {
+
+            if (!empty($values)) {
+
+                if (!empty($comment)) {
                     $file->fwrite("   /*$comment*/\n");
                 }
+
                 $write($values);
                 $file->fwrite("\n");
             }
         };
+
         $write_group(array('sitename'), 'Site Settings');
         $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
         $write_group(array('secret','error_reporting','tmp_path','log_path','force_ssl'), 'Server Settings');
@@ -337,4 +356,3 @@ class Config
         $file->fwrite("}");
     }
 }
-?>

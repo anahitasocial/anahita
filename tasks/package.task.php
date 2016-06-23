@@ -51,7 +51,7 @@ class PackageCommand extends Command
         {
             $mapper   = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
             $mapper->addCrawlMap('',  array(
-                    '#^(site|administrator)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                    '#^(site)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#^(media)/([^/]+)/.+#' => '\1/\2',
                     '#CHANGELOG.php#'  => '',
                     '#^migration.*#'     => '',
@@ -196,7 +196,7 @@ $console
         {
             $mapper = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
             $mapper->addCrawlMap('',  array(
-                    '#^(site|administrator)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+                    '#^(site)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
                     '#^(media)/([^/]+)/.+#' => '\1/\2',
                     '#CHANGELOG.php#'    => '',
                     '#^migration.*#'     => '',

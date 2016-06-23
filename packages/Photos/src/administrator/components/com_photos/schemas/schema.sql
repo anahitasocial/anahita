@@ -1,1 +1,0 @@
-INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'photos') ON DUPLICATE KEY UPDATE `version` = 1;

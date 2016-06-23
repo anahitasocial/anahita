@@ -43,26 +43,20 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function __construct()
     {
-        $this->_callbacks  = array('before'=>array(),'after'=>array());
-        $this->_packages   = new Extension\Packages();
-
+        $this->_callbacks = array('before'=>array(),'after'=>array());
+        $this->_packages = new Extension\Packages();
         $this->_packages->addPackageFromComposerFiles(COMPOSER_ROOT.'/composer.json');
-
-        $this->_packages->addPackageFromComposerFiles(
-                Extension\Helper::getComposerFiles(COMPOSER_ROOT.'/packages'));
+        $this->_packages->addPackageFromComposerFiles(Extension\Helper::getComposerFiles(COMPOSER_ROOT.'/packages'));
 
         //@TODO very bad way of doing it.
         //should read composer.lock or installed.json file
-        foreach(new \DirectoryIterator(COMPOSER_VENDOR_DIR) as $dir) {
-            if ( $dir->isDir() && !$dir->isDot() )
-            {
-                $this->_packages->addPackageFromComposerFiles(
-                    Extension\Helper::getComposerFiles($dir->getPathName()));
+        foreach (new \DirectoryIterator(COMPOSER_VENDOR_DIR) as $dir) {
+            if ($dir->isDir() && !$dir->isDot()) {
+                $this->_packages->addPackageFromComposerFiles(Extension\Helper::getComposerFiles($dir->getPathName()));
             }
         }
 
-        $this->_packages->addPackageFromComposerFiles(
-                Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));
+        $this->_packages->addPackageFromComposerFiles(Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));
 
         parent::__construct();
     }
@@ -72,7 +66,7 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function loadFramework()
     {
-        if ( !defined('JPATH_BASE') )
+        if (!defined('JPATH_BASE'))
         {
             $_composerLoader = $GLOBALS['composerLoader'];
             define('JPATH_BASE', WWW_ROOT);
@@ -127,32 +121,36 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
-        $name      = $this->getCommandName($input);
-        $result    = true;
+        $name = $this->getCommandName($input);
+        $result = true;
 
-        if ( isset($this->_callbacks['before'][$name]) )
-        {
+        if (isset($this->_callbacks['before'][$name])){
+
             $callbacks = $this->_callbacks['before'][$name];
+
             foreach($callbacks as $callback) {
+
                 $result = call_user_func_array($callback, array($input, $output));
-                if ( $result === false ) {
+
+                if ($result === false) {
                     break;
                 }
             }
         }
 
-        if ( $result !== false )
-        {
+        if ($result !== false) {
+
             parent::doRun($input, $output);
 
-            if ( isset($this->_callbacks['after'][$name]) ) {
+            if (isset($this->_callbacks['after'][$name])) {
+
                 $callbacks = $this->_callbacks['after'][$name];
-                foreach($callbacks as $callback) {
+
+                foreach ($callbacks as $callback) {
                     call_user_func_array($callback, array($input, $output));
                 }
             }
         }
-
     }
 
     /**
@@ -177,10 +175,8 @@ class Application extends \Symfony\Component\Console\Application
     public function runCommand($command)
     {
         $this->setAutoExit(false);
-        $argv  = explode(' ','application '.$command);
+        $argv = explode(' ','application '.$command);
         $input = new ArgvInput($argv);
         $this->run($input);
     }
 }
-
-?>
