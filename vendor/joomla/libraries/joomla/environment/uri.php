@@ -129,7 +129,7 @@ class JURI extends JObject
 
 		if (!isset ($instances[$uri]))
 		{
-			    
+
 			// Are we obtaining the URI from the server?
 			if ($uri == 'SERVER')
 			{
@@ -153,7 +153,7 @@ class JURI extends JObject
 				 * running on IIS and will therefore need to work some magic with the SCRIPT_NAME and
 				 * QUERY_STRING environment variables.
 				 */
-				
+
 				 	if (strlen($_SERVER['QUERY_STRING']) && strpos($_SERVER['REQUEST_URI'], $_SERVER['QUERY_STRING']) === false) {
 						$theURI .= '?'.$_SERVER['QUERY_STRING'];
 					}
@@ -163,7 +163,7 @@ class JURI extends JObject
 				 {
 					// IIS uses the SCRIPT_NAME variable instead of a REQUEST_URI variable... thanks, MS
 					$theURI = 'http' . $https . $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
-		
+
 					// If the query string exists append it to the URI string
 					if (isset($_SERVER['QUERY_STRING']) && !empty($_SERVER['QUERY_STRING'])) {
 						$theURI .= '?' . $_SERVER['QUERY_STRING'];
@@ -229,9 +229,6 @@ class JURI extends JObject
 				$uri =& JURI::getInstance($live_site);
 				$base['prefix'] = $uri->toString( array('scheme', 'host', 'port'));
 				$base['path'] = rtrim($uri->toString( array('path')), '/\\');
-				if(str_replace('\\', '/', JPATH_BASE) == str_replace('\\', '/', JPATH_ADMINISTRATOR)) {
-					$base['path'] .= '/administrator';
-				}
 			} else {
 				$uri	         =& JURI::getInstance();
 				$base['prefix'] = $uri->toString( array('scheme', 'host', 'port'));
@@ -684,16 +681,16 @@ class JURI extends JObject
         {
            return true;
         }
-                
+
         if( isSSL() )
         {
             return true;
-        }  
-            
-        return false;    
+        }
+
+        return false;
 	}
 
-	/** 
+	/**
 	 * Checks if the supplied URL is internal
 	 *
 	 * @access	public
@@ -801,7 +798,7 @@ class JURI extends JObject
 		}
 		return $parts;
 	}
-	
+
 	public function __toString()
 	{
 		return $this->toString();

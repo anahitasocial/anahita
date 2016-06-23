@@ -49,18 +49,6 @@ class JApplicationHelper
 			$obj->name	= 'site';
 			$obj->path	= JPATH_SITE;
 			$clients[0] = clone($obj);
-
-			// Administrator Client
-			$obj->id		= 1;
-			$obj->name	= 'administrator';
-			$obj->path	= JPATH_ADMINISTRATOR;
-			$clients[1] = clone($obj);
-
-			// Installation Client
-			$obj->id		= 2;
-			$obj->name	= 'installation';
-			$obj->path	= JPATH_INSTALLATION;
-			$clients[2] = clone($obj);
 		}
 
 		//If no client id has been passed return the whole array
@@ -317,13 +305,9 @@ class JApplicationHelper
 	private static function _checkPath( $path, $checkAdmin=1 )
 	{
 		$file = JPATH_SITE . $path;
+
 		if ($checkAdmin > -1 && file_exists( $file )) {
 			return $file;
-		} else if ($checkAdmin != 0) {
-			$file = JPATH_ADMINISTRATOR . $path;
-			if (file_exists( $file )) {
-				return $file;
-			}
 		}
 
 		return null;

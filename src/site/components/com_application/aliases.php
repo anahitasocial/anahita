@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -21,4 +21,7 @@ $config->cache_enabled = $config->caching;
 
 KService::setAlias('application.registry', 'com://site/application.registry');
 KService::setAlias('application', 'com://site/application');
-KService::setConfig('application.registry', array('cache_prefix' => $config->cache_prefix, 'cache_enabled' => $config->cache_enabled));
+KService::setConfig('application.registry', array(
+  'cache_prefix' => $config->cache_prefix,
+  'cache_enabled' => $config->cache_enabled
+));

@@ -239,59 +239,6 @@ class JUser extends JObject
 	}
 
 	/**
-	 * Method to get the user parameters
-	 *
-	 * This function tries to load an xml file based on the users usertype. The filename of the xml
-	 * file is the same as the usertype. The functionals has a static variable to store the parameters
-	 * setup file base path. You can call this function statically to set the base path if needed.
-	 *
-	 * @access 	public
-	 * @param	boolean	If true, loads the parameters setup file. Default is false.
-	 * @param	path	Set the parameters setup file base path to be used to load the user parameters.
-	 * @return	object	The user parameters object
-	 * @since	1.5
-	 */
-	function &getParameters($loadsetupfile = false, $path = null)
-	{
-		static $parampath;
-
-		// Set a custom parampath if defined
-		if( isset($path) ) {
-			$parampath = $path;
-		}
-
-		// Set the default parampath if not set already
-		if( !isset($parampath) ) {
-			$parampath = JPATH_ADMINISTRATOR.DS.'components'.DS.'com_users'.DS.'models';
-		}
-
-		if($loadsetupfile)
-		{
-			$type = str_replace(' ', '_', strtolower($this->usertype));
-
-			$file = $parampath.DS.$type.'.xml';
-			if(!file_exists($file)) {
-				$file = $parampath.DS.'user.xml';
-			}
-
-			$this->_params->loadSetupFile($file);
-		}
-		return $this->_params;
-	}
-
-	/**
-	 * Method to get the user parameters
-	 *
-	 * @access 	public
-	 * @param	object	The user parameters object
-	 * @since	1.5
-	 */
-	function setParameters($params )
-	{
-		$this->_params = $params;
-	}
-
-	/**
 	 * Method to get the user table object
 	 *
 	 * This function uses a static variable to store the table name of the user table to

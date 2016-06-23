@@ -14,7 +14,7 @@
 *   protected function _initialize(KConfig $config)
 *   {
 *       $config->append(array(
-*           'event_publishers' => array('com://admin/foo.controller.bar')
+*           'event_publishers' => array('com://site/foo.controller.bar')
 *       ));
 *
 *       parent::_initialize($config);
