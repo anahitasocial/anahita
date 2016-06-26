@@ -31,4 +31,4 @@ INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering
 
 INSERT INTO `#__nodes` (`id`, `type`, `component`, `name`, `access`) VALUES (1, 'ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment', 'com_notes', 'com:people.domain.entity.person', 1);
 
-INSERT INTO #__migrator_versions (`version`,`component`) VALUES(3, 'anahita') ON DUPLICATE KEY UPDATE `version` = 3;
+INSERT INTO `#__migrator_versions` (`version`,`component`) VALUES(3, 'anahita') ON DUPLICATE KEY UPDATE `version` = 3;
