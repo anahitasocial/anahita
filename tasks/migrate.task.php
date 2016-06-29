@@ -367,7 +367,7 @@ $console
 
     $errors   = array();
 
-    $db = \JInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],true);
+    $db = \AnInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],true);
 
     if($db instanceof \JException)
     {
@@ -376,9 +376,9 @@ $console
     }
 
     if($input->getOption('drop-tables'))
-    	\JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
+    	\AnInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
 
     $output->writeLn('<info>Loading data. This may take a while...</info>');
 
-    \JInstallationHelper::populateDatabase($db, $file, $errors);
+    \AnInstallationHelper::populateDatabase($db, $file, $errors);
 });

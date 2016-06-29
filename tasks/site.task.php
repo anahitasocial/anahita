@@ -156,13 +156,13 @@ class Create extends Command
         $output->writeLn('<info>connecting to database...</info>');
         $errors   = array();
         $database = $config->getDatabaseInfo();
-        $db       = \JInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],false);
+        $db       = \AnInstallationHelper::getDBO('mysqli',$database['host'].':'.$database['port'],$database['user'],$database['password'],$database['name'],$database['prefix'],false);
         if ( $db instanceof \JException ) {
             $output->writeLn('<error>'.$db->toString().'</error>');
             exit(1);
         }
 
-        $db_exists = \JInstallationHelper::databaseExists($db, $database['name']);
+        $db_exists = \AnInstallationHelper::databaseExists($db, $database['name']);
         $dump_file = null;
         if ( $input->getOption('database-dump') ) {
             $dump_file = realpath($input->getOption('database-dump'));
@@ -171,14 +171,14 @@ class Create extends Command
         if ( $db_exists && $input->getOption('drop-database') )
         {
             $output->writeLn('<fg=red>Dropping existing database...</fg=red>');
-            \JInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
+            \AnInstallationHelper::deleteDatabase($db, $database['name'], $database['prefix'], $errors);
             $db_exists = false;
         }
 
         if ( !$db_exists )
         {
             $output->writeLn('<info>Creating new database...</info>');
-            \JInstallationHelper::createDatabase($db, $database['name'],true);
+            \AnInstallationHelper::createDatabase($db, $database['name'],true);
             $db->select($database['name']);
             $sql_files = $dump_file ? array($dump_file) :
                     array_map(function($file){
@@ -187,7 +187,7 @@ class Create extends Command
             ;
             $output->writeLn('<info>Populating database...</info>');
             array_walk($sql_files, function($file) use($db) {
-                \JInstallationHelper::populateDatabase($db, $file, $errors);
+                \AnInstallationHelper::populateDatabase($db, $file, $errors);
             });
         }
         jimport('joomla.user.helper');
