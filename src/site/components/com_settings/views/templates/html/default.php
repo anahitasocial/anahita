@@ -31,12 +31,6 @@
                       <div class="entity-meta">
                           <ul class="an-meta inline">
                               <li><?= @text('COM-SETTINGS-TEMPLATES-VERSION') ?>: <?= $item->version ?></li>
-                              <li>
-                                <?= @text('COM-SETTINGS-TEMPLATES-AUTHOR') ?>:
-                                <a href="<?= $item->authorUrl ?>" target="_blank">
-                                  <?= $item->author ?>
-                                </a>
-                              </li>
                           </ul>
                       </div>
                   </div>

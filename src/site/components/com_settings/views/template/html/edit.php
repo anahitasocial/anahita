@@ -24,25 +24,20 @@
 
                   <div class="entity-meta">
                       <dl>
-                        <dt><?= @text('COM-SETTINGS-TEMPLATES-VERSION') ?></dt>
-                        <dd><?= @escape($item->version) ?></dd>
+                          <dt><?= @text('COM-SETTINGS-TEMPLATES-VERSION') ?></dt>
+                          <dd><?= @escape($item->version) ?></dd>
 
-                        <dt><?= @text('COM-SETTINGS-TEMPLATES-LICENSE') ?></dt>
-                        <dd><?= @escape($item->license) ?></dd>
+                          <dt><?= @text('COM-SETTINGS-TEMPLATES-LICENSE') ?></dt>
+                          <dd><?= @escape($item->license) ?></dd>
 
-                        <dt><?= @text('COM-SETTINGS-TEMPLATES-AUTHOR') ?></dt>
-                        <dd>
-                            <a href="<?= $item->authorUrl ?>" target="_blank">
-                              <?= @escape($item->author) ?>
-                            </a>
-                        </dd>
-
-                        <dt><?= @text('COM-SETTINGS-TEMPLATES-AUTHOR-EMAIL') ?></dt>
-                        <dd>
-                            <a href="mailto:<?= $item->authorEmail ?>" target="_top">
-                              <?= @escape($item->authorEmail) ?>
-                            </a>
-                        </dd>
+                          <dt><?= @text('COM-SETTINGS-TEMPLATES-AUTHOR') ?></dt>
+                          <? foreach($item->authors as $author) : ?>
+                          <dd>
+                              <a href="<?= $author->homepage ?>" target="_blank">
+                                <?= @escape($author->name) ?>
+                              </a>
+                          </dd>
+                          <? endforeach; ?>
                       </dl>
                   </div>
               </div>

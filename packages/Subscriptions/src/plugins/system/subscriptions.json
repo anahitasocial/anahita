@@ -1,17 +1,23 @@
 {
     "name": "Anahita Subscriptions",
-    "author": "Anahita Social Networking Platform",
-    "copyright": "rmd Studio/Peerglobe Technology",
-    "license": "GPL3",
-    "authoremail": "rastin@anahitapolis.com",
-    "authorurl": "www.GetAnahita.com",
     "description": "Anahita Subscriptions system plugin",
-    "version": "4.3",
-    "install": {
-        "files": [
-            "subscriptions.php"
-        ],
-        "type": "plugin",
-        "group": "system"
-    }
+    "type": "plugin",
+    "group": "system",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc.",
+        "Copyright 2013 Peerglobe Technology Inc."
+    ],
+    "files": [
+        "connect.php"
+    ]
 }

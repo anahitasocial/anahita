@@ -1,19 +1,24 @@
 {
-    "install": {
-        "name": "Connect",
-        "author": "Anahita Social Networking Platform and Framework",
-        "copyright": "(C) 2013 rmdStudio, Peerglobe Technology",
-        "license": "http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL",
-        "authoremail": "info@anahitapolis.com",
-        "authorurl": "www.Anahitapolis.com",
-        "description": "Anahita integration with OAuth for connecting to the other social networking services",
-        "administration": {
-            "menu": "Connect"
-        },
-        "_type": "component",
-        "_version": "##BUILD_PLATFORM_VERSION##",
-        "_enforce": "1",
-        "_social_app": "1",
-        "_method": "upgrade"
-    }
+  "name": "Connect",
+  "description": "Anahita integration with OAuth for connecting to the other social networking services",
+  "type": "component",
+  "version": "4.3.0",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc.",
+      "Copyright 2013 Peerglobe Technology Inc."
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.PeerGlobe.com"
+      }
+  ]
 }

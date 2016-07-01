@@ -1,18 +1,24 @@
 {
-    "install": {
-        "name": "Photos",
-        "author": "Anahita Social Networking Platform and Framework",
-        "copyright": "(C) 2013 rmd Studio, Peerglobe Technology",
-        "license": "GPL3 - http://www.gnu.org/licenses/gpl-3.0.html",
-        "authoremail": "info@anahitapolis.com",
-        "authorurl": "http://www.Anahitapolis.com",
-        "description": "The Anahita photo sharing and blogging social app",
-        "administration": {
-            "menu": "Photos"
-        },
-        "_type": "component",
-        "_enforce": "1",
-        "_social_app": "1",
-        "_method": "upgrade"
-    }
+  "name": "Photos",
+  "description": "The Anahita photo sharing and blogging social app",
+  "type": "component",
+  "version": "4.3.0",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc.",
+      "Copyright 2013 Peerglobe Technology Inc."
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.PeerGlobe.com"
+      }
+  ]
 }

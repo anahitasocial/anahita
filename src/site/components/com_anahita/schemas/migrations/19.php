@@ -30,7 +30,7 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE `#__components` DROP COLUMN `admin_menu_img`');
 
         //deleting legacy data
-        dbexec('DELETE FROM `#__components` WHERE `option` IN ("com_config","com_cpanel","com_plugins","com_templates","com_components")');
+        dbexec('DELETE FROM `#__components` WHERE `option` IN ("com_config","com_cpanel","com_plugins","com_templates","com_components", "com_languages")');
 
         $this->_updateMeta('components');
 

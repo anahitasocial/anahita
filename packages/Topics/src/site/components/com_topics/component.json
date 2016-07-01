@@ -1,16 +1,18 @@
 {
-    "install": {
-        "name": "Topics",
-        "author": "Anahita Social Networking Platform and Framework",
-        "copyright": "(C) 2013 rmdStudio, Peerglobe Technology",
-        "license": "GPL3 - http://www.gnu.org/licenses/gpl-3.0.html",
-        "authoremail": "info@anahitapolis.com",
-        "authorurl": "http://www.Anahitapolis.com",
-        "description": "Topics app for Anahita",
-        "_type": "component",
-        "_version": "##BUILD_PLATFORM_VERSION##",
-        "_enforce": "1",
-        "_social_app": "1",
-        "_method": "upgrade"
-    }
+  "name": "Topics",
+  "description": "Topics app for Anahita",
+  "type": "component",
+  "version": "4.3.0",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc."
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+  ]
 }

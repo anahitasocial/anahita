@@ -29,16 +29,13 @@ class ComSettingsDomainEntityTemplate extends KObject
     {
         $this->_attributes = array(
             'name' => 'Untitled',
+            'description' => '...',
             'alias' => null,
             'thumbnail' => null,
             'version' => '0.0.0',
-            'createdOn' => '',
-            'author' => '',
-            'authorEmail' => '',
-            'authorUrl' => '',
+            'authors' => array(),
             'copyright' => '',
             'license' => '',
-            'description' => '...',
             'params' => array()
         );
     }

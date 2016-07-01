@@ -1,18 +1,28 @@
 {
     "name": "Anahita Invites",
-    "author": "Anahita",
-    "creationDate": "May 2016",
-    "copyright": "rmd Studio Inc., Peerglobe Technology Inc.",
-    "license": "GNU/GPLv3",
-    "authoremail": "rastin@anahitapolis.com",
-    "authorurl": "www.GetAnahita.com",
-    "version": "4.3",
     "description": "Anahita Invites user plugin",
-    "install": {
-        "files": [
-            "invites.php"
-        ],
-        "type": "plugin",
-        "group": "user"
-    }
+    "type": "plugin",
+    "group": "user",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.peerglobe.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc.",
+        "Copyright 2013 Peerglobe Technology Inc."
+    ],
+    "files": [
+        "invites.php"
+    ]
 }

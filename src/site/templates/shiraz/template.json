@@ -1,13 +1,17 @@
 {
     "name": "Shiraz",
-    "version": "4.3.0",
-    "createdOn": "June 2016",
-    "author": "GetAnahita.com",
-    "authorEmail": "rastin@getanahita.com",
-    "authorUrl": "https://www.GetAnahita.com",
-    "copyright": "Copyright 2016 - rmdStudio Inc.",
-    "license": "GPLv3",
     "description": "Shiraz [ʃiːˈrɒːz] is named after the ancient city of poets, mathematicians, flowers, and wine in south of Persia which dates back to 4000 BCE.",
+    "version": "4.3.0",
+    "homepage": "https://www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@getanahita.com",
+        "homepage": "http://www.GetAnahita.com"
+      }
+    ],
+    "license": "GPLv3",
+    "copyright": "Copyright 2016 - rmdStudio Inc.",
     "exceptions": {
         "filename": {
             "type": "noreplace",
