@@ -23,6 +23,7 @@ class Mapper
         $src = $this->_src_root.'/'.ltrim($src, '/');
         $target = $this->_target_root.'/'.ltrim($target, '/');
         $map = new Map($src, $target);
+
         return $map;
     }
 
@@ -43,7 +44,7 @@ class Mapper
         $paths = $crawler->getPaths();
 
         foreach ($paths as $path) {
-            $this->addMap($src.'/'.$path, str_replace('site/','',$path));
+            $this->addMap($src.'/'.$path, $path);
         }
     }
 

@@ -32,22 +32,12 @@ class PackageCommand extends Command
         $this->getApplication()->loadFramework();
         \KService::get('koowa:loader')->loadIdentifier('com://site/migrator.helper');
 
-        /*
-        $helper = $this->getHelperSet();
-        $io     = new \Composer\IO\ConsoleIO($input, $output, $helper);
-        $get_composer = function($root) use($input, $output, $helper,$io) {
-            global $composerLoader;
-            $embeddedComposerBuilder = new \Dflydev\EmbeddedComposer\Core\EmbeddedComposerBuilder($composerLoader, $root);
-            return $embeddedComposerBuilder->build();
-        };
-        */
-
         foreach ($packages as $package) {
 
             $mapper = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
 
-            $mapper->addCrawlMap('',  array(
-              '#^(site)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+            $mapper->addCrawlMap('', array(
+              '#^(components|templates|media)/([^/]+)/.+#' => '\1/\2',
               '#^(media)/([^/]+)/.+#' => '\1/\2',
               '#CHANGELOG.php#' => '',
               '#^migration.*#' => '',
@@ -56,21 +46,6 @@ class PackageCommand extends Command
 
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
             $mapper->symlink();
-
-//             $root     = $get_composer(COMPOSER_ROOT)->createComposer($io);
-//             $app      = $get_composer($package->getRoot())->createComposer($io);
-//             $requires = $root->getPackage()->getRequires();
-//             foreach($app->getPackage()->getRequires() as $require)
-//             {
-//                $output->writeLn((string)$require);
-//                //$require    = new \Composer\Package\Link('__root__',$require->getTarget(), $require->getConstraint(), null, $require->getPrettyConstraint());
-//                $requires[] = $require;
-//             }
-//             $root->getPackage()->setRequires($requires);
-//             $installer = \Composer\Installer::create($io, $root);
-//             $installer->setDryRun(true);
-//             $installer->setUpdate(true);
-//             $installer->run();
 
             $this->_installExtensions($package->getSourcePath(), $output, $input->getOption('create-schema'));
         }
@@ -185,7 +160,7 @@ $console
 
           $mapper = new \Installer\Mapper($package->getSourcePath(), WWW_ROOT);
           $mapper->addCrawlMap('',  array(
-            '#^(site)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
+            '#^(components|templates|media)/([^/]+)/.+#' => '\1/\2',
             '#^(media)/([^/]+)/.+#' => '\1/\2',
             '#CHANGELOG.php#' => '',
             '#^migration.*#' => '',

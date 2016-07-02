@@ -27,11 +27,10 @@ class Symlink extends Command
         $mapper = new \Installer\Mapper(ANAHITA_ROOT, $target);
 
         $patterns = array(
-          '#^(site)/(components|templates|media)/([^/]+)/.+#' => '\1/\2/\3',
           '#^(components|templates|libraries|media)/([^/]+)/.+#' => '\1/\2',
           '#^(cli)/.+#' => 'cli',
           '#^plugins/([^/]+)/([^/]+)/.+#' => 'plugins/\1/\2',
-          '#^(site)/includes/.+#' => '\1/includes',
+          '#^includes/.+#' => '\1/includes',
           '#^(vendors|migration)/.+#' => '',
           '#^configuration\.php-dist#' => '',
           '#^htaccess.txt#' => '',
