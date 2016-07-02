@@ -1,18 +1,22 @@
 {
     "name": "Content Filter - Hyperlink",
-    "author": "Anahita Social Networking Project",
-    "copyright": "rmd Studio/Peerglobe Technology",
-    "license": "GNU/GPL3",
-    "authoremai": "rastin@anahitapolis.com",
-    "authorurl": "www.GetAnahita.com",
-    "creationDate": "May 2016",
     "description": "Hyperlink Content Filter Plugin",
-    "install": {
-        "version": "4.3",
-        "type": "plugin",
-        "group": "contentfilter",
-        "files": [
-          "link.php"
-        ]
-    }
+    "type": "plugin",
+    "group": "contentfilter",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "link.php"
+    ]
 }

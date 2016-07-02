@@ -1,0 +1,24 @@
+{
+  "name": "Invites",
+  "description": "Enables people to invite their friends and followers from other social networks or find the ones who have already joined this social network.",
+  "type": "component",
+  "version": "4.3.0",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc.",
+      "Copyright 2013 Peerglobe Technology Inc."
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.PeerGlobe.com"
+      }
+  ]
+}

@@ -1,18 +1,28 @@
 {
-    "name": "User - Anahita ™ Connect",
-    "author": "Anahita Social Networking Project",
-    "creationDate": "May 2016",
-    "copyright": "2016 rmd Studio, PeerGlobe Technology",
-    "license": "GNU/GPL3",
-    "authoremail": "rastin@anahitapolis.com",
-    "authorurl": "www.GetAnahita.com",
-    "version": "4.3",
-    "description": "Anahita Connect Autentication Plugin",
-    "install": {
-        "files": [
-            "connect.php"
-        ],
-        "type": "plugin",
-        "group": "authentication"
+  "name": "Authentication - Anahita Connect",
+  "description": "Echos user notes on facebook, twitter, and LinkedIn",
+  "type": "plugin",
+  "group": "authentication",
+  "version": "4.3.0",
+  "license": "GPLv3",
+  "homepage": "www.GetAnahita.com",
+  "authors": [
+    {
+      "name": "Rastin Mehr",
+      "email": "rastin@anahitapolis.com",
+      "homepage": "http://www.rmdstudio.com"
+    },
+    {
+      "name": "Ash Sanieyan",
+      "email": "ash@peerglobe.com",
+      "homepage": "http://www.peerglobe.com"
     }
+  ],
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc.",
+      "Copyright 2013 Peerglobe Technology Inc."
+  ],
+  "files": [
+      "connect.php"
+  ]
 }

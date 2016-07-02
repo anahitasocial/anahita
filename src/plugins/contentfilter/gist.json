@@ -1,18 +1,22 @@
 {
     "name": "Content Filter - GithubGist",
-    "author": "Rastin Mehr",
-    "creationDate": "April 2015",
-    "copyright": "rmd Studio",
-    "license": "GPL3",
-    "authoremai": "rastin@anahitapolis.com",
-    "authorurl": "www.GetAnahita.com",
     "description": "Renders GithubGist links as gist embeds. Ideal for sharing code examples",
-    "install": {
-        "type": "plugin",
-        "group": "contentfilter",
-        "version" : "4.3",
-        "files": [
-             "gist.php"
-          ]
-    }
+    "type": "plugin",
+    "group": "contentfilter",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "gist.php"
+    ]
 }

@@ -1,18 +1,22 @@
 {
     "name": "Content Filter - Anahita",
-    "author": "Rastin Mehr",
-    "creationDate": "June 2015",
-    "copyright": "rmd Studio",
-    "license": "GPL3",
-    "authoremai": "rastin@anahitapolis.com",
-    "authorurl": "www.GetAnahita.com",
     "description": "Replaces the link to an Anahita medium with a preview",
-    "version": "4.3",
-    "install": {
-        "files": [
-            "mention.php"
-        ],
-        "type": "plugin",
-        "group": "contentfilter"
-    }
+    "type": "plugin",
+    "group": "contentfilter",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "mention.php"
+    ]
 }

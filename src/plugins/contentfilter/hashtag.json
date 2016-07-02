@@ -1,17 +1,22 @@
 {
     "name": "Hashtag",
-    "author": "Anahita",
-    "creationDate": "November 2014",
-    "copyright": "rmd Studio",
-    "license": "GPL3",
-    "authoremai": "",
-    "authorurl": "GetAnahita.com",
     "description": "Converts #hashtag terms to links to the hashtag pages",
-    "install": {
-        "type": "plugin",
-        "group": "contentfilter",
-        "files": [
-            "hashtag.php"
-        ]
-    }
+    "type": "plugin",
+    "group": "contentfilter",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "hashtag.php"
+    ]
 }

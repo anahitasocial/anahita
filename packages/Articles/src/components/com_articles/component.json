@@ -1,0 +1,30 @@
+{
+  "name": "Articles",
+  "description": "Social app for creating and maintaining Articles on a collaborative or individual basis.",
+  "type": "component",
+  "version": "4.3.0",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc.",
+      "Copyright 2013 Peerglobe Technology Inc.",
+      "Copyright 2015 BeerLovers"
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.PeerGlobe.com"
+      },
+      {
+        "name": "Scott Crawford",
+        "email": "scott@beerlovers.com",
+        "homepage": "http://www.BeerLovers.com"
+      }
+  ]
+}

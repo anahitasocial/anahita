@@ -1,18 +1,22 @@
 {
     "name": "Authentication - Joomla",
-    "author": "Joomla! Project",
-    "creationDate": "November 2005",
-    "copyright": "Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved.",
-    "license": "http://www.gnu.org/licenses/gpl-2.0.html GNU/GPL",
-    "authorEmail": "admin@joomla.org",
-    "authorUrl": "www.joomla.org",
-    "version": "1.5",
     "description": "Handles Joomlas default user authentication",
-    "install": {
-        "files": [
-          "joomla.php"
-        ],
-        "type": "plugin",
-        "group": "auth"
-    }
+    "type": "plugin",
+    "group": "authentication",
+    "version": "1.5",
+    "license": "GPLv2",
+    "homepage": "http://www.joomla.org",
+    "authors": [
+      {
+        "name": "Joomla Project",
+        "email": "admin@joomla.org",
+        "homepage": "http://www.joomla.org"
+      }
+    ],
+    "copyright": [
+        "Copyright (C) 2005 - 2010 Open Source Matters. All rights reserved."
+    ],
+    "files": [
+        "joomla.php"
+    ]
 }
