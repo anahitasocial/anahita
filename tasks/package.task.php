@@ -51,8 +51,7 @@ class PackageCommand extends Command
               '#^(media)/([^/]+)/.+#' => '\1/\2',
               '#CHANGELOG.php#' => '',
               '#^migration.*#' => '',
-              '#^component.json#' => '',
-              '#^template.json#' => ''
+              '#^component.json#' => ''
             ));
 
             $output->writeLn("<info>Linking {$package->getFullName()} Package</info>");
