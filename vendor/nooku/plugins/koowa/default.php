@@ -153,20 +153,7 @@ abstract class PlgKoowaDefault extends KEventSubscriberDefault
 	{
 	    $params = array();
 
-	    if(!version_compare(JVERSION,'1.6.0','ge'))
-	    {
-	        $string = trim($string);
-
-	        if(!empty($string))
-	        {
-	            foreach(explode("\n", $string) as $line)
-	            {
-	                $param = explode("=", $line, 2);
-	                $params[$param[0]] = $param[1];
-	            }
-	        }
-	    }
-	    else $params = json_decode($string);
+	    $params = json_decode($string);
 
 	    $params = new KConfig($params);
 	    return $params;

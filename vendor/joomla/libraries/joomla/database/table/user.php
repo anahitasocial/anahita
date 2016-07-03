@@ -95,13 +95,6 @@ class JTableUser extends JTable
 	var $activation		= null;
 
 	/**
-	 * Description
-	 *
-	 * @var string
-	 */
-	var $params			= null;
-
-	/**
 	* @param database A database connector object
 	*/
 	function __construct( &$db )
@@ -210,8 +203,8 @@ class JTableUser extends JTable
 	function delete( $oid=null )
 	{
 		$k = $this->_tbl_key;
-		
-		if ($oid) 
+
+		if ($oid)
 		{
 			$this->$k = intval( $oid );
 		}
@@ -219,17 +212,17 @@ class JTableUser extends JTable
 		$query = 'DELETE FROM '. $this->_tbl
 		. ' WHERE '. $this->_tbl_key .' = '. (int) $this->$k
 		;
-        
+
 		$this->_db->setQuery( $query );
 
-		if ($this->_db->query()) 
+		if ($this->_db->query())
 		{
 			return true;
-		} 
-		else 
+		}
+		else
 		{
 			$this->setError( $this->_db->getErrorMsg() );
-			
+
 			return false;
 		}
 	}

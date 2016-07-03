@@ -299,7 +299,7 @@ function translate($texts, $force = true)
     $debug = isset($_GET['dbg']);
     $debug_list = array();
     $lang = JFactory::getLanguage();
-    $has_key = version_compare(JVERSION, '1.6.0', 'ge');
+    $has_key = false;
     $translatable = false;
     foreach ($texts as $text) {
         if (strpos($text, '_')) {

@@ -264,30 +264,8 @@ class JFactory
 		        $copy->addBCC($email);
 		    }
 		}
-*/				
+*/
 		return $copy;
-	}
-
-	/**
-	 * Get an XML document
-	 *
-	 * @access public
-	 * @param string The type of xml parser needed 'DOM', 'RSS' or 'Simple'
-	 * @param array:
-	 * 		boolean ['lite'] When using 'DOM' if true or not defined then domit_lite is used
-	 * 		string  ['rssUrl'] the rss url to parse when using "RSS"
-	 * 		string	['cache_time'] with 'RSS' - feed cache time. If not defined defaults to 3600 sec
-	 * @return object Parsed XML document object
-	 */
-
-	 static public function &getXMLParser( $type = 'simple', $options = array())
-	 {
-		$doc = null;
-
-    	jimport('joomla.utilities.simplexml');
-    	$doc = new JSimpleXML();
-
-		return $doc;
 	}
 
 	/**
@@ -401,10 +379,10 @@ class JFactory
 		//get the editor configuration setting
 		$conf =& JFactory::getConfig();
 		$handler =  $conf->getValue('config.session_handler', 'none');
-		
+
 		// config time is in minutes
 		$options['expire'] = ($conf->getValue('config.lifetime')) ? $conf->getValue('config.lifetime') * 60 : 900;
-		
+
 		$session = JSession::getInstance($handler, $options);
 		if ($session->getState() == 'expired') {
 			$session->restart();

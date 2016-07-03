@@ -68,24 +68,6 @@ class JComponentHelper
 		return ($result->enabled | $mainframe->isAdmin());
 	}
 
-	/**
-	 * Gets the parameter object for the component
-	 *
-	 * @access public
-	 * @param string $name The component name
-	 * @return object A JParameter object
-	 */
-	static function &getParams( $name )
-	{
-		static $instances;
-		if (!isset( $instances[$name] ))
-		{
-			$component = &JComponentHelper::getComponent( $name );
-			$instances[$name] = new JParameter($component->meta);
-		}
-		return $instances[$name];
-	}
-
 	static function renderComponent($name, $params = array())
 	{
 		global $mainframe, $option;
@@ -127,16 +109,7 @@ class JComponentHelper
         {
             $contents = self::_renderComponent($path);
 
-            // Build the component toolbar
-            jimport( 'joomla.application.helper' );
-            if (($path = JApplicationHelper::getPath( 'toolbar' )) && $mainframe->isAdmin())
-            {
-                // Get the task again, in case it has changed
-                $task = JRequest::getString( 'task' );
-
-                // Make the toolbar
-                include_once( $path );
-            }
+            
 
             return $contents;
         }

@@ -129,7 +129,7 @@ class JApplication extends JObject
 		{
 			//Load the router object
 			jimport('joomla.application.helper');
-			$info =& JApplicationHelper::getClientInfo($client, true);
+
             $classname = $prefix.ucfirst($client);
             if ( !class_exists($classname) )
             {
@@ -205,7 +205,7 @@ class JApplication extends JObject
  	function dispatch($component)
  	{
 		$document =& JFactory::getDocument();
-
+die('asdf');
 		$document->setTitle( $this->getCfg('sitename' ). ' - ' .JText::_( 'Administration' ));
 		$document->setDescription( $this->getCfg('MetaDesc') );
 
@@ -918,22 +918,6 @@ class JApplication extends JObject
 	}
 
 	/**
-	 * Deprecated, use JDocument->addCustomTag instead (only when document type is HTML).
-	 *
-	 * @since 1.0
-	 * @deprecated As of version 1.5
-	 * @param string Valid HTML
-	 * @see JDocumentHTML::addCustomTag()
-	 */
-	function addCustomHeadTag( $html )
-	{
-		$document=& JFactory::getDocument();
-		if($document->getType() == 'html') {
-			$document->addCustomTag($html);
-		}
-	}
-
-	/**
 	 * Deprecated.
 	 *
 	 * @since 1.0
@@ -991,19 +975,6 @@ class JApplication extends JObject
 	{
 		$menus = &JSite::getMenu();
 		return count($menus->getItems('type', 'content_item_link'));
-	}
-
-	/**
-	 * Deprecated, use JApplicationHelper::getPath instead.
-	 *
-	 * @since 1.0
-	 * @deprecated As of version 1.5
-	 * @see JApplicationHelper::getPath()
-	 */
-	function getPath($varname, $user_option = null)
-	{
-		jimport('joomla.application.helper');
-		return JApplicationHelper::getPath ($varname, $user_option);
 	}
 
 	/**

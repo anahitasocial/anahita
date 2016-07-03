@@ -95,21 +95,9 @@ class JUser extends JObject
 
 	/**
 	 * Description
-	 * @var string
-	 */
-	var $params			= null;
-
-	/**
-	 * Description
 	 * @var boolean
 	 */
 	var $guest     = null;
-
-	/**
-	 * User parameters
-	 * @var object
-	 */
-	var $_params 	= null;
 
 	/**
 	 * Error message
@@ -125,8 +113,6 @@ class JUser extends JObject
 	*/
 	function __construct($identifier = 0)
 	{
-		// Create the user parameters object
-		$this->_params = new JParameter( '' );
 
 		// Load the user if it exists
 		if (!empty($identifier)) {
@@ -177,48 +163,6 @@ class JUser extends JObject
 		}
 
 		return $instances[$id];
-	}
-
-	/**
-	 * Method to get a parameter value
-	 *
-	 * @access 	public
-	 * @param 	string 	$key 		Parameter key
-	 * @param 	mixed	$default	Parameter default value
-	 * @return	mixed				The value or the default if it did not exist
-	 * @since	1.5
-	 */
-	function getParam( $key, $default = null )
-	{
-		return $this->_params->get( $key, $default );
-	}
-
-	/**
-	 * Method to set a parameter
-	 *
-	 * @access 	public
-	 * @param 	string 	$key 	Parameter key
-	 * @param 	mixed	$value	Parameter value
-	 * @return	mixed			Set parameter value
-	 * @since	1.5
-	 */
-	function setParam( $key, $value )
-	{
-		return $this->_params->set( $key, $value );
-	}
-
-	/**
-	 * Method to set a default parameter if it does not exist
-	 *
-	 * @access 	public
-	 * @param 	string 	$key 	Parameter key
-	 * @param 	mixed	$value	Parameter value
-	 * @return	mixed			Set parameter value
-	 * @since	1.5
-	 */
-	function defParam( $key, $value )
-	{
-		return $this->_params->def( $key, $value );
 	}
 
 	/**
@@ -350,19 +294,6 @@ class JUser extends JObject
 		// TODO: this will be deprecated as of the ACL implementation
 		$db =& JFactory::getDBO();
 
-		if ( array_key_exists('params', $array) )
-		{
-			$params	= '';
-			$this->_params->bind($array['params']);
-			if ( is_array($array['params']) ) {
-				$params	= $this->_params->toString();
-			} else {
-				$params = $array['params'];
-			}
-
-			$this->params = $params;
-		}
-
 		// Bind the array
 		if (!$this->setProperties($array)) {
 			$this->setError("Unable to bind array to user object");
@@ -387,7 +318,6 @@ class JUser extends JObject
 	{
 		// Create the user table object
 		$table 	=& $this->getTable();
-		$this->params = $this->_params->toString();
 		$table->bind($this->getProperties());
 
 		// Check and store the object.
@@ -486,13 +416,6 @@ class JUser extends JObject
 			JError::raiseWarning( 'SOME_ERROR_CODE', 'JUser::_load: Unable to load user with id: '.$id );
 			return false;
 		}
-
-		/*
-		 * Set the user parameters using the default xml file.  We might want to
-		 * extend this in the future to allow for the ability to have custom
-		 * user parameters, but for right now we'll leave it how it is.
-		 */
-		$this->_params->loadINI($table->params);
 
 		// Assuming all is well at this point lets bind the data
 		$this->setProperties($table->getProperties());

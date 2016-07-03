@@ -12,6 +12,7 @@
 * See COPYRIGHT.php for copyright notices and details.
 */
 defined('JPATH_BASE') or die();
+
 /**
  * Simple Record Set object to allow our database connector to be used with
  * ADODB driven 3rd party libraries
@@ -45,14 +46,14 @@ class JRecordSet
 	function RecordCount() {
 		return $this->count;
 	}
-	
+
 	/**
 	 * @return int
 	 */
 	function RowCount() {
 		return $this->RecordCount();
 	}
-	
+
 	/**
 	 * @return mixed A row from the data array or null
 	 */
