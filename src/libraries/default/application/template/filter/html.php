@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -44,14 +44,14 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
             //render the styles
             $text = str_replace('</head>', $this->_renderHead().$this->_renderStyles().'</head>', $text);
 
-            //render the scripts                
+            //render the scripts
             $text = str_replace('</body>', $this->_renderScripts().'</body>', $text);
         }
     }
 
     /**
      * Render title.
-     * 
+     *
      * @return string
      */
     protected function _renderHead()
@@ -74,7 +74,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
     /**
      * Return the document scripts.
-     * 
+     *
      * @return string
      */
     protected function _renderScripts()
@@ -83,6 +83,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $string = '';
 
         //include tranlsation files
+        //this isn't working
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
 
         // Generate script file links
@@ -104,7 +105,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
     /**
      * Return the document styles.
-     * 
+     *
      * @return string
      */
     protected function _renderStyles()

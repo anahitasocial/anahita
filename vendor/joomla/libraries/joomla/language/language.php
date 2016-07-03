@@ -376,8 +376,8 @@ class JLanguage extends JObject
 	 */
 	function get($property, $default = null)
 	{
-		if (isset ($this->_metadata[$property])) {
-			return $this->_metadata[$property];
+		if (isset ($this->_metadata->property)) {
+			return $this->_metadata->property;
 		}
 		return $default;
 	}
@@ -431,7 +431,7 @@ class JLanguage extends JObject
 	* @since	1.5
 	*/
 	function getName() {
-		return $this->_metadata['name'];
+		return $this->_metadata->name;
 	}
 
 	/**
@@ -465,7 +465,7 @@ class JLanguage extends JObject
 	* @since	1.5
 	*/
 	function getPdfFontName() {
-		return $this->_metadata['pdffontname'];
+		return $this->_metadata->pdffontname;
 	}
 
 	/**
@@ -476,7 +476,7 @@ class JLanguage extends JObject
 	* @since	1.5
 	*/
 	function getWinCP() {
-		return $this->_metadata['wincodepage'];
+		return $this->_metadata->wincodepage;
 	}
 
 	/**
@@ -487,7 +487,7 @@ class JLanguage extends JObject
 	* @since	1.5
 	*/
 	function getBackwardLang() {
-		return $this->_metadata['backwardlang'];
+		return $this->_metadata->backwardlang;
 	}
 
 	/**
@@ -498,7 +498,7 @@ class JLanguage extends JObject
 	* @since	1.5
 	*/
 	function getTag() {
-		return $this->_metadata['tag'];
+		return $this->_metadata->tag;
 	}
 
 	/**
@@ -510,7 +510,7 @@ class JLanguage extends JObject
 	*/
 	function getLocale()
 	{
-		$locales = explode(',', $this->_metadata['locale']);
+		$locales = explode(',', $this->_metadata->locale);
 
 		for($i = 0; $i < count($locales); $i++ ) {
 			$locale = $locales[$i];
@@ -530,7 +530,7 @@ class JLanguage extends JObject
 	* @since	1.5
 	*/
 	function isRTL() {
-		return $this->_metadata['rtl'];
+		return $this->_metadata->rtl;
 	}
 
 	/**
@@ -630,14 +630,15 @@ class JLanguage extends JObject
 	function getMetadata($lang)
 	{
 		$path = JLanguage::getLanguagePath(JPATH_BASE, $lang);
-		$file = $lang.'.xml';
+		$file = $lang.'.json';
 
-		$result = null;
-		if(is_file($path.DS.$file)) {
-			$result = JLanguage::_parseXMLLanguageFile($path.DS.$file);
+		$meta = null;
+		if(file_exists($path.DS.$file)) {
+			$result = json_decode(file_get_contents($path.DS.$file));
+			$meta = $result->meta;
 		}
 
-		return $result;
+		return $meta;
 	}
 
 	/**
@@ -686,13 +687,14 @@ class JLanguage extends JObject
 	 */
 	public function setLanguage($lang)
 	{
-		$previous			= $this->_lang;
-		$this->_lang		= $lang;
-		$this->_metadata	= $this->getMetadata($this->_lang);
+		$previous	= $this->_lang;
+		$this->_lang = $lang;
+		$this->_metadata = $this->getMetadata($this->_lang);
 
 		//set locale based on the language tag
 		//TODO : add function to display locale setting in configuration
 		$locale = setlocale(LC_TIME, $this->getLocale());
+
 		return $previous;
 	}
 
@@ -712,6 +714,7 @@ class JLanguage extends JObject
 
 		$subdirs = JFolder::folders($dir);
 		foreach ($subdirs as $path) {
+			//print $path."\n";
 			$langs = JLanguage::_parseXMLLanguageFiles($dir.DS.$path);
 			$languages = array_merge($languages, $langs);
 		}
