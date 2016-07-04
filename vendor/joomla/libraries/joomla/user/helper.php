@@ -64,7 +64,7 @@ class JUserHelper
 		}
 		else
 		{
-			JError::raiseWarning( "SOME_ERROR_CODE", JText::_('UNABLE TO FIND A USER WITH GIVEN ACTIVATION STRING') );
+			JError::raiseWarning( "SOME_ERROR_CODE", AnTranslator::_('UNABLE TO FIND A USER WITH GIVEN ACTIVATION STRING') );
 			return false;
 		}
 

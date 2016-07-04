@@ -263,18 +263,18 @@ class JDate extends JObject
 	{
 		switch ($month)
 		{
-			case 1:  return $abbr ? JText::_('JANUARY_SHORT')   : JText::_('JANUARY');
-			case 2:  return $abbr ? JText::_('FEBRUARY_SHORT')  : JText::_('FEBRUARY');
-			case 3:  return $abbr ? JText::_('MARCH_SHORT')     : JText::_('MARCH');
-			case 4:  return $abbr ? JText::_('APRIL_SHORT')     : JText::_('APRIL');
-			case 5:  return $abbr ? JText::_('MAY_SHORT')       : JText::_('MAY');
-			case 6:  return $abbr ? JText::_('JUNE_SHORT')      : JText::_('JUNE');
-			case 7:  return $abbr ? JText::_('JULY_SHORT')      : JText::_('JULY');
-			case 8:  return $abbr ? JText::_('AUGUST_SHORT')    : JText::_('AUGUST');
-			case 9:  return $abbr ? JText::_('SEPTEMBER_SHORT')  : JText::_('SEPTEMBER');
-			case 10: return $abbr ? JText::_('OCTOBER_SHORT')   : JText::_('OCTOBER');
-			case 11: return $abbr ? JText::_('NOVEMBER_SHORT')  : JText::_('NOVEMBER');
-			case 12: return $abbr ? JText::_('DECEMBER_SHORT')  : JText::_('DECEMBER');
+			case 1:  return $abbr ? AnTranslator::_('JANUARY_SHORT')   : AnTranslator::_('JANUARY');
+			case 2:  return $abbr ? AnTranslator::_('FEBRUARY_SHORT')  : AnTranslator::_('FEBRUARY');
+			case 3:  return $abbr ? AnTranslator::_('MARCH_SHORT')     : AnTranslator::_('MARCH');
+			case 4:  return $abbr ? AnTranslator::_('APRIL_SHORT')     : AnTranslator::_('APRIL');
+			case 5:  return $abbr ? AnTranslator::_('MAY_SHORT')       : AnTranslator::_('MAY');
+			case 6:  return $abbr ? AnTranslator::_('JUNE_SHORT')      : AnTranslator::_('JUNE');
+			case 7:  return $abbr ? AnTranslator::_('JULY_SHORT')      : AnTranslator::_('JULY');
+			case 8:  return $abbr ? AnTranslator::_('AUGUST_SHORT')    : AnTranslator::_('AUGUST');
+			case 9:  return $abbr ? AnTranslator::_('SEPTEMBER_SHORT')  : AnTranslator::_('SEPTEMBER');
+			case 10: return $abbr ? AnTranslator::_('OCTOBER_SHORT')   : AnTranslator::_('OCTOBER');
+			case 11: return $abbr ? AnTranslator::_('NOVEMBER_SHORT')  : AnTranslator::_('NOVEMBER');
+			case 12: return $abbr ? AnTranslator::_('DECEMBER_SHORT')  : AnTranslator::_('DECEMBER');
 		}
 	}
 
@@ -290,13 +290,13 @@ class JDate extends JObject
 	{
 		switch ($day)
 		{
-			case 0: return $abbr ? JText::_('SUN') : JText::_('SUNDAY');
-			case 1: return $abbr ? JText::_('MON') : JText::_('MONDAY');
-			case 2: return $abbr ? JText::_('TUE') : JText::_('TUESDAY');
-			case 3: return $abbr ? JText::_('WED') : JText::_('WEDNESDAY');
-			case 4: return $abbr ? JText::_('THU') : JText::_('THURSDAY');
-			case 5: return $abbr ? JText::_('FRI') : JText::_('FRIDAY');
-			case 6: return $abbr ? JText::_('SAT') : JText::_('SATURDAY');
+			case 0: return $abbr ? AnTranslator::_('SUN') : AnTranslator::_('SUNDAY');
+			case 1: return $abbr ? AnTranslator::_('MON') : AnTranslator::_('MONDAY');
+			case 2: return $abbr ? AnTranslator::_('TUE') : AnTranslator::_('TUESDAY');
+			case 3: return $abbr ? AnTranslator::_('WED') : AnTranslator::_('WEDNESDAY');
+			case 4: return $abbr ? AnTranslator::_('THU') : AnTranslator::_('THURSDAY');
+			case 5: return $abbr ? AnTranslator::_('FRI') : AnTranslator::_('FRIDAY');
+			case 6: return $abbr ? AnTranslator::_('SAT') : AnTranslator::_('SATURDAY');
 		}
 	}
 

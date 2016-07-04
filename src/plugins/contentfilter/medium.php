@@ -63,7 +63,7 @@
                     $template = '<div class="alert alert-block alert-success">';
 
                     if ($medium->title) {
-                        $template .= '<h4><a href="'.JRoute::_($medium->getURL()).'">'.$medium->title.'</a></h4>';
+                        $template .= '<h4><a href="'.route($medium->getURL()).'">'.$medium->title.'</a></h4>';
                     }
 
                     if ($medium->excerpt) {

@@ -55,7 +55,7 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
     public function redirect(KCommandContext $context)
     {
         if ($context->action == 'edit' || $context->action == 'add') {
-            $context->response->setRedirect(JRoute::_($this->getItem()->getURL().'&layout=edit'));
+            $context->response->setRedirect(route($this->getItem()->getURL().'&layout=edit'));
         } else {
             return parent::redirect($context);
         }

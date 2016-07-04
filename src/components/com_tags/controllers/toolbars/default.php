@@ -80,10 +80,10 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-DELETE')))
-        ->href(JRoute::_($entity->getURL()))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
+        ->href(route($entity->getURL()))
         ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', JRoute::_($entity->owner->getURL()))
+        ->setAttribute('data-redirect', route($entity->owner->getURL()))
         ->class('action-delete');
     }
 
@@ -103,6 +103,6 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 
         $command
         ->append(array('label' => $label))
-        ->href(JRoute::_($url));
+        ->href(route($url));
     }
 }

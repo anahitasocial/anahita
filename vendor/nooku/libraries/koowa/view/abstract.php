@@ -259,7 +259,7 @@ abstract class KViewAbstract extends KObject
 		}
 		
 		//Create the route 
-		$route = KService::get('koowa:http.url', array('url' => JRoute::_('index.php?'.http_build_query($parts))));
+		$route = KService::get('koowa:http.url', array('url' => route('index.php?'.http_build_query($parts))));
 		
 		//Add the host and the schema
 		if($fqr)

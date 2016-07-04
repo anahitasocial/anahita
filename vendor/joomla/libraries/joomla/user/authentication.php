@@ -51,7 +51,7 @@ class JAuthentication extends JObservable
 		$isLoaded = KService::get('com:plugins.helper')->import('authentication');
 
 		if (!$isLoaded) {
-			JError::raiseWarning('SOME_ERROR_CODE', JText::_('JAuthentication::__construct: Could not load authentication libraries.'));
+			JError::raiseWarning('SOME_ERROR_CODE', AnTranslator::_('JAuthentication::__construct: Could not load authentication libraries.'));
 		}
 	}
 

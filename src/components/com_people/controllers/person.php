@@ -208,11 +208,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         } else {
             $context->response->setHeader('X-User-Activation-Required', true);
-            $this->setMessage(JText::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
+            $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
             $redirectUrl .= '&view=session';
         }
 
-        $context->response->setRedirect(JRoute::_($redirectUrl));
+        $context->response->setRedirect(route($redirectUrl));
         $context->response->status = 200;
 
         return $person;
@@ -249,7 +249,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         if ($url) {
-            $context->response->setRedirect(JRoute::_($url));
+            $context->response->setRedirect(route($url));
         }
     }
 
@@ -274,7 +274,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->mail(array(
             'to' => $person->email,
-            'subject' => sprintf(JText::_($subject), JFactory::getConfig()->getValue('sitename')),
+            'subject' => sprintf(AnTranslator::_($subject), JFactory::getConfig()->getValue('sitename')),
             'template' => $template,
         ));
     }
@@ -288,7 +288,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $person = $context->result;
         $this->mailAdmins(array(
-            'subject' => JText::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
+            'subject' => AnTranslator::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
             'template' => 'new_admin',
         ));
     }
@@ -304,7 +304,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $user = $this->getService('repos://site/users.user')
                      ->find(array('id' => $person->userId));
         $context->response
-        ->setRedirect(JRoute::_('option=com_people&view=session&token='.$user->activation));
+        ->setRedirect(route('option=com_people&view=session&token='.$user->activation));
     }
 
     /**
@@ -318,7 +318,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $viewer = get_viewer();
 
         if ($viewer->admin() || $viewer->eql($this->getItem())) {
-            $tabs->insert('account', array('label' => JText::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));
+            $tabs->insert('account', array('label' => AnTranslator::_('COM-PEOPLE-SETTING-TAB-ACCOUNT')));
         }
     }
 }

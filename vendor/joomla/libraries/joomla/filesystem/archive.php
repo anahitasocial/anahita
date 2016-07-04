@@ -118,7 +118,7 @@ class JArchive
 				}
 				break;
 			default:
-				JError::raiseWarning(10, JText::_('UNKNOWNARCHIVETYPE'));
+				JError::raiseWarning(10, AnTranslator::_('UNKNOWNARCHIVETYPE'));
 				return false;
 				break;
 		}
@@ -148,7 +148,7 @@ class JArchive
 				if (file_exists($path)) {
 					require_once($path);
 				} else {
-					JError::raiseError(500,JText::_('Unable to load archive'));
+					JError::raiseError(500,AnTranslator::_('Unable to load archive'));
 				}
 			}
 

@@ -54,9 +54,9 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         $this->actor->resetNotifications();
 
         if ($this->actor->eql(get_viewer())) {
-            $title = JText::_('COM-NOTIFICATIONS-ACTORBAR-YOUR-NOTIFICATIONS');
+            $title = AnTranslator::_('COM-NOTIFICATIONS-ACTORBAR-YOUR-NOTIFICATIONS');
         } else {
-            $title = sprintf(JText::_('COM-NOTIFICATIONS-ACTORBAR-ACTOR-NOTIFICATIONS'), $this->actor->name);
+            $title = sprintf(AnTranslator::_('COM-NOTIFICATIONS-ACTORBAR-ACTOR-NOTIFICATIONS'), $this->actor->name);
         }
 
         $this->getToolbar('actorbar')->setTitle($title);

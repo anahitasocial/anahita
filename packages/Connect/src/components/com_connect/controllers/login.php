@@ -45,12 +45,12 @@ class ComConnectControllerLogin extends ComBaseControllerResource
         $token = $this->getAPI()->getToken();
 
         if (empty($token)) {
-            $context->response->setRedirect(JRoute::_('index.php?'));
+            $context->response->setRedirect(route('index.php?'));
 
             return false;
         }
 
-        $context->response->setRedirect(JRoute::_('option=com_connect&view=login'));
+        $context->response->setRedirect(route('option=com_connect&view=login'));
     }
 
     /**
@@ -59,7 +59,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
     protected function _actionRead(KCommandContext $context)
     {
         if (!$this->getAPI()) {
-            $context->response->setRedirect(JRoute::_('option=com_people&view=person&get=settings&edit=connect'));
+            $context->response->setRedirect(route('option=com_people&view=person&get=settings&edit=connect'));
 
             return false;
         }

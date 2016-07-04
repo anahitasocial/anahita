@@ -114,10 +114,10 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-DELETE')))
-        ->href(JRoute::_($entity->getURL()))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
+        ->href(route($entity->getURL()))
         ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', JRoute::_($entity->owner->getURL()))
+        ->setAttribute('data-redirect', route($entity->owner->getURL()))
         ->class('action-delete');
     }
 
@@ -138,7 +138,7 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
 
         $command
         ->append(array('label' => $label))
-        ->href(JRoute::_($url));
+        ->href(route($url));
     }
 
     /**
@@ -150,7 +150,7 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
 
-        $label = ($entity->pinned) ? JTEXT::_('LIB-AN-ACTION-UNPIN') : JTEXT::_('LIB-AN-ACTION-PIN');
+        $label = ($entity->pinned) ? AnTranslator::_('LIB-AN-ACTION-UNPIN') : AnTranslator::_('LIB-AN-ACTION-PIN');
 
         $command
         ->append(array('label' => $label))

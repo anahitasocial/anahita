@@ -205,8 +205,8 @@ class JApplication extends JObject
  	function dispatch($component)
  	{
 		$document =& JFactory::getDocument();
-die('asdf');
-		$document->setTitle( $this->getCfg('sitename' ). ' - ' .JText::_( 'Administration' ));
+
+		$document->setTitle( $this->getCfg('sitename' ). ' - ' .AnTranslator::_( 'Administration' ));
 		$document->setDescription( $this->getCfg('MetaDesc') );
 
 		$contents = JComponentHelper::renderComponent($component);
@@ -583,7 +583,7 @@ die('asdf');
 		}
 
 		// Return the error
-		return JError::raiseWarning('SOME_ERROR_CODE', JText::_('E_LOGIN_AUTHENTICATE'));
+		return JError::raiseWarning('SOME_ERROR_CODE', AnTranslator::_('E_LOGIN_AUTHENTICATE'));
 	}
 
 	/**

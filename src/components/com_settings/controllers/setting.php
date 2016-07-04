@@ -57,7 +57,7 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     */
     protected function _actionGet(KCommandContext $context)
     {
-        $title = JText::_('COM-SETTINGS-HEADER-SYSTEM');
+        $title = AnTranslator::_('COM-SETTINGS-HEADER-SYSTEM');
 
         $this->getToolbar('menubar')->setTitle($title);
 

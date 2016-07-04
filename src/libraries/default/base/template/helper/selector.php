@@ -407,24 +407,24 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
         $prompt = $options->prompt;
 
         $months = array(
-            1 => JText::_('LIB-AN-JANUARY'),
-            2 => JText::_('LIB-AN-FEBRURARY'),
-            3 => JText::_('LIB-AN-MARCH'),
-            4 => JText::_('LIB-AN-APRIL'),
-            5 => JText::_('LIB-AN-MAY'),
-            6 => JText::_('LIB-AN-JUNE'),
-            7 => JText::_('LIB-AN-JULY'),
-            8 => JText::_('LIB-AN-AUGUST'),
-            9 => JText::_('LIB-AN-SEPTEMBER'),
-            10 => JText::_('LIB-AN-OCTOBER'),
-            11 => JText::_('LIB-AN-NOVEMBER'),
-            12 => JText::_('LIB-AN-DECEMBER'),
+            1 => AnTranslator::_('LIB-AN-JANUARY'),
+            2 => AnTranslator::_('LIB-AN-FEBRURARY'),
+            3 => AnTranslator::_('LIB-AN-MARCH'),
+            4 => AnTranslator::_('LIB-AN-APRIL'),
+            5 => AnTranslator::_('LIB-AN-MAY'),
+            6 => AnTranslator::_('LIB-AN-JUNE'),
+            7 => AnTranslator::_('LIB-AN-JULY'),
+            8 => AnTranslator::_('LIB-AN-AUGUST'),
+            9 => AnTranslator::_('LIB-AN-SEPTEMBER'),
+            10 => AnTranslator::_('LIB-AN-OCTOBER'),
+            11 => AnTranslator::_('LIB-AN-NOVEMBER'),
+            12 => AnTranslator::_('LIB-AN-DECEMBER'),
         );
 
         unset($options->prompt);
 
         if ($prompt) {
-            $array = array(JText::_('LIB-AN-SELECTOR-SELECT-MONTH'), null);
+            $array = array(AnTranslator::_('LIB-AN-SELECTOR-SELECT-MONTH'), null);
             $months = AnHelperArray::merge($array, $months);
         }
 
@@ -458,7 +458,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
         $years = array_combine(range($options->start, $options->end), range($options->start, $options->end));
 
         if ($prompt) {
-            $array = array(JText::_('LIB-AN-SELECTOR-SELECT-YEAR'));
+            $array = array(AnTranslator::_('LIB-AN-SELECTOR-SELECT-YEAR'));
             $years = AnHelperArray::merge($array, $years);
         }
 
@@ -487,7 +487,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
         $prompt = $options->prompt;
         unset($options->prompt);
         if ($prompt) {
-            $array = array(JText::_('LIB-AN-SELECTOR-SELECT-DAY'));
+            $array = array(AnTranslator::_('LIB-AN-SELECTOR-SELECT-DAY'));
             $days = AnHelperArray::merge($array, $days);
         }
 
@@ -520,11 +520,11 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
         unset($options->use_country_code);
 
         $countries = array(
-            null => JText::_('LIB-AN-SELECTOR-SELECT-OPTION'),
+            null => AnTranslator::_('LIB-AN-SELECTOR-SELECT-OPTION'),
         );
 
         foreach (self::$COUNTRIES as $key => $name) {
-            $countries[$use_country_code ? $key : $name] = JText::_($name);
+            $countries[$use_country_code ? $key : $name] = AnTranslator::_($name);
         }
 
         return $this->_html->select($options->name, array('options' => $countries, 'selected' => $selected), KConfig::unbox($options));
@@ -567,11 +567,11 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
         $provinces = array();
 
         foreach (self::$US_STATES as $key => $name) {
-            $states[$use_state_code ? $key : $name] = JText::_($name);
+            $states[$use_state_code ? $key : $name] = AnTranslator::_($name);
         }
 
         foreach (self::$CANADA_PROVINCES as $key => $name) {
-            $provinces[$use_state_code ? $key : $name] = JText::_($name);
+            $provinces[$use_state_code ? $key : $name] = AnTranslator::_($name);
         }
 
         $selected = $options->selected;

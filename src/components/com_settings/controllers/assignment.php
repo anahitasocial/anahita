@@ -32,7 +32,7 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
 
     protected function _actionGet(KCommandContext $context)
     {
-        $title = JText::_('COM-SETTINGS-HEADER-ASSIGNMENTS');
+        $title = AnTranslator::_('COM-SETTINGS-HEADER-ASSIGNMENTS');
 
         $this->getToolbar('menubar')->setTitle($title);
 

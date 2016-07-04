@@ -13,7 +13,7 @@
     <?php if ($viewer->admin()) : ?>
     <?php
     $usertypes = array(
-        '' => JText::_('COM-PEOPLE-FILTER-USERTYPE'),
+        '' => AnTranslator::_('COM-PEOPLE-FILTER-USERTYPE'),
         ComPeopleDomainEntityPerson::USERTYPE_REGISTERED => @text('COM-PEOPLE-USERTYPE-REGISTERED'),
         ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR => @text('COM-PEOPLE-USERTYPE-ADMINISTRATOR'),
         ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR => @text('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR'),

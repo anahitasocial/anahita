@@ -63,7 +63,7 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
             }
 
             if (strpos($url, '/') === 0) {
-                return JRoute::_($url);
+                return route($url);
             }
 
             $url = str_replace('index.php?', '', trim($url));
@@ -107,7 +107,7 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
             unset($url['layout']);
         }
 
-        $route = JRoute::_('index.php?'.http_build_query($url), false);
+        $route = route('index.php?'.http_build_query($url), false);
 
         return $route;
     }

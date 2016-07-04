@@ -89,7 +89,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         $flash = $this->_mixer->getState()->flash;
         $message = $flash->getMessage();
         if ($message) {
-            $message['message'] = JText::_($message['message']);
+            $message['message'] = AnTranslator::_($message['message']);
             $this->storeValue('message', $message, true);
         }
     }
@@ -117,7 +117,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         //in the header
         if ($this->getRequest()->isAjax()) {
             $this->getResponse()->setHeader('X-Message',
-                    json_encode(array('text' => JText::_($message), 'type' => $type)));
+                    json_encode(array('text' => AnTranslator::_($message), 'type' => $type)));
         } else {
             $this->storeValue('message', array('type' => $type, 'message' => $message), $global);
         }

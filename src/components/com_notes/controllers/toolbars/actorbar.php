@@ -26,7 +26,7 @@ class ComNotesControllerToolbarActorbar extends ComBaseControllerToolbarActorbar
 
         if ($this->getController()->isOwnable() && $this->getController()->actor) {
             $actor = pick($this->getController()->actor, get_viewer());
-            $this->setTitle(sprintf(JText::_('COM-NOTES-HEADER-NOTES'), $actor->name));
+            $this->setTitle(sprintf(AnTranslator::_('COM-NOTES-HEADER-NOTES'), $actor->name));
             $this->setActor($actor);
         }
     }

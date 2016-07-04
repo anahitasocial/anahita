@@ -440,8 +440,8 @@ class JRequest
 			if($session->isNew()) {
 				//Redirect to login screen
 				global $mainframe;
-				$return = JRoute::_('index.php');
-;				$mainframe->redirect($return, JText::_('SESSION_EXPIRED'));
+				$return = route('index.php');
+;				$mainframe->redirect($return, AnTranslator::_('SESSION_EXPIRED'));
 				$mainframe->close();
 			} else {
 				return false;

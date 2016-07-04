@@ -37,7 +37,6 @@ JLoader::import( 'joomla.environment.response');
 
 //Factory class and methods
 JLoader::import( 'joomla.factory');
-JLoader::import( 'joomla.version');
 
 //Error
 JLoader::import( 'joomla.error.error');
@@ -48,8 +47,3 @@ JLoader::import( 'joomla.utilities.arrayhelper');
 
 //Filters
 JLoader::import( 'joomla.filter.filterinput');
-JLoader::import( 'joomla.filter.filteroutput');
-
-//Register class that don't follow one file per class naming conventions
-JLoader::register('JText' , dirname(__FILE__).DS.'methods.php');
-JLoader::register('JRoute', dirname(__FILE__).DS.'methods.php');

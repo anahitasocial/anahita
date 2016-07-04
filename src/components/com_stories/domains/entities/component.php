@@ -94,7 +94,7 @@ class ComStoriesDomainEntityComponent extends ComComponentsDomainEntityComponent
             $controller->oid($actor->id)->view('stories');
 
             $gadgets->insert('stories', array(
-                'title' => JText::_('COM-STORIES-GADGET-TITLE-STORIES'),
+                'title' => AnTranslator::_('COM-STORIES-GADGET-TITLE-STORIES'),
                 'show_title' => get_viewer()->guest(),
                 'content' => $content,
             ));
@@ -102,7 +102,7 @@ class ComStoriesDomainEntityComponent extends ComComponentsDomainEntityComponent
             $controller->view('stories')->filter('leaders');
 
             $gadgets->insert('stories', array(
-                    'title' => JText::_('COM-STORIES-GADGET-TITLE-STORIES'),
+                    'title' => AnTranslator::_('COM-STORIES-GADGET-TITLE-STORIES'),
                     'show_title' => get_viewer()->guest(),
                     'content' => $content,
             ));

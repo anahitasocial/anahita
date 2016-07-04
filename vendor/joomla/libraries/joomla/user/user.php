@@ -238,7 +238,7 @@ class JUser extends JObject
 			}
 
 			if ($array['password'] != $array['password2']) {
-					$this->setError( JText::_( 'PASSWORD DO NOT MATCH.' ) );
+					$this->setError( AnTranslator::_( 'PASSWORD DO NOT MATCH.' ) );
 					return false;
 			}
 
@@ -275,7 +275,7 @@ class JUser extends JObject
 			if (!empty($array['password']))
 			{
 				if ( $array['password'] != $array['password2'] ) {
-					$this->setError( JText::_( 'PASSWORD DO NOT MATCH.' ) );
+					$this->setError( AnTranslator::_( 'PASSWORD DO NOT MATCH.' ) );
 					return false;
 				}
 

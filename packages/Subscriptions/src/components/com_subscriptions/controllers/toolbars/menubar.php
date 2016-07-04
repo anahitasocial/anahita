@@ -30,29 +30,29 @@ class ComSubscriptionsControllerToolbarMenubar extends ComBaseControllerToolbarM
         //packages transactions
         $this->addNavigation(
             'nav-transactions',
-            JText::_('COM-SUBSCRIPTIONS-TRANSACTIONS-MENU-ITEM'),
-            JRoute::_('option=com_subscriptions&view=orders'),
+            AnTranslator::_('COM-SUBSCRIPTIONS-TRANSACTIONS-MENU-ITEM'),
+            route('option=com_subscriptions&view=orders'),
             ($name == 'order') ? true : false);
 
         //packages navigation
         $this->addNavigation(
             'nav-packages',
-            JText::_('COM-SUBSCRIPTIONS-PACKAGES-MENU-ITEM'),
-            JRoute::_('option=com_subscriptions&view=packages'),
+            AnTranslator::_('COM-SUBSCRIPTIONS-PACKAGES-MENU-ITEM'),
+            route('option=com_subscriptions&view=packages'),
             ($name == 'package') ? true : false);
 
         //coupons navigation
         $this->addNavigation(
             'nav-coupons',
-            JText::_('COM-SUBSCRIPTIONS-COUPONS-MENU-ITEM'),
-            JRoute::_('option=com_subscriptions&view=coupons'),
+            AnTranslator::_('COM-SUBSCRIPTIONS-COUPONS-MENU-ITEM'),
+            route('option=com_subscriptions&view=coupons'),
             ($name == 'coupon') ? true : false);
 
        //coupons navigation
         $this->addNavigation(
             'nav-vats',
-            JText::_('COM-SUBSCRIPTIONS-VATS-MENU-ITEM'),
-            JRoute::_('option=com_subscriptions&view=vats'),
+            AnTranslator::_('COM-SUBSCRIPTIONS-VATS-MENU-ITEM'),
+            route('option=com_subscriptions&view=vats'),
             ($name == 'vat') ? true : false);
     }
 }

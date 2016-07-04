@@ -93,7 +93,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
                 'longitude' => $location->longitude,
                 'latitude' => $location->latitude,
                 'name' => $location->name,
-                'url' => JRoute::_($location->getURL())
+                'url' => route($location->getURL())
             );
         }
 

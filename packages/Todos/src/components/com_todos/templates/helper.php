@@ -53,11 +53,11 @@ class ComTodosTemplateHelper extends KTemplateHelperAbstract
         }
 
         $options = array(
-            array(ComTodosDomainEntityTodo::PRIORITY_HIGHEST,    JText::_('COM-TODOS-TODO-PRIORITY-HIGHEST')),
-            array(ComTodosDomainEntityTodo::PRIORITY_HIGH,        JText::_('COM-TODOS-TODO-PRIORITY-HIGH')),
-            array(ComTodosDomainEntityTodo::PRIORITY_NORMAL,    JText::_('COM-TODOS-TODO-PRIORITY-NORMAL')),
-            array(ComTodosDomainEntityTodo::PRIORITY_LOW,        JText::_('COM-TODOS-TODO-PRIORITY-LOW')),
-            array(ComTodosDomainEntityTodo::PRIORITY_LOWEST,    JText::_('COM-TODOS-TODO-PRIORITY-LOWEST')),
+            array(ComTodosDomainEntityTodo::PRIORITY_HIGHEST,    AnTranslator::_('COM-TODOS-TODO-PRIORITY-HIGHEST')),
+            array(ComTodosDomainEntityTodo::PRIORITY_HIGH,        AnTranslator::_('COM-TODOS-TODO-PRIORITY-HIGH')),
+            array(ComTodosDomainEntityTodo::PRIORITY_NORMAL,    AnTranslator::_('COM-TODOS-TODO-PRIORITY-NORMAL')),
+            array(ComTodosDomainEntityTodo::PRIORITY_LOW,        AnTranslator::_('COM-TODOS-TODO-PRIORITY-LOW')),
+            array(ComTodosDomainEntityTodo::PRIORITY_LOWEST,    AnTranslator::_('COM-TODOS-TODO-PRIORITY-LOWEST')),
         );
 
         return $html->select('priority', array('options' => $options, 'selected' => $selected))->class('input-medium')->id('todo-priority');

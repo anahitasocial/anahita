@@ -138,9 +138,9 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
             if ($context->request->getFormat() == 'html') {
                 $offset = $this->getItem()->getCommentOffset($comment->id);
                 $start = (int) ($offset / $this->limit) * $this->limit;
-                $context->response->setRedirect(JRoute::_($comment->parent->getURL().'&start='.$start).'#scroll='.$comment->id);
+                $context->response->setRedirect(route($comment->parent->getURL().'&start='.$start).'#scroll='.$comment->id);
             } else {
-                $context->response->setRedirect(JRoute::_($comment->getURL()));
+                $context->response->setRedirect(route($comment->getURL()));
             }
         }
 

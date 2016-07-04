@@ -107,7 +107,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
         }
 
         if ($linked && $actor->authorize('access')) {
-            $url = JRoute::_($actor->getURL());
+            $url = route($actor->getURL());
             $verified = ($actor->verified) ? 'verified' : '';
             $img = '<a class="actor-avatar-link '.$verified.'" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
         }
@@ -142,7 +142,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
         }
 
         if ($linked && $actor->authorize('access')) {
-            $url = JRoute::_($actor->getURL());
+            $url = route($actor->getURL());
             $img = '<a '.$this->_buildAttribute($attr).' data-actor="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
         }
 
@@ -162,7 +162,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
     {
         if (is_null($actor) || !isset($actor->id)) {
             $linked = false;
-            $name = '<span class="actor-name">'.JText::_('LIB-AN-UNKOWN-PERSON').'</span>';
+            $name = '<span class="actor-name">'.AnTranslator::_('LIB-AN-UNKOWN-PERSON').'</span>';
         } else {
             $name = '<span class="actor-name" actorid="'.$actor->id.'">'.$actor->name.'</span>';
             if($actor->verified){
@@ -174,7 +174,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
             return (string) $name;
         }
 
-        $url = JRoute::_($actor->getURL());
+        $url = route($actor->getURL());
 
         if (is_person($actor)) {
             $attr['title'] = '@'.$actor->username;

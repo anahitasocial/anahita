@@ -39,7 +39,7 @@
     {
         $text = preg_replace(
         "/https?\:\/\/gist.github.com\/[\S]+\/[0-9a-z]+[^\W]/",
-        '<div class="an-meta" data-trigger="LoadGist" data-inline data-src="\\0.js">'.JText::_('LIB-AN-REMOTE-LOADING').'</div>',
+        '<div class="an-meta" data-trigger="LoadGist" data-inline data-src="\\0.js">'.AnTranslator::_('LIB-AN-REMOTE-LOADING').'</div>',
         $text);
 
         return $text;

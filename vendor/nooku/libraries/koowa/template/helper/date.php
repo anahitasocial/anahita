@@ -112,11 +112,11 @@ class KTemplateHelperDate extends KTemplateHelperAbstract
                     $periods[$i].= 's';
                 }
 
-                $result = sprintf(JText::_('%s '.$periods[$i].' '.$tense), $difference);
+                $result = sprintf(AnTranslator::_('%s '.$periods[$i].' '.$tense), $difference);
             }
-            else $result = JText::_('Now');
+            else $result = AnTranslator::_('Now');
         }
-        else $result = JText::_('Never');
+        else $result = AnTranslator::_('Never');
 
         return $result;
     }

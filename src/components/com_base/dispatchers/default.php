@@ -146,7 +146,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 
             $return = base64_encode(KRequest::url());
 
-            $context->response->setRedirect(JRoute::_('option=com_people&view=session&return='.$return));
+            $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
 
             $context->response->send();
 

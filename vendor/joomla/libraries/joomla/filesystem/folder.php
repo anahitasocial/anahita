@@ -53,15 +53,15 @@ class JFolder
 		$dest = rtrim($dest, DS);
 
 		if (!JFolder::exists($src)) {
-			return JError::raiseError(-1, JText::_('Cannot find source folder'));
+			return JError::raiseError(-1, AnTranslator::_('Cannot find source folder'));
 		}
 		if (JFolder::exists($dest) && !$force) {
-			return JError::raiseError(-1, JText::_('Folder already exists'));
+			return JError::raiseError(-1, AnTranslator::_('Folder already exists'));
 		}
 
 		// Make sure the destination exists
 		if (! JFolder::create($dest)) {
-			return JError::raiseError(-1, JText::_('Unable to create target folder'));
+			return JError::raiseError(-1, AnTranslator::_('Unable to create target folder'));
 		}
 
 		if ($ftpOptions['enabled'] == 1)
@@ -74,7 +74,7 @@ class JFolder
 			);
 
 			if (!($dh = @opendir($src))) {
-				return JError::raiseError(-1, JText::_('Unable to open source folder'));
+				return JError::raiseError(-1, AnTranslator::_('Unable to open source folder'));
 			}
 			// Walk through the directory copying files and recursing into folders.
 			while (($file = readdir($dh)) !== false) {
@@ -94,14 +94,14 @@ class JFolder
 						// Translate path for the FTP account
 						$dfid = JPath::clean(str_replace(JPATH_ROOT, $ftpOptions['root'], $dfid), '/');
 						if (! $ftp->store($sfid, $dfid)) {
-							return JError::raiseError(-1, JText::_('Copy failed'));
+							return JError::raiseError(-1, AnTranslator::_('Copy failed'));
 						}
 						break;
 				}
 			}
 		} else {
 			if (!($dh = @opendir($src))) {
-				return JError::raiseError(-1, JText::_('Unable to open source folder'));
+				return JError::raiseError(-1, AnTranslator::_('Unable to open source folder'));
 			}
 			// Walk through the directory copying files and recursing into folders.
 			while (($file = readdir($dh)) !== false) {
@@ -119,7 +119,7 @@ class JFolder
 
 					case 'file':
 						if (!@copy($sfid, $dfid)) {
-							return JError::raiseError(-1, JText::_('Copy failed'));
+							return JError::raiseError(-1, AnTranslator::_('Copy failed'));
 						}
 						break;
 				}
@@ -154,7 +154,7 @@ class JFolder
 			if (($nested > 20) || ($parent == $path)) {
 				JError::raiseWarning(
 					'SOME_ERROR_CODE',
-					'JFolder::create: ' . JText::_('Infinite loop detected')
+					'JFolder::create: ' . AnTranslator::_('Infinite loop detected')
 				);
 				$nested--;
 				return false;
@@ -217,7 +217,7 @@ class JFolder
 					// Return false for JFolder::create because the path to be created is not in open_basedir
 					JError::raiseWarning(
 						'SOME_ERROR_CODE',
-						'JFolder::create: ' . JText::_('Path not in open_basedir paths')
+						'JFolder::create: ' . AnTranslator::_('Path not in open_basedir paths')
 					);
 					return false;
 				}
@@ -231,7 +231,7 @@ class JFolder
 				@umask($origmask);
 				JError::raiseWarning(
 					'SOME_ERROR_CODE',
-					'JFolder::create: ' . JText::_('Could not create directory'),
+					'JFolder::create: ' . AnTranslator::_('Could not create directory'),
 					'Path: ' . $path
 				);
 				return false;
@@ -255,7 +255,7 @@ class JFolder
 		// Sanity check
 		if (!$path) {
 			// Bad programmer! Bad Bad programmer!
-			JError::raiseWarning(500, 'JFolder::delete: ' . JText::_('Attempt to delete base directory') );
+			JError::raiseWarning(500, 'JFolder::delete: ' . AnTranslator::_('Attempt to delete base directory') );
 			return false;
 		}
 
@@ -268,7 +268,7 @@ class JFolder
 
 		// Is this really a folder?
 		if (!is_dir($path)) {
-			JError::raiseWarning(21, 'JFolder::delete: ' . JText::_('Path is not a folder'), 'Path: ' . $path);
+			JError::raiseWarning(21, 'JFolder::delete: ' . AnTranslator::_('Path is not a folder'), 'Path: ' . $path);
 			return false;
 		}
 
@@ -319,7 +319,7 @@ class JFolder
 		} else {
 			JError::raiseWarning(
 				'SOME_ERROR_CODE',
-				'JFolder::delete: ' . JText::_('Could not delete folder'),
+				'JFolder::delete: ' . AnTranslator::_('Could not delete folder'),
 				'Path: ' . $path
 			);
 			$ret = false;
@@ -348,10 +348,10 @@ class JFolder
 		}
 
 		if (!JFolder::exists($src) && !is_writable($src)) {
-			return JText::_('Cannot find source folder');
+			return AnTranslator::_('Cannot find source folder');
 		}
 		if (JFolder::exists($dest)) {
-			return JText::_('Folder already exists');
+			return AnTranslator::_('Folder already exists');
 		}
 
 		if ($ftpOptions['enabled'] == 1) {
@@ -368,12 +368,12 @@ class JFolder
 
 			// Use FTP rename to simulate move
 			if (!$ftp->rename($src, $dest)) {
-				return JText::_('Rename failed');
+				return AnTranslator::_('Rename failed');
 			}
 			$ret = true;
 		} else {
 			if (!@rename($src, $dest)) {
-				return JText::_('Rename failed');
+				return AnTranslator::_('Rename failed');
 			}
 			$ret = true;
 		}
@@ -415,7 +415,7 @@ class JFolder
 
 		// Is the path a folder?
 		if (!is_dir($path)) {
-			JError::raiseWarning(21, 'JFolder::files: ' . JText::_('Path is not a folder'), 'Path: ' . $path);
+			JError::raiseWarning(21, 'JFolder::files: ' . AnTranslator::_('Path is not a folder'), 'Path: ' . $path);
 			return false;
 		}
 
@@ -476,7 +476,7 @@ class JFolder
 
 		// Is the path a folder?
 		if (!is_dir($path)) {
-			JError::raiseWarning(21, 'JFolder::folder: ' . JText::_('Path is not a folder'), 'Path: ' . $path);
+			JError::raiseWarning(21, 'JFolder::folder: ' . AnTranslator::_('Path is not a folder'), 'Path: ' . $path);
 			return false;
 		}
 

@@ -28,7 +28,7 @@ class ComSubscriptionsControllerToolbarPackage extends ComSubscriptionsControlle
 
         $command
         ->append(array('label' => $label))
-        ->href(JRoute::_($url));
+        ->href(route($url));
     }
 
     /**
@@ -43,7 +43,7 @@ class ComSubscriptionsControllerToolbarPackage extends ComSubscriptionsControlle
 
         $layout = pick($command->layout, 'edit');
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-EDIT')))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-EDIT')))
                 ->href($entity->getURL().'&layout='.$layout);
 
         if (KInflector::isPlural($view)) {

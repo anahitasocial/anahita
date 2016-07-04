@@ -45,10 +45,10 @@ class ComPhotosControllerToolbarSet extends ComMediumControllerToolbarDefault
 
         if ($entity->owner->authorize('administration')) {
             //organize photos
-            $this->addCommand('organize', JText::_('COM-PHOTOS-ACTION-SET-ORGANIZE'))
+            $this->addCommand('organize', AnTranslator::_('COM-PHOTOS-ACTION-SET-ORGANIZE'))
                  ->getCommand('organize')
                  ->dataTrigger('Organize')
-                 ->href(JText::_('option=com_photos&view=photos&layout=selector&oid='.$entity->owner->id.'&exclude_set='.$entity->id))
+                 ->href(AnTranslator::_('option=com_photos&view=photos&layout=selector&oid='.$entity->owner->id.'&exclude_set='.$entity->id))
                  ->class('visible-desktop');
 
             $this->addAdministrationCommands();

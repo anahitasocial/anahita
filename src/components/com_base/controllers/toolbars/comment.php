@@ -31,16 +31,16 @@ class ComBaseControllerToolbarComment extends ComBaseControllerToolbarDefault
                 $url = $url.'&comment[editor]=1';
             }
 
-            $this->addCommand('editcomment', JText::_('LIB-AN-ACTION-EDIT'))
+            $this->addCommand('editcomment', AnTranslator::_('LIB-AN-ACTION-EDIT'))
                 ->getCommand('editcomment')
-                ->href(JRoute::_($url))
+                ->href(route($url))
                 ->class('action-edit');
         }
 
         if ($comment->authorize('delete')) {
-            $this->addCommand('deletecomment', JText::_('LIB-AN-ACTION-DELETE'))
+            $this->addCommand('deletecomment', AnTranslator::_('LIB-AN-ACTION-DELETE'))
                 ->getCommand('deletecomment')
-                ->href(JRoute::_($comment->getURL()))
+                ->href(route($comment->getURL()))
                 ->class('action-delete');
         }
     }

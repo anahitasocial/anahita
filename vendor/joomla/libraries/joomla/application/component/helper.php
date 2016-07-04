@@ -77,7 +77,7 @@ class JComponentHelper
 		define( 'JPATH_COMPONENT_SITE',				JPATH_SITE.DS.'components'.DS.$name);
 
 		if ( !file_exists(JPATH_COMPONENT) ) {
-		    JError::raiseError( 404, JText::_( 'Component Not Found' ) );
+		    JError::raiseError( 404, AnTranslator::_( 'Component Not Found' ) );
 		}
 
 		$file = substr( $name, 4 );

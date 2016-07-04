@@ -563,7 +563,7 @@ class JError
 		$document->setError($error);
 
 		@ob_end_clean();
-		$document->setTitle(JText::_('Error').': '.$error->getCode());
+		$document->setTitle(AnTranslator::_('Error').': '.$error->getCode());
 		$document->setLanguage($language->getTag());
 		$document->setDirection($dir);
 		$data = $document->render(false, array (

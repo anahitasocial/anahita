@@ -123,7 +123,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
         if ($this->getItem()) {
             $this->mail(array(
                 'to' => $this->getItem()->person->email,
-                'subject' => JText::_('COM-SUBSCRIPTIONS-CONFIRMATION-MESSAGE-SUBJECT'),
+                'subject' => AnTranslator::_('COM-SUBSCRIPTIONS-CONFIRMATION-MESSAGE-SUBJECT'),
                 'template' => 'invoice',
             ));
         }

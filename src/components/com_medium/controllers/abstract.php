@@ -113,7 +113,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
             $url['oid'] = $this->getItem()->owner->id;
         }
 
-        $this->getResponse()->setRedirect(JRoute::_($url));
+        $this->getResponse()->setRedirect(route($url));
     }
 
     /**

@@ -36,7 +36,7 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
 
     protected function _actionGet(KCommandContext $context)
     {
-        $title = JText::_('COM-SETTINGS-HEADER-PLUGINS');
+        $title = AnTranslator::_('COM-SETTINGS-HEADER-PLUGINS');
 
         $this->getToolbar('menubar')->setTitle($title);
 

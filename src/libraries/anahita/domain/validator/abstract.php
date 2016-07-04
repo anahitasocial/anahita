@@ -450,7 +450,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
                     $entity->addError(array(
                         'message' => sprintf(
-                            JText::_('%s %s can not be empty!'),
+                            AnTranslator::_('%s %s can not be empty!'),
                             $entity->getIdentifier()->name,
                             $property->getName()
                         ),
@@ -496,7 +496,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
             $entity->addError(array(
                 'message' => sprintf(
-                    JText::_('%s %s can not be empty!'),
+                    AnTranslator::_('%s %s can not be empty!'),
                     $entity->getIdentifier()->name,
                     $property->getName()
                 ),
@@ -540,7 +540,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
                             $entity->addError(array(
                                 'message' => sprintf(
-                                    JText::_('%s %s can not be greater than %d characters'),
+                                    AnTranslator::_('%s %s can not be greater than %d characters'),
                                     $this->getIdentifier()->name,
                                     $property->getName(),
                                     $options['max']
@@ -562,7 +562,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
                             $entity->addError(array(
                                 'message' => sprintf(
-                                    JText::_('%s %s can not be less than %d characters'),
+                                    AnTranslator::_('%s %s can not be less than %d characters'),
                                     $this->getIdentifier()->name,
                                     $property->getName(),
                                     $options['min']
@@ -582,7 +582,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
                     $entity->addError(array(
                         'message' => sprintf(
-                            JText::_('%s %s must be %d characters'),
+                            AnTranslator::_('%s %s must be %d characters'),
                             $this->getIdentifier()->name,
                             $property->getName(),
                             $options
@@ -635,7 +635,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
             $entity->addError(array(
                 'message' => sprintf(
-                    JText::_('%s %s is not unique'),
+                    AnTranslator::_('%s %s is not unique'),
                     $this->getIdentifier()->name,
                     $property->getName()
                 ),

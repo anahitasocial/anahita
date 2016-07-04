@@ -33,7 +33,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
         $view = $this->getController()->getView()->getName();
         $layout = pick($command->layout, 'edit');
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-EDIT')))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-EDIT')))
         ->href($entity->getURL().'&layout='.$layout);
 
         if (KInflector::isPlural($view)) {
@@ -50,10 +50,10 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     {
         $entity = $this->getController()->getItem();
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-DELETE')))
-        ->href(JRoute::_($entity->getURL()))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
+        ->href(route($entity->getURL()))
         ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', JRoute::_('index.php?'))
+        ->setAttribute('data-redirect', route('index.php?'))
         ->class('action-delete');
     }
 
@@ -75,12 +75,12 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
             $class .= 'comment';
         }
 
-        $label = $voted ? JText::_('LIB-AN-ACTION-UNVOTE') : JText::_('LIB-AN-ACTION-VOTE');
+        $label = $voted ? AnTranslator::_('LIB-AN-ACTION-UNVOTE') : AnTranslator::_('LIB-AN-ACTION-VOTE');
 
         $command
         ->setName($action)
         ->append(array('label' => $label))
-        ->href(JRoute::_($entity->getURL()))
+        ->href(route($entity->getURL()))
         ->class($class)
         ->setAttribute('data-action', $action)
         ->setAttribute('data-nodeid', $entity->id);
@@ -96,7 +96,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
 
         $action = ($entity->subscribed(get_viewer()) ? 'unsubscribe' : 'subscribe');
-        $label = JText::_('LIB-AN-ACTION-'.strtoupper($action));
+        $label = AnTranslator::_('LIB-AN-ACTION-'.strtoupper($action));
 
         $command->append(array('label' => $label))
             ->href($entity->getURL())
@@ -113,7 +113,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     {
         $entity = $this->getController()->getItem();
 
-        $label = $entity->openToComment ? JTEXT::_('LIB-AN-ACTION-CLOSE-COMMENTING') : JTEXT::_('LIB-AN-ACTION-OPEN-COMMENTING');
+        $label = $entity->openToComment ? AnTranslator::_('LIB-AN-ACTION-CLOSE-COMMENTING') : AnTranslator::_('LIB-AN-ACTION-OPEN-COMMENTING');
         $status = $entity->openToComment ? 0 : 1;
 
         $command->append(array('label' => $label))
@@ -131,7 +131,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
     protected function _commandEnable($command)
     {
         $entity = $this->getController()->getItem();
-        $label = JText::_('LIB-AN-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
+        $label = AnTranslator::_('LIB-AN-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
 
         $command->append(array('label' => $label))
         ->href($entity->getURL().'&action='.($entity->enabled ? 'disable' : 'enable'))

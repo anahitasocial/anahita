@@ -35,7 +35,7 @@ class ComSettingsControllerApp extends ComBaseControllerService
 
     protected function _actionGet(KCommandContext $context)
     {
-        $title = JText::_('COM-SETTINGS-HEADER-APPS');
+        $title = AnTranslator::_('COM-SETTINGS-HEADER-APPS');
 
         $this->getToolbar('menubar')->setTitle($title);
 

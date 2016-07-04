@@ -80,7 +80,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         if (isset($data['flash']) && $data['flash']->message) {
             $message = array_merge((array) $data['flash']->getMessage(true), $config);
 
-            return $this->message(JText::_($message['message']), $message);
+            return $this->message(AnTranslator::_($message['message']), $message);
         }
     }
 
@@ -433,35 +433,35 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             $actor = $config->options;
 
             $options = new KConfig(array(
-                LibBaseDomainBehaviorPrivatable::GUEST => JText::_('LIB-AN-PRIVACYLABEL-PUBLIC'),
-                LibBaseDomainBehaviorPrivatable::REG => JText::_('LIB-AN-PRIVACYLABEL-REG'),
+                LibBaseDomainBehaviorPrivatable::GUEST => AnTranslator::_('LIB-AN-PRIVACYLABEL-PUBLIC'),
+                LibBaseDomainBehaviorPrivatable::REG => AnTranslator::_('LIB-AN-PRIVACYLABEL-REG'),
             ));
 
             if ($actor->isFollowable()) {
                 $options->append(array(
-                    LibBaseDomainBehaviorPrivatable::FOLLOWER => JTEXT::_('LIB-AN-PRIVACYLABEL-FOLLOWERS'),
+                    LibBaseDomainBehaviorPrivatable::FOLLOWER => AnTranslator::_('LIB-AN-PRIVACYLABEL-FOLLOWERS'),
                 ));
             }
 
             if ($actor->isLeadable()) {
                 $options->append(array(
-                        LibBaseDomainBehaviorPrivatable::LEADER => JTEXT::_('LIB-AN-PRIVACYLABEL-LEADERS'),
-                        LibBaseDomainBehaviorPrivatable::MUTUAL => JTEXT::_('LIB-AN-PRIVACYLABEL-MUTUALS'),
+                        LibBaseDomainBehaviorPrivatable::LEADER => AnTranslator::_('LIB-AN-PRIVACYLABEL-LEADERS'),
+                        LibBaseDomainBehaviorPrivatable::MUTUAL => AnTranslator::_('LIB-AN-PRIVACYLABEL-MUTUALS'),
                 ));
             }
 
             if ($actor->isAdministrable()) {
                 $options->append(array(
-                    LibBaseDomainBehaviorPrivatable::ADMIN => JTEXT::_('LIB-AN-PRIVACYLABEL-ADMIN'),
+                    LibBaseDomainBehaviorPrivatable::ADMIN => AnTranslator::_('LIB-AN-PRIVACYLABEL-ADMIN'),
                 ));
             } else {
                 if (is_viewer($actor)) {
                     $options->append(array(
-                        LibBaseDomainBehaviorPrivatable::ADMIN => JTEXT::_('LIB-AN-PRIVACYLABEL-ONLYYOU'),
+                        LibBaseDomainBehaviorPrivatable::ADMIN => AnTranslator::_('LIB-AN-PRIVACYLABEL-ONLYYOU'),
                     ));
                 } else {
                     $options->append(array(
-                        LibBaseDomainBehaviorPrivatable::ADMIN => sprintf(JTEXT::_('LIB-AN-PRIVACYLABEL-ONLYNAME'), $actor->name),
+                        LibBaseDomainBehaviorPrivatable::ADMIN => sprintf(AnTranslator::_('LIB-AN-PRIVACYLABEL-ONLYNAME'), $actor->name),
                     ));
                 }
             }
@@ -525,7 +525,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 
         $path = (string) $uri;
 
-        $placeholder = isset($config['placeholder']) ? $config['placeholder'] : JText::_('LIB-AN-FILTER-PLACEHOLDER');
+        $placeholder = isset($config['placeholder']) ? $config['placeholder'] : AnTranslator::_('LIB-AN-FILTER-PLACEHOLDER');
 
         $config = new KConfig($config);
 
@@ -548,11 +548,11 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
     public function search($config = array())
     {
         $actor = null;
-        $label = JText::_('LIB-AN-SEARCH-PLACEHOLDER');
+        $label = AnTranslator::_('LIB-AN-SEARCH-PLACEHOLDER');
 
         if ($this->getService()->has('com://site/search.owner')) {
             $actor = $this->getService('com://site/search.owner');
-            $label = JText::sprintf('LIB-AN-SEARCH-PLACEHOLDER-OWNER', $actor->name);
+            $label = AnTranslator::sprintf('LIB-AN-SEARCH-PLACEHOLDER-OWNER', $actor->name);
         }
 
         $scope = null;

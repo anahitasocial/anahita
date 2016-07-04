@@ -40,7 +40,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             } else {
                 $this->setActor(null);
 
-                $this->setTitle(sprintf(JText::_('COM-ACTORS-PROFILE-ACTORBAR-TITLE'), $item->getName()));
+                $this->setTitle(sprintf(AnTranslator::_('COM-ACTORS-PROFILE-ACTORBAR-TITLE'), $item->getName()));
             }
         }
         //if viewing a list of actors related to another actor

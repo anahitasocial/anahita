@@ -90,7 +90,7 @@ class ComConnectControllerDefault extends ComBaseControllerResource
     protected function _actionGet(KCommandContext $context)
     {
         if ($context->request->getFormat() == 'html') {
-            $context->response->setRedirect(JRoute::_('format=json&option=com_connect&view='.$this->view));
+            $context->response->setRedirect(route('format=json&option=com_connect&view='.$this->view));
 
             return;
         }

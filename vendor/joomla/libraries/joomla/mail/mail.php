@@ -76,7 +76,7 @@ class JMail extends PHPMailer
 	{
 		if ( ( $this->Mailer == 'mail' ) && ! function_exists('mail') )
 		{
-			return JError::raiseNotice( 500, JText::_('MAIL_FUNCTION_DISABLED') );
+			return JError::raiseNotice( 500, AnTranslator::_('MAIL_FUNCTION_DISABLED') );
 		}
 
 		@ $result = parent::Send();
@@ -84,7 +84,7 @@ class JMail extends PHPMailer
 		if ($result == false)
 		{
 			// TODO: Set an appropriate error number
-			$result =& JError::raiseNotice( 500, JText::_($this->ErrorInfo) );
+			$result =& JError::raiseNotice( 500, AnTranslator::_($this->ErrorInfo) );
 		}
 		return $result;
 	}

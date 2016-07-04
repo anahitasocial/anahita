@@ -91,7 +91,7 @@ class JFile
 
 		//Check src path
 		if (!is_readable($src)) {
-			JError::raiseWarning(21, 'JFile::copy: ' . JText::_('Cannot find or read file') . ": '$src'");
+			JError::raiseWarning(21, 'JFile::copy: ' . AnTranslator::_('Cannot find or read file') . ": '$src'");
 			return false;
 		}
 
@@ -115,7 +115,7 @@ class JFile
 			$ret = true;
 		} else {
 			if (!@ copy($src, $dest)) {
-				JError::raiseWarning(21, JText::_('Copy failed'));
+				JError::raiseWarning(21, AnTranslator::_('Copy failed'));
 				return false;
 			}
 			$ret = true;
@@ -170,7 +170,7 @@ class JFile
 				}
 			} else {
 				$filename	= basename($file);
-				JError::raiseWarning('SOME_ERROR_CODE', JText::_('Delete failed') . ": '$filename'");
+				JError::raiseWarning('SOME_ERROR_CODE', AnTranslator::_('Delete failed') . ": '$filename'");
 				return false;
 			}
 		}
@@ -200,7 +200,7 @@ class JFile
 
 		//Check src path
 		if (!is_readable($src) && !is_writable($src)) {
-			JError::raiseWarning(21, 'JFile::move: ' . JText::_('Cannot find, read or write file') . ": '$src'");
+			JError::raiseWarning(21, 'JFile::move: ' . AnTranslator::_('Cannot find, read or write file') . ": '$src'");
 			return false;
 		}
 
@@ -215,12 +215,12 @@ class JFile
 
 			// Use FTP rename to simulate move
 			if (!$ftp->rename($src, $dest)) {
-				JError::raiseWarning(21, JText::_('Rename failed'));
+				JError::raiseWarning(21, AnTranslator::_('Rename failed'));
 				return false;
 			}
 		} else {
 			if (!@ rename($src, $dest)) {
-				JError::raiseWarning(21, JText::_('Rename failed'));
+				JError::raiseWarning(21, AnTranslator::_('Rename failed'));
 				return false;
 			}
 		}
@@ -244,7 +244,7 @@ class JFile
 		$data = null;
 		if($amount && $chunksize > $amount) { $chunksize = $amount; }
 		if (false === $fh = fopen($filename, 'rb', $incpath)) {
-			JError::raiseWarning(21, 'JFile::read: '.JText::_('Unable to open file') . ": '$filename'");
+			JError::raiseWarning(21, 'JFile::read: '.AnTranslator::_('Unable to open file') . ": '$filename'");
 			return false;
 		}
 		clearstatcache();
@@ -345,17 +345,17 @@ class JFile
 			            $ret = true;
                 		unlink($src);
 			} else {
-				JError::raiseWarning(21, JText::_('WARNFS_ERR02'));
+				JError::raiseWarning(21, AnTranslator::_('WARNFS_ERR02'));
 			}
 		} else {
 			if (is_writeable($baseDir) && move_uploaded_file($src, $dest)) { // Short circuit to prevent file permission errors
 				if (JPath::setPermissions($dest)) {
 					$ret = true;
 				} else {
-					JError::raiseWarning(21, JText::_('WARNFS_ERR01'));
+					JError::raiseWarning(21, AnTranslator::_('WARNFS_ERR01'));
 				}
 			} else {
-				JError::raiseWarning(21, JText::_('WARNFS_ERR02'));
+				JError::raiseWarning(21, AnTranslator::_('WARNFS_ERR02'));
 			}
 		}
 		return $ret;

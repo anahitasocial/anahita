@@ -48,7 +48,7 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 
                 if (!empty($actors)) {
                     $name = implode(', ', array_map(array($helper, 'name'), $actors));
-                    $name = sprintf(JText::_('COM-STORIES-AND-ACTOR'), $name, $last_actor);
+                    $name = sprintf(AnTranslator::_('COM-STORIES-AND-ACTOR'), $name, $last_actor);
                 } else {
                     $name = $last_actor;
                 }
@@ -64,7 +64,7 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
 
             $actors = array_splice($actors, 0, $truncate_after);
             $actors = implode(', ', array_map(array($helper, 'name'), $actors));
-            $actors = sprintf(JTEXT::_('COM-STORIES-AND-OTHERS'), $actors, JRoute::_('option=com_actors&layout=modal&view=actors&'.$ids), JText::_($left_over));
+            $actors = sprintf(AnTranslator::_('COM-STORIES-AND-OTHERS'), $actors, route('option=com_actors&layout=modal&view=actors&'.$ids), AnTranslator::_($left_over));
 
             return $actors;
         }
@@ -83,14 +83,14 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
     public function possessiveNoune($story, $actor)
     {
         if (is_array($actor) || empty($actor)) {
-            $value = JText::_('LIB-AN-THEIR');
+            $value = AnTranslator::_('LIB-AN-THEIR');
         } else {
             if ($actor->eql($story->subject)) {
-                $value = JText::_(KService::get('com:actors.template.helper')->noune($actor, array('type' => 'possessive')));
+                $value = AnTranslator::_(KService::get('com:actors.template.helper')->noune($actor, array('type' => 'possessive')));
             } elseif ($actor->eql(get_viewer())) {
-                $value = JText::_('LIB-AN-YOUR');
+                $value = AnTranslator::_('LIB-AN-YOUR');
             } else {
-                $value = sprintf(JText::_('LIB-AN-THIRD-PERSON\'S'), $this->actorName($actor));
+                $value = sprintf(AnTranslator::_('LIB-AN-THIRD-PERSON\'S'), $this->actorName($actor));
             }
         }
 
@@ -117,6 +117,6 @@ class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
             return implode(', ', $links);
         }
 
-        return '<a href="'.JRoute::_($node->getURL()).$query.'">'.$node->getName().'</a>';
+        return '<a href="'.route($node->getURL()).$query.'">'.$node->getName().'</a>';
     }
 }

@@ -1,19 +1,30 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
  *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
+ * @copyright  2008 - 2016 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
  *
  * @link       http://www.GetAnahita.com
  */
+
+ /**
+  * Creates human friendly urls
+  *
+  * @access public
+  * @param 	string 	 $url 	Absolute or Relative URI to Anahita resource
+  * @param 	boolean  $xhtml Replace & by &amp; for xml compilance
+  *
+  * @return The translated humanly readible URL
+  */
+function route($url, $fqr = false)
+{
+    return KService::get('application')->getRouter()->build($url, $fqr);
+}
 
 /**
  * Lots of cool functions.

@@ -299,7 +299,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         }
 
         if ($url) {
-            $context->response->setRedirect(JRoute::_($url));
+            $context->response->setRedirect(route($url));
         }
     }
 
