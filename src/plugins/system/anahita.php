@@ -103,14 +103,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             KService::get('com://site/people.helper.person')->logout();
         }
 
-        /**
-        * @todo remove this block after the admin back-end is removed
-        */
-        global $mainframe;
-        if ($mainframe->isAdmin()) {
-            return;
-        }
-
         jimport('joomla.utilities.utility');
         jimport('joomla.utilities.simplecrypt');
 

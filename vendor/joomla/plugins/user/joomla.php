@@ -57,17 +57,6 @@ class plgUserJoomla extends PlgAnahitaDefault
 					return false;
 		  }
 
-		  if (
-		      $mainframe->isAdmin() &&
-		      $juser->usertype != ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR &&
-		      $juser->usertype != ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
-		  )
-		  {
-		      JError::raiseWarning(403, "Not authorized to access the admin side");
-
-					return false;
-		  }
-
 			// Register the needed session variables
 			$session =& JFactory::getSession();
 			$session->set('user', $juser);

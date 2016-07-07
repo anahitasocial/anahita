@@ -96,7 +96,7 @@ class JSessionStorageDatabase extends JSessionStorage
 			// therefore we use insert instead of store
 			$app = &JFactory::getApplication();
 			$session->data = $session_data;
-			$session->insert($id, $app->getClientId());
+			$session->insert($id, 0);
 		}
 
 		return true;

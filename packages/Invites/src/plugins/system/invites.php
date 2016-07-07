@@ -20,13 +20,6 @@ class plgSystemInvites extends PlgAnahitaDefault
      */
     public function onAfterRoute()
     {
-
-        // @todo remove this block after admin back-end is removed
-        global $mainframe;
-        if ($mainframe->isAdmin()) {
-            return;
-        }
-
         if(
             KRequest::get('session.invite_token', 'string', null) &&
             KRequest::get('get.option', 'string', null) == 'com_people' &&

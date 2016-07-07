@@ -65,7 +65,7 @@ class JComponentHelper
 		global $mainframe;
 
 		$result = &JComponentHelper::getComponent( $component, $strict );
-		return ($result->enabled | $mainframe->isAdmin());
+		return ($result->enabled);
 	}
 
 	static function renderComponent($name, $params = array())
@@ -83,14 +83,14 @@ class JComponentHelper
 		$file = substr( $name, 4 );
 
 		// get component path
-		if ( $mainframe->isAdmin() && file_exists(JPATH_COMPONENT.DS.'admin.'.$file.'.php') ) {
+		if ( file_exists(JPATH_COMPONENT.DS.'admin.'.$file.'.php') ) {
 			$path = JPATH_COMPONENT.DS.'admin.'.$file.'.php';
 		} else {
 			$path = JPATH_COMPONENT.DS.$file.'.php';
 		}
 
         $identifier = KService::getIdentifier("com:$file.aliases");
-        $identifier->application = $mainframe->isAdmin()  ? 'admin' : 'site';
+        $identifier->application = 'site';
         $lang =& JFactory::getLanguage();
         $lang->load($name);
         KLoader::getInstance()->loadIdentifier($identifier);
@@ -109,7 +109,7 @@ class JComponentHelper
         {
             $contents = self::_renderComponent($path);
 
-            
+
 
             return $contents;
         }

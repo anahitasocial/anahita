@@ -24,10 +24,6 @@ class PlgStorageLocal extends PlgStorageAbstract
     {
         $base_uri = JURI::base();
 
-        if (JFactory::getApplication()->getClientId() != 0) {
-            $base_uri = preg_replace('/\w+\/$/', '', $base_uri);
-        }
-
         $config->append(array(
               'folder' => 'assets',
               'base_uri' => $base_uri,
