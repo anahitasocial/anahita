@@ -280,4 +280,162 @@ class JApplication extends JObject
 
 		return $session;
 	}
+
+	/**
+	 * Redirect to another URL.
+	 *
+	 * Optionally enqueues a message in the system message queue (which will be displayed
+	 * the next time a page is loaded) using the enqueueMessage method. If the headers have
+	 * not been sent the redirect will be accomplished using a "301 Moved Permanently" or "303 See Other"
+	 * code in the header pointing to the new location depending upon the moved flag. If the headers
+	 * have already been sent this will be accomplished using a JavaScript statement.
+	 *
+	 * @access	public
+	 * @param	string	$url	The URL to redirect to. Can only be http/https URL
+	 * @param	string	$msg	An optional message to display on redirect.
+	 * @param	string  $msgType An optional message type.
+	 * @param	boolean	True if the page is 301 Permanently Moved, otherwise 303 See Other is assumed.
+	 * @return	none; calls exit().
+	 * @since	1.5
+	 * @see		JApplication::enqueueMessage()
+	 */
+	function redirect( $url, $msg='', $msgType='message', $moved = false )
+	{
+		// check for relative internal links
+		if (preg_match( '#^index[2]?.php#', $url )) {
+			$url = JURI::base() . $url;
+		}
+
+		// Strip out any line breaks
+		$url = preg_split("/[\r\n]/", $url);
+		$url = $url[0];
+
+		// If we don't start with a http we need to fix this before we proceed
+		// We could validly start with something else (e.g. ftp), though this would
+		// be unlikely and isn't supported by this API
+		if(!preg_match( '#^http#i', $url )) {
+			$uri =& JURI::getInstance();
+			$prefix = $uri->toString(Array('scheme', 'user', 'pass', 'host', 'port'));
+			if($url[0] == '/') {
+				// we just need the prefix since we have a path relative to the root
+				$url = $prefix . $url;
+			} else {
+				// its relative to where we are now, so lets add that
+				$parts = explode('/', $uri->toString(Array('path')));
+				array_pop($parts);
+				$path = implode('/',$parts).'/';
+				$url = $prefix . $path . $url;
+			}
+		}
+
+
+		// If the message exists, enqueue it
+		if (trim( $msg )) {
+			$this->enqueueMessage($msg, $msgType);
+		}
+
+		// Persist messages if they exist
+		if (count($this->_messageQueue))
+		{
+			$session =& JFactory::getSession();
+			$session->set('application.queue', $this->_messageQueue);
+		}
+
+		// If the headers have been sent, then we cannot send an additional location header
+		// so we will output a javascript redirect statement.
+		if (headers_sent()) {
+			echo "<script>document.location.href='$url';</script>\n";
+		}
+		else
+		{
+			if (!$moved && strstr(strtolower($_SERVER['HTTP_USER_AGENT']), 'webkit') !== false) {
+				// WebKit browser - Do not use 303, as it causes subresources reload (https://bugs.webkit.org/show_bug.cgi?id=38690)
+				echo '<html><head><meta http-equiv="refresh" content="0;'. $url .'" /></head><body></body></html>';
+			}
+			else {
+				// All other browsers, use the more efficient HTTP header method
+				header($moved ? 'HTTP/1.1 301 Moved Permanently' : 'HTTP/1.1 303 See other');
+				header('Location: '.$url);
+			}
+		}
+		$this->close();
+	}
+
+	function close( $code = 0 ) {
+			exit($code);
+	}
+
+	/**
+	 * Enqueue a system message.
+	 *
+	 * @access	public
+	 * @param	string 	$msg 	The message to enqueue.
+	 * @param	string	$type	The message type.
+	 * @return	void
+	 * @since	1.5
+	 */
+	function enqueueMessage( $msg, $type = 'message' )
+	{
+		// For empty queue, if messages exists in the session, enqueue them first
+		if (!count($this->_messageQueue))
+		{
+			$session =& JFactory::getSession();
+			$sessionQueue = $session->get('application.queue');
+			if (count($sessionQueue)) {
+				$this->_messageQueue = $sessionQueue;
+				$session->set('application.queue', null);
+			}
+		}
+		// Enqueue the message
+		$this->_messageQueue[] = array('message' => $msg, 'type' => strtolower($type));
+	}
+
+	/**
+	 * Logout authentication function.
+	 *
+	 * Passed the current user information to the onLogoutUser event and reverts the current
+	 * session record back to 'anonymous' parameters.
+	 *
+	  * @param 	int 	$userid   The user to load - Can be an integer or string - If string, it is converted to ID automatically
+	 * @param	array 	$options  Array( 'clientid' => array of client id's )
+	 *
+	 * @access public
+	 */
+	function logout($userid = null, $options = array())
+	{
+		// Initialize variables
+		$retval = false;
+
+		// Get a user object from the JApplication
+		$user = &JFactory::getUser($userid);
+
+		// Build the credentials array
+		$parameters['username']	= $user->get('username');
+		$parameters['id']		= $user->get('id');
+
+		// Set clientid in the options array if it hasn't been set already
+		$options['clientid'] = 0;
+
+		$results = dispatch_plugin('user.onLogoutUser', array(
+									'user' => $parameters,
+									'options' => $options
+								));
+
+		/*
+		 * If any of the authentication plugins did not successfully complete
+		 * the logout routine then the whole method fails.  Any errors raised
+		 * should be done in the plugin as this provides the ability to provide
+		 * much more information about why the routine may have failed.
+		 */
+		if (!$results) {
+			setcookie( JUtility::getHash('JLOGIN_REMEMBER'), false, time() - 86400, '/' );
+			return true;
+		}
+
+
+		// Trigger onLoginFailure Event
+		$this->triggerEvent('onLogoutFailure', array($parameters));
+
+		return false;
+	}
 }
