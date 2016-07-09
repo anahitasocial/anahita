@@ -69,7 +69,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         //initialize the application and load system plugins
         $this->_application->initialise();
 
-        dispatch_plugin('system.onAfterDispatcherRun');
+        dispatch_plugin('system.onAfterDispatch');
 
         $this->route();
     }
@@ -87,7 +87,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
             parent::_actionDispatch($context);
         }
 
-        $this->_application->triggerEvent('onAfterDispatch', array($context));
+        dispatch_plugin('onAfterDispatch', array( $context ));
 
         //render if it's only an HTML
         //otherwise just send back the request
@@ -107,7 +107,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
             ->layout($layout)->render();
         }
 
-        $this->_application->triggerEvent('onAfterRender', array($context));
+        dispatch_plugin('onAfterRender', array( $context ));
 
         $this->send($context);
     }
@@ -131,7 +131,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     }
 
     /**
-     * Callback to handle both JError and Exception.
+     * Callback to handle Exception.
      *
      * @param KCommandContext $context Command chain context
      *                                 caller => KObject, data => mixed

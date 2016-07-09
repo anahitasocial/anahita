@@ -15,7 +15,7 @@ function dboutput($output)
  *
  * @param string $column The column to perform replace on
  * @param array  $array  The array of nested replace
- * 
+ *
  * @return string
  */
 function dbreplace_func($column, $array)
@@ -33,7 +33,7 @@ function dbreplace_func($column, $array)
  *
  * @param string $queries The query to execute
  * @param bool force    If force set to through then no exception is raised. Just an error log
- * 
+ *
  * @return mixed
  */
 function dbexec($queries, $force = true)
@@ -128,7 +128,7 @@ function dbinsert($table, $data)
  *
  * @param string $select The Select query
  * @param int    $mode   The fetch mode. @see KDatabase
- * 
+ *
  * @return mixed
  */
 function dbfetch($select, $mode = KDatabase::FETCH_ARRAY_LIST)
@@ -146,7 +146,7 @@ function dbfetch($select, $mode = KDatabase::FETCH_ARRAY_LIST)
 /**
  * Parse Queries using the ;.
  *
- * @param string $data The query to parse 
+ * @param string $data The query to parse
  *
  * @return array
  */
@@ -185,7 +185,7 @@ function dbparse($sql)
 
 /**
  * executes a sql file.
- * 
+ *
  * @param string $file
  */
 function dbexecfile($file)
@@ -198,7 +198,7 @@ function dbexecfile($file)
  * Check if a table exists.
  *
  * @param string $table
- * 
+ *
  * @return bool
  */
 function dbtable_exists($table)

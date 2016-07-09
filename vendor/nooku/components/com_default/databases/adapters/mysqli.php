@@ -20,27 +20,27 @@
 class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KServiceInstantiatable
 {
     /**
-	 * The cache object
-	 *
-	 * @var	JCache
-	 */
-    protected $_cache;
+  	 * The cache object
+  	 *
+  	 * @var	JCache
+  	 */
+      protected $_cache;
 
-	/**
-	 * Constructor
-	 *
-	 * Prevent creating instances of this class by making the contructor private
-	 *
-	 * @param 	object 	An optional KConfig object with configuration options
-	 */
-	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);
+  	/**
+  	 * Constructor
+  	 *
+  	 * Prevent creating instances of this class by making the contructor private
+  	 *
+  	 * @param 	object 	An optional KConfig object with configuration options
+  	 */
+  	public function __construct(KConfig $config)
+  	{
+    		parent::__construct($config);
 
-		if(JFactory::getConfig()->getValue('config.caching')) {
-	        $this->_cache = JFactory::getCache('database', 'output');
-		}
-	}
+    		if (JFactory::getConfig()->getValue('config.caching')) {
+    	     $this->_cache = JFactory::getCache('database', 'output');
+    		}
+  	}
 
 	/**
      * Force creation of a singleton
@@ -51,8 +51,7 @@ class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements 
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier))
-        {
+        if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance  = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -73,8 +72,8 @@ class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements 
     {
         $db = JFactory::getDBO();
 
-		$resource = method_exists($db, 'getConnection') ? $db->getConnection() : $db->_resource;
-		$prefix   = method_exists($db, 'getPrefix')     ? $db->getPrefix()     : $db->_table_prefix;
+		    $resource = method_exists($db, 'getConnection') ? $db->getConnection() : $db->_resource;
+		    $prefix   = method_exists($db, 'getPrefix') ? $db->getPrefix() : $db->_table_prefix;
 
         $config->append(array(
     		'connection'   => $resource,

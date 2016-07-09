@@ -636,6 +636,7 @@ class JLanguage extends JObject
 		if(file_exists($path.DS.$file)) {
 			$result = json_decode(file_get_contents($path.DS.$file));
 			$meta = $result->meta;
+			$meta->tag = $result->tag;
 		}
 
 		return $meta;

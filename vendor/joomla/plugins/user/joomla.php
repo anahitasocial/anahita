@@ -95,7 +95,6 @@ class plgUserJoomla extends PlgAnahitaDefault
 	public function onLogoutUser(KEvent $event)
 	{
 		$user = $event->user;
-		$options = $event->options;
 
 		if ($user['id'] == 0) {
 			return false;
@@ -112,14 +111,11 @@ class plgUserJoomla extends PlgAnahitaDefault
 			// Destroy the php session for this user
 			$session =& JFactory::getSession();
 			$session->destroy();
-		}
-		else
-		{
-			// Force logout all users with that userid
+
 			$table = & JTable::getInstance('session');
-			$table->destroy((int) $user['id'], (int) $options['clientid']);
+			return $table->destroy($user['id']);
 		}
 
-		return true;
+		return false;
 	}
 }

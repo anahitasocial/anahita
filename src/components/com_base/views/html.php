@@ -42,7 +42,7 @@ class ComBaseViewHtml extends LibBaseViewHtml
         $paths[] = dirname($this->getIdentifier()->filepath).'/html';
         $paths[] = implode(DS, array(
                       JPATH_THEMES,
-                      JFactory::getApplication()->getTemplate(),
+                      KService::get('application')->getTemplate(),
                       'html',
                       $this->getIdentifier()->type.'_'.$this->getIdentifier()->package,
                       $this->getName(), ));

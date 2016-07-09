@@ -462,26 +462,6 @@ class JError
 	}
 
 	/**
-	 * Message error handler
-	 * 	- Enqueues the error message into the system queue
-	 *
-	 * @static
-	 * @param	object	$error		Exception object to handle
-	 * @param	array	$options	Handler options
-	 * @return	object	The exception object
-	 * @since	1.5
-	 *
-	 * @see	raise()
-	 */
-	static public function & handleMessage(& $error, $options)
-	{
-		global $mainframe;
-		$type = ($error->get('level') == E_NOTICE) ? 'notice' : 'error';
-		$mainframe->enqueueMessage($error->get('message'), $type);
-		return $error;
-	}
-
-	/**
 	 * Log error handler
 	 * 	- Logs the error message to a system log file
 	 *
@@ -543,7 +523,7 @@ class JError
 	{
 		// Initialize variables
 		jimport('joomla.document.document');
-		$app        = & JFactory::getApplication();
+		$app        = & $this->getService('application');
 		$document	= & JDocument::getInstance('error');
 		$config		= & JFactory::getConfig();
 

@@ -424,32 +424,6 @@ class JRequest
 		}
 	}
 
-	/**
-	 * Checks for a form token in the request
-	 *
-	 * Use in conjuction with JHTML::_( 'form.token' )
-	 *
-	 * @param	string	The request method in which to look for the token key
-	 * @return	boolean	True if found and valid, false otherwise
-	 */
-	static function checkToken( $method = 'post' )
-	{
-		$token	= JUtility::getToken();
-		if(!JRequest::getVar( $token, '', $method, 'alnum' )) {
-			$session = JFactory::getSession();
-			if($session->isNew()) {
-				//Redirect to login screen
-				global $mainframe;
-				$return = route('index.php');
-;				$mainframe->redirect($return, AnTranslator::_('SESSION_EXPIRED'));
-				$mainframe->close();
-			} else {
-				return false;
-			}
-		} else {
-			return true;
-		}
-	}
 
 	/**
 	 * Cleans the request from script injection.

@@ -90,34 +90,34 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
 	 */
 	public function __construct( KConfig $config = null )
 	{
-		//If no config is passed create it
-		if(!isset($config)) $config = new KConfig();
+			//If no config is passed create it
+			if(!isset($config)) $config = new KConfig();
 
-		// Initialize the options
-        parent::__construct($config);
+			// Initialize the options
+      parent::__construct($config);
 
-        // Set the connection
-        $this->setConnection($config->connection);
+      // Set the connection
+      $this->setConnection($config->connection);
 
-		// Set the default charset. http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html
-		if (!empty($config->charset)) {
-			//$this->setCharset($config->charset);
-		}
+			// Set the default charset. http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html
+			if (!empty($config->charset)) {
+				//$this->setCharset($config->charset);
+			}
 
-		// Set the table prefix
-		$this->_table_prefix = $config->table_prefix;
+			// Set the table prefix
+			$this->_table_prefix = $config->table_prefix;
 
-		// Set the table prefix
-		$this->_table_needle = $config->table_needle;
+			// Set the table prefix
+			$this->_table_needle = $config->table_needle;
 
-		// Set the connection options
-		$this->_options = $config->options;
+			// Set the connection options
+			$this->_options = $config->options;
 
-		 //Set the mixer in the config
-        $config->mixer = $this;
-		
-		// Mixin the command interface
-        $this->mixin(new KMixinCommand($config));
+		 	//Set the mixer in the config
+      $config->mixer = $this;
+
+			// Mixin the command interface
+      $this->mixin(new KMixinCommand($config));
 	}
 
 	/**
@@ -127,7 +127,7 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
 	 */
 	public function __destruct()
 	{
-		$this->disconnect();
+		 $this->disconnect();
 	}
 
   	/**

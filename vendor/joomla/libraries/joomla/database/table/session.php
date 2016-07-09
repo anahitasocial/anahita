@@ -62,12 +62,6 @@ class JTableSession extends JTable
 
 	/**
 	 *
-	 * @var int
-	 */
-	var $client_id = null;
-
-	/**
-	 *
 	 * @var string
 	 */
 	var $data	= null;
@@ -112,10 +106,9 @@ class JTableSession extends JTable
 		}
 	}
 
-	function insert($sessionId, $clientId)
+	function insert($sessionId)
 	{
 		$this->session_id	= $sessionId;
-		$this->client_id	= $clientId;
 
 		$this->time = time();
 		$ret = $this->_db->insertObject( $this->_tbl, $this, 'session_id' );
@@ -144,11 +137,9 @@ class JTableSession extends JTable
 	/**
 	 * Destroys the pesisting session
 	 */
-	function destroy($userId, $clientIds = array())
+	function destroy($userId)
 	{
-		$query = 'DELETE FROM #__session'
-			. ' WHERE userid = '. $this->_db->Quote($userId)
-			. ' AND client_id IN ( 0,1 )';
+		$query = 'DELETE FROM `#__session` WHERE userid = '. (int) $userId;
 
 		$this->_db->setQuery( $query );
 

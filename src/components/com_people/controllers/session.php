@@ -115,11 +115,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         try {
             $result = $this->execute('add', $context);
-
             return $result;
         } catch (RuntimeException $e) {
             $context->response->setRedirect(route('option=com_people&view=session'));
-
             throw $e;
         }
     }
@@ -166,7 +164,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $_SESSION['return'] = null;
         } else {
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
-            JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $authResponse));
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             $this->getResponse()->status = KHttpResponse::FORBIDDEN;
             $this->getResponse()->setRedirect(route('option=com_people&view=session'));
@@ -182,8 +179,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        //we don't care if a useris logged in or not just delete
-       $this->getService('com:people.helper.person')->logout();
+        $this->getService('com:people.helper.person')->logout();
         $context->response->setRedirect(route('index.php?'));
     }
 

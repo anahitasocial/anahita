@@ -91,10 +91,6 @@ class JSessionStorageDatabase extends JSessionStorage
 			$session->data = $session_data;
 			$session->store();
 		} else {
-			// if load failed then we assume that it is because
-			// the session doesn't exist in the database
-			// therefore we use insert instead of store
-			$app = &JFactory::getApplication();
 			$session->data = $session_data;
 			$session->insert($id, 0);
 		}

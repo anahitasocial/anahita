@@ -30,7 +30,7 @@ class ComTagsViewTagsHtml extends ComBaseViewHtml
         parent::_initialize($config);
 
         $config->append(array(
-            'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_tags/tags'),
+            'template_paths' => array(JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_tags/tags'),
         ));
     }
 }

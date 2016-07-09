@@ -63,10 +63,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         }
 
         if (
-            /**
-            * @todo use native Anahita code to obtain caching from global config
-            */
-            !JFactory::getApplication()->getCfg('caching') ||
+            !KService::get('application')->getSystemSetting('caching') ||
             (
                 JFactory::getUser()->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR &&
                 // @todo incorporate this feature in the global settings
@@ -95,7 +92,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     /**
      * Remebers handling.
      */
-    public function onAfterDispatcherRun(KEvent $event)
+    public function onAfterDispatch(KEvent $event)
     {
         $viewer = get_viewer();
 

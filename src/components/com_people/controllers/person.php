@@ -231,7 +231,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $userId = $this->getItem()->userId;
 
-        JFactory::getApplication()->logout($userId);
+        $this->getService('application')->logout($userId);
         JFactory::getUser($userId)->delete();
     }
 

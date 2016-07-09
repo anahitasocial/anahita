@@ -158,7 +158,7 @@ abstract class KDispatcherAbstract extends KControllerAbstract
 		{
 			if($redirect = $this->getController()->getRedirect())
 			{
-			    JFactory::getApplication()
+			    $this->getService('application')
 					->redirect($redirect['url'], $redirect['message'], $redirect['type']);
 			}
 		}

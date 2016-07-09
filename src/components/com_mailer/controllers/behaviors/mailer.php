@@ -113,8 +113,8 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
             $identifier->path = array('emails');
 
             $paths[] = dirname($identifier->filepath);
-            $paths[] = implode(DS, array(JPATH_THEMES, JFactory::getApplication()->getTemplate(), 'emails', $identifier->type.'_'.$identifier->package));
-            $paths[] = implode(DS, array(JPATH_THEMES, JFactory::getApplication()->getTemplate(), 'emails'));
+            $paths[] = implode(DS, array(JPATH_THEMES, $this->getService('application')->getTemplate(), 'emails', $identifier->type.'_'.$identifier->package));
+            $paths[] = implode(DS, array(JPATH_THEMES, $this->getService('application')->getTemplate(), 'emails'));
 
             $config = array(
                 'base_url' => $this->_base_url,

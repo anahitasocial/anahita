@@ -47,7 +47,10 @@ class ComDefaultControllerDefault extends KControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'limit' => array('max' => 100, 'default' => JFactory::getApplication()->getCfg('list_limit'))
+            'limit' => array(
+							'max' => 100,
+							'default' => '20'
+						)
         ));
 
         parent::_initialize($config);

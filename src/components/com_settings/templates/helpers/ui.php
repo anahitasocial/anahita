@@ -30,7 +30,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         parent::_initialize($config);
 
         $paths = KConfig::unbox($config->paths);
-        array_unshift($paths, JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_settings/ui');
+        array_unshift($paths, JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_settings/ui');
         $config->paths = $paths;
     }
 
