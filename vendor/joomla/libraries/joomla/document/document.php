@@ -77,14 +77,6 @@ class JDocument extends JObject
 	var $direction = 'ltr';
 
 	/**
-	 * Document generator
-	 *
-	 * @var		string
-	 * @access	public
-	 */
-	 var $_generator = 'Anahita 4.1.0 Birth Release - Open Source Social Networking Platform And Framework';
-
-	/**
 	 * Document modified date
 	 *
 	 * @var		string
@@ -376,9 +368,7 @@ class JDocument extends JObject
 	{
 		$result = '';
 		$name = strtolower($name);
-		if($name == 'generator') { 
-			$result = $this->getGenerator();
-		} elseif($name == 'description') {
+		if($name == 'description') {
 			$result = $this->getDescription();
 		} else {
 			if ($http_equiv == true) {
@@ -402,9 +392,7 @@ class JDocument extends JObject
 	function setMetaData($name, $content, $http_equiv = false)
 	{
 		$name = strtolower($name);
-		if($name == 'generator') { 
-			$this->setGenerator($content);
-		} elseif($name == 'description') {
+		if($name == 'description') {
 			$this->setDescription($content);
 		} else {
 			if ($http_equiv == true) {
@@ -615,27 +603,6 @@ class JDocument extends JObject
 	 */
 	function getLink() {
 		return $this->link;
-	}
-
-	 /**
-	 * Sets the document generator
-	 *
-	 * @param   string
-	 * @access  public
-	 * @return  void
-	 */
-	function setGenerator($generator) {
-		$this->_generator = $generator;
-	}
-
-	/**
-	 * Returns the document generator
-	 *
-	 * @access public
-	 * @return string
-	 */
-	function getGenerator() {
-		return $this->_generator;
 	}
 
 	 /**
