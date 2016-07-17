@@ -70,22 +70,6 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
 	protected $_mdate = '';
 
 	/**
-	 * Tab string
-	 *
-	 * @var		string
-	 * @access	protected
-	 */
-	protected $_tab = "\11";
-
-	/**
-	 * Contains the line end string
-	 *
-	 * @var		string
-	 * @access	protected
-	 */
-	protected $_lineEnd = "\12";
-
-	/**
 	 * Contains the character encoding string
 	 *
 	 * @var	 string
@@ -100,22 +84,6 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
 	 * @access	protected
 	 */
 	protected $_mime = '';
-
-	/**
-	 * Document namespace
-	 *
-	 * @var		string
-	 * @access   protected
-	 */
-	protected $_namespace = '';
-
-	/**
-	 * Document profile
-	 *
-	 * @var		string
-	 * @access   protected
-	 */
-	protected $_profile = '';
 
 	/**
 	 * Array of linked scripts
@@ -188,11 +156,9 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
         // Initialize the options
         parent::__construct($config);
 
-		$this->setLineEnd($config->lineend);
         $this->setCharset($config->charset);
         $this->setLanguage($config->language);
         $this->setDirection($config->direction);
-        $this->setTab($config->tab);
         $this->setLink($config->link);
         $this->setBase($config->base);
         $this->setType($config->type);
@@ -209,11 +175,9 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
     protected function _initialize(KConfig $config)
     {
     	$config->append(array(
-    		'lineend' => "\12",
     		'charset' => 'utf-8',
        	 	'language' => 'en-GB',
     	    'direction'	=> 'ltr',
-    		'tab' => "\11",
     		'link'   => '',
     		'base'  => '',
             'type' => 'html'
@@ -222,17 +186,6 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
         parent::_initialize($config);
     }
 
-    /**
-	 * Returns a reference to the global JDocument object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * This method must be invoked as:
-	 * 		<pre>  $document = &JDocument::getInstance();</pre>
-	 *
-	 * @access public
-	 * @param type $type The document type to instantiate
-	 * @return object  The document object.
-	 */
 	public function getInstance($type = 'html', $attributes = array())
 	{
         $registry = $this->getService('application.registry');
@@ -416,9 +369,9 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
 	 */
 	public function addStyleSheet($url, $type = 'text/css', $media = null, $attribs = array())
 	{
-		$this->_styleSheets[$url]['mime']		= $type;
-		$this->_styleSheets[$url]['media']		= $media;
-		$this->_styleSheets[$url]['attribs']	= $attribs;
+		$this->_styleSheets[$url]['mime'] = $type;
+		$this->_styleSheets[$url]['media'] = $media;
+		$this->_styleSheets[$url]['attribs'] = $attribs;
 	}
 
 	 /**
@@ -581,27 +534,6 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
 	}
 
 	 /**
-	 * Sets the document generator
-	 *
-	 * @param   string
-	 * @access  public
-	 * @return  void
-	 */
-	public function setGenerator($generator) {
-		$this->_generator = $generator;
-	}
-
-	/**
-	 * Returns the document generator
-	 *
-	 * @access public
-	 * @return string
-	 */
-	public function getGenerator() {
-		return $this->_generator;
-	}
-
-	 /**
 	 * Sets the document modified date
 	 *
 	 * @param   string
@@ -625,73 +557,12 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
 	 /**
 	 * Sets the document MIME encoding that is sent to the browser.
 	 *
-	 * <p>This usually will be text/html because most browsers cannot yet
-	 * accept the proper mime settings for XHTML: application/xhtml+xml
-	 * and to a lesser extent application/xml and text/xml. See the W3C note
-	 * ({@link http://www.w3.org/TR/xhtml-media-types/
-	 * http://www.w3.org/TR/xhtml-media-types/}) for more details.</p>
-	 *
 	 * @param	string	$type
 	 * @access   public
 	 * @return   void
 	 */
 	public function setMimeEncoding($type = 'text/html') {
 		$this->_mime = strtolower($type);
-	}
-
-	 /**
-	 * Sets the line end style to Windows, Mac, Unix or a custom string.
-	 *
-	 * @param   string  $style  "win", "mac", "unix" or custom string.
-	 * @access  public
-	 * @return  void
-	 */
-	public function setLineEnd($style)
-	{
-		switch ($style) {
-			case 'win':
-				$this->_lineEnd = "\15\12";
-				break;
-			case 'unix':
-				$this->_lineEnd = "\12";
-				break;
-			case 'mac':
-				$this->_lineEnd = "\15";
-				break;
-			default:
-				$this->_lineEnd = $style;
-		}
-	}
-
-	/**
-	 * Returns the lineEnd
-	 *
-	 * @access	protected
-	 * @return	string
-	 */
-	protected function _getLineEnd() {
-		return $this->_lineEnd;
-	}
-
-	/**
-	 * Sets the string used to indent HTML
-	 *
-	 * @param	 string	$string	 String used to indent ("\11", "\t", '  ', etc.).
-	 * @access	public
-	 * @return	void
-	 */
-	public function setTab($string) {
-		$this->_tab = $string;
-	}
-
-	 /**
-	 * Returns a string containing the unit for indenting HTML
-	 *
-	 * @access	protected
-	 * @return	string
-	 */
-	protected function _getTab() {
-        return $this->_tab;
 	}
 
 	/**
@@ -703,7 +574,7 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
 	 * @param array		$params		Associative array of attributes
 	 * @return 	The rendered data
 	 */
-	function render( $cache = false, $params = array())
+	function render($cache = false, $params = array())
 	{
 		JResponse::setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' );
 

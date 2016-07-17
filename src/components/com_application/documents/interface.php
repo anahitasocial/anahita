@@ -235,23 +235,6 @@ interface ComApplicationDocumentInterface
     public function getLink();
 
     /**
-    * Sets the document generator
-    *
-    * @param   string
-    * @access  public
-    * @return  void
-    */
-    public function setGenerator($generator);
-
-    /**
-    * Returns the document generator
-    *
-    * @access public
-    * @return string
-    */
-    public function getGenerator();
-
-    /**
     * Sets the document modified date
     *
     * @param   string
@@ -271,26 +254,11 @@ interface ComApplicationDocumentInterface
     /**
     * Sets the document MIME encoding that is sent to the browser.
     *
-    * <p>This usually will be text/html because most browsers cannot yet
-    * accept the proper mime settings for XHTML: application/xhtml+xml
-    * and to a lesser extent application/xml and text/xml. See the W3C note
-    * ({@link http://www.w3.org/TR/xhtml-media-types/
-    * http://www.w3.org/TR/xhtml-media-types/}) for more details.</p>
-    *
     * @param	string	$type
     * @access   public
     * @return   void
     */
     public function setMimeEncoding($type = 'text/html');
-
-    /**
-    * Sets the line end style to Windows, Mac, Unix or a custom string.
-    *
-    * @param   string  $style  "win", "mac", "unix" or custom string.
-    * @access  public
-    * @return  void
-    */
-    public function setLineEnd($style);
 
     /**
 	 * Outputs the document
