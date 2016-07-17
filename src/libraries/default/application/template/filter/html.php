@@ -56,7 +56,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderHead()
     {
-        $document = JFactory::getDocument();
+        $document = $this->getService('com:application.document')->getInstance();
         $html = '<base href="base://" />';
 
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
@@ -79,7 +79,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderScripts()
     {
-        $document = JFactory::getDocument();
+        $document = $this->getService('application.document')->getInstance();
         $string = '';
 
         //include tranlsation files
@@ -87,14 +87,14 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
 
         // Generate script file links
-        $scripts = array_reverse($document->_scripts);
+        $scripts = array_reverse($document->getScripts());
 
         foreach ($scripts as $src => $type) {
             $string .= '<script type="'.$type.'" src="'.$src.'"></script>';
         }
 
         // Generate script declarations
-        $script = $document->_script;
+        $script = $document->getScript();
 
         foreach ($script as $type => $content) {
             $string .= '<script type="'.$type.'">'.$content.'</script>';
@@ -110,11 +110,11 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderStyles()
     {
-        $document = JFactory::getDocument();
+        $document = $this->getService('com:application.document')->getInstance();
         $html = '';
 
         // Generate stylesheet links
-        foreach ($document->_styleSheets as $src => $attr) {
+        foreach ($document->getStyleSheets() as $src => $attr) {
             $rel = 'stylesheet';
 
             if (strpos($src, '.less')) {
@@ -134,7 +134,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
             $html .= '/>';
         }
 
-        foreach ($document->_style as $type => $content) {
+        foreach ($document->getStyle() as $type => $content) {
             $html .= '<style type="'.$type.'">'.$content.'</style>';
         }
 

@@ -93,26 +93,6 @@ class JFactory
 	}
 
 	/**
-	 * Get a document object
-	 *
-	 * Returns a reference to the global {@link JDocument} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @return object JDocument
-	 */
-	static public function &getDocument()
-	{
-		static $instance;
-
-		if (!is_object( $instance )) {
-			$instance = JFactory::_createDocument();
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get an user object
 	 *
 	 * Returns a reference to the global {@link JUser} object, only creating it

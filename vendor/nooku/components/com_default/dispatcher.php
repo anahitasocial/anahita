@@ -98,7 +98,7 @@ class ComDefaultDispatcher extends KDispatcherDefault implements KServiceInstant
     {
         $view  = $this->getController()->getView();
 
-        $document = JFactory::getDocument();
+        $document = KService::get('application.document')->getInstance();
         $document->setMimeEncoding($view->mimetype);
 
         return parent::_actionRender($context);
