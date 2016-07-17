@@ -56,17 +56,9 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderHead()
     {
-        $document = $this->getService('com:application.document')->getInstance();
+        $document = $this->getService('application.document')->getInstance();
         $html = '<base href="base://" />';
-
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
-
-        if (isset($document->_custom)) {
-            foreach ($document->_custom as $custom) {
-                $html .= $custom;
-            }
-        }
-
         $html .= '<title>'.$document->getTitle().'</title>';
 
         return $html;
@@ -80,20 +72,16 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
     protected function _renderScripts()
     {
         $document = $this->getService('application.document')->getInstance();
-        $string = '';
 
-        //include tranlsation files
-        //this isn't working
+        $string = '';
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
 
-        // Generate script file links
         $scripts = array_reverse($document->getScripts());
 
         foreach ($scripts as $src => $type) {
             $string .= '<script type="'.$type.'" src="'.$src.'"></script>';
         }
 
-        // Generate script declarations
         $script = $document->getScript();
 
         foreach ($script as $type => $content) {
@@ -110,11 +98,12 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderStyles()
     {
-        $document = $this->getService('com:application.document')->getInstance();
+        $document = $this->getService('application.document')->getInstance();
         $html = '';
 
         // Generate stylesheet links
         foreach ($document->getStyleSheets() as $src => $attr) {
+
             $rel = 'stylesheet';
 
             if (strpos($src, '.less')) {

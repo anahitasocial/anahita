@@ -121,7 +121,7 @@ class ComApplication extends KObject
   	{
   		$options = array();
   		$options['name'] = $name;
-      $options['force_ssl'] = isSSL();
+        $options['force_ssl'] = isSSL();
 
   		$session =& JFactory::getSession($options);
 
