@@ -49,7 +49,7 @@ class JElementCustom extends JElement
         $this->_template->addFilter(array('shorttag', 'alias'));
 
         $this->_template->getFilter('alias')->append(array(
-            '@route(' => 'JRoute::_(',
+            '@route(' => 'route(',
             '@html(\'' => '$this->renderHelper(\'com:base.template.helper.html.',
         ));
     }

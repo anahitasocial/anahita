@@ -7,6 +7,7 @@ define('ANAHITA', 1);
  */
 require_once JPATH_LIBRARIES.'/koowa/koowa.php';
 require_once JPATH_LIBRARIES.'/anahita/functions.php';
+require_once JPATH_LIBRARIES.'/anahita/translator.php';
 
 /**
  * Service Class.

@@ -30,7 +30,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         parent::_initialize($config);
 
         $paths = KConfig::unbox($config->paths);
-        array_unshift($paths, JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_settings/ui');
+        array_unshift($paths, JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_settings/ui');
         $config->paths = $paths;
     }
 
@@ -301,7 +301,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         $config_file_path = JPATH_SITE.DS.'components'.DS.$package.DS.'config.json';
 
         if(!file_exists($config_file_path)) {
-           return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
+           return AnTranslator::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
         }
 
         JFactory::getLanguage()->load($package);
@@ -329,10 +329,10 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
             if(isset($plugin_config->fields)) {
                 return $this->_renderForm($plugin_config->fields, $entity);
             } else {
-                return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
+                return AnTranslator::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
             }
         } else {
-            return JText::_("Couldn't find the {$element}.json file!");
+            return AnTranslator::_("Couldn't find the {$element}.json file!");
         }
     }
 
@@ -349,7 +349,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         $config_file_path = JPATH_THEMES.DS.$template.DS.'template.json';
 
         if(!file_exists($config_file_path)) {
-           return JText::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
+           return AnTranslator::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
         }
 
         $template_config = json_decode(file_get_contents($config_file_path));
@@ -369,9 +369,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                     $html .= $this->formfield_text(array(
                         'name' => $field->name,
                         'id' => 'param-'.$field->name,
-                        'label' => JText::_($field->label),
-                        'placeholder' => isset($field->placeholder) ? JText::_($field->placeholder) : '',
-                        'description' => isset($field->description) ? JText::_($field->description) : '',
+                        'label' => AnTranslator::_($field->label),
+                        'placeholder' => isset($field->placeholder) ? AnTranslator::_($field->placeholder) : '',
+                        'description' => isset($field->description) ? AnTranslator::_($field->description) : '',
                         'maxlength' => isset($field->size) ? $field->size : 200,
                         'value' => $entity->getValue($field->name, $field->default),
                         'disabled' => isset($field->disabled) ? $field->disabled : 0,
@@ -395,9 +395,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                    $html .= $this->formfield_select(array(
                      'name' => $field->name,
                      'id' => 'param-'.$field->name,
-                     'label' => JText::_($field->label),
+                     'label' => AnTranslator::_($field->label),
                      'selected' => ($value === '') ? $field->default : $value,
-                     'description' => isset($field->description) ? JText::_($field->description) : '',
+                     'description' => isset($field->description) ? AnTranslator::_($field->description) : '',
                      'options' => $options,
                      'disabled' => isset($field->disabled) ? 1 : 0,
                    ));
@@ -408,9 +408,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                     $html .= $this->formfield_textarea(array(
                         'name' => $field->name,
                         'id' => 'param-'.$field->name,
-                        'label' => JText::_($field->label),
-                        'placeholder' => isset($field->placeholder) ? JText::_($field->placeholder) : '',
-                        'description' => isset($field->description) ? JText::_($field->description) : '',
+                        'label' => AnTranslator::_($field->label),
+                        'placeholder' => isset($field->placeholder) ? AnTranslator::_($field->placeholder) : '',
+                        'description' => isset($field->description) ? AnTranslator::_($field->description) : '',
                         'maxlength' => isset($field->size) ? $field->size : 200,
                         'value' => html_entity_decode($entity->getValue($field->name)),
                         'disabled' => isset($field->disabled) ? 1 : 0,
@@ -430,12 +430,12 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                    $html .= $this->formfield_custom(array(
                      'name' => $field->name,
                      'id' => 'param-'.$field->name,
-                     'label' => JText::_($field->label),
+                     'label' => AnTranslator::_($field->label),
                      'value' => ($value === '') ? $field->default : $value,
                      'disabled' => isset($field->disabled) ? 1 : 0,
                      'identifier' => $field->identifier,
-                     'placeholder' => isset($field->placeholder) ? JText::_($field->placeholder) : '',
-                     'description' => isset($field->description) ? JText::_($field->description) : '',
+                     'placeholder' => isset($field->placeholder) ? AnTranslator::_($field->placeholder) : '',
+                     'description' => isset($field->description) ? AnTranslator::_($field->description) : '',
                    ));
                 break;
             }

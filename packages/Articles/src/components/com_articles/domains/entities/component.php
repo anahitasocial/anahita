@@ -53,16 +53,16 @@ class ComArticlesDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($mode == 'profile') {
             $gadgets->insert('articles', array(
-                    'title' => JText::_('COM-ARTICLES-GADGET-ACTOR-ARTICLES'),
+                    'title' => AnTranslator::_('COM-ARTICLES-GADGET-ACTOR-ARTICLES'),
                     'url' => 'option=com_articles&view=articles&layout=gadget&oid='.$actor->id,
-                    'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+                    'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                     'action_url' => 'option=com_articles&view=articles&oid='.$actor->id,
             ));
         } else {
             $gadgets->insert('articles', array(
-                    'title' => JText::_('COM-ARTICLES-GADGET-ACTOR-DASHBOARD'),
+                    'title' => AnTranslator::_('COM-ARTICLES-GADGET-ACTOR-DASHBOARD'),
                     'url' => 'option=com_articles&view=articles&layout=gadget&filter=leaders',
-                    'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+                    'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                     'action_url' => 'option=com_articles&view=articles&filter=leaders',
             ));
         }
@@ -75,8 +75,8 @@ class ComArticlesDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($actor->authorize('action', 'com_articles:article:add')) {
             $composers->insert('article-composer', array(
-                    'title' => JText::_('COM-ARTICLES-COMPOSER-ARTICLE'),
-                    'placeholder' => JText::_('COM-ARTICLES-ARTICLE-ADD'),
+                    'title' => AnTranslator::_('COM-ARTICLES-COMPOSER-ARTICLE'),
+                    'placeholder' => AnTranslator::_('COM-ARTICLES-ARTICLE-ADD'),
                     'url' => 'option=com_articles&view=article&layout=composer&oid='.$actor->id,
             ));
         }
@@ -88,7 +88,7 @@ class ComArticlesDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setMenuLinks($actor, $menuItems)
     {
         $menuItems->insert('articles-articles', array(
-            'title' => JText::_('COM-ARTICLES-MENU-ITEM-ARTICLES'),
+            'title' => AnTranslator::_('COM-ARTICLES-MENU-ITEM-ARTICLES'),
             'url' => 'option=com_articles&view=articles&oid='.$actor->uniqueAlias,
         ));
     }

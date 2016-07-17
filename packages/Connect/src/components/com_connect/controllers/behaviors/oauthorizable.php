@@ -136,7 +136,7 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
                     $query[] = 'oid='.$this->oid;
                 }
 
-                $callback = JRoute::_(implode($query, '&'), true);
+                $callback = route(implode($query, '&'), true);
 
                 $this->_consumer = new ComConnectOauthConsumer(new KConfig(array(
                     'key' => $key,

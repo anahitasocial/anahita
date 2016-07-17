@@ -36,12 +36,12 @@ class ComInvitesControllerToolbarActorbar extends ComBaseControllerToolbarActorb
             $name = $this->getController()->service;
         }
 
-        $this->setTitle(JText::sprintf('COM-INVITES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
+        $this->setTitle(AnTranslator::sprintf('COM-INVITES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
 
         //create navigations
         $this->addNavigation(
             'email',
-            JText::_('COM-INVITES-LINK-EMAIL'),
+            AnTranslator::_('COM-INVITES-LINK-EMAIL'),
             'option=com_invites&view=email',
             $name == 'email'
           );
@@ -49,7 +49,7 @@ class ComInvitesControllerToolbarActorbar extends ComBaseControllerToolbarActorb
         if (ComConnectHelperApi::enabled('facebook')) {
             $this->addNavigation(
               'facebook',
-              JText::_('COM-INVITES-LINK-FACEBOOK'),
+              AnTranslator::_('COM-INVITES-LINK-FACEBOOK'),
               'option=com_invites&view=connections&service=facebook',
               $name == 'facebook'
             );

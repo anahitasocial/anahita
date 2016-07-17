@@ -95,13 +95,6 @@ class JTableUser extends JTable
 	var $activation		= null;
 
 	/**
-	 * Description
-	 *
-	 * @var string
-	 */
-	var $params			= null;
-
-	/**
 	* @param database A database connector object
 	*/
 	function __construct( &$db )
@@ -123,22 +116,22 @@ class JTableUser extends JTable
 
 		// Validate user information
 		if (trim( $this->name ) == '') {
-			$this->setError( JText::_( 'Please enter your name.' ) );
+			$this->setError( AnTranslator::_( 'Please enter your name.' ) );
 			return false;
 		}
 
 		if (trim( $this->username ) == '') {
-			$this->setError( JText::_( 'Please enter a user name.') );
+			$this->setError( AnTranslator::_( 'Please enter a user name.') );
 			return false;
 		}
 
 		if (preg_match( "#[<>\"'%;()&]#i", $this->username) || strlen(utf8_decode($this->username )) < 2) {
-			$this->setError( JText::sprintf( 'VALID_AZ09', JText::_( 'Username' ), 2 ) );
+			$this->setError( AnTranslator::sprintf( 'VALID_AZ09', AnTranslator::_( 'Username' ), 2 ) );
 			return false;
 		}
 
 		if ((trim($this->email) == "") || ! JMailHelper::isEmailAddress($this->email) ) {
-			$this->setError( JText::_( 'WARNREG_MAIL' ) );
+			$this->setError( AnTranslator::_( 'WARNREG_MAIL' ) );
 			return false;
 		}
 
@@ -158,7 +151,7 @@ class JTableUser extends JTable
 		$this->_db->setQuery( $query );
 		$xid = intval( $this->_db->loadResult() );
 		if ($xid && $xid != intval( $this->id )) {
-			$this->setError(  JText::_('WARNREG_INUSE'));
+			$this->setError(  AnTranslator::_('WARNREG_INUSE'));
 			return false;
 		}
 
@@ -172,7 +165,7 @@ class JTableUser extends JTable
 		$this->_db->setQuery( $query );
 		$xid = intval( $this->_db->loadResult() );
 		if ($xid && $xid != intval( $this->id )) {
-			$this->setError( JText::_( 'WARNREG_EMAIL_INUSE' ) );
+			$this->setError( AnTranslator::_( 'WARNREG_EMAIL_INUSE' ) );
 			return false;
 		}
 
@@ -198,7 +191,7 @@ class JTableUser extends JTable
 
 		if( !$ret )
 		{
-			$this->setError( strtolower(get_class( $this ))."::". JText::_( 'store failed' ) ."<br />" . $this->_db->getErrorMsg() );
+			$this->setError( strtolower(get_class( $this ))."::". AnTranslator::_( 'store failed' ) ."<br />" . $this->_db->getErrorMsg() );
 			return false;
 		}
 		else
@@ -210,8 +203,8 @@ class JTableUser extends JTable
 	function delete( $oid=null )
 	{
 		$k = $this->_tbl_key;
-		
-		if ($oid) 
+
+		if ($oid)
 		{
 			$this->$k = intval( $oid );
 		}
@@ -219,17 +212,17 @@ class JTableUser extends JTable
 		$query = 'DELETE FROM '. $this->_tbl
 		. ' WHERE '. $this->_tbl_key .' = '. (int) $this->$k
 		;
-        
+
 		$this->_db->setQuery( $query );
 
-		if ($this->_db->query()) 
+		if ($this->_db->query())
 		{
 			return true;
-		} 
-		else 
+		}
+		else
 		{
 			$this->setError( $this->_db->getErrorMsg() );
-			
+
 			return false;
 		}
 	}

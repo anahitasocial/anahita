@@ -80,7 +80,7 @@ class ComStoriesTemplateHelperParser extends KTemplateHelperAbstract
             'filters' => array('alias', 'shorttag'),
             'alias' => array(
                 '@escape(' => 'htmlspecialchars(',
-                '@route(' => 'JRoute::_(',
+                '@route(' => 'route(',
                 '@name(' => '$this->renderHelper(\'com://site/actors.template.helper.story.names\',',
                 '@possessive(' => '$this->renderHelper(\'com://site/stories.template.helper.story.possessiveNoune\',$story,',
                 '@link(' => '$this->renderHelper(\'com://site/actors.template.helper.story.link\',',

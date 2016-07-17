@@ -86,10 +86,10 @@ class JUtility
  	 */
 	static public function sendAdminMail( $adminName, $adminEmail, $email, $type, $title, $author, $url = null )
 	{
-		$subject = JText::_( 'User Submitted' ) ." '". $type ."'";
+		$subject = AnTranslator::_( 'User Submitted' ) ." '". $type ."'";
 
-		$message = sprintf ( JText::_( 'MAIL_MSG_ADMIN' ), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
-		$message .= JText::_( 'MAIL_MSG') ."\n";
+		$message = sprintf ( AnTranslator::_( 'MAIL_MSG_ADMIN' ), $adminName, $type, $title, $author, $url, $url, 'administrator', $type);
+		$message .= AnTranslator::_( 'MAIL_MSG') ."\n";
 
 	 	// Get a JMail instance
 		$mail =& JFactory::getMailer();

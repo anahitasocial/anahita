@@ -29,10 +29,10 @@ class ComTopicsControllerToolbarActorbar extends ComMediumControllerToolbarActor
         $layout = pick($this->getController()->layout, 'default');
         $name = $this->getController()->getIdentifier()->name;
 
-        $this->setTitle(JText::sprintf('COM-TOPICS-HEADER-TOPICS', $actor->name));
+        $this->setTitle(AnTranslator::sprintf('COM-TOPICS-HEADER-TOPICS', $actor->name));
 
         $this->addNavigation('topics',
-                JText::_('COM-TOPICS-NAV-TOPICS'),
+                AnTranslator::_('COM-TOPICS-NAV-TOPICS'),
                 array(
                     'option' => 'com_topics',
                     'view' => 'topics',

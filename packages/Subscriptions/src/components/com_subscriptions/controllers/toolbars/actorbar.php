@@ -37,12 +37,12 @@ class ComSubscriptionsControllerToolbarActorbar extends ComBaseControllerToolbar
         }
 
         $this->setActor($actor);
-        $this->setTitle(JText::sprintf('COM-SUBSCRIPTIONS-ACTOR-HEADER-TITLE-ORDER', $actor->name));
+        $this->setTitle(AnTranslator::sprintf('COM-SUBSCRIPTIONS-ACTOR-HEADER-TITLE-ORDER', $actor->name));
 
             //create navigations
         $this->addNavigation(
             'subscriptions-orders',
-            JText::_('COM-SUBSCRIPTIONS-TRANSACTIONS-MENU-ITEM'),
+            AnTranslator::_('COM-SUBSCRIPTIONS-TRANSACTIONS-MENU-ITEM'),
             array('option' => 'com_subscriptions', 'view' => 'orders', 'oid' => $actor->id));
     }
 }

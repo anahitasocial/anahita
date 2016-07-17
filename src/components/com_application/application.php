@@ -1,32 +1,16 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
  *
  * @link       http://www.GetAnahita.com
  */
 
-/**
- * JSite application. Temporary until merged with the dispatcher.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class JSite extends JApplication
+class ComApplication extends KObject
 {
     /**
      * Template.
@@ -43,14 +27,45 @@ class JSite extends JApplication
     protected $_router;
 
     /**
-     * Constructor.
-     *
-     * @param array $config An optional KConfig object with configuration options.
-     */
+  	 * The name of the application
+  	 *
+  	 * @var		array
+  	 * @access	protected
+  	 */
+  	var $_name = null;
+
+    /**
+    * Class constructor.
+    *
+    * @param	integer	A client identifier.
+    */
     public function __construct($config = array())
     {
-        $config['clientId'] = 0;
-        parent::__construct($config);
+        //set the application name
+        $this->_name	= $this->getName();
+
+        //Set the session default name
+        if(!isset($config['session_name'])) {
+           $config['session_name'] = $this->_name;
+        }
+
+        //Enable sessions by default
+        if(!isset($config['session'])) {
+          $config['session'] = true;
+        }
+
+        //Set the default configuration file
+        if(!isset($config['config_file'])) {
+          $config['config_file'] = 'configuration.php';
+        }
+
+        //create the configuration object
+        $this->_createConfiguration(JPATH_CONFIGURATION.DS.$config['config_file']);
+
+        //create the session if a session name is passed
+        if($config['session'] !== false) {
+          $this->_createSession(JUtility::getHash($config['session_name']));
+        }
     }
 
     /**
@@ -67,9 +82,88 @@ class JSite extends JApplication
         if (!JLanguage::exists($options['language'])) {
             $options['language'] = 'en-GB';
         }
-
-        parent::initialise($options);
     }
+
+    /**
+     * Create the configuration registry
+     *
+     * @access	private
+     * @param	string	$file 	The path to the configuration file
+     * return	JConfig
+     */
+    protected function &_createConfiguration($file)
+    {
+      jimport( 'joomla.registry.registry' );
+
+      require_once($file);
+
+      $config = new JConfig();
+      $registry =& JFactory::getConfig();
+      $registry->loadObject($config);
+
+      return $config;
+    }
+
+    /**
+  	 * Create the user session.
+  	 *
+  	 * Old sessions are flushed based on the configuration value for the cookie
+  	 * lifetime. If an existing session, then the last access time is updated.
+  	 * If a new session, a session id is generated and a record is created in
+  	 * the #__sessions table.
+  	 *
+  	 * @access	private
+  	 * @param	string	The sessions name.
+  	 * @return	object	JSession on success. May call exit() on database error.
+  	 * @since	1.5
+  	 */
+  	public function &_createSession( $name )
+  	{
+  		$options = array();
+  		$options['name'] = $name;
+        $options['force_ssl'] = isSSL();
+
+  		$session =& JFactory::getSession($options);
+
+  		jimport('joomla.database.table');
+  		$storage = & JTable::getInstance('session');
+  		$storage->purge($session->getExpire());
+
+  		// Session exists and is not expired, update time in session table
+  		if ($storage->load($session->getId())) {
+  				$storage->update();
+  				return $session;
+  		}
+
+  		//Session doesn't exist yet, initalise and store it in the session table
+  		$session->set('registry',	new JRegistry('session'));
+  		$session->set('user',	new JUser());
+
+  		if (!$storage->insert( $session->getId(), 0)) {
+  				jexit( $storage->getError());
+  		}
+
+  		return $session;
+  	}
+
+    /**
+   	 * Gets a configuration value.
+   	 *
+   	 * @access	public
+   	 * @param	string	The name of the value to get.
+   	 * @return	mixed	The user state.
+   	 * @example	application/japplication-getcfg.php Getting a configuration value
+   	 */
+   	public function getSystemSetting( $name )
+   	{
+        $setting = new JConfig();
+
+        if(isset($setting->$name)){
+          return $setting->$name;
+        }
+
+        return null;
+   	}
 
     /**
      * Get the template.
@@ -129,4 +223,34 @@ class JSite extends JApplication
 
         return $this->_router;
     }
+
+    /**
+  	 * Method to get the application name
+  	 *
+  	 * The dispatcher name by default parsed using the classname, or it can be set
+  	 * by passing a $config['name'] in the class constructor
+  	 *
+  	 * @access	public
+  	 * @return	string The name of the dispatcher
+  	 */
+  	function getName()
+  	{
+  		$name = $this->_name;
+
+  		if (empty( $name )) {
+
+  			$r = null;
+
+  			if (!preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
+            throw new AnErrorException(
+              "Can't get or parse the class name.",
+              KHttpResponse::INTERNAL_SERVER_ERROR
+            );
+  			}
+
+  			$name = strtolower( $r[1] );
+  		}
+
+  		return $name;
+  	}
 }

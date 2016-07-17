@@ -29,11 +29,11 @@ class ComArticlesControllerToolbarActorbar extends ComMediumControllerToolbarAct
         $layout = pick($this->getController()->layout, 'default');
         $name = $this->getController()->getIdentifier()->name;
 
-        $this->setTitle(JText::sprintf('COM-ARTICLES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
+        $this->setTitle(AnTranslator::sprintf('COM-ARTICLES-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
 
         //create navigations
         $this->addNavigation('articles',
-                        JText::_('COM-ARTICLES-LINK-ARTICLES'),
+                        AnTranslator::_('COM-ARTICLES-LINK-ARTICLES'),
                         array(
                             'option' => 'com_articles',
                             'view' => 'articles',

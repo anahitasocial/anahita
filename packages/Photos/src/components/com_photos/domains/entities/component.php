@@ -40,16 +40,16 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($mode == 'profile') {
             $gadgets->insert('photos', array(
-                    'title' => JText::_('COM-PHOTOS-GADGET-ACTOR-PROFILE'),
+                    'title' => AnTranslator::_('COM-PHOTOS-GADGET-ACTOR-PROFILE'),
                     'url' => 'option=com_photos&view=photos&layout=gadget&oid='.$actor->uniqueAlias,
-                    'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+                    'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                     'action_url' => 'option=com_photos&view=photos&oid='.$actor->id,
             ));
         } else {
             $gadgets->insert('photos', array(
-                    'title' => JText::_('COM-PHOTOS-GADGET-DASHBOARD'),
+                    'title' => AnTranslator::_('COM-PHOTOS-GADGET-DASHBOARD'),
                     'url' => 'option=com_photos&view=photos&layout=gadget&filter=leaders',
-                    'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+                    'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                     'action_url' => 'option=com_photos&view=photos&filter=leaders',
             ));
         }
@@ -62,8 +62,8 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($actor->authorize('action', 'com_photos:photo:add')) {
             $composers->insert('photo-composer', array(
-                    'title' => JText::_('COM-PHOTOS-COMPOSER-PHOTO'),
-                    'placeholder' => JText::_('COM-PHOTOS-PHOTO-ADD'),
+                    'title' => AnTranslator::_('COM-PHOTOS-COMPOSER-PHOTO'),
+                    'placeholder' => AnTranslator::_('COM-PHOTOS-PHOTO-ADD'),
                     'url' => 'option=com_photos&view=photo&layout=composer&oid='.$actor->id,
             ));
         }
@@ -75,7 +75,7 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setMenuLinks($actor, $menuItems)
     {
         $menuItems->insert('photo-photos', array(
-            'title' => JText::_('COM-PHOTOS-MENU-ITEM-PHOTOS'),
+            'title' => AnTranslator::_('COM-PHOTOS-MENU-ITEM-PHOTOS'),
             'url' => 'option=com_photos&view=photos&oid='.$actor->uniqueAlias,
         ));
     }

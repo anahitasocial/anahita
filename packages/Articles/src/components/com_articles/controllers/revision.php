@@ -40,7 +40,7 @@ class ComArticlesControllerRevision extends ComMediumControllerDefault
         $article = $revision->article;
         $article->restore($revision);
 
-        $msg = JText::sprintf('COM-ARTICLES-ARTICLE-REVISIONS-RESTORATION-CONFIRMATION', $revision->revisionNum);
+        $msg = AnTranslator::sprintf('COM-ARTICLES-ARTICLE-REVISIONS-RESTORATION-CONFIRMATION', $revision->revisionNum);
         $context->response->setRedirect($article->getURL().'&layout=edit', $msg);
     }
 

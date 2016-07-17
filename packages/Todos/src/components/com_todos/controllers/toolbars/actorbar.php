@@ -30,10 +30,10 @@ class ComTodosControllerToolbarActorbar extends ComMediumControllerToolbarActorb
         $layout = pick($this->getController()->layout, 'default');
         $name = $this->getController()->getIdentifier()->name;
 
-        $this->setTitle(JText::sprintf('COM-TODOS-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
+        $this->setTitle(AnTranslator::sprintf('COM-TODOS-ACTOR-HEADER-'.strtoupper($name).'S', $actor->name));
 
         //create navigations
-        $this->addNavigation('todos', JText::_('COM-TODOS-LINK-TODOS'), array(
+        $this->addNavigation('todos', AnTranslator::_('COM-TODOS-LINK-TODOS'), array(
           'option' => 'com_todos',
           'view' => 'todos',
           'oid' => $actor->id, ), $name == 'todo');

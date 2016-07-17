@@ -35,7 +35,7 @@ class ComArticlesControllerToolbarRevision extends ComMediumControllerToolbarDef
     protected function _commandView($command)
     {
         $entity = $this->getController()->getItem();
-        $command->append(array('label' => JText::_('COM-ARTICLES-ARTICLE-CURRENT-VERSION')));
+        $command->append(array('label' => AnTranslator::_('COM-ARTICLES-ARTICLE-CURRENT-VERSION')));
         $command->href('option=com_articles&view=article&id='.$entity->parent->id);
     }
 
@@ -47,7 +47,7 @@ class ComArticlesControllerToolbarRevision extends ComMediumControllerToolbarDef
     protected function _commandRestore($command)
     {
         $entity = $this->getController()->getItem();
-        $command->append(array('label' => JText::_('COM-ARTICLES-ARTICLE-REVISION-RESTORE')));
+        $command->append(array('label' => AnTranslator::_('COM-ARTICLES-ARTICLE-REVISION-RESTORE')));
         $command->href('option=com_articles&view=revision&action=restore&id='.$entity->id)
         ->setAttribute('data-trigger', 'Submit');
     }

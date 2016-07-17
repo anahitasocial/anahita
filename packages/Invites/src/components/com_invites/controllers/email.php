@@ -72,7 +72,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
                     $token->save();
 
                     $this->mail(array(
-                        'subject' => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+                        'subject' => AnTranslator::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
                         'to' => $email,
                         'layout' => false,
                         'template' => 'invite',

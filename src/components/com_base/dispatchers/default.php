@@ -55,18 +55,19 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     public function includeMedia()
     {
-        $asset = $this->getService('com://site/base.template.asset');
+        $document = $this->getService('application.document')->getInstance();
+        $asset = $this->getService('com:base.template.asset');
 
         $url = $asset->getURL("com_{$this->getIdentifier()->package}/js/{$this->getIdentifier()->package}.js");
 
         if ($url) {
-            JFactory::getDocument()->addScript($url);
+            $document->addScript($url);
         }
 
         $url = $asset->getURL("com_{$this->getIdentifier()->package}/css/{$this->getIdentifier()->package}.css");
 
         if ($url) {
-            JFactory::getDocument()->addStyleSheet($url);
+            $document->addStyleSheet($url);
         }
     }
 
@@ -92,7 +93,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     public function setPageTitle(KCommandContext $context)
     {
         $view = $this->getController()->getView();
-        $document = JFactory::getDocument();
+        $document = $this->getService('application.document')->getInstance();
 
         //@TODO temporary fix
         if ($document->getTitle()) {
@@ -146,7 +147,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 
             $return = base64_encode(KRequest::url());
 
-            $context->response->setRedirect(JRoute::_('option=com_people&view=session&return='.$return));
+            $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
 
             $context->response->send();
 

@@ -40,16 +40,16 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($mode == 'profile') {
             $gadgets->insert('todos-gadget-profile-todos', array(
-                'title' => JText::_('COM-TODOS-GADGET-ACTOR-TODOS'),
+                'title' => AnTranslator::_('COM-TODOS-GADGET-ACTOR-TODOS'),
                 'url' => 'option=com_todos&view=todos&layout=gadget&oid='.$actor->id,
-                'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+                'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                 'action_url' => 'option=com_todos&view=todos&oid='.$actor->id,
             ));
         } else {
             $gadgets->insert('todos-gadget-profile-todos', array(
-                'title' => JText::_('COM-TODOS-GADGET-DASHBOARD-TODOS'),
+                'title' => AnTranslator::_('COM-TODOS-GADGET-DASHBOARD-TODOS'),
                 'url' => 'option=com_todos&view=todos&layout=gadget&filter=leaders',
-                'action' => JText::_('LIB-AN-GADGET-VIEW-ALL'),
+                'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                 'action_url' => 'option=com_todos&view=todos&filter=leaders',
             ));
         }
@@ -62,8 +62,8 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($actor->authorize('action', 'com_todos:todo:add')) {
             $composers->insert('todos-composer', array(
-                'title' => JText::_('COM-TODOS-COMPOSER-TODO'),
-                'placeholder' => JText::_('COM-TODOS-TODO-ADD'),
+                'title' => AnTranslator::_('COM-TODOS-COMPOSER-TODO'),
+                'placeholder' => AnTranslator::_('COM-TODOS-TODO-ADD'),
                 'url' => 'option=com_todos&view=todo&layout=composer&oid='.$actor->id,
             ));
         }
@@ -75,7 +75,7 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setMenuLinks($actor, $menuItems)
     {
         $menuItems->insert('todos-todos', array(
-            'title' => JText::_('COM-TODOS-MENU-ITEM-TODOS'),
+            'title' => AnTranslator::_('COM-TODOS-MENU-ITEM-TODOS'),
             'url' => 'option=com_todos&view=todos&oid='.$actor->uniqueAlias,
         ));
     }

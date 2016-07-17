@@ -101,15 +101,15 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
      */
     protected function _initialize(KConfig $config)
     {
-    	$config->append(array(
-    		'options'	=> array(
-    			'host'		=> ini_get('mysqli.default_host'),
-    			'username'	=> ini_get('mysqli.default_user'),
-    			'password'  => ini_get('mysqli.default_pw'),
-    			'database'	=> '',
-    			'port'		=> ini_get("mysqli.default_port"),
-    			'socket'	=> ini_get("mysqli.default_socket")
-    		)
+    		$config->append(array(
+	    		'options'	=> array(
+	    			'host'		=> ini_get('mysqli.default_host'),
+	    			'username'	=> ini_get('mysqli.default_user'),
+	    			'password'  => ini_get('mysqli.default_pw'),
+	    			'database'	=> '',
+	    			'port'		=> ini_get("mysqli.default_port"),
+	    			'socket'	=> ini_get("mysqli.default_socket")
+	    		)
         ));
 
         parent::_initialize($config);
@@ -192,7 +192,8 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 	    }
 
 	    $this->_connection = $resource;
-		return $this;
+
+			return $this;
 	}
 
 	/**

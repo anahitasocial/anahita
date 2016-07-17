@@ -55,7 +55,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
 
-        $label = JText::_('COM-TODOS-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
+        $label = AnTranslator::_('COM-TODOS-ACTION-'.strtoupper($entity->enabled ? 'disable' : 'enable'));
 
         $action = ($entity->enabled) ? 'disable' : 'enable';
 
@@ -80,7 +80,7 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
     protected function _commandNew($command)
     {
         $command
-        ->append(array('label' => JText::_('COM-TODOS-TOOLBAR-TODO-NEW')))
+        ->append(array('label' => AnTranslator::_('COM-TODOS-TOOLBAR-TODO-NEW')))
         ->href('#')
         ->setAttribute('data-trigger', 'ReadForm');
     }

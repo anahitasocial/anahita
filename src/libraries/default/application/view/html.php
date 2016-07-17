@@ -75,14 +75,12 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
         $params = '';
 
         if (is_readable($file = JPATH_THEMES.'/'.$this->getIdentifier()->package.'/params.ini')) {
-            $params = file_get_contents($file);
+            $params = parse_ini_file($file);
         }
-
-        $params = new JParameter($params);
 
         $config->append(array(
             'mimetype' => 'text/html',
-            'params' => $params->toArray(),
+            'params' => $params,
             'template_filters' => array('shorttag', 'html', 'alias'),
         ));
 

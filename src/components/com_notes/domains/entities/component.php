@@ -30,8 +30,8 @@ class ComNotesDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         if ($actor->authorize('action', 'com_notes:note:add')) {
             $composers->insert('notes', array(
-                    'title' => JText::_('COM-NOTES-COMPOSER-NOTE'),
-                    'placeholder' => JText::_('COM-NOTES-COMPOSER-PLACEHOLDER'),
+                    'title' => AnTranslator::_('COM-NOTES-COMPOSER-NOTE'),
+                    'placeholder' => AnTranslator::_('COM-NOTES-COMPOSER-PLACEHOLDER'),
                     'url' => 'option=com_notes&layout=composer&view=note&oid='.$actor->id,
             ));
         }

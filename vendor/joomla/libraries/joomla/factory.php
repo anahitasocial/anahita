@@ -20,34 +20,6 @@ defined('JPATH_BASE') or die();
  */
 class JFactory
 {
-	/**
-	 * Get a application object
-	 *
-	 * Returns a reference to the global {@link JApplication} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @param	mixed	$id 		A client identifier or name.
-	 * @param	array	$config 	An optional associative array of configuration settings.
-	 * @return object JApplication
-	 */
-	public static function &getApplication($id = null, $config = array(), $prefix='J')
-	{
-		static $instance;
-
-		if (!is_object($instance))
-		{
-			jimport( 'joomla.application.application' );
-
-			if (!$id) {
-				JError::raiseError(500, 'Application Instantiation Error');
-			}
-
-			$instance = JApplication::getInstance($id, $config, $prefix);
-		}
-
-		return $instance;
-	}
 
 	/**
 	 * Get a configuration object
@@ -67,7 +39,7 @@ class JFactory
 		if (!is_object($instance))
 		{
 			if ($file === null) {
-				$file = dirname(__FILE__).DS.'config.php';
+					$file = dirname(__FILE__).DS.'config.php';
 			}
 
 			$instance = JFactory::_createConfig($file, $type);
@@ -113,31 +85,8 @@ class JFactory
 		if (!is_object($instance))
 		{
 			//get the debug configuration setting
-			$conf =& JFactory::getConfig();
-			$debug = $conf->getValue('config.debug_lang');
-
 			$instance = JFactory::_createLanguage();
-			$instance->setDebug($debug);
-		}
-
-		return $instance;
-	}
-
-	/**
-	 * Get a document object
-	 *
-	 * Returns a reference to the global {@link JDocument} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @return object JDocument
-	 */
-	static public function &getDocument()
-	{
-		static $instance;
-
-		if (!is_object( $instance )) {
-			$instance = JFactory::_createDocument();
+			$instance->setDebug(false);
 		}
 
 		return $instance;
@@ -264,30 +213,8 @@ class JFactory
 		        $copy->addBCC($email);
 		    }
 		}
-*/				
+*/
 		return $copy;
-	}
-
-	/**
-	 * Get an XML document
-	 *
-	 * @access public
-	 * @param string The type of xml parser needed 'DOM', 'RSS' or 'Simple'
-	 * @param array:
-	 * 		boolean ['lite'] When using 'DOM' if true or not defined then domit_lite is used
-	 * 		string  ['rssUrl'] the rss url to parse when using "RSS"
-	 * 		string	['cache_time'] with 'RSS' - feed cache time. If not defined defaults to 3600 sec
-	 * @return object Parsed XML document object
-	 */
-
-	 static public function &getXMLParser( $type = 'simple', $options = array())
-	 {
-		$doc = null;
-
-    	jimport('joomla.utilities.simplexml');
-    	$doc = new JSimpleXML();
-
-		return $doc;
 	}
 
 	/**
@@ -378,7 +305,7 @@ class JFactory
 		$registry = new JRegistry('config');
 
 		// Create the JConfig object
-		$config = new JFrameworkConfig();
+		$config = new JConfig();
 
 		// Load the configuration values into the registry
 		$registry->loadObject($config);
@@ -400,11 +327,11 @@ class JFactory
 
 		//get the editor configuration setting
 		$conf =& JFactory::getConfig();
-		$handler =  $conf->getValue('config.session_handler', 'none');
-		
+		$handler =  $conf->getValue('session_handler', 'none');
+
 		// config time is in minutes
-		$options['expire'] = ($conf->getValue('config.lifetime')) ? $conf->getValue('config.lifetime') * 60 : 900;
-		
+		$options['expire'] = ($conf->getValue('lifetime')) ? $conf->getValue('lifetime') * 60 : 900;
+
 		$session = JSession::getInstance($handler, $options);
 		if ($session->getState() == 'expired') {
 			$session->restart();
@@ -510,10 +437,8 @@ class JFactory
 	{
 		jimport('joomla.language.language');
 
-		$conf	=& JFactory::getConfig();
-		$locale	= $conf->getValue('config.language');
-		$lang	=& JLanguage::getInstance($locale);
-		$lang->setDebug($conf->getValue('config.debug_lang'));
+		$settings = new JConfig();
+		$lang	=& JLanguage::getInstance($settings->language);
 
 		return $lang;
 	}

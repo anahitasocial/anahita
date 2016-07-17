@@ -57,17 +57,6 @@ class plgUserJoomla extends PlgAnahitaDefault
 					return false;
 		  }
 
-		  if (
-		      $mainframe->isAdmin() &&
-		      $juser->usertype != ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR &&
-		      $juser->usertype != ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
-		  )
-		  {
-		      JError::raiseWarning(403, "Not authorized to access the admin side");
-
-					return false;
-		  }
-
 			// Register the needed session variables
 			$session =& JFactory::getSession();
 			$session->set('user', $juser);
@@ -106,7 +95,6 @@ class plgUserJoomla extends PlgAnahitaDefault
 	public function onLogoutUser(KEvent $event)
 	{
 		$user = $event->user;
-		$options = $event->options;
 
 		if ($user['id'] == 0) {
 			return false;
@@ -123,14 +111,11 @@ class plgUserJoomla extends PlgAnahitaDefault
 			// Destroy the php session for this user
 			$session =& JFactory::getSession();
 			$session->destroy();
-		}
-		else
-		{
-			// Force logout all users with that userid
+
 			$table = & JTable::getInstance('session');
-			$table->destroy((int) $user['id'], (int) $options['clientid']);
+			return $table->destroy($user['id']);
 		}
 
-		return true;
+		return false;
 	}
 }

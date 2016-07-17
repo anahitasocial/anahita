@@ -83,7 +83,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
             ))->setToken($token)->save();
         }
 
-        $route = JRoute::_($this->actor->getURL().'&get=settings&edit=connect');
+        $route = route($this->actor->getURL().'&get=settings&edit=connect');
 
         if ($data->return) {
             $route = base64_decode($data->return);

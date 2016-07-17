@@ -43,7 +43,7 @@ class ComSubscriptionsDomainEntityComponent extends ComComponentsDomainEntityCom
 
         if (!$actor->admin()) {
             $tabs->insert('subscription', array(
-                'label' => JText::_('COM-SUBSCRIPTIONS-PROFILE-EDIT'),
+                'label' => AnTranslator::_('COM-SUBSCRIPTIONS-PROFILE-EDIT'),
                 'controller' => 'com://site/subscriptions.controller.setting',
             ));
         }

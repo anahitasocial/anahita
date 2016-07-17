@@ -85,7 +85,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         JRequest::set($url->query, 'get', false);
 
         // trigger the onAfterRoute events
-        $this->_application->triggerEvent('onAfterRoute');
+        dispatch_plugin('onAfterRoute');
 
         $url->query = KRequest::get('get', 'raw');
 
@@ -103,35 +103,22 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     protected function _actionLoad($context)
     {
         //already loaded
-        if ($this->_application instanceof JApplication) {
+        if ($this->_application instanceof ComApplication) {
             return;
         }
-
-        //legacy register error handling
-        JError::setErrorHandling(E_ERROR, 'callback', array($this, 'exception'));
 
         //register exception handler
         set_exception_handler(array($this, 'exception'));
 
         $identifier = clone $this->getIdentifier();
         $identifier->name = 'application';
-
-        //load the JSite
         $this->getService('koowa:loader')->loadIdentifier($identifier);
 
-        jimport('joomla.application.component.helper');
-
         //no need to create session when using CLI (command line interface)
+        $this->_application = $this->getService('application', array('session' => PHP_SAPI !== 'cli'));
+        $error_reporting = $this->_application->getSystemSetting('error_reporting');
 
-        $this->_application = JFactory::getApplication($this->_application, array('session' => PHP_SAPI !== 'cli'));
-
-        global $mainframe;
-
-        $mainframe = $this->_application;
-
-        $error_reporting = $this->_application->getCfg('error_reporting');
-
-        define('JDEBUG', $this->_application->getCfg('debug'));
+        define('JDEBUG', $this->_application->getSystemSetting('debug'));
 
         //taken from nooku application dispatcher
         if ($error_reporting > 0) {
@@ -145,8 +132,8 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
         //set the session handler to none for
         if (PHP_SAPI == 'cli') {
-            JFactory::getConfig()->setValue('config.session_handler', 'none');
-            JFactory::getConfig()->setValue('config.cache_handler', 'file');
+            JFactory::getConfig()->setValue('session_handler', 'none');
+            JFactory::getConfig()->setValue('cache_handler', 'file');
         }
 
         //set the default timezone to UTC
@@ -196,7 +183,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         KRequest::url()->setQuery($_GET);
 
         KService::get('com:plugins.helper')->import('cli');
-        $this->_application->triggerEvent('onCli');
+        dispatch_plugin('onCli');
 
         //if there's a file then just load the file and exit
         if (!empty($file)) {

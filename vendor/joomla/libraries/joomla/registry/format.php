@@ -52,7 +52,7 @@ class JRegistryFormat extends JObject
 				if (file_exists($path)) {
 					require_once($path);
 				} else {
-					JError::raiseError(500,JText::_('Unable to load format class'));
+					JError::raiseError(500,AnTranslator::_('Unable to load format class'));
 				}
 			}
 

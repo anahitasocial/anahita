@@ -1,11 +1,11 @@
 <?php defined('KOOWA') or die; ?>
 
-<?php $document = &JFactory::getDocument(); ?>
+<?php $document = KService::get('application.document')->getInstance(); ?>
 <?php $path = JURI::root().'media/lib_anahita/js/production/' ?>
 
 <?php if (defined('JDEBUG') && JDEBUG) : ?>
 
-<?php 
+<?php
 @helper('javascript.combine', array(
     'file' => JPATH_ROOT.'/media/lib_anahita/js/site.js',
     'output' => JPATH_ROOT.'/media/lib_anahita/js/production/site.uncompressed.js',

@@ -31,21 +31,21 @@ class ComPhotosControllerToolbarActorbar extends ComMediumControllerToolbarActor
 
         //create title
         if ($layout == 'upload') {
-            $this->setTitle(JText::sprintf('COM-PHOTOS-UPLOAD-PHOTOS', $actor->name));
+            $this->setTitle(AnTranslator::sprintf('COM-PHOTOS-UPLOAD-PHOTOS', $actor->name));
         } elseif ($name == 'set') {
-            $this->setTitle(JText::sprintf('COM-PHOTOS-HEADER-ACTOR-SETS', $actor->name));
+            $this->setTitle(AnTranslator::sprintf('COM-PHOTOS-HEADER-ACTOR-SETS', $actor->name));
         } else {
-            $this->setTitle(JText::sprintf('COM-PHOTOS-HEADER-ACTOR-PHOTOS', $actor->name));
+            $this->setTitle(AnTranslator::sprintf('COM-PHOTOS-HEADER-ACTOR-PHOTOS', $actor->name));
         }
 
         //create navigations
         $this->addNavigation('photos',
-            JText::_('COM-PHOTOS-LINKS-PHOTOS'),
+            AnTranslator::_('COM-PHOTOS-LINKS-PHOTOS'),
             array('option' => 'com_photos', 'view' => 'photos', 'oid' => $actor->uniqueAlias),
             $name == 'photo' && (in_array($layout, array('default', 'add', 'masonry'))));
 
         if ($actor->photos->getTotal() > 0) {
-            $this->addNavigation('sets', JText::_('COM-PHOTOS-LINKS-SETS'),
+            $this->addNavigation('sets', AnTranslator::_('COM-PHOTOS-LINKS-SETS'),
             array('option' => 'com_photos', 'view' => 'sets', 'oid' => $actor->uniqueAlias),
             $name == 'set' && in_array($layout, array('default', 'add', 'edit')));
         }

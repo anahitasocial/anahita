@@ -28,7 +28,8 @@ class LibPeopleHelperPerson extends KObject
         // we fork the session to prevent session fixation issues
         $session->fork();
 
-        JFactory::getApplication()->_createSession($session->getId());
+        $application = KService::get('application');
+        $application->_createSession($session->getId());
 
         $options = array();
         $results = dispatch_plugin('user.onLoginUser', array(
@@ -75,8 +76,19 @@ class LibPeopleHelperPerson extends KObject
      */
     public function logout()
     {
-        setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - AnHelperDate::dayToSeconds(30), '/');
+        $viewer = get_viewer();
+        $user = array(
+          'username' => $viewer->username,
+          'id' => $viewer->userId
+        );
 
-        return JFactory::getApplication()->logout();
+        $results = dispatch_plugin('user.onLogoutUser', array( 'user' => $user ));
+
+        if ($results) {
+    			setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - AnHelperDate::dayToSeconds(30), '/');
+    			return true;
+    		}
+
+        return false;
     }
 }

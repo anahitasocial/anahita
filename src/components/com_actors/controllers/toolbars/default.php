@@ -128,14 +128,14 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $this->addListCommands();
 
         if ($actor->authorize('administration')) {
-            $this->addCommand('edit-actor', array('label' => JText::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
+            $this->addCommand('edit-actor', array('label' => AnTranslator::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
             ->getCommand('edit-actor')
             ->href($actor->getURL().'&get=settings');
         }
 
         if (get_viewer()->admin()) {
             $action = ($actor->verified) ? 'unverify' : 'verify';
-            $this->addCommand($action.'-actor', array('label' => JText::_('COM-ACTORS-PROFILE-'.$action), 'entity' => $actor))
+            $this->addCommand($action.'-actor', array('label' => AnTranslator::_('COM-ACTORS-PROFILE-'.$action), 'entity' => $actor))
             ->getCommand($action.'-actor')
             ->href($actor->getURL().'&action='.$action)
             ->dataTrigger('PostLink');
@@ -143,16 +143,16 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 
         if ($actor->authorize('changeEnabled')) {
             $action = ($actor->enabled) ? 'disable' : 'enable';
-            $this->addCommand($action.'-actor', array('label' => JText::_('LIB-AN-ACTION-'.$action), 'entity' => $actor))
+            $this->addCommand($action.'-actor', array('label' => AnTranslator::_('LIB-AN-ACTION-'.$action), 'entity' => $actor))
             ->getCommand($action.'-actor')
             ->href($actor->getURL().'&action='.$action)
             ->dataTrigger('PostLink');
         }
 
         if ($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor)) {
-            $this->addCommand('notifications-settings', array('label' => JText::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
+            $this->addCommand('notifications-settings', array('label' => AnTranslator::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
             ->getCommand('notifications-settings')
-            ->href(JRoute::_('option=notifications&view=settings&layout=modal&oid='.$actor->id));
+            ->href(route('option=notifications&view=settings&layout=modal&oid='.$actor->id));
         }
     }
 

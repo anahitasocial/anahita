@@ -89,7 +89,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
         $this->getToolbar('actorbar')->setActor($entity);
         $this->getToolbar('actorbar')
              ->setTitle(
-                 sprintf(JText::_('COM-ACTORS-PROFILE-HEADER-EDIT'),
+                 sprintf(AnTranslator::_('COM-ACTORS-PROFILE-HEADER-EDIT'),
                  $entity->name));
         $dispatcher = $this->getService('anahita:event.dispatcher');
         $entity->components->registerEventDispatcher($dispatcher);

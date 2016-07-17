@@ -115,11 +115,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         try {
             $result = $this->execute('add', $context);
-
             return $result;
         } catch (RuntimeException $e) {
-            $context->response->setRedirect(JRoute::_('option=com_people&view=session'));
-
+            $context->response->setRedirect(route('option=com_people&view=session'));
             throw $e;
         }
     }
@@ -166,10 +164,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $_SESSION['return'] = null;
         } else {
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
-            JFactory::getApplication()->triggerEvent('onLoginFailure', array((array) $authResponse));
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             $this->getResponse()->status = KHttpResponse::FORBIDDEN;
-            $this->getResponse()->setRedirect(JRoute::_('option=com_people&view=session'));
+            $this->getResponse()->setRedirect(route('option=com_people&view=session'));
         }
 
         return true;
@@ -182,9 +179,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        //we don't care if a useris logged in or not just delete
-       $this->getService('com:people.helper.person')->logout();
-        $context->response->setRedirect(JRoute::_('index.php?'));
+        $this->getService('com:people.helper.person')->logout();
+        $context->response->setRedirect(route('index.php?'));
     }
 
     /**
@@ -251,8 +247,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getResponse()->setRedirect($returnUrl);
         } else {
             $_SESSION['return'] = null;
-            $msg = JText::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
-            $this->getResponse()->setRedirect(JRoute::_($redirectUrl), $msg);
+            $msg = AnTranslator::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
+            $this->getResponse()->setRedirect(route($redirectUrl), $msg);
         }
 
         $this->getResponse()->status = KHttpResponse::ACCEPTED;

@@ -190,10 +190,6 @@ class JLog extends JObject
 			$fields = strtolower($fields);
 			$header[] = "#Fields: " . $fields;
 
-			// Prepare the software string
-			$version = new JVersion();
-			$header[] = "#Software: " . $version->getLongVersion();
-
 			$head = implode("\n", $header);
 		} else {
 			$head = false;

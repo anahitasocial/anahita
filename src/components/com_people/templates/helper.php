@@ -56,12 +56,12 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
         unset($options->selected);
 
         $usertypes = array(
-            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED => JText::_('COM-PEOPLE-USERTYPE-REGISTERED'),
-            ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR => JText::_('COM-PEOPLE-USERTYPE-ADMINISTRATOR'),
+            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED => AnTranslator::_('COM-PEOPLE-USERTYPE-REGISTERED'),
+            ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR => AnTranslator::_('COM-PEOPLE-USERTYPE-ADMINISTRATOR'),
         );
 
         if ($viewer->superadmin()) {
-            $usertypes[ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR] = JText::_('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR');
+            $usertypes[ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR] = AnTranslator::_('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR');
         }
 
         $html = $this->getService('com:base.template.helper.html');

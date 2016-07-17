@@ -72,7 +72,7 @@
              ->get('layout'), $context);
 
         if ($this->getRequest()->get('layout') == 'login' && !$this->viewer->guest()) {
-            $context->response->setRedirect(JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
+            $context->response->setRedirect(route('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
 
             return false;
         }
@@ -87,7 +87,7 @@
      */
     protected function _actionConfirm($context)
     {
-        $url = JRoute::_('option=com_subscriptions&view=signup&layout=confirm&id='.$this->getItem()->id);
+        $url = route('option=com_subscriptions&view=signup&layout=confirm&id='.$this->getItem()->id);
         $context->response->setRedirect($url);
     }
 
@@ -98,7 +98,7 @@
      */
     protected function _actionPayment($context)
     {
-        $url = JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id);
+        $url = route('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id);
         $context->response->setRedirect($url);
     }
 
@@ -115,8 +115,8 @@
 
         try {
             $url = $gateway->getAuthorizationURL($this->order->getPayload(),
-                JRoute::_('option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true),
-                JRoute::_('option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true));
+                route('option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true),
+                route('option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true));
 
             $context->response->setRedirect($url, KHttpResponse::SEE_OTHER);
         } catch (Exception $e) {
@@ -147,13 +147,13 @@
             //clreat the sesion
             $_SESSION['signup'] = null;
             KRequest::set('session.subscriber_id', $subscription->person->id);
-            $url = JRoute::_('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
+            $url = route('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
 
             if (get_viewer()->guest()) {
                 $return = base64UrlEncode($url);
                 $user = $subscription->person->getUserObject();
                 $token = $user->activation;
-                $url = JRoute::_('option=com_people&view=session&token='.$token.'&return='.$return);
+                $url = route('option=com_people&view=session&token='.$token.'&return='.$return);
             }
 
             $context->response->setRedirect($url);
@@ -188,14 +188,14 @@
             $this->order->setPaymentMethod($method);
             $this->order->country = $country;
         } else {
-            $url = JRoute::_('option=com_subscriptions&view=signup&layout=payment&id='.$package->id);
+            $url = route('option=com_subscriptions&view=signup&layout=payment&id='.$package->id);
 
             $error = false;
 
             //validate creditcard
             if (!$this->creditcard->is_valid()) {
                 $error = true;
-                $this->storeValue('credit_card_error', JText::_('COM-SUBSCRIPTIONS-CREDITCARD-INVALID'));
+                $this->storeValue('credit_card_error', AnTranslator::_('COM-SUBSCRIPTIONS-CREDITCARD-INVALID'));
             }
 
             //validate contact
@@ -208,7 +208,7 @@
                   $contact->state &&
                   $contact->zip
             )) {
-                $this->storeValue('address_error', JText::_('COM-SUBSCRIPTIONS-BILLING-INVALID'));
+                $this->storeValue('address_error', AnTranslator::_('COM-SUBSCRIPTIONS-BILLING-INVALID'));
             }
 
             if ($error) {
@@ -232,7 +232,7 @@
 
         //validate user
         if (get_viewer()->guest() && !$this->person->validateEntity()) {
-            $url = JRoute::_('option=com_subscriptions&view=signup&layout=login&id='.$package->id);
+            $url = route('option=com_subscriptions&view=signup&layout=login&id='.$package->id);
             $context->response->setRedirect($url);
 
             return false;

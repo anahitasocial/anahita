@@ -149,7 +149,7 @@ class KDatabaseBehaviorLockable extends KDatabaseBehaviorAbstract
 	        $user = JFactory::getUser($this->locked_by);
 			$date = $this->getService('com:default.template.helper.date')->humanize(array('date' => $this->locked_on));
 
-			$message = JText::sprintf('Locked by %s %s', $user->get('name'), $date);
+			$message = AnTranslator::sprintf('Locked by %s %s', $user->get('name'), $date);
 		}
 
 		return $message;

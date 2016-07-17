@@ -46,7 +46,7 @@ class ComActorsTemplateHelperStory extends ComActorsTemplateHelper
 
                 if (!empty($actors)) {
                     $name = implode(', ', array_map(array($this, 'name'), $actors));
-                    $name = sprintf(JText::_('COM-ACTORS-AND-ACTOR'), $name, $last_actor);
+                    $name = sprintf(AnTranslator::_('COM-ACTORS-AND-ACTOR'), $name, $last_actor);
                 } else {
                     $name = $last_actor;
                 }
@@ -62,7 +62,7 @@ class ComActorsTemplateHelperStory extends ComActorsTemplateHelper
 
             $actors = array_splice($actors, 0, $truncate_after);
             $actors = implode(', ', array_map(array($this, 'name'), $actors));
-            $actors = sprintf(JTEXT::_('COM-ACTORS-AND-OTHERS'), $actors, JRoute::_('option=com_actors&layout=modal&view=actors&'.$ids), JText::_($left_over));
+            $actors = sprintf(AnTranslator::_('COM-ACTORS-AND-OTHERS'), $actors, route('option=com_actors&layout=modal&view=actors&'.$ids), AnTranslator::_($left_over));
 
             return $actors;
         }
@@ -90,6 +90,6 @@ class ComActorsTemplateHelperStory extends ComActorsTemplateHelper
             return implode(', ', $links);
         }
 
-        return '<a href="'.JRoute::_($node->getURL()).$query.'">'.$node->getName().'</a>';
+        return '<a href="'.route($node->getURL()).$query.'">'.$node->getName().'</a>';
     }
 }

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -44,7 +44,7 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
         parent::_initialize($config);
 
         $config->append(array(
-            'template_paths' => array(JPATH_THEMES.'/'.JFactory::getApplication()->getTemplate().'/html/com_actors/settings'),
+            'template_paths' => array(JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/settings'),
         ));
     }
 
@@ -86,7 +86,7 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
                 $identifier = $this->getIdentifier($identifier);
 
                 foreach ($actions as $action) {
-                    $label = JText::_(strtoupper('COM-'.$identifier->package.'-PERMISSION'.'-'.$identifier->name.'-'.$action));
+                    $label = AnTranslator::_(strtoupper('COM-'.$identifier->package.'-PERMISSION'.'-'.$identifier->name.'-'.$action));
                     $name = 'com_'.$identifier->package.':'.$identifier->name.':'.$action;
                     $permissions[] = new KConfig(array('label' => $label, 'name' => $name));
                 }
@@ -109,30 +109,30 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
         $tabs = new LibBaseTemplateObjectContainer();
 
         $tabs->insert('profile', array(
-            'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-PROFILE'),
+            'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-PROFILE'),
         ));
 
         $tabs->insert('avatar', array(
-           'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-AVATAR'),
+           'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-AVATAR'),
         ));
 
         $tabs->insert('cover', array(
-           'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-COVER'),
+           'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-COVER'),
         ));
 
         $tabs->insert('permissions', array(
-            'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-PERMISSIONS'),
+            'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-PERMISSIONS'),
         ));
 
         if ($this->_state->getItem()->isFollowable() && $this->_state->getItem()->followRequesterIds->count() > 0) {
             $tabs->insert('requests', array(
-                'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-REQUESTS').'<span class="pull-right badge badge-important">'.$this->_state->getItem()->followRequesterIds->count().'</span>',
+                'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-REQUESTS').'<span class="pull-right badge badge-important">'.$this->_state->getItem()->followRequesterIds->count().'</span>',
             ));
         }
 
         if ($this->_state->getItem()->isAdministrable()) {
             $tabs->insert('admins', array(
-                'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-ADMINS'),
+                'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-ADMINS'),
             ));
         }
 
@@ -144,13 +144,13 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
 
         if (count($this->enablable_apps)) {
             $tabs->insert('apps', array(
-                'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-APPS'),
+                'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-APPS'),
             ));
         }
 
         if ($this->_state->getItem()->authorize('delete')) {
             $tabs->insert('delete', array(
-                   'label' => JText::_('COM-ACTORS-PROFILE-EDIT-TAB-DELETE'),
+                   'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-DELETE'),
             ));
         }
 

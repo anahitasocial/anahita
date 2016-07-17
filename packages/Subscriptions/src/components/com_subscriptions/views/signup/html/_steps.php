@@ -2,11 +2,11 @@
 
 <?php 
 $steps = array(
-    JText::_('COM-SUBSCRIPTIONS-STEP-TOS') => 'default',
-    JText::_('COM-SUBSCRIPTIONS-STEP-REGISTER') => 'login',
-    JText::_('COM-SUBSCRIPTIONS-STEP-PAYMENT-METHOD') => 'payment',
-    JText::_('COM-SUBSCRIPTIONS-STEP-PAYMENT-CONFIRM') => 'confirm',
-    JText::_('COM-SUBSCRIPTIONS-STEP-PAYMENT-PROCESSED') => 'processed',
+    AnTranslator::_('COM-SUBSCRIPTIONS-STEP-TOS') => 'default',
+    AnTranslator::_('COM-SUBSCRIPTIONS-STEP-REGISTER') => 'login',
+    AnTranslator::_('COM-SUBSCRIPTIONS-STEP-PAYMENT-METHOD') => 'payment',
+    AnTranslator::_('COM-SUBSCRIPTIONS-STEP-PAYMENT-CONFIRM') => 'confirm',
+    AnTranslator::_('COM-SUBSCRIPTIONS-STEP-PAYMENT-PROCESSED') => 'processed',
 );
 ?>
 

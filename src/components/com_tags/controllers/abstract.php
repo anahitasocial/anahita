@@ -62,7 +62,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $pkg = $this->getIdentifier()->package;
         $name = $this->getIdentifier()->name;
 
-        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-'.$pkg.'-TERM'), $name));
+        $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-'.$pkg.'-TERM'), $name));
 
         if (!empty($entity->tagables)) {
 
@@ -148,6 +148,6 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
             $url['id'] = $this->getItem()->id;
         }
 
-        $this->getResponse()->setRedirect(JRoute::_($url));
+        $this->getResponse()->setRedirect(route($url));
     }
 }

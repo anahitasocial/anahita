@@ -32,7 +32,7 @@ class PlgSystemSubscriptions extends PlgAnahitaDefault
             $person->subscription->getTimeLeft() < 0
         ) {
             $person->unsubscribe();
-            $url = JRoute::_('index.php?option=com_subscriptions&view=packages');
+            $url = route('index.php?option=com_subscriptions&view=packages');
             KService::get('application.dispatcher')->getResponse()
                                                    ->setRedirect($url)
                                                    ->send();

@@ -42,7 +42,6 @@ if (!file_exists(JPATH_CONFIGURATION.'/configuration.php') || (filesize(JPATH_CO
 // Joomla : setup
 require_once JPATH_LIBRARIES.'/joomla/import.php';
 
-jimport('joomla.application.application');
 jimport('joomla.application.router');
 jimport('joomla.user.user');
 jimport('joomla.environment.uri');
@@ -57,8 +56,8 @@ $config = new JConfig();
 
 //instantiate anahita and nooku
 Anahita::getInstance(array(
-    'cache_prefix' => md5($config->secret).'-cache-koowa',
-    'cache_enabled' => $config->caching,
+  'cache_prefix' => md5($config->secret).'-cache-koowa',
+  'cache_enabled' => $config->caching
 ));
 
 KServiceIdentifier::setApplication('site', JPATH_SITE);
@@ -73,7 +72,7 @@ KServiceIdentifier::addLocator(KService::get('anahita:service.locator.template')
 
 KService::setAlias('koowa:database.adapter.mysqli', 'com:default.database.adapter.mysqli');
 KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
-KService::setAlias('anahita:domain.space',          'com:base.domain.space');
+KService::setAlias('anahita:domain.space', 'com:base.domain.space');
 
 //make sure for the autoloader to be reigstered after nooku
 if (PHP_SAPI != 'cli') {

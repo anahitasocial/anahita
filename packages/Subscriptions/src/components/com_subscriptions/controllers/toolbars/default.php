@@ -82,7 +82,7 @@ class ComSubscriptionsControllerToolbarDefault extends ComBaseControllerToolbarD
 
         $layout = pick($command->layout, 'edit');
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-EDIT')))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-EDIT')))
         ->href($entity->getURL().'&layout='.$layout)
         ->setAttribute('data-action', 'edit');
     }
@@ -99,10 +99,10 @@ class ComSubscriptionsControllerToolbarDefault extends ComBaseControllerToolbarD
         $name = KInflector::pluralize($this->getController()->getIdentifier()->name);
         $redirect = 'option=com_'.$this->getIdentifier()->package.'&view='.$name;
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-DELETE')))
-        ->href(JRoute::_($entity->getURL()))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
+        ->href(route($entity->getURL()))
         ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', JRoute::_($redirect))
+        ->setAttribute('data-redirect', route($redirect))
         ->class('action-delete');
     }
 
@@ -116,7 +116,7 @@ class ComSubscriptionsControllerToolbarDefault extends ComBaseControllerToolbarD
         $name = $this->getController()->getIdentifier()->name;
 
         $command
-        ->append(array('label' => JText::_('COM-UBSCRIPTIONS-TOOLBAR-'.$name.'-NEW')))
+        ->append(array('label' => AnTranslator::_('COM-UBSCRIPTIONS-TOOLBAR-'.$name.'-NEW')))
         ->href('#')
         ->setAttribute('data-trigger', 'ReadForm');
     }

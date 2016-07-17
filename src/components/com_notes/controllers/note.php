@@ -80,7 +80,7 @@ class ComNotesControllerNote extends ComMediumControllerDefault
     public function redirect(KCommandContext $context)
     {
         if ($context->action == 'delete') {
-            $context->response->setRedirect(JRoute::_($this->getItem()->owner->getURL()));
+            $context->response->setRedirect(route($this->getItem()->owner->getURL()));
         } else {
             return parent::redirect($context);
         }

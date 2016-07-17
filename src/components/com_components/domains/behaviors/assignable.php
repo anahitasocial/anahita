@@ -87,7 +87,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     {
         $config->append(array(
                 'profile_name' => ucfirst($this->getIdentifier()->package),
-                'profile_description' => JText::_('COM-'.$this->getIdentifier()->package.'-APP-DESCRIPTION'),
+                'profile_description' => AnTranslator::_('COM-'.$this->getIdentifier()->package.'-APP-DESCRIPTION'),
                 'profile_features' => array(),
                 'assignment_option' => self::OPTION_OPTIONAL,
                 'actor_identifiers' => array(),

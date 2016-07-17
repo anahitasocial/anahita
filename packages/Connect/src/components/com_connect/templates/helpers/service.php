@@ -77,7 +77,7 @@
             $url .= '&return='.KRequest::get('get.return', 'raw');
         }
 
-        return JRoute::_($url);
+        return route($url);
     }
 
     /**

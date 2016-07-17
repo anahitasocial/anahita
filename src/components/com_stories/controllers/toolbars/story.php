@@ -68,9 +68,9 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
     protected function _commandView($command)
     {
         $entity = $this->getController()->getItem();
-        $label = sprintf(JText::_('COM-STORIES-VIEW-ALL-COMMENTS'), $entity->getNumOfComments());
+        $label = sprintf(AnTranslator::_('COM-STORIES-VIEW-ALL-COMMENTS'), $entity->getNumOfComments());
         $command->append(array('label' => $label));
-        $command->href(JRoute::_($entity->getURL()));
+        $command->href(route($entity->getURL()));
     }
 
     /**
@@ -82,8 +82,8 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
     {
         $entity = $this->getController()->getItem();
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-COMMENT')))
-            ->href(JRoute::_($entity->getURL()))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-COMMENT')))
+            ->href(route($entity->getURL()))
             ->class('comment action-comment')
             ->setAttribute('data-action', 'addcomment');
     }
@@ -102,8 +102,8 @@ class ComStoriesControllerToolbarStory extends ComBaseControllerToolbarDefault
             $link .= '&id[]='.$id;
         }
 
-        $command->append(array('label' => JText::_('LIB-AN-ACTION-DELETE')))
-        ->href(JRoute::_($link))
+        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
+        ->href(route($link))
         ->setAttribute('data-action', 'delete')
         ->class('action-delete');
     }
