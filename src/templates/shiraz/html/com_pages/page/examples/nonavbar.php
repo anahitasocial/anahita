@@ -1,9 +1,9 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
-<?php @title('No navigation bar')?>
-<?php @description('An example of a page without a navigation bar.') ?>
+<? @title('No navigation bar')?>
+<? @description('An example of a page without a navigation bar.') ?>
 
-<?php @service('application.dispatcher')->getRequest()->tmpl = 'component' ?>
+<? @service('application.dispatcher')->getRequest()->tmpl = 'component' ?>
 
 <h1>No Navbar</h1>
 
