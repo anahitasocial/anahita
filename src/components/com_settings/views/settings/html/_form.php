@@ -146,14 +146,14 @@
       <? //cache handler ?>
       <?
         jimport('joomla.cache.cache');
-    		$stores = JCache::getStores();
-    		$options_cache_handler = array();
+    	$stores = JCache::getStores();
+    	$options_cache_handler = array();
         foreach($stores as $store) {
-    			$options_cache_handler[] = array(
-            'name' => @text(ucfirst($store)),
-            'value' => $store
-          );
-    		}
+    	    $options_cache_handler[] = array(
+                'name' => @text(ucfirst($store)),
+                'value' => $store
+            );
+    	}
       ?>
       <?= @helper('ui.formfield_select', array(
         'label' => @text('COM-SETTINGS-SYSTEM-CACHE-HANDLER'),
@@ -182,14 +182,14 @@
 
       <? //session handler ?>
       <?
-        $stores = JSession::getStores();
-    		$options_session_handler = array();
-    		foreach($stores as $store) {
-    			$options_session_handler[] = array(
-            'name' => @text(ucfirst($store)),
-            'value' => $store
-          );
-    		}
+        $stores = @service('com:people.session')->getStores();
+    	$options_session_handler = array();
+    	foreach($stores as $store) {
+    	    $options_session_handler[] = array(
+                'name' => @text(ucfirst($store)),
+                'value' => $store
+            );
+    	}
       ?>
       <?= @helper('ui.formfield_select', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SESSION-HANDLER'),

@@ -280,7 +280,7 @@ class JSession extends JObject
 				require_once(dirname(__FILE__).DS.'storage'.DS.$name.'.php');
 			}
 
-			if(call_user_func_array( array( trim($class), 'test' ), array())) {
+			if(call_user_func_array(trim($class), 'test', array())) {
 				$names[] = $name;
 			}
 		}
@@ -345,16 +345,16 @@ class JSession extends JObject
 		if($this->_state !== 'active') {
 			// @TODO :: generated error here
 			return null;
-		}	
-			
+		}
+
 		$old = isset($_SESSION[$namespace][$name]) ?  $_SESSION[$namespace][$name] : null;
-		
+
 		if ($value === null) {
 			unset($_SESSION[$namespace][$name]);
 		} else {
 			$_SESSION[$namespace][$name] = $value;
 		}
-		
+
 		return $old;
 	}
 
@@ -554,9 +554,9 @@ class JSession extends JObject
 	 */
 	private function _setCookieParams() {
 		$cookie	=	session_get_cookie_params();
-		
+
         $cookie['secure'] = isSSL();
-        
+
 		session_set_cookie_params( $cookie['lifetime'], $cookie['path'], $cookie['domain'], $cookie['secure'] );
 	}
 

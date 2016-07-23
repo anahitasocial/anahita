@@ -183,13 +183,12 @@ CREATE TABLE `#__plugins` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__session` (
+  `session_id` varchar(200) NOT NULL DEFAULT '0',
   `username` varchar(150) DEFAULT '',
   `time` varchar(14) DEFAULT '',
-  `session_id` varchar(200) NOT NULL DEFAULT '0',
   `guest` tinyint(4) DEFAULT '1',
   `userid` int(11) DEFAULT '0',
   `usertype` varchar(50) DEFAULT '',
-  `client_id` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `data` longtext,
   PRIMARY KEY (`session_id`(64)),
   KEY `whosonline` (`guest`,`usertype`),

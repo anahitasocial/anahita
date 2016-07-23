@@ -153,7 +153,6 @@ abstract class ComApplicationDocumentAbstract extends KObject implements ComAppl
         //If no config is passed create it
         if(!isset($config)) $config = new KConfig();
 
-        // Initialize the options
         parent::__construct($config);
 
         $this->setCharset($config->charset);

@@ -45,7 +45,7 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
 
         dbexec('DROP TABLE IF EXISTS `#__templates_menu`');
 
-        dbexec('ALTER TABLE `#__session` DROP COLUMN `client`');
+        dbexec('ALTER TABLE `#__session` DROP COLUMN `client_id`');
     }
 
    /**
