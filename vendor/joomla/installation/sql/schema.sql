@@ -198,6 +198,22 @@ CREATE TABLE `#__session` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE `#__sessions` (
+  `session_id` varchar(200) NOT NULL DEFAULT '0',
+  `node_id` bigint(11) NOT NULL,
+  `person_username` varchar(255) DEFAULT NULL,
+  `person_usertype` varchar(255) DEFAULT NULL,
+  `time` varchar(14) DEFAULT '',
+  `guest` tinyint(4) DEFAULT '1',
+  `data` longtext,
+  PRIMARY KEY (`session_id`(64)),
+  KEY `whosonline` (`guest`,`person_usertype`),
+  KEY `node_id` (`node_id`),
+  KEY `time` (`time`)
+) ENGINE=InnoDB CHARACTER SET=utf8;
+
+-- --------------------------------------------------------
+
 CREATE TABLE `#__users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
