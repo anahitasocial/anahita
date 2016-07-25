@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class ComDocumentHtml extends ComDocumentAbstract
+class LibDocumentHtml extends LibDocumentAbstract
 {
     /**
 	 * Constructor.

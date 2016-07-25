@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-interface ComDocumentInterface
+interface LibDocumentInterface
 {
     /**
     * Set the document type

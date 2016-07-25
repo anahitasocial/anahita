@@ -1,3 +1,3 @@
 <?php
 
-class ComDocumentException extends KException {}
+class LibDocumentException extends KException {}

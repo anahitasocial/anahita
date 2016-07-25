@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class ComDocumentRaw extends ComApplicationDocumentAbstract
+class LibDocumentRaw extends LibApplicationDocumentAbstract
 {
     /**
 	 * Constructor.

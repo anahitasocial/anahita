@@ -55,7 +55,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     public function includeMedia()
     {
-        $document = $this->getService('application.document')->getInstance();
+        $document = $this->getService('com:document')->getInstance();
         $asset = $this->getService('com:base.template.asset');
 
         $url = $asset->getURL("com_{$this->getIdentifier()->package}/js/{$this->getIdentifier()->package}.js");
@@ -93,7 +93,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     public function setPageTitle(KCommandContext $context)
     {
         $view = $this->getController()->getView();
-        $document = $this->getService('application.document')->getInstance();
+        $document = $this->getService('com:document')->getInstance();
 
         //@TODO temporary fix
         if ($document->getTitle()) {

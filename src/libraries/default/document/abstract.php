@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-abstract class ComDocumentAbstract extends KObject implements ComDocumentInterface
+abstract class LibDocumentAbstract extends KObject implements LibDocumentInterface
 {
     /**
 	 * Document title

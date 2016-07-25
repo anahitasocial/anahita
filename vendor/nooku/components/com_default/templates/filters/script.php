@@ -31,7 +31,7 @@ class ComDefaultTemplateFilterScript extends KTemplateFilterScript
             return parent::_renderScript($script, $link, $attribs);
         }
 
-        $document = KService::get('application.document')->getInstance();
+        $document = KService::get('com:document')->getInstance();
 
         if($link) {
             $document->addScript($script, 'text/javascript');

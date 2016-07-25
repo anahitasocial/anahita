@@ -34,7 +34,7 @@ class ComDefaultTemplateFilterLink extends KTemplateFilterLink
         $relValue = $attribs['rel'];
         unset($attribs['rel']);
 
-        KService::get('application.document')
+        KService::get('com:document')
         ->getInstance()
         ->addHeadLink($link, $relValue, $relType, $attribs);
     }

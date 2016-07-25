@@ -11,4 +11,4 @@
  * @link       http://www.GetAnahita.com
  */
 
- class ComDocument extends ComDocumentAbstract {}
+ class LibDocument extends LibDocumentAbstract {}
