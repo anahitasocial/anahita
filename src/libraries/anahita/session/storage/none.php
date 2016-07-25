@@ -1,6 +1,6 @@
 <?php
 
-class ComPeopleSessionStorageNone extends ComPeopleSessionStorageAbstract
+class AnSessionStorageNone extends AnSessionStorageAbstract
 {
 	/**
 	* Register the functions of this class with PHP's session handler

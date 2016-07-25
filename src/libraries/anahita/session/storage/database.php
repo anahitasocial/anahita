@@ -1,38 +1,34 @@
 <?php
-/**
-* Session Adaptor interface class
-*
-* @category   Anahita
-*
-* @author     Rastin Mehr <rastin@anahitapolis.com>
-* @copyright  2008 - 2016 rmdStudio Inc.
-* @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
-*
-* @link       http://www.GetAnahita.com
-*/
 
-interface ComPeopleSessionStorageInterface
+class AnSessionStorageDatabase extends AnSessionStorageAbstract
 {
-    /**
+    private $_data = null;
+
+	/**
 	 * Open the SessionHandler backend.
 	 *
-	 * @abstract
 	 * @access public
 	 * @param string $save_path     The path to the session object.
 	 * @param string $session_name  The name of the session.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function open($save_path, $session_name);
+	function open($save_path, $session_name)
+	{
+		return true;
+	}
 
-    /**
+	/**
 	 * Close the SessionHandler backend.
 	 *
 	 * @access public
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function close();
+	function close()
+	{
+		return true;
+	}
 
-    /**
+ 	/**
  	 * Read the data for a particular session identifier from the
  	 * SessionHandler backend.
  	 *
@@ -40,9 +36,22 @@ interface ComPeopleSessionStorageInterface
  	 * @param string $id  The session identifier.
  	 * @return string  The session data.
  	 */
-	function read($id);
+	function read($id)
+	{
+		$db =& JFactory::getDBO();
 
-    /**
+		if (!$db->connected()) {
+			return false;
+		}
+
+		$session =& JTable::getInstance('session');
+
+        $session->load($id);
+
+		return (string) $session->data;
+	}
+
+	/**
 	 * Write session data to the SessionHandler backend.
 	 *
 	 * @access public
@@ -50,9 +59,28 @@ interface ComPeopleSessionStorageInterface
 	 * @param string $session_data  The session data.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function write($id, $session_data);
+	function write($id, $session_data)
+	{
+		$db =& JFactory::getDBO();
 
-    /**
+		if (!$db->connected()) {
+			return false;
+		}
+
+		$session = & JTable::getInstance('session');
+
+        if ($session->load($id)) {
+			$session->data = $session_data;
+			$session->store();
+		} else {
+			$session->data = $session_data;
+			$session->insert($id, 0);
+		}
+
+		return true;
+	}
+
+	/**
 	  * Destroy the data for a particular session identifier in the
 	  * SessionHandler backend.
 	  *
@@ -60,14 +88,39 @@ interface ComPeopleSessionStorageInterface
 	  * @param string $id  The session identifier.
 	  * @return boolean  True on success, false otherwise.
 	  */
-	function destroy($id);
+	function destroy($id)
+	{
+		$db =& JFactory::getDBO();
 
-    /**
+		if (!$db->connected()) {
+			return false;
+		}
+
+		$session =& JTable::getInstance('session');
+		$session->delete($id);
+
+        return true;
+	}
+
+	/**
 	 * Garbage collect stale sessions from the SessionHandler backend.
 	 *
 	 * @access public
 	 * @param integer $maxlifetime  The maximum age of a session.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function gc($maxlifetime);
+	function gc($maxlifetime)
+	{
+		$db =& JFactory::getDBO();
+
+		if(!$db->connected()) {
+			return false;
+		}
+
+		$session =& JTable::getInstance('session');
+
+        $session->purge($maxlifetime);
+
+		return true;
+	}
 }

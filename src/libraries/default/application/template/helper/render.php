@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Rendering script.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,12 +30,12 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 {
     /**
      * Template parameters.
-     * 
+     *
      * @return KConfig
      */
     protected $_params;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -49,9 +49,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 
     /**
      * Renders the logo hyperlinked.
-     * 
+     *
      * @param $config Configuration
-     * 
+     *
      * @return string
      */
     public function logo($config = array())
@@ -71,9 +71,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 
     /**
      * Renders the favicon tag.
-     * 
+     *
      * @param $config Configuration
-     * 
+     *
      * @return string
      */
     public function favicon($config = array())
@@ -103,9 +103,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 
     /**
      * Renders the template style.
-     * 
-     * @param array $config Configuration 
-     * 
+     *
+     * @param array $config Configuration
+     *
      * @return string
      */
     public function style($config = array())
@@ -132,7 +132,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         $style = $finder->getPath('style.less');
         $css = $css_folder.DS.'style.css';
 
-        //compile        
+        //compile
         if ($config->compile > 0 && !empty($style)) {
             $this->_template->renderHelper('less.compile', array(
                 'force' => $config->compile > 1,
@@ -151,12 +151,12 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 
     /**
      * Render the document queued messages.
-     * 
+     *
      * @return string
      */
     public function messages()
     {
-        $session = &JFactory::getSession();
+        $session = KService::get('anahita:session');
         $queue = (array) $session->get('application.queue', array());
 
         $session->set('application.queue', null);

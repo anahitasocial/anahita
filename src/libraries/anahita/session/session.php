@@ -1,6 +1,6 @@
 <?php
 
-class ComPeopleSessionDefault extends KObject
+class AnSession extends KObject
 {
 	const STATE_ACTIVE = 'active';
 	const STATE_EXPIRED = 'expired';
@@ -15,7 +15,7 @@ class ComPeopleSessionDefault extends KObject
 	 * @var	string $_state one of 'active'|'expired'|'destroyed|'error'
 	 * @see getState()
 	 */
-	protected $_state = self::STATE_ACTIVE;
+	protected $_state = '';
 
 	/**
 	 * Maximum age of unused session
@@ -23,13 +23,13 @@ class ComPeopleSessionDefault extends KObject
 	 * @access protected
 	 * @var	string $_expire minutes
 	 */
-	protected $_expire = 7200;
+	protected $_expire = 0;
 
 	/**
 	 * The session store object
 	 *
 	 * @access protected
-	 * @var	object A ComPeopleStorage object
+	 * @var	object A AnStorage object
 	 */
 	protected $_store = null;
 
@@ -43,7 +43,7 @@ class ComPeopleSessionDefault extends KObject
 	* @access protected
 	* @var array $_security list of checks that will be done.
 	*/
-	protected $_security = array('fix_browser');
+	protected $_security = array();
 
 	/**
 	* Force cookies to be SSL only
@@ -54,7 +54,17 @@ class ComPeopleSessionDefault extends KObject
 	*/
 	protected $_force_ssl = false;
 
-	protected $_namespace = '__default';
+	/**
+	*	Session name space
+	* 	@var string
+	*/
+	protected $_namespace = '';
+
+	/**
+	*	Singleton instance of AnSession class
+	* 	@var AnSession instance
+	*/
+	private static $_instance = null;
 
 	/**
      * Constructor.
@@ -65,8 +75,7 @@ class ComPeopleSessionDefault extends KObject
     {
 		parent::__construct($config);
 
-		//Need to destroy any existing sessions started with session.auto_start
-		if (session_id()) {
+		if (session_status() === PHP_SESSION_ACTIVE) {
 			session_unset();
 			session_destroy();
 		}
@@ -79,16 +88,17 @@ class ComPeopleSessionDefault extends KObject
 
 		//create handler
 		$settins = new JConfig();
-		$this->_store = $this->getService('com:people.session.storage.'.$settins->session_handler);
+		$this->_store = KService::get('anahita:session.storage.'.$settins->session_handler);
 
 		if (isset($config->name)) {
-			session_name(sha1($config->name));
+			session_name(md5($config->name));
 		}
 
 		if (isset($config->id)) {
-			session_id(sha1($config->name));
+			session_id(md5($config->name));
 		}
 
+		$this->_state =	$config->state;
 		$this->_expire = $config->expire;
 		$this->_security = explode(',', $config->security);
 		$this->_force_ssl = $config->force_ssl;
@@ -98,8 +108,6 @@ class ComPeopleSessionDefault extends KObject
 		$this->_start();
 		$this->_setCounter();
 		$this->_setTimers();
-
-		$this->_state =	$config->state;
 
 		// perform security checks
 		$this->_validate();
@@ -119,7 +127,7 @@ class ComPeopleSessionDefault extends KObject
 			'state' => self::STATE_ACTIVE,
 			'expire' => 7200,
 			'security' => array('fix_browser'),
-			'force_ssl' => false,
+			'force_ssl' => isSSl(),
 			'namespace' => '__default'
 		));
 
@@ -131,7 +139,7 @@ class ComPeopleSessionDefault extends KObject
 	 *
 	 * @access protected
 	 */
-	protected function __destruct() {
+	public function __destruct() {
 		$this->close();
 	}
 
@@ -215,7 +223,7 @@ class ComPeopleSessionDefault extends KObject
 	public function getName()
 	{
 		if ($this->_state === self::STATE_DESTROYED) {
-			throw new ComPeopleSessionException("Can't obtain the session name!\n");
+			throw new AnSessionException("Can't obtain the session name!\n");
 			return;
 		}
 
@@ -231,7 +239,7 @@ class ComPeopleSessionDefault extends KObject
 	public function getId()
 	{
 		if ($this->_state === self::STATE_DESTROYED) {
-			throw new ComPeopleSessionException("Can't obtain the session id!\n");
+			throw new AnSessionException("Can't obtain the session id!\n");
 			return;
 		}
 
@@ -287,10 +295,10 @@ class ComPeopleSessionDefault extends KObject
 	* @param  string 	$namespace 	Namespace to use, default to 'default'
 	* @return mixed  Value of a variable
 	*/
-   public function get($property = null, $default = null)
+   public function &get($property = null, $default = null)
    {
 	   if($this->_state !== self::STATE_ACTIVE && $this->_state !== self::STATE_EXPIRED) {
-		   throw new ComPeopleSessionException("Session does not exist!\n");
+		   throw new AnSessionException("Session does not exist!\n");
 		   return;
 	   }
 
@@ -312,7 +320,7 @@ class ComPeopleSessionDefault extends KObject
 	public function set($name, $value = null)
 	{
 		if($this->_state !== self::STATE_ACTIVE) {
-			throw new ComPeopleSessionException("Session isn't active!\n");
+			throw new AnSessionException("Session isn't active!\n");
 			return;
 		}
 
@@ -338,7 +346,7 @@ class ComPeopleSessionDefault extends KObject
 	{
 
 		if($this->_state !== self::STATE_ACTIVE) {
-			throw new ComPeopleSessionException("Session isn't active!\n");
+			throw new AnSessionException("Session isn't active!\n");
 			return;
 		}
 
@@ -355,7 +363,7 @@ class ComPeopleSessionDefault extends KObject
 	public function clear($name)
 	{
 		if($this->_state !== self::STATE_ACTIVE) {
-			throw new ComPeopleSessionException("Session isn't active!\n");
+			throw new AnSessionException("Session isn't active!\n");
 			return;
 		}
 
@@ -377,11 +385,11 @@ class ComPeopleSessionDefault extends KObject
 	* @access protected
 	* @return boolean $result true on success
 	*/
-	protected function _start()
+	private function _start()
 	{
-		// start session if not startet
-		if ($this->_state === self::STATE_RESTART) {
-			session_id($this->_createId());
+		//  start session if not startet
+		if( $this->_state === self::STATE_RESTART ) {
+			session_id( $this->_createId() );
 		}
 
 		session_cache_limiter('none');
@@ -437,16 +445,14 @@ class ComPeopleSessionDefault extends KObject
 		$this->destroy();
 
 		if ($this->_state !==  self::STATE_DESTROYED) {
-			throw new ComPeopleSessionException("Session is not destroyed!\n");
+			throw new AnSessionException("Session is not destroyed!\n");
 			return false;
 		}
 
-		// Re-register the session handler after a session has been destroyed, to avoid PHP bug
 		$this->_store->register();
 
 		$this->_state = self::STATE_RESTART;
 
-		//regenerate session id
 		$id	= $this->_createId(strlen($this->getId()));
 
 		session_id($id);
@@ -456,7 +462,6 @@ class ComPeopleSessionDefault extends KObject
 		$this->_state = self::STATE_ACTIVE;
 
 		$this->_validate();
-
 		$this->_setCounter();
 
 		return true;
@@ -472,7 +477,7 @@ class ComPeopleSessionDefault extends KObject
 	public function fork()
 	{
 		if ($this->_state !== self::STATE_ACTIVE) {
-			throw new ComPeopleSessionException("Session isn't active!\n");
+			throw new AnSessionException("Session isn't active!\n");
 			return false;
 		}
 
@@ -483,14 +488,6 @@ class ComPeopleSessionDefault extends KObject
 
 	/**
 	* Writes session data and ends session
-	*
-	* Session data is usually stored after your script terminated without the need
-	* to call JSession::close(),but as session data is locked to prevent concurrent
-	* writes only one script may operate on a session at any time. When using
-	* framesets together with sessions you will experience the frames loading one
-	* by one due to this locking. You can reduce the time needed to load all the
-	* frames by ending the session as soon as all changes to session variables are
-	* done.
 	*
 	* @access public
 	* @see	session_write_close()
@@ -514,7 +511,7 @@ class ComPeopleSessionDefault extends KObject
 			$id .= mt_rand(0, mt_getrandmax());
 		}
 
-		$id	= sha1(uniqid($id, true));
+		$id	= md5(uniqid($id, true));
 
 		return $id;
 	}
@@ -556,7 +553,7 @@ class ComPeopleSessionDefault extends KObject
 			$token .= $chars[(rand(0, $max))];
 		}
 
-		return sha1($token.$name);
+		return md5($token.$name);
 	}
 
 	/**

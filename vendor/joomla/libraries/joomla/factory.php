@@ -49,27 +49,6 @@ class JFactory
 	}
 
 	/**
-	 * Get a session object
-	 *
-	 * Returns a reference to the global {@link JSession} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @param array An array containing session options
-	 * @return object JSession
-	 */
-	static public function &getSession($options = array())
-	{
-		static $instance;
-
-		if (!is_object($instance)) {
-			$instance = JFactory::_createSession($options);
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get a language object
 	 *
 	 * Returns a reference to the global {@link JLanguage} object, only creating it
@@ -109,7 +88,7 @@ class JFactory
 
 		if(is_null($id))
 		{
-			$session  =& JFactory::getSession();
+			$session = KService::get('anahita:session');
 			$instance =& $session->get('user');
 			if (!is_a($instance, 'JUser')) {
 				$instance =& JUser::getInstance();
@@ -311,33 +290,6 @@ class JFactory
 		$registry->loadObject($config);
 
 		return $registry;
-	}
-
-	/**
-	 * Create a session object
-	 *
-	 * @access private
-	 * @param array $options An array containing session options
-	 * @return object JSession
-	 * @since 1.5
-	 */
-	static private function &_createSession($options = array())
-	{
-		jimport('joomla.session.session');
-
-		//get the editor configuration setting
-		$conf =& JFactory::getConfig();
-		$handler =  $conf->getValue('session_handler', 'none');
-
-		// config time is in minutes
-		$options['expire'] = ($conf->getValue('lifetime')) ? $conf->getValue('lifetime') * 60 : 900;
-
-		$session = JSession::getInstance($handler, $options);
-		if ($session->getState() == 'expired') {
-			$session->restart();
-		}
-
-		return $session;
 	}
 
 	/**

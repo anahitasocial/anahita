@@ -66,8 +66,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
      */
     protected function _actionRun(KCommandContext $context)
     {
-        //initialize the application and load system plugins
-        $this->_application->initialise();
+        $this->_application->_initialize($context);
 
         dispatch_plugin('system.onAfterDispatch');
 

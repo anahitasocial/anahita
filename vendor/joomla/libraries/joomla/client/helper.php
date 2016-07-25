@@ -71,7 +71,7 @@ class JClientHelper
 			// If user and pass are not set in global config lets see if its in the session
 			if ($options['enabled'] == true && ($options['user'] == '' || $options['pass'] == ''))
 			{
-				$session =& JFactory::getSession();
+				$session = KService::get('anahita:session');
 				$options['user'] = $session->get($client.'.user', null, 'JClientHelper');
 				$options['pass'] = $session->get($client.'.pass', null, 'JClientHelper');
 			}
@@ -136,7 +136,7 @@ class JClientHelper
 
 		if ($return) {
 			// Save valid credentials to the session
-			$session =& JFactory::getSession();
+			$session = KService::('anahita:session');
 			$session->set($client.'.user', $user, 'JClientHelper');
 			$session->set($client.'.pass', $pass, 'JClientHelper');
 
@@ -194,7 +194,7 @@ class JClientHelper
 		else
 		{
 			// Check if login credentials are available in the session
-			$session =& JFactory::getSession();
+			$session = KService::get('anahita:session');
 			$user = $session->get($client.'.user', null, 'JClientHelper');
 			$pass = $session->get($client.'.pass', null, 'JClientHelper');
 			if ($user != '' && $pass != '') {

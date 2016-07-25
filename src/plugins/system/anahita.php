@@ -45,6 +45,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
                 $url = KService::get('application')->getRouter()->getBaseUrl();
                 $url .= '/templates/system/error_suhosin.html';
 
+                //@todo we don't have redirect methods
                 KService::get('application.dispatcher')->getResponse()->setRedirect($url);
                 KService::get('application.dispatcher')->getResponse()->send();
 
