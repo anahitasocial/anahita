@@ -88,7 +88,7 @@ class JFactory
 
 		if(is_null($id))
 		{
-			$session = KService::get('anahita:session');
+			$session = KService::get('com:session');
 			$instance =& $session->get('user');
 			if (!is_a($instance, 'JUser')) {
 				$instance =& JUser::getInstance();

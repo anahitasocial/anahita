@@ -124,7 +124,7 @@ class ComApplication extends KObject
             'name' => $name
         ));
 
-        $session = KService::get('anahita:session', array('config' => $config));
+        $session = KService::get('com:session', array('config' => $config));
 
   		jimport('joomla.database.table');
   		$storage = & JTable::getInstance('session');

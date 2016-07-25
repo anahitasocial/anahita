@@ -122,7 +122,7 @@ class JUtility
 	static public function getToken($forceNew = false)
 	{
 		$user = &JFactory::getUser();
-		$session = KService::get('anahita:session');
+		$session = KService::get('com:session');
 		$hash = JUtility::getHash( $user->get( 'id', 0 ).$session->getToken($forceNew));
 		
 		return $hash;

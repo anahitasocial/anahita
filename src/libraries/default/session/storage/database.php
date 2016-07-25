@@ -1,6 +1,6 @@
 <?php
 
-class AnSessionStorageDatabase extends AnSessionStorageAbstract
+class LibSessionStorageDatabase extends LibSessionStorageAbstract
 {
     private $_data = null;
 

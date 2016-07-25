@@ -57,7 +57,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 		}
 
 		// Register the needed session variables
-		$session = KService::get('anahita:session');
+		$session = KService::get('com:session');
 		$session->set('user', $juser);
 
 		// Get the session object
@@ -109,7 +109,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 			$viewer->setLastVisit();
 
 			// Destroy the php session for this user
-			$session = KService::get('com:people.session');
+			$session = KService::get('com:session');
 			$session->destroy();
 
 			$table = & JTable::getInstance('session');

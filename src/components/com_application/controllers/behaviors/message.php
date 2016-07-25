@@ -47,7 +47,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         $this->_enabled = $config->enabled;
         $namespace = $this->_getQueueNamespace(false);
         $config->append(array('namespace' => $namespace->namespace));
-        $session = KService::get('anahita:session', array('config' => $config));
+        $session = KService::get('com:session', array('config' => $config));
 
         $data = array();
         if ($this->_enabled) {
@@ -139,7 +139,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
             $namespace = $this->_getQueueNamespace($global);
             $config = new KConfig(array('namespace' => $namespace->namespace));
-            $queue = KService::get('anahita:session', array('config' => $config));
+            $queue = KService::get('com:session', array('config' => $config));
             $queue->set($key, $value);
 
             if (!$global && $this->_mixer->flash) {
@@ -161,7 +161,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
             $config = new KConfig(array('namespace' => $namespace->namespace));
-            $queue = KService::get('anahita:session', array('config' => $config));
+            $queue = KService::get('com:session', array('config' => $config));
             $queue->get($namespace->queue, new stdClass());
             $ret = isset($queue[$key]) ? $queue[$key] : null;
         }
@@ -179,7 +179,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
      */
     protected function _getQueueNamespace($global = false)
     {
-        $session = KService::get('anahita:session');
+        $session = KService::get('com:session');
 
         if ($global) {
             $store = 'application.queue';

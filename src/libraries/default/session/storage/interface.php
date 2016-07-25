@@ -11,7 +11,7 @@
 * @link       http://www.GetAnahita.com
 */
 
-interface AnSessionStorageInterface
+interface LibSessionStorageInterface
 {
     /**
 	 * Open the SessionHandler backend.

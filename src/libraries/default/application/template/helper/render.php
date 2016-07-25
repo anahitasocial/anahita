@@ -156,7 +156,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
      */
     public function messages()
     {
-        $session = KService::get('anahita:session');
+        $session = KService::get('com:session');
         $queue = (array) $session->get('application.queue', array());
 
         $session->set('application.queue', null);

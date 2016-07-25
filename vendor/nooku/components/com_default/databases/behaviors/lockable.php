@@ -29,7 +29,7 @@ class ComDefaultDatabaseBehaviorLockable extends KDatabaseBehaviorLockable
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'lifetime'   =>  KService::get('anahita:session')->getExpire()
+            'lifetime'   =>  KService::get('com:session')->getExpire()
         ));
 
         parent::_initialize($config);
