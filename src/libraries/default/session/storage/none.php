@@ -8,7 +8,7 @@ class LibSessionStorageNone extends LibSessionStorageAbstract
 	* @access public
 	* @param array $options optional parameters
 	*/
-	function register($options = array())
+	function register(KConfig $config)
 	{
 		//let php handle the session storage
 	}

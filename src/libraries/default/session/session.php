@@ -255,7 +255,7 @@ class LibSession extends KObject
 	public function getStores()
 	{
 		$handlers = scandir(
-			dirname(__FILE__).DS.'storages',
+			dirname(__FILE__).DS.'storage',
 			SCANDIR_SORT_DESCENDING
 		);
 
@@ -265,7 +265,7 @@ class LibSession extends KObject
 		foreach ($handlers as $handler) {
 			if (strpos($handler, '.php') && !in_array($handler, $exclude)) {
 				$name = substr($handler, 0, strrpos($handler, '.'));
-				if ($this->getService('com:people.session.storage.'.$name)->test()){
+				if ($this->getService('com:session.storage.'.$name)->test()){
 					$names[] = $name;
 				}
 			}
