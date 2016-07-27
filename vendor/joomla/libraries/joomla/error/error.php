@@ -523,9 +523,9 @@ class JError
 	{
 		// Initialize variables
 		jimport('joomla.document.document');
-		$app        = & $this->getService('application');
-		$document	= & JDocument::getInstance('error');
-		$config		= & JFactory::getConfig();
+		$app        = KService::get('com:application');
+		$document	= KService::get('com:document');
+		$config		= JFactory::getConfig();
 
 		//Get the current language direction
 		$language = &JFactory::getLanguage();
@@ -540,7 +540,7 @@ class JError
 		$template = $app->getTemplate();
 
 		// Push the error object into the document
-		$document->setError($error);
+		$document->setBuffer($error);
 
 		@ob_end_clean();
 		$document->setTitle(AnTranslator::_('Error').': '.$error->getCode());
@@ -554,7 +554,7 @@ class JError
 
 		JResponse::setBody($data);
 		echo JResponse::toString();
-		$app->close(0);
+		//$app->close(0);
 	}
 
 	static public function customErrorHandler($level, $msg)

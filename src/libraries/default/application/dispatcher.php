@@ -62,7 +62,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'application' => null,
+            'application' => null
         ));
 
         parent::_initialize($config);
@@ -115,10 +115,9 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->getService('koowa:loader')->loadIdentifier($identifier);
 
         //no need to create session when using CLI (command line interface)
-        $this->_application = $this->getService('application', array('session' => PHP_SAPI !== 'cli'));
+        $createSession = PHP_SAPI !== 'cli';
+        $this->_application = $this->getService('application', array('session' => $createSession));
         $error_reporting = $this->_application->getSystemSetting('error_reporting');
-
-        define('JDEBUG', $this->_application->getSystemSetting('debug'));
 
         //taken from nooku application dispatcher
         if ($error_reporting > 0) {

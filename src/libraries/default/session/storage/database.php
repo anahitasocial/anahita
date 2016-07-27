@@ -38,17 +38,17 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
  	 */
 	function read($id)
 	{
-		$db =& JFactory::getDBO();
+        $this->_data = '';
 
-		if (!$db->connected()) {
-			return false;
-		}
+        $session = KService::get('repos:session.session')
+        ->getQuery()
+        ->fetch(array('id' => $id));
 
-		$session =& JTable::getInstance('session');
+        if (isset($session)) {
+            $this->_data = (string) $session->meta;
+        }
 
-        $session->load($id);
-
-		return (string) $session->data;
+		return $this->_data;
 	}
 
 	/**
@@ -59,26 +59,47 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	 * @param string $session_data  The session data.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function write($id, $session_data)
+	function write($id = '', $meta = '')
 	{
-		$db =& JFactory::getDBO();
+        $session = KService::get('repos:session.session')
+        ->getQuery()
+        ->fetch(array('id' => $id));
 
-		if (!$db->connected()) {
-			return false;
-		}
+        if(isset($session)) {
 
-		$session = & JTable::getInstance('session');
+            $session
+            ->set('id', $id)
+            ->set('meta', $meta)
+            ->save();
 
-        if ($session->load($id)) {
-			$session->data = $session_data;
-			$session->store();
-		} else {
-			$session->data = $session_data;
-			$session->insert($id, 0);
-		}
+            $this->_data = $meta;
+
+        } else {
+
+            $session = KService::get('repos:session.session')->getEntity();
+            $session
+            ->set('id', $id)
+            ->set('meta', '')
+            ->save();
+
+            $this->_data = '';
+        }
 
 		return true;
 	}
+
+    function update($id) {
+
+        $session = KService::get('repos:session.session')
+        ->getQuery()
+        ->fetch(array('id' => $id));
+
+        if(isset($session)) {
+            return $session->set('time', time())->save();
+        }
+
+        return true;
+    }
 
 	/**
 	  * Destroy the data for a particular session identifier in the
@@ -90,14 +111,13 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	  */
 	function destroy($id)
 	{
-		$db =& JFactory::getDBO();
+        $session = KService::get('repos:session.session')
+        ->getQuery()
+        ->fetch(array('id' => $id));
 
-		if (!$db->connected()) {
-			return false;
-		}
-
-		$session =& JTable::getInstance('session');
-		$session->delete($id);
+        if (isset($session)) {
+		    $session->delete();
+        }
 
         return true;
 	}
@@ -106,20 +126,12 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	 * Garbage collect stale sessions from the SessionHandler backend.
 	 *
 	 * @access public
-	 * @param integer $maxlifetime  The maximum age of a session.
+	 * @param integer $maxlifetime  The maximum age of a session. 60 days by default
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function gc($maxlifetime)
+	function gc($lifetime = LibSessionDomainEntitySession::MAX_LIFETIME)
 	{
-		$db =& JFactory::getDBO();
-
-		if(!$db->connected()) {
-			return false;
-		}
-
-		$session =& JTable::getInstance('session');
-
-        $session->purge($maxlifetime);
+        KService::get('repos:session.session')->purge($lifetime);
 
 		return true;
 	}

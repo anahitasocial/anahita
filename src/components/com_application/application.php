@@ -125,23 +125,20 @@ class ComApplication extends KObject
         ));
 
         $session = KService::get('com:session', array('config' => $config));
+        $storage = $session->getStorage();
+        $storage->gc($session->getExpire());
 
-  		jimport('joomla.database.table');
-  		$storage = & JTable::getInstance('session');
-  		$storage->purge($session->getExpire());
-
-  		// Session exists and is not expired, update time in session table
-  		if ($storage->load($session->getId())) {
-  			$storage->update();
-  			return $session;
-  		}
+        if ($storage->read($session->getId())) {
+            $storage->update($session->getId());
+            return $session;
+        }
 
   		//Session doesn't exist yet, initalise and store it in the session table
   		$session->set('registry', new JRegistry('session'));
   		$session->set('user', new JUser());
 
-  		if (!$storage->insert( $session->getId(), 0)) {
-            throw new KException($storage->getError());
+        if (!$storage->write($session->getId(), '')) {
+            throw new KException("Coudn't write in the session table");
             return;
   		}
 

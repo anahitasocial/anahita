@@ -25,9 +25,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 			return false;
 		}
 
-		$db =& JFactory::getDBO();
-		$db->setQuery('DELETE FROM `#__session` WHERE userid = '.$db->Quote($event->user['id']));
-		$db->Query();
+		KService::get('repos:session.session')->destroy($event->user['id']);
 
 		return true;
 	}
@@ -60,25 +58,20 @@ class plgUserJoomla extends PlgAnahitaDefault
 		$session = KService::get('com:session');
 		$session->set('user', $juser);
 
-		// Get the session object
-		$table = & JTable::getInstance('session');
-
-		if($table->load($session->getId()))
-		{
-			$table->guest = 0;
-			$table->username = $juser->get('username');
-			$table->userid = intval($juser->get('id'));
-			$table->usertype = $juser->get('usertype');
-			$table->update();
+		if ($sessionEntity = KService::get('repos:session.session')->fetch(array('id' => $session->getId()))) {
+			$sessionEntity->setData(array(
+				'guest' => 0,
+				'username' => $juser->get('username'),
+				'userid' => (int) $juser->get('id'),
+				'usertype' => $juser->get('usertype')
+			))->save();
 		}
 
 		// Hit the user last visit field
 		$juser->setLastVisit();
 
      	//cleanup session table from guest users
-      	$db =& JFactory::getDBO();
-      	$db->setQuery('DELETE FROM `#__session` WHERE userid = 0 ');
-      	$db->Query();
+      	KService::get('repos:session.session')->destroy(0);
 
 		return true;
 	}
@@ -112,8 +105,9 @@ class plgUserJoomla extends PlgAnahitaDefault
 			$session = KService::get('com:session');
 			$session->destroy();
 
-			$table = & JTable::getInstance('session');
-			return $table->destroy($user['id']);
+			KService::get('repos:session.session')->destroy($user['id']);
+
+			return true;
 		}
 
 		return false;

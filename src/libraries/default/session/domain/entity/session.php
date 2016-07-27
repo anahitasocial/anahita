@@ -5,14 +5,15 @@
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleDomainEntitySession extends AnDomainEntityDefault
+class LibSessionDomainEntitySession extends AnDomainEntityDefault
 {
+    const MAX_LIFETIME = 60 * 24 * 3600;
+
     /**
      * Initializes the default configuration for the object.
      *
@@ -24,15 +25,40 @@ class ComPeopleDomainEntitySession extends AnDomainEntityDefault
     {
         $config->append(array(
             'resources' => array('session'),
+            'searchable_properties' => array(
+                'userId',
+                'username',
+                'usertype'
+            ),
             'attributes' => array(
-                'session_id' => array('key' => true)
+                'sessionId' => array(
+                    'key' => true,
+                    'default' => '',
+                    'required' => true
+                ),
+                'username' => array(
+                    'default' => ''
+                ),
+                'userid' => array(
+                    'default' => 0
+                ),
+                'usertype' => array(
+                    'default' => 'guest'
+                ),
+                'guest' => array(
+                    'default' => 1
+                ),
+                'data' => array(
+                    'default' => ''
+                ),
+                'time' => array(
+                    'default' => 0
+                )
             ),
-            'relationships' => array(
-                'parent' => 'com:people.domain.entity.person',
-                'child_column' => 'person_userid',
-                'parent_column' => 'userid',
-                'required' => true,
-            ),
+            'aliases' => array(
+                'id' => 'sessionId',
+                'meta' => 'data'
+            )
         ));
 
         parent::_initialize($config);

@@ -31,7 +31,7 @@ class LibSession extends KObject
 	 * @access protected
 	 * @var	object A AnStorage object
 	 */
-	protected $_store = null;
+	protected $_storage = null;
 
 	/**
 	* security policy
@@ -88,7 +88,7 @@ class LibSession extends KObject
 
 		//create handler
 		$settins = new JConfig();
-		$this->_store = KService::get('com:session.storage.'.$settins->session_handler);
+		$this->_storage = $this->getService('com:session.storage.'.$settins->session_handler);
 
 		if (isset($config->name)) {
 			session_name(md5($config->name));
@@ -125,7 +125,7 @@ class LibSession extends KObject
     {
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
-			'expire' => 7200,
+			'expire' => LibSessionDomainEntitySession::MAX_LIFETIME,
 			'security' => array('fix_browser'),
 			'force_ssl' => isSSl(),
 			'namespace' => '__default'
@@ -272,6 +272,11 @@ class LibSession extends KObject
 		}
 
 		return $names;
+	}
+
+	public function getStorage()
+	{
+		return $this->_storage;
 	}
 
 	/**
@@ -449,7 +454,7 @@ class LibSession extends KObject
 			return false;
 		}
 
-		$this->_store->register();
+		$this->_storage->register();
 
 		$this->_state = self::STATE_RESTART;
 

@@ -143,17 +143,16 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     protected function _actionException(KCommandContext $context)
     {
         if (!JFactory::getUser()->id && $context->data instanceof LibBaseControllerExceptionUnauthorized) {
+
             $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
-
             $return = base64_encode(KRequest::url());
-
             $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
-
             $context->response->send();
-
             exit(0);
+            
         } else {
-            $this->getService('application.dispatcher')->execute('exception', $context);
+            $this->getService('application.dispatcher')
+                 ->execute('exception', $context);
         }
     }
 }

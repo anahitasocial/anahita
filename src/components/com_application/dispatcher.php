@@ -1,27 +1,12 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Application Dispatcher.
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2016 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -39,22 +24,6 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
         //parse route
         $this->registerCallback('before.run',  array($this, 'load'));
-    }
-
-    /**
-     * Initializes the default configuration for the object.
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     */
-    protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-             'application' => 'site',
-        ));
-
-        parent::_initialize($config);
     }
 
     /**
@@ -82,7 +51,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
      */
     protected function _actionDispatch(KCommandContext $context)
     {
-        if ($context->request->get('option') != 'com_application') {
+        if ($context->request->get('option') !== 'com_application') {
             parent::_actionDispatch($context);
         }
 
@@ -93,7 +62,13 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         //@TODO arash. For some reason the line below Need to fix the line below
         //not working properly
         //$redirect = $context->response->isRedirect()
-        if (!$context->response->getHeader('Location') && $context->request->getFormat() == 'html' && !$context->request->isAjax()) {
+
+        $location = $context->response->getHeader('Location');
+        $isHtml = $context->request->getFormat() == 'html';
+        $isAjax = $context->request->isAjax();
+
+        if (!$location && $isHtml && !$isAjax) {
+
             $config = array(
                 'request' => $context->request,
                 'response' => $context->response,
@@ -102,8 +77,9 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
             $layout = $this->_request->get('tmpl', 'default');
 
-            $this->getService('com://site/application.controller.page', $config)
-            ->layout($layout)->render();
+            $this->getService('com:application.controller.page', $config)
+                 ->layout($layout)
+                 ->render();
         }
 
         dispatch_plugin('onAfterRender', array( $context ));
@@ -166,7 +142,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         $config = array(
             'response' => $context->response,
             'request' => $context->request,
-            'theme' => $this->_application->getTemplate(),
+            'theme' => 'shiraz'
         );
 
         //if ajax or the format is not html
