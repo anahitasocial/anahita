@@ -1,6 +1,6 @@
 <?php
 
-class LibSessionStorageDatabase extends LibSessionStorageAbstract
+class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 {
     private $_data = null;
 
@@ -40,7 +40,7 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	{
         $this->_data = '';
 
-        $session = KService::get('repos:session.session')
+        $session = KService::get('repos:sessions.session')
         ->getQuery()
         ->fetch(array('id' => $id));
 
@@ -61,7 +61,7 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	 */
 	function write($id = '', $meta = '')
 	{
-        $session = KService::get('repos:session.session')
+        $session = KService::get('repos:sessions.session')
         ->getQuery()
         ->fetch(array('id' => $id));
 
@@ -76,7 +76,7 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 
         } else {
 
-            $session = KService::get('repos:session.session')->getEntity();
+            $session = KService::get('repos:sessions.session')->getEntity();
             $session
             ->set('id', $id)
             ->set('meta', '')
@@ -90,7 +90,7 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 
     function update($id) {
 
-        $session = KService::get('repos:session.session')
+        $session = KService::get('repos:sessions.session')
         ->getQuery()
         ->fetch(array('id' => $id));
 
@@ -111,7 +111,7 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	  */
 	function destroy($id)
 	{
-        $session = KService::get('repos:session.session')
+        $session = KService::get('repos:sessions.session')
         ->getQuery()
         ->fetch(array('id' => $id));
 
@@ -129,9 +129,9 @@ class LibSessionStorageDatabase extends LibSessionStorageAbstract
 	 * @param integer $maxlifetime  The maximum age of a session. 60 days by default
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function gc($lifetime = LibSessionDomainEntitySession::MAX_LIFETIME)
+	function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
 	{
-        KService::get('repos:session.session')->purge($lifetime);
+        KService::get('repos:sessions.session')->purge($lifetime);
 
 		return true;
 	}

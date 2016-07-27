@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibSessionDomainRepositorySession extends AnDomainRepositoryDefault
+class LibSessionsDomainRepositorySession extends AnDomainRepositoryDefault
 {
 
     /**
@@ -19,7 +19,7 @@ class LibSessionDomainRepositorySession extends AnDomainRepositoryDefault
     *
     *   @param maximum session lifetime
     */
-    public function purge($lifetime = LibSessionDomainEntitySession::MAX_LIFETIME)
+    public function purge($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
     {
         $past = time() - $lifetime;
         $query = $this->getQuery()->delete()->where('time < '.$past);

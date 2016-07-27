@@ -25,7 +25,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 			return false;
 		}
 
-		KService::get('repos:session.session')->destroy($event->user['id']);
+		KService::get('repos:sessions.session')->destroy($event->user['id']);
 
 		return true;
 	}
@@ -55,15 +55,15 @@ class plgUserJoomla extends PlgAnahitaDefault
 		}
 
 		// Register the needed session variables
-		$session = KService::get('com:session');
+		$session = KService::get('com:sessions');
 		$session->set('user', $juser);
 
-		if ($sessionEntity = KService::get('repos:session.session')->fetch(array('id' => $session->getId()))) {
+		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {
 			$sessionEntity->setData(array(
 				'guest' => 0,
-				'username' => $juser->get('username'),
+				'personUsername' => $juser->get('username'),
 				'userid' => (int) $juser->get('id'),
-				'usertype' => $juser->get('usertype')
+				'personUsertype' => $juser->get('usertype')
 			))->save();
 		}
 
@@ -71,7 +71,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 		$juser->setLastVisit();
 
      	//cleanup session table from guest users
-      	KService::get('repos:session.session')->destroy(0);
+      	KService::get('repos:sessions.session')->destroy(0);
 
 		return true;
 	}
@@ -102,10 +102,10 @@ class plgUserJoomla extends PlgAnahitaDefault
 			$viewer->setLastVisit();
 
 			// Destroy the php session for this user
-			$session = KService::get('com:session');
+			$session = KService::get('com:sessions');
 			$session->destroy();
 
-			KService::get('repos:session.session')->destroy($user['id']);
+			KService::get('repos:sessions.session')->destroy($user['id']);
 
 			return true;
 		}

@@ -1,6 +1,6 @@
 <?php
 
-class LibSessionStorageAbstract extends KObject implements LibSessionStorageInterface
+class LibSessionsStorageAbstract extends KObject implements LibSessionsStorageInterface
 {
 	/**
 	* Constructor

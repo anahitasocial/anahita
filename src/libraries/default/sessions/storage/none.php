@@ -1,6 +1,6 @@
 <?php
 
-class LibSessionStorageNone extends LibSessionStorageAbstract
+class LibSessionsStorageNone extends LibSessionsStorageAbstract
 {
 	/**
 	* Register the functions of this class with PHP's session handler

@@ -182,34 +182,18 @@ CREATE TABLE `#__plugins` (
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__session` (
-  `session_id` varchar(200) NOT NULL DEFAULT '0',
-  `username` varchar(150) DEFAULT '',
-  `time` varchar(14) DEFAULT '',
-  `guest` tinyint(4) DEFAULT '1',
-  `userid` int(11) DEFAULT '0',
-  `usertype` varchar(50) DEFAULT '',
-  `data` longtext,
-  PRIMARY KEY (`session_id`(64)),
-  KEY `whosonline` (`guest`,`usertype`),
-  KEY `userid` (`userid`),
-  KEY `time` (`time`)
-) ENGINE=InnoDB CHARACTER SET=utf8;
-
--- --------------------------------------------------------
-
 CREATE TABLE `#__sessions` (
-  `session_id` varchar(200) NOT NULL DEFAULT '0',
-  `node_id` bigint(11) NOT NULL,
+  `session_id` char(64) NOT NULL UNIQUE,
+  `node_id` bigint(11) NOT NULL DEFAULT 0,
+  `userid` bigint(11) NOT NULL DEFAULT 0,
   `person_username` varchar(255) DEFAULT NULL,
   `person_usertype` varchar(255) DEFAULT NULL,
-  `time` varchar(14) DEFAULT '',
-  `guest` tinyint(4) DEFAULT '1',
-  `data` longtext,
+  `time` INT(11) DEFAULT 0,
+  `guest` tinyint(2) DEFAULT '1',
+  `meta` longtext,
   PRIMARY KEY (`session_id`(64)),
-  KEY `whosonline` (`guest`,`person_usertype`),
-  KEY `node_id` (`node_id`),
-  KEY `time` (`time`)
+  KEY `whosonline` (`guest`,`person_usertype`,`person_username`),
+  KEY `node_id` (`node_id`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------

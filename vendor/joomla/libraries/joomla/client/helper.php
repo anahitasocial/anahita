@@ -71,7 +71,7 @@ class JClientHelper
 			// If user and pass are not set in global config lets see if its in the session
 			if ($options['enabled'] == true && ($options['user'] == '' || $options['pass'] == ''))
 			{
-				$session = KService::get('com:session');
+				$session = KService::get('com:sessions');
 				$options['user'] = $session->get($client.'.user', null, 'JClientHelper');
 				$options['pass'] = $session->get($client.'.pass', null, 'JClientHelper');
 			}
@@ -136,7 +136,7 @@ class JClientHelper
 
 		if ($return) {
 			// Save valid credentials to the session
-			$session = KService::('com:session');
+			$session = KService::('com:sessions');
 			$session->set($client.'.user', $user, 'JClientHelper');
 			$session->set($client.'.pass', $pass, 'JClientHelper');
 
@@ -194,7 +194,7 @@ class JClientHelper
 		else
 		{
 			// Check if login credentials are available in the session
-			$session = KService::get('com:session');
+			$session = KService::get('com:sessions');
 			$user = $session->get($client.'.user', null, 'JClientHelper');
 			$pass = $session->get($client.'.pass', null, 'JClientHelper');
 			if ($user != '' && $pass != '') {

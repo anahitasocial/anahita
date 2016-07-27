@@ -1,6 +1,6 @@
 <?php
 
-class LibSession extends KObject
+class LibSessions extends KObject
 {
 	const STATE_ACTIVE = 'active';
 	const STATE_EXPIRED = 'expired';
@@ -61,8 +61,8 @@ class LibSession extends KObject
 	protected $_namespace = '';
 
 	/**
-	*	Singleton instance of LibSession class
-	* 	@var LibSession instance
+	*	Singleton instance of LibSessions class
+	* 	@var LibSessions instance
 	*/
 	private static $_instance = null;
 
@@ -88,7 +88,7 @@ class LibSession extends KObject
 
 		//create handler
 		$settins = new JConfig();
-		$this->_storage = $this->getService('com:session.storage.'.$settins->session_handler);
+		$this->_storage = $this->getService('com:sessions.storage.'.$settins->session_handler);
 
 		if (isset($config->name)) {
 			session_name(md5($config->name));
@@ -125,7 +125,7 @@ class LibSession extends KObject
     {
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
-			'expire' => LibSessionDomainEntitySession::MAX_LIFETIME,
+			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME,
 			'security' => array('fix_browser'),
 			'force_ssl' => isSSl(),
 			'namespace' => '__default'
@@ -223,7 +223,7 @@ class LibSession extends KObject
 	public function getName()
 	{
 		if ($this->_state === self::STATE_DESTROYED) {
-			throw new LibSessionException("Can't obtain the session name!\n");
+			throw new LibSessionsException("Can't obtain the session name!\n");
 			return;
 		}
 
@@ -239,7 +239,7 @@ class LibSession extends KObject
 	public function getId()
 	{
 		if ($this->_state === self::STATE_DESTROYED) {
-			throw new LibSessionException("Can't obtain the session id!\n");
+			throw new LibSessionsException("Can't obtain the session id!\n");
 			return;
 		}
 
@@ -265,7 +265,7 @@ class LibSession extends KObject
 		foreach ($handlers as $handler) {
 			if (strpos($handler, '.php') && !in_array($handler, $exclude)) {
 				$name = substr($handler, 0, strrpos($handler, '.'));
-				if ($this->getService('com:session.storage.'.$name)->test()){
+				if ($this->getService('com:sessions.storage.'.$name)->test()){
 					$names[] = $name;
 				}
 			}
@@ -303,7 +303,7 @@ class LibSession extends KObject
    public function &get($property = null, $default = null)
    {
 	   if($this->_state !== self::STATE_ACTIVE && $this->_state !== self::STATE_EXPIRED) {
-		   throw new LibSessionException("Session does not exist!\n");
+		   throw new LibSessionsException("Session does not exist!\n");
 		   return;
 	   }
 
@@ -325,7 +325,7 @@ class LibSession extends KObject
 	public function set($name, $value = null)
 	{
 		if($this->_state !== self::STATE_ACTIVE) {
-			throw new LibSessionException("Session isn't active!\n");
+			throw new LibSessionsException("Session isn't active!\n");
 			return;
 		}
 
@@ -351,7 +351,7 @@ class LibSession extends KObject
 	{
 
 		if($this->_state !== self::STATE_ACTIVE) {
-			throw new LibSessionException("Session isn't active!\n");
+			throw new LibSessionsException("Session isn't active!\n");
 			return;
 		}
 
@@ -368,7 +368,7 @@ class LibSession extends KObject
 	public function clear($name)
 	{
 		if($this->_state !== self::STATE_ACTIVE) {
-			throw new LibSessionException("Session isn't active!\n");
+			throw new LibSessionsException("Session isn't active!\n");
 			return;
 		}
 
@@ -450,7 +450,7 @@ class LibSession extends KObject
 		$this->destroy();
 
 		if ($this->_state !==  self::STATE_DESTROYED) {
-			throw new LibSessionException("Session is not destroyed!\n");
+			throw new LibSessionsException("Session is not destroyed!\n");
 			return false;
 		}
 
@@ -482,7 +482,7 @@ class LibSession extends KObject
 	public function fork()
 	{
 		if ($this->_state !== self::STATE_ACTIVE) {
-			throw new LibSessionException("Session isn't active!\n");
+			throw new LibSessionsException("Session isn't active!\n");
 			return false;
 		}
 

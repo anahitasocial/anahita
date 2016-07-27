@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibSessionDomainEntitySession extends AnDomainEntityDefault
+class LibSessionsDomainEntitySession extends AnDomainEntityDefault
 {
     const MAX_LIFETIME = 60 * 24 * 3600;
 
@@ -24,11 +24,11 @@ class LibSessionDomainEntitySession extends AnDomainEntityDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'resources' => array('session'),
+            'resources' => array('sessions'),
             'searchable_properties' => array(
-                'userId',
-                'username',
-                'usertype'
+                'userid',
+                'personUsername',
+                'personUsertype'
             ),
             'attributes' => array(
                 'sessionId' => array(
@@ -36,19 +36,19 @@ class LibSessionDomainEntitySession extends AnDomainEntityDefault
                     'default' => '',
                     'required' => true
                 ),
-                'username' => array(
+                'personUsername' => array(
                     'default' => ''
                 ),
                 'userid' => array(
                     'default' => 0
                 ),
-                'usertype' => array(
+                'personUsertype' => array(
                     'default' => 'guest'
                 ),
                 'guest' => array(
                     'default' => 1
                 ),
-                'data' => array(
+                'meta' => array(
                     'default' => ''
                 ),
                 'time' => array(
@@ -56,8 +56,7 @@ class LibSessionDomainEntitySession extends AnDomainEntityDefault
                 )
             ),
             'aliases' => array(
-                'id' => 'sessionId',
-                'meta' => 'data'
+                'id' => 'sessionId'
             )
         ));
 

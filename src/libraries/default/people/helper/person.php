@@ -24,7 +24,7 @@ class LibPeopleHelperPerson extends KObject
     public function login(array $user, $remember = false)
     {
 
-        $session = KService::get('com:session');
+        $session = KService::get('com:sessions');
 
         // we fork the session to prevent session fixation issues
         $session->fork();

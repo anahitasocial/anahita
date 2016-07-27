@@ -44,21 +44,21 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         $this->_updateMeta('plugins');
 
         dbexec('DROP TABLE IF EXISTS `#__templates_menu`');
-
-        dbexec('ALTER TABLE `#__session` DROP COLUMN `client_id`');
+        dbexec('DROP TABLE IF EXISTS `#__session`');
 
         $query = "CREATE TABLE `#__sessions` ("
-        ."`session_id` varchar(200) NOT NULL DEFAULT '0',"
-        ."`node_id` bigint(11) NOT NULL,"
+        ."`session_id` char(64) NOT NULL UNIQUE,"
+        ."`node_id` bigint(11) NOT NULL DEFAULT 0,"
+        ."`userid` bigint(11) NOT NULL DEFAULT 0,"
         ."`person_username` varchar(255) DEFAULT NULL,"
         ."`person_usertype` varchar(255) DEFAULT NULL,"
-        ."`time` varchar(14) DEFAULT '',"
-        ."`guest` tinyint(4) DEFAULT '1',"
-        ."`data` longtext,"
+        ."`time` INT(11) DEFAULT 0,"
+        ."`guest` tinyint(2) DEFAULT '1',"
+        ."`meta` longtext,"
         ."PRIMARY KEY (`session_id`(64)),"
-        ."KEY `whosonline` (`guest`,`person_usertype`),"
+        ."KEY `whosonline` (`guest`,`person_usertype`,`person_username`),"
         ."KEY `node_id` (`node_id`),"
-        ."KEY `time` (`time`)"
+        ."KEY `userid` (`userid`)"
         .") ENGINE=InnoDB CHARACTER SET=utf8";
         dbexec($query);
     }

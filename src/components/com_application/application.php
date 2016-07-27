@@ -124,7 +124,7 @@ class ComApplication extends KObject
             'name' => $name
         ));
 
-        $session = KService::get('com:session', array('config' => $config));
+        $session = KService::get('com:sessions', array('config' => $config));
         $storage = $session->getStorage();
         $storage->gc($session->getExpire());
 

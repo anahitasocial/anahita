@@ -182,7 +182,7 @@
 
       <? //session handler ?>
       <?
-        $stores = @service('com:session')->getStores();
+        $stores = @service('com:sessions')->getStores();
     	$options_session_handler = array();
     	foreach($stores as $store) {
     	    $options_session_handler[] = array(
