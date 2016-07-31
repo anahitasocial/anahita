@@ -25,9 +25,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 			return false;
 		}
 
-		$db =& JFactory::getDBO();
-		$db->setQuery('DELETE FROM #__session WHERE userid = '.$db->Quote($event->user['id']));
-		$db->Query();
+		KService::get('repos:sessions.session')->destroy($event->user['id']);
 
 		return true;
 	}
@@ -43,44 +41,39 @@ class plgUserJoomla extends PlgAnahitaDefault
 	 */
 	public function onLoginUser(KEvent $event)
 	{
-			$user = $event->user;
-			$options = $event->options;
+		$user = $event->user;
+		$options = $event->options;
 
-			global $mainframe;
+		global $mainframe;
 
-			jimport('joomla.user.helper');
-		  $juser =& JFactory::getUser($user['username']);
+		jimport('joomla.user.helper');
+		$juser =& JFactory::getUser($user['username']);
 
-		  if (!$juser){
-		      JError::raiseWarning(401, "Did not find a user with username: ".$juser['username']);
+		if (!$juser) {
+			JError::raiseWarning(401, "Did not find a user with username: ".$juser['username']);
+			return false;
+		}
 
-					return false;
-		  }
+		// Register the needed session variables
+		$session = KService::get('com:sessions');
+		$session->set('user', $juser);
 
-			// Register the needed session variables
-			$session =& JFactory::getSession();
-			$session->set('user', $juser);
+		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {
+			$sessionEntity->setData(array(
+				'guest' => 0,
+				'personUsername' => $juser->get('username'),
+				'userid' => (int) $juser->get('id'),
+				'personUsertype' => $juser->get('usertype')
+			))->save();
+		}
 
-			// Get the session object
-			$table = & JTable::getInstance('session');
-			if($table->load($session->getId()))
-			{
-					$table->guest = 0;
-					$table->username = $juser->get('username');
-					$table->userid = intval($juser->get('id'));
-					$table->usertype = $juser->get('usertype');
-					$table->update();
-			}
+		// Hit the user last visit field
+		$juser->setLastVisit();
 
-			// Hit the user last visit field
-			$juser->setLastVisit();
+     	//cleanup session table from guest users
+      	KService::get('repos:sessions.session')->destroy(0);
 
-      //cleanup session table from guest users
-      $db =& JFactory::getDBO();
-      $db->setQuery('DELETE FROM #__session WHERE userid = 0 ');
-      $db->Query();
-
-			return true;
+		return true;
 	}
 
 	/**
@@ -98,22 +91,23 @@ class plgUserJoomla extends PlgAnahitaDefault
 
 		if ($user['id'] == 0) {
 			return false;
-    }
+    	}
 
-    $viewer =& JFactory::getUser();
+    	$viewer =& JFactory::getUser();
 
 		//Check to see if we're deleting the current session
-		if ($viewer->id == (int) $user['id'])
-		{
+		if ($viewer->id == (int) $user['id']) {
+
 			// Hit the user last visit field
 			$viewer->setLastVisit();
 
 			// Destroy the php session for this user
-			$session =& JFactory::getSession();
+			$session = KService::get('com:sessions');
 			$session->destroy();
 
-			$table = & JTable::getInstance('session');
-			return $table->destroy($user['id']);
+			KService::get('repos:sessions.session')->destroy($user['id']);
+
+			return true;
 		}
 
 		return false;

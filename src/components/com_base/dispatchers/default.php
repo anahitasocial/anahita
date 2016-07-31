@@ -55,7 +55,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     public function includeMedia()
     {
-        $document = $this->getService('application.document')->getInstance();
+        $document = $this->getService('com:document')->getInstance();
         $asset = $this->getService('com:base.template.asset');
 
         $url = $asset->getURL("com_{$this->getIdentifier()->package}/js/{$this->getIdentifier()->package}.js");
@@ -93,7 +93,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     public function setPageTitle(KCommandContext $context)
     {
         $view = $this->getController()->getView();
-        $document = $this->getService('application.document')->getInstance();
+        $document = $this->getService('com:document')->getInstance();
 
         //@TODO temporary fix
         if ($document->getTitle()) {
@@ -143,17 +143,16 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     protected function _actionException(KCommandContext $context)
     {
         if (!JFactory::getUser()->id && $context->data instanceof LibBaseControllerExceptionUnauthorized) {
+
             $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
-
             $return = base64_encode(KRequest::url());
-
             $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
-
             $context->response->send();
-
             exit(0);
+            
         } else {
-            $this->getService('application.dispatcher')->execute('exception', $context);
+            $this->getService('application.dispatcher')
+                 ->execute('exception', $context);
         }
     }
 }

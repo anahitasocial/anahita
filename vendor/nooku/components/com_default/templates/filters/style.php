@@ -31,7 +31,7 @@ class ComDefaultTemplateFilterStyle extends KTemplateFilterStyle
             return parent::_renderStyle($style, $link, $attribs);
         }
 
-        $document = KService::get('application.document')->getInstance();
+        $document = KService::get('com:document')->getInstance();
 
         if($link) {
             $document->addStyleSheet($style, 'text/css', null, $attribs);

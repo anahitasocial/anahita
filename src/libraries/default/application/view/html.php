@@ -105,7 +105,9 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
             $this->content = $this->getTemplate()->loadTemplate('errors/'.$layout, array('error' => $error))->render();
 
-            if (JDEBUG) {
+            $settings = new JConfig();
+
+            if ($settings->debug) {
                 $traces = array();
                 $traces[] = '<h4>Exception '.get_class($error).' with message "'.$error->getMessage().'"</h4>';
                 $traces[] = $error->getFile().':'.$error->getLine();

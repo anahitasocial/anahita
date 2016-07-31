@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +30,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 {
     /**
      * Check if the behavior is enabled or not.
-     * 
+     *
      * @var bool
      */
     protected $_enabled;
@@ -45,11 +45,13 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         parent::__construct($config);
 
         $this->_enabled = $config->enabled;
-        $session = JFactory::getSession();
+        $namespace = $this->_getQueueNamespace(false);
+        $config->append(array('namespace' => $namespace->namespace));
+        $session = KService::get('com:sessions', array('config' => $config));
+
         $data = array();
         if ($this->_enabled) {
-            $namespace = $this->_getQueueNamespace(false);
-            $data = (array) $session->get($namespace->queue, new stdClass(), $namespace->namespace);
+            $data = (array) $session->set($namespace->queue, new stdClass());
         }
 
         $config->mixer->getState()->flash = new ComApplicationControllerBehaviorMessageFlash($data);
@@ -79,9 +81,9 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     }
 
     /**
-     * If the message is still in the flash, push that to the global 
+     * If the message is still in the flash, push that to the global
      * message stack. This gives a chance for the message to be seen.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterControllerGet(KCommandContext $context)
@@ -106,14 +108,14 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
     /**
      * Sets a message.
-     * 
+     *
      * @param string $type    The message type
      * @param string $message The message text
      * @param bool   $global  A flag to whether store the message in the global queue or not
      */
     public function setMessage($message, $type = 'info', $global = false)
     {
-        //if ajax send back the message 
+        //if ajax send back the message
         //in the header
         if ($this->getRequest()->isAjax()) {
             $this->getResponse()->setHeader('X-Message',
@@ -126,25 +128,23 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     /**
      * Stores a value in the session. This value is removed in the next
      * request.
-     * 
+     *
      * @param string $key    Key to use to store the value
      * @param string $value  The value
-     * @param bool   $global Global queue flag 
+     * @param bool   $global Global queue flag
      */
     public function storeValue($key, $value, $global = false)
     {
         if ($this->_enabled) {
+
             $namespace = $this->_getQueueNamespace($global);
-            $queue = JFactory::getSession()
-                            ->get($namespace->queue, new stdClass(), $namespace->namespace);
-            $queue->$key = $value;
+            $config = new KConfig(array('namespace' => $namespace->namespace));
+            $queue = KService::get('com:sessions', array('config' => $config));
+            $queue->set($key, $value);
 
             if (!$global && $this->_mixer->flash) {
                 $this->_mixer->flash->$key = $value;
             }
-
-            JFactory::getSession()
-                ->set($namespace->queue, $queue, $namespace->namespace);
         }
     }
 
@@ -152,7 +152,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
      * Retreive a stored value from the session.
      *
      * @param string $key    The value key
-     * @param bool   $global Global queue flag 
+     * @param bool   $global Global queue flag
      */
     public function retrieveValue($key, $global = false)
     {
@@ -160,8 +160,9 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
-            $queue = JFactory::getSession()
-                            ->get($namespace->queue, new stdClass(), $namespace->namespace);
+            $config = new KConfig(array('namespace' => $namespace->namespace));
+            $queue = KService::get('com:sessions', array('config' => $config));
+            $queue->get($namespace->queue, new stdClass());
             $ret = isset($queue[$key]) ? $queue[$key] : null;
         }
 
@@ -169,16 +170,16 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     }
 
     /**
-     * Return a value queue. If global is set then it returns the global 
+     * Return a value queue. If global is set then it returns the global
      * queue.
-     * 
+     *
      * @param bool $global
-     * 
+     *
      * @return array
      */
     protected function _getQueueNamespace($global = false)
     {
-        $session = JFactory::getSession();
+        $session = KService::get('com:sessions');
 
         if ($global) {
             $store = 'application.queue';

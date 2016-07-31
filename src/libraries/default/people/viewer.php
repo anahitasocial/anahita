@@ -24,10 +24,11 @@ class LibPeopleViewer extends KObject implements KServiceInstantiatable
      public static function getInstance(KConfigInterface $config, KServiceInterface $container)
      {
          if (!$container->has($config->service_identifier)) {
+
              $id = JFactory::getUser()->id;
 
              if (!$id) {
-                 $viewer = $container->get('repos://site/people.person')
+                 $viewer = $container->get('repos:people.person')
                  ->getEntity()
                  ->setData(array(
                    'userType' => ComPeopleDomainEntityPerson::USERTYPE_GUEST, ),
@@ -37,7 +38,7 @@ class LibPeopleViewer extends KObject implements KServiceInstantiatable
                  $viewer->set('id', 0);
                  $viewer->getRepository()->extract($viewer);
              } else {
-                 $viewer = $container->get('repos://site/people.person')->find(array('userId' => $id));
+                 $viewer = $container->get('repos:people.person')->find(array('userId' => $id));
              }
 
              $container->set($config->service_identifier, $viewer);

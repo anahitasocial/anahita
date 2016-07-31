@@ -42,7 +42,7 @@ class ComApplication extends KObject
     public function __construct($config = array())
     {
         //set the application name
-        $this->_name	= $this->getName();
+        $this->_name = $this->getName();
 
         //Set the session default name
         if(!isset($config['session_name'])) {
@@ -73,15 +73,17 @@ class ComApplication extends KObject
      *
      * @param array $options Initialization options
      */
-    public function initialise($options = array())
-    {
-        $setting = new JConfig();
-        $options['language'] = $setting->language;
+     protected function _initialize(KConfig $config)
+     {
+         parent::_initialize($config);
 
-        // One last check to make sure we have something
-        if (!JLanguage::exists($options['language'])) {
-            $options['language'] = 'en-GB';
-        }
+         $settings = new JConfig();
+         $config->language = $settings->language;
+
+         // One last check to make sure we have something
+         if (!JLanguage::exists($config->language)) {
+            $config->language = 'en-GB';
+         }
     }
 
     /**
@@ -114,33 +116,30 @@ class ComApplication extends KObject
   	 *
   	 * @access	private
   	 * @param	string	The sessions name.
-  	 * @return	object	JSession on success. May call exit() on database error.
-  	 * @since	1.5
+  	 * @return	object	AnSession on success. May call exit() on database error.
   	 */
   	public function &_createSession( $name )
   	{
-  		$options = array();
-  		$options['name'] = $name;
-        $options['force_ssl'] = isSSL();
+        $config = new KConfig(array(
+            'name' => $name
+        ));
 
-  		$session =& JFactory::getSession($options);
+        $session = KService::get('com:sessions', array('config' => $config));
+        $storage = $session->getStorage();
+        $storage->gc($session->getExpire());
 
-  		jimport('joomla.database.table');
-  		$storage = & JTable::getInstance('session');
-  		$storage->purge($session->getExpire());
-
-  		// Session exists and is not expired, update time in session table
-  		if ($storage->load($session->getId())) {
-  				$storage->update();
-  				return $session;
-  		}
+        if ($storage->read($session->getId())) {
+            $storage->update($session->getId());
+            return $session;
+        }
 
   		//Session doesn't exist yet, initalise and store it in the session table
-  		$session->set('registry',	new JRegistry('session'));
-  		$session->set('user',	new JUser());
+  		$session->set('registry', new JRegistry('session'));
+  		$session->set('user', new JUser());
 
-  		if (!$storage->insert( $session->getId(), 0)) {
-  				jexit( $storage->getError());
+        if (!$storage->write($session->getId(), '')) {
+            throw new KException("Coudn't write in the session table");
+            return;
   		}
 
   		return $session;

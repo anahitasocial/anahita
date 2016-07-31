@@ -121,9 +121,10 @@ class JUtility
 	 */
 	static public function getToken($forceNew = false)
 	{
-		$user		= &JFactory::getUser();
-		$session	= &JFactory::getSession();
-		$hash		= JUtility::getHash( $user->get( 'id', 0 ).$session->getToken( $forceNew ) );
+		$user = &JFactory::getUser();
+		$session = KService::get('com:sessions');
+		$hash = JUtility::getHash( $user->get( 'id', 0 ).$session->getToken($forceNew));
+		
 		return $hash;
 	}
 

@@ -25,51 +25,6 @@ defined('JPATH_BASE') or die();
  */
 class JUserHelper
 {
-	/**
-	 * Method to activate a user
-	 *
-	 * @param	string	$activation	Activation string
-	 * @return 	boolean 			True on success
-	 * @since	1.5
-	 */
-	public static function activateUser($activation)
-	{
-		//Initialize some variables
-		$db = & JFactory::getDBO();
-
-		// Lets get the id of the user we want to activate
-		$query = 'SELECT id'
-		. ' FROM #__users'
-		. ' WHERE activation = '.$db->Quote($activation)
-		. ' AND block = 1'
-		. ' AND lastvisitDate = '.$db->Quote('0000-00-00 00:00:00');
-		;
-		$db->setQuery( $query );
-		$id = intval( $db->loadResult() );
-
-		// Is it a valid user to activate?
-		if ($id)
-		{
-			$user =& JUser::getInstance( (int) $id );
-
-			$user->set('block', '0');
-			$user->set('activation', '');
-
-			// Time to take care of business.... store the user.
-			if (!$user->save())
-			{
-				JError::raiseWarning( "SOME_ERROR_CODE", $user->getError() );
-				return false;
-			}
-		}
-		else
-		{
-			JError::raiseWarning( "SOME_ERROR_CODE", AnTranslator::_('UNABLE TO FIND A USER WITH GIVEN ACTIVATION STRING') );
-			return false;
-		}
-
-		return true;
-	}
 
 	/**
 	 * Returns userid if a user exists
