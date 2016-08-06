@@ -175,6 +175,11 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
             return $this->setPassword($value);
         }
         else {
+
+            if($key == 'username') {
+                $this->set('alias', $value);
+            }
+
             return parent::__set($key, $value);
         }
     }
