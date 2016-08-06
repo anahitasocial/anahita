@@ -74,13 +74,13 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
             $firstUser ||
             (
                 $viewer->superadmin() &&
-                $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
+                $this->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
             )
         ) {
             $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
         } elseif (
             $viewer->admin() &&
-            $this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR
+            $this->usertype == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR
         ) {
             $user->set('usertype', ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR);
         } else {
@@ -99,7 +99,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         }
 
         $this->userId = $user->id;
-        $this->userType = $user->usertype;
+        $this->usertype = $user->usertype;
         $this->enabled = ($user->block) ? 0 : 1;
 
         return true;
@@ -133,8 +133,8 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
             $user->set('block', !$this->enabled);
         }
 
-        if ($this->getModifiedData()->userType) {
-            $user->set('usertype', $this->userType);
+        if ($this->getModifiedData()->usertype) {
+            $user->set('usertype', $this->usertype);
         }
 
         if ($this->getModifiedData()->enabled) {

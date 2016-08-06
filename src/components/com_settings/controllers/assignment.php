@@ -19,7 +19,7 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	KConfig object 	An optional KConfig object with configuration options.
      */
     protected function _initialize(KConfig $config)
     {

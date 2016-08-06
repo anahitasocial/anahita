@@ -57,47 +57,33 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
+            'resources' => array('people_people'),
             'attributes' => array(
                 'administratingIds' => array(
                     'type' => 'set',
-                    'default' => 'set',
+                    'default' => 'set'
                 ),
                 'username' => array(
-                    'column' => 'person_username',
                     'key' => true,
-                    'format' => 'username',
+                    'format' => 'username'
                 ),
-                'userType' => array(
-                    'column' => 'person_usertype',
+                'usertype' => array(
                     'default' => self::USERTYPE_REGISTERED,
-                    'write_access' => 'private',
+                    'write_access' => 'private'
                 ),
                 'email' => array(
-                    'column' => 'person_useremail',
                     'key' => true,
-                    'format' => 'email',
+                    'format' => 'email'
                 ),
-                'givenName' => array(
-                    'column' => 'person_given_name',
-                    'format' => 'string',
-                ),
-                'familyName' => array(
-                    'column' => 'person_family_name',
-                    'format' => 'string',
-                ),
-                'lastVisitDate' => array(
-                    'type' => 'date',
-                    'column' => 'person_lastvisitdate',
-                ),
-                'language' => array('column' => 'person_language'),
-                'timezone' => array('column' => 'person_time_zone'),
-                'gender' => array('column' => 'actor_gender'),
+                'gender',
+                'lastVisitDate'
             ),
             'aliases' => array(
                 'registrationDate' => 'creationTime',
                 'aboutMe' => 'description',
             ),
             'behaviors' => to_hash(array(
+                //@todo if viewer is admin, then make email searchable too
                 'describable' => array('searchable_properties' => array('username')),
                 'administrator',
                 'notifiable',
@@ -276,7 +262,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function guest()
     {
-        return $this->userType === self::USERTYPE_GUEST;
+        return $this->usertype === self::USERTYPE_GUEST;
     }
 
     /**
@@ -286,8 +272,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function admin()
     {
-        return $this->userType === self::USERTYPE_ADMINISTRATOR ||
-               $this->userType === self::USERTYPE_SUPER_ADMINISTRATOR;
+        return $this->usertype === self::USERTYPE_ADMINISTRATOR ||
+               $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
     }
 
     /**
@@ -297,6 +283,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function superadmin()
     {
-        return $this->userType === self::USERTYPE_SUPER_ADMINISTRATOR;
+        return $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
     }
 }

@@ -50,7 +50,7 @@ class ComActorsDomainAuthorizerComponent extends LibBaseDomainAuthorizerDefault
             case self::CAN_ADD_ADMIN :
                 return $this->_viewer->admin();
             case self::CAN_ADD_SPECIAL :
-                return $this->_viewer->userType != 'Registered' && !$this->_viewer->guest();
+                return $this->_viewer->usertype != 'Registered' && !$this->_viewer->guest();
             case self::CAN_ADD_ALL :
                 return !$this->_viewer->guest();
             default :

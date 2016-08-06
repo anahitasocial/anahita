@@ -124,9 +124,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         //dont' set the usertype yet, until we find the conditions are met
         $userType = null;
-        if ($data->userType) {
-            $userType = $data->userType;
-            unset($context->data->userType);
+        if ($data->usertype) {
+            $userType = $data->usertype;
+            unset($context->data->usertype);
         }
 
         $person = parent::_actionEdit($context);
@@ -148,7 +148,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         //now check to see if usertype can be set, otherwise the value is unchanged
         if (in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
-            $person->userType = $userType;
+            $person->usertype = $userType;
         }
 
         $person->timestamp();
@@ -191,10 +191,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             return false;
         }
 
-        if ($viewer->admin() && in_array($data->userType, $this->_allowed_user_types)) {
-            $person->userType = $data->userType;
+        if ($viewer->admin() && in_array($data->usertype, $this->_allowed_user_types)) {
+            $person->usertype = $data->usertype;
         } else {
-            $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+            $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
         if ($isFirstUser) {

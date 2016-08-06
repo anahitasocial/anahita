@@ -31,7 +31,7 @@ class LibPeopleViewer extends KObject implements KServiceInstantiatable
                  $viewer = $container->get('repos:people.person')
                  ->getEntity()
                  ->setData(array(
-                   'userType' => ComPeopleDomainEntityPerson::USERTYPE_GUEST, ),
+                   'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST, ),
                    AnDomain::ACCESS_PROTECTED
                  );
 

@@ -770,7 +770,7 @@ function clean_ap_user_cache()
  */
 function is_guest($actor)
 {
-    return is_person($actor) && $actor->userType == ComPeopleDomainEntityPerson::USERTYPE_GUEST;
+    return is_person($actor) && $actor->usertype == ComPeopleDomainEntityPerson::USERTYPE_GUEST;
 }
 
 /**
@@ -782,7 +782,7 @@ function is_guest($actor)
  */
 function is_admin($actor)
 {
-    return is_person($actor) && ($this->userType == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR || $this->userType == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
+    return is_person($actor) && ($this->usertype == ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR || $this->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR);
 }
 
 /**

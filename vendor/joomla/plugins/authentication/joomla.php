@@ -42,13 +42,11 @@ class plgAuthenticationJoomla extends PlgAnahitaDefault
         $db =& JFactory::getDBO();
         $username = $db->Quote($credentials['username']);
 
-        $query = 'SELECT `id`, `username`, `password`, `email`'
-            . ' FROM `#__users`'
-            . ' WHERE username=' . $username;
+        $query = "SELECT * FROM `#__people_people` WHERE `username` = $username";
 
         //if an email
         if(strpos($username,'@')) {
-            $query .= ' OR email='.$username;
+            $query .= " OR `email` = $email";
         }
 
         $db->setQuery($query);
@@ -66,10 +64,9 @@ class plgAuthenticationJoomla extends PlgAnahitaDefault
             if($crypt === $testcrypt)
             {
                 // Bring this in line with the rest of the system
-                $user = JUser::getInstance($result->id);
+                $user = JUser::getInstance($result->userid);
                 $response->username = $user->username;
                 $response->email = $user->email;
-                $response->fullname = $user->name;
                 $response->status = JAUTHENTICATE_STATUS_SUCCESS;
                 $response->error_message = '';
             }

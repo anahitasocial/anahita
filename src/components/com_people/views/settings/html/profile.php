@@ -34,7 +34,10 @@
                 'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'),
                 'other' => @text('COM-ACTORS-GENDER-OTHER'), );
             ?>
-            <?= @html('select', 'gender', array('options' => $genderOptions, 'selected' => $item->gender))->class('input-block-level') ?>
+            <?= @html('select', 'gender', array(
+					'options' => $genderOptions,
+					'selected' => $item->gender)
+					)->class('input-block-level') ?>
         </div>
     </div>
 
@@ -44,7 +47,7 @@
             <?= @text('COM-PEOPLE-USERTYPE'); ?>
         </label>
         <div class="controls">
-            <?= @helper('usertypes', array('selected' => $item->userType)) ?>
+            <?= @helper('usertypes', array('selected' => $item->usertype)) ?>
         </div>
     </div>
     <?php endif; ?>

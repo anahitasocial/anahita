@@ -45,6 +45,7 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
 
         dbexec('DROP TABLE IF EXISTS `#__templates_menu`');
         dbexec('DROP TABLE IF EXISTS `#__session`');
+        dbexec('DROP TABLE IF EXISTS `#__sessions`');
 
         $query = "CREATE TABLE `#__sessions` ("
         ."`session_id` char(64) NOT NULL UNIQUE,"
@@ -61,6 +62,63 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         ."KEY `userid` (`userid`)"
         .") ENGINE=InnoDB CHARACTER SET=utf8";
         dbexec($query);
+
+        dbexec('DROP TABLE IF EXISTS `#__people_people`');
+
+        $query = "CREATE TABLE `#__people_people` ("
+        ."`people_person_id` SERIAL,"
+        ."`node_id` BIGINT UNSIGNED NOT NULL,"
+        ."`userid` INT(11) DEFAULT NULL,"
+        ."`username` varchar(255) DEFAULT NULL,"
+        ."`password` varchar(255) DEFAULT NULL,"
+        ."`usertype` varchar(50) DEFAULT NULL,"
+        ."`gender` varchar(50) DEFAULT NULL,"
+        ."`email` varchar(255) DEFAULT NULL,"
+        ."`given_name` varchar(255) DEFAULT NULL,"
+        ."`family_name` varchar(255) DEFAULT NULL,"
+        ."`network_presence` tinyint(3) NOT NULL DEFAULT 0,"
+        ."`last_visit_date` datetime DEFAULT NULL,"
+        ."`time_zone` int(11) DEFAULT NULL,"
+        ."`language` varchar(100) DEFAULT NULL,"
+        ."`activation_code` varchar(255) NOT NULL DEFAULT '',"
+        ."UNIQUE KEY `userid` (`userid`),"
+        ."KEY `usertype` (`usertype`),"
+        ."UNIQUE KEY `username` (`username`),"
+        ."UNIQUE KEY `email` (`email`),"
+        ."KEY `last_visit_date` (`last_visit_date`)"
+        .") ENGINE=InnoDB CHARACTER SET=utf8";
+        dbexec($query);
+
+        $query = "INSERT INTO `#__people_people` ("
+        ."`node_id`,`userid`,`username`,`usertype`,`gender`,"
+        ."`email`,`given_name`,`family_name`,"
+        ."`last_visit_date`,`time_zone`,`language` )"
+        ." SELECT "
+        ."`id`,`person_userid`,`person_username`,`person_usertype`,`actor_gender`,"
+        ."`person_useremail`,`person_given_name`,`person_family_name`,"
+        ."`person_lastvisitdate`,`person_time_zone`,`person_language` "
+        ." FROM `#__nodes` ORDER BY `id`";
+        dbexec($query);
+
+        $query = "UPDATE `#__people_people` AS `p` "
+        ."INNER JOIN `#__users` AS `u` ON `u`.`id` = `p`.`userid`"
+        ." SET "
+        ."`p`.`password` = `u`.`password`,"
+        ."`p`.`last_visit_date` = `u`.`lastvisitDate`,"
+        ."`p`.`activation_code` = `u`.`activation`";
+        dbexec($query);
+
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_username`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_useremail`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_usertype`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_lastvisitdate`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `actor_gender`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_given_name`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_family_name`');
+        dbexec('ALTER TABLE `#__nodes` DROP COLUMN `person_network_presence`');
+
+        dbexec('ALTER TABLE `#__nodes` CHANGE `person_time_zone` `timezone` int(3) DEFAULT NULL');
+        dbexec('ALTER TABLE `#__nodes` CHANGE `person_language` `language` VARCHAR(50) DEFAULT NULL');
     }
 
    /**

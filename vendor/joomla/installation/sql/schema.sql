@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 
 CREATE TABLE `#__edges` (
-  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `type` varchar(255) NOT NULL,
   `node_a_id` bigint(11) unsigned NOT NULL,
   `node_a_type` varchar(255) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `#__edges` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__nodes` (
-  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `type` varchar(255) NOT NULL,
   `component` varchar(100) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -139,7 +139,7 @@ CREATE TABLE `#__nodes` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__components` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `parent` int(11) unsigned NOT NULL DEFAULT '0',
   `option` varchar(50) NOT NULL DEFAULT '',
@@ -154,7 +154,7 @@ CREATE TABLE `#__components` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__migrator_versions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `component` varchar(255) NOT NULL,
   `version` text NOT NULL,
   PRIMARY KEY (`id`),
@@ -164,7 +164,7 @@ CREATE TABLE `#__migrator_versions` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__plugins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `element` varchar(100) NOT NULL DEFAULT '',
   `folder` varchar(100) NOT NULL DEFAULT '',
@@ -193,13 +193,39 @@ CREATE TABLE `#__sessions` (
   `meta` longtext,
   PRIMARY KEY (`session_id`(64)),
   KEY `whosonline` (`guest`,`person_usertype`,`person_username`),
-  KEY `node_id` (`node_id`)
+  UNIQUE KEY `node_id` (`node_id`),
+  UNIQUE KEY `person_username` (`person_username`)
+) ENGINE=InnoDB CHARACTER SET=utf8;
+
+-- --------------------------------------------------------
+
+CREATE TABLE `#__people_people` (
+    `people_person_id ` SERIAL,
+    `node_id` BIGINT UNSIGNED NOT NULL,
+    `userid` int(11) DEFAULT NULL,
+    `username` varchar(255) DEFAULT NULL,
+    `password` varchar(255) DEFAULT NULL,
+    `usertype` varchar(50) DEFAULT NULL,
+    `gender` varchar(50) DEFAULT NULL,
+    `email` varchar(255) DEFAULT NULL,
+    `given_name` varchar(255) DEFAULT NULL,
+    `family_name` varchar(255) DEFAULT NULL,
+    `network_presence` tinyint(3) NOT NULL DEFAULT 0,
+    `last_visit_date` datetime DEFAULT NULL,
+    `time_zone` int(11) DEFAULT NULL,
+    `language` varchar(100) DEFAULT NULL,
+    `activation_code` varchar(255) NOT NULL DEFAULT '',
+    UNIQUE KEY `userid` (`userid`),
+    KEY `usertype` (`usertype`),
+    UNIQUE KEY `username` (`username`),
+    UNIQUE KEY `email` (`email`),
+    KEY `last_visit_date` (`last_visit_date`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
 CREATE TABLE `#__users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `username` varchar(150) NOT NULL DEFAULT '',
   `email` varchar(100) NOT NULL DEFAULT '',
