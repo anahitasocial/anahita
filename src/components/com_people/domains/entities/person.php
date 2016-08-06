@@ -63,6 +63,10 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                     'type' => 'set',
                     'default' => 'set'
                 ),
+                'alias' => array(
+                    'key' => true,
+                    'format' => 'username'
+                ),
                 'username' => array(
                     'key' => true,
                     'format' => 'username'
@@ -160,22 +164,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     }
 
     /**
-     * Return the username as unique alias.
-     *
-     * (non-PHPdoc)
-     *
-     * @see AnDomainEntityAbstract::__get()
-     */
-    public function __get($key)
-    {
-        if ($key == 'uniqueAlias') {
-            return $this->username;
-        }
-
-        return parent::__get($key);
-    }
-
-    /**
      * Captures the password value when password is set through
      * magic methods.
      *
@@ -185,7 +173,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         if ($key == 'password' && !empty($value)) {
             return $this->setPassword($value);
-        } else {
+        }
+        else {
             return parent::__set($key, $value);
         }
     }
@@ -225,7 +214,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         $url = 'option=com_people&view=person&id='.$this->id;
 
         if ($use_username) {
-            $url .= '&uniqueAlias='.$this->username;
+            $url .= '&uniqueAlias='.$this->alias;
         }
 
         return $url;

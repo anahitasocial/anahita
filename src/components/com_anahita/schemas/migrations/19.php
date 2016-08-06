@@ -63,6 +63,9 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         .") ENGINE=InnoDB CHARACTER SET=utf8";
         dbexec($query);
 
+        //for people the alias is the same as username
+        dbexec("UPDATE `#__nodes` SET `alias` = `person_username` WHERE `person_username` != '' ");
+
         dbexec('DROP TABLE IF EXISTS `#__people_people`');
 
         $query = "CREATE TABLE `#__people_people` ("

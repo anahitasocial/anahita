@@ -112,7 +112,7 @@
      */
     public function getMentions()
     {
-        $this->get('mentions')->getQuery()->select('node.person_username');
+        $this->get('mentions')->getQuery()->select('person.username');
 
         return $this->get('mentions');
     }
