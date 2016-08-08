@@ -35,7 +35,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('validatable', 'com://site/mailer.controller.behavior.mailer'),
+            'behaviors' => array(
+                'validatable',
+                'com:mailer.controller.behavior.mailer'
+            ),
             'request' => array(
                 'reset_password' => 0
             )
@@ -72,6 +75,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $query = $context->query;
 
         if ($this->filter) {
+
             if (
                 $this->filter['usertype'] &&
                 in_array($this->filter['usertype'], $this->_allowed_user_types)
@@ -89,7 +93,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $query->filterEmail($this->q);
         }
 
-        if ($this->getService('com://site/people.filter.username')->validate($this->q)) {
+        if ($this->getService('com:people.filter.username')->validate($this->q)) {
             $query->filterUsername($this->q);
         }
 
@@ -123,9 +127,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $data = $context->data;
 
         //dont' set the usertype yet, until we find the conditions are met
-        $userType = null;
+        $usertype = null;
+
         if ($data->usertype) {
-            $userType = $data->usertype;
+            $usertype = $data->usertype;
             unset($context->data->usertype);
         }
 
@@ -147,8 +152,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         //now check to see if usertype can be set, otherwise the value is unchanged
-        if (in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
-            $person->usertype = $userType;
+        if (in_array($usertype, $this->_allowed_user_types) && $person->authorize('changeUsertype')) {
+            $person->usertype = $usertype;
         }
 
         $person->timestamp();
@@ -168,7 +173,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
         $viewer = get_viewer();
-        $isFirstUser = !(bool) $this->getService('repos://site/users')
+        $isFirstUser = !(bool) $this->getService('repos:users')
                                     ->getQuery(true)
                                     ->fetchValue('id');
 
