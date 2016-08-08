@@ -174,18 +174,38 @@ abstract class AnDomainPropertyAbstract
         ));
 
         if (is_string($config->write)) {
+
             switch ($config->write) {
-                case 'private'     : $config->write = AnDomain::ACCESS_PRIVATE;break;
-                case 'protected' : $config->write = AnDomain::ACCESS_PROTECTED;break;
-                case 'public'     : $config->write = AnDomain::ACCESS_PUBLIC;break;
+
+                case 'private' :
+                    $config->write = AnDomain::ACCESS_PRIVATE;
+                    break;
+
+                case 'protected' :
+                    $config->write = AnDomain::ACCESS_PROTECTED;
+                    break;
+
+                case 'public' :
+                    $config->write = AnDomain::ACCESS_PUBLIC;
+                    break;
             }
         }
 
         if (is_string($config->read)) {
+
             switch ($config->read) {
-                case 'private'     : $config->read = AnDomain::ACCESS_PRIVATE;break;
-                case 'protected' : $config->read = AnDomain::ACCESS_PROTECTED;break;
-                case 'public'     : $config->read = AnDomain::ACCESS_PUBLIC;break;
+
+                case 'private' :
+                    $config->read = AnDomain::ACCESS_PRIVATE;
+                    break;
+
+                case 'protected' :
+                    $config->read = AnDomain::ACCESS_PROTECTED;
+                    break;
+
+                case 'public' :
+                    $config->read = AnDomain::ACCESS_PUBLIC;
+                    break;
             }
         }
     }

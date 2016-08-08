@@ -27,13 +27,13 @@ class LibSessionsDomainRepositorySession extends AnDomainRepositoryDefault
     }
 
     /**
-    *   Removes session by userId
+    *   Removes session by personId
     *
     *   @param (int) user id
     */
-    public function destroy($userId = 0)
+    public function destroy($personId = 0)
     {
-        $query = $this->getQuery()->delete()->where(array('userid' => (int) $userId));
+        $query = $this->getQuery()->delete()->where(array('nodeId' => (int) $personId));
         $this->getStore()->execute($query);
     }
 }

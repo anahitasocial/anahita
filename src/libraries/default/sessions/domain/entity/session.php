@@ -26,7 +26,7 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('sessions'),
             'searchable_properties' => array(
-                'userid',
+                'nodeId',
                 'personUsername',
                 'personUsertype'
             ),
@@ -39,7 +39,7 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
                 'personUsername' => array(
                     'default' => ''
                 ),
-                'userid' => array(
+                'nodeId' => array(
                     'default' => 0
                 ),
                 'personUsertype' => array(

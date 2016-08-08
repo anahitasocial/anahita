@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibPeopleHelperPerson extends KObject
+class ComPeopleHelperPerson extends KObject
 {
     /**
      * Logs in a user.
@@ -21,9 +21,8 @@ class LibPeopleHelperPerson extends KObject
      *
      * @return bool
      */
-    public function login(array $user, $remember = false)
+    public function login(array $credentials, $remember = false)
     {
-
         $session = KService::get('com:sessions');
 
         // we fork the session to prevent session fixation issues
@@ -34,16 +33,12 @@ class LibPeopleHelperPerson extends KObject
 
         $options = array();
         $results = dispatch_plugin('user.onLoginUser', array(
-                      'user' => $user,
+                      'credentials' => $credentials,
                       'options' => $options
                     ));
 
         foreach ($results as $result) {
-            if (
-                $result instanceof JException ||
-                $result instanceof Exception ||
-                $result === false
-                ) {
+            if ($result instanceof Exception || $result === false) {
                 return false;
             }
         }
@@ -57,12 +52,16 @@ class LibPeopleHelperPerson extends KObject
             $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
 
             if ($key) {
+
                 $crypt = new JSimpleCrypt($key);
+
                 $cookie = $crypt->encrypt(serialize(array(
-                    'username' => $user['username'],
-                    'password' => $user['password'],
+                    'username' => $credentials['username'],
+                    'password' => $credentials['password'],
                 )));
+
                 $lifetime = time() + (365 * 24 * 3600);
+
                 setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
             }
         }
@@ -78,12 +77,13 @@ class LibPeopleHelperPerson extends KObject
     public function logout()
     {
         $viewer = get_viewer();
-        $user = array(
-          'username' => $viewer->username,
-          'id' => $viewer->userId
+
+        $person = array(
+          'id' => $viewer->id,
+          'username' => $viewer->username
         );
 
-        $results = dispatch_plugin('user.onLogoutUser', array( 'user' => $user ));
+        $results = dispatch_plugin('user.onLogoutUser', array('person' => $person));
 
         if ($results) {
     			setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - AnHelperDate::dayToSeconds(30), '/');

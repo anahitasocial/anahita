@@ -45,7 +45,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         parent::setRequest($request);
 
         if (isset($this->_request->return)) {
-            $return = $this->getService('com://site/people.filter.return')
+            $return = $this->getService('com:people.filter.return')
                            ->sanitize($this->_request->return);
             $this->_request->return = $return;
             $this->return = $return;
@@ -92,15 +92,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $person = $this->getService('repos://site/people.person')
-                       ->find(array('userId' => JFactory::getUser()->id));
+        //$person = $this->getService('repos://site/people.person')
+        //               ->find(array('userId' => JFactory::getUser()->id));
 
-        $this->_state->setItem($person);
+        $person = get_viewer();
+
+        $this->_state->setItem(get_viewer());
 
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
-                'return' => $this->getService('com://site/people.filter.return')
-                                 ->sanitize($_SESSION['return']), ));
+                'return' => $this->getService('com:people.filter.return')->sanitize($_SESSION['return']), ));
         }
 
         return $person;
@@ -136,7 +137,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $data = $context->data;
 
         if ($data->return) {
-            $_SESSION['return'] = $this->getService('com://site/people.filter.return')
+            $_SESSION['return'] = $this->getService('com:people.filter.return')
                                        ->sanitize($data->return);
             $context->url = base64UrlDecode($data->return);
         } else {
@@ -159,9 +160,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $credentials['password'] = $authResponse->password;
 
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
+
             $this->getResponse()->status = KHttpResponse::CREATED;
             $this->getResponse()->setRedirect($context->url);
+
             $_SESSION['return'] = null;
+
         } else {
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
@@ -198,7 +202,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             return false;
         }
 
-        $user = $this->getService('repos://site/users.user')
+        $user = $this->getService('repos:users.user')
                      ->find(array('activation' => $this->token));
 
         if (!$user) {
@@ -241,7 +245,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         ->login($credentials, $credentials['remember']);
 
         if ($this->return) {
-            $_SESSION['return'] = $this->getService('com://site/people.filter.return')
+            $_SESSION['return'] = $this->getService('com:people.filter.return')
                                        ->sanitize($this->return);
             $returnUrl = base64UrlDecode($this->return);
             $this->getResponse()->setRedirect($returnUrl);

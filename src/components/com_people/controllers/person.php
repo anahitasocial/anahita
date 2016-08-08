@@ -187,7 +187,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
-
             return false;
         }
 
@@ -232,6 +231,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $userId = $this->getItem()->userId;
 
         $this->getService('application')->logout($userId);
+
         JFactory::getUser($userId)->delete();
     }
 

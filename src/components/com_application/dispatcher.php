@@ -151,7 +151,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
             $context->request->setFormat('json');
         }
 
-        $this->getService('com://site/application.controller.exception', $config)
+        $this->getService('com:application.controller.exception', $config)
         ->layout('error')
         ->render($exception);
 

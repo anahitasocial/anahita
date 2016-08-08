@@ -69,30 +69,36 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'username' => array(
                     'key' => true,
-                    'format' => 'username'
+                    'format' => 'username',
+                    'required' => true,
+                    'read' => AnDomain::ACCESS_PUBLIC
+                ),
+                'password' => array(
+                    'required' => true
                 ),
                 'usertype' => array(
                     'default' => self::USERTYPE_REGISTERED,
-                    'write_access' => 'private'
+                    'read' => AnDomain::ACCESS_PUBLIC
                 ),
                 'email' => array(
                     'key' => true,
-                    'format' => 'email'
+                    'format' => 'email',
+                    'read' => AnDomain::ACCESS_PUBLIC
                 ),
                 'gender',
-                'lastVisitDate'
+                'lastVisitDate' => array(
+                    'default' => 'data'
+                )
             ),
             'aliases' => array(
-                'registrationDate' => 'creationTime',
-                'aboutMe' => 'description',
+                'registrationDate' => 'creationTime'
             ),
             'behaviors' => to_hash(array(
                 //@todo if viewer is admin, then make email searchable too
                 'describable' => array('searchable_properties' => array('username')),
                 'administrator',
                 'notifiable',
-                'leadable',
-                'user',
+                'leadable'
             )),
         ));
 
@@ -171,40 +177,18 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function __set($key, $value)
     {
-        if ($key == 'password' && !empty($value)) {
-            return $this->setPassword($value);
-        }
-        else {
-
-            if($key == 'username') {
-                $this->set('alias', $value);
-            }
-
-            return parent::__set($key, $value);
-        }
-    }
-
-    /**
-     * Set a person account passwrod. This password is not stored in the database
-     * and only used for validation. @see
-     * <code>
-     * $person->setPassword('somepassowrd')->validate() //will validate the password
-     * </code>.
-     *
-     * @param string $password Clear password
-     *
-     * @return ComPeopleDomainEntityPerson
-     */
-    public function setPassword($password)
-    {
-        //make sure the passowrd is set to an empty string
-        if (empty($password)) {
-            $password = null;
+        if ($key == 'username') {
+            $this->set('alias', $value);
         }
 
-        $this->_password['clear'] = $password;
+        if ($key == 'password') {
+            jimport('joomla.user.helper');
+            $salt = JUserHelper::genRandomPassword(32);
+            $crypt = JUserHelper::getCryptedPassword($value, $salt);
+            $this->password = $crypt.':'.$salt;
+        }
 
-        return $this;
+        return parent::__set($key, $value);
     }
 
     /**
@@ -223,30 +207,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         }
 
         return $url;
-    }
-
-    /**
-     * Return the clear password set for validation. If a hash is set to true
-     * then it first hash the password and then return it.
-     *
-     * @param bool $hash.
-     *
-     * @return string
-     */
-    public function getPassword($hash = false)
-    {
-        if ($hash && $this->_password['clear']) {
-            if (!$this->_password['hashed']) {
-                jimport('joomla.user.helper');
-                $salt = JUserHelper::genRandomPassword(32);
-                $crypt = JUserHelper::getCryptedPassword($this->_password['clear'], $salt);
-                $this->_password['hashed'] = $crypt.':'.$salt;
-            }
-
-            return $this->_password['hashed'];
-        } else {
-            return $this->_password['clear'];
-        }
     }
 
     /**
@@ -278,5 +238,15 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     public function superadmin()
     {
         return $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
+    }
+
+    /**
+     * Before Update timestamp modified on and modifier.
+     *
+     * @param KCommandContext $context Context parameter
+     */
+    protected function _beforeEntityUpdate(KCommandContext $context)
+    {
+        $this->lastVisitDate = AnDomainAttributeDate::getInstance();
     }
 }

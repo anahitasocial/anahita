@@ -9,25 +9,10 @@
  */
 class plgAuthenticationJoomla extends PlgAnahitaDefault
 {
-
     public $name;
 
-    /**
-     * This method should handle any authentication and report back to the subject
-     *
-     * @access  public
-     * @param   array   $credentials Array holding the user credentials
-     * @param   array   $options     Array of extra options
-     * @param   object  $response    Authentication response object
-     * @return  boolean
-     * @since 1.5
-     */
     function onAuthenticate(&$credentials, $options, &$response)
     {
-
-        jimport('joomla.user.helper');
-
-        // Joomla does not like blank passwords
         if(empty($credentials['password']))
         {
             $response->status = JAUTHENTICATE_STATUS_FAILURE;
@@ -35,38 +20,26 @@ class plgAuthenticationJoomla extends PlgAnahitaDefault
             return false;
         }
 
-        // Initialize variables
-        $conditions = '';
+        $condition = strpos($credentials['username'],'@') ? 'email' : 'username';
+        $person = KService::get('repos:people.person')->find(array(
+            $condition => $credentials['username']
+        ));
 
-        // Get a database object
-        $db =& JFactory::getDBO();
-        $username = $db->Quote($credentials['username']);
-
-        $query = "SELECT * FROM `#__people_people` WHERE `username` = $username";
-
-        //if an email
-        if(strpos($username,'@')) {
-            $query .= " OR `email` = $email";
-        }
-
-        $db->setQuery($query);
-
-        $result = $db->loadObject();
-
-        if($result)
+        if(isset($person))
         {
-            $credentials['username'] = $result->username;
-            $parts  = explode(':', $result->password);
+            $credentials['username'] = $person->username;
+            $parts  = explode(':', $person->password);
             $crypt  = $parts[0];
             $salt   = isset($parts[1]) ? $parts[1] : '';
+
+            jimport('joomla.user.helper');
             $testcrypt = JUserHelper::getCryptedPassword($credentials['password'], $salt);
 
             if($crypt === $testcrypt)
             {
-                // Bring this in line with the rest of the system
-                $user = JUser::getInstance($result->userid);
-                $response->username = $user->username;
-                $response->email = $user->email;
+                $response->id = $person->id;
+                $response->username = $person->username;
+                $response->email = $person->email;
                 $response->status = JAUTHENTICATE_STATUS_SUCCESS;
                 $response->error_message = '';
             }

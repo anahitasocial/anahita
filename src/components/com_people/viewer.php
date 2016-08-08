@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibPeopleViewer extends KObject implements KServiceInstantiatable
+class ComPeopleViewer extends KObject implements KServiceInstantiatable
 {
     /**
       * Force creation of a singleton.
@@ -25,20 +25,26 @@ class LibPeopleViewer extends KObject implements KServiceInstantiatable
      {
          if (!$container->has($config->service_identifier)) {
 
-             $id = JFactory::getUser()->id;
+             $session = KService::get('com:sessions');
+             $person = $session->has('person') ? $session->get('person') : null;
 
-             if (!$id) {
-                 $viewer = $container->get('repos:people.person')
+             $repository = KService::get('repos:people.person');
+
+             if($person) {
+
+                 $viewer = KService::get('repos:people.person')
+                 ->find(array('id' => $person->id));
+
+             } else {
+
+                 $viewer = KService::get('repos:people.person')
                  ->getEntity()
                  ->setData(array(
-                   'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST, ),
-                   AnDomain::ACCESS_PROTECTED
-                 );
+                    'id' => 0,
+                    'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
+                 ));
 
-                 $viewer->set('id', 0);
                  $viewer->getRepository()->extract($viewer);
-             } else {
-                 $viewer = $container->get('repos:people.person')->find(array('userId' => $id));
              }
 
              $container->set($config->service_identifier, $viewer);

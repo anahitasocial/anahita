@@ -118,13 +118,14 @@ class ComApplication extends KObject
   	 * @param	string	The sessions name.
   	 * @return	object	AnSession on success. May call exit() on database error.
   	 */
-  	public function &_createSession( $name )
+  	public function &_createSession($name)
   	{
         $config = new KConfig(array(
             'name' => $name
         ));
 
         $session = KService::get('com:sessions', array('config' => $config));
+
         $storage = $session->getStorage();
         $storage->gc($session->getExpire());
 
@@ -135,7 +136,13 @@ class ComApplication extends KObject
 
   		//Session doesn't exist yet, initalise and store it in the session table
   		$session->set('registry', new JRegistry('session'));
-  		$session->set('user', new JUser());
+
+        $person = KService::get('repos:people.person')
+                    ->getEntity()->setData(array(
+                        'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
+                    ))->reset();
+
+        $session->set('person', (object) $person->getData());
 
         if (!$storage->write($session->getId(), '')) {
             throw new KException("Coudn't write in the session table");
