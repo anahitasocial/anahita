@@ -92,9 +92,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        //$person = $this->getService('repos://site/people.person')
-        //               ->find(array('userId' => JFactory::getUser()->id));
-
         $person = get_viewer();
 
         $this->_state->setItem(get_viewer());

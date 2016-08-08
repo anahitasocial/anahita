@@ -218,24 +218,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
-     * Deletes a person and all of their assets. It also logsout the person.
-     *
-     * @param KCommandContext $context Context parameter
-     */
-    protected function _actionDelete(KCommandContext $context)
-    {
-        parent::_actionDelete($context);
-
-        $this->commit();
-
-        $userId = $this->getItem()->userId;
-
-        $this->getService('application')->logout($userId);
-
-        JFactory::getUser($userId)->delete();
-    }
-
-    /**
      * Set the necessary redirect.
      *
      * @param KCommandContext $context

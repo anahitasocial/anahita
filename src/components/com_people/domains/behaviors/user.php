@@ -47,8 +47,8 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
                                   ->getQuery(true)
                                   ->fetchValue('id');
 
-        jimport('joomla.user.helper');
-        $user = clone JFactory::getUser();
+        //we are going to remove this class alltogehter
+        $user = clone JObject();
 
         $user->set('id', 0);
         $user->set('name', $this->name);
@@ -115,7 +115,9 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         $data = $context->data;
         jimport('joomla.user.helper');
         $viewer = get_viewer();
-        $user = clone JFactory::getUser($this->userId);
+
+        //we are going to remove this class alltogehter
+        $user = clone JObject();
 
         if ($this->getModifiedData()->name) {
             $user->set('name', $this->name);

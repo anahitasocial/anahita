@@ -17,17 +17,15 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
      * Validates an email.
      *
      * @param string $email Email to validate
-     * 
+     *
      * @return bool
      */
     public function validateEmail($email)
     {
-        $user = $this->getService('repos://site/users.user')
-                     ->find(array('email' => $email));
+        $person = $this->getService('repos:people.person')->find(array('email' => $email));
 
-        if ($user && $user->id != JFactory::getUser()->id) {
+        if ($person->id) {
             $this->setMessage('Email is already in use');
-
             return false;
         }
 
@@ -37,18 +35,16 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
     /**
      * Validates a username.
      *
-     * @param string $email Email to validate     * 
+     * @param string $email Email to validate     *
      *
      * @return bool
      */
     public function validateUsername($username)
     {
-        $user = $this->getService('repos://site/users.user')
-                     ->find(array('username' => $username));
+        $person = $this->getService('repos:people.person')->find(array('username' => $username));
 
-        if ($user && $user->id != JFactory::getUser()->id) {
+        if ($person->id) {
             $this->setMessage('Username is already in use');
-
             return false;
         }
 

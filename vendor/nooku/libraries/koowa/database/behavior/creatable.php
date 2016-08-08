@@ -47,7 +47,7 @@ class KDatabaseBehaviorCreatable extends KDatabaseBehaviorAbstract
     protected function _beforeTableInsert(KCommandContext $context)
     {
         if(isset($this->created_by) && empty($this->created_by)) {
-            $this->created_by  = (int) JFactory::getUser()->get('id');
+            $this->created_by  = (int) get_viewer()->id;
         }
 
         if(isset($this->created_on) && (empty($this->created_on) || $this->created_on == $context->caller->getDefault('created_on'))) {

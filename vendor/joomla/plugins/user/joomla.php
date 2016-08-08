@@ -61,9 +61,9 @@ class plgUserJoomla extends PlgAnahitaDefault
 		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {
 			$sessionEntity->setData(array(
 				'guest' => 0,
-				'personUsername' => $person->username,
 				'nodeId' => $person->id,
-				'personUsertype' => $person->usertype,
+				'username' => $person->username,
+				'usertype' => $person->usertype,
 				'time' => $session->getExpire()
 			))->save();
 		}

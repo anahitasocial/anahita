@@ -26,7 +26,7 @@ abstract class KControllerService extends KControllerResource
     protected function _initialize(KConfig $config)
     {
     	$config->append(array(
-    		'behaviors'  => array('discoverable', 'editable'),
+    		'behaviors'  => array('discoverable'),
     	    'readonly'   => false,
         ));
 
