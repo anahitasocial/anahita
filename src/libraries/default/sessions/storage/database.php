@@ -3,9 +3,29 @@
 class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 {
     /**
-    *   @param hold session data
+    * @param hold session data
     */
     private $_data = null;
+
+    /**
+    * @param $session entity
+    */
+    private $_session = null;
+
+    /**
+    * loads the session entity
+    *
+    * @param $id string session id
+    * @return session entity
+    */
+    private function _getSession($id)
+    {
+        if (is_null($this->_session)) {
+            $this->_session = KService::get('repos:sessions.session')->find(array('id' => $id));
+        }
+
+        return $this->_session;
+    }
 
 	/**
 	 * Open the SessionHandler backend.
@@ -15,7 +35,7 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 * @param string $session_name  The name of the session.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function open($save_path, $session_name)
+	public function open($save_path, $session_name)
 	{
         return true;
 	}
@@ -26,7 +46,7 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 * @access public
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function close()
+	public function close()
 	{
 		return true;
 	}
@@ -39,7 +59,7 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
  	 * @param string $id  The session identifier.
  	 * @return string  The session data.
  	 */
-	function read($id)
+	public function read($id)
 	{
         $this->_data = '';
 
@@ -47,7 +67,7 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
             return $this->_data;
         }
 
-        $session = KService::get('repos:sessions.session')->find(array('id' => $id));
+        $session = $this->_getSession($id);
 
         if (isset($session)) {
             $this->_data = (string) $session->meta;
@@ -64,13 +84,13 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 * @param string $session_data  The session data.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function write($id, $session_data)
+	public function write($id, $session_data)
 	{
         if ($id == '' && $session_data == '') {
             return false;
         }
 
-        $session = KService::get('repos:sessions.session')->find(array('id' => $id));
+        $session = $this->_getSession($id);
 
         if (isset($session)) {
 
@@ -92,13 +112,13 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 		return true;
 	}
 
-    function update($id) {
+    public function update($id) {
 
         if ($id == '') {
             return false;
         }
 
-        $session = KService::get('repos:sessions.session')->find(array('id' => $id));
+        $session = $this->_getSession($id);
 
         if(isset($session)) {
             return $session->set('time', time())->save();
@@ -115,13 +135,13 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	  * @param string $id  The session identifier.
 	  * @return boolean  True on success, false otherwise.
 	  */
-	function destroy($id)
+	public function destroy($id)
 	{
         if ($id == '') {
             return false;
         }
 
-        $session = KService::get('repos:sessions.session')->find(array('id' => $id));
+        $session = $this->_getSession($id);
 
         if (isset($session)) {
 		    $session->delete();
@@ -137,10 +157,9 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 * @param integer $maxlifetime  The maximum age of a session. 60 days by default
 	 * @return boolean  True on success, false otherwise.
 	 */
-	function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
+	public function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
 	{
         KService::get('repos:sessions.session')->purge($lifetime);
-
 		return true;
 	}
 }

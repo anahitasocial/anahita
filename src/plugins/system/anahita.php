@@ -185,12 +185,13 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     public function onBeforeDeleteUser(KEvent $event)
     {
 
-        $person = KService::get('repos://site/people.person')->find(array(
+        $person = KService::get('repos:people.person')->find(array(
                     'userId' => $event->user['id']
                   ));
 
         if ($person) {
-            KService::get('repos://site/components')
+
+            KService::get('repos:components')
             ->fetchSet()
             ->registerEventDispatcher(KService::get('anahita:event.dispatcher'));
 

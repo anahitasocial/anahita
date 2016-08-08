@@ -62,7 +62,12 @@ class ComPeopleHelperPerson extends KObject
 
                 $lifetime = time() + (365 * 24 * 3600);
 
-                setcookie(JUtility::getHash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
+                setcookie(
+                    JUtility::getHash('JLOGIN_REMEMBER'),
+                    $cookie,
+                    $lifetime,
+                    '/'
+                );
             }
         }
 
@@ -86,9 +91,14 @@ class ComPeopleHelperPerson extends KObject
         $results = dispatch_plugin('user.onLogoutUser', array('person' => $person));
 
         if ($results) {
-    			setcookie(JUtility::getHash('JLOGIN_REMEMBER'), false, time() - AnHelperDate::dayToSeconds(30), '/');
-    			return true;
-    		}
+            setcookie(
+                JUtility::getHash('JLOGIN_REMEMBER'),
+                false,
+                time() - AnHelperDate::dayToSeconds(30),
+                '/'
+            );
+    		return true;
+    	}
 
         return false;
     }
