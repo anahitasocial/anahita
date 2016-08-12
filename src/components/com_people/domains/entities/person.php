@@ -23,13 +23,6 @@
 final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 {
     /*
-     * Clear string passwrod.
-     *
-     * @var string
-     */
-    protected $_password;
-
-    /*
     * Allowed user types array
     */
     protected $_allowed_user_types;
@@ -74,7 +67,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                     'read' => AnDomain::ACCESS_PUBLIC
                 ),
                 'password' => array(
-                    'required' => true
+                    'required' => true,
+                    'format' => 'password'
                 ),
                 'usertype' => array(
                     'default' => self::USERTYPE_REGISTERED,
@@ -107,24 +101,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         parent::_initialize($config);
 
         AnHelperArray::unsetValues($config->behaviors, array('administrable'));
-
-        $this->_password = array(
-            'clear' => null,
-            'hashed' => null,
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _afterEntityInstantiate(KConfig $config)
-    {
-        $config->append(array('data' => array(
-            'author' => $this,
-            'component' => 'com_people',
-        )));
-
-        parent::_afterEntityInstantiate($config);
     }
 
     /**
@@ -178,14 +154,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     public function __set($key, $value)
     {
         if ($key == 'username') {
-            $this->set('alias', $value);
-        }
-
-        if ($key == 'password') {
-            jimport('joomla.user.helper');
-            $salt = JUserHelper::genRandomPassword(32);
-            $crypt = JUserHelper::getCryptedPassword($value, $salt);
-            $this->password = $crypt.':'.$salt;
+            $this->alias = $value;
         }
 
         return parent::__set($key, $value);
@@ -238,6 +207,19 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     public function superadmin()
     {
         return $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _afterEntityInstantiate(KConfig $config)
+    {
+        $config->append(array('data' => array(
+            'author' => $this,
+            'component' => 'com_people',
+        )));
+
+        parent::_afterEntityInstantiate($config);
     }
 
     /**

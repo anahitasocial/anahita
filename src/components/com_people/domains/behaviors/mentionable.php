@@ -48,8 +48,7 @@
     public function addMention($username)
     {
         if (
-            $mentioned = $this->getService('repos://site/people.person')
-                              ->find(array('username' => $username))
+            $mentioned = $this->getService('repos:people.person')->find(array('username' => $username))
         ) {
             $this->mentions->insert($mentioned);
 
@@ -75,8 +74,7 @@
     public function removeMention($username)
     {
         if (
-            $mentioned = $this->getService('repos://site/people.person')
-                              ->find(array('username' => $username))
+            $mentioned = $this->getService('repos:people.person')->find(array('username' => $username))
         ) {
             $this->mentions->extract($mentioned);
 
@@ -112,7 +110,10 @@
      */
     public function getMentions()
     {
-        $this->get('mentions')->getQuery()->select('person.username');
+        $this->get('mentions')
+        ->getQuery()
+        ->select('person.username')
+        ->join('left', 'people_people AS person', 'person.node_id = node.id');
 
         return $this->get('mentions');
     }

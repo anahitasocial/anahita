@@ -37,4 +37,31 @@ class ComPeopleFilterPassword extends KFilterRaw
 
         return $ret;
     }
+
+    /**
+     * Sanitize a value.
+     *
+     * @param   mixed   Value to be sanitized
+     *
+     * @return string
+     */
+    protected function _sanitize($value)
+    {
+        return $this->_encrypt($value);
+    }
+
+    /**
+     * Encrypt the password value
+     *
+     * @param   mixed   Value to be sanitized
+     *
+     * @return string
+     */
+    private function _encrypt($value)
+    {
+        jimport('joomla.user.helper');
+        $salt = JUserHelper::genRandomPassword(32);
+        $crypt = JUserHelper::getCryptedPassword($value, $salt);
+        return $crypt.':'.$salt;
+    }
 }

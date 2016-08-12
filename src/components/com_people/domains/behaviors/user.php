@@ -142,7 +142,7 @@ class ComPeopleDomainBehaviorUser extends AnDomainBehaviorAbstract
         if ($this->getModifiedData()->enabled) {
             $user->set('block', !$this->enabled);
         }
-
+        
         if ($this->getPassword()) {
             $user->set('password', $this->getPassword(true));
             $user->set('password_clear', $this->getPassword());

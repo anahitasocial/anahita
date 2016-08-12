@@ -9,7 +9,7 @@
     </li>
     <li>
       <b><?= @text('COM-PERSON-META-LAST-LOGIN') ?>: </b>
-      <?php $lastLoginDate = $item->getLastLoginDate() ?>
+      <?php $lastLoginDate = $item->lastVisitDate ?>
       <?php if($lastLoginDate->compare($item->creationTime) < 0): ?>
       <?= @text('COM-PERSON-META-NEVER-LOGGED-IN') ?>
       <?php else : ?>

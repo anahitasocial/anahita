@@ -98,7 +98,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
-                'return' => $this->getService('com:people.filter.return')->sanitize($_SESSION['return']), ));
+                'return' => $this->getService('com:people.filter.return')->sanitize($_SESSION['return'])
+            ));
         }
 
         return $person;
@@ -134,8 +135,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $data = $context->data;
 
         if ($data->return) {
-            $_SESSION['return'] = $this->getService('com:people.filter.return')
-                                       ->sanitize($data->return);
+            $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($data->return);
             $context->url = base64UrlDecode($data->return);
         } else {
             $_SESSION['return'] = null;
@@ -195,21 +195,17 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         if ($this->token == '') {
             throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);
-
             return false;
         }
 
-        $user = $this->getService('repos:users.user')
-                     ->find(array('activation' => $this->token));
+        $user = $this->getService('repos:users.user')->find(array('activation' => $this->token));
 
         if (!$user) {
             throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
-
             return false;
         }
 
-        $person = $this->getService('repos://site/people.person')
-                       ->find(array('userId' => $user->id));
+        $person = $this->getService('repos:people.person')->find(array('userId' => $user->id));
 
         $newUser = ($user->lastvisitDate->compare($user->registerDate)) ? true : false;
         $redirectUrl = $person->getURL();
@@ -238,8 +234,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             'remember' => true,
         );
 
-        $this->getService('com:people.helper.person')
-        ->login($credentials, $credentials['remember']);
+        $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
 
         if ($this->return) {
             $_SESSION['return'] = $this->getService('com:people.filter.return')

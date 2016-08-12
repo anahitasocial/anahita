@@ -54,6 +54,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         );
 
         $viewer = get_viewer();
+        
         if ($viewer->superadmin()) {
             $this->_allowed_user_types[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         }
@@ -134,12 +135,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             unset($context->data->usertype);
         }
 
-        $person = parent::_actionEdit($context);
-
         if ($data->password) {
-            $person->setPassword($data->password);
             $_SESSION['reset_password_prompt'] = 0;
         }
+
+        $person = parent::_actionEdit($context);
 
         //add the validations here
         $this->getRepository()
@@ -157,6 +157,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         $person->timestamp();
+
         $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
         return $person;
@@ -173,15 +174,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
         $viewer = get_viewer();
-        $isFirstUser = !(bool) $this->getService('repos:users')
+        $isFirstUser = !(bool) $this->getService('repos:people.person')
                                     ->getQuery(true)
                                     ->fetchValue('id');
 
         $person = parent::_actionAdd($context);
-
-        if ($data->password) {
-            $person->setPassword($data->password);
-        }
 
         $redirectUrl = 'option=com_people';
 
@@ -288,10 +285,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function activateFirstAdmin(KCommandContext $context)
     {
         $person = $context->result;
-        $user = $this->getService('repos://site/users.user')
-                     ->find(array('id' => $person->userId));
         $context->response
-        ->setRedirect(route('option=com_people&view=session&token='.$user->activation));
+        ->setRedirect(route('option=com_people&view=session&token='.$person->activationCode));
     }
 
     /**
