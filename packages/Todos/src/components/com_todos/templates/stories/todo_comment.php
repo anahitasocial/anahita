@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
 	<?= sprintf(@text('COM-TODOS-STORY-NEW-TODO-COMMENT'), @name($subject), @route($object->getURL().'&permalink='.$comment->id)) ?>
@@ -17,8 +17,8 @@
 	</div>
 </data>
 
-<?php if ($type == 'notification') :?>
-<?php $commands->insert('viewcomment', array('label' => @text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id)?>
+<? if ($type == 'notification') :?>
+<? $commands->insert('viewcomment', array('label' => @text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id)?>
 <data name="email_body">
     <h4 class="entity-title">
     	<?= @link($object)?>
@@ -27,4 +27,4 @@
 	    <?= $comment->body ?>
 	</div>
 </data>
-<?php endif;?>
+<? endif;?>

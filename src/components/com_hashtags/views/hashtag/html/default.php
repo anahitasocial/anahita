@@ -1,8 +1,8 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <?= @helper('ui.header') ?>
 
-<?php
+<?
 $url = $item->getURL().'&layout=taggables';
 
 if (!empty($sort)) {

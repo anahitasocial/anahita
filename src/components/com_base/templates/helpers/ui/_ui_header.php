@@ -1,13 +1,13 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<? defined('KOOWA') or die('Restricted access') ?>
 
-<?php if (!empty($menubar)) : ?>
+<? if (!empty($menubar)) : ?>
 <?= @helper('ui.menubar', array('menubar' => $menubar))?>
-<?php endif;?>
+<? endif;?>
 
-<?php if (!empty($actorbar)) : ?>
+<? if (!empty($actorbar)) : ?>
 <?= @helper('ui.actorbar', array('actorbar' => $actorbar))?>
-<?php endif;?>
+<? endif;?>
 
-<?php if (!empty($toolbar)) : ?>
+<? if (!empty($toolbar)) : ?>
 <?= @helper('ui.toolbar', array('toolbar' => $toolbar))?>
-<?php endif;?>
+<? endif;?>

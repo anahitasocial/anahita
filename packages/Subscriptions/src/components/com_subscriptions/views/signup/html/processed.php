@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <?= @template('_steps', array('current_step' => 'processed')) ?>
 
@@ -6,21 +6,21 @@
 	<div class="span8">
         <div class="alert alert-success alert-block">
         	<p><?= @text('COM-SUBSCRIPTIONS-THANK-YOU') ?></p>
-        	<?php if (!$viewer->guest()) : ?>
+        	<? if (!$viewer->guest()) : ?>
         	<p>
         	    <a class="btn" href="<?= @route($viewer->getURL().'&get=settings&edit=subscription') ?>">
         	       <?= @text('COM-SUBSCRIPTIONS-VIEW-YOUR-SUBSCRIPTION') ?>
         	    </a>
         	</p>
-        	<?php endif;?>
+        	<? endif;?>
         </div>
 
-        <?php if ($viewer->guest()) : ?>
+        <? if ($viewer->guest()) : ?>
         <p>
             <a class="btn btn-primary btn-large" href="<?= @route('option=people&view=session&connect=1') ?>" >
                 <?= @text('LIB-AN-ACTION-LOGIN') ?>
             </a>
         </p>
-        <?php endif; ?>
+        <? endif; ?>
 	</div>
 </div>

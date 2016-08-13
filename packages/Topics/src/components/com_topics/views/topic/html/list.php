@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <div class="an-entity">
 	<div class="clearfix">
@@ -7,15 +7,15 @@
 		</div>
 
 		<div class="entity-container">
-		    <?php if ($topic->owner->authorize('administration') && $topic->pinned): ?>
+		    <? if ($topic->owner->authorize('administration') && $topic->pinned): ?>
             <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span>
-            <?php endif; ?>
+            <? endif; ?>
 			<h4 class="author-name"><?= @name($topic->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($topic->creationTime) ?></li>
-				<?php if (!$topic->owner->eql($topic->author)): ?>
+				<? if (!$topic->owner->eql($topic->author)): ?>
 				<li><?= @name($topic->owner) ?></li>
-				<?php endif; ?>
+				<? endif; ?>
 			</ul>
 		</div>
 	</div>

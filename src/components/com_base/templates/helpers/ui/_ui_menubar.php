@@ -1,13 +1,13 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<? defined('KOOWA') or die('Restricted access') ?>
 
-<?php if ($menubar->getTitle()) : ?>
+<? if ($menubar->getTitle()) : ?>
 <h1 class="an-page-header"><?=$menubar->getTitle()?></h1>
-<?php endif;?>
+<? endif;?>
 
-<?php if (count($menubar->getCommands())) :?>
+<? if (count($menubar->getCommands())) :?>
 <ul class="toolbar inline">
-<?php foreach ($menubar->getCommands() as $command) : ?>
+<? foreach ($menubar->getCommands() as $command) : ?>
 	<li><?= @html('tag', 'a', $command->label, $command->getAttributes()) ?></li>
-<?php endforeach; ?>
+<? endforeach; ?>
 </ul>
-<?php endif; ?>
+<? endif; ?>

@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <div class="an-entity an-record">
 	<h4 class="entity-title">
@@ -6,7 +6,7 @@
 			<?= sprintf(@text('COM-ARTICLES-ARTICLE-REVISION-META-NUMBER'), $revision->revisionNum) ?>
 		</a>
 	</h4>
-	
+
 	<div class="entity-meta">
 		<?= sprintf(@text('COM-ARTICLES-ARTICLE-REVISION-LIST-ITEM'), @date($revision->creationTime, @date($revision->creationTime, '%B %d %Y - %l:%M %p')), @name($revision->editor)) ?>
 	</div>

@@ -1,14 +1,14 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php if ($photo->authorize('edit')) : ?>
+<? if ($photo->authorize('edit')) : ?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_photos/js/photoset.js" />
-<?php else: ?>
+<? else: ?>
 <script src="com_photos/js/min/photoset.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
-<?php endif; ?>
+<? endif; ?>
 
 <div class="row">
 	<div class="span8">
@@ -41,7 +41,7 @@
         	</ul>
     	</div>
 
-			<?php if(count($photo->locations) || $photo->authorize('edit')): ?>
+			<? if(count($photo->locations) || $photo->authorize('edit')): ?>
 			<h4 class="block-title">
 				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
 			</h4>
@@ -49,9 +49,9 @@
 			<div class="block-content">
 			<?= @location($photo) ?>
 			</div>
-			<?php endif; ?>
+			<? endif; ?>
 
-    	<?php if ($actor->authorize('administration')) : ?>
+    	<? if ($actor->authorize('administration')) : ?>
     	<h4 class="block-title">
     	<?= @text('COM-PHOTOS-PHOTO-PRIVACY') ?>
     	</h4>
@@ -59,6 +59,6 @@
     	<div class="block-content">
     	<?= @helper('ui.privacy', $photo) ?>
     	</div>
-    	<?php endif; ?>
+    	<? endif; ?>
 	</div>
 </div>

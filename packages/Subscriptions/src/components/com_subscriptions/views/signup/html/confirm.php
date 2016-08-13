@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <?= @template('_steps', array('current_step' => 'confirm')) ?>
 
@@ -21,16 +21,16 @@
             <div class="entity-description">
 
                 <dl>
-                    <?php if ($item->recurring): ?>
+                    <? if ($item->recurring): ?>
                     <dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt>
                     <dd><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
-                    <?php else: ?>
+                    <? else: ?>
                     <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-DURATION') ?>:</dt>
                     <dd>
                         <?= round(AnHelperDate::secondsTo('day', $item->duration)) ?>
                         <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DAYS') ?>
                     </dd>
-                    <?php endif; ?>
+                    <? endif; ?>
 
                     <dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>: </dt>
                     <dd>
@@ -38,13 +38,13 @@
                         <?= get_config_value('subscriptions.currency', 'US') ?>
                     </dd>
 
-                    <?php if ($order->getDiscountAmount()): ?>
+                    <? if ($order->getDiscountAmount()): ?>
                     <dt><?=@text('COM-SUBSCRIPTIONS-PACKAGE-DISCOUNT')?></dt>
                     <dd>
                         <?= round($order->getDiscountAmount(), 2) ?>
                         <?= get_config_value('subscriptions.currency', 'US') ?>
                     </dd>
-                    <?php endif; ?>
+                    <? endif; ?>
 
                     <dt><?=@text('COM-SUBSCRIPTIONS-PACKAGE-TAX')?></dt>
                     <dd><?= round($order->getTaxAmount(), 2) ?></dd>
@@ -62,7 +62,7 @@
 
 
 
-		<?php if ($order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard) : ?>
+		<? if ($order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard) : ?>
 		<h3><?= @text('COM-SUBSCRIPTIONS-CREDITCARD-INFORMATION') ?></h3>
 
 			<dl class="dl-horizontal">
@@ -100,17 +100,17 @@
             <dt><?= @text('COM-SUBSCRIPTIONS-BILLING-ZIP') ?></dt>
             <dd><?= strtoupper($contact->zip) ?></dd>
 		</dl>
-		<?php endif; ?>
+		<? endif; ?>
 
     	<form action="<?= @route(array('id' => $item->id)); ?>" method="post">
     		<input type="hidden" name="action" value="process">
 
     		<div class="form-actions">
-    		    <?php if ($order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard) : ?>
+    		    <? if ($order->getPaymentMethod() instanceof ComSubscriptionsDomainPaymentMethodCreditcard) : ?>
     			<a class="btn" href="<?= @route(array('layout' => 'payment', 'id' => $item->id)) ?>">
                     <?= @text('COM-SUBSCRIPTIONS-EDIT-INFORMATION') ?>
     			</a>
-    			<?php endif; ?>
+    			<? endif; ?>
 
     			<button class="btn btn-primary" type="submit">
     			    <?= @text('COM-SUBSCRIPTIONS-PROCESS-PAYMENT') ?>

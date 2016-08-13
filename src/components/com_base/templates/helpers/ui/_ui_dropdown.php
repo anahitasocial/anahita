@@ -1,26 +1,26 @@
-<?php if (count($commands) > 0) : ?>
+<? if (count($commands) > 0) : ?>
 <button class="btn dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
 	<i class="icon-<?=$icon?>"></i>&nbsp;<span class="caret"></span>
 </button>
 
 <ul class="dropdown-menu">
-    <?php $delete = $commands->extract('delete') ?> 
-    <?php $count = count($commands) ?>
-    <?php if ($edit = $commands->extract('edit')) : ?>
-          <li><?= @helper('ui.command', $edit) ?></li>                  
-    <?php endif;?>
-    <?php if ($subscribe = $commands->extract('subscribe')) : ?>
-          <li><?= @helper('ui.command', $subscribe) ?></li>        
-    <?php endif;?>        
-    <?php foreach ($commands as $command) : ?>
-          <?php $commands->extract($command) ?>
+    <? $delete = $commands->extract('delete') ?>
+    <? $count = count($commands) ?>
+    <? if ($edit = $commands->extract('edit')) : ?>
+          <li><?= @helper('ui.command', $edit) ?></li>
+    <? endif;?>
+    <? if ($subscribe = $commands->extract('subscribe')) : ?>
+          <li><?= @helper('ui.command', $subscribe) ?></li>
+    <? endif;?>
+    <? foreach ($commands as $command) : ?>
+          <? $commands->extract($command) ?>
           <li><?= @helper('ui.command', $command) ?></li>
-    <?php endforeach;?>    
-    <?php if ($delete) : ?>
-          <?php if ($count) : ?>
+    <? endforeach;?>
+    <? if ($delete) : ?>
+          <? if ($count) : ?>
           <li class="divider"></li>
-          <?php endif; ?>
+          <? endif; ?>
           <li><?= @helper('ui.command', $delete) ?></li>
-    <?php endif;?>
+    <? endif;?>
  </ul>
- <?php endif; ?>
+ <? endif; ?>

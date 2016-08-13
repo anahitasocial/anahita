@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
 <h1><?= @text('COM-SUBSCRIPTIONS-INVOICE') ?></h1>
 
@@ -15,12 +15,10 @@
 
 <p>&nbsp;</p>
 
-<?php if (!empty($contact) && !empty($contact->address)) : ?>
+<? if (!empty($contact) && !empty($contact->address)) : ?>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-ADDR') ?></strong>: <?= $contact->address ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-CITY') ?></strong>: <?= $contact->city ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-STATE') ?></strong>: <?= $contact->state ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-COUNTRY') ?></strong>: <?= $contact->country ?></p>
 <p><strong><?= @text('COM-SUBSCRIPTIONS-BILLING-ZIP') ?></strong>: <?= $contact->zip ?></p>
-<?php endif; ?>
-
-
+<? endif; ?>

@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
-<?php
+<?
 $url = array('layout' => 'list');
 
 if (isset($filter)) {

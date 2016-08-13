@@ -1,15 +1,15 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <div class="an-entities">
 
-	<?php foreach ($coupons as $coupon) : ?>
+	<? foreach ($coupons as $coupon) : ?>
 	<?= @view('coupon')->layout('list')->coupon($coupon) ?>
-	<?php endforeach; ?>
-    
-    <?php if (count($coupons) == 0): ?>
+	<? endforeach; ?>
+
+    <? if (count($coupons) == 0): ?>
 	<?= @message(@text('COM-SUBSCRIPTIONS-COUPONS-EMPTY-LIST-MESSAGE')) ?>
-    <?php endif; ?>
-    
+    <? endif; ?>
+
 </div>
 
 <?= @pagination($coupons, array('url' => @route('layout=list'))) ?>

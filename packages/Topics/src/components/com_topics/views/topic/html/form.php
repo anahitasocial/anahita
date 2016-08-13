@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php $topic = empty($topic) ? @service('repos:topics.topic')->getEntity()->reset() : $topic; ?>
+<? $topic = empty($topic) ? @service('repos:topics.topic')->getEntity()->reset() : $topic; ?>
 
 <form method="post" action="<?= @route($topic->getURL().'&oid='.$actor->id)?>">
 	<fieldset>
@@ -41,13 +41,13 @@
 		</div>
 
 		<div class="form-actions">
-			<?php $cancelURL = ($topic->persisted()) ? $topic->getURL() : 'view=topics&oid='.$actor->id ?>
+			<? $cancelURL = ($topic->persisted()) ? $topic->getURL() : 'view=topics&oid='.$actor->id ?>
 			<a class="btn" href="<?= @route($cancelURL) ?>">
 			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</a>
 
-			<?php $action = ($topic->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
-			<?php $actionLoading = ($topic->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
+			<? $action = ($topic->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
+			<? $actionLoading = ($topic->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
 			<button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
 			    <?= @text($action) ?>
 			</button>

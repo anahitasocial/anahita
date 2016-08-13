@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
-<?php $package = empty($package) ? @controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $package; ?>
+<? $package = empty($package) ? @controller($this->getView()->getName())->getRepository()->getEntity()->reset() : $package; ?>
 
 <form method="post" action="<?= @route() ?>">
     <fieldset>
@@ -13,7 +13,7 @@
                 <input required class="input-block-level" id="package-title" name="title" value="<?= @escape($package->title) ?>" size="50" maxlength="255" type="text" />
             </div>
         </div>
-        
+
         <div class="control-group">
             <label class="control-label" for="package-body">
                 <?= @text('LIB-AN-ENTITY-DESCRIPTION') ?>
@@ -32,27 +32,27 @@
                 )); ?>
             </div>
         </div>
-        
+
         <div class="control-group">
             <label class="control-label" for="package-price">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>
-            </label> 
+            </label>
             <div class="controls">
                 <div class="input-append">
-                    <input class="span2" id="package-price" required type="text" placeholder="00.00" value="<?= $package->price ?>" size="10" maxlength="10" name="price" /> 
+                    <input class="span2" id="package-price" required type="text" placeholder="00.00" value="<?= $package->price ?>" size="10" maxlength="10" name="price" />
                     <span class="add-on">
                         <?= get_config_value('subscriptions.currency', 'US') ?>
                     </span>
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group">
             <label class="control-label" for="package-duration">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DURATION') ?>
-            </label> 
+            </label>
             <div class="controls">
-                <?php 
+                <?
                 $period_options = array(
                     array(ComSubscriptionsDomainEntityPackage::BILLING_PERIOD_YEAR, @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-YEAR')),
                     array(ComSubscriptionsDomainEntityPackage::BILLING_PERIOD_MONTH, @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-MONTH')),
@@ -65,72 +65,72 @@
                 </select>
             </div>
         </div>
-        
+
        <div class="control-group">
            <label class="control-label" for="package-recurring">
                 <?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING') ?>
            </label>
-           <div class="controls"> 
+           <div class="controls">
                 <select class="span1" name="recurring" id="package-recurring">
-                 <?php
+                 <?
                  $recurring_options = array(
                     array(0, @text('LIB-AN-NO')),
                     array(1, @text('LIB-AN-YES')),
                  );
-                 ?>   
-                 <?= @helper('html.options', $recurring_options, $package->recurring) ?>   
+                 ?>
+                 <?= @helper('html.options', $recurring_options, $package->recurring) ?>
                 </select>
            </div>
        </div>
-       
-       <?php if ($package->ordering > 1) : ?>
+
+       <? if ($package->ordering > 1) : ?>
        <div class="control-group">
             <label class="control-label" for="package-upgrade-discount">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-UPGRADE-DISCOUNT') ?>
-            </label> 
+            </label>
             <div class="controls">
                 <div class="input-append">
-                    <input class="span1" id="package-upgrade-discount" required type="text" placeholder="00.00" value="<?= $package->getUpgradeDiscount() * 100 ?>" size="2" maxlength="2" name="upgrade_discount" /> 
+                    <input class="span1" id="package-upgrade-discount" required type="text" placeholder="00.00" value="<?= $package->getUpgradeDiscount() * 100 ?>" size="2" maxlength="2" name="upgrade_discount" />
                     <span class="add-on">%</span>
                 </div>
             </div>
         </div>
-        <?php endif; ?>
-        
+        <? endif; ?>
+
         <div class="control-group">
             <label class="control-label" for="package-subscribables">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-SUBSCRIBABLES') ?>
-            </label> 
+            </label>
             <div class="controls">
                 <textarea id="package-subscribables" class="input-block-level" rows="5" name="actor_ids" required maxlength="500"><?= $package->getValue('actorIds') ?></textarea>
             </div>
         </div>
-        
+
         <div class="control-group">
            <label class="control-label" for="package-enabled">
                 <?= @text('COM-SUBSCRIPTIONS-PACKAGE-ENABLED') ?>
            </label>
-           <div class="controls"> 
+           <div class="controls">
                 <select class="span1" name="enabled" id="package-enabled">
-                 <?php
+                 <?
                  $recurring_options = array(
                     array(0, @text('LIB-AN-NO')),
                     array(1, @text('LIB-AN-YES')),
                  );
-                 ?>   
-                 <?= @helper('html.options', $recurring_options, $package->enabled) ?>   
+                 ?>
+                 <?= @helper('html.options', $recurring_options, $package->enabled) ?>
                 </select>
            </div>
        </div>
-        
+
         <div class="form-actions">
-            <?php $cancelURL = ($package->persisted()) ? $package->getURL() : 'view=packages' ?>
+            <? $cancelURL = ($package->persisted()) ? $package->getURL() : 'view=packages' ?>
             <a class="btn" href="<?= @route($cancelURL) ?>">
                 <?= @text('LIB-AN-ACTION-CANCEL') ?>
-            </a>  
-            
-            <?php $action = ($package->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-ADD' ?>
-            <?php $actionLoading = ($package->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
+            </a>
+
+            <? $action = ($package->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-ADD' ?>
+            <? $actionLoading = ($package->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
             <button type="submit" class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
                 <?= @text($action) ?>
             </button>

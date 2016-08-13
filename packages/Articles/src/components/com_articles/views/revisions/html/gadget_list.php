@@ -1,11 +1,11 @@
-<?php defined('KOOWA') or die('Restricted access');?>	
-	
-<?php $revisions->order('revisionNum', 'DESC')->limit(10) ?>
+<? defined('KOOWA') or die('Restricted access');?>	
 
-<?php if (count($revisions)): ?>
-	<?php foreach ($revisions as $revision): ?>
+<? $revisions->order('revisionNum', 'DESC')->limit(10) ?>
+
+<? if (count($revisions)): ?>
+	<? foreach ($revisions as $revision): ?>
 	<?= @view('revision')->layout('gadget')->revision($revision) ?>
-	<?php endforeach; ?>
-<?php else: ?>
+	<? endforeach; ?>
+<? else: ?>
 	<?= @message(@text('COM-ARTICLES-ARTICLE-REVISIONS-EMPTY-LIST')) ?>
-<?php endif; ?>
+<? endif; ?>

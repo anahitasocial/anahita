@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <div class="row">
 
@@ -7,13 +7,13 @@
 			<li class="nav-header">
 		          <?= @text('COM-ACTORS-PROFILE-EDIT') ?>
 		  </li>
-		<?php foreach ($tabs as $tab) : ?>
+		<? foreach ($tabs as $tab) : ?>
 			<li class="<?= $tab->active ? 'active' : ''?>">
 				<a href="<?=@route($tab->url)?>">
 		            <?= $tab->label ?>
 		        </a>
 			</li>
-		<?php endforeach;?>
+		<? endforeach;?>
 		</ul>
 	</div>
 

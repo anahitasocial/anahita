@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
-<?php $article = empty($article) ? @service('repos:articles.article')->getEntity()->reset() : $article; ?>
+<? $article = empty($article) ? @service('repos:articles.article')->getEntity()->reset() : $article; ?>
 
 <form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post">
 	<fieldset>
@@ -58,8 +58,8 @@
 				<?= @text('LIB-AN-ACTION-CLOSE') ?>
 			</a>
 
-			<?php $action = ($article->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
-      <?php $actionLoading = ($article->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
+			<? $action = ($article->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
+      <? $actionLoading = ($article->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
       <button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
           <?= @text($action) ?>
       </button>

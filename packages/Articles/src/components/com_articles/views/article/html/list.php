@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
 <div class="an-entity">
 	<div class="clearfix">
@@ -7,15 +7,15 @@
 		</div>
 
 		<div class="entity-container">
-		    <?php if ($article->owner->authorize('administration') && $article->pinned): ?>
+		    <? if ($article->owner->authorize('administration') && $article->pinned): ?>
             <span class="label label-info pull-right"><?= @text('LIB-AN-PINNED') ?></span>
-            <?php endif; ?>
+            <? endif; ?>
 			<h4 class="author-name"><?= @name($article->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($article->creationTime) ?></li>
-				<?php if (!$article->owner->eql($article->author)): ?>
+				<? if (!$article->owner->eql($article->author)): ?>
 				<li><?= @name($article->owner) ?></li>
-				<?php endif; ?>
+				<? endif; ?>
 			</ul>
 		</div>
 	</div>
@@ -26,24 +26,24 @@
 		</a>
 	</h3>
 
-	<?php if ($article->excerpt): ?>
+	<? if ($article->excerpt): ?>
 	<div class="entity-excerpt">
 		<?= @escape($article->excerpt) ?>
 	</div>
-	<?php endif; ?>
+	<? endif; ?>
 
 	<div class="entity-meta">
-		<?php if (!$article->isPublished()): ?>
+		<? if (!$article->isPublished()): ?>
 		<p class="label label-warning">
 			<?= @text('COM-ARTICLES-ARTICLE-IS-UNPUBLISHED') ?>
 		</p>
-		<?php endif; ?>
+		<? endif; ?>
 
 		<ul class="an-meta inline">
 			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $article->numOfComments) ?></li>
-			<?php if (isset($article->editor)) : ?>
+			<? if (isset($article->editor)) : ?>
 			<li><?= sprintf(@text('LIB-AN-ENTITY-EDITOR'), @date($article->updateTime), @name($article->editor)) ?></li>
-			<?php endif; ?>
+			<? endif; ?>
 		</ul>
 
 		<div class="vote-count-wrapper an-meta" id="vote-count-wrapper-<?= $article->id ?>">

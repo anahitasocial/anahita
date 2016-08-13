@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php
+<?
 
 $url = array('layout=gadget_list');
 

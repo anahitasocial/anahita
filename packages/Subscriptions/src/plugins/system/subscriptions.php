@@ -24,7 +24,7 @@ class PlgSystemSubscriptions extends PlgAnahitaDefault
             return;
         }
 
-        KService::get('repos://site/subscriptions.package');
+        KService::get('repos:subscriptions.package');
 
         //if subscribe then unsubsribe
         if (

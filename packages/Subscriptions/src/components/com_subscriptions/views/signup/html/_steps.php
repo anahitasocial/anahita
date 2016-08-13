@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php 
+<?
 $steps = array(
     AnTranslator::_('COM-SUBSCRIPTIONS-STEP-TOS') => 'default',
     AnTranslator::_('COM-SUBSCRIPTIONS-STEP-REGISTER') => 'login',
@@ -12,13 +12,9 @@ $steps = array(
 
 
 <ol class="sub-steps">
-	<?php foreach ($steps as $label => $step) : ?>
+	<? foreach ($steps as $label => $step) : ?>
 	<li class="<?= ($step == $current_step) ? 'active' : '' ?>">
 		<?= $label ?>
 	</li>
-	<?php endforeach; ?>	
+	<? endforeach; ?>
 </ol>
-
-
-
-

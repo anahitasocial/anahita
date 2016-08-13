@@ -1,16 +1,16 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
 <h4><?= @text('COM-PHOTOS-SELECTOR-TITLE') ?></h4>
 
 <?= @message(@text('COM-PHOTOS-SELECTOR-INSTRUCTIONS')) ?>
 
-<?php if (!empty($exclude_set)): ?>
+<? if (!empty($exclude_set)): ?>
 <div class="form-actions">
 	<a data-trigger="ClosePhotoSelector" href="#" class="btn"><?= @text('LIB-AN-ACTION-CLOSE') ?></a>
 </div>
-<?php endif; ?>
+<? endif; ?>
 
-<?php
+<?
 $url = array('view' => 'photos', 'layout' => 'selector_list', 'oid' => $actor->id);
 
 if (!empty($exclude_set)) {

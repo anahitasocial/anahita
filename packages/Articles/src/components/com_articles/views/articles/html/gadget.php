@@ -1,7 +1,7 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
-<?php if (count($articles)) : ?>
-<?php
+<? if (count($articles)) : ?>
+<?
 $url = array('layout' => 'gadget_list');
 
 if (isset($filter)) {
@@ -15,6 +15,6 @@ if (isset($filter)) {
   'url' => $url,
   'topic' => 'an-articles'
 )) ?>
-<?php else: ?>
+<? else: ?>
 <?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
-<?php endif; ?>
+<? endif; ?>

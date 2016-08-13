@@ -29,7 +29,7 @@ class plgUserAutoFollow extends PlgAnahitaDefault
             return false;
         }
 
-        $person = KService::get('repos://site/people.person')
+        $person = KService::get('repos:people.person')
                   ->getQuery()
                   ->disableChain()
                   ->userId($event->user['id'])
@@ -42,7 +42,7 @@ class plgUserAutoFollow extends PlgAnahitaDefault
                 $actor_id = (int) $actor_id;
 
                 if ($actor_id) {
-                    $actor = KService::get('repos://site/actors.actor')
+                    $actor = KService::get('repos:actors.actor')
                              ->getQuery()
                              ->disableChain()
                              ->fetch($actor_id);

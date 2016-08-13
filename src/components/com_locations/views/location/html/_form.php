@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php $location = empty($location) ? @service('repos:locations.location')->getEntity()->reset() : $location; ?>
+<? $location = empty($location) ? @service('repos:locations.location')->getEntity()->reset() : $location; ?>
 
 <form action="<?= @route($location->getURL()) ?>" method="post">
 		<fieldset>

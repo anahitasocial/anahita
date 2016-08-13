@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <div class="row">
 	<div class="span8">
@@ -19,7 +19,7 @@
     		</ul>
 		</div>
 
-		<?php if(count($article->locations) || $article->authorize('edit')): ?>
+		<? if(count($article->locations) || $article->authorize('edit')): ?>
 		<h4 class="block-title">
 			<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
 		</h4>
@@ -27,9 +27,9 @@
 		<div class="block-content">
 		<?= @location($article) ?>
 		</div>
-		<?php endif; ?>
+		<? endif; ?>
 
-		<?php if ($actor->authorize('administration')): ?>
+		<? if ($actor->authorize('administration')): ?>
 		<h4 class="block-title">
 		<?= @text('COM-ARTICLES-ARTICLE-PRIVACY') ?>
 		</h4>
@@ -37,6 +37,6 @@
 		<div class="block-content">
 		<?= @helper('ui.privacy', $article) ?>
 		</div>
-		<?php endif; ?>
+		<? endif; ?>
 	</div>
 </div>

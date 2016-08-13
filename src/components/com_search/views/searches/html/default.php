@@ -1,23 +1,23 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php if (!empty($keywords)) : ?>
+<? if (!empty($keywords)) : ?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_search/js/_search.js" />
-<?php else: ?>
+<? else: ?>
 <script src="com_search/js/min/_search.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
 <?= @map_api_nearby(array()) ?>
 <?= @map_api(array('libraries'=>'places')) ?>
 
-<?php endif;?>
+<? endif;?>
 
 <div class="row">
     <div class="span4">
-    <?php if (!empty($keywords)): ?>
+    <? if (!empty($keywords)): ?>
     <?= @template('scopes') ?>
-    <?php endif;?>
+    <? endif;?>
     </div>
 
 	<div class="span8">
@@ -42,11 +42,11 @@
         <label name="SearchNearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
         <input form="navbar-search" type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
 
-        <?php $ranges = array(100,50,25,10,5); ?>
+        <? $ranges = array(100,50,25,10,5); ?>
         <select form="navbar-search" disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">
-            <?php foreach($ranges as $index=>$range) : ?>
+            <? foreach($ranges as $index=>$range) : ?>
             <option <?= ($range === 25) ? 'selected' : '' ?> value="<?= $range ?>"><?= $range ?> km</option>
-            <?php endforeach; ?>
+            <? endforeach; ?>
         </select>
 
         <label class="checkbox">
@@ -55,7 +55,7 @@
         </label>
    </fieldset>
 
-		<?php
+		<?
     $url = array('layout' => 'list');
 
     if (!empty($sort)) {

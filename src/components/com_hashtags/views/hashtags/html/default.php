@@ -1,15 +1,15 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <?= @helper('ui.header') ?>
 
-<?php if (count($items)): ?>
+<? if (count($items)): ?>
 <ul class="nav nav-pills">
-<?php foreach ($items as $item): ?>
+<? foreach ($items as $item): ?>
 	<li>
 		<a href="<?= @route($item->getURL()) ?>">#<?= $item->name ?></a>
 	</li>
-<?php endforeach; ?>
+<? endforeach; ?>
 </ul>
-<?php else: ?>
+<? else: ?>
 <?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
-<?php endif; ?>
+<? endif; ?>

@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php
+<?
 $params = array();
 
 if ($key) {

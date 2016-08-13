@@ -1,14 +1,14 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
-<?php if ($set->authorize('edit')) : ?>
+<? if ($set->authorize('edit')) : ?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_photos/js/organizer.js" />
-<?php else: ?>
+<? else: ?>
 <script src="com_photos/js/min/organizer.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
-<?php endif; ?>
+<? endif; ?>
 
 <div class="row">
 	<div class="span8">
@@ -36,7 +36,7 @@
         	</ul>
     	</div>
 
-			<?php if(count($set->locations) || $set->authorize('edit')): ?>
+			<? if(count($set->locations) || $set->authorize('edit')): ?>
 			<h4 class="block-title">
 				<?= @text('LIB-AN-ENTITY-LOCATIONS') ?>
 			</h4>
@@ -44,6 +44,6 @@
 			<div class="block-content">
 			<?= @location($set) ?>
 			</div>
-			<?php endif; ?>
+			<? endif; ?>
 	</div>
 </div>

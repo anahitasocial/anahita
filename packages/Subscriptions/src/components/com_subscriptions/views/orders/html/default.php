@@ -1,10 +1,10 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
 <?= @helper('ui.header'); ?>
 
 <table class="table table-striped">
 	<thead>
-		<tr>				
+		<tr>
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-ID'); ?></th>
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-SUBSCRIPTION'); ?></th>
 			<th><?= @text('COM-SUBSCRIPTIONS-TRANSACTION-PAID'); ?></th>
@@ -14,7 +14,7 @@
 		</tr>
 	</thead>
 
-	<?php foreach ($orders as $order): ?>
+	<? foreach ($orders as $order): ?>
 	<tr>
 		<td>
 			<a href="<?= @route('view=order&id='.$order->id) ?>">
@@ -24,14 +24,14 @@
 		<td><?= @escape($order->itemName); ?></td>
 		<td><?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?></td>
 		<td><i class="icon-<?= ($order->recurring) ? 'repeat' : 'ok-circle' ?>"></i> <?= ($order->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$order->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$order->billingPeriod) ?></td>
-		<td><?= $order->method?></td>					
+		<td><?= $order->method?></td>
 		<td><?= $order->createdOn->getDate('%b %d %Y')?></td>
 	</tr>
-	<?php endforeach; ?>
+	<? endforeach; ?>
 </table>
 
-<?php if (count($orders) == 0): ?>
+<? if (count($orders) == 0): ?>
 <div class="alert alert-info">
 <?= @text('COM-SUBSCRIPTIONS-TRANSACTION-EMPTY-LIST') ?>
 </div>
-<?php endif; ?>
+<? endif; ?>
