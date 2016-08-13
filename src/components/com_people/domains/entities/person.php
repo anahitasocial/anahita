@@ -62,7 +62,9 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'username',
                 'email',
-                'password',
+                'password' => array(
+                    'format' => 'password'
+                ),
                 'usertype',
                 'gender',
                 'lastVisitDate' => array(

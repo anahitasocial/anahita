@@ -46,37 +46,23 @@ class ComPeopleDomainValidatorPerson extends AnDomainValidatorAbstract
      */
     public function validateEntity($person)
     {
-
-        if ($person->username) {
-            if (!$this->getFilter('username')->validate($person->username)) {
-                $person->addError(array(
-                    'message' => 'Invalid username format',
-                    'code' => AnError::INVALID_FORMAT,
-                    'key' => 'username',
-                ));
-            }
-        }
-
-        if ($person->email) {
-            if (!$this->getFilter('email')->validate($person->email)) {
-                $person->addError(array(
-                    'message' => 'Invalid email format',
-                    'code' => AnError::INVALID_FORMAT,
-                    'key' => 'email',
-                ));
-            }
-        }
-
-        if ($person->password) {
-            if (!$this->getFilter('password')->validate($person->password)) {
-                $person->addError(array(
-                    'message' => 'Invalid password format',
-                    'code' => AnError::INVALID_FORMAT,
-                    'key' => 'password',
-                ));
-            }
-        }
+        $this->_validateField($person, 'email');
+        $this->_validateField($person, 'username');
+        $this->_validateField($person, 'password');
 
         return parent::validateEntity($person);
+    }
+
+    private function _validateField($person, $field)
+    {
+        if ($person->$field) {
+            if (!$this->getFilter($field)->validate($person->$field)) {
+                $person->addError(array(
+                    'message' => "Invalid $field format",
+                    'code' => AnError::INVALID_FORMAT,
+                    'key' => $field
+                ));
+            }
+        }
     }
 }
