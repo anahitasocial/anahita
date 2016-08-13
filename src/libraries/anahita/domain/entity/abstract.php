@@ -197,7 +197,6 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     public function validate(&$failed = null)
     {
         $result = $this->getRepository()->getSpace()->validateEntities($failed);
-
         return !$failed->contains($this);
     }
 

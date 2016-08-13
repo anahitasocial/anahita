@@ -24,7 +24,7 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
     {
         $person = $this->getService('repos:people.person')->find(array('email' => $email));
 
-        if ($person->id) {
+        if ($person) {
             $this->setMessage('Email is already in use');
             return false;
         }
@@ -43,7 +43,7 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
     {
         $person = $this->getService('repos:people.person')->find(array('username' => $username));
 
-        if ($person->id) {
+        if ($person) {
             $this->setMessage('Username is already in use');
             return false;
         }

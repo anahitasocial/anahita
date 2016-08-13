@@ -60,16 +60,16 @@ class ComPeopleControllerToken extends ComBaseControllerResource
         $data = $context->data;
         $email = $data->email;
         //an email
-        $user = $this->getService('repos://site/users.user')
+        $person = $this->getService('repos:people.person')
                       ->getQuery()
                       ->email($email)
-                      ->where('IF(@col(block),@col(activation) <> \'\',1)')
+                      ->where('IF(!@col(enabled),@col(activationCode) <> \'\',1)')
                       ->fetch();
 
-        if ($user) {
+        if ($person) {
             $user->requiresActivation()->save();
             $this->getResponse()->status = KHttpResponse::CREATED;
-            $this->user = $user;
+            $this->person = $person;
         } else {
             throw new LibBaseControllerExceptionNotFound('Email Not Found');
         }
@@ -82,10 +82,11 @@ class ComPeopleControllerToken extends ComBaseControllerResource
      */
     public function mailConfirmation(KCommandContext $context)
     {
-        if ($this->user) {
+        if ($this->person) {
+            $config = new JConfig();
             $this->mail(array(
-                'to' => $this->user->email,
-                'subject' => sprintf(AnTranslator::_('COM-PEOPLE-MAIL-SUBJECT-PASSWORD-RESET'), JFactory::getConfig()->getValue('sitename')),
+                'to' => $this->person->email,
+                'subject' => sprintf(AnTranslator::_('COM-PEOPLE-MAIL-SUBJECT-PASSWORD-RESET'), $config->sitename),
                 'template' => 'password_reset',
             ));
         }

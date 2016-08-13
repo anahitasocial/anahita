@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -34,10 +34,13 @@ class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
     public function toSerializableArray($entity)
     {
         $data = parent::toSerializableArray($entity);
+
         $data['username'] = $entity->username;
+
         if (
             KService::has('com:people.viewer') &&
-            KService::get('com:people.viewer')->eql($entity)
+            KService::get('com:people.viewer')->eql($entity) &&
+            KService::get('com:people.viewer')->admin()
         ) {
             $data['email'] = $entity->email;
         }

@@ -72,10 +72,12 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
                 if ($this->isIdentifiable() && $this->getItem()) {
                     if ($this->getItem()->getErrors()->count()) {
                         throw new AnErrorException($this->getItem()->getErrors(), KHttpResponse::BAD_REQUEST);
+                        return;
                     }
                 } else {
                     $errors = AnHelperArray::getValues($this->getCommitErrors());
                     throw new AnErrorException($errors, KHttpResponse::BAD_REQUEST);
+                    return;
                 }
             }
         }

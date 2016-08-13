@@ -60,28 +60,13 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                     'key' => true,
                     'format' => 'username'
                 ),
-                'username' => array(
-                    'key' => true,
-                    'format' => 'username',
-                    'required' => true,
-                    'read' => AnDomain::ACCESS_PUBLIC
-                ),
-                'password' => array(
-                    'required' => true,
-                    'format' => 'password'
-                ),
-                'usertype' => array(
-                    'default' => self::USERTYPE_REGISTERED,
-                    'read' => AnDomain::ACCESS_PUBLIC
-                ),
-                'email' => array(
-                    'key' => true,
-                    'format' => 'email',
-                    'read' => AnDomain::ACCESS_PUBLIC
-                ),
+                'username',
+                'email',
+                'password',
+                'usertype',
                 'gender',
                 'lastVisitDate' => array(
-                    'default' => 'data'
+                    'default' => 'date'
                 )
             ),
             'aliases' => array(
@@ -89,14 +74,18 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
             ),
             'behaviors' => to_hash(array(
                 //@todo if viewer is admin, then make email searchable too
-                'describable' => array('searchable_properties' => array('username')),
+                'describable' => array(
+                    'searchable_properties' => array('username', 'email')
+                ),
                 'administrator',
                 'notifiable',
                 'leadable'
             )),
         ));
 
-        $config->behaviors->append(array('followable' => array('subscribe_after_follow' => false)));
+        $config->behaviors->append(array(
+            'followable' => array('subscribe_after_follow' => false)
+        ));
 
         parent::_initialize($config);
 
@@ -143,21 +132,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $this->set('givenName', $name);
         $this->set('name', $this->givenName.' '.$this->familyName);
-    }
-
-    /**
-     * Captures the password value when password is set through
-     * magic methods.
-     *
-     * {@inheritdoc}
-     */
-    public function __set($key, $value)
-    {
-        if ($key == 'username') {
-            $this->alias = $value;
-        }
-
-        return parent::__set($key, $value);
     }
 
     /**
@@ -217,6 +191,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         $config->append(array('data' => array(
             'author' => $this,
             'component' => 'com_people',
+            'enabled' => false
         )));
 
         parent::_afterEntityInstantiate($config);
@@ -227,8 +202,19 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      *
      * @param KCommandContext $context Context parameter
      */
+    protected function _beforeEntityInsert(KCommandContext $context)
+    {
+        $this->alias = $this->username;
+    }
+
+    /**
+     * Before Update timestamp modified on and modifier.
+     *
+     * @param KCommandContext $context Context parameter
+     */
     protected function _beforeEntityUpdate(KCommandContext $context)
     {
+        $this->alias = $this->username;
         $this->lastVisitDate = AnDomainAttributeDate::getInstance();
     }
 }

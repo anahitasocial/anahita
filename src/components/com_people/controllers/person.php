@@ -54,7 +54,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         );
 
         $viewer = get_viewer();
-        
+
         if ($viewer->superadmin()) {
             $this->_allowed_user_types[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         }
@@ -149,6 +149,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+            return;
         }
 
         //now check to see if usertype can be set, otherwise the value is unchanged
@@ -173,14 +174,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionAdd(KCommandContext  $context)
     {
         $data = $context->data;
-        $viewer = get_viewer();
         $isFirstUser = !(bool) $this->getService('repos:people.person')
                                     ->getQuery(true)
                                     ->fetchValue('id');
 
         $person = parent::_actionAdd($context);
-
-        $redirectUrl = 'option=com_people';
 
         $this->getRepository()
         ->getValidator()
@@ -192,25 +190,31 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             return false;
         }
 
-        if ($viewer->admin() && in_array($data->usertype, $this->_allowed_user_types)) {
+        $viewer = get_viewer();
+
+        if ($isFirstUser) {
+            $person->accessCode = JUtility::getHash(JUserHelper::genRandomPassword());
+            $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
+        } elseif ($viewer->admin() && in_array($data->usertype, $this->_allowed_user_types)) {
             $person->usertype = $data->usertype;
         } else {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
+        $redirectUrl = 'option=com_people';
+
         if ($isFirstUser) {
             $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
-
             if ($person->admin()) {
                 $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
             }
-
         } else {
+            $redirectUrl .= '&view=session';
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
-            $redirectUrl .= '&view=session';
+
         }
 
         $context->response->setRedirect(route($redirectUrl));
@@ -228,7 +232,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $url = null;
 
-        if ($context->action == 'delete') {
+        if ($context->action === 'delete') {
             $url = 'option=com_people&view=people';
         }
 
@@ -245,7 +249,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function mailActivationLink(KCommandContext $context)
     {
         $person = $context->result;
-        $this->user = $person->getUserObject();
         $viewer = get_viewer();
 
         if ($viewer->admin()) {
