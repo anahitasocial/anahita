@@ -198,27 +198,22 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             return false;
         }
 
-        $user = $this->getService('repos:users.user')->find(array('activation' => $this->token));
+        $person = $this->getService('repos:people.person')->find(array('activationCode' => $this->token));
 
-        if (!$user) {
+        if (!$person) {
             throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
             return false;
         }
 
-        $person = $this->getService('repos:people.person')->find(array('userId' => $user->id));
-
-        $newUser = ($user->lastvisitDate->compare($user->registerDate)) ? true : false;
+        $newPerson = ($person->lastvisitDate->compare($person->creationTime)) ? true : false;
         $redirectUrl = $person->getURL();
 
         //if this is a first time user, then unblock them
-        if ($newUser) {
-            $user->block = 0;
+        if ($newPerson) {
             $person->enable();
-            $person->save();
         }
 
-        $user->activation = '';
-        $user->save();
+        $person->activationCode = '';
 
         $this->token = null;
         $this->_request->token = null;
@@ -229,16 +224,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         }
 
         $credentials = array(
-            'username' => $user->username,
-            'password' => $user->password,
+            'username' => $person->username,
+            //@todo this needs to be a clear password
+            'password' => $person->password,
             'remember' => true,
         );
 
         $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
 
         if ($this->return) {
-            $_SESSION['return'] = $this->getService('com:people.filter.return')
-                                       ->sanitize($this->return);
+            $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($this->return);
             $returnUrl = base64UrlDecode($this->return);
             $this->getResponse()->setRedirect($returnUrl);
         } else {

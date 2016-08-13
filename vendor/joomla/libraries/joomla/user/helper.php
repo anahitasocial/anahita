@@ -27,22 +27,6 @@ class JUserHelper
 {
 
 	/**
-	 * Returns userid if a user exists
-	 *
-	 * @param string The username to search on
-	 * @return int The user id or 0 if not found
-	 */
-	public static function getUserId($username)
-	{
-		// Initialize some variables
-		$db = & JFactory::getDBO();
-
-		$query = 'SELECT id FROM #__users WHERE username = ' . $db->Quote( $username );
-		$db->setQuery($query, 0, 1);
-		return $db->loadResult();
-	}
-
-	/**
 	 * Formats a password using the current encryption.
 	 *
 	 * @access	public
