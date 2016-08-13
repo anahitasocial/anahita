@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die;?>
+<? defined('KOOWA') or die;?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,11 +8,11 @@
   	</head>
     <body>
         <?= @template('tmpl/navbar') ?>
-        
+
         <div class="container">
     	<?= $this->getView()->content; ?>
     	</div>
-    	
+
     	<?= @template('tmpl/js') ?>
         <?= @template('tmpl/analytics') ?>
     </body>

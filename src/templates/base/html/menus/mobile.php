@@ -1,19 +1,19 @@
-<?php defined('KOOWA') or die;?>
+<? defined('KOOWA') or die;?>
 
-<?php
+<?
 $viewer = get_viewer();
 $components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
 ?>
 
 <ul class="nav">
-<?php if ($viewer->guest()): ?>
+<? if ($viewer->guest()): ?>
 	<li>
-		<?php $return = base64UrlEncode(KRequest::url()); ?>
+		<? $return = base64UrlEncode(KRequest::url()); ?>
 		<a href="<?= @route('option=com_people&view=session&return='.$return) ?>">
 		<?= @text('LIB-AN-ACTION-LOGIN') ?>
 		</a>
 	</li>
-<?php else : ?>
+<? else : ?>
 	<li>
 		<a href="<?=@route($viewer->getURL())?>">
 		<?= @avatar(get_viewer(), 'square', false) ?>
@@ -25,30 +25,30 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 		</a>
 	</li>
 
-<?php if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
+<? if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
     <li class="divider"></li>
     <li>
     	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
         <?= @text('TMPL-MENU-ITEM-VIEWER-GROUPS') ?>
         </a>
     </li>
- 	<?php endif; ?>
+ 	<? endif; ?>
 
-	<?php if (count($components)): ?>
+	<? if (count($components)): ?>
 	<li class="divider"></li>
-    <?php foreach ($components as $component): ?>
+    <? foreach ($components as $component): ?>
     <li>
     	<a href="<?= @route($component->url) ?>">
     	<?= $component->title ?>
     	</a>
     </li>
-    <?php endforeach; ?>
-    <?php endif; ?>
+    <? endforeach; ?>
+    <? endif; ?>
     <li class="divider"></li>
 	<li>
 		<a data-trigger="PostLink" href="<?= @route('option=com_people&view=session&action=delete') ?>">
         <?= @text('LIB-AN-ACTION-LOGOUT') ?>
 		</a>
 	</li>
-<?php endif; ?>
+<? endif; ?>
 </ul>

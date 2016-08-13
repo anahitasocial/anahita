@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -20,7 +20,7 @@
         <?= $this->getView()->content; ?>
         </div>
 
-        <?php if ($this->getView()->getParams()->poweredby): ?>
+        <? if ($this->getView()->getParams()->poweredby): ?>
         <div class="container">
         	<div class="row">
         		<div class="span12">
@@ -30,7 +30,7 @@
         		</div>
         	</div>
         </div>
-        <?php endif; ?>
+        <? endif; ?>
 
         <?= @template('tmpl/js') ?>
         <?= @template('tmpl/analytics') ?>

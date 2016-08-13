@@ -1,8 +1,8 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php $gid = $this->getView()->getParams()->analytics; ?>
+<? $gid = $this->getView()->getParams()->analytics; ?>
 
-<?php if (!empty($gid)) : ?>
+<? if (!empty($gid)) : ?>
 <script type="text/javascript">
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', '<?= $gid ?>']);
@@ -14,4 +14,4 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
-<?php endif; ?>
+<? endif; ?>

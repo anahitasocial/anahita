@@ -1,11 +1,11 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php $document = KService::get('com:document')->getInstance(); ?>
-<?php $path = JURI::root().'media/lib_anahita/js/production/' ?>
+<? $document = KService::get('com:document')->getInstance(); ?>
+<? $path = JURI::root().'media/lib_anahita/js/production/' ?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 
-<?php
+<?
 @helper('javascript.combine', array(
     'file' => JPATH_ROOT.'/media/lib_anahita/js/site.js',
     'output' => JPATH_ROOT.'/media/lib_anahita/js/production/site.uncompressed.js',
@@ -13,6 +13,6 @@
 
 $document->addScript($path.'site.uncompressed.js');
 ?>
-<?php else : ?>
-<?php $document->addScript($path.'site.js'); ?>
-<?php endif; ?>
+<? else : ?>
+<? $document->addScript($path.'site.js'); ?>
+<? endif; ?>
