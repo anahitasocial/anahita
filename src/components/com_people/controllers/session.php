@@ -205,7 +205,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             return false;
         }
 
-        $newPerson = ($person->lastvisitDate->compare($person->creationTime)) ? true : false;
+        $newPerson = ($person->lastVisitDate->compare($person->registrationDate)) ? true : false;
+
         $redirectUrl = $person->getURL();
 
         //if this is a first time user, then unblock them

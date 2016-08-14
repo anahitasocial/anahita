@@ -69,7 +69,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'gender',
                 'lastVisitDate' => array(
                     'default' => 'date'
-                )
+                ),
+                'activationCode'
             ),
             'aliases' => array(
                 'registrationDate' => 'creationTime'
@@ -199,21 +200,31 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         parent::_afterEntityInstantiate($config);
     }
 
-    /**
-     * Before Update timestamp modified on and modifier.
-     *
-     * @param KCommandContext $context Context parameter
-     */
     protected function _beforeEntityInsert(KCommandContext $context)
     {
         $this->alias = $this->username;
+
+        jimport('joomla.user.helper');
+        $this->activationCode = JUtility::getHash(JUserHelper::genRandomPassword());
+        $this->lastVisitDate = AnDomainAttributeDate::getInstance(new KConfig(array(
+            'date' => array(
+                'hour' => 0,
+                'minute' => 0,
+                'second' => 0,
+                'partsecond' => 0,
+                'year' => '0000',
+                'month' => '00',
+                'day' => '00'
+            )
+        )));
     }
 
-    /**
-     * Before Update timestamp modified on and modifier.
-     *
-     * @param KCommandContext $context Context parameter
-     */
+    protected function _afterEntityInsert(KCommandContext $context)
+    {
+        //@todo we may want to move this to the person controller
+        dispatch_plugin('user.onAfterStoreUser', array('person' => $this));
+    }
+
     protected function _beforeEntityUpdate(KCommandContext $context)
     {
         $this->alias = $this->username;

@@ -62,32 +62,31 @@
 
 abstract class PlgAnahitaDefault extends KEventSubscriberDefault
 {
-    protected $_params	= null;
+    /**
+     * Plugin Parameters
+     *
+     * @var KConfig
+     */
+    protected $_params;
 
     /**
   	 * Constructor
   	 */
-  	public function __construct($dispatcher, $config = array())
-  	{
-    		if (!$config instanceof KConfig) {
-    	    	$config = new KConfig($config);
-    		}
+     public function __construct($dispatcher = null,  $config = array())
+     {
+		if (!$config instanceof KConfig) {
+	    	$config = new KConfig($config);
+		}
 
-    	    //Inject the identifier
-    		$config->service_identifier = KService::getIdentifier('plg:anahita.'.$config['name']);
+	    //Inject the identifier
+		$config->service_identifier = KService::getIdentifier('plg:anahita.'.$config['name']);
 
-    		//Inject the service container
-    		$config->service_container = KService::getInstance();
+		//Inject the service container
+		$config->service_container = KService::getInstance();
 
-    		parent::__construct($config);
+		parent::__construct($config);
 
-  		  //Set the plugin params
-  	    if(is_string($config->meta)) {
-            $params = json_decode($config->meta, true);
-            $config->params = new KConfig($params);
-        }
-
-        $this->_params = $config->params;
+        $this->_params = $config->meta;
 
         //Setup lazy wiring for publishers we are subscribing too
         foreach($config->event_publishers as $publisher) {

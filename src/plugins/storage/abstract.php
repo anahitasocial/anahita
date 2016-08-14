@@ -28,7 +28,9 @@ abstract class PlgStorageAbstract extends KObject
      */
     public function __construct($dispatcher = null,  $config = array())
     {
-        $config = new KConfig($config);
+        if (!$config instanceof KConfig) {
+            $config = new KConfig($config);
+        }
 
         parent::__construct($config);
 
