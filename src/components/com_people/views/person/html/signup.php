@@ -1,12 +1,12 @@
 <? defined('KOOWA') or die; ?>
 
 <? @service('application.dispatcher')->getRequest()->tmpl = 'component'; ?>
-<? $person = @service('repos:people.person')->getQuery(true)->fetchValue('id'); ?>
+<? $anybody = @service('repos:people.person')->getQuery(true)->fetchValue('id'); ?>
 
 <div class="row">
 	<div class="offset3 span6">
 
-        <? if (!$person): ?>
+        <? if (!$anybody): ?>
         <div class="alert alert-info alert-block">
             <h4><?= @text('COM-PEOPLE-WELCOME1') ?></h4>
             <p><?= @text('COM-PEOPLE-WELCOME2') ?></p>
@@ -24,7 +24,6 @@
 			autocomplete="off"
 		>
             <input type="hidden" name="action" value="add" />
-
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>

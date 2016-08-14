@@ -157,9 +157,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
     public function messages()
     {
         $session = KService::get('com:sessions');
-        $queue = (array) $session->get('application.queue', array());
+        $queue = (array) $session->get('controller.queue', array());
 
-        $session->set('application.queue', null);
+        $session->set('controller.queue', null);
 
         if (isset($queue['message'])) {
             $message = $queue['message'];

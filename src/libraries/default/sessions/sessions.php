@@ -86,8 +86,6 @@ class LibSessions extends KObject
 		//disable transparent sid support
 		ini_set('session.use_trans_sid', '0');
 
-
-
 		if (isset($config->name)) {
 			session_name(md5($config->name));
 		}

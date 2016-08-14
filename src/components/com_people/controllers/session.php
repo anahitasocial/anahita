@@ -92,9 +92,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $person = get_viewer();
+        $viewer = get_viewer();
 
-        $this->_state->setItem(get_viewer());
+        $this->_state->setItem($viewer);
 
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
@@ -102,7 +102,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             ));
         }
 
-        return $person;
+        return $viewer;
     }
 
     /**

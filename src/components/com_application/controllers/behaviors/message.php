@@ -51,12 +51,13 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         $data = array();
         if ($this->_enabled) {
-            $data = (array) $session->set($namespace->queue, new stdClass());
+            $data = (array) $session->set($namespace->queue, new stdClass(), $namespace->namespace);
         }
 
         $config->mixer->getState()->flash = new ComApplicationControllerBehaviorMessageFlash($data);
 
         static $once;
+
         if (!$once) {
             $_SESSION['__controller_persistance'] = array('controller.queue' => new stdClass());
             $once = true;
@@ -138,13 +139,16 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         if ($this->_enabled) {
 
             $namespace = $this->_getQueueNamespace($global);
-            $config = new KConfig(array('namespace' => $namespace->namespace));
-            $queue = KService::get('com:sessions', array('config' => $config));
-            $queue->set($key, $value);
+            $session = KService::get('com:sessions', array('config' => $namespace));
+
+            $queue = $session->get($namespace->queue, new stdClass);
+            $queue->$key = $value;
 
             if (!$global && $this->_mixer->flash) {
                 $this->_mixer->flash->$key = $value;
             }
+
+            $session->set($namespace->queue, $queue);
         }
     }
 
@@ -160,9 +164,8 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
-            $config = new KConfig(array('namespace' => $namespace->namespace));
-            $queue = KService::get('com:sessions', array('config' => $config));
-            $queue->get($namespace->queue, new stdClass());
+            $session = KService::get('com:sessions', array('config' => $namespace));
+            $queue = $session->get($namespace->queue, new stdClass());
             $ret = isset($queue[$key]) ? $queue[$key] : null;
         }
 
@@ -183,7 +186,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         if ($global) {
             $store = 'application.queue';
-            $namespace = 'default';
+            $namespace = '__anahita';
         } else {
             $store = (string) $this->_mixer->getIdentifier();
             $store = 'controller.queue';
