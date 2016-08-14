@@ -40,6 +40,7 @@ class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
             KService::get('com:people.viewer')->eql($entity)
         ) {
             $data['email'] = $entity->email;
+            $data['userType'] = $entity->userType;
         }
 
         return $data;
