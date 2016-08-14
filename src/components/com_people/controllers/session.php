@@ -159,8 +159,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
 
             $this->getResponse()->status = KHttpResponse::CREATED;
-            $this->getResponse()->setRedirect($context->url);
 
+            if(!$context->url) {
+                $context->url = route(array(
+                    'option' => 'com_people',
+                    'view' => 'person',
+                    'uniqueAlias' => $credentials['username']
+                ));
+            }
+
+            $this->getResponse()->setRedirect($context->url);
             $_SESSION['return'] = null;
 
         } else {
@@ -206,10 +214,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         }
 
         $newPerson = ($person->lastVisitDate->compare($person->registrationDate)) ? true : false;
-
         $redirectUrl = $person->getURL();
 
-        //if this is a first time user, then unblock them
+        //@todo: this isn't working
         if ($newPerson) {
             $person->enable();
         }
