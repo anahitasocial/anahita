@@ -23,13 +23,6 @@
 final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 {
     /*
-     * Clear string passwrod.
-     *
-     * @var string
-     */
-    protected $_password;
-
-    /*
     * Allowed user types array
     */
     protected $_allowed_user_types;
@@ -57,78 +50,49 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
+            'resources' => array('people_people'),
             'attributes' => array(
                 'administratingIds' => array(
                     'type' => 'set',
-                    'default' => 'set',
+                    'default' => 'set'
                 ),
-                'username' => array(
-                    'column' => 'person_username',
+                'alias' => array(
                     'key' => true,
-                    'format' => 'username',
+                    'format' => 'username'
                 ),
-                'userType' => array(
-                    'column' => 'person_usertype',
-                    'default' => self::USERTYPE_REGISTERED,
-                    'write_access' => 'private',
+                'username',
+                'email',
+                'password' => array(
+                    'format' => 'password'
                 ),
-                'email' => array(
-                    'column' => 'person_useremail',
-                    'key' => true,
-                    'format' => 'email',
-                ),
-                'givenName' => array(
-                    'column' => 'person_given_name',
-                    'format' => 'string',
-                ),
-                'familyName' => array(
-                    'column' => 'person_family_name',
-                    'format' => 'string',
-                ),
+                'usertype',
+                'gender',
                 'lastVisitDate' => array(
-                    'type' => 'date',
-                    'column' => 'person_lastvisitdate',
+                    'default' => 'date'
                 ),
-                'language' => array('column' => 'person_language'),
-                'timezone' => array('column' => 'person_time_zone'),
-                'gender' => array('column' => 'actor_gender'),
+                'activationCode'
             ),
             'aliases' => array(
-                'registrationDate' => 'creationTime',
-                'aboutMe' => 'description',
+                'registrationDate' => 'creationTime'
             ),
             'behaviors' => to_hash(array(
-                'describable' => array('searchable_properties' => array('username')),
+                //@todo if viewer is admin, then make email searchable too
+                'describable' => array(
+                    'searchable_properties' => array('username', 'email')
+                ),
                 'administrator',
                 'notifiable',
-                'leadable',
-                'user',
+                'leadable'
             )),
         ));
 
-        $config->behaviors->append(array('followable' => array('subscribe_after_follow' => false)));
+        $config->behaviors->append(array(
+            'followable' => array('subscribe_after_follow' => false)
+        ));
 
         parent::_initialize($config);
 
         AnHelperArray::unsetValues($config->behaviors, array('administrable'));
-
-        $this->_password = array(
-            'clear' => null,
-            'hashed' => null,
-        );
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _afterEntityInstantiate(KConfig $config)
-    {
-        $config->append(array('data' => array(
-            'author' => $this,
-            'component' => 'com_people',
-        )));
-
-        parent::_afterEntityInstantiate($config);
     }
 
     /**
@@ -174,60 +138,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     }
 
     /**
-     * Return the username as unique alias.
-     *
-     * (non-PHPdoc)
-     *
-     * @see AnDomainEntityAbstract::__get()
-     */
-    public function __get($key)
-    {
-        if ($key == 'uniqueAlias') {
-            return $this->username;
-        }
-
-        return parent::__get($key);
-    }
-
-    /**
-     * Captures the password value when password is set through
-     * magic methods.
-     *
-     * {@inheritdoc}
-     */
-    public function __set($key, $value)
-    {
-        if ($key == 'password' && !empty($value)) {
-            return $this->setPassword($value);
-        } else {
-            return parent::__set($key, $value);
-        }
-    }
-
-    /**
-     * Set a person account passwrod. This password is not stored in the database
-     * and only used for validation. @see
-     * <code>
-     * $person->setPassword('somepassowrd')->validate() //will validate the password
-     * </code>.
-     *
-     * @param string $password Clear password
-     *
-     * @return ComPeopleDomainEntityPerson
-     */
-    public function setPassword($password)
-    {
-        //make sure the passowrd is set to an empty string
-        if (empty($password)) {
-            $password = null;
-        }
-
-        $this->_password['clear'] = $password;
-
-        return $this;
-    }
-
-    /**
      * Return a person URL.
      *
      * @param bool $use_username A flag whether to use the username in the URL or not
@@ -239,34 +149,10 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         $url = 'option=com_people&view=person&id='.$this->id;
 
         if ($use_username) {
-            $url .= '&uniqueAlias='.$this->username;
+            $url .= '&uniqueAlias='.$this->alias;
         }
 
         return $url;
-    }
-
-    /**
-     * Return the clear password set for validation. If a hash is set to true
-     * then it first hash the password and then return it.
-     *
-     * @param bool $hash.
-     *
-     * @return string
-     */
-    public function getPassword($hash = false)
-    {
-        if ($hash && $this->_password['clear']) {
-            if (!$this->_password['hashed']) {
-                jimport('joomla.user.helper');
-                $salt = JUserHelper::genRandomPassword(32);
-                $crypt = JUserHelper::getCryptedPassword($this->_password['clear'], $salt);
-                $this->_password['hashed'] = $crypt.':'.$salt;
-            }
-
-            return $this->_password['hashed'];
-        } else {
-            return $this->_password['clear'];
-        }
     }
 
     /**
@@ -276,7 +162,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function guest()
     {
-        return $this->userType === self::USERTYPE_GUEST;
+        return $this->usertype === self::USERTYPE_GUEST;
     }
 
     /**
@@ -286,8 +172,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function admin()
     {
-        return $this->userType === self::USERTYPE_ADMINISTRATOR ||
-               $this->userType === self::USERTYPE_SUPER_ADMINISTRATOR;
+        return $this->usertype === self::USERTYPE_ADMINISTRATOR ||
+               $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
     }
 
     /**
@@ -297,6 +183,70 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function superadmin()
     {
-        return $this->userType === self::USERTYPE_SUPER_ADMINISTRATOR;
+        return $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
+    }
+
+    public function visited()
+    {
+        $this->lastVisitDate = AnDomainAttributeDate::getInstance();
+    }
+
+    /**
+     * Automatically sets the activation token for the user.
+     *
+     * @return LibUsersDomainEntityUser
+     */
+    public function requiresReactivation()
+    {
+        //@todo we need a global token generator
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $this->activationCode = $token;
+        return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _afterEntityInstantiate(KConfig $config)
+    {
+        $config->append(array('data' => array(
+            'author' => $this,
+            'component' => 'com_people',
+            'enabled' => false
+        )));
+
+        parent::_afterEntityInstantiate($config);
+    }
+
+    protected function _beforeEntityInsert(KCommandContext $context)
+    {
+        $this->alias = $this->username;
+
+        jimport('joomla.user.helper');
+        $this->activationCode = JUtility::getHash(JUserHelper::genRandomPassword());
+        $this->lastVisitDate = AnDomainAttributeDate::getInstance(new KConfig(array(
+            'date' => array(
+                'hour' => 0,
+                'minute' => 0,
+                'second' => 0,
+                'partsecond' => 0,
+                'year' => '1000',
+                'month' => '01',
+                'day' => '01'
+            )
+        )));
+    }
+
+    protected function _afterEntityInsert(KCommandContext $context)
+    {
+        //@todo we may want to move this to the person controller
+        dispatch_plugin('user.onAfterStoreUser', array('person' => $this));
+    }
+
+    protected function _beforeEntityUpdate(KCommandContext $context)
+    {
+        if ($this->getModifiedData()->username) {
+            $this->alias = $this->username;
+        }
     }
 }

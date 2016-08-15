@@ -45,7 +45,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         parent::setRequest($request);
 
         if (isset($this->_request->return)) {
-            $return = $this->getService('com://site/people.filter.return')
+            $return = $this->getService('com:people.filter.return')
                            ->sanitize($this->_request->return);
             $this->_request->return = $return;
             $this->return = $return;
@@ -92,18 +92,17 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $person = $this->getService('repos://site/people.person')
-                       ->find(array('userId' => JFactory::getUser()->id));
+        $viewer = get_viewer();
 
-        $this->_state->setItem($person);
+        $this->_state->setItem($viewer);
 
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
-                'return' => $this->getService('com://site/people.filter.return')
-                                 ->sanitize($_SESSION['return']), ));
+                'return' => $this->getService('com:people.filter.return')->sanitize($_SESSION['return'])
+            ));
         }
 
-        return $person;
+        return $viewer;
     }
 
     /**
@@ -136,8 +135,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $data = $context->data;
 
         if ($data->return) {
-            $_SESSION['return'] = $this->getService('com://site/people.filter.return')
-                                       ->sanitize($data->return);
+            $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($data->return);
             $context->url = base64UrlDecode($data->return);
         } else {
             $_SESSION['return'] = null;
@@ -159,9 +157,20 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $credentials['password'] = $authResponse->password;
 
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
+
             $this->getResponse()->status = KHttpResponse::CREATED;
+
+            if(!$context->url) {
+                $context->url = route(array(
+                    'option' => 'com_people',
+                    'view' => 'person',
+                    'uniqueAlias' => $credentials['username']
+                ));
+            }
+
             $this->getResponse()->setRedirect($context->url);
             $_SESSION['return'] = null;
+
         } else {
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
@@ -194,61 +203,46 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         if ($this->token == '') {
             throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);
-
             return false;
         }
 
-        $user = $this->getService('repos://site/users.user')
-                     ->find(array('activation' => $this->token));
+        $person = $this->getService('repos:people.person')->find(array('activationCode' => $this->token));
 
-        if (!$user) {
+        if (!$person) {
             throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
-
             return false;
         }
 
-        $person = $this->getService('repos://site/people.person')
-                       ->find(array('userId' => $user->id));
+        $newPerson = ($person->registrationDate->compare($person->lastVisitDate)) ? true : false;
 
-        $newUser = ($user->lastvisitDate->compare($user->registerDate)) ? true : false;
-        $redirectUrl = $person->getURL();
-
-        //if this is a first time user, then unblock them
-        if ($newUser) {
-            $user->block = 0;
+        if ($newPerson) {
             $person->enable();
-            $person->save();
         }
 
-        $user->activation = '';
-        $user->save();
-
+        $person->activationCode = '';
         $this->token = null;
         $this->_request->token = null;
 
         if ($this->reset_password) {
-            $redirectUrl .= '&get=settings&edit=account';
             $_SESSION['reset_password_prompt'] = 1;
         }
 
         $credentials = array(
-            'username' => $user->username,
-            'password' => $user->password,
+            'username' => $person->username,
+            'password' => $person->password,
             'remember' => true,
         );
 
-        $this->getService('com:people.helper.person')
-        ->login($credentials, $credentials['remember']);
+        $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
 
         if ($this->return) {
-            $_SESSION['return'] = $this->getService('com://site/people.filter.return')
-                                       ->sanitize($this->return);
+            $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($this->return);
             $returnUrl = base64UrlDecode($this->return);
             $this->getResponse()->setRedirect($returnUrl);
         } else {
             $_SESSION['return'] = null;
-            $msg = AnTranslator::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
-            $this->getResponse()->setRedirect(route($redirectUrl), $msg);
+            $this->setMessage('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
+            $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
         }
 
         $this->getResponse()->status = KHttpResponse::ACCEPTED;

@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <h3><?= @text('COM-PEOPLE-PROFILE-EDIT-ACCOUNT-INFORMATION') ?></h3>
 
@@ -9,18 +9,18 @@
     </li>
     <li>
       <b><?= @text('COM-PERSON-META-LAST-LOGIN') ?>: </b>
-      <?php $lastLoginDate = $item->getLastLoginDate() ?>
-      <?php if($lastLoginDate->compare($item->creationTime) < 0): ?>
+      <? $lastLoginDate = $item->lastVisitDate ?>
+      <? if($lastLoginDate->compare($item->creationTime) < 0): ?>
       <?= @text('COM-PERSON-META-NEVER-LOGGED-IN') ?>
-      <?php else : ?>
+      <? else : ?>
       <?= @date($lastLoginDate) ?>
-      <?php endif; ?>
+      <? endif; ?>
     </li>
 </ul>
 
-<?php if(isset($_SESSION['reset_password_prompt']) && $_SESSION['reset_password_prompt'] == 1): ?>
+<? if(isset($_SESSION['reset_password_prompt']) && $_SESSION['reset_password_prompt'] == 1): ?>
 <?= @message(@text('COM-PEOPLE-PROMPT-RESET-PASSWORD'), array('type'=>'alert')) ?>
-<?php endif; ?>
+<? endif; ?>
 
 <form action="<?= @route('view=person&id='.$item->id) ?>" method="post" autocomplete="off">
     <input type="hidden" name="action" value="edit" />

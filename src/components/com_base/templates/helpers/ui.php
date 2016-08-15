@@ -80,7 +80,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         if (isset($data['flash']) && $data['flash']->message) {
             $message = array_merge((array) $data['flash']->getMessage(true), $config);
 
-            return $this->message(AnTranslator::_($message['message']), $message);
+            return $this->message($message['message'], $message);
         }
     }
 
@@ -106,6 +106,8 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         if ($config->closable) {
             $close_handler = '<a class="close" data-dismiss="alert">&times;</a>';
         }
+
+        $message = AnTranslator::_($message);
 
         return "<div class=\"alert alert-{$config->type} $alertblock\">$close_handler<p>$message</p></div>";
     }

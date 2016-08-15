@@ -26,9 +26,9 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('sessions'),
             'searchable_properties' => array(
-                'userid',
-                'personUsername',
-                'personUsertype'
+                'nodeId',
+                'username',
+                'usertype'
             ),
             'attributes' => array(
                 'sessionId' => array(
@@ -36,14 +36,14 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
                     'default' => '',
                     'required' => true
                 ),
-                'personUsername' => array(
+                'username' => array(
                     'default' => ''
                 ),
-                'userid' => array(
+                'nodeId' => array(
                     'default' => 0
                 ),
-                'personUsertype' => array(
-                    'default' => 'guest'
+                'usertype' => array(
+                    'default' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
                 ),
                 'guest' => array(
                     'default' => 1

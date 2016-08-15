@@ -1,37 +1,37 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <?= @template('_steps', array('current_step' => 'login')) ?>
 
 <div class="row">
-	<div class="span8">  	
-	    
+	<div class="span8">
+
 	    <h1><?= @text('COM-SUBSCRIPTIONS-STEP-REGISTER') ?></h1>
-	    
+
 	    <div class="well">
             <p class="lead">
                 <?= @text('COM-SUBSCRIPTIONS-LOGIN-PROMPT'); ?>
             </p>
-            
+
             <p>
-                <?php $return = base64UrlEncode(KRequest::url()); ?>
+                <? $return = base64UrlEncode(KRequest::url()); ?>
                 <a class="btn btn-primary btn-large" href="<?= @route('option=people&view=session&connect=1&return='.$return) ?>" >
-                    <?= @text('LIB-AN-ACTION-LOGIN') ?>                                               
+                    <?= @text('LIB-AN-ACTION-LOGIN') ?>
                 </a>
             </p>
-        </div>     
+        </div>
 
         <div class="well">
-        
+
             <p class="lead">
                 <?= @text('COM-SUBSCRIPTIONS-REGISTER-PROMMPT-PROMPT') ?>
             </p>
-            
+
             <form action="<?= @route('id='.$item->id) ?>" method="post" name="person-form" id="person-form">
             	<input type="hidden" name="action" value="payment" />
-            			
-            	<?php $usernamePattern = '^[A-Za-z][A-Za-z0-9_-]*$'; ?>		
-            	<?php $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>		
-            			
+
+            	<? $usernamePattern = '^[A-Za-z][A-Za-z0-9_-]*$'; ?>
+            	<? $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
+
             	<?= @helper('ui.form', array(
                     'COM-SUBSCRIPTIONS-REGISTER-FULL-NAME' => @html('textfield', 'user[name]', $person->name)->required('true'),
 
@@ -45,15 +45,15 @@
 
                     'COM-SUBSCRIPTIONS-REGISTER-PASSWORD' => @html('passwordfield',  'user[password]', '')->required('true'),
                 )); ?>
-            			
+
             	<div class="form-actions">
             		<button type="submit" class="btn btn-large">
             		    <?= @text('LIB-AN-ACTION-REGISTER') ?>
             		</button>
             	</div>
             </form>
-        
+
         </div>
-        
+
 	</div>
 </div>

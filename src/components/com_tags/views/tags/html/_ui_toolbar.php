@@ -1,14 +1,14 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php $commands = $toolbar->getCommands(); ?>
+<? $commands = $toolbar->getCommands(); ?>
 
 <div class="btn-toolbar clearfix">
-    <?php if ($new = $commands->extract('new')) :?>
+    <? if ($new = $commands->extract('new')) :?>
     <?= @html('tag', 'a', $new->label, $new->getAttributes())->class('btn btn-primary') ?>
-    <?php endif;?>
+    <? endif;?>
 
     <div class="pull-right btn-group">
-        <?php
+        <?
             $sort_types = array(
               'trending' => array(
                 'label' => 'LIB-AN-SORT-TRENDING',
@@ -24,10 +24,10 @@
               ),
             );
         ?>
-        <?php foreach($sort_types as $i => $sort_type) : ?>
+        <? foreach($sort_types as $i => $sort_type) : ?>
         <a class="btn <?= ($i == $sort) ? 'disabled' : '' ?>" href="<?= @route(array('sort'=>$i)) ?>">
             <?= @text($sort_type['label']) ?>
         </a>
-        <?php endforeach; ?>
+        <? endforeach; ?>
     </div>
 </div>

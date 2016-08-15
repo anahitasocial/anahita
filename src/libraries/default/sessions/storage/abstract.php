@@ -10,7 +10,7 @@ class LibSessionsStorageAbstract extends KObject implements LibSessionsStorageIn
 	*/
 	public function __construct(KConfig $config)
 	{
-		$this->register($config);
+		$this->register();
 	}
 
 	/**
@@ -19,7 +19,7 @@ class LibSessionsStorageAbstract extends KObject implements LibSessionsStorageIn
 	* @access public
 	* @param array $options optional parameters
 	*/
-	public function register(KConfig $config)
+	public function register()
 	{
 		// use this object as the session handler
 		session_set_save_handler(

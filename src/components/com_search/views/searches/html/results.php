@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <?= @template('scopes') ?>
 <?= @template('list') ?>

@@ -23,7 +23,6 @@
      */
     protected function _beforeRepositoryFetch(KCommandContext $context)
     {
-        $user = JFactory::getUser();
         $query = $context->query;
         $query->where('IF(@col(enabled)=FALSE,0,1)');
     }

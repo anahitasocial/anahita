@@ -1,12 +1,12 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-PROFILE-INFORMATION') ?></h3>
 
-<form action="<?= @route($item->getURL()) ?>" method="post" autocomplete="off">		
+<form action="<?= @route($item->getURL()) ?>" method="post" autocomplete="off">
 
 	<fieldset>
 		<legend><?= @text('COM-ACTORS-PROFILE-INFO-BASIC') ?></legend>
-		
+
 		<div class="control-group">
 			<label class="control-label" class="control-label" for="actor-name">
 				<?= @text('COM-ACTORS-NAME') ?>
@@ -15,7 +15,7 @@
 				<input type="text" class="input-block-level" id="actor-name" size="50" maxlength="100" name="name" value="<?=$item->name?>" required />
 			</div>
 		</div>
-			
+
 		<div class="control-group">
 			<label class="control-label" for="actor-body">
 				<?= @text('COM-ACTORS-BODY') ?>
@@ -25,30 +25,29 @@
 			</div>
 		</div>
 	</fieldset>
-	
-	<?php foreach ($profile as $header => $fields)  : ?>		
+
+	<? foreach ($profile as $header => $fields)  : ?>
 	<fieldset>
 		<legend><?= @text($header) ?></legend>
-		<?php foreach ($fields as $label => $field) : ?>	
+		<? foreach ($fields as $label => $field) : ?>
 		<div class="control-group">
 			<label><?= @text($label) ?></label>
 			<div class="controls">
-				<?php if (is_object($field)) : ?>
-				<?php $class = (in_array($field->name, array('textarea', 'input'))) ? 'input-block-level' : '' ?>
+				<? if (is_object($field)) : ?>
+				<? $class = (in_array($field->name, array('textarea', 'input'))) ? 'input-block-level' : '' ?>
 				<?= $field->class($class)->rows(5)->cols(5) ?>
-				<?php else : ?>
+				<? else : ?>
 				<?= $field ?>
-				<?php endif;?>
+				<? endif;?>
 			</div>
 		</div>
-		<?php endforeach;?>
+		<? endforeach;?>
 	</fieldset>
-	<?php endforeach;?>
-	
+	<? endforeach;?>
+
 	<div class="form-actions">
         <button type="submit" class="btn" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">
             <?= @text('LIB-AN-ACTION-SAVE'); ?>
         </button>
     </div>
 </form>
-

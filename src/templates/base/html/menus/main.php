@@ -1,12 +1,12 @@
-<?php defined('KOOWA') or die;?>
+<? defined('KOOWA') or die;?>
 
-<?php 
+<?
 
-//Override this layout in your custom template 
+//Override this layout in your custom template
 
 ?>
 
-<?php 
+<?
 
 // remove this if statement for the menu to render
 
@@ -16,7 +16,7 @@ if (false): ?>
 		<a href="<?= @route('option=com_pages&view=content&layout=examples/article') ?>">
 		<?= @text('Article') ?>
 		</a>
-	</li>			
+	</li>
 	<li>
 		<a href="<?= @route('option=com_pages&view=content&layout=examples/actor-gadget') ?>">
 		<?= @text('Actor Gadget') ?>
@@ -24,26 +24,26 @@ if (false): ?>
 	</li>
 	<li class="dropdown">
 		<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-		<?= @text('About') ?> <b class="caret"></b>				
+		<?= @text('About') ?> <b class="caret"></b>
 		</a>
-		<ul class="dropdown-menu">							
+		<ul class="dropdown-menu">
 			<li>
 				<a href="<?= @route('option=com_pages&view=content&layout=examples/landing') ?>">
 				<?= @text('Landing') ?>
 				</a>
-			</li>						
+			</li>
 			<li>
 				<a href="<?= @route('option=com_pages&view=content&layout=examples/nonavbar') ?>">
 				<?= @text('No Navbar') ?>
 				</a>
-			</li>						
-		</ul>			
+			</li>
+		</ul>
 	</li>
 	<li>
 		<a href="http://www.example.com" target="_blank">
 		<?= @text('External Site') ?>
 		</a>
-	</li>	
-		
+	</li>
+
 </ul>
-<?php endif; ?>
+<? endif; ?>

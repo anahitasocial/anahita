@@ -42,7 +42,7 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     /**
      * Check to see if viewer has permission to change usertype.
      */
-    protected function _authorizeChangeUserType(KCommandContext $context)
+    protected function _authorizeChangeUsertype(KCommandContext $context)
     {
         if ($this->_entity->eql($this->_viewer)) {
             return false;

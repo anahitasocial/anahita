@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <div class="an-entity">
 	<div class="clearfix">
@@ -15,10 +15,10 @@
 				<li>
 					<?= $item->followerCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-FOLLOWERS') ?></span>
-					<?php if ($item->isLeadable()): ?>
+					<? if ($item->isLeadable()): ?>
 					/ <?= $item->leaderCount ?>
 					<span class="stat-name"><?= @text('COM-ACTORS-SOCIALGRAPH-LEADERS') ?></span>
-					<?php endif; ?>
+					<? endif; ?>
 				</li>
 			</ul>
 		</div>
@@ -28,9 +28,9 @@
 		<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 400, 'consider_html' => true)) ?>
 	</div>
 
-	<?php if(count($locations)) : ?>
+	<? if(count($locations)) : ?>
 	<div class="entity-meta">
 			<?= @template('_locations') ?>
 	</div>
-	<?php endif;?>
+	<? endif;?>
 </div>

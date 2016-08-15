@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-PROFILE-INFORMATION') ?></h3>
 
@@ -26,7 +26,7 @@
             <?= @text('COM-ACTORS-PROFILE-GENDER') ?>
         </label>
         <div class="controls">
-            <?php
+            <?
             $genderOptions = array(
                 '' => @text('COM-ACTORS-GENDER-UNDEFINED'),
                 'male' => @text('COM-ACTORS-GENDER-MALE'),
@@ -34,39 +34,42 @@
                 'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'),
                 'other' => @text('COM-ACTORS-GENDER-OTHER'), );
             ?>
-            <?= @html('select', 'gender', array('options' => $genderOptions, 'selected' => $item->gender))->class('input-block-level') ?>
+            <?= @html('select', 'gender', array(
+					'options' => $genderOptions,
+					'selected' => $item->gender)
+					)->class('input-block-level') ?>
         </div>
     </div>
 
-    <?php if ($item->authorize('changeUserType')): ?>
+    <? if ($item->authorize('changeUserType')): ?>
     <div class="control-group">
         <label class="control-label" for="person-group">
             <?= @text('COM-PEOPLE-USERTYPE'); ?>
         </label>
         <div class="controls">
-            <?= @helper('usertypes', array('selected' => $item->userType)) ?>
+            <?= @helper('usertypes', array('selected' => $item->usertype)) ?>
         </div>
     </div>
-    <?php endif; ?>
+    <? endif; ?>
 
-	<?php foreach ($profile as $header => $fields)  : ?>
+	<? foreach ($profile as $header => $fields)  : ?>
 	<fieldset>
 		<legend><?= @text($header) ?></legend>
-		<?php foreach ($fields as $label => $field) : ?>
+		<? foreach ($fields as $label => $field) : ?>
 		<div class="control-group">
 			<label><?= @text($label) ?></label>
 			<div class="controls">
-				<?php if (is_object($field)) : ?>
-				<?php $class = (in_array($field->name, array('textarea', 'input'))) ? 'input-block-level' : '' ?>
+				<? if (is_object($field)) : ?>
+				<? $class = (in_array($field->name, array('textarea', 'input'))) ? 'input-block-level' : '' ?>
 				<?= $field->class($class)->rows(5)->cols(5) ?>
-				<?php else : ?>
+				<? else : ?>
 				<?= $field ?>
-				<?php endif;?>
+				<? endif;?>
 			</div>
 		</div>
-		<?php endforeach;?>
+		<? endforeach;?>
 	</fieldset>
-	<?php endforeach;?>
+	<? endforeach;?>
 
 	<div class="form-actions">
         <button type="submit" class="btn" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">

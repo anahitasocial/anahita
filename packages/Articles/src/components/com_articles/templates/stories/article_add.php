@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <data name="title">
 	<?= sprintf(@text('COM-ARTICLES-STORY-ARTICLE-ADD'), @name($subject), @route($object->getURL())) ?>
@@ -10,5 +10,5 @@
     </h4>
     <div class="entity-body">
 	    <?= @helper('text.truncate', @escape($object->excerpt), array('length' => 200)); ?>
-	</div>	
+	</div>
 </data>

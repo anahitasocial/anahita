@@ -30,12 +30,15 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'inheritance' => array('abstract' => $this->getIdentifier()->classname == __CLASS__),
+            'inheritance' => array(
+                'abstract' => $this->getIdentifier()->classname == __CLASS__
+            ),
             'attributes' => to_hash(array(
                 'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public', ),
+                    'read' => 'public'
+                ),
                 'body' => array('format' => 'string'),
                 'status',
                 'statusUpdateTime',
@@ -122,11 +125,13 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
     public function __get($name)
     {
         if ($name == 'components') {
+
             if (!isset($this->_components)) {
                 $this->_components = $this->getService('com://site/actors.domain.entityset.component', array('actor' => $this));
             }
 
             return $this->_components;
+            
         } elseif ($name == 'uniqueAlias') {
             return $this->get('id');
         } else {

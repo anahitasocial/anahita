@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<? defined('KOOWA') or die('Restricted access') ?>
 
-<?php
+<?
 $view = @view('story')->layout('list');
 
 if (isset($actor)) {
@@ -8,6 +8,6 @@ if (isset($actor)) {
 }
 ?>
 
-<?php foreach ($stories as $story) : ?>
+<? foreach ($stories as $story) : ?>
 <?= $view->item($story) ?>
-<?php endforeach; ?>
+<? endforeach; ?>

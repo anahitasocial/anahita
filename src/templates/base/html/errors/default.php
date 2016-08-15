@@ -1,4 +1,4 @@
-<?php if (!defined('KOOWA')) {
+<? if (!defined('KOOWA')) {
     die;
 } ?>
 
@@ -8,6 +8,6 @@
 
 
 <div class="alert alert-block alert-error">
-<h4 class="alert-heading"><?php print AnTranslator::_('TMPL-ERROR-DEFAULT-TITLE') ?></h4>
-<p><?php print AnTranslator::_('TMPL-ERROR-DEFAULT-DESC') ?></p>
+<h4 class="alert-heading"><? print AnTranslator::_('TMPL-ERROR-DEFAULT-TITLE') ?></h4>
+<p><? print AnTranslator::_('TMPL-ERROR-DEFAULT-DESC') ?></p>
 </div>

@@ -25,7 +25,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 			return false;
 		}
 
-		KService::get('repos:sessions.session')->destroy($event->user['id']);
+		KService::get('repos:sessions.session')->destroy($event->person['id']);
 
 		return true;
 	}
@@ -41,34 +41,33 @@ class plgUserJoomla extends PlgAnahitaDefault
 	 */
 	public function onLoginUser(KEvent $event)
 	{
-		$user = $event->user;
+		$credentials = $event->credentials;
 		$options = $event->options;
 
-		global $mainframe;
+		$person = KService::get('repos:people.person')
+				  ->find(array('username' => $credentials['username']));
 
-		jimport('joomla.user.helper');
-		$juser =& JFactory::getUser($user['username']);
-
-		if (!$juser) {
-			JError::raiseWarning(401, "Did not find a user with username: ".$juser['username']);
+		if (!isset($person)) {
+			$msg = "Did not find a user with username: ".$credentials['username'];
+			throw new AnErrorException($msg, KHttpResponse::UNAUTHORIZED);
 			return false;
 		}
 
+		$person->visited();
+
 		// Register the needed session variables
 		$session = KService::get('com:sessions');
-		$session->set('user', $juser);
+		$session->set('person', (object) $person->getData());
 
 		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {
 			$sessionEntity->setData(array(
 				'guest' => 0,
-				'personUsername' => $juser->get('username'),
-				'userid' => (int) $juser->get('id'),
-				'personUsertype' => $juser->get('usertype')
+				'nodeId' => $person->id,
+				'username' => $person->username,
+				'usertype' => $person->usertype,
+				'time' => $session->getExpire()
 			))->save();
 		}
-
-		// Hit the user last visit field
-		$juser->setLastVisit();
 
      	//cleanup session table from guest users
       	KService::get('repos:sessions.session')->destroy(0);
@@ -87,29 +86,18 @@ class plgUserJoomla extends PlgAnahitaDefault
 	 */
 	public function onLogoutUser(KEvent $event)
 	{
-		$user = $event->user;
+		$person = $event->person;
 
-		if ($user['id'] == 0) {
+		if ($person['id'] == 0) {
 			return false;
     	}
 
-    	$viewer =& JFactory::getUser();
+		// Destroy the php session for this user
+		$session = KService::get('com:sessions');
+		$session->destroy();
 
-		//Check to see if we're deleting the current session
-		if ($viewer->id == (int) $user['id']) {
+		KService::get('repos:sessions.session')->destroy($person['id']);
 
-			// Hit the user last visit field
-			$viewer->setLastVisit();
-
-			// Destroy the php session for this user
-			$session = KService::get('com:sessions');
-			$session->destroy();
-
-			KService::get('repos:sessions.session')->destroy($user['id']);
-
-			return true;
-		}
-
-		return false;
+		return true;
 	}
 }

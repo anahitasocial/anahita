@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -33,11 +33,23 @@ class ComTagsDomainQueryNode extends AnDomainQueryDefault
 
         //lets add all the common fields
         $this->select(array(
-                'node.created_by', 'node.owner_id', 'node.owner_type', 'node.name', 'node.person_username',
-                'node.alias', 'node.body', 'node.created_on', 'node.modified_on', 'node.modified_by', 'node.person_usertype',
-                'node.blocker_ids', 'node.blocked_ids', 'node.access', 'node.follower_count', 'node.leader_count',
-                'node.parent_id', 'node.parent_type',
-                'node.filename',
+                'node.created_by',
+                'node.owner_id',
+                'node.owner_type',
+                'node.name',
+                'node.alias',
+                'node.body',
+                'node.created_on',
+                'node.modified_on',
+                'node.modified_by',
+                'node.blocker_ids',
+                'node.blocked_ids',
+                'node.access',
+                'node.follower_count',
+                'node.leader_count',
+                'node.parent_id',
+                'node.parent_type',
+                'node.filename'
         ));
     }
 
@@ -56,7 +68,7 @@ class ComTagsDomainQueryNode extends AnDomainQueryDefault
 
     /**
      * Order by top ranked nodes.
-     * 
+     *
      * @return ComTagsDomainQueryNode
      */
     public function sortTop()
@@ -68,7 +80,7 @@ class ComTagsDomainQueryNode extends AnDomainQueryDefault
 
     /**
      * Order by most recently created nodes.
-     * 
+     *
      * @return ComTagsDomainQueryNode
      */
     public function sortRecent()

@@ -25,32 +25,20 @@ class plgUserAutoFollow extends PlgAnahitaDefault
      */
     public function onAfterStoreUser(KEvent $event)
     {
-        if (!$event->succes) {
+        if (!$event->person) {
             return false;
         }
 
-        $person = KService::get('repos://site/people.person')
-                  ->getQuery()
-                  ->disableChain()
-                  ->userId($event->user['id'])
-                  ->fetch();
+        $person = $event->person;
+        $actor_ids = explode(',', $this->_params->actor_ids);
 
-        if ($person) {
-            $actor_ids = explode(',', $this->params->actor_ids);
-
-            foreach ($actor_ids as $actor_id) {
-                $actor_id = (int) $actor_id;
-
-                if ($actor_id) {
-                    $actor = KService::get('repos://site/actors.actor')
-                             ->getQuery()
-                             ->disableChain()
-                             ->fetch($actor_id);
-
-                    if ($actor && $actor->isFollowable()) {
-                        $actor->addFollower($person);
-                        $actor->save();
-                    }
+        foreach ($actor_ids as $actor_id) {
+            $actor_id = (int) $actor_id;
+            if ($actor_id) {
+                $actor = KService::get('repos:actors.actor')->find(array('id' => $actor_id));
+                if ($actor && $actor->isFollowable()) {
+                    $actor->addFollower($person);
+                    $actor->save();
                 }
             }
         }

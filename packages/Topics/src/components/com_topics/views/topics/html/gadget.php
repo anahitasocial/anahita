@@ -1,7 +1,7 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php if (count($topics)) : ?>
-<?php
+<? if (count($topics)) : ?>
+<?
 $url = array('layout' => 'gadget_list');
 
 if (isset($filter)) {
@@ -15,6 +15,6 @@ if (isset($filter)) {
   'url' => $url,
   'topic' => 'an-topics'
 )) ?>
-<?php else: ?>
+<? else: ?>
 <?= @message(@text('LIB-AN-NODES-EMPTY-LIST-MESSAGE')) ?>
-<?php endif; ?>
+<? endif; ?>

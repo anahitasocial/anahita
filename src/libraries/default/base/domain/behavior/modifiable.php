@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,12 +30,12 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
 {
     /**
      * Modiable Properties.
-     * 
+     *
      * @var array
      */
     protected $_modifiable_properties = array();
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -59,7 +59,11 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
         $config->append(array(
             'modifiable_properties' => array(),
             'attributes' => array(
-                'creationTime' => array('column' => 'created_on', 'default' => 'date', 'required' => true),
+                'creationTime' => array(
+                    'column' => 'created_on',
+                    'default' => 'date',
+                    'required' => true
+                ),
                 'updateTime' => array('column' => 'modified_on', 'default' => 'date'),
             ),
             'relationships' => array(
@@ -73,7 +77,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
 
     /**
      * Executes the command after.instantiate.
-     * 
+     *
      * @param KConfig $config Configuration parameter
      */
     protected function _afterEntityInstantiate(KConfig $config)
@@ -87,7 +91,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
 
     /**
      * Set author of a node. By setting an author the editor is also set to the author. The creationTime property is also updated.
-     * 
+     *
      * @param ComPeopleDomainEntityPerson $author The author of the entity
      */
     public function setAuthor($author)
@@ -99,8 +103,8 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
 
     /**
      * Set editr of a node. It also updates the updateTime property.
-     * 
-     * @param ComPeopleDomainEntityPerson $editor An editor 
+     *
+     * @param ComPeopleDomainEntityPerson $editor An editor
      */
     public function setEditor($editor)
     {

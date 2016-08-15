@@ -376,11 +376,11 @@
     }
 
     /**
-     * Instantiate a JUser object.
+     * Instantiate a ComPeopleDomainEntityPerson object
      *
      * @param KConfig $data
      *
-     * @return JUser
+     * @return ComPeopleDomainEntityPerson instance
      */
     protected function _instantiateUser($data)
     {
@@ -394,10 +394,10 @@
                 'username' => $data->user->username,
                 'password' => $data->user->password,
                 'name' => $data->user->name,
-                'userType' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
+                'usertype' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
             );
 
-            $person = $this->getService('repos://site/people.person')
+            $person = $this->getService('repos:people.person')
             ->getEntity()
             ->reset()
             ->setData($user_data);

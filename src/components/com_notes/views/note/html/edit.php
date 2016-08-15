@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
 <form action="<?= @route($item->getURL()) ?>" method="post" >
 	<fieldset>

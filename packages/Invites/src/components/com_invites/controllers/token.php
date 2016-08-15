@@ -75,11 +75,11 @@ class ComInvitesControllerToken extends ComBaseControllerService
 
         if (empty($data->value) || $value != $data->value) {
             throw new LibBaseControllerExceptionBadRequest('Invalid token signature');
-
             return;
         }
 
         KRequest::set('session.invite_token', null);
+
         $token = $this->getRepository()->getEntity(array(
                         'data' => array(
                             'value' => $value,
@@ -90,7 +90,6 @@ class ComInvitesControllerToken extends ComBaseControllerService
 
         if (!$token->save()) {
             throw new LibBaseControllerExceptionInternal();
-
             return;
         }
     }

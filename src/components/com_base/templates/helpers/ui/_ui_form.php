@@ -1,19 +1,19 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
-<?php foreach ($inputs as $label => $input) : ?>
+<? foreach ($inputs as $label => $input) : ?>
 <div class="control-group">
-	<?php if (is_int(key($inputs)))  : ?>
-		<?php $input = $label ?>
-		<?php $label = null?>
-	<?php endif;?>
-	<?php if ($label) : ?>
-		<?php if (strpos($label, '<label') === 0) : ?>
+	<? if (is_int(key($inputs)))  : ?>
+		<? $input = $label ?>
+		<? $label = null?>
+	<? endif;?>
+	<? if ($label) : ?>
+		<? if (strpos($label, '<label') === 0) : ?>
 			<?= $label ?>
-		<?php else :?>
+		<? else :?>
 		 	<label class="control-label" for="<?= $label ?>"><?= @text($label) ?></label>
-		<?php endif;?>
-	<?php endif;?>
-	<?php
+		<? endif;?>
+	<? endif;?>
+	<?
         $input_class = 'input';
         if ($input instanceof LibBaseTemplateHelperHtmlElement) {
             $add_on = '';
@@ -28,4 +28,4 @@
     ?>
 	<div class="controls <?= $input_class ?>"><?= $input ?></div>
 </div>
-<?php endforeach;?>
+<? endforeach;?>

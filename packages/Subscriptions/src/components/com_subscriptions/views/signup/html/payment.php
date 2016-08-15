@@ -1,10 +1,10 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_subscriptions/js/coupon.js" />
-<?php else: ?>
+<? else: ?>
 <script src="com_subscriptions/js/min/coupon.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
 <?= @template('_steps', array('current_step' => 'payment')) ?>
 
@@ -24,13 +24,13 @@
 
         	<div class="entity-description">
             	<dl>
-            		<?php if ($item->recurring): ?>
+            		<? if ($item->recurring): ?>
             		<dt><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD') ?>:</dt>
             		<dd><?= @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$item->billingPeriod) ?></dd>
-            		<?php else: ?>
+            		<? else: ?>
             		<dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-DURATION') ?>:</dt>
             		<dd><?= round(AnHelperDate::secondsTo('day', $item->duration)) ?> <?= @text('COM-SUBSCRIPTIONS-PACKAGE-DAYS') ?></dd>
-            		<?php endif; ?>
+            		<? endif; ?>
 
             		<dt><?= @text('COM-SUBSCRIPTIONS-PACKAGE-PRICE') ?>: </dt>
             		<dd><?= $item->price.' '.get_config_value('subscriptions.currency', 'US') ?></dd>
@@ -103,11 +103,11 @@
         					    <?= @text('COM-SUBSCRIPTIONS-ENTER-CREDITCARD-INFORMATION') ?>
         					</p>
 
-            			<?php if (isset($flash['credit_card_error'])) : ?>
+            			<? if (isset($flash['credit_card_error'])) : ?>
             			<?= @message($flash['credit_card_error'], array('type' => 'error'))?>
-            			<?php endif;?>
+            			<? endif;?>
 
-        					<?php
+        					<?
                   $ccName = null;
                   if ($creditcard->first_name && $creditcard->last_name) {
                       $ccName = $creditcard->first_name.' '.$creditcard->last_name;
@@ -137,9 +137,9 @@
         				    <?= @text('COM-SUBSCRIPTIONS-CONTACT-INFORMATION') ?>
         				</legend>
 
-            			<?php if (isset($flash['address_error'])) : ?>
+            			<? if (isset($flash['address_error'])) : ?>
             			<?= @message($flash['address_error'], array('type' => 'error'))?>
-            			<?php endif;?>
+            			<? endif;?>
 
         				<?= @helper('ui.form', array(
 
@@ -165,11 +165,11 @@
         			</fieldset>
 
         			<div class="form-actions">
-        				<?php if ($viewer->guest()) : ?>
+        				<? if ($viewer->guest()) : ?>
         				<a href="<?=@route(array('layout' => 'login', 'id' => $item->id)) ?>" class="btn">
         				    <?=@text('COM-SUBSCRIPTIONS-EDIT-USER-INFORMATION')?>
         				</a>
-        				<?php endif; ?>
+        				<? endif; ?>
 
         				<button class="btn btn-primary" type="submit">
         				    <?=@text('COM-SUBSCRIPTIONS-PREVIEW-ORDER') ?>
@@ -192,11 +192,11 @@
         		    </p>
 
         			<div class="form-actions">
-        				<?php if ($viewer->guest()) : ?>
+        				<? if ($viewer->guest()) : ?>
         				<a class="btn" href="<?= @route(array('layout' => 'default', 'id' => $item->id)) ?>">
         				    <?=@text('COM-SUBSCRIPTIONS-EDIT-USER-INFORMATION')?>
         				</a>
-        				<?php endif; ?>
+        				<? endif; ?>
         				<button class="btn btn-primary" type="submit">
         				    <?=@text('COM-SUBSCRIPTIONS-PAYPAL-LOGIN') ?>
         				</button>

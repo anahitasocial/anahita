@@ -86,10 +86,6 @@ class LibSessions extends KObject
 		//disable transparent sid support
 		ini_set('session.use_trans_sid', '0');
 
-		//create handler
-		$settins = new JConfig();
-		$this->_storage = $this->getService('com:sessions.storage.'.$settins->session_handler);
-
 		if (isset($config->name)) {
 			session_name(md5($config->name));
 		}
@@ -125,11 +121,15 @@ class LibSessions extends KObject
     {
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
-			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME,
+			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME + time(),
 			'security' => array('fix_browser'),
 			'force_ssl' => isSSl(),
-			'namespace' => '__default'
+			'namespace' => '__anahita'
 		));
+
+		//create handler
+		$settins = new JConfig();
+		$this->_storage = $this->getService('com:sessions.storage.'.$settins->session_handler);
 
 		parent::_initialize($config);
 	}
@@ -141,6 +141,27 @@ class LibSessions extends KObject
 	 */
 	public function __destruct() {
 		$this->close();
+	}
+
+	/**
+	* Start a session
+	*
+	* Creates a session (or resumes the current one based on the state of the session)
+ 	*
+	* @access protected
+	* @return boolean $result true on success
+	*/
+	private function _start()
+	{
+		//  start session if not startet
+		if ( $this->_state === self::STATE_RESTART ) {
+			session_id($this->_createId());
+		}
+
+		session_cache_limiter('none');
+		session_start();
+
+		return true;
 	}
 
 	/**
@@ -300,15 +321,17 @@ class LibSessions extends KObject
 	* @param  string 	$namespace 	Namespace to use, default to 'default'
 	* @return mixed  Value of a variable
 	*/
-   public function &get($property = null, $default = null)
+   public function &get($property = null, $default = null, $namespace = '')
    {
 	   if($this->_state !== self::STATE_ACTIVE && $this->_state !== self::STATE_EXPIRED) {
 		   throw new LibSessionsException("Session does not exist!\n");
 		   return;
 	   }
 
-	   if (isset($_SESSION[$this->_namespace][$property])) {
-		   return $_SESSION[$this->_namespace][$property];
+	   $namespace = ($namespace === '') ? $this->_namespace : $namespace;
+
+	   if (isset($_SESSION[$namespace][$property])) {
+		   return $_SESSION[$namespace][$property];
 	   }
 
 	   return $default;
@@ -322,20 +345,26 @@ class LibSessions extends KObject
 	 * @param  mixed  $value 		Value of a variable
 	 * @return mixed  Old value of a variable
 	 */
-	public function set($name, $value = null)
+	public function set($name, $value = null, $namespace = '')
 	{
 		if($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
 			return;
 		}
 
-		$old = isset($_SESSION[$this->_namespace][$name]) ? $_SESSION[$this->_namespace][$name] : null;
+		$namespace = ($namespace === '') ? $this->_namespace : $namespace;
+
+		$old = isset($_SESSION[$namespace][$name]) ? $_SESSION[$namespace][$name] : null;
 
 		if ($value === null) {
-			unset($_SESSION[$this->_namespace][$name]);
+			unset($_SESSION[$namespace][$name]);
 		} else {
-			$_SESSION[$this->_namespace][$name] = $value;
+			$_SESSION[$namespace][$name] = $value;
 		}
+
+		// @todo this should happen automatically,
+		// but for some reason session value isn't being passed
+		$this->_storage->write($this->getId(), serialize($_SESSION));
 
 		return $old;
 	}
@@ -355,7 +384,7 @@ class LibSessions extends KObject
 			return;
 		}
 
-		return isset( $_SESSION[$this->_namespace][$name] );
+		return isset($_SESSION[$this->_namespace][$name]);
 	}
 
 	/**
@@ -367,7 +396,7 @@ class LibSessions extends KObject
 	*/
 	public function clear($name)
 	{
-		if($this->_state !== self::STATE_ACTIVE) {
+		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
 			return;
 		}
@@ -380,27 +409,6 @@ class LibSessions extends KObject
 		}
 
 		return $value;
-	}
-
-	/**
-	* Start a session
-	*
-	* Creates a session (or resumes the current one based on the state of the session)
- 	*
-	* @access protected
-	* @return boolean $result true on success
-	*/
-	private function _start()
-	{
-		//  start session if not startet
-		if( $this->_state === self::STATE_RESTART ) {
-			session_id( $this->_createId() );
-		}
-
-		session_cache_limiter('none');
-		session_start();
-
-		return true;
 	}
 
 	/**

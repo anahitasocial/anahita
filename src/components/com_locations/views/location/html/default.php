@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<? defined('KOOWA') or die('Restricted access') ?>
 
 <?= @map_api(array()) ?>
 
@@ -21,11 +21,11 @@
     <?= @helper('address', $location) ?>
     </div>
 
-    <?php if($location->description) : ?>
+    <? if($location->description) : ?>
     <div class="entity-description">
     <?= @helper('text.truncate', @content(nl2br($location->description), array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
     </div>
-    <?php endif; ?>
+    <? endif; ?>
 </div>
 
 <div class="row">
@@ -45,7 +45,7 @@
     </div>
 </div>
 
-<?php
+<?
 $url = $location->getURL().'&layout=taggables';
 
 if (!empty($sort)) {

@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 
 CREATE TABLE `#__edges` (
-  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `type` varchar(255) NOT NULL,
   `node_a_id` bigint(11) unsigned NOT NULL,
   `node_a_type` varchar(255) NOT NULL,
@@ -27,7 +27,7 @@ CREATE TABLE `#__edges` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__nodes` (
-  `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `type` varchar(255) NOT NULL,
   `component` varchar(100) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
@@ -99,26 +99,14 @@ CREATE TABLE `#__nodes` (
   `story_object_id` bigint(11) unsigned DEFAULT NULL,
   `story_target_id` bigint(11) unsigned DEFAULT NULL,
   `story_comment_id` int(11) unsigned DEFAULT NULL,
-  `person_userid` int(11) DEFAULT NULL,
-  `person_username` varchar(255) DEFAULT NULL,
-  `person_usertype` varchar(255) DEFAULT NULL,
-  `person_useremail` varchar(255) DEFAULT NULL,
-  `person_lastvisitdate` datetime DEFAULT NULL,
-  `person_given_name` varchar(255) DEFAULT NULL,
-  `person_family_name` varchar(255) DEFAULT NULL,
-  `person_network_presence` varchar(255) DEFAULT NULL,
-  `person_time_zone` int(11) DEFAULT NULL,
-  `person_language` varchar(100) DEFAULT NULL,
+  `time_zone` int(11) DEFAULT NULL,
+  `language` varchar(100) DEFAULT NULL,
   `access` text,
   `permissions` text,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `person_username` (`person_username`),
-  UNIQUE KEY `person_userid` (`person_userid`),
-  UNIQUE KEY `person_useremail` (`person_useremail`),
   KEY `last_comment_by` (`last_comment_by`),
   KEY `created_by` (`created_by`),
   KEY `modified_by` (`modified_by`),
-  KEY `person_lastvisitdate` (`person_lastvisitdate`),
   KEY `type` (`type`),
   KEY `component` (`component`),
   KEY `owner_id` (`owner_id`),
@@ -139,7 +127,7 @@ CREATE TABLE `#__nodes` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__components` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `name` varchar(50) NOT NULL DEFAULT '',
   `parent` int(11) unsigned NOT NULL DEFAULT '0',
   `option` varchar(50) NOT NULL DEFAULT '',
@@ -154,7 +142,7 @@ CREATE TABLE `#__components` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__migrator_versions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `component` varchar(255) NOT NULL,
   `version` text NOT NULL,
   PRIMARY KEY (`id`),
@@ -164,7 +152,7 @@ CREATE TABLE `#__migrator_versions` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__plugins` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` SERIAL,
   `name` varchar(100) NOT NULL DEFAULT '',
   `element` varchar(100) NOT NULL DEFAULT '',
   `folder` varchar(100) NOT NULL DEFAULT '',
@@ -185,34 +173,38 @@ CREATE TABLE `#__plugins` (
 CREATE TABLE `#__sessions` (
   `session_id` char(64) NOT NULL UNIQUE,
   `node_id` bigint(11) NOT NULL DEFAULT 0,
-  `userid` bigint(11) NOT NULL DEFAULT 0,
-  `person_username` varchar(255) DEFAULT NULL,
-  `person_usertype` varchar(255) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `usertype` varchar(255) DEFAULT NULL,
   `time` INT(11) DEFAULT 0,
   `guest` tinyint(2) DEFAULT '1',
   `meta` longtext,
   PRIMARY KEY (`session_id`(64)),
-  KEY `whosonline` (`guest`,`person_usertype`,`person_username`),
-  KEY `node_id` (`node_id`)
+  KEY `whosonline` (`guest`,`usertype`,`username`),
+  UNIQUE KEY `node_id` (`node_id`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
-CREATE TABLE `#__users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `username` varchar(150) NOT NULL DEFAULT '',
-  `email` varchar(100) NOT NULL DEFAULT '',
-  `password` varchar(100) NOT NULL DEFAULT '',
-  `usertype` varchar(25) NOT NULL DEFAULT '',
-  `block` tinyint(4) NOT NULL DEFAULT '0',
-  `registerDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `lastvisitDate` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `activation` varchar(100) NOT NULL DEFAULT '',
-  `params` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `usertype` (`usertype`),
-  KEY `idx_name` (`name`),
-  KEY `username` (`username`),
-  KEY `email` (`email`)
+CREATE TABLE `#__people_people` (
+    `people_person_id ` SERIAL,
+    `node_id` BIGINT UNSIGNED NOT NULL,
+    `email` varchar(255) DEFAULT NULL,
+    `username` varchar(255) DEFAULT NULL,
+    `password` varchar(255) DEFAULT NULL,
+    `usertype` varchar(50) DEFAULT NULL,
+    `gender` varchar(50) DEFAULT NULL,
+    `given_name` varchar(255) DEFAULT NULL,
+    `family_name` varchar(255) DEFAULT NULL,
+    `network_presence` tinyint(3) NOT NULL DEFAULT 0,
+    `last_visit_date` datetime DEFAULT NULL,
+    `time_zone` int(11) DEFAULT NULL,
+    `language` varchar(100) DEFAULT NULL,
+    `activation_code` varchar(255) DEFAULT NULL,
+    UNIQUE KEY `people_person_id` (`people_person_id`),
+    KEY `usertype` (`usertype`),
+    UNIQUE KEY `node_id` (`node_id`),
+    UNIQUE KEY `username` (`username`),
+    UNIQUE KEY `email` (`email`),
+    KEY `last_visit_date` (`last_visit_date`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;

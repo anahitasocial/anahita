@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php foreach($locations as $location) : ?>
+<? foreach($locations as $location) : ?>
 <div class="an-entity">
     <div class="entity-title">
         <a data-action="add-location" data-location="<?= $location->id ?>" href="<?= @route($locatable->getURL()) ?>">
@@ -13,4 +13,4 @@
         <?= @helper('address', $location) ?>
     </div>
 </div>
-<?php endforeach; ?>
+<? endforeach; ?>

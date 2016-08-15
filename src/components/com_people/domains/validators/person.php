@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,13 +16,13 @@
  */
 
 /**
- * Person object. It's the main actor node that represents the social network users. A person can added 
+ * Person object. It's the main actor node that represents the social network users. A person can added
  * applications to their profile.
- * 
+ *
  * Here's how to get a person object, set a property and save
  * <code>
  * //fetches a peron with $id
- * $person = KService::get('repos://site/people.person')->fetch($id); 
+ * $person = KService::get('repos://site/people.person')->fetch($id);
  * $person->name = 'James Bond';
  * $person->save();
  * </code>
@@ -38,46 +38,31 @@
 class ComPeopleDomainValidatorPerson extends AnDomainValidatorAbstract
 {
     /**
-     * Initializes the default configuration for the object.
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     */
-    protected function _initialize(KConfig $config)
-    {
-        $config->append(array(
-            'validations' => array(
-                'username' => array(
-                    'length' => array('max' => 100),
-                    'format' => 'username',
-                ),
-            ),
-        ));
-
-        parent::_initialize($config);
-    }
-
-    /**
      * Validates a person object.
-     * 
+     *
      * @param ComPeopleDomainEntityPerson $person
-     * 
+     *
      * @return bool
      */
     public function validateEntity($person)
     {
-        //if a password is set then validate the password
-        if ($password = $person->getPassword()) {
-            if (!$this->getFilter('password')->validate($password)) {
+        $this->_validateField($person, 'email');
+        $this->_validateField($person, 'username');
+        $this->_validateField($person, 'password');
+
+        return parent::validateEntity($person);
+    }
+
+    private function _validateField($person, $field)
+    {
+        if ($person->$field) {
+            if (!$this->getFilter($field)->validate($person->$field)) {
                 $person->addError(array(
-                    'message' => 'Invalid password format',
+                    'message' => "Invalid $field format",
                     'code' => AnError::INVALID_FORMAT,
-                    'key' => 'password',
+                    'key' => $field
                 ));
             }
         }
-
-        return parent::validateEntity($person);
     }
 }

@@ -1,9 +1,9 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
-<?php if (!empty($commands)) : ?>
+<? if (!empty($commands)) : ?>
 <ul class="an-actions">
-<?php foreach ($commands as $command) : ?>
-<li><?= $helper->command($command) ?></li> 
-<?php endforeach; ?>
+<? foreach ($commands as $command) : ?>
+<li><?= $helper->command($command) ?></li>
+<? endforeach; ?>
 </ul>
-<?php endif;?>
+<? endif;?>

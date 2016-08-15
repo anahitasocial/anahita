@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php $view = @listItemView()->layout('list'); ?>
-<?php foreach ($items as $item) : ?>
+<? $view = @listItemView()->layout('list'); ?>
+<? foreach ($items as $item) : ?>
 <?= $view->item($item) ?>
-<?php endforeach; ?>
+<? endforeach; ?>

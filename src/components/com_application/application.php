@@ -64,7 +64,7 @@ class ComApplication extends KObject
 
         //create the session if a session name is passed
         if($config['session'] !== false) {
-          $this->_createSession(JUtility::getHash($config['session_name']));
+          $this->createSession(JUtility::getHash($config['session_name']));
         }
     }
 
@@ -118,13 +118,15 @@ class ComApplication extends KObject
   	 * @param	string	The sessions name.
   	 * @return	object	AnSession on success. May call exit() on database error.
   	 */
-  	public function &_createSession( $name )
+  	public function createSession($name)
   	{
+
         $config = new KConfig(array(
             'name' => $name
         ));
 
         $session = KService::get('com:sessions', array('config' => $config));
+
         $storage = $session->getStorage();
         $storage->gc($session->getExpire());
 
@@ -135,7 +137,13 @@ class ComApplication extends KObject
 
   		//Session doesn't exist yet, initalise and store it in the session table
   		$session->set('registry', new JRegistry('session'));
-  		$session->set('user', new JUser());
+
+        $person = KService::get('repos:people.person')
+                    ->getEntity()->setData(array(
+                        'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
+                    ))->reset();
+
+        $session->set('person', (object) $person->getData());
 
         if (!$storage->write($session->getId(), '')) {
             throw new KException("Coudn't write in the session table");
@@ -217,7 +225,10 @@ class ComApplication extends KObject
     public function &getRouter($name = null, $options = array())
     {
         if (!isset($this->_router)) {
-            $this->_router = KService::get('com://site/application.router', array('enable_rewrite' => JFactory::getConfig()->getValue('sef_rewrite')));
+            $settings = new JConfig();
+            $this->_router = KService::get('com:application.router', array(
+                'enable_rewrite' => $settings->sef_rewrite
+            ));
         }
 
         return $this->_router;

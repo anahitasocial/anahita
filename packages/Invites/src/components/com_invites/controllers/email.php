@@ -23,7 +23,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
+            'behaviors' => array('com:mailer.controller.behavior.mailer'),
         ));
 
         parent::_initialize($config);
@@ -50,19 +50,17 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
     {
         $data = $context->data;
         $viewer = get_viewer();
-        $siteConfig = JFactory::getConfig();
-
         $emails = $data->email;
 
         foreach ($emails as $email) {
 
             if ($this->getService('koowa:filter.email')->validate($email)) {
 
-                $person = $this->getService('repos://site/people')->find(array('email' => $email));
+                $person = $this->getService('repos:people.person')->find(array('email' => $email));
 
                 if (!$person) {
 
-                    $token = $this->getService('repos://site/invites.token')->getEntity(array(
+                    $token = $this->getService('repos:invites.token')->getEntity(array(
                         'data' => array(
                             'inviter' => $viewer,
                             'serviceName' => 'email',
@@ -71,14 +69,16 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 
                     $token->save();
 
+                    $settings = new JConfig();
+
                     $this->mail(array(
-                        'subject' => AnTranslator::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
+                        'subject' => AnTranslator::sprintf('COM-INVITES-MESSAGE-SUBJECT', $settings->sitename),
                         'to' => $email,
                         'layout' => false,
                         'template' => 'invite',
                         'data' => array(
                             'invite_url' => $token->getURL(),
-                            'site_name' => $siteConfig->getValue('sitename'),
+                            'site_name' => $settings->sitename,
                             'sender' => $viewer,
                         ),
                     ));

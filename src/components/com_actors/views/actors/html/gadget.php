@@ -1,5 +1,5 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
-<div class="an-entities-wrapper">	
+<div class="an-entities-wrapper">
 	<?= @template('list') ?>
 </div>

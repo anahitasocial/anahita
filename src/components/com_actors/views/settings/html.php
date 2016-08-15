@@ -137,7 +137,7 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
         }
 
         //lets get a list of components that this actor can enable
-        $this->enablable_apps = $this->getService('com://site/actors.domain.entityset.component', array(
+        $this->enablable_apps = $this->getService('com:actors.domain.entityset.component', array(
                 'actor' => $this->_state->getItem(),
                 'can_enable' => true,
             ));

@@ -1,10 +1,10 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_photos/js/organizer.js" />
-<?php else: ?>
+<? else: ?>
 <script src="com_photos/js/min/organizer.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
 <div class="row">
 	<div class="span8">
@@ -57,6 +57,6 @@
 </div>
 
 <script>
-<?php $url = 'option=com_photos&view=photos&layout=selector&oid='.$actor->id; ?>
+<? $url = 'option=com_photos&view=photos&layout=selector&oid='.$actor->id; ?>
 $('#photo-selector').setOrganizer( 'open', '<?= @route($url) ?>');
 </script>

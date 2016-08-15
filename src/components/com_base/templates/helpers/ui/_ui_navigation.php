@@ -1,51 +1,51 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<? defined('KOOWA') or die('Restricted access') ?>
 
-<?php if ($navigation->getPageTitle()) : ?>
+<? if ($navigation->getPageTitle()) : ?>
 <h1 class="an-page-header"><?=$navigation->getPageTitle()?></h1>
-	<?php if (!$navigation->getTitle()) : ?>
-		<?php if (count($navigation->getNavigationItems())) :?>
+	<? if (!$navigation->getTitle()) : ?>
+		<? if (count($navigation->getNavigationItems())) :?>
 		<ul class="toolbar">
-		<?php foreach ($navigation->getNavigationItems() as $item) : ?>
+		<? foreach ($navigation->getNavigationItems() as $item) : ?>
 			<li><?= $helper->addAction($item)?></li>
-		<?php endforeach; ?>
+		<? endforeach; ?>
 		</ul>
-		<?php endif; ?>
-	<?php endif?>
-<?php endif;?>
+		<? endif; ?>
+	<? endif?>
+<? endif;?>
 
-<?php if ($navigation->getTitle()) : ?>
-<div class="an-media-header">	
-	<div class="clearfix">	
-		<?php if ($navigation->getThumbnail()) : ?>
+<? if ($navigation->getTitle()) : ?>
+<div class="an-media-header">
+	<div class="clearfix">
+		<? if ($navigation->getThumbnail()) : ?>
 		<div class="avatar">
-			<?php if ($navigation->getThumbnailURL()) : ?>
+			<? if ($navigation->getThumbnailURL()) : ?>
 				<a href="<?=  $navigation->getThumbnailURL()?>">
 					<img src="<?=$navigation->getThumbnail()?>" />
 				</a>
-			<?php else : ?>
+			<? else : ?>
 				<img src="<?=$navigation->getThumbnail()?>" />
-			<?php endif?>
+			<? endif?>
 		</div>
-		<?php endif;?>
-		
-		<?php $class = ($navigation->getThumbnail()) ? 'has-thumbnail' : ''; ?>
+		<? endif;?>
+
+		<? $class = ($navigation->getThumbnail()) ? 'has-thumbnail' : ''; ?>
 		<div class="info <?= $class ?>">
-			<?php if ($navigation->getTitle()) : ?>
+			<? if ($navigation->getTitle()) : ?>
 			<h2 class="title"><?= $navigation->getTitle() ?></h2>
-			<?php endif; ?>
-			
-			<?php if ($navigation->getDescription()) : ?>
+			<? endif; ?>
+
+			<? if ($navigation->getDescription()) : ?>
 			<div class="description"><?= $navigation->getDescription() ?></div>
-			<?php endif; ?>
-			
-			<?php if (count($navigation->getNavigationItems())) :?>
+			<? endif; ?>
+
+			<? if (count($navigation->getNavigationItems())) :?>
 			<ul class="toolbar inline">
-			<?php foreach ($navigation->getNavigationItems() as $item) : ?>
+			<? foreach ($navigation->getNavigationItems() as $item) : ?>
 				<li><?= $helper->addAction($item)?></li>
-			<?php endforeach; ?>
+			<? endforeach; ?>
 			</ul>
-			<?php endif; ?>
+			<? endif; ?>
 		</div>
 	</div>
 </div>
-<?php endif;?>
+<? endif;?>

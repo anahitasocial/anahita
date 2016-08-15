@@ -1,9 +1,9 @@
-<?php defined('KOOWA') or die('Restricted access');?>	
-				
-<?php if (count($items)) :?>
-	<?php foreach ($items as $item): ?>
+<? defined('KOOWA') or die('Restricted access');?>	
+
+<? if (count($items)) :?>
+	<? foreach ($items as $item): ?>
 	<?= @listItemView()->layout('gadget_list')->item($item)->filter($filter) ?>
-	<?php endforeach; ?>
-<?php else: ?>
+	<? endforeach; ?>
+<? else: ?>
 <?= @message(@text('LIB-AN-MEDIUMS-EMPTY-LIST-MESSAGE')) ?>
-<?php endif; ?>
+<? endif; ?>

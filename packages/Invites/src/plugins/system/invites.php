@@ -25,7 +25,7 @@ class plgSystemInvites extends PlgAnahitaDefault
             KRequest::get('get.option', 'string', null) == 'com_people' &&
             get_viewer()->guest()
         ) {
-            $personConfig = KService::get('com://site/settings.template.helper')->getMeta('people');
+                $personConfig = KService::get('com:settings.template.helper')->getMeta('people');
     		    $personConfig->allowUserRegistration = true;
     		}
     }

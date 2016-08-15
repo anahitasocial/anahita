@@ -1,7 +1,7 @@
-<?php defined('KOOWA') or die ?>
+<? defined('KOOWA') or die ?>
 
 <div class="media-grid">
-	<?php foreach ($actors as $actor) : ?>
-	<div><?= @avatar($actor) ?></div>	
-	<?php endforeach; ?>
+	<? foreach ($actors as $actor) : ?>
+	<div><?= @avatar($actor) ?></div>
+	<? endforeach; ?>
 </div>

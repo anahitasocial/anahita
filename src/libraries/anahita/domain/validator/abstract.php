@@ -80,6 +80,7 @@ abstract class AnDomainValidatorAbstract extends KObject
         $validations = array();
 
         foreach ($properties as $property) {
+
             if ($property->isAttribute() && $property->getFormat()) {
                 $validations[$property->getName()]['format'] = $property->getFormat();
             }
@@ -123,6 +124,7 @@ abstract class AnDomainValidatorAbstract extends KObject
         $validations = (array) KConfig::unbox($validations);
 
         foreach ($validations as $validation => $options) {
+
             if (is_numeric($validation)) {
                 $validation = $options;
                 $options = array();
@@ -197,6 +199,7 @@ abstract class AnDomainValidatorAbstract extends KObject
         $validations = (array) KConfig::unbox($validations);
 
         foreach ($validations as $validation => $options) {
+
             if (is_numeric($validation)) {
                 $validation = $options;
                 $options = array();
@@ -215,8 +218,10 @@ abstract class AnDomainValidatorAbstract extends KObject
                  'options' => $options,
              ));
 
-            $this->$method($config);
+            $value = $this->$method($config);
         }
+
+        return $value;
     }
 
     /**
@@ -506,6 +511,8 @@ abstract class AnDomainValidatorAbstract extends KObject
 
             return false;
         }
+
+        return true;
     }
 
     /**
@@ -521,13 +528,16 @@ abstract class AnDomainValidatorAbstract extends KObject
         $value = $config->value;
         $entity = $config->entity;
         $options = KConfig::unbox($config->options);
+
         //if a number is just passed then treat it as max
         if (!is_array($options)) {
             $options = array('max' => $options);
         }
 
         if ($property->isAttribute() && $property->isScalar()) {
+
             $options = KConfig::unbox($options);
+
             if (is_array($options)) {
                 //check the min/max length
                 if (isset($options['max']) || isset($options['min'])) {
@@ -596,6 +606,8 @@ abstract class AnDomainValidatorAbstract extends KObject
                 }
             }
         }
+
+        return true;
     }
 
     /**
@@ -611,7 +623,6 @@ abstract class AnDomainValidatorAbstract extends KObject
         $value = $config->value;
         $entity = $config->entity;
         $options = $config->options;
-
         $conditions = array();
 
         $query = $entity->getRepository()->getQuery();
@@ -632,7 +643,6 @@ abstract class AnDomainValidatorAbstract extends KObject
         $query->where($conditions);
 
         if ($query->disableChain()->fetch()) {
-
             $entity->addError(array(
                 'message' => sprintf(
                     AnTranslator::_('%s %s is not unique'),
@@ -645,5 +655,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
             return false;
         }
+
+        return true;
     }
 }

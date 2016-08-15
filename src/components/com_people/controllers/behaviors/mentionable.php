@@ -131,7 +131,8 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 
             $query
             ->join('left', 'edges AS mention_edge', '('.$entityType.'.id = mention_edge.node_b_id AND mention_edge.type=\''.$edgeType.'\')')
-            ->join('left', 'nodes AS mention', 'mention_edge.node_a_id = mention.id');
+            ->join('left', 'nodes AS mention', 'mention_edge.node_a_id = mention.id')
+            ->join('left', 'people_people AS person', 'person.node_id = mention.id');
 
             foreach ($this->mention as $mention) {
                 $username = $this->getService('com://site/people.filter.username')->sanitize($mention);
@@ -142,7 +143,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
             }
 
             $query
-            ->where('mention.person_username', 'IN', $usernames)
+            ->where('person.username', 'IN', $usernames)
             ->group($entityType.'.id');
         }
     }

@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
 <h3 class="modal-header">
     <?= @text('Add Location') ?>
@@ -79,7 +79,7 @@
         </div>
 
         <div id="locations-container">
-            <?php $url = 'layout=list_selector&locatable_id='.$locatable->id; ?>
+            <? $url = 'layout=list_selector&locatable_id='.$locatable->id; ?>
             <?= @helper('ui.filterbox', @route($url), array('placeholder' => @text('LIB-AN-SEARCH-PLACEHOLDER'))) ?>
             <div class="an-entities" data-url="<?= @route($url.'&limit=100') ?>"></div>
         </div>

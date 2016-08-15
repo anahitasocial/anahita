@@ -66,7 +66,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         if (
             !KService::get('application')->getSystemSetting('caching') ||
             (
-                JFactory::getUser()->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR &&
+                get_viewer()->superadmin() &&
                 // @todo incorporate this feature in the global settings
                 KRequest::get('get.clearapc', 'cmd')
             )
@@ -98,13 +98,13 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         $viewer = get_viewer();
 
         if (!$viewer->guest() && !$viewer->enabled) {
-            KService::get('com://site/people.helper.person')->logout();
+            KService::get('com:people.helper.person')->logout();
         }
 
         jimport('joomla.utilities.utility');
         jimport('joomla.utilities.simplecrypt');
 
-        $user = array();
+        $credentials = array();
         $remember = JUtility::getHash('JLOGIN_REMEMBER');
 
         // for json requests obtain the username and password from the $_SERVER array
@@ -115,8 +115,10 @@ class PlgSystemAnahita extends PlgAnahitaDefault
                KRequest::has('server.PHP_AUTH_PW') &&
                KRequest::format() == 'json'
            ) {
-            $user['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
-            $user['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
+
+            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
+            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
+
         } elseif (
               $viewer->guest() &&
               isset($_COOKIE[$remember]) &&
@@ -127,22 +129,25 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             if ($key) {
                 $crypt = new JSimpleCrypt($key);
                 $cookie = $crypt->decrypt($_COOKIE[$remember]);
-                $user = (array) @unserialize($cookie);
+                $credentials = (array) @unserialize($cookie);
             }
+
         } else {
             return;
         }
 
-        if ($viewer->guest() && count($user)) {
+        if ($viewer->guest() && count($credentials)) {
 
             try {
+
                 jimport('joomla.user.authentication');
                 $authentication = &JAuthentication::getInstance();
-                $authResponse = $authentication->authenticate($user, array());
+                $authResponse = $authentication->authenticate($credentials, array());
 
                 if ($authResponse->status == JAUTHENTICATE_STATUS_SUCCESS) {
-                    KService::get('com://site/people.helper.person')->login($user, true);
+                    KService::get('com:people.helper.person')->login($credentials, true);
                 }
+
             } catch (RuntimeException $e) {
                 //only throws exception if we are using JSON format
                 //otherwise let the current app handle it
@@ -180,12 +185,13 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     public function onBeforeDeleteUser(KEvent $event)
     {
 
-        $person = KService::get('repos://site/people.person')->find(array(
+        $person = KService::get('repos:people.person')->find(array(
                     'userId' => $event->user['id']
                   ));
 
         if ($person) {
-            KService::get('repos://site/components')
+
+            KService::get('repos:components')
             ->fetchSet()
             ->registerEventDispatcher(KService::get('anahita:event.dispatcher'));
 

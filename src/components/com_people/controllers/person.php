@@ -35,7 +35,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('validatable', 'com://site/mailer.controller.behavior.mailer'),
+            'behaviors' => array(
+                'validatable',
+                'com:mailer.controller.behavior.mailer'
+            ),
             'request' => array(
                 'reset_password' => 0
             )
@@ -51,6 +54,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         );
 
         $viewer = get_viewer();
+
         if ($viewer->superadmin()) {
             $this->_allowed_user_types[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         }
@@ -72,6 +76,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $query = $context->query;
 
         if ($this->filter) {
+
             if (
                 $this->filter['usertype'] &&
                 in_array($this->filter['usertype'], $this->_allowed_user_types)
@@ -89,7 +94,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $query->filterEmail($this->q);
         }
 
-        if ($this->getService('com://site/people.filter.username')->validate($this->q)) {
+        if ($this->getService('com:people.filter.username')->validate($this->q)) {
             $query->filterUsername($this->q);
         }
 
@@ -123,18 +128,18 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $data = $context->data;
 
         //dont' set the usertype yet, until we find the conditions are met
-        $userType = null;
-        if ($data->userType) {
-            $userType = $data->userType;
-            unset($context->data->userType);
+        $usertype = null;
+
+        if ($data->usertype) {
+            $usertype = $data->usertype;
+            unset($context->data->usertype);
+        }
+
+        if ($data->password) {
+            $_SESSION['reset_password_prompt'] = 0;
         }
 
         $person = parent::_actionEdit($context);
-
-        if ($data->password) {
-            $person->setPassword($data->password);
-            $_SESSION['reset_password_prompt'] = 0;
-        }
 
         //add the validations here
         $this->getRepository()
@@ -144,14 +149,16 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+            return;
         }
 
         //now check to see if usertype can be set, otherwise the value is unchanged
-        if (in_array($userType, $this->_allowed_user_types) && $person->authorize('changeUserType')) {
-            $person->userType = $userType;
+        if (in_array($usertype, $this->_allowed_user_types) && $person->authorize('changeUsertype')) {
+            $person->usertype = $usertype;
         }
 
         $person->timestamp();
+
         $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
         return $person;
@@ -167,18 +174,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionAdd(KCommandContext  $context)
     {
         $data = $context->data;
-        $viewer = get_viewer();
-        $isFirstUser = !(bool) $this->getService('repos://site/users')
+        $isFirstUser = !(bool) $this->getService('repos:people.person')
                                     ->getQuery(true)
                                     ->fetchValue('id');
 
         $person = parent::_actionAdd($context);
-
-        if ($data->password) {
-            $person->setPassword($data->password);
-        }
-
-        $redirectUrl = 'option=com_people';
 
         $this->getRepository()
         ->getValidator()
@@ -187,52 +187,40 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
-
             return false;
         }
 
-        if ($viewer->admin() && in_array($data->userType, $this->_allowed_user_types)) {
-            $person->userType = $data->userType;
+        $viewer = get_viewer();
+
+        if ($isFirstUser) {
+            $person->accessCode = JUtility::getHash(JUserHelper::genRandomPassword());
+            $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
+        } elseif ($viewer->admin() && in_array($data->usertype, $this->_allowed_user_types)) {
+            $person->usertype = $data->usertype;
         } else {
-            $person->userType = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+            $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
+
+        $redirectUrl = 'option=com_people';
 
         if ($isFirstUser) {
             $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } elseif ($viewer->admin()) {
             $redirectUrl .= '&view=people';
-
             if ($person->admin()) {
                 $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
             }
-
         } else {
+            $redirectUrl .= '&view=session';
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
-            $redirectUrl .= '&view=session';
+
         }
 
         $context->response->setRedirect(route($redirectUrl));
         $context->response->status = 200;
 
         return $person;
-    }
-
-    /**
-     * Deletes a person and all of their assets. It also logsout the person.
-     *
-     * @param KCommandContext $context Context parameter
-     */
-    protected function _actionDelete(KCommandContext $context)
-    {
-        parent::_actionDelete($context);
-
-        $this->commit();
-
-        $userId = $this->getItem()->userId;
-
-        $this->getService('application')->logout($userId);
-        JFactory::getUser($userId)->delete();
     }
 
     /**
@@ -244,7 +232,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $url = null;
 
-        if ($context->action == 'delete') {
+        if ($context->action === 'delete') {
             $url = 'option=com_people&view=people';
         }
 
@@ -261,7 +249,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function mailActivationLink(KCommandContext $context)
     {
         $person = $context->result;
-        $this->user = $person->getUserObject();
         $viewer = get_viewer();
 
         if ($viewer->admin()) {
@@ -272,9 +259,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $template = 'account_activate';
         }
 
+        $settings = new JConfig();
+
         $this->mail(array(
             'to' => $person->email,
-            'subject' => sprintf(AnTranslator::_($subject), JFactory::getConfig()->getValue('sitename')),
+            'subject' => sprintf(AnTranslator::_($subject), $settings->sitename),
             'template' => $template,
         ));
     }
@@ -301,10 +290,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function activateFirstAdmin(KCommandContext $context)
     {
         $person = $context->result;
-        $user = $this->getService('repos://site/users.user')
-                     ->find(array('id' => $person->userId));
         $context->response
-        ->setRedirect(route('option=com_people&view=session&token='.$user->activation));
+        ->setRedirect(route('option=com_people&view=session&token='.$person->activationCode));
     }
 
     /**

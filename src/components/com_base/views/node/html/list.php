@@ -1,9 +1,9 @@
-<?php defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die; ?>
 
-<?php if ($item->inherits('ComBaseDomainEntityComment')): ?>
+<? if ($item->inherits('ComBaseDomainEntityComment')): ?>
 <?= @template('list_comment') ?>
-<?php elseif ($item->inherits('ComActorsDomainEntityActor')): ?>
+<? elseif ($item->inherits('ComActorsDomainEntityActor')): ?>
 <?= @template('list_actor') ?>
-<?php else: ?>
+<? else: ?>
 <?= @template('list_node') ?>
-<?php endif; ?>
+<? endif; ?>

@@ -47,7 +47,7 @@ class ComPeopleTemplateHelper extends KTemplateHelperAbstract
         $options->append(array(
             'id' => 'person-userType',
             'selected' => 'registered',
-            'name' => 'userType',
+            'name' => 'usertype',
             'class' => 'input-block-level',
         ));
 

@@ -1,18 +1,18 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php if (isset($service)) : ?>
+<? if (isset($service)) : ?>
 <script data-inline src="https://connect.facebook.net/en_US/all.js"></script>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="media://com_invites/js/facebook.js" />
-<?php else: ?>
+<? else: ?>
 <script src="media://com_invites/js/min/facebook.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
 <div id="fb-root"></div>
 
 <script>
-<?php
+<?
 $subject = htmlspecialchars(sprintf(@text('COM-INVITES-MESSAGE-SUBJECT'), JFactory::getConfig()->getValue('sitename')));
 $body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name($viewer, false), JFactory::getConfig()->getValue('sitename')));
 $url = @route()->getUrl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT);
@@ -33,12 +33,12 @@ $('body').invitesFacebook({
 </a>
 
 <div class="an-entities masonry">
-<?php
-$controller = @service('com://site/people.controller.person', array('request' => array('view' => 'people')));
+<?
+$controller = @service('com:people.controller.person', array('request' => array('view' => 'people')));
 $controller->getState()->setList($items);
 ?>
 <?= $controller->getView()->layout('list')->display() ?>
 </div>
-<?php else: ?>
+<? else: ?>
 <?= @template('add') ?>
-<?php endif; ?>
+<? endif; ?>

@@ -1,19 +1,19 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<? defined('KOOWA') or die('Restricted access') ?>
 
-<?php if (count($composers)) : ?>
+<? if (count($composers)) : ?>
 
-<?php if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('JDEBUG') && JDEBUG) : ?>
 <script src="com_composer/js/_composer.js" />
 <script src="com_locations/js/geoposition.js" />
-<?php else: ?>
+<? else: ?>
 <script src="com_composer/js/min/_composer.min.js" />
 <script src="com_locations/js/min/geoposition.min.js" />
-<?php endif; ?>
+<? endif; ?>
 
 <div id="com-composer-container" data-behavior="Composer">
     <div class="clearfix">
         <div class="btn-group pull-right">
-            <?php $array = array_values($composers->getObjects()); ?>
+            <? $array = array_values($composers->getObjects()); ?>
             <button class="btn dropdown-toggle" class="dropdown-toggle" data-toggle="dropdown">
             	<i class="icon-plus-sign"></i>
             	<span class="composer-button-title"><?=$array[0]->title?></span>
@@ -21,22 +21,22 @@
             </button>
 
             <ul id="composer-menu" class="dropdown-menu">
-            <?php foreach ($composers as $composer) : ?>
+            <? foreach ($composers as $composer) : ?>
                 <li>
                 	<a href="#" title="<?= $composer->title ?>">
                 	<?= $composer->title ?>
                 	</a>
                 </li>
-            <?php endforeach;?>
+            <? endforeach;?>
             </ul>
         </div>
     </div>
     <div class="tab-content">
-    <?php foreach ($composers as $index => $composer) : ?>
+    <? foreach ($composers as $index => $composer) : ?>
         <div class="tab-content-item" data-url="<?=@route($composer->url) ?>">
             <a class="form-placeholder"><?= $composer->placeholder ?></a>
         </div>
-    <?php endforeach;?>
+    <? endforeach;?>
     </div>
 </div>
-<?php endif;?>
+<? endif;?>

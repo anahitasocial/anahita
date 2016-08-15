@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
 <h4><?= @text('COM-PHOTOS-SET-CHANGE-COVER') ?></h4>
 

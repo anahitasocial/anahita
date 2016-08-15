@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -35,6 +35,6 @@ class ComPeopleControllerPermissionToken extends LibBaseControllerPermissionDefa
      */
     public function canExecute($action)
     {
-        return JFactory::getUser()->id == 0;
+        return get_viewer()->guest();
     }
 }
