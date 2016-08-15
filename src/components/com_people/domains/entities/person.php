@@ -192,6 +192,19 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     }
 
     /**
+     * Automatically sets the activation token for the user.
+     *
+     * @return LibUsersDomainEntityUser
+     */
+    public function requiresReactivation()
+    {
+        //@todo we need a global token generator
+        $token = bin2hex(openssl_random_pseudo_bytes(32));
+        $this->activationCode = $token;
+        return $this;
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function _afterEntityInstantiate(KConfig $config)

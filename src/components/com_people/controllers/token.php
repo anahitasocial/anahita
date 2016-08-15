@@ -34,7 +34,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
+            'behaviors' => array('com:mailer.controller.behavior.mailer'),
         ));
 
         parent::_initialize($config);
@@ -64,10 +64,11 @@ class ComPeopleControllerToken extends ComBaseControllerResource
                       ->getQuery()
                       ->email($email)
                       ->where('IF(!@col(enabled),@col(activationCode) <> \'\',1)')
+                      ->disableChain()
                       ->fetch();
 
         if ($person) {
-            $user->requiresActivation()->save();
+            $person->requiresReactivation()->save();
             $this->getResponse()->status = KHttpResponse::CREATED;
             $this->person = $person;
         } else {
