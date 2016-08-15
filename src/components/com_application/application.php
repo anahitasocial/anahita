@@ -64,7 +64,7 @@ class ComApplication extends KObject
 
         //create the session if a session name is passed
         if($config['session'] !== false) {
-          $this->_createSession(JUtility::getHash($config['session_name']));
+          $this->createSession(JUtility::getHash($config['session_name']));
         }
     }
 
@@ -118,8 +118,9 @@ class ComApplication extends KObject
   	 * @param	string	The sessions name.
   	 * @return	object	AnSession on success. May call exit() on database error.
   	 */
-  	public function &_createSession($name)
+  	public function createSession($name)
   	{
+
         $config = new KConfig(array(
             'name' => $name
         ));
@@ -224,7 +225,10 @@ class ComApplication extends KObject
     public function &getRouter($name = null, $options = array())
     {
         if (!isset($this->_router)) {
-            $this->_router = KService::get('com://site/application.router', array('enable_rewrite' => JFactory::getConfig()->getValue('sef_rewrite')));
+            $settings = new JConfig();
+            $this->_router = KService::get('com:application.router', array(
+                'enable_rewrite' => $settings->sef_rewrite
+            ));
         }
 
         return $this->_router;

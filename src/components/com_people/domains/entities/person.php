@@ -186,6 +186,11 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         return $this->usertype === self::USERTYPE_SUPER_ADMINISTRATOR;
     }
 
+    public function visited()
+    {
+        $this->lastVisitDate = AnDomainAttributeDate::getInstance();
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -212,9 +217,9 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'minute' => 0,
                 'second' => 0,
                 'partsecond' => 0,
-                'year' => '0000',
-                'month' => '00',
-                'day' => '00'
+                'year' => '1000',
+                'month' => '01',
+                'day' => '01'
             )
         )));
     }
@@ -227,7 +232,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
 
     protected function _beforeEntityUpdate(KCommandContext $context)
     {
-        $this->alias = $this->username;
-        $this->lastVisitDate = AnDomainAttributeDate::getInstance();
+        if ($this->getModifiedData()->username) {
+            $this->alias = $this->username;
+        }
     }
 }

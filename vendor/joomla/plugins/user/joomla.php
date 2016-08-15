@@ -53,9 +53,10 @@ class plgUserJoomla extends PlgAnahitaDefault
 			return false;
 		}
 
+		$person->visited();
+
 		// Register the needed session variables
 		$session = KService::get('com:sessions');
-
 		$session->set('person', (object) $person->getData());
 
 		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {

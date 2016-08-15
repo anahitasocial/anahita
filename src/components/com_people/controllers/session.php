@@ -213,27 +213,22 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             return false;
         }
 
-        $newPerson = ($person->lastVisitDate->compare($person->registrationDate)) ? true : false;
-        $redirectUrl = $person->getURL();
+        $newPerson = ($person->registrationDate->compare($person->lastVisitDate)) ? true : false;
 
-        //@todo: this isn't working
         if ($newPerson) {
             $person->enable();
         }
 
         $person->activationCode = '';
-
         $this->token = null;
         $this->_request->token = null;
 
         if ($this->reset_password) {
-            $redirectUrl .= '&get=settings&edit=account';
             $_SESSION['reset_password_prompt'] = 1;
         }
 
         $credentials = array(
             'username' => $person->username,
-            //@todo this needs to be a clear password
             'password' => $person->password,
             'remember' => true,
         );
@@ -246,8 +241,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getResponse()->setRedirect($returnUrl);
         } else {
             $_SESSION['return'] = null;
-            $msg = AnTranslator::_('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
-            $this->getResponse()->setRedirect(route($redirectUrl), $msg);
+            $this->setMessage('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
+            $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
         }
 
         $this->getResponse()->status = KHttpResponse::ACCEPTED;

@@ -29,7 +29,7 @@ class ComPeopleHelperPerson extends KObject
         $session->fork();
 
         $application = KService::get('application');
-        $application->_createSession($session->getId());
+        $application->createSession($session->getId());
 
         $options = array();
         $results = dispatch_plugin('user.onLoginUser', array(

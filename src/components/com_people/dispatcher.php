@@ -28,6 +28,7 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
         ) {
             $this->getController()->execute('tokenlogin', $context);
             $context->response->send();
+            exit(0);
         }
 
         return parent::_actionDispatch($context);
