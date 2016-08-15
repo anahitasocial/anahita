@@ -34,7 +34,7 @@ $('body').invitesFacebook({
 
 <div class="an-entities masonry">
 <?
-$controller = @service('com://site/people.controller.person', array('request' => array('view' => 'people')));
+$controller = @service('com:people.controller.person', array('request' => array('view' => 'people')));
 $controller->getState()->setList($items);
 ?>
 <?= $controller->getView()->layout('list')->display() ?>
