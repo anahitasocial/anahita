@@ -363,33 +363,4 @@ class JFactory
 
 		return $lang;
 	}
-
-	/**
-	 * Create a document object
-	 *
-	 * @access private
-	 * @return object JDocument
-	 * @since 1.5
-	 */
-	static private function &_createDocument()
-	{
-		jimport('joomla.document.document');
-
-		$lang	=& JFactory::getLanguage();
-
-		//Keep backwards compatibility with Joomla! 1.0
-		$raw	= JRequest::getBool('no_html');
-		$type	= JRequest::getWord('format', $raw ? 'raw' : 'html');
-
-		$attributes = array (
-			'charset'	=> 'utf-8',
-			'lineend'	=> 'unix',
-			'tab'		=> '  ',
-			'language'	=> $lang->getTag(),
-			'direction'	=> $lang->isRTL() ? 'rtl' : 'ltr'
-		);
-
-		$doc =& JDocument::getInstance($type, $attributes);
-		return $doc;
-	}
 }

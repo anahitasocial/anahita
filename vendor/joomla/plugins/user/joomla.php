@@ -21,7 +21,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 	 */
 	public function onAfterDeleteUser(KEvent $event)
 	{
-		if(!$event->succes) {
+		if (!$event->succes) {
 			return false;
 		}
 
@@ -44,11 +44,12 @@ class plgUserJoomla extends PlgAnahitaDefault
 		$credentials = $event->credentials;
 		$options = $event->options;
 
-		$person = KService::get('repos:people.person')
-				  ->find(array('username' => $credentials['username']));
+		$person = KService::get('repos:people.person')->find(array(
+						'username' => $credentials->username
+					));
 
 		if (!isset($person)) {
-			$msg = "Did not find a user with username: ".$credentials['username'];
+			$msg = "Did not find a user with username: ".$credentials->username;
 			throw new AnErrorException($msg, KHttpResponse::UNAUTHORIZED);
 			return false;
 		}
@@ -60,6 +61,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 		$session->set('person', (object) $person->getData());
 
 		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {
+
 			$sessionEntity->setData(array(
 				'guest' => 0,
 				'nodeId' => $person->id,
@@ -88,7 +90,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 	{
 		$person = $event->person;
 
-		if ($person['id'] == 0) {
+		if ($person->id === 0) {
 			return false;
     	}
 
@@ -96,7 +98,7 @@ class plgUserJoomla extends PlgAnahitaDefault
 		$session = KService::get('com:sessions');
 		$session->destroy();
 
-		KService::get('repos:sessions.session')->destroy($person['id']);
+		KService::get('repos:sessions.session')->destroy($person->id);
 
 		return true;
 	}

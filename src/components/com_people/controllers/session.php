@@ -141,20 +141,22 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $_SESSION['return'] = null;
         }
 
-        jimport('joomla.user.authentication');
-        $authentication = &JAuthentication::getInstance();
         $credentials = array(
             'username' => $data->username,
             'password' => $data->password,
-            'remember' => $data->remember,
+            'remember' => $data->remember
         );
-        $options = array();
-        $authResponse = $authentication->authenticate($credentials, $options);
 
-        if ($authResponse->status === JAUTHENTICATE_STATUS_SUCCESS) {
+        $response = $this->getService('com:people.authentication.response');
+        dispatch_plugin('authentication.onAuthenticate', array(
+                            'credentials' => $credentials,
+                            'response' => $response
+                        ));
 
-            $credentials['username'] = $authResponse->username;
-            $credentials['password'] = $authResponse->password;
+        if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
+
+            $credentials['username'] = $response->username;
+            $credentials['password'] = $response->password;
 
             $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
 
@@ -172,6 +174,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $_SESSION['return'] = null;
 
         } else {
+
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             $this->getResponse()->status = KHttpResponse::FORBIDDEN;
