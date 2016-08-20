@@ -60,7 +60,8 @@ class ComPeopleDomainValidatorPerson extends AnDomainValidatorAbstract
                 $person->addError(array(
                     'message' => "Invalid $field format",
                     'code' => AnError::INVALID_FORMAT,
-                    'key' => $field
+                    'key' => $field,
+                    'format' => $field
                 ));
             }
         }

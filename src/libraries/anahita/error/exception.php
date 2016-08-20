@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,12 +30,12 @@ class AnErrorException extends KException
 {
     /**
      * An array of Exceptions and Error object.
-     * 
+     *
      * @var Iterator
      */
     protected $_errors = array();
 
-    /** 
+    /**
      * Constructor.
      *
      * @param array $config An optional KConfig object with configuration options.
@@ -59,9 +59,11 @@ class AnErrorException extends KException
     public function __toString()
     {
         $errors = array();
+
         foreach ($this->_errors as $error) {
             $errors[] = $error->toArray();
         }
+
         $msg = "Exception '".get_class($this)."' with message '".$this->getMessage()."' in ".$this->getFile().':'.$this->getLine();
         $msg .= ' '.json_encode($errors);
 
@@ -70,7 +72,7 @@ class AnErrorException extends KException
 
     /**
      * Return an array of errors.
-     * 
+     *
      * @return array
      */
     public function getErrors()
