@@ -1,23 +1,6 @@
 <?php
-/**
- * @version     $Id: mysqli.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Nooku_Components
- * @subpackage  Default
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
-
-/**
- * Default Database MySQLi Adapter
- *
- * @author      Johan Janssens <johan@nooku.org>
- * @category    Nooku
- * @package     Nooku_Components
- * @subpackage  Default
- */
-class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KServiceInstantiatable
+class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KServiceInstantiatable
 {
     /**
   	 * The cache object

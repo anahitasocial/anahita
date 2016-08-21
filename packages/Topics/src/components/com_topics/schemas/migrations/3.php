@@ -16,7 +16,7 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);
 
-        $db = KService::get('koowa:database.adapter.mysqli');
+        $db = KService::get('anahita:database.adapter.mysqli');
 
         dboutput("Updating Topics. This may take a while ...\n");
 
