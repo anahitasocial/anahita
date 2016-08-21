@@ -140,11 +140,13 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
             try {
 
-                jimport('joomla.user.authentication');
-                $authentication = &JAuthentication::getInstance();
-                $authResponse = $authentication->authenticate($credentials, array());
+                $response = $this->getService('com:people.authentication.response');
+                dispatch_plugin('authentication.onAuthenticate', array(
+                                    'credentials' => $credentials,
+                                    'response' => $response
+                                ));
 
-                if ($authResponse->status == JAUTHENTICATE_STATUS_SUCCESS) {
+                if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
                     KService::get('com:people.helper.person')->login($credentials, true);
                 }
 
@@ -186,7 +188,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
 
         $person = KService::get('repos:people.person')->find(array(
-                    'userId' => $event->user['id']
+                    'id' => $event->person->id
                   ));
 
         if ($person) {

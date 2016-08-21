@@ -1,0 +1,22 @@
+{
+    "name": "Authentication",
+    "description": "Handles Anahita's default user authentication",
+    "type": "plugin",
+    "group": "authentication",
+    "version": "4.3",
+    "license": "GPLv3",
+    "homepage": "http://www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@GetAnahita.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "anahita.php"
+    ]
+}

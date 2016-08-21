@@ -32,17 +32,12 @@ class JFactory
 	 * @param string	The type of the configuration file
 	 * @return object JRegistry
 	 */
-	static public function &getConfig($file = null, $type = 'PHP')
+	static public function &getConfig()
 	{
 		static $instance;
 
-		if (!is_object($instance))
-		{
-			if ($file === null) {
-					$file = dirname(__FILE__).DS.'config.php';
-			}
-
-			$instance = JFactory::_createConfig($file, $type);
+		if (!is_object($instance)){
+			$instance = JFactory::_createConfig();
 		}
 
 		return $instance;
@@ -243,11 +238,9 @@ class JFactory
 	 * @return object JRegistry
 	 * @since 1.5
 	 */
-	static private function &_createConfig($file, $type = 'PHP')
+	static private function &_createConfig()
 	{
 		jimport('joomla.registry.registry');
-
-		require_once $file;
 
 		// Create the registry with a default namespace of config
 		$registry = new JRegistry('config');
@@ -362,34 +355,5 @@ class JFactory
 		$lang	=& JLanguage::getInstance($settings->language);
 
 		return $lang;
-	}
-
-	/**
-	 * Create a document object
-	 *
-	 * @access private
-	 * @return object JDocument
-	 * @since 1.5
-	 */
-	static private function &_createDocument()
-	{
-		jimport('joomla.document.document');
-
-		$lang	=& JFactory::getLanguage();
-
-		//Keep backwards compatibility with Joomla! 1.0
-		$raw	= JRequest::getBool('no_html');
-		$type	= JRequest::getWord('format', $raw ? 'raw' : 'html');
-
-		$attributes = array (
-			'charset'	=> 'utf-8',
-			'lineend'	=> 'unix',
-			'tab'		=> '  ',
-			'language'	=> $lang->getTag(),
-			'direction'	=> $lang->isRTL() ? 'rtl' : 'ltr'
-		);
-
-		$doc =& JDocument::getInstance($type, $attributes);
-		return $doc;
 	}
 }

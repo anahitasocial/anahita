@@ -59,9 +59,6 @@ class ComPeopleFilterPassword extends KFilterRaw
      */
     private function _encrypt($value)
     {
-        jimport('joomla.user.helper');
-        $salt = JUserHelper::genRandomPassword(32);
-        $crypt = JUserHelper::getCryptedPassword($value, $salt);
-        return $crypt.':'.$salt;
+        return password_hash($value, PASSWORD_DEFAULT);
     }
 }

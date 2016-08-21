@@ -212,8 +212,7 @@ class Create extends Command
             });
         }
 
-        jimport('joomla.user.helper');
-        $config->secret = \JUserHelper::genRandomPassword(32);
+        $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $config->save();
 
         $output->writeLn("<info>Congratulations you're done.</info>");
@@ -284,14 +283,11 @@ $console
 
     if ($input->getOption('new-secret')) {
         $console->loadFramework();
-        jimport('joomla.user.helper');
-        $config->set('secret', \JUserHelper::genRandomPassword(32));
+        $config->set('secret', bin2hex(openssl_random_pseudo_bytes(32)));
     }
 
     if ($input->getOption('set-value')) {
-
         $values = $input->getOption('set-value');
-
         foreach ($values as $value) {
             $parts = explode('=',$value);
             $parts = array_map('trim', $parts);

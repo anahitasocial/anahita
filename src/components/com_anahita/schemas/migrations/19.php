@@ -125,6 +125,10 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE `#__people_people` DROP COLUMN `userid`');
 
         dbexec('DROP TABLE IF EXISTS `#__users`');
+
+        //update user and authentication plugins
+        dbexec("UPDATE `#__plugins` SET `element` = 'anahita' WHERE `element` = 'joomla'");
+        dbexec("UPDATE `#__plugins` SET `name` = 'User - Anahita' WHERE `folder` = 'user' AND `element` = 'anahita'");
     }
 
    /**
