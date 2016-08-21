@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -9,11 +9,10 @@
  *
  * @link       http://www.GetAnahita.com
  */
-jimport('joomla.filesystem.file');
 
 /**
- * Coverable Behavior. 
- * 
+ * Coverable Behavior.
+ *
  * An cover representation of a node
  *
  * @category   Anahita
@@ -27,21 +26,21 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 {
     /**
      * An arary of sizes to resize a cover to.
-     * 
+     *
      * @var array
      */
     protected $_sizes;
 
     /**
      * A boolearn flag to whether to keep the orignal file or not. By default set to true.
-     * 
+     *
      * @var bool
      */
     protected $_keep_original;
 
     /**
      * Pending files to be stored for an entity.
-     * 
+     *
      * @var AnObjectArray
      */
     protected $_pending_files;
@@ -86,7 +85,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return if the cover is set.
-     * 
+     *
      * @return bool
      */
     public function coverSet()
@@ -127,10 +126,12 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     {
         $coverFilename = $this->coverFilename;
 
-        //remove the extension
-        $extension = JFile::getExt($coverFilename);
-        $name = JFile:: stripExt($coverFilename);
+        //get the extension
+        $extension = explode('.', $coverFilename);
+        $extension = array_pop($extension);
 
+        //remove file extension
+        $name = preg_replace('#\.[^.]*$#', '', $coverFilename);
         $coverFilename = $name.'_'.$size.'.'.$extension;
 
         return $coverFilename;
@@ -138,7 +139,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return the URL to the cover.
-     * 
+     *
      * @return string
      */
     public function getCoverURL($size = 'large')
@@ -152,7 +153,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * Obtain the list of available sizes and dimensions for this cover.
-     * 
+     *
      * @return array of $size=>$dimension
      */
     public function getCoverSizes()
@@ -168,7 +169,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * After an entity is instantaited.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterEntityInstantiate(KCommandContext $context)
@@ -182,7 +183,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * Set the cover.
-     * 
+     *
      * @param array $config The cover options [data,orientation,mimetype]
      */
     public function setCover($config)
@@ -255,9 +256,9 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return a resizes verion of the image.
-     * 
+     *
      * @param resource $image
-     * 
+     *
      * @return array
      */
     public function resizeCoverImage($image)
@@ -291,7 +292,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
     /**
      * Called after the entity is updated.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterEntityUpdate(KCommandContext $context)
@@ -326,10 +327,10 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     }
 
     /**
-     * Delete a photo image from the storage. 
-     * 
+     * Delete a photo image from the storage.
+     *
      * @param  KCommandContext $context Context parameter
-     *                                   
+     *
      * @return bool
      */
     protected function _beforeEntityDelete(KCommandContext $context)

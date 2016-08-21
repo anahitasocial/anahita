@@ -127,8 +127,9 @@ class JCache extends JObject
 	 */
 	public static function getStores()
 	{
-		jimport('joomla.filesystem.folder');
-		$handlers = JFolder::files(dirname(__FILE__).DS.'storage', '.php$');
+		$path = dirname(__FILE__).DS.'storage';
+		$handlers = array_values(preg_grep('/^([^.])/', scandir($path)));
+		//$handlers = JFolder::files(dirname(__FILE__).DS.'storage', '.php$');
 
 		$names = array();
 		foreach($handlers as $handler)
@@ -141,7 +142,7 @@ class JCache extends JObject
 			}
 
 			$class= trim($class);
-			
+
 			if(call_user_func_array( array( $class, 'test' ), array())) {
 				$names[] = $name;
 			}

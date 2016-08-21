@@ -377,6 +377,7 @@ $console
     $database = $config->getDatabaseInfo();
     $errors = array();
 
+    /*
     $db = \AnInstallationHelper::getDBO(
         'mysqli',
         $database['host'].':'.$database['port'],
@@ -386,6 +387,9 @@ $console
         $database['prefix'],
         true
     );
+    */
+
+    $db = \KService::get('anahita:database.adapeter.mysqli');
 
     if ($db instanceof \JException) {
         $output->writeLn('<error>'.$db->toString().'</error>');

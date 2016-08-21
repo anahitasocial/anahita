@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -14,11 +14,10 @@
  *
  * @link       http://www.GetAnahita.com
  */
-jimport('joomla.filesystem.file');
 
 /**
- * Portraitable Behavior. 
- * 
+ * Portraitable Behavior.
+ *
  * An image representation of a node
  *
  * @category   Anahita
@@ -33,21 +32,21 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 {
     /**
      * An arary of sizes to resize a portrait to.
-     * 
+     *
      * @var array
      */
     protected $_sizes;
 
     /**
      * A boolearn flag to whether to keep the orignal file or not. By default set to true.
-     * 
+     *
      * @var bool
      */
     protected $_keep_original;
 
     /**
      * Pending files to be stored for an entity.
-     * 
+     *
      * @var AnObjectArray
      */
     protected $_pending_files;
@@ -94,7 +93,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return if the portrait is set.
-     * 
+     *
      * @return bool
      */
     public function portraitSet()
@@ -135,9 +134,12 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
     {
         $filename = $this->filename;
 
-        //remove the extension
-        $extension = JFile::getExt($filename);
-        $name = JFile:: stripExt($filename);
+        //get file extension
+        $extension = explode('.', $filename);
+        $extension = array_pop($extension);
+
+        //remove extension
+        $name = preg_replace('#\.[^.]*$#', '', $filename);
 
         $filename = $name.'_'.$size.'.'.$extension;
 
@@ -146,7 +148,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return the URL to the portrait.
-     * 
+     *
      * @return string
      */
     public function getPortraitURL($size = 'square')
@@ -159,7 +161,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * Obtain the list of available sizes and dimensions for this photo.
-     * 
+     *
      * @return array of $size=>$dimension
      */
     public function getPortraitSizes()
@@ -175,7 +177,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * After an entity is instantaited.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterEntityInstantiate(KCommandContext $context)
@@ -189,7 +191,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * Set the portrait.
-     * 
+     *
      * @param array $config The portrait options [data,orientation,mimetype]
      */
     public function setPortrait($config)
@@ -285,9 +287,9 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * Return a resizes verion of the image.
-     * 
+     *
      * @param resource $image
-     * 
+     *
      * @return array
      */
     public function resizePortraitImage($image)
@@ -321,7 +323,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
     /**
      * Called after the entity is updated.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _afterEntityUpdate(KCommandContext $context)
@@ -356,10 +358,10 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
     }
 
     /**
-     * Delete a photo image from the storage. 
-     * 
+     * Delete a photo image from the storage.
+     *
      * @param  KCommandContext $context Context parameter
-     *                                   
+     *
      * @return bool
      */
     protected function _beforeEntityDelete(KCommandContext $context)

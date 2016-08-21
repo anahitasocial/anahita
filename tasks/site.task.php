@@ -157,6 +157,8 @@ class Create extends Command
 
         $errors  = array();
         $database = $config->getDatabaseInfo();
+
+        /*
         $db = \AnInstallationHelper::getDBO(
                   'mysqli',
                   $database['host'].':'.$database['port'],
@@ -166,6 +168,9 @@ class Create extends Command
                   $database['prefix'],
                   false
               );
+        */
+
+        $db = KService::get('anahita:database.adapeter.mysqli');
 
         if ($db instanceof \JException) {
             $output->writeLn('<error>'.$db->toString().'</error>');

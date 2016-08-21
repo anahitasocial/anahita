@@ -83,8 +83,7 @@ class JLog extends JObject
 			$path = $config->getValue('config.log_path');
 		}
 
-		jimport('joomla.filesystem.path');
-		$path = JPath :: clean($path . DS . $file);
+		$path = trim($path . DS . $file);
 		$sig = md5($path);
 
 		if (!isset ($instances)) {
@@ -176,8 +175,7 @@ class JLog extends JObject
 
 		if (!file_exists($this->_path))
 		{
-			jimport("joomla.filesystem.folder");
-			if (!JFolder :: create(dirname($this->_path))) {
+			if (!mkdir(dirname($this->_path))) {
 				return false;
 			}
 			$header[] = "#<?php die('Direct Access To Log Files Not Permitted'); ?>";
