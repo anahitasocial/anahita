@@ -32,17 +32,12 @@ class JFactory
 	 * @param string	The type of the configuration file
 	 * @return object JRegistry
 	 */
-	static public function &getConfig($file = null, $type = 'PHP')
+	static public function &getConfig()
 	{
 		static $instance;
 
-		if (!is_object($instance))
-		{
-			if ($file === null) {
-					$file = dirname(__FILE__).DS.'config.php';
-			}
-
-			$instance = JFactory::_createConfig($file, $type);
+		if (!is_object($instance)){
+			$instance = JFactory::_createConfig();
 		}
 
 		return $instance;
@@ -243,11 +238,9 @@ class JFactory
 	 * @return object JRegistry
 	 * @since 1.5
 	 */
-	static private function &_createConfig($file, $type = 'PHP')
+	static private function &_createConfig()
 	{
 		jimport('joomla.registry.registry');
-
-		require_once $file;
 
 		// Create the registry with a default namespace of config
 		$registry = new JRegistry('config');

@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Joomla Authentication plugin
- *
- * @package     Joomla
- * @subpackage  JFramework
- * @since 1.5
- */
-class plgAuthenticationJoomla extends PlgAnahitaDefault
+class plgAuthenticationAnahita extends PlgAnahitaDefault
 {
     function onAuthenticate(KEvent $event)
     {
@@ -28,21 +21,30 @@ class plgAuthenticationJoomla extends PlgAnahitaDefault
 
         if (isset($person)) {
 
-            $credentials->username = $person->username;
-            $parts = explode(':', $person->password);
-            $crypt = $parts[0];
-            $salt = isset($parts[1]) ? $parts[1] : '';
+            $success = false;
 
-            jimport('joomla.user.helper');
-            $testcrypt = JUserHelper::getCryptedPassword($credentials->password, $salt);
+            //check for legacy password
+            if (strpos($person->password, ':')) {
 
-            if ($crypt === $testcrypt) {
+                $credentials->username = $person->username;
+                $parts = explode(':', $person->password);
+                $crypt = $parts[0];
+                $salt = isset($parts[1]) ? $parts[1] : '';
 
+                if($person->password === md5($credentials->password.$salt).':'.$salt) {
+                    $success = true;
+                    //legacy password will be upgraded to php's new password_hash()
+                    $person->password = $credentials->password;
+                }
+            } else {
+                $success = password_verify($credentials->password, $person->password);
+            }
+
+            if ($success) {
                 $response->username = $person->username;
                 $response->email = $person->email;
                 $response->status = ComPeopleAuthentication::STATUS_SUCCESS;
                 $response->error_message = '';
-
             } else {
                 $response->status = ComPeopleAuthentication::STATUS_FAILURE;
                 $response->error_message = 'Invalid password';

@@ -188,7 +188,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
 
         $person = KService::get('repos:people.person')->find(array(
-                    'userId' => $event->user['id']
+                    'id' => $event->person->id
                   ));
 
         if ($person) {

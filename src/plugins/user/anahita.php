@@ -1,13 +1,6 @@
 <?php
 
-/**
- * Joomla User plugin
- *
- * @package		Joomla
- * @subpackage	JFramework
- * @since 		1.5
- */
-class plgUserJoomla extends PlgAnahitaDefault
+class plgUserAnahita extends PlgAnahitaDefault
 {
 
 	/**

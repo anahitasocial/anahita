@@ -1,0 +1,21 @@
+{
+	"name": "User - Anahita!",
+	"description": "Anahita's user plugin",
+	"type": "plugin",
+	"group": "user",
+	"version": "4.3",
+	"license": "GPLv3",
+	"homepage": "https://www.getanahita.com",
+	"authors": [{
+		"name": "Rastin mehr",
+		"email": "rastin@getanahita.com",
+		"homepage": "http://www.rmdstudio.com"
+	}],
+	"copyright": [
+		"2016 rmd Studio Inc."
+	],
+	"files": [
+		"anahita.php"
+	],
+	"fields": []
+}

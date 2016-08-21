@@ -198,10 +198,14 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function requiresReactivation()
     {
-        //@todo we need a global token generator
+        $this->_createActivationCode();
+        return $this;
+    }
+
+    protected function _createActivationCode()
+    {
         $token = bin2hex(openssl_random_pseudo_bytes(32));
         $this->activationCode = $token;
-        return $this;
     }
 
     /**
@@ -222,8 +226,12 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $this->alias = $this->username;
 
-        jimport('joomla.user.helper');
-        $this->activationCode = JUtility::getHash(JUserHelper::genRandomPassword());
+        $this->_createActivationCode();
+
+        if (!$this->password) {
+            $this->password = $this->activationCode;
+        }
+
         $this->lastVisitDate = AnDomainAttributeDate::getInstance(new KConfig(array(
             'date' => array(
                 'hour' => 0,

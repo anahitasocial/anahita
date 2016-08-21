@@ -193,7 +193,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $viewer = get_viewer();
 
         if ($isFirstUser) {
-            $person->accessCode = JUtility::getHash(JUserHelper::genRandomPassword());
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         } elseif ($viewer->admin() && in_array($data->usertype, $this->_allowed_user_types)) {
             $person->usertype = $data->usertype;
@@ -214,7 +213,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $redirectUrl .= '&view=session';
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
-
         }
 
         $context->response->setRedirect(route($redirectUrl));
