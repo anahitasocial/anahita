@@ -115,7 +115,9 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
             $identifiers = array();
 
             if (file_exists($path)) {
-                $files = JFolder::files($path);
+
+                //scandir without . and .. hiident directories
+                $files = array_values(preg_grep('/^([^.])/', scandir($path)));
 
                 foreach ($files as $file) {
                     $name = explode('.', basename($file));

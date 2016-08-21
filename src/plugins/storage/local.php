@@ -75,9 +75,9 @@ class PlgStorageLocal extends PlgStorageAbstract
     protected function _delete($path)
     {
         $path = $this->_realpath($path);
-        jimport('joomla.filesystem.folder');
+
         if (is_dir($path)) {
-            JFolder::delete($path);
+            rmdir($path);
         } elseif (file_exists($path)) {
             @unlink($path);
         }

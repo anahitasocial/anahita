@@ -290,8 +290,7 @@ class JRegistry extends JObject
 		}
 
 		// Get the contents of the file
-		jimport('joomla.filesystem.file');
-		$data = JFile::read($file);
+		$data = readfile($file);
 
 		if (!isset($this->_registry[$namespace]))
 		{

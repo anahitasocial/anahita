@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.filesystem.file');
-
 /**
  * Set Entity.
  *
@@ -51,9 +49,12 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
         $cover = $this->photos->order('photoSets.ordering')->fetch();
         $filename = $cover->filename;
 
-        //remove the extension
-        $extension = JFile::getExt($filename);
-        $name = JFile:: stripExt($filename);
+        //get file extension
+        $extension = explode('.', $filename);
+        $extension = array_pop($extension);
+
+        //remove file extension
+        $name = preg_replace('#\.[^.]*$#', '', $filename);
         $filename = $name.'_'.$size.'.'.$extension;
 
         return $this->owner->getPathURL('com_photos/'.$filename);
