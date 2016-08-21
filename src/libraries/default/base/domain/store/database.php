@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Database storage.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -69,7 +69,7 @@ class LibBaseDomainStoreDatabase extends AnDomainStoreDatabase implements KServi
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'adapter' => $this->getService('koowa:database.adapter.mysqli'),
+            'adapter' => $this->getService('anahita:database.adapter.mysqli'),
         ));
 
         parent::_initialize($config);

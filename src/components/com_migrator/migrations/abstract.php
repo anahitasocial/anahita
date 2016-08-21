@@ -120,7 +120,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
         $config->append(array(
            'output_path' => $path,
            'tables' => self::AUTO_DETECT_TABLES,
-           'db' => $this->getService('koowa:database.adapter.mysqli'),
+           'db' => $this->getService('anahita:database.adapter.mysqli'),
            'command_chain' => $this->getService('koowa:command.chain'),
            'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
            'component' => $this->getIdentifier()->package,

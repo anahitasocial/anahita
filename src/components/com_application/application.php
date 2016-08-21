@@ -252,10 +252,10 @@ class ComApplication extends KObject
   			$r = null;
 
   			if (!preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
-            throw new AnErrorException(
-              "Can't get or parse the class name.",
-              KHttpResponse::INTERNAL_SERVER_ERROR
-            );
+                throw new AnErrorException(
+                  "Can't get or parse the class name.",
+                  KHttpResponse::INTERNAL_SERVER_ERROR
+                );
   			}
 
   			$name = strtolower( $r[1] );

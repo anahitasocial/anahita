@@ -76,7 +76,7 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         //updating comments
 
         $timeThen = microtime(true);
-        $db = KService::get('koowa:database.adapter.mysqli');
+        $db = KService::get('anahita:database.adapter.mysqli');
 
         //change comment formats from html to string
         $entities = dbfetch('SELECT id, body FROM #__nodes WHERE type LIKE "ComBaseDomainEntityComment%" ');

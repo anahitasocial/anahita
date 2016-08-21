@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -14,8 +14,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-define('PHP_INT_MIN', ~PHP_INT_MAX);
-
+ 
 /**
  * Array Helper.
  *
@@ -37,10 +36,10 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Index an object (or an array) using one of it's attribute.
-     * 
-     * @param array  $items An array of object or associative array  
+     *
+     * @param array  $items An array of object or associative array
      * @param string $key   Attribute by which to index the array
-     * 
+     *
      * @return array
      */
     public static function indexBy($items, $key)
@@ -56,10 +55,10 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Collects $key from an array of items.
-     * 
-     * @param array        $items An array of object or associative array  
+     *
+     * @param array        $items An array of object or associative array
      * @param string|array $key   The key to collect the value for
-     * 
+     *
      * @return array
      */
     public static function collect($items, $key)
@@ -84,10 +83,10 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Groups an array of items by their common $key.
-     * 
-     * @param array  $items An array of object or associative array  
+     *
+     * @param array  $items An array of object or associative array
      * @param string $key   Attribute by which to index the array
-     * 
+     *
      * @return array
      */
     public static function groupBy($items, $key)
@@ -107,9 +106,9 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Return a unique array of $array. This method also handles object as value.
-     * 
+     *
      * @param array $array An Array
-     * 
+     *
      * @return array
      */
     public static function unique($array)
@@ -131,7 +130,7 @@ class AnHelperArray extends KHelperArray
      *
      * @param array $array  The orignal array
      * @param array $values An array of values to be inserted
-     * 
+     *
      * @return array
      */
     public static function insert($array, $values, $index = null)
@@ -153,9 +152,9 @@ class AnHelperArray extends KHelperArray
      * Unset a list of values from an array. This method both unset any key that exists
      * in the $values array as well as any values that exists in the $values array. This method
      * modifies the $array object.
-     * 
+     *
      * @param array $array An Array values to unset
-     * 
+     *
      * @return array
      */
     public static function unsetValues($array, $values)
@@ -179,9 +178,9 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Flattens a multi-dimensial array and return all the values as one single array.
-     * 
+     *
      * @param array $array The array to be flattened
-     * 
+     *
      * @return array
      */
     public static function getValues($array)
@@ -201,9 +200,9 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Return the simple scalar array of the object.
-     * 
+     *
      * @param mixed $object An object to be converted to an array
-     * 
+     *
      * @return array
      */
     public static function toArray($object)
@@ -219,10 +218,10 @@ class AnHelperArray extends KHelperArray
 
     /**
      * Get the value of an item (array|object) using a $key. The $key can be a string path.
-     * 
+     *
      * @param object $item The object whose attribute value is being returend
      * @param string $key  The attribute name
-     * 
+     *
      * @return mixed
      */
     public static function getValue($item, $key)
@@ -246,7 +245,7 @@ class AnHelperArray extends KHelperArray
      * Return an interator for an object.
      *
      * @param mixed $object An Iteratable or NonInterable object
-     * 
+     *
      * @return Iteratorable
      */
     public static function getIterator($object)
@@ -261,7 +260,7 @@ class AnHelperArray extends KHelperArray
     /**
      * Get the value at an index. The index can be an integer or 'first' or 'last'. If the
      * index doesn't exists it returns null.
-     * 
+     *
      * @param array $array
      * @param mixed $index
      */
@@ -280,10 +279,10 @@ class AnHelperArray extends KHelperArray
     }
 
     /**
-     * Return true if the array is some of kind of iterative array. 
-     * 
-     * @param array $array An array of object or associative array  
-     * 
+     * Return true if the array is some of kind of iterative array.
+     *
+     * @param array $array An array of object or associative array
+     *
      * @return bool
      */
     public static function isIterable($array)

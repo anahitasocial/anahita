@@ -1,23 +1,6 @@
 <?php
-/**
- * @version     $Id: mysqli.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Nooku_Components
- * @subpackage  Default
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
-
-/**
- * Default Database MySQLi Adapter
- *
- * @author      Johan Janssens <johan@nooku.org>
- * @category    Nooku
- * @package     Nooku_Components
- * @subpackage  Default
- */
-class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KServiceInstantiatable
+class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KServiceInstantiatable
 {
     /**
   	 * The cache object
@@ -38,7 +21,7 @@ class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements 
     		parent::__construct($config);
 
     		if (JFactory::getConfig()->getValue('config.caching')) {
-    	     $this->_cache = JFactory::getCache('database', 'output');
+    	           $this->_cache = JFactory::getCache('database', 'output');
     		}
   	}
 
@@ -70,14 +53,55 @@ class ComDefaultDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements 
      */
     protected function _initialize(KConfig $config)
     {
-        $db = JFactory::getDBO();
+        $settings = new JConfig();
 
-		    $resource = method_exists($db, 'getConnection') ? $db->getConnection() : $db->_resource;
-		    $prefix   = method_exists($db, 'getPrefix') ? $db->getPrefix() : $db->_table_prefix;
+        $database = $settings->db;
+        $prefix = $settings->dbprefix;
+        $port = NULL;
+		$socket	= NULL;
+        $host = $settings->host;
+        $user = $settings->user;
+        $password = $settings->password;
+
+		$targetSlot = substr(strstr($host, ":"), 1);
+
+        if (!empty($targetSlot)) {
+
+			// Get the port number or socket name
+			if (is_numeric($targetSlot)) {
+                $port = $targetSlot;
+            } else {
+				$socket	= $targetSlot;
+            }
+
+			// Extract the host name only
+			$host = substr($host, 0, strlen($host) - (strlen($targetSlot) + 1));
+
+            // This will take care of the following notation: ":3306"
+			if($host === '') {
+				$host = 'localhost';
+            }
+		}
+
+        //test to see if driver exists
+        if (!function_exists( 'mysqli_connect' )) {
+            throw new Exception('The MySQL adapter "mysqli" is not available!');
+            return;
+		}
+
+        if(!($db = new mysqli($host, $user, $password, NULL, $port, $socket))) {
+            throw new Exception("Couldn't connect to the database!");
+			return false;
+        }
+
+        if (!$db->select_db($database)) {
+            throw new Exception("The database \"$database\" doesn't seem to exist!");
+			return false;
+		}
 
         $config->append(array(
-    		'connection'   => $resource,
-            'table_prefix' => $prefix,
+    		'connection' => $db,
+            'table_prefix' => $settings->dbprefix,
         ));
 
         parent::_initialize($config);
