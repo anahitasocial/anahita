@@ -53,10 +53,28 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
      */
     protected function _initialize(KConfig $config)
     {
-        $db = JFactory::getDBO();
+        $settings = new JConfig();
+        $options = array(
+            'driver' => 'mysqli',
+            'host' => $settings->host,
+            'user' => $settings->user,
+            'password' => $settings->password,
+            'database' => $settings->db,
+            'prefix' => $settings->dbprefix
+        );
 
-		    $resource = method_exists($db, 'getConnection') ? $db->getConnection() : $db->_resource;
-		    $prefix   = method_exists($db, 'getPrefix') ? $db->getPrefix() : $db->_table_prefix;
+        jimport('joomla.database.database');
+        $db =& JDatabase::getInstance($options);
+
+        if($db->getErrorNum() > 0) {
+            throw new AnErrorException(
+              'Could not connect to database: Error: '.$db->toString(),
+              KHttpResponse::INTERNAL_SERVER_ERROR
+            );
+        }
+
+		$resource = method_exists($db, 'getConnection') ? $db->getConnection() : $db->_resource;
+		$prefix   = method_exists($db, 'getPrefix') ? $db->getPrefix() : $db->_table_prefix;
 
         $config->append(array(
     		'connection'   => $resource,

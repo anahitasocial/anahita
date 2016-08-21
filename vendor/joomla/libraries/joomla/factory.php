@@ -103,31 +103,6 @@ class JFactory
 	}
 
 	/**
-	 * Get a database object
-	 *
-	 * Returns a reference to the global {@link JDatabase} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @return object JDatabase
-	 */
-	static public function &getDBO()
-	{
-		static $instance;
-
-		if (!is_object($instance))
-		{
-			//get the debug configuration setting
-			$conf =& JFactory::getConfig();
-			$debug = $conf->getValue('config.debug');
-
-			$instance = JFactory::_createDBO();
-			$instance->debug($debug);
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get a mailer object
 	 *
 	 * Returns a reference to the global {@link JMail} object, only creating it
@@ -252,45 +227,6 @@ class JFactory
 		$registry->loadObject($config);
 
 		return $registry;
-	}
-
-	/**
-	 * Create an database object
-	 *
-	 * @access private
-	 * @return object JDatabase
-	 * @since 1.5
-	 */
-	static private function &_createDBO()
-	{
-		jimport('joomla.database.database');
-		jimport( 'joomla.database.table' );
-
-		$conf =& JFactory::getConfig();
-
-		$host 		= $conf->getValue('config.host');
-		$user 		= $conf->getValue('config.user');
-		$password 	= $conf->getValue('config.password');
-		$database	= $conf->getValue('config.db');
-		$prefix 	= $conf->getValue('config.dbprefix');
-		$driver 	= $conf->getValue('config.dbtype');
-		$debug 		= $conf->getValue('config.debug');
-
-		$options	= array ( 'driver' => $driver, 'host' => $host, 'user' => $user, 'password' => $password, 'database' => $database, 'prefix' => $prefix );
-
-		$db =& JDatabase::getInstance( $options );
-
-		if ( JError::isError($db) ) {
-			header('HTTP/1.1 500 Internal Server Error');
-			jexit('Database Error: ' . $db->toString() );
-		}
-
-		if ($db->getErrorNum() > 0) {
-			JError::raiseError(500 , 'JDatabase::getInstance: Could not connect to database <br />' . 'joomla.library:'.$db->getErrorNum().' - '.$db->getErrorMsg() );
-		}
-
-		$db->debug( $debug );
-		return $db;
 	}
 
 	/**
