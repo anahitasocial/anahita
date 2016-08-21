@@ -140,11 +140,10 @@ class JRegistry extends JObject
 
 				//for ($i = 0; $i < $pathNodes; $i ++) {
 				for ($i = 1; $i < $pathNodes; $i ++) {
-					if((isset($ns->$nodes[$i]))) $ns =& $ns->$nodes[$i];
-				}
 
-				if(isset($ns->$nodes[$i])) {
-					$result = $ns->$nodes[$i];
+					if(isset($ns->$nodes[$i])) {
+						$result = $ns->$nodes[$i];
+					}
 				}
 			}
 		}
