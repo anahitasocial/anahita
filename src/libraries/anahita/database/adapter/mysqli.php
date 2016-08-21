@@ -21,7 +21,7 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
     		parent::__construct($config);
 
     		if (JFactory::getConfig()->getValue('config.caching')) {
-    	     $this->_cache = JFactory::getCache('database', 'output');
+    	           $this->_cache = JFactory::getCache('database', 'output');
     		}
   	}
 
@@ -54,31 +54,54 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
     protected function _initialize(KConfig $config)
     {
         $settings = new JConfig();
-        $options = array(
-            'driver' => 'mysqli',
-            'host' => $settings->host,
-            'user' => $settings->user,
-            'password' => $settings->password,
-            'database' => $settings->db,
-            'prefix' => $settings->dbprefix
-        );
 
-        jimport('joomla.database.database');
-        $db =& JDatabase::getInstance($options);
+        $database = $settings->db;
+        $prefix = $settings->dbprefix;
+        $port = NULL;
+		$socket	= NULL;
+        $host = $settings->host;
+        $user = $settings->user;
+        $password = $settings->password;
 
-        if($db->getErrorNum() > 0) {
-            throw new AnErrorException(
-              'Could not connect to database: Error: '.$db->toString(),
-              KHttpResponse::INTERNAL_SERVER_ERROR
-            );
+		$targetSlot = substr(strstr($host, ":"), 1);
+
+        if (!empty($targetSlot)) {
+
+			// Get the port number or socket name
+			if (is_numeric($targetSlot)) {
+                $port = $targetSlot;
+            } else {
+				$socket	= $targetSlot;
+            }
+
+			// Extract the host name only
+			$host = substr($host, 0, strlen($host) - (strlen($targetSlot) + 1));
+
+            // This will take care of the following notation: ":3306"
+			if($host === '') {
+				$host = 'localhost';
+            }
+		}
+
+        //test to see if driver exists
+        if (!function_exists( 'mysqli_connect' )) {
+            throw new Exception('The MySQL adapter "mysqli" is not available!');
+            return;
+		}
+
+        if(!($db = new mysqli($host, $user, $password, NULL, $port, $socket))) {
+            throw new Exception("Couldn't connect to the database!");
+			return false;
         }
 
-		$resource = method_exists($db, 'getConnection') ? $db->getConnection() : $db->_resource;
-		$prefix   = method_exists($db, 'getPrefix') ? $db->getPrefix() : $db->_table_prefix;
+        if (!$db->select_db($database)) {
+            throw new Exception("The database \"$database\" doesn't seem to exist!");
+			return false;
+		}
 
         $config->append(array(
-    		'connection'   => $resource,
-            'table_prefix' => $prefix,
+    		'connection' => $db,
+            'table_prefix' => $settings->dbprefix,
         ));
 
         parent::_initialize($config);
