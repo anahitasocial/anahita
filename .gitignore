@@ -8,3 +8,4 @@ vendor/dg/*
 vendor/symfony/*
 www/*
 node_modules/*
+.DS_Store
