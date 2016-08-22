@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Hashtag Controller.
  *
@@ -10,4 +9,16 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComHashtagsControllerHashtag extends ComTagsControllerDefault{}
+class ComHashtagsControllerHashtag extends ComTagsControllerDefault
+{
+    /**
+     * Read Service.
+     *
+     * @param KCommandContext $context
+     */
+    protected function _actionRead(KCommandContext $context)
+    {
+        $entity = parent::_actionRead($context);
+        $this->getToolbar('menubar')->setTitle(sprintf(JText::_('COM-HASHTAGS-TERM'), $entity->name));
+    }
+}
