@@ -1,5 +1,8 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.2.2 Birth Release
+* fixed issue preventing hashtag term showing as title in the hashtag view
+
 Anahita 4.2.1 Birth Release
 =============================
 * fixed issue which was preventing authentication with email instead of username
