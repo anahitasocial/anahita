@@ -82,7 +82,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
         $this->_application->getRouter()->parse($url);
 
-        JRequest::set($url->query, 'get', false);
+        KRequest::set('get', $url->query);
 
         // trigger the onAfterRoute events
         dispatch_plugin('onAfterRoute');

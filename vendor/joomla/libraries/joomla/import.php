@@ -29,10 +29,6 @@ if(!class_exists('JLoader'))
 //Base classes
 JLoader::import( 'joomla.base.object');
 
-//Environment classes
-JLoader::import( 'joomla.environment.request');
-JRequest::clean();
-
 JLoader::import( 'joomla.environment.response');
 
 //Factory class and methods
