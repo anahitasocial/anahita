@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -46,8 +46,8 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         $this->_parser = $this->getService($config->parser);
 
-        JFactory::getLanguage()->load('lib_anahita');
-        JFactory::getLanguage()->load('com_actors');
+        $this->getService('anahita:language')->load('lib_anahita');
+        $this->getService('anahita:language')->load('com_actors');
     }
 
     /**
@@ -71,7 +71,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
     /**
      * Process an array of notifications.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionProcess(KCommandContext $context)

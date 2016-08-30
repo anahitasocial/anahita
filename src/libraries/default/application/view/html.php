@@ -56,7 +56,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
         $this->_params = $config->params;
 
-        JFactory::getLanguage()->load('tpl_'.$this->getIdentifier()->package);
+        $this->getService('anahita:language')->load('tpl_'.$this->getIdentifier()->package);
 
         $this->getTemplate()->getFilter('alias')
             ->append(array('@render(\'' => '$this->renderHelper(\'render.'))

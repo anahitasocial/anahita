@@ -39,7 +39,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
         if (strpos($text, '<html')) {
             //add language
-            $text = str_replace('<html', '<html lang="'.JFactory::getLanguage()->getTag().'"', $text);
+            $text = str_replace('<html', '<html lang="'.$this->getService('anahita:language')->getTag().'"', $text);
 
             //render the styles
             $text = str_replace('</head>', $this->_renderHead().$this->_renderStyles().'</head>', $text);

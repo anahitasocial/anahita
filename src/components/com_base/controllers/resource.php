@@ -22,8 +22,7 @@ class ComBaseControllerResource extends LibBaseControllerResource
     {
         parent::__construct($config);
 
-        //load the language
-        JFactory::getLanguage()->load($config->language);
+        $this->getService('anahita:language')->load($config->language);
 
         $this->_state->viewer = $config->viewer;
     }

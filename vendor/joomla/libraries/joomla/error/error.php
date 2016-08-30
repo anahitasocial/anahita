@@ -528,7 +528,7 @@ class JError
 		$config		= JFactory::getConfig();
 
 		//Get the current language direction
-		$language = &JFactory::getLanguage();
+		$language = &$this->getService('anahita:language');
 		if ($language->isRTL()){
 		$dir ="rtl";
 		}

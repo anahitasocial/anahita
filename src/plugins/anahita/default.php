@@ -129,6 +129,6 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
   		    $extension = 'plg_'.$this->getIdentifier()->package.'_'.$this->getIdentifier()->name;
   		}
 
-  		return JFactory::getLanguage()->load( strtolower($extension), $basePath);
+  		return KService::get('anahita:language')->load( strtolower($extension), $basePath);
   	}
 }

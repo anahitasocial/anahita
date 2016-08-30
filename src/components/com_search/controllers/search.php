@@ -79,7 +79,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
              ->insert('search_range')
              ->insert('search_leaders');
 
-        JFactory::getLanguage()->load('com_actors');
+        $this->getService('anahita:language')->load('com_actors');
 
         $this->keywords = array_filter(explode(' ', $this->term));
 

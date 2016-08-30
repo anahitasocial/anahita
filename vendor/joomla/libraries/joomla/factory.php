@@ -44,29 +44,6 @@ class JFactory
 	}
 
 	/**
-	 * Get a language object
-	 *
-	 * Returns a reference to the global {@link JLanguage} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @return object JLanguage
-	 */
-	static public function &getLanguage()
-	{
-		static $instance;
-
-		if (!is_object($instance))
-		{
-			//get the debug configuration setting
-			$instance = JFactory::_createLanguage();
-			$instance->setDebug(false);
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get a cache object
 	 *
 	 * Returns a reference to the global {@link JCache} object
@@ -170,7 +147,7 @@ class JFactory
 			$instances = array();
 		}
 
-		$language =& JFactory::getLanguage();
+		$language =& $this->getService('anahita:language');
 		$locale = $language->getTag();
 
 		if(!isset($classname) || $locale != $mainLocale) {

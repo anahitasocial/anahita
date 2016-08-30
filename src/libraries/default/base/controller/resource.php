@@ -41,7 +41,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
             $this->mixin(new KMixinToolbar($config->append(array('mixer' => $this))));
         }
 
-        JFactory::getLanguage()->load($this->getIdentifier()->package);
+        $this->getService('anahita:language')->load($this->getIdentifier()->package);
     }
 
     /**

@@ -40,7 +40,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         ));
 
         if (!$config->template) {
-            $template = $this->getService('com://site/base.template.default');
+            $template = $this->getService('com:base.template.default');
             $template->addFilter('alias')->addFilter('shorttag');
             $config->append(array(
                  'template' => $template,

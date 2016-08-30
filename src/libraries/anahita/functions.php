@@ -309,21 +309,28 @@ function translate($texts, $force = true)
     settype($texts, 'array');
     $debug = isset($_GET['dbg']);
     $debug_list = array();
-    $lang = JFactory::getLanguage();
+    $language = KService::get('anahita:language');
     $has_key = false;
     $translatable = false;
+
     foreach ($texts as $text) {
+
         if (strpos($text, '_')) {
             $text = strtoupper(str_replace('_', '-', $text));
         }
-        if ($has_key ? $lang->hasKey($text) : isset($lang->_strings[$text])) {
+
+        if ($language->hasKey($text)) {
+
             if ($debug) {
-                $debug_lists[] = $text.'=>'.$lang->_($text);
+                $debug_lists[] = $text.'=>'.$language->_($text);
                 continue;
             }
-            $text = $lang->_($text);
+
+            $text = $language->_($text);
             $translatable = true;
+
             break;
+
         } elseif ($debug) {
             $debug_lists[] = $text;
         }
@@ -332,6 +339,7 @@ function translate($texts, $force = true)
     if ($debug) {
         return '['.implode(',', $debug_lists).']';
     }
+
     if (!$translatable && !$force) {
         return;
     }
