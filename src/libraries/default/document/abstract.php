@@ -575,12 +575,14 @@ abstract class LibDocumentAbstract extends KObject implements LibDocumentInterfa
 	 */
 	function render($cache = false, $params = array())
 	{
-		JResponse::setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' );
+        $response = $this->getResponse();
+
+        $response->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' );
 
         if ($mdate = $this->getModifiedDate()) {
-			JResponse::setHeader( 'Last-Modified', $mdate /* gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' */ );
+            $response->setHeader( 'Last-Modified', $mdate /* gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' */ );
 		}
 
-		JResponse::setHeader( 'Content-Type', $this->_mime .  '; charset=' . $this->_charset);
+		$response->setHeader( 'Content-Type', $this->_mime .  '; charset=' . $this->_charset);
 	}
 }
