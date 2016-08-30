@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -162,7 +162,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
 
     /**
      * Authenticate a request.
-     * 
+     *
      * @param KCommandContext $context
      */
     public function authenticateRequest(KCommandContext $context)
@@ -199,25 +199,5 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         }
 
         return $context->result;
-    }
-
-    /**
-     * Renders a legacy component.
-     * 
-     * @param KCommandContext $context
-     */
-    protected function _actionRenderlegacy(KCommandContext $context)
-    {
-        global $option;
-        $path = JPATH_COMPONENT.'/'.$this->getIdentifier()->package.'.php';
-        if (!file_exists($path)) {
-            $path = JPATH_COMPONENT.'/'.'admin.'.$this->getIdentifier()->package.'.php';
-        }
-        $task = JRequest::getString('task');
-        ob_start();
-        require_once $path;
-        $contents = ob_get_contents();
-        ob_end_clean();
-        $this->getResponse()->setContent($contents);
     }
 }

@@ -84,7 +84,7 @@ class JCache extends JObject
 		}
 
 		//Fix to detect if template positions are enabled...
-		if(JRequest::getCMD('tpl',0)) {
+		if(KRequest::get('get.tpl', 'cmd', '')) {
 			$this->_options['caching'] = false;
 		}
 	}
