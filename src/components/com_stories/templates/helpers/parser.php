@@ -58,7 +58,7 @@ class ComStoriesTemplateHelperParser extends KTemplateHelperAbstract
 
         $this->_template->getFilter('alias')->append(KConfig::unbox($config->alias));
 
-        JFactory::getLanguage()->load('com_stories');
+        $this->getService('anahita:language')->load('com_stories');
 
         $this->_template->addSearchPath(KConfig::unbox($config->paths), true);
     }
@@ -103,7 +103,7 @@ class ComStoriesTemplateHelperParser extends KTemplateHelperAbstract
     {
         $options = array();
 
-        JFactory::getLanguage()->load($story->component);
+        $this->getService('anahita:language')->load($story->component);
 
         static $commands;
 

@@ -73,7 +73,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             )),
         ));
 
-        JFactory::getLanguage()->load('com_actors');
+        $this->getService('anahita:language')->load('com_actors');
     }
 
     /**

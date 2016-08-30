@@ -304,7 +304,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
            return AnTranslator::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
         }
 
-        JFactory::getLanguage()->load($package);
+        $this->getService('anahita:language')->load($package);
         $app_config = json_decode(file_get_contents($config_file_path));
 
         return $this->_renderForm($app_config->fields, $entity);

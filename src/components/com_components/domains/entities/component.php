@@ -29,7 +29,7 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
      */
     protected function _initialize(KConfig $config)
     {
-        JFactory::getLanguage()->load('com_'.$this->getIdentifier()->package);
+        $this->getService('anahita:language')->load('com_'.$this->getIdentifier()->package);
         parent::_initialize($config);
     }
 

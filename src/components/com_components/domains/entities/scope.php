@@ -87,7 +87,7 @@ class ComComponentsDomainEntityScope extends KObject
         $this->hashtagable  = $config->hashtagable;
         $this->geolocatable = $config->geolocatable;
 
-        JFactory::getLanguage()->load('com_'.$this->identifier->package);
+        $this->getService('anahita:language')->load('com_'.$this->identifier->package);
     }
 
     /**
@@ -118,7 +118,7 @@ class ComComponentsDomainEntityScope extends KObject
      */
     public function __wakeup()
     {
-        JFactory::getLanguage()->load('com_'.$this->identifier->package);
+        $this->getService('anahita:language')->load('com_'.$this->identifier->package);
     }
 
     /**

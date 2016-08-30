@@ -140,7 +140,7 @@ abstract class PlgKoowaDefault extends KEventSubscriberDefault
 		    $extension = 'plg_'.$this->getIdentifier()->package.'_'.$this->getIdentifier()->name;
 		}
 
-		return JFactory::getLanguage()->load( strtolower($extension), $basePath);
+		return $this->getService('anahita:language')->load( strtolower($extension), $basePath);
 	}
 
 	/**

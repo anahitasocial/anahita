@@ -47,7 +47,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
         parent::_initialize($config);
 
-        JFactory::getLanguage()->load('com_tags');
+        $this->getService('anahita:language')->load('com_tags');
     }
 
     /**

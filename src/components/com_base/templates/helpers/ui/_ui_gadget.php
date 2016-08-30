@@ -8,7 +8,7 @@
     	<h3 class="gadget-title">
             <? if ($gadget->title_url) : ?>
             <a href="<?= @route($gadget->title_url) ?>">
-                <?=$gadget->title?>
+                <?= $gadget->title ?>
             </a>
             <? else : ?>
             <?=$gadget->title?>

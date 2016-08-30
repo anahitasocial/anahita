@@ -29,8 +29,7 @@ class ComBaseControllerToolbarActorbar extends ComBaseControllerToolbarMenubar
     {
         parent::__construct($config);
 
-        //loads the actor langauge
-        JFactory::getLanguage()->load('com_actors');
+        $this->getService('anahita:language')->load('com_actors');
     }
 
     /**

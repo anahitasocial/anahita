@@ -81,7 +81,7 @@ class ComApplication extends KObject
          $config->language = $settings->language;
 
          // One last check to make sure we have something
-         if (!JLanguage::exists($config->language)) {
+         if (!KService::get('anahita:language')->exists($config->language)) {
             $config->language = 'en-GB';
          }
     }
