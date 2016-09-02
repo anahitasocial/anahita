@@ -38,6 +38,3 @@ JLoader::import( 'joomla.error.exception');
 
 //Utilities
 JLoader::import( 'joomla.utilities.arrayhelper');
-
-//Filters
-JLoader::import( 'joomla.filter.filterinput');
