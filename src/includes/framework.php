@@ -44,7 +44,6 @@ require_once JPATH_LIBRARIES.'/joomla/import.php';
 
 jimport('joomla.environment.uri');
 jimport('joomla.utilities.utility');
-jimport('joomla.language.language');
 jimport('joomla.utilities.string');
 
 require_once JPATH_CONFIGURATION.'/configuration.php';

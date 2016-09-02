@@ -1,7 +1,7 @@
 <? defined('KOOWA') or die; ?>
 
 <? $document = KService::get('com:document')->getInstance(); ?>
-<? $path = JURI::root().'media/lib_anahita/js/production/' ?>
+<? $path = KRequest::base().'/media/lib_anahita/js/production/' ?>
 
 <? if (defined('JDEBUG') && JDEBUG) : ?>
 

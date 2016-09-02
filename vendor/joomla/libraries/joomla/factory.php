@@ -113,21 +113,6 @@ class JFactory
 	}
 
 	/**
-	 * Return a reference to the {@link JURI} object
-	 *
-	 * @access public
-	 * @return object JURI
-	 * @since 1.5
-	 */
-	static public function &getURI($uri = 'SERVER')
-	{
-		jimport('joomla.environment.uri');
-
-		$instance =& JURI::getInstance($uri);
-		return $instance;
-	}
-
-	/**
 	 * Return a reference to the {@link JDate} object
 	 *
 	 * @access public
@@ -251,22 +236,5 @@ class JFactory
 		}
 
 		return $mail;
-	}
-
-	/**
-	 * Create a language object
-	 *
-	 * @access private
-	 * @return object JLanguage
-	 * @since 1.5
-	 */
-	static private function &_createLanguage()
-	{
-		jimport('joomla.language.language');
-
-		$settings = new JConfig();
-		$lang	=& JLanguage::getInstance($settings->language);
-
-		return $lang;
 	}
 }
