@@ -22,7 +22,7 @@ class PlgStorageLocal extends PlgStorageAbstract
      */
     protected function _initialize(KConfig $config)
     {
-        $base_uri = JURI::base();
+        $base_uri = KRequest::base();
 
         $config->append(array(
               'folder' => 'assets',

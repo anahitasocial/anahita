@@ -5,7 +5,7 @@ if (!defined('JPATH_BASE')) {
     $base = str_replace('/components/com_notifications', '', $base);
     define('JPATH_BASE', $base);
     require_once JPATH_BASE.'/includes/framework.php';
-    KService::get('com://site/application.dispatcher')->load();
+    KService::get('com:application.dispatcher')->load();
 }
 
 class ComNotificationsRouterApplication extends ComApplicationRouter
@@ -23,16 +23,15 @@ class ComNotificationsRouterApplication extends ComApplicationRouter
     }
 }
 
-KService::setAlias('com://site/application.router',
-    'com://site/notifications.router.application');
+KService::setAlias('com:application.router', 'com:notifications.router.application');
 
-$base_url = KService::get('koowa:http.url', array('url' => rtrim(JURI::base(), '/')));
+$base_url = KService::get('koowa:http.url', array('url' => rtrim(KRequest::base(), '/')));
 
-KService::setConfig('com://site/application.router', array(
+KService::setConfig('com:application.router', array(
     'base_url' => $base_url,
 ));
 
-$controller = KService::get('com://site/notifications.controller.processor', array('base_url' => $base_url));
+$controller = KService::get('com:notifications.controller.processor', array('base_url' => $base_url));
 $ids = (array) KRequest::get('get.id', 'int', array());
 if (!empty($ids)) {
     $controller->id($ids);
