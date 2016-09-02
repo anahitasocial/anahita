@@ -420,23 +420,21 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	{
 		$result	= false;
 
-		if (file_exists($filename) && $content = file_get_contents($filename)) {
+        if (file_exists($filename)) {
 
-			//Take off BOM if present in the ini file
-			if ($content[0] == "\xEF" && $content[1] == "\xBB" && $content[2] == "\xBF" ) {
-				$content = substr( $content, 3 );
-		  	}
+            $strings = parse_ini_file($filename, false, INI_SCANNER_RAW);
 
-            //use native php methods for this block
-			$registry = new JRegistry();
-			$registry->loadINI($content);
-			$newStrings	= $registry->toArray();
+            if (is_array($strings)){
 
-			if (is_array($newStrings)){
-                $this->_strings = $overwrite ? array_merge($this->_strings, $newStrings) : array_merge($newStrings, $this->_strings);
+                if ($overwrite) {
+                    $this->_strings = array_merge($this->_strings, $strings);
+                } else {
+                    $this->_strings = array_merge($strings, $this->_strings);
+                }
+
                 $result = true;
 			}
-		}
+        }
 
 		// Record the result of loading the extension's file.
 		if (!isset($this->_paths[$extension])) {

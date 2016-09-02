@@ -108,8 +108,8 @@ class JUtility
  	 */
 	static public function getHash( $seed )
 	{
-		$conf =& JFactory::getConfig();
-		return md5( $conf->getValue('config.secret') .  $seed  );
+		$config = new JConfig();
+		return md5( $config->secret .  $seed  );
 	}
 
 	/**

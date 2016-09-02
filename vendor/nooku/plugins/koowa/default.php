@@ -68,11 +68,6 @@
  */
 abstract class PlgKoowaDefault extends KEventSubscriberDefault
 {
-	/**
-	 * A JRegistry object holding the parameters for the plugin
-	 *
-	 * @var	A JRegistry object
-	 */
 	protected $_params	= null;
 
 	/**

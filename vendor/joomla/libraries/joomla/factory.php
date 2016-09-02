@@ -22,28 +22,6 @@ class JFactory
 {
 
 	/**
-	 * Get a configuration object
-	 *
-	 * Returns a reference to the global {@link JRegistry} object, only creating it
-	 * if it doesn't already exist.
-	 *
-	 * @access public
-	 * @param string	The path to the configuration file
-	 * @param string	The type of the configuration file
-	 * @return object JRegistry
-	 */
-	static public function &getConfig()
-	{
-		static $instance;
-
-		if (!is_object($instance)){
-			$instance = JFactory::_createConfig();
-		}
-
-		return $instance;
-	}
-
-	/**
 	 * Get a cache object
 	 *
 	 * Returns a reference to the global {@link JCache} object
@@ -54,28 +32,29 @@ class JFactory
 	 * @param string The storage method
 	 * @return object JCache
 	 */
-	static public function &getCache($group = '', $handler = 'callback', $storage = null)
+	 static public function &getCache($group = '', $handler = 'callback', $storage = null)
 	{
-		$handler = ($handler == 'function') ? 'callback' : $handler;
+		$handler = ($handler === 'function') ? 'callback' : $handler;
 
-		$conf =& JFactory::getConfig();
+		$conf = new JConfig();
 
 		if(!isset($storage)) {
-			$storage = $conf->getValue('config.cache_handler', 'file');
+			$storage = $conf->cache_handler ? $conf->cache_handler : 'file';
 		}
 
 		$options = array(
 			'defaultgroup' 	=> $group,
-			'cachebase' 	=> $conf->getValue('config.cache_path'),
-			'lifetime' 		=> $conf->getValue('config.cachetime') * 60,	// minutes to seconds
-			'language' 		=> $conf->getValue('config.language'),
-			'storage'		=> $storage
+			'lifetime' => $conf->cachetime * 60,	// minutes to seconds
+			'language' => $conf->language,
+			'storage' => $storage
 		);
 
 		jimport('joomla.cache.cache');
 
-		$cache =& JCache::getInstance( $handler, $options );
-		$cache->setCaching($conf->getValue('config.caching'));
+		$cache = JCache::getInstance( $handler, $options );
+
+		$cache->setCaching($conf->caching);
+
 		return $cache;
 	}
 
@@ -164,33 +143,6 @@ class JFactory
 		return $date;
 	}
 
-
-
-	/**
-	 * Create a configuration object
-	 *
-	 * @access private
-	 * @param string	The path to the configuration file
-	 * @param string	The type of the configuration file
-	 * @return object JRegistry
-	 * @since 1.5
-	 */
-	static private function &_createConfig()
-	{
-		jimport('joomla.registry.registry');
-
-		// Create the registry with a default namespace of config
-		$registry = new JRegistry('config');
-
-		// Create the JConfig object
-		$config = new JConfig();
-
-		// Load the configuration values into the registry
-		$registry->loadObject($config);
-
-		return $registry;
-	}
-
 	/**
 	 * Create a mailer object
 	 *
@@ -202,18 +154,18 @@ class JFactory
 	{
 		jimport('joomla.mail.mail');
 
-		$conf	=& JFactory::getConfig();
+		$conf = new JConfig();
 
-		$sendmail 	= $conf->getValue('config.sendmail');
-		$smtpauth 	= $conf->getValue('config.smtpauth');
-		$smtpuser 	= $conf->getValue('config.smtpuser');
-		$smtppass  	= $conf->getValue('config.smtppass');
-		$smtphost 	= $conf->getValue('config.smtphost');
-		$smtpsecure	= $conf->getValue('config.smtpsecure');
-		$smtpport	= $conf->getValue('config.smtpport');
-		$mailfrom 	= $conf->getValue('config.mailfrom');
-		$fromname 	= $conf->getValue('config.fromname');
-		$mailer 	= $conf->getValue('config.mailer');
+		$sendmail 	= $conf->sendmail;
+		$smtpauth 	= $conf->smtpauth;
+		$smtpuser 	= $conf->smtpuser;
+		$smtppass  	= $conf->smtppass;
+		$smtphost 	= $conf->smtphost;
+		$smtpsecure	= $conf->smtpsecure;
+		$smtpport	= $conf->smtpport;
+		$mailfrom 	= $conf->mailfrom;
+		$fromname 	= $conf->fromname;
+		$mailer 	= $conf->mailer;
 
 		// Create a JMail object
 		$mail 		=& JMail::getInstance();

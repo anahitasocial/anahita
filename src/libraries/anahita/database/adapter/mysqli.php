@@ -20,8 +20,10 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
   	{
     		parent::__construct($config);
 
-    		if (JFactory::getConfig()->getValue('config.caching')) {
-    	           $this->_cache = JFactory::getCache('database', 'output');
+            $settings = new JConfig();
+
+    		if ($settings->caching) {
+    	        $this->_cache = JFactory::getCache('database', 'output');
     		}
   	}
 
@@ -118,20 +120,17 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
 	 */
 	public function getTableSchema($table)
 	{
-	    if(!isset($this->_table_schema[$table]) && isset($this->_cache))
-		{
-		    $database = $this->getDatabase();
+	    if (!isset($this->_table_schema[$table]) && isset($this->_cache)) {
 
+            $database = $this->getDatabase();
 		    $identifier = md5($database.$table);
 
-	        if (!$schema = $this->_cache->get($identifier))
-	        {
-	            $schema = parent::getTableSchema($table);
-
-	            //Store the object in the cache
+	        if (!$schema = $this->_cache->get($identifier)) {
+                $schema = parent::getTableSchema($table);
 		   	    $this->_cache->store(serialize($schema), $identifier);
-	        }
-	        else $schema = unserialize($schema);
+	        } else {
+                $schema = unserialize($schema);
+            }
 
 		    $this->_table_schema[$table] = $schema;
 	    }

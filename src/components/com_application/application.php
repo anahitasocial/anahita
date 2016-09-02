@@ -54,14 +54,6 @@ class ComApplication extends KObject
           $config['session'] = true;
         }
 
-        //Set the default configuration file
-        if(!isset($config['config_file'])) {
-          $config['config_file'] = 'configuration.php';
-        }
-
-        //create the configuration object
-        $this->_createConfiguration(JPATH_CONFIGURATION.DS.$config['config_file']);
-
         //create the session if a session name is passed
         if($config['session'] !== false) {
           $this->createSession(JUtility::getHash($config['session_name']));
@@ -87,26 +79,6 @@ class ComApplication extends KObject
     }
 
     /**
-     * Create the configuration registry
-     *
-     * @access	private
-     * @param	string	$file 	The path to the configuration file
-     * return	JConfig
-     */
-    protected function &_createConfiguration($file)
-    {
-      jimport( 'joomla.registry.registry' );
-
-      require_once($file);
-
-      $config = new JConfig();
-      $registry =& JFactory::getConfig();
-      $registry->loadObject($config);
-
-      return $config;
-    }
-
-    /**
   	 * Create the user session.
   	 *
   	 * Old sessions are flushed based on the configuration value for the cookie
@@ -120,7 +92,6 @@ class ComApplication extends KObject
   	 */
   	public function createSession($name)
   	{
-
         $config = new KConfig(array(
             'name' => $name
         ));
@@ -134,9 +105,6 @@ class ComApplication extends KObject
             $storage->update($session->getId());
             return $session;
         }
-
-  		//Session doesn't exist yet, initalise and store it in the session table
-  		$session->set('registry', new JRegistry('session'));
 
         $person = KService::get('repos:people.person')
                     ->getEntity()->setData(array(
