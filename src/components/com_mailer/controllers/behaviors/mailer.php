@@ -72,12 +72,14 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
+        $settings = new JConfig();
+
         $config->append(array(
             'base_url' => KRequest::url(),
             'test_options' => array(
                 'enabled' => get_config_value('mailer.debug', false),
                 'email' => get_config_value('mailer.redirect_email'),
-                'log' => JFactory::getConfig()->getValue('tmp_path').'/emails/',
+                'log' => $settings->tmp_path . '/emails/',
             ),
             'template_view' => null,
         ));
@@ -180,7 +182,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
                        ->fetchSet(array(
                            'usertype' => ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
                        ));
-                       
+
         $config['to'] = $admins->email;
 
         return $this->mail($config);
