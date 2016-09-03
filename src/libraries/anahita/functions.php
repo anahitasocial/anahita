@@ -13,6 +13,19 @@
  */
 
  /**
+  * Provides a secure hash based on a seed
+  *
+  * @param string Seed string
+  * @param string php hash algorithm of choice
+  * @return string
+  */
+ function get_hash($seed = '', $algorithm = 'sha256')
+ {
+     $config = new JConfig();
+     return hash($algorithm, $config->secret .  $seed);
+ }
+
+ /**
   * Creates human friendly urls
   *
   * @access public

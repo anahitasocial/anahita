@@ -56,7 +56,7 @@ class ComApplication extends KObject
 
         //create the session if a session name is passed
         if($config['session'] !== false) {
-          $this->createSession(JUtility::getHash($config['session_name']));
+          $this->createSession(get_hash($config['session_name']));
         }
     }
 

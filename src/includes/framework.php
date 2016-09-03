@@ -39,12 +39,8 @@ if (!file_exists(JPATH_CONFIGURATION.'/configuration.php') || (filesize(JPATH_CO
     exit();
 }
 
-// Joomla : setup
+// Platform : setup
 require_once JPATH_LIBRARIES.'/joomla/import.php';
-
-jimport('joomla.utilities.utility');
-jimport('joomla.utilities.string');
-
 require_once JPATH_CONFIGURATION.'/configuration.php';
 require_once JPATH_LIBRARIES.'/anahita/anahita.php';
 
