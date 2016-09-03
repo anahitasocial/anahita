@@ -101,11 +101,10 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             KService::get('com:people.helper.person')->logout();
         }
 
-        jimport('joomla.utilities.utility');
         jimport('joomla.utilities.simplecrypt');
 
         $credentials = array();
-        $remember = JUtility::getHash('JLOGIN_REMEMBER');
+        $remember = get_hash('JLOGIN_REMEMBER');
 
         // for json requests obtain the username and password from the $_SERVER array
         // else if the remember me cookie exists, decrypt and obtain the username and password from it
@@ -124,7 +123,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
               isset($_COOKIE[$remember]) &&
               $_COOKIE[$remember] != ''
         ) {
-            $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
+            $key = get_hash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
 
             if ($key) {
                 $crypt = new JSimpleCrypt($key);

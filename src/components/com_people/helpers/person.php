@@ -47,9 +47,8 @@ class ComPeopleHelperPerson extends KObject
         if ($remember) {
             // Set the remember me cookie if enabled
             jimport('joomla.utilities.simplecrypt');
-            jimport('joomla.utilities.utility');
 
-            $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
+            $key = get_hash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
 
             if ($key) {
 
@@ -63,7 +62,7 @@ class ComPeopleHelperPerson extends KObject
                 $lifetime = time() + (365 * 24 * 3600);
 
                 setcookie(
-                    JUtility::getHash('JLOGIN_REMEMBER'),
+                    get_hash('JLOGIN_REMEMBER'),
                     $cookie,
                     $lifetime,
                     '/'
@@ -92,7 +91,7 @@ class ComPeopleHelperPerson extends KObject
 
         if ($results) {
             setcookie(
-                JUtility::getHash('JLOGIN_REMEMBER'),
+                get_hash('JLOGIN_REMEMBER'),
                 false,
                 time() - AnHelperDate::dayToSeconds(30),
                 '/'
