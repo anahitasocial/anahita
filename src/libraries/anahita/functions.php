@@ -22,7 +22,7 @@
  function get_hash($seed = '', $algorithm = 'sha256')
  {
      $config = new JConfig();
-     return hash($algorithm, $config->secret .  $seed  );
+     return hash($algorithm, $config->secret .  $seed);
  }
 
  /**

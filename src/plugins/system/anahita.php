@@ -101,8 +101,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             KService::get('com:people.helper.person')->logout();
         }
 
-        jimport('joomla.utilities.simplecrypt');
-
         $credentials = array();
         $remember = get_hash('JLOGIN_REMEMBER');
 
@@ -118,18 +116,12 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
             $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
 
-        } elseif (
-              $viewer->guest() &&
-              isset($_COOKIE[$remember]) &&
-              $_COOKIE[$remember] != ''
-        ) {
-            $key = get_hash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
+        } elseif ($viewer->guest() && isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '') {
 
-            if ($key) {
-                $crypt = new JSimpleCrypt($key);
-                $cookie = $crypt->decrypt($_COOKIE[$remember]);
-                $credentials = (array) @unserialize($cookie);
-            }
+            $key = get_hash('JLOGIN_REMEMBER', 'md5');
+            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
+            $cookie = $crypt->decrypt($_COOKIE[$remember]);
+            $credentials = (array) @unserialize($cookie);
 
         } else {
             return;

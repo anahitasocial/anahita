@@ -45,29 +45,17 @@ class ComPeopleHelperPerson extends KObject
 
         //if remember is true, create a remember cookie that contains the ecrypted username and password
         if ($remember) {
-            // Set the remember me cookie if enabled
-            jimport('joomla.utilities.simplecrypt');
 
-            $key = get_hash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
+            $key = get_hash('JLOGIN_REMEMBER', 'md5');
+            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
 
-            if ($key) {
+            $cookie = $crypt->encrypt(serialize(array(
+                'username' => $credentials['username'],
+                'password' => $credentials['password'],
+            )));
 
-                $crypt = new JSimpleCrypt($key);
-
-                $cookie = $crypt->encrypt(serialize(array(
-                    'username' => $credentials['username'],
-                    'password' => $credentials['password'],
-                )));
-
-                $lifetime = time() + (365 * 24 * 3600);
-
-                setcookie(
-                    get_hash('JLOGIN_REMEMBER'),
-                    $cookie,
-                    $lifetime,
-                    '/'
-                );
-            }
+            $lifetime = time() + (365 * 24 * 3600);
+            setcookie(get_hash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
         }
 
         return true;

@@ -5,8 +5,6 @@
  *
  * @static
  * @package 	Anahita.Framework
- * @subpackage	Language
- * @since		4.3
  */
 class AnTranslator
 {
