@@ -31,7 +31,7 @@ class ComDefaultTemplateFilterScript extends KTemplateFilterScript
             return parent::_renderScript($script, $link, $attribs);
         }
 
-        $document = KService::get('com:document');
+        $document = KService::get('anahita:document');
 
         if($link) {
             $document->addScript($script, 'text/javascript');

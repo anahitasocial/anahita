@@ -524,7 +524,7 @@ class JError
 		// Initialize variables
 		jimport('joomla.document.document');
 		$app        = KService::get('com:application');
-		$document	= KService::get('com:document');
+		$document	= KService::get('anahita:document');
 		$config		= JFactory::getConfig();
 
 		//Get the current language direction
