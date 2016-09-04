@@ -116,25 +116,19 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      */
     public function getFriends()
     {
-        $cache = JFactory::getCache((string) 'ComConnectOauthServiceFacebook', '');
-        $key = 'ids_'.md5($this->_token);
-        $data = $cache->get($key);
-        if (!$data) {
-            try {
-                $data = $this->get('/me/friends');
-            } catch (Exception $e) {
-                throw new \LogicException("Can't get connections from facebook");
-            }
-            if ($data->error) {
-                throw new \LogicException("Can't get connections from facebook");
-            }
-            $data = KConfig::unbox($data);
-            $data = array_map(function ($user) {return $user['id'];}, $data['data']);
-            $data[] = '-1';
-            $cache->store(json_encode($data), $key);
-        } else {
-            $data = json_decode($data);
+        try {
+            $data = $this->get('/me/friends');
+        } catch (Exception $e) {
+            throw new \LogicException("Can't get connections from facebook");
         }
+
+        if ($data->error) {
+            throw new \LogicException("Can't get connections from facebook");
+        }
+
+        $data = KConfig::unbox($data);
+        $data = array_map(function ($user) {return $user['id'];}, $data['data']);
+        $data[] = '-1';
 
         $query = $this->getService('repos://site/people')->getQuery(true)
         ->where(array(
@@ -151,16 +145,8 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      */
     public function getAppID()
     {
-        $key = md5($this->_token);
-        $cache = JFactory::getCache((string) 'ComConnectOauthServiceFacebook');
-        $cache->setLifeTime(5 * 1000);
-
-        $data = $cache->get(function ($session) {
-            $info = $session->get('/app');
-
-            return $info;
-        }, array($this), '/app'.$key);
-
+        $data = $this->get('/app');
+        $data = KConfig::unbox($data);
         return $data['id'];
     }
 }

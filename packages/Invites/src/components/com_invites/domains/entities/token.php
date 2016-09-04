@@ -70,9 +70,10 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
      */
     protected function _afterEntityInstantiate(KConfig $config)
     {
+        $settings = new JConfig();
         $config->append(array(
             'data' => array(
-                'value' => hash('sha256', str_shuffle(JFactory::getConfig()->getValue('secret').((string) (int) microtime(true)))),
+                'value' => hash('sha256', str_shuffle($settings->secret.((string) (int) microtime(true)))),
             ),
         ));
     }

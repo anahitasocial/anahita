@@ -15,12 +15,13 @@
  * @link       http://www.GetAnahita.com
  */
 $config = new JConfig();
+$cache_prefix = md5($config->secret).'-cache-system';
+$cache_enabled = $config->caching;
 
-$config->cache_prefix = md5($config->secret).'-cache-system';
-$config->cache_enabled = $config->caching;
-KService::setAlias('application', 'com:application');
 KService::setAlias('application.registry', 'com:application.registry');
 KService::setConfig('application.registry', array(
-  'cache_prefix' => $config->cache_prefix,
-  'cache_enabled' => $config->cache_enabled
+  'cache_prefix' => $cache_prefix,
+  'cache_enabled' => $cache_enabled
 ));
+
+KService::setAlias('application', 'com:application');

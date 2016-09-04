@@ -22,43 +22,6 @@ class JFactory
 {
 
 	/**
-	 * Get a cache object
-	 *
-	 * Returns a reference to the global {@link JCache} object
-	 *
-	 * @access public
-	 * @param string The cache group name
-	 * @param string The handler to use
-	 * @param string The storage method
-	 * @return object JCache
-	 */
-	 static public function &getCache($group = '', $handler = 'callback', $storage = null)
-	{
-		$handler = ($handler === 'function') ? 'callback' : $handler;
-
-		$conf = new JConfig();
-
-		if(!isset($storage)) {
-			$storage = $conf->cache_handler ? $conf->cache_handler : 'file';
-		}
-
-		$options = array(
-			'defaultgroup' 	=> $group,
-			'lifetime' => $conf->cachetime * 60,	// minutes to seconds
-			'language' => $conf->language,
-			'storage' => $storage
-		);
-
-		jimport('joomla.cache.cache');
-
-		$cache = JCache::getInstance( $handler, $options );
-
-		$cache->setCaching($conf->caching);
-
-		return $cache;
-	}
-
-	/**
 	 * Get a mailer object
 	 *
 	 * Returns a reference to the global {@link JMail} object, only creating it

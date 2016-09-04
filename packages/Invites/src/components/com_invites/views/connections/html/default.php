@@ -13,8 +13,9 @@
 
 <script>
 <?
-$subject = htmlspecialchars(sprintf(@text('COM-INVITES-MESSAGE-SUBJECT'), JFactory::getConfig()->getValue('sitename')));
-$body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name($viewer, false), JFactory::getConfig()->getValue('sitename')));
+$settings = new JConfig();
+$subject = htmlspecialchars(sprintf(@text('COM-INVITES-MESSAGE-SUBJECT'), $settings->sitename));
+$body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name($viewer, false), $settings->sitename));
 $url = @route()->getUrl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT);
 ?>
 $('body').invitesFacebook({

@@ -46,11 +46,8 @@ require_once JPATH_LIBRARIES.'/anahita/anahita.php';
 
 $config = new JConfig();
 
-//instantiate anahita and nooku
-Anahita::getInstance(array(
-  'cache_prefix' => md5($config->secret).'-cache-koowa',
-  'cache_enabled' => $config->caching
-));
+//instantiate anahita
+Anahita::getInstance();
 
 KServiceIdentifier::setApplication('site', JPATH_SITE);
 KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => JPATH_BASE)));

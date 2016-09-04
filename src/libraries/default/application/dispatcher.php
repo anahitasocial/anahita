@@ -131,8 +131,8 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
         //set the session handler to none for
         if (PHP_SAPI == 'cli') {
-            JFactory::getConfig()->setValue('session_handler', 'none');
-            JFactory::getConfig()->setValue('cache_handler', 'file');
+            //JFactory::getConfig()->setValue('session_handler', 'none');
+            //JFactory::getConfig()->setValue('cache_handler', 'file');
         }
 
         //set the default timezone to UTC
