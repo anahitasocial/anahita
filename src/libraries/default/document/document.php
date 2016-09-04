@@ -150,8 +150,6 @@ class LibDocument extends KObject implements KServiceInstantiatable
 	 */
 	public function __construct(KConfig $config = null)
 	{
-        parent::__construct($config);
-
         $this->setCharset($config->charset);
         $this->setLanguage($config->language);
         $this->setDirection($config->direction);
@@ -159,6 +157,8 @@ class LibDocument extends KObject implements KServiceInstantiatable
         $this->setBase($config->base);
         $this->setType($config->type);
         $this->setMime($config->mime);
+
+        parent::__construct($config);
 
  		//set default document metadata
  		 $this->setMetaData('Content-Type', $this->getMime().'; charset='.$this->getCharset(), true);
@@ -205,25 +205,6 @@ class LibDocument extends KObject implements KServiceInstantiatable
 
         return $container->get($config->service_identifier);
     }
-
-    /*
-	public function getInstance($type = 'html', $attributes = array())
-	{
-        $registry = $this->getService('application.registry');
-        $offset = 'application-document';
-
-        $format = KRequest::get('get.format', 'html');
-
-        error_log($format);
-
-        if (!$registry->offsetExists($offset)) {
-            $document = $this->getService('com:document.'.$type);
-            $registry->offsetSet($offset, $document);
-        }
-
-        return $registry->offsetGet($offset);
-    }
-    */
 
     public function getStylesheets()
     {
