@@ -47,11 +47,6 @@ class ComSettingsDomainEntitySetting extends KObject
               'template' => 'shiraz',
               'language' => 'en-GB',
 
-              // caching
-              'caching' => 0,
-              'cachetime' => 1440,
-              'cache_handler' => 'file',
-
               // database
               'dbtype' => 'mysqli',
               'host' => '',
@@ -192,14 +187,11 @@ class ComSettingsDomainEntitySetting extends KObject
               'error_reporting',
               'sef_rewrite',
               'debug',
-              'caching',
-              'cachetime',
               'lifetime',
               'smtpauth'
             );
 
             $cmds = array(
-              'cache_handler',
               'session_handler',
               'mailer',
               'smtpsecure',
