@@ -116,7 +116,7 @@ class JLog extends JObject
 	function addEntry($entry)
 	{
 		// Set some default field values if not already set.
-		$date =& JFactory::getDate();
+		$date = new KDate();
 		if (!isset ($entry['date'])) {
 
 			$entry['date'] = $date->toFormat("%Y-%m-%d");
@@ -170,7 +170,7 @@ class JLog extends JObject
 			return true;
 		}
 
-		$now =& JFactory::getDate();
+		$now = new KDate();
 		$date = $now->toMySQL();
 
 		if (!file_exists($this->_path))

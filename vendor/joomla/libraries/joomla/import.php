@@ -17,8 +17,7 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 /**
  * Load the loader class
  */
-if(!class_exists('JLoader'))
-{
+if(!class_exists('JLoader')) {
     require_once( JPATH_LIBRARIES.DS.'loader.php');
 }
 
@@ -35,6 +34,3 @@ JLoader::import( 'joomla.factory');
 //Error
 JLoader::import( 'joomla.error.error');
 JLoader::import( 'joomla.error.exception');
-
-//Utilities
-JLoader::import( 'joomla.utilities.arrayhelper');
