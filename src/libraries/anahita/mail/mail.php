@@ -14,6 +14,61 @@
 class LibMail extends KObject implements KServiceInstantiatable
 {
     /**
+    *   Mail sender
+    *   @param array($name, $email)
+    */
+    protected $_sender = array();
+
+    /**
+    *   Mail body
+    *
+    *   @param string
+    */
+    protected $_body = null;
+
+    /**
+    *   List of recipients
+    *
+    *   @param array(array($name, $email), array($name, $email), ...)
+    */
+    protected $_recipients = array();
+
+    /**
+    *   List of carbon copy recipients
+    *
+    *   @param array(array($name, $email), array($name, $email), ...)
+    */
+    protected $_cc = array();
+
+    /**
+    *   List of blind carbon copy recipients
+    *
+    *   @param array(array($name, $email), array($name, $email), ...)
+    */
+    protected $_bcc = array();
+
+    /**
+    *   List of attachments
+    *
+    *   @param array of strings
+    */
+    protected $_attachments = array();
+
+    /**
+    *   Reply to email address
+    *
+    *   @param string email address
+    */
+    protected $_replyTo = null;
+
+    /**
+    *   Mail protocol
+    *
+    *   @param string 'smtp' or 'sendmail'
+    */
+    protected $_protocol = null;
+
+    /**
 	 * Constructor.
 	 *
 	 * @param 	object 	An optional KConfig object with configuration options.
@@ -40,5 +95,55 @@ class LibMail extends KObject implements KServiceInstantiatable
         ));
 
         parent::_initialize($config);
+    }
+
+    public function setSender($from)
+    {
+
+    }
+
+    public function setBody($body)
+    {
+
+    }
+
+    public function setRecipient($recipient)
+    {
+
+    }
+
+    public function addCc($cc, $name = '')
+    {
+
+    }
+
+    public function addBCc($bcc, $name = '')
+    {
+
+    }
+
+    public function addAtachment($attachment, $name, $encoding, $type)
+    {
+
+    }
+
+    public function addReplyTo($replyTo, $name = '')
+    {
+
+    }
+
+    protected function useSendmail($sendmail)
+    {
+
+    }
+
+    protected function useSmtp($auth, $host, $user, $pass, $secure, $port)
+    {
+
+    }
+
+    public function send()
+    {
+
     }
 }
