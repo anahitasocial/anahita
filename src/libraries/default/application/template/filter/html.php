@@ -56,7 +56,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderHead()
     {
-        $document = $this->getService('com:document')->getInstance();
+        $document = $this->getService('com:document');
         $html = '<base href="base://" />';
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
         $html .= '<title>'.$document->getTitle().'</title>';
@@ -71,7 +71,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderScripts()
     {
-        $document = $this->getService('com:document')->getInstance();
+        $document = $this->getService('com:document');
 
         $string = '';
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
@@ -98,7 +98,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
      */
     protected function _renderStyles()
     {
-        $document = $this->getService('com:document')->getInstance();
+        $document = $this->getService('com:document');
         $html = '';
 
         // Generate stylesheet links
