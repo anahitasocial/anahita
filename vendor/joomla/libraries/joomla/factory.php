@@ -34,24 +34,11 @@ class JFactory
 	{
 		static $instance;
 
-		if ( ! is_object($instance) ) {
+		if (! is_object($instance)) {
 			$instance = JFactory::_createMailer();
 		}
 
-		// Create a copy of this object - do not return the original because it may be used several times
-		// PHP4 copies objects by value whereas PHP5 copies by reference
-		$copy	= (PHP_VERSION < 5) ? $instance : clone($instance);
-/*
-		if ( JDEBUG || get_config_value('notifications.debug', false) )
-		{
-		    $emails  = explode(',',get_config_value('notifications.redirect_email'));
-		    foreach($emails as $email)
-		    {
-		        $copy->addBCC($email);
-		    }
-		}
-*/
-		return $copy;
+		return $instance;
 	}
 
 	/**
@@ -79,10 +66,13 @@ class JFactory
 		$mailer 	= $conf->mailer;
 
 		// Create a JMail object
-		$mail 		=& JMail::getInstance();
+		$mail =& JMail::getInstance();
 
 		// Set default sender
-		$mail->setSender(array ($mailfrom, $fromname));
+		$mail->setSender(array(
+			$mailfrom,
+			$fromname
+		));
 
 		// Default mailer is to use PHP's mail function
 		switch ($mailer)
