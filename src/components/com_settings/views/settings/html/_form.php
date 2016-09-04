@@ -115,57 +115,6 @@
     </fieldset>
 
     <fieldset>
-      <legend><?= @text('COM-SETTINGS-SYSTEM-CACHE-SETTINGS') ?></legend>
-
-      <? //Cache ?>
-      <?
-        $options_caching = array();
-        $options_caching[] = array('name' => @text('LIB-AN-YES'), 'value' => 1);
-        $options_caching[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
-      ?>
-      <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-CACHING'),
-        'name' => 'caching',
-        'selected' => (int) $setting->caching,
-        'id' => 'setting-caching',
-        'options' => $options_caching,
-      )) ?>
-
-      <? //cache time ?>
-      <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-CACHETIME'),
-        'name' => 'cachetime',
-        'value' => (int) $setting->cachetime,
-        'id' => 'setting-cachetime',
-        'class' => 'span1',
-        'placeholder' => @text('LIB-AN-TIME-MINUTES'),
-        'pattern' => '\d*',
-        'maxlength' => 5
-      )) ?>
-
-      <? //cache handler ?>
-      <?
-        jimport('joomla.cache.cache');
-    	$stores = JCache::getStores();
-    	$options_cache_handler = array();
-        foreach($stores as $store) {
-    	    $options_cache_handler[] = array(
-                'name' => @text(ucfirst($store)),
-                'value' => $store
-            );
-    	}
-      ?>
-      <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-CACHE-HANDLER'),
-        'name' => 'cache_handler',
-        'selected' => $setting->cache_handler,
-        'id' => 'setting-cache-handler',
-        'options' => $options_cache_handler,
-      )) ?>
-
-    </fieldset>
-
-    <fieldset>
       <legend><?= @text('COM-SETTINGS-SYSTEM-SESSION-SETTINGS') ?></legend>
 
       <? //Session Lifetime ?>

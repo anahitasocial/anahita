@@ -38,8 +38,8 @@ class LibBaseTemplateFilterAlias extends KTemplateFilterAlias
         parent::__construct($config);
 
         $this->_alias_read = array_merge($this->_alias_read, array(
-            '@title(' => 'KService::get(\'com:document\')->getInstance()->setTitle(',
-            '@description(' => 'KService::get(\'com:document\')->getInstance()->setDescription(',
+            '@title(' => 'KService::get(\'com:document\')->setTitle(',
+            '@description(' => 'KService::get(\'com:document\')->setDescription(',
             '@controller(' => '$this->renderHelper(\'controller.getController\',',
             '@view(' => '$this->renderHelper(\'controller.getView\',',
             '@previous(' => '$this->getHelper(\'previous\')->load(',

@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die; ?>
 
-<? $document = KService::get('com:document')->getInstance(); ?>
+<? $document = KService::get('com:document'); ?>
 <? $path = KRequest::base().'/media/lib_anahita/js/production/' ?>
 
 <? if (defined('JDEBUG') && JDEBUG) : ?>

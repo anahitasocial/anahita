@@ -2,31 +2,6 @@
 
 class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KServiceInstantiatable
 {
-    /**
-  	 * The cache object
-  	 *
-  	 * @var	JCache
-  	 */
-      protected $_cache;
-
-  	/**
-  	 * Constructor
-  	 *
-  	 * Prevent creating instances of this class by making the contructor private
-  	 *
-  	 * @param 	object 	An optional KConfig object with configuration options
-  	 */
-  	public function __construct(KConfig $config)
-  	{
-    		parent::__construct($config);
-
-            $settings = new JConfig();
-
-    		if ($settings->caching) {
-    	        $this->_cache = JFactory::getCache('database', 'output');
-    		}
-  	}
-
 	/**
      * Force creation of a singleton
      *
@@ -108,33 +83,4 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
 
         parent::_initialize($config);
     }
-
-	/**
-	 * Retrieves the table schema information about the given table
-	 *
-	 * This function try to get the table schema from the cache. If it cannot be found
-	 * the table schema will be retrieved from the database and stored in the cache.
-	 *
-	 * @param 	string 	A table name or a list of table names
-	 * @return	KDatabaseSchemaTable
-	 */
-	public function getTableSchema($table)
-	{
-	    if (!isset($this->_table_schema[$table]) && isset($this->_cache)) {
-
-            $database = $this->getDatabase();
-		    $identifier = md5($database.$table);
-
-	        if (!$schema = $this->_cache->get($identifier)) {
-                $schema = parent::getTableSchema($table);
-		   	    $this->_cache->store(serialize($schema), $identifier);
-	        } else {
-                $schema = unserialize($schema);
-            }
-
-		    $this->_table_schema[$table] = $schema;
-	    }
-
-	    return parent::getTableSchema($table);
-	}
 }
