@@ -116,10 +116,6 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
                 $html .= ' media="'.$attr['media'].'" ';
             }
 
-            if ($temp = JArrayHelper::toString($attr['attribs'])) {
-                $html .= ' '.$temp;
-            }
-
             $html .= '/>';
         }
 
