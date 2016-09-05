@@ -24,13 +24,6 @@ if(!class_exists('JLoader')) {
 /**
  * Joomla! library imports
  */
-
-//Base classes
-JLoader::import( 'joomla.base.object');
-
+ 
 //Factory class and methods
 JLoader::import( 'joomla.factory');
-
-//Error
-JLoader::import( 'joomla.error.error');
-JLoader::import( 'joomla.error.exception');

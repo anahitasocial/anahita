@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class LibDocument extends KObject implements KServiceInstantiatable
+class AnDocument extends KObject implements KServiceInstantiatable
 {
     /**
 	 * Document title

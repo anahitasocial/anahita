@@ -1,13 +1,14 @@
 {
-    "type": "project",    
+    "type": "project",
     "name": "anahita/anahita",
-    "license": "GPL-3.0",    
+    "license": "GPL-3.0",
     "keywords" : ["socialnetwork", "knowledge", "platform", "framework", "restful", "graph", "nodes"],
     "description": "Anahita Social Networking Platform",
-    "bin": ["bin/anahita"],    
+    "bin": ["bin/anahita"],
      "require": {
-        "php": ">=5.3",
-        "symfony/console": "2.1.*",        
-        "dg/mysql-dump": "1.1.0"       
+        "php": ">=5.5",
+        "symfony/console": "2.1.*",
+        "dg/mysql-dump": "1.1.0",
+        "swiftmailer/swiftmailer": "~5.1"
     }
 }

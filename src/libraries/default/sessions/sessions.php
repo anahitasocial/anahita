@@ -123,7 +123,7 @@ class LibSessions extends KObject
 			'state' => self::STATE_ACTIVE,
 			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME + time(),
 			'security' => array('fix_browser'),
-			'force_ssl' => isSSl(),
+			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita'
 		));
 
@@ -537,7 +537,7 @@ class LibSessions extends KObject
 	protected function _setCookieParams() {
 
 	   $cookie	= session_get_cookie_params();
-	   $cookie['secure'] = isSSL();
+	   $cookie['secure'] = is_ssl();
 
 	   session_set_cookie_params(
 		   $cookie['lifetime'],

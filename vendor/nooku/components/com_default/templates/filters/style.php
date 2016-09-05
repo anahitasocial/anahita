@@ -31,7 +31,7 @@ class ComDefaultTemplateFilterStyle extends KTemplateFilterStyle
             return parent::_renderStyle($style, $link, $attribs);
         }
 
-        $document = KService::get('com:document');
+        $document = KService::get('anahita:document');
 
         if($link) {
             $document->addStyleSheet($style, 'text/css', null, $attribs);

@@ -42,7 +42,7 @@ function route($url, $fqr = false)
 /**
  * Lots of cool functions.
  */
-function isSSL()
+function is_ssl()
 {
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
         return true;

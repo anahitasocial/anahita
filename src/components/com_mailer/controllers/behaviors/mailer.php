@@ -218,8 +218,8 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 
             //Supposed to fix the random exclamation points
             $output = wordwrap($output, 900, "\n");
-            $mailer = JFactory::getMailer();
 
+            $mailer = JFactory::getMailer();
             $mailer->setSubject($subject);
             $mailer->setBody($output);
             $mailer->isHTML($config->is_html);

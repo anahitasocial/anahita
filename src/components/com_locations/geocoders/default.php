@@ -13,12 +13,6 @@
  */
 class ComLocationsGeocoderDefault extends KObject
 {
-
-    /**
-    *   geocoder object ComLocationsGeocoderAdapterAbstract instance
-    */
-    protected $_geocoder = null;
-
     /**
     *   Return a geocoder singleton
     *
@@ -28,14 +22,14 @@ class ComLocationsGeocoderDefault extends KObject
     */
     public function getInstance(KConfig $config)
     {
-        if ($this->_geocoder) {
-            return $this->_geocoder;
+        static $instance;
+
+        if(!is_object($instance)) {
+            $service = ucfirst(get_config_value('locations.service', 'google'));
+            $class_name = 'ComLocationsGeocoderAdapter'.$service;
+            $instance = new $class_name($config);
         }
 
-        $service = ucfirst(get_config_value('locations.service', 'google'));
-        $class_name = 'ComLocationsGeocoderAdapter'.$service;
-        $this->_geocoder = new $class_name($config);
-
-        return $this->_geocoder;
+        return $instance;
     }
 }
