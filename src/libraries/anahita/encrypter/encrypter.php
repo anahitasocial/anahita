@@ -91,12 +91,7 @@ class AnEncrypter extends KObject
      */
     public function encrypt($value)
     {
-        if(function_exists('random_bytes')) {
-            $iv = random_bytes(16);
-        } else {
-            $iv = openssl_random_pseudo_bytes(16);
-        }
-
+        $iv = function_exists('random_bytes') ? random_bytes(16) : openssl_random_pseudo_bytes(16);
         $value = openssl_encrypt(serialize($value), $this->_cipher, $this->_key, 0, $iv);
 
         if ($value === false) {
@@ -184,7 +179,7 @@ class AnEncrypter extends KObject
      */
     protected function _validMac(array $payload)
     {
-        $bytes = random_bytes(16);
+        $bytes = function_exists('random_bytes') ? random_bytes(16) : openssl_random_pseudo_bytes(16);
         $calcMac = hash_hmac('sha256', $this->_hash($payload['iv'], $payload['value']), $bytes, true);
         return hash_equals(hash_hmac('sha256', $payload['mac'], $bytes, true), $calcMac);
     }
