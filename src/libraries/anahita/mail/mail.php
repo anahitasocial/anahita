@@ -1,5 +1,7 @@
 <?php
 
+require_once JPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
+
 /**
  *
  * @category   Anahita
@@ -10,7 +12,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-
 class LibMail extends KObject implements KServiceInstantiatable
 {
     /**
