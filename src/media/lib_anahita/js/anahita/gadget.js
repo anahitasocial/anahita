@@ -17,7 +17,7 @@
 			var gadget = $(this);
 			var content = gadget.find(".gadget-content");
 
-			if(content.children('div').length === 0) {
+			if(content.children('div').length === 0 && gadget.data('url')) {
 				content.load(gadget.data('url'));
 			}
 		});
