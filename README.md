@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.2.1 Birth Release
+*Version:* 4.2.2 Birth Release
 
 Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
