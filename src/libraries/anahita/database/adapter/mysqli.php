@@ -76,6 +76,8 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
 			return false;
 		}
 
+		$db->set_charset("utf8");
+
         $config->append(array(
     		'connection' => $db,
             'table_prefix' => $settings->dbprefix,
