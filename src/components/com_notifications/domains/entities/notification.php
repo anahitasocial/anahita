@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -142,9 +142,9 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
      * Sets the type of the notification. If an array of configuration is passed, it will
      * store it as the notification configuration.
      *
-     * @param string $type   The type of the notification	 
+     * @param string $type   The type of the notification
      * @param array  $config An array of configuration for the notification
-     * 
+     *
      * @return ComNotificationsDomainEntityNotification
      */
     public function setType($type, $config = array())
@@ -159,7 +159,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 
     /**
      * Set a list of notifications subscribers.
-     * 
+     *
      * @param array $subscribers An array of Ids or person objects
      */
     public function setSubscribers($subscribers)
@@ -189,7 +189,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 
     /**
      * Removes an array of people or ids from the list of subscribers.
-     * 
+     *
      * @param ComActorsDomainEntityActor|array $subscribers An array of people or ids
      */
     public function removeSubscribers($subscribers)
@@ -224,7 +224,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
      *
      * @param ComPeopleDomainEntityPerson         $person
      * @param ComNotificationsDomainEntitySetting $setting
-     * 
+     *
      * @return int
      */
     public function shouldNotify($person, $setting)
@@ -244,7 +244,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         }
 
         if ($this->type) {
-            $delegate = $this->getService('com://site/notifications.domain.delegate.setting.'.$this->type);
+            $delegate = $this->getService('com:notifications.domain.delegate.setting.'.$this->type);
 
             return $delegate->shouldNotify($person, $this, $setting);
         } else {

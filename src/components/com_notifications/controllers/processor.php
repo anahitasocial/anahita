@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Process a notification and mail it out.
  *
  * @category   Anahita
@@ -60,9 +45,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'parser' => 'com://site/notifications.template.helper.parser',
+            'parser' => 'com:notifications.template.helper.parser',
             'behaviors' => array(
-                'com://site/mailer.controller.behavior.mailer' => $config->toArray(),
+                'com:mailer.controller.behavior.mailer' => $config->toArray(),
              ),
         ));
 
@@ -76,7 +61,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     protected function _actionProcess(KCommandContext $context)
     {
-        $notifications = $this->getService('repos://site/notifications.notification')
+        $notifications = $this->getService('repos:notifications.notification')
             ->getQuery(true)
             ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
 
@@ -98,6 +83,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $space = $this->getService('anahita:domain.space');
 
         try {
+
             foreach ($notifications as $notification) {
                 $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
             }
@@ -109,7 +95,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             foreach ($notifications as $notification) {
                 $this->sendNotification($notification);
             }
+
         } catch (Exception $e) {
+
         }
 
         $space->commitEntities();
@@ -122,20 +110,31 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     public function sendNotification($notification)
     {
-        $people = $this->getService('repos://site/actors.actor')->getQuery(true)->id($notification->subscriberIds->toArray())->fetchSet();
-        $settings = $this->getService('repos://site/notifications.setting')
-                        ->getQuery(true, array('actor.id' => $notification->target->id))
-                        ->fetchSet();
+        $people = $this->getService('repos:actors.actor')
+                       ->getQuery(true)
+                       ->id($notification->subscriberIds->toArray())
+                       ->fetchSet();
+
+        $settings = $this->getService('repos:notifications.setting')
+                         ->getQuery(true, array('actor.id' => $notification->target->id))
+                         ->fetchSet();
 
         $settings = AnHelperArray::indexBy($settings, 'person.id');
 
-        $mails = $this->_renderMails(array('notification' => $notification, 'people' => $people, 'settings' => $settings));
+        $mails = $this->_renderMails(array(
+                        'notification' => $notification,
+                        'people' => $people,
+                        'settings' => $settings
+                    ));
+
         $debug = $this->getBehavior('mailer')->getTestOptions()->enabled;
 
         if ($debug) {
+
             $recipients = array();
 
             foreach ($mails as $i => $mail) {
+
                 $recipients[] = $mail['to'];
 
                 if ($i < 3) {
@@ -149,6 +148,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
             $bodies[] = 'Sending out '.count($mails).' notification mail(s)';
             $bodies[] = '<br /><br />'.implode('<br />', $recipients);
+
             $mails = array(array(
                  'subject' => $notification->name,
                  'body' => implode('<hr />', $bodies),
@@ -176,6 +176,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $notification = $config->notification;
 
         foreach ($people as  $person) {
+
             $setting = $settings->{$person->id};
 
             if (!$ret = $notification->shouldNotify($person, $setting)) {
@@ -208,16 +209,16 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             }
 
             $body = $this->renderMail(array(
-                    'layout' => false,
-                    'template' => 'notification',
-                    'data' => array(
-                        'person' => $person,
-                        'commands' => $data->commands,
-                        'subject' => $notification->subject,
-                        'title' => $data->email_title,
-                        'body' => $data->email_body,
-                    ),
-            ));
+                        'layout' => false,
+                        'template' => 'notification',
+                        'data' => array(
+                            'person' => $person,
+                            'commands' => $data->commands,
+                            'subject' => $notification->subject,
+                            'title' => $data->email_title,
+                            'body' => $data->email_body,
+                        ),
+                    ));
 
             $mails[] = array(
                   'subject' => $data->email_subject,

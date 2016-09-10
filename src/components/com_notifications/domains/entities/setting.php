@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -53,10 +53,10 @@ class ComNotificationsDomainEntitySetting extends ComBaseDomainEntityEdge
     /**
      * Set a notification value for a notitification type.
      *
-     * @param string $type       The type of the notification. 
+     * @param string $type       The type of the notification.
      * @param mixed  $value      The value of the notification setting.
      * @param bool   $send_email Boolean flag to whether email the notifications to the user or not
-     * 
+     *
      * @return ComNotificationsDomainEntitySetting
      */
     public function setValue($type, $value, $send_email)
@@ -80,15 +80,16 @@ class ComNotificationsDomainEntitySetting extends ComBaseDomainEntityEdge
     /**
      * Gets the value of the setting. If the notificaiton type has not been set
      * then NULL value is returned.
-     *  
+     *
      * @param string $type    The type of the notification
      * @param mixed  $default The default value to return If the type is NULL
-     * 
-     * @return mixed The return value for the type. 
+     *
+     * @return mixed The return value for the type.
      */
     public function getValue($type, $default = null)
     {
         $ret = $this->__call('getValue', array($type, $default));
+        
         if (!isset($ret['value'])) {
             return $default;
         }
@@ -99,10 +100,10 @@ class ComNotificationsDomainEntitySetting extends ComBaseDomainEntityEdge
     /**
      * Returns whether the setting should send an email for a notification or not for a
      * notification type.
-     * 
+     *
      * @param string $type    The type of the notification
      * @param mixed  $default The default value to return If the type is NULL
-     * 
+     *
      * @return bool The boolean flag to whether send an email or not
      */
     public function sendEmail($type, $default = false)

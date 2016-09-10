@@ -5,7 +5,7 @@ if (!defined('JPATH_BASE')) {
     $base = str_replace('/components/com_notifications', '', $base);
     define('JPATH_BASE', $base);
     require_once JPATH_BASE.'/includes/framework.php';
-    KService::get('com:application.dispatcher')->load();
+    KService::get('com://site/application.dispatcher')->load();
 }
 
 class ComNotificationsRouterApplication extends ComApplicationRouter
@@ -33,8 +33,10 @@ KService::setConfig('com:application.router', array(
 
 $controller = KService::get('com:notifications.controller.processor', array('base_url' => $base_url));
 $ids = (array) KRequest::get('get.id', 'int', array());
+
 if (!empty($ids)) {
     $controller->id($ids);
 }
+
 $controller->process();
 exit(0);

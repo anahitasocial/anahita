@@ -23,7 +23,7 @@ class ComNotesControllerNote extends ComMediumControllerDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'behaviors' => array('com://site/shares.controller.behavior.sharable'),
+            'behaviors' => array('com:shares.controller.behavior.sharable'),
         ));
 
         parent::_initialize($config);
@@ -57,11 +57,9 @@ class ComNotesControllerNote extends ComMediumControllerDefault
         if ($entity->owner->isSubscribable()) {
             //create a notification and pass the owner
             $notification = $this->createNotification(array(
-
                 'name' => 'note_add',
                 'object' => $entity,
                 'subscribers' => array($entity->owner->subscriberIds->toArray(), $entity->owner),
-
             ))->setType('post', array('new_post' => true));
         }
 

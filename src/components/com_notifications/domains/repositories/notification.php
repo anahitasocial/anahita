@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -33,9 +33,9 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
      * If set the true it wil try to send the notification righ
      * after it has been created through a background process.
      * This require the PHP environment to have access to the shell.
-     * 
+     *
      * @see exec_in_background()
-     * 
+     *
      * @var bool
      */
     protected $_send_after_insert;

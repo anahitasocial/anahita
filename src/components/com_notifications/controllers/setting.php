@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -56,7 +56,7 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
 
         $viewer = get_viewer();
 
-        $setting = $this->getService('repos://site/notifications.setting')->findOrAddNew(array(
+        $setting = $this->getService('repos:notifications.setting')->findOrAddNew(array(
             'person' => $viewer,
             'actor' => $this->actor,
         ));
@@ -68,7 +68,7 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
 
     /**
      * Authorizes a get, only if the viewer is already following the owner.
-     * 
+     *
      * @return bool
      */
     public function canGet()

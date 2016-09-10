@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Mailer Behavior can be used to send emails using a template.
  *
  * @category   Anahita
@@ -192,11 +177,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
      * Send an email.
      *
      * @param array $config An array of config
-     *                      'to' => array of recipients
-     *                      'template' => name of the email template to use
-     *                      'layout'   => the email layout. It's set to default
-     *                      'data'	   => array of data
-     *                      'subject'  => the mail subject
+*                      'to' => array of recipients
+*                      'template' => name of the email template to use
+*                      'layout'   => the email layout. It's set to default
+*                      'data'	   => array of data
+*                      'subject'  => the mail subject
      */
     public function mail($config = array())
     {
@@ -214,6 +199,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         ));
 
         if (!empty($emails)) {
+
             $subject = KService::get('koowa:filter.string')->sanitize($config->subject);
 
             //Supposed to fix the random exclamation points
