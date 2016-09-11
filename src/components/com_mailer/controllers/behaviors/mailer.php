@@ -146,7 +146,6 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $template = $this->getEmailTemplateView()->getTemplate();
         $data = array_merge($config['data'], array('config' => $config));
         $output = $template->loadTemplate($config->template, $data)->render();
-
         if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, array('output' => $output))->render();
         }

@@ -60,7 +60,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
                 ),
             ),
             'behaviors' => array(
-                  'serializable' => array('serializer' => 'com://site/stories.domain.serializer.story'),
+                  'serializable' => array('serializer' => 'com:stories.domain.serializer.story'),
                   'dictionariable',
             ),
             'relationships' => array(
@@ -245,7 +245,6 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 
         if ($this->type) {
             $delegate = $this->getService('com:notifications.domain.delegate.setting.'.$this->type);
-
             return $delegate->shouldNotify($person, $this, $setting);
         } else {
             return ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL;

@@ -8,23 +8,6 @@ if (!defined('JPATH_BASE')) {
     KService::get('com://site/application.dispatcher')->load();
 }
 
-class ComNotificationsRouterApplication extends ComApplicationRouter
-{
-    /**
-     * Always return absolute URL.
-     *
-     * (non-PHPdoc)
-     *
-     * @see ComApplicationRouter::build()
-     */
-    public function build(&$query = '', $fqr = false)
-    {
-        return parent::build($query, true);
-    }
-}
-
-KService::setAlias('com:application.router', 'com:notifications.router.application');
-
 $base_url = KService::get('koowa:http.url', array('url' => rtrim(KRequest::base(), '/')));
 
 KService::setConfig('com:application.router', array(
@@ -39,4 +22,5 @@ if (!empty($ids)) {
 }
 
 $controller->process();
+
 exit(0);

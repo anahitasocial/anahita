@@ -47,7 +47,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $config->append(array(
             'parser' => 'com:notifications.template.helper.parser',
             'behaviors' => array(
-                'com:mailer.controller.behavior.mailer' => $config->toArray(),
+                'com:mailer.controller.behavior.mailer' => $config->toArray()
              ),
         ));
 
@@ -62,8 +62,8 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     protected function _actionProcess(KCommandContext $context)
     {
         $notifications = $this->getService('repos:notifications.notification')
-            ->getQuery(true)
-            ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
+                              ->getQuery(true)
+                              ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
 
         if ($this->id) {
             $ids = (array) KConfig::unbox($this->id);
@@ -201,7 +201,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                 'email_subject' => $data->title,
                 'email_title' => pick($data->email_subject, $data->title),
                 'email_body' => $data->body,
-                'notification' => $notification,
+                'notification' => $notification
             ));
 
             if ($notification->target && !$notification->target->eql($person)) {
@@ -216,8 +216,8 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                             'commands' => $data->commands,
                             'subject' => $notification->subject,
                             'title' => $data->email_title,
-                            'body' => $data->email_body,
-                        ),
+                            'body' => $data->email_body
+                        )
                     ));
 
             $mails[] = array(
