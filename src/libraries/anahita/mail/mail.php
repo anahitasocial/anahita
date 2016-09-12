@@ -12,13 +12,41 @@ require_once JPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class LibMail extends KObject implements KServiceInstantiatable
+class AnMail extends KObject implements KServiceInstantiatable
 {
+    const PRIORITY_HIGHEST = 1;
+    const PRIORITY_HIGH = 2;
+    const PRIORITY_NORMAL = 3;
+    const PRIORITY_LOW = 4;
+    const PRIORITY_LOWEST = 5;
+
     /**
-    *   Mail sender
-    *   @param array($name, $email)
+    *   Mail sender address
+    *
+    *   @param array($email => $name)
     */
     protected $_sender = array();
+
+    /**
+    *   Mail from address
+    *
+    *   @param array($email => $name)
+    */
+    protected $_from = array();
+
+    /**
+    *   Mail to address
+    *
+    *   @param array($email => $name)
+    */
+    protected $_to = array();
+
+    /**
+    *   Mail subject
+    *
+    *   @param string
+    */
+    protected $_subject = null;
 
     /**
     *   Mail body
@@ -28,46 +56,53 @@ class LibMail extends KObject implements KServiceInstantiatable
     protected $_body = null;
 
     /**
-    *   List of recipients
-    *
-    *   @param array(array($name, $email), array($name, $email), ...)
-    */
-    protected $_recipients = array();
-
-    /**
     *   List of carbon copy recipients
     *
-    *   @param array(array($name, $email), array($name, $email), ...)
+    *   @param array($email, array($email => $name), ...)
     */
     protected $_cc = array();
 
     /**
     *   List of blind carbon copy recipients
     *
-    *   @param array(array($name, $email), array($name, $email), ...)
+    *   @param array($email, array($email => $name), ...)
     */
     protected $_bcc = array();
 
     /**
-    *   List of attachments
-    *
-    *   @param array of strings
-    */
-    protected $_attachments = array();
-
-    /**
     *   Reply to email address
     *
-    *   @param string email address
+    *   @param array($email, $name)
     */
-    protected $_replyTo = null;
+    protected $_reply_to = array();
 
     /**
-    *   Mail protocol
+    *   Mailer
     *
-    *   @param string 'smtp' or 'sendmail'
+    *   @param string 'mail', 'sendmail', 'smtp'
     */
-    protected $_protocol = null;
+    protected $_mailer = null;
+
+    /**
+    *   Mail Charset
+    *
+    *   @param string 'utf-8' by default
+    */
+    protected $_charset = null;
+
+    /**
+    *   Mail Maximum Line Length
+    *
+    *   @param int <= 1000
+    */
+    protected $_maxLineLength = null;
+
+    /**
+    *   Mail Content Type
+    *
+    *   @param string 'text/html' OR  'text/plain'
+    */
+    protected $_contentType = null;
 
     /**
 	 * Constructor.
@@ -79,6 +114,12 @@ class LibMail extends KObject implements KServiceInstantiatable
 	public function __construct(KConfig $config = null)
 	{
         parent::__construct($config);
+
+        $this->_charset = $config->charset;
+        $this->_maxLineLength = $config->maxLineLength;
+        $this->_priority = $config->priority;
+        $this->_contentType = $config->contentType;
+        $this->_mailer = $config->mailer;
     }
 
     /**
@@ -91,60 +132,272 @@ class LibMail extends KObject implements KServiceInstantiatable
      */
     protected function _initialize(KConfig $config)
     {
-    	$config->append(array(
+        $settings = new JConfig();
+
+        $config->append(array(
     		'charset' => 'utf-8',
+            'maxLineLength' => 900,
+            'priority' => self::PRIORITY_NORMAL,
+            'contentType' => 'text/html',
+            'mailer' => $settings->mailer
         ));
 
         parent::_initialize($config);
     }
 
-    public function setSender($from)
+    /**
+     * Force creation of a singleton.
+     *
+     * @param KConfigInterface  $config    An optional KConfig object with configuration options
+     * @param KServiceInterface $container A KServiceInterface object
+     *
+     * @return KServiceInstantiatable
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
+        if (!$container->has($config->service_identifier)) {
+            $instance = new AnMail($config);
+            $container->set($config->service_identifier, $instance);
+        }
 
+        return $container->get($config->service_identifier);
     }
 
+    public function reset()
+    {
+        $this->_sender = array();
+        $this->_from = array();
+        $this->_to = array();
+        $this->_subject = '';
+        $this->_body = '';
+        $this->_cc = array();
+        $this->_bcc = array();
+    }
+
+    /**
+    * Set message priority
+    *
+    * @param int values 1 (highest) to 5 (lowest)
+    * @return this
+    */
+    public function setPriority($level = self::PRIORITY_NORMAL)
+    {
+        $this->_priority = (int) $level;
+        return $this;
+    }
+
+    /**
+    * Set message subject
+    *
+    * @param string
+    * @return this
+    */
+    public function setSubject($subject)
+    {
+        $this->_subject = trim($subject);
+        return $this;
+    }
+
+    /**
+    * Set message body
+    *
+    * @param string
+    * @return this
+    */
     public function setBody($body)
     {
-
+        $this->_body = trim($body);
+        return $this;
     }
 
-    public function setRecipient($recipient)
+    /**
+    * Set Sender address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @return this
+    */
+    public function setSender($email, $name = '')
     {
-
+        $this->_addAddress($email, $name, 'sender');
+        return $this;
     }
 
-    public function addCc($cc, $name = '')
+    /**
+    * Set From address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @return this
+    */
+    public function setFrom($email, $name = '')
     {
-
+        $this->_addAddress($email, $name, 'from');
+        return $this;
     }
 
-    public function addBCc($bcc, $name = '')
+    /**
+    * Set To address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @return this
+    */
+    public function setTo($email, $name = '')
     {
-
+        $this->_addAddress($email, $name, 'to');
+        return $this;
     }
 
-    public function addAtachment($attachment, $name, $encoding, $type)
+    /**
+    * Add a carbon copy address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @return this
+    */
+    public function addCc($email, $name = '')
     {
-
+        $this->_addAddress($email, $name, 'cc');
+        return $this;
     }
 
-    public function addReplyTo($replyTo, $name = '')
+    /**
+    * Add a blind carbon copy address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @return this
+    */
+    public function addBCc($email, $name = '')
     {
-
+        $this->_addAddress($email, $name, 'bcc');
+        return $this;
     }
 
-    protected function useSendmail($sendmail)
+    /**
+    * Add a reply to address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @return this
+    */
+    public function setReplyTo($email, $name = '')
     {
-
+        $this->_addAddress($email, $name, 'reply_to');
+        return $this;
     }
 
-    protected function useSmtp($auth, $host, $user, $pass, $secure, $port)
+    /**
+    * Adds an address
+    *
+    * @param string email address format
+    * @param string sender's name
+    * @param string 'recipient' OR 'cc' OR 'bcc' OR 'replyTo'
+    *
+    * @return void
+    */
+    protected function _addAddress($email, $name, $type) {
+
+        $type = '_'.$type;
+
+        $allowed = array(
+            '_sender',
+            '_from',
+            '_to',
+            '_cc',
+            '_bcc',
+            '_reply_to'
+        );
+
+        if (in_array($type, $allowed)) {
+            if ($name != '') {
+                $this->{$type}[$email] = $name;
+            } else {
+                $this->{$type}[] = $email;
+            }
+        }
+    }
+
+    /**
+    * Obtains the swift mailer transport object
+    *
+    * @return object Swift_SmtpTransport instance
+    */
+    protected function _getTransport()
     {
+        $setting = new JConfig();
 
+        if ($this->_mailer === 'smtp') {
+            $transport = Swift_SmtpTransport::newInstance($setting->smtphost, $setting->smtpport)
+            ->setUsername($setting->smtpuser)
+            ->setPassword($setting->smtppass);
+        } elseif ($this->_mailer === 'sendmail') {
+            $transport = Swift_SendmailTransport::newInstance('/usr/sbin/exim -bs');
+        } else {
+            $transport = Swift_MailTransport::newInstance();
+        }
+
+        return $transport;
     }
 
+    /**
+    * Creates a message to be sent out
+    *
+    * @return object Swift_Message instance
+    */
+    protected function _createMessage()
+    {
+        $setting = new JConfig();
+
+        $message = Swift_Message::newInstance()
+        ->setCharset($this->_charset)
+        ->setContentType($this->_contentType)
+        ->setPriority($this->_priority)
+        ->setMaxLineLength($this->_maxLineLength)
+        ->setSubject($this->_subject)
+        ->setTo($this->_to)
+        ->setBody($this->_body);
+
+        if(count($this->_cc)) {
+            $message->setCc($this->_cc);
+        }
+
+        if(count($this->_bcc)) {
+            $message->setBcc($this->_bcc);
+        }
+
+        if(count($this->_sender)) {
+            $message->setSender($this->_sender);
+        } else {
+            $message->setSender($setting->mailfrom, $setting->fromname);
+        }
+
+        if(count($this->_from)) {
+            $message->setFrom($this->_from);
+        } else {
+            $message->setFrom($setting->mailfrom, $setting->fromname);
+        }
+
+        if(count($this->_reply_to)) {
+            $message->setReplyTo($this->_reply_to);
+        } else {
+            $message->setReplyTo($setting->mailfrom, $setting->fromname);
+        }
+
+        return $message;
+    }
+
+    /**
+    * Sends a message
+    *
+    * @return void
+    */
     public function send()
     {
-
+        $transport = $this->_getTransport();
+        $mailer = Swift_Mailer::newInstance($transport);
+        $message = $this->_createMessage();
+        $mailer->send($message);
     }
 }

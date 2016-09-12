@@ -20,10 +20,3 @@ defined( '_JEXEC' ) or die( 'Restricted access' );
 if(!class_exists('JLoader')) {
     require_once( JPATH_LIBRARIES.DS.'loader.php');
 }
-
-/**
- * Joomla! library imports
- */
- 
-//Factory class and methods
-JLoader::import( 'joomla.factory');

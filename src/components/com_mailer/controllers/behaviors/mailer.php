@@ -193,23 +193,22 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
 
         $output = $config->body ? $config->body : $this->renderMail($config);
 
-        $config->append(array(
-            'is_html' => true,
-        ));
-
         if (!empty($emails)) {
 
             $subject = KService::get('koowa:filter.string')->sanitize($config->subject);
 
-            //Supposed to fix the random exclamation points
-            $output = wordwrap($output, 900, "\n");
+            $mailer = $this->getService('anahita:mail');
 
-            $mailer = JFactory::getMailer();
-            $mailer->setSubject($subject);
-            $mailer->setBody($output);
-            $mailer->isHTML($config->is_html);
-            $mailer->addRecipient($emails);
-            $mailer->Send();
+            $mailer
+            ->setSubject($subject)
+            ->setBody($output)
+            ->setTo(array_pop($emails));
+
+            foreach($emails as $email) {
+                $mailer->setBcc($email);
+            }
+
+            $mailer->send();
         }
 
         if ($this->_test_options->enabled && $this->_test_options->log) {

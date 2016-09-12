@@ -613,34 +613,4 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 
         return $this->_html->select($options->name, array('options' => $currencies, 'selected' => $selected), KConfig::unbox($options));
     }
-
-    /**
-     * Returns a user type selector.
-     *
-     * @param array $options
-     *
-     * @return string
-     */
-    public function usertypes($options = array())
-    {
-        $options = new KConfig($options);
-
-        $options->append(array(
-            'root_name' => 'Registered',
-            'inclusive' => true,
-            'multiple_selection' => true
-        ));
-
-        $acl = &JFactory::getACL();
-
-        $gtree = $acl->get_group_children_tree(null, $options->root_name, $options->inclusive);
-
-        $attr = 'class="user-types" size="'.count($gtree).'"';
-
-        if ($options->multiple_selection) {
-            $attr .= ' multiple ';
-        }
-
-        return JHTML::_('select.genericlist',  $gtree, 'gid', $attr, 'value', 'text', $options->selected);
-    }
 }
