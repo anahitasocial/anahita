@@ -14,7 +14,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-jimport('joomla.application.router');
 
 /**
  * Actor Helper.
