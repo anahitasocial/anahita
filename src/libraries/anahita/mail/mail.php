@@ -163,6 +163,7 @@ class AnMail extends KObject implements KServiceInstantiatable
         return $container->get($config->service_identifier);
     }
 
+
     public function reset()
     {
         $this->_sender = array();
@@ -172,6 +173,8 @@ class AnMail extends KObject implements KServiceInstantiatable
         $this->_body = '';
         $this->_cc = array();
         $this->_bcc = array();
+
+        return $this;
     }
 
     /**

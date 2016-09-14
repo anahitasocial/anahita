@@ -156,70 +156,65 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
     /**
      * Replaces to with the admin emails.
      *
-     * @param array $config
+     * @param array $mails
      *
      * @see ComMailerControllerBehaviorMaile::mail
      */
-    public function mailAdmins($config = array())
+    public function mailAdmins($mails = array())
     {
         $admins = $this->getService('repos:people.person')
                        ->fetchSet(array(
                            'usertype' => ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
                        ));
 
-        $config['to'] = $admins->email;
+        $mails['to'] = $admins->email;
 
-        return $this->mail($config);
+        return $this->mail($mails);
     }
 
     /**
-     * Send an email.
-     *
-     * @param array $config An array of config
-*                      'to' => array of recipients
-*                      'template' => name of the email template to use
-*                      'layout'   => the email layout. It's set to default
-*                      'data'	   => array of data
-*                      'subject'  => the mail subject
-     */
-    public function mail($config = array())
+    * Send an email.
+    *
+    * @param array $mails An array of config
+    *        'to' => array of recipients
+    *        'template'=> name of the email template to use
+    *        'layout' => the email layout. It's set to default
+    *        'data' => array of data
+    *        'subject' => the mail subject
+    */
+    public function mail($mails)
     {
-        $config = new KConfig($config);
-        $emails = (array) $config['to'];
+        $mailer = $this->getService('anahita:mail');
 
-        if ($this->_test_options->enabled) {
-            $emails = $this->_test_options->email;
-        }
+        foreach($mails as $mail) {
 
-        $output = $config->body ? $config->body : $this->renderMail($config);
+            $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
+            $subject = KService::get('koowa:filter.string')->sanitize($mail['subject']);
 
-        if (!empty($emails)) {
+            if (isset($mail['body'])) {
+                $body = $mail['body'];
+            } else {
+                $config = new KConfig($mail);
+                $body = $this->renderMail($config);
+            }
 
-            $subject = KService::get('koowa:filter.string')->sanitize($config->subject);
-
-            $mailer = $this->getService('anahita:mail');
-
-            $mailer
+            $mailer->reset()
             ->setSubject($subject)
-            ->setBody($output)
-            ->setTo(array_pop($emails));
+            ->setBody($body)
+            ->setTo($to)
+            ->send();
 
-            foreach($emails as $email) {
-                $mailer->setBcc($email);
+            if ($this->_test_options->enabled && $this->_test_options->log) {
+
+                $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
+                $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
+
+                if (!file_exists(dirname($file))) {
+                    mkdir(dirname($file), 0755);
+                }
+
+                file_put_contents($file, $output);
             }
-
-            $mailer->send();
-        }
-
-        if ($this->_test_options->enabled && $this->_test_options->log) {
-            $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $config->subject));
-            $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
-
-            if (!file_exists(dirname($file))) {
-                mkdir(dirname($file), 0755);
-            }
-
-            file_put_contents($file, $output);
         }
     }
 }

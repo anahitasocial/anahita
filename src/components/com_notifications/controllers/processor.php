@@ -82,25 +82,17 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     {
         $space = $this->getService('anahita:domain.space');
 
-        try {
-
-            foreach ($notifications as $notification) {
-                $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
-            }
-
-            //change the notification status
-            $space->commitEntities();
-
-            //send the notification
-            foreach ($notifications as $notification) {
-                $this->sendNotification($notification);
-            }
-
-        } catch (Exception $e) {
-
+        foreach ($notifications as $notification) {
+            $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
         }
 
+        //change the notification status
         $space->commitEntities();
+
+        //send the notification
+        foreach ($notifications as $notification) {
+            $this->sendNotification($notification);
+        }
     }
 
     /**
@@ -127,37 +119,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                         'settings' => $settings
                     ));
 
-        $debug = $this->getBehavior('mailer')->getTestOptions()->enabled;
-
-        if ($debug) {
-
-            $recipients = array();
-
-            foreach ($mails as $i => $mail) {
-
-                $recipients[] = $mail['to'];
-
-                if ($i < 3) {
-                    $body = array();
-                    $body[] = 'Subject   : '.$mail['subject'];
-                    $body[] = $mail['body'];
-                    $body = implode('<br />', $body);
-                    $bodies[] = $body;
-                }
-            }
-
-            $bodies[] = 'Sending out '.count($mails).' notification mail(s)';
-            $bodies[] = '<br /><br />'.implode('<br />', $recipients);
-
-            $mails = array(array(
-                 'subject' => $notification->name,
-                 'body' => implode('<hr />', $bodies),
-            ));
-        }
-
-        foreach ($mails as $mail) {
-            $this->mail($mail);
-        }
+        $this->mail($mails);
     }
 
     /**
