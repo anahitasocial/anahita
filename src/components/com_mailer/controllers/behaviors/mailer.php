@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Mailer Behavior can be used to send emails using a template.
  *
  * @category   Anahita
@@ -161,7 +146,6 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $template = $this->getEmailTemplateView()->getTemplate();
         $data = array_merge($config['data'], array('config' => $config));
         $output = $template->loadTemplate($config->template, $data)->render();
-
         if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, array('output' => $output))->render();
         }
@@ -172,70 +156,65 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
     /**
      * Replaces to with the admin emails.
      *
-     * @param array $config
+     * @param array $mails
      *
      * @see ComMailerControllerBehaviorMaile::mail
      */
-    public function mailAdmins($config = array())
+    public function mailAdmins($mails = array())
     {
         $admins = $this->getService('repos:people.person')
                        ->fetchSet(array(
                            'usertype' => ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
                        ));
 
-        $config['to'] = $admins->email;
+        $mails['to'] = $admins->email;
 
-        return $this->mail($config);
+        return $this->mail($mails);
     }
 
     /**
-     * Send an email.
-     *
-     * @param array $config An array of config
-     *                      'to' => array of recipients
-     *                      'template' => name of the email template to use
-     *                      'layout'   => the email layout. It's set to default
-     *                      'data'	   => array of data
-     *                      'subject'  => the mail subject
-     */
-    public function mail($config = array())
+    * Send an email.
+    *
+    * @param array $mails An array of config
+    *        'to' => array of recipients
+    *        'template'=> name of the email template to use
+    *        'layout' => the email layout. It's set to default
+    *        'data' => array of data
+    *        'subject' => the mail subject
+    */
+    public function mail($mails)
     {
-        $config = new KConfig($config);
-        $emails = (array) $config['to'];
+        $mailer = $this->getService('anahita:mail');
 
-        if ($this->_test_options->enabled) {
-            $emails = $this->_test_options->email;
-        }
+        foreach($mails as $mail) {
 
-        $output = $config->body ? $config->body : $this->renderMail($config);
+            $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
+            $subject = KService::get('koowa:filter.string')->sanitize($mail['subject']);
 
-        $config->append(array(
-            'is_html' => true,
-        ));
-
-        if (!empty($emails)) {
-            $subject = KService::get('koowa:filter.string')->sanitize($config->subject);
-
-            //Supposed to fix the random exclamation points
-            $output = wordwrap($output, 900, "\n");
-
-            $mailer = JFactory::getMailer();
-            $mailer->setSubject($subject);
-            $mailer->setBody($output);
-            $mailer->isHTML($config->is_html);
-            $mailer->addRecipient($emails);
-            $mailer->Send();
-        }
-
-        if ($this->_test_options->enabled && $this->_test_options->log) {
-            $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $config->subject));
-            $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
-
-            if (!file_exists(dirname($file))) {
-                mkdir(dirname($file), 0755);
+            if (isset($mail['body'])) {
+                $body = $mail['body'];
+            } else {
+                $config = new KConfig($mail);
+                $body = $this->renderMail($config);
             }
 
-            file_put_contents($file, $output);
+            $mailer->reset()
+            ->setSubject($subject)
+            ->setBody($body)
+            ->setTo($to)
+            ->send();
+
+            if ($this->_test_options->enabled && $this->_test_options->log) {
+
+                $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
+                $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
+
+                if (!file_exists(dirname($file))) {
+                    mkdir(dirname($file), 0755);
+                }
+
+                file_put_contents($file, $output);
+            }
         }
     }
 }

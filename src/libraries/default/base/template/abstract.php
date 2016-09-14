@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -36,40 +36,40 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 {
     /**
      * Array of search path.
-     * 
+     *
      * @var array
      */
     protected $_search_paths = array();
 
     /**
      * The template load stack.
-     * 
+     *
      * @var array
      */
     protected $_load_stack = array();
 
     /**
      * Array of helpers.
-     * 
+     *
      * @var array
      */
     protected $_helpers = array();
 
     /**
      * Contains the paths for the template.
-     * 
+     *
      * @var array
      */
     protected $_paths = array();
 
     /**
      * stores the parsed data for each path.
-     * 
+     *
      * @var array
      */
     protected $_parsed_data;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -102,9 +102,9 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
     /**
      * Method to set a view object attached to the controller.
      *
-     * @param	mixed	An object that implements KObjectServiceable, KServiceIdentifier object 
+     * @param	mixed	An object that implements KObjectServiceable, KServiceIdentifier object
      * 					or valid identifier string
-     * 
+     *
      * @return LibBaseTemplateAbstract
      */
     public function setView($view)
@@ -169,7 +169,7 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
         $result = parent::loadFile($file, $data, $process);
 
         array_pop($this->_load_stack);
-        //the path 
+        //the path
         $this->_path = end($this->_load_stack);
 
         return $result;
@@ -177,13 +177,13 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 
     /**
      * Loads a template using the identifier by converting an identifier to a path. On the contrary to
-     * KTemplateAbstract if a KServiceIdentifier is passed, it will not append the path directory as the 
+     * KTemplateAbstract if a KServiceIdentifier is passed, it will not append the path directory as the
      * default path of $template->_search_paths.
-     * 
+     *
      * @param  KServiceIdentifier $template Template Identifier
      * @param  array              $data     Template data
      * @param  bool               $process  If TRUE process the data using a tmpl stream. Default TRUE.
-     *                                       
+     *
      * @return KTemplateAbstract
      */
     public function loadIdentifier($template, $data = array(), $process = true)
@@ -209,7 +209,7 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
      * @param string $template Template name
      * @param array  $data     Template data
      * @param bool   $process  If TRUE process the data using a tmpl stream. Default TRUE.
-     * 
+     *
      * @return string
      */
     public function loadTemplate($template, $data = array(), $process = true)
@@ -217,22 +217,21 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
         $path = $this->findTemplate($template);
 
         if (!$path) {
-            //@TODO a hack to prevent caching the 
-            //paths that are not found
             unset($this->_paths[$template.'.php']);
             throw new KTemplateException($template.' template not found for '.$this->getIdentifier());
+            return false;
         }
 
         return $this->loadFile($path, $data, $process);
     }
 
     /**
-     * Load a template helper. On Contrary to Nooku, it allows for any number of 
+     * Load a template helper. On Contrary to Nooku, it allows for any number of
      * argument than just an array.
      *
      * @param	string	Name of the helper, dot separated including the helper function to call
      * @param	mixed	Parameters to be passed to the helper
-     * 
+     *
      * @return string Helper output
      */
     public function renderHelper($identifier, $config = array())
@@ -288,9 +287,9 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 
     /**
      * Same as findPath except it automatically adds the .php extension.
-     * 
+     *
      * @param string $template The template path
-     * 
+     *
      * @return string
      */
     public function findTemplate($template)
@@ -327,7 +326,7 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
 
     /**
      * Return all the template paths.
-     * 
+     *
      * @return array
      */
     public function getSearchPaths()
@@ -339,7 +338,7 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
      * Add a new search path. By the default the path is added to the top of the search path.
      *
      * @param string|array The path(s) to add.
-     * 
+     *
      * @return KTemplateAbstract
      */
     public function addSearchPath($paths, $append = false)

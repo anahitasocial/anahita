@@ -1,6 +1,6 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<? defined('KOOWA') or die('Restricted access');?>
 
-<?php 
+<?
 $targets = $target;
 
 if (!is_array($targets)) {
@@ -9,21 +9,21 @@ if (!is_array($targets)) {
 ?>
 
 <data name="title">
-<?php if (count($targets) == 1): ?>
-<?=sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATAR'), @name($subject)) ?>
-<?php else: ?>
+<? if (count($targets) == 1): ?>
+<?= sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATAR'), @name($subject)) ?>
+<? else: ?>
 <?= sprintf(@text('COM-STORIES-TITLE-UPDATE-AVATARS'), @name($subject)) ?>
-<?php endif; ?>
+<? endif; ?>
 </data>
 
 <data name="body">
-	<?php if (count($targets) == 1): ?>
+	<? if (count($targets) == 1): ?>
 	<?= @avatar($target, 'medium') ?>
-	<?php else: ?>
+	<? else: ?>
 	<div class="media-grid">
-		<?php foreach ($targets as $target) : ?>  
+		<? foreach ($targets as $target) : ?>
 		<div><?= @avatar($target, 'square') ?></div>
-		<?php endforeach; ?>
+		<? endforeach; ?>
 	</div>
-	<?php endif; ?>
+	<? endif; ?>
 </data>

@@ -1,3 +1,3 @@
 <?php
 
-class LibMailException extends KException {}
+class AnMailException extends KException {}

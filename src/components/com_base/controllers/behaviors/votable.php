@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -32,7 +32,7 @@ class ComBaseControllerBehaviorVotable extends KControllerBehaviorAbstract
      * Renders ComBaseTemplateHelperUi::vote().
      *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return string
      */
     protected function _actionGetvoters($context)
@@ -44,7 +44,7 @@ class ComBaseControllerBehaviorVotable extends KControllerBehaviorAbstract
             ->renderHelper('ui.voters', $this->getItem(), array('avatars' => $this->avatars));
         } else {
             $voters = $this->getItem()->voteups->voter;
-            $controller = $this->getService('com://site/actors.controller.actor')
+            $controller = $this->getService('com:actors.controller.actor')
                                 ->view('actors')
                                 ->format($context->request->getFormat());
 

@@ -122,8 +122,6 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 	 */
 	 public function connect()
 	 {
-		$oldErrorReporting = error_reporting(0);
-
 		$mysqli = new mysqli(
 			$this->_options->host,
 			$this->_options->username,
@@ -133,8 +131,6 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 			$this->_options->socket
 		);
 
-		error_reporting($oldErrorReporting);
-
 		if (mysqli_connect_errno()) {
 			throw new KDatabaseAdapterException('Connect failed: (' . mysqli_connect_errno() . ') ' . mysqli_connect_error(), mysqli_connect_errno());
 		}
@@ -143,6 +139,8 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 		if (defined('MYSQLI_OPT_INT_AND_FLOAT_NATIVE')) {
 			$mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 		}
+
+		$mysqli->set_charset("utf8");
 
 		$this->_connection = $mysqli;
 		$this->_connected  = true;

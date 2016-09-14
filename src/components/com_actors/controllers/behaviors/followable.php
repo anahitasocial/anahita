@@ -247,7 +247,7 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
                 $excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));
 
                 if ($viewer->admin()) {
-                    $entities = $this->_mixer->getService('com://site/people.domain.entity.person')
+                    $entities = $this->_mixer->getService('com:people.domain.entity.person')
                                 ->getRepository()->getQuery()
                                 ->where('person.id', 'NOT IN', $excludeIds);
                 } else {

@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Subscription system plugins. Validates the viewer subscriptions.
  *

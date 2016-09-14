@@ -79,8 +79,8 @@ class JLog extends KObject
 		// Set default path if not set
 		if (!$path)
 		{
-			$config =& JFactory::getConfig();
-			$path = $config->getValue('config.log_path');
+			$config = new JConfig();
+			$path = $config->log_path;
 		}
 
 		$path = trim($path . DS . $file);
