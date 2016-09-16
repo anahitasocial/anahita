@@ -1,6 +1,10 @@
 <?php
 
+<<<<<<< HEAD
 require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
+=======
+require_once JPATH_LIBRARIES.'/merchant/merchant.php';
+>>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
 /**
  * Paypal Gateway.
@@ -194,9 +198,13 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      */
     protected function _logError($response)
     {
+<<<<<<< HEAD
         $log = $this->getService('anahita:log', array(
             'file' => 'system_log.php'
         ));
+=======
+        $log = $this->getService('anahita:log');
+>>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
         $message = "\nerror_message=".$response->message()."\n";
 

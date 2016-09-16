@@ -23,7 +23,11 @@ class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
     /**
      * Log instance.
      *
+<<<<<<< HEAD
      * @var JLog
+=======
+     * @var AnLog
+>>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
      */
     protected $_log;
 
@@ -48,7 +52,11 @@ class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
+<<<<<<< HEAD
         $log = $this->getService('anahita:log');
+=======
+        $log = $this->getService('anahita:log', array('file' => 'system_log.php'));
+>>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
         $config->append(array(
             'log' => $log,
