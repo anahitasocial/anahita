@@ -140,17 +140,17 @@ class Create extends Command
 
         define('DS', DIRECTORY_SEPARATOR);
         define('_JEXEC', 1);
-        define('JPATH_BASE', WWW_ROOT);
-        define('JPATH_ROOT', JPATH_BASE );
-        define('JPATH_SITE', JPATH_ROOT);
-        define('JPATH_CONFIGURATION', JPATH_ROOT );
-        define('JPATH_LIBRARIES', JPATH_ROOT.'/libraries');
-        define('JPATH_PLUGINS', JPATH_ROOT.'/plugins');
-        define('JPATH_INSTALLATION', JPATH_ROOT.'/installation');
-        define('JPATH_THEMES', JPATH_BASE.'/templates');
-        define('JPATH_CACHE', JPATH_BASE.'/cache' );
+        define('ANPATH_BASE', WWW_ROOT);
+        define('ANPATH_ROOT', ANPATH_BASE );
+        define('ANPATH_SITE', ANPATH_ROOT);
+        define('ANPATH_CONFIGURATION', ANPATH_ROOT );
+        define('ANPATH_LIBRARIES', ANPATH_ROOT.'/libraries');
+        define('ANPATH_PLUGINS', ANPATH_ROOT.'/plugins');
+        define('ANPATH_INSTALLATION', ANPATH_ROOT.'/installation');
+        define('ANPATH_THEMES', ANPATH_BASE.'/templates');
+        define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
 
-        include_once (JPATH_LIBRARIES . '/joomla/import.php');
+        include_once (ANPATH_LIBRARIES . '/joomla/import.php');
         require_once 'Console/Installer/Helper.php';
 
         $output->writeLn('<info>connecting to database...</info>');

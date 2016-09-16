@@ -2,9 +2,9 @@
 
 jimport('joomla.error.log');
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,7 +16,7 @@ jimport('joomla.error.log');
  *
  * @link       http://www.GetAnahita.com
  */
-require_once JPATH_LIBRARIES.'/merchant/merchant.php';
+require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
 
 /**
  * Paypal Gateway.
@@ -33,7 +33,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 {
     /**
      * Gateway config.
-     * 
+     *
      * @var array
      */
     protected $_gateway_config;
@@ -78,10 +78,10 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
     /**
      * Return a payment method.
-     * 
+     *
      * @param string $token   The authorization token
-     * @param string $country If the country is known then it will set the country code 
-     * 
+     * @param string $country If the country is known then it will set the country code
+     *
      * @return ComSubscriptionsDomainPaymentMethodToken
      */
     public function getExpressPaymentMethod($token, &$country = null)
@@ -99,11 +99,11 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
     /**
      * Get the authorization URL.
-     * 
+     *
      * @param ComSubscriptionsDomainPaymentPayload $payload
      * @param string                               $return_url The return url
      * @param string                               $cancel_url The cancel url
-     * 
+     *
      * @return string
      */
     public function getAuthorizationURL(ComSubscriptionsDomainPaymentPayload $payload, $return_url, $cancel_url)
@@ -205,7 +205,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
     /**
      * Logs an error.
-     * 
+     *
      * @param mixed $response
      */
     protected function _logError($response)

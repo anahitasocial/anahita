@@ -83,7 +83,7 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'cache_file' => JPATH_CACHE.'/'.basename($this->_file).'.'.md5($this->_file),
+            'cache_file' => ANPATH_CACHE.'/'.basename($this->_file).'.'.md5($this->_file),
         ));
 
         parent::_initialize($config);
@@ -151,7 +151,7 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
                 }
             }
 
-            $content = '//'.str_replace(JPATH_ROOT, '', $file)."\n".$content;
+            $content = '//'.str_replace(ANPATH_ROOT, '', $file)."\n".$content;
             $this->_cache_data[$file] = array('data' => $content,'imports' => $imports);
         } else {
             $content = $this->_cache_data[$file]['data'];

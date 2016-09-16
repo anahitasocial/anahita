@@ -23,7 +23,7 @@ class ComBaseTemplateAsset extends LibBaseTemplateAsset
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'asset_paths' => array(JPATH_THEMES.'/'.KService::get('application')->getTemplate().'/media'),
+            'asset_paths' => array(ANPATH_THEMES.'/'.KService::get('application')->getTemplate().'/media'),
         ));
 
         parent::_initialize($config);

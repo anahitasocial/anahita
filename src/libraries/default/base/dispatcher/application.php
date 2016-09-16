@@ -134,10 +134,10 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
     {
         $name = 'com_'.$this->getComponent()->getIdentifier()->package;
 
-        define('JPATH_COMPONENT', JPATH_BASE.DS.'components'.DS.$name);
-        define('JPATH_COMPONENT_SITE', JPATH_SITE.DS.'components'.DS.$name);
+        define('ANPATH_COMPONENT', ANPATH_BASE.DS.'components'.DS.$name);
+        define('ANPATH_COMPONENT_SITE', ANPATH_SITE.DS.'components'.DS.$name);
 
-        if (!file_exists(JPATH_COMPONENT)) {
+        if (!file_exists(ANPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound('Component not found');
         }
 

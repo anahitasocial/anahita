@@ -66,12 +66,12 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function loadFramework()
     {
-        if (!defined('JPATH_BASE'))
+        if (!defined('ANPATH_BASE'))
         {
             $_composerLoader = $GLOBALS['composerLoader'];
-            define('JPATH_BASE', WWW_ROOT);
+            define('ANPATH_BASE', WWW_ROOT);
             $_SERVER['HTTP_HOST'] = '';
-            require_once ( JPATH_BASE.'/includes/framework.php' );
+            require_once ( ANPATH_BASE.'/includes/framework.php' );
             \KService::get('com://site/application.dispatcher')->load();
             global $composerLoader, $console;
             $composerLoader = $_composerLoader;

@@ -196,7 +196,7 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     protected function _buildManifestPath($alias)
     {
-        return JPATH_THEMES.DS.$alias.DS.'template.json';
+        return ANPATH_THEMES.DS.$alias.DS.'template.json';
     }
 
     /**
@@ -208,6 +208,6 @@ class ComSettingsDomainEntityTemplate extends KObject
     */
     protected function _buildParamsPath($alias)
     {
-        return JPATH_THEMES.DS.$alias.DS.'params.ini';
+        return ANPATH_THEMES.DS.$alias.DS.'params.ini';
     }
 }

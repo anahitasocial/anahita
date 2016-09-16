@@ -110,7 +110,7 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
         $registry = $this->getService('application.registry', array('key' => $this->getIdentifier()));
 
         if (!$registry->offsetExists($class.'-identifiers')) {
-            $path = JPATH_ROOT.DS.'components'.DS.'com_'.$this->getIdentifier()->package.DS.'domains'.DS.'entities';
+            $path = ANPATH_ROOT.DS.'components'.DS.'com_'.$this->getIdentifier()->package.DS.'domains'.DS.'entities';
 
             $identifiers = array();
 

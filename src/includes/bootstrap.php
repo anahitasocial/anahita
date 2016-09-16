@@ -15,8 +15,8 @@
  * @link       http://www.GetAnahita.com
  */
 // no direct access
-defined('JPATH_BASE') or die('Restricted access');
+defined('ANPATH_BASE') or die('Restricted access');
 
-require_once JPATH_BASE.'/includes/framework.php';
+require_once ANPATH_BASE.'/includes/framework.php';
 
 KService::get('com://site/application.dispatcher')->run();

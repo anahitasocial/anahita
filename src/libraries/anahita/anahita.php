@@ -5,9 +5,9 @@ define('ANAHITA', 1);
 /**
  * Include Koowa.
  */
-require_once JPATH_LIBRARIES.'/koowa/koowa.php';
-require_once JPATH_LIBRARIES.'/anahita/functions.php';
-require_once JPATH_LIBRARIES.'/anahita/translator.php';
+require_once ANPATH_LIBRARIES.'/koowa/koowa.php';
+require_once ANPATH_LIBRARIES.'/anahita/functions.php';
+require_once ANPATH_LIBRARIES.'/anahita/translator.php';
 
 /**
  * Service Class.
@@ -86,7 +86,7 @@ class anahita
         require_once dirname(__FILE__).'/loader/adapter/anahita.php';
 
         KLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
-        KLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => JPATH_LIBRARIES.'/default')));
+        KLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
 
         AnServiceClass::getInstance();
 

@@ -41,7 +41,7 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
 
         $identifier->path = array();
 
-        $paths[] = JPATH_THEMES.'/base/'.$this->getFormat();
+        $paths[] = ANPATH_THEMES.'/base/'.$this->getFormat();
 
         $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
 

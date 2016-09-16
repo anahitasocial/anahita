@@ -123,7 +123,7 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
   	 * @param	string 	$basePath  	The basepath to use
   	 * @return	boolean	True, if the file has successfully loaded.
   	 */
-  	public function loadLanguage($extension = '', $basePath = JPATH_BASE)
+  	public function loadLanguage($extension = '', $basePath = ANPATH_BASE)
   	{
   		if(empty($extension)) {
   		    $extension = 'plg_'.$this->getIdentifier()->package.'_'.$this->getIdentifier()->name;

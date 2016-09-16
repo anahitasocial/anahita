@@ -50,7 +50,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         parent::_initialize($config);
 
         $paths = KConfig::unbox($config->paths);
-        array_unshift($paths, JPATH_THEMES.'/'.KService::get('application')->getTemplate().'/html/com_base/ui');
+        array_unshift($paths, ANPATH_THEMES.'/'.KService::get('application')->getTemplate().'/html/com_base/ui');
         $config->paths = $paths;
     }
 

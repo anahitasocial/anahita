@@ -14,6 +14,6 @@
 // Set flag that this is a parent file
 define( '_JEXEC', 1 );
 
-define('JPATH_BASE', dirname(__FILE__) );
+define('ANPATH_BASE', dirname(__FILE__) );
 
-require(JPATH_BASE.'/includes/bootstrap.php');
+require(ANPATH_BASE.'/includes/bootstrap.php');

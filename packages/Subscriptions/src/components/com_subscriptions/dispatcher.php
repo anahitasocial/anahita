@@ -1,6 +1,6 @@
 <?php
 
-require_once JPATH_LIBRARIES.'/merchant/merchant.php';
+require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
 
 /**
  * Subscription Dispatcher.

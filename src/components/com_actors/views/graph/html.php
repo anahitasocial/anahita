@@ -30,7 +30,7 @@ class ComActorsViewGraphHtml extends ComBaseViewHtml
         parent::_initialize($config);
 
         $config->append(array(
-            'template_paths' => array(JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/graph'),
+            'template_paths' => array(ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/graph'),
         ));
     }
 }

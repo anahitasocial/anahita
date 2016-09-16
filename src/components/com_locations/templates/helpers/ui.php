@@ -32,7 +32,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
         parent::_initialize($config);
 
         $paths = KConfig::unbox($config->paths);
-        array_unshift($paths, JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_locations/ui');
+        array_unshift($paths, ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_locations/ui');
         $config->paths = $paths;
 
         $this->_service = get_config_value('locations.service', 'google');

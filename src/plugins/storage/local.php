@@ -27,7 +27,7 @@ class PlgStorageLocal extends PlgStorageAbstract
         $config->append(array(
               'folder' => 'assets',
               'base_uri' => $base_uri,
-               'root' => JPATH_ROOT,
+               'root' => ANPATH_ROOT,
         ));
 
         parent::_initialize($config);

@@ -1,6 +1,6 @@
 <?php
 
-require_once JPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
+require_once ANPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
 
 /**
  *

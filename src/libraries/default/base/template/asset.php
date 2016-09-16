@@ -101,7 +101,7 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
     }
 
     /**
-     * Add relative search base paths from JPATH_BASE in which look for the media. The paths are added 
+     * Add relative search base paths from ANPATH_BASE in which look for the media. The paths are added 
      * to the beginging of the search list.
      * 
      * @param $path string|array Adds a base path
@@ -172,7 +172,7 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
             // results in a directory registered so that
             // non-registered directores are not accessible via directory
             // traversal attempts.
-            $file_path = JPATH_ROOT.DS.$path;
+            $file_path = ANPATH_ROOT.DS.$path;
 
             //fixes windows file system issue
             $path = str_replace(DS, '/', $path);

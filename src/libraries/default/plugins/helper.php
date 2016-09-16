@@ -119,7 +119,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
     {
         $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
         $element  = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->element);
-        $path	= JPATH_PLUGINS.DS.$type.DS.$element.'.php';
+        $path	= ANPATH_PLUGINS.DS.$type.DS.$element.'.php';
 
         if (isset($paths[$path])) {
            return;

@@ -59,7 +59,7 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
      */
     public function setData($property = AnDomain::ACCESS_PUBLIC, $default = null)
     {
-        $config_file_path = JPATH_SITE.DS.'components'.DS.$this->package.DS.'config.json';
+        $config_file_path = ANPATH_SITE.DS.'components'.DS.$this->package.DS.'config.json';
 
         if(file_exists($config_file_path)) {
 
