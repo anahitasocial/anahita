@@ -21,7 +21,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      */
     public function __construct($dispatcher, $config = array())
     {
-        // Command line fixes for Joomla
+        // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
             if (!isset($_SERVER['HTTP_HOST'])) {
                 $_SERVER['HTTP_HOST'] = '';

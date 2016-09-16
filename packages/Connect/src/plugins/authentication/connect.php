@@ -1,11 +1,10 @@
 <?php
 
 /**
- * Joomla Authentication plugin.
+ * Anahita Authentication plugin.
  *
  * @category     Anahita
  *
- * @since 1.5
  */
 class PlgAuthenticationConnect extends PlgAnahitaDefault
 {
@@ -70,7 +69,7 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
                     $response->error_message = '';
                 }
             }
-            
+
         } catch (Exception $e) {
             //ignore any exception
         }

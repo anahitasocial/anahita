@@ -37,12 +37,12 @@ class Symlink extends Command
         );
 
         $patterns['#^installation/.+#'] = '';
-        $mapper->addCrawlMap('vendor/joomla', $patterns);
+        $mapper->addCrawlMap('vendor/anahita-platform', $patterns);
         $mapper->addCrawlMap('vendor/nooku', $patterns);
         $mapper->addCrawlMap('src', $patterns);
         $mapper->symlink();
-        $mapper->getMap('vendor/joomla/index.php', 'index.php')->copy();
-        $mapper->getMap('vendor/joomla/htaccess.txt', '.htaccess')->copy();
+        $mapper->getMap('vendor/anahita-platform/index.php', 'index.php')->copy();
+        $mapper->getMap('vendor/anahita-platform/htaccess.txt', '.htaccess')->copy();
 
         @mkdir($target.'/tmp', 0755);
         @mkdir($target.'/cache', 0755);
@@ -150,7 +150,7 @@ class Create extends Command
         define('ANPATH_THEMES', ANPATH_BASE.'/templates');
         define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
 
-        include_once (ANPATH_LIBRARIES . '/joomla/import.php');
+        include_once (ANPATH_LIBRARIES . '/anahita-platform/import.php');
         require_once 'Console/Installer/Helper.php';
 
         $output->writeLn('<info>connecting to database...</info>');
@@ -207,7 +207,7 @@ class Create extends Command
 
             $sql_files = $dump_file ? array($dump_file) :
                     array_map(function($file){
-                        return $file = ANAHITA_ROOT."/vendor/joomla/installation/sql/$file";
+                        return $file = ANAHITA_ROOT."/vendor/anahita-platform/installation/sql/$file";
                     }, array("schema.sql","data.sql"));
 
             $output->writeLn('<info>Populating database...</info>');
