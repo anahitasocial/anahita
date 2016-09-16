@@ -21,7 +21,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      */
     public function __construct($dispatcher, $config = array())
     {
-        // Command line fixes for Joomla
+        // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
             if (!isset($_SERVER['HTTP_HOST'])) {
                 $_SERVER['HTTP_HOST'] = '';
@@ -84,8 +84,8 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         }
 
         KService::get('plg:storage.default');
-        KService::get('anahita:language')->load('overwrite', JPATH_ROOT);
-        KService::get('anahita:language')->load('lib_anahita', JPATH_ROOT);
+        KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
+        KService::get('anahita:language')->load('lib_anahita', ANPATH_ROOT);
 
         parent::__construct($dispatcher, $config);
     }

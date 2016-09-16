@@ -99,10 +99,10 @@ class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
             }
 
             if (count($parts) == 2 && $parts[0] == 'domains') {
-                if ($parts[1] == 'entities' && JPATH_SITE != $this->_basepath) {
+                if ($parts[1] == 'entities' && ANPATH_SITE != $this->_basepath) {
                     //set the basepath of entities to the site
                     if (!file_exists($basepath.$filepath)) {
-                        $basepath = JPATH_SITE;
+                        $basepath = ANPATH_SITE;
                     }
                 }
             }

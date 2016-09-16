@@ -148,7 +148,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
     public function onAfterSchemaMigration(\KEvent $event)
     {
         if ($event->caller->getComponent() == 'anahita') {
-          $path = ANAHITA_ROOT.'/vendor/joomla/installation/sql';
+          $path = ANAHITA_ROOT.'/vendor/anahita-platform/installation/sql';
           $event->caller->setOutputPath($path);
         }
 

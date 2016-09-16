@@ -30,7 +30,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         parent::_initialize($config);
 
         $paths = KConfig::unbox($config->paths);
-        array_unshift($paths, JPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_settings/ui');
+        array_unshift($paths, ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_settings/ui');
         $config->paths = $paths;
     }
 
@@ -127,7 +127,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
             '.DS_Store'
           );
 
-          $templates = array_diff(scandir(JPATH_THEMES), $exclude);
+          $templates = array_diff(scandir(ANPATH_THEMES), $exclude);
 
           $options = array();
 
@@ -156,7 +156,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
             '.DS_Store'
           );
 
-          $path = JPATH_SITE.DS.'language';
+          $path = ANPATH_SITE.DS.'language';
           $languages = array_diff(scandir($path), $exclude);
           $options = array();
 
@@ -298,7 +298,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     {
         $entity = $config->entity;
         $package = $entity->option;
-        $config_file_path = JPATH_SITE.DS.'components'.DS.$package.DS.'config.json';
+        $config_file_path = ANPATH_SITE.DS.'components'.DS.$package.DS.'config.json';
 
         if(!file_exists($config_file_path)) {
            return AnTranslator::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');
@@ -322,7 +322,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         $element = $entity->element;
         $folder = $entity->folder;
 
-        $config_file_path = JPATH_SITE.DS.'plugins'.DS.$folder.DS.$element.'.json';
+        $config_file_path = ANPATH_SITE.DS.'plugins'.DS.$folder.DS.$element.'.json';
 
         if(file_exists($config_file_path)) {
             $plugin_config = json_decode(file_get_contents($config_file_path));
@@ -346,7 +346,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     {
         $entity = $config->entity;
         $template = $entity->alias;
-        $config_file_path = JPATH_THEMES.DS.$template.DS.'template.json';
+        $config_file_path = ANPATH_THEMES.DS.$template.DS.'template.json';
 
         if(!file_exists($config_file_path)) {
            return AnTranslator::_('COM-SETTINGS-PROMPT-NO-CONFIGURATION-AVAILABLE');

@@ -1,6 +1,6 @@
 <?php
 
-define('PROCESSOR_PATH', JPATH_BASE.'/components/com_notifications/process.php');
+define('PROCESSOR_PATH', ANPATH_BASE.'/components/com_notifications/process.php');
 
 /**
  * Notification Repository.
@@ -65,7 +65,7 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
         parent::_afterEntityInsert($context);
 
         if ($this->_send_after_insert) {
-            exec_in_background('php '.JPATH_BASE.'/index.php '.PROCESSOR_PATH.' id='.$context->entity->id);
+            exec_in_background('php '.ANPATH_BASE.'/index.php '.PROCESSOR_PATH.' id='.$context->entity->id);
         }
     }
 }

@@ -74,7 +74,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'lifetime' => 1440
             );
 
-            $this->config_file_path = JPATH_CONFIGURATION.DS.'configuration.php';
+            $this->config_file_path = ANPATH_CONFIGURATION.DS.'configuration.php';
     }
 
     /**

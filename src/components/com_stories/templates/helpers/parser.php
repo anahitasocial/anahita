@@ -74,8 +74,8 @@ class ComStoriesTemplateHelperParser extends KTemplateHelperAbstract
     {
         $config->append(array(
             'paths' => array(
-                JPATH_ROOT.'/components/com_stories/templates/stories',
-                JPATH_ROOT.'/components/com_actors/templates/stories',
+                ANPATH_ROOT.'/components/com_stories/templates/stories',
+                ANPATH_ROOT.'/components/com_actors/templates/stories',
                 ),
             'filters' => array('alias', 'shorttag'),
             'alias' => array(
@@ -123,7 +123,7 @@ class ComStoriesTemplateHelperParser extends KTemplateHelperAbstract
             'type' => $story->getIdentifier()->name,
         );
 
-        $path[] = JPATH_ROOT.'/components/'.$story->component.'/templates/stories/'.$story->name.'.php';
+        $path[] = ANPATH_ROOT.'/components/'.$story->component.'/templates/stories/'.$story->name.'.php';
 
         $output = $this->_render($story, $path, $data);
         $data = $this->_parseData($output);

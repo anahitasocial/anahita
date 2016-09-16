@@ -201,7 +201,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	 */
 	public function getMetadata($language)
 	{
-		$path = $this->getLanguagePath(JPATH_BASE, $language);
+		$path = $this->getLanguagePath(ANPATH_BASE, $language);
 		$file = $language.'.json';
 
 		$meta = null;
@@ -240,7 +240,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	 * @param	string $language The language tag
 	 * @return	string	language related path or null
 	 */
-	public function getLanguagePath($basePath = JPATH_BASE, $language = null )
+	public function getLanguagePath($basePath = ANPATH_BASE, $language = null )
 	{
 		$dir = $basePath.DS.'language';
 
@@ -388,7 +388,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	 * @param	boolean $reload		Flag that will force a language to be reloaded if set to true
 	 * @return	boolean	True, if the file has successfully loaded.
 	 */
-	public function load($extension = 'anahita', $basePath = JPATH_BASE, $language = null, $reload = false)
+	public function load($extension = 'anahita', $basePath = ANPATH_BASE, $language = null, $reload = false)
 	{
 		if (is_null($language)) {
 			$language = $this->_language;
@@ -492,7 +492,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	 * @param	string $basePath Optional path to check
 	 * @return	boolean True if the language exists
 	 */
-	public function exists($language, $basePath = JPATH_BASE)
+	public function exists($language, $basePath = ANPATH_BASE)
 	{
         $directory = $this->getLanguagePath($basePath, $language);
         return is_dir($directory);

@@ -1,22 +1,10 @@
 <?php
 
-jimport('joomla.error.log');
-
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
+<<<<<<< HEAD
+require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
+=======
 require_once JPATH_LIBRARIES.'/merchant/merchant.php';
+>>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
 /**
  * Paypal Gateway.
@@ -33,7 +21,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 {
     /**
      * Gateway config.
-     * 
+     *
      * @var array
      */
     protected $_gateway_config;
@@ -78,10 +66,10 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
     /**
      * Return a payment method.
-     * 
+     *
      * @param string $token   The authorization token
-     * @param string $country If the country is known then it will set the country code 
-     * 
+     * @param string $country If the country is known then it will set the country code
+     *
      * @return ComSubscriptionsDomainPaymentMethodToken
      */
     public function getExpressPaymentMethod($token, &$country = null)
@@ -99,11 +87,11 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
     /**
      * Get the authorization URL.
-     * 
+     *
      * @param ComSubscriptionsDomainPaymentPayload $payload
      * @param string                               $return_url The return url
      * @param string                               $cancel_url The cancel url
-     * 
+     *
      * @return string
      */
     public function getAuthorizationURL(ComSubscriptionsDomainPaymentPayload $payload, $return_url, $cancel_url)
@@ -205,12 +193,18 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
     /**
      * Logs an error.
-     * 
+     *
      * @param mixed $response
      */
     protected function _logError($response)
     {
-        $log = JLog::getInstance('system_log.php');
+<<<<<<< HEAD
+        $log = $this->getService('anahita:log', array(
+            'file' => 'system_log.php'
+        ));
+=======
+        $log = $this->getService('anahita:log');
+>>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
         $message = "\nerror_message=".$response->message()."\n";
 

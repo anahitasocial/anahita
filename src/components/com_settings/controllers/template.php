@@ -79,7 +79,7 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
           '.DS_Store'
         );
 
-        $aliases = array_diff(scandir(JPATH_THEMES), $exclude);
+        $aliases = array_diff(scandir(ANPATH_THEMES), $exclude);
         $items = array();
 
         foreach ($aliases as $alias) {

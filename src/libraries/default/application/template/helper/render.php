@@ -88,15 +88,15 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         ));
 
         $paths = array(
-            JPATH_THEMES.DS.'base'.DS.'css'.DS.'images',
-            JPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style.DS.'images',
+            ANPATH_THEMES.DS.'base'.DS.'css'.DS.'images',
+            ANPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style.DS.'images',
         );
 
         $finder = $this->getService('anahita:file.pathfinder');
 
         $finder->addSearchDirs($paths);
 
-        $path = str_replace('\\', '/', str_replace(JPATH_ROOT.DS, 'base://', $finder->getPath('favicon.ico')));
+        $path = str_replace('\\', '/', str_replace(ANPATH_ROOT.DS, 'base://', $finder->getPath('favicon.ico')));
 
         return '<link rel="icon" type="'.$config->type.'" href="'.$path.'" />';
     }
@@ -122,9 +122,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         ));
 
         $paths = array(
-            JPATH_ROOT.DS.'media'.DS.'lib_anahita'.DS.'css',
-            JPATH_THEMES.DS.'base'.DS.'css',
-            $css_folder = JPATH_ROOT.DS.'templates'.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style,
+            ANPATH_ROOT.DS.'media'.DS.'lib_anahita'.DS.'css',
+            ANPATH_THEMES.DS.'base'.DS.'css',
+            $css_folder = ANPATH_ROOT.DS.'templates'.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style,
         );
 
         $finder = $this->getService('anahita:file.pathfinder');
@@ -144,7 +144,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
             ));
         }
 
-        $cssHref = str_replace('\\', '/', str_replace(JPATH_ROOT.DS, 'base://', $css));
+        $cssHref = str_replace('\\', '/', str_replace(ANPATH_ROOT.DS, 'base://', $css));
 
         return '<link rel="stylesheet" href="'.$cssHref.'" type="text/css" />';
     }

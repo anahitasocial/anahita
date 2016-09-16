@@ -37,12 +37,12 @@ class Symlink extends Command
         );
 
         $patterns['#^installation/.+#'] = '';
-        $mapper->addCrawlMap('vendor/joomla', $patterns);
+        $mapper->addCrawlMap('vendor/anahita-platform', $patterns);
         $mapper->addCrawlMap('vendor/nooku', $patterns);
         $mapper->addCrawlMap('src', $patterns);
         $mapper->symlink();
-        $mapper->getMap('vendor/joomla/index.php', 'index.php')->copy();
-        $mapper->getMap('vendor/joomla/htaccess.txt', '.htaccess')->copy();
+        $mapper->getMap('vendor/anahita-platform/index.php', 'index.php')->copy();
+        $mapper->getMap('vendor/anahita-platform/htaccess.txt', '.htaccess')->copy();
 
         @mkdir($target.'/tmp', 0755);
         @mkdir($target.'/cache', 0755);
@@ -139,18 +139,18 @@ class Create extends Command
         ));
 
         define('DS', DIRECTORY_SEPARATOR);
-        define('_JEXEC', 1);
-        define('JPATH_BASE', WWW_ROOT);
-        define('JPATH_ROOT', JPATH_BASE );
-        define('JPATH_SITE', JPATH_ROOT);
-        define('JPATH_CONFIGURATION', JPATH_ROOT );
-        define('JPATH_LIBRARIES', JPATH_ROOT.'/libraries');
-        define('JPATH_PLUGINS', JPATH_ROOT.'/plugins');
-        define('JPATH_INSTALLATION', JPATH_ROOT.'/installation');
-        define('JPATH_THEMES', JPATH_BASE.'/templates');
-        define('JPATH_CACHE', JPATH_BASE.'/cache' );
+        define('_ANEXEC', 1);
+        define('ANPATH_BASE', WWW_ROOT);
+        define('ANPATH_ROOT', ANPATH_BASE );
+        define('ANPATH_SITE', ANPATH_ROOT);
+        define('ANPATH_CONFIGURATION', ANPATH_ROOT );
+        define('ANPATH_LIBRARIES', ANPATH_ROOT.'/libraries');
+        define('ANPATH_PLUGINS', ANPATH_ROOT.'/plugins');
+        define('ANPATH_INSTALLATION', ANPATH_ROOT.'/installation');
+        define('ANPATH_THEMES', ANPATH_BASE.'/templates');
+        define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
 
-        include_once (JPATH_LIBRARIES . '/joomla/import.php');
+        include_once (ANPATH_LIBRARIES . '/anahita-platform/import.php');
         require_once 'Console/Installer/Helper.php';
 
         $output->writeLn('<info>connecting to database...</info>');
@@ -207,7 +207,7 @@ class Create extends Command
 
             $sql_files = $dump_file ? array($dump_file) :
                     array_map(function($file){
-                        return $file = ANAHITA_ROOT."/vendor/joomla/installation/sql/$file";
+                        return $file = ANAHITA_ROOT."/vendor/anahita-platform/installation/sql/$file";
                     }, array("schema.sql","data.sql"));
 
             $output->writeLn('<info>Populating database...</info>');

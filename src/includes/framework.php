@@ -12,46 +12,46 @@
  */
 
 // no direct access
-defined('JPATH_BASE') or die('Restricted access');
-defined('_JEXEC') or define('_JEXEC', 1);
+defined('ANPATH_BASE') or die('Restricted access');
+defined('_ANEXEC') or define('_ANEXEC', 1);
 
 define('DS', DIRECTORY_SEPARATOR);
 
-define('JPATH_ROOT',           JPATH_BASE);
-define('JPATH_SITE',           JPATH_ROOT);
-define('JPATH_CONFIGURATION',  JPATH_ROOT);
-define('JPATH_LIBRARIES',      JPATH_ROOT.'/libraries');
-define('JPATH_PLUGINS',        JPATH_ROOT.'/plugins');
-define('JPATH_INSTALLATION',   JPATH_ROOT.'/installation');
-define('JPATH_THEMES',         JPATH_BASE.'/templates');
-define('JPATH_CACHE',          JPATH_BASE.DS.'cache');
-define('JPATH_VENDOR',         JPATH_BASE.'/vendor');
+define('ANPATH_ROOT',           ANPATH_BASE);
+define('ANPATH_SITE',           ANPATH_ROOT);
+define('ANPATH_CONFIGURATION',  ANPATH_ROOT);
+define('ANPATH_LIBRARIES',      ANPATH_ROOT.'/libraries');
+define('ANPATH_PLUGINS',        ANPATH_ROOT.'/plugins');
+define('ANPATH_INSTALLATION',   ANPATH_ROOT.'/installation');
+define('ANPATH_THEMES',         ANPATH_BASE.'/templates');
+define('ANPATH_CACHE',          ANPATH_BASE.DS.'cache');
+define('ANPATH_VENDOR',         ANPATH_BASE.'/vendor');
 
 /*
  * Installation check, and check on removal of the install directory.
  */
-if (!file_exists(JPATH_CONFIGURATION.'/configuration.php') || (filesize(JPATH_CONFIGURATION.'/configuration.php') < 10)) {
+if (!file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH_CONFIGURATION.'/configuration.php') < 10)) {
     echo 'No configuration file found. Exiting...';
     exit();
 }
 
 // Platform : setup
-require_once JPATH_CONFIGURATION.'/configuration.php';
-require_once JPATH_LIBRARIES.'/anahita/anahita.php';
+require_once ANPATH_CONFIGURATION.'/configuration.php';
+require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
 
 $config = new JConfig();
 
 //instantiate anahita
 Anahita::getInstance();
 
-KServiceIdentifier::setApplication('site', JPATH_SITE);
-KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => JPATH_BASE)));
+KServiceIdentifier::setApplication('site', ANPATH_SITE);
+KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => ANPATH_BASE)));
 KServiceIdentifier::addLocator(KService::get('anahita:service.locator.component'));
 
-KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => JPATH_ROOT)));
+KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => ANPATH_ROOT)));
 KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
 
-KLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath' => JPATH_BASE)));
+KLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath' => ANPATH_BASE)));
 KServiceIdentifier::addLocator(KService::get('anahita:service.locator.template'));
 
 KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
@@ -59,7 +59,7 @@ KService::setAlias('anahita:domain.space', 'com:base.domain.space');
 
 //make sure for the autoloader to be reigstered after nooku
 if (PHP_SAPI != 'cli') {
-  $autoloader = require_once JPATH_VENDOR.'/autoload.php';
+  $autoloader = require_once ANPATH_VENDOR.'/autoload.php';
   $autoloader->unregister();
   $autoloader->register();
 }

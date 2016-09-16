@@ -37,7 +37,7 @@ class ComPagesControllerPage extends ComBaseControllerResource
 
         if ($this->_base_path) {
             if (!preg_match('%^(\w:)?[/\\\\]%', $this->_base_path)) {
-                $this->_base_path = realpath(JPATH_ROOT.'/'.$this->_base_path);
+                $this->_base_path = realpath(ANPATH_ROOT.'/'.$this->_base_path);
             }
 
             $this->getService()->setConfig($this->_view, array(

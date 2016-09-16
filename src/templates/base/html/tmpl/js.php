@@ -7,8 +7,8 @@
 
 <?
 @helper('javascript.combine', array(
-    'file' => JPATH_ROOT.'/media/lib_anahita/js/site.js',
-    'output' => JPATH_ROOT.'/media/lib_anahita/js/production/site.uncompressed.js',
+    'file' => ANPATH_ROOT.'/media/lib_anahita/js/site.js',
+    'output' => ANPATH_ROOT.'/media/lib_anahita/js/production/site.uncompressed.js',
 ));
 
 $document->addScript($path.'site.uncompressed.js');

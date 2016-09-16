@@ -82,8 +82,8 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         //post depending if there are any action
         if (PHP_SAPI == 'cli') {
             $method = KRequest::get('post.action', 'cmd', 'get');
-        } elseif (file_exists(JPATH_COMPONENT.'/'.$this->getIdentifier()->package.'.php') ||
-                 file_exists(JPATH_COMPONENT.'/'.'admin.'.$this->getIdentifier()->package.'.php')
+        } elseif (file_exists(ANPATH_COMPONENT.'/'.$this->getIdentifier()->package.'.php') ||
+                 file_exists(ANPATH_COMPONENT.'/'.'admin.'.$this->getIdentifier()->package.'.php')
                 ) {
             $method = 'renderlegacy';
         } else {
