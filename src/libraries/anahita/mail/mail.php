@@ -23,84 +23,84 @@ class AnMail extends KObject implements KServiceInstantiatable
     /**
     *   Mail sender address
     *
-    *   @param array($email => $name)
+    *   @var array($email => $name)
     */
     protected $_sender = array();
 
     /**
     *   Mail from address
     *
-    *   @param array($email => $name)
+    *   @var array($email => $name)
     */
     protected $_from = array();
 
     /**
     *   Mail to address
     *
-    *   @param array($email => $name)
+    *   @var array($email => $name)
     */
     protected $_to = array();
 
     /**
     *   Mail subject
     *
-    *   @param string
+    *   @var string
     */
     protected $_subject = null;
 
     /**
     *   Mail body
     *
-    *   @param string
+    *   @var string
     */
     protected $_body = null;
 
     /**
     *   List of carbon copy recipients
     *
-    *   @param array($email, array($email => $name), ...)
+    *   @var array($email, array($email => $name), ...)
     */
     protected $_cc = array();
 
     /**
     *   List of blind carbon copy recipients
     *
-    *   @param array($email, array($email => $name), ...)
+    *   @var array($email, array($email => $name), ...)
     */
     protected $_bcc = array();
 
     /**
     *   Reply to email address
     *
-    *   @param array($email, $name)
+    *   @var array($email, $name)
     */
     protected $_reply_to = array();
 
     /**
     *   Mailer
     *
-    *   @param string 'mail', 'sendmail', 'smtp'
+    *   @var string 'mail', 'sendmail', 'smtp'
     */
     protected $_mailer = null;
 
     /**
     *   Mail Charset
     *
-    *   @param string 'utf-8' by default
+    *   @var string 'utf-8' by default
     */
     protected $_charset = null;
 
     /**
     *   Mail Maximum Line Length
     *
-    *   @param int <= 1000
+    *   @var int <= 1000
     */
     protected $_maxLineLength = null;
 
     /**
     *   Mail Content Type
     *
-    *   @param string 'text/html' OR  'text/plain'
+    *   @var string 'text/html' OR  'text/plain'
     */
     protected $_contentType = null;
 

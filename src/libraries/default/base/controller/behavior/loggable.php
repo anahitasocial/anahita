@@ -1,21 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-jimport('joomla.error.log');
-
 define('LOG_LEVEL_DEBUG', 'DEBUG');
 define('LOG_LEVEL_INFO',  'INFO');
 define('LOG_LEVEL_WARN',  'WARN');
@@ -32,14 +16,14 @@ define('LOG_LEVEL_ERROR', 'ERROR');
  *
  * @link       http://www.GetAnahita.com
  *
- * @uses JLog
+ * @uses AnLog
  */
 class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
 {
     /**
      * Log instance.
-     * 
-     * @var JLog
+     *
+     * @var AnLog
      */
     protected $_log;
 
@@ -64,7 +48,7 @@ class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
-        $log = JLog::getInstance('system_log.php');
+        $log = $this->getService('anahita:log', array('file' => 'system_log.php'));
 
         $config->append(array(
             'log' => $log,
@@ -75,10 +59,10 @@ class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
 
     /**
      * Logs an entry.
-     * 
+     *
      * @param array|string $entry
      *
-     * @see JLog::addEntry options
+     * @see AnLog::addEntry options
      *
      * @return mixed
      */
