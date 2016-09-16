@@ -1,21 +1,5 @@
 <?php
 
-jimport('joomla.error.log');
-
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
 require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
 
 /**
@@ -210,7 +194,9 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      */
     protected function _logError($response)
     {
-        $log = JLog::getInstance('system_log.php');
+        $log = $this->getService('anahita:log', array(
+            'file' => 'system_log.php'
+        ));
 
         $message = "\nerror_message=".$response->message()."\n";
 
