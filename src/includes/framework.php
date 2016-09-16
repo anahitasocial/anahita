@@ -13,7 +13,7 @@
 
 // no direct access
 defined('ANPATH_BASE') or die('Restricted access');
-defined('_JEXEC') or define('_JEXEC', 1);
+defined('_ANEXEC') or define('_ANEXEC', 1);
 
 define('DS', DIRECTORY_SEPARATOR);
 

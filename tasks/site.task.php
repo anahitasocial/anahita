@@ -139,7 +139,7 @@ class Create extends Command
         ));
 
         define('DS', DIRECTORY_SEPARATOR);
-        define('_JEXEC', 1);
+        define('_ANEXEC', 1);
         define('ANPATH_BASE', WWW_ROOT);
         define('ANPATH_ROOT', ANPATH_BASE );
         define('ANPATH_SITE', ANPATH_ROOT);
