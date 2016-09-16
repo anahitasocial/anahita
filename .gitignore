@@ -9,3 +9,4 @@ vendor/symfony/*
 vendor/swiftmailer/*
 www/*
 node_modules/*
+.DS_Store

@@ -16,25 +16,25 @@
 
 	<ol>
 		<li>
-			<a href="<?= @route('option=com_pages&view=content&layout=examples/article') ?>">
+			<a href="<?= @route('option=com_pages&view=page&layout=examples/article') ?>">
 				Simple Article
 			</a>
 		</li>
 
 		<li>
-			<a href="<?= @route('option=com_pages&view=content&layout=examples/landing') ?>">
+			<a href="<?= @route('option=com_pages&view=page&layout=examples/landing') ?>">
 				Landing Page
 			</a>
 		</li>
 
 		<li>
-			<a href="<?= @route('option=com_pages&view=content&layout=examples/actor_gadget') ?>">
+			<a href="<?= @route('option=com_pages&view=page&layout=examples/actor_gadget') ?>">
 				Actor Gadget
 			</a>
 		</li>
 
 		<li>
-			<a href="<?= @route('option=com_pages&view=content&layout=examples/nonavbar') ?>">
+			<a href="<?= @route('option=com_pages&view=page&layout=examples/nonavbar') ?>">
 				No Navbar
 			</a>
 		</li>

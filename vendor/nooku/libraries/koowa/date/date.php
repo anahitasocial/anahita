@@ -107,7 +107,7 @@ class KDate extends KObject
      *
      * @see setDate()
      * @param object    An optional KConfig object with configuration options
-                        Recognized key values include 'date'
+     *                  Recognized key values include 'date'
      * @return KDate The new Date object
      */
     public function __construct( KConfig $config = null)

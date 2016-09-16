@@ -41,9 +41,7 @@ class anahita
      *
      * Prevent creating clones of this class
      */
-    final private function __clone()
-    {
-    }
+    final private function __clone(){}
 
     /**
      * Singleton instance.

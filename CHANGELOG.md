@@ -1,5 +1,12 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.2.2 Birth Release
+=============================
+* fixed issue preventing hashtag term showing as title in the hashtag view
+* displays userType to viewer in json
+* gadget must be given a url before loading
+* urls in shiraz example pages fixed
+
 Anahita 4.2.1 Birth Release
 =============================
 * fixed issue which was preventing authentication with email instead of username
