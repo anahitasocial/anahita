@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.0 Birth Release
+=============================
+* removed all joomla legacy files and replaced them with native anahita classes
+
 Anahita 4.2.2 Birth Release
 =============================
 * fixed issue preventing hashtag term showing as title in the hashtag view
