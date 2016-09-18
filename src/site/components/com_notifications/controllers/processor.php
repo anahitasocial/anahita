@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -71,7 +71,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
     /**
      * Process an array of notifications.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionProcess(KCommandContext $context)
@@ -97,22 +97,17 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     {
         $space = $this->getService('anahita:domain.space');
 
-        try {
-            foreach ($notifications as $notification) {
-                $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
-            }
-
-            //change the notification status
-            $space->commitEntities();
-
-            //send the notification
-            foreach ($notifications as $notification) {
-                $this->sendNotification($notification);
-            }
-        } catch (Exception $e) {
+        foreach ($notifications as $notification) {
+            $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
         }
 
+        //change the notification status
         $space->commitEntities();
+
+        //send the notification
+        foreach ($notifications as $notification) {
+            $this->sendNotification($notification);
+        }
     }
 
     /**
@@ -122,42 +117,24 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     public function sendNotification($notification)
     {
-        $people = $this->getService('repos://site/actors.actor')->getQuery(true)->id($notification->subscriberIds->toArray())->fetchSet();
-        $settings = $this->getService('repos://site/notifications.setting')
-                        ->getQuery(true, array('actor.id' => $notification->target->id))
-                        ->fetchSet();
+        $people = $this->getService('repos:actors.actor')
+                       ->getQuery(true)
+                       ->id($notification->subscriberIds->toArray())
+                       ->fetchSet();
+
+        $settings = $this->getService('repos:notifications.setting')
+                         ->getQuery(true, array('actor.id' => $notification->target->id))
+                         ->fetchSet();
 
         $settings = AnHelperArray::indexBy($settings, 'person.id');
 
-        $mails = $this->_renderMails(array('notification' => $notification, 'people' => $people, 'settings' => $settings));
-        $debug = $this->getBehavior('mailer')->getTestOptions()->enabled;
+        $mails = $this->_renderMails(array(
+                        'notification' => $notification,
+                        'people' => $people,
+                        'settings' => $settings
+                    ));
 
-        if ($debug) {
-            $recipients = array();
-
-            foreach ($mails as $i => $mail) {
-                $recipients[] = $mail['to'];
-
-                if ($i < 3) {
-                    $body = array();
-                    $body[] = 'Subject   : '.$mail['subject'];
-                    $body[] = $mail['body'];
-                    $body = implode('<br />', $body);
-                    $bodies[] = $body;
-                }
-            }
-
-            $bodies[] = 'Sending out '.count($mails).' notification mail(s)';
-            $bodies[] = '<br /><br />'.implode('<br />', $recipients);
-            $mails = array(array(
-                 'subject' => $notification->name,
-                 'body' => implode('<hr />', $bodies),
-            ));
-        }
-
-        foreach ($mails as $mail) {
-            $this->mail($mail);
-        }
+        $this->mail($mails);
     }
 
     /**
