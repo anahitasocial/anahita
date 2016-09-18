@@ -132,14 +132,14 @@ class AnMail extends KObject implements KServiceInstantiatable
      */
     protected function _initialize(KConfig $config)
     {
-        $config = JFactory::getConfig();
+        $settings = JFactory::getConfig();
 
         $config->append(array(
     		'charset' => 'utf-8',
             'maxLineLength' => 900,
             'priority' => self::PRIORITY_NORMAL,
             'contentType' => 'text/html',
-            'mailer' => $config->getValue('mailer')
+            'mailer' => $settings->getValue('mailer')
         ));
 
         parent::_initialize($config);
