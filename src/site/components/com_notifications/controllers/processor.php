@@ -76,16 +76,18 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     protected function _actionProcess(KCommandContext $context)
     {
-        $notifications = $this->getService('repos://site/notifications.notification')
+        $query = $this->getService('repos://site/notifications.notification')
             ->getQuery(true)
             ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
 
         if ($this->id) {
             $ids = (array) KConfig::unbox($this->id);
-            $notifications->id($ids);
+            $query->id($ids);
         }
 
-        $this->sendNotifications($notifications->fetchSet());
+        $notifications = $query->fetchSet();
+
+        $this->sendNotifications($notifications);
     }
 
     /**
@@ -153,6 +155,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $notification = $config->notification;
 
         foreach ($people as  $person) {
+
             $setting = $settings->{$person->id};
 
             if (!$ret = $notification->shouldNotify($person, $setting)) {
@@ -196,11 +199,13 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                     ),
             ));
 
-            $mails[] = array(
-                  'subject' => $data->email_subject,
-                  'body' => $body,
-                  'to' => $person->email,
-            );
+            if ($person->email != '' && filter_var($person->email, FILTER_VALIDATE_EMAIL)) {
+                $mails[] = array(
+                      'subject' => $data->email_subject,
+                      'body' => $body,
+                      'to' => $person->email,
+                );
+            }
         }
 
         return $mails;
