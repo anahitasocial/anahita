@@ -329,12 +329,12 @@ class AnMail extends KObject implements KServiceInstantiatable
     */
     protected function _getTransport()
     {
-        $setting = new JConfig();
+        $config = JFactory::getConfig();
 
         if ($this->_mailer === 'smtp') {
-            $transport = Swift_SmtpTransport::newInstance($setting->smtphost, $setting->smtpport)
-            ->setUsername($setting->smtpuser)
-            ->setPassword($setting->smtppass);
+            $transport = Swift_SmtpTransport::newInstance($config->getValue('smtphost'), $config->getValue('smtpport'))
+            ->setUsername($config->getValue('smtpuser'))
+            ->setPassword($config->getValue('smtppass'));
         } elseif ($this->_mailer === 'sendmail') {
             $transport = Swift_SendmailTransport::newInstance('/usr/sbin/exim -bs');
         } else {
