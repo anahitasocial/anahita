@@ -85,11 +85,14 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     {
         if ($this->person) {
             $config = new JConfig();
-            $this->mail(array(
+
+            $mails[] = array(
                 'to' => $this->person->email,
                 'subject' => sprintf(AnTranslator::_('COM-PEOPLE-MAIL-SUBJECT-PASSWORD-RESET'), $config->sitename),
                 'template' => 'password_reset',
-            ));
+            );
+
+            $this->mail($mails);
         }
     }
 }

@@ -125,7 +125,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $config = new KConfig($config);
 
         $config->append(array(
-            'layout' => 'default_layout',
+            'layout' => 'default',
         ));
 
         $layout = $config->layout;
@@ -146,6 +146,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $template = $this->getEmailTemplateView()->getTemplate();
         $data = array_merge($config['data'], array('config' => $config));
         $output = $template->loadTemplate($config->template, $data)->render();
+
         if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, array('output' => $output))->render();
         }
@@ -156,18 +157,26 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
     /**
      * Replaces to with the admin emails.
      *
-     * @param array $mails
+     * @param array('template' => '...', 'subject' => '...')
      *
      * @see ComMailerControllerBehaviorMaile::mail
      */
-    public function mailAdmins($mails = array())
+    public function mailAdmins($config = array())
     {
         $admins = $this->getService('repos:people.person')
                        ->fetchSet(array(
                            'usertype' => ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
                        ));
 
-        $mails['to'] = $admins->email;
+        $mails = array();
+
+        foreach($admins as $admin) {
+           $mails[] = array(
+               'subject' => $config['subject'],
+               'template' => $config['template'],
+               'to' => $admin->email
+           );
+        }
 
         return $this->mail($mails);
     }

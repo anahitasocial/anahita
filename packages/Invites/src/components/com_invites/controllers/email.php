@@ -71,7 +71,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 
                     $settings = new JConfig();
 
-                    $this->mail(array(
+                    $mails[] = array(
                         'subject' => AnTranslator::sprintf('COM-INVITES-MESSAGE-SUBJECT', $settings->sitename),
                         'to' => $email,
                         'layout' => false,
@@ -81,10 +81,14 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
                             'site_name' => $settings->sitename,
                             'sender' => $viewer,
                         ),
-                    ));
+                    );
 
-                }// if person doesn't exists
-            }// email validation
-        }//foreach
+                    $this->mail($mails);
+
+                }
+
+            }
+
+        }
     }
 }

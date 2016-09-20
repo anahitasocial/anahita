@@ -259,11 +259,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $settings = new JConfig();
 
-        $this->mail(array(
+        $mails[] = array(
             'to' => $person->email,
             'subject' => sprintf(AnTranslator::_($subject), $settings->sitename),
             'template' => $template,
-        ));
+        );
+
+        $this->mail($mails);
     }
 
     /**
@@ -274,6 +276,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function mailAdminsNewAdmin(KCommandContext $context)
     {
         $person = $context->result;
+
         $this->mailAdmins(array(
             'subject' => AnTranslator::sprintf('COM-PEOPLE-MAIL-SUBJECT-NEW-ADMIN', $person->name),
             'template' => 'new_admin',
@@ -288,8 +291,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function activateFirstAdmin(KCommandContext $context)
     {
         $person = $context->result;
-        $context->response
-        ->setRedirect(route('option=com_people&view=session&token='.$person->activationCode));
+        $url = route('option=com_people&view=session&token='.$person->activationCode);
+        $context->response->setRedirect($url);
     }
 
     /**

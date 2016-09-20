@@ -87,7 +87,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             $person->getRepository()->getSpace()
             ->setEntityState($person, AnDomain::STATE_NEW);
             $person->enable()->saveEntity();
-            
+
             $this->_order->setSubscriber($person);
         }
 
@@ -121,11 +121,14 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     public function mailInvoice(KCommandContext $context)
     {
         if ($this->getItem()) {
-            $this->mail(array(
+
+            $mails[] = array(
                 'to' => $this->getItem()->person->email,
                 'subject' => AnTranslator::_('COM-SUBSCRIPTIONS-CONFIRMATION-MESSAGE-SUBJECT'),
                 'template' => 'invoice',
-            ));
+            );
+
+            $this->mail($mails);
         }
     }
 
