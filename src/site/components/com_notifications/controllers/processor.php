@@ -134,7 +134,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                         'notification' => $notification,
                         'people' => $people,
                         'settings' => $settings
-                    ));
+                    ));         
 
         $this->mail($mails);
     }

@@ -271,11 +271,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $template = 'account_activate';
         }
 
-        $this->mail(array(
+        $mail[] = array(
             'to' => $person->email,
             'subject' => sprintf(JText::_($subject), JFactory::getConfig()->getValue('sitename')),
             'template' => $template,
-        ));
+        );
+
+        $this->mail($mail);
     }
 
     /**

@@ -71,7 +71,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 
                     $token->save();
 
-                    $this->mail(array(
+                    $mail[] = array(
                         'subject' => JText::sprintf('COM-INVITES-MESSAGE-SUBJECT', $siteConfig->getValue('sitename')),
                         'to' => $email,
                         'layout' => false,
@@ -81,7 +81,9 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
                             'site_name' => $siteConfig->getValue('sitename'),
                             'sender' => $viewer,
                         ),
-                    ));
+                    );
+
+                    $this->mail($mail);
 
                 }// if person doesn't exists
             }// email validation

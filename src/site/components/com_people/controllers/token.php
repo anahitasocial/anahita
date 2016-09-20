@@ -83,11 +83,14 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     public function mailConfirmation(KCommandContext $context)
     {
         if ($this->user) {
-            $this->mail(array(
+
+            $mail[] = array(
                 'to' => $this->user->email,
                 'subject' => sprintf(JText::_('COM-PEOPLE-MAIL-SUBJECT-PASSWORD-RESET'), JFactory::getConfig()->getValue('sitename')),
                 'template' => 'password_reset',
-            ));
+            );
+
+            $this->mail($mail);
         }
     }
 }

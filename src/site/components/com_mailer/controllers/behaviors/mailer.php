@@ -170,18 +170,26 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
     /**
      * Replaces to with the admin emails.
      *
-     * @param array $mails
+     * @param array $config
      *
      * @see ComMailerControllerBehaviorMaile::mail
      */
-    public function mailAdmins($mails = array())
+    public function mailAdmins($config)
     {
         $admins = $this->getService('repos:people.person')
                        ->fetchSet(array(
-                           'usertype' => ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
+                           'person.person_usertype' => ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR
                        ));
 
-        $mails['to'] = $admins->email;
+        $mails = array();
+
+        foreach($admins as $admin) {
+            $mails[] = array(
+                'subject' => $config['subject'],
+                'template' => $config['template'],
+                'to' => $admin->email
+            );
+        }
 
         return $this->mail($mails);
     }
@@ -201,15 +209,13 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $mailer = $this->getService('anahita:mail');
 
         foreach($mails as $mail) {
-
             $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
             $subject = KService::get('koowa:filter.string')->sanitize($mail['subject']);
 
             if (isset($mail['body'])) {
                 $body = $mail['body'];
             } else {
-                $config = new KConfig($mail);
-                $body = $this->renderMail($config);
+                $body = $this->renderMail($mail);
             }
 
             $mailer->reset()
