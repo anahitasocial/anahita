@@ -105,6 +105,13 @@ class AnMail extends KObject implements KServiceInstantiatable
     protected $_contentType = null;
 
     /**
+    *   Mail Transport type
+    *
+    *   @var string 'sendmail' OR  'mail' OR 'smtp'
+    */
+    protected $_transport = null;
+
+    /**
 	 * Constructor.
 	 *
 	 * @param 	object 	An optional KConfig object with configuration options.
@@ -120,6 +127,7 @@ class AnMail extends KObject implements KServiceInstantiatable
         $this->_priority = $config->priority;
         $this->_contentType = $config->contentType;
         $this->_mailer = $config->mailer;
+        $this->_transport = $this->_getTransport();
     }
 
     /**
@@ -398,8 +406,7 @@ class AnMail extends KObject implements KServiceInstantiatable
     */
     public function send()
     {
-        $transport = $this->_getTransport();
-        $mailer = Swift_Mailer::newInstance($transport);
+        $mailer = Swift_Mailer::newInstance($this->_transport);
         $message = $this->_createMessage();
         $mailer->send($message);
     }

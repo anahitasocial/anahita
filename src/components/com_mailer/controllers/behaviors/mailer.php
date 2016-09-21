@@ -161,7 +161,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
      *
      * @see ComMailerControllerBehaviorMaile::mail
      */
-    public function mailAdmins($config = array())
+    public function mailAdmins($config)
     {
         $admins = $this->getService('repos:people.person')
                        ->fetchSet(array(
@@ -196,15 +196,13 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $mailer = $this->getService('anahita:mail');
 
         foreach($mails as $mail) {
-
             $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
             $subject = KService::get('koowa:filter.string')->sanitize($mail['subject']);
 
             if (isset($mail['body'])) {
                 $body = $mail['body'];
             } else {
-                $config = new KConfig($mail);
-                $body = $this->renderMail($config);
+                $body = $this->renderMail($mail);
             }
 
             $mailer->reset()

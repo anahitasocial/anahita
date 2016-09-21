@@ -20621,7 +20621,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 			return this;
 		}
 		
-		if ( action == 'addadmin' || action == 'removeadmin' ) {
+		if ( action == 'removeadmin' ) {
 			
 			$(this).attr('disabled', true);
 			
@@ -20816,7 +20816,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	});
 	
 	//Remove Admin
-	$('body').on('click', '[data-action="removeadmin"]', function () {
+	$('body').on('click', '[data-action="removeadmin"]', function ( event ) {
 		
 		event.preventDefault();
 		$(this).anahitaActor('removeadmin');
@@ -20871,6 +20871,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
 	
 }(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/actions/stories.js
 /**
  * Author: Rastin Mehr

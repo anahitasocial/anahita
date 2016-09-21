@@ -84,11 +84,8 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
                     );
 
                     $this->mail($mails);
-
                 }
-
             }
-
         }
     }
 }

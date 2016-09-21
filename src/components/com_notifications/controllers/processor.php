@@ -67,10 +67,12 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         if ($this->id) {
             $ids = (array) KConfig::unbox($this->id);
-            $notifications->id($ids);
+            $query->id($ids);
         }
 
-        $this->sendNotifications($notifications->fetchSet());
+        $notifications = $query->fetchSet();
+
+        $this->sendNotifications($notifications);
     }
 
     /**
@@ -182,11 +184,13 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                         )
                     ));
 
-            $mails[] = array(
-                  'subject' => $data->email_subject,
-                  'body' => $body,
-                  'to' => $person->email,
-            );
+            if ($person->email != '' && filter_var($person->email, FILTER_VALIDATE_EMAIL)) {
+                $mails[] = array(
+                      'subject' => $data->email_subject,
+                      'body' => $body,
+                      'to' => $person->email,
+                );
+            }
         }
 
         return $mails;

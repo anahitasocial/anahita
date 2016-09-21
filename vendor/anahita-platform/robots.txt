@@ -5,7 +5,9 @@ Disallow: /components/
 Disallow: /includes/
 Disallow: /language/
 Disallow: /libraries/
+Disallow: /log/
 Disallow: /media/
 Disallow: /plugins/
 Disallow: /templates/
 Disallow: /tmp/
+Disallow: /vendor/
