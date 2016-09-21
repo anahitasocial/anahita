@@ -211,7 +211,7 @@
 
         $.ajax({
           method : 'POST',
-          url : elem.data('url'),
+          url : elem.attr('href'),
           data : {
             action : 'addlocation',
             location_id : elem.data('location')
@@ -230,7 +230,7 @@
 
         $.ajax({
           method : 'POST',
-          url : elem.data('url'),
+          url : elem.attr('href'),
           data : {
             action : 'deletelocation',
             location_id : elem.data('location')

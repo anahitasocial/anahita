@@ -7,6 +7,7 @@ Anahita 4.2.3 Birth Release
 * updated email regex according to the latest w3c specs
 * added tags url attributes for people, actors, and masonry photos so they can be filtered by hashtag, mention, or location
 * updated robots.txt file
+* fixed add/remove location locatable target url bug
 
 Anahita 4.2.2 Birth Release
 =============================
