@@ -21,7 +21,8 @@
   <? if($hiddenlink && count($entities) >= $limit) : ?>
   <div class="well InfiniteScrollReadmore">
       <? $start += $limit; ?>
-      <a href="<?= @route($url.'&start='.$start.'&limit='.$limit) ?>">
+      <? $url = array_merge($url, array('start' => $start, 'limit' => $limit)); ?>
+      <a href="<?= @route($url) ?>">
         <?= @text('LIB-AN-READMORE') ?>
       </a>
   </div>
