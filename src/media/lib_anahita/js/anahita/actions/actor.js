@@ -82,7 +82,7 @@
 			return this;
 		}
 		
-		if ( action == 'addadmin' || action == 'removeadmin' ) {
+		if ( action == 'removeadmin' ) {
 			
 			$(this).attr('disabled', true);
 			
@@ -277,7 +277,7 @@
 	});
 	
 	//Remove Admin
-	$('body').on('click', '[data-action="removeadmin"]', function () {
+	$('body').on('click', '[data-action="removeadmin"]', function ( event ) {
 		
 		event.preventDefault();
 		$(this).anahitaActor('removeadmin');
