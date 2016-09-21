@@ -5,6 +5,7 @@ Anahita 4.2.3 Birth Release
 * starting using SwiftMail and Anahita's Mailer class instead of legacy joomla mailer
 * improved the code that sends out notification mails
 * updated email regex according to the latest w3c specs
+* added tags url attributes for people, actors, and masonry photos so they can be filtered by hashtag, mention, or location 
 
 Anahita 4.2.2 Birth Release
 =============================
