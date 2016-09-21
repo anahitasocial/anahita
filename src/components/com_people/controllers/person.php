@@ -257,23 +257,15 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $template = 'account_activate';
         }
 
-<<<<<<< HEAD:src/components/com_people/controllers/person.php
         $settings = new JConfig();
 
         $mails[] = array(
-=======
-        $mail[] = array(
->>>>>>> upstream/master:src/site/components/com_people/controllers/person.php
             'to' => $person->email,
             'subject' => sprintf(AnTranslator::_($subject), $settings->sitename),
             'template' => $template,
         );
 
-<<<<<<< HEAD:src/components/com_people/controllers/person.php
         $this->mail($mails);
-=======
-        $this->mail($mail);
->>>>>>> upstream/master:src/site/components/com_people/controllers/person.php
     }
 
     /**
