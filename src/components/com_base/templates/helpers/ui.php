@@ -272,10 +272,16 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
             'columns' => 2,
             'layout_list' => 'default',
             'layout_item' => 'list',
-            'url' => 'layout=list',
             'start' => 0,
             'limit' => 20,
             'hiddenlink' => false,
+        ), $config);
+
+        $config = array_merge(array(
+            'url' => array(
+                'layout' => 'list',
+                'start' => $config['start'],
+                'limit' => $config['limit'])
         ), $config);
 
         return $this->_render('infinitescroll', $config);

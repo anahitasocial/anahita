@@ -2,15 +2,16 @@
 
 /**
  *
- * @category   Anahita
+ * @category    Anahita
+ * @package     com_application
  *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @author      Rastin Mehr <rastin@anahitapolis.com>
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link        http://www.GetAnahita.com
  */
 
-class ComApplication extends KObject
+class ComApplication extends KObject implements KServiceInstantiatable
 {
     /**
      * Template.
@@ -30,34 +31,33 @@ class ComApplication extends KObject
   	 * The name of the application
   	 *
   	 * @var		array
-  	 * @access	protected
   	 */
-  	var $_name = null;
+  	protected $_name = null;
+
+    /**
+    * Site settings
+    *
+    * @var object ComSettingsSetting instance
+    *
+    */
+    protected $_site_settings = null;
 
     /**
     * Class constructor.
     *
     * @param	integer	A client identifier.
     */
-    public function __construct($config = array())
+    public function __construct(KConfig $config = null)
     {
-        //set the application name
-        $this->_name = $this->getName();
+        $this->_name = $config->session_name;
 
-        //Set the session default name
-        if(!isset($config['session_name'])) {
-           $config['session_name'] = $this->_name;
+        if ($config->session) {
+           $this->createSession(get_hash($config->_name));
         }
 
-        //Enable sessions by default
-        if(!isset($config['session'])) {
-          $config['session'] = true;
-        }
+        parent::__construct($config);
 
-        //create the session if a session name is passed
-        if($config['session'] !== false) {
-          $this->createSession(get_hash($config['session_name']));
-        }
+        $this->_site_settings = $this->getService('com:settings.setting');
     }
 
     /**
@@ -67,15 +67,30 @@ class ComApplication extends KObject
      */
      protected function _initialize(KConfig $config)
      {
+         $config->append(array(
+             'session' => true,
+             'session_name' => $this->getName()
+         ));
+
          parent::_initialize($config);
+    }
 
-         $settings = new JConfig();
-         $config->language = $settings->language;
+    /**
+     * Force creation of a singleton
+     *
+     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object	A KServiceInterface object
+     * @return KDatabaseTableInterface
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    {
+        if (!$container->has($config->service_identifier)) {
+            $classname = $config->service_identifier->classname;
+            $instance  = new $classname($config);
+            $container->set($config->service_identifier, $instance);
+        }
 
-         // One last check to make sure we have something
-         if (!KService::get('anahita:language')->exists($config->language)) {
-            $config->language = 'en-GB';
-         }
+        return $container->get($config->service_identifier);
     }
 
     /**
@@ -122,25 +137,6 @@ class ComApplication extends KObject
   	}
 
     /**
-   	 * Gets a configuration value.
-   	 *
-   	 * @access	public
-   	 * @param	string	The name of the value to get.
-   	 * @return	mixed	The user state.
-   	 * @example	application/japplication-getcfg.php Getting a configuration value
-   	 */
-   	public function getSystemSetting( $name )
-   	{
-        $setting = new JConfig();
-
-        if(isset($setting->$name)){
-          return $setting->$name;
-        }
-
-        return null;
-   	}
-
-    /**
      * Get the template.
      *
      * @return string The template name
@@ -149,10 +145,7 @@ class ComApplication extends KObject
     {
         if (!isset($this->_template)) {
             if (!KService::get('application.registry')->offsetExists('application-template')) {
-
-                $settings = new JConfig();
-                $template = (isset($settings->template)) ? $settings->template : 'shiraz';
-
+                $template = (isset($this->_site_settings->template)) ? $this->_site_settings->template : 'shiraz';
                 KService::get('application.registry')->offsetSet('application-template', $template);
             }
 
@@ -190,12 +183,11 @@ class ComApplication extends KObject
      *
      * @return JRouter
      */
-    public function &getRouter($name = null, $options = array())
+    public function getRouter($name = null, $options = array())
     {
         if (!isset($this->_router)) {
-            $settings = new JConfig();
             $this->_router = KService::get('com:application.router', array(
-                'enable_rewrite' => $settings->sef_rewrite
+                'enable_rewrite' => $this->_site_settings->sef_rewrite
             ));
         }
 

@@ -14,7 +14,9 @@
       maxlength="<?= $maxlength ?>"
       type="<?= $type ?>"
       placeholder="<?= $placeholder ?>"
+      <? if (!empty($pattern)) : ?>
       pattern="<?= $pattern ?>"
+      <? endif; ?>
       <?= ($disabled) ? 'disabled' : '' ?>
       <?= ($required) ? 'required' : '' ?>
     />

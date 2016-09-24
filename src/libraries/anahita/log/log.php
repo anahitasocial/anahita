@@ -66,7 +66,7 @@ class AnLog extends KObject implements KServiceInstantiatable
     */
     protected function _initialize(KConfig $config)
     {
-         $settings = new JConfig();
+         $settings = $this->getService('com:settings.setting');
 
          $config->append(array(
             'file' => 'error.php',

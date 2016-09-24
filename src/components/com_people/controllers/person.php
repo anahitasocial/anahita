@@ -257,7 +257,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $template = 'account_activate';
         }
 
-        $settings = new JConfig();
+        $settings = $this->getService('com:settings.setting');
 
         $mails[] = array(
             'to' => $person->email,

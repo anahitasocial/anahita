@@ -61,7 +61,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     protected function _actionProcess(KCommandContext $context)
     {
-        $notifications = $this->getService('repos:notifications.notification')
+        $query = $this->getService('repos:notifications.notification')
                               ->getQuery(true)
                               ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
 

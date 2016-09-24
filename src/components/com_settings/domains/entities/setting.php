@@ -86,10 +86,10 @@ class ComSettingsDomainEntitySetting extends KObject
      */
     public function load()
     {
-        $setting = new JConfig();
+        $settings = $this->getService('com:settings.setting');
 
         foreach($this->attributes as $key => $value) {
-          $this->attributes[$key] = $setting->$key;
+          $this->attributes[$key] = $settings->$key;
         }
 
         return $this;
@@ -106,7 +106,7 @@ class ComSettingsDomainEntitySetting extends KObject
 
             chmod($this->config_file_path, 0644);
 
-            $content = "<?php\nclass JConfig{\n";
+            $content = "<?php\nclass AnConfig{\n";
 
             foreach($this->attributes as $key=>$value) {
               if(!is_array($value)){

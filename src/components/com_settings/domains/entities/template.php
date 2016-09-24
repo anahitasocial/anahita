@@ -78,9 +78,8 @@ class ComSettingsDomainEntityTemplate extends KObject
 
     public function isDefault()
     {
-        $config = new JConfig();
-
-        return $config->template == $this->alias;
+        $settings = $this->getService('com:settings.setting');
+        return $settings->template === $this->alias;
     }
 
     /**

@@ -21,8 +21,8 @@
   */
  function get_hash($seed = '', $algorithm = 'sha256')
  {
-     $config = new JConfig();
-     return hash($algorithm, $config->secret .  $seed);
+     $settings = KService::get('com:settings.setting');
+     return hash($algorithm, $settings->secret .  $seed);
  }
 
  /**

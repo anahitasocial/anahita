@@ -117,7 +117,9 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         //no need to create session when using CLI (command line interface)
         $createSession = PHP_SAPI !== 'cli';
         $this->_application = $this->getService('application', array('session' => $createSession));
-        $error_reporting = $this->_application->getSystemSetting('error_reporting');
+
+        $settings = KService::get('com:settings.setting');
+        $error_reporting = $settings->error_reporting;
 
         //taken from nooku application dispatcher
         if ($error_reporting > 0) {

@@ -30,7 +30,7 @@ class AnDatabaseAdapterMysqli extends KDatabaseAdapterMysqli implements KService
      */
     protected function _initialize(KConfig $config)
     {
-        $settings = new JConfig();
+        $settings = $this->getService('com:settings.setting');
 
         $database = $settings->db;
         $prefix = $settings->dbprefix;

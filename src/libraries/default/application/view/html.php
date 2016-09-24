@@ -105,7 +105,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
             $this->content = $this->getTemplate()->loadTemplate('errors/'.$layout, array('error' => $error))->render();
 
-            $settings = new JConfig();
+            $settings = $this->getService('com:settings.setting');
 
             if ($settings->debug) {
                 $traces = array();

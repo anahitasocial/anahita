@@ -105,9 +105,16 @@ class Config
 
         if (file_exists($this->_configuration_file)) {
 
-            $classname = 'JConfig'.md5(uniqid());
+            $classname = 'AnConfig'.md5(uniqid());
             $content = file_get_contents($this->_configuration_file);
-            $content = str_replace('JConfig', $classname, $content);
+
+            //search for the legacy JConfig first
+            if (strrpos($content, 'JConfig')) {
+                $content = str_replace('JConfig', $classname, $content);
+            } else {
+                $content = str_replace('AnConfig', $classname, $content);
+            }
+
             $content = str_replace(array('<?php',''), '', $content);
             $classname = '\\'.$classname;
             $return = @eval($content);
@@ -280,7 +287,7 @@ class Config
 
         $file = new \SplFileObject($this->_configuration_file, 'w');
         $file->fwrite("<?php\n");
-        $file->fwrite("class JConfig {\n\n");
+        $file->fwrite("class AnConfig {\n\n");
 
         $print_array = function($array) use (&$print_array) {
 

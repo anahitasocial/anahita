@@ -63,26 +63,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             ini_set('safeex.url_include_proto_whitelist', $whitelist);
         }
 
-        if (
-            !KService::get('application')->getSystemSetting('caching') ||
-            (
-                get_viewer()->superadmin() &&
-                // @todo incorporate this feature in the global settings
-                KRequest::get('get.clearapc', 'cmd')
-            )
-        ) {
-            //clear apc cache for components
-            //@NOTE If apc is shared across multiple services
-            //this causes the caceh to be cleared for all of them
-            //since all of them starts with the same prefix. Needs to be fix
-            clean_apc_with_prefix('cache_com');
-            clean_apc_with_prefix('cache_plg');
-            clean_apc_with_prefix('cache_system');
-            clean_apc_with_prefix('cache__system');
-            $jconfig = new JConfig();
-            clean_apc_with_prefix(md5($jconfig->secret).'-cache-');
-        }
-
         KService::get('plg:storage.default');
         KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
         KService::get('anahita:language')->load('lib_anahita', ANPATH_ROOT);

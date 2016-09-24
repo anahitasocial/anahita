@@ -115,7 +115,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     public function location($entity, $config = array())
     {
         if(!$entity->isGeolocatable()) {
-           throw new Exception('Entity is not locatable');
+           throw new Exception('Entity is not geolocatable');
            return false;
         }
 

@@ -36,10 +36,7 @@ if (!file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH_
 }
 
 // Platform : setup
-require_once ANPATH_CONFIGURATION.'/configuration.php';
 require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
-
-$config = new JConfig();
 
 //instantiate anahita
 Anahita::getInstance();
@@ -65,3 +62,4 @@ if (PHP_SAPI != 'cli') {
 }
 
 KLoader::getInstance()->loadIdentifier('com://site/application.aliases');
+KService::get('com:settings.setting');

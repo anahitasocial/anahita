@@ -193,7 +193,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
             'description' => '',
             'disabled' => false,
             'type' => 'text',
-            'pattern' => '*',
+            'pattern' => '',
             'required' => true,
         ));
 

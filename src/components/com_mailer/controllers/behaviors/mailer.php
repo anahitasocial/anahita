@@ -57,7 +57,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
-        $settings = new JConfig();
+        $settings = $this->getService('com:settings.setting');
 
         $config->append(array(
             'base_url' => KRequest::url(),

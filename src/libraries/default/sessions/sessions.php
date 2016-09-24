@@ -61,12 +61,6 @@ class LibSessions extends KObject
 	protected $_namespace = '';
 
 	/**
-	*	Singleton instance of LibSessions class
-	* 	@var LibSessions instance
-	*/
-	private static $_instance = null;
-
-	/**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -79,6 +73,8 @@ class LibSessions extends KObject
 			session_unset();
 			session_destroy();
 		}
+
+		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage);
 
 		//set default sessios save handler
 		ini_set('session.save_handler', 'files');
@@ -124,12 +120,9 @@ class LibSessions extends KObject
 			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME + time(),
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
-			'namespace' => '__anahita'
+			'namespace' => '__anahita',
+			'storage' => 'database'
 		));
-
-		//create handler
-		$settins = new JConfig();
-		$this->_storage = $this->getService('com:sessions.storage.'.$settins->session_handler);
 
 		parent::_initialize($config);
 	}
