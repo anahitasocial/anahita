@@ -67,11 +67,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'smtpport' => '',
               'smtpuser' => '',
               'smtppass' => '',
-              'smtphost' => '',
-
-              //session
-              'session_handler' => 'database',
-              'lifetime' => 1440
+              'smtphost' => ''
             );
 
             $this->config_file_path = ANPATH_CONFIGURATION.DS.'configuration.php';
@@ -187,12 +183,10 @@ class ComSettingsDomainEntitySetting extends KObject
               'error_reporting',
               'sef_rewrite',
               'debug',
-              'lifetime',
               'smtpauth'
             );
 
             $cmds = array(
-              'session_handler',
               'mailer',
               'smtpsecure',
               'template',

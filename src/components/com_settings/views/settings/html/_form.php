@@ -115,42 +115,6 @@
     </fieldset>
 
     <fieldset>
-      <legend><?= @text('COM-SETTINGS-SYSTEM-SESSION-SETTINGS') ?></legend>
-
-      <? //Session Lifetime ?>
-      <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-LIFETIME'),
-        'name' => 'lifetime',
-        'value' => $setting->lifetime,
-        'id' => 'setting-lifetime',
-        'class' => 'span1',
-        'placeholder' => @text('LIB-AN-TIME-MINUTES'),
-        'pattern' => '\d*',
-        'maxlength' => 10
-      )) ?>
-
-      <? //session handler ?>
-      <?
-        $stores = @service('com:sessions')->getStores();
-    	$options_session_handler = array();
-    	foreach($stores as $store) {
-    	    $options_session_handler[] = array(
-                'name' => @text(ucfirst($store)),
-                'value' => $store
-            );
-    	}
-      ?>
-      <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SESSION-HANDLER'),
-        'name' => 'session_handler',
-        'selected' => $setting->session_handler,
-        'id' => 'setting-session-handler',
-        'options' => $options_session_handler,
-      )) ?>
-
-    </fieldset>
-
-    <fieldset>
       <legend><?= @text('COM-SETTINGS-SYSTEM-DATABASE-SETTINGS') ?></legend>
 
       <? //database type ?>
