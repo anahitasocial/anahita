@@ -14,7 +14,7 @@
         <legend>
             <?= @text('COM-PEOPLE-SESSION-TITLE') ?>
 
-            <? if (@service('com://site/people.controller.person')->permission->isRegistrationOpen()): ?>
+            <? if (@service('com:people.controller.person')->permission->isRegistrationOpen()): ?>
             <small>
                 <a class="pull-right" href="<?= @route('option=com_people&view=person&layout=signup'.(($return) ? "&return=$return" : '')) ?>">
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>

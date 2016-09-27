@@ -14,6 +14,20 @@
 class ComConnectControllerLogin extends ComBaseControllerResource
 {
     /**
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+
+        if (session_status() != PHP_SESSION_ACTIVE) {
+            session_start();
+        }
+    }
+
+    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -46,11 +60,10 @@ class ComConnectControllerLogin extends ComBaseControllerResource
 
         if (empty($token)) {
             $context->response->setRedirect(route('index.php?'));
-
             return false;
         }
 
-        $context->response->setRedirect(route('option=com_connect&view=login'));
+        $context->response->setRedirect('index.php?view=login');
     }
 
     /**
@@ -60,28 +73,22 @@ class ComConnectControllerLogin extends ComBaseControllerResource
     {
         if (!$this->getAPI()) {
             $context->response->setRedirect(route('option=com_people&view=person&get=settings&edit=connect'));
-
             return false;
         }
 
         $service = $this->getAPI()->getName();
         $userid = $this->getAPI()->getUser()->id;
-        $token = $this->getService('repos://site/connect.session')
-                      ->find(array(
-                          'profileId' => $userid,
-                          'api' => $service,
-                        ));
-
+        $token = $this->getService('repos:connect.session')->find(array('profileId' => $userid, 'api' => $service));
         $return_url = KRequest::get('session.return', 'raw');
 
         if ($token) {
+
             $person = $token->owner;
             KRequest::set('session.oauth', null);
 
             $credentials = array(
                 'username' => $person->username,
-                //it doesn't matter what password is used, but let's use something long and encrypted
-                'password' => $person->getPassword(true)
+                'password' => get_hash('COM_CONNECT_PASSWORD')
             );
 
             if($this->getService('com:people.helper.person')->login($credentials, true)) {
@@ -90,6 +97,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
 
             return false;
         }
+
         $this->return_url = base64_encode($return_url);
     }
 }

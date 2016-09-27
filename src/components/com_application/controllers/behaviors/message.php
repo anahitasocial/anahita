@@ -74,8 +74,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'enabled' => KRequest::format() == 'html' &&
-                         $config->mixer->isDispatched(),
+            'enabled' => KRequest::format() == 'html' && $config->mixer->isDispatched(),
         ));
 
         parent::_initialize($config);

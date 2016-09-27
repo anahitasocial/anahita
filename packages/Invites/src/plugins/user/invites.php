@@ -19,8 +19,6 @@ class plgUserInvites extends PlgAnahitaDefault
      * @param 	array   array holding options (remember, autoregister, group)
      *
      * @return bool True on success
-     *
-     * @since	1.5
      */
     public function onLoginUser(KEvent $event)
     {

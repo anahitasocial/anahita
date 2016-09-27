@@ -1,27 +1,13 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Application Dispatcher.
  *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -85,7 +71,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         KRequest::set('get', $url->query);
 
         // trigger the onAfterRoute events
-        dispatch_plugin('onAfterRoute');
+        dispatch_plugin('system.onAfterRoute');
 
         $url->query = KRequest::get('get', 'raw');
 
@@ -184,7 +170,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         KRequest::url()->setQuery($_GET);
 
         KService::get('com:plugins.helper')->import('cli');
-        dispatch_plugin('onCli');
+        dispatch_plugin('cli.onCli');
 
         //if there's a file then just load the file and exit
         if (!empty($file)) {

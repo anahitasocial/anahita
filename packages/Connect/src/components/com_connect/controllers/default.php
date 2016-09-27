@@ -48,7 +48,7 @@ class ComConnectControllerDefault extends ComBaseControllerResource
             return false;
         }
 
-        $this->getService('repos://site/connect.session');
+        $this->getService('repos:connect.session');
 
         $api = $this->actor->sessions->{$this->getIdentifier()->name};
 
@@ -76,8 +76,7 @@ class ComConnectControllerDefault extends ComBaseControllerResource
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        $session = $this->actor->sessions->find(array('api' => $this->getIdentifier()->name));
-        if ($session) {
+        if ($session = $this->actor->sessions->find(array('api' => $this->getIdentifier()->name))) {
             $session->delete()->save();
         }
     }
@@ -91,7 +90,6 @@ class ComConnectControllerDefault extends ComBaseControllerResource
     {
         if ($context->request->getFormat() == 'html') {
             $context->response->setRedirect(route('format=json&option=com_connect&view='.$this->view));
-
             return;
         }
 

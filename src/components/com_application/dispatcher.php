@@ -55,11 +55,11 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
             parent::_actionDispatch($context);
         }
 
-        dispatch_plugin('onAfterDispatch', array( $context ));
+        dispatch_plugin('system.onAfterDispatch', array( $context ));
 
         //render if it's only an HTML
         //otherwise just send back the request
-        //@TODO arash. For some reason the line below Need to fix the line below
+        //@TODO rastin. For some reason the line below Need to fix the line below
         //not working properly
         //$redirect = $context->response->isRedirect()
 
@@ -82,7 +82,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
                  ->render();
         }
 
-        dispatch_plugin('onAfterRender', array( $context ));
+        dispatch_plugin('system.onAfterRender', array( $context ));
 
         $this->send($context);
     }
@@ -117,8 +117,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     {
         $exception = $context->data;
 
-        //if JException then conver it to KException
-        if ($exception instanceof JException) {
+        //if KException then conver it to KException
+        if ($exception instanceof KException) {
             $exception = new RuntimeException($exception->getMessage(), $exception->getCode());
         }
 

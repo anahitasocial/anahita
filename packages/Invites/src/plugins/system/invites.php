@@ -18,13 +18,13 @@ class plgSystemInvites extends PlgAnahitaDefault
      */
     public function onAfterRoute()
     {
-        if(
-            KRequest::get('session.invite_token', 'string', null) &&
-            KRequest::get('get.option', 'string', null) == 'com_people' &&
-            get_viewer()->guest()
-        ) {
-                $personConfig = KService::get('com:settings.template.helper')->getMeta('people');
-    		    $personConfig->allowUserRegistration = true;
-    		}
+        $token = KRequest::get('session.invite_token', 'string', null);
+        $option = KRequest::get('get.option', 'string', null);
+        $isGuest = get_viewer()->guest();
+
+        if ($token && $option && $isGuest) {
+            $personConfig = KService::get('com:settings.template.helper')->getMeta('people');
+    		$personConfig->allowUserRegistration = true;
+    	}
     }
 }

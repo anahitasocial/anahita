@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -47,7 +47,7 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
         return $container->get($config->service_identifier);
     }
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -71,7 +71,7 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
         ));
 
         $config->append(array(
-            'view' => 'tmpl://site/'.$config->theme.'.view.'.$this->getIdentifier()->name.'.'.$config->request->getFormat(),
+            'view' => 'tmpl:'.$config->theme.'.view.'.$this->getIdentifier()->name.'.'.$config->request->getFormat(),
         ));
 
         parent::_initialize($config);
@@ -79,7 +79,7 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
 
     /**
      * Renders the page.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionRender(KCommandContext $context)

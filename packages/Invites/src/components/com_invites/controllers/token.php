@@ -43,7 +43,6 @@ class ComInvitesControllerToken extends ComBaseControllerService
 
             if (!$token || !isset($token->inviter)) {
                 throw new LibBaseControllerExceptionNotFound('Token not found');
-
                 return;
             }
 
@@ -58,7 +57,6 @@ class ComInvitesControllerToken extends ComBaseControllerService
             $token = $this->getRepository()->getEntity()->reset();
             KRequest::set('session.invite_token', $token->value);
             $this->getView()->value($token->value);
-
             return $this->getView()->display();
         }
     }

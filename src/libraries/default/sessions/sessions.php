@@ -314,7 +314,7 @@ class LibSessions extends KObject
 	* @param  string 	$namespace 	Namespace to use, default to 'default'
 	* @return mixed  Value of a variable
 	*/
-   public function &get($property = null, $default = null, $namespace = '')
+   public function get($property = null, $default = null, $namespace = '')
    {
 	   if($this->_state !== self::STATE_ACTIVE && $this->_state !== self::STATE_EXPIRED) {
 		   throw new LibSessionsException("Session does not exist!\n");

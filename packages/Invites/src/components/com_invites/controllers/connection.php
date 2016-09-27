@@ -27,7 +27,7 @@ class ComInvitesControllerConnection extends ComInvitesControllerDefault
             return;
         }
 
-        $this->getService('repos://site/connect.session');
+        $this->getService('repos:connect.session');
         $service = $this->viewer->sessions->$serviceType;
 
         if (!empty($service)) {

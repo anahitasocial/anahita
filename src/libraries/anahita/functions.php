@@ -609,7 +609,7 @@ function get_config_value($extension, $key = null, $default = null)
 
     if ($type == 'com') {
 
-        $meta = KService::get('com://site/settings.template.helper')->getMeta($name);
+        $meta = KService::get('com:settings.template.helper')->getMeta($name);
 
         if ($key) {
           return isset($meta->$key) ? $meta->$key : $default;
@@ -632,17 +632,16 @@ function get_config_value($extension, $key = null, $default = null)
 function dispatch_plugin($plugin, $args = array(), $dispatcher = null)
 {
     $parts = explode('.', $plugin);
-    $event = array_pop($parts);
+    $type = $parts[0];
+    $event = $parts[1];
     $dispatcher = pick($dispatcher, KService::get('anahita:event.dispatcher'));
 
-    if (!empty($parts)) {
-        KService::get('com:plugins.helper')->import(
-            $parts[0],
-            isset($parts[1]) ? $parts[1] : null,
-            true,
-            $dispatcher
-        );
-    }
+    KService::get('com:plugins.helper')->import(
+        $type,
+        null,
+        true,
+        $dispatcher
+    );
 
     return $dispatcher->dispatchEvent($event, $args);
 }
