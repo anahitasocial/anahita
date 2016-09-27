@@ -16,12 +16,11 @@ class PlgConnectEcho extends PlgAnahitaDefault
     {
         $adapters = $event->adapters;
         $request = $event->request;
-        $this->getService('repos://site/connect.session');
+        $this->getService('repos:connect.session');
         $sessions = $request->target->sessions;
         foreach ($sessions as $session) {
-            $identifier = $this->getIdentifier('com://site/connect.sharer.'.$session->get('api'));
-            $sharer = $this->getService($identifier,
-                              array('session' => $session->api));
+            $identifier = $this->getIdentifier('com:connect.sharer.'.$session->get('api'));
+            $sharer = $this->getService($identifier, array('session' => $session->api));
             $adapters[] = $sharer;
         }
     }

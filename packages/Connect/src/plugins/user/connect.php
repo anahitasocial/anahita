@@ -6,8 +6,6 @@
  * @author		Rastin Mehr  <info@rmdstudio.com>
  *
  * @category     Anahita
- *
- * @since 		1.5
  */
 class PlgUserConnect extends PlgAnahitaDefault
 {
@@ -41,15 +39,7 @@ class PlgUserConnect extends PlgAnahitaDefault
 
         $this->_createToken($user['username']);
 
-        $userId = $user['id'];
-
         if ($this->_person) {
-            //unblock the user
-            $user = KService::get('repos://site/users')->find($userId);
-
-            $user->block = false;
-
-            $user->save();
 
             $user = $this->_api->getUser();
 
@@ -58,7 +48,6 @@ class PlgUserConnect extends PlgAnahitaDefault
             }
 
             $this->_person->enabled = true;
-
             $this->_person->save();
         }
     }
@@ -70,8 +59,6 @@ class PlgUserConnect extends PlgAnahitaDefault
      * @param 	array    extra options
      *
      * @return bool True on success
-     *
-     * @since	1.5
      */
     public function onLoginUser(KEvent $event)
     {
@@ -100,11 +87,10 @@ class PlgUserConnect extends PlgAnahitaDefault
         }
 
         if ($token = $api->getToken()) {
-            $person = KService::get('repos://site/people.person')->find(array('username' => $username));
 
+            $person = KService::get('repos:people.person')->find(array('username' => $username));
             $user = $api->getUser();
-
-            $session = KService::get('repos://site/connect.session')->findOrAddNew(array('profileId' => $user->id, 'api' => $api->getName()));
+            $session = KService::get('repos:connect.session')->findOrAddNew(array('profileId' => $user->id, 'api' => $api->getName()));
 
             $session->setData(array(
                 'component' => 'com_connect',
@@ -114,7 +100,6 @@ class PlgUserConnect extends PlgAnahitaDefault
             $session->save();
 
             $this->_person = $person;
-
             $this->_api = $api;
         }
     }
@@ -129,6 +114,7 @@ class PlgUserConnect extends PlgAnahitaDefault
         $api = null;
 
         try {
+
             if (isset($post['oauth_token']) && isset($post['oauth_handler'])) {
                 $api = ComConnectHelperApi::getApi($post['oauth_handler']);
                 $api->setToken($post['oauth_token'], isset($post['oauth_secret']) ? $post['oauth_secret'] : '');
@@ -141,13 +127,14 @@ class PlgUserConnect extends PlgAnahitaDefault
 
                 KRequest::set('session.oauth', null);
 
-                KService::get('koowa:loader')->loadIdentifier('com://site/connect.oauth.consumer');
+                KService::get('koowa:loader')->loadIdentifier('com:connect.oauth.consumer');
 
-                $api = KService::get('com://site/connect.oauth.service.'.$session->api, array(
+                $api = KService::get('com:connect.oauth.service.'.$session->api, array(
                     'consumer' => new ComConnectOauthConsumer($session->consumer),
                     'token' => $session->token,
                 ));
             }
+
         } catch (Exception $e) {
             $api = null;
         }

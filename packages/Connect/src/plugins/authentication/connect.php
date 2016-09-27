@@ -29,7 +29,7 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
             return;
         }
 
-        if (!isset($credentials->oauth_token) || !isset($credentials->oauth_token)) {
+        if (!isset($credentials->oauth_token) || !isset($credentials->oauth_handler)) {
             return;
         }
 
@@ -49,11 +49,9 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
             //if we can get the logged in user then
             //the user is authenticated
             if ($profile_id = $api->getUser()->id) {
-
                 //lets find a valid sesison
                 //lets be strict and make sure all the values match
-                $session = KService::get('repos://site/connect.session')
-                    ->find(array(
+                $session = KService::get('repos://site/connect.session')->find(array(
                             'owner.type' => 'com:people.domain.entity.person',
                             'profileId' => $profile_id,
                             'tokenKey' => $oauth_token,
@@ -61,7 +59,6 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
                         ));
 
                 if ($session) {
-
                     $response->status = ComPeopleAuthentication::STATUS_SUCCESS;
                     $response->username = $session->owner->username;
                     $response->password = '';
