@@ -46,7 +46,7 @@ class ComPeopleHelperPerson extends KObject
         //if remember is true, create a remember cookie that contains the ecrypted username and password
         if ($remember) {
 
-            $key = get_hash('JLOGIN_REMEMBER', 'md5');
+            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
             $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
 
             $cookie = $crypt->encrypt(serialize(array(
@@ -55,7 +55,7 @@ class ComPeopleHelperPerson extends KObject
             )));
 
             $lifetime = time() + (365 * 24 * 3600);
-            setcookie(get_hash('JLOGIN_REMEMBER'), $cookie, $lifetime, '/');
+            setcookie(get_hash('AN_LOGIN_REMEMBER'), $cookie, $lifetime, '/');
         }
 
         return true;
@@ -79,7 +79,7 @@ class ComPeopleHelperPerson extends KObject
 
         if ($results) {
             setcookie(
-                get_hash('JLOGIN_REMEMBER'),
+                get_hash('AN_LOGIN_REMEMBER'),
                 false,
                 time() - AnHelperDate::dayToSeconds(30),
                 '/'

@@ -82,7 +82,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         }
 
         $credentials = array();
-        $remember = get_hash('JLOGIN_REMEMBER');
+        $remember = get_hash('AN_LOGIN_REMEMBER');
 
         // for json requests obtain the username and password from the $_SERVER array
         // else if the remember me cookie exists, decrypt and obtain the username and password from it
@@ -98,7 +98,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
         } elseif ($viewer->guest() && isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '') {
 
-            $key = get_hash('JLOGIN_REMEMBER', 'md5');
+            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
             $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
             $cookie = $crypt->decrypt($_COOKIE[$remember]);
             $credentials = (array) @unserialize($cookie);
