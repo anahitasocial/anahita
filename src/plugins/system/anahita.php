@@ -65,7 +65,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
         KService::get('plg:storage.default');
         KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
-        KService::get('anahita:language')->load('lib_anahita', ANPATH_ROOT);
 
         parent::__construct($dispatcher, $config);
     }
