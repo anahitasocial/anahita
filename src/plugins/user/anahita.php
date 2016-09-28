@@ -30,7 +30,6 @@ class plgUserAnahita extends PlgAnahitaDefault
 	 * @param   array   holds the user data
 	 * @param 	array   array holding options (remember, autoregister, group)
 	 * @return	boolean	True on success
-	 * @since	1.5
 	 */
 	public function onLoginUser(KEvent $event)
 	{
@@ -53,17 +52,6 @@ class plgUserAnahita extends PlgAnahitaDefault
 		$session = KService::get('com:sessions');
 		$session->set('person', (object) $person->getData());
 
-		if ($sessionEntity = KService::get('repos:sessions.session')->fetch(array('id' => $session->getId()))) {
-
-			$sessionEntity->setData(array(
-				'guest' => 0,
-				'nodeId' => $person->id,
-				'username' => $person->username,
-				'usertype' => $person->usertype,
-				'time' => $session->getExpire()
-			))->save();
-		}
-
      	//cleanup session table from guest users
       	KService::get('repos:sessions.session')->destroy(0);
 
@@ -77,7 +65,6 @@ class plgUserAnahita extends PlgAnahitaDefault
 	 * @param  array	holds the user data
 	 * @param 	array   array holding options (client, ...)
 	 * @return object   True on success
-	 * @since 1.5
 	 */
 	public function onLogoutUser(KEvent $event)
 	{
@@ -87,12 +74,6 @@ class plgUserAnahita extends PlgAnahitaDefault
 			return false;
     	}
 
-		// Destroy the php session for this user
-		$session = KService::get('com:sessions');
-		$session->destroy();
-
-		KService::get('repos:sessions.session')->destroy($person->id);
-
-		return true;
+		return KService::get('com:sessions')->destroy();
 	}
 }

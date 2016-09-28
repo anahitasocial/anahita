@@ -3,36 +3,6 @@
 class LibSessionsStorageAbstract extends KObject implements LibSessionsStorageInterface
 {
 	/**
-	* Constructor
-	*
-	* @access protected
-	* @param array $options optional parameters
-	*/
-	public function __construct(KConfig $config)
-	{
-		$this->register();
-	}
-
-	/**
-	* Register the functions of this class with PHP's session handler
-	*
-	* @access public
-	* @param array $options optional parameters
-	*/
-	public function register()
-	{
-		// use this object as the session handler
-		session_set_save_handler(
-			array($this, 'open'),
-			array($this, 'close'),
-			array($this, 'read'),
-			array($this, 'write'),
-			array($this, 'destroy'),
-			array($this, 'gc')
-		);
-	}
-
-	/**
 	 * Open the SessionHandler backend.
 	 *
 	 * @abstract

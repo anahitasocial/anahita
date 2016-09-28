@@ -27,30 +27,6 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
         return $this->_session;
     }
 
-	/**
-	 * Open the SessionHandler backend.
-	 *
-	 * @access public
-	 * @param string $save_path     The path to the session object.
-	 * @param string $session_name  The name of the session.
-	 * @return boolean  True on success, false otherwise.
-	 */
-	public function open($save_path, $session_name)
-	{
-        return true;
-	}
-
-	/**
-	 * Close the SessionHandler backend.
-	 *
-	 * @access public
-	 * @return boolean  True on success, false otherwise.
-	 */
-	public function close()
-	{
-		return true;
-	}
-
  	/**
  	 * Read the data for a particular session identifier from the
  	 * SessionHandler backend.
@@ -86,18 +62,16 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 */
 	public function write($id, $session_data)
 	{
-        if ($id == '' && $session_data == '') {
+        if ($id === '' && $session_data === '') {
             return false;
         }
+
+        //error_log('Writing session: ' . $id);
 
         $session = $this->_getSession($id);
 
         if (isset($session)) {
-
-            $session
-            ->set('meta', $session_data)
-            ->save();
-
+            $session->set('meta', $session_data);
         } else {
 
             KService::get('repos:sessions.session')
@@ -121,7 +95,15 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
         $session = $this->_getSession($id);
 
         if(isset($session)) {
-            return $session->set('time', time())->save();
+
+            $viewer = get_viewer();
+
+            $session
+            ->set('time', time())
+            ->set('nodeId', $viewer->id)
+            ->set('username', $viewer->username)
+            ->set('usertype', $viewer->usertype)
+            ->set('guest', $viewer->guest());
         }
 
         return true;
@@ -137,14 +119,8 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	  */
 	public function destroy($id)
 	{
-        if ($id == '') {
-            return false;
-        }
-
-        $session = $this->_getSession($id);
-
-        if (isset($session)) {
-		    $session->delete();
+        if ($session = $this->_getSession($id)) {
+            KService::get('repos:sessions.session')->destroy($session->nodeId);
         }
 
         return true;

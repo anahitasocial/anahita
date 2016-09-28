@@ -45,7 +45,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
     {
         $this->getResponse()->status = KHttpResponse::NO_CONTENT;
 
-        $token = $this->getService('repos://site/connect.session')->fetchSet(array(
+        $token = $this->getService('repos:connect.session')->fetchSet(array(
                         'owner' => $this->actor,
                         'api' => $this->getAPI()->getName(),
                     ));
@@ -67,7 +67,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
 
         $user = $this->getAPI()->getUser();
 
-        $session = $this->getService('repos://site/connect.session')
+        $session = $this->getService('repos:connect.session')
                         ->findOrAddNew(array(
                             'profileId' => $user->id,
                             'api' => $this->getAPI()->getName(),

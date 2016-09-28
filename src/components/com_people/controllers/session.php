@@ -61,7 +61,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      * as follow
      *
      * <code>
-     * KService::setConfig('com://site/people.controller.session', array(
+     * KService::setConfig('com:people.controller.session', array(
      *  'redirect_to_after_login'  => 'mynewurl'
      *  'redirect_to_after_logout' => 'mynewurl'
      * ));

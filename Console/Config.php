@@ -353,7 +353,6 @@ class Config
         $write_group(array('sitename'), 'Site Settings');
         $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
         $write_group(array('secret','error_reporting','tmp_path','log_path','force_ssl'), 'Server Settings');
-        $write_group(array('lifetime','session_handler'), 'Session Settings');
         $write_group(array('mailer','mailfrom','fromname','sendmail','smtpauth','smtpuser','smtppass','smtphost'), 'Mail Settings');
         $write_group(array('caching','cachetime','cache_handler'), 'Cache Settings');
         $write_group(array('debug','debug_db','debug_lang'), 'Debug Settings');

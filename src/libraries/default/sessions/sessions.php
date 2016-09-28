@@ -1,7 +1,11 @@
 <?php
 
-class LibSessions extends KObject
+class LibSessions extends KObject implements KServiceInstantiatable
 {
+
+	/**
+	* state contants
+	*/
 	const STATE_ACTIVE = 'active';
 	const STATE_EXPIRED = 'expired';
 	const STATE_DESTROYED = 'destroyed';
@@ -126,6 +130,24 @@ class LibSessions extends KObject
 
 		parent::_initialize($config);
 	}
+
+	/**
+     * Force creation of a singleton
+     *
+     * @param 	object 	An optional KConfigInterface object with configuration options
+     * @param 	object	A KServiceInterface object
+     * @return KDatabaseTableInterface
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    {
+		static $instance;
+
+		if (!is_object($instance)) {
+			$instance = new LibSessions($config);
+		}
+
+		return $instance;
+    }
 
 	/**
 	 * Session object destructor
@@ -422,6 +444,9 @@ class LibSessions extends KObject
 			return true;
 		}
 
+		// @todo this should happen automatically,
+		$this->_storage->destroy($this->getId());
+
 		// In order to kill the session altogether, like to log the user out, the session id
 		// must also be unset. If a cookie is used to propagate the session id (default behavior),
 		// then the session cookie must be deleted.
@@ -452,8 +477,6 @@ class LibSessions extends KObject
 			throw new LibSessionsException("Session is not destroyed!\n");
 			return false;
 		}
-
-		$this->_storage->register();
 
 		$this->_state = self::STATE_RESTART;
 

@@ -51,7 +51,7 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
             if ($profile_id = $api->getUser()->id) {
                 //lets find a valid sesison
                 //lets be strict and make sure all the values match
-                $session = KService::get('repos://site/connect.session')->find(array(
+                $session = KService::get('repos:connect.session')->find(array(
                             'owner.type' => 'com:people.domain.entity.person',
                             'profileId' => $profile_id,
                             'tokenKey' => $oauth_token,

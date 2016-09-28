@@ -25,11 +25,6 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
     {
         $config->append(array(
             'resources' => array('sessions'),
-            'searchable_properties' => array(
-                'nodeId',
-                'username',
-                'usertype'
-            ),
             'attributes' => array(
                 'sessionId' => array(
                     'key' => true,
