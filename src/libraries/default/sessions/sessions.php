@@ -87,7 +87,7 @@ class LibSessions extends KObject
 		}
 
 		if (isset($config->id)) {
-			session_id(md5($config->name));
+			session_id($config->id);
 		}
 
 		$this->_state =	$config->state;
@@ -209,8 +209,6 @@ class LibSessions extends KObject
 	 *
 	 * @param	string	Hashed token to be verified
 	 * @param	boolean	If true, expires the session
-	 * @since	1.5
-	 * @static
 	 */
 	public function hasToken($tokenCheck, $forceExpire = true)
 	{
@@ -653,19 +651,15 @@ class LibSessions extends KObject
 
 			if ($ip === null) {
 				$this->set('session.client.address', $_SERVER['REMOTE_ADDR']);
-			}
-			elseif ($_SERVER['REMOTE_ADDR'] !== $ip)
-			{
+			} elseif ($_SERVER['REMOTE_ADDR'] !== $ip) {
 				$this->_state = self::STATE_ERROR;
 				return false;
 			}
 		}
 
 		// check for clients browser
-		if(in_array('fix_browser', $this->_security) && isset($_SERVER['HTTP_USER_AGENT']))
-		{
+		if(in_array('fix_browser', $this->_security) && isset($_SERVER['HTTP_USER_AGENT'])) {
 			$browser = $this->get('session.client.browser');
-
 			if ($browser === null) {
 				$this->set( 'session.client.browser', $_SERVER['HTTP_USER_AGENT']);
 			}
