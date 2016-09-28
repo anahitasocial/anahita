@@ -91,7 +91,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
                 'password' => get_hash('COM_CONNECT_PASSWORD')
             );
 
-            if($this->getService('com:people.helper.person')->login($credentials, true)) {
+            if ($this->getService('com:people.helper.person')->login($credentials, true)) {
                 $context->response->setRedirect(base64_decode($return_url));
             }
 
