@@ -12,7 +12,12 @@
  */
 class LibSessionsDomainEntitySession extends AnDomainEntityDefault
 {
-    const MAX_LIFETIME = 60 * 24 * 3600;
+    /**
+    *   60 days in seconds = 60 * 24 * 3600
+    *
+    *   @var integer
+    */
+    const MAX_LIFETIME = 5184000;
 
     /**
      * Initializes the default configuration for the object.
@@ -26,9 +31,8 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('sessions'),
             'attributes' => array(
+                'id',
                 'sessionId' => array(
-                    'key' => true,
-                    'default' => '',
                     'required' => true
                 ),
                 'username' => array(
@@ -38,23 +42,52 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
                     'default' => 0
                 ),
                 'usertype' => array(
-                    'default' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
+                    'default' => ComPeopleDomainEntityPerson::USERTYPE_GUEST,
+                    'required' => true
                 ),
                 'guest' => array(
-                    'default' => 1
+                    'default' => 1,
+                    'required' => true
                 ),
                 'meta' => array(
-                    'default' => ''
+                    'default' => '',
                 ),
                 'time' => array(
                     'default' => 0
                 )
-            ),
-            'aliases' => array(
-                'id' => 'sessionId'
             )
         ));
 
         parent::_initialize($config);
+    }
+
+    /**
+    * Updates time
+    *
+    * @return this
+    */
+    public function updateTime()
+    {
+        $this->time = time();
+        return $this;
+    }
+
+    protected function _beforeEntityInsert(KCommandContext $context)
+    {
+        $this->time = time();
+    }
+
+    protected function _beforeEntityUpdate(KCommandContext $context)
+    {
+        if ($this->getModifiedData()) {
+            $viewer = get_viewer();
+            $this->setData(array(
+                'time' => time(),
+                'nodeId' => $viewer->id,
+                'guest' => $viewer->guest(),
+                'username' => $viewer->username,
+                'usertype' => $viewer->usertype
+            ));
+        }
     }
 }

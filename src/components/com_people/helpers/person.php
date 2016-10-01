@@ -23,14 +23,6 @@ class ComPeopleHelperPerson extends KObject
      */
     public function login(array $credentials, $remember = false)
     {
-        $session = KService::get('com:sessions');
-
-        // we fork the session to prevent session fixation issues
-        $session->fork();
-
-        $application = KService::get('application');
-        $application->createSession($session->getId());
-
         $options = array();
         $results = dispatch_plugin('user.onLoginUser', array(
                       'credentials' => $credentials,

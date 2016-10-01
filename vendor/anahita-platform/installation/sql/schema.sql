@@ -171,17 +171,19 @@ CREATE TABLE `#__plugins` (
 -- --------------------------------------------------------
 
 CREATE TABLE `#__sessions` (
-  `session_id` char(64) NOT NULL UNIQUE,
+  `id` SERIAL,
+  `session_id` char(64) NOT NULL,
   `node_id` bigint(11) NOT NULL DEFAULT 0,
-  `username` varchar(255) DEFAULT NULL,
+  `username` varchar(255),
   `usertype` varchar(255) DEFAULT NULL,
   `time` INT(11) DEFAULT 0,
   `guest` tinyint(2) DEFAULT '1',
   `meta` longtext,
-  PRIMARY KEY (`session_id`(64)),
-  KEY `whosonline` (`guest`,`usertype`,`username`),
-  UNIQUE KEY `node_id` (`node_id`),
-  UNIQUE KEY `username` (`username`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `session_id` (`session_id`),
+  KEY `node_id` (`node_id`),
+  KEY `username` (`username`),
+  KEY `whosonline` (`guest`,`usertype`,`username`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------

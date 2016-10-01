@@ -68,7 +68,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
      protected function _initialize(KConfig $config)
      {
          $config->append(array(
-             'session' => true,
+             'session' => false,
              'session_name' => $this->getName()
          ));
 
@@ -112,26 +112,12 @@ class ComApplication extends KObject implements KServiceInstantiatable
         ));
 
         $session = KService::get('com:sessions', array('config' => $config));
+        $repository = KService::get('repos:sessions.session');
+        $repository->purge($session->getExpire());
 
-        $storage = $session->getStorage();
-        $storage->gc($session->getExpire());
-
-        if ($storage->read($session->getId())) {
-            $storage->update($session->getId());
-            return $session;
+        if ($entity = $repository->find(array('sessionId' => $session->getId()))) {
+            $entity->updateTime();
         }
-
-        $person = KService::get('repos:people.person')
-                    ->getEntity()->setData(array(
-                        'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
-                    ))->reset();
-
-        $session->set('person', (object) $person->getData());
-
-        if (!$storage->write($session->getId(), '')) {
-            throw new KException("Coudn't write in the session table");
-            return;
-  		}
 
   		return $session;
   	}

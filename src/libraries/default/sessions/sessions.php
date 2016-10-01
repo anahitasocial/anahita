@@ -71,20 +71,20 @@ class LibSessions extends KObject implements KServiceInstantiatable
      */
     public function __construct(KConfig $config)
     {
-		parent::__construct($config);
-
 		if (session_status() === PHP_SESSION_ACTIVE) {
 			session_unset();
 			session_destroy();
 		}
 
-		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage);
+		parent::__construct($config);
 
 		//set default sessios save handler
 		ini_set('session.save_handler', 'files');
 
 		//disable transparent sid support
 		ini_set('session.use_trans_sid', '0');
+
+		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage);
 
 		if (isset($config->name)) {
 			session_name(md5($config->name));
@@ -99,6 +99,8 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		$this->_security = explode(',', $config->security);
 		$this->_force_ssl = $config->force_ssl;
 		$this->_namespace = $config->namespace;
+
+		ini_set('session.gc_maxlifetime', $this->getExpire());
 
 		$this->_setCookieParams();
 		$this->_start();
@@ -140,13 +142,19 @@ class LibSessions extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-		static $instance;
+		if (!$container->has($config->service_identifier)) {
+            $classname = $config->service_identifier->classname;
+            $instance  = new $classname($config);
+            $container->set($config->service_identifier, $instance);
+        }
 
-		if (!is_object($instance)) {
-			$instance = new LibSessions($config);
+		$session = $container->get($config->service_identifier);
+
+		if ($session->getState() === self::STATE_EXPIRED) {
+			$session->restart();
 		}
 
-		return $instance;
+        return $session;
     }
 
 	/**
@@ -168,8 +176,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	*/
 	private function _start()
 	{
-		//  start session if not startet
-		if ( $this->_state === self::STATE_RESTART ) {
+		if ($this->_state === self::STATE_RESTART) {
 			session_id($this->_createId());
 		}
 
@@ -216,8 +223,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	{
 		$token = $this->get('session.token');
 
-		//create a token
-		if ($token === null || $forceNew) {
+		if (is_null($token) || $forceNew) {
 			$token = $this->_createToken(12);
 			$this->set('session.token', $token);
 		}
@@ -238,7 +244,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 
 		if ($stored !== $tokenCheck) {
 
-			if($forceExpire) {
+			if ($forceExpire) {
 				$this->_state = self::STATE_EXPIRED;
 			}
 
@@ -360,14 +366,12 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	 */
 	public function set($name, $value = null, $namespace = '')
 	{
-		if($this->_state !== self::STATE_ACTIVE) {
+		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
 			return;
 		}
 
 		$namespace = ($namespace === '') ? $this->_namespace : $namespace;
-
-		$old = isset($_SESSION[$namespace][$name]) ? $_SESSION[$namespace][$name] : null;
 
 		if ($value === null) {
 			unset($_SESSION[$namespace][$name]);
@@ -375,11 +379,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 			$_SESSION[$namespace][$name] = $value;
 		}
 
-		// @todo this should happen automatically,
-		// but for some reason session value isn't being passed
-		$this->_storage->write($this->getId(), serialize($_SESSION));
-
-		return $old;
+		return $this;
 	}
 
 	/**
@@ -434,18 +434,13 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	 * @static
 	 * @access public
 	 * @return void
-	 * @see	session_unset()
-	 * @see	session_destroy()
 	 */
 	public function destroy()
 	{
 		// session was already destroyed
 		if ($this->_state === self::STATE_DESTROYED) {
-			return true;
+			return;
 		}
-
-		// @todo this should happen automatically,
-		$this->_storage->destroy($this->getId());
 
 		// In order to kill the session altogether, like to log the user out, the session id
 		// must also be unset. If a cookie is used to propagate the session id (default behavior),
@@ -458,8 +453,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		session_destroy();
 
 		$this->_state = self::STATE_DESTROYED;
-
-		return true;
 	}
 
 	/**
@@ -467,7 +460,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	*
 	* @access public
 	* @return boolean $result true on success
-	* @see destroy
 	*/
 	public function restart()
 	{
@@ -478,9 +470,11 @@ class LibSessions extends KObject implements KServiceInstantiatable
 			return false;
 		}
 
+		$this->_storage->register();
+
 		$this->_state = self::STATE_RESTART;
 
-		$id	= $this->_createId(strlen($this->getId()));
+		$id	= $this->_createToken(strlen($this->getId()));
 
 		session_id($id);
 
@@ -530,11 +524,11 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	* @access protected
 	* @return string Session ID
 	*/
-	protected function _createId( )
+	protected function _createId($length = 32)
 	{
-		$id = 0;
+		$id = '';
 
-		while (strlen($id) < 32)  {
+		while (strlen($id) < $length)  {
 			$id .= mt_rand(0, mt_getrandmax());
 		}
 
@@ -550,7 +544,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	*/
 	protected function _setCookieParams() {
 
-	   $cookie	= session_get_cookie_params();
+	   $cookie = session_get_cookie_params();
 	   $cookie['secure'] = is_ssl();
 
 	   session_set_cookie_params(
@@ -571,8 +565,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	protected function _createToken($length = 32)
 	{
 		$chars = '0123456789abcdef';
-
-		$max = strlen( $chars ) - 1;
+		$max = strlen($chars) - 1;
 		$token = '';
 		$name = session_name();
 

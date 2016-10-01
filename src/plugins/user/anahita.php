@@ -18,7 +18,7 @@ class plgUserAnahita extends PlgAnahitaDefault
 			return false;
 		}
 
-		KService::get('repos:sessions.session')->destroy($event->person['id']);
+		KService::get('repos:sessions.session')->destroy(array('nodeId' => (string) $event->person['id']));
 
 		return true;
 	}
@@ -47,13 +47,8 @@ class plgUserAnahita extends PlgAnahitaDefault
 		}
 
 		$person->visited();
-
-		// Register the needed session variables
 		$session = KService::get('com:sessions');
 		$session->set('person', (object) $person->getData());
-
-     	//cleanup session table from guest users
-      	KService::get('repos:sessions.session')->destroy(0);
 
 		return true;
 	}
@@ -73,6 +68,8 @@ class plgUserAnahita extends PlgAnahitaDefault
 		if ($person->id === 0) {
 			return false;
     	}
+
+		KService::get('repos:sessions.session')->destroy(array('nodeId' => $person->id));
 
 		return KService::get('com:sessions')->destroy();
 	}

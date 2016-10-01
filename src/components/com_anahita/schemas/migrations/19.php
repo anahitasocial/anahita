@@ -48,16 +48,19 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec('DROP TABLE IF EXISTS `#__sessions`');
 
         $query = "CREATE TABLE `#__sessions` ("
-        ."`session_id` char(64) NOT NULL UNIQUE,"
+        ."`id` SERIAL,"
+        ."`session_id` char(64) NOT NULL,"
         ."`node_id` bigint(11) NOT NULL DEFAULT 0,"
         ."`username` varchar(255) DEFAULT NULL,"
-        ."`usertype` varchar(255) DEFAULT NULL,"
+        ."`usertype` varchar(255),"
         ."`time` INT(11) DEFAULT 0,"
         ."`guest` tinyint(2) DEFAULT '1',"
         ."`meta` longtext,"
-        ."PRIMARY KEY (`session_id`(64)),"
+        ."PRIMARY KEY (`id`),"
         ."KEY `whosonline` (`guest`,`usertype`,`username`),"
-        ."KEY `node_id` (`node_id`)"
+        ."UNIQUE KEY `session_id` (`session_id`),"
+        ."KEY `node_id` (`node_id`),"
+        ."KEY `username` (`username`)"
         .") ENGINE=InnoDB CHARACTER SET=utf8";
         dbexec($query);
 

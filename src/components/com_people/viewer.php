@@ -30,21 +30,23 @@ class ComPeopleViewer extends KObject implements KServiceInstantiatable
 
              $repository = KService::get('repos:people.person');
 
-             if($person) {
-                 $viewer = KService::get('repos:people.person')->find(array('id' => $person->id));
+             if(isset($person->id)) {
+                 $viewer = $repository->find(array('id' => $person->id));
              } else {
-                 $viewer = KService::get('repos:people.person')
+
+                 $viewer = $repository
                  ->getEntity()
                  ->setData(array(
                     'id' => 0,
                     'usertype' => ComPeopleDomainEntityPerson::USERTYPE_GUEST
-                 ));
+                 ))->reset();
+
                  $viewer->getRepository()->extract($viewer);
              }
 
              $container->set($config->service_identifier, $viewer);
          }
-
+         
          return $container->get($config->service_identifier);
      }
 }

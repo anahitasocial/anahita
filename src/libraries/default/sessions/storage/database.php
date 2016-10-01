@@ -5,12 +5,17 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
     /**
     * @param hold session data
     */
-    private $_data = null;
+    protected $_data = null;
 
     /**
     * @param $session entity
     */
-    private $_session = null;
+    protected $_session = null;
+
+    /**
+    * @param database session repository
+    */
+    protected $_repository = null;
 
     /**
     * loads the session entity
@@ -18,14 +23,29 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
     * @param $id string session id
     * @return session entity
     */
-    private function _getSession($id)
+    private function _getSession($sessionId)
     {
         if (is_null($this->_session)) {
-            $this->_session = KService::get('repos:sessions.session')->find(array('id' => $id));
+            $this->_session = $this->_repository->find(array('sessionId' => $sessionId));
         }
 
         return $this->_session;
     }
+
+    /**
+	 * Open the SessionHandler backend.
+	 *
+	 * @abstract
+	 * @access public
+	 * @param string $save_path     The path to the session object.
+	 * @param string $session_name  The name of the session.
+	 * @return boolean  True on success, false otherwise.
+	 */
+	public function open($save_path, $session_name)
+	{
+        $this->_repository = KService::get('repos:sessions.session');
+        return true;
+	}
 
  	/**
  	 * Read the data for a particular session identifier from the
@@ -39,13 +59,11 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	{
         $this->_data = '';
 
-        if ($id == '') {
+        if ($id === '') {
             return $this->_data;
         }
 
-        $session = $this->_getSession($id);
-
-        if (isset($session)) {
+        if ($session = $this->_getSession($id)) {
             $this->_data = (string) $session->meta;
         }
 
@@ -66,48 +84,24 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
             return false;
         }
 
-        //error_log('Writing session: ' . $id);
-
+        $result = false;
         $session = $this->_getSession($id);
 
         if (isset($session)) {
-            $session->set('meta', $session_data);
+            $result = $session->set('meta', $session_data)->save();
         } else {
-
-            KService::get('repos:sessions.session')
-            ->getEntity()
-            ->set('id', $id)
+            $result = $this->_repository->getEntity()
+            ->set('sessionId', $id)
             ->set('meta', $session_data)
             ->save();
         }
 
-        $this->_data = $session_data;
+        if ($result) {
+            $this->_data = $session_data;
+        }
 
-		return true;
+		return $result;
 	}
-
-    public function update($id) {
-
-        if ($id == '') {
-            return false;
-        }
-
-        $session = $this->_getSession($id);
-
-        if(isset($session)) {
-
-            $viewer = get_viewer();
-
-            $session
-            ->set('time', time())
-            ->set('nodeId', $viewer->id)
-            ->set('username', $viewer->username)
-            ->set('usertype', $viewer->usertype)
-            ->set('guest', $viewer->guest());
-        }
-
-        return true;
-    }
 
 	/**
 	  * Destroy the data for a particular session identifier in the
@@ -120,10 +114,10 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	public function destroy($id)
 	{
         if ($session = $this->_getSession($id)) {
-            KService::get('repos:sessions.session')->destroy($session->nodeId);
+            return $this->_repository->destroy(array('sessionId' => $id));
         }
 
-        return true;
+        return false;
 	}
 
 	/**
@@ -135,7 +129,6 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 */
 	public function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
 	{
-        KService::get('repos:sessions.session')->purge($lifetime);
-		return true;
+        return $this->_repository->purge($lifetime);
 	}
 }

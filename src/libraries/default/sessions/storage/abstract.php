@@ -1,7 +1,52 @@
 <?php
 
-class LibSessionsStorageAbstract extends KObject implements LibSessionsStorageInterface
+class LibSessionsStorageAbstract extends KObject implements SessionHandlerInterface, KServiceInstantiatable
 {
+	/**
+     * Constructor.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+		parent::__construct($config);
+		$this->register();
+	}
+
+	/**
+     * Force creation of a singleton
+     *
+     * @param 	object 	An optional KConfigInterface object with configuration options
+     * @param 	object	A KServiceInterface object
+     * @return KDatabaseTableInterface
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    {
+		if (!$container->has($config->service_identifier)) {
+            $classname = $config->service_identifier->classname;
+            $instance  = new $classname($config);
+            $container->set($config->service_identifier, $instance);
+        }
+
+		return $container->get($config->service_identifier);
+    }
+
+	/**
+	* Register the functions of this class with PHP's session handler
+	*
+	*/
+	public function register()
+	{
+		session_set_save_handler(
+			array($this, 'open'),
+			array($this, 'close'),
+			array($this, 'read'),
+			array($this, 'write'),
+			array($this, 'destroy'),
+			array($this, 'gc')
+		);
+	}
+
 	/**
 	 * Open the SessionHandler backend.
 	 *

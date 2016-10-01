@@ -13,7 +13,6 @@
  */
 class LibSessionsDomainRepositorySession extends AnDomainRepositoryDefault
 {
-
     /**
     *   Removes all expired sessions
     *
@@ -23,17 +22,6 @@ class LibSessionsDomainRepositorySession extends AnDomainRepositoryDefault
     {
         $past = time() - $lifetime;
         $query = $this->getQuery()->delete()->where('time < '.$past);
-        $this->getStore()->execute($query);
-    }
-
-    /**
-    *   Removes session by personId
-    *
-    *   @param (int) user id
-    */
-    public function destroy($personId = 0)
-    {
-        $query = $this->getQuery()->delete()->where(array('nodeId' => (int) $personId));
         $this->getStore()->execute($query);
     }
 }
