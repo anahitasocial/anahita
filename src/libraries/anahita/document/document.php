@@ -267,26 +267,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	}
 
 	/**
-	 * Get the contents of the document buffer
-	 *
-	 * @access public
-	 * @return 	The contents of the document buffer
-	 */
-	public function getBuffer() {
-		return $this->_buffer;
-	}
-
-	/**
-	 * Set the contents of the document buffer
-	 *
-	 * @access public
-	 * @param string 	$content	The content to be set in the buffer
-	 */
-	public function setBuffer($contents, $type, $name = null) {
-		$this->_buffer = $content;
-	}
-
-	/**
 	 * Gets a meta tag.
 	 *
 	 * @param	string	$name			Value of name or http-equiv tag
@@ -581,26 +561,4 @@ class AnDocument extends KObject implements KServiceInstantiatable
     {
         return $this->_mime;
     }
-
-	/**
-	 * Outputs the document
-	 *
-	 * @access public
-	 * @param boolean 	$cache		If true, cache the output
-	 * @param boolean 	$compress	If true, compress the output
-	 * @param array		$params		Associative array of attributes
-	 * @return 	The rendered data
-	 */
-	function render($cache = false, $params = array())
-	{
-        $response = $this->getResponse();
-
-        $response->setHeader( 'Expires', gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' );
-
-        if ($mdate = $this->getModifiedDate()) {
-            $response->setHeader( 'Last-Modified', $mdate /* gmdate( 'D, d M Y H:i:s', time() + 900 ) . ' GMT' */ );
-		}
-
-		$response->setHeader( 'Content-Type', $this->_mime .  '; charset=' . $this->_charset);
-	}
 }

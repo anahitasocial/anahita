@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Message Behavior.
  *
  * @category   Anahita
@@ -23,6 +8,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -50,6 +36,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         $session = KService::get('com:sessions', array('config' => $config));
 
         $data = array();
+
         if ($this->_enabled) {
             $data = (array) $session->set($namespace->queue, new stdClass(), $namespace->namespace);
         }
@@ -74,7 +61,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'enabled' => KRequest::format() == 'html' && $config->mixer->isDispatched(),
+            'enabled' => KRequest::format() != 'json' && $config->mixer->isDispatched(),
         ));
 
         parent::_initialize($config);
@@ -118,8 +105,11 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
         //if ajax send back the message
         //in the header
         if ($this->getRequest()->isAjax()) {
-            $this->getResponse()->setHeader('X-Message',
-                    json_encode(array('text' => AnTranslator::_($message), 'type' => $type)));
+            $this->getResponse()
+            ->setHeader('X-Message', json_encode(array(
+                'text' => AnTranslator::_($message),
+                'type' => $type
+            )));
         } else {
             $this->storeValue('message', array('type' => $type, 'message' => $message), $global);
         }
@@ -136,7 +126,6 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     public function storeValue($key, $value, $global = false)
     {
         if ($this->_enabled) {
-
             $namespace = $this->_getQueueNamespace($global);
             $session = KService::get('com:sessions', array('config' => $namespace));
 

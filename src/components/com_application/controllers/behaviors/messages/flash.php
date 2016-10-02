@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Flash memory. Can contain key value pairs.
  *
@@ -23,6 +8,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -30,9 +16,9 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 {
     /**
      * A flash can contain only one message.
-     * 
+     *
      * @param bool $unset Unset the message after getting it
-     * 
+     *
      * @return array
      */
     public function getMessage($unset = false)
@@ -48,7 +34,7 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 
     /**
      * Unsets an offset.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see ArrayObject::offsetUnset()
@@ -62,7 +48,7 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 
     /**
      * Return null if the offset doesn't exits.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see ArrayObject::offsetGet()
@@ -78,9 +64,9 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 
     /**
      * Forward to offsetGet.
-     * 
+     *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
     public function __get($key)
@@ -97,11 +83,7 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
      */
     public function __set($key, $value)
     {
-        if ($key == 'message') {
-            return $this->getMessage();
-        } else {
-            return $this[$key] = $value;
-        }
+        return ($key === 'message') ? $this->getMessage() : $this[$key] = $value;
     }
 
     /**
@@ -118,9 +100,9 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 
     /**
      * Forwards to unset.
-     * 
+     *
      * @param string $key
-     * 
+     *
      * @return mixed
      */
     public function __unset($key)

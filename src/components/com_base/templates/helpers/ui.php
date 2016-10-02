@@ -79,7 +79,6 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 
         if (isset($data['flash']) && $data['flash']->message) {
             $message = array_merge((array) $data['flash']->getMessage(true), $config);
-
             return $this->message($message['message'], $message);
         }
     }

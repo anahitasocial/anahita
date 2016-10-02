@@ -106,9 +106,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		$this->_start();
 		$this->_setCounter();
 		$this->_setTimers();
-
-		// perform security checks
-		$this->_validate();
 	}
 
 	/**
@@ -482,7 +479,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 
 		$this->_state = self::STATE_ACTIVE;
 
-		$this->_validate();
 		$this->_setCounter();
 
 		return true;
@@ -612,74 +608,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 
 		$this->set('session.timer.last', $this->get('session.timer.now'));
 		$this->set('session.timer.now', time());
-
-		return true;
-	}
-
-	/**
-	* Do some checks for security reason
-	*
-	* - timeout check (expire)
-	* - ip-fixiation
-	* - browser-fixiation
-	*
-	* If one check failed, session data has to be cleaned.
-	*
-	* @access protected
-	* @param boolean $restart reactivate session
-	* @return boolean $result true on success
-	* @see http://shiflett.org/articles/the-truth-about-sessions
-	*/
-	protected function _validate($restart = false)
-	{
-
-		// allow to restart a session
-		if ($restart) {
-			$this->_state =	self::STATE_ACTIVE;
-			$this->set('session.client.address', null);
-			$this->set('session.client.forwarded', null);
-			$this->set('session.client.browser', null);
-			$this->set('session.token', null);
-		}
-
-		// check if session has expired
-		if ($this->_expire) {
-
-			$curTime = $this->get('session.timer.now', 0);
-			$maxTime = $this->get('session.timer.last', 0) +  $this->_expire;
-
-			// empty session variables
-			if ($maxTime < $curTime) {
-				$this->_state =	self::STATE_EXPIRED;
-				return false;
-			}
-		}
-
-		// record proxy forwarded for in the session in case we need it later
-		if (isset( $_SERVER['HTTP_X_FORWARDED_FOR'])) {
-			$this->set('session.client.forwarded', $_SERVER['HTTP_X_FORWARDED_FOR']);
-		}
-
-		// check for client adress
-		if (in_array('fix_adress', $this->_security) && isset($_SERVER['REMOTE_ADDR'])) {
-
-			$ip	= $this->get( 'session.client.address' );
-
-			if ($ip === null) {
-				$this->set('session.client.address', $_SERVER['REMOTE_ADDR']);
-			} elseif ($_SERVER['REMOTE_ADDR'] !== $ip) {
-				$this->_state = self::STATE_ERROR;
-				return false;
-			}
-		}
-
-		// check for clients browser
-		if(in_array('fix_browser', $this->_security) && isset($_SERVER['HTTP_USER_AGENT'])) {
-			$browser = $this->get('session.client.browser');
-			if ($browser === null) {
-				$this->set( 'session.client.browser', $_SERVER['HTTP_USER_AGENT']);
-			}
-		}
 
 		return true;
 	}
