@@ -39,6 +39,7 @@ $composerLoader->add('Console\\', ANAHITA_ROOT);
 //check the tasks folder for any class
 
 $console = new Console\Application();
+$console->loadFramework();
 
 function include_tasks($directory)
 {

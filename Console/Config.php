@@ -119,7 +119,7 @@ class Config
      */
     public function isConfigured()
     {
-        return file_exists($this->_configuration_file );
+        return file_exists($this->_configuration_file);
     }
 
     /**
@@ -264,84 +264,8 @@ class Config
      */
     public function save()
     {
-        $data   = $this->toData();
-
-        if (file_exists($this->_configuration_file) && !is_writable($this->_configuration_file)) {
-            chmod($this->_configuration_file, 0644);
-        }
-
-        $file = new \SplFileObject($this->_configuration_file, 'w');
-        $file->fwrite("<?php\n");
-        $file->fwrite("class AnConfig {\n\n");
-
-        $print_array = function($array) use (&$print_array) {
-
-            if (is_array($array)) {
-
-                $values = array();
-                $hash   = !is_numeric(key($array));
-
-                foreach ($array as $key => $value) {
-
-                    if ( !is_numeric($key) ) {
-                        $key = "'".addslashes($key)."'";
-                    }
-
-                    if ( !is_numeric($value) ) {
-                        $value = "'".addslashes($value)."'";
-                    }
-
-                    $values[] = $hash ? "$key=>$value" : $value;
-                }
-
-                return 'array('.implode(',', $values).')';
-            }
-        };
-
-        $write = function($data) use($file, $print_array) {
-
-            foreach($data as $key => $value) {
-
-                if (is_array($value)) {
-                    $value = $print_array($value);
-                } elseif ( !is_numeric($value) ) {
-                    $value = "'".addslashes($value)."'";
-                }
-
-                $file->fwrite("   var \$$key = $value;\n");
-            }
-        };
-
-        $write_group = function($keys, $comment = null) use (&$data, $file, $write) {
-
-            $values = array();
-
-            foreach ($keys as $key) {
-
-                if (isset($data[$key])) {
-                    $values[$key] = $data[$key];
-                    unset($data[$key]);
-                }
-            }
-
-            if (!empty($values)) {
-
-                if (!empty($comment)) {
-                    $file->fwrite("   /*$comment*/\n");
-                }
-
-                $write($values);
-                $file->fwrite("\n");
-            }
-        };
-
-        $write_group(array('sitename'), 'Site Settings');
-        $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
-        $write_group(array('secret','error_reporting','tmp_path','log_path','force_ssl'), 'Server Settings');
-        $write_group(array('mailer','mailfrom','fromname','sendmail','smtpauth','smtpuser','smtppass','smtphost'), 'Mail Settings');
-        $write_group(array('debug'), 'Debug Settings');
-        $write_group(array('sef_rewrite'), 'Route Settings');
-        $write_group(array_keys($data),'Other configurations');
-        $file->fwrite("}");
+        $data = array('meta' => $this->toData());
+        \KService::get('com:settings.domain.entity.setting')->setData($data)->save();
+        return;
     }
 }
