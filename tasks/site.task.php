@@ -135,7 +135,7 @@ class Create extends Command
             'password' => $prompt('database-password', 'Enter the database password? ',@$info['password'],'Please enter the database password'),
             'host'     => $prompt('database-host', 'Enter the database host address? ', '127.0.0.1',@$info['host']),
             'port'     => $prompt('database-port', 'Enter the database port? ','3306',@$info['port']),
-            'prefix'   => $prompt('database-prefix', 'Enter a prefix for the tables in the database? ','jos_',@$info['prefix'])
+            'prefix'   => $prompt('database-prefix', 'Enter a prefix for the tables in the database? ','an_',@$info['prefix'])
         ));
 
         define('DS', DIRECTORY_SEPARATOR);

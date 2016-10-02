@@ -87,7 +87,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage);
 
 		if (isset($config->name)) {
-			session_name(md5($config->name));
+			session_name(get_hash($config->name));
 		}
 
 		if (isset($config->id)) {

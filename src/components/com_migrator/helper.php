@@ -41,7 +41,7 @@ function dbexec($queries, $force = true)
     settype($queries, 'array');
     $db = KService::get('anahita:database.adapter.mysqli');
     foreach ($queries as $sql) {
-        $sql = str_replace('jos_', '#__', $sql);
+        $sql = str_replace('an_', '#__', $sql);
         try {
             $then = microtime(true);
             $db->execute($sql);
@@ -89,7 +89,7 @@ function dbinsert($table, $data)
     foreach ($keys as $i => $key) {
         $keys[$i] = $db->quoteName($key);
     }
-    $query = "INSERT INTO jos_$table (".implode(',', $keys).") VALUES\n";
+    $query = "INSERT INTO an_$table (".implode(',', $keys).") VALUES\n";
     $keys = array_keys($data[0]);
     $inserts = array();
     foreach ($data as $values) {
@@ -133,7 +133,7 @@ function dbinsert($table, $data)
  */
 function dbfetch($select, $mode = KDatabase::FETCH_ARRAY_LIST)
 {
-    $select = str_replace('jos_', '#__', $select);
+    $select = str_replace('an_', '#__', $select);
     $db = KService::get('anahita:database.adapter.mysqli');
     $then = microtime();
     $result = $db->select($select, $mode);

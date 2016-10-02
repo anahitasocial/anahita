@@ -806,7 +806,7 @@ function is_admin($actor)
 }
 
 /**
- * Prints a query and repalce #__ with jos__.
+ * Prints a query and repalce #__ with an_
  */
 function print_query($query)
 {
@@ -825,7 +825,7 @@ function print_query($query)
         $query = (string) $context->query;
     }
 
-    print str_replace('#__', 'jos_', $query)."\G";
+    print str_replace('#__', 'an_', $query)."\G";
 }
 
 function trace_mark($message)
