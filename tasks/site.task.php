@@ -150,7 +150,6 @@ class Create extends Command
         define('ANPATH_THEMES', ANPATH_BASE.'/templates');
         define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
 
-        include_once (ANPATH_LIBRARIES . '/anahita-platform/import.php');
         require_once 'Console/Installer/Helper.php';
 
         $output->writeLn('<info>connecting to database...</info>');
