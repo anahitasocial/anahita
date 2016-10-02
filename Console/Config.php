@@ -22,21 +22,16 @@ class Config
      * @var array
      */
     protected $_key_map = array(
-        'database_type'      => 'dbtype',
-        'database_host'      => 'host',
-        'database_user'      => 'user',
-        'database_password'  => 'password',
-        'database_name'      => 'db',
-        'database_prefix'    => 'dbprefix',
-        'enable_debug'       => 'debug',
-        'enable_caching'     => 'caching',
-        'url_rewrite'        => 'sef_rewrite',
-        'cache_lifetime'     => 'cachetime',
-        'session_lifetime'   => 'lifetime',
+        'database_type' => 'dbtype',
+        'database_host' => 'host',
+        'database_user' => 'user',
+        'database_password' => 'password',
+        'database_name' => 'db',
+        'database_prefix' => 'dbprefix',
+        'enable_debug' => 'debug',
+        'url_rewrite' => 'sef_rewrite',
         'secret',
-        'error_reporting',
-        'session_handler',
-        'cache_handler'
+        'error_reporting'
     );
 
     /**
@@ -71,7 +66,6 @@ class Config
         }
         $this->_key_map = $map;
         $this->_data = array(
-            'debug_db' => 0,
             'mailer' => 'mail',
             'mailfrom' => '',
             'fromname' => '',
@@ -80,25 +74,16 @@ class Config
             'smtpuser' => '',
             'smtppass' => '',
             'smtphost' => 'localhost',
-            'force_ssl' => 0,
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
-            'sitename' => 'Anahita',
-            'sef' => '',
-            'sef_suffix' => '',
+            'sitename' => 'Anahita'
         );
 
         $this->set(array(
            'secret' => '',
-           'offline' => 0,
            'enable_debug' => 0,
-           'cache_lifetime' => 60,
-           'session_lifetime' => 1440,
            'error_reporting' => 0,
-           'enable_caching' => 0,
-           'url_rewrite' => 0,
-           'session_handler' => 'database',
-           'cache_handler' => function_exists('apc_fetch') ? 'apc' : 'file'
+           'url_rewrite' => 0
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
@@ -282,7 +267,7 @@ class Config
         $data   = $this->toData();
 
         if (file_exists($this->_configuration_file) && !is_writable($this->_configuration_file)) {
-            chmod($this->_configuration_file,0755);
+            chmod($this->_configuration_file, 0644);
         }
 
         $file = new \SplFileObject($this->_configuration_file, 'w');
@@ -354,10 +339,8 @@ class Config
         $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
         $write_group(array('secret','error_reporting','tmp_path','log_path','force_ssl'), 'Server Settings');
         $write_group(array('mailer','mailfrom','fromname','sendmail','smtpauth','smtpuser','smtppass','smtphost'), 'Mail Settings');
-        $write_group(array('caching','cachetime','cache_handler'), 'Cache Settings');
-        $write_group(array('debug','debug_db','debug_lang'), 'Debug Settings');
+        $write_group(array('debug'), 'Debug Settings');
         $write_group(array('sef_rewrite'), 'Route Settings');
-        $write_group(array('list_limit','gzip','xmlrpc_server','ftp_enable','offset','MetaAuthor','MetaTitle','sef','sef_suffix','feed_limit'),'Legacy. Will be removed');
         $write_group(array_keys($data),'Other configurations');
         $file->fwrite("}");
     }

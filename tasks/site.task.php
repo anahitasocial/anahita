@@ -245,9 +245,6 @@ $console
 ->register('site:configuration')
 ->setDescription('Provides the ability to set some of the site configuration through command line')
 ->setDefinition(array(
-    new InputOption('session-handler','', InputOption::VALUE_REQUIRED, 'What session handler use'),
-    new InputOption('cache-handler','',   InputOption::VALUE_REQUIRED, 'What cache handler use'),
-    new InputOption('use-apc','',   InputOption::VALUE_NONE, 'If set then both cache handler and session handle will use apc'),
     new InputOption('enable-debug','',   InputOption::VALUE_NONE, 'Turn on the debug'),
     new InputOption('disable-debug','',   InputOption::VALUE_NONE, 'Turn off the debug'),
     new InputOption('new-secret','',   InputOption::VALUE_NONE, 'Generates a new secret'),
@@ -274,11 +271,7 @@ $console
         }
     };
 
-    $set('session-handler','cache-handler','offline','url-rewrite');
-
-    if ($input->getOption('use-apc')) {
-        $config->set(array('session_handler'=>'apc','cache_handler'=>'apc'));
-    }
+    $set('url-rewrite');
 
     if ($input->getOption('enable-debug')) {
         $config->enableDebug();
