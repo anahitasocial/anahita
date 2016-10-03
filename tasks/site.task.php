@@ -138,92 +138,94 @@ class Create extends Command
             'prefix'   => $prompt('database-prefix', 'Enter a prefix for the tables in the database? ','an_',@$info['prefix'])
         ));
 
-        define('DS', DIRECTORY_SEPARATOR);
-        define('_ANEXEC', 1);
-        define('ANPATH_BASE', WWW_ROOT);
-        define('ANPATH_ROOT', ANPATH_BASE );
-        define('ANPATH_SITE', ANPATH_ROOT);
-        define('ANPATH_CONFIGURATION', ANPATH_ROOT );
-        define('ANPATH_LIBRARIES', ANPATH_ROOT.'/libraries');
-        define('ANPATH_PLUGINS', ANPATH_ROOT.'/plugins');
-        define('ANPATH_INSTALLATION', ANPATH_ROOT.'/installation');
-        define('ANPATH_THEMES', ANPATH_BASE.'/templates');
-        define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
+        //define('DS', DIRECTORY_SEPARATOR);
+        //define('_ANEXEC', 1);
+        //define('ANPATH_BASE', WWW_ROOT);
+        //define('ANPATH_ROOT', ANPATH_BASE );
+        //define('ANPATH_SITE', ANPATH_ROOT);
+        //define('ANPATH_CONFIGURATION', ANPATH_ROOT );
+        //define('ANPATH_LIBRARIES', ANPATH_ROOT.'/libraries');
+        //define('ANPATH_PLUGINS', ANPATH_ROOT.'/plugins');
+        //define('ANPATH_INSTALLATION', ANPATH_ROOT.'/installation');
+        //define('ANPATH_THEMES', ANPATH_BASE.'/templates');
+        //define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
+
+        $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
+        $config->save();
 
         require_once 'Console/Installer/Helper.php';
-
         $output->writeLn('<info>connecting to database...</info>');
 
-        $errors  = array();
         $database = $config->getDatabaseInfo();
+        $db = new \mysqli(
+            $database['host'],
+            $database['user'],
+            $database['password'],
+            '', //don't pass database name yet
+            $database['port']
+        );
 
-        /*
-        $db = \AnInstallationHelper::getDBO(
-                  'mysqli',
-                  $database['host'].':'.$database['port'],
-                  $database['user'],
-                  $database['password'],
-                  $database['name'],
-                  $database['prefix'],
-                  false
-              );
-        */
-
-        $db = KService::get('anahita:database.adapeter.mysqli');
-
-        if ($db instanceof \JException) {
-            $output->writeLn('<error>'.$db->toString().'</error>');
+        //check connection
+        if ($db->connect_errno) {
+            $errorMsg = sprintf("Connect failed: %s\n", mysqli_connect_error());
+            $output->writeLn('<error>'.$errorMsg.'</error>');
             exit(1);
         }
 
-        $db_exists = \AnInstallationHelper::databaseExists($db, $database['name']);
-        $dump_file = null;
+        //check to see if database exists
+        $db_exists = true;
+        if (!$db->select_db($database['name'])) {
+            $db_exists = false;
+        }
 
+        $dump_file = null;
         if ( $input->getOption('database-dump') ) {
             $dump_file = realpath($input->getOption('database-dump'));
         }
 
         if ($db_exists && $input->getOption('drop-database')) {
-
-            $output->writeLn('<fg=red>Dropping existing database...</fg=red>');
-
-            \AnInstallationHelper::deleteDatabase(
-              $db,
-              $database['name'],
-              $database['prefix'],
-              $errors
-            );
-
+            $output->writeLn('<info>Dropping existing database...</info>');
+            $db->query(sprintf("DROP DATABASE `%s`", $database['name']));
             $db_exists = false;
         }
 
         if (!$db_exists) {
             $output->writeLn('<info>Creating new database...</info>');
 
-            \AnInstallationHelper::createDatabase($db, $database['name'],true);
-
-            $db->select($database['name']);
-
-            $sql_files = $dump_file ? array($dump_file) :
-                    array_map(function($file){
-                        return $file = ANAHITA_ROOT."/vendor/anahita-platform/installation/sql/$file";
-                    }, array("schema.sql","data.sql"));
-
-            $output->writeLn('<info>Populating database...</info>');
-
-            array_walk($sql_files, function($file) use($db) {
-                \AnInstallationHelper::populateDatabase($db, $file, $errors);
-            });
+            if ($db->query(sprintf("CREATE DATABASE `%s` CHARACTER SET `utf8`", $database['name']))) {
+                $msg = sprintf("Database %s created successfully", $database['name']);
+                $output->writeLn('<info>'.$msg.'</info>');
+                $db->select_db($database['name']);
+                $db_exists = true;
+            }
         }
 
-        $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
-        $config->save();
+        $sql_files = $dump_file ? array($dump_file) :
+                array_map(function($file){
+                    return ANAHITA_ROOT."/vendor/anahita-platform/installation/sql/$file";
+                }, array("schema.sql","data.sql"));
+
+        $output->writeLn('<info>Populating database...</info>');
+
+        $queries = '';
+        foreach($sql_files as $file) {
+            $content = file_get_contents($file);
+            $queries .= str_replace('#__', $database['prefix'], $content);
+        }
+
+        if (!$db->multi_query($queries)) {
+            $errorMsg = sprintf("Couldn't process the file %s", $file);
+            $output->writeLn('<error>'.$errorMsg.'</error>');
+            exit(1);
+        }
 
         $output->writeLn("<info>Congratulations you're done.</info>");
 
-        if (!$db_exists && !$dump_file) {
+        if ($db_exists && !$dump_file) {
             $output->writeLn("<info>The first person who registers for an account becomes the Super Administrator. Point your browser to http://yoursite/people/signup and create a new account.</info>");
         }
+
+        $db->close();
     }
 }
 

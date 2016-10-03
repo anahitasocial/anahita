@@ -360,7 +360,7 @@ $console
 ->setDescription('Load data from a sql file into the database')
 ->setDefinition(array(
 		new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
-    //new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
+        //new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
 
@@ -377,22 +377,8 @@ $console
     $database = $config->getDatabaseInfo();
     $errors = array();
 
-    /*
-    $db = \AnInstallationHelper::getDBO(
-        'mysqli',
-        $database['host'].':'.$database['port'],
-        $database['user'],
-        $database['password'],
-        $database['name'],
-        $database['prefix'],
-        true
-    );
-    */
-
-    $db = \KService::get('anahita:database.adapeter.mysqli');
-
-    if ($db instanceof \JException) {
-        $output->writeLn('<error>'.$db->toString().'</error>');
+    if (! $db = \KService::get('anahita:database.adapeter.mysqli')) {
+        $output->writeLn("<error>Coudn't obtain the database object!</error>");
         exit(1);
     }
 

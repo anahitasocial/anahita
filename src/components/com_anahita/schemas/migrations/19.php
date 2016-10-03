@@ -85,6 +85,7 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         ."`time_zone` int(11) DEFAULT NULL,"
         ."`language` varchar(100) DEFAULT NULL,"
         ."`activation_code` varchar(255) DEFAULT NULL,"
+        ."PRIMARY KEY (`people_person_id`),"
         ."KEY `usertype` (`usertype`),"
         ."UNIQUE KEY `username` (`username`),"
         ."UNIQUE KEY `email` (`email`),"

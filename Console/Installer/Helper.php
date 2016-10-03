@@ -6,61 +6,6 @@
 class AnInstallationHelper
 {
 	/**
-	 * Creates a new database
-	 * @param object Database connector
-	 * @param string Database name
-	 * @param boolean utf-8 support
-	 * @param string Selected collation
-	 * @return boolean success
-	 */
-	static public function createDatabase(& $db, $DBname, $DButfSupport)
-	{
-		if ($DButfSupport) {
-			$sql = "CREATE DATABASE `$DBname` CHARACTER SET `utf8`";
-		} else {
-			$sql = "CREATE DATABASE `$DBname`";
-		}
-
-		$db->setQuery($sql);
-		$db->query();
-		$result = $db->getErrorNum();
-
-		if ($result != 0) {
-			return false;
-		}
-
-		return true;
-	}
-
-	/**
-	 * Return whether the any tables exists or not
-	 *
-	 * @param object $db
-	 *
-	 * @return boolean
-	 */
-	static public function databaseExists(&$db, $name)
-	{
-	    if (!$db->select($name)) {
-	        return false;
-	    }
-
-	    $query = "SHOW TABLES FROM `$name`";
-			$db->setQuery($query);
-			$errors = array ();
-
-			if ($tables = $db->loadResultArray()) {
-				foreach ($tables as $table) {
-					if (strpos($table, $db->getPrefix()) === 0) {
-							return true;
-					}
-				}
-			}
-
-			return false;
-	}
-
-	/**
 	 * Deletes all database tables
 	 * @param object Database connector
 	 * @param array An array of errors encountered

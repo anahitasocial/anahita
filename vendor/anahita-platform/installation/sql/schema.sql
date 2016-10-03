@@ -156,41 +156,38 @@ CREATE TABLE `#__plugins` (
   `name` varchar(100) NOT NULL DEFAULT '',
   `element` varchar(100) NOT NULL DEFAULT '',
   `folder` varchar(100) NOT NULL DEFAULT '',
-  `access` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `published` tinyint(3) NOT NULL DEFAULT '0',
   `iscore` tinyint(3) NOT NULL DEFAULT '0',
-  `client_id` tinyint(3) NOT NULL DEFAULT '0',
-  `checked_out` int(11) unsigned NOT NULL DEFAULT '0',
-  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `params` text NOT NULL,
+  `meta` text NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_folder` (`published`,`client_id`,`access`,`folder`)
+  KEY `idx_folder` (`published`,`folder`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
 CREATE TABLE `#__sessions` (
-  `id` SERIAL,
-  `session_id` char(64) NOT NULL,
-  `node_id` bigint(11) NOT NULL DEFAULT 0,
-  `username` varchar(255),
-  `usertype` varchar(255) DEFAULT NULL,
-  `time` INT(11) DEFAULT 0,
-  `guest` tinyint(2) DEFAULT '1',
-  `meta` longtext,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `session_id` (`session_id`),
-  KEY `node_id` (`node_id`),
-  KEY `username` (`username`),
-  KEY `whosonline` (`guest`,`usertype`,`username`)
+    `id` SERIAL,
+    `session_id` char(64) NOT NULL,
+    `node_id` bigint(11) NOT NULL DEFAULT 0,
+    `username` varchar(255) DEFAULT NULL,
+    `usertype` varchar(255),
+    `time` INT(11) DEFAULT 0,
+    `guest` tinyint(2) DEFAULT '1',
+    `meta` longtext,
+    PRIMARY KEY (`id`),
+    KEY `whosonline` (`guest`,`usertype`,`username`),
+    UNIQUE KEY `session_id` (`session_id`),
+    KEY `node_id` (`node_id`),
+    KEY `username` (`username`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 
 CREATE TABLE `#__people_people` (
-    `people_person_id ` SERIAL,
+    `people_person_id` SERIAL,
     `node_id` BIGINT UNSIGNED NOT NULL,
+    `userid` INT(11) DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
     `username` varchar(255) DEFAULT NULL,
     `password` varchar(255) DEFAULT NULL,
@@ -203,10 +200,10 @@ CREATE TABLE `#__people_people` (
     `time_zone` int(11) DEFAULT NULL,
     `language` varchar(100) DEFAULT NULL,
     `activation_code` varchar(255) DEFAULT NULL,
-    UNIQUE KEY `people_person_id` (`people_person_id`),
+    PRIMARY KEY (`people_person_id`),
     KEY `usertype` (`usertype`),
-    UNIQUE KEY `node_id` (`node_id`),
     UNIQUE KEY `username` (`username`),
     UNIQUE KEY `email` (`email`),
+    UNIQUE KEY `node_id` (`node_id`),
     KEY `last_visit_date` (`last_visit_date`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
