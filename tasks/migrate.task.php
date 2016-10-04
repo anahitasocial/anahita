@@ -359,8 +359,8 @@ $console
 ->register('db:load')
 ->setDescription('Load data from a sql file into the database')
 ->setDefinition(array(
-		new InputArgument('file', InputArgument::REQUIRED, 'The output file'),
-        //new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
+		new InputArgument('file', InputArgument::REQUIRED, 'The input file'),
+        new InputOption('drop-tables','', InputOption::VALUE_NONE, 'If all the tables are droped first'),
 ))
 ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
 
@@ -368,30 +368,51 @@ $console
 
 	if (!file_exists($file)) {
 	   throw new \Exception("File '$file' doesn't exists");
-  }
+    }
 
-	require_once 'Console/Installer/Helper.php';
-
-    $console->loadFramework();
     $config = new Config(WWW_ROOT);
     $database = $config->getDatabaseInfo();
     $errors = array();
 
-    if (! $db = \KService::get('anahita:database.adapeter.mysqli')) {
-        $output->writeLn("<error>Coudn't obtain the database object!</error>");
-        exit(1);
-    }
-
     if ($input->getOption('drop-tables')) {
-    	\AnInstallationHelper::deleteDatabase(
-        $db,
-        $database['name'],
-        $database['prefix'],
-        $errors
-      );
+
+        $db = new \mysqli(
+            $database['host'],
+            $database['user'],
+            $database['password'],
+            $database['name'],
+            $database['port']
+        );
+
+        //check connection
+        if ($db->connect_errno) {
+            $errorMsg = sprintf("Connect failed: %s\n", mysqli_connect_error());
+            $output->writeLn('<error>'.$errorMsg.'</error>');
+            exit;
+        }
+
+        $query = sprintf("SELECT `TABLE_NAME` FROM information_schema.tables WHERE `table_schema` = '%s'", $database['name']);
+
+        $tables = array();
+        if ($result = $db->query($query)) {
+            while($row = $result->fetch_row()) {
+                $tables[] = $row[0];
+            }
+        }
+
+        foreach($tables as $table) {
+            $db->query(sprintf("DROP TABLE %s", $table));
+        }
     }
 
     $output->writeLn('<info>Loading data. This may take a while...</info>');
 
-    \AnInstallationHelper::populateDatabase($db, $file, $errors);
+    if ($content = file_get_contents($file)) {
+        $queries = str_replace('#__', $database['prefix'], $content);
+        if (!$db->multi_query($queries)) {
+            $errorMsg = sprintf("Couldn't process file %s", $file);
+            $output->writeLn('<error>'.$errorMsg.'</error>');
+            exit;
+        }
+    }
 });

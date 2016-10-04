@@ -138,18 +138,6 @@ class Create extends Command
             'prefix'   => $prompt('database-prefix', 'Enter a prefix for the tables in the database? ','an_',@$info['prefix'])
         ));
 
-        //define('DS', DIRECTORY_SEPARATOR);
-        //define('_ANEXEC', 1);
-        //define('ANPATH_BASE', WWW_ROOT);
-        //define('ANPATH_ROOT', ANPATH_BASE );
-        //define('ANPATH_SITE', ANPATH_ROOT);
-        //define('ANPATH_CONFIGURATION', ANPATH_ROOT );
-        //define('ANPATH_LIBRARIES', ANPATH_ROOT.'/libraries');
-        //define('ANPATH_PLUGINS', ANPATH_ROOT.'/plugins');
-        //define('ANPATH_INSTALLATION', ANPATH_ROOT.'/installation');
-        //define('ANPATH_THEMES', ANPATH_BASE.'/templates');
-        //define('ANPATH_CACHE', ANPATH_BASE.'/cache' );
-
         $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $config->save();
 
@@ -169,7 +157,7 @@ class Create extends Command
         if ($db->connect_errno) {
             $errorMsg = sprintf("Connect failed: %s\n", mysqli_connect_error());
             $output->writeLn('<error>'.$errorMsg.'</error>');
-            exit(1);
+            exit;
         }
 
         //check to see if database exists
@@ -197,13 +185,17 @@ class Create extends Command
                 $output->writeLn('<info>'.$msg.'</info>');
                 $db->select_db($database['name']);
                 $db_exists = true;
+            } else {
+                $errorMsg = sprintf("Coudln't create the database `%s`. Check your permissions and try again.", $database['name']);
+                $output->writeLn('<error>'.$errorMsg.'</error>');
+                exit;
             }
         }
 
-        $sql_files = $dump_file ? array($dump_file) :
-                array_map(function($file){
-                    return ANAHITA_ROOT."/vendor/anahita-platform/installation/sql/$file";
-                }, array("schema.sql","data.sql"));
+        $sql_files = $dump_file ? array($dump_file) : array_map(function($file){
+                            $file = ANAHITA_ROOT.'/vendor/anahita-platform/installation/sql/'.$file;
+                            return $file;
+                        }, array('schema.sql', 'data.sql'));
 
         $output->writeLn('<info>Populating database...</info>');
 
@@ -214,12 +206,12 @@ class Create extends Command
         }
 
         if (!$db->multi_query($queries)) {
-            $errorMsg = sprintf("Couldn't process the file %s", $file);
+            $errorMsg = sprintf("Couldn't process file %s", $file);
             $output->writeLn('<error>'.$errorMsg.'</error>');
-            exit(1);
+            exit;
         }
 
-        $output->writeLn("<info>Congratulations you're done.</info>");
+        $output->writeLn("<info>Anahita installation completed</info>");
 
         if ($db_exists && !$dump_file) {
             $output->writeLn("<info>The first person who registers for an account becomes the Super Administrator. Point your browser to http://yoursite/people/signup and create a new account.</info>");
