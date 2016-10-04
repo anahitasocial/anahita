@@ -69,7 +69,7 @@ class LibBaseDomainStoreDatabase extends AnDomainStoreDatabase implements KServi
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'adapter' => $this->getService('anahita:database.adapter.mysqli'),
+            'adapter' => $this->getService('anahita:database'),
         ));
 
         parent::_initialize($config);

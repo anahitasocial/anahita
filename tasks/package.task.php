@@ -135,7 +135,7 @@ class PackageCommand extends Command
             $queries = dbparse(file_get_contents($path.'/schemas/schema.sql'));
 
             foreach ($queries as $query) {
-                 \KService::get('anahita:database.adapter.mysqli')->execute($query);
+                 \KService::get('anahita:database')->execute($query);
             }
         }
     }

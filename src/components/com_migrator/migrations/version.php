@@ -66,7 +66,7 @@ class ComMigratorMigrationVersion extends KObject implements ArrayAccess
     {
         $config->append(array(
             'version' => $this->getIdentifier()->name,
-            'db' => $this->getService('anahita:database.adapter.mysqli'),
+            'db' => $this->getService('anahita:database'),
         ));
 
         parent::_initialize($config);

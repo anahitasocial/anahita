@@ -135,7 +135,7 @@ abstract class KDatabaseTableAbstract extends KObject
         $name    = $this->getIdentifier()->name;
         
         $config->append(array(
-            'database'          => $this->getService('anahita:database.adapter.mysqli'),
+            'database'          => $this->getService('anahita:database'),
             'name'              => empty($package) ? $name : $package.'_'.$name,
             'column_map'        => null,
             'filters'           => array(),
