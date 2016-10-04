@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 if ( !$console->isInitialized() ) {
     return;
@@ -21,12 +21,12 @@ $console
     $script   = $input->getArgument('script');
     $run_code = function($code) use($console, $input, $output) {
         $script = tempnam(sys_get_temp_dir(), uniqid());
-        $code   = str_replace('__DIR__', "'".getcwd()."'", $code);        
+        $code   = str_replace('__DIR__', "'".getcwd()."'", $code);
         file_put_contents($script, $code);
         require_once($script);
         unlink($script);
     };
-    if ( empty($script) ) 
+    if ( empty($script) )
     {
         $stream = fopen('php://stdin','r');
         $data   = stream_get_contents($stream);
@@ -34,12 +34,13 @@ $console
         $run_code($data);
     } else {
         $parts = parse_url($script);
-        //remote url
+        
         if ( isset($parts['host']) ) {
             $run_code(file_get_contents($script));
         }
-        else 
+        else {
             require_once $script;
+        }
     }
 });
 ?>

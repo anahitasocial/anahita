@@ -14,6 +14,14 @@
           'id' => 'setting-sitename',
         )) ?>
 
+        <? //site name ?>
+        <?= @helper('ui.formfield_text', array(
+          'label' => @text('COM-SETTINGS-SYSTEM-LIVE-SITE'),
+          'name' => 'live_site',
+          'value' => $setting->live_site,
+          'id' => 'setting-live-site',
+        )) ?>
+
         <? //template ?>
         <?= @helper('ui.templates', array(
           'label' => @text('COM-SETTINGS-SYSTEM-TEMPLATE'),

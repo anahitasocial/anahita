@@ -63,14 +63,13 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
             <? endforeach; ?>
             <? endif; ?>
 
-            <li class="divider"></li>
-
             <? if (KService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
             <li>
             	<a href="<?= @route('option=com_invites&view=email') ?>">
             	<?= @text('TMPL-MENU-ITEM-VIEWER-INVITE') ?>
             	</a>
             </li>
+			<li class="divider"></li>
             <? endif; ?>
 
             <? if (KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>

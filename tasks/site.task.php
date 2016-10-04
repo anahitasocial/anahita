@@ -138,10 +138,6 @@ class Create extends Command
             'prefix'   => $prompt('database-prefix', 'Enter a prefix for the tables in the database? ','an_',@$info['prefix'])
         ));
 
-        $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
-        $config->save();
-
-        require_once 'Console/Installer/Helper.php';
         $output->writeLn('<info>connecting to database...</info>');
 
         $database = $config->getDatabaseInfo();
@@ -218,6 +214,9 @@ class Create extends Command
         }
 
         $db->close();
+
+        $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
+        $config->save();
     }
 }
 
@@ -227,13 +226,6 @@ if (!$console->isInitialized()) {
     return;
 }
 
-// $console
-// ->register('site:update')
-// ->setDescription('Provides one command that performs updading all the packages, running migrations and re-linking all the files')
-// ->setDefinition(array())
-// ->setCode(function (InputInterface $input, OutputInterface $output) use ($console) {
-
-// });
 $console
 ->register('site:configuration')
 ->setDescription('Provides the ability to set some of the site configuration through command line')
