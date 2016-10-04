@@ -10,6 +10,20 @@
         <dt><?= @text('LIB-AN-ENTITY-NAME') ?></dt>
         <dd><?= @escape($item->name) ?></dd>
       </dl>
+
+      <? //smtp auth ?>
+      <?
+        $options_enabled = array();
+        $options_enabled[] = array('name' => @text('LIB-AN-YES'), 'value' => 1);
+        $options_enabled[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
+      ?>
+      <?= @helper('ui.formfield_select', array(
+        'label' => @text('COM-SETTINGS-PLUGIN-ENABLED'),
+        'name' => 'enabled',
+        'selected' => (int) $plugin->enabled,
+        'id' => 'plugin-enabled',
+        'options' => $options_enabled
+      )) ?>
   </fieldset>
 
   <h3><?= @text('COM-SETTINGS-APP-CONFIGURATIONS') ?></h3>

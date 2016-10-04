@@ -26,7 +26,7 @@ class ComSettingsControllerDefault extends ComBaseControllerResource
       $config->append(array(
           'toolbars' => array($this->getIdentifier()->name, 'menubar'),
           'request' => array(
-              'limit' => 20,
+              'limit' => 20
           ),
       ));
 

@@ -156,12 +156,12 @@ CREATE TABLE `#__plugins` (
   `name` varchar(100) NOT NULL DEFAULT '',
   `element` varchar(100) NOT NULL DEFAULT '',
   `folder` varchar(100) NOT NULL DEFAULT '',
-  `ordering` int(11) NOT NULL DEFAULT '0',
-  `published` tinyint(3) NOT NULL DEFAULT '0',
-  `iscore` tinyint(3) NOT NULL DEFAULT '0',
+  `ordering` int(11) NOT NULL DEFAULT 0,
+  `enabled` tinyint(3) NOT NULL DEFAULT 0,
+  `iscore` tinyint(3) NOT NULL DEFAULT 0,
   `meta` text NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `idx_folder` (`published`,`folder`)
+  KEY `idx_folder` (`enabled`,`folder`)
 ) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------

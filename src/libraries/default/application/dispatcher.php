@@ -186,6 +186,9 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
         if (isset($pluginColumns['params'])) {
            $db->execute('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
+           $db->execute('ALTER TABLE `#__plugins` CHANGE `published` `enabled` tinyint(3) NOT NULL DEFAULT 0');
+           $db->execute('DROP INDEX `idx_folder` ON `#__plugins`');
+           $db->execute('ALTER TABLE `#__plugins` ADD INDEX `idx_folder` (`enabled`, `folder`)');
            print "Please run `db:migrate:up` one more time!\n";
            exit(0);
         }

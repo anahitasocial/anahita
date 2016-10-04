@@ -9,6 +9,7 @@
     </td>
     <td><?= @escape($item->element) ?></td>
     <td><?= @escape($item->type) ?></td>
+    <td><?= $item->enabled ?></td>
     <td>
       <a
         class="js-orderable-handle"

@@ -12,7 +12,7 @@ INSERT INTO `#__components` (`name`, `parent`, `option`, `ordering`, `iscore`, `
 
 -- --------------------------------------------------------
 
-INSERT INTO `#__plugins` (`name`, `element`, `folder`, `ordering`, `published`, `iscore`, `meta`) VALUES
+INSERT INTO `#__plugins` (`name`, `element`, `folder`, `ordering`, `enabled`, `iscore`, `meta`) VALUES
 ('Authentication', 'anahita', 'authentication', 1, 1, 1, ''),
 ('Anahita', 'anahita', 'user', 0, 1, 1, 'autoregister=1\n\n'),
 ('Anahita', 'anahita', 'system', 1, 1, 1, ''),

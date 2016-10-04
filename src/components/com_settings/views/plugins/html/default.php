@@ -18,6 +18,10 @@
   if($sort){
     $url['sort'] = $sort;
   }
+
+  if($enabled){
+    $url['enabled'] = $enabled;
+  }
 ?>
 
 <div class="row">
@@ -52,6 +56,13 @@
                 <?= @helper('ui.sorting', array(
                   'field' => 'type',
                   'label' => 'COM-SETTINGS-PLUGIN-TYPE',
+                  'url' => $url
+              )) ?>
+              </th>
+              <th>
+                <?= @helper('ui.sorting', array(
+                  'field' => 'enabled',
+                  'label' => 'COM-SETTINGS-PLUGIN-ENABLED',
                   'url' => $url
               )) ?>
               </th>

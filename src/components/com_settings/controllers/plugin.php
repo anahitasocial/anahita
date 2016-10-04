@@ -27,7 +27,8 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
              'request' => array(
                 'sort' => 'name',
                 'limit' => 99,
-                'type' => ''
+                'type' => '',
+                'enabled' => 0
              ),
         ));
 

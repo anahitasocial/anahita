@@ -26,9 +26,6 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
             'resources' => array('plugins'),
             'attributes' => array(
                   'id',
-                  'published' => array(
-                    'default' => 1
-                  ),
                   'meta' => array(
                       'type' => 'json',
                       'default' => 'json',
@@ -40,10 +37,10 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
                 'dictionariable',
                 'authorizer',
                 'locatable',
+                'enableable'
             ),
             'aliases' => array(
                 'type' => 'folder',
-                'enabled' => 'published'
              ),
             'auto_generate' => true,
         ));
