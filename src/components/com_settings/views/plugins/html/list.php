@@ -9,12 +9,10 @@
     </td>
     <td><?= @escape($item->element) ?></td>
     <td><?= @escape($item->type) ?></td>
-    <td><?= $item->enabled ?></td>
+    <? $icon = (boolean) $item->enabled ? 'icon-ok' : ''; ?>
+    <td><em class="icon <?= $icon ?>"></em></td>
     <td>
-      <a
-        class="js-orderable-handle"
-        style="cursor: <?= ($sort == 'ordering') ? 'move' : 'not-allowed' ?>"
-      >
+      <a class="js-orderable-handle" style="cursor: <?= ($sort == 'ordering') ? 'move' : 'not-allowed' ?>">
         <i class="icon icon-resize-vertical"></i>
       </a>
     </td>

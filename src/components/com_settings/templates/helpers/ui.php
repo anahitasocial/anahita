@@ -367,7 +367,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
                 case 'text' :
                     $html .= $this->formfield_text(array(
-                        'name' => $field->name,
+                        'name' => sprintf('meta[%s]', $field->name),
                         'id' => 'param-'.$field->name,
                         'label' => AnTranslator::_($field->label),
                         'placeholder' => isset($field->placeholder) ? AnTranslator::_($field->placeholder) : '',
@@ -393,7 +393,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                    $value = $entity->getValue($field->name);
 
                    $html .= $this->formfield_select(array(
-                     'name' => $field->name,
+                     'name' => sprintf('meta[%s]', $field->name),
                      'id' => 'param-'.$field->name,
                      'label' => AnTranslator::_($field->label),
                      'selected' => ($value === '') ? $field->default : $value,
@@ -406,7 +406,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
                 case 'textarea' :
                     $html .= $this->formfield_textarea(array(
-                        'name' => $field->name,
+                        'name' => sprintf('meta[%s]', $field->name),
                         'id' => 'param-'.$field->name,
                         'label' => AnTranslator::_($field->label),
                         'placeholder' => isset($field->placeholder) ? AnTranslator::_($field->placeholder) : '',
@@ -428,7 +428,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                    $value = $entity->getValue($field->name);
 
                    $html .= $this->formfield_custom(array(
-                     'name' => $field->name,
+                     'name' => sprintf('meta[%s]', $field->name),
                      'id' => 'param-'.$field->name,
                      'label' => AnTranslator::_($field->label),
                      'value' => ($value === '') ? $field->default : $value,

@@ -24,17 +24,25 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-             'request' => array(
+            'request' => array(
                 'sort' => 'name',
                 'limit' => 99,
-                'type' => '',
-                'enabled' => 0
-             ),
+                'type' => ''
+            ),
+            'behaviors' => array(
+                'enablable'
+            )
         ));
 
         parent::_initialize($config);
     }
 
+    /**
+    *   get service
+    *
+    *  @param KCommandContext $context Context Parameter
+    *  @return object entity
+    */
     protected function _actionGet(KCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-PLUGINS');
@@ -42,15 +50,6 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
         $this->getToolbar('menubar')->setTitle($title);
 
         return parent::_actionGet($context);
-    }
-
-    protected function _actionEdit(KCommandContext $context)
-    {
-        parent::_actionEdit($context);
-
-        if (!$context->getError()) {
-            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
-        }
     }
 
     /**
@@ -70,5 +69,22 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
         $entities->order($this->sort);
 
         return $entities;
+    }
+
+    /**
+    *   edit service
+    *
+    *  @param KCommandContext $context Context Parameter
+    *  @return void
+    */
+    protected function _actionEdit(KCommandContext $context)
+    {
+        $entity = parent::_actionEdit($context);
+
+        if (!$context->getError()) {
+            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
+        }
+
+        return $entity;
     }
 }

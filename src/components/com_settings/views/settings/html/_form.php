@@ -9,7 +9,7 @@
         <? //site name ?>
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-SYSTEM-SITENAME'),
-          'name' => 'sitename',
+          'name' => 'meta[sitename]',
           'value' => $setting->sitename,
           'id' => 'setting-sitename',
         )) ?>
@@ -17,7 +17,7 @@
         <? //site name ?>
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-SYSTEM-LIVE-SITE'),
-          'name' => 'live_site',
+          'name' => 'meta[live_site]',
           'value' => $setting->live_site,
           'id' => 'setting-live-site',
         )) ?>
@@ -25,7 +25,7 @@
         <? //template ?>
         <?= @helper('ui.templates', array(
           'label' => @text('COM-SETTINGS-SYSTEM-TEMPLATE'),
-          'name' => 'template',
+          'name' => 'meta[template]',
           'selected' => $setting->template,
           'id' => 'setting-template',
         )) ?>
@@ -33,7 +33,7 @@
         <? //language ?>
         <?= @helper('ui.languages', array(
           'label' => @text('COM-SETTINGS-SYSTEM-LANGUAGE'),
-          'name' => 'language',
+          'name' => 'meta[language]',
           'selected' => $setting->language,
           'id' => 'setting-language',
         )) ?>
@@ -41,7 +41,7 @@
         <? //log path ?>
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-SYSTEM-LOG-PATH'),
-          'name' => 'log_path',
+          'name' => 'meta[log_path]',
           'value' => $setting->log_path,
           'id' => 'setting-log_path',
         )) ?>
@@ -49,7 +49,7 @@
         <? //tmp path ?>
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-SYSTEM-TMP-PATH'),
-          'name' => 'tmp_path',
+          'name' => 'meta[tmp_path]',
           'value' => $setting->tmp_path,
           'id' => 'setting-tmp_path',
         )) ?>
@@ -57,7 +57,7 @@
         <? //Sectert Word ?>
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-SYSTEM-SECRET'),
-          'name' => 'secret',
+          'name' => 'meta[secret]',
           'value' => $setting->secret,
           'id' => 'setting-secret',
           'disabled' => true
@@ -86,7 +86,7 @@
         ?>
         <?= @helper('ui.formfield_select', array(
           'label' => @text('COM-SETTINGS-SYSTEM-ERROR-REPORTING'),
-          'name' => 'error_reporting',
+          'name' => 'meta[error_reporting]',
           'selected' => (int) $setting->error_reporting,
           'id' => 'setting-error_reporting',
           'options' => $options_error_reporting,
@@ -100,7 +100,7 @@
         ?>
         <?= @helper('ui.formfield_select', array(
           'label' => @text('COM-SETTINGS-SYSTEM-SEF-REWRITE'),
-          'name' => 'sef_rewrite',
+          'name' => 'meta[sef_rewrite]',
           'selected' => (int) $setting->sef_rewrite,
           'id' => 'setting-sef_rewrite',
           'options' => $options_sef_rewrite,
@@ -114,7 +114,7 @@
         ?>
         <?= @helper('ui.formfield_select', array(
           'label' => @text('COM-SETTINGS-SYSTEM-DEBUG'),
-          'name' => 'debug',
+          'name' => 'meta[debug]',
           'selected' => (int) $setting->debug,
           'id' => 'setting-debug',
           'options' => $options_debug,
@@ -128,7 +128,7 @@
       <? //database type ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-DBTYPE'),
-        'name' => 'dbtype',
+        'name' => 'meta[dbtype]',
         'value' => $setting->dbtype,
         'id' => 'setting-dbtype',
         'disabled' => true
@@ -137,7 +137,7 @@
       <? //database hostname ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-HOST'),
-        'name' => 'host',
+        'name' => 'meta[host]',
         'value' => $setting->host,
         'id' => 'setting-host',
       )) ?>
@@ -145,7 +145,7 @@
       <? //database username ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-USER'),
-        'name' => 'user',
+        'name' => 'meta[user]',
         'value' => $setting->user,
         'id' => 'setting-user',
       )) ?>
@@ -153,7 +153,7 @@
       <? //database name ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-DB'),
-        'name' => 'db',
+        'name' => 'meta[db]',
         'value' => $setting->db,
         'id' => 'setting-db',
       )) ?>
@@ -161,7 +161,7 @@
       <? //database table prefix ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-DBPREFIX'),
-        'name' => 'dbprefix',
+        'name' => 'meta[dbprefix]',
         'value' => $setting->dbprefix,
         'id' => 'setting-dbprefix',
       )) ?>
@@ -189,7 +189,7 @@
       ?>
       <?= @helper('ui.formfield_select', array(
         'label' => @text('COM-SETTINGS-SYSTEM-MAILER'),
-        'name' => 'mailer',
+        'name' => 'meta[mailer]',
         'selected' => $setting->mailer,
         'id' => 'setting-mailer',
         'options' => $options_mailer,
@@ -198,7 +198,7 @@
       <? //mail from ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-MAILFROM'),
-        'name' => 'mailfrom',
+        'name' => 'meta[mailfrom]',
         'value' => $setting->mailfrom,
         'id' => 'setting-mailfrom',
       )) ?>
@@ -206,7 +206,7 @@
       <? //from name ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-FROMNAME'),
-        'name' => 'fromname',
+        'name' => 'meta[fromname]',
         'value' => $setting->fromname,
         'id' => 'setting-fromname',
       )) ?>
@@ -214,7 +214,7 @@
       <? //sendmail path ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SENDMAIL'),
-        'name' => 'sendmail',
+        'name' => 'meta[sendmail]',
         'value' => $setting->sendmail,
         'id' => 'setting-sendmail',
       )) ?>
@@ -227,7 +227,7 @@
       ?>
       <?= @helper('ui.formfield_select', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SMTPAUTH'),
-        'name' => 'smtpauth',
+        'name' => 'meta[smtpauth]',
         'selected' => (int) $setting->smtpauth,
         'id' => 'setting-caching',
         'options' => $options_smtpauth,
@@ -252,7 +252,7 @@
       ?>
       <?= @helper('ui.formfield_select', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SMTPSECURE'),
-        'name' => 'smtpsecure',
+        'name' => 'meta[smtpsecure]',
         'selected' => $setting->smtpsecure,
         'id' => 'setting-smtpsecure',
         'options' => $options_smtpsecure,
@@ -261,7 +261,7 @@
       <? //smtp port ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SMTPPORT'),
-        'name' => 'smtpport',
+        'name' => 'meta[smtpport]',
         'value' => $setting->smtpport,
         'id' => 'setting-smtpport',
         'required' => false,
@@ -270,7 +270,7 @@
       <? //smtp user ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SMTPUSER'),
-        'name' => 'smtpuser',
+        'name' => 'meta[smtpuser]',
         'value' => $setting->smtpuser,
         'id' => 'setting-smtpuser',
         'required' => false,
@@ -279,7 +279,7 @@
       <? //smtp pass ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SMTPPASS'),
-        'name' => 'smtppass',
+        'name' => 'meta[smtppass]',
         'value' => $setting->smtppass,
         'id' => 'setting-smtppass',
         'type' => 'password',
@@ -289,7 +289,7 @@
       <? //smtp host ?>
       <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-SYSTEM-SMTPHOST'),
-        'name' => 'smtphost',
+        'name' => 'meta[smtphost]',
         'value' => $setting->smtphost,
         'id' => 'setting-smtphost',
         'required' => false,

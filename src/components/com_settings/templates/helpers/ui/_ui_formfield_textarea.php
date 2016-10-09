@@ -10,7 +10,7 @@
     <span class="help-inline"><?= @escape($description) ?></span>
     <? endif; ?>
     <textarea
-      name="meta[<?= $name ?>]"
+      name="<?= $name ?>"
       id="<?= $id ?>"
       class="<?= $class ?>"
       placeholder="<?= $placeholder ?>"

@@ -11,7 +11,6 @@
         <dd><?= @escape($item->name) ?></dd>
       </dl>
 
-      <? //smtp auth ?>
       <?
         $options_enabled = array();
         $options_enabled[] = array('name' => @text('LIB-AN-YES'), 'value' => 1);

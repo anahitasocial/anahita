@@ -18,10 +18,6 @@
   if($sort){
     $url['sort'] = $sort;
   }
-
-  if($enabled){
-    $url['enabled'] = $enabled;
-  }
 ?>
 
 <div class="row">

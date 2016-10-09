@@ -36,8 +36,7 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
                 'orderable',
                 'dictionariable',
                 'authorizer',
-                'locatable',
-                'enableable'
+                'locatable'
             ),
             'aliases' => array(
                 'type' => 'folder',
