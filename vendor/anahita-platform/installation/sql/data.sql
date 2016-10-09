@@ -14,11 +14,11 @@ INSERT INTO `#__components` (`name`, `parent`, `option`, `ordering`, `iscore`, `
 
 INSERT INTO `#__plugins` (`name`, `element`, `folder`, `ordering`, `enabled`, `iscore`, `meta`) VALUES
 ('Authentication', 'anahita', 'authentication', 1, 1, 1, ''),
-('Anahita', 'anahita', 'user', 0, 1, 1, 'autoregister=1\n\n'),
+('Anahita', 'anahita', 'user', 0, 1, 1, ''),
 ('Anahita', 'anahita', 'system', 1, 1, 1, ''),
 ('Hyperlink', 'link', 'contentfilter', 0, 1, 1, ''),
 ('Video', 'video', 'contentfilter', 0, 1, 1, ''),
-('Local', 'local', 'storage', 0, 1, 1, ''),
+('Local', 'local', 'storage', 0, 1, 1, '{"folder":"assets"}'),
 ('Amazon S3', 's3', 'storage', 0, 0, 1, ''),
 ('Hashtag', 'hashtag', 'contentfilter', 0, 1, 1, ''),
 ('Mention', 'mention', 'contentfilter', 0, 1, 1, ''),

@@ -20,6 +20,8 @@ abstract class PlgStorageAbstract extends KObject
      */
     protected $_params;
 
+    protected $_folder;
+
     /**
      * Constructor.
      *
@@ -35,6 +37,7 @@ abstract class PlgStorageAbstract extends KObject
         parent::__construct($config);
 
         $this->_params = $config->meta;
+        $this->_folder = $config->folder;
 
         KService::set('plg:storage.default', $this);
     }
@@ -142,7 +145,7 @@ abstract class PlgStorageAbstract extends KObject
      */
     protected function _relativepath($path, $public)
     {
-        return $this->_params->folder.'/'.($public ? "public/$path" : "private/$path");
+        return $this->_folder.'/'.($public ? "public/$path" : "private/$path");
     }
 
     /**

@@ -13,24 +13,31 @@
  */
 class PlgStorageLocal extends PlgStorageAbstract
 {
+
     /**
-     * Initializes the default configuration for the object.
+    *  Path to the root
+    *
+    *  @var string
+    */
+    protected $_root = ANPATH_ROOT;
+
+    /**
+    *  Base uri
+    *
+    *  @var string
+    */
+    protected $_base_uri = '';
+
+    /**
+     * Constructor.
      *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param mixed $dispatcher A dispatcher
+     * @param array $config     An optional KConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    public function __construct($dispatcher = null,  $config = array())
     {
-        $base_uri = KRequest::base();
-
-        $config->append(array(
-              'folder' => 'assets',
-              'base_uri' => $base_uri,
-               'root' => ANPATH_ROOT,
-        ));
-
-        parent::_initialize($config);
+        parent::__construct($config);
+        $this->_base_uri = KRequest::base();
     }
 
     /**
@@ -39,7 +46,6 @@ class PlgStorageLocal extends PlgStorageAbstract
     protected function _read($path)
     {
         $path = $this->_realpath($path);
-
         return file_get_contents($path);
     }
 
@@ -49,11 +55,11 @@ class PlgStorageLocal extends PlgStorageAbstract
     protected function _write($path, $data, $public)
     {
         $path = $this->_realpath($path);
-
         $dir = dirname($path);
+        $success = false;
 
-        if (!file_exists($dir)) {
-            mkdir($dir, 0707, true);
+        if (!is_dir($dir)) {
+            @mkdir($dir, 0707, true);
         }
 
         return file_put_contents($path, (string) $data);
@@ -65,7 +71,6 @@ class PlgStorageLocal extends PlgStorageAbstract
     protected function _exists($path)
     {
         $path = $this->_realpath($path);
-
         return file_exists($path);
     }
 
@@ -77,7 +82,7 @@ class PlgStorageLocal extends PlgStorageAbstract
         $path = $this->_realpath($path);
 
         if (is_dir($path)) {
-            rmdir($path);
+            @rmdir($path);
         } elseif (file_exists($path)) {
             @unlink($path);
         }
@@ -88,7 +93,7 @@ class PlgStorageLocal extends PlgStorageAbstract
      */
     protected function _getUrl($path)
     {
-        return $this->_params->base_uri.$path;
+        return $this->_base_uri.DS.$path;
     }
 
     /**
@@ -100,6 +105,6 @@ class PlgStorageLocal extends PlgStorageAbstract
      */
     protected function _realpath($relative)
     {
-        return $this->_params->root.DS.str_replace('/', DS, $relative);
+        return $this->_root.DS.str_replace('/', DS, $relative);
     }
 }
