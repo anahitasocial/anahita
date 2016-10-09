@@ -31,13 +31,11 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
      * Constructor.
      *
      * @param mixed $dispatcher A dispatcher
-     * @param array $config     An optional KConfig object with configuration options.
+     * @param object $config    An optional KConfig object with configuration options.
      */
-    public function __construct($dispatcher = null,  $config = array())
+    public function __construct($dispatcher = null, KConfig $config)
     {
-        $config = new KConfig($config);
-
-        parent::__construct($config);
+        parent::__construct($dispatcher, $config);
 
         $this->_name = $config->name;
 

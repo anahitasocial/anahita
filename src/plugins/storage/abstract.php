@@ -28,12 +28,8 @@ abstract class PlgStorageAbstract extends KObject
      * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional KConfig object with configuration options.
      */
-    public function __construct($dispatcher = null,  $config = array())
+    public function __construct($dispatcher = null, KConfig $config)
     {
-        if (!$config instanceof KConfig) {
-            $config = new KConfig($config);
-        }
-
         parent::__construct($config);
 
         $this->_params = $config->meta;

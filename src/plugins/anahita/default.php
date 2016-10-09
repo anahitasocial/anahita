@@ -72,14 +72,10 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
     /**
   	 * Constructor
   	 */
-     public function __construct($dispatcher = null,  $config = array())
+     public function __construct($dispatcher = null,  KConfig $config)
      {
-		if (!$config instanceof KConfig) {
-	    	$config = new KConfig($config);
-		}
-
 	    //Inject the identifier
-		$config->service_identifier = KService::getIdentifier('plg:anahita.'.$config['name']);
+		$config->service_identifier = KService::getIdentifier('plg:anahita.'.$config->name);
 
 		//Inject the service container
 		$config->service_container = KService::getInstance();

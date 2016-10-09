@@ -19,7 +19,7 @@ class PlgStorageLocal extends PlgStorageAbstract
     *
     *  @var string
     */
-    protected $_root = ANPATH_ROOT;
+    protected $_root = '';
 
     /**
     *  Base uri
@@ -34,10 +34,29 @@ class PlgStorageLocal extends PlgStorageAbstract
      * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional KConfig object with configuration options.
      */
-    public function __construct($dispatcher = null,  $config = array())
+    public function __construct($dispatcher = null,  KConfig $config)
     {
-        parent::__construct($config);
-        $this->_base_uri = KRequest::base();
+        parent::__construct($dispatcher, $config);
+
+        $this->_base_uri = $config->base_uri;
+        $this->_root = $config->root;
+    }
+
+    /**
+     * Initializes the default configuration for the object.
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    protected function _initialize(KConfig $config)
+    {
+        $config->append(array(
+             'root' => ANPATH_ROOT,
+             'base_uri' => KRequest::base()
+        ));
+
+        parent::_initialize($config);
     }
 
     /**

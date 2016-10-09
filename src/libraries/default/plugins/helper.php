@@ -56,20 +56,20 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
   	 */
   	public function &getPlugin($type, $element = null)
   	{
-    		$results = array();
-    		$this->_load();
+		$results = array();
+		$this->_load();
 
-    		foreach($this->_plugins as $plugin){
-    			if (is_null($element)) {
-    				if($plugin->type == $type) {
-    					$results[] = $plugin;
-    				}
-    			} elseif($plugin->type === $type && $plugin->element === $element) {
-    				 $results = $plugin;
-    			}
-    		}
+		foreach($this->_plugins as $plugin){
+			if (is_null($element)) {
+				if($plugin->type == $type) {
+					$results[] = $plugin;
+				}
+			} elseif($plugin->type === $type && $plugin->element === $element) {
+				 $results = $plugin;
+			}
+		}
 
-  		  return $results;
+		return $results;
   	}
 
     /**
@@ -106,7 +106,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
   	 */
   	public function isEnabled($type, $element = null)
   	{
-    		return (boolean) $this->getPlugin($type, $element);
+    	return (boolean) $this->getPlugin($type, $element);
   	}
 
     /**
@@ -136,13 +136,15 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
         if ($autocreate) {
             $className = 'plg'.ucfirst($type).ucfirst($element);
             if (class_exists($className)) {
-                $instance = new $className($dispatcher, array(
+                $config = array(
                   'id' => $plugin->id,
                   'name' => $plugin->name,
                   'type' => $plugin->type,
                   'element' => $plugin->element,
                   'meta' => $plugin->meta
-                ));
+                );
+                $config = new KConfig($config);
+                $instance = new $className($dispatcher, $config);
             }
         }
     }

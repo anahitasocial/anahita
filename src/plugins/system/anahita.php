@@ -19,7 +19,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      * @param mixed $subject Dispatcher
      * @param array $config  Array of configuration
      */
-    public function __construct($dispatcher, $config = array())
+    public function __construct($dispatcher, KConfig $config)
     {
         // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {

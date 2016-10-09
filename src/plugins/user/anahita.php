@@ -18,7 +18,8 @@ class plgUserAnahita extends PlgAnahitaDefault
 			return false;
 		}
 
-		KService::get('repos:sessions.session')->destroy(array('nodeId' => (string) $event->person['id']));
+		KService::get('repos:sessions.session')
+		->destroy(array('nodeId' => (string) $event->person['id']));
 
 		return true;
 	}
