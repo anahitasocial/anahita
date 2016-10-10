@@ -30,6 +30,13 @@ class PlgStorageS3 extends PlgStorageAbstract
     protected $_bucket;
 
     /**
+     * use SSL
+     *
+     * @var boolean
+     */
+    protected $_ssl;
+
+    /**
      * Constructor.
      *
      * @param mixed $dispatcher A dispatcher
@@ -39,13 +46,14 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         parent::__construct($dispatcher, $config);
 
-        $this->_s3 = new S3(
-            $config->access_key,
-            $config->secret_key,
-            $config->use_ssl
-        );
-
         $this->_bucket = ($config->bucket != '') ? $config->bucket : $this->_params->bucket;
+        $this->_ssl = (boolean) $config->ssl;
+
+        $this->_s3 = new S3(
+            $this->_params->access_key,
+            $this->_params->secret_key,
+            $this->_ssl
+        );
     }
 
     /**
@@ -59,9 +67,7 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         $config->append(array(
              'bucket' => '',
-             'access_key' => '',
-             'secret_key' => '',
-             'use_ssl' => false
+             'ssl' => is_ssl()
         ));
 
         parent::_initialize($config);
@@ -108,7 +114,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _getUrl($path)
     {
-        if (is_ssl()) {
+        if ($this->_ssl) {
             $url = 'https://s3.amazonaws.com/'.$this->_bucket.'/'.$path;
         } else {
             $url = 'http://'.$this->_bucket.'.s3.amazonaws.com/'.$path;

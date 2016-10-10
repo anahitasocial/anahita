@@ -20,6 +20,11 @@ abstract class PlgStorageAbstract extends KObject
      */
     protected $_params;
 
+    /**
+    * Storage folder
+    *
+    *  @var string
+    */
     protected $_folder;
 
     /**
