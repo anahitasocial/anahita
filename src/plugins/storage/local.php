@@ -75,10 +75,11 @@ class PlgStorageLocal extends PlgStorageAbstract
     {
         $path = $this->_realpath($path);
         $dir = dirname($path);
-        $success = false;
-
+        
         if (!is_dir($dir)) {
-            @mkdir($dir, 0707, true);
+            if (!mkdir($dir, 0707, true)) {
+                return false;
+            }
         }
 
         return file_put_contents($path, (string) $data);
@@ -101,10 +102,12 @@ class PlgStorageLocal extends PlgStorageAbstract
         $path = $this->_realpath($path);
 
         if (is_dir($path)) {
-            @rmdir($path);
+            return rmdir($path);
         } elseif (file_exists($path)) {
-            @unlink($path);
+            return unlink($path);
         }
+
+        return false;
     }
 
     /**
