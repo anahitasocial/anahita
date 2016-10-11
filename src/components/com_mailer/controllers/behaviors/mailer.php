@@ -90,6 +90,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
     public function getEmailTemplateView()
     {
         if (!$this->_template_view instanceof LibBaseViewTemplate) {
+
             if (!isset($this->_template_view)) {
                 $this->_template_view = clone $this->_mixer->getIdentifier();
                 $this->_template_view->path = array('emails');
@@ -99,7 +100,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
             $identifier = clone $this->_mixer->getIdentifier();
             $identifier->path = array('emails');
 
-            $paths[] = dirname($identifier->filepath);
+            $paths[] = ANPATH_ROOT.dirname($identifier->filepath);
             $paths[] = implode(DS, array(ANPATH_THEMES, $this->getService('application')->getTemplate(), 'emails', $identifier->type.'_'.$identifier->package));
             $paths[] = implode(DS, array(ANPATH_THEMES, $this->getService('application')->getTemplate(), 'emails'));
 

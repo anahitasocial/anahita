@@ -22,6 +22,7 @@ define('ANPATH_SITE',           ANPATH_ROOT);
 define('ANPATH_CONFIGURATION',  ANPATH_ROOT);
 define('ANPATH_LIBRARIES',      ANPATH_ROOT.'/libraries');
 define('ANPATH_PLUGINS',        ANPATH_ROOT.'/plugins');
+define('ANPATH_COMPONENTS',     ANPATH_ROOT.'/components');
 define('ANPATH_INSTALLATION',   ANPATH_ROOT.'/installation');
 define('ANPATH_THEMES',         ANPATH_BASE.'/templates');
 define('ANPATH_CACHE',          ANPATH_BASE.DS.'cache');
