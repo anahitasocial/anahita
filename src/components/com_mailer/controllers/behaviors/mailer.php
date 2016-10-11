@@ -100,7 +100,12 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
             $identifier = clone $this->_mixer->getIdentifier();
             $identifier->path = array('emails');
 
-            $paths[] = ANPATH_ROOT.dirname($identifier->filepath);
+            $directory = dirname($identifier->filepath);
+            if (strpos($directory, ANPATH_ROOT) === false) {
+                $directory = ANPATH_ROOT.$directory;
+            }
+
+            $paths[] = $directory;
             $paths[] = implode(DS, array(ANPATH_THEMES, $this->getService('application')->getTemplate(), 'emails', $identifier->type.'_'.$identifier->package));
             $paths[] = implode(DS, array(ANPATH_THEMES, $this->getService('application')->getTemplate(), 'emails'));
 

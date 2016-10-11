@@ -26,7 +26,7 @@ class ComNotificationsControllerBehaviorNotifier extends KControllerBehaviorAbst
 
         $data->append(array(
           'component' => 'com_'.$this->_mixer->getIdentifier()->package,
-          'subject' => get_viewer(),
+          'subject' => get_viewer()
         ));
 
         $notification = $this->getService('repos:notifications.notification')->getEntity(array('data' => $data));

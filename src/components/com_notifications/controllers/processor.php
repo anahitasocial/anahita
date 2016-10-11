@@ -30,7 +30,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         parent::__construct($config);
 
         $this->_parser = $this->getService($config->parser);
-        
+
         $this->getService('anahita:language')->load('com_actors');
     }
 
@@ -172,7 +172,6 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             }
 
             $body = $this->renderMail(array(
-                        'layout' => false,
                         'template' => 'notification',
                         'data' => array(
                             'person' => $person,

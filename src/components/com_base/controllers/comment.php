@@ -40,8 +40,8 @@ class ComBaseControllerComment extends ComBaseControllerService
             'behaviors' => array(
                 'parentable',
                 'votable',
-                'com://site/hashtags.controller.behavior.hashtagable',
-                'com://site/people.controller.behavior.mentionable',
+                'com:hashtags.controller.behavior.hashtagable',
+                'com:people.controller.behavior.mentionable',
             ),
         ));
 
