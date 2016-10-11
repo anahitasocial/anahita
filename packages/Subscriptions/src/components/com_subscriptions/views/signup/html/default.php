@@ -37,7 +37,6 @@
         $privacy_replace = '<a href="'.@route('option=com_pages&view=content&layout='.$privacy_layout).'" target="_blank">'.@text('COM-SUBSCRIPTIONS-PRIVACY-POLICY').'</a>';
 
         $body = sprintf(@text('COM-SUBSCRIPTIONS-TERMS-DESCRIPTION'), $tos_replace, $privacy_replace);
-
         ?>
 
         <p class="lead well">
@@ -49,7 +48,7 @@
                 <?=@text('COM-SUBSCRIPTIONS-TERM-CANCEL')?>
             </a>
 
-            <a href="<?=@route('layout=payment&id='.$item->id)?>" class="btn btn-primary btn-large">
+            <a href="<?=@route('layout=login&id='.$item->id)?>" class="btn btn-primary btn-large">
                 <?=@text('COM-SUBSCRIPTIONS-TERM-AGREE')?>
             </a>
         </p>

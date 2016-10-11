@@ -153,24 +153,20 @@
                                  'selected' => $contact->country, ))->required(''),
 
                             'COM-SUBSCRIPTIONS-BILLING-STATE' => @helper('selector.state',
-                               array(
+                               	array(
                                    'name' => 'contact[state]',
                                    'id' => 'state-selector',
-                                   'selected' => $contact->state, )),
+                                   'selected' => $contact->state,
+								   'country_selector' => 'countery-selector',
+								   'country' => $contact->country
+							   )),
 
-                            'COM-SUBSCRIPTIONS-BILLING-ZIP' => @html('textfield', 'contact[zip]',
-                                   $contact->zip)->required('')->class('small'),
+                            'COM-SUBSCRIPTIONS-BILLING-ZIP' => @html('textfield', 'contact[zip]', $contact->zip)->required('')->class('small'),
                         )) ?>
 
         			</fieldset>
 
         			<div class="form-actions">
-        				<? if ($viewer->guest()) : ?>
-        				<a href="<?=@route(array('layout' => 'login', 'id' => $item->id)) ?>" class="btn">
-        				    <?=@text('COM-SUBSCRIPTIONS-EDIT-USER-INFORMATION')?>
-        				</a>
-        				<? endif; ?>
-
         				<button class="btn btn-primary" type="submit">
         				    <?=@text('COM-SUBSCRIPTIONS-PREVIEW-ORDER') ?>
         				</button>
@@ -192,11 +188,6 @@
         		    </p>
 
         			<div class="form-actions">
-        				<? if ($viewer->guest()) : ?>
-        				<a class="btn" href="<?= @route(array('layout' => 'default', 'id' => $item->id)) ?>">
-        				    <?=@text('COM-SUBSCRIPTIONS-EDIT-USER-INFORMATION')?>
-        				</a>
-        				<? endif; ?>
         				<button class="btn btn-primary" type="submit">
         				    <?=@text('COM-SUBSCRIPTIONS-PAYPAL-LOGIN') ?>
         				</button>

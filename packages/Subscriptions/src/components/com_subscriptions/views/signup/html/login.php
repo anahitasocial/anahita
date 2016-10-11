@@ -33,17 +33,17 @@
             	<? $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
 
             	<?= @helper('ui.form', array(
-                    'COM-SUBSCRIPTIONS-REGISTER-FULL-NAME' => @html('textfield', 'user[name]', $person->name)->required('true'),
+                    'COM-SUBSCRIPTIONS-REGISTER-FULL-NAME' => @html('textfield', 'person[name]', $person->name)->required('true'),
 
-                    'COM-SUBSCRIPTIONS-REGISTER-USERNAME' => @html('textfield', 'user[username]', $person->username)
+                    'COM-SUBSCRIPTIONS-REGISTER-USERNAME' => @html('textfield', 'person[username]', $person->username)
                      ->required('true')->dataValidate('username')->dataUrl(@route('option=com_people&view=person', false))
                      ->id('person-username')->pattern($usernamePattern)->maxlength(100)->minlength(6),
 
-                    'COM-SUBSCRIPTIONS-REGISTER-EMAIL' => @html('textfield', 'user[email]', $person->email)
+                    'COM-SUBSCRIPTIONS-REGISTER-EMAIL' => @html('textfield', 'person[email]', $person->email)
                     ->required('true')->dataValidate('email')->dataUrl(@route('option=com_people&view=person', false))
                     ->id('person-email')->pattern($emailPattern)->maxlength(100)->minlength(10),
 
-                    'COM-SUBSCRIPTIONS-REGISTER-PASSWORD' => @html('passwordfield',  'user[password]', '')->required('true'),
+                    'COM-SUBSCRIPTIONS-REGISTER-PASSWORD' => @html('passwordfield',  'person[password]', '')->required('true'),
                 )); ?>
 
             	<div class="form-actions">

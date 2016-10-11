@@ -113,6 +113,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         $this->set('givenName', $givenName);
         $this->set('familyName', $familyName);
         $this->set('name', $name);
+
+        return $this;
     }
 
     /**
@@ -124,6 +126,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $this->set('familyName', $name);
         $this->set('name', $this->givenName.' '.$this->familyName);
+
+        return $this;
     }
 
     /**
@@ -135,6 +139,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $this->set('givenName', $name);
         $this->set('name', $this->givenName.' '.$this->familyName);
+
+        return $this;
     }
 
     /**

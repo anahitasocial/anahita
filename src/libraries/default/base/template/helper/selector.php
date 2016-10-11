@@ -542,7 +542,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
         $options = new KConfig($options);
 
         $options->append(array(
-            'country_selector' => null,
+            'country_selector' => 'countery-selector',
             'country' => 'US',
             'selected' => null,
             'use_state_code' => true,

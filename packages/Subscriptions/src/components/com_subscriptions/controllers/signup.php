@@ -67,27 +67,15 @@
             'layout' => 'default',
         ));
 
-        $this->getCommandChain()
-             ->run('layout.'.$this->getRequest()
-             ->get('layout'), $context);
+        $this->getCommandChain()->run('layout.'.$this->getRequest()->get('layout'), $context);
 
-        if ($this->getRequest()->get('layout') === 'login' && !$this->viewer->guest()) {
-            $context->response->setRedirect(route('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id));
+        if ($this->getRequest()->get('layout') == 'login' && !$this->viewer->guest()) {
+            $url = route('option=com_subscriptions&view=signup&layout=payment&id='.$this->getItem()->id);
+            $context->response->setRedirect($url);
             return false;
         }
 
         return parent::_actionGet($context);
-    }
-
-    /**
-     * Confirm the payment.
-     *
-     * @param KCommandContext $context
-     */
-    protected function _actionConfirm($context)
-    {
-        $url = route('option=com_subscriptions&view=signup&layout=confirm&id='.$this->getItem()->id);
-        $context->response->setRedirect($url);
     }
 
     /**
@@ -102,6 +90,17 @@
     }
 
     /**
+     * Confirm the payment.
+     *
+     * @param KCommandContext $context
+     */
+    protected function _actionConfirm($context)
+    {
+        $url = route('option=com_subscriptions&view=signup&layout=confirm&id='.$this->getItem()->id);
+        $context->response->setRedirect($url);
+    }
+
+    /**
      * Express Payment.
      *
      * @param KCommandContext $context
@@ -110,7 +109,7 @@
     {
         $data = $context->data;
         $package = $this->getItem();
-        $gateway = $this->getService('com://site/subscriptions.controller.subscription')->getGateway();
+        $gateway = $this->getService('com:subscriptions.controller.subscription')->getGateway();
 
         try {
 
@@ -135,30 +134,28 @@
     protected function _actionProcess($context)
     {
         try {
-
-            $subscription = $this->getService('com:subscriptions.controller.subscription');
-            $subscription->setOrder($this->order->cloneEntity())->add();
-
+            $identifier = 'com:subscriptions.controller.subscription';
+            $subscription = $this->getService($identifier)->setOrder($this->order->cloneEntity())->add();
         } catch (ComSubscriptionsDomainPaymentException $exception) {
             $this->setMessage('COM-SUBSCRIPTIONS-TRANSACTION-ERROR', 'error');
             throw new RuntimeException('Payment process error');
             return false;
         }
 
-        if ($subscription) {
-            //clreat the sesion
-            $_SESSION['signup'] = null;
+        if ($subscription->persisted()) {
+
+            KRequest::set('session.signup', null);
             KRequest::set('session.subscriber_id', $subscription->person->id);
             $url = route('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
 
             if (get_viewer()->guest()) {
                 $return = base64UrlEncode($url);
-                $user = $subscription->person->getUserObject();
-                $token = $user->activation;
+                $token = $subscription->person->activationCode;
                 $url = route('option=com_people&view=session&token='.$token.'&return='.$return);
             }
 
             $context->response->setRedirect($url);
+
         } else {
             throw new RuntimeException("Couldn't subscribe");
             return false;
@@ -180,12 +177,15 @@
         $package = $this->getItem();
 
         if ($data->token) {
+
             $country = null;
-            $identifier = 'com://site/subscriptions.controller.subscription';
+            $identifier = 'com:subscriptions.controller.subscription';
             $method = $this->getService($identifier)->getGateway()->getExpressPaymentMethod($data->token, $country);
             $this->order->setPaymentMethod($method);
             $this->order->country = $country;
+
         } else {
+
             $url = route('option=com_subscriptions&view=signup&layout=payment&id='.$package->id);
             $error = false;
 
@@ -198,7 +198,7 @@
             //validate contact
             $contact = $this->contact;
 
-            if (!(
+            if (! (
                   $contact->address &&
                   $contact->city &&
                   $contact->country &&
@@ -234,7 +234,6 @@
         if (get_viewer()->guest() && !$this->person->validateEntity()) {
             $url = route('option=com_subscriptions&view=signup&layout=login&id='.$package->id);
             $context->response->setRedirect($url);
-
             return false;
         }
 
@@ -278,9 +277,10 @@
         $package = $this->getItem();
 
         //create a dummy transaction
-        $this->order = $this->getService('repos:subscriptions.order')->getEntity()->reset();
         $viewer = get_viewer();
+        $this->order = $this->getService('repos:subscriptions.order')->getEntity()->reset();
         $this->order->setPackage($package, $viewer->hasSubscription() ? $viewer->subscription->package : null);
+
         $this->_instantiateCoupon($data);
         $this->_instantiateUser($data);
         $this->_instantiateCreditCard($data);
@@ -296,6 +296,7 @@
         $this->coupon_code = $data->coupon_code;
         $this->coupon = $this->getService('repos:subscriptions.coupon')
                              ->find(array('code' => $this->coupon_code));
+
         if (!$this->coupon) {
             $this->coupon_code = '';
         } else {
@@ -342,7 +343,6 @@
         if ($data->token) {
             unset($data['creditcard']);
             unset($data['contact']);
-
             return;
         }
 
@@ -382,29 +382,30 @@
     protected function _instantiateUser($data)
     {
         if (get_viewer()->guest()) {
+
             $data->append(array(
-                'user' => new KConfig(),
+                'person' => new KConfig(),
             ));
 
-            $user_data = array(
-                'email' => $data->user->email,
-                'username' => $data->user->username,
-                'password' => $data->user->password,
-                'name' => $data->user->name,
-                'usertype' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
+            $person_data = array(
+                'name' => $data->person->name,
+                'email' => $data->person->email,
+                'username' => $data->person->username,
+                'password' => $data->person->password,
+                'usertype' => ComPeopleDomainEntityPerson::USERTYPE_REGISTERED
             );
 
             $person = $this->getService('repos:people.person')
-            ->getEntity()
-            ->reset()
-            ->setData($user_data);
+                           ->getEntity()
+                           ->reset()
+                           ->setData($person_data)
+                           ->setName($data->person->name);
         } else {
             $person = get_viewer();
         }
 
         $this->order->setSubscriber($person);
         $this->person = $person;
-        $this->user = $person;
 
         return $person;
     }
