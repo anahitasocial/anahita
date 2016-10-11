@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Payload object.
  *
@@ -23,6 +8,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -51,21 +37,21 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
 
     /**
      * Order ID.
-     * 
+     *
      * @var string
      */
     public $order_id;
 
     /**
      * The payment method.
-     * 
+     *
      * @var ComSubscriptionsDomainPaymentMethodInterface
      */
     public $payment_method;
 
     /**
      * The order currency.
-     * 
+     *
      * @var string
      */
     public $curreny;
@@ -93,9 +79,9 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
 
     /**
      * Set the recurring options.
-     * 
-     * @param int    $frequency  The frequency 
-     * @param string $unit       The unit for which the frequency happens 
+     *
+     * @param int    $frequency  The frequency
+     * @param string $unit       The unit for which the frequency happens
      * @param KDate  $start_date The start date
      */
     public function setRecurring($frequency, $unit, $start_date)
@@ -109,7 +95,7 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
 
     /**
      * Return the payload total amount.
-     * 
+     *
      * @return int
      */
     public function getTotalAmount()
@@ -119,7 +105,7 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
 
     /**
      * Return the recurring options if ther are any.
-     * 
+     *
      * @return KConfig
      */
     public function getRecurring()

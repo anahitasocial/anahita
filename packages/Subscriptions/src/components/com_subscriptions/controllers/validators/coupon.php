@@ -27,11 +27,9 @@ class ComSubscriptionsControllerValidatorCoupon extends LibBaseControllerValidat
         if ($coupon && !$coupon->expired()) {
             $discount = $coupon->discount * 100;
             $this->setMessage(AnTranslator::sprintf('COM-SUBSCRIPTIONS-VALID-COUPON', $discount));
-
             return true;
         } else {
             $this->setMessage(AnTranslator::_('COM-SUBSCRIPTIONS-INVALID-COUPON'));
-
             return false;
         }
     }

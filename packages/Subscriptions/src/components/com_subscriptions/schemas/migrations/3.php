@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -15,10 +15,10 @@ class ComSubscriptionsSchemaMigration3 extends ComMigratorMigrationVersion
     public function up()
     {
         //remove the photo plugin
-        dbexec("DELETE FROM #__plugins WHERE `element` = 'access' AND `folder` = 'subscriptions' ");
+        dbexec("DELETE FROM `#__plugins` WHERE `element` = 'access' AND `folder` = 'subscriptions' ");
 
         //remove the dangling transaction records
-        dbexec('DELETE FROM #__subscriptions_transactions WHERE user_id NOT IN (SELECT id FROM #__users)');
+        dbexec('DELETE FROM `#__subscriptions_transactions` WHERE `user_id` NOT IN (SELECT id FROM `#__users`)');
     }
 
     /**
@@ -26,6 +26,6 @@ class ComSubscriptionsSchemaMigration3 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

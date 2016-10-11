@@ -28,11 +28,11 @@
             "option": [
                 {
                     "value": "0",
-                    "text": "NO"
+                    "text": "LIB-AN-NO"
                 },
                 {
                     "value": "1",
-                    "text": "YES"
+                    "text": "LIB-AN-YES"
                 }
             ],
             "name": "test_mode",
@@ -53,11 +53,11 @@
             "option": [
                 {
                     "value": "0",
-                    "text": "NO"
+                    "text": "LIB-AN-NO"
                 },
                 {
                     "value": "1",
-                    "text": "YES"
+                    "text": "LIB-AN-YES"
                 }
             ],
             "name": "use_ssl",

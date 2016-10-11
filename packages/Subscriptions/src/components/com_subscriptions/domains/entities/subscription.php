@@ -23,7 +23,7 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         parent::__construct($config);
 
         $this->getService('repos:people.person')
-        ->addBehavior('com://site/subscriptions.domain.behavior.subscriber');
+        ->addBehavior('com:subscriptions.domain.behavior.subscriber');
     }
 
     /**
@@ -99,7 +99,7 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         $actorIds = $this->package->getActorIds();
 
         if (count($actorIds)) {
-            $actors = $this->getService('repos://site/actors.actor')
+            $actors = $this->getService('repos:actors.actor')
                            ->getQuery(true)
                            ->where('id', 'IN', $actorIds)
                            ->fetchSet();
@@ -120,7 +120,7 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
         $actorIds = $this->package->getActorIds();
 
         if (count($actorIds)) {
-            $actors = $this->getService('repos://site/actors.actor')
+            $actors = $this->getService('repos:actors.actor')
                            ->getQuery(true)
                            ->where('id', 'IN', $actorIds)
                            ->fetchSet();

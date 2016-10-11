@@ -23,8 +23,10 @@
 		</td>
 		<td><?= @escape($order->itemName); ?></td>
 		<td><?= round($order->getTotalAmount(), 2) ?> <?= $order->currency ?></td>
-		<td><i class="icon-<?= ($order->recurring) ? 'repeat' : 'ok-circle' ?>"></i> <?= ($order->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$order->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$order->billingPeriod) ?></td>
-		<td><?= $order->method?></td>
+		<td>
+			<i class="icon-<?= ($order->recurring) ? 'repeat' : 'ok-circle' ?>"></i> 
+			<?= ($order->recurring) ? @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-RECURRING-'.$order->billingPeriod) : @text('COM-SUBSCRIPTIONS-BILLING-PERIOD-'.$order->billingPeriod) ?></td>
+		<td><?= $order->method ?></td>
 		<td><?= $order->createdOn->getDate('%b %d %Y')?></td>
 	</tr>
 	<? endforeach; ?>

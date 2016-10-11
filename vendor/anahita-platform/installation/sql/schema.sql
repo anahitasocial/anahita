@@ -187,7 +187,6 @@ CREATE TABLE `#__sessions` (
 CREATE TABLE `#__people_people` (
     `people_person_id` SERIAL,
     `node_id` BIGINT UNSIGNED NOT NULL,
-    `userid` INT(11) DEFAULT NULL,
     `email` varchar(255) DEFAULT NULL,
     `username` varchar(255) DEFAULT NULL,
     `password` varchar(255) DEFAULT NULL,

@@ -14,7 +14,7 @@
     >
         <? foreach($options as $option) : ?>
         <option value="<?= $option['value'] ?>" <?= ($selected === $option['value']) ? 'selected' : '' ?>>
-          <?= $option['name'] ?>
+          <?= @text($option['name']) ?>
         </option>
         <? endforeach; ?>
     </select>

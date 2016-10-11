@@ -1,10 +1,6 @@
 <?php
 
-<<<<<<< HEAD
 require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
-=======
-require_once JPATH_LIBRARIES.'/merchant/merchant.php';
->>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
 /**
  * Paypal Gateway.
@@ -52,13 +48,11 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      */
     protected function _initialize(KConfig $config)
     {
-        $params = get_config_value('com_subscriptions');
-
         $config->append(array(
-                'test_mode' => $params->get('test_mode', false),
-                'login' => $params->get('login'),
-                'password' => $params->get('password'),
-                'signature' => $params->get('signature'),
+            'test_mode' => get_config_value('subscriptions.test_mode', true),
+            'login' => get_config_value('subscriptions.login'),
+            'password' => get_config_value('subscriptions.password'),
+            'signature' => get_config_value('subscriptions.signature')
         ));
 
         parent::_initialize($config);
@@ -198,13 +192,9 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      */
     protected function _logError($response)
     {
-<<<<<<< HEAD
         $log = $this->getService('anahita:log', array(
             'file' => 'system_log.php'
         ));
-=======
-        $log = $this->getService('anahita:log');
->>>>>>> f57b86b8d97cc8d46a32e699be9a29c04467a16b
 
         $message = "\nerror_message=".$response->message()."\n";
 

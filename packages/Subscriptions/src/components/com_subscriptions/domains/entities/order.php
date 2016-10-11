@@ -92,11 +92,9 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
         $this->_subscriber = $subscriber;
 
         if ($subscriber->persisted()) {
-            $this->userId = $this->_subscriber->userId;
             $this->actorId = $this->_subscriber->id;
         } else {
             $this->set('actorId', PHP_INT_MAX);
-            $this->set('userId',  PHP_INT_MAX);
         }
 
         $this->getRepository()->getSpace()->setSaveOrder($this, $this->_subscriber);
@@ -148,7 +146,7 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
      */
     public function getPayload()
     {
-        $payload = $this->getService('com://site/subscriptions.domain.payment.payload', array(
+        $payload = $this->getService('com:subscriptions.domain.payment.payload', array(
 
            'order_id' => $this->orderId,
            'description' => $this->_package->name,
@@ -232,7 +230,7 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
     {
         $this->set('country', $country);
 
-        $vat = $this->getService('repos://site/subscriptions.vat')->find(array('country' => $country));
+        $vat = $this->getService('repos:subscriptions.vat')->find(array('country' => $country));
 
         if ($vat) {
             $this->setVat($vat);

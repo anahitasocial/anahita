@@ -32,7 +32,12 @@ class ComSubscriptionsControllerPermissionSubscription extends ComSubscriptionsC
      */
     public function canAdd()
     {
-        return  $this->getOrder() instanceof ComSubscriptionsDomainEntityOrder &&
-                $this->getOrder()->canProcess();
+        $order = $this->getOrder();
+
+        if ($order instanceof ComSubscriptionsDomainEntityOrder && $order->canProcess()){
+            return true;
+        }
+
+        return  false;
     }
 }

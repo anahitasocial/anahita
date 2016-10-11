@@ -52,7 +52,7 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
                     'default' => 0,
                 ),
                 'billingPeriod' => array(
-                    'column' => 'billing_period',
+                    'default' => self::BILLING_PERIOD_YEAR,
                     'required' => true,
                 ),
             ),

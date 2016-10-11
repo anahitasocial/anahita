@@ -26,9 +26,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     {
         parent::__construct($config);
 
-        $this->registerCallback(array(
-                                  'before.edit',
-                                  'after.add', ), array($this, 'setMeta'));
+        $this->registerCallback(array('before.edit', 'after.add', ), array($this, 'setMeta'));
 
         $this->registerCallback(array(
                 'before.editsubscription',
@@ -99,14 +97,12 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     public function fetchSubscriber(KCommandContext $context)
     {
         if (!$this->_subscriber) {
-            $actor_id = $context->data->actor_id;
 
-            $this->_subscriber = $this->getService('repos://site/actors.actor')
-                                      ->fetch($actor_id);
+            $actor_id = $context->data->actor_id;
+            $this->_subscriber = $this->getService('repos:actors.actor')->fetch($actor_id);
 
             if (!$this->_subscriber) {
                 throw new LibBaseControllerExceptionNotFound('Subscriber Not Found');
-
                 return false;
             }
         }
@@ -121,7 +117,9 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      */
     public function fetchEntity(KCommandContext $context)
     {
-        if (in_array($context->action, array('editsubscription', 'addsubscriber', 'deletesubscriber'))) {
+        $actions = array('editsubscription', 'addsubscriber', 'deletesubscriber');
+        
+        if (in_array($context->action, $actions)) {
             if ($context->data->package_id) {
                 $this->id = $context->data->package_id;
             }

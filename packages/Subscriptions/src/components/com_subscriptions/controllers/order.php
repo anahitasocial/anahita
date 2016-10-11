@@ -31,7 +31,7 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
             'behaviors' => array(
                 'ownable',
                 'serviceable' => array(
-                    'read_only' => true,
+                    'read_only' => true
                     ),
                 ),
         ));
@@ -61,9 +61,8 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
     public function fetchActor()
     {
         if ($entity = $this->getItem()) {
-            $actor = $this->getService('repos://site/people.person')
-                          ->find(array('id' => $entity->actorId));
-
+            $id = $entity->actorId;
+            $actor = $this->getService('repos:people.person')->find(array('id' => $id));
             $this->actor = $actor;
         }
     }

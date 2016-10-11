@@ -57,9 +57,17 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'serviceable' => array('except' => array('browse', 'read', 'edit')),
-            'behaviors' => array('com://site/mailer.controller.behavior.mailer'),
-            'gateway' => 'com://site/subscriptions.domain.payment.gateway.paypal',
+            'serviceable' => array(
+                'except' => array(
+                    'browse',
+                    'read',
+                    'edit'
+                )
+            ),
+            'behaviors' => array(
+                'com:mailer.controller.behavior.mailer'
+            ),
+            'gateway' => 'com:subscriptions.domain.payment.gateway.paypal'
         ));
 
         parent::_initialize($config);
@@ -76,10 +84,11 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 
         if (!$this->_gateway->process($payload)) {
             throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
+            return;
         }
 
         $this->getService('repos:people.person')
-        ->addBehavior('com://site/subscriptions.domain.behavior.subscriber');
+        ->addBehavior('com:subscriptions.domain.behavior.subscriber');
         $person = $this->_order->getSubscriber();
         $package = $this->_order->getPackage();
 

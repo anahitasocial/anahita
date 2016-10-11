@@ -17,7 +17,7 @@ class ComSubscriptionsControllerPermissionSignup extends LibBaseControllerPermis
         $subscriber_id = KRequest::get('session.subscriber_id', 'cmd');
 
         if ($subscriber_id) {
-            $this->person = $this->getService('repos://site/people')->find($subscriber_id);
+            $this->person = $this->getService('repos:people.person')->find($subscriber_id);
         }
 
         return !is_null($this->person);

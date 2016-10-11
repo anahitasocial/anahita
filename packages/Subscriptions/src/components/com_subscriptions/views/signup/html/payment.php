@@ -69,12 +69,12 @@
         <ul class="nav nav-pills">
         	<li class="active">
         		<a href="#creditcard" data-toggle="pill">
-        		    <?= @text('AB-SUB-CHOOSE-PAYMENT-CREDITCARD') ?>
+        		    <?= @text('COM-SUBSCRIPTIONS-CHOOSE-PAYMENT-CREDITCARD') ?>
         		</a>
         	</li>
         	<li>
         		<a href="#paypal" data-toggle="pill">
-        		    <?= @text('AB-SUB-CHOOSE-PAYMENT-PAYPAL') ?>
+        		    <?= @text('COM-SUBSCRIPTIONS-CHOOSE-PAYMENT-PAYPAL') ?>
         		</a>
         	</li>
         </ul>

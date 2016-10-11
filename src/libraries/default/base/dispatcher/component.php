@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Component Dispatcher.
  *
  * @category   Anahita
@@ -23,6 +8,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -80,11 +66,9 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
 
         //if a command line the either do get or
         //post depending if there are any action
-        if (PHP_SAPI == 'cli') {
+        if (PHP_SAPI === 'cli') {
             $method = KRequest::get('post.action', 'cmd', 'get');
-        } elseif (file_exists(ANPATH_COMPONENT.'/'.$this->getIdentifier()->package.'.php') ||
-                 file_exists(ANPATH_COMPONENT.'/'.'admin.'.$this->getIdentifier()->package.'.php')
-                ) {
+        } elseif (file_exists(ANPATH_COMPONENT.'/'.$this->getIdentifier()->package.'.php')) {
             $method = 'renderlegacy';
         } else {
             $method = strtolower(KRequest::method());
@@ -102,9 +86,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
      */
     protected function _actionGet(KCommandContext $context)
     {
-        $result = $this->getController()->execute('get', $context);
-
-        return $result;
+        return $this->getController()->execute('get', $context);
     }
 
     /**
@@ -115,7 +97,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     protected function _actionPost(KCommandContext $context)
     {
         $context->append(array(
-                'data' => KRequest::get('post', 'raw', array()),
+            'data' => KRequest::get('post', 'raw', array()),
         ));
 
         //backward compatiblity
@@ -131,8 +113,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
             }
         }
 
-        if ($context->request->getFormat() == 'json' ||
-                    $context->request->isAjax()) {
+        if ($context->request->getFormat() == 'json' || $context->request->isAjax()) {
             $this->registerCallback('after.post', array($this, 'forward'));
         } else {
             $context->response->setRedirect(KRequest::get('server.HTTP_REFERER', 'url'));
@@ -170,7 +151,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         $request = $context->request;
 
         //Check referrer
-        if (!$request->getReferrer()) {
+        if (! $request->getReferrer()) {
             throw new LibBaseControllerExceptionForbidden('Invalid Request Referrer');
         }
     }
@@ -188,8 +169,6 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
 
         if (!$response->getContent()) {
             if (in_array($response->getStatusCode(), array(201, 205))) {
-                //set the view to single
-                //render the item
                 $view = $this->getController()->getIdentifier()->name;
                 $response->setContent($this->getController()->view($view)->execute('display', $context));
                 if ($response->getStatusCode() == 205) {

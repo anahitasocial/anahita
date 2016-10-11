@@ -33,7 +33,6 @@ CREATE TABLE `#__subscriptions_packages` (
 CREATE TABLE `#__subscriptions_transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `actor_id` bigint(11) NOT NULL,
   `item_name` varchar(255) NOT NULL,
   `item_id` bigint(11) NOT NULL,
@@ -50,7 +49,8 @@ CREATE TABLE `#__subscriptions_transactions` (
   `upgrade` tinyint(1) NOT NULL DEFAULT '0',
   `recurring` tinyint(1) NOT NULL,
   `billing_period` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `actor_id` (`actor_id`)
 ) ENGINE=InnoDB;
 
 -- --------------------------------------------------------

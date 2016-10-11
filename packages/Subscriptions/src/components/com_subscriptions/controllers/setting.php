@@ -26,8 +26,8 @@ class ComSubscriptionsControllerSetting extends ComBaseControllerResource
     {
         $config->append(array(
             'behaviors' => array(
-                'ownable',
-            ),
+                'ownable'
+            )
         ));
 
         parent::_initialize($config);
@@ -43,7 +43,7 @@ class ComSubscriptionsControllerSetting extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $this->getService('repos://site/subscriptions.package');
+        $this->getService('repos:subscriptions.package');
         $this->setItem($this->actor->subscription);
     }
 }
