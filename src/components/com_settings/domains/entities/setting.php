@@ -43,7 +43,6 @@ class ComSettingsDomainEntitySetting extends KObject
               'error_reporting' => 0,
               'log_path' => '',
               'tmp_path' => '',
-              'live_site' => $_SERVER['DOCUMENT_ROOT'],
               'template' => 'shiraz',
               'language' => 'en-GB',
 
@@ -167,7 +166,6 @@ class ComSettingsDomainEntitySetting extends KObject
 
             $strings = array(
               'sitename',
-              'live_site',
               'log_path',
               'tmp_path',
               'fromname',
