@@ -19,6 +19,12 @@ class Symlink extends Command
     {
         $output->writeLn("<info>Linking files...</info>");
         $this->symlink();
+
+        //removes legacy administrator directory
+        $adminDirectory = WWW_ROOT.'/administrator';
+        if (is_dir($adminDirectory)) {
+            exec("rm -rf {$adminDirectory}");
+        }
     }
 
     public function symlink()
