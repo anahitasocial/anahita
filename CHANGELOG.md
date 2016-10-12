@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.2.4 Birth Release
+=============================
+* fixed critical issue which was preventing first time installation due to the absence of a from system email
+
 Anahita 4.2.3 Birth Release
 =============================
 * starting using SwiftMail and Anahita's Mailer class instead of legacy joomla mailer

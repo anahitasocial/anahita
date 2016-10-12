@@ -392,7 +392,7 @@ class AnMail extends KObject implements KServiceInstantiatable
 
         if(count($this->_reply_to)) {
             $message->setReplyTo($this->_reply_to);
-        } else {
+        } else if($config->getValue('mailfrom') != '') {
             $message->setReplyTo($config->getValue('mailfrom'), $config->getValue('fromname'));
         }
 
