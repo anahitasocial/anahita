@@ -107,7 +107,7 @@ class Create extends Command
         $dialog = $this->getHelperSet()->get('dialog');
         $output = $this->_output;
         $input  = $this->_input;
-                
+          //test      
         $prompt = function($key, $text, $default = null, $error = null) 
                             use ($dialog, $output, $input) 
         {
