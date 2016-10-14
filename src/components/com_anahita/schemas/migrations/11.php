@@ -49,7 +49,7 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
         dbexec('DROP TABLE #__migrator_migrations');
 
         //some of the plugins are core plugins
-        dbexec("UPDATE #__plugins SET iscore = 1 WHERE element IN ('joomla', 'gist', 'medium', 'link', 'video', 's3')");
+        dbexec("UPDATE `#__plugins` SET iscore = 1 WHERE element IN ('joomla', 'gist', 'medium', 'link', 'video', 's3')");
     }
 
     /**

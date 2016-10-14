@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -15,11 +15,11 @@ class ComAnahitaSchemaMigration7 extends ComMigratorMigrationVersion
     public function up()
     {
         //remove some legacy plugin records
-        dbexec('DELETE FROM #__plugins WHERE folder = \'system\' AND element IN (\'sef\',\'debug\',\'logger\',\'missioncontrol\', \'mtupgrade\', \'tagmeta\')');
+        dbexec('DELETE FROM `#__plugins` WHERE folder = \'system\' AND element IN (\'sef\',\'debug\',\'logger\',\'missioncontrol\', \'mtupgrade\', \'tagmeta\')');
 
         dbexec('DROP TABLE IF EXISTS #__menu');
         dbexec('DROP TABLE IF EXISTS #__menu_types');
-        dbexec('DELETE FROM #__modules WHERE `module` IN (\'mod_menu\',\'mod_viewer\') AND `client_id` = 0 ');
+        dbexec('DELETE FROM `#__modules` WHERE `module` IN (\'mod_menu\',\'mod_viewer\') AND `client_id` = 0 ');
     }
 
     /**
@@ -27,6 +27,6 @@ class ComAnahitaSchemaMigration7 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

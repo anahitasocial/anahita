@@ -43,13 +43,13 @@ class ComAnahitaSchemaMigration13 extends ComMigratorMigrationVersion
         dbexec('DROP TABLE #__groups');
 
        //legacy component cleanup
-       dbexec('DELETE FROM #__components WHERE `option` IN (\'com_users\', \'com_user\') ');
-        dbexec('UPDATE #__components SET `admin_menu_link`=\'option=com_people\', `admin_menu_alt`=\'People\', `admin_menu_img`=\'js/ThemeOffice/component.png\' WHERE `option`=\'com_people\' ');
+       dbexec('DELETE FROM `#__components` WHERE `option` IN (\'com_users\', \'com_user\') ');
+        dbexec('UPDATE `#__components` SET `admin_menu_link`=\'option=com_people\', `admin_menu_alt`=\'People\', `admin_menu_img`=\'js/ThemeOffice/component.png\' WHERE `option`=\'com_people\' ');
 
-        dbexec('ALTER TABLE #__nodes MODIFY `enabled` tinyint(1) NOT NULL DEFAULT 0');
-        dbexec('ALTER TABLE #__nodes MODIFY `is_default` tinyint(1) NOT NULL DEFAULT 0');
-        dbexec('UPDATE #__nodes SET `story_subject_id` = `created_by` WHERE `story_subject_id` = `story_target_id` AND `name` = \'actor_follow\'');
-        dbexec('UPDATE #__nodes SET `enabled`=1, `access` = \'admins\' WHERE `type` LIKE \'%com:people.domain.entity.person\' AND `enabled` = 0');
+        dbexec('ALTER TABLE `#__nodes` MODIFY `enabled` tinyint(1) NOT NULL DEFAULT 0');
+        dbexec('ALTER TABLE `#__nodes` MODIFY `is_default` tinyint(1) NOT NULL DEFAULT 0');
+        dbexec('UPDATE `#__nodes` SET `story_subject_id` = `created_by` WHERE `story_subject_id` = `story_target_id` AND `name` = \'actor_follow\'');
+        dbexec('UPDATE `#__nodes` SET `enabled`=1, `access` = \'admins\' WHERE `type` LIKE \'%com:people.domain.entity.person\' AND `enabled` = 0');
     }
 
     /**

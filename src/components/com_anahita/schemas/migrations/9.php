@@ -22,7 +22,7 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         dbexec("INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES (49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '')");
 
         //remove the syntax plugin
-        dbexec("DELETE FROM #__plugins WHERE `element` IN ('syntax', 'ptag') ");
+        dbexec("DELETE FROM `#__plugins` WHERE `element` IN ('syntax', 'ptag') ");
 
         //remove anahita from nodes and edges table names
         if (!dbexists('SHOW TABLES LIKE "#__nodes"')) {
@@ -35,43 +35,43 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
 
         //UTF-8 conversions
         dbexec('ALTER DATABASE CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__edges CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__nodes CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__edges` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__nodes CHANGE name name VARBINARY(255)');
-        dbexec('ALTER TABLE #__nodes CHANGE name name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHANGE name name VARBINARY(255)');
+        dbexec('ALTER TABLE `#__nodes` CHANGE name name VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__nodes CHANGE alias alias VARBINARY(255)');
-        dbexec('ALTER TABLE #__nodes CHANGE alias alias VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHANGE alias alias VARBINARY(255)');
+        dbexec('ALTER TABLE `#__nodes` CHANGE alias alias VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__nodes CHANGE body body MEDIUMBLOB');
-        dbexec('ALTER TABLE #__nodes CHANGE body body MEDIUMTEXT CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHANGE body body MEDIUMBLOB');
+        dbexec('ALTER TABLE `#__nodes` CHANGE body body MEDIUMTEXT CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__nodes CHANGE person_given_name person_given_name VARBINARY(255)');
-        dbexec('ALTER TABLE #__nodes CHANGE person_given_name person_given_name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHANGE person_given_name person_given_name VARBINARY(255)');
+        dbexec('ALTER TABLE `#__nodes` CHANGE person_given_name person_given_name VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__nodes CHANGE person_family_name person_family_name VARBINARY(255)');
-        dbexec('ALTER TABLE #__nodes CHANGE person_family_name person_family_name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHANGE person_family_name person_family_name VARBINARY(255)');
+        dbexec('ALTER TABLE `#__nodes` CHANGE person_family_name person_family_name VARCHAR(255) CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__migrator_migrations CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__migrator_versions CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__opensocial_profiles CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__opensocial_profiles CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__migrator_migrations` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__migrator_versions` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__opensocial_profiles` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__opensocial_profiles` CHARACTER SET utf8');
 
         //move these to related components
-        dbexec('ALTER TABLE #__invites_tokens CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__opensocial_profiles CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__subscriptions_coupons CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__subscriptions_packages CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__subscriptions_transactions CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__subscriptions_vats CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__todos_todos CHARACTER SET utf8');
-        dbexec('ALTER TABLE #__topics_topics CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__invites_tokens` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__opensocial_profiles` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__subscriptions_coupons` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__subscriptions_packages` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__subscriptions_transactions` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__subscriptions_vats` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__todos_todos` CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__topics_topics` CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__users CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__users` CHARACTER SET utf8');
 
-        dbexec('ALTER TABLE #__users CHANGE name name VARBINARY(255)');
-        dbexec('ALTER TABLE #__users CHANGE name name VARCHAR(255) CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__users` CHANGE name name VARBINARY(255)');
+        dbexec('ALTER TABLE `#__users` CHANGE name name VARCHAR(255) CHARACTER SET utf8');
 
         //updating comments
 
@@ -79,7 +79,7 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         $db = KService::get('anahita:database');
 
         //change comment formats from html to string
-        $entities = dbfetch('SELECT id, body FROM #__nodes WHERE type LIKE "ComBaseDomainEntityComment%" ');
+        $entities = dbfetch('SELECT id, body FROM `#__nodes` WHERE type LIKE "ComBaseDomainEntityComment%" ');
 
         dboutput("Updating comments. This WILL take a while ...\n");
 

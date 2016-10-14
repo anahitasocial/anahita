@@ -19,7 +19,7 @@ class ComAnahitaSchemaMigration12 extends ComMigratorMigrationVersion
             dbexec('RENAME TABLE #__anahita_edges TO #__edges');
         }
 
-        dbexec('DELETE FROM #__edges WHERE node_a_id = node_b_id');
+        dbexec('DELETE FROM `#__edges` WHERE node_a_id = node_b_id');
     }
 
     /**

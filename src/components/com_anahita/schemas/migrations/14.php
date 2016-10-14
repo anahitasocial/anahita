@@ -20,11 +20,11 @@ class ComAnahitaSchemaMigration14 extends ComMigratorMigrationVersion
     public function up()
     {
         //add your migration here
-        dbexec("ALTER TABLE #__users ENGINE=InnoDB");
-        dbexec("ALTER TABLE #__templates_menu ENGINE=InnoDB");
-        dbexec("ALTER TABLE #__plugins ENGINE=InnoDB");
-        dbexec("ALTER TABLE #__nodes ENGINE=InnoDB");
-        dbexec("ALTER TABLE #__components ENGINE=InnoDB");
+        dbexec("ALTER TABLE `#__users` ENGINE=InnoDB");
+        dbexec("ALTER TABLE `#__templates_menu` ENGINE=InnoDB");
+        dbexec("ALTER TABLE `#__plugins` ENGINE=InnoDB");
+        dbexec("ALTER TABLE `#__nodes` ENGINE=InnoDB");
+        dbexec("ALTER TABLE `#__components` ENGINE=InnoDB");
     }
 
    /**

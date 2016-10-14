@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -39,12 +39,7 @@ class ComAnahitaSchemaMigration extends ComMigratorMigrationAbstract
     {
         $config->append(array(
             'tables' => array(
-                    'anahita_edges', 'anahita_nodes',
-                    'components',
-                    'core_acl_aro', 'core_acl_aro_groups',
-                    'core_acl_aro_map', 'core_acl_aro_sections', 'core_acl_groups_aro_map',
-                    'groups', 'menu', 'menu_types', 'migrator_versions', 'modules', 'modules_menu',
-                    'plugins', 'session', 'templates_menu', 'users',
+                'edges', 'nodes', 'components', 'migrator_versions', 'plugins', 'sessions', 'people_people'
             ),
         ));
 
