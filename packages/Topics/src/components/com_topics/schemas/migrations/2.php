@@ -14,8 +14,9 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        $timeThen = microtime(true);
+        //$timeThen = microtime(true);
 
+        /*
         //converting the old boards as hashtags
         $boards = dbfetch('SELECT `id`, `alias` FROM #__nodes WHERE `type` LIKE \'%com:topics.domain.entity.board\' ');
 
@@ -43,14 +44,15 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
                 }
             }
         }
+        */
 
         dbexec('UPDATE `#__nodes` SET `parent_id` = 0 WHERE `type` LIKE \'%com:topics.domain.entity.topic\'');
         dbexec('DELETE FROM `#__nodes` WHERE `type` LIKE \'%com:topics.domain.entity.board\'');
         dbexec('DELETE FROM `#__edges` WHERE `node_b_type` LIKE \'%com:topics.domain.entity.board\'');
         dbexec('DROP TABLE #__topics_boards');
 
-        $timeDiff = microtime(true) - $timeThen;
-        dboutput("TIME: ($timeDiff)"."\n");
+        //$timeDiff = microtime(true) - $timeThen;
+        //dboutput("TIME: ($timeDiff)"."\n");
     }
 
     /**

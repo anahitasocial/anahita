@@ -21,7 +21,7 @@ class ComTopicsSchemaMigration3 extends ComMigratorMigrationVersion
         dboutput("Updating Topics. This may take a while ...\n");
 
         //Use p tags instead of inlines for topics
-        $entities = dbfetch('SELECT id, body FROM #__nodes WHERE type LIKE "%com:topics.domain.entity.topic" ');
+        $entities = dbfetch('SELECT id, body FROM `#__nodes` WHERE type LIKE "%com:topics.domain.entity.topic" ');
 
         foreach ($entities as $entity) {
             $id = $entity['id'];

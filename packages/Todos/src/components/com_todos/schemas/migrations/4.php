@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  */
 
@@ -14,7 +14,7 @@ class ComTodosSchemaMigration4 extends ComMigratorMigrationVersion
      */
     public function up()
     {
-        dbexec('ALTER TABLE #__todos_todos ENGINE=InnoDB');
+        dbexec('ALTER TABLE `#__todos_todos` ENGINE=InnoDB');
     }
 
     /**
@@ -22,6 +22,6 @@ class ComTodosSchemaMigration4 extends ComMigratorMigrationVersion
      */
     public function down()
     {
-        //add your migration here        
+        //add your migration here
     }
 }

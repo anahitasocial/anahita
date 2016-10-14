@@ -37,9 +37,9 @@ class ComArticlesSchemaMigration1 extends ComMigratorMigrationVersion
         // Update edges
         dbexec('UPDATE `#__edges` SET `node_b_type` = \'com:articles.domain.entity.article\' WHERE `node_b_type` = \'com:pages.domain.entity.page\' ');
 
-		    // Update stories and notifications
-		    dbexec('UPDATE `#__nodes` SET name=\'article_add\' WHERE name=\'page_add\'');
-		    dbexec('UPDATE `#__nodes` SET name=\'article_comment\' WHERE name=\'page_comment\'');
+		// Update stories and notifications
+		dbexec('UPDATE `#__nodes` SET name=\'article_add\' WHERE name=\'page_add\'');
+		dbexec('UPDATE `#__nodes` SET name=\'article_comment\' WHERE name=\'page_comment\'');
     }
 
    /**

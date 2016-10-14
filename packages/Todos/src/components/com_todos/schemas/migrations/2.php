@@ -24,8 +24,9 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
 
         dbexec('DROP TABLE #__todos_milestones');
 
+        /*
         //clearing todolists from the data
-           $todolists = dbfetch('SELECT `id`, `parent_id`, `alias` FROM `#__nodes` WHERE `type` LIKE \'%com:todos.domain.entity.todolist\' ');
+        $todolists = dbfetch('SELECT `id`, `parent_id`, `alias` FROM `#__nodes` WHERE `type` LIKE \'%com:todos.domain.entity.todolist\' ');
 
         foreach ($todolists as $todolist) {
             $terms = explode('-', $todolist['alias']);
@@ -51,11 +52,12 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
                 }
             }
         }
+        */
 
-        dbexec('DELETE FROM #__nodes WHERE `type` LIKE \'%com:todos.domain.entity.todolist\' ');
+        dbexec('DELETE FROM `#__nodes` WHERE `type` LIKE \'%com:todos.domain.entity.todolist\' ');
 
         //clear stories
-        dbexec('DELETE FROM #__nodes WHERE `story_object_type` = \'com:todos.domain.entity.todolist\' OR `story_object_type` = \'com:todos.domain.entity.milestone\' ');
+        dbexec('DELETE FROM `#__nodes` WHERE `story_object_type` = \'com:todos.domain.entity.todolist\' OR `story_object_type` = \'com:todos.domain.entity.milestone\' ');
 
         dbexec('DROP TABLE #__todos_todolists');
 
