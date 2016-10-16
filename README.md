@@ -53,7 +53,7 @@ The code in the master branch is called the **Embryo**. It is what we use to pow
 Before you start please make sure that your server meets the following requirements:
 
 1. Linux or unix server
-1. Apache 2.0+ (with mod_mysql, mod_xml, mod_zlib) or Nginx
+1. Nginx or Apache 2.0+
 1. MySql 5.6+
 1. php 5.6+ with OPcache. Use PHP 7+ for best results
 1. Composer package management. You can download it following the instructions on
@@ -136,7 +136,7 @@ Here are the options on the Site Settings view:
 
 ### Notifications
 
-Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you need to setup a cron job on your server to the `yourdomain.com/components/com_notifications/process.php` file. 
+Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you can setup a cron job on your server to the `yourdomain.com/components/com_notifications/process.php` file. Make sure to go to _Site Settings > Apps > Notifications_ and set **Use Cron** to _Yes_.
 
 There are many articles on the web to show you how to setup a cron job. Depending on your number of users and activity on your site, anywhere from 15 minute to 1 hour intervals will work. You will find the suitable interval after monitoring your Anahita installation for a while.  
 
@@ -164,7 +164,7 @@ Congratulations! You have just installed some apps and extensions on your Anahit
 
 ### Amazon S3 Storage
 
-Nearly in all cases you wouldn't want to store the uploaded files on your own server. They add up very quickly and that makes it very difficult to maintain or migrate your Anahita installation. Anahita provides a plugin which allows all the uploaded files to be stored in the AWS or [Amazon S3](https://aws.amazon.com/s3/) cloud.
+Nearly in all cases you wouldn't want to store the uploaded files on your own server. They add up very quickly and that makes it very difficult to maintain or migrate your Anahita installation. Anahita provides a plugin which allows all the uploaded files to be stored in the AWS or ![Amazon S3](https://aws.amazon.com/s3/) cloud.
 
 Go to _Site Settings > Plugins_ and then from the _type_ list select _Storage_. Edit and disable the _Storage - Local_ plugin by clicking on it's name. Edit the _Amazon S3_ plugin using the following settings:
 
@@ -177,21 +177,21 @@ Go to _Site Settings > Plugins_ and then from the _type_ list select _Storage_. 
 Now click _Update_ to store the settings. Try uploading your avatar in the front-end and see if it gets uploaded properly. Check the image src to make sure it is an AWS url.
 
 ## Join the Anahita Tribe
-Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](https://www.GetAnahita.com/join)
+Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So ![Join Us](https://www.GetAnahita.com/join)
 
-**Please Note:** we do not answer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the [Tribe Support](https://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
+**Please Note:** we do not answer questions in email. If you have any questions, please join the Anahita tribe and post your questions on the ![Tribe Support](https://www.getanahita.com/groups/107732-tribe-support) group where others can benefit from the answers too.
 
 ## Report Bugs or Issues
 
 There are so many ways that you can report us a bug:
 
 - open an issue here on our repository
-- start a topic on [Anahita Project](https://www.getanahita.com/groups/42242-anahita-project) group
-- send us a [friendly email](https://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug
+- start a topic on ![Anahita Project](https://www.getanahita.com/groups/42242-anahita-project) group
+- send us a ![friendly email](https://www.getanahita.com/html/about/contact) and tell us how to reproduce the bug
 
 ## Contribute to Anahita
 
-Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a [complete guideline](https://www.getanahita.com/html/tribes/contribute) of how you can contribute to Anahita.
+Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a ![complete guideline](https://www.getanahita.com/html/tribes/contribute) of how you can contribute to Anahita.
 
 ## Follow us, Like us
 
@@ -199,4 +199,4 @@ Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like 
 
 ## Credits
 
-Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver based software development company specialized in developing knowledge sharing mobile and web apps. 
+Anahita is developed and maintained by ![rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver based software development company specialized in developing knowledge sharing mobile and web apps. 
