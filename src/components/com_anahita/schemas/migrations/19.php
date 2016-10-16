@@ -65,7 +65,7 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec($query);
 
         //for people the alias is the same as username
-        dbexec("UPDATE `#__nodes` SET `alias` = `person_username` WHERE `person_username` != '' ");
+        dbexec("UPDATE `#__nodes` SET alias = person_username WHERE type LIKE '%com:people.domain.entity.person' ");
 
         dbexec('DROP TABLE IF EXISTS `#__people_people`');
 

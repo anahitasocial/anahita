@@ -14,6 +14,7 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
      */
     public function up()
     {
+        /*
         $timeThen = microtime(true);
 
         $db = KService::get('anahita:database');
@@ -30,6 +31,7 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
 
         $timeDiff = microtime(true) - $timeThen;
         dboutput("TIME: ($timeDiff)"."\n");
+        */
     }
 
     /**

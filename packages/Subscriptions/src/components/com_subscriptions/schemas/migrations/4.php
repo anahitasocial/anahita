@@ -21,7 +21,7 @@ class ComSubscriptionsSchemaMigration4 extends ComMigratorMigrationVersion
     public function up()
     {
         dbexec('ALTER TABLE `#__subscriptions_transactions` DROP COLUMN `user_id`');
-        dbexec('UPDATE TABLE `#__subscriptions_transactions` SET billing_period = \'Year\' WHERE `billing_period` = \'\' ');
+        dbexec('UPDATE `#__subscriptions_transactions` SET `billing_period` = \'Year\' WHERE `billing_period` = \'\' ');
     }
 
    /**

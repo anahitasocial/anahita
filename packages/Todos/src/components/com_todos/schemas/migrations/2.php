@@ -16,11 +16,11 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
     {
         $timeThen = microtime(true);
 
-        dbexec('DELETE FROM #__nodes WHERE `type` LIKE \'%ComBaseDomainEntityComment%\' AND `parent_type` = \'com:todos.domain.entity.milestone\' ');
+        dbexec('DELETE FROM `#__nodes` WHERE `type` LIKE \'%ComBaseDomainEntityComment%\' AND `parent_type` = \'com:todos.domain.entity.milestone\' ');
 
-        dbexec('DELETE FROM #__nodes WHERE `type` LIKE \'%com:todos.domain.entity.milestone\' ');
+        dbexec('DELETE FROM `#__nodes` WHERE `type` LIKE \'%com:todos.domain.entity.milestone\' ');
 
-        dbexec('DELETE FROM #__edges WHERE `node_b_type` LIKE \'%com:todos.domain.entity.milestone\' ');
+        dbexec('DELETE FROM `#__edges` WHERE `node_b_type` LIKE \'%com:todos.domain.entity.milestone\' ');
 
         dbexec('DROP TABLE #__todos_milestones');
 

@@ -27,7 +27,6 @@ CREATE TABLE `#__subscriptions_packages` (
 CREATE TABLE `#__subscriptions_transactions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` varchar(255) NOT NULL,
-  `user_id` int(11) NOT NULL,
   `actor_id` bigint(11) NOT NULL,
   `item_name` varchar(255) NOT NULL,
   `item_id` bigint(11) NOT NULL,
