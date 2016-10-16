@@ -53,7 +53,7 @@ The code in the master branch is called the **Embryo**. It is what we use to pow
 Before you start please make sure that your server meets the following requirements:
 
 1. Linux or unix server
-1. Apache 2.0+ (with mod_mysql, mod_xml, mod_zlib) or Nginx
+1. Nginx or Apache 2.0+
 1. MySql 5.6+
 1. php 5.6+ with OPcache. Use PHP 7+ for best results
 1. Composer package management. You can download it following the instructions on
@@ -136,7 +136,7 @@ Here are the options on the Site Settings view:
 
 ### Notifications
 
-Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you need to setup a cron job on your server to the `yourdomain.com/components/com_notifications/process.php` file. 
+Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you can setup a cron job on your server to the `yourdomain.com/components/com_notifications/process.php` file. Make sure to go to _Site Settings > Apps > Notifications_ and set **Use Cron** to _Yes_.
 
 There are many articles on the web to show you how to setup a cron job. Depending on your number of users and activity on your site, anywhere from 15 minute to 1 hour intervals will work. You will find the suitable interval after monitoring your Anahita installation for a while.  
 
