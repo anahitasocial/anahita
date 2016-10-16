@@ -35,7 +35,6 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
      */
     const GUEST = 'public';
     const REG = 'registered';
-    const SPECIAL = 'special';    //special permission
     const FOLLOWER = 'followers';
     const LEADER = 'leaders';
     const MUTUAL = 'mutuals';

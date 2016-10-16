@@ -34,6 +34,8 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
 
         $this->_updateMeta('components');
 
+        dbexec('UPDATE `#__components` SET meta = REPLACE(meta, \'"allowUserRegistration":\', \'"allow_registration":\') WHERE `option` = \'com_people\'');
+
         //legacy data clean up
         dbexec('DELETE FROM `#__plugins` WHERE `element` = "invite" ');
         dbexec('ALTER TABLE `#__plugins` DROP COLUMN `access`');

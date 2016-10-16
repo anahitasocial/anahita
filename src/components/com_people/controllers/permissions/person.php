@@ -50,7 +50,7 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'can_register' => (bool) get_config_value('people.allowUserRegistration', true),
+            'can_register' => (bool) get_config_value('people.allow_registration', true),
         ));
 
         $this->_viewer = get_viewer();

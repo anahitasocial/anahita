@@ -441,7 +441,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
 
             $options = new KConfig(array(
                 LibBaseDomainBehaviorPrivatable::GUEST => AnTranslator::_('LIB-AN-PRIVACYLABEL-PUBLIC'),
-                LibBaseDomainBehaviorPrivatable::REG => AnTranslator::_('LIB-AN-PRIVACYLABEL-REG'),
+                LibBaseDomainBehaviorPrivatable::REG => AnTranslator::_('LIB-AN-PRIVACYLABEL-REGISTERED'),
             ));
 
             if ($actor->isFollowable()) {

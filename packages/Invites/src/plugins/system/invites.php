@@ -24,7 +24,7 @@ class plgSystemInvites extends PlgAnahitaDefault
 
         if ($token && $option === 'com_people' && $isGuest) {
             $personConfig = KService::get('com:settings.template.helper')->getMeta('people');
-    		$personConfig->allowUserRegistration = true;
+    		$personConfig->allow_registration = true;
     	}
     }
 }
