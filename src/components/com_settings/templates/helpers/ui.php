@@ -51,6 +51,12 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         return $this->_render('sorting', $config);
     }
 
+    /**
+    * Renders navigation bar for settings
+    *
+    * @param array of menu items
+    * @param string html
+    */
     public function navigation($config = array())
     {
         $config = array_merge($config, array(
@@ -121,13 +127,11 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
           $exclude = array(
             'base',
-            'system',
-            '.',
-            '..',
-            '.DS_Store'
+            'system'
           );
 
-          $templates = array_diff(scandir(ANPATH_THEMES), $exclude);
+          $templates = preg_grep('/^([^.])/', scandir(ANPATH_THEMES));
+          $templates = array_diff($templates, $exclude);
 
           $options = array();
 
@@ -149,15 +153,8 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     public function languages($config = array())
     {
           $config = new KConfig($config);
-
-          $exclude = array(
-            '.',
-            '..',
-            '.DS_Store'
-          );
-
           $path = ANPATH_SITE.DS.'language';
-          $languages = array_diff(scandir($path), $exclude);
+          $languages = preg_grep('/^([^.])/', scandir($path));
           $options = array();
 
           foreach($languages as $language){

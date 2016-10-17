@@ -296,11 +296,20 @@ class LibSessions extends KObject implements KServiceInstantiatable
 			SCANDIR_SORT_DESCENDING
 		);
 
-		$exclude = array('abstract.php', 'exception.php', 'interface.php');
+		$handlers = preg_grep('/^([^.])/', $handlers);
+
+		$exclude = array(
+			'abstract.php',
+			'exception.php',
+			'interface.php'
+		);
+
+		$handlers = array_diff($handlers, $exclude);
+
 		$names = array();
 
 		foreach ($handlers as $handler) {
-			if (strpos($handler, '.php') && !in_array($handler, $exclude)) {
+			if (strpos($handler, '.php')) {
 				$name = substr($handler, 0, strrpos($handler, '.'));
 				if ($this->getService('com:sessions.storage.'.$name)->test()){
 					$names[] = $name;
