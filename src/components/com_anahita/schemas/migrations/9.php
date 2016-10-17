@@ -15,8 +15,8 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
     public function up()
     {
         //looks like these two didn't work in previous migrations
-        dbexec('DROP TABLE #__content_rating');
-        dbexec("DELETE FROM #__components WHERE `option` IN  ('com_media', 'com_menus', 'com_modules')");
+        dbexec('DROP TABLE `#__content_rating`');
+        dbexec("DELETE FROM `#__components` WHERE `option` IN  ('com_media', 'com_menus', 'com_modules')");
 
         //add github gist plugin
         dbexec("INSERT INTO `#__plugins` (`id`, `name`, `element`, `folder`, `access`, `ordering`, `published`, `iscore`, `client_id`, `checked_out`, `checked_out_time`, `params`) VALUES (49, 'Content Filter - GithubGist', 'gist', 'contentfilter', 0, 0, 0, 0, 0, 0, '0000-00-00 00:00:00', '')");
@@ -45,7 +45,9 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         dbexec('ALTER TABLE `#__nodes` CHANGE alias alias VARCHAR(255) CHARACTER SET utf8');
 
         dbexec('ALTER TABLE `#__nodes` CHANGE body body MEDIUMBLOB');
-        dbexec('ALTER TABLE `#__nodes` CHANGE body body MEDIUMTEXT CHARACTER SET utf8');
+        dbexec('ALTER TABLE `#__nodes` CHANGE body body MEDIUMTEXT CHARACTER SET utf8mb4');
+
+        dbexec('ALTER TABLE `#__nodes` CHANGE excerpt excerpt TEXT CHARACTER SET utf8mb4');
 
         dbexec('ALTER TABLE `#__nodes` CHANGE person_given_name person_given_name VARBINARY(255)');
         dbexec('ALTER TABLE `#__nodes` CHANGE person_given_name person_given_name VARCHAR(255) CHARACTER SET utf8');

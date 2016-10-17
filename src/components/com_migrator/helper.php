@@ -46,12 +46,12 @@ function dbexec($queries, $force = true)
             $then = microtime(true);
             $db->execute($sql);
             $diff = microtime(true) - $then;
-            dboutput('QUERY: '.$sql." ($diff)"."\n");
+            dboutput('QUERY: '.$sql." ($diff)"."\n\n");
         } catch (Exception $e) {
             if ($force) {
-                dboutput('QUERY ERROR IGNORED: '.$e->getMessage()."\n");
+                dboutput('QUERY ERROR IGNORED: '.$e->getMessage()."\n\n");
             } else {
-                dboutput('QUERY ERROR: '.$sql."\n");
+                dboutput('QUERY ERROR: '.$sql."\n\n");
                 throw $e;
             }
         }
@@ -89,7 +89,7 @@ function dbinsert($table, $data)
     foreach ($keys as $i => $key) {
         $keys[$i] = $db->quoteName($key);
     }
-    $query = "INSERT INTO an_$table (".implode(',', $keys).") VALUES\n";
+    $query = "INSERT INTO an_$table (".implode(',', $keys).") VALUES\n\n";
     $keys = array_keys($data[0]);
     $inserts = array();
     foreach ($data as $values) {
@@ -138,7 +138,7 @@ function dbfetch($select, $mode = KDatabase::FETCH_ARRAY_LIST)
     $then = microtime();
     $result = $db->select($select, $mode);
     $diff = microtime() - $then;
-    dboutput('QUERY: '.$select." ($diff)"."\n");
+    dboutput('QUERY: '.$select." ($diff)"."\n\n");
 
     return $result;
 }
