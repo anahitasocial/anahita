@@ -32,7 +32,7 @@ CREATE TABLE `#__nodes` (
   `component` varchar(100) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
-  `body` mediumtext,
+  `body` mediumtext CHARACTER SET utf8mb4,
   `start_date` datetime DEFAULT NULL,
   `end_date` datetime DEFAULT NULL,
   `owner_type` varchar(255) DEFAULT NULL,
@@ -92,7 +92,7 @@ CREATE TABLE `#__nodes` (
   `shared_owner_ids` mediumtext,
   `administrator_ids` text,
   `blocked_ids` text,
-  `excerpt` text,
+  `excerpt` text CHARACTER SET utf8mb4,
   `mimetype` varchar(100) DEFAULT NULL,
   `story_subject_id` bigint(11) unsigned DEFAULT NULL,
   `story_object_type` varchar(255) DEFAULT NULL,
@@ -122,7 +122,7 @@ CREATE TABLE `#__nodes` (
   KEY `type_created_on` (`type`,`created_on`),
   KEY `type_status_update_time` (`type`,`status_update_time`),
   KEY `type_default` (`type`,`is_default`)
-) ENGINE=InnoDB CHARACTER SET=utf8mb4;
+) ENGINE=InnoDB CHARACTER SET=utf8;
 
 -- --------------------------------------------------------
 

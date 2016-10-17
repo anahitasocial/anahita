@@ -36,7 +36,7 @@ class ComAnahitaSchemaMigration9 extends ComMigratorMigrationVersion
         //UTF-8 conversions
         dbexec('ALTER DATABASE CHARACTER SET utf8');
         dbexec('ALTER TABLE `#__edges` CHARACTER SET utf8');
-        dbexec('ALTER TABLE `#__nodes` CHARACTER SET utf8mb4');
+        dbexec('ALTER TABLE `#__nodes` CHARACTER SET utf8');
 
         dbexec('ALTER TABLE `#__nodes` CHANGE name name VARBINARY(255)');
         dbexec('ALTER TABLE `#__nodes` CHANGE name name VARCHAR(255) CHARACTER SET utf8');
