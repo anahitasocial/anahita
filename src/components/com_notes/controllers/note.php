@@ -69,18 +69,4 @@ class ComNotesControllerNote extends ComMediumControllerDefault
 
         return $entity;
     }
-
-    /**
-     * Page post action.
-     *
-     * @param KCommandContext $context Context parameter
-     */
-    public function redirect(KCommandContext $context)
-    {
-        if ($context->action == 'delete') {
-            $context->response->setRedirect(route($this->getItem()->owner->getURL()));
-        } else {
-            return parent::redirect($context);
-        }
-    }
 }

@@ -171,7 +171,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     protected function _getQueueNamespace($global = false)
     {
         $session = KService::get('com:sessions');
-
+        
         if ($global) {
             $store = 'application.queue';
             $namespace = '__anahita';

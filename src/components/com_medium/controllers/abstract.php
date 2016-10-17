@@ -21,6 +21,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
+        
         $this->registerCallback(array(
             'after.add'),
             array($this, 'createStoryCallback'));
