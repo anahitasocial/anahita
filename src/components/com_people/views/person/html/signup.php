@@ -29,20 +29,37 @@
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>
                 </legend>
 
-                <div class="control-group">
-                    <label class="control-label"  for="person-name">
-                        <?= @text('COM-PEOPLE-SIGNUP-NAME'); ?>
+				<div class="control-group">
+                    <label class="control-label"  for="person-given-name">
+                        <?= @text('COM-PEOPLE-GIVEN-NAME'); ?>
                     </label>
                     <div class="controls">
                         <input
-							required
-							class="input-block-level"
-							type="text"
-							id="person-name"
-							name="name"
+                            required
+                            class="input-block-level"
+                            type="text"
+                            id="person-given-name"
+                            name="givenName"
 							maxlength="25"
-							minlength="6"
-						 />
+                            minlength="3"
+                         />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label"  for="person-family-name">
+                        <?= @text('COM-PEOPLE-FAMILY-NAME'); ?>
+                    </label>
+                    <div class="controls">
+                        <input
+                            required
+                            class="input-block-level"
+                            type="text"
+                            id="person-family-name"
+                            name="familyName"
+							maxlength="25"
+                            minlength="3"
+                         />
                     </div>
                 </div>
 

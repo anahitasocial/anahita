@@ -388,7 +388,8 @@
             ));
 
             $person_data = array(
-                'name' => $data->person->name,
+                'givenName' => $data->person->givenName,
+                'familyName' => $data->person->familyName,
                 'email' => $data->person->email,
                 'username' => $data->person->username,
                 'password' => $data->person->password,
@@ -398,8 +399,7 @@
             $person = $this->getService('repos:people.person')
                            ->getEntity()
                            ->reset()
-                           ->setData($person_data)
-                           ->setName($data->person->name);
+                           ->setData($person_data);
         } else {
             $person = get_viewer();
         }

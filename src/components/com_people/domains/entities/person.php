@@ -60,6 +60,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                     'key' => true,
                     'format' => 'username'
                 ),
+                'givenName',
+                'familyName',
                 'username',
                 'email',
                 'password' => array(
@@ -78,7 +80,12 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
             'behaviors' => to_hash(array(
                 //@todo if viewer is admin, then make email searchable too
                 'describable' => array(
-                    'searchable_properties' => array('username', 'email')
+                    'searchable_properties' => array(
+                        'givenName',
+                        'familyName',
+                        'username',
+                        'email'
+                    )
                 ),
                 'administrator',
                 'notifiable',

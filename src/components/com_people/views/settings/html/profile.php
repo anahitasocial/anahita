@@ -4,11 +4,38 @@
 
 <form action="<?= @route($item->getURL()) ?>" method="post" autocomplete="off">
 	<div class="control-group">
-		<label class="control-label" class="control-label" for="actor-name">
-			<?= @text('COM-ACTORS-NAME') ?>
+		<label class="control-label"  for="person-given-name">
+			<?= @text('COM-PEOPLE-GIVEN-NAME'); ?>
 		</label>
 		<div class="controls">
-			<input type="text" class="input-block-level" id="actor-name" size="50" maxlength="100" name="name" value="<?=$item->name?>" required />
+			<input
+				required
+				class="input-block-level"
+				type="text"
+				id="person-given-name"
+				name="givenName"
+				maxlength="25"
+				minlength="3"
+				value="<?= $item->givenName ?>"
+			 />
+		</div>
+	</div>
+
+	<div class="control-group">
+		<label class="control-label"  for="person-family-name">
+			<?= @text('COM-PEOPLE-FAMILY-NAME'); ?>
+		</label>
+		<div class="controls">
+			<input
+				required
+				class="input-block-level"
+				type="text"
+				id="person-family-name"
+				name="familyName"
+				maxlength="25"
+				minlength="3"
+				value="<?= $item->familyName ?>"
+			 />
 		</div>
 	</div>
 

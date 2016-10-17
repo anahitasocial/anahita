@@ -33,7 +33,11 @@
             	<? $emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ?>
 
             	<?= @helper('ui.form', array(
-                    'COM-SUBSCRIPTIONS-REGISTER-FULL-NAME' => @html('textfield', 'person[name]', $person->name)->required('true'),
+                    'COM-SUBSCRIPTIONS-REGISTER-GIVEN-NAME' => @html('textfield', 'person[givenName]', $person->givenName)
+					->required('true')->id('person-given-name')->maxlength(25)->minlength(3),
+
+					'COM-SUBSCRIPTIONS-REGISTER-FAMILY-NAME' => @html('textfield', 'person[familyName]', $person->familyName)
+					->required('true')->id('person-family-name')->maxlength(25)->minlength(3),
 
                     'COM-SUBSCRIPTIONS-REGISTER-USERNAME' => @html('textfield', 'person[username]', $person->username)
                      ->required('true')->dataValidate('username')->dataUrl(@route('option=com_people&view=person', false))
