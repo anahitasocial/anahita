@@ -76,7 +76,7 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
 			return false;
 		}
 
-		$db->set_charset("utf8");
+		$db->set_charset("utf8mb4");
 
         $config->append(array(
     		'connection' => $db,

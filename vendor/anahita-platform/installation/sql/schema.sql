@@ -122,7 +122,7 @@ CREATE TABLE `#__nodes` (
   KEY `type_created_on` (`type`,`created_on`),
   KEY `type_status_update_time` (`type`,`status_update_time`),
   KEY `type_default` (`type`,`is_default`)
-) ENGINE=InnoDB CHARACTER SET=utf8;
+) ENGINE=InnoDB CHARACTER SET=utf8mb4;
 
 -- --------------------------------------------------------
 
