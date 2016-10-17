@@ -111,7 +111,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
         $messages[] = strtoupper('LIB-AN-MESSAGE-'.$action.'-'.$type);
         $messages[] = 'LIB-AN-PROMPT-COMMIT-'.strtoupper($type);
         $message = translate($messages, false);
-        error_log(serialize($messages));
+
         return $message;
     }
 
