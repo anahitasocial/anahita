@@ -178,9 +178,8 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		}
 
 		session_cache_limiter('none');
-		session_start();
-
-		return true;
+		
+		return session_start();
 	}
 
 	/**

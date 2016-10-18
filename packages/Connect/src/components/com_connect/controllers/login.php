@@ -49,7 +49,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
             return false;
         }
 
-        $context->response->setRedirect('index.php?view=login');
+        $context->response->setRedirect('view=login');
     }
 
     /**
