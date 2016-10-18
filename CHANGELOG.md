@@ -2,7 +2,12 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.3.0 Birth Release
 =============================
+* removed administration back-end
+* implemented com_settings for super admins to configure Anahita
 * removed all joomla legacy files and replaced them with native anahita classes
+* removed all xml files and started using json files instead
+* node description and excerpt fields now support utf8mb4 for displaying emojis
+* updated robots.txt file
 
 Anahita 4.2.4 Birth Release
 =============================
