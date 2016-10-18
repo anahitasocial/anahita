@@ -22,6 +22,6 @@ class LibSessionsDomainRepositorySession extends AnDomainRepositoryDefault
     {
         $past = time() - $lifetime;
         $query = $this->getQuery()->delete()->where('time < '.$past);
-        $this->getStore()->execute($query);
+        return (boolean) $this->getStore()->execute($query);
     }
 }
