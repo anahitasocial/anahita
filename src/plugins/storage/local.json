@@ -1,0 +1,30 @@
+{
+    "name": "Storage - Local",
+    "description": "Local storage",
+    "type": "plugin",
+    "group": "storage",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "local.php"
+    ],
+    "fields": {
+        "input": {
+            "type": "text",
+            "name": "folder",
+            "label": "The folder to store the data",
+            "default": "assets"
+        }
+    }
+}

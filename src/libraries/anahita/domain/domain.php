@@ -98,7 +98,7 @@ class AnDomain
 
         if (!$identifier->basepath) {
             $adapters = KService::get('koowa:loader')->getAdapters();
-            $basepath = pick($adapters[$identifier->type]->getBasePath(), JPATH_BASE);
+            $basepath = pick($adapters[$identifier->type]->getBasePath(), ANPATH_BASE);
             $applications = array_flip(KServiceIdentifier::getApplications());
 
             if (isset($applications[$basepath])) {

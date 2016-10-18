@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Rendering script.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,12 +30,12 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 {
     /**
      * Template parameters.
-     * 
+     *
      * @return KConfig
      */
     protected $_params;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -49,9 +49,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 
     /**
      * Renders the logo hyperlinked.
-     * 
+     *
      * @param $config Configuration
-     * 
+     *
      * @return string
      */
     public function logo($config = array())
@@ -71,9 +71,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
 
     /**
      * Renders the favicon tag.
-     * 
+     *
      * @param $config Configuration
-     * 
+     *
      * @return string
      */
     public function favicon($config = array())
@@ -88,24 +88,24 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         ));
 
         $paths = array(
-            JPATH_THEMES.DS.'base'.DS.'css'.DS.'images',
-            JPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style.DS.'images',
+            ANPATH_THEMES.DS.'base'.DS.'css'.DS.'images',
+            ANPATH_THEMES.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style.DS.'images',
         );
 
         $finder = $this->getService('anahita:file.pathfinder');
 
         $finder->addSearchDirs($paths);
 
-        $path = str_replace('\\', '/', str_replace(JPATH_ROOT.DS, 'base://', $finder->getPath('favicon.ico')));
+        $path = str_replace('\\', '/', str_replace(ANPATH_ROOT.DS, 'base://', $finder->getPath('favicon.ico')));
 
         return '<link rel="icon" type="'.$config->type.'" href="'.$path.'" />';
     }
 
     /**
      * Renders the template style.
-     * 
-     * @param array $config Configuration 
-     * 
+     *
+     * @param array $config Configuration
+     *
      * @return string
      */
     public function style($config = array())
@@ -122,9 +122,9 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         ));
 
         $paths = array(
-            JPATH_ROOT.DS.'media'.DS.'lib_anahita'.DS.'css',
-            JPATH_THEMES.DS.'base'.DS.'css',
-            $css_folder = JPATH_ROOT.DS.'templates'.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style,
+            ANPATH_ROOT.DS.'media'.DS.'lib_anahita'.DS.'css',
+            ANPATH_THEMES.DS.'base'.DS.'css',
+            $css_folder = ANPATH_ROOT.DS.'templates'.DS.$this->getIdentifier()->package.DS.'css'.DS.$config->style,
         );
 
         $finder = $this->getService('anahita:file.pathfinder');
@@ -132,7 +132,7 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
         $style = $finder->getPath('style.less');
         $css = $css_folder.DS.'style.css';
 
-        //compile        
+        //compile
         if ($config->compile > 0 && !empty($style)) {
             $this->_template->renderHelper('less.compile', array(
                 'force' => $config->compile > 1,
@@ -144,22 +144,22 @@ class LibApplicationTemplateHelperRender extends KTemplateHelperAbstract
             ));
         }
 
-        $cssHref = str_replace('\\', '/', str_replace(JPATH_ROOT.DS, 'base://', $css));
+        $cssHref = str_replace('\\', '/', str_replace(ANPATH_ROOT.DS, 'base://', $css));
 
         return '<link rel="stylesheet" href="'.$cssHref.'" type="text/css" />';
     }
 
     /**
      * Render the document queued messages.
-     * 
+     *
      * @return string
      */
     public function messages()
     {
-        $session = &JFactory::getSession();
-        $queue = (array) $session->get('application.queue', array());
+        $session = KService::get('com:sessions');
+        $queue = (array) $session->get('controller.queue', array());
 
-        $session->set('application.queue', null);
+        $session->set('controller.queue', null);
 
         if (isset($queue['message'])) {
             $message = $queue['message'];

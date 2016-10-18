@@ -1,0 +1,36 @@
+{
+    "fields": [
+          {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "No"
+                },
+                {
+                    "value": "1",
+                    "text": "Yes"
+                }
+            ],
+            "name": "allow_registration",
+            "type": "list",
+            "default": "1",
+            "label": "COM-PEOPLE-CONFIG-ALLOW-REGISTRATION"
+        },
+        {
+          "option": [
+              {
+                  "value": "public",
+                  "text": "LIB-AN-PRIVACYLABEL-PUBLIC"
+              },
+              {
+                  "value": "registered",
+                  "text": "LIB-AN-PRIVACYLABEL-REGISTERED"
+              }
+          ],
+          "name": "access",
+          "type": "list",
+          "default": "registered",
+          "label": "COM-PEOPLE-CONFIG-DEFAULT-ACCESS"
+        }
+    ]
+}

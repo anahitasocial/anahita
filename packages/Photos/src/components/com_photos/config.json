@@ -1,0 +1,10 @@
+{
+    "fields": [{
+        "name": "uploadlimit",
+        "type": "custom",
+        "label": "Upload Limit (MB)",
+        "description": "Sets the file size upload limit",
+        "default" : "4",
+        "identifier": "com://site/photos.template.helper.ui.uploadlimit"
+    }]
+}

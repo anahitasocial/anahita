@@ -21,22 +21,24 @@ abstract class PlgStorageAbstract extends KObject
     protected $_params;
 
     /**
+    * Storage folder
+    *
+    *  @var string
+    */
+    protected $_folder;
+
+    /**
      * Constructor.
      *
      * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional KConfig object with configuration options.
      */
-    public function __construct($dispatcher = null,  $config = array())
+    public function __construct($dispatcher = null, KConfig $config)
     {
-        if (isset($config['params'])) {
-            $config = (array) JRegistryFormat::getInstance('ini')->stringToObject($config['params']);
-        }
-
-        $config = new KConfig($config);
-
         parent::__construct($config);
 
-        $this->_params = $config;
+        $this->_params = $config->meta;
+        $this->_folder = $config->folder;
 
         KService::set('plg:storage.default', $this);
     }
@@ -144,7 +146,7 @@ abstract class PlgStorageAbstract extends KObject
      */
     protected function _relativepath($path, $public)
     {
-        return $this->_params->folder.'/'.($public ? "public/$path" : "private/$path");
+        return $this->_folder.'/'.($public ? "public/$path" : "private/$path");
     }
 
     /**

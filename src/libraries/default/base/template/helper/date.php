@@ -96,18 +96,18 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
 
         $months = array(
             0 => 'Select Month',
-            1 => JText::_('JANUARY') ,
-            2 => JText::_('FEBRUARY') ,
-            3 => JText::_('MARCH')  ,
-            4 => JText::_('APRIL')  ,
-            5 => JText::_('MAY')    ,
-            6 => JText::_('JUNE')   ,
-            7 => JText::_('JULY')    ,
-            8 => JText::_('AUGUST') ,
-            9 => JText::_('SEPTEMBER') ,
-            10 => JText::_('OCTOBER') ,
-            11 => JText::_('NOVEMBER') ,
-            12 => JText::_('DECEMBER') ,
+            1 => AnTranslator::_('JANUARY') ,
+            2 => AnTranslator::_('FEBRUARY') ,
+            3 => AnTranslator::_('MARCH')  ,
+            4 => AnTranslator::_('APRIL')  ,
+            5 => AnTranslator::_('MAY')    ,
+            6 => AnTranslator::_('JUNE')   ,
+            7 => AnTranslator::_('JULY')    ,
+            8 => AnTranslator::_('AUGUST') ,
+            9 => AnTranslator::_('SEPTEMBER') ,
+            10 => AnTranslator::_('OCTOBER') ,
+            11 => AnTranslator::_('NOVEMBER') ,
+            12 => AnTranslator::_('DECEMBER') ,
         );
 
         $days = array(0 => 'Select Day');
@@ -158,33 +158,33 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
             $diff = abs($diff);
 
             if ($diff < 1) {
-                return sprintf(JText::_('LIB-AN-DATE-MOMENT'), $diff);
+                return sprintf(AnTranslator::_('LIB-AN-DATE-MOMENT'), $diff);
             }
 
             if ($diff < 60) {
-                return ($diff > 1) ? sprintf(JText::_('LIB-AN-DATE-SECONDS'.$timeLeft), $diff) : sprintf(JText::_('LIB-AN-DATE-SECOND'.$timeLeft), $diff);
+                return ($diff > 1) ? sprintf(AnTranslator::_('LIB-AN-DATE-SECONDS'.$timeLeft), $diff) : sprintf(AnTranslator::_('LIB-AN-DATE-SECOND'.$timeLeft), $diff);
             }
 
             $diff = round($diff / 60);
 
             if ($diff < 60) {
-                return ($diff > 1) ? sprintf(JText::_('LIB-AN-DATE-MINUTES'.$timeLeft), $diff) : sprintf(JText::_('LIB-AN-DATE-MINUTE'.$timeLeft), $diff);
+                return ($diff > 1) ? sprintf(AnTranslator::_('LIB-AN-DATE-MINUTES'.$timeLeft), $diff) : sprintf(AnTranslator::_('LIB-AN-DATE-MINUTE'.$timeLeft), $diff);
             }
 
             $diff = round($diff / 60);
             if ($diff < 24) {
-                return ($diff > 1) ? sprintf(JText::_('LIB-AN-DATE-HOURS'.$timeLeft), $diff) : sprintf(JText::_('LIB-AN-DATE-HOUR'.$timeLeft), $diff);
+                return ($diff > 1) ? sprintf(AnTranslator::_('LIB-AN-DATE-HOURS'.$timeLeft), $diff) : sprintf(AnTranslator::_('LIB-AN-DATE-HOUR'.$timeLeft), $diff);
             }
 
             $diff = round($diff / 24);
             if ($diff < 7) {
-                return ($diff > 1) ? sprintf(JText::_('LIB-AN-DATE-DAYS'.$timeLeft), $diff) : sprintf(JText::_('LIB-AN-DATE-DAY'.$timeLeft), $diff);
+                return ($diff > 1) ? sprintf(AnTranslator::_('LIB-AN-DATE-DAYS'.$timeLeft), $diff) : sprintf(AnTranslator::_('LIB-AN-DATE-DAY'.$timeLeft), $diff);
             }
 
             $diff = round($diff / 7);
 
             if ($diff < 4) {
-                return ($diff > 1) ? sprintf(JText::_('LIB-AN-DATE-WEEKS'.$timeLeft), $diff) : sprintf(JText::_('LIB-AN-DATE-WEEK'.$timeLeft), $diff);
+                return ($diff > 1) ? sprintf(AnTranslator::_('LIB-AN-DATE-WEEKS'.$timeLeft), $diff) : sprintf(AnTranslator::_('LIB-AN-DATE-WEEK'.$timeLeft), $diff);
             }
         } elseif ($config->offset) {
             $date->addHours($config->offset);

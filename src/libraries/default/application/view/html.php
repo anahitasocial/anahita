@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,19 +30,19 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 {
     /**
      * Page content to display.
-     * 
+     *
      * @return KException|string
      */
     public $content;
 
     /**
      * Template Parameters.
-     * 
+     *
      * KConfig
      */
     protected $_params;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -56,7 +56,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
         $this->_params = $config->params;
 
-        JFactory::getLanguage()->load('tpl_'.$this->getIdentifier()->package);
+        $this->getService('anahita:language')->load('tpl_'.$this->getIdentifier()->package);
 
         $this->getTemplate()->getFilter('alias')
             ->append(array('@render(\'' => '$this->renderHelper(\'render.'))
@@ -74,15 +74,13 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
     {
         $params = '';
 
-        if (is_readable($file = JPATH_THEMES.'/'.$this->getIdentifier()->package.'/params.ini')) {
-            $params = file_get_contents($file);
+        if (is_readable($file = ANPATH_THEMES.'/'.$this->getIdentifier()->package.'/params.ini')) {
+            $params = parse_ini_file($file);
         }
-
-        $params = new JParameter($params);
 
         $config->append(array(
             'mimetype' => 'text/html',
-            'params' => $params->toArray(),
+            'params' => $params,
             'template_filters' => array('shorttag', 'html', 'alias'),
         ));
 
@@ -91,7 +89,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
     /**
      * Displays the template.
-     * 
+     *
      * @return string
      */
     public function display()
@@ -107,7 +105,9 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
             $this->content = $this->getTemplate()->loadTemplate('errors/'.$layout, array('error' => $error))->render();
 
-            if (JDEBUG) {
+            $settings = $this->getService('com:settings.setting');
+
+            if ($settings->debug) {
                 $traces = array();
                 $traces[] = '<h4>Exception '.get_class($error).' with message "'.$error->getMessage().'"</h4>';
                 $traces[] = $error->getFile().':'.$error->getLine();
@@ -141,7 +141,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
     /**
      * Set the template parameters.
-     * 
+     *
      * @param array $params
      */
     public function setParams($params)
@@ -151,7 +151,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
     /**
      * Get template parameters.
-     * 
+     *
      * @return KConfig
      */
     public function getParams()

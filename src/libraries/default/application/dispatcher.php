@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Application Dispatcher.
  *
@@ -22,6 +7,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -35,7 +21,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
      */
     protected $_application;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -47,6 +33,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->_application = $config->application;
 
         if (PHP_SAPI == 'cli') {
+            $this->registerCallback('after.load', array($this, 'updateLegacyPluginsParams'));
             $this->registerCallback('after.load', array($this, 'prepclienv'));
         }
     }
@@ -61,7 +48,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'application' => null,
+            'application' => null
         ));
 
         parent::_initialize($config);
@@ -81,17 +68,12 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
         $this->_application->getRouter()->parse($url);
 
-        JRequest::set($url->query, 'get', false);
+        KRequest::set('get', $url->query);
 
         // trigger the onAfterRoute events
-        $this->_application->triggerEvent('onAfterRoute');
+        dispatch_plugin('system.onAfterRoute');
 
         $url->query = KRequest::get('get', 'raw');
-
-        //globally set ItemId
-        global $Itemid;
-
-        $Itemid = KRequest::get('get.Itemid', 'int', 0);
 
         //set the request
         $this->getRequest()->append($url->query);
@@ -107,35 +89,23 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     protected function _actionLoad($context)
     {
         //already loaded
-        if ($this->_application instanceof JApplication) {
+        if ($this->_application instanceof ComApplication) {
             return;
         }
-
-        //legacy register error handling
-        JError::setErrorHandling(E_ERROR, 'callback', array($this, 'exception'));
 
         //register exception handler
         set_exception_handler(array($this, 'exception'));
 
         $identifier = clone $this->getIdentifier();
         $identifier->name = 'application';
-
-        //load the JSite
         $this->getService('koowa:loader')->loadIdentifier($identifier);
 
-        jimport('joomla.application.component.helper');
-
         //no need to create session when using CLI (command line interface)
+        $createSession = PHP_SAPI !== 'cli';
+        $this->_application = $this->getService('application', array('session' => $createSession));
 
-        $this->_application = JFactory::getApplication($this->_application, array('session' => PHP_SAPI !== 'cli'));
-
-        global $mainframe;
-
-        $mainframe = $this->_application;
-
-        $error_reporting = $this->_application->getCfg('error_reporting');
-
-        define('JDEBUG', $this->_application->getCfg('debug'));
+        $settings = KService::get('com:settings.setting');
+        $error_reporting = $settings->error_reporting;
 
         //taken from nooku application dispatcher
         if ($error_reporting > 0) {
@@ -147,12 +117,6 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->getService()->set($identifier, $this->_application);
         $this->getService()->setAlias('application', $identifier);
 
-        //set the session handler to none for
-        if (PHP_SAPI == 'cli') {
-            JFactory::getConfig()->setValue('config.session_handler', 'none');
-            JFactory::getConfig()->setValue('config.cache_handler', 'file');
-        }
-
         //set the default timezone to UTC
         date_default_timezone_set('UTC');
 
@@ -161,7 +125,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
 
     /**
      * Prepares the CLI mode.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionPrepclienv(KCommandContext $context)
@@ -199,14 +163,34 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         KRequest::url()->format = 'json';
         KRequest::url()->setQuery($_GET);
 
-        jimport('joomla.plugin.helper');
-        JPluginHelper::importPlugin('cli');
-        $this->_application->triggerEvent('onCli');
+        KService::get('com:plugins.helper')->import('cli');
+        dispatch_plugin('cli.onCli');
 
         //if there's a file then just load the file and exit
         if (!empty($file)) {
             KService::get('koowa:loader')->loadFile($file);
             exit(0);
+        }
+    }
+
+    /**
+    *  if the plugins table still has a legacy params field, rename it to meta
+    *  to be consistent with Anahita's convention
+    *  @todo remove this method in the future releases
+    */
+    public function updateLegacyPluginsParams()
+    {
+        //Renaming a legacy database table field otherwise cli would break
+        $db = KService::get('anahita:domain.store.database');
+        $pluginColumns = $db->getColumns('plugins');
+
+        if (isset($pluginColumns['params'])) {
+           $db->execute('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
+           $db->execute('ALTER TABLE `#__plugins` CHANGE `published` `enabled` tinyint(3) NOT NULL DEFAULT 0');
+           $db->execute('DROP INDEX `idx_folder` ON `#__plugins`');
+           $db->execute('ALTER TABLE `#__plugins` ADD INDEX `idx_folder` (`enabled`, `folder`)');
+           print "Please run `db:migrate:up` one more time!\n";
+           exit(0);
         }
     }
 }

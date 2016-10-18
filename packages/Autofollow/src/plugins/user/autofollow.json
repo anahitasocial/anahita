@@ -1,0 +1,40 @@
+{
+    "name": "User - Anahita Auto Follow Actor",
+    "description": "Allows a site admin to set a list of actors to be automatically followed by the new registered members",
+    "type": "plugin",
+    "group": "user",
+    "version": "4.3.0",
+    "copyright": "2013 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.",
+    "license": "GPL3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.peerglobe.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc.",
+        "Copyright 2013 Peerglobe Technology Inc."
+    ],
+    "files": [
+        "autofollow.php"
+    ],
+    "fields": [
+        {
+            "name": "actor_ids",
+            "type": "textarea",
+            "rows": "3",
+            "cols": "40",
+            "default": "",
+            "label": "Actor IDs",
+            "description": "Enter a comma seperated list of actor ids!"
+        }
+    ]
+}

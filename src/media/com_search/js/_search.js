@@ -155,10 +155,5 @@
 	});
 
 	var search = $('#an-search-results').search();
-/*
-	$('body').on('click', '[data-trigger="ChangeScope"]', function ( event ) {
-			event.preventDefault();
-			search.search('changeScope', this);
-	});
-*/
+
 }(jQuery, window, document));

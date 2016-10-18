@@ -1,0 +1,18 @@
+{
+  "name": "Topics",
+  "description": "Topics app for Anahita",
+  "type": "component",
+  "version": "4.3.0",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc."
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+  ]
+}

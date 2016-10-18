@@ -1,0 +1,28 @@
+{
+    "name": "Anahita Connect",
+    "description": "Allows a site admin to set a list of actors to be automatically followed by the new registered members",
+    "type": "plugin",
+    "group": "user",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      },
+      {
+        "name": "Ash Sanieyan",
+        "email": "ash@peerglobe.com",
+        "homepage": "http://www.peerglobe.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc.",
+        "Copyright 2013 Peerglobe Technology Inc."
+    ],
+    "files": [
+        "connect.php"
+    ]
+}

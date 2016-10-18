@@ -1,6 +1,6 @@
 <?php
 
-require_once JPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
+require_once ANPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
 
 /**
  *
@@ -14,6 +14,7 @@ require_once JPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
  */
 class AnMail extends KObject implements KServiceInstantiatable
 {
+
     const PRIORITY_HIGHEST = 1;
     const PRIORITY_HIGH = 2;
     const PRIORITY_NORMAL = 3;
@@ -112,6 +113,13 @@ class AnMail extends KObject implements KServiceInstantiatable
     protected $_transport = null;
 
     /**
+    * site settings object
+    *
+    * @var object
+    */
+    protected $_site_settings = null;
+
+    /**
 	 * Constructor.
 	 *
 	 * @param 	object 	An optional KConfig object with configuration options.
@@ -126,6 +134,7 @@ class AnMail extends KObject implements KServiceInstantiatable
         $this->_maxLineLength = $config->maxLineLength;
         $this->_priority = $config->priority;
         $this->_contentType = $config->contentType;
+        $this->_site_settings = $config->site_settings;
         $this->_mailer = $config->mailer;
         $this->_transport = $this->_getTransport();
     }
@@ -140,14 +149,16 @@ class AnMail extends KObject implements KServiceInstantiatable
      */
     protected function _initialize(KConfig $config)
     {
-        $settings = JFactory::getConfig();
+        $settings = $this->getService('com:settings.setting');
 
         $config->append(array(
     		'charset' => 'utf-8',
             'maxLineLength' => 900,
             'priority' => self::PRIORITY_NORMAL,
             'contentType' => 'text/html',
-            'mailer' => $settings->getValue('mailer')
+            'site_settings' => $settings
+        ))->append(array(
+            'mailer' => $settings->mailer
         ));
 
         parent::_initialize($config);
@@ -337,12 +348,10 @@ class AnMail extends KObject implements KServiceInstantiatable
     */
     protected function _getTransport()
     {
-        $config = JFactory::getConfig();
-
         if ($this->_mailer === 'smtp') {
-            $transport = Swift_SmtpTransport::newInstance($config->getValue('smtphost'), $config->getValue('smtpport'))
-            ->setUsername($config->getValue('smtpuser'))
-            ->setPassword($config->getValue('smtppass'));
+            $transport = Swift_SmtpTransport::newInstance($this->_site_settings->smtphost, $this->_site_settings->smtpport)
+            ->setUsername($this->_site_settings->smtpuser)
+            ->setPassword($this->_site_settings->smtppass);
         } elseif ($this->_mailer === 'sendmail') {
             $transport = Swift_SendmailTransport::newInstance('/usr/sbin/exim -bs');
         } else {
@@ -359,8 +368,6 @@ class AnMail extends KObject implements KServiceInstantiatable
     */
     protected function _createMessage()
     {
-        $config = JFactory::getConfig();
-
         $message = Swift_Message::newInstance()
         ->setCharset($this->_charset)
         ->setContentType($this->_contentType)
@@ -381,19 +388,19 @@ class AnMail extends KObject implements KServiceInstantiatable
         if(count($this->_sender)) {
             $message->setSender($this->_sender);
         } else {
-            $message->setSender($config->getValue('mailfrom'), $config->getValue('fromname'));
+            $message->setSender($this->_site_settings->mailfrom, $this->_site_settings->fromname);
         }
 
         if(count($this->_from)) {
             $message->setFrom($this->_from);
         } else {
-            $message->setFrom($config->getValue('mailfrom'), $config->getValue('fromname'));
+            $message->setFrom($this->_site_settings->mailfrom, $this->_site_settings->fromname);
         }
 
         if(count($this->_reply_to)) {
             $message->setReplyTo($this->_reply_to);
-        } else if($config->getValue('mailfrom') != '') {
-            $message->setReplyTo($config->getValue('mailfrom'), $config->getValue('fromname'));
+        } else {
+            $message->setReplyTo($this->_site_settings->mailfrom, $this->_site_settings->fromname);
         }
 
         return $message;

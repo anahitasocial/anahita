@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -39,34 +39,26 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
         if (strpos($text, '<html')) {
             //add language
-            $text = str_replace('<html', '<html lang="'.JFactory::getLanguage()->getTag().'"', $text);
+            $text = str_replace('<html', '<html lang="'.$this->getService('anahita:language')->getTag().'"', $text);
 
             //render the styles
             $text = str_replace('</head>', $this->_renderHead().$this->_renderStyles().'</head>', $text);
 
-            //render the scripts                
+            //render the scripts
             $text = str_replace('</body>', $this->_renderScripts().'</body>', $text);
         }
     }
 
     /**
      * Render title.
-     * 
+     *
      * @return string
      */
     protected function _renderHead()
     {
-        $document = JFactory::getDocument();
+        $document = $this->getService('anahita:document');
         $html = '<base href="base://" />';
-
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
-
-        if (isset($document->_custom)) {
-            foreach ($document->_custom as $custom) {
-                $html .= $custom;
-            }
-        }
-
         $html .= '<title>'.$document->getTitle().'</title>';
 
         return $html;
@@ -74,26 +66,23 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
     /**
      * Return the document scripts.
-     * 
+     *
      * @return string
      */
     protected function _renderScripts()
     {
-        $document = JFactory::getDocument();
-        $string = '';
+        $document = $this->getService('anahita:document');
 
-        //include tranlsation files
+        $string = '';
         $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
 
-        // Generate script file links
-        $scripts = array_reverse($document->_scripts);
+        $scripts = array_reverse($document->getScripts());
 
         foreach ($scripts as $src => $type) {
             $string .= '<script type="'.$type.'" src="'.$src.'"></script>';
         }
 
-        // Generate script declarations
-        $script = $document->_script;
+        $script = $document->getScript();
 
         foreach ($script as $type => $content) {
             $string .= '<script type="'.$type.'">'.$content.'</script>';
@@ -104,16 +93,17 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
     /**
      * Return the document styles.
-     * 
+     *
      * @return string
      */
     protected function _renderStyles()
     {
-        $document = JFactory::getDocument();
+        $document = $this->getService('anahita:document');
         $html = '';
 
         // Generate stylesheet links
-        foreach ($document->_styleSheets as $src => $attr) {
+        foreach ($document->getStyleSheets() as $src => $attr) {
+
             $rel = 'stylesheet';
 
             if (strpos($src, '.less')) {
@@ -126,14 +116,10 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
                 $html .= ' media="'.$attr['media'].'" ';
             }
 
-            if ($temp = JArrayHelper::toString($attr['attribs'])) {
-                $html .= ' '.$temp;
-            }
-
             $html .= '/>';
         }
 
-        foreach ($document->_style as $type => $content) {
+        foreach ($document->getStyle() as $type => $content) {
             $html .= '<style type="'.$type.'">'.$content.'</style>';
         }
 

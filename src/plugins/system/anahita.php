@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Anahita System Plugin.
  *
@@ -13,7 +11,7 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class PlgSystemAnahita extends JPlugin
+class PlgSystemAnahita extends PlgAnahitaDefault
 {
     /**
      * Constructor.
@@ -21,9 +19,9 @@ class PlgSystemAnahita extends JPlugin
      * @param mixed $subject Dispatcher
      * @param array $config  Array of configuration
      */
-    public function __construct($subject, $config = array())
+    public function __construct($dispatcher, KConfig $config)
     {
-        // Command line fixes for Joomla
+        // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
             if (!isset($_SERVER['HTTP_HOST'])) {
                 $_SERVER['HTTP_HOST'] = '';
@@ -47,6 +45,7 @@ class PlgSystemAnahita extends JPlugin
                 $url = KService::get('application')->getRouter()->getBaseUrl();
                 $url .= '/templates/system/error_suhosin.html';
 
+                //@todo we don't have redirect methods
                 KService::get('application.dispatcher')->getResponse()->setRedirect($url);
                 KService::get('application.dispatcher')->getResponse()->send();
 
@@ -64,55 +63,25 @@ class PlgSystemAnahita extends JPlugin
             ini_set('safeex.url_include_proto_whitelist', $whitelist);
         }
 
-        if (
-            !JFactory::getApplication()->getCfg('caching') ||
-            (
-                JFactory::getUser()->usertype == ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR &&
-                KRequest::get('get.clearapc', 'cmd')
-            )
-        ) {
-            //clear apc cache for components
-            //@NOTE If apc is shared across multiple services
-            //this causes the caceh to be cleared for all of them
-            //since all of them starts with the same prefix. Needs to be fix
-            clean_apc_with_prefix('cache_com');
-            clean_apc_with_prefix('cache_plg');
-            clean_apc_with_prefix('cache_system');
-            clean_apc_with_prefix('cache__system');
-            $jconfig = new JConfig();
-            clean_apc_with_prefix(md5($jconfig->secret).'-cache-');
-        }
-
         KService::get('plg:storage.default');
-        JFactory::getLanguage()->load('overwrite', JPATH_ROOT);
-        JFactory::getLanguage()->load('lib_anahita', JPATH_ROOT);
+        KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
 
-        parent::__construct($subject, $config);
+        parent::__construct($dispatcher, $config);
     }
 
     /**
      * Remebers handling.
      */
-    public function onAfterInitialise()
+    public function onAfterDispatch(KEvent $event)
     {
-        global $mainframe;
-
         $viewer = get_viewer();
 
         if (!$viewer->guest() && !$viewer->enabled) {
-            KService::get('com://site/people.helper.person')->logout();
+            KService::get('com:people.helper.person')->logout();
         }
 
-        // No remember me for admin
-        if ($mainframe->isAdmin()) {
-            return;
-        }
-
-        jimport('joomla.utilities.utility');
-        jimport('joomla.utilities.simplecrypt');
-
-        $user = array();
-        $remember = JUtility::getHash('JLOGIN_REMEMBER');
+        $credentials = array();
+        $remember = get_hash('AN_LOGIN_REMEMBER');
 
         // for json requests obtain the username and password from the $_SERVER array
         // else if the remember me cookie exists, decrypt and obtain the username and password from it
@@ -122,34 +91,35 @@ class PlgSystemAnahita extends JPlugin
                KRequest::has('server.PHP_AUTH_PW') &&
                KRequest::format() == 'json'
            ) {
-            $user['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
-            $user['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
-        } elseif (
-              $viewer->guest() &&
-              isset($_COOKIE[$remember]) &&
-              $_COOKIE[$remember] != ''
-        ) {
-            $key = JUtility::getHash(KRequest::get('server.HTTP_USER_AGENT', 'raw'));
 
-            if ($key) {
-                $crypt = new JSimpleCrypt($key);
-                $cookie = $crypt->decrypt($_COOKIE[$remember]);
-                $user = (array) @unserialize($cookie);
-            }
+            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
+            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
+
+        } elseif ($viewer->guest() && isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '') {
+
+            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
+            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
+            $cookie = $crypt->decrypt($_COOKIE[$remember]);
+            $credentials = (array) @unserialize($cookie);
+
         } else {
             return;
         }
 
-        if ($viewer->guest() && count($user)) {
+        if ($viewer->guest() && count($credentials)) {
 
             try {
-                jimport('joomla.user.authentication');
-                $authentication = &JAuthentication::getInstance();
-                $authResponse = $authentication->authenticate($user, array());
 
-                if ($authResponse->status == JAUTHENTICATE_STATUS_SUCCESS) {
-                    KService::get('com://site/people.helper.person')->login($user, true);
+                $response = $this->getService('com:people.authentication.response');
+                dispatch_plugin('authentication.onAuthenticate', array(
+                                    'credentials' => $credentials,
+                                    'response' => $response
+                                ));
+
+                if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
+                    KService::get('com:people.helper.person')->login($credentials, true);
                 }
+
             } catch (RuntimeException $e) {
                 //only throws exception if we are using JSON format
                 //otherwise let the current app handle it
@@ -172,7 +142,7 @@ class PlgSystemAnahita extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser(KEvent $event)
     {
         return true;
     }
@@ -184,17 +154,23 @@ class PlgSystemAnahita extends JPlugin
      *
      * @param 	array		holds the user data
      */
-    public function onBeforeDeleteUser($user)
+    public function onBeforeDeleteUser(KEvent $event)
     {
-        $person = KService::get('repos://site/people.person')->find(array('userId' => $user['id']));
+
+        $person = KService::get('repos:people.person')->find(array(
+                    'id' => $event->person->id
+                  ));
 
         if ($person) {
-            KService::get('repos://site/components')
+
+            KService::get('repos:components')
             ->fetchSet()
             ->registerEventDispatcher(KService::get('anahita:event.dispatcher'));
 
             KService::get('anahita:event.dispatcher')
-            ->dispatchEvent('onDeleteActor', array('actor_id' => $person->id));
+            ->dispatchEvent('onDeleteActor', array(
+              'actor_id' => $person->id
+            ));
 
             $person->delete()->save();
         }

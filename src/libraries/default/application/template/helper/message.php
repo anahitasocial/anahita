@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,9 +16,9 @@
  */
 
 /**
- * Renders a message. This class is specialized at the application 
+ * Renders a message. This class is specialized at the application
  * level to render system messages.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -31,10 +31,10 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
 {
     /**
      * Renders a message using the passed configuration.
-     * 
+     *
      * @param string $message The message to render
      * @param array  $config  Message configuration
-     * 
+     *
      * @return string
      */
     public function render($config = array())
@@ -61,10 +61,10 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
 
     /**
      * Renders an individual message.
-     * 
+     *
      * @param string $message The message to render
      * @param array  $config  Options
-     * 
+     *
      * @return string
      */
     protected function _renderMessage($message, $config)
@@ -86,10 +86,10 @@ class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
 
     /**
      * Renders a button for a message.
-     * 
+     *
      * @param string $label  Button label
      * @param array  $attrbs Button attributes
-     * 
+     *
      * @return string
      */
     protected function _renderButton($label, $attrbs)

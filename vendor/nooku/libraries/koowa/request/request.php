@@ -81,7 +81,7 @@ class KRequest
             } else {
                 $authorization = KRequest::get('server.HTTP_AUTHORIZATION', 'url');
             }
-            
+
 	        if (strstr($authorization,"Basic"))
 	        {
 	            $parts = explode(':',base64_decode(substr($authorization, 6)));
@@ -200,12 +200,12 @@ class KRequest
     public static function set($identifier, $value)
     {
         list($hash, $keys) = self::_parseIdentifier($identifier);
-        
+
         // Add to _REQUEST hash if original hash is get, post, or cookies
         if(in_array($hash, array('GET', 'POST', 'COOKIE'))) {
             self::set('request.'.implode('.', $keys), $value);
         }
-        
+
         // Store cookies persistently
         if($hash == 'COOKIE' && strpos(KRequest::scheme(), 'http') !== false)
         {
@@ -215,7 +215,7 @@ class KRequest
             foreach($ckeys as $ckey) {
                 $name .= '['.$ckey.']';
             }
- 
+
             if(!setcookie($name, $value)) {
                 throw new KRequestException("Couldn't set cookie, headers already sent.");
             }
@@ -225,12 +225,12 @@ class KRequest
         foreach(array_reverse($keys, true) as $key) {
             $value = array($key => $value);
         }
-        
+
         // Add the global if it's doesn't exist
-        if(!isset($GLOBALS['_'.$hash])) { 
-           $GLOBALS['_'.$hash] = array(); 
-        } 
-        
+        if(!isset($GLOBALS['_'.$hash])) {
+           $GLOBALS['_'.$hash] = array();
+        }
+
         $GLOBALS['_'.$hash] = KHelperArray::merge($GLOBALS['_'.$hash], $value);
     }
 
@@ -327,7 +327,7 @@ class KRequest
                 self::$_accept['language'] = self::_parseAccept($accept);
             }
         }
-        
+
         return $type ? self::$_accept[$type] : self::$_accept;
     }
 
@@ -380,8 +380,8 @@ class KRequest
         if(!isset(self::$_url))
         {
             $url = self::scheme().'://';
-            
-            if (PHP_SAPI !== 'cli') 
+
+            if (PHP_SAPI !== 'cli')
         	{
         		/*
             	 * Since we are assigning the URI from the server variables, we first need
@@ -414,7 +414,7 @@ class KRequest
                 }
         	}
         	else $url .= 'koowa';
-            
+
             // Sanitize the url since we can't trust the server var
             $url = KService::get('koowa:filter.url')->sanitize($url);
 
@@ -436,16 +436,16 @@ class KRequest
         if(!isset(self::$_base))
         {
             // Get the base request path
-            if (strpos(PHP_SAPI, 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI'])) 
-            {    
+            if (strpos(PHP_SAPI, 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI']))
+            {
                 // PHP-CGI on Apache with "cgi.fix_pathinfo = 0"
                 // We don't have user-supplied PATH_INFO in PHP_SELF
                 $path = $_SERVER['PHP_SELF'];
-            } 
+            }
             else $path = $_SERVER['SCRIPT_NAME'];
-            
+
             $path = rtrim(dirname($path), '/\\');
-         
+
             // Sanitize the url since we can't trust the server var
             $path = KService::get('koowa:filter.url')->sanitize($path);
 
@@ -490,47 +490,47 @@ class KRequest
     public static function scheme()
     {
         $scheme = 'cli';
-        
-        if (PHP_SAPI !== 'cli') 
+
+        if (PHP_SAPI !== 'cli')
         {
-            
+
             $isSSL = false;
-            
+
             if ( isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' )
             {
                  $isSSL = true;
             }
-            
+
             if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1 )
             {
                  $isSSL = true;
-            } 
-            
-            if ( isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443 ) ) 
+            }
+
+            if ( isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443 ) )
             {
                  $isSSL = true;
-            } 
-            
-            if ( isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on' ) 
+            }
+
+            if ( isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on' )
             {
                 $isSSL = true;
             }
-            
-            if ( isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true ) 
+
+            if ( isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true )
             {
                 $isSSL = true;
-            }    
-                
-                
+            }
+
+
             $scheme = ($isSSL) ? 'https' : 'http';
-        } 
-     
+        }
+
         return $scheme;
     }
-    
+
     /**
      * Return the protocal based on $_SERVER['SERVER_PROTOCOL']
-     * 
+     *
      * @return  string
      */
     public static function protocol()
@@ -577,14 +577,6 @@ class KRequest
 
         if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             $type = 'AJAX';
-        }
-
-        if( isset($_SERVER['HTTP_X_FLASH_VERSION'])) {
-            $type = 'FLASH';
-        }
-
-        if(preg_match('/^(Shockwave|Adobe) Flash/', KRequest::client()) == 1) {
-             $type = 'FLASH';
         }
 
         return $type;
@@ -690,12 +682,12 @@ class KRequest
             {
                 // Split the type into parts
                 $parts = explode(';', $type);
-                
+
                 // Make the type only the MIME
                 $type = trim(array_shift($parts));
 
                 // Default quality is 1.0
-                $options = array('quality' => 1.0); 
+                $options = array('quality' => 1.0);
 
                 foreach ($parts as $part)
                 {
@@ -706,7 +698,7 @@ class KRequest
 
                     // Separate the key and value
                     list ($key, $value) = explode('=', trim($part));
-                    
+
                     switch ($key)
                     {
                         case 'q'       : $options['quality'] = (float) trim($value); break;
@@ -724,7 +716,7 @@ class KRequest
 
         // Order by quality
         arsort($accepts);
-       
+
         return $accepts;
     }
 

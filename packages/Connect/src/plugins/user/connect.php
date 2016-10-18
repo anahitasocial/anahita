@@ -1,29 +1,13 @@
 <?php
 
 /**
- * @version		1.0.3
- *
- * @category	Anahita Social Engine™
- *
- * @copyright	Copyright (C) 2008 - 2010 rmdStudio Inc. and Peerglobe Technology Inc. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link     	http://www.GetAnahita.com
- */
-defined('_JEXEC') or die();
-
-jimport('joomla.plugin.plugin');
-
-/**
  * Anahita Tweets User Plugin.
  *
  * @author		Rastin Mehr  <info@rmdstudio.com>
  *
  * @category     Anahita
- *
- * @since 		1.5
  */
-class PlgUserConnect extends JPlugin
+class PlgUserConnect extends PlgAnahitaDefault
 {
     /**
      * API.
@@ -49,19 +33,13 @@ class PlgUserConnect extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser(KEvent $event)
     {
+        $user = $event->user;
+
         $this->_createToken($user['username']);
 
-        $userId = $user['id'];
-
         if ($this->_person) {
-            //unblock the user	
-            $user = KService::get('repos://site/users')->find($userId);
-
-            $user->block = false;
-
-            $user->save();
 
             $user = $this->_api->getUser();
 
@@ -70,7 +48,6 @@ class PlgUserConnect extends JPlugin
             }
 
             $this->_person->enabled = true;
-
             $this->_person->save();
         }
     }
@@ -82,11 +59,11 @@ class PlgUserConnect extends JPlugin
      * @param 	array    extra options
      *
      * @return bool True on success
-     *
-     * @since	1.5
      */
-    public function onLoginUser($user, $options)
+    public function onLoginUser(KEvent $event)
     {
+        $user = $event->user;
+
         if (isset($user['username'])) {
             $this->_createToken($user['username']);
         }
@@ -103,18 +80,17 @@ class PlgUserConnect extends JPlugin
 
         $api = $this->_getApi();
 
-        //if there's no api or the token are invalid then don't create 
+        //if there's no api or the token are invalid then don't create
         //session
         if (!$api || !$api->getUser()->id) {
             return;
         }
 
         if ($token = $api->getToken()) {
-            $person = KService::get('repos://site/people.person')->find(array('username' => $username));
 
+            $person = KService::get('repos:people.person')->find(array('username' => $username));
             $user = $api->getUser();
-
-            $session = KService::get('repos://site/connect.session')->findOrAddNew(array('profileId' => $user->id, 'api' => $api->getName()));
+            $session = KService::get('repos:connect.session')->findOrAddNew(array('profileId' => $user->id, 'api' => $api->getName()));
 
             $session->setData(array(
                 'component' => 'com_connect',
@@ -124,7 +100,6 @@ class PlgUserConnect extends JPlugin
             $session->save();
 
             $this->_person = $person;
-
             $this->_api = $api;
         }
     }
@@ -139,6 +114,7 @@ class PlgUserConnect extends JPlugin
         $api = null;
 
         try {
+
             if (isset($post['oauth_token']) && isset($post['oauth_handler'])) {
                 $api = ComConnectHelperApi::getApi($post['oauth_handler']);
                 $api->setToken($post['oauth_token'], isset($post['oauth_secret']) ? $post['oauth_secret'] : '');
@@ -151,13 +127,14 @@ class PlgUserConnect extends JPlugin
 
                 KRequest::set('session.oauth', null);
 
-                KService::get('koowa:loader')->loadIdentifier('com://site/connect.oauth.consumer');
+                KService::get('koowa:loader')->loadIdentifier('com:connect.oauth.consumer');
 
-                $api = KService::get('com://site/connect.oauth.service.'.$session->api, array(
+                $api = KService::get('com:connect.oauth.service.'.$session->api, array(
                     'consumer' => new ComConnectOauthConsumer($session->consumer),
                     'token' => $session->token,
                 ));
             }
+
         } catch (Exception $e) {
             $api = null;
         }

@@ -1,0 +1,503 @@
+{
+    "fields": [
+        {
+            "name": "login",
+            "type": "text",
+            "label": "AN-SB-PAYPAL-LOGIN",
+            "description": "",
+            "size": "70",
+            "default": ""
+        },
+        {
+            "name": "password",
+            "type": "text",
+            "label": "AN-SB-PAYPAL-PASSWORD",
+            "description": "",
+            "size": "70",
+            "default": ""
+        },
+        {
+            "name": "signature",
+            "type": "text",
+            "label": "AN-SB-PAYPAL-SIGNATURE",
+            "description": "",
+            "size": "70",
+            "default": ""
+        },
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "LIB-AN-NO"
+                },
+                {
+                    "value": "1",
+                    "text": "LIB-AN-YES"
+                }
+            ],
+            "name": "test_mode",
+            "type": "list",
+            "default": "0",
+            "label": "AN-SB-TEST-MODE"
+        },
+        {
+            "name": "renew_notice",
+            "type": "text",
+            "default": "30",
+            "label": "AN-SB-RENEW-NOTICE",
+            "description": "AN-SB-RENEW-NOTICE-DESC",
+            "size": "10",
+            "default": ""
+        },
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "LIB-AN-NO"
+                },
+                {
+                    "value": "1",
+                    "text": "LIB-AN-YES"
+                }
+            ],
+            "name": "use_ssl",
+            "type": "list",
+            "default": "20",
+            "label": "AN-SB-USE-SSL",
+            "description": ""
+        },
+        {
+            "option": [
+                {
+                    "value": "AFA",
+                    "text": "AFA"
+                },
+                {
+                    "value": "AWG",
+                    "text": "AWG"
+                },
+                {
+                    "value": "AUD",
+                    "text": "AUD"
+                },
+                {
+                    "value": "ARS",
+                    "text": "ARS"
+                },
+                {
+                    "value": "AZN",
+                    "text": "AZN"
+                },
+                {
+                    "value": "BSD",
+                    "text": "BSD"
+                },
+                {
+                    "value": "BDT",
+                    "text": "BDT"
+                },
+                {
+                    "value": "BBD",
+                    "text": "BBD"
+                },
+                {
+                    "value": "BYR",
+                    "text": "BYR"
+                },
+                {
+                    "value": "BOB",
+                    "text": "BOB"
+                },
+                {
+                    "value": "BRL",
+                    "text": "BRL"
+                },
+                {
+                    "value": "GBP",
+                    "text": "GBP"
+                },
+                {
+                    "value": "BGN",
+                    "text": "BGN"
+                },
+                {
+                    "value": "KHR",
+                    "text": "KHR"
+                },
+                {
+                    "value": "CAD",
+                    "text": "CAD"
+                },
+                {
+                    "value": "KYD",
+                    "text": "KYD"
+                },
+                {
+                    "value": "CLP",
+                    "text": "CLP"
+                },
+                {
+                    "value": "CNY",
+                    "text": "CNY"
+                },
+                {
+                    "value": "COP",
+                    "text": "COP"
+                },
+                {
+                    "value": "CRC",
+                    "text": "CRC"
+                },
+                {
+                    "value": "HRK",
+                    "text": "HRK"
+                },
+                {
+                    "value": "CPY",
+                    "text": "CPY"
+                },
+                {
+                    "value": "CZK",
+                    "text": "CZK"
+                },
+                {
+                    "value": "DKK",
+                    "text": "DKK"
+                },
+                {
+                    "value": "DOP",
+                    "text": "DOP"
+                },
+                {
+                    "value": "XCD",
+                    "text": "XCD"
+                },
+                {
+                    "value": "EGP",
+                    "text": "EGP"
+                },
+                {
+                    "value": "ERN",
+                    "text": "ERN"
+                },
+                {
+                    "value": "EEK",
+                    "text": "EEK"
+                },
+                {
+                    "value": "EUR",
+                    "text": "EUR"
+                },
+                {
+                    "value": "GEL",
+                    "text": "GEL"
+                },
+                {
+                    "value": "GHC",
+                    "text": "GHC"
+                },
+                {
+                    "value": "GIP",
+                    "text": "GIP"
+                },
+                {
+                    "value": "GTQ",
+                    "text": "GTQ"
+                },
+                {
+                    "value": "HNL",
+                    "text": "HNL"
+                },
+                {
+                    "value": "HKD",
+                    "text": "HKD"
+                },
+                {
+                    "value": "HUF",
+                    "text": "HUF"
+                },
+                {
+                    "value": "ISK",
+                    "text": "ISK"
+                },
+                {
+                    "value": "INR",
+                    "text": "INR"
+                },
+                {
+                    "value": "IDR",
+                    "text": "IDR"
+                },
+                {
+                    "value": "ILS",
+                    "text": "ILS"
+                },
+                {
+                    "value": "JMD",
+                    "text": "JMD"
+                },
+                {
+                    "value": "JPY",
+                    "text": "JPY"
+                },
+                {
+                    "value": "KZT",
+                    "text": "KZT"
+                },
+                {
+                    "value": "KES",
+                    "text": "KES"
+                },
+                {
+                    "value": "KWD",
+                    "text": "KWD"
+                },
+                {
+                    "value": "LVL",
+                    "text": "LVL"
+                },
+                {
+                    "value": "LBP",
+                    "text": "LBP"
+                },
+                {
+                    "value": "LTL",
+                    "text": "LTL"
+                },
+                {
+                    "value": "MOP",
+                    "text": "MOP"
+                },
+                {
+                    "value": "MKD",
+                    "text": "MKD"
+                },
+                {
+                    "value": "MGA",
+                    "text": "MGA"
+                },
+                {
+                    "value": "MYR",
+                    "text": "MYR"
+                },
+                {
+                    "value": "MTL",
+                    "text": "MTL"
+                },
+                {
+                    "value": "BAM",
+                    "text": "BAM"
+                },
+                {
+                    "value": "MUR",
+                    "text": "MUR"
+                },
+                {
+                    "value": "MXN",
+                    "text": "MXN"
+                },
+                {
+                    "value": "MZM",
+                    "text": "MZM"
+                },
+                {
+                    "value": "NPR",
+                    "text": "NPR"
+                },
+                {
+                    "value": "ANG",
+                    "text": "ANG"
+                },
+                {
+                    "value": "TWD",
+                    "text": "TWD"
+                },
+                {
+                    "value": "NZD",
+                    "text": "NZD"
+                },
+                {
+                    "value": "NIO",
+                    "text": "NIO"
+                },
+                {
+                    "value": "NGN",
+                    "text": "NGN"
+                },
+                {
+                    "value": "KPW",
+                    "text": "KPW"
+                },
+                {
+                    "value": "NOK",
+                    "text": "NOK"
+                },
+                {
+                    "value": "OMR",
+                    "text": "OMR"
+                },
+                {
+                    "value": "PKR",
+                    "text": "PKR"
+                },
+                {
+                    "value": "PYG",
+                    "text": "PYG"
+                },
+                {
+                    "value": "PEN",
+                    "text": "PEN"
+                },
+                {
+                    "value": "PHP",
+                    "text": "PHP"
+                },
+                {
+                    "value": "QAR",
+                    "text": "QAR"
+                },
+                {
+                    "value": "RON",
+                    "text": "RON"
+                },
+                {
+                    "value": "RUB",
+                    "text": "RUB"
+                },
+                {
+                    "value": "SAR",
+                    "text": "SAR"
+                },
+                {
+                    "value": "CSD",
+                    "text": "CSD"
+                },
+                {
+                    "value": "SCR",
+                    "text": "SCR"
+                },
+                {
+                    "value": "SGD",
+                    "text": "SGD"
+                },
+                {
+                    "value": "SKK",
+                    "text": "SKK"
+                },
+                {
+                    "value": "SIT",
+                    "text": "SIT"
+                },
+                {
+                    "value": "ZAR",
+                    "text": "ZAR"
+                },
+                {
+                    "value": "KRW",
+                    "text": "KRW"
+                },
+                {
+                    "value": "LKR",
+                    "text": "LKR"
+                },
+                {
+                    "value": "SRD",
+                    "text": "SRD"
+                },
+                {
+                    "value": "SEK",
+                    "text": "SEK"
+                },
+                {
+                    "value": "CHF",
+                    "text": "CHF"
+                },
+                {
+                    "value": "TZS",
+                    "text": "TZS"
+                },
+                {
+                    "value": "THB",
+                    "text": "THB"
+                },
+                {
+                    "value": "TTD",
+                    "text": "TTD"
+                },
+                {
+                    "value": "TRY",
+                    "text": "TRY"
+                },
+                {
+                    "value": "AED",
+                    "text": "AED"
+                },
+                {
+                    "value": "USD",
+                    "text": "USD"
+                },
+                {
+                    "value": "UGX",
+                    "text": "UGX"
+                },
+                {
+                    "value": "UAH",
+                    "text": "UAH"
+                },
+                {
+                    "value": "UYU",
+                    "text": "UYU"
+                },
+                {
+                    "value": "UZS",
+                    "text": "UZS"
+                },
+                {
+                    "value": "VEB",
+                    "text": "VEB"
+                },
+                {
+                    "value": "VND",
+                    "text": "VND"
+                },
+                {
+                    "value": "AMK",
+                    "text": "AMK"
+                },
+                {
+                    "value": "ZWD",
+                    "text": "ZWD"
+                }
+            ],
+            "name": "currency",
+            "type": "list",
+            "label": "AN-SB-CURRENCY",
+            "description": "",
+            "default": "US"
+        },
+        {
+            "name": "tos_content_layout",
+            "type": "text",
+            "label": "AN-SB-TOS-URL",
+            "size": "70",
+            "default": "tos",
+            "default": ""
+        },
+        {
+            "name": "privacy_content_layout",
+            "type": "text",
+            "label": "AN-SB-PRIVACY-URL",
+            "size": "70",
+            "default": "privacy"
+        },
+        {
+            "name": "welcome_message",
+            "type": "textarea",
+            "label": "AN-SB-WELCOME-MESSAGE",
+            "description": "",
+            "cols": "10",
+            "rows": "20",
+            "size": "5000"
+        }
+    ]
+}

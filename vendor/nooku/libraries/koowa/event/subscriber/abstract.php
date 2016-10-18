@@ -23,14 +23,14 @@ abstract class KEventSubscriberAbstract extends KObject implements KEventSubscri
      * @var array
      */
     private $__subscriptions;
-    
+
     /**
      * The event priority
      *
      * @var int
      */
     protected $_priority;
-    
+
 	/**
 	 * Constructor.
 	 *
@@ -39,10 +39,10 @@ abstract class KEventSubscriberAbstract extends KObject implements KEventSubscri
 	public function __construct(KConfig $config)
 	{
 		parent::__construct($config);
-		
+
 		$this->_priority = $config->priority;
 	}
- 	
+
  	/**
      * Initializes the options for the object
      *
@@ -54,12 +54,12 @@ abstract class KEventSubscriberAbstract extends KObject implements KEventSubscri
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-    		'priority' => KCommand::PRIORITY_NORMAL 
+    		'priority' => KCommand::PRIORITY_NORMAL
         ));
 
         parent::_initialize($config);
     }
-    
+
     /**
      * Get the priority of the handler
      *
@@ -69,12 +69,12 @@ abstract class KEventSubscriberAbstract extends KObject implements KEventSubscri
     {
         return $this->_priority;
     }
-        
+
     /**
-     * Get a list of subscribed events 
-     *       
+     * Get a list of subscribed events
+     *
      * Event handlers always start with 'on' and need to be public methods
-     * 
+     *
      * @return array An array of public methods
      */
     public function getSubscriptions()
@@ -82,19 +82,20 @@ abstract class KEventSubscriberAbstract extends KObject implements KEventSubscri
         if(!$this->__subscriptions)
         {
             $subscriptions  = array();
-            
+
             //Get all the public methods
             $reflection = new ReflectionClass($this);
-            foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) 
+
+            foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
             {
                 if(substr($method->name, 0, 2) == 'on') {
-                    $subscriptions[] = $method->name;   
+                    $subscriptions[] = $method->name;
                 }
             }
-            
+
             $this->__subscriptions = $subscriptions;
         }
-          
+
         return $this->__subscriptions;
     }
 }

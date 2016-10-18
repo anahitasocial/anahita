@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,9 +17,9 @@
 
 /**
  * Javascript Helper.
- * 
+ *
  * NOTE Expermimental and subject to change
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -44,23 +44,26 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
 
     /**
      * Loads an aray of javascript language.
-     * 
+     *
      * @params array $langs Array of language files
      */
     public function language($langs)
     {
+
+
         //force array
         settype($langs, 'array');
 
         $scripts = '';
-        $tag = JFactory::getLanguage()->getTag();
-        $base = JLanguage::getLanguagePath(JPATH_ROOT, $tag);
+        $language = $this->getService('anahita:language');
+        $tag = $language->getTag();
+        $tag = 'en-GB';
+        $base = $language->getLanguagePath(ANPATH_ROOT, $tag);
 
         foreach ($langs as $lang) {
             $path = $base.'/'.$tag.'.'.$lang.'.js';
-
             if (is_readable($path)) {
-                $src = JURI::base().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
+                $src = KRequest::base().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
                 $scripts .= '<script type="text/javascript" src="'.$src.'"></script>'."\n";
             }
         }

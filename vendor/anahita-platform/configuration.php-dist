@@ -1,0 +1,35 @@
+<?php
+
+class AnConfig{
+
+	/* Site Settings */
+	var $sitename = 'Anahita Website';
+	var $template = 'shiraz';
+	var $language = 'en-GB';
+	var $log_path = '~/www/log';
+    var $tmp_path = '~/www/tmp';
+    var $debug = 0;
+    var $sef_rewrite = 1;
+    var $secret = '';
+    var $error_reporting = -1;
+
+	/* Database Settings */
+    var $dbtype = 'mysqli';
+    var $host = '127.0.0.1:3306';
+	var $db = '';
+    var $user = '';
+    var $password = '';
+	var $dbprefix = 'an_';
+
+	/* Mailer */
+    var $mailer = 'smtp';
+    var $mailfrom = 'noreply@example.com';
+    var $fromname = 'Anahita Website';
+    var $sendmail = '/usr/sbin/sendmail';
+    var $smtpauth = 0;
+    var $smtpsecure = 'none';
+    var $smtpport = '';
+    var $smtpuser = '';
+    var $smtppass = '';
+    var $smtphost = 'localhost';
+}

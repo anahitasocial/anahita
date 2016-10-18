@@ -1,0 +1,19 @@
+{
+    "fields": [{
+        "option": [
+            {
+                "value": "0",
+                "text": "Site Admins"
+            },
+            {
+                "value": "2",
+                "text": "Site Admins, Registered Members"
+            }
+        ],
+        "name": "can_publish",
+        "type": "list",
+        "default": "0",
+        "label": "Who can create a new group",
+        "description": ""
+    }]
+}

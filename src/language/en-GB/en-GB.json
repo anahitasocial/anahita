@@ -1,0 +1,23 @@
+{
+  "name": "English (United Kingdom)",
+  "description": "Default localization package",
+  "tag": "en-GB",
+  "version": "4.3",
+  "homepage": "https://www.getanahita.com",
+  "authors": [{
+      "name": "Rastin mehr",
+      "email": "rastin@getanahita.com",
+      "homepage": "http://www.rmdstudio.com"
+  }],
+  "copyright": [
+      "2016 rmd Studio Inc."
+  ],
+  "license": "GPLv3",
+  "meta": {
+      "rtl": "0",
+      "locale": "en_GB.utf8, en_GB.UTF-8, en_GB, eng_GB, en, english, english-uk, uk, gbr, britain, england, great britain, uk, united kingdom, united-kingdom",
+      "winCodePage": "iso-8859-1",
+      "backwardLang": "english",
+      "pdfFontName": "freesans"
+  }
+}

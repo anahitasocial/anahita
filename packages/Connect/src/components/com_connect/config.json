@@ -1,0 +1,118 @@
+{
+    "fields": [
+        {
+            "name": "spacer",
+            "type": "legend",
+            "default": "Facebook Connect"
+        },
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "NO"
+                },
+                {
+                    "value": "1",
+                    "text": "YES"
+                }
+            ],
+
+            "name": "facebook_enable",
+            "type": "list",
+            "default": "0",
+            "label": "Enable Service"
+        },
+        {
+            "name": "facebook_key",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Consumer Key",
+            "placeholder": "Facebook Client Id"
+        },
+        {
+            "name": "facebook_secret",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Consumer Secret",
+            "placeholder": "Facebook Client Secret"
+        },
+        {
+            "name": "spacer",
+            "type": "legend",
+            "default": "Twitter Connect"
+        },
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "NO"
+                },
+                {
+                    "value": "1",
+                    "text": "YES"
+                }
+            ],
+
+            "name": "twitter_enable",
+            "type": "list",
+            "default": "0",
+            "label": "Enable Service"
+        },
+        {
+            "name": "twitter_key",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Consumer Key",
+            "placeholder": "Twitter Client Id"
+        },
+        {
+            "name": "twitter_secret",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Consumer Secret",
+            "placeholder": "Twitter Client Secret"
+        },
+        {
+            "name": "spacer",
+            "type": "legend",
+            "default": "LinkedIn Connect"
+        },
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "NO"
+                },
+                {
+                    "value": "1",
+                    "text": "YES"
+                }
+            ],
+
+            "name": "linkedin_enable",
+            "type": "list",
+            "default": "0",
+            "label": "Enable Service"
+        },
+        {
+            "name": "linkedin_key",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Consumer Key",
+            "placeholder": "LinkedIn Client Id"
+        },
+        {
+            "name": "linkedin_secret",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Consumer Secret",
+            "placeholder": "LinkedIn Client Secret"
+        }
+    ]
+}

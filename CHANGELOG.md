@@ -1,8 +1,8 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.2.4 Birth Release
+Anahita 4.3.0 Birth Release
 =============================
-* fixed critical issue which was preventing first time installation due to the absence of a from system email
+* removed all joomla legacy files and replaced them with native anahita classes
 
 Anahita 4.2.3 Birth Release
 =============================
@@ -11,7 +11,6 @@ Anahita 4.2.3 Birth Release
 * updated email regex according to the latest w3c specs
 * added tags url attributes for people, actors, and masonry photos so they can be filtered by hashtag, mention, or location
 * updated robots.txt file
-* fixed add/remove location locatable target url bug
 
 Anahita 4.2.2 Birth Release
 =============================

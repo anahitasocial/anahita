@@ -18,9 +18,43 @@ class PlgStorageS3 extends PlgStorageAbstract
     /**
      * S3 storage.
      *
-     * @var S3
+     * @var object Amazon S3
      */
     protected $_s3;
+
+    /**
+     * S3 bucket
+     *
+     * @var string
+     */
+    protected $_bucket;
+
+    /**
+     * use SSL
+     *
+     * @var boolean
+     */
+    protected $_ssl;
+
+    /**
+     * Constructor.
+     *
+     * @param mixed $dispatcher A dispatcher
+     * @param array $config     An optional KConfig object with configuration options.
+     */
+    public function __construct($dispatcher = null,  KConfig $config)
+    {
+        parent::__construct($dispatcher, $config);
+
+        $this->_bucket = ($config->bucket != '') ? $config->bucket : $this->_params->bucket;
+        $this->_ssl = (boolean) $config->ssl;
+
+        $this->_s3 = new S3(
+            $this->_params->access_key,
+            $this->_params->secret_key,
+            $this->_ssl
+        );
+    }
 
     /**
      * Initializes the default configuration for the object.
@@ -33,15 +67,10 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         $config->append(array(
              'bucket' => '',
-             'access_key' => '',
-             'secret_key' => '',
-             'folder' => 'assets',
-             'use_ssl' => false,
+             'ssl' => is_ssl()
         ));
 
         parent::_initialize($config);
-
-        $this->_s3 = new S3($config->access_key, $config->secret_key, $config->use_ssl);
     }
 
     /**
@@ -49,7 +78,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _read($path)
     {
-        return $this->_s3->getObject($this->_params->bucket, $path)->body;
+        return $this->_s3->getObject($this->_bucket, $path)->body;
     }
 
     /**
@@ -58,9 +87,10 @@ class PlgStorageS3 extends PlgStorageAbstract
     protected function _write($path, $data, $public)
     {
         $acl = $public ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE;
+
         $options = array('Content-Type' => $this->_s3->__getMimeType($path));
 
-        return $this->_s3->putObject($data, $this->_params->bucket, $path, $acl, array(), $options);
+        return $this->_s3->putObject($data, $this->_bucket, $path, $acl, array(), $options);
     }
 
     /**
@@ -68,7 +98,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _exists($path)
     {
-        return $this->_s3->getObjectInfo($this->_params->bucket, $path, false);
+        return $this->_s3->getObjectInfo($this->_bucket, $path, false);
     }
 
     /**
@@ -76,7 +106,7 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _delete($path)
     {
-        return $this->_s3->deleteObject($this->_params->bucket, $path);
+        return $this->_s3->deleteObject($this->_bucket, $path);
     }
 
     /**
@@ -84,10 +114,10 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _getUrl($path)
     {
-        if (isSSL()) {
-            $url = 'https://s3.amazonaws.com/'.$this->_params->bucket.'/'.$path;
+        if ($this->_ssl) {
+            $url = 'https://s3.amazonaws.com/'.$this->_bucket.'/'.$path;
         } else {
-            $url = 'http://'.$this->_params->bucket.'.s3.amazonaws.com/'.$path;
+            $url = 'http://'.$this->_bucket.'.s3.amazonaws.com/'.$path;
         }
 
         return $url;

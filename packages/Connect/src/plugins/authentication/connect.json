@@ -1,0 +1,28 @@
+{
+  "name": "Authentication - Anahita Connect",
+  "description": "Echos user notes on facebook, twitter, and LinkedIn",
+  "type": "plugin",
+  "group": "authentication",
+  "version": "4.3.0",
+  "license": "GPLv3",
+  "homepage": "www.GetAnahita.com",
+  "authors": [
+    {
+      "name": "Rastin Mehr",
+      "email": "rastin@anahitapolis.com",
+      "homepage": "http://www.rmdstudio.com"
+    },
+    {
+      "name": "Ash Sanieyan",
+      "email": "ash@peerglobe.com",
+      "homepage": "http://www.peerglobe.com"
+    }
+  ],
+  "copyright": [
+      "Copyright 2016 rmdStudio Inc.",
+      "Copyright 2013 Peerglobe Technology Inc."
+  ],
+  "files": [
+      "connect.php"
+  ]
+}

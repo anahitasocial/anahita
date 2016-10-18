@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Privatable Behavior.
- * 
+ *
  * Provides privacy for nodes
  *
  * @category   Anahita
@@ -35,7 +35,6 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
      */
     const GUEST = 'public';
     const REG = 'registered';
-    const SPECIAL = 'special';    //special permission
     const FOLLOWER = 'followers';
     const LEADER = 'leaders';
     const MUTUAL = 'mutuals';
@@ -53,7 +52,11 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         $config->append(array(
             'attributes' => array(
                 'access' => array('default' => self::GUEST),
-                'permissions' => array('type' => 'json', 'default' => 'json', 'write' => 'private'),
+                'permissions' => array(
+                    'type' => 'json',
+                    'default' => 'json',
+                    'write' => 'private'
+                ),
             ),
         ));
 
@@ -61,12 +64,12 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
     }
 
     /**
-     * Set the access value of the node. Access value is basically a read persmission for a node. 
-     * This value can be checked during fetching the record from the database to see if the 
+     * Set the access value of the node. Access value is basically a read persmission for a node.
+     * This value can be checked during fetching the record from the database to see if the
      * viewer has access to it or not.
-     * 
+     *
      * @param int|string $access Access value. Can be a string or an id of another node
-     * 
+     *
      * @return LibBaseDomainBehaviorPrivatable
      */
     public function setAccess($value)
@@ -78,7 +81,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
                 $value = self::GUEST;
             } elseif (!is_numeric($value)) {
                 if (!in_array($value, array('public', 'registered', 'followers', 'special', 'leaders', 'mutuals', 'admins'))) {
-                    $value = 'public';
+                    $value = self::GUEST;
                 }
             }
 
@@ -106,10 +109,10 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
     /**
      * Return a permission value for of a resource. If the permission doesn't exists then it returns the default
      * value.
-     * 
+     *
      * @param string $key     The name of the resource
-     * @param mixed  $default The default value, if the permission is not set yet 
-     * 
+     * @param mixed  $default The default value, if the permission is not set yet
+     *
      * @return mixed
      */
     public function getPermission($key, $default = self::GUEST)
@@ -123,10 +126,10 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 
     /**
      * Sets a permission for a resource.
-     * 
+     *
      * @param string     $key   The name of the resource
      * @param int|string $value The value of the permission. Can be string or integer
-     * 
+     *
      * @return LibBaseDomainBehaviorPrivatable
      */
     public function setPermission($key, $value)
@@ -148,10 +151,10 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 
     /**
      * Checks if an entity has a permission value for a key.
-     * 
+     *
      * @param string $key   The key permission key
      * @param string $value The value to to check if permission has
-     * 
+     *
      * @return bool
      */
     public function hasPermission($key, $value)
@@ -163,11 +166,11 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 
     /**
      * Return whether $actor has privellege perform $action on the entity.
-     * 
+     *
      * @param ComPeopleDomainEntityPerson $actor   The person who's trying to perform an operation on the entity
      * @param string                      $action  The name of the action being performed
      * @param string                      $default The default value to use if the there are no values are set for the operation
-     * 
+     *
      * @return bool
      */
     public function allows($actor, $action, $default = self::REG)
@@ -184,7 +187,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         }
 
         if (!empty($owner)) {
-            //if actor and owner the same then 
+            //if actor and owner the same then
             //allow
             if ($actor->id == $owner->id) {
                 return true;
@@ -204,7 +207,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
             }
         }
 
-        //an array of entities whose permission must return true 
+        //an array of entities whose permission must return true
         $entities = array();
 
         if (!empty($owner)) {
@@ -229,11 +232,11 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
     /**
      * Checks an array of permissions against an accessor using the socialgraph between the
      * accessor and actor.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor       The actor who's trying to perform an operation
      * @param array                      $permissions An array of permissions
      * @param ComActorsDomainEntityActor $owner       If one of the permision
-     * 
+     *
      * @return bool
      */
     public function checkPermissions($actor, $permissions, $owner)
@@ -261,7 +264,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
                 case self::LEADER :
                     $result = $actor->leading($owner) || $actor->administrator($owner);
                     break;
-                //mutual                        
+                //mutual
                 case self::MUTUAL :
                     $result = $actor->mutuallyLeading($owner) || $actor->administrator($owner);
                     break;
@@ -283,10 +286,10 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
     /**
      * Creates a where statement that checks actor id and access column values against viewer socialgraph and viewer id.
      *
-     * @param string  $actor_id The name of the columm containing actor ids. 
+     * @param string  $actor_id The name of the columm containing actor ids.
      * @param KConfig $config   Configuration parameter
      * @param string  $access   The name of the column containing access values
-     * 
+     *
      * @return string
      */
     public function buildCondition($actor_id, $config, $access = '@col(access)')
@@ -305,7 +308,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         if ($viewer->id) {
             $where[] = "WHEN FIND_IN_SET('".self::REG."', $access) THEN 1";
 
-            if ($viewer->userType != 'registered') {
+            if ($viewer->usertype != 'registered') {
                 $where[] = "WHEN FIND_IN_SET('".self::SPECIAL."', $access) THEN 1";
             }
 
@@ -324,7 +327,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
                 $viewer_is_admin = "$is_viewer  OR $actor_id IN (".$admin_ids.')';
                 $requestable = $this->_repository->isFollowable() ? '@col(allowFollowRequest) = 1' : 'FALSE';
 
-                //if privacy set to follow, show the actor only if viewer is a follower or viewer is a leader or actor 
+                //if privacy set to follow, show the actor only if viewer is a follower or viewer is a leader or actor
                 //accecpts follow request
                 $where[] = "WHEN FIND_IN_SET('".self::FOLLOWER."',$access) THEN $viewer_is_follower OR $viewer_is_leader OR $requestable";
                 $where[] = "WHEN FIND_IN_SET('".self::LEADER."',$access) THEN $viewer_is_leader";

@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Subscription system plugins. Validates the viewer subscriptions.
  *
@@ -13,7 +11,7 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class PlgSystemSubscriptions extends JPlugin
+class PlgSystemSubscriptions extends PlgAnahitaDefault
 {
     /**
      * onAfterRender handler.
@@ -26,18 +24,18 @@ class PlgSystemSubscriptions extends JPlugin
             return;
         }
 
-        KService::get('repos://site/subscriptions.package');
+        KService::get('repos:subscriptions.package');
 
         //if subscribe then unsubsribe
-        if (
-            isset($person->subscription) &&
-            $person->subscription->getTimeLeft() < 0
-        ) {
+        if (isset($person->subscription) && $person->subscription->getTimeLeft() < 0) {
+
             $person->unsubscribe();
-            $url = JRoute::_('index.php?option=com_subscriptions&view=packages');
-            KService::get('application.dispatcher')->getResponse()
-                                                   ->setRedirect($url)
-                                                   ->send();
+
+            $url = route('index.php?option=com_subscriptions&view=packages');
+            KService::get('application.dispatcher')
+            ->getResponse()
+            ->setRedirect($url)
+            ->send();
         }
 
         return;

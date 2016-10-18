@@ -24,10 +24,10 @@ class KTemplateFilterAlias extends KTemplateFilterAbstract implements KTemplateF
      */
     protected $_alias_read = array(
         '@helper('      => '$this->renderHelper(',
-    	'@service('     => '$this->getService(',
+    	  '@service('     => '$this->getService(',
         '@date('        => '$this->renderHelper(\'date.format\',',
         '@overlay('     => '$this->renderHelper(\'behavior.overlay\', ',
-        '@text('        => 'JText::_(',
+        '@text('        => 'AnTranslator::_(',
         '@template('    => '$this->loadIdentifier(',
         '@route('       => '$this->getView()->getRoute(',
         '@escape('      => '$this->getView()->escape(',

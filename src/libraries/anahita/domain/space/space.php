@@ -72,7 +72,6 @@ class AnDomainSpace extends KObject
 
         foreach ($entities as $entity) {
             $restult = $entity->getRepository()->validate($entity);
-
             if ($restult === false) {
                 $failed->insert($entity);
             }

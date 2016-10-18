@@ -1,0 +1,50 @@
+{
+    "name": "Storage - Amazon S3",
+    "description": "Amazon S3 Storage",
+    "type": "plugin",
+    "group": "storage",
+    "version": "4.3.0",
+    "license": "GPLv3",
+    "homepage": "www.GetAnahita.com",
+    "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "http://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "Copyright 2016 rmdStudio Inc."
+    ],
+    "files": [
+        "s3lib.php",
+				"s3.php"
+    ],
+		"fields": [{
+			"type": "text",
+			"name": "folder",
+			"label": "The folder to store the data",
+			"default": "assets"
+		}, {
+			"name": "bucket",
+			"type": "text",
+			"label": "Bucket",
+			"description": "",
+			"size": "40",
+			"default": ""
+		}, {
+			"name": "access_key",
+			"type": "text",
+			"label": "Access  Key",
+			"description": "",
+			"size": "40",
+			"default": ""
+		}, {
+			"name": "secret_key",
+			"type": "text",
+			"label": "Secret Key",
+			"description": "",
+			"size": "60",
+			"default": ""
+		}]
+}

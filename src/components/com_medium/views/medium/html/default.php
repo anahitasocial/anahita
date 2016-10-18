@@ -1,0 +1,1 @@
+<? defined('KOOWA') or die; ?>

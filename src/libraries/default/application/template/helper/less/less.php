@@ -54,7 +54,7 @@ class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
         }
         $config['import'] = $config['import'];
         $less->setImportDir($config['import']);
-        $cache_file = JPATH_CACHE.'/less-'.md5($config->input);
+        $cache_file = ANPATH_CACHE.'/less-'.md5($config->input);
 
         if (file_exists($cache_file)) {
             $cache = unserialize(file_get_contents($cache_file));

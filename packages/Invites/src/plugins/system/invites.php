@@ -1,7 +1,5 @@
 <?php
 
-jimport('joomla.plugin.plugin');
-
 /**
  * Subscription system plugins. Validates the viewer subscriptions.
  *
@@ -13,26 +11,20 @@ jimport('joomla.plugin.plugin');
  *
  * @link       http://www.GetAnahita.com
  */
-class plgSystemInvites extends JPlugin
+class plgSystemInvites extends PlgAnahitaDefault
 {
     /**
      * onAfterRender handler.
      */
     public function onAfterRoute()
     {
-        global $mainframe;
+        $token = KRequest::get('session.invite_token', 'string', null);
+        $option = KRequest::get('get.option', 'string', null);
+        $isGuest = get_viewer()->guest();
 
-        if ($mainframe->isAdmin()) {
-            return;
-        }
-
-        if(
-            KRequest::get('session.invite_token', 'string', null) &&
-            KRequest::get('get.option', 'string', null) == 'com_people' &&
-            get_viewer()->guest()
-        ) {
-    		    $personConfig = &JComponentHelper::getParams('com_people');
-    		    $personConfig->set('allowUserRegistration', true);
-    		}
+        if ($token && $option === 'com_people' && $isGuest) {
+            $personConfig = KService::get('com:settings.template.helper')->getMeta('people');
+    		$personConfig->allow_registration = true;
+    	}
     }
 }

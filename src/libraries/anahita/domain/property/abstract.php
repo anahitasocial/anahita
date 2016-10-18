@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -18,7 +18,7 @@
 /**
  * Abstract Domain Entity Property. This is the base class for Attribute or Relationship
  * properties of an entity.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -31,7 +31,7 @@ abstract class AnDomainPropertyAbstract
 {
     /**
      * Stores the clonable property instances.
-     * 
+     *
      * @var array
      */
     protected static $_instances = array();
@@ -39,10 +39,10 @@ abstract class AnDomainPropertyAbstract
     /**
      * Creates and initialize a property. The instantiation happens through cloning rather
      * then creating a new instance.
-     * 
+     *
      * @param string  $property The property type
-     * @param KConfig $config   The property configuration 
-     * 
+     * @param KConfig $config   The property configuration
+     *
      * @return AnDomainPropertyAbstract
      */
     public static function getInstance($property, KConfig $config)
@@ -73,21 +73,21 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Name of the property.
-     * 
+     *
      * @var string
      */
     protected $_name;
 
     /**
      * Specified a property is readonly and can't be set.
-     * 
+     *
      * @var bool
      */
     protected $_write_access;
 
     /**
-     * Specifies a properrty read access. It can be PUBLIC or PROTECTED. if set to protected then 
-     * when it won't be retrieved when $entity received $entity->getData(). By default all properties 
+     * Specifies a properrty read access. It can be PUBLIC or PROTECTED. if set to protected then
+     * when it won't be retrieved when $entity received $entity->getData(). By default all properties
      * are protected.
      *
      * @var bool
@@ -96,14 +96,14 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * If set to true, the property can not have a null or empty value.
-     * 
+     *
      * @var int
      */
     protected $_required;
 
     /**
      * Boolean value if a property is unique or not.
-     * 
+     *
      * @var bool
      */
     protected $_unique;
@@ -111,7 +111,7 @@ abstract class AnDomainPropertyAbstract
     /**
      * Property original configuration. Having this prevents from recreating an existing
      * property.
-     * 
+     *
      * @var KConfig
      */
     private $__config;
@@ -130,7 +130,7 @@ abstract class AnDomainPropertyAbstract
      * Configures a property. Property are cloned so using this method, it's possibled to
      * re-configured a cloned property.
      *
-     * @param KConfig $config Property Configuration 
+     * @param KConfig $config Property Configuration
      */
     public function setConfig(KConfig $config)
     {
@@ -174,25 +174,45 @@ abstract class AnDomainPropertyAbstract
         ));
 
         if (is_string($config->write)) {
+
             switch ($config->write) {
-                case 'private'     : $config->write = AnDomain::ACCESS_PRIVATE;break;
-                case 'protected' : $config->write = AnDomain::ACCESS_PROTECTED;break;
-                case 'public'     : $config->write = AnDomain::ACCESS_PUBLIC;break;
+
+                case 'private' :
+                    $config->write = AnDomain::ACCESS_PRIVATE;
+                    break;
+
+                case 'protected' :
+                    $config->write = AnDomain::ACCESS_PROTECTED;
+                    break;
+
+                case 'public' :
+                    $config->write = AnDomain::ACCESS_PUBLIC;
+                    break;
             }
         }
 
         if (is_string($config->read)) {
+
             switch ($config->read) {
-                case 'private'     : $config->read = AnDomain::ACCESS_PRIVATE;break;
-                case 'protected' : $config->read = AnDomain::ACCESS_PROTECTED;break;
-                case 'public'     : $config->read = AnDomain::ACCESS_PUBLIC;break;
+
+                case 'private' :
+                    $config->read = AnDomain::ACCESS_PRIVATE;
+                    break;
+
+                case 'protected' :
+                    $config->read = AnDomain::ACCESS_PROTECTED;
+                    break;
+
+                case 'public' :
+                    $config->read = AnDomain::ACCESS_PUBLIC;
+                    break;
             }
         }
     }
 
     /**
      * Name of the property.
-     * 
+     *
      * @return string
      */
     public function getName()
@@ -202,9 +222,9 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Set write access.
-     * 
-     * @param bool $access The proeprty read access 
-     * 
+     *
+     * @param bool $access The proeprty read access
+     *
      * @return AnDomainPropertyAbstract
      */
     public function setWriteAccess($access)
@@ -216,9 +236,9 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Set read access.
-     * 
-     * @param bool $access The proeprty read access 
-     * 
+     *
+     * @param bool $access The proeprty read access
+     *
      * @return AnDomainPropertyAbstract
      */
     public function setReadAccess($access)
@@ -240,7 +260,7 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Return property access.
-     * 
+     *
      * @return bool
      */
     public function getWriteAccess()
@@ -290,7 +310,7 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Return if a property is uniquable.
-     * 
+     *
      * @return bool
      */
     public function isSerializable()
@@ -300,7 +320,7 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Return if a property is a attribute.
-     * 
+     *
      * @return bool
      */
     public function isAttribute()
@@ -310,7 +330,7 @@ abstract class AnDomainPropertyAbstract
 
     /**
      * Return if a property is a relationship.
-     * 
+     *
      * @return bool
      */
     public function isRelationship()
@@ -322,7 +342,7 @@ abstract class AnDomainPropertyAbstract
      * Provides a test to see if a property is materializable given data.
      *
      * @param array $data
-     * 
+     *
      * @return bool
      */
     abstract public function isMaterializable(array $data);
@@ -331,7 +351,7 @@ abstract class AnDomainPropertyAbstract
      * Materilize a property from the raw data. If the entity object has been
      * already been initialized it will be passed to the function. If a property is
      * unique it will not be passed the entity.
-     * 
+     *
      * @param array                  $data
      * @param AnDomainEntityAbstract $entity
      */

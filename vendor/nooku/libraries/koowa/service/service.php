@@ -16,7 +16,7 @@
  */
 class KService implements KServiceInterface
 {
-	/**
+		/**
      * The identifier registry
      *
      * @var array
@@ -24,32 +24,32 @@ class KService implements KServiceInterface
     protected static $_identifiers = null;
 
     /**
-	 * The identifier aliases
-	 *
-	 * @var	array
-	 */
-	protected static $_aliases = array();
+		 * The identifier aliases
+		 *
+		 * @var	array
+		 */
+		protected static $_aliases = array();
 
-	/**
-	 * The services
-	 *
-	 * @var	array
-	 */
-	protected static $_services = null;
+		/**
+		 * The services
+		 *
+		 * @var	array
+		 */
+		protected static $_services = null;
 
-	/**
-	 * The mixins
-	 *
-	 * @var	array
-	 */
-	protected static $_mixins = array();
+		/**
+		 * The mixins
+		 *
+		 * @var	array
+		 */
+		protected static $_mixins = array();
 
-	/**
-	 * The configs
-	 *
-	 * @var	array
-	 */
-	protected static $_configs = array();
+		/**
+		 * The configs
+		 *
+		 * @var	array
+		 */
+		protected static $_configs = array();
 
 	/**
 	 * Constructor
@@ -59,21 +59,21 @@ class KService implements KServiceInterface
 	final private function __construct(KConfig $config)
 	{
 	    //Create the identifier registry
-        self::$_identifiers = new KServiceIdentifierRegistry();
+      self::$_identifiers = new KServiceIdentifierRegistry();
 
-	    if(isset($config['cache_prefix'])) {
-            self::$_identifiers->setCachePrefix($config['cache_prefix']);
-        }
+	    if (isset($config['cache_prefix'])) {
+      		self::$_identifiers->setCachePrefix($config['cache_prefix']);
+      }
 
-	    if(isset($config['cache_enabled'])) {
-            self::$_identifiers->enableCache($config['cache_enabled']);
-        }
+	    if (isset($config['cache_enabled'])) {
+        	self::$_identifiers->enableCache($config['cache_enabled']);
+      }
 
-        //Create the service container
-	    self::$_services    = new KServiceContainer();
+      //Create the service container
+	    self::$_services = new KServiceContainer();
 
 	    //Auto-load the koowa adapter
-        KServiceIdentifier::addLocator(new KServiceLocatorKoowa());
+      KServiceIdentifier::addLocator(new KServiceLocatorKoowa());
 	}
 
 	/**
@@ -91,18 +91,18 @@ class KService implements KServiceInterface
      */
 	public static function getInstance($config = array())
 	{
-		static $instance;
+			static $instance;
 
-		if ($instance === NULL)
-		{
-			if(!$config instanceof KConfig) {
-				$config = new KConfig($config);
+			if ($instance === NULL) {
+
+				if (!$config instanceof KConfig) {
+					$config = new KConfig($config);
+				}
+
+				$instance = new self($config);
 			}
 
-			$instance = new self($config);
-		}
-
-		return $instance;
+			return $instance;
 	}
 
 	/**
@@ -117,20 +117,21 @@ class KService implements KServiceInterface
 	 */
 	public static function get($identifier, array $config = array())
 	{
-		$objIdentifier = self::getIdentifier($identifier);
-		$strIdentifier = (string) $objIdentifier;
+			$objIdentifier = self::getIdentifier($identifier);
+			$strIdentifier = (string) $objIdentifier;
 
-		if(!self::$_services->offsetExists($strIdentifier))
-		{
-		    //Instantiate the identifier
-			$instance = self::_instantiate($objIdentifier, $config);
+			if(!self::$_services->offsetExists($strIdentifier)) {
+			    //Instantiate the identifier
+				$instance = self::_instantiate($objIdentifier, $config);
 
-			//Perform the mixin
-			self::_mixin($strIdentifier, $instance);
-		}
-		else $instance = self::$_services->offsetGet($strIdentifier);
+				//Perform the mixin
+				self::_mixin($strIdentifier, $instance);
 
-		return $instance;
+			} else {
+				$instance = self::$_services->offsetGet($strIdentifier);
+			}
+
+			return $instance;
 	}
 
 	/**
@@ -214,6 +215,7 @@ class KService implements KServiceInterface
         $strIdentifier = (string) $objIdentifier;
 
         $result = array();
+
         if(isset(self::$_mixins[$strIdentifier])) {
             $result = self::$_mixins[$strIdentifier];
         }
@@ -234,27 +236,29 @@ class KService implements KServiceInterface
 	 */
 	public static function getIdentifier($identifier)
 	{
-	    if(!is_string($identifier))
-		{
-	        if($identifier instanceof KObjectServiceable) {
-			    $identifier = $identifier->getIdentifier();
-		    }
-		}
+	    if (!is_string($identifier)) {
+		      if($identifier instanceof KObjectServiceable) {
+				    	$identifier = $identifier->getIdentifier();
+			    }
+			}
 
 	    $alias = (string) $identifier;
-	    if(array_key_exists($alias, self::$_aliases)) {
-	        $identifier = self::$_aliases[$alias];
-		}
 
-	    if(!self::$_identifiers->offsetExists((string) $identifier))
-        {
-		    if(is_string($identifier)) {
+			if (array_key_exists($alias, self::$_aliases)) {
+	        $identifier = self::$_aliases[$alias];
+			}
+
+	    if (!self::$_identifiers->offsetExists((string) $identifier)) {
+
+				if (is_string($identifier)) {
 		        $identifier = new KServiceIdentifier($identifier);
 		    }
 
 		    self::$_identifiers->offsetSet((string) $identifier, $identifier);
-        }
-        else $identifier = self::$_identifiers->offsetGet((string)$identifier);
+
+			} else {
+					$identifier = self::$_identifiers->offsetGet((string)$identifier);
+			}
 
 		return $identifier;
 	}
@@ -268,9 +272,8 @@ class KService implements KServiceInterface
 	 */
 	public static function setAlias($alias, $identifier)
 	{
-		$identifier = self::getIdentifier($identifier);
-
-		self::$_aliases[$alias] = $identifier;
+			$identifier = self::getIdentifier($identifier);
+			self::$_aliases[$alias] = $identifier;
 	}
 
 	/**
@@ -281,18 +284,18 @@ class KService implements KServiceInterface
 	 */
 	public static function getAlias($alias)
 	{
-		return isset(self::$_aliases[$alias])  ? self::$_aliases[$alias] : null;
+			return isset(self::$_aliases[$alias]) ? self::$_aliases[$alias] : null;
 	}
 
 	/**
-     * Get a list of aliasses
-     *
-     * @return array
-     */
-    public static function getAliases()
-    {
-        return self::$_aliases;
-    }
+   * Get a list of aliasses
+   *
+   * @return array
+   */
+  public static function getAliases()
+  {
+      return self::$_aliases;
+  }
 
 	/**
 	 * Set the configuration options for an identifier
@@ -303,14 +306,14 @@ class KService implements KServiceInterface
 	 */
 	public static function setConfig($identifier, array $config)
 	{
-		$objIdentifier = self::getIdentifier($identifier);
-		$strIdentifier = (string) $objIdentifier;
+			$objIdentifier = self::getIdentifier($identifier);
+			$strIdentifier = (string) $objIdentifier;
 
-		if(isset(self::$_configs[$strIdentifier])) {
-		     self::$_configs[$strIdentifier] =  self::$_configs[$strIdentifier]->append($config);
-		} else {
-		    self::$_configs[$strIdentifier] = new KConfig($config);
-		}
+			if (isset(self::$_configs[$strIdentifier])) {
+					self::$_configs[$strIdentifier] = self::$_configs[$strIdentifier]->append($config);
+			} else {
+			    self::$_configs[$strIdentifier] = new KConfig($config);
+			}
 	}
 
 	/**
@@ -322,8 +325,8 @@ class KService implements KServiceInterface
 	 */
 	public static function getConfig($identifier)
 	{
-		$objIdentifier = self::getIdentifier($identifier);
-		$strIdentifier = (string) $objIdentifier;
+			$objIdentifier = self::getIdentifier($identifier);
+			$strIdentifier = (string) $objIdentifier;
 
 	    return isset(self::$_configs[$strIdentifier])  ? self::$_configs[$strIdentifier]->toArray() : array();
 	}
@@ -348,10 +351,11 @@ class KService implements KServiceInterface
      */
     protected static function _mixin($identifier, $instance)
     {
-        if(isset(self::$_mixins[$identifier]) && $instance instanceof KObject)
-        {
-            $mixins = self::$_mixins[$identifier];
-            foreach($mixins as $mixin) {
+        if (isset(self::$_mixins[$identifier]) && $instance instanceof KObject) {
+
+						$mixins = self::$_mixins[$identifier];
+
+						foreach ($mixins as $mixin) {
                 $instance->mixin($mixin, self::getConfig($mixin));
             }
         }
@@ -370,10 +374,9 @@ class KService implements KServiceInterface
         $result = null;
 
         //Load the class manually using the basepath
-        if(self::get('koowa:loader')->loadClass($identifier->classname, $identifier->basepath))
-        {
-            if(array_key_exists('KObjectServiceable', class_implements($identifier->classname)))
-            {
+        if (self::get('koowa:loader')->loadClass($identifier->classname, $identifier->basepath)) {
+
+						if (array_key_exists('KObjectServiceable', class_implements($identifier->classname))) {
                 //Create the configuration object
                 $config = new KConfig(array_merge(self::getConfig($identifier), $config));
 
@@ -382,17 +385,16 @@ class KService implements KServiceInterface
                 $config->service_identifier = $identifier;
 
                 // If the class has an instantiate method call it
-                if(array_key_exists('KServiceInstantiatable', class_implements($identifier->classname))) {
+                if (array_key_exists('KServiceInstantiatable', class_implements($identifier->classname))) {
                     $result = call_user_func(array($identifier->classname, 'getInstance'), $config, self::getInstance());
                 } else {
                     $result = new $identifier->classname($config);
                 }
-
             }
         }
 
         //Thrown an error if no object was instantiated
-        if(!is_object($result)) {
+        if (!is_object($result)) {
             throw new KServiceException('Cannot instantiate object from identifier : '.$identifier);
         }
 

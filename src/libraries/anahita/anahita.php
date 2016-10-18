@@ -5,8 +5,9 @@ define('ANAHITA', 1);
 /**
  * Include Koowa.
  */
-require_once JPATH_LIBRARIES.'/koowa/koowa.php';
-require_once JPATH_LIBRARIES.'/anahita/functions.php';
+require_once ANPATH_LIBRARIES.'/koowa/koowa.php';
+require_once ANPATH_LIBRARIES.'/anahita/functions.php';
+require_once ANPATH_LIBRARIES.'/anahita/translator.php';
 
 /**
  * Service Class.
@@ -26,7 +27,7 @@ class anahita
      *
      * @var string
      */
-    protected static $_version = '4.2.4';
+    protected static $_version = '4.3.0';
 
     /**
      * Path to Anahita libraries.
@@ -40,9 +41,7 @@ class anahita
      *
      * Prevent creating clones of this class
      */
-    final private function __clone()
-    {
-    }
+    final private function __clone(){}
 
     /**
      * Singleton instance.
@@ -73,23 +72,19 @@ class anahita
     {
         //store the path
         $this->_path = dirname(__FILE__);
+        $cache_prefix = isset($config['cache_prefix']) ? $config['cache_prefix'] : '';
+        $cache_enabled = isset($config['cache_enabled']) ? $config['cache_enabled'] : 0;
 
         //instantiate koowa
         Koowa::getInstance(array(
-            'cache_prefix' => $config['cache_prefix'],
-            'cache_enabled' => $config['cache_enabled'],
+            'cache_prefix' => $cache_prefix,
+            'cache_enabled' => (bool) $cache_enabled,
         ));
-
-        //if caching is not enabled then reset the apc cache to
-        //to prevent corrupt identifier
-        if (!$config['cache_enabled']) {
-            clean_apc_with_prefix($config['cache_prefix']);
-        }
 
         require_once dirname(__FILE__).'/loader/adapter/anahita.php';
 
         KLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
-        KLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => JPATH_LIBRARIES.'/default')));
+        KLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
 
         AnServiceClass::getInstance();
 

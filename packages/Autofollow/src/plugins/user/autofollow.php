@@ -10,9 +10,8 @@
  *
  * @link     	http://www.GetAnahita.com
  */
-jimport('joomla.plugin.plugin');
 
-class plgUserAutoFollow extends JPlugin
+class plgUserAutoFollow extends PlgAnahitaDefault
 {
     /**
      * store user method.
@@ -24,34 +23,22 @@ class plgUserAutoFollow extends JPlugin
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser($user, $isnew, $succes, $msg)
+    public function onAfterStoreUser(KEvent $event)
     {
-        if (!$succes) {
+        if (!$event->person) {
             return false;
         }
 
-        $person = KService::get('repos://site/people.person')
-                  ->getQuery()
-                  ->disableChain()
-                  ->userId($user['id'])
-                  ->fetch();
+        $person = $event->person;
+        $actor_ids = explode(',', $this->_params->actor_ids);
 
-        if ($person) {
-            $actor_ids = explode(',', $this->params->get('actor_ids'));
-
-            foreach ($actor_ids as $actor_id) {
-                $actor_id = (int) $actor_id;
-
-                if ($actor_id) {
-                    $actor = KService::get('repos://site/actors.actor')
-                             ->getQuery()
-                             ->disableChain()
-                             ->fetch($actor_id);
-
-                    if ($actor && $actor->isFollowable()) {
-                        $actor->addFollower($person);
-                        $actor->save();
-                    }
+        foreach ($actor_ids as $actor_id) {
+            $actor_id = (int) $actor_id;
+            if ($actor_id) {
+                $actor = KService::get('repos:actors.actor')->find(array('id' => $actor_id));
+                if ($actor && $actor->isFollowable()) {
+                    $actor->addFollower($person);
+                    $actor->save();
                 }
             }
         }

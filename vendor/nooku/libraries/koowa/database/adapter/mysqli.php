@@ -101,15 +101,15 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
      */
     protected function _initialize(KConfig $config)
     {
-    	$config->append(array(
-    		'options'	=> array(
-    			'host'		=> ini_get('mysqli.default_host'),
-    			'username'	=> ini_get('mysqli.default_user'),
-    			'password'  => ini_get('mysqli.default_pw'),
-    			'database'	=> '',
-    			'port'		=> ini_get("mysqli.default_port"),
-    			'socket'	=> ini_get("mysqli.default_socket")
-    		)
+    		$config->append(array(
+	    		'options'	=> array(
+	    			'host'		=> ini_get('mysqli.default_host'),
+	    			'username'	=> ini_get('mysqli.default_user'),
+	    			'password'  => ini_get('mysqli.default_pw'),
+	    			'database'	=> '',
+	    			'port'		=> ini_get("mysqli.default_port"),
+	    			'socket'	=> ini_get("mysqli.default_socket")
+	    		)
         ));
 
         parent::_initialize($config);
@@ -122,8 +122,6 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 	 */
 	 public function connect()
 	 {
-		$oldErrorReporting = error_reporting(0);
-
 		$mysqli = new mysqli(
 			$this->_options->host,
 			$this->_options->username,
@@ -133,8 +131,6 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 			$this->_options->socket
 		);
 
-		error_reporting($oldErrorReporting);
-
 		if (mysqli_connect_errno()) {
 			throw new KDatabaseAdapterException('Connect failed: (' . mysqli_connect_errno() . ') ' . mysqli_connect_error(), mysqli_connect_errno());
 		}
@@ -143,6 +139,8 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 		if (defined('MYSQLI_OPT_INT_AND_FLOAT_NATIVE')) {
 			$mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 		}
+
+		$mysqli->set_charset("utf8");
 
 		$this->_connection = $mysqli;
 		$this->_connected  = true;
@@ -192,7 +190,8 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 	    }
 
 	    $this->_connection = $resource;
-		return $this;
+
+			return $this;
 	}
 
 	/**
@@ -236,7 +235,6 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 		if(!isset($this->_table_schema[$table]))
 		{
 			$this->_table_schema[$table] = $this->_fetchTableInfo($table);
-
 			$this->_table_schema[$table]->indexes = $this->_fetchTableIndexes($table);
 			$this->_table_schema[$table]->columns = $this->_fetchTableColumns($table);
 		}
