@@ -4,6 +4,10 @@ Anahita 4.3.0 Birth Release
 =============================
 * removed all joomla legacy files and replaced them with native anahita classes
 
+Anahita 4.2.4 Birth Release
+=============================
+* fixed critical issue which was preventing first time installation due to the absence of a from system email
+
 Anahita 4.2.3 Birth Release
 =============================
 * starting using SwiftMail and Anahita's Mailer class instead of legacy joomla mailer
