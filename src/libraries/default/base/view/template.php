@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -132,7 +132,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      * Sets the _escape() callback.
      *
      * @param   mixed The callback for _escape() to use.
-     * 
+     *
      * @return LibBaseViewAbstract
      */
     public function setEscape($spec)
@@ -168,11 +168,11 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     /**
      * Method to set a template object attached to the view.
      *
-     * @param   mixed   An object that implements KObjectIdentifiable, an object that 
+     * @param   mixed   An object that implements KObjectIdentifiable, an object that
      *                  implements KIndentifierInterface or valid identifier string
      *
      * @throws KDatabaseRowsetException If the identifier is not a table identifier
-     * 
+     *
      * @return LibBaseViewAbstract
      */
     public function setTemplate($template)
@@ -201,11 +201,11 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     }
 
     /**
-     * Calls the methods _beforeLayout($layout) and _layout[Layout] and runs the command 
+     * Calls the methods _beforeLayout($layout) and _layout[Layout] and runs the command
      * before.load if there are any commands in the queue. For any layout rendered through the view
-     * the data of the view is passed to the template regardless. If $data has duplicate keys as the 
+     * the data of the view is passed to the template regardless. If $data has duplicate keys as the
      * $view->data then $data values replaces the values with duplicate keys.
-     * 
+     *
      * @param string $layout The layout
      * @param array  $data   The data
      */

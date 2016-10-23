@@ -3,7 +3,7 @@
 <?
 $num_notifications = empty($num_notifications) ? get_viewer()->numOfNewNotifications() : $num_notifications;
 $viewer = get_viewer();
-$components = $this->getService('com://site/people.template.helper')->viewerMenuLinks($viewer);
+$components = $this->getService('com:people.template.helper')->viewerMenuLinks($viewer);
 ?>
 
 <ul class="nav pull-right">
@@ -82,22 +82,22 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
                  <?= @text('TMPL-MENU-ITEM-VIEWER-SUBSCRIPTIONS-ORDERS-HISTORY') ?>
                  </a>
             </li>
+			<li class="divider"></li>
             <? endif; ?>
 
-						<? if($viewer->superadmin()): ?>
-						<li class="divider"></li>
-						<li>
-								<a href="<?= @route('option=com_settings&view=settings') ?>">
-									<?= @text('TMPL-MENU-ITEM-VIEWER-SITE-SETTINGS') ?>
-								</a>
-						</li>
-						<li class="divider"></li>
-						<? endif; ?>
-					<li>
-						<a data-trigger="PostLink" href="<?= @route('option=com_people&view=session&action=delete') ?>">
-						    <?= @text('LIB-AN-ACTION-LOGOUT') ?>
-						</a>
-					</li>
+			<? if($viewer->superadmin()): ?>
+			<li>
+				<a href="<?= @route('option=com_settings&view=settings') ?>">
+					<?= @text('TMPL-MENU-ITEM-VIEWER-SITE-SETTINGS') ?>
+				</a>
+			</li>
+			<li class="divider"></li>
+			<? endif; ?>
+			<li>
+				<a data-trigger="PostLink" href="<?= @route('option=com_people&view=session&action=delete') ?>">
+				    <?= @text('LIB-AN-ACTION-LOGOUT') ?>
+				</a>
+			</li>
 		</ul>
 	</li>
 </ul>

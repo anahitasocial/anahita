@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -28,7 +28,7 @@
  */
 class ComApplicationViewHtml extends LibApplicationViewHtml
 {
-    /** 
+    /**
      * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -42,8 +42,7 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
         $identifier->path = array();
 
         $paths[] = ANPATH_THEMES.'/base/'.$this->getFormat();
-
-        $paths[] = dirname($identifier->filepath).'/'.$this->getFormat();
+        $paths[] = ANPATH_BASE . dirname($identifier->filepath).'/'.$this->getFormat();
 
         $config->append(array(
             'template_paths' => $paths,

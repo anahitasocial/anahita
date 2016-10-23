@@ -310,10 +310,8 @@ abstract class LibBaseTemplateAbstract extends KTemplateAbstract
         if (!isset($this->_paths[$filename])) {
             foreach ($this->_search_paths as $path) {
                 $file = $path.'/'.$filename;
-
                 if ($this->findFile($file)) {
                     $this->_paths[$filename] = $file;
-
                     return $file;
                 }
             }

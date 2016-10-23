@@ -130,15 +130,15 @@ class ComApplication extends KObject implements KServiceInstantiatable
     public function getTemplate()
     {
         if (!isset($this->_template)) {
+
             if (!KService::get('application.registry')->offsetExists('application-template')) {
-                $template = (isset($this->_site_settings->template)) ? $this->_site_settings->template : 'shiraz';
-                KService::get('application.registry')->offsetSet('application-template', $template);
+                KService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
             }
 
             $template = KService::get('application.registry')->offsetGet('application-template');
             $this->setTemplate(pick($template, 'base'));
         }
-
+        
         return $this->_template;
     }
 

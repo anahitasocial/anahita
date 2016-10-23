@@ -60,8 +60,7 @@ class PackageCommand extends Command
           if ($file->isFile() && pathinfo($file->getFilename(), PATHINFO_EXTENSION) == 'json') {
 
                $json = json_decode(file_get_contents($file));
-
-               if (isset($json) && in_array($json->type, array('component', 'plugin'))) {
+               if (isset($json->type) && in_array($json->type, array('component', 'plugin'))) {
                   $manifests[dirname($file)] = $json;
                }
            }
