@@ -54,7 +54,8 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
 
         parent::__construct($config);
 
-        $this->_params = $config->params;
+        $this->_params = new KConfig();
+        $this->setParams($config->params);
 
         $this->getService('anahita:language')->load('tpl_'.$this->getIdentifier()->package);
 
@@ -146,7 +147,7 @@ class LibApplicationViewHtml extends LibBaseViewTemplate
      */
     public function setParams($params)
     {
-        $this->_params = new KConfig($params);
+        $this->_params->append($params);
     }
 
     /**

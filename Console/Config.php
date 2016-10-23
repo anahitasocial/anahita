@@ -57,13 +57,16 @@ class Config
     {
         $this->_site_path = $site_path;
         $map = array();
-        foreach($this->_key_map as $key => $value)
-        {
+
+        foreach($this->_key_map as $key => $value) {
+
             if ( is_numeric($key) ) {
                 $key = $value;
             }
+
             $map[$key] = $value;
         }
+
         $this->_key_map = $map;
         $this->_data = array(
             'mailer' => 'mail',
@@ -76,7 +79,8 @@ class Config
             'smtphost' => 'localhost',
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
-            'sitename' => 'Anahita'
+            'sitename' => 'Anahita',
+            'template' => 'shiraz'
         );
 
         $this->set(array(
@@ -109,6 +113,7 @@ class Config
                 $this->_data = array_merge($this->_data, get_object_vars($config));
             }
         }
+
         $this->database_type = 'mysqli';
     }
 
@@ -129,7 +134,7 @@ class Config
     {
         $this->set(array(
             'error_reporting' => E_ALL,
-            'enable_debug'    => 1,
+            'enable_debug' => 1,
         ));
     }
 
@@ -140,7 +145,7 @@ class Config
     {
         $this->set(array(
             'error_reporting' => 0,
-            'enable_debug'    => 0,
+            'enable_debug' => 0,
         ));
     }
 
@@ -237,7 +242,7 @@ class Config
     {
         $parts = explode(':', $this->database_host);
 
-        return array(
+        $info = array(
             'host' => $parts[0],
             'port' => isset($parts[1]) ? $parts[1] : '3306',
             'user' => $this->database_user,
@@ -245,6 +250,8 @@ class Config
             'name' => $this->database_name,
             'prefix' => $this->database_prefix
         );
+
+        return $info;
     }
 
     /**
@@ -264,7 +271,7 @@ class Config
      */
     public function save()
     {
-        $data   = $this->toData();
+        $data = $this->toData();
 
         if (file_exists($this->_configuration_file) && !is_writable($this->_configuration_file)) {
             chmod($this->_configuration_file, 0644);
@@ -336,12 +343,12 @@ class Config
         };
 
         $write_group(array('sitename'), 'Site Settings');
-        $write_group(array('dbtype','host','user','password','db','dbprefix'), 'Database Settings');
-        $write_group(array('secret','error_reporting','tmp_path','log_path','force_ssl'), 'Server Settings');
-        $write_group(array('mailer','mailfrom','fromname','sendmail','smtpauth','smtpuser','smtppass','smtphost'), 'Mail Settings');
+        $write_group(array('dbtype', 'host', 'user', 'password', 'db', 'dbprefix'), 'Database Settings');
+        $write_group(array('secret', 'error_reporting', 'tmp_path', 'log_path', 'force_ssl'), 'Server Settings');
+        $write_group(array('mailer', 'mailfrom', 'fromname', 'sendmail', 'smtpauth', 'smtpuser', 'smtppass', 'smtphost'), 'Mail Settings');
         $write_group(array('debug'), 'Debug Settings');
         $write_group(array('sef_rewrite'), 'Route Settings');
-        $write_group(array_keys($data),'Other configurations');
+        $write_group(array_keys($data), 'Other configurations');
         $file->fwrite("}");
     }
 }

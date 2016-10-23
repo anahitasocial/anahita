@@ -19,6 +19,7 @@ class ComAnahitaSchemaMigration11 extends ComMigratorMigrationVersion
 
         //delete legacy com_cache and com_opensocial
         dbexec('DELETE FROM `#__components` WHERE `option` = \'com_cache\' OR `option` = \'com_opensocial\' ');
+        dbexec('DELETE FROM `#__migrator_versions` WHERE component = "opensocial"');
 
         //some clean up
         dbexec('DELETE FROM `#__components` WHERE name = "" ');

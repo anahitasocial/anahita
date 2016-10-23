@@ -20,6 +20,9 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
     */
     public function up()
     {
+        //legacy app clean up
+        dbexec('DELETE FROM `#__migrator_versions` WHERE component = "opensocial"');
+
         dbexec('ALTER TABLE `#__nodes` CHANGE `meta` `meta` text DEFAULT NULL');
         dbexec('ALTER TABLE `#__edges` CHANGE `meta` `meta` text DEFAULT NULL');
         dbexec('ALTER TABLE `#__components` CHANGE `params` `meta` text DEFAULT NULL');
