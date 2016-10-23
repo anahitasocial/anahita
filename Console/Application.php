@@ -66,8 +66,7 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function loadFramework()
     {
-        if (!defined('ANPATH_BASE'))
-        {
+        if (!defined('ANPATH_BASE')) {
             $_composerLoader = $GLOBALS['composerLoader'];
             define('ANPATH_BASE', WWW_ROOT);
             $_SERVER['HTTP_HOST'] = '';
