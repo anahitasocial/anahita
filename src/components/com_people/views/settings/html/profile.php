@@ -2,7 +2,7 @@
 
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-PROFILE-INFORMATION') ?></h3>
 
-<form action="<?= @route($item->getURL()) ?>" method="post" autocomplete="off">
+<form action="<?= @route($item->getURL(false)) ?>" method="post" autocomplete="off">
 	<div class="control-group">
 		<label class="control-label"  for="person-given-name">
 			<?= @text('COM-PEOPLE-GIVEN-NAME'); ?>
