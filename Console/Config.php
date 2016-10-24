@@ -70,8 +70,8 @@ class Config
         $this->_key_map = $map;
         $this->_data = array(
             'mailer' => 'mail',
-            'mailfrom' => '',
-            'fromname' => '',
+            'mailfrom' => 'noreply@example.com',
+            'fromname' => 'Anahita Website',
             'sendmail' => '/usr/sbin/sendmail',
             'smtpauth' => '0',
             'smtpuser' => '',
