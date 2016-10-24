@@ -20,6 +20,8 @@ class ComHashtagsControllerBehaviorIdentifiable extends ComBaseControllerBehavio
      */
     public function fetchEntity(KCommandContext $context)
     {
+        print $this->getRequest()->alias;
+
         if ($this->isDispatched() && $this->getRequest()->alias) {
             $this->setIdentifiableKey('alias');
         }

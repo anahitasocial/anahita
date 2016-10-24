@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,33 +30,33 @@ class LibApplicationRouter extends KObject
 {
     /**
      * cloneable url.
-     * 
+     *
      * @var KHttpUrl
      */
     private $_clonable_url;
 
     /**
      * If enabled then index.php is removed from the routes.
-     * 
+     *
      * @var bool
      */
     protected $_enable_rewrite;
 
     /**
      * base url.
-     * 
+     *
      * @var KHttpUrl
      */
     protected $_base_url;
 
     /**
      * Component routers.
-     * 
+     *
      * @var array
      */
     protected $_routers = array();
 
-    /** 
+    /**
      * Constructor.
      *
      * @param array $config An optional KConfig object with configuration options.
@@ -106,7 +106,7 @@ class LibApplicationRouter extends KObject
 
     /**
      * Return if rewerite is enabled.
-     * 
+     *
      * @return bool
      */
     public function rewriteEnabled()
@@ -116,7 +116,7 @@ class LibApplicationRouter extends KObject
 
     /**
      * Return the base url.
-     * 
+     *
      * @return KHttpUrl
      */
     public function getBaseUrl()
@@ -125,18 +125,8 @@ class LibApplicationRouter extends KObject
     }
 
     /**
-     * Return the router mode.
-     * 
-     * @return int
-     */
-    public function getMode()
-    {
-        return JROUTER_MODE_SEF;
-    }
-
-    /**
      * Parses the URI.
-     * 
+     *
      * @param JURI $uri
      */
     public function parse(&$url)
@@ -149,7 +139,7 @@ class LibApplicationRouter extends KObject
 
     /**
      * Parses a URL.
-     * 
+     *
      * @param KHttpUrl $url
      */
     protected function _parse(&$url)
@@ -168,7 +158,7 @@ class LibApplicationRouter extends KObject
 
     /**
      * Builds a SEF URL.
-     * 
+     *
      * @param string $url URL to build
      * @param bool   $fqr Full query resolution
      */
@@ -180,7 +170,7 @@ class LibApplicationRouter extends KObject
 
         $url = (string) $url;
 
-        //remove the index.php for urls that starts with index.php? 	    
+        //remove the index.php for urls that starts with index.php?
         if (strpos($url, 'index.php?') === 0) {
             $url = substr($url, 9);
         }
@@ -247,9 +237,9 @@ class LibApplicationRouter extends KObject
 
     /**
      * Returna component router.
-     * 
-     * @param string $component Component name 
-     * 
+     *
+     * @param string $component Component name
+     *
      * @return ComBaseRouter
      */
     public function getComponentRouter($component)
@@ -268,7 +258,7 @@ class LibApplicationRouter extends KObject
 
     /**
      * Fixes the url path.
-     * 
+     *
      * @param KHttpUrl $url
      */
     protected function _fixUrlForParsing($url)

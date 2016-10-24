@@ -139,6 +139,8 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         dbexec("UPDATE `#__plugins` SET `element` = 'anahita' WHERE `element` = 'joomla'");
         dbexec("UPDATE `#__plugins` SET `name` = 'User - Anahita' WHERE `folder` = 'user' AND `element` = 'anahita'");
 
+        dbexec('ALTER TABLE `#__nodes` CHANGE name name VARCHAR(255) CHARACTER SET utf8mb4');
+        dbexec('ALTER TABLE `#__nodes` CHANGE alias alias VARCHAR(255) CHARACTER SET utf8mb4');
         dbexec('ALTER TABLE `#__nodes` CHANGE body body MEDIUMTEXT CHARACTER SET utf8mb4');
         dbexec('ALTER TABLE `#__nodes` CHANGE excerpt excerpt TEXT CHARACTER SET utf8mb4');
     }
