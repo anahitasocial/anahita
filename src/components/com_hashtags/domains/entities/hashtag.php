@@ -16,7 +16,7 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
     /*
      * hashtag regex pattern
      */
-    const PATTERN_HASHTAG = '/(?![^<]*>)(?<=\W|^)#([^\d_\s\W][\p{L}\d]{2,})/';
+    const PATTERN_HASHTAG = '/(?![^<]*>)(?<=\W|^)#([^\d_\s\W][\p{L}\d\x{1F600}-\x{1F64F}\x{1F300}-\x{1F5FF}\x{1F680}-\x{1F6FF}]{2,})/u';
 
     /**
      * Initializes the default configuration for the object.

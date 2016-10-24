@@ -32,8 +32,9 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
             'resources' => array(
                 array(
                     'alias' => $this->getIdentifier()->name,
-                    'name' => 'nodes',
-                 ), ),
+                    'name' => 'nodes'
+                 )
+             ),
             'identity_property' => 'id',
             'attributes' => array(
                 'id' => array(
