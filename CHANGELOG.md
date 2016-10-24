@@ -8,6 +8,7 @@ Anahita 4.3.0 Birth Release
 * removed all xml files and started using json files instead
 * node description and excerpt fields now support utf8mb4 for displaying emojis
 * updated robots.txt file
+* added emoji support to node names, aliases, and hashtags 
 
 Anahita 4.2.4 Birth Release
 =============================
