@@ -22,7 +22,7 @@
 <?= @message(@text('COM-PEOPLE-PROMPT-RESET-PASSWORD'), array('type'=>'alert')) ?>
 <? endif; ?>
 
-<form action="<?= @route('view=person&id='.$item->id) ?>" method="post" autocomplete="off">
+<form action="<?= @route($item->getURL(false)) ?>" method="post" autocomplete="off">
     <input type="hidden" name="action" value="edit" />
 
 	<div class="control-group">
