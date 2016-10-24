@@ -14,12 +14,13 @@ class plgUserAnahita extends PlgAnahitaDefault
 	 */
 	public function onAfterDeleteUser(KEvent $event)
 	{
-		if (!$event->succes) {
-			return false;
-		}
+		$person = $event->person;
 
-		KService::get('repos:sessions.session')
-		->destroy(array('nodeId' => (string) $event->person['id']));
+		if ($person->id === 0) {
+			return false;
+    	}
+
+		KService::get('repos:sessions.session')->destroy(array('nodeId' => $person->id));
 
 		return true;
 	}
