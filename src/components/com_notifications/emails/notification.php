@@ -1,5 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
-<?php
+<?
 $btn = <<<EOF
   text-decoration:none;
   cursor:pointer;
@@ -47,43 +47,50 @@ EOF;
                 <table cellspacing="0" cellpadding="0" border="0" style="">
                      <tbody>
                       <tr>
-                      	  <?php if ($subject) : ?>
+                      	  <? if ($subject) : ?>
                           <td valign="top">
                               <a href="<?= @route($subject->getURL())?>">
                                   <img src="<?= @helper('com:actors.template.helper.getAvatarURL', $subject) ?>" />
                               </a>
                           </td>
-                          <?php endif;?>
+                          <? endif;?>
                           <td valign="top" style="padding-left:10px">
-                              <?php if ($title) : ?><div style="font-size:16px"><?= $title ?></div><?php endif;?>
-                              <?php if ($body)   : ?><div style="padding-top:10px;font-size:12px"><?= (trim($body)) ?></div><?php endif;?>
+                              <? if ($title) : ?>
+                              <div style="font-size:16px">
+                                  <?= $title ?>
+                              </div>
+                              <? endif;?>
+
+                              <? if ($body) : ?>
+                              <div style="padding-top:10px;font-size:12px">
+                                  <?= (trim($body)) ?>
+                              </div>
+                              <?php endif; ?>
                           </td>
                       </tr>
                       </tbody>
                 </table>
 		      </td>
 		   </tr>
-		   <?php if ($commands && count($commands) > 0) : ?>
-		   <?php
-               $setting_command = $commands->extract('notification_setting');
-           ?>
+		   <? if ($commands && count($commands) > 0) : ?>
+		   <? $setting_command = $commands->extract('notification_setting'); ?>
 			<tr>
-				<td style="<?= $well?>">
-					<?php foreach ($commands as $command) :  ?>
+				<td style="<?= $well ?>">
+					<? foreach ($commands as $command) : ?>
 						<a href="<?= @route($command->attribs->href) ?>" style="<?= $btn_primary  ?>"><?= $command->label?></a>
-					<?php endforeach;?>
+					<? endforeach; ?>
 				</td>
 			</tr>
 			<?php endif;?>
 			<tr>
     			<td>
     			<small>
-        			<?php if (!empty($setting_command)) : ?>
+        			<? if (!empty($setting_command)) : ?>
         			    <?= sprintf(@text('COM-NOTIFICATIONS-SETTING-URL'),
                                 @route('option=notifications&view=settings&oid='.$setting_command->actor->id),
                                 @route($setting_command->actor->getURL()),
                                 $setting_command->actor->name)?>
-        			<?php endif;?>
+        			<? endif;?>
     			</small>
     			</td>
 			</tr>
