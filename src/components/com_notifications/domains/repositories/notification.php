@@ -65,7 +65,8 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
         parent::_afterEntityInsert($context);
 
         if ($this->_send_after_insert) {
-            exec_in_background('php '.ANPATH_BASE.'/index.php '.PROCESSOR_PATH.' id='.$context->entity->id);
+            $command = 'php '.ANPATH_BASE.'/index.php '.PROCESSOR_PATH.' id='.$context->entity->id;
+            $result = exec_in_background($command);
         }
     }
 }

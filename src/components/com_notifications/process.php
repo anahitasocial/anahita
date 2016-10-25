@@ -8,10 +8,12 @@ if (!defined('ANPATH_BASE')) {
     KService::get('com://site/application.dispatcher')->load();
 }
 
-$base_url = KService::get('koowa:http.url', array('url' => rtrim(KRequest::base(), '/')));
+$settings = KService::get('com:settings.setting');
+$url = KRequest::root($settings->live_site);
+$base_url = KService::get('koowa:http.url', array('url' => $url))->getURL();
 
 KService::setConfig('com:application.router', array(
-    'base_url' => $base_url,
+    'base_url' => $base_url
 ));
 
 $controller = KService::get('com:notifications.controller.processor', array('base_url' => $base_url));
