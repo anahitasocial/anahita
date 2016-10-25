@@ -173,6 +173,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
             $body = $this->renderMail(array(
                         'template' => 'notification',
+                        'layout' => false,
                         'data' => array(
                             'person' => $person,
                             'commands' => $data->commands,

@@ -1,5 +1,5 @@
 <?php defined('KOOWA') or die('Restricted access') ?>
-<?php 
+<?php
 $btn = <<<EOF
   text-decoration:none;
   cursor:pointer;
@@ -16,18 +16,18 @@ EOF;
 $btn_primary = $btn.<<<EOF
   color:#ffffff;
   background-color:#076da0;
-  border-color:#076da0 #076da0 #043b57;  
+  border-color:#076da0 #076da0 #043b57;
 EOF;
 $btn_danger = $btn.<<<EOF
   color:#ffffff;
-  background-color:#c43c35;  
+  background-color:#c43c35;
   border-color:#c43c35 #c43c35 #882a25;
 EOF;
 $well = <<<EOF
   background-color:#f2f2f2;
-  margin-bottom:20px;  
-  padding:10px;  
-  min-height:20px;  
+  margin-bottom:20px;
+  padding:10px;
+  min-height:20px;
   border:1px solid #eeeeee;
 EOF;
 ?>
@@ -50,8 +50,8 @@ EOF;
                       	  <?php if ($subject) : ?>
                           <td valign="top">
                               <a href="<?= @route($subject->getURL())?>">
-                                  <img src="<?= @helper('com://site/actors.template.helper.getAvatarURL', $subject) ?>" />
-                              </a>                                                          
+                                  <img src="<?= @helper('com:actors.template.helper.getAvatarURL', $subject) ?>" />
+                              </a>
                           </td>
                           <?php endif;?>
                           <td valign="top" style="padding-left:10px">
@@ -62,18 +62,18 @@ EOF;
                       </tbody>
                 </table>
 		      </td>
-		   </tr>			   
+		   </tr>
 		   <?php if ($commands && count($commands) > 0) : ?>
-		   <?php 
+		   <?php
                $setting_command = $commands->extract('notification_setting');
            ?>
 			<tr>
 				<td style="<?= $well?>">
-					<?php foreach ($commands as $command) :  ?>						
+					<?php foreach ($commands as $command) :  ?>
 						<a href="<?= @route($command->attribs->href) ?>" style="<?= $btn_primary  ?>"><?= $command->label?></a>
 					<?php endforeach;?>
 				</td>
-			</tr>			
+			</tr>
 			<?php endif;?>
 			<tr>
     			<td>
@@ -93,4 +93,3 @@ EOF;
 </tr>
 </tbody>
 </table>
-
