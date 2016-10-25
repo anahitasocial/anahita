@@ -15,7 +15,7 @@
 
 /**
  * Template Helper.
- * 
+ *
  * @category   Anahita
  */
 class ComNotificationsTemplateHelperParser extends ComStoriesTemplateHelperParser
@@ -31,8 +31,8 @@ class ComNotificationsTemplateHelperParser extends ComStoriesTemplateHelperParse
     {
         $config->append(array(
             'filters' => array(
-                'com://site/notifications.template.filter.blockquote',
-                'com://site/notifications.template.filter.link',
+                'com:notifications.template.filter.blockquote',
+                'com:notifications.template.filter.link',
             ),
         ));
 

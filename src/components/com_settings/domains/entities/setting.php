@@ -37,6 +37,7 @@ class ComSettingsDomainEntitySetting extends KObject
 
               // site
               'sitename' => 'Anahita',
+              'live_site' => 'example.com',
               'debug' => 0,
               'sef_rewrite' => 0,
               'secret' => '',
@@ -166,6 +167,7 @@ class ComSettingsDomainEntitySetting extends KObject
 
             $strings = array(
               'sitename',
+              'live_site',
               'log_path',
               'tmp_path',
               'fromname',

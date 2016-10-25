@@ -86,19 +86,16 @@ class LibApplicationRouter extends KObject
      */
     protected function _initialize(KConfig $config)
     {
-        if (!$config->base_url) {
-            $base = clone KRequest::base();
+        $base = clone KRequest::base();
 
-            foreach (array('host', 'scheme', 'port', 'user', 'pass') as $part) {
-                $base->$part = KRequest::url()->$part;
-            }
-
-            $config->base_url = $base;
+        foreach (array('host', 'scheme', 'port', 'user', 'pass') as $part) {
+            $base->$part = KRequest::url()->$part;
         }
 
         $config->append(array(
+            'base_url' => $base,
             'enable_rewrite' => false,
-            'url' => clone KService::get('koowa:http.url'),
+            'url' => clone KService::get('koowa:http.url')
         ));
 
         parent::_initialize($config);

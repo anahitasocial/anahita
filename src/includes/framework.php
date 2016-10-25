@@ -15,8 +15,7 @@
 defined('ANPATH_BASE') or die('Restricted access');
 defined('_ANEXEC') or define('_ANEXEC', 1);
 
-define('DS', DIRECTORY_SEPARATOR);
-
+define('DS',                    DIRECTORY_SEPARATOR);
 define('ANPATH_ROOT',           ANPATH_BASE);
 define('ANPATH_SITE',           ANPATH_ROOT);
 define('ANPATH_CONFIGURATION',  ANPATH_ROOT);
