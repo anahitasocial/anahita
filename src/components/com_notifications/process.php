@@ -9,8 +9,13 @@ if (!defined('ANPATH_BASE')) {
 }
 
 $settings = KService::get('com:settings.setting');
-$url = KRequest::root($settings->live_site);
-$base_url = KService::get('koowa:http.url', array('url' => $url))->getURL();
+
+if ($settings->live_site === '') {
+    exit();
+}
+
+$scheme = is_ssl() ? 'https://' : 'http://';
+$base_url = $scheme.$settings->live_site;
 
 KService::setConfig('com:application.router', array(
     'base_url' => $base_url
@@ -25,4 +30,4 @@ if (!empty($ids)) {
 
 $controller->process();
 
-exit(0);
+exit();
