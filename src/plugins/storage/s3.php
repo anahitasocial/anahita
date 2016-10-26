@@ -87,10 +87,7 @@ class PlgStorageS3 extends PlgStorageAbstract
     protected function _write($path, $data, $public)
     {
         $acl = $public ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE;
-
-        $options = array('Content-Type' => $this->_s3->__getMimeType($path));
-
-        return $this->_s3->putObject($data, $this->_bucket, $path, $acl, array(), $options);
+        return $this->_s3->putObject($data, $this->_bucket, $path, $acl);
     }
 
     /**
