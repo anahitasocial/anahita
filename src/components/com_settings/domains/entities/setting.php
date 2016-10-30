@@ -119,6 +119,8 @@ class ComSettingsDomainEntitySetting extends KObject
             }
 
             chmod($this->config_file_path, 0444);
+
+            $this->_clearCache();
         }
 
         return $this;
@@ -218,5 +220,12 @@ class ComSettingsDomainEntitySetting extends KObject
         }
 
         return $this;
+    }
+
+    protected function _clearCache()
+    {
+        if (ini_get('opcache.enable')) {
+            opcache_reset();
+        }
     }
 }

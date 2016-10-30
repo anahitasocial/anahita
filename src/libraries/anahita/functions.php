@@ -756,15 +756,15 @@ function get_viewer()
  */
 function clean_apc_with_prefix($prefix)
 {
-    if (extension_loaded('apc')) {
-        $info = @apc_cache_info('user');
+    if (extension_loaded('apcu')) {
+        $info = @apcu_cache_info('user');
 
         if ($info) {
             $list = (array) $info['cache_list'];
             //delete all the entries with the prefix $key
             foreach ($list as $entry) {
                 if (array_key_exists('info', $entry) && strpos($entry['info'], $prefix) === 0) {
-                    apc_delete($entry['info']);
+                    apcu_delete($entry['info']);
                 }
             }
         }
@@ -776,8 +776,8 @@ function clean_apc_with_prefix($prefix)
  */
 function clean_ap_user_cache()
 {
-    if (extension_loaded('apc')) {
-        apc_clear_cache('user');
+    if (extension_loaded('apcu')) {
+        apcu_clear_cache();
     }
 }
 

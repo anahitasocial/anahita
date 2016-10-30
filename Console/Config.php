@@ -350,5 +350,14 @@ class Config
         $write_group(array('sef_rewrite'), 'Route Settings');
         $write_group(array_keys($data), 'Other configurations');
         $file->fwrite("}");
+
+        $this->_clearCache();
+    }
+
+    protected function _clearCache()
+    {
+        if (ini_get('opcache.enable')) {
+            opcache_reset();
+        }
     }
 }

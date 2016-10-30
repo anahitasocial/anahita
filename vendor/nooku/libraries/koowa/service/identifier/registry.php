@@ -38,7 +38,7 @@ class KServiceIdentifierRegistry extends ArrayObject
      */
 	public function enableCache($enabled = true)
 	{
-	    if($enabled && extension_loaded('apc')) {
+	    if($enabled && extension_loaded('apcu')) {
             $this->_cache = true;
         } else {
             $this->_cache = false;

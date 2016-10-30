@@ -85,4 +85,34 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
 
         parent::_initialize($config);
     }
+
+	/**
+	 * Retrieves the table schema information about the given table
+	 *
+	 * This function try to get the table schema from the cache. If it cannot be found
+	 * the table schema will be retrieved from the database and stored in the cache.
+	 *
+	 * @param 	string 	A table name or a list of table names
+	 * @return	KDatabaseSchemaTable
+	 */
+	public function getTableSchema($table)
+	{
+	    if (! isset($this->_table_schema[$table]) && isset($this->_cache)) {
+
+			$database = $this->getDatabase();
+		    $identifier = md5($database.$table);
+
+	        if (! $schema = $this->_cache->get($identifier)) {
+	            $schema = parent::getTableSchema($table);
+	            //Store the object in the cache
+		   	    $this->_cache->store(serialize($schema), $identifier);
+	        } else {
+				$schema = unserialize($schema);
+			}
+
+		    $this->_table_schema[$table] = $schema;
+	    }
+
+	    return parent::getTableSchema($table);
+	}
 }
