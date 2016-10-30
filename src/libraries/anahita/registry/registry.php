@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Memory based registry.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -51,7 +51,7 @@ class AnRegistry extends ArrayObject
      */
     public function enableCache($enabled = true)
     {
-        if ($enabled && extension_loaded('apc')) {
+        if ($enabled && extension_loaded('apcu')) {
             $this->_cache = true;
         } else {
             $this->_cache = false;
@@ -91,7 +91,7 @@ class AnRegistry extends ArrayObject
     {
         if (!parent::offsetExists($offset)) {
             if ($this->_cache) {
-                $result = apc_fetch($this->_cache_prefix.'-'.$offset);
+                $result = apcu_fetch($this->_cache_prefix.'-'.$offset);
             } else {
                 $result = false;
             }
@@ -113,7 +113,7 @@ class AnRegistry extends ArrayObject
     public function offsetSet($offset, $value)
     {
         if ($this->_cache) {
-            apc_store($this->_cache_prefix.'-'.$offset, $value);
+            apcu_store($this->_cache_prefix.'-'.$offset, $value);
         }
 
         parent::offsetSet($offset, $value);
@@ -130,7 +130,7 @@ class AnRegistry extends ArrayObject
     {
         if (false === $result = parent::offsetExists($offset)) {
             if ($this->_cache) {
-                $result = apc_exists($this->_cache_prefix.'-'.$offset);
+                $result = apcu_exists($this->_cache_prefix.'-'.$offset);
             }
         }
 
@@ -145,7 +145,7 @@ class AnRegistry extends ArrayObject
     public function offsetUnset($offset)
     {
         if ($this->_cache) {
-            apc_delete($this->_cache_prefix.'-'.$offset);
+            apcu_delete($this->_cache_prefix.'-'.$offset);
         }
 
         return parent::offsetUnset($offset);

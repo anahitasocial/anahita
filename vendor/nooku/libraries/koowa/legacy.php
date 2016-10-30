@@ -27,7 +27,7 @@ if(false === function_exists('lcfirst'))
 /**
  * APC 3.1.4 compatibility
  */
-if(extension_loaded('apc') && !function_exists('apc_exists'))
+if(extension_loaded('apcu') && !function_exists('apcu_exists'))
 {
     /**
      * Check if an APC key exists
