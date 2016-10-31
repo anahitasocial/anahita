@@ -356,8 +356,12 @@ class Config
 
     protected function _clearCache()
     {
-        if (ini_get('opcache.enable')) {
+        if (extension_loaded('Zend OPcache') && ini_get('opcache.enable')) {
             opcache_reset();
+        }
+
+        if (extension_loaded('apcu') && ini_get('apc.enabled')) {
+            apcu_clear_cache();
         }
     }
 }
