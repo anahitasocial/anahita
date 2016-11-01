@@ -22,7 +22,6 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     {
         parent::__construct($config);
 
-        //parse route
         $this->registerCallback('before.run',  array($this, 'load'));
     }
 

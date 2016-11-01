@@ -55,8 +55,8 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'verifiable',
                 'dictionariable',
                 'followable',
-                'com://site/hashtags.domain.behavior.hashtagable',
-                'com://site/locations.domain.behavior.geolocatable',
+                'com:hashtags.domain.behavior.hashtagable',
+                'com:locations.domain.behavior.geolocatable',
                 'coverable',
                 'portraitable' => array(
                         'sizes' => array(
@@ -131,7 +131,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
             }
 
             return $this->_components;
-            
+
         } elseif ($name == 'uniqueAlias') {
             return $this->get('id');
         } else {

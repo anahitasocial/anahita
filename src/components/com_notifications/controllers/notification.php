@@ -25,12 +25,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         $config->append(array(
             'behaviors' => array(
                 'ownable',
-                'serviceable' => array(
-                    'except' => array(
-                        'add',
-                        'edit'
-                    )
-                )
+                'serviceable' => array('except' => array('add', 'edit'))
             ),
             'request' => array('oid' => 'viewer'),
         ));
@@ -46,7 +41,6 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
     protected function _actionGetcount(KCommandContext $context)
     {
         $count = $this->actor->numOfNewNotifications();
-
         return $this->getView()->newNotifications($count)->display();
     }
 
@@ -71,22 +65,22 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
 
         $context->query = $this->actor->getNotifications()->getQuery();
 
-        $set = parent::_actionBrowse($context)->order('creationTime', 'DESC');
+        $entities = parent::_actionBrowse($context)->order('creationTime', 'DESC');
 
         if ($this->new) {
-            $set->id($this->actor->newNotificationIds->toArray());
+            $entities->id($this->actor->newNotificationIds->toArray());
         }
 
         //only zero the notifications if the viewer is the same as the
         //actor. prevents from admin zeroing others notifications
-        if ($set->count() > 0 && get_viewer()->eql($this->actor)) {
+        if ($entities->count() > 0 && get_viewer()->eql($this->actor)) {
             //set the number of notification, since it's going to be
             //reset by the time it gets to the mod_viewer
             KService::setConfig('com:viewer.html', array('data' => array('num_notifications' => $this->actor->numOfNewNotifications())));
-            $this->registerCallback('after.get', array($this->actor, 'viewedNotifications'), $set->toArray());
+            $this->registerCallback('after.get', array($this->actor, 'viewedNotifications'), $entities->toArray());
         }
 
-        return $set;
+        return $entities;
     }
 
     /**

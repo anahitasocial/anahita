@@ -143,9 +143,9 @@ class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
             if ($value == 'viewer') {
                 $actor = get_viewer();
             } elseif (!is_numeric($value)) {
-                $actor = $this->getService('repos://site/people.person')->fetch(array('username' => $value));
+                $actor = $this->getService('repos:people.person')->fetch(array('username' => $value));
             } else {
-                $actor = $this->getService('repos://site/actors.actor')->fetch((int) $value);
+                $actor = $this->getService('repos:actors.actor')->fetch((int) $value);
             }
 
             //guest actor can never be a context actor

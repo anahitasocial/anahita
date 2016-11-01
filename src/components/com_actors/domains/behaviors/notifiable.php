@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Notifiable Behavior. Internal behavior that's used by the Com_Notifications
  * to store manage an actor's notifications.
@@ -24,6 +9,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -40,8 +26,16 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
     {
         $config->append(array(
             'attributes' => array(
-                'notificationIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'newNotificationIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
+                'notificationIds' => array(
+                    'type' => 'set',
+                    'default' => 'set',
+                    'write' => 'private'
+                ),
+                'newNotificationIds' => array(
+                    'type' => 'set',
+                    'default' => 'set',
+                    'write' => 'private'
+                ),
             ),
         ));
 
@@ -50,31 +44,31 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
 
     /**
      * Return a set of actor notifications.
-     * 
+     *
      * @return AnDomainEntitysetDefault
      */
     public function getNotifications()
     {
-        $repository = $this->getService('repos://site/notifications.notification');
+        $repository = $this->getService('repos:notifications.notification');
 
-        return $repository->getQuery()->status(ComNotificationsDomainEntityNotification::STATUS_SENT)
-               ->id($this->notificationIds->toArray())->toEntityset();
+        return $repository->getQuery()
+                ->status(ComNotificationsDomainEntityNotification::STATUS_SENT)
+                ->id($this->notificationIds->toArray())
+                ->toEntityset();
     }
 
     /**
      * Adds a new notification for the actor.
-     * 
+     *
      * @param ComNotificationsDomainEntityNotification $notification Notification
      */
     public function addNotification($notification)
     {
-        //register a callback to resetStats before 
-        //updating
         $this->_mixer->getRepository()
-            ->registerCallback('before.update', array($this, 'resetStats'), array($this->_mixer));
+        ->registerCallback('before.update', array($this, 'resetStats'), array($this->_mixer));
 
         $this->_mixer->getRepository()
-            ->registerCallback('before.update', array($this, 'removeOldNotifications'), array($this->_mixer));
+        ->registerCallback('before.update', array($this, 'removeOldNotifications'), array($this->_mixer));
 
         $ids = clone $this->notificationIds;
         $ids[] = $notification->id;
@@ -87,7 +81,7 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
 
     /**
      * Return the number of new notifications.
-     * 
+     *
      * @return int
      */
     public function numOfNewNotifications()
@@ -97,19 +91,19 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
 
     /**
      * Return if a notification has been viewed by the actor.
-     * 
+     *
      * @param ComNotificationsDomainEntityNotification $notification Notification
-     * 
+     *
      * @return bool
      */
     public function notificationViewed($notification)
     {
-        return !$this->newNotificationIds->offsetExists($notification->id);
+        return ! $this->newNotificationIds->offsetExists($notification->id);
     }
 
     /**
      * Marks the notifications as read.
-     * 
+     *
      * @param array $notifications An array of notifications
      */
     public function viewedNotifications($notifications)
@@ -129,9 +123,9 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
 
     /**
      * Removes a notification.
-     * 
+     *
      * @param ComNotificationsDomainEntityNotification $notification Notification
-     * 
+     *
      * @return bool
      */
     public function removeNotification($notification)
@@ -157,14 +151,14 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
 
     /**
      * Reset stats.
-     * 
+     *
      * @param array $actor An array of notifiable actors
      */
     public function resetStats($actors)
     {
         foreach ($actors as $actor) {
             $ids = $actor->notificationIds->toArray();
-            $ids = $this->getService('repos://site/notifications.notification')->getQuery()->id($ids)->fetchValues('id');
+            $ids = $this->getService('repos:notifications.notification')->getQuery()->id($ids)->fetchValues('id');
             $actor->set('notificationIds', AnDomainAttribute::getInstance('set')->setData($ids));
             $new_ids = array();
 
@@ -180,7 +174,7 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
 
     /**
      * Remove old notifications.
-     * 
+     *
      * @param array $actor An array of notifiable actors
      */
     public function removeOldNotifications($actors)
@@ -188,7 +182,11 @@ class ComActorsDomainBehaviorNotifiable extends AnDomainBehaviorAbstract
         foreach ($actors as $actor) {
             $read_notifications = array_diff($actor->notificationIds->toArray(), $actor->newNotificationIds->toArray());
             $date = $this->getService('anahita:domain.attribute.date')->modify('-5 days');
-            $query = $this->getService('repos://site/notifications.notification')->getQuery()->id($read_notifications)->creationTime($date, '<');
+            $query = $this->getService('repos:notifications.notification')
+                          ->getQuery()
+                          ->id($read_notifications)
+                          ->creationTime($date, '<');
+
             $notifications = $query->fetchSet();
 
             foreach ($notifications as $notification) {

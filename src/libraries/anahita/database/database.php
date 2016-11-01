@@ -20,6 +20,19 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
         return $container->get($config->service_identifier);
     }
 
+	/**
+	 * Constructor.
+	 *
+	 * @param 	object 	An optional KConfig object with configuration options.
+	 * Recognized key values include 'command_chain', 'charset', 'table_prefix',
+	 * (this list is not meant to be comprehensive).
+	 */
+	public function __construct( KConfig $config = null )
+	{
+		$this->_connected = (bool) $config->connected;
+		parent::__construct($config);
+	}
+
     /**
      * Initializes the options for the object
      *
@@ -78,9 +91,15 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
 
 		$db->set_charset("utf8mb4");
 
+		if (defined('MYSQLI_OPT_INT_AND_FLOAT_NATIVE')) {
+			$db->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
+		}
+
         $config->append(array(
     		'connection' => $db,
             'table_prefix' => $settings->dbprefix,
+			'charset' => 'utf8mb4',
+			'connected' => true
         ));
 
         parent::_initialize($config);

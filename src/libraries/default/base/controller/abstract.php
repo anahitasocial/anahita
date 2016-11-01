@@ -127,11 +127,12 @@ class LibBaseControllerAbstract extends KControllerAbstract
     {
         //omit anything that starts with underscore
         if (strpos($method, '_') === false) {
+
             if (count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions())) {
                 $this->{KInflector::underscore($method)} = $args[0];
-
                 return $this;
             }
+
         } elseif (strpos($method, '_action') === 0) {
             //if the missing method is _action[Name] but
             //method exists, then that means the action
@@ -144,8 +145,8 @@ class LibBaseControllerAbstract extends KControllerAbstract
             if (method_exists($this, $method)) {
                 $action = strtolower(substr($method, 7));
 
-                if (isset($this->_mixed_methods[ $action ])) {
-                    return $this->_mixed_methods[ $action ]->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
+                if (isset($this->_mixed_methods[$action])) {
+                    return $this->_mixed_methods[$action]->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
                 } else {
                     //we need to throw this
                     //because if it goes to parent::__call it will causes
@@ -186,7 +187,6 @@ class LibBaseControllerAbstract extends KControllerAbstract
     public function setResponse($response)
     {
         $this->_response = $response;
-
         return $this;
     }
 
@@ -198,9 +198,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
     public function getCommandContext()
     {
         $context = parent::getCommandContext();
-
         $context->response = $this->getResponse();
-
         $context->request = $this->getRequest();
 
         return $context;
@@ -220,10 +218,9 @@ class LibBaseControllerAbstract extends KControllerAbstract
     {
         if (is_string($behavior)) {
             if (strpos($behavior, '.') === false) {
+
                 $identifier = clone $this->getIdentifier();
-
                 $identifier->path = array('controller','behavior');
-
                 $identifier->name = $behavior;
 
                 register_default(array('identifier' => $identifier, 'prefix' => $this));
