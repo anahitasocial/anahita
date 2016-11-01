@@ -140,8 +140,6 @@ class KDatabaseAdapterMysqli extends KDatabaseAdapterAbstract
 			$mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 		}
 
-		$mysqli->set_charset("utf8");
-
 		$this->_connection = $mysqli;
 		$this->_connected  = true;
 		$this->_database   = $this->_options->database;

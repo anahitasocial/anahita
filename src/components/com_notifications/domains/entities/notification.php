@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Notification Entity.
  *
  * @category   Anahita
@@ -23,6 +8,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -99,22 +85,28 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         $data = $config->data;
 
         $data->append(array(
-            'subscribers' => array(),
+            'subscribers' => array()
         ));
 
         if ($data->object) {
+
             if (is($data->object, 'ComBaseDomainEntityComment')) {
+
                 $data->comment = $data->object;
                 $data->object = $data->comment->parent;
 
                 $data->append(array(
                      'subscribers' => array($data->comment->author->id),
                 ));
+
             } elseif ($data->object->isModifiable() && !is($data->object, 'ComActorsDomainEntityActor')) {
+
                 $data->append(array(
                     'subscribers' => array($data->object->author->id),
                 ));
+
             } elseif (is_person($data->object)) {
+
                 $data->append(array(
                     'subscribers' => array($data->object->id),
                 ));
@@ -150,6 +142,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
     public function setType($type, $config = array())
     {
         $this->set('type', $type);
+
         foreach ($config as $key => $value) {
             $this->setValue($key, $value);
         }
@@ -179,7 +172,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         $ids = array_unique($ids);
 
         if (count($ids) > 0) {
-            $this->set('subscriberIds',   AnDomainAttribute::getInstance('set')->setData($ids));
+            $this->set('subscriberIds', AnDomainAttribute::getInstance('set')->setData($ids));
         } else {
             $this->delete();
         }

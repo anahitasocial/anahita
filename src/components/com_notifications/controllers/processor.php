@@ -137,7 +137,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $settings = $config->settings;
         $people = $config->people;
         $notification = $config->notification;
-        
+
         foreach ($people as  $person) {
 
             $setting = $settings->{$person->id};

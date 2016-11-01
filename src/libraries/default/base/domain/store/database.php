@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Database storage.
  *
  * @category   Anahita
@@ -23,6 +8,7 @@
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  *
  * @link       http://www.GetAnahita.com
  */
@@ -38,7 +24,7 @@ class LibBaseDomainStoreDatabase extends AnDomainStoreDatabase implements KServi
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -69,19 +55,9 @@ class LibBaseDomainStoreDatabase extends AnDomainStoreDatabase implements KServi
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'adapter' => $this->getService('anahita:database'),
+            'adapter' => $this->getService('anahita:database')
         ));
 
         parent::_initialize($config);
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see AnDomainStoreDatabase::getColumns()
-     */
-    public function getColumns($table)
-    {
-        return parent::getColumns($table);
     }
 }

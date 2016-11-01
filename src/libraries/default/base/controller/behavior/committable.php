@@ -52,7 +52,7 @@ class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
         $result = $context->result;
 
         //after an action save
-        if ($parts[0] == 'after' && $parts[1] != 'cancel') {
+        if ($parts[0] === 'after' && $parts[1] != 'cancel') {
 
             //skip if there are not any commitable
             if (count($this->getRepository()->getSpace()->getCommitables()) == 0) {

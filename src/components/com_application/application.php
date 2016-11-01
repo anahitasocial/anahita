@@ -138,7 +138,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
             $template = KService::get('application.registry')->offsetGet('application-template');
             $this->setTemplate(pick($template, 'base'));
         }
-        
+
         return $this->_template;
     }
 

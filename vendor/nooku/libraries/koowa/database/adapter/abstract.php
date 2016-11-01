@@ -94,10 +94,10 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
 			if(!isset($config)) $config = new KConfig();
 
 			// Initialize the options
-      parent::__construct($config);
+		    parent::__construct($config);
 
-      // Set the connection
-      $this->setConnection($config->connection);
+		    // Set the connection
+		    $this->setConnection($config->connection);
 
 			// Set the default charset. http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html
 			if (!empty($config->charset)) {
@@ -114,10 +114,10 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
 			$this->_options = $config->options;
 
 		 	//Set the mixer in the config
-      $config->mixer = $this;
+      		$config->mixer = $this;
 
 			// Mixin the command interface
-      $this->mixin(new KMixinCommand($config));
+      		$this->mixin(new KMixinCommand($config));
 	}
 
 	/**
@@ -143,7 +143,7 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
     	$config->append(array(
     		'options'			=> array(),
     		'charset'			=> 'UTF-8',
-       	 	'table_prefix'  	=> 'jos_',
+       	 	'table_prefix'  	=> 'an_',
     	    'table_needle'		=> '#__',
     		'command_chain'     => $this->getService('koowa:command.chain'),
     		'dispatch_events'   => true,
