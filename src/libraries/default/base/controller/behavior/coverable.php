@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -24,7 +24,7 @@
  */
 class LibBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract
 {
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -39,9 +39,9 @@ class LibBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract
 
     /**
      * Add a cover.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function addCover(KCommandContext $context)
@@ -61,9 +61,9 @@ class LibBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract
 
     /**
      * edit a cover.
-     * 
+     *
      * @param KCommandContext $context Context parameter
-     * 
+     *
      * @return AnDomainEntityAbstract
      */
     public function editCover(KCommandContext $context)
@@ -71,19 +71,31 @@ class LibBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract
         $entity = $this->getItem();
 
         if ($entity->isCoverable() && KRequest::has('files.cover')) {
+
             $file = KRequest::get('files.cover', 'raw');
 
             if ($this->_mixer->bellowSizeLimit($file) && $file['error'] == 0) {
-                $this->getItem()->setCover(array('url' => $file['tmp_name'], 'mimetype' => $file['type']));
+
+                $this->getItem()->setCover(array(
+                    'url' => $file['tmp_name'],
+                    'mimetype' => $file['type']
+                ));
 
                 $story = $this->createStory(array(
                    'name' => 'cover_edit',
                    'owner' => $entity,
                    'target' => $entity,
                 ));
+
             } else {
-                //$this->_mixer->getItem()->removeCoverImage();
+
                 $entity->removeCoverImage();
+
+                $this->getService('repos:stories.story')->destroy(array(
+                    'name' => 'cover_edit',
+                    'owner' => $entity,
+                    'component' => 'com_'.$this->getIdentifier()->package
+                ));
             }
         }
 

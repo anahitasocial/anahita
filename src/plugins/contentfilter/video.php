@@ -57,13 +57,22 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 
         if (preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) {
             foreach ($matches[1] as $index => $id) {
-                $video = json_decode(file_get_contents('https://vimeo.com/api/v2/video/'.$id.'.json'));
+
+                $url = sprintf("https://vimeo.com/api/v2/video/%d.json", $id);
+                $videoJson = @file_get_contents($url);
+
+                if (empty($videoJson)) {
+                    continue;
+                }
+
+                $video = json_decode($videoJson);
+
                 $video = $video[0];
 
                 if ($video && $video->id) {
                     $options = array(
                         'title' => $video->title,
-                        'url' => 'https://vimeo.com/'.$video->id,
+                        'url' => sprintf("https://vimeo.com/%d", $video->id),
                         'thumbnail' => $video->thumbnail_large,
                     );
 
@@ -91,7 +100,8 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
                     'title' => '',
                 );
 
-                $thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
+                //$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
+                $thumbBase = sprintf("https://img.youtube.com/vi/%s/", $id);
 
                 $maxres = get_headers($thumbBase.'maxresdefault.jpg');
                 $notfound = get_headers($thumbBase.'0.jpg');
@@ -104,8 +114,10 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
                     return;
                 }
 
+                $url = sprintf("https://www.youtube.com/watch?v=%s", $id);
+
                 $options = array_merge(array(
-                    'url' => 'https://www.youtube.com/watch?v='.$id,
+                    'url' => $url,
                     'thumbnail' => $thumbnail,
                 ), $options);
 
