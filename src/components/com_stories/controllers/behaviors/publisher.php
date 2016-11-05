@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -46,8 +46,7 @@ class ComStoriesControllerBehaviorPublisher extends KControllerBehaviorAbstract
             'component' => 'com_'.$this->_mixer->getIdentifier()->package,
         ));
 
-        $story = $this->getService('repos://site/stories')->create($config->toArray());
-        //$story = $this->getService('com://site/stories.controller.story')->add($config->toArray());
+        $story = $this->getService('repos:stories.story')->create($config->toArray());
 
         $story->save();
 

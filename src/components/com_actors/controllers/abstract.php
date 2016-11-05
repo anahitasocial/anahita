@@ -57,9 +57,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
         $config->append(array(
             'behaviors' => to_hash(array(
-                'com://site/search.controller.behavior.searchable',
-                'com://site/stories.controller.behavior.publisher',
-                'com://site/notifications.controller.behavior.notifier',
+                'com:search.controller.behavior.searchable',
+                'com:stories.controller.behavior.publisher',
+                'com:notifications.controller.behavior.notifier',
                 'followable',
                 'administrable',
                 'ownable',
@@ -67,8 +67,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'enablable',
                 'verifiable',
                 'subscribable',
-                'com://site/hashtags.controller.behavior.hashtagable',
-                'com://site/locations.controller.behavior.geolocatable',
+                'com:hashtags.controller.behavior.hashtagable',
+                'com:locations.controller.behavior.geolocatable',
                 'coverable',
             )),
         ));
@@ -166,16 +166,26 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             $file = KRequest::get('files.portrait', 'raw');
 
             if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
+
                 $this->getItem()->setPortrait(array(
                     'url' => $file['tmp_name'],
-                    'mimetype' => $file['type']));
+                    'mimetype' => $file['type']
+                ));
 
                 $story = $this->createStory(array(
                    'name' => 'avatar_edit',
                    'owner' => $entity,
-                   'target' => $entity));
+                   'target' => $entity
+               ));
+
             } else {
                 $this->getItem()->removePortraitImage();
+
+                $this->getService('repos:stories.story')->destroy(array(
+                    'name' => 'avatar_edit',
+                    'owner' => $entity,
+                    'component' => 'com_'.$this->getIdentifier()->package
+                ));
             }
         }
 
