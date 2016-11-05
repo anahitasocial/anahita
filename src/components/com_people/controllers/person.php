@@ -161,8 +161,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
-        $edit = ($data->password && $data->username) ? 'account' : 'profile';
-        $context->response->setRedirect(route($person->getURL('false').'&get=settings&edit='.$edit));
+        $edit = ($data->password && $data->username) ? 'account' : $this->edit;
+        $url = sprintf($person->getURL('false')."&get=settings&edit=%s", $edit);
+        $context->response->setRedirect(route($url));
 
         return $person;
     }

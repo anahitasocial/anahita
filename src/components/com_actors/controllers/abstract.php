@@ -180,6 +180,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
             } else {
                 $this->getItem()->removePortraitImage();
+
+                $this->getService('repos:stories.story')->destroy(array(
+                    'name' => 'avatar_edit',
+                    'owner' => $entity,
+                    'component' => 'com_'.$this->getIdentifier()->package
+                ));
             }
         }
 
