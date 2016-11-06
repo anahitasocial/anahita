@@ -62,9 +62,5 @@ final class ComLocationsDomainEntityTag extends ComTagsDomainEntityTag
     private function resetStats()
     {
         $this->location->resetStats(array($this->location));
-
-        if (count($this->location->geolocatables) === 0) {
-            $this->location->delete();
-        }
     }
 }
