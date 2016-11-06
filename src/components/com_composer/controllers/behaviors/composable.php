@@ -20,7 +20,7 @@ class ComComposerControllerBehaviorComposable extends KControllerBehaviorAbstrac
      */
     protected function _renderComposedStory($story)
     {
-        $controller = $this->getService('com:stories.controller.story')
+        $controller = $this->getService('com://site/stories.controller.story')
                             ->layout('list')
                             ->setItem($story);
 

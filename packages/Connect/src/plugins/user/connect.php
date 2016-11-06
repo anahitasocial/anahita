@@ -127,7 +127,7 @@ class PlgUserConnect extends PlgAnahitaDefault
 
                 KRequest::set('session.oauth', null);
 
-                KService::get('koowa:loader')->loadIdentifier('com:connect.oauth.consumer');
+                KService::get('koowa:loader')->loadIdentifier('com://site/connect.oauth.consumer');
 
                 $api = KService::get('com:connect.oauth.service.'.$session->api, array(
                     'consumer' => new ComConnectOauthConsumer($session->consumer),

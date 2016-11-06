@@ -237,28 +237,28 @@ class KService implements KServiceInterface
 	public static function getIdentifier($identifier)
 	{
 	    if (!is_string($identifier)) {
-		      if($identifier instanceof KObjectServiceable) {
-				    	$identifier = $identifier->getIdentifier();
-			    }
+			if($identifier instanceof KObjectServiceable) {
+				$identifier = $identifier->getIdentifier();
 			}
+		}
 
 	    $alias = (string) $identifier;
 
-			if (array_key_exists($alias, self::$_aliases)) {
+		if (array_key_exists($alias, self::$_aliases)) {
 	        $identifier = self::$_aliases[$alias];
-			}
+		}
 
 	    if (!self::$_identifiers->offsetExists((string) $identifier)) {
 
-				if (is_string($identifier)) {
+			if (is_string($identifier)) {
 		        $identifier = new KServiceIdentifier($identifier);
 		    }
 
 		    self::$_identifiers->offsetSet((string) $identifier, $identifier);
 
-			} else {
-					$identifier = self::$_identifiers->offsetGet((string)$identifier);
-			}
+		} else {
+			$identifier = self::$_identifiers->offsetGet((string)$identifier);
+		}
 
 		return $identifier;
 	}
@@ -310,7 +310,7 @@ class KService implements KServiceInterface
 			$strIdentifier = (string) $objIdentifier;
 
 			if (isset(self::$_configs[$strIdentifier])) {
-					self::$_configs[$strIdentifier] = self::$_configs[$strIdentifier]->append($config);
+				self::$_configs[$strIdentifier] = self::$_configs[$strIdentifier]->append($config);
 			} else {
 			    self::$_configs[$strIdentifier] = new KConfig($config);
 			}
