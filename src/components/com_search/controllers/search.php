@@ -50,7 +50,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             ),
         ));
 
-        $this->_geocoder = KService::get('com://site/locations.geocoder')->getInstance($config);
+        $this->_geocoder = KService::get('com:locations.geocoder')->getInstance($config);
 
         parent::_initialize($config);
     }
@@ -68,7 +68,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         if ($this->actor) {
             $this->getToolbar('actorbar')->setTitle($this->actor->name);
-            $this->getService()->set('com://site/search.owner', $this->actor);
+            $this->getService()->set('com:search.owner', $this->actor);
         }
 
         $this->_state
@@ -83,11 +83,11 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         $this->keywords = array_filter(explode(' ', $this->term));
 
-        $this->scopes = $this->getService('com://site/components.domain.entityset.scope');
+        $this->scopes = $this->getService('com:components.domain.entityset.scope');
 
         $this->current_scope = $this->scopes->find($this->scope);
 
-        $query = $this->getService('com://site/search.domain.query.node')
+        $query = $this->getService('com:search.domain.query.node')
                       ->searchTerm($this->term)
                       ->limit($this->limit, $this->start);
 

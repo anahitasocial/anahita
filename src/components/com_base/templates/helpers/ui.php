@@ -557,15 +557,15 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         $actor = null;
         $label = AnTranslator::_('LIB-AN-SEARCH-PLACEHOLDER');
 
-        if ($this->getService()->has('com://site/search.owner')) {
-            $actor = $this->getService('com://site/search.owner');
+        if ($this->getService()->has('com:search.owner')) {
+            $actor = $this->getService('com:search.owner');
             $label = AnTranslator::sprintf('LIB-AN-SEARCH-PLACEHOLDER-OWNER', $actor->name);
         }
 
         $scope = null;
 
-        if ($this->getService()->has('com://site/search.scope')) {
-            $scope = $this->getService('com://site/search.scope');
+        if ($this->getService()->has('com:search.scope')) {
+            $scope = $this->getService('com:search.scope');
         }
 
         $url = 'index.php?option=com_search';
@@ -575,7 +575,7 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
         }
 
         $term = KRequest::get('get.term', 'raw');
-        $term = KService::get('com://site/search.filter.term')->sanitize($term);
+        $term = KService::get('com:search.filter.term')->sanitize($term);
 
         $config = new KConfig($config);
 

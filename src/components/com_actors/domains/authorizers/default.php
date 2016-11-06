@@ -160,7 +160,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         //check if it's a social app then if it's enabled
 
         if ($component) {
-            $component = $this->getService('repos://site/components.component')->find(array('component' => $component));
+            $component = $this->getService('repos:components.component')->find(array('component' => $component));
 
             if (
                 $component &&

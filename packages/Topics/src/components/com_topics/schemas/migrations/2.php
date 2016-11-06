@@ -28,7 +28,7 @@ class ComTopicsSchemaMigration2 extends ComMigratorMigrationVersion
                 }
             }
 
-            $topics = KService::get('com://site/topics.domain.entity.topic')
+            $topics = KService::get('com:topics.domain.entity.topic')
                         ->getRepository()
                         ->getQuery()
                         ->disableChain()

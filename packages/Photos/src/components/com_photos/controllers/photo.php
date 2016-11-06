@@ -54,7 +54,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
      */
     protected function _actionBrowse($context)
     {
-        $this->getService('repos://site/photos.set');
+        $this->getService('repos:photos.set');
         $photos = parent::_actionBrowse($context);
         $photos->order('creationTime', 'DESC');
 

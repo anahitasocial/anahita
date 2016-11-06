@@ -83,7 +83,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
             }
 
             if ($this->alias) {
-                $this->_mixer->_url .= '&alias='.$this->alias;
+                $this->_mixer->_url .= '&alias='.strtolower($this->alias);
             }
         }
 

@@ -65,7 +65,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
             return $actor->getPortraitURL($size);
         }
 
-        return $this->getService('com://site/base.template.asset')
+        return $this->getService('com:base.template.asset')
                     ->getURL('lib_anahita/images/avatar/'.$size.'_default.gif');
     }
 
@@ -88,7 +88,7 @@ class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServic
             $width = '';
         }
 
-        $defaultAvatar = $this->getService('com://site/base.template.asset')
+        $defaultAvatar = $this->getService('com:base.template.asset')
                               ->getURL('lib_anahita/images/avatar/'.$size.'_default.gif');
 
         if (is_null($actor) || !isset($actor->id)) {

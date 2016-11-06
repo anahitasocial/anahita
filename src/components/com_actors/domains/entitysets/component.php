@@ -38,7 +38,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
         $query = $this->getService($config->repository)
                     ->getQuery()
                     ->bind('actorid', $this->_actor->id)
-                    ->bind('components_set_to_never', $this->getService('repos://site/components.assignment')
+                    ->bind('components_set_to_never', $this->getService('repos:components.assignment')
                             ->getQuery()
                             ->columns('id')
                             ->where('@col(actortype) = :actortype AND @col(access) = :never'))
@@ -48,7 +48,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
                             ->bind('optional', ComComponentsDomainBehaviorAssignable::ACCESS_OPTIONAL);
 
         $query
-        ->link('repos://site/components.assignment', '@col(assignment.component) = @col(component)', array('type' => 'weak'))
+        ->link('repos:components.assignment', '@col(assignment.component) = @col(component)', array('type' => 'weak'))
         ->enabled(true)
         ->where('@col(id) NOT IN (:components_set_to_never)');
 
@@ -74,7 +74,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     {
         $config->append(array(
             'data' => null,
-            'repository' => 'repos://site/components.component',
+            'repository' => 'repos:components.component',
         ));
 
         parent::_initialize($config);

@@ -117,7 +117,6 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	{
 		$this->_language = $language;
 		$this->_meta = $this->getMetadata($this->_language);
-
         $local = $this->getLocale();
 
 		setlocale(LC_TIME, $local);
@@ -206,7 +205,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 
 		$meta = null;
 
-		if(file_exists($path.DS.$file)) {
+		if (file_exists($path.DS.$file)) {
 			$result = json_decode(file_get_contents($path.DS.$file));
 			$meta = $result->meta;
 			$meta->tag = $result->tag;

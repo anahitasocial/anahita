@@ -56,7 +56,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'repository' => 'repos://site/search.node'
+            'repository' => 'repos:search.node'
         ));
 
         parent::_initialize($config);
@@ -98,7 +98,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             }
         }
 
-        $scopes = $this->getService('com://site/components.domain.entityset.scope');
+        $scopes = $this->getService('com:components.domain.entityset.scope');
 
         if ($this->scope instanceof ComComponentsDomainEntityScope) {
             $scopes = array($this->scope);
@@ -158,7 +158,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
      */
     public function toEntitySet()
     {
-        return KService::get('com://site/search.domain.entityset.node', array(
+        return KService::get('com:search.domain.entityset.node', array(
                   'query' => clone $this,
                   'repository' => $this->getRepository()
                 ));

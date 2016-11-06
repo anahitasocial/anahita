@@ -26,7 +26,7 @@ class ComSearchDomainEntityNode extends ComBaseDomainEntityNode
             'inheritance' => array('ignore' => __CLASS__),
             'behaviors' => array(
                 'privatable',
-                'com://site/locations.domain.behavior.geolocatable',
+                'com:locations.domain.behavior.geolocatable',
             )
         ));
 

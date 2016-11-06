@@ -130,7 +130,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
         $data = array_map(function ($user) {return $user['id'];}, $data['data']);
         $data[] = '-1';
 
-        $query = $this->getService('repos://site/people')->getQuery(true)
+        $query = $this->getService('repos:people.person')->getQuery(true)
         ->where(array(
                 'sessions.profileId' => $data,
                 'sessions.api' => 'facebook', ));

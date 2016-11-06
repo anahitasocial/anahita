@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -66,12 +66,12 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 
     /**
      * Removes an $actor from the list of blockers.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor
      */
     public function addBlocker($actor)
     {
-        //if A blocks B, then A must remove B as a follower 
+        //if A blocks B, then A must remove B as a follower
         //need to keep track of this since the mixin is a singleton
         $person = $this->_mixer;
 
@@ -102,7 +102,7 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 
     /**
      * Removes a person from the list of blocked.
-     * 
+     *
      * @param ComActorsDomainEntityActor $person
      */
     public function removeBlocker($actor)
@@ -121,9 +121,9 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 
     /**
      * Return this person common leader with another person.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor Actor for which to get the common leaders
-     * 
+     *
      * @return AnDomainEntitysetDefault
      */
     public function getCommonLeaders($actor)
@@ -141,14 +141,14 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 
     /**
      * Return the mutual followers.
-     * 
+     *
      * @return AnDomainEntitysetAbstract
      */
     public function getMutuals()
     {
         if (!isset($this->__mutuals)) {
             $ids = array_intersect($this->leaderIds->toArray(), $this->followerIds->toArray());
-            $query = $this->getService('repos://site/people.person')->getQuery()->where('id', 'IN', $ids);
+            $query = $this->getService('repos:people.person')->getQuery()->where('id', 'IN', $ids);
 
             $this->__mutuals = $query->toEntitySet();
         }
@@ -157,11 +157,11 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
     }
 
     /**
-     * Return true if the both the mixer and person is following each other 
+     * Return true if the both the mixer and person is following each other
      * else it returns false;.
-     * 
+     *
      * @param ComPeopleDomainEntityPerson $person Person object
-     * 
+     *
      * @return bool
      */
     public function mutuallyLeading($person)
@@ -171,9 +171,9 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
 
     /**
      * Return true if the mixer is following the person else return false.
-     * 
+     *
      * @param ComActorsDomainEntityActor $actor Actor object
-     * 
+     *
      * @return bool
      */
     public function following($actor)

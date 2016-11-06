@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -126,7 +126,7 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
     public function getAdminCanditates()
     {
         $viewer = get_viewer();
-        $query = $this->getService('repos://site/people.person')->getQuery();
+        $query = $this->getService('repos:people.person')->getQuery();
 
         //super admin can make anyone admin
         if (!$viewer->admin()) {

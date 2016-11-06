@@ -47,7 +47,7 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
                 'modifiable' => array(
                     'modifiable_properties' => array('excerpt', 'name', 'body'),
                 ),
-                'commentable' => array('comment' => array('format' => 'com://site/medium.filter.post')),
+                'commentable' => array('comment' => array('format' => 'com:medium.filter.post')),
             ),
         ));
 
