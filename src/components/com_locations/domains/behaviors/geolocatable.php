@@ -81,7 +81,7 @@
 
          foreach ($newItems as $item) {
              if (! $this->locations->find($item)) {
-                 $this->locations->insert( $item );
+                 $this->locations->insert($item);
              }
          }
 
