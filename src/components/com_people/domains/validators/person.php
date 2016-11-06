@@ -22,7 +22,7 @@
  * Here's how to get a person object, set a property and save
  * <code>
  * //fetches a peron with $id
- * $person = KService::get('repos://site/people.person')->fetch($id);
+ * $person = KService::get('repos:people.person')->fetch($id);
  * $person->name = 'James Bond';
  * $person->save();
  * </code>

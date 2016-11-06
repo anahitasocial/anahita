@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +30,7 @@ class ComBaseTemplateFilterStyle extends ComDefaultTemplateFilterStyle
 {
     /**
      * Render style information.
-     * 
+     *
      * @param string    The style information
      * @param bool   True, if the style information is a URL
      * @param array     Associative array of attributes
@@ -39,15 +39,15 @@ class ComBaseTemplateFilterStyle extends ComDefaultTemplateFilterStyle
      */
     protected function _renderStyle($style, $link, $attribs = array())
     {
-        //get the correct URL   	
+        //get the correct URL
         if ($link) {
-            $style = pick($this->getService('com://site/base.template.asset')->getURL($style), $style);
+            $style = pick($this->getService('com:base.template.asset')->getURL($style), $style);
         }
 
         //if ajax try to get the content of the file
         if (KRequest::type() == 'AJAX') {
             if ($link) {
-                $file = $this->getService('com://site/base.template.asset')->getFilePath($style);
+                $file = $this->getService('com:base.template.asset')->getFilePath($style);
                 if ($file) {
                     $style = file_get_contents($file);
                     $link = false;

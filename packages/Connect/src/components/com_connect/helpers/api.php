@@ -64,7 +64,7 @@
     public static function getAPI($service)
     {
         $service = strtolower($service);
-        $identifier = 'com://site/connect.oauth.service.'.$service;
+        $identifier = 'com:connect.oauth.service.'.$service;
         if (!KService::has($identifier)) {
             $config = array();
             $config['consumer'] = self::getConsumer($service);

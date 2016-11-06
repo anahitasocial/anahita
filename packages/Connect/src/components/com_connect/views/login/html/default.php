@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="span8">
 
-    <? if (@service('com://site/people.controller.person')->isRegistrationOpen()) : ?>
+    <? if (@service('com:people.controller.person')->isRegistrationOpen()) : ?>
     <div class="alert alert-block">
     	<h4><?= $alert_title ?></h4>
     	<p><?= @text('COM-CONNECT-LOGIN-PROMPT-SIGN-IN-OR-SIGNUP') ?></p>

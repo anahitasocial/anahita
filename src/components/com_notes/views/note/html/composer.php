@@ -22,11 +22,11 @@
 
 	<div class="clearfix">
 		<span class="connect">
-    	<? $app = @service('repos://site/components.component')->find(array('component' => 'com_connect')); ?>
+    	<? $app = @service('repos:components.component')->find(array('component' => 'com_connect')); ?>
 		<? if ($app && $app->authorize('echo', array('actor' => $actor))) : ?>
             <?
             $services = ComConnectHelperApi::getServices();
-            @service('repos://site/connect.session');
+            @service('repos:connect.session');
             $sessions = $actor->sessions->toArray();
             foreach ($sessions as $key => $session) {
                 if ($session->getApi()->isReadOnly()) {
@@ -38,7 +38,7 @@
 				<? foreach ($sessions as $session) : ?>
 				<span>
     				<a class="btn btn-<?= $session->api->getName() ?> connect-link" data-behavior="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?= $session->getName() ?>" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
-    					<?= @helper('com://site/connect.template.helper.service.icon', $session->api->getName())?>
+    					<?= @helper('com:connect.template.helper.service.icon', $session->api->getName())?>
     			    </a>
 			    </span>
 				<? endforeach;?>

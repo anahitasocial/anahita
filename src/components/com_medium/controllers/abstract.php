@@ -21,7 +21,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-        
+
         $this->registerCallback(array(
             'after.add'),
             array($this, 'createStoryCallback'));
@@ -53,17 +53,17 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
                 'order' => null,
             ),
             'behaviors' => array(
-                'com://site/search.controller.behavior.searchable',
-                'com://site/stories.controller.behavior.publisher',
-                'com://site/notifications.controller.behavior.notifier',
+                'com:search.controller.behavior.searchable',
+                'com:stories.controller.behavior.publisher',
+                'com:notifications.controller.behavior.notifier',
                 'composable',
                 'commentable',
                 'votable',
                 'privatable',
                 'subscribable',
-                'com://site/hashtags.controller.behavior.hashtagable',
-                'com://site/locations.controller.behavior.geolocatable',
-                'com://site/people.controller.behavior.mentionable',
+                'com:hashtags.controller.behavior.hashtagable',
+                'com:locations.controller.behavior.geolocatable',
+                'com:people.controller.behavior.mentionable',
                 'ownable',
         ), ));
 

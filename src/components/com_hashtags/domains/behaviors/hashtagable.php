@@ -1,8 +1,8 @@
 <?php
 
- /** 
+ /**
   * LICENSE: ##LICENSE##.
-  * 
+  *
   * @category   Anahita
   *
   * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -50,7 +50,7 @@
 
     /**
      * Adds a hashtag to a hashtagable mixer entity.
-     * 
+     *
      * @param a word
      */
     public function addHashtag($term)
@@ -62,7 +62,7 @@
             return;
         }
 
-        if ($hashtag = $this->getService('repos://site/hashtags.hashtag')->findOrAddNew(array('name' => $term))) {
+        if ($hashtag = $this->getService('repos:hashtags.hashtag')->findOrAddNew(array('name' => $term))) {
             $this->hashtags->insert($hashtag);
 
             return $this;
@@ -73,7 +73,7 @@
 
     /**
      * Removes a hashtag from a hashtagable mixer entity.
-     * 
+     *
      * @param a word
      */
     public function removeHashtag($term)
@@ -85,7 +85,7 @@
             return;
         }
 
-        if ($hashtag = $this->getService('repos://site/hashtags.hashtag')->find(array('name' => $term))) {
+        if ($hashtag = $this->getService('repos:hashtags.hashtag')->find(array('name' => $term))) {
             $this->hashtags->extract($hashtag);
 
             return $this;
@@ -95,11 +95,11 @@
     }
 
     /**
-     * Change the query to include name. 
-     * 
+     * Change the query to include name.
+     *
      * Since the target is a simple node. The name field is not included. By ovewriting the
      * tags method we can change the query to include name in the $taggable->tags query
-     * 
+     *
      * @return AnDomainEntitySet
      */
     public function getHashtags()

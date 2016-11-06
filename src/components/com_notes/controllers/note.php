@@ -64,7 +64,10 @@ class ComNotesControllerNote extends ComMediumControllerDefault
         }
 
         if (!empty($data['channels'])) {
-            $this->shareObject(array('object' => $entity, 'sharers' => $data['channels']));
+            $this->shareObject(array(
+                'object' => $entity,
+                'sharers' => $data['channels']
+            ));
         }
 
         return $entity;

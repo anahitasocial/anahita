@@ -104,7 +104,7 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
     public function reorder($photo_ids)
     {
         if (count($photo_ids) == 1) {
-            if ($edge = $this->getService('repos://site/photos.edge')
+            if ($edge = $this->getService('repos:photos.edge')
                               ->fetch(array(
                                         'set' => $this,
                                         'photo.id' => $photo_ids[0],
@@ -117,7 +117,7 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
         }
 
         foreach ($photo_ids as $index => $photo_id) {
-            if ($edge = $this->getService('repos://site/photos.edge')
+            if ($edge = $this->getService('repos:photos.edge')
                              ->fetch(array(
                                       'set' => $this,
                                       'photo.id' => $photo_id, ))

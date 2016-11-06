@@ -12,7 +12,7 @@
 </div>
 
 <div class="an-entities masonry">
-<?= @service('com://site/people.controller.person')->setItem($token->inviter)->layout('list'); ?>
+<?= @service('com:people.controller.person')->setItem($token->inviter)->layout('list'); ?>
 </div>
 
 <p></p>

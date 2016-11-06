@@ -8,8 +8,8 @@
  *
  * <code>
  * //fetches a peron with $id
- * $actor  = KService::get('repos://site/actors.actor')->fetch($some_actor_id);
- * $person = KService::get('repos://site/people.person')->fetch($some_person_id);
+ * $actor  = KService::get('repos:actors.actor')->fetch($some_actor_id);
+ * $person = KService::get('repos:people.person')->fetch($some_person_id);
  * if ( $actor->isFollowable() )
  * {
  *      //adding the person as a follower
@@ -406,7 +406,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     public function removeNodeSubscriptions($leader, $follower)
     {
         //Find all the nodes that follower was subscribed to
-        $query = $this->getService('repos://site/base.subscription')
+        $query = $this->getService('repos:base.subscription')
                  ->getQuery()->subscriber($follower)
                  ->where('subscribee.id', 'IN', $this->getService('repos:base.node')
                  ->getQuery()->columns('id')->where('owner_id', '=', $leader->id));
@@ -415,10 +415,10 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
         //Remove the follower as subscriber from any node that's owned by the leader
         if (count($subscribers)) {
-            $this->getService('repos://site/base.node')
+            $this->getService('repos:base.node')
             ->update("subscriber_ids = @remove_from_set(subscriber_ids,{$follower->id}), subscriber_count = @set_length(subscriber_ids)", $subscribers);
 
-            $this->getService('repos://site/base.subscription')->destroy($query);
+            $this->getService('repos:base.subscription')->destroy($query);
         }
     }
 }

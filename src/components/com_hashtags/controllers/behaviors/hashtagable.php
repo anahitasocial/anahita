@@ -106,7 +106,7 @@ class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstra
             ->join('left', 'nodes AS hashtag', 'hashtag_edge.node_a_id = hashtag.id');
 
             foreach ($this->hashtag as $hashtag) {
-                $hashtag = $this->getService('com://site/hashtags.filter.hashtag')->sanitize($hashtag);
+                $hashtag = $this->getService('com:hashtags.filter.hashtag')->sanitize($hashtag);
                 if ($hashtag != '') {
                     $hashtags[] = $hashtag;
                 }

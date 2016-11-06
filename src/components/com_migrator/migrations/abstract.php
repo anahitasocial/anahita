@@ -91,7 +91,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
     {
         parent::__construct($config);
 
-        $this->getService('koowa:loader')->loadIdentifier('com://site/migrator.helper');
+        $this->getService('koowa:loader')->loadIdentifier('com:migrator.helper');
 
         $this->_component = $config->component;
 

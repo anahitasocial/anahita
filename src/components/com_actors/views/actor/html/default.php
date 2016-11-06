@@ -54,7 +54,7 @@
 		<? endif; ?>
 
 		<? if (!$viewer->blocking($item)): ?>
-		<?= @helper('com://site/composer.template.helper.ui.composers', $composers) ?>
+		<?= @helper('com:composer.template.helper.ui.composers', $composers) ?>
 		<? endif; ?>
 
 		<div class="tab-content">

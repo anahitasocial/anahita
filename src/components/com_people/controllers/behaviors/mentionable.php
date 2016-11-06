@@ -135,7 +135,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
             ->join('left', 'people_people AS person', 'person.node_id = mention.id');
 
             foreach ($this->mention as $mention) {
-                $username = $this->getService('com://site/people.filter.username')->sanitize($mention);
+                $username = $this->getService('com:people.filter.username')->sanitize($mention);
 
                 if ($username != '') {
                     $usernames[] = $username;
@@ -159,7 +159,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $subscribers = array();
 
         foreach ($this->_newly_mentioned as $username) {
-            $person = $this->getService('repos://site/people.person')->find(array('username' => $username));
+            $person = $this->getService('repos:people.person')->find(array('username' => $username));
 
             if ($person && $person->authorize('mention')) {
                 $subscribers[] = $person->id;
@@ -172,7 +172,7 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
 
         if ($entity instanceof ComBaseDomainEntityComment) {
             $parentIdentifier = $entity->parent->getIdentifier()->name;
-            $parentController = $this->getService('com://site/'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
+            $parentController = $this->getService('com:'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
 
             if ($parentController->isNotifier() && $entity->parent->isSubscribable()) {
                 $data = array(

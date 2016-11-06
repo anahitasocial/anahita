@@ -141,7 +141,7 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
             throw new LibBaseControllerExceptionNotFound('Component not found');
         }
 
-        $app = KService::get('repos://site/settings.app')->find(array('package' => $name));
+        $app = KService::get('repos:settings.app')->find(array('package' => $name));
 
         if (isset($app) && $app->enabled != 1) {
             throw new LibBaseControllerExceptionForbidden('Component is disabled');

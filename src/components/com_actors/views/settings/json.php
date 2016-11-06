@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +30,7 @@ class ComActorsViewSettingsJson extends ComBaseViewJson
 {
     public function display()
     {
-        $apps = $this->getService('com://site/actors.domain.entityset.component', array(
+        $apps = $this->getService('com:actors.domain.entityset.component', array(
                 'actor' => $this->_state->getItem(),
                 'can_enable' => true,
         ));

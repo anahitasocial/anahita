@@ -168,7 +168,7 @@ class ComActorsControllerBehaviorAdministrable extends KControllerBehaviorAbstra
 
         if ($this->getItem()) {
             $this->getState()
-                 ->admin = $this->getService('repos://site/people.person')
+                 ->admin = $this->getService('repos:people.person')
                                 ->fetch($data->adminid);
         }
     }

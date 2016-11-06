@@ -23,17 +23,17 @@ class ComSearchControllerBehaviorSearchable extends KControllerBehaviorAbstract
         if ($this->_mixer->isIdentifiable() && $this->isDispatched()) {
             $item = $this->_mixer->getItem();
             $scope = $this->_mixer->getIdentifier()->package.'.'.$this->_mixer->getIdentifier()->name;
-            $scope = $this->getService('com://site/components.domain.entityset.scope')->find($scope);
+            $scope = $this->getService('com:components.domain.entityset.scope')->find($scope);
 
             if ($scope) {
-                $this->getService()->set('com://site/search.scope', $scope);
+                $this->getService()->set('com:search.scope', $scope);
             }
 
             if ($item && $item->persisted() && $item->inherits('ComActorsDomainEntityActor')) {
-                $this->getService()->set('com://site/search.owner', $item);
-                $this->getService()->set('com://site/components.scope', null);
+                $this->getService()->set('com:search.owner', $item);
+                $this->getService()->set('com:components.scope', null);
             } elseif ($this->getRepository()->isOwnable() && $this->actor) {
-                $this->getService()->set('com://site/search.owner', $this->actor);
+                $this->getService()->set('com:search.owner', $this->actor);
             }
         }
     }

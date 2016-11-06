@@ -64,7 +64,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
     {
         $result = false;
 
-        $component = $this->getService('repos://site/components.component')
+        $component = $this->getService('repos:components.component')
         ->find(array('component' => 'com_'.$this->getIdentifier()->package));
 
         if ($component) {

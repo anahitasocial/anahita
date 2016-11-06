@@ -92,7 +92,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
 
         parent::_initialize($config);
 
-        $this->_geocoder = KService::get('com://site/locations.geocoder')->getInstance($config);
+        $this->_geocoder = KService::get('com:locations.geocoder')->getInstance($config);
     }
 
     /**

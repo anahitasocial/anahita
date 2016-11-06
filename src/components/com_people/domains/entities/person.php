@@ -7,7 +7,7 @@
  * Here's how to get a person object, set a property and save
  * <code>
  * //fetches a peron with $id
- * $person = KService::get('repos://site/people.person')->fetch($id);
+ * $person = KService::get('repos:people.person')->fetch($id);
  * $person->name = 'Doctor Who';
  * $person->save();
  * </code>
@@ -162,7 +162,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         $url = 'option=com_people&view=person&id='.$this->id;
 
         if ($use_username) {
-            $url .= '&uniqueAlias='.$this->alias;
+            $url .= '&uniqueAlias='.strtolower($this->alias);
         }
 
         return $url;

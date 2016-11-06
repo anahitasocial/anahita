@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -42,7 +42,7 @@ class ComDashboardViewDashboardHtml extends ComBaseViewHtml
         $context->composers = $this->composers;
 
         //make all the apps to listen to dispatcher
-        $components = $this->getService('repos://site/components.component')->fetchSet();
+        $components = $this->getService('repos:components.component')->fetchSet();
 
         $components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
 
