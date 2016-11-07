@@ -60,6 +60,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         $base_url = KRequest::base();
         $settings = $this->getService('com:settings.setting');
 
+        if (PHP_SAPI == 'cli' && $settings->live_site != '') {
+            $scheme = is_ssl() ? 'https://' : 'http://';
+            $base_url = $scheme.$settings->live_site;
+        }
+
         $config->append(array(
             'base_url' => $base_url,
             'test_options' => array(
