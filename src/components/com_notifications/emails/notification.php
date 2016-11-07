@@ -63,7 +63,7 @@ EOF;
 
                               <? if ($body) : ?>
                               <div style="padding-top:10px;font-size:12px">
-                                  <?= (trim($body)) ?>
+                                  <?= trim($body) ?>
                               </div>
                               <?php endif; ?>
                           </td>
@@ -77,7 +77,9 @@ EOF;
 			<tr>
 				<td style="<?= $well ?>">
 					<? foreach ($commands as $command) : ?>
-						<a href="<?= @route($command->attribs->href) ?>" style="<?= $btn_primary  ?>"><?= $command->label?></a>
+						<a href="<?= @route($command->attribs->href) ?>" style="<?= $btn_primary  ?>">
+                            <?= $command->label?>
+                        </a>
 					<? endforeach; ?>
 				</td>
 			</tr>
@@ -89,7 +91,7 @@ EOF;
         			    <?= sprintf(@text('COM-NOTIFICATIONS-SETTING-URL'),
                                 @route('option=notifications&view=settings&oid='.$setting_command->actor->id),
                                 @route($setting_command->actor->getURL()),
-                                $setting_command->actor->name)?>
+                                $setting_command->actor->name) ?>
         			<? endif;?>
     			</small>
     			</td>

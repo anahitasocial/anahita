@@ -85,13 +85,6 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         foreach ($notifications as $notification) {
             $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
-        }
-
-        //change the notification status
-        $space->commitEntities();
-
-        //send the notification
-        foreach ($notifications as $notification) {
             $this->sendNotification($notification);
         }
     }
@@ -142,7 +135,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
             $setting = $settings->{$person->id};
 
-            if (!$ret = $notification->shouldNotify($person, $setting)) {
+            if (! $ret = $notification->shouldNotify($person, $setting)) {
                 $notification->removeSubscribers($person);
                 continue;
             }
@@ -187,7 +180,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                 $mails[] = array(
                       'subject' => $data->email_subject,
                       'body' => $body,
-                      'to' => $person->email,
+                      'to' => $person->email
                 );
             }
         }

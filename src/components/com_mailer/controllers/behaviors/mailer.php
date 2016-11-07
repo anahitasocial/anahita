@@ -57,10 +57,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
+        $base_url = KRequest::base();
         $settings = $this->getService('com:settings.setting');
 
         $config->append(array(
-            'base_url' => KRequest::url(),
+            'base_url' => $base_url,
             'test_options' => array(
                 'enabled' => get_config_value('mailer.debug', false),
                 'email' => get_config_value('mailer.redirect_email'),
@@ -89,7 +90,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
      */
     public function getEmailTemplateView()
     {
-        if (!$this->_template_view instanceof LibBaseViewTemplate) {
+        if (! $this->_template_view instanceof LibBaseViewTemplate) {
 
             if (!isset($this->_template_view)) {
                 $this->_template_view = clone $this->_mixer->getIdentifier();
@@ -114,7 +115,11 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
                 'template_paths' => $paths,
             );
 
-            register_default(array('identifier' => $this->_template_view, 'default' => 'LibBaseViewTemplate'));
+            register_default(array(
+                'identifier' => $this->_template_view,
+                'default' => 'LibBaseViewTemplate'
+            ));
+
             $this->_template_view = $this->getService($this->_template_view, $config);
         }
 
@@ -146,15 +151,16 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
         }
 
         $config->append(array(
-            'data' => $data,
+            'data' => $data
         ));
 
         $template = $this->getEmailTemplateView()->getTemplate();
         $data = array_merge($config['data'], array('config' => $config));
-        $output = $template->loadTemplate($config->template, $data)->render();
 
         if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, array('output' => $output))->render();
+        } else {
+            $output = $template->loadTemplate($config->template, $data)->render();
         }
 
         return $output;
