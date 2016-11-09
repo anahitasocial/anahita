@@ -67,8 +67,8 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
                 'updateTime' => array('column' => 'modified_on', 'default' => 'date'),
             ),
             'relationships' => array(
-                'author' => array('parent' => 'com:people.domain.entity.person', 'child_column' => 'created_by'),
-                'editor' => array('parent' => 'com:people.domain.entity.person', 'child_column' => 'modified_by'),
+                'author' => array('parent' => 'com:actors.domain.entity.actor', 'child_column' => 'created_by'),
+                'editor' => array('parent' => 'com:actors.domain.entity.actor', 'child_column' => 'modified_by'),
             ),
         ));
 
