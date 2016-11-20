@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Abstract Base Dispatcher.
  *
@@ -22,6 +7,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -36,7 +22,6 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-
         $this->_controller = $config->controller;
     }
 
@@ -90,7 +75,7 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
 
     /**
      * Set the request of the response.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see LibBaseControllerAbstract::getResponse()
@@ -101,9 +86,10 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
             $this->_response = parent::getResponse();
 
             if (!$this->_response instanceof LibBaseDispatcherResponse) {
+
                 throw new InvalidArgumentException(
-                       'Response: '.get_class($this->_response).' must be an intance of LibBaseDispatcherResponse');
-            }
+                    'Response: '.get_class($this->_response).' must be an intance of LibBaseDispatcherResponse');
+                }
 
             $this->_response->setRequest($this->getRequest());
         }
@@ -133,6 +119,7 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller');
                 $identifier->name = $controller;
+
             } else {
                 $identifier = $this->getIdentifier($controller);
             }

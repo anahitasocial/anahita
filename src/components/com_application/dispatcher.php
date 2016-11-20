@@ -66,7 +66,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         $isHtml = $context->request->getFormat() == 'html';
         $isAjax = $context->request->isAjax();
 
-        if (!$location && $isHtml && !$isAjax) {
+        if (! $location && $isHtml && !$isAjax) {
 
             $config = array(
                 'request' => $context->request,

@@ -52,7 +52,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
         $this->_name = $config->session_name;
 
         if ($config->session) {
-           $this->createSession(get_hash($config->_name));
+           $this->createSession( get_hash($config->_name) );
         }
 
         parent::__construct($config);
@@ -84,9 +84,9 @@ class ComApplication extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
-            $instance  = new $classname($config);
+            $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
         }
 
@@ -113,7 +113,8 @@ class ComApplication extends KObject implements KServiceInstantiatable
 
         $session = KService::get('com:sessions', array('config' => $config));
         $repository = KService::get('repos:sessions.session');
-        $repository->purge($session->getExpire());
+        //purge guest sessions within 15 minutes
+        $repository->purge(900);
 
         if ($entity = $repository->find(array('sessionId' => $session->getId()))) {
             $entity->updateTime();
