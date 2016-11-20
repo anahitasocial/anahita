@@ -78,14 +78,6 @@ class LibApplicationRouter extends KObject
             $base->$part = KRequest::url()->$part;
         }
 
-        if (PHP_SAPI == 'cli') {
-            $settings = $this->getService('com:settings.setting');
-            if ($settings->live_site != '') {
-                $scheme = is_ssl() ? 'https://' : 'http://';
-                $base = $scheme.$settings->live_site;
-            }
-        }
-
         $config->append(array(
             'base_url' => $base,
             'enable_rewrite' => false,
