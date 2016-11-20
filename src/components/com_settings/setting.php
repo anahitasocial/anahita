@@ -46,7 +46,6 @@
 
          if (!file_exists($filepath) || (filesize($filepath) < 10)) {
              throw new KException('No configuration file found!', 500);
-             return;
          }
 
          require_once $filepath;

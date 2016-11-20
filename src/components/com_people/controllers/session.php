@@ -206,14 +206,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         if ($this->token == '') {
             throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);
-            return false;
         }
 
         $person = $this->getService('repos:people.person')->find(array('activationCode' => $this->token));
 
         if (!$person) {
             throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
-            return false;
         }
 
         $newPerson = ($person->registrationDate->compare($person->lastVisitDate)) ? true : false;

@@ -139,7 +139,6 @@
         } catch (ComSubscriptionsDomainPaymentException $exception) {
             $this->setMessage('COM-SUBSCRIPTIONS-TRANSACTION-ERROR', 'error');
             throw new RuntimeException('Payment process error');
-            return false;
         }
 
         if ($subscription->persisted()) {
@@ -158,7 +157,6 @@
 
         } else {
             throw new RuntimeException("Couldn't subscribe");
-            return false;
         }
 
         return true;
