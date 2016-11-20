@@ -8,8 +8,17 @@ if (!defined('ANPATH_BASE')) {
     KService::get('com://site/application.dispatcher')->load();
 }
 
-$controller = KService::get('com:notifications.controller.processor');
 $ids = (array) KRequest::get('get.id', 'int', array());
+$ssl = KRequest::get('get.ssl', 'int', (int) is_ssl());
+$settings = KService::get('com:settings.setting');
+$host = KRequest::get('get.host', 'url', $settings->live_site);
+
+$scheme = ($ssl) ? 'https://' : 'http://';
+$base_url = $scheme.$host;
+
+$controller = KService::get('com:notifications.controller.processor', array(
+    'base_url' => $base_url
+));
 
 if (!empty($ids)) {
     $controller->id($ids);

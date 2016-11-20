@@ -32,8 +32,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         $this->_enabled = $config->enabled;
         $namespace = $this->_getQueueNamespace(false);
-        $config->append(array('namespace' => $namespace->namespace));
-        $session = KService::get('com:sessions', array('config' => $config));
+        $session = KService::get('com:sessions', array('namespace' => $namespace->namespace));
 
         $data = array();
 
@@ -77,6 +76,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     {
         $flash = $this->_mixer->getState()->flash;
         $message = $flash->getMessage();
+
         if ($message) {
             $message['message'] = AnTranslator::_($message['message']);
             $this->storeValue('message', $message, true);
@@ -127,7 +127,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     {
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
-            $session = KService::get('com:sessions', array('config' => $namespace));
+            $session = KService::get('com:sessions', array('namespace' => $namespace->namespace));
 
             $queue = $session->get($namespace->queue, new stdClass);
             $queue->$key = $value;
@@ -152,7 +152,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
-            $session = KService::get('com:sessions', array('config' => $namespace));
+            $session = KService::get('com:sessions', array('namespace' => $namespace->namespace));
             $queue = $session->get($namespace->queue, new stdClass());
             $ret = isset($queue[$key]) ? $queue[$key] : null;
         }
@@ -170,13 +170,11 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
      */
     protected function _getQueueNamespace($global = false)
     {
-        $session = KService::get('com:sessions');
-        
         if ($global) {
             $store = 'application.queue';
             $namespace = '__anahita';
         } else {
-            $store = (string) $this->_mixer->getIdentifier();
+            //$store = (string) $this->_mixer->getIdentifier();
             $store = 'controller.queue';
             $namespace = 'controller_persistance';
         }

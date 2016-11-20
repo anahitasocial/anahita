@@ -107,14 +107,13 @@ class ComApplication extends KObject implements KServiceInstantiatable
   	 */
   	public function createSession($name)
   	{
-        $config = new KConfig(array(
+        $session = KService::get('com:sessions', array(
             'name' => $name
         ));
-
-        $session = KService::get('com:sessions', array('config' => $config));
+        
         $repository = KService::get('repos:sessions.session');
-        //purge guest sessions within 15 minutes
-        $repository->purge(900);
+        //purge guest sessions within 10 minutes expiry time
+        $repository->purge(600);
 
         if ($entity = $repository->find(array('sessionId' => $session->getId()))) {
             $entity->updateTime();
