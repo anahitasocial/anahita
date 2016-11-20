@@ -149,7 +149,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
-            return;
         }
 
         //now check to see if usertype can be set, otherwise the value is unchanged
@@ -191,7 +190,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($person->validate() === false) {
             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
-            return false;
         }
 
         $viewer = get_viewer();

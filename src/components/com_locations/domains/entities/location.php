@@ -20,6 +20,18 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
   protected $_geocoder = null;
 
   /**
+   * Constructor
+   *
+   * @param KConfig $config An optional KConfig object with configuration options.
+   */
+  public function __construct(KConfig $config)
+  {
+      parent::__construct($config);
+
+      $this->_geocoder = $this->getService('com:locations.geocoder', array('config' => $config));
+  }
+
+  /**
    * Initializes the default configuration for the object.
    *
    * Called from {@link __construct()} as a first step of object instantiation.
@@ -91,8 +103,6 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
         ));
 
         parent::_initialize($config);
-
-        $this->_geocoder = KService::get('com:locations.geocoder')->getInstance($config);
     }
 
     /**

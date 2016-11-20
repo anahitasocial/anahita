@@ -11,25 +11,26 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComLocationsGeocoderDefault extends KObject
+class ComLocationsGeocoderDefault extends KObject implements KServiceInstantiatable
 {
     /**
-    *   Return a geocoder singleton
-    *
-    *   @param $config KConfig object
-    *
-    *   @return ComLocationsGeocoderAdapterAbstract child singleton
-    */
-    public function getInstance(KConfig $config)
+     * Force creation of a singleton
+     *
+     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object	A KServiceInterface object
+     * @return KDatabaseTableInterface
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        static $instance;
+        if (!$container->has($config->service_identifier)) {
 
-        if(!is_object($instance)) {
             $service = ucfirst(get_config_value('locations.service', 'google'));
-            $class_name = 'ComLocationsGeocoderAdapter'.$service;
-            $instance = new $class_name($config);
+            $classname = 'ComLocationsGeocoderAdapter'.$service;
+
+            $instance  = new $classname($config);
+            $container->set($config->service_identifier, $instance);
         }
 
-        return $instance;
+        return $container->get($config->service_identifier);
     }
 }

@@ -328,8 +328,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
         if ($filesize > $uploadlimit) {
             throw new LibBaseControllerExceptionBadRequest('Exceed maximum size');
-
-            return false;
         }
 
         return true;

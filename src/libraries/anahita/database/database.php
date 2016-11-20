@@ -76,17 +76,14 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
         //test to see if driver exists
         if (!function_exists( 'mysqli_connect' )) {
             throw new Exception('The MySQL adapter "mysqli" is not available!');
-            return;
 		}
 
         if(!($db = new mysqli($host, $user, $password, NULL, $port, $socket))) {
             throw new Exception("Couldn't connect to the database!");
-			return false;
         }
 
         if (!$db->select_db($database)) {
             throw new Exception("The database \"$database\" doesn't seem to exist!");
-			return false;
 		}
 
 		$db->set_charset("utf8mb4");

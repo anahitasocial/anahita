@@ -84,7 +84,6 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
 
         if (!$this->_gateway->process($payload)) {
             throw new ComSubscriptionsDomainPaymentException('Payment error. Check the log');
-            return;
         }
 
         $this->getService('repos:people.person')

@@ -103,7 +103,6 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
 
             if (!$this->_subscriber) {
                 throw new LibBaseControllerExceptionNotFound('Subscriber Not Found');
-                return false;
             }
         }
 
@@ -118,7 +117,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     public function fetchEntity(KCommandContext $context)
     {
         $actions = array('editsubscription', 'addsubscriber', 'deletesubscriber');
-        
+
         if (in_array($context->action, $actions)) {
             if ($context->data->package_id) {
                 $this->id = $context->data->package_id;

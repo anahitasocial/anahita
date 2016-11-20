@@ -27,6 +27,18 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     protected $_geocoder = null;
 
     /**
+     * Constructor
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+
+        $this->_geocoder = $this->getService('com:locations.geocoder', array('config' => $config));
+    }
+
+    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -49,8 +61,6 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'scope' => 'all',
             ),
         ));
-
-        $this->_geocoder = KService::get('com:locations.geocoder')->getInstance($config);
 
         parent::_initialize($config);
     }

@@ -17,6 +17,17 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     protected $_service;
 
     /**
+     * Constructor
+     *
+     * @param KConfig $config An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
+        $this->_service = get_config_value('locations.service', 'google');
+    }
+
+    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -26,16 +37,14 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-              'paths' => array(dirname(__FILE__).'/ui'),
+            'paths' => array(dirname(__FILE__).'/ui'),
         ));
-
-        parent::_initialize($config);
 
         $paths = KConfig::unbox($config->paths);
         array_unshift($paths, ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_locations/ui');
         $config->paths = $paths;
 
-        $this->_service = get_config_value('locations.service', 'google');
+        parent::_initialize($config);
     }
 
     /**
@@ -116,7 +125,6 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     {
         if(!$entity->isGeolocatable()) {
            throw new Exception('Entity is not geolocatable');
-           return false;
         }
 
         $config['entity'] = $entity;

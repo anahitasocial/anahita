@@ -41,8 +41,6 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
-
-            return false;
         }
 
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
@@ -77,8 +75,6 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
-
-            return false;
         }
 
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
@@ -134,8 +130,6 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
-
-            return false;
         }
 
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
@@ -238,8 +232,6 @@ class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
             } elseif ($this->type == 'leadables') {
                 if (!$entity->authorize('leadable')) {
                     throw new LibBaseControllerExceptionForbidden('Forbidden');
-
-                    return false;
                 }
 
                 $excludeIds = KConfig::unbox($entity->followers->id);
