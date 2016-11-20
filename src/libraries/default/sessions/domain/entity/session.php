@@ -13,7 +13,7 @@
 class LibSessionsDomainEntitySession extends AnDomainEntityDefault
 {
     /**
-    *   60 days in seconds = 60 * 24 * 3600
+    *   60 days in seconds = 60day * 24hour * 60min * 60sec
     *
     *   @var integer
     */

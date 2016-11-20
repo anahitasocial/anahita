@@ -16,12 +16,19 @@ class LibSessionsDomainRepositorySession extends AnDomainRepositoryDefault
     /**
     *   Removes all expired sessions
     *
-    *   @param maximum session lifetime
+    *   @param int maximum session lifetime
+    *   @param bool delete guest sessions only
     */
-    public function purge($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
+    public function purge($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME, $guestOnly = true)
     {
         $past = time() - $lifetime;
+
         $query = $this->getQuery()->delete()->where('time < '.$past);
+
+        if ($guestOnly) {
+            $query->where('guest', '=', 1);
+        }
+
         return (boolean) $this->getStore()->execute($query);
     }
 }

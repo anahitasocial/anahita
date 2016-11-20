@@ -1,27 +1,13 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Application Dispatcher.
  *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -38,7 +24,7 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -49,9 +35,9 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
     }
 
     /**
-     * Constructor.
+     * Constructor
      *
-     * @param     object     An optional KConfig object with configuration options.
+     * @param object An optional KConfig object with configuration options.
      */
     public function __construct(KConfig $config)
     {
@@ -66,7 +52,7 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param     object     An optional KConfig object with configuration options.
+     * @param object An optional KConfig object with configuration options.
      */
     protected function _initialize(KConfig $config)
     {
@@ -86,10 +72,11 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
      */
     public function getComponent()
     {
-        if (!($this->_controller instanceof LibBaseDispatcherAbstract)) {
+        if (! ($this->_controller instanceof LibBaseDispatcherAbstract)) {
+
             $this->_controller = $this->getController();
 
-            if (!$this->_controller instanceof LibBaseDispatcherAbstract) {
+            if (! $this->_controller instanceof LibBaseDispatcherAbstract) {
                 throw new \UnexpectedValueException(
                     'Dispatcher: '.get_class($this->_controller).' does not implement LibBaseDispatcherAbstract'
                 );
@@ -109,7 +96,8 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
      */
     public function setComponent($component, $config = array())
     {
-        if (!($component instanceof LibBaseDispatcherAbstract)) {
+        if (! ($component instanceof LibBaseDispatcherAbstract)) {
+
             if (is_string($component) &&
                     strpos($component, '.') === false) {
                 $identifier = clone $this->getIdentifier();
@@ -117,6 +105,7 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
             } else {
                 $identifier = $this->getIdentifier($component);
             }
+
             $component = $identifier;
         }
 
@@ -136,8 +125,8 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
 
         define('ANPATH_COMPONENT', ANPATH_BASE.DS.'components'.DS.$name);
         define('ANPATH_COMPONENT_SITE', ANPATH_SITE.DS.'components'.DS.$name);
-
-        if (!file_exists(ANPATH_COMPONENT)) {
+        
+        if (! file_exists(ANPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound('Component not found');
         }
 

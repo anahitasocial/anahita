@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Application Registry. Instantiates a registry with prefix using the application
  * secret.
@@ -23,6 +8,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -31,7 +17,7 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
 {
     /**
      * clonable registry.
-     * 
+     *
      * @var AnRegistry
      */
     protected static $_clone;
@@ -53,7 +39,7 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!isset(self::$_clone)) {
+        if (! isset(self::$_clone)) {
             self::$_clone = new AnRegistry();
         }
 
@@ -62,7 +48,8 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
             unset($config->key);
         }
 
-        if (!isset(self::$_instances[$config->cache_prefix])) {
+        if (! isset(self::$_instances[$config->cache_prefix])) {
+
             $instance = clone self::$_clone;
             self::$_instances[$config->cache_prefix] = $instance;
 
