@@ -30,11 +30,11 @@
   *
   * @access public
   * @param 	string 	 $url 	Absolute or Relative URI to Anahita resource
-  * @param 	boolean  $xhtml Replace & by &amp; for xml compilance
+  * @param 	boolean  full query resolution
   *
   * @return The translated humanly readible URL
   */
-function route($url, $fqr = false)
+function route($url, $fqr = true)
 {
     return KService::get('application')->getRouter()->build($url, $fqr);
 }

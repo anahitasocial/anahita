@@ -79,7 +79,11 @@ class LibApplicationRouter extends KObject
         }
 
         if (PHP_SAPI == 'cli') {
-            $base = '';
+            $base->scheme = extension_loaded('openssl') ? 'https' : 'http';
+            //$base->scheme = is_ssl() ? 'https' : 'http';
+            $settings = $this->getService('com:settings.setting');
+            $base->host = KRequest::get('server.HOSTNAME', 'url', $settings->live_site);
+            $base->path = '';
         }
 
         $config->append(array(
@@ -179,7 +183,6 @@ class LibApplicationRouter extends KObject
 
         if (isset($query['format'])) {
             $uri->format = $query['format'];
-
             unset($query['format']);
         }
 
