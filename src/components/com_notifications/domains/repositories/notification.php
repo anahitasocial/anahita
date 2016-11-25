@@ -65,11 +65,7 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
         parent::_afterEntityInsert($context);
 
         if ($this->_send_after_insert) {
-            $settings = $this->getService('com:settings.setting');
-            $host = KRequest::get('server.HOSTNAME', 'url', $settings->live_site);
-            $ssl = (int) is_ssl();
-            $command = 'php '.ANPATH_BASE.'/index.php '.PROCESSOR_PATH.' id='.$context->entity->id.' ssl='.$ssl.' host='.$host;
-            //error_log($command);
+            $command = 'php '.ANPATH_BASE.'/index.php '.PROCESSOR_PATH.' id='.$context->entity->id;
             $result = exec_in_background($command);
         }
     }

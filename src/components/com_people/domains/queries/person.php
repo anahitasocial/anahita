@@ -20,16 +20,16 @@ class ComPeopleDomainQueryPerson extends AnDomainQueryDefault
         $viewer = get_viewer();
 
         if ($this->filter_usertype && $viewer->admin()) {
-            $this->where('person.usertype', '=', $this->filter_usertype);
+            $this->where('person_tbl.usertype', '=', $this->filter_usertype);
         }
 
         if ($this->filter_email && $viewer->admin()) {
-            $this->where('person.email', '=', $this->filter_email);
+            $this->where('person_tbl.email', '=', $this->filter_email);
         } else {
             $subclause = $this->clause();
 
             if ($this->filter_username) {
-                $subclause->where('person.username', 'LIKE', '%'.$this->filter_username.'%');
+                $subclause->where('person_tbl.username', 'LIKE', '%'.$this->filter_username.'%');
             }
 
             if ($this->keyword) {
