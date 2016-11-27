@@ -5,7 +5,7 @@
 	<ul>
 		<li class="prev <?= $paginator['offset'] == 0 ? 'disabled' : ''?>">
 			<a href="<?= $prev_page ?>">
-				<?= @text('PREV') ?>
+				<?= @text('LIB-AN-ACTION-PREVIOUS') ?>
 			</a>
 		</li>
 		<? foreach ($pages as $page) : ?>
@@ -17,7 +17,7 @@
 		<? endforeach; ?>
 		<li class="next <?= ($paginator['total'] - $paginator['offset'] > $paginator['limit']) ? '' : 'disabled'?>">
 			<a href="<?= $next_page ?>">
-				<?= @text('NEXT') ?>
+				<?= @text('LIB-AN-ACTION-NEXT') ?>
 			</a>
 		</li>
 	</ul>
