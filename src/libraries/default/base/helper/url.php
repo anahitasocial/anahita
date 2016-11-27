@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,8 +16,8 @@
  */
 
 /**
- * Template helper used to build an URL. 
- * 
+ * Template helper used to build an URL.
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -49,10 +49,10 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
 
     /**
      * Get a Route for a URL.
-     * 
-     * @param string|array $url The url. Can be query fragments 
+     *
+     * @param string|array $url The url. Can be query fragments
      * @param bool         $fqr Fully qualified route
-     * 
+     *
      * @return string
      */
     public function getRoute($url = '', $fqr = true)
@@ -107,7 +107,9 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
             unset($url['layout']);
         }
 
-        $route = route('index.php?'.http_build_query($url), false);
+        $parts = 'index.php?'.http_build_query($url);
+        
+        $route = $this->getService('application')->getRouter()->build($parts, $fqr);
 
         return $route;
     }

@@ -49,6 +49,7 @@ EOF;
                       <tr>
                       	  <? if ($subject) : ?>
                           <td valign="top">
+
                               <a href="<?= @route($subject->getURL())?>">
                                   <img src="<?= @helper('com:actors.template.helper.getAvatarURL', $subject) ?>" />
                               </a>

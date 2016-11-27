@@ -1,28 +1,16 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  *  Abstract Class. Provides assign, __set and __get and assign. All the views support assigning
  *  data.
  *
+ * @todo refactor this class and LibApplicationRouter
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2016 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -66,7 +54,7 @@ abstract class LibBaseViewAbstract extends KObject
 
     /**
      * The mimetype.
-     * 
+     *
      * @var string
      */
     public $mimetype = '';
@@ -154,8 +142,8 @@ abstract class LibBaseViewAbstract extends KObject
     }
 
     /**
-     * Supports a simple form of Fluent Interfaces. Allows you to assign variables to the view 
-     * by using the variable name as the method name. If the method name is a setter method the 
+     * Supports a simple form of Fluent Interfaces. Allows you to assign variables to the view
+     * by using the variable name as the method name. If the method name is a setter method the
      * setter will be called instead.
      *
      * For example : $view->layout('foo')->title('name')->display().
@@ -279,7 +267,7 @@ abstract class LibBaseViewAbstract extends KObject
 
     /**
      * Returns the view sata.
-     * 
+     *
      * @return AnControllerState
      */
     public function getState()
@@ -307,6 +295,8 @@ abstract class LibBaseViewAbstract extends KObject
      * - option=com_mycomp&view=myview&foo=bar
      *
      * In templates, use @route()
+     *
+     * @todo refactor this method and LibApplicationRouter::getRoute
      *
      * @param	string	The query string used to create the route
      * @param 	bool	If TRUE create a fully qualified route. Default TRUE.
@@ -358,13 +348,12 @@ abstract class LibBaseViewAbstract extends KObject
 
         $parts = array_merge($route, $parts);
         $parts = http_build_query($parts);
-        $route = $this->getService('application')->getRouter()->build($parts);
+        $route = $this->getService('application')->getRouter()->build($parts, $fqr);
 
-        //Add the host and the schema
-        if ($fqr) {
-            $route->scheme = $this->getBaseUrl()->scheme;
-            $route->host = $this->getBaseUrl()->host;
-        }
+        //if ($fqr && false) {
+        //    $route->scheme = $this->getBaseUrl()->scheme;
+        //    $route->host = $this->getBaseUrl()->host;
+        //}
 
         return $route;
     }

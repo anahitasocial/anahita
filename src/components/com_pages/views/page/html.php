@@ -21,9 +21,7 @@ class ComPagesViewPageHtml extends ComBaseViewHtml
      */
     public function getRoute($route = '', $fqr = true)
     {
-        if (is_string($route) &&
-                strpos($route, '/') &&
-                strpos($route, 'layout') === false) {
+        if (is_string($route) && strpos($route, '/') && strpos($route, 'layout') === false) {
             $url = $this->getService('koowa:http.url', array('url' => $route));
             $route = $url->query;
             $route['layout'] = $url->path;
