@@ -34,9 +34,9 @@
   *
   * @return The translated humanly readible URL
   */
-function route($url, $fqr = true)
+function route($route, $fqr = true)
 {
-    return KService::get('application')->getRouter()->build($url, $fqr);
+    return KService::get('application')->getRouter()->build($route, $fqr);
 }
 
 /**

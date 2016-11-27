@@ -62,6 +62,6 @@ class ComApplicationViewHtml extends LibApplicationViewHtml
             $route .= 'index.php?'.$route;
         }
 
-        return $this->getService('application')->getRouter()->build($route);
+        return $this->getService('application')->getRouter()->build($route, $fqr);
     }
 }

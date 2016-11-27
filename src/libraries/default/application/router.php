@@ -152,7 +152,7 @@ class LibApplicationRouter extends KObject
      * @param string $url URL to build
      * @param bool   $fqr Full query resolution
      */
-    public function build(&$url = '', $fqr = false)
+    public function build(&$url = '', $fqr = true)
     {
         if (is_array($url)) {
             $url = '?'.http_build_query($url, '', '&');

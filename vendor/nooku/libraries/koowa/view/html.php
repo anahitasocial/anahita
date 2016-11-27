@@ -69,18 +69,4 @@ class KViewHtml extends KViewTemplate
 
 		return parent::display();
 	}
-	
-	/**
-	 * Get a route based on a full or partial query string. 
-	 * 
-	 * This function force the route to be not fully qualified. 
-	 *
-	 * @param	string	The query string used to create the route
-	 * @param 	boolean	If TRUE create a fully qualified route. Default TRUE.
-	 * @return 	string 	The route
-	 */
-	public function getRoute( $route = '', $fqr = true)
-	{
-		return parent::getRoute($route, false);
-	}
 }
