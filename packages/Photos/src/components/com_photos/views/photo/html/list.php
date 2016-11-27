@@ -14,7 +14,7 @@
 			<h4 class="author-name"><?= @name($photo->author) ?></h4>
 			<ul class="an-meta inline">
 				<li><?= @date($photo->creationTime) ?></li>
-				<? if (!$photo->owner->eql($viewer)): ?>
+				<? if (!$photo->owner->eql($photo->author)): ?>
 				<li><?= @name($photo->owner) ?></li>
 				<? endif; ?>
 			</ul>
@@ -22,34 +22,39 @@
 	</div>
 
 	<div class="entity-portrait-medium">
-		<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
+		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
+		<a data-rel="media-photos-<?= $photo->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
 	</div>
 
 	<div class="entity-description-wrapper">
 		<? if ($photo->title): ?>
-			<h3 class="entity-title">
+			<h4 class="entity-title">
 				<a title="<?= @escape($photo->title) ?>" href="<?= @route($photo->getURL()) ?>">
 					<?= @escape($photo->title) ?>
 				</a>
-			</h3>
+			</h4>
 		<? elseif ($photo->authorize('edit')) : ?>
-			<h3 class="entity-title">
+			<h4 class="entity-title">
 				<span class="muted"><?= @text('LIB-AN-EDITABLE-PLACEHOLDER') ?></span>
-			</h3>
+			</h4>
 		<? endif; ?>
 
-		<div class="entity-description">
-			<?= @content(nl2br($photo->description), array('exclude' => array('gist', 'video'))) ?>
-		</div>
+    	<div class="entity-description">
+    	<?= @helper('text.truncate', @content(nl2br($photo->description), array('exclude' => array('gist', 'video'))), array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
+    	</div>
 	</div>
 
 	<div class="entity-meta">
 		<ul class="an-meta inline">
-			<li><?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?></li>
+			<li>
+				<a href="<?= @route($photo->getURL()) ?>">
+				<?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
+				</a>
+			</li>
 			<? if ($photo->lastCommenter): ?>
-			<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
+		 	<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
 			<? endif; ?>
 		</ul>
 

@@ -2,7 +2,7 @@
 
 <? if (count($photos)) : ?>
 <?
-$url['layout'] = 'masonry_list';
+$url['layout'] = 'list';
 
 if (isset($filter)) {
     $url['filter'] = $filter;
@@ -12,7 +12,6 @@ if (isset($filter)) {
 ?>
 
 <?= @infinitescroll(null, array(
-  'layout_item' => 'masonry',
   'url' => $url,
   'id' => 'an-photos'
 )) ?>
