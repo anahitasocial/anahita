@@ -1,9 +1,25 @@
-<? defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die('Restricted access'); ?>
 
 <?= @helper('ui.header') ?>
 
-<?= @helper('ui.filterbox', @route('layout=list')) ?>
+<?
+$url['layout'] = 'list';
+$tags = array('hashtag', 'location', 'mention');
+foreach ($tags as $tag) {
+    if (isset(${$tag})) {
+        $url[$tag] = ${$tag};
+    }
+}
 
-<div class="an-entities-wrapper">
-	<?= @template('list') ?>
-</div>
+if (isset($filter)) {
+    $url['filter'] = $filter;
+} elseif (isset($actor)) {
+    $url['oid'] = $actor->id;
+}
+?>
+
+<?= @infinitescroll($items, array(
+  'id' => 'an-media',
+  'url' => $url,
+  'hiddenlink' => true
+)) ?>
