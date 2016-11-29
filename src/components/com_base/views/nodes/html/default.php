@@ -1,5 +1,19 @@
 <? defined('KOOWA') or die; ?>
 
-<div class="an-entities-wrapper" id="an-entities-main-wrapper">
-	<?= @template('list') ?>
-</div>
+<?= @helper('ui.header') ?>
+
+<?
+$url['layout'] = 'list';
+$tags = array('hashtag', 'location', 'mention');
+foreach ($tags as $tag) {
+    if (isset(${$tag})) {
+        $url[$tag] = ${$tag};
+    }
+}
+?>
+
+<?= @infinitescroll($items, array(
+  'id' => 'an-nodes',
+  'url' => $url,
+  'hiddenlink' => true,
+)) ?>

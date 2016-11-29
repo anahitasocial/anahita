@@ -1,8 +1,7 @@
 <? defined('KOOWA') or die('Restricted access');?>
 
 <?
-
-$url = array('layout=gadget_list');
+$url['layout'] = 'list';
 
 if (isset($filter)) {
     $url['filter'] = $filter;

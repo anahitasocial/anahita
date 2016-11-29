@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('KOOWA') or die('Restricted access');?>
 
 <?= @helper('ui.header') ?>
 
