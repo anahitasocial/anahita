@@ -87,7 +87,8 @@ class Config
            'secret' => '',
            'enable_debug' => 0,
            'error_reporting' => 0,
-           'url_rewrite' => 0
+           'url_rewrite' => 0,
+           'live_site' => 'example.com'
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
@@ -344,10 +345,9 @@ class Config
 
         $write_group(array('sitename'), 'Site Settings');
         $write_group(array('dbtype', 'host', 'user', 'password', 'db', 'dbprefix'), 'Database Settings');
-        $write_group(array('secret', 'error_reporting', 'tmp_path', 'log_path', 'force_ssl'), 'Server Settings');
+        $write_group(array('sef_rewrite', 'live_site', 'secret', 'error_reporting', 'tmp_path', 'log_path', 'force_ssl'), 'Server Settings');
         $write_group(array('mailer', 'mailfrom', 'fromname', 'sendmail', 'smtpauth', 'smtpuser', 'smtppass', 'smtphost'), 'Mail Settings');
         $write_group(array('debug'), 'Debug Settings');
-        $write_group(array('sef_rewrite'), 'Route Settings');
         $write_group(array_keys($data), 'Other configurations');
         $file->fwrite("}");
 
