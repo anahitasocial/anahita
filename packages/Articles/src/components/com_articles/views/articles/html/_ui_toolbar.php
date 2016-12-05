@@ -10,19 +10,19 @@
     <div class="pull-right btn-group">
         <?
             $sort_types = array(
-              'trending' => array(
-                'label' => 'LIB-AN-SORT-TRENDING',
-                'icon' => 'fire'
-              ),
-              'top' => array(
-                'label' => 'LIB-AN-SORT-TOP',
-                'icon' => 'fire'
-              ),
-              'recent' => array(
-                'label' => 'LIB-AN-SORT-RECENT',
-                'icon' => 'time'
-              ),
-            );
+                'recent' => array(
+                  'label' => 'LIB-AN-SORT-RECENT',
+                  'icon' => 'time'
+                  ),
+                  'top' => array(
+                    'label' => 'LIB-AN-SORT-TOP',
+                    'icon' => 'fire'
+                  ),
+                  'updated' => array(
+                    'label' => 'LIB-AN-SORT-UPDATED',
+                    'icon' => 'edit'
+                  )
+              );
         ?>
         <? foreach($sort_types as $i => $sort_type) : ?>
         <a class="btn <?= ($i == $sort) ? 'disabled' : '' ?>" href="<?= @route(array('sort'=>$i)) ?>">

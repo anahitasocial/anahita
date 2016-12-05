@@ -3,7 +3,7 @@
 <? if (isset($service)) : ?>
 <script data-inline src="https://connect.facebook.net/en_US/all.js"></script>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="media://com_invites/js/facebook.js" />
 <? else: ?>
 <script src="media://com_invites/js/min/facebook.min.js" />

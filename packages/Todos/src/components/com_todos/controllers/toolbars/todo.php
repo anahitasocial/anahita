@@ -71,17 +71,4 @@ class ComTodosControllerToolbarTodo extends ComMediumControllerToolbarDefault
             ->setAttribute('data-trigger', 'PostLink');
         }
     }
-
-    /**
-     * New button toolbar.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandNew($command)
-    {
-        $command
-        ->append(array('label' => AnTranslator::_('COM-TODOS-TOOLBAR-TODO-NEW')))
-        ->href('#')
-        ->setAttribute('data-trigger', 'ReadForm');
-    }
 }

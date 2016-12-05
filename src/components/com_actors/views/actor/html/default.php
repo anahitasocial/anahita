@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die('Restricted access') ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_actors/js/cover.js" />
 <? else: ?>
 <script src="com_actors/js/min/cover.min.js" />

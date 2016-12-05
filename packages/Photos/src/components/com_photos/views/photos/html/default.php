@@ -12,7 +12,7 @@ foreach ($tags as $tag) {
 }
 ?>
 
-<?= @infinitescroll($photos, array(
+<?= @infinitescroll($items, array(
   'id' => 'an-photos',
   'url' => $url,
   'hiddenlink' => true,

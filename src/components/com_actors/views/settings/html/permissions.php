@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die; ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_actors/js/permissions.js" />
 <? else: ?>
 <script src="com_actors/js/min/permissions.min.js" />

@@ -3,7 +3,7 @@
 <? $document = KService::get('anahita:document'); ?>
 <? $path = KRequest::base().'/media/lib_anahita/js/production/' ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 
 <?
 @helper('javascript.combine', array(
@@ -16,3 +16,7 @@ $document->addScript($path.'site.uncompressed.js');
 <? else : ?>
 <? $document->addScript($path.'site.js'); ?>
 <? endif; ?>
+<?
+$document->addScript('https://cdn.plyr.io/2.0.11/plyr.js');
+$document->addStyleSheet('https://cdn.plyr.io/2.0.11/plyr.css');
+?>

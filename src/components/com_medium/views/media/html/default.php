@@ -16,6 +16,10 @@ if (isset($filter)) {
 } elseif (isset($actor)) {
     $url['oid'] = $actor->id;
 }
+
+if (isset($sort)) {
+    $url['sort'] = $sort;
+}
 ?>
 
 <?= @infinitescroll($items, array(

@@ -2,7 +2,7 @@
 
 <? if ($photo->authorize('edit')) : ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_photos/js/photoset.js" />
 <? else: ?>
 <script src="com_photos/js/min/photoset.min.js" />

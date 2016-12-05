@@ -2,7 +2,7 @@
 
 <? if ($set->authorize('edit')) : ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_photos/js/organizer.js" />
 <? else: ?>
 <script src="com_photos/js/min/organizer.min.js" />
