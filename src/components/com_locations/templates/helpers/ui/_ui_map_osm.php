@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die('Restricted access') ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_locations/js/map.osm.js" />
 <? else: ?>
 <script src="com_locations/js/min/map.osm.min.js" />

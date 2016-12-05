@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die; ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
   <? if($entity->authorize('edit')): ?>
   <script src="com_locations/js/geoposition.js" />
   <? endif; ?>

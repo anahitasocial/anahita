@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die('Restricted access');?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="media://com_invites/js/email.js" />
 <? else: ?>
 <script src="media://com_invites/js/min/email.min.js" />

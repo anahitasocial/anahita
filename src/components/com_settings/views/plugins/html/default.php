@@ -1,7 +1,7 @@
 <? defined('KOOWA') or die; ?>
 
 <? if ($sort == 'ordering') : ?>
-    <? if (defined('JDEBUG') && JDEBUG) : ?>
+    <? if (defined('ANDEBUG') && ANDEBUG) : ?>
     <script src="com_settings/js/orderable.js" />
     <? else: ?>
     <script src="com_settings/js/min/orderable.min.js" />

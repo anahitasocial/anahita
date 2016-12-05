@@ -5,7 +5,6 @@
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -51,37 +50,17 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
      *
      * @return string
      */
-    protected function _vimeo(&$text)
-    {
-        $matches = array();
+     protected function _vimeo(&$text)
+     {
+         $matches = array();
 
-        if (preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) {
-            foreach ($matches[1] as $index => $id) {
-
-                $url = sprintf("https://vimeo.com/api/v2/video/%d.json", $id);
-                $videoJson = @file_get_contents($url);
-
-                if (empty($videoJson)) {
-                    continue;
-                }
-
-                $video = json_decode($videoJson);
-
-                $video = $video[0];
-
-                if ($video && $video->id) {
-                    $options = array(
-                        'title' => $video->title,
-                        'url' => sprintf("https://vimeo.com/%d", $video->id),
-                        'thumbnail' => $video->thumbnail_large,
-                    );
-
-                    $video = $this->_createVideo($options);
-                    $text = str_replace($matches[0][$index], $video, $text);
-                }
-            }
-        }
-    }
+         if (preg_match_all('%http[s]?://\S*vimeo.com/(\d+)%', $text, $matches)) {
+             foreach ($matches[1] as $index => $id) {
+                 $video = sprintf('<div class="an-media-video" data-trigger="video-player" data-type="vimeo" data-video-id="%d"></div>', $id);
+                 $text = str_replace($matches[0][$index], $video, $text);
+             }
+         }
+     }
 
     /**
      * Checks the text for a youtube URL.
@@ -96,51 +75,9 @@ class PlgContentfilterVideo extends PlgContentfilterAbstract
 
         if (preg_match_all('%http[s]?://\S*(?:youtube(?:-nocookie)?\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $text, $matches)) {
             foreach ($matches[1] as $index => $id) {
-                $options = array(
-                    'title' => '',
-                );
-
-                //$thumbBase = 'https://img.youtube.com/vi/'.$id.'/';
-                $thumbBase = sprintf("https://img.youtube.com/vi/%s/", $id);
-
-                $maxres = get_headers($thumbBase.'maxresdefault.jpg');
-                $notfound = get_headers($thumbBase.'0.jpg');
-
-                if ($maxres[0] != 'HTTP/1.0 404 Not Found') {
-                    $thumbnail = $thumbBase.'maxresdefault.jpg';
-                } elseif ($notfound[0] != 'HTTP/1.0 404 Not Found') {
-                    $thumbnail = $thumbBase.'0.jpg';
-                } else {
-                    return;
-                }
-
-                $url = sprintf("https://www.youtube.com/watch?v=%s", $id);
-
-                $options = array_merge(array(
-                    'url' => $url,
-                    'thumbnail' => $thumbnail,
-                ), $options);
-
-                $video = $this->_createVideo($options);
+                $video = sprintf('<div class="an-media-video" data-trigger="video-player" data-type="youtube" data-video-id="%s"></div>', $id);
                 $text = str_replace($matches[0][$index], $video, $text);
             }
         }
-    }
-
-    /**
-     * Return a HTML tag for the video to be displayed.
-     *
-     * @param array $options The options to be passed, it must contait the video URL, video thumbnail and width and height
-     *
-     * @return string
-     */
-    protected function _createVideo(array $options)
-    {
-        return '<div class="an-media-video">'
-        .'<img src="'.$options['thumbnail'].'" />'
-        .'<a data-rel="media-'.uniqid().'" data-trigger="MediaViewer" class="an-media-video-thumbnail" '
-        .' href="'.$options['url'].'"'
-        .' title="'.htmlspecialchars($options['title'], ENT_QUOTES).'" >'
-        .'</a></div>';
     }
 }

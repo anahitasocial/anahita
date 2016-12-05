@@ -44,13 +44,12 @@
 //@depends anahita/paginator.js
 //@depends anahita/permalink.js
 //@depends anahita/mediaviewer.js
-//@depends anahita/sort.js
 //@depends anahita/readmore.js
 //@depends anahita/person.js
 //@depends anahita/token.js
 //@depends anahita/editor.js
 //@depends anahita/gist.js
-
+//@depends anahita/plyr.js
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/entity.js

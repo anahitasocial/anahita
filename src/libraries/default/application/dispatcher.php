@@ -107,6 +107,8 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $settings = KService::get('com:settings.setting');
         $error_reporting = $settings->error_reporting;
 
+        define('ANDEBUG', $settings->debug);
+
         //taken from nooku application dispatcher
         if ($error_reporting > 0) {
             error_reporting($error_reporting);

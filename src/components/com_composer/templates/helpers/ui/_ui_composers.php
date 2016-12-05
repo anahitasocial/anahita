@@ -2,7 +2,7 @@
 
 <? if (count($composers)) : ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_composer/js/_composer.js" />
 <script src="com_locations/js/geoposition.js" />
 <? else: ?>

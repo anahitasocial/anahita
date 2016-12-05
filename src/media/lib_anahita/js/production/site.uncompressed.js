@@ -19502,51 +19502,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 }(jQuery, window));
 
-///media/lib_anahita/js/anahita/sort.js
-/**
- * Author: Nick Swinford
- * Email: NicholasJohn16@gmail.com
- * Author: Rastin Mehr
- * Email: rastin@anahitapolis.com
- * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
- * Licensed under the MIT license:
- * http://www.opensource.org/licenses/MIT
- */
-
-;(function ($, window, document) {
-    
-    $.fn.anSort = function() {
-        
-        var self = $(this);
-        
-        $.ajax({
-           
-        	url: self.attr('href'),
-        	
-        	beforeSend: function() {
-        		self.parent().fadeTo('fast', 0.3).addClass('uiActivityIndicator');
-        	},
-           
-           success: function(response) {
-                              
-               $('#an-entities-main').html($(response).find('.an-entity'));
-               $('.pagination').html($(response).filter('.pagination'));
-        	   
-               self.parent().siblings().removeClass('active');
-               self.parent().addClass('active');
-           },
-           complete: function() {
-               self.parent().fadeTo('fast', 1).removeClass('uiActivityIndicator');
-           }
-        });
-    };
-    
-    $('body').on('click','ul[data-behavior="sortable"] a', function(event) {
-        event.preventDefault();
-        $(this).anSort();
-    });
-    
-}(jQuery, window, document));
 ///media/lib_anahita/js/anahita/readmore.js
 /**
  * Author: Rastin Mehr
@@ -19925,41 +19880,66 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-    
+
     'use strict';
-    
+
     $.fn.anahitaGist = function () {
-        
+
         this.filter( this.selector ).each(function(){
-           
+
             var placeholder = $(this);
-        
+
             $.getJSON( placeholder.data('src') + 'on?callback=?', function( data ) {
-     
+
                 // replace script with gist html
                 placeholder.replaceWith( $( data.div ) );
-     
-                // load the stylesheet, but only once…            
+
+                // load the stylesheet, but only once…
                 var head = $('head');
-     
+
                 if ( head.find('link[rel="stylesheet"][href="'+ data.stylesheet +'"]').length < 1 ) {
                     head.append('<link rel="stylesheet" href="'+ data.stylesheet +'" type="text/css" />');
                 }
             });
         });
     };
-    
+
     if ( $('[data-trigger="LoadGist"]').length ) {
         $('[data-trigger="LoadGist"]').anahitaGist();
     }
-    
+
     $(document).ajaxSuccess(function() {
-        
+
         if ( $('[data-trigger="LoadGist"]').length ) {
             $('[data-trigger="LoadGist"]').anahitaGist();
         }
     });
-    
+
+}(jQuery, window, document));
+
+///media/lib_anahita/js/anahita/plyr.js
+/**
+ * Author: Rastin Mehr
+ * Email: rastin@anahitapolis.com
+ * Copyright 2016 rmdStudio Inc. www.rmdStudio.com
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+;(function ($, window, document) {
+
+    'use strict';
+
+    if ( $('[data-trigger="video-player"]').length ) {
+        plyr.setup('.an-media-video');
+    }
+
+    $(document).ajaxSuccess(function() {
+        if ( $('[data-trigger="video-player"]').length ) {
+            plyr.setup('.an-media-video');
+        }
+    });
+
 }(jQuery, window, document));
 
 
@@ -20989,49 +20969,49 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-    
+
     'use strict';
-    
-    $.widget('anahita.stateSelector', { 
+
+    $.widget('anahita.stateSelector', {
 
         _create : function () {
-          
+
           var self = this;
           this.states = [];
-            
+
           this.states[0] = $('[country="us"]');
           this.states[1] = $('[country="canada"]');
           this.states[2] = $('[country="custom"]');
-          
+
           self._hideAll();
-          
+
           var country = this.element.find('options:selected').val();
-          
-          this._show( country );  
-          
+
+          this._show( country );
+
           this._on('#country-selector', {
               'change' : function ( event ) {
-                 
+
                  self._hideAll();
-                 
+
                  var country = $(event.currentTarget).find('option:selected').val();
-                 
+
                  self._show(country);
               }
           });
         },
-        
+
         _hideAll : function () {
-            
+
             $.each(this.states, function (index, state) {
                 state.hide().attr('disabled', true);
             });
         },
-        
+
         _show : function ( country ) {
-            
-            var index = 0; 
-            
+
+            var index = 0;
+
             if (country == 'US') {
                      index = 0;
                  } else if( country == 'CA' ) {
@@ -21039,15 +21019,16 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                  } else {
                      index = 2;
                  }
-            
-            
+
+
             this.states[index].show().attr('disabled', false);
         }
     });
 
     $('body').stateSelector();
-    
+
 }(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/ui/masonry.js
 /**
  * Author: Rastin Mehr

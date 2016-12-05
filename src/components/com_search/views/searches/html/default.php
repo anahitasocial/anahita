@@ -2,7 +2,7 @@
 
 <? if (!empty($keywords)) : ?>
 
-<? if (defined('JDEBUG') && JDEBUG) : ?>
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_search/js/_search.js" />
 <? else: ?>
 <script src="com_search/js/min/_search.min.js" />
