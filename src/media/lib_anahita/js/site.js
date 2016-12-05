@@ -12,6 +12,7 @@
 //@depends vendors/jquery.ba-outside-events.js
 //@depends vendors/jquery.swipebox.js
 //@depends vendors/tinycon.js
+//@depends vendors/plyr.js
 
 //@depends vendors/bootstrap/bootstrap-affix.js
 //@depends vendors/bootstrap/bootstrap-alert.js
