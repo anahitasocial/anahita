@@ -37,16 +37,30 @@
 		</div>
 
 		<div class="form-actions">
-			<? $cancelURL = ($todo->persisted()) ? $todo->getURL() : 'view=todos&oid='.$actor->id ?>
-			<a class="btn" href="<?= @route($cancelURL) ?>">
-			    <?= @text('LIB-AN-ACTION-CANCEL') ?>
+			<? if ($todo->persisted()): ?>
+				<? if (KRequest::type() == 'AJAX'): ?>
+				<a data-action="cancel" class="btn" href="<?= @route($url.'&layout=list') ?>">
+					<?= @text('LIB-AN-ACTION-CANCEL') ?>
+				</a>
+				<? else : ?>
+				<? $cancelURL = ($todo->persisted()) ? $todo->getURL() : 'view=todos&oid='.$actor->id ?>
+				<a class="btn" href="<?= @route($cancelURL) ?>">
+					<?= @text('LIB-AN-ACTION-CANCEL') ?>
+				</a>
+				<? endif; ?>
+
+				<button type="submit" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-UPDATING') ?>">
+					<?= @text('LIB-AN-ACTION-UPDATE') ?>
+				</button>
+			<? else : ?>
+			<a data-trigger="CancelAdd" class="btn" href="<?= @route('view=todos&oid='.$actor->id) ?>">
+				<?= @text('LIB-AN-ACTION-CANCEL') ?>
 			</a>
 
-			<? $action = ($todo->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-ADD' ?>
-			<? $actionLoading = ($todo->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-ADDING' ?>
-			<button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
-			    <?= @text($action) ?>
+			<button data-trigger="Add" class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-MEDIUM-POSTING') ?>">
+				<?= @text('LIB-AN-ACTION-ADD') ?>
 			</button>
+			<? endif; ?>
 		</div>
 	</fieldset>
 </form>
