@@ -191,13 +191,13 @@
 	});
 
 	//Edit Entity Action
-	$('body').on('submit', '.an-entities > form.an-entity', function ( event ) {
+	$('body').on('submit', '.an-entities form.an-entity', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('edit');
 	});
 
 	//Add Entity Action
-	$('body').on('submit', '#entity-form-wrapper > form', function ( event ) {
+	$('body').on('submit', '#entity-form-wrapper form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('add');
 	});
