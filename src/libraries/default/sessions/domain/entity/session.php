@@ -83,7 +83,7 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
             $viewer = get_viewer();
             $this->setData(array(
                 'time' => time(),
-                'nodeId' => $viewer->id,
+                'nodeId' => (int) $viewer->id,
                 'guest' => $viewer->guest(),
                 'username' => $viewer->username,
                 'usertype' => $viewer->usertype
