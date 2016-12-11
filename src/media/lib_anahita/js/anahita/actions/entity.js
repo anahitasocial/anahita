@@ -191,13 +191,14 @@
 	});
 
 	//Edit Entity Action
-	$('body').on('submit', '.an-entities form.an-entity', function ( event ) {
+
+	$('body').on('click', '.an-entities form:not(.an-comment-form) button[type="submit"]', function ( event ) {
 		event.preventDefault();
-		$(this).anahitaEntity('edit');
+		$(this).closest('form').anahitaEntity('edit');
 	});
 
 	//Add Entity Action
-	$('body').on('submit', '#entity-form-wrapper form', function ( event ) {
+	$('body').on('submit', '#entity-form-wrapper > form:not(.an-comment-form)', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('add');
 	});
@@ -215,7 +216,7 @@
 	});
 
 	//Add Comment Action
-	$('body').on('submit', '.an-comments-wrapper > form', function ( event ) {
+	$('body').on('submit', '.an-comments-wrapper > form.an-comment-form', function ( event ) {
 		event.preventDefault();
 		$(this).anahitaEntity('addcomment');
 	});
