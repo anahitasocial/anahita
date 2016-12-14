@@ -24,7 +24,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
     {
         $config->append(array(
             'service_name' => 'Facebook',
-            'version' => '2.0',
+            'version' => '2.8',
             'api_url' => 'https://graph.facebook.com',
             'request_token_url' => '',
             'access_token_url' => 'https://graph.facebook.com/oauth/access_token',
@@ -53,7 +53,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
     public function requestAccessToken($data)
     {
         $url = $this->access_token_url.'?type=user_agent&client_id='.$this->_consumer->key.'&client_secret='.$this->_consumer->secret.'&code='.$data->code;
-        $url      .= '&redirect_uri='.$this->_consumer->callback_url;
+        $url .= '&redirect_uri='.$this->_consumer->callback_url;
         $response = $this->getRequest(array('url' => $url))->send();
         $result = $response->parseQuery();
         $this->setToken($result->access_token);
@@ -80,7 +80,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      {
          $me = $this->get('me');
          $data = array(
-                'profile_url' => 'http://www.facebook.com/profile.php?id='.$me->id,
+                'profile_url' => 'https://www.facebook.com/profile.php?id='.$me->id,
                 'name' => $me->name,
                 'id' => $me->id,
                 'username' => $me->username,

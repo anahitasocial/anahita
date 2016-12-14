@@ -24073,7 +24073,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 	});
 
 	//Edit Entity Action
-
 	$('body').on('click', '.an-entities form:not(.an-comment-form) button[type="submit"]', function ( event ) {
 		event.preventDefault();
 		$(this).closest('form').anahitaEntity('edit');
