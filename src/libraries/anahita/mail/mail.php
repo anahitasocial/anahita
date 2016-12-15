@@ -409,12 +409,12 @@ class AnMail extends KObject implements KServiceInstantiatable
     /**
     * Sends a message
     *
-    * @return void
+    * @return boolean
     */
     public function send()
     {
         $mailer = Swift_Mailer::newInstance($this->_transport);
         $message = $this->_createMessage();
-        $mailer->send($message);
+        return (boolean) $mailer->send($message);
     }
 }
