@@ -2,11 +2,12 @@
 
 <h3><?= @text('COM-CONNECT-PROFILE-SETTING-TITLE') ?></h3>
 
-<div class="an-entities">
+<div class="connect-service">
 <? foreach ($apis as $api) : ?>
 
 <?
 $session = $sessions->find(array('api' => $api->getName()));
+
 if ($session && !$session->validateToken()) {
     $session->delete()->save();
     $session = null;
@@ -30,9 +31,16 @@ if ($session && !$session->validateToken()) {
         $session = null;
     }
     ?>
-
 		<div class="entity-actions">
-    		<form action="<?= @route(array('option' => 'com_connect', 'view' => 'setting', 'oid' => $actor->uniqueAlias, 'server' => $api->getName())) ?>" method="post">
+            <?
+            $url = array(
+                'option' => 'com_connect',
+                'view' => 'setting',
+                'oid' => $actor->uniqueAlias,
+                'server' => $api->getName()
+            );
+            ?>
+    		<form action="<?= @route($url) ?>" method="post">
     			<? if (!$session) : ?>
     			<input type="hidden" name="get" value="accesstoken" />
     			<? else : ?>
