@@ -66,7 +66,11 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
      */
     public function subscribed($subscriber)
     {
-        return ($subscriber->id && $this->subscriberIds->offsetExists($subscriber->id));
+        if ($subscriber->id && $this->subscriberIds->offsetExists($subscriber->id)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -84,7 +88,7 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
            return false;
         }
 
-        $subscription = $this->subscriptions->addNew(array(
+        $subscription = $this->subscriptions->findOrAddNew(array(
             'subscriber' => $person,
         ))->setData(array(
             'component' => $this->component,
