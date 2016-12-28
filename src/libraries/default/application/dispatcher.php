@@ -101,8 +101,13 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->getService('koowa:loader')->loadIdentifier($identifier);
 
         //no need to create session when using CLI (command line interface)
-        $createSession = (bool) PHP_SAPI !== 'cli';
-        $this->_application = $this->getService('application', array('session' => $createSession));
+        if (PHP_SAPI == 'cli') {
+            $session = false;
+        } else {
+            $session = true;
+        }
+
+        $this->_application = $this->getService('application', array('session' => $session));
 
         $settings = KService::get('com:settings.setting');
         $error_reporting = $settings->error_reporting;
