@@ -55,7 +55,7 @@ Before you start please make sure that your server meets the following requireme
 1. Linux or unix server
 1. Nginx or Apache 2.0+
 1. MySql 5.6+
-1. php 5.6+ with OPcache. Use PHP 7+ for best results
+1. php 5.6+ with OPcache and APCU. Use PHP 7.0+ for best results.
 1. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
@@ -122,7 +122,7 @@ Congratulations! You have installed Anahita successfully. Now you need to config
 Now you need to make some configurations before you can use your Anahita for development or production server. To access the site settings:
 
 1. Login to your Anahita installation as a _Super Administrator_
-2. Click on your avatar on the top menubar 
+2. Click on your avatar on the top menubar
 3. Click on _Site Settings_. By default you will go to the _Site Settings_
 
 Here are the options on the Site Settings view:
@@ -132,7 +132,7 @@ Here are the options on the Site Settings view:
 1. **Apps:** configure Anahita apps for the entire site.
 1. **Assignments:** configure which actors (People, Groups, etc.) can use what apps (Topics, Photos, etc.)
 1. **Plugins:** configure Anahita plugins for the entire site.
-1. **Templates:** configure Anahita templates. That is only if they are configurable. 
+1. **Templates:** configure Anahita templates. That is only if they are configurable.
 
 ### Notifications
 
@@ -199,4 +199,4 @@ Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like 
 
 ## Credits
 
-Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver based software development company specialized in developing knowledge sharing mobile and web apps. 
+Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver based software development company specialized in developing knowledge sharing mobile and web apps.
