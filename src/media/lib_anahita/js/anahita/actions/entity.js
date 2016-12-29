@@ -55,7 +55,7 @@
 		}
 
 		//edit entity
-		if ( action == 'edit' ) {
+		if ( action == 'edit' || action == 'editcomment' ) {
 
 			var form = $(this);
 
@@ -214,10 +214,11 @@
 		$('#entity-form-wrapper').slideToggle();
 	});
 
-	//Add Comment Action
-	$('body').on('submit', '.an-comments-wrapper > form.an-comment-form', function ( event ) {
+	//Add/Edit Comment Action
+	$('body').on('submit', '.an-comments-wrapper form.an-comment-form', function ( event ) {
 		event.preventDefault();
-		$(this).anahitaEntity('addcomment');
+		var action = $(this).find('input[name="action"]').val();
+		$(this).anahitaEntity(action);
 	});
 
 }(jQuery, window, document));
