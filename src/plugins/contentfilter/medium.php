@@ -48,7 +48,7 @@
 
             if (isset($medium->id) && $medium->authorize('access')) {
                 if ($medium->getRepository()->hasBehavior('portraitable')) {
-                    $caption = htmlspecialchars($medium->title, ENT_QUOTES, 'UTF-8');
+                    $caption = htmlspecialchars($medium->title, ENT_QUOTES);
                     $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/photos\/'.$medium->id.'[-\w\-]*/';
                     $text = preg_replace($pattern,
                     '<div><a data-trigger="MediaViewer" href="'.$medium->getPortraitURL('original').'" title="'.$caption.'" >'

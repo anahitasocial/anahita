@@ -13,7 +13,7 @@
 <? if ($type != 'notification') : ?>
 <data name="body">
 	<? if (!is_array($object)) : ?>
-		<? $caption = htmlspecialchars($object->title, ENT_QUOTES, 'UTF-8') ?>
+		<? $caption = htmlspecialchars($object->title, ENT_QUOTES) ?>
 		<? if (!empty($object->title)): ?>
 		<h4 class="entity-title">
     		<a href="<?= @route($object->getURL()) ?>">
@@ -39,7 +39,7 @@
 		<? if ($i > 12) {
     break;
 } ?>
-		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
+		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 		<div class="entity-portrait">
 			<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 				<img src="<?= $photo->getPortraitURL('square') ?>" />
