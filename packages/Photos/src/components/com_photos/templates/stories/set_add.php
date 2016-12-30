@@ -22,7 +22,7 @@
 	<div class="media-grid">
 		<? $photos = $object->photos->order('photoSets.ordering')->limit(10)->fetchSet(); ?>
 		<? foreach ($photos as $i => $photo): ?>
-		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
+		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 		<? if ($i > 12) {
     break;
 } ?>

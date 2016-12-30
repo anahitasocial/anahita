@@ -13,7 +13,7 @@
     	</a>
     </h4>
 	<? endif; ?>
-	<? $caption = htmlspecialchars($object->title, ENT_QUOTES, 'UTF-8'); ?>
+	<? $caption = htmlspecialchars($object->title, ENT_QUOTES); ?>
 	<a data-rel="story-<?= $story->id ?>" data-trigger="MediaViewer" href="<?= @route($object->getPortraitURL('original')) ?>" title="<?= $caption ?>">
 		<img class="entity-portrait-medium" src="<?= $object->getPortraitURL('medium') ?>" />
 	</a>

@@ -22,7 +22,7 @@
 	</div>
 
 	<div class="entity-portrait-medium">
-		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES, 'UTF-8'); ?>
+		<? $caption = htmlspecialchars($photo->title, ENT_QUOTES); ?>
 		<a data-rel="media-photos-<?= $photo->id ?>" data-trigger="MediaViewer" title="<?= $caption ?>" href="<?= $photo->getPortraitURL('original') ?>">
 			<img alt="<?= @escape($photo->title) ?>" src="<?= $photo->getPortraitURL('medium') ?>" />
 		</a>
