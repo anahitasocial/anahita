@@ -9,6 +9,6 @@
         "php": ">=5.5",
         "symfony/console": "2.1.*",
         "dg/mysql-dump": "1.1.0",
-        "swiftmailer/swiftmailer": "~5.1"
+        "swiftmailer/swiftmailer": "5.4.*"
     }
 }
