@@ -34,11 +34,11 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
             return $this->_mixer->canAdd();
         }
 
-        if (!$this->getItem()) {
-            return false;
+        if ($this->getItem() && $this->getItem()->authorize('access')) {
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
