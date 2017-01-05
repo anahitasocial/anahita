@@ -186,7 +186,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
             $owner = $this->owner;
         }
 
-        if (!empty($owner)) {
+        if (! empty($owner)) {
             //if actor and owner the same then
             //allow
             if ($actor->id == $owner->id) {
@@ -200,7 +200,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
 
             //no opreation is allowed if actor is not published and the accessor
             //is not admin
-            if ($owner->isEnableable() && $owner->enabled === false) {
+            if ($owner->isEnableable() && $owner->enabled == false) {
                 if ($actor->isAdministrator() && !$actor->administrator($owner)) {
                     return false;
                 }

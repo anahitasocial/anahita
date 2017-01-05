@@ -49,6 +49,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         $ret = false;
 
         if ($this->_entity->authorize('access', $context)) {
+
             if ($this->_viewer->isAdministrator()) {
                 $ret = $this->_viewer->administrator($this->_entity);
             }
@@ -107,20 +108,19 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
             return true;
         }
 
-        $ret = true;
-
-        if (is_person($this->_viewer) && $this->_viewer->admin()) {
-            $ret = true;
-        } elseif ($this->_entity->isFollowable() && $this->_entity->blocking($this->_viewer)) {
-            $ret = false;
-        } elseif (
-            (bool) $this->_entity->allows($this->_viewer, 'access') &&
-            $this->_entity->enabled == false
-        ) {
-            $ret = false;
+        if ($this->_viewer->admin()) {
+            return true;
         }
 
-        return $ret;
+        if ($this->_entity->isFollowable() && $this->_entity->blocking($this->_viewer)) {
+            return false;
+        }
+
+        if ($this->_entity->allows($this->_viewer, 'access')) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -138,7 +138,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         }
 
         //if viewer is admin then return true on the action
-        if (is_person($this->_viewer) && $this->_viewer->admin()) {
+        if ($this->_viewer->admin()) {
             return true;
         }
 
@@ -150,7 +150,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         ));
 
         //not access to the entiy
-        if ($this->_entity->authorize('access') === false) {
+        if (! $this->_entity->authorize('access')) {
             return false;
         }
 
@@ -160,6 +160,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
         //check if it's a social app then if it's enabled
 
         if ($component) {
+
             $component = $this->getService('repos:components.component')->find(array('component' => $component));
 
             if (
@@ -200,7 +201,8 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
             return false;
         }
 
-        if ($this->_entity->authorize('access', $context) === false) {
+        if (! $this->_entity->authorize('access', $context)) {
+
             if ($this->_entity->isLeadable() && $this->_entity->following($this->_viewer)) {
                 return true;
             } else {
@@ -313,7 +315,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
             return false;
         }
 
-        if (!$entity->isSubscribable()) {
+        if (! $entity->isSubscribable()) {
             return false;
         }
 
