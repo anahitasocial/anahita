@@ -107,7 +107,9 @@ class ComAnahitaSchemaMigration19 extends ComMigratorMigrationVersion
         ."`id`,`person_userid`,`person_username`,`person_usertype`,`actor_gender`,"
         ."`person_useremail`,`person_given_name`,`person_family_name`,"
         ."`person_lastvisitdate`,`person_time_zone`,`person_language` "
-        ." FROM `#__nodes` ORDER BY `id`";
+        ." FROM `#__nodes`"
+        ." WHERE `type` LIKE '%com:people.domain.entity.person'"
+        ." ORDER BY `id`";
         dbexec($query);
 
         $query = "UPDATE `#__people_people` AS `p` "

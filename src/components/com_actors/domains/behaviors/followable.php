@@ -182,10 +182,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         $edge->save();
 
         //add a subscriber
-        if ($this->_subscribe_after_follow) {
-            error_log('add subscriber');
+        //if ($this->_subscribe_after_follow) {
             //$leader->addSubscriber($follower);
-        }
+        //}
 
         $this->resetStats(array($leader, $follower));
 

@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.3 Birth Release
+*Version:* 4.3.2 Birth Release
 
 Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
@@ -46,7 +46,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 
 The code in the master branch is called the **Embryo**. It is what we use to power our website [GetAnahita.com](https://www.getanahita.com) and it is constantly changing and evolving. It may contain bugs that are being fixed. Experimental features may be added and removed. Whenever we reach a specific milestone and the codebase is stable, it is packaged as a **Birth** relase.
 
-### Upgrading
+## Upgrading
 
 If you are using any previous 4.* versions of Anahita, [here is how to upgrade] (https://www.getanahita.com/articles/158983-updating-from-anahita-4-2-to-4-3)
 
