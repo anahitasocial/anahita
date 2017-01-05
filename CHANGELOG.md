@@ -1,5 +1,13 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.2 Birth Release
+=============================
+* fixed critical bug in the migration query bug which was adding all nodes to the people_people table. 
+
+Anahita 4.3.1 Birth Release
+=============================
+* fixed issue which was causing a WSOD whenever a guest viewed an actor profile accessible to registered people only.
+
 Anahita 4.3.0 Birth Release
 =============================
 * removed administration back-end
@@ -8,7 +16,7 @@ Anahita 4.3.0 Birth Release
 * removed all xml files and started using json files instead
 * node description and excerpt fields now support utf8mb4 for displaying emojis
 * updated robots.txt file
-* added emoji support to node names, aliases, and hashtags 
+* added emoji support to node names, aliases, and hashtags
 
 Anahita 4.2.4 Birth Release
 =============================

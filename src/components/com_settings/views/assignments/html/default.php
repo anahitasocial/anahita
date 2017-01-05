@@ -26,7 +26,6 @@
 
                       <div class="controls">
                           <? $selected = $app->getAssignmentForIdentifier($actor) ?>
-                          <? error_log($selected); ?>
                           <select name="access" id="assignable-<?= $app->id ?>" class="input-block-level autosubmit">
                               <? if ($app->getAssignmentOption() == ComComponentsDomainBehaviorAssignable::OPTION_OPTIONAL) : ?>
                               <option <?= ($selected === 0) ? 'selected' : '' ?> value="0">
