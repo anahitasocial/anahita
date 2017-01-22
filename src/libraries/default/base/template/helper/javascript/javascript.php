@@ -58,8 +58,6 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
         $tag = 'en-GB';
         $base = $language->getLanguagePath(ANPATH_ROOT, $tag);
 
-        error_log($base);
-
         foreach ($langs as $lang) {
             $path = $base.'/'.$tag.'.'.$lang.'.js';
             if (is_readable($path)) {
