@@ -49,8 +49,6 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
      */
     public function language($langs)
     {
-
-
         //force array
         settype($langs, 'array');
 
@@ -60,10 +58,12 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
         $tag = 'en-GB';
         $base = $language->getLanguagePath(ANPATH_ROOT, $tag);
 
+        error_log($base);
+
         foreach ($langs as $lang) {
             $path = $base.'/'.$tag.'.'.$lang.'.js';
             if (is_readable($path)) {
-                $src = KRequest::base().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
+                $src = KService::get('com:application')->getRouter()->getBaseUrl().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
                 $scripts .= '<script type="text/javascript" src="'.$src.'"></script>'."\n";
             }
         }
