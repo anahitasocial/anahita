@@ -25,8 +25,12 @@ class ComPeopleViewer extends KObject implements KServiceInstantiatable
      {
          if (!$container->has($config->service_identifier)) {
 
-             $session = KService::get('com:sessions');
-             $person = $session->has('person') ? $session->get('person') : null;
+             $person = null;
+
+             if (PHP_SAPI != 'cli') {
+                $session = KService::get('com:sessions');
+                $person = $session->has('person') ? $session->get('person') : null;
+             }
 
              $repository = KService::get('repos:people.person');
 
@@ -46,7 +50,7 @@ class ComPeopleViewer extends KObject implements KServiceInstantiatable
 
              $container->set($config->service_identifier, $viewer);
          }
-         
+
          return $container->get($config->service_identifier);
      }
 }
