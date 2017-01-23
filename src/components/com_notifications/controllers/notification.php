@@ -63,9 +63,15 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
 
         $this->getToolbar('actorbar')->setTitle($title);
 
-        $context->query = $this->actor->getNotifications()->getQuery();
+        $entities = parent::_actionBrowse($context);
 
-        $entities = parent::_actionBrowse($context)->order('creationTime', 'DESC');
+        $entities
+        ->where('notification.story_subject_id', '<>', $this->actor->id)
+        ->clause('AND')
+        ->where('notification.story_target_id', '=', $this->actor->id)
+        ->where('notification.story_object_id', '=', $this->actor->id, 'OR')
+        ->where('FIND_IN_SET('.$this->actor->id.', notification.subscriber_ids)', 'OR')
+        ;
 
         if ($this->new) {
             $entities->id($this->actor->newNotificationIds->toArray());
@@ -75,7 +81,6 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         //actor. prevents from admin zeroing others notifications
         if ($entities->count() > 0 && get_viewer()->eql($this->actor)) {
             //set the number of notification, since it's going to be
-            //reset by the time it gets to the mod_viewer
             KService::setConfig('com:viewer.html', array('data' => array('num_notifications' => $this->actor->numOfNewNotifications())));
             $this->registerCallback('after.get', array($this->actor, 'viewedNotifications'), $entities->toArray());
         }

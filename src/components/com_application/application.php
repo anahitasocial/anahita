@@ -110,7 +110,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
         $session = KService::get('com:sessions', array(
             'name' => $name
         ));
-        
+
         $repository = KService::get('repos:sessions.session');
         //purge guest sessions within 10 minutes expiry time
         $repository->purge(600);

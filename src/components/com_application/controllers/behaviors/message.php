@@ -32,7 +32,11 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         $this->_enabled = $config->enabled;
         $namespace = $this->_getQueueNamespace(false);
-        $session = KService::get('com:sessions', array('namespace' => $namespace->namespace));
+
+        $session = KService::get('com:sessions', array(
+                        'namespace' => $namespace->namespace,
+                        'storage' => (PHP_SAPI == 'cli') ? 'none' : 'database'
+                    ));
 
         $data = array();
 

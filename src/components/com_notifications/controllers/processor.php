@@ -87,6 +87,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
             $this->sendNotification($notification);
         }
+
+        //change the notification status
+        $space->commitEntities();
     }
 
     /**
