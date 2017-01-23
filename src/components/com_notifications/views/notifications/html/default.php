@@ -2,8 +2,8 @@
 
 <?= @helper('ui.header') ?>
 
-<div class="row">
-	<div class="span8" id="an-entities-wrapper">
-    <?= @template('list') ?>
-	</div>
-</div>
+<?= @infinitescroll(null, array(
+  'id' => 'an-notifications',
+  'url' => array('layout' => 'list'),
+  'columns' => 2
+)) ?>

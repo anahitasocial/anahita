@@ -10,7 +10,7 @@
 </div>
 
 <div class="popover-content">
-	<div id="an-notifications" class="an-entities">
+	<div class="an-entities">
         <? foreach ($notifications as $notification) : ?>
         <? $class = $actor->notificationViewed($notification) ? '' : 'an-highlight'; ?>
         <div class="an-entity <?= $class ?>">

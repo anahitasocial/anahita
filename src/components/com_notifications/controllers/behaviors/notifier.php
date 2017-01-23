@@ -23,15 +23,16 @@ class ComNotificationsControllerBehaviorNotifier extends KControllerBehaviorAbst
     public function createNotification($data = array())
     {
         $data = new KConfig($data);
+        $viewer = $this->getService('com:people.viewer');
 
         $data->append(array(
           'component' => 'com_'.$this->_mixer->getIdentifier()->package,
-          'subject' => get_viewer()
+          'subject' => $viewer
         ));
 
         $notification = $this->getService('repos:notifications.notification')->getEntity(array('data' => $data));
 
-        $notification->removeSubscribers(get_viewer());
+        $notification->removeSubscribers($viewer);
 
         return $notification;
     }

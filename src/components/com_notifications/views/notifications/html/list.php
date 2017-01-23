@@ -1,31 +1,28 @@
 <? defined('KOOWA') or die ?>
 
-<? $dates = @helper('notifications.group', $notifications); ?>
-
-<? foreach ($dates as $date => $notifications) : ?>
-
-<div class="an-meta">
-    <?= $date ?>
-</div>
-
 <div class="an-entities">
     <? foreach ($notifications as $notification) : ?>
     <? $data = @helper('parser.parse', $notification, $actor); ?>
-    <div class="an-entity">
+    <? $class = $actor->notificationViewed($notification) ? '' : 'an-highlight'; ?>
+    <div class="an-entity <?= $class ?>">
 	    <div class="entity-portrait-square">
 	    	<?= @avatar($notification->subject) ?>
 	    </div>
 
 	    <div class="entity-container">
 	    	<div class="entity-description">
-               	<?= $data['title'] ?> <?= $notification->creationTime->format('%l:%M %p') ?>
+               	<?= $data['title'] ?>
         	</div>
+
+            <div class="entity-meta">
+                <?= @date($notification->creationTime)?>
+            </div>
 	    </div>
     </div>
     <? endforeach;?>
 </div>
-<? endforeach; ?>
+<? // endforeach; ?>
 
-<? if (count($dates) == 0) : ?>
+<? if (count($notifications) == 0) : ?>
 <?= @message(@text('COM-NOTIFICATIONS-EMPTY-LIST-MESSAGE')) ?>
 <? endif; ?>
