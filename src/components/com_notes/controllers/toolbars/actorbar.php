@@ -24,10 +24,20 @@ class ComNotesControllerToolbarActorbar extends ComBaseControllerToolbarActorbar
     {
         parent::onBeforeControllerGet($event);
 
-        if ($this->getController()->isOwnable() && $this->getController()->actor) {
-            $actor = pick($this->getController()->actor, get_viewer());
-            $this->setTitle(sprintf(AnTranslator::_('COM-NOTES-HEADER-NOTES'), $actor->name));
-            $this->setActor($actor);
-        }
+        $viewer = $this->getController()->viewer;
+        $actor = pick($this->getController()->actor, $viewer);
+        $layout = pick($this->getController()->layout, 'default');
+        $name = $this->getController()->getIdentifier()->name;
+
+        $title = AnTranslator::sprintf('COM-NOTES-HEADER-NOTES', $actor->name);
+
+        $this->setTitle($title);
+
+        $this->addNavigation(
+            'notes',
+            AnTranslator::_('COM-NOTES-NAV-NOTES'),
+            array('option' => 'com_notes', 'view' => 'notes', 'oid' => $actor->id),
+            $name == 'note'
+        );
     }
 }

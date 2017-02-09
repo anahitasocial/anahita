@@ -29,15 +29,15 @@ class ComTopicsControllerToolbarActorbar extends ComMediumControllerToolbarActor
         $layout = pick($this->getController()->layout, 'default');
         $name = $this->getController()->getIdentifier()->name;
 
-        $this->setTitle(AnTranslator::sprintf('COM-TOPICS-HEADER-TOPICS', $actor->name));
+        $title = AnTranslator::sprintf('COM-TOPICS-HEADER-TOPICS', $actor->name);
 
-        $this->addNavigation('topics',
-                AnTranslator::_('COM-TOPICS-NAV-TOPICS'),
-                array(
-                    'option' => 'com_topics',
-                    'view' => 'topics',
-                    'oid' => $actor->id,
-                ),
-                $name == 'topic');
+        $this->setTitle($title);
+
+        $this->addNavigation(
+            'topics',
+            AnTranslator::_('COM-TOPICS-NAV-TOPICS'),
+            array('option' => 'com_topics', 'view' => 'topics', 'oid' => $actor->id),
+            $name == 'topic'
+        );
     }
 }

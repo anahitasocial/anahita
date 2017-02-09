@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -14,7 +14,7 @@
 
 /**
  * Person tag.
- * 
+ *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -35,7 +35,7 @@ final class ComPeopleDomainEntityMention extends ComTagsDomainEntityTag
     {
         $config->append(array(
             'relationships' => array(
-                'mention' => array('parent' => 'com:people.domain.entity.person'),
+                'mention' => array('parent' => 'com:people.domain.entity.person')
             ),
             'aliases' => array(
                 'mention' => 'nodeA',

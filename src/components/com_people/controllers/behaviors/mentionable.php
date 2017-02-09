@@ -31,7 +31,8 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $this->registerCallback('after.edit', array($this, 'updateMentionsFromBody'));
         $this->registerCallback(array(
             'after.add',
-            'after.edit', ), array($this, 'notifyMentioned'));
+            'after.edit',
+        ), array($this, 'notifyMentioned'));
     }
 
     /**
@@ -61,7 +62,10 @@ class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
         $entity = $this->getItem();
         $body_mentions = $this->extractMentions($entity->body);
         $body_mentions = array_map('strtolower', $body_mentions);
-        $entity_mentions = KConfig::unbox($entity->mentions->username);
+
+        // @todo we should be accessing username, but for now we are using alias
+        // until the design in the domain entities is improved
+        $entity_mentions = KConfig::unbox($entity->mentions->alias);
 
         if (is_array($entity_mentions)) {
             $entity_mentions = array_map('strtolower', $entity_mentions);

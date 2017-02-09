@@ -41,16 +41,16 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
                     'key' => true,
                     'type' => 'integer',
                     'read' => 'public',
-                    ),
+                ),
                 'component' => array(
                     'required' => true,
                     'read' => 'public',
-                    ),
+                ),
                 'enabled' => array(
-                  'default' => 1
+                    'default' => 1
                 ),
                 'verified' => array(
-                  'default' => 0
+                    'default' => 0
                 )
             ),
            'behaviors' => to_hash('node'),
