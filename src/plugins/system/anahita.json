@@ -3,7 +3,7 @@
     "description": "Anahita Social Engine ™ system plugin",
     "type": "plugin",
     "group": "system",
-    "version": "4.3.0",
+    "version": "4.3.3",
     "license": "GPLv3",
     "homepage": "www.GetAnahita.com",
     "authors": [
@@ -14,7 +14,7 @@
       }
     ],
     "copyright": [
-        "Copyright 2016 rmdStudio Inc."
+        "Copyright 2017 rmdStudio Inc."
     ],
     "media": {
         "folder": [
