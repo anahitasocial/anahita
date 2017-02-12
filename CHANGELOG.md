@@ -1,8 +1,16 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.3 Birth Release
+=============================
+* fixed a number of issues in the notifications component
+* used infinite scroll for the list of Transactions in the Subscriptions app
+* fixed bug that prevented editing mentionable nodes
+* added actor bar for the notes list view
+* minimum php requirement is now set to version 5.6
+
 Anahita 4.3.2 Birth Release
 =============================
-* fixed critical bug in the migration query bug which was adding all nodes to the people_people table. 
+* fixed critical bug in the migration query bug which was adding all nodes to the people_people table.
 
 Anahita 4.3.1 Birth Release
 =============================

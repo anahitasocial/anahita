@@ -2,11 +2,12 @@
     "type": "project",
     "name": "anahita/anahita",
     "license": "GPL-3.0",
-    "keywords" : ["socialnetwork", "knowledge", "platform", "framework", "restful", "graph", "nodes"],
+    "keywords" : ["social", "networking", "knowledge", "platform", "framework", "restful", "graph", "learning"],
+    "homepage" : "https://www.GetAnahita.com",
     "description": "Anahita Social Networking Platform",
     "bin": ["bin/anahita"],
      "require": {
-        "php": ">=5.5",
+        "php": ">=5.6",
         "symfony/console": "2.1.*",
         "dg/mysql-dump": "1.1.0",
         "swiftmailer/swiftmailer": "5.4.*"
