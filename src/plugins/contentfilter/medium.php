@@ -58,7 +58,7 @@
                 } else {
                     $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/articles\/'.$medium->id.'[-\w\-]*/';
 
-                    $template = '<div class="alert alert-block alert-success">';
+                    $template = '<div class="medium-preview">';
 
                     if ($medium->title) {
                         $template .= '<h4><a href="'.route($medium->getURL()).'">'.$medium->title.'</a></h4>';

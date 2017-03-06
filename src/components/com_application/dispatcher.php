@@ -141,7 +141,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
         $config = array(
             'response' => $context->response,
             'request' => $context->request,
-            'theme' => 'shiraz'
+            'theme' => $this->_application->getTemplate()
         );
 
         //if ajax or the format is not html
