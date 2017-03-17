@@ -36,7 +36,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
     {
         $this->_application->_initialize($context);
 
-        dispatch_plugin('system.onAfterDispatch');
+        //dispatch_plugin('system.onAfterDispatch');
 
         $this->route();
     }
@@ -50,7 +50,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
      */
     protected function _actionDispatch(KCommandContext $context)
     {
-        if ($context->request->get('option') !== 'com_application') {
+        if ($context->request->get('option') != 'com_application') {
             parent::_actionDispatch($context);
         }
 

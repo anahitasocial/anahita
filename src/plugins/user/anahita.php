@@ -14,14 +14,6 @@ class plgUserAnahita extends PlgAnahitaDefault
 	 */
 	public function onAfterDeleteUser(KEvent $event)
 	{
-		$person = $event->person;
-
-		if ($person->id === 0) {
-			return false;
-    	}
-
-		KService::get('repos:sessions.session')->destroy(array('nodeId' => $person->id));
-
 		return true;
 	}
 
@@ -39,7 +31,8 @@ class plgUserAnahita extends PlgAnahitaDefault
 		$options = $event->options;
 
 		$person = KService::get('repos:people.person')->find(array(
-						'username' => $credentials->username
+						'username' => $credentials->username,
+						'enabled' => 1
 					));
 
 		if (!isset($person)) {

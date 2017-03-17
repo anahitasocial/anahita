@@ -60,7 +60,7 @@ class ComPeopleHelperPerson extends KObject
      */
     public function logout()
     {
-        $viewer = get_viewer();
+        $viewer = $this->getService('com:people.viewer');
 
         $person = array(
           'id' => $viewer->id,

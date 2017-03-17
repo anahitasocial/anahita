@@ -210,7 +210,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         $person = $this->getService('repos:people.person')->find(array('activationCode' => $this->token));
 
-        if (!$person) {
+        if (! $person) {
             throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
         }
 
