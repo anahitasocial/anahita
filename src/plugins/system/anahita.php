@@ -74,10 +74,11 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      */
     public function onAfterDispatch(KEvent $event)
     {
-        $viewer = get_viewer();
+        $viewer = KService::get('com:people.viewer');
 
         if (!$viewer->guest() && !$viewer->enabled) {
             KService::get('com:people.helper.person')->logout();
+            KService::get('application.dispatcher')->getResponse()->setRedirect(route('index.php'));
         }
 
         $credentials = array();

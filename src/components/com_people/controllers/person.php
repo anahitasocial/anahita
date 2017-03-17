@@ -224,6 +224,25 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     }
 
     /**
+     * Deletes an actor and all of the necessary cleanup. It also dispatches all the apps to
+     * clean up after the deleted actor.
+     *
+     * @param KCommandContext $context Context parameter
+     *
+     * @return AnDomainEntityAbstract
+     */
+    protected function _actionDelete(KCommandContext $context)
+    {
+        $person = parent::_actionDelete($context);
+
+        $this->getService('repos:sessions.session')->destroy(array('nodeId' => $person->id));
+
+        dispatch_plugin('user.onAfterDeleteUser', array('person' => $person));
+
+        return $person;
+    }
+
+    /**
      * Set the necessary redirect.
      *
      * @param KCommandContext $context
@@ -233,7 +252,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $url = null;
 
         if ($context->action === 'delete') {
-            $url = 'option=com_people&view=people';
+
+            $viewer = $this->getService('com:people.viewer');
+
+            if ($viewer->id == $this->getItem()->id) {
+                $url = 'index.php?';
+            } else {
+                $url = 'option=com_people&view=people';
+            }
         }
 
         if ($url) {
