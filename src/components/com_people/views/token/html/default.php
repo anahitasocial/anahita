@@ -14,8 +14,15 @@
                         <?= @text('COM-PEOPLE-TOKEN-FORGOT-PASSWORD-INSTRUCTIONS'); ?>
                     </label>
                     <div class="controls">
-                       <? $emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" ?>
-                       <input data-url="<?= @route('view=person', false) ?>" type="email" name="email" pattern="<?= $emailPattern ?>" id="person-email" class="input-block-level" maxlength="100" minlength="10" required  />
+                       <input
+					   		data-url="<?= @route('view=person', false) ?>"
+							type="email"
+							name="email"
+							pattern="<?= @helper('regex.email') ?>"
+							id="person-email"
+							class="input-block-level"
+							maxlength="100"
+							minlength="10" required  />
                     </div>
                 </div>
 
