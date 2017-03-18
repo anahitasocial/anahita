@@ -68,4 +68,4 @@ CREATE TABLE `#__subscriptions_vats` (
   KEY `modified_by` (`modified_by`)
 ) ENGINE=InnoDB;
 
-INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'subscriptions') ON DUPLICATE KEY UPDATE `version` = 1;
+INSERT INTO #__migrator_versions (`version`,`component`) VALUES(4, 'subscriptions') ON DUPLICATE KEY UPDATE `version` = 4;
