@@ -9,4 +9,4 @@ CREATE TABLE `#__todos_todos` (
   UNIQUE KEY `node_id` (`node_id`)
 ) ENGINE=InnoDB;
 
-INSERT INTO #__migrator_versions (`version`,`component`) VALUES(1, 'todos') ON DUPLICATE KEY UPDATE `version` = 1;
+INSERT INTO #__migrator_versions (`version`,`component`) VALUES(4, 'todos') ON DUPLICATE KEY UPDATE `version` = 4;

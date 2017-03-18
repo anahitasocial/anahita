@@ -32,4 +32,4 @@ INSERT INTO `#__nodes` (`type`, `component`, `name`, `access`) VALUES ('ComCompo
 
 -- --------------------------------------------------------
 
-INSERT INTO `#__migrator_versions` (`version`,`component`) VALUES (19, 'anahita') ON DUPLICATE KEY UPDATE `version` = 19;
+INSERT INTO `#__migrator_versions` (`version`,`component`) VALUES (21, 'anahita') ON DUPLICATE KEY UPDATE `version` = 21;
