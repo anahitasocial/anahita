@@ -20,7 +20,6 @@ class ComPeopleTemplateHelperRegex extends KTemplateHelperAbstract
     public function email()
     {
         return "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]*$";
-        //return "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*";
     }
 
     /**
