@@ -30,7 +30,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     /*
      * Mention regex pattern
      */
-    const PATTERN_MENTION = '/@([A-Za-z][A-Za-z0-9_-]{3,})/';
+    const PATTERN_MENTION = '/(?<=\s|^)@([A-Za-z][A-Za-z0-9_-]{3,})/u';
 
     /*
      * User types
