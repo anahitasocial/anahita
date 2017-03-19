@@ -58,8 +58,19 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
     {
         $document = $this->getService('anahita:document');
         $html = '<base href="base://" />';
-        $html .= '<meta name="description" content="'.$document->getDescription().'" />';
+
+        $title = str_replace(array('#', '@'), '', $document->getTitle());
         $html .= '<title>'.$document->getTitle().'</title>';
+
+        $description = $document->getDescription();
+        $stripURLRegex = "/((?<!=\")(http|ftp)+(s)?:\/\/[^<>()\s]+)/i";
+        $description = preg_replace($stripURLRegex, '', $description);
+        $description = strip_tags($description);
+        $description = str_replace(array('#', '@'), '', $description);
+        $description = KService::get('com:base.template.helper.text')->truncate($description, array('length' => 160));
+        $description = trim($description);
+
+        $html .= '<meta name="description" content="'.$description.'" />';
 
         return $html;
     }
