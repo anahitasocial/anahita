@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComTopicsFilterPost extends KFilterHtml
+class ComMediumFilterHtml extends KFilterHtml
 {
     /**
      * Initializes the default configuration for the object.
@@ -41,5 +41,18 @@ class ComTopicsFilterPost extends KFilterHtml
         parent::_initialize($config);
     }
 
-//end class
+    /**
+     * Sanitize a value
+     *
+     * @param   scalar  Input string/array-of-string to be 'cleaned'
+     * @return  mixed   'Cleaned' version of input parameter
+     */
+    protected function _sanitize($value)
+    {
+        //strip php tags
+        $value = preg_replace('/<\\?.*(\\?>|$)/Us', '', $value);
+        $value = parent::_sanitize($value);
+
+        return $value;
+    }
 }

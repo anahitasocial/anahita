@@ -28,7 +28,8 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
             'attributes' => array(
                 'body' => array(
                 'required' => AnDomain::VALUE_NOT_EMPTY,
-                'format' => 'string', ),
+                'format' => 'string' 
+                ),
             ),
             'behaviors' => array(
                 'parentable' => array(

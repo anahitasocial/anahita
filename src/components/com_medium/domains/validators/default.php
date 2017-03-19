@@ -27,7 +27,7 @@ class ComMediumDomainValidatorDefault extends AnDomainValidatorAbstract
         $config->append(array(
             'validations' => array(
                   'name' => array('format' => 'string'),
-                  'body' => array('format' => 'post'),
+                  'body' => array('format' => 'string'),
              ),
         ));
     }
