@@ -29,7 +29,7 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
                 ),
-                'body' => array('format' => 'post'),
+                'body' => array('format' => 'html'),
             ),
             'relationships' => array(
                 'revisions',
