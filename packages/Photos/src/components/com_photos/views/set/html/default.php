@@ -18,11 +18,6 @@
 	</div>
 
 	<div class="span4 visible-desktop">
-
-    	<div id="set-cover-wrapper">
-                <?= @template('cover') ?>
-            </div>
-
     	<h4 class="block-title">
     	    <?= @text('LIB-AN-META') ?>
     	</h4>

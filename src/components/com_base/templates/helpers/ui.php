@@ -241,15 +241,17 @@ class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
      */
     public function voters($entity, $config = array())
     {
+        $viewer = $this->getService('com:people.viewer');
+
         $config = array_merge(array(
                'avatars' => false,
-               'viewer' => get_viewer(),
+               'viewer' => $viewer,
         ), $config);
 
         if (!$config['avatars']) {
-            return $this->_render('voters', array('entity' => $entity, 'viewer' => get_viewer()));
+            return $this->_render('voters', array('entity' => $entity, 'viewer' => $viewer));
         } else {
-            return $this->_render('voters_avatars', array('entity' => $entity, 'viewer' => get_viewer()));
+            return $this->_render('voters_avatars', array('entity' => $entity, 'viewer' => $viewer));
         }
     }
 
