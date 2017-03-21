@@ -7,6 +7,13 @@
 <? else : ?>
 <div class="an-entity an-photos-set">
 <? endif; ?>
+
+    <div class="entity-portrait-medium">
+        <div id="set-cover-wrapper">
+    		<?= @template('cover') ?>
+    	</div>
+    </div>
+
     <div class="entity-description-wrapper">
         <h3 class="entity-title">
             <?= @escape($set->title) ?>
