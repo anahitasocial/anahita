@@ -47,14 +47,6 @@ var StringLibAnahita = {
             inviteSent : 'Invitation Sent'
         },
 
-	    password : {
-            unavailable : 'This is a good email',
-            isAvailable : 'There is already an account with this email address',
-            patternMismatch : 'This is an invalid email format',
-            tooShort : 'This email is a little too short',
-            tooLong : 'Really? This email is way too long'
-        },
-
         token : {
             unavailable : 'Sorry, we don\'t seem to have this email in our system!',
             available : 'We have emailed you a link. Click on that link to update your password.'

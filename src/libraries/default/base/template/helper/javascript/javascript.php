@@ -55,7 +55,6 @@ class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
         $scripts = '';
         $language = $this->getService('anahita:language');
         $tag = $language->getTag();
-        $tag = 'en-GB';
         $base = $language->getLanguagePath(ANPATH_ROOT, $tag);
 
         foreach ($langs as $lang) {

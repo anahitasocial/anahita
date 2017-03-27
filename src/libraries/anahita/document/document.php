@@ -51,7 +51,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @var	 string
 	 * @access  public
 	 */
-	public $language = 'en-GB';
+	protected $_language;
 
 	/**
 	 * Contains the document direction setting
@@ -59,7 +59,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @var	 string
 	 * @access  public
 	 */
-	public $direction = 'ltr';
+	protected $_direction;
 
 	/**
 	 * Document modified date
@@ -75,7 +75,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @var	 string
 	 * @access  protected
 	 */
-	protected $_charset = 'utf-8';
+	protected $_charset;
 
 	/**
 	 * Document mime type
@@ -385,8 +385,8 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access  public
 	 * @return  void
 	 */
-	public function setCharset($type = 'utf-8') {
-		$this->_charset = $type;
+	public function setCharset($charset) {
+		$this->_charset = strtolower($charset);
 	}
 
 	/**
@@ -405,8 +405,8 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access public
 	 * @param   string   $lang
 	 */
-	public function setLanguage($lang = "en-GB") {
-		$this->language = strtolower($lang);
+	public function setLanguage($language) {
+        $this->_language = strtolower($language);
 	}
 
 	/**
@@ -416,7 +416,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access public
 	 */
 	public function getLanguage() {
-		return $this->language;
+		return $this->_language;
 	}
 
 	/**
@@ -425,8 +425,8 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access public
 	 * @param   string   $lang
 	 */
-	public function setDirection($dir = "ltr") {
-		$this->direction = strtolower($dir);
+	public function setDirection($direction) {
+		$this->_direction = strtolower($direction);
 	}
 
 	/**
@@ -436,7 +436,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access public
 	 */
 	public function getDirection() {
-		return $this->direction;
+		return $this->_direction;
 	}
 
 	/**

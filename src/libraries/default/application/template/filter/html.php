@@ -38,6 +38,7 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $matches = array();
 
         if (strpos($text, '<html')) {
+
             //add language
             $text = str_replace('<html', '<html lang="'.$this->getService('anahita:language')->getTag().'"', $text);
 
