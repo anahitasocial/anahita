@@ -18,7 +18,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
     /**
     *   Default language
     */
-    protected $_default = 'en-GB';
+    protected $_default;
 
     /**
     *   Array of orphan text
@@ -63,10 +63,11 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 
         $this->_default = $config->default;
         $this->_debug = $config->debug;
-        $this->_language = is_null($config->language) ? $this->_default : $config->language;
 
-        $this->setLanguage($this->_language);
-		$this->load();
+        $language = is_null($config->language) ? $this->_default : $config->language;
+        $this->setLanguage($language);
+
+        $this->load();
     }
 
     /**
@@ -81,7 +82,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
     {
         $config->append(array(
     		'debug' => false,
-            'default' => 'en-GB',
+            'default' => 'en-GB'
         ));
 
         parent::_initialize($config);
@@ -115,11 +116,14 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	 */
 	public function setLanguage($language)
 	{
-		$this->_language = $language;
-		$this->_meta = $this->getMetadata($this->_language);
-        $local = $this->getLocale();
+        if (! $this->exists($language)) {
+            $language = $this->_default;
+        }
 
-		setlocale(LC_TIME, $local);
+        $this->_language = $language;
+        $this->_meta = $this->getMetadata($this->_language);
+        $local = $this->getLocale();
+        setlocale(LC_TIME, $local);
 
 		return $this;
 	}
@@ -277,11 +281,11 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 	* Get locale property
 	*
 	* @access	public
-	* @return	string The locale property
+	* @return	array of strings
 	*/
 	public function getLocale()
 	{
-		$locales = explode(',', $this->_meta->locale);
+        $locales = explode(',', $this->_meta->locale);
 
 		for($i = 0; $i < count($locales); $i++ ) {
 			$locale = $locales[$i];
@@ -398,7 +402,7 @@ class AnLanguage extends KObject implements KServiceInstantiatable
 		if (isset($this->_paths[$extension][$filename]) && !$reload) {
             return true;
 		} else {
-            $path = $this->getLanguagePath($basePath, $this->_default);
+            $path = $this->getLanguagePath($basePath, $this->_language);
             $filename = $path.DS.$filename.'.ini';
             $result = $this->_load($filename, $extension, false);
 

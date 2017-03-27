@@ -110,6 +110,11 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
         $this->_application = $this->getService('application', array('session' => $session));
 
         $settings = KService::get('com:settings.setting');
+
+        $this->getService('anahita:language', array(
+            'language' => $settings->language
+        ));
+
         $error_reporting = $settings->error_reporting;
 
         define('ANDEBUG', $settings->debug);
