@@ -25,7 +25,6 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
         if ($config->request->getFormat() == 'html' && !$config->request->isAjax()) {
             $this->registerCallback('after.get', array($this, 'includeMedia'));
             $this->registerCallback('after.get', array($this, 'setPageTitle'));
-
             set_exception_handler(array($this, 'exception'));
         }
     }
@@ -125,6 +124,21 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
 
         $document->setTitle($title);
         $document->setDescription($description);
+
+        if ($item) {
+            $document->setLink(route($item->getURL()));
+            if ($item->isPortraitable()) {
+                $document->setImage($item->getPortraitURL('medium'));
+            }
+
+            if ($item instanceof ComActorsDomainEntityActor) {
+                $document->setType('profile');
+            }
+
+            if ($item instanceof ComMediumDomainEntityMedium) {
+                $document->setType('article');
+            }
+        }
     }
 
     /**

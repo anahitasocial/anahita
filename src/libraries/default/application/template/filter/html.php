@@ -59,19 +59,21 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
     {
         $document = $this->getService('anahita:document');
         $html = '<base href="base://" />';
-
-        $title = str_replace(array('#', '@'), '', $document->getTitle());
         $html .= '<title>'.$document->getTitle().'</title>';
+        $html .= '<meta name="description" content="'.$document->getDescription().'" />';
 
-        $description = $document->getDescription();
-        $stripURLRegex = "/((?<!=\")(http|ftp)+(s)?:\/\/[^<>()\s]+)/i";
-        $description = preg_replace($stripURLRegex, '', $description);
-        $description = strip_tags($description);
-        $description = str_replace(array('#', '@'), '', $description);
-        $description = KService::get('com:base.template.helper.text')->truncate($description, array('length' => 160));
-        $description = trim($description);
+        /* Twitter Card */
+        //$html .= '<meta name="twitter:card" value="summary">';
 
-        $html .= '<meta name="description" content="'.$description.'" />';
+        /* Generic Open Graph tags */
+        $html .= '<meta property="og:title" content="'.$document->getTitle().'" />';
+        $html .= '<meta property="og:description" content="'.$document->getDescription().'" />';
+        $html .= '<meta property="og:type" content="'.$document->getType().'" />';
+        $html .= '<meta property="og:url" content="'.$document->getLink().'" />';
+
+        if ($document->getImage()) {
+            $html .= '<meta property="og:image" content="'.$document->getImage().'" />';
+        }
 
         return $html;
     }

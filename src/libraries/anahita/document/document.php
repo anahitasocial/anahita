@@ -17,9 +17,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Document title
 	 *
 	 * @var	 string
-	 * @access  public
+	 * @access  protected
 	 */
-	public $title = '';
+	protected $_title = '';
 
 	/**
 	 * Document description
@@ -27,15 +27,15 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @var	 string
 	 * @access  public
 	 */
-	public $description = '';
+	protected $_description = '';
 
 	/**
 	 * Document full URL
 	 *
 	 * @var	 string
-	 * @access  public
+	 * @access  protected
 	 */
-	public $link = '';
+	protected $_link = '';
 
 	/**
 	 * Document base URL
@@ -43,13 +43,12 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @var	 string
 	 * @access  public
 	 */
-	public $base = '';
+	protected $_base = '';
 
 	 /**
 	 * Contains the document language setting
 	 *
 	 * @var	 string
-	 * @access  public
 	 */
 	protected $_language;
 
@@ -57,7 +56,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Contains the document direction setting
 	 *
 	 * @var	 string
-	 * @access  public
 	 */
 	protected $_direction;
 
@@ -65,7 +63,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Document modified date
 	 *
 	 * @var		string
-	 * @access   protected
 	 */
 	protected $_mdate = '';
 
@@ -73,7 +70,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Contains the character encoding string
 	 *
 	 * @var	 string
-	 * @access  protected
 	 */
 	protected $_charset;
 
@@ -81,7 +77,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Document mime type
 	 *
 	 * @var		string
-	 * @access	protected
 	 */
 	protected $_mime = '';
 
@@ -89,7 +84,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Array of linked scripts
 	 *
 	 * @var		array
-	 * @access   protected
 	 */
 	protected $_scripts = array();
 
@@ -97,7 +91,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Array of scripts placed in the header
 	 *
 	 * @var  array
-	 * @access   protected
 	 */
 	protected $_script = array();
 
@@ -105,7 +98,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Array of linked style sheets
 	 *
 	 * @var	 array
-	 * @access  protected
 	 */
 	protected $_styleSheets = array();
 
@@ -113,7 +105,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Array of included style declarations
 	 *
 	 * @var	 array
-	 * @access  protected
 	 */
 	protected $_style = array();
 
@@ -121,7 +112,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Array of meta tags
 	 *
 	 * @var	 array
-	 * @access  protected
 	 */
 	protected $_metaTags = array();
 
@@ -129,7 +119,6 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * The document type
 	 *
 	 * @var	 string
-	 * @access  protected
 	 */
 	protected $_type = null;
 
@@ -137,9 +126,15 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * Array of buffered output
 	 *
 	 * @var		mixed (depends on the renderer)
-	 * @access	protected
 	 */
 	protected $_buffer = null;
+
+    /**
+    * Path to an image file that represents the document
+    *
+    * @var string
+    */
+    protected $_image = null;
 
     /**
 	 * Constructor.
@@ -153,6 +148,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
         $this->setCharset($config->charset);
         $this->setLanguage($config->language);
         $this->setDirection($config->direction);
+        $this->setImage($config->image);
         $this->setLink($config->link);
         $this->setBase($config->base);
         $this->setType($config->type);
@@ -181,6 +177,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
     	    'direction'	=> 'ltr',
     		'link'   => '',
     		'base'  => '',
+            'image' => '',
             'type' => 'html',
             'mime' => 'text/html'
         ));
@@ -226,13 +223,24 @@ class AnDocument extends KObject implements KServiceInstantiatable
         return $this->_script;
     }
 
+    public function setImage($src)
+    {
+        $this->_image = $src;
+    }
+
+    public function getImage()
+    {
+        return $this->_image;
+    }
+
     /**
      * Set the document type
      *
      * @access	public
      * @param	string $type
      */
-    public function setType($type) {
+    public function setType($type)
+    {
     	$this->_type = $type;
     }
 
@@ -242,7 +250,8 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access	public
 	 * @return	string
 	 */
-	public function getType() {
+	public function getType()
+    {
 		return $this->_type;
 	}
 
@@ -280,7 +289,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
 		$name = strtolower($name);
 
         if($name == 'description') {
-			$result = $this->getDescription();
+			$result = $this->_description;
 		} else {
 
         	if ($http_equiv == true) {
@@ -425,7 +434,8 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access public
 	 * @param   string   $lang
 	 */
-	public function setDirection($direction) {
+	public function setDirection($direction)
+    {
 		$this->_direction = strtolower($direction);
 	}
 
@@ -435,7 +445,8 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @return string
 	 * @access public
 	 */
-	public function getDirection() {
+	public function getDirection()
+    {
 		return $this->_direction;
 	}
 
@@ -445,8 +456,10 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @param	string	$title
 	 * @access   public
 	 */
-	public function setTitle($title) {
-		$this->title = $title;
+	public function setTitle($title)
+    {
+        $title = str_replace(array('#', '@'), '', $title);
+        $this->_title = $title;
 	}
 
 	/**
@@ -455,8 +468,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @return   string
 	 * @access   public
 	 */
-	public function getTitle() {
-		return $this->title;
+	public function getTitle()
+    {
+		return $this->_title;
 	}
 
 	/**
@@ -465,8 +479,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @param	string	$base
 	 * @access   public
 	 */
-	public function setBase($base) {
-		$this->base = $base;
+	public function setBase($base)
+    {
+		$this->_base = $base;
 	}
 
 	/**
@@ -475,8 +490,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @return   string
 	 * @access   public
 	 */
-	public function getBase() {
-		return $this->base;
+	public function getBase()
+    {
+		return $this->_base;
 	}
 
 	/**
@@ -485,8 +501,17 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @param	string	$title
 	 * @access   public
 	 */
-	public function setDescription($description) {
-		$this->description = $description;
+	public function setDescription($description)
+    {
+        $stripURLRegex = "/((?<!=\")(http|ftp)+(s)?:\/\/[^<>()\s]+)/i";
+        $description = preg_replace($stripURLRegex, '', $description);
+        $description = strip_tags($description);
+        $description = htmlentities($description);
+        $description = str_replace(array('#', '@'), '', $description);
+        $description = KService::get('com:base.template.helper.text')->truncate($description, array('length' => 160));
+        $description = trim($description);
+
+        $this->_description = $description;
 	}
 
 	/**
@@ -495,8 +520,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @return   string
 	 * @access   public
 	 */
-	public function getDescription() {
-		return $this->description;
+	public function getDescription()
+    {
+		return $this->_description;
 	}
 
 	 /**
@@ -506,8 +532,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access  public
 	 * @return  void
 	 */
-	public function setLink($url) {
-		$this->link = $url;
+	public function setLink($url)
+    {
+		$this->_link = $url;
 	}
 
 	/**
@@ -516,8 +543,9 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 * @access public
 	 * @return string
 	 */
-	public function getLink() {
-		return $this->link;
+	public function getLink()
+    {
+		return $this->_link;
 	}
 
 	 /**
