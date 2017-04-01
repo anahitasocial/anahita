@@ -53,9 +53,6 @@
 				<?= sprintf(@text('LIB-AN-MEDIUM-NUMBER-OF-COMMENTS'), $photo->numOfComments) ?>
 				</a>
 			</li>
-			<? if ($photo->lastCommenter): ?>
-		 	<li><?= sprintf(@text('LIB-AN-MEDIUM-LAST-COMMENT-BY-X'), @name($photo->lastCommenter), @date($photo->lastCommentTime)) ?></li>
-			<? endif; ?>
 		</ul>
 
 		<div class="vote-count-wrapper an-meta" id="vote-count-wrapper-<?= $photo->id ?>">
