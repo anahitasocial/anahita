@@ -62,8 +62,26 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
         $html .= '<title>'.$document->getTitle().'</title>';
         $html .= '<meta name="description" content="'.$document->getDescription().'" />';
 
+        /* Google+ Card*/
+        $html .= '<meta itemprop="name" content="'.$document->getTitle().'" />';
+        $html .= '<meta itemprop="description" content="'.$document->getDescription().'" />';
+
+        if ($document->getImage()) {
+            $html .= '<meta itemprop="image" content="'.$document->getImage().'" />';
+        }
+
         /* Twitter Card */
-        //$html .= '<meta name="twitter:card" value="summary">';
+        $twitter_card = ($document->getImage()) ? 'summary_large_image' : 'summary';
+        $html .= '<meta name="twitter:card" value="'.$twitter_card.'">';
+        $html .= '<meta property="twitter:title" content="'.$document->getTitle().'" />';
+        $html .= '<meta property="twitter:description" content="'.$document->getDescription().'" />';
+        $html .= '<meta property="og:type" content="'.$document->getType().'" />';
+        $html .= '<meta property="twitter:site" content="'.$document->getLink().'" />';
+
+        if ($document->getImage()) {
+            $html .= '<meta property="twitter:image:src" content="'.$document->getImage().'" />';
+        }
+
 
         /* Generic Open Graph tags */
         $html .= '<meta property="og:title" content="'.$document->getTitle().'" />';
