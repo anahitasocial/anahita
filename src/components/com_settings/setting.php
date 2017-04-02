@@ -31,6 +31,16 @@
      protected $_settings = null;
 
      /**
+     * @param string defaul template name
+     */
+     protected $_default_template;
+
+     /**
+     * @param string defaul language name
+     */
+     protected $_default_language;
+
+     /**
      * Class constructor.
      *
      * @param	integer	A client identifier.
@@ -56,6 +66,9 @@
          } else {
              $this->_settings = new AnConfig();
          }
+
+         $this->_default_template = 'shiraz';
+         $this->_default_language = 'en-GB';
      }
 
      /**
@@ -113,6 +126,14 @@
 
      protected function __get($key)
      {
+         if ($key === 'template' && !is_dir(ANPATH_THEMES.DS.$this->get($key))) {
+             return $this->_default_template;
+         }
+
+         if ($key === 'language' && !is_dir(ANPATH_LANGUAGE.DS.$this->get($key))) {
+             return $this->_default_language;
+         }
+
          return $this->get($key);
      }
 

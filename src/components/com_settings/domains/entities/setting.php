@@ -16,12 +16,12 @@ class ComSettingsDomainEntitySetting extends KObject
     /**
     * @param entity atributes
     */
-    protected $attributes;
+    protected $_attributes;
 
     /**
     * @param path to the configuration file
     */
-    protected $config_file_path;
+    protected $_config_file_path;
 
     /**
      * Initializes the default configuration for the object.
@@ -33,7 +33,7 @@ class ComSettingsDomainEntitySetting extends KObject
     protected function _initialize(KConfig $config)
     {
 
-        $this->attributes = array(
+        $this->_attributes = array(
 
               // site
               'sitename' => 'Anahita',
@@ -70,7 +70,7 @@ class ComSettingsDomainEntitySetting extends KObject
               'smtphost' => ''
             );
 
-            $this->config_file_path = ANPATH_CONFIGURATION.DS.'configuration.php';
+            $this->_config_file_path = ANPATH_CONFIGURATION.DS.'configuration.php';
     }
 
     /**
@@ -84,8 +84,8 @@ class ComSettingsDomainEntitySetting extends KObject
     {
         $settings = $this->getService('com:settings.setting');
 
-        foreach($this->attributes as $key => $value) {
-          $this->attributes[$key] = $settings->$key;
+        foreach($this->_attributes as $key => $value) {
+          $this->_attributes[$key] = $settings->$key;
         }
 
         return $this;
@@ -98,13 +98,13 @@ class ComSettingsDomainEntitySetting extends KObject
      */
     public function save()
     {
-        if(file_exists($this->config_file_path)){
+        if(file_exists($this->_config_file_path)){
 
-            chmod($this->config_file_path, 0644);
+            chmod($this->_config_file_path, 0644);
 
             $content = "<?php\nclass AnConfig{\n";
 
-            foreach($this->attributes as $key=>$value) {
+            foreach($this->_attributes as $key=>$value) {
               if(!is_array($value)){
                 $content .= "    var \$$key = '$value';\n";
               }
@@ -113,12 +113,12 @@ class ComSettingsDomainEntitySetting extends KObject
             $content .= "}\n";
 
             try {
-              file_put_contents($this->config_file_path, $content);
+              file_put_contents($this->_config_file_path, $content);
             } catch (Exception $e) {
                 throw new \RuntimeException($e->getMessage());
             }
 
-            chmod($this->config_file_path, 0444);
+            chmod($this->_config_file_path, 0444);
 
             $this->_clearCache();
         }
@@ -152,7 +152,7 @@ class ComSettingsDomainEntitySetting extends KObject
     */
     public function __get($name)
     {
-        return $this->attributes[$name];
+        return $this->_attributes[$name];
     }
 
     /**
@@ -165,7 +165,7 @@ class ComSettingsDomainEntitySetting extends KObject
     */
     public function __set($name, $value)
     {
-        if (array_key_exists($name, $this->attributes)) {
+        if (array_key_exists($name, $this->_attributes)) {
 
             $strings = array(
               'sitename',
@@ -216,7 +216,7 @@ class ComSettingsDomainEntitySetting extends KObject
               $value = $this->getService('koowa:filter.email')->sanitize($value);
             }
 
-            $this->attributes[$name] = $value;
+            $this->_attributes[$name] = $value;
         }
 
         return $this;
