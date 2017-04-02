@@ -168,6 +168,23 @@ $console
           $output->writeLn("<info>Unlinking {$package->getFullName()} Package</info>");
           $mapper->unlink();
       }
+
+      //Delete empty language directories
+      $languagePath = WWW_ROOT.'/language/';
+      foreach (scandir($languagePath) as $node) {
+          if (is_dir($languagePath.$node) && strpos($node, '-') > -1 && $node != 'en-GB') {
+              $empty = true;
+              foreach(scandir($languagePath.$node) as $file) {
+                  $fileParts = pathinfo($file);
+                  if ($file_parts['extension'] == 'ini') {
+                      $empty = false;
+                  }
+              }
+              if ($empty) {
+                  rmdir($languagePath.$node);
+              }
+          }
+      }
 });
 
 $console->addCommands(array(new PackageCommand()));
