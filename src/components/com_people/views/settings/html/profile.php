@@ -50,16 +50,15 @@
 
     <div class="control-group">
         <label class="control-label" for="gender">
-            <?= @text('COM-ACTORS-PROFILE-GENDER') ?>
+            <?= @text('COM-PEOPLE-PROFILE-GENDER') ?>
         </label>
         <div class="controls">
             <?
             $genderOptions = array(
-                '' => @text('COM-ACTORS-GENDER-UNDEFINED'),
-                'male' => @text('COM-ACTORS-GENDER-MALE'),
-                'female' => @text('COM-ACTORS-GENDER-FEMALE'),
-                'transgender' => @text('COM-ACTORS-GENDER-TRANSGENDER'),
-                'other' => @text('COM-ACTORS-GENDER-OTHER'), );
+                'neutral' => @text('COM-PEOPLE-GENDER-NEUTRAL'),
+                'female' => @text('COM-PEOPLE-GENDER-FEMALE'),
+				'male' => @text('COM-PEOPLE-GENDER-MALE')
+			);
             ?>
             <?= @html('select', 'gender', array(
 					'options' => $genderOptions,
