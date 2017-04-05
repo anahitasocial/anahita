@@ -1,5 +1,27 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.4 Birth Release
+=============================
+1. asking for pronouns instead of gender on person profile edit
+1. if custom language package doesn't exist, default to en-GB
+1. if custom template package doesn't exist, default to shiraz
+1. delete language package directory when language package is uninstalled
+1. added OpenGraph meta tags to media and actor node detailed views
+1. fixed issue in the language class which was preventing the use of custom packages
+1. moved photo set cover to the main column
+1. fixed issue which was breaking inline photo title/description editing 
+1. used rel=nofollow for the voters action link
+1. clean up meta description text
+1. fixed issue where the mentions RegEx was parsing @ symbols within urls
+1. refined email RegEx
+1. cleaned up and updated schemas
+1. fixed WSOD when users deleted their own accounts
+1. fixed issue where people with disabled accounts could login and see a broken page
+1. improved speed by 25% by some code optimization
+1. fixed issue which prevented errors to be displayed within the custom template    
+1. updated minimum php version of all packages to php >= 5.6
+1. display the last 20 notifications in the notifications popup
+
 Anahita 4.3.3 Birth Release
 =============================
 * fixed a number of issues in the notifications component
