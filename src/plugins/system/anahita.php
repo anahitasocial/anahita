@@ -132,48 +132,4 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
         return;
     }
-
-    /**
-     * store user method.
-     *
-     * Method is called after user data is stored in the database
-     *
-     * @param 	array		holds the new user data
-     * @param 	bool		true if a new user is stored
-     * @param	bool		true if user was succesfully stored in the database
-     * @param	string		message
-     */
-    public function onAfterStoreUser(KEvent $event)
-    {
-        return true;
-    }
-
-    /**
-     * delete user method.
-     *
-     * Method is called before user data is deleted from the database
-     *
-     * @param 	array		holds the user data
-     */
-    public function onBeforeDeleteUser(KEvent $event)
-    {
-
-        $person = KService::get('repos:people.person')->find(array(
-                    'id' => $event->person->id
-                  ));
-
-        if ($person) {
-
-            KService::get('repos:components')
-            ->fetchSet()
-            ->registerEventDispatcher(KService::get('anahita:event.dispatcher'));
-
-            KService::get('anahita:event.dispatcher')
-            ->dispatchEvent('onDeleteActor', array(
-              'actor_id' => $person->id
-            ));
-
-            $person->delete()->save();
-        }
-    }
 }

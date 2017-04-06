@@ -2,6 +2,27 @@
 
 class plgUserAnahita extends PlgAnahitaDefault
 {
+	public function onBeforeSaveUser(KEvent $event)
+	{
+		return true;
+	}
+
+	public function onAfterSaveUser(KEvent $event)
+	{
+		return true;
+	}
+
+	/**
+     * delete user method.
+     *
+     * Method is called before user data is deleted from the database
+     *
+     * @param 	array		holds the user data
+     */
+    public function onBeforeDeleteUser(KEvent $event)
+    {
+		return true;
+    }
 
 	/**
 	 * Remove all sessions for the user name

@@ -116,6 +116,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         return $entities;
     }
 
+    protected function _actionPost(KCommandContext $context)
+    {
+        dispatch_plugin('user.onBeforeSaveUser', array('data' => $context->data));
+        $person = parent::_actionPost($context);
+        dispatch_plugin('user.onAfterSaveUser', array('person' => $person));
+    }
+
     /**
      * Edit a person's data and synchronize with the person with the user entity.
      *
@@ -177,6 +184,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionAdd(KCommandContext  $context)
     {
         $data = $context->data;
+
         $isFirstUser = !(bool) $this->getService('repos:people.person')
                                     ->getQuery(true)
                                     ->fetchValue('id');
@@ -233,6 +241,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionDelete(KCommandContext $context)
     {
+        dispatch_plugin('user.onBeforeDeleteUser', array('id' => $context->data->id));
+
         $person = parent::_actionDelete($context);
 
         $this->getService('repos:sessions.session')->destroy(array('nodeId' => $person->id));
