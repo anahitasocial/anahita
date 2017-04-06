@@ -24,7 +24,7 @@ class ComPeopleHelperPerson extends KObject
     public function login(array $credentials, $remember = false)
     {
         $options = array();
-        $results = dispatch_plugin('user.onLoginUser', array(
+        $results = dispatch_plugin('user.onLoginPerson', array(
                       'credentials' => $credentials,
                       'options' => $options
                     ));
@@ -67,7 +67,7 @@ class ComPeopleHelperPerson extends KObject
           'username' => $viewer->username
         );
 
-        $results = dispatch_plugin('user.onLogoutUser', array('person' => $person));
+        $results = dispatch_plugin('user.onLogoutPerson', array('person' => $person));
 
         if ($results) {
             setcookie(

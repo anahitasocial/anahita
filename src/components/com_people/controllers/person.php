@@ -118,9 +118,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
     protected function _actionPost(KCommandContext $context)
     {
-        dispatch_plugin('user.onBeforeSaveUser', array('data' => $context->data));
+        dispatch_plugin('user.onBeforeSavePerson', array('data' => $context->data));
+
         $person = parent::_actionPost($context);
-        dispatch_plugin('user.onAfterSaveUser', array('person' => $person));
+
+        dispatch_plugin('user.onAfterSavePerson', array('person' => $person));
     }
 
     /**
@@ -241,13 +243,13 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        dispatch_plugin('user.onBeforeDeleteUser', array('id' => $context->data->id));
+        dispatch_plugin('user.onBeforeDeletePerson', array('data' => $context->data));
 
         $person = parent::_actionDelete($context);
 
         $this->getService('repos:sessions.session')->destroy(array('nodeId' => $person->id));
 
-        dispatch_plugin('user.onAfterDeleteUser', array('person' => $person));
+        dispatch_plugin('user.onAfterDeletePerson', array('person' => $person));
 
         return $person;
     }
