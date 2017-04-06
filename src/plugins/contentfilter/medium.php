@@ -51,7 +51,7 @@
                     $caption = htmlspecialchars($medium->title, ENT_QUOTES);
                     $pattern = '/((?<!=\")[http]+[s]?:\/\/[^<>\s]+)\/photos\/'.$medium->id.'[-\w\-]*/';
                     $text = preg_replace($pattern,
-                    '<div><a data-trigger="MediaViewer" href="'.$medium->getPortraitURL('original').'" title="'.$caption.'" >'
+                    '<div class="an-media-photo"><a data-trigger="MediaViewer" href="'.$medium->getPortraitURL('original').'" title="'.$caption.'" >'
                     .'<img alt="'.$caption.'" src="'.$medium->getPortraitURL('medium').'" />'
                     .'</a></div>',
                     $text);

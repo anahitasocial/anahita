@@ -4,28 +4,56 @@ class plgUserAnahita extends PlgAnahitaDefault
 {
 
 	/**
-	 * Remove all sessions for the user name
-	 *
-	 * Method is called after user data is deleted from the database
-	 *
-	 * @param 	array	  	holds the user data
-	 * @param	boolean		true if user was succesfully stored in the database
-	 * @param	string		message
-	 */
-	public function onAfterDeleteUser(KEvent $event)
+	* Is called before a person is added or edited
+	*
+	* @param $event->data
+	* @return boolean
+	*/
+	public function onBeforeSavePerson(KEvent $event)
 	{
 		return true;
 	}
 
 	/**
-	 * This method should handle any login logic and report back to the subject
+	* Is called before a person is added or edited
+	*
+	* @param $event->person
+	* @return boolean
+	*/
+	public function onAfterSavePerson(KEvent $event)
+	{
+		return true;
+	}
+
+	/**
+     * Is called before a person id deleted
+     *
+	 * @param $event->data
+ 	 * @return boolean
+     */
+    public function onBeforeDeletePerson(KEvent $event)
+    {
+		return true;
+    }
+
+	/**
+     * Is called before a person id deleted
+     *
+	 * @param $event->person
+ 	 * @return boolean
+     */
+	public function onAfterDeletePerson(KEvent $event)
+	{
+		return true;
+	}
+
+	/**
+	 * Is called when a person logs in
 	 *
-	 * @access	public
-	 * @param   array   holds the user data
-	 * @param 	array   array holding options (remember, autoregister, group)
-	 * @return	boolean	True on success
+	 * @param $event->credentials
+ 	 * @return boolean
 	 */
-	public function onLoginUser(KEvent $event)
+	public function onLoginPerson(KEvent $event)
 	{
 		$credentials = $event->credentials;
 		$options = $event->options;
@@ -49,14 +77,12 @@ class plgUserAnahita extends PlgAnahitaDefault
 	}
 
 	/**
-	 * This method should handle any logout logic and report back to the subject
+	 * Is called when a person logs out
 	 *
-	 * @access public
-	 * @param  array	holds the user data
-	 * @param 	array   array holding options (client, ...)
-	 * @return object   True on success
+	 * @param $event->person
+ 	 * @return boolean
 	 */
-	public function onLogoutUser(KEvent $event)
+	public function onLogoutPerson(KEvent $event)
 	{
 		$person = $event->person;
 

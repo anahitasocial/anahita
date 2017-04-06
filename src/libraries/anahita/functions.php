@@ -636,12 +636,16 @@ function dispatch_plugin($plugin, $args = array(), $dispatcher = null)
     $event = $parts[1];
     $dispatcher = pick($dispatcher, KService::get('anahita:event.dispatcher'));
 
-    KService::get('com:plugins.helper')->import(
-        $type,
-        null,
-        true,
-        $dispatcher
-    );
+    static $plugin = array();
+
+    if (! isset($plugin[$type])) {
+        $plugin[$type] = KService::get('com:plugins.helper')->import(
+            $type,
+            null,
+            true,
+            $dispatcher
+        );
+    }
 
     return $dispatcher->dispatchEvent($event, $args);
 }

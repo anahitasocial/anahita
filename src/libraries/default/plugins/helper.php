@@ -64,7 +64,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
 				if($plugin->type == $type) {
 					$results[] = $plugin;
 				}
-			} elseif($plugin->type === $type && $plugin->element === $element) {
+			} elseif($plugin->type == $type && $plugin->element == $element) {
 				 $results = $plugin;
 			}
 		}
@@ -87,7 +87,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
         $this->_load();
 
         foreach ($this->_plugins as $plugin) {
-            if ($plugin->type === $type && ($element === null || $plugin->element === $element)) {
+            if ($plugin->type == $type && ($element == null || $plugin->element == $element)) {
               $this->_import($plugin, $autocreate, $dispatcher);
               $result = true;
             }
