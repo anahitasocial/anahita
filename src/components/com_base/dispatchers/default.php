@@ -91,7 +91,13 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     public function setPageTitle(KCommandContext $context)
     {
-        $view = $this->getController()->getView();
+        $controller = $this->getController();
+
+        if (! $controller->isIdentifiable()) {
+            return;
+        }
+
+        $view = $controller->getView();
         $document = $this->getService('anahita:document');
 
         //@TODO temporary fix
@@ -99,8 +105,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
             return;
         }
 
-        $item = $this->getController()->getState()->getItem();
-        $actorbar = $this->getController()->actorbar;
+        $item = $controller->getState()->getItem();
+        $actorbar = $controller->actorbar;
 
         $title = array();
         $description = null;
