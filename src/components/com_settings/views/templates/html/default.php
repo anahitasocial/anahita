@@ -12,14 +12,14 @@
           <div class="an-entity <?= ($item->isDefault()) ? 'an-highlight' : ''; ?>">
               <div class="clearfix">
                   <div class="entity-portrait-square">
-                      <a href="<?= @route('view=template&layout=edit&alias='.$item->alias) ?>">
+                      <a href="<?= @route('view=template&alias='.$item->alias) ?>">
                           <img src="<?= $item->thumbnail ?>" alt="<?= $item->name ?>" />
                       </a>
                   </div>
 
                   <div class="entity-container">
                       <h4 class="entity-title">
-                        <a href="<?= @route('view=template&layout=edit&alias='.$item->alias) ?>">
+                        <a href="<?= @route('view=template&alias='.$item->alias) ?>">
                           <?= $item->name ?>
                         </a>
                       </h4>

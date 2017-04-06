@@ -40,6 +40,11 @@ class ComSettingsDomainEntityTemplate extends KObject
         );
     }
 
+    public function getURL()
+    {
+        return route('option=com_settings&view=template&alias='.$this->alias);
+    }
+
     /**
      * Load the entity properties from template json file
      *
