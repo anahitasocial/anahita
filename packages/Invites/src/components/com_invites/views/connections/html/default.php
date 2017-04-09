@@ -33,7 +33,7 @@ $('body').invitesFacebook({
 	+ <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
 </a>
 
-<div class="an-entities masonry">
+<div class="an-entities">
 <?
 $controller = @service('com:people.controller.person', array('request' => array('view' => 'people')));
 $controller->getState()->setList($items);
