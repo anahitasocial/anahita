@@ -1,6 +1,6 @@
 // ==========================================================================
 // Plyr
-// plyr.js v2.0.11
+// plyr.js v2.0.12
 // https://github.com/selz/plyr
 // License: The MIT License (MIT)
 // ==========================================================================
@@ -43,7 +43,8 @@
         displayDuration:        true,
         loadSprite:             true,
         iconPrefix:             'plyr',
-        iconUrl:                'https://cdn.plyr.io/2.0.11/plyr.svg',
+        iconUrl:                'https://cdn.plyr.io/2.0.12/plyr.svg',
+        blankUrl:               'https://cdn.selz.com/plyr/blank.mp4',
         clickToPlay:            true,
         hideControls:           true,
         showPosterOnEnd:        false,
@@ -1490,7 +1491,7 @@
                 _toggleClass(plyr.container, config.classes.stopped, config.autoplay);
 
                 // Add iOS class
-                _toggleClass(plyr.ontainer, config.classes.isIos, plyr.browser.isIos);
+                _toggleClass(plyr.container, config.classes.isIos, plyr.browser.isIos);
 
                 // Add touch class
                 _toggleClass(plyr.container, config.classes.isTouch, plyr.browser.isTouch);
@@ -3065,7 +3066,7 @@
             }
 
             // Captions
-            _on(plyr.buttons.captions, 'click', _toggleCaptions);
+            _proxyListener(plyr.buttons.captions, 'click', config.listeners.captions, _toggleCaptions);
 
             // Seek tooltip
             _on(plyr.progress.container, 'mouseenter mouseleave mousemove', _updateSeekTooltip);
@@ -3217,7 +3218,7 @@
             // Set blank video src attribute
             // This is to prevent a MEDIA_ERR_SRC_NOT_SUPPORTED error
             // Info: http://stackoverflow.com/questions/32231579/how-to-properly-dispose-of-an-html5-video-and-close-socket-or-connection
-            plyr.media.setAttribute('src', 'https://cdn.selz.com/plyr/blank.mp4');
+            plyr.media.setAttribute('src', config.blankUrl);
 
             // Load the new empty source
             // This will cancel existing requests

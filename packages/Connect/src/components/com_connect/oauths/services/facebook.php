@@ -52,10 +52,18 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      */
     public function requestAccessToken($data)
     {
-        $url = $this->access_token_url.'?type=user_agent&client_id='.$this->_consumer->key.'&client_secret='.$this->_consumer->secret.'&code='.$data->code;
-        $url .= '&redirect_uri='.$this->_consumer->callback_url;
+        $params = array(
+            'client_id' => $this->_consumer->key,
+            'client_secret' => $this->_consumer->secret,
+            'code' => $data->code,
+            'redirect_uri' => $this->_consumer->callback_url,
+            'response_type' => 'token'
+        );
+
+        $url = $this->access_token_url.'?'.http_build_query($params);
         $response = $this->getRequest(array('url' => $url))->send();
-        $result = $response->parseQuery();
+        $result = $response->parseJSON();
+
         $this->setToken($result->access_token);
 
         return $result->access_token;

@@ -71,8 +71,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
                         ->findOrAddNew(array(
                             'profileId' => $user->id,
                             'api' => $this->getAPI()->getName(),
-                          )
-                        );
+                          ));
 
         $token = $this->getAPI()->getToken();
 
