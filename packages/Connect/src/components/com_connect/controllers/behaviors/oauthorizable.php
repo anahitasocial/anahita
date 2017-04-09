@@ -56,7 +56,6 @@ class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstr
         $this->getAPI()->requestAccessToken($this->getRequest());
 
         $token = (array) $this->getAPI()->getToken();
-
         $consumer = (array) $this->_consumer;
 
         KRequest::set('session.oauth', array(
