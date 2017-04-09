@@ -24,6 +24,7 @@ Anahita 4.3.4 Birth Release
 1. fixed issue where plugins were being imported multiple times
 1. fixed issue preventing commenting on articles
 1. added before/after events for person save and delete in user plugins
+1. updated Connect App code for facebook
 
 Anahita 4.3.3 Birth Release
 =============================
