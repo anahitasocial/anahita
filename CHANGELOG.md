@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.5 Birth Release
+=============================
+1. freshly grunted js files added
+
 Anahita 4.3.4 Birth Release
 =============================
 1. asking for pronouns instead of gender on person profile edit
