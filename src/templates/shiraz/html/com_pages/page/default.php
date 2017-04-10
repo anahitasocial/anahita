@@ -13,7 +13,7 @@
 			<p class="lead">open source social networking platform</p>
 
 			<p>
-				<a class="btn btn-primary" href="http://GetAnahita.com" target="_blank">
+				<a class="btn btn-primary" href="https://www.GetAnahita.com" target="_blank">
 					GetAnahita.com
 				</a>
 
@@ -33,7 +33,7 @@
 					<i class="icon-feed"></i>
 				</a>
 
-				<a title="GitHub" class="btn btn-github" href="https://www.github.com/anahitasocial" target="_blank">
+				<a title="GitHub" class="btn btn-github" href="https://github.com/anahitasocial/anahita" target="_blank">
 					<i class="icon-github"></i>
 				</a>
 			</p>
