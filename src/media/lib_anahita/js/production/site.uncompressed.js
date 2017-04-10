@@ -18534,7 +18534,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 
 }(jQuery, window, document));
 
-//@depends vendors/jquery.preload.js
 
 ///media/lib_anahita/js/vendors/bootstrap/bootstrap-affix.js
 /* ==========================================================
