@@ -9,7 +9,13 @@
 <? $socialgraphGadget = $gadgets->extract('socialgraph') ?>
 
 <? if ($item->coverSet()): ?>
-<div class="profile-cover" data-src-large="<?= $item->getCoverURL('large'); ?>" data-src-medium="<?= $item->getCoverURL('medium'); ?>"></div>
+<div
+	class="profile-cover parallax-window"
+	data-parallax="scroll"
+	data-image-src="<?= $item->getCoverURL('large'); ?>"
+	data-src-large="<?= $item->getCoverURL('large'); ?>"
+	data-src-medium="<?= $item->getCoverURL('medium'); ?>">
+</div>
 <? endif; ?>
 
 <div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">

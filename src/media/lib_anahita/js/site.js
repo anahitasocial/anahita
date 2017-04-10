@@ -13,6 +13,8 @@
 //@depends vendors/jquery.swipebox.js
 //@depends vendors/tinycon.js
 //@depends vendors/plyr.js
+//@depends vendors/parallax.js
+//@depends vendors/jquery.preload.js
 
 //@depends vendors/bootstrap/bootstrap-affix.js
 //@depends vendors/bootstrap/bootstrap-alert.js
@@ -31,7 +33,6 @@
 
 //@depends vendors/editor/bootstrap-wysiwyg.js
 //@depends vendors/editor/jquery.hotkeys.js
-
 //@depends vendors/dropzone/dropzone.js
 
 //@depends anahita/input-alert.js
