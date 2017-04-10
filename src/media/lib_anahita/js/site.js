@@ -14,7 +14,6 @@
 //@depends vendors/tinycon.js
 //@depends vendors/plyr.js
 //@depends vendors/parallax.js
-//@depends vendors/jquery.preload.js
 
 //@depends vendors/bootstrap/bootstrap-affix.js
 //@depends vendors/bootstrap/bootstrap-alert.js
