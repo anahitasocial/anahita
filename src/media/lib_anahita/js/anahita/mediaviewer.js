@@ -11,7 +11,6 @@
   'use strict';
 
   $('[data-trigger="MediaViewer"]').swipebox({
-    autoplayVideos : true,
     closeOnClick : true
   });
 
