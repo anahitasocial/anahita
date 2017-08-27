@@ -1,5 +1,12 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.6 Birth Release
+=============================
+1. Subscriptions App: fixed profile setting view
+1. Subscriptions App: fixed orders view for non admins
+1. Subscriptions App: highlight disabled packages
+1. Subscriptions App: show prompt message that says no packages are available
+
 Anahita 4.3.5 Birth Release
 =============================
 1. freshly grunted js files added
