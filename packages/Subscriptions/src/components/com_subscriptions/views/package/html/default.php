@@ -7,7 +7,7 @@
             <?= @helper('ui.header'); ?>
         </div>
 
-        <div class="an-entity">
+        <div class="an-entity <?= ($package->enabled) ? '' : 'an-highlight' ?>">
             <h2 class="entity-title">
                 <?= @escape($package->name); ?>
             </h2>

@@ -5,10 +5,14 @@
 
 	    <?= @helper('ui.header'); ?>
 
+		<? if(count($packages)): ?>
         <div class="an-entities">
         <? foreach ($packages as $package) : ?>
             <?= @view('package')->layout('list')->package($package) ?>
         <? endforeach; ?>
         </div>
+		<? else : ?>
+		<?= @message('COM-SUBSCRIPTIONS-PACKAGE-EMPTY-LIST') ?>
+		<? endif; ?>
 	</div>
 </div>

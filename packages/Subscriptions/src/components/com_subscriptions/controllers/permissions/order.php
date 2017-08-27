@@ -16,19 +16,11 @@ class ComSubscriptionsControllerPermissionOrder extends ComSubscriptionsControll
     {
         $viewer = get_viewer();
 
-        if ($viewer->guest()) {
-            return false;
+        if ($viewer->admin() || $viewer->eql($this->actor)) {
+            return true;
         }
 
-        if (!$viewer->admin() && !isset($this->actor->id)) {
-            return false;
-        }
-
-        if (!$viewer->admin() && !$viewer->eql($this->actor)) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
@@ -40,11 +32,7 @@ class ComSubscriptionsControllerPermissionOrder extends ComSubscriptionsControll
     {
         $viewer = get_viewer();
 
-        if ($viewer->admin()) {
-            return true;
-        }
-
-        if ($this->getItem()->actorId == $viewer->id) {
+        if ($viewer->admin() || $viewer->eql($this->actor)) {
             return true;
         }
 

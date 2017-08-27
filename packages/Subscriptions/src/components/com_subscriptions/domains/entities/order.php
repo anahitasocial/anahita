@@ -43,6 +43,9 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
             'aliases' => array(
                 'creationTime' => 'createdOn',
             ),
+            'behaviors' => array(
+                'locatable'
+            ),
         ));
 
         parent::_initialize($config);

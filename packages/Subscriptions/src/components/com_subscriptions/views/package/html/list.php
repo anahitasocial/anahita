@@ -1,6 +1,6 @@
 <? defined('KOOWA') or die('Restricted access'); ?>
 
-<div class="an-entity">
+<div class="an-entity <?= ($package->enabled) ? '' : 'an-highlight' ?>">
     <h3 class="entity-title">
         <? if ($package->authorize('administration')): ?>
         <a href="<?= @route($package->getURL()) ?>">
