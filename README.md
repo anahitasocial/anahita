@@ -203,4 +203,4 @@ Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like 
 
 ## Credits
 
-Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a Vancouver based software development company specialized in developing knowledge sharing mobile and web apps.
+Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a software development company in Vancouver, Canada. We develop apps for scientific, healthcare, and industrial sectors. 
