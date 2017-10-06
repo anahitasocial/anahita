@@ -23,7 +23,7 @@
 			class="well"
 			autocomplete="off"
 		>
-            <input type="hidden" name="action" value="add" />
+            
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>
