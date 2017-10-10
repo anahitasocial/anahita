@@ -1,10 +1,26 @@
 <? defined('KOOWA') or die; ?>
 
+<? $recaptcha = @service('repos:settings.plugin')->fetch(array('name' => 'recaptcha')); ?>
+<? if($recaptcha && $recaptcha->enabled): ?>
+    <script src="https://www.google.com/recaptcha/api.js?" />
+
+    <script>
+        $('#person-form button[type=submit]').on('click', function(evt) {
+            evt.preventDefault();
+            grecaptcha.execute();
+        });
+
+        var onSubmit = function(token) {
+            $('#person-form').submit();
+        }
+    </script>
+<? endif; ?>
+
 <? @service('application.dispatcher')->getRequest()->tmpl = 'component'; ?>
 <? $anybody = @service('repos:people.person')->getQuery(true)->fetchValue('id'); ?>
 
 <div class="row">
-	<div class="offset3 span6">
+    <div class="offset3 span6">
 
         <? if (!$anybody): ?>
         <div class="alert alert-info alert-block">
@@ -13,16 +29,24 @@
         </div>
         <? endif; ?>
 
-		<? $return = empty($return) ? null : $return; ?>
+        <? $return = empty($return) ? null : $return; ?>
 
         <form
-			action="<?= @route('view=person') ?>"
-			method="post"
-			name="person-form"
-			id="person-form"
-			class="well"
-			autocomplete="off"
-		>
+            action="<?= @route('view=person') ?>"
+            method="post"
+            name="person-form"
+            id="person-form"
+            class="well"
+            autocomplete="off"
+        >
+
+            <? if($recaptcha && $recaptcha->enabled): ?>
+                <div class="g-recaptcha"
+                    data-sitekey="<?= $recaptcha->meta->get('site-key') ?>"
+                    data-callback="onSubmit"
+                    data-size="invisible">
+                </div>
+            <? endif; ?>
             
             <fieldset>
                 <legend>
