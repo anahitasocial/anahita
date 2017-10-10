@@ -1,9 +1,12 @@
 <? defined('KOOWA') or die; ?>
 
-<? $recaptcha = @service('repos:settings.plugin')->fetch(array('name' => 'recaptcha')); ?>
+<? $recaptcha = @service('repos:settings.plugin')->fetch(array(
+    'element' => 'recaptcha',
+    'folder' => 'system'
+)); ?>
+
 <? if($recaptcha && $recaptcha->enabled): ?>
     <script src="https://www.google.com/recaptcha/api.js?" />
-
     <script>
         $('#person-form button[type=submit]').on('click', function(evt) {
             evt.preventDefault();
@@ -47,7 +50,7 @@
                     data-size="invisible">
                 </div>
             <? endif; ?>
-            
+
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>
