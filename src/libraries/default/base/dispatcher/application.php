@@ -125,7 +125,7 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
 
         define('ANPATH_COMPONENT', ANPATH_BASE.DS.'components'.DS.$name);
         define('ANPATH_COMPONENT_SITE', ANPATH_SITE.DS.'components'.DS.$name);
-        
+
         if (! file_exists(ANPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound('Component not found');
         }
@@ -137,6 +137,8 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
         }
 
         $this->getComponent()->dispatch($context);
+
+        dispatch_plugin('system.onAfterDispatch', array( $context ));
     }
 
     /**
