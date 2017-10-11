@@ -1,5 +1,5 @@
 {
-	"name": "recaptcha",
+	"name": "Google reCaptcha",
 	"description": "Enables Google Invisible reCaptcha to registration form",
 	"type": "plugin",
 	"group": "system",
