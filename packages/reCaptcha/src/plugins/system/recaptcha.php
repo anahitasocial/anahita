@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Subscription system plugins. Validates the viewer subscriptions.
+ * Google reCaptcha system plugin for Anahita. This plugin validates the reCaptcha response.
  *
  * @category   Anahita
  *
@@ -50,7 +50,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     *   2. registration form
     *   3. add group form
     *
-    *   @return boolean 
+    *   @return boolean
     */
     private function _hasRecaptcha()
     {
