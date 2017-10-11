@@ -13,6 +13,21 @@
  */
 class plgSystemRecaptcha extends PlgAnahitaDefault
 {
+    private $_option;
+    private $_view;
+    private $_id;
+    private $_layout;
+
+    public function __construct($dispatcher = null,  KConfig $config)
+    {
+        parent::__construct($dispatcher, $config);
+
+        $this->_option = KRequest::get('get.option', 'string', '');
+        $this->_view = KRequest::get('get.view', 'cmd', '');
+        $this->_layout = KRequest::get('get.view', 'string', '');
+        $this->_id = KRequest::get('get.view', 'int', 0);
+    }
+
     /**
      * onAfterRender handler.
      */
@@ -36,6 +51,22 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     }
 
     /**
+     * onBeforeRender handler.
+     */
+    public function onBeforeRender(KEvent $event)
+    {
+        if($this->_option === 'com_people') {
+            if ($this->_view === 'session' || $this->_view === 'person') {
+                $this->_addScripts();
+            }
+        }
+
+        if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_layout === 'add') {
+            $this->_addScripts();
+        }
+    }
+
+    /**
      * onAfterRender handler.
      */
     public function onAfterRender(KEvent $event)
@@ -54,26 +85,33 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     */
     private function _hasRecaptcha()
     {
-        $option = KRequest::get('get.option', 'string', '');
-        $view = KRequest::get('get.view', 'cmd', '');
-        $id = KRequest::get('get.view', 'int', 0);
-
         $action = KRequest::get('post.action', 'cmd', 'add');
 
-        if ($option === 'com_people') {
-            if ($view === 'session' && $action === 'add') {
+        if ($this->_option === 'com_people') {
+            if ($this->_view === 'session' && $action === 'add') {
                 return true;
             }
-            if ($view === 'person' && $id === 0) {
+            if ($this->_view === 'person' && $this->_id === 0) {
                 return true;
             }
         }
 
-        if ($option === 'com_groups' && $view === 'group' && $id === 0 && $action === 'add') {
+        if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_id === 0 && $action === 'add') {
             return true;
         }
 
         return false;
+    }
+
+    private function _addScripts()
+    {
+        $base = KService::get('com:application')->getRouter()->getBaseUrl();
+        $api = 'https://www.google.com/recaptcha/api.js';
+        $recaptcha = $base.'/media/plg_recaptcha/js/recaptcha.js';
+
+        $document = KService::get('anahita:document');
+        $document->addScript($api);
+        $document->addScript($recaptcha);
     }
 
     /**
