@@ -60,6 +60,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
         if (! $location && $isHtml && !$isAjax) {
 
+            dispatch_plugin('system.onBeforeRender', array( $context ));
+
             $config = array(
                 'request' => $context->request,
                 'response' => $context->response,
