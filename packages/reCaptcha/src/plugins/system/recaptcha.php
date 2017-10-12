@@ -17,6 +17,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     private $_view;
     private $_id;
     private $_layout;
+    private $_viewer;
 
     /**
     *   Class constructor
@@ -32,7 +33,8 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
         $this->_option = KRequest::get('get.option', 'string', '');
         $this->_view = KRequest::get('get.view', 'cmd', '');
         $this->_layout = KRequest::get('get.layout', 'cmd', '');
-        $this->_id = KRequest::get('get.view', 'int', 0);
+        $this->_id = KRequest::get('get.id', 'int', 0);
+        $this->_viewer = KService::get('com:people.viewer');
     }
 
     /**
@@ -62,13 +64,11 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
      */
     public function onBeforeRender(KEvent $event)
     {
-        if($this->_option === 'com_people') {
+        if($this->_option === 'com_people' && $this->_viewer->guest()) {
             if ($this->_view === 'session' || $this->_view === 'person') {
                 $this->_addScripts();
             }
         }
-
-        error_log($this->_layout);
 
         if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_layout === 'add') {
             $this->_addScripts();
@@ -96,7 +96,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     {
         $action = KRequest::get('post.action', 'cmd', 'add');
 
-        if ($this->_option === 'com_people') {
+        if ($this->_option === 'com_people' && $this->_viewer->guest()) {
             if ($this->_view === 'session' && $action === 'add') {
                 return true;
             }
@@ -105,7 +105,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
             }
         }
 
-        if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_id === 0 && $action === 'add') {
+        if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_id === 0) {
             return true;
         }
 
@@ -138,8 +138,8 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
                 recaptcha.recaptcha('recaptchaCallback', token)
             }
         ";
-        $document->addScriptDeclaration(sprintf($jsDeclaration, $this->_params->get('site-key')));
 
+        $document->addScriptDeclaration(sprintf($jsDeclaration, $this->_params->get('site-key')));
         $document->addScript($recaptcha);
         $document->addScript($api, 'text/javascript', array('async', 'defer'));
     }
