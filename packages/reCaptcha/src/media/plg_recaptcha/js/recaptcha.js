@@ -10,6 +10,24 @@
 
      'use strict';
 
-     console.log('reCaptcha driver loaded');
+     $.widget("anahita.recaptcha", {
+         options : {
+             siteKey: ''
+         },
+         _create : function () {
+             this.form = $(this.element);
+             this.form.prepend('<div data-callback="recaptcha.onSubmitCallback()" class="g-recaptcha" data-size="invisible" data-sitekey="' + this.options.siteKey + '" />');
+
+             this._on( this.form, {
+                 'submit' : function ( event ){
+                     event.preventDefault();
+                     grecaptcha.execute();
+                 }
+             });
+         },
+         onSubmitCallback : function() {
+             console.log("onSubmitCallback called");
+         }
+     });
 
 }(jQuery, window, document));

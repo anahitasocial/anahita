@@ -18,13 +18,20 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     private $_id;
     private $_layout;
 
+    /**
+    *   Class constructor
+    *   @param $dispatcher optional dispatcher object
+    *   @param $config optional KConfig object
+    *
+    *   @return void
+    */
     public function __construct($dispatcher = null,  KConfig $config)
     {
         parent::__construct($dispatcher, $config);
 
         $this->_option = KRequest::get('get.option', 'string', '');
         $this->_view = KRequest::get('get.view', 'cmd', '');
-        $this->_layout = KRequest::get('get.view', 'string', '');
+        $this->_layout = KRequest::get('get.layout', 'cmd', '');
         $this->_id = KRequest::get('get.view', 'int', 0);
     }
 
@@ -60,6 +67,8 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
                 $this->_addScripts();
             }
         }
+
+        error_log($this->_layout);
 
         if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_layout === 'add') {
             $this->_addScripts();
@@ -103,13 +112,30 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
         return false;
     }
 
+    /**
+    *   Adds required javascript code to the header.
+    *
+    *   @return void
+    */
     private function _addScripts()
     {
-        $base = KService::get('com:application')->getRouter()->getBaseUrl();
         $api = 'https://www.google.com/recaptcha/api.js';
-        $recaptcha = $base.'/media/plg_recaptcha/js/recaptcha.js';
+        $base = KService::get('com:application')->getRouter()->getBaseUrl();
+        $recaptcha = $base.'/media/plg_recaptcha/js/';
+        $recaptcha .= ANDEBUG ? 'recaptcha.js' : 'min/recaptcha.min.js';
 
         $document = KService::get('anahita:document');
+        $jsDeclaration = "
+            $(document).ready(function(){
+                if( $('form.recaptcha').length ) {
+                    var recaptcha = $('form.recaptcha').recaptcha({
+                        siteKey: \"%s\"
+                    });
+                }
+            });
+        ";
+        $document->addScriptDeclaration(sprintf($jsDeclaration, $this->_params->get('site-key')));
+
         $document->addScript($api);
         $document->addScript($recaptcha);
     }

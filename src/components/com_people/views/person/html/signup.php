@@ -1,24 +1,5 @@
 <? defined('KOOWA') or die; ?>
 
-<? $recaptcha = @service('repos:settings.plugin')->fetch(array(
-    'element' => 'recaptcha',
-    'folder' => 'system',
-    'enabled' => 1
-)); ?>
-
-<? if($recaptcha): ?>
-    <script>
-        $('#person-form button[type=submit]').on('click', function(evt) {
-            evt.preventDefault();
-            grecaptcha.execute();
-        });
-
-        var onSubmit = function(token) {
-            $('#person-form').submit();
-        }
-    </script>
-<? endif; ?>
-
 <? @service('application.dispatcher')->getRequest()->tmpl = 'component'; ?>
 <? $anybody = @service('repos:people.person')->getQuery(true)->fetchValue('id'); ?>
 
@@ -39,18 +20,9 @@
             method="post"
             name="person-form"
             id="person-form"
-            class="well"
+            class="well recaptcha"
             autocomplete="off"
         >
-
-            <? if($recaptcha): ?>
-                <div class="g-recaptcha"
-                    data-sitekey="<?= $recaptcha->meta->get('site-key') ?>"
-                    data-callback="onSubmit"
-                    data-size="invisible">
-                </div>
-            <? endif; ?>
-
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>
