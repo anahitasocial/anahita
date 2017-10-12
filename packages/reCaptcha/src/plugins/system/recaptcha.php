@@ -126,18 +126,22 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
 
         $document = KService::get('anahita:document');
         $jsDeclaration = "
+            var recaptcha = null;
             $(document).ready(function(){
                 if( $('form.recaptcha').length ) {
-                    var recaptcha = $('form.recaptcha').recaptcha({
+                    recaptcha = $('form.recaptcha').recaptcha({
                         siteKey: \"%s\"
                     });
                 }
             });
+            function recaptchaCallback(token) {
+                recaptcha.recaptcha('recaptchaCallback', token)
+            }
         ";
         $document->addScriptDeclaration(sprintf($jsDeclaration, $this->_params->get('site-key')));
 
-        $document->addScript($api);
         $document->addScript($recaptcha);
+        $document->addScript($api, 'text/javascript', array('async', 'defer'));
     }
 
     /**

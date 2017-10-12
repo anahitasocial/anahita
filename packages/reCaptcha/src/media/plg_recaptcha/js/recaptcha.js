@@ -16,17 +16,20 @@
          },
          _create : function () {
              this.form = $(this.element);
-             this.form.prepend('<div data-callback="recaptcha.onSubmitCallback()" class="g-recaptcha" data-size="invisible" data-sitekey="' + this.options.siteKey + '" />');
-
+             this.form.prepend('<div data-callback="recaptchaCallback" class="g-recaptcha" data-size="invisible" data-sitekey="' + this.options.siteKey + '" />');
              this._on( this.form, {
-                 'submit' : function ( event ){
+                 'submit' : function (event) {
                      event.preventDefault();
-                     grecaptcha.execute();
+                     if (this.element.context.checkValidity()) {
+                         grecaptcha.execute();
+                     } else {
+                         grecaptcha.reset();
+                     }
                  }
              });
          },
-         onSubmitCallback : function() {
-             console.log("onSubmitCallback called");
+         recaptchaCallback : function (token) {
+             this.element.context.submit();
          }
      });
 
