@@ -1,6 +1,6 @@
 {
 	"name": "Google reCaptcha",
-	"description": "Enables Google Invisible reCaptcha to registration form",
+	"description": "Adds Google invisible reCaptcha to login, registration, and add group forms",
 	"type": "plugin",
 	"group": "system",
 	"version": "4.3",
