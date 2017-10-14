@@ -68,7 +68,7 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
             }
 
         } catch (Exception $e) {
-            //ignore any exception
+            error_log($e->getMessage());
         }
     }
 }

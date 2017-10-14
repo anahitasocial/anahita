@@ -136,6 +136,7 @@ class PlgUserConnect extends PlgAnahitaDefault
             }
 
         } catch (Exception $e) {
+            error_log($e->getMessage());
             $api = null;
         }
 
