@@ -15,8 +15,8 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
 {
     private $_option;
     private $_view;
-    private $_id;
     private $_layout;
+    private $_id;
     private $_viewer;
 
     /**
@@ -64,13 +64,18 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
      */
     public function onBeforeRender(KEvent $event)
     {
-        if($this->_option === 'com_people' && $this->_viewer->guest()) {
-            if ($this->_view === 'session' || $this->_view === 'person') {
+        if($this->_option == 'com_people' && $this->_viewer->guest()) {
+            if (in_array($this->_view, array('session', 'person'))) {
                 $this->_addScripts();
             }
         }
 
-        if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_layout === 'add') {
+        if (
+            $this->_option === 'com_groups' &&
+            $this->_view === 'group' &&
+            $this->_id === 0 &&
+            in_array($this->_layout, array('add', 'form'))
+        ) {
             $this->_addScripts();
         }
     }
@@ -96,17 +101,19 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     {
         $action = KRequest::get('post.action', 'cmd', 'add');
 
-        if ($this->_option === 'com_people' && $this->_viewer->guest()) {
-            if ($this->_view === 'session' && $action === 'add') {
-                return true;
+        if ($action == 'add' && $this->_id === 0) {
+            if ($this->_option === 'com_people' && $this->_viewer->guest()) {
+                if ($this->_view === 'session') {
+                    return true;
+                }
+                if ($this->_view === 'person') {
+                    return true;
+                }
             }
-            if ($this->_view === 'person' && $this->_id === 0) {
-                return true;
-            }
-        }
 
-        if ($this->_option === 'com_groups' && $this->_view === 'group' && $this->_id === 0) {
-            return true;
+            if ($this->_option === 'com_groups' && $this->_view === 'group') {
+                return true;
+            }
         }
 
         return false;
