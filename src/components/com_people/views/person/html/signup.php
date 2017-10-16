@@ -4,7 +4,7 @@
 <? $anybody = @service('repos:people.person')->getQuery(true)->fetchValue('id'); ?>
 
 <div class="row">
-	<div class="offset3 span6">
+    <div class="offset3 span6">
 
         <? if (!$anybody): ?>
         <div class="alert alert-info alert-block">
@@ -13,17 +13,16 @@
         </div>
         <? endif; ?>
 
-		<? $return = empty($return) ? null : $return; ?>
+        <? $return = empty($return) ? null : $return; ?>
 
         <form
-			action="<?= @route('view=person') ?>"
-			method="post"
-			name="person-form"
-			id="person-form"
-			class="well"
-			autocomplete="off"
-		>
-            <input type="hidden" name="action" value="add" />
+            action="<?= @route('view=person') ?>"
+            method="post"
+            name="person-form"
+            id="person-form"
+            class="well recaptcha"
+            autocomplete="off"
+        >
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>

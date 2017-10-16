@@ -20,6 +20,11 @@ define('LOG_LEVEL_ERROR', 'ERROR');
  */
 class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
 {
+    /**
+     * Log instance.
+     *
+     * @var AnLog
+     */
     protected $_log;
 
     /**
@@ -43,8 +48,7 @@ class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
-        $log = $this->getService('anahita:log');
-
+        $log = $this->getService('anahita:log', array('file' => 'system_log.php'));
         $config->append(array(
             'log' => $log,
         ));

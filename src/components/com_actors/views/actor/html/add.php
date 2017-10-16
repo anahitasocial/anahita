@@ -6,7 +6,7 @@
 
 <div class="row">
 	<div class="span8">
-		<form action="<?= @route($entity->getURL()) ?>" method="post" enctype="multipart/form-data">
+		<form action="<?= @route($entity->getURL()) ?>" class="recaptcha" method="post" enctype="multipart/form-data">
 			<div class="control-group">
 				<label class="label-group"  for="actor-name">
 					<?= @text('COM-ACTORS-NAME') ?>

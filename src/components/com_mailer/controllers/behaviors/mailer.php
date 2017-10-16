@@ -237,7 +237,7 @@ class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
                     mkdir(dirname($file), 0755);
                 }
 
-                file_put_contents($file, $output);
+                file_put_contents($file, $body);
             }
         }
     }

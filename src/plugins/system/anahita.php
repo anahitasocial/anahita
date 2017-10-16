@@ -19,8 +19,10 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      * @param mixed $subject Dispatcher
      * @param array $config  Array of configuration
      */
+
     public function __construct($dispatcher, KConfig $config)
     {
+
         // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
             if (!isset($_SERVER['HTTP_HOST'])) {
@@ -63,7 +65,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             ini_set('safeex.url_include_proto_whitelist', $whitelist);
         }
 
-        KService::get('plg:storage.default');
+        //KService::get('plg:storage.default');
         KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
 
         parent::__construct($dispatcher, $config);

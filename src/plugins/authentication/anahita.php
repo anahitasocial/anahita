@@ -7,7 +7,13 @@ class plgAuthenticationAnahita extends PlgAnahitaDefault
         $credentials = $event->credentials;
         $response = $event->response;
 
-        if (empty($credentials->username)) {
+        if ($credentials->username === "") {
+            $response->status = ComPeopleAuthentication::STATUS_FAILURE;
+            $response->error_message = 'Empty username not allowed';
+            return false;
+        }
+
+        if ($credentials->password === "") {
             $response->status = ComPeopleAuthentication::STATUS_FAILURE;
             $response->error_message = 'Empty password not allowed';
             return false;

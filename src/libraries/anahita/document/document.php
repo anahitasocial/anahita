@@ -330,12 +330,14 @@ class AnDocument extends KObject implements KServiceInstantiatable
 	 /**
 	 * Adds a linked script to the page
 	 *
-	 * @param	string  $url		URL to the linked script
-	 * @param	string  $type		Type of script. Defaults to 'text/javascript'
+	 * @param	string  $url	URL to the linked script
+	 * @param	string  $type	Type of script. Defaults to 'text/javascript'
+	 * @param 	array $attribs 	attributes
 	 * @access   public
 	 */
-	public function addScript($url, $type="text/javascript") {
-		$this->_scripts[$url] = $type;
+	public function addScript($url, $type="text/javascript", $attribs = array()) {
+		$this->_scripts[$url]['type'] = $type;
+		$this->_scripts[$url]['attribs'] = $attribs;
 	}
 
 	/**

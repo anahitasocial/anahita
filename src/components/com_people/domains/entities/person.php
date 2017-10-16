@@ -259,6 +259,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'day' => '01'
             )
         )));
+
+        dispatch_plugin('user.onBeforeStoreUser', array('person' => $this));
     }
 
     protected function _afterEntityInsert(KCommandContext $context)
