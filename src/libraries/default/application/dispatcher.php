@@ -17,7 +17,7 @@ class LibApplicationDispatcher extends LibBaseDispatcherApplication
     /**
      * Application.
      *
-     * @var JApplication
+     * @var AnApplication
      */
     protected $_application;
 

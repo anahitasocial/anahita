@@ -17,7 +17,7 @@ class ComApplicationRouter extends LibApplicationRouter
     /**
      * Parses the URI.
      *
-     * @param JURI $uri
+     * @param $uri
      */
     public function parse(&$url)
     {

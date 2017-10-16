@@ -94,21 +94,22 @@ class KRequest
 		    }
         }
 
-        if(!empty($content['data']))
-        {
-            if($content['type'] == 'application/x-www-form-urlencoded')
-            {
-                if (in_array(self::method(), array('PUT', 'DELETE')))
-                {
+
+        if (!empty($content['data'])) {
+
+            if (!isset($GLOBALS['_REQUEST'])) {
+                $GLOBALS['_REQUEST'] = array();
+            }
+
+            if ($content['type'] == 'application/x-www-form-urlencoded') {
+                if (in_array(self::method(), array('PUT', 'DELETE'))) {
                     parse_str($content['data'], $GLOBALS['_'.self::method()]);
                     $GLOBALS['_REQUEST'] = array_merge($GLOBALS['_REQUEST'],  $GLOBALS['_'.self::method()]);
                 }
             }
 
-            if($content['type'] == 'application/json')
-            {
-                if(in_array(self::method(), array('POST', 'PUT', 'DELETE')))
-                {
+            if ($content['type'] == 'application/json') {
+                if (in_array(self::method(), array('POST', 'PUT', 'DELETE'))) {
                     $GLOBALS['_'.self::method()] = json_decode($content['data'], true);
                     $GLOBALS['_REQUEST'] = array_merge($GLOBALS['_REQUEST'],  $GLOBALS['_'.self::method()]);
                 }
