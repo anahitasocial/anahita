@@ -23,7 +23,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
     /**
      * Application Router.
      *
-     * @var JRouter
+     * @var ComApplicationRouter
      */
     protected $_router;
 

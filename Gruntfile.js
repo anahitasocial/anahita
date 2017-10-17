@@ -57,6 +57,20 @@ module.exports = function ( grunt ) {
             }
         },
 
+        recaptcha : {
+
+            options : {
+                banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
+                compress: true
+            },
+
+            files : {
+
+                'packages/reCaptcha/src/media/plg_recaptcha/js/min/recaptcha.min.js' :
+                ['packages/reCaptcha/src/media/plg_recaptcha/js/recaptcha.js'],
+            }
+        },
+
         //uglify com_photos js files
         photos : {
 

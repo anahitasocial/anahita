@@ -1,0 +1,38 @@
+{
+	"name": "Google reCaptcha",
+	"description": "Adds Google invisible reCaptcha to login, registration, and add group forms",
+	"type": "plugin",
+	"group": "system",
+	"version": "4.3",
+	"license": "GPLv3",
+	"homepage": "https://www.getanahita.com",
+	"authors": [{
+		"name": "Nick Swinford",
+		"email": "nick@nicholasjohn16.com",
+		"homepage": "http://www.nicholasjohn16.com"
+	},{
+		"name": "Rastin Mehr",
+		"email": "rastin@anahitapolis.com",
+		"homepage": "https://www.GetAnahita.com"
+	}],
+	"copyright": [
+		"2017 rmd Studio Inc."
+	],
+	"files": [
+		"recaptcha.php"
+	],
+	"fields": [
+		{
+			"type": "text",
+			"name": "site-key",
+			"label": "Site Key",
+			"default": ""
+		},
+		{
+			"type": "text",
+			"name": "secret-key",
+			"label": "Secret Key",
+			"default": ""
+		}
+	]
+}

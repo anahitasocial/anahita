@@ -98,8 +98,7 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
     {
         if (! ($component instanceof LibBaseDispatcherAbstract)) {
 
-            if (is_string($component) &&
-                    strpos($component, '.') === false) {
+            if (is_string($component) && strpos($component, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->package = $component;
             } else {
@@ -125,8 +124,8 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
 
         define('ANPATH_COMPONENT', ANPATH_BASE.DS.'components'.DS.$name);
         define('ANPATH_COMPONENT_SITE', ANPATH_SITE.DS.'components'.DS.$name);
-        
-        if (! file_exists(ANPATH_COMPONENT)) {
+
+        if (! file_exists(ANPATH_COMPONENT) && !file_exists(ANPATH_COMPONENT_SITE)) {
             throw new LibBaseControllerExceptionNotFound('Component not found');
         }
 
@@ -137,6 +136,8 @@ class LibBaseDispatcherApplication extends LibBaseDispatcherAbstract implements 
         }
 
         $this->getComponent()->dispatch($context);
+
+        dispatch_plugin('system.onAfterDispatch', array( $context ));
     }
 
     /**

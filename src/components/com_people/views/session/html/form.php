@@ -3,7 +3,7 @@
 <? $return = empty($return) ? null : $return; ?>
 <? $connect = empty($connect) ? false : true; ?>
 
-<form action="<?= @route() ?>" name="person-form" id="person-form" method="post" class="well">
+<form action="<?= @route() ?>" name="person-form" id="person-form" method="post" class="well recaptcha">
     <? if ($return) : ?>
     <input type="hidden" name="return" value="<?= $return; ?>" />
     <? endif; ?>
@@ -36,7 +36,7 @@
 
         <div class="control-group">
             <div class="controls">
-                <input class="input-block-level" name="username" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>" id="person-username" type="text" size="25" />
+                <input required class="input-block-level" name="username" placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>" id="person-username" type="text" size="25" />
             </div>
         </div>
 

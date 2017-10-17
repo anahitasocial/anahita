@@ -110,8 +110,16 @@ class LibApplicationTemplateFilterHtml extends KTemplateFilterAbstract implement
 
         $scripts = array_reverse($document->getScripts());
 
-        foreach ($scripts as $src => $type) {
-            $string .= '<script type="'.$type.'" src="'.$src.'"></script>';
+        foreach ($scripts as $src => $script) {
+
+            $type = $script['type'];
+
+            $attribs = '';
+            if (count($script['attribs'])) {
+                $attribs = implode($script['attribs'], ' ');
+            }
+
+            $string .= '<script type="'.$type.'" src="'.$src.'" '.$attribs.'></script>';
         }
 
         $script = $document->getScript();

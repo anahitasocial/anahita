@@ -46,11 +46,7 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
      */
     protected function _actionDispatch(KCommandContext $context)
     {
-        if ($context->request->get('option') != 'com_application') {
-            parent::_actionDispatch($context);
-        }
-
-        dispatch_plugin('system.onAfterDispatch', array( $context ));
+        parent::_actionDispatch($context);
 
         //render if it's only an HTML
         //otherwise just send back the request
@@ -64,6 +60,8 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
 
         if (! $location && $isHtml && !$isAjax) {
 
+            dispatch_plugin('system.onBeforeRender', array( $context ));
+
             $config = array(
                 'request' => $context->request,
                 'response' => $context->response,
@@ -75,9 +73,9 @@ class ComApplicationDispatcher extends LibApplicationDispatcher
             $this->getService('com:application.controller.page', $config)
                  ->layout($layout)
                  ->render();
-        }
 
-        dispatch_plugin('system.onAfterRender', array( $context ));
+            dispatch_plugin('system.onAfterRender', array( $context ));
+        }
 
         $this->send($context);
     }

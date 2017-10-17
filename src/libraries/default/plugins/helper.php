@@ -59,7 +59,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
 		$results = array();
 		$this->_load();
 
-		foreach($this->_plugins as $plugin){
+		foreach($this->_plugins as $plugin) {
 			if (is_null($element)) {
 				if($plugin->type == $type) {
 					$results[] = $plugin;
@@ -87,9 +87,9 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
         $this->_load();
 
         foreach ($this->_plugins as $plugin) {
-            if ($plugin->type == $type && ($element == null || $plugin->element == $element)) {
-              $this->_import($plugin, $autocreate, $dispatcher);
-              $result = true;
+            if ($plugin->type === $type && (is_null($element) || $plugin->element === $element)) {
+                $this->_import($plugin, $autocreate, $dispatcher);
+                $result = true;
             }
         }
 
@@ -121,17 +121,17 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
         $element  = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->element);
         $path	= ANPATH_PLUGINS.DS.$type.DS.$element.'.php';
 
-        if (isset($paths[$path])) {
-           return;
+        if (isset($this->_paths[$path]) && $this->_paths[$path] === true) {
+           return true;
         }
 
-        if(!file_exists($path)) {
-           $paths[$path] = false;
-           return;
+        if(! file_exists($path)) {
+           $this->_paths[$path] = false;
+           return false;
         }
 
         require_once($path);
-        $paths[$path] = true;
+        $this->_paths[$path] = true;
 
         if ($autocreate) {
             $className = 'plg'.ucfirst($type).ucfirst($element);
@@ -147,6 +147,8 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
                 $instance = new $className($dispatcher, $config);
             }
         }
+
+        return true;
     }
 
     /**

@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.7 Birth Release
+=============================
+1. added Google reCaptcha plugin
+1. fixed issue which was preventing all system plugins to load on pages other than Dashboard
+1. a number of bug fixes and code improvements 
+
 Anahita 4.3.6 Birth Release
 =============================
 1. Subscriptions App: fixed profile setting view
