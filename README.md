@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.3.6 Birth Release
+*Version:* 4.3.7 Birth Release
 
 Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
@@ -195,7 +195,7 @@ There are so many ways that you can report us a bug:
 
 ## Contribute to Anahita
 
-Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a [complete guideline](https://www.getanahita.com/html/tribes/contribute) of how you can contribute to Anahita.
+Anahita could never be possible without the help of people in our tribe. We need contributors who can help us with testing, finding and fixing bugs, and coding of course. Here is a [complete guideline](https://www.getanahita.com/articles/162390-contribute-to-anahita) of how you can contribute to Anahita.
 
 ## Follow us, Like us
 
@@ -203,4 +203,4 @@ Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like 
 
 ## Credits
 
-Anahita is developed and maintained by [rmdStudio Inc.](http://www.rmdstudio.com) a software development company in Vancouver, Canada. We develop apps for scientific, healthcare, and industrial sectors. 
+Anahita is developed and maintained by [rmdStudio Inc.](https://www.rmdstudio.com) a software development company in Vancouver, Canada. We develop web and mobile apps for scientific, healthcare, and industrial sectors.
