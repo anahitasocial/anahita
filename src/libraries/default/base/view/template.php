@@ -1,27 +1,13 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: view.php 13650 2012-04-11 08:56:41Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Abstract Template View. Very similar to nooku except different in loading the template.
  *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -82,7 +68,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         $this->_template = $config->template;
 
         //Set the template filters
-        if (!empty($config->template_filters)) {
+        if (! empty($config->template_filters)) {
             $this->getTemplate()->addFilter($config->template_filters);
         }
 
@@ -138,7 +124,6 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     public function setEscape($spec)
     {
         $this->_escape = $spec;
-
         return $this;
     }
 
@@ -149,14 +134,14 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      */
     public function getTemplate()
     {
-        if (!$this->_template instanceof KTemplateAbstract) {
+        if (! $this->_template instanceof KTemplateAbstract) {
             //Make sure we have a template identifier
-            if (!($this->_template instanceof KServiceIdentifier)) {
+            if (! ($this->_template instanceof KServiceIdentifier)) {
                 $this->setTemplate($this->_template);
             }
 
             $config = array(
-                'view' => $this,
+                'view' => $this
             );
 
             $this->_template = $this->getService($this->_template, $config);
@@ -177,7 +162,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      */
     public function setTemplate($template)
     {
-        if (!($template instanceof KTemplateAbstract)) {
+        if (! ($template instanceof KTemplateAbstract)) {
             if (is_string($template) && strpos($template, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('template');

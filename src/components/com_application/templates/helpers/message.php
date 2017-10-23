@@ -1,7 +1,8 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
+ * Renders a message. This class is specialized at the application
+ * level to render system messages.
  *
  * @category   Anahita
  *
@@ -10,24 +11,9 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @version    SVN: $Id$
- *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * Renders a message. This class is specialized at the application
- * level to render system messages.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibApplicationTemplateHelperMessage extends KTemplateHelperAbstract
+class ComApplicationTemplateHelperMessage extends KTemplateHelperAbstract
 {
     /**
      * Renders a message using the passed configuration.

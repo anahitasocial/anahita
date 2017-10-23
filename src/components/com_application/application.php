@@ -2,13 +2,15 @@
 
 /**
  *
- * @category    Anahita
- * @package     com_application
+ * @category   Anahita
+ * @package    com_application
  *
- * @author      Rastin Mehr <rastin@anahitapolis.com>
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @author     Arash Sanieyan <ash@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link        http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 
 class ComApplication extends KObject implements KServiceInstantiatable
@@ -129,9 +131,9 @@ class ComApplication extends KObject implements KServiceInstantiatable
      */
     public function getTemplate()
     {
-        if (!isset($this->_template)) {
+        if (! isset($this->_template)) {
 
-            if (!KService::get('application.registry')->offsetExists('application-template')) {
+            if (! KService::get('application.registry')->offsetExists('application-template')) {
                 KService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
             }
 
@@ -150,6 +152,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
     public function setTemplate($template)
     {
         $this->_template = $template;
+        return $this;
     }
 
     /**
@@ -160,7 +163,6 @@ class ComApplication extends KObject implements KServiceInstantiatable
     public function setRouter($router)
     {
         $this->_router = $router;
-
         return $this;
     }
 
@@ -171,7 +173,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
      */
     public function getRouter($name = null, $options = array())
     {
-        if (!isset($this->_router)) {
+        if (! isset($this->_router)) {
             $this->_router = KService::get('com:application.router', array(
                 'enable_rewrite' => $this->_site_settings->sef_rewrite
             ));
@@ -193,7 +195,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
   	{
   		$name = $this->_name;
 
-  		if (empty( $name )) {
+  		if (empty($name)) {
 
   			$r = null;
 

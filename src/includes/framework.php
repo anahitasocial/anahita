@@ -42,7 +42,7 @@ require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
 //instantiate anahita
 Anahita::getInstance();
 
-KServiceIdentifier::setApplication('site', ANPATH_SITE);
+KServiceIdentifier::setApplication('site', ANPATH_BASE);
 KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => ANPATH_BASE)));
 KServiceIdentifier::addLocator(KService::get('anahita:service.locator.component'));
 

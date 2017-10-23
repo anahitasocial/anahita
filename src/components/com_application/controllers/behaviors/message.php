@@ -48,7 +48,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         static $once;
 
-        if (!$once) {
+        if (! $once) {
             $_SESSION['__controller_persistance'] = array('controller.queue' => new stdClass());
             $once = true;
         }

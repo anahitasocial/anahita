@@ -1,8 +1,10 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
+require_once 'less/compiler.php';
+
+/**
+ * Less Compiler Template Helper.
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -10,28 +12,13 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @version    SVN: $Id$
- *
  * @link       http://www.GetAnahita.com
  */
-require_once 'compiler.php';
-
-/**
- * Less Compiler Template Helper.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
+class ComApplicationTemplateHelperLess extends KTemplateHelperAbstract
 {
     /**
      * Compiles a less css file. The the compiler will create a css file output.
-     * 
+     *
      * @param array $config Array of less compile configuration
      */
     public function compile($config = array())
@@ -70,7 +57,7 @@ class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
         }
 
         //check if any of the import folder have changed or
-        //if yes then re-compile        
+        //if yes then re-compile
         if (is_array($cache)) {
             foreach ($config['import'] as $path) {
                 if (is_readable($path) &&
@@ -95,7 +82,7 @@ class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
             //store the cache
             file_put_contents($cache_file, serialize($new_cache));
             //store the compiled file
-            //create a directory if 
+            //create a directory if
             if (!file_exists(dirname($config->output))) {
                 mkdir(dirname($config->output), 0755);
             }
@@ -105,10 +92,10 @@ class LibApplicationTemplateHelperLess extends KTemplateHelperAbstract
 
     /**
      * Parse URLs.
-     * 
+     *
      * @param string $text  The compiled css text
      * @param array  $paths An array of paths to look for assets
-     * 
+     *
      * @return string
      */
     protected function _parseUrls($text, array $paths)
