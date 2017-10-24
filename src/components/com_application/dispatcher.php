@@ -282,7 +282,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      *
      * @param KCommandContext $context Command chain context
      *
-     * @return bool
+     * @return void
      */
     protected function _actionDispatch(KCommandContext $context)
     {
@@ -309,13 +309,19 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         $isAjax = $context->request->isAjax();
 
         if (! $location && $isHtml && !$isAjax) {
-            $this->_renderHtml($context);
+            $this->_render($context);
         }
 
         $this->send($context);
     }
 
-    protected function _renderHtml(KCommandContext $context)
+    /**
+    *   Outputs html content
+    *   @param KCommandContext $context Command chain context
+    *
+    *   @return void
+    */
+    protected function _render(KCommandContext $context)
     {
         dispatch_plugin('system.onBeforeRender', array( $context ));
 
@@ -351,7 +357,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      * @param KCommandContext $context Command chain context
      *                                 caller => KObject, data => mixed
      *
-     * @return KException
+     * @return void
      */
     protected function _actionException($context)
     {

@@ -18,13 +18,6 @@
 abstract class KViewAbstract extends KObject
 {
 	/**
-	 * Model identifier (com://APP/COMPONENT.model.NAME)
-	 *
-	 * @var	string|object
-	 */
-	protected $_model;
-
-	/**
      * Layout name
      *
      * @var string
@@ -74,7 +67,6 @@ abstract class KViewAbstract extends KObject
 		$this->output   = $config->output;
 		$this->mimetype = $config->mimetype;
 
-		$this->setModel($config->model);
         $this->setLayout($config->layout);
 	}
 
@@ -89,7 +81,6 @@ abstract class KViewAbstract extends KObject
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-			'model'   	=> $this->getName(),
 	    	'output'	=> '',
     		'mimetype'	=> '',
             'layout'    => 'default',
@@ -128,63 +119,6 @@ abstract class KViewAbstract extends KObject
 	public function display()
 	{
 		return $this->output;
-	}
-
-	/**
-	 * Get the model object attached to the contoller
-	 *
-	 * @return	KModelAbstract
-	 */
-	public function getModel()
-	{
-		if(!$this->_model instanceof KModelAbstract)
-		{
-			//Make sure we have a model identifier
-		    if(!($this->_model instanceof KServiceIdentifier)) {
-		        $this->setModel($this->_model);
-			}
-
-		    $this->_model = $this->getService($this->_model);
-		}
-
-		return $this->_model;
-	}
-
-	/**
-	 * Method to set a model object attached to the view
-	 *
-	 * @param	mixed	An object that implements KObjectServiceable, KServiceIdentifier object
-	 * 					or valid identifier string
-	 * @throws	KViewException	If the identifier is not a table identifier
-	 * @return	KViewAbstract
-	 */
-    public function setModel($model)
-	{
-		if(!($model instanceof KModelAbstract))
-		{
-	        if(is_string($model) && strpos($model, '.') === false )
-		    {
-			    // Model names are always plural
-			    if(KInflector::isSingular($model)) {
-				    $model = KInflector::pluralize($model);
-			    }
-
-			    $identifier			= clone $this->getIdentifier();
-			    $identifier->path	= array('model');
-			    $identifier->name	= $model;
-			}
-			else $identifier = $this->getIdentifier($model);
-
-			if($identifier->path[0] != 'model') {
-				throw new KControllerException('Identifier: '.$identifier.' is not a model identifier');
-			}
-
-			$model = $identifier;
-		}
-
-		$this->_model = $model;
-
-		return $this;
 	}
 
  	/**
