@@ -55,9 +55,10 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
      */
     public function getController()
     {
-        if (!($this->_controller instanceof KControllerAbstract)) {
+        if (! ($this->_controller instanceof LibBaseControllerAbstract)) {
+
             //Make sure we have a controller identifier
-            if (!($this->_controller instanceof KServiceIdentifier)) {
+            if (! ($this->_controller instanceof KServiceIdentifier)) {
                 $this->setController($this->_controller);
             }
 
@@ -76,20 +77,18 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
     /**
      * Set the request of the response.
      *
-     * (non-PHPdoc)
-     *
-     * @see LibBaseControllerAbstract::getResponse()
+     * @return LibBaseDispatcherResponse
      */
     public function getResponse()
     {
-        if (!$this->_response instanceof LibBaseDispatcherResponse) {
+        if (! $this->_response instanceof LibBaseDispatcherResponse) {
             $this->_response = parent::getResponse();
 
-            if (!$this->_response instanceof LibBaseDispatcherResponse) {
-
+            if (! $this->_response instanceof LibBaseDispatcherResponse) {
                 throw new InvalidArgumentException(
-                    'Response: '.get_class($this->_response).' must be an intance of LibBaseDispatcherResponse');
-                }
+                    'Response: '.get_class($this->_response).' must be an intance of LibBaseDispatcherResponse'
+                );
+            }
 
             $this->_response->setRequest($this->getRequest());
         }
@@ -105,13 +104,14 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
      *
      * @throws KDispatcherException If the identifier is not a controller identifier
      *
-     * @return KDispatcherAbstract
+     * @return LibBaseDispatcherAbstract
      */
     public function setController($controller)
     {
-        if (!($controller instanceof KControllerAbstract)) {
+        if (! ($controller instanceof LibBaseControllerAbstract)) {
             if (is_string($controller) && strpos($controller, '.') === false) {
-                // Controller names are always singular
+
+                // Controlle name is always singular
                 if (KInflector::isPlural($controller)) {
                     $controller = KInflector::singularize($controller);
                 }
@@ -119,7 +119,6 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller');
                 $identifier->name = $controller;
-
             } else {
                 $identifier = $this->getIdentifier($controller);
             }

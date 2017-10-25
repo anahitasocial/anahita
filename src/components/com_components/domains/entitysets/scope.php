@@ -22,10 +22,10 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $registry = $container->get('application.registry', array('key' => $config->service_identifier));
 
-            if (!$registry->offsetExists('scopes')) {
+            if (! $registry->offsetExists('scopes')) {
                 $components = $container->get('repos:components.component')->fetchSet();
 
                 $dispatcher = $container->get('koowa:event.dispatcher');

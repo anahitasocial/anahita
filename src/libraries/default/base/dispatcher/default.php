@@ -12,4 +12,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseDispatcherDefault extends LibBaseDispatcherComponent{}
+class LibBaseDispatcherDefault extends LibBaseDispatcherComponent {}

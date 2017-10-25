@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityComponent implements KEventSubscriberInterface
+class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implements KEventSubscriberInterface
 {
     /**
      * Subscriptions.
@@ -30,7 +30,44 @@ class ComComponentsDomainEntityComponent extends LibComponentsDomainEntityCompon
     protected function _initialize(KConfig $config)
     {
         $this->getService('anahita:language')->load('com_'.$this->getIdentifier()->package);
+
+        $config->append(array(
+            'resources' => array('components'),
+            'attributes' => array(
+                'meta' => array(
+                    'required' => false,
+                    'default' => ''
+                ),
+                'enabled',
+            ),
+            'behaviors' => array(
+                'orderable',
+                'authorizer',
+                'assignable',
+            ),
+            'query_options' => array(
+                'where' => array('parent' => 0)
+            ),
+            'aliases' => array(
+                'component' => 'option',
+             ),
+            'auto_generate' => true,
+        ));
+
         parent::_initialize($config);
+    }
+
+    /**
+     *
+     * @see AnDomainEntityAbstract::__get()
+     */
+    public function __get($key)
+    {
+        if ($key == 'name') {
+            return ucfirst(str_replace('com_', '', $this->option));
+        }
+
+        return parent::__get($key);
     }
 
     /**

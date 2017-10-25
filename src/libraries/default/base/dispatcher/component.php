@@ -24,7 +24,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -58,6 +58,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         $identifier = clone $this->getIdentifier();
         $identifier->name = 'aliases';
         $identifier->path = array();
+
         //Load the component aliases
         $this->getService('koowa:loader')->loadIdentifier($identifier);
 
@@ -114,6 +115,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         }
 
         $action = 'post';
+
         if ($context->data['_action']) {
             $action = $context->data['_action'];
             if (in_array($action, array('browse', 'read', 'display'))) {
@@ -139,11 +141,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     {
         //this wil not affect the json calls
         $redirect = KRequest::get('server.HTTP_REFERER', 'url');
-
-        $this->getController()
-        ->getResponse()
-        ->setRedirect($redirect);
-
+        $this->getController()->getResponse()->setRedirect($redirect);
         $result = $this->getController()->execute('delete', $context);
 
         return $result;
@@ -160,10 +158,11 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     {
         $response = $this->getController()->getResponse();
 
-        if (!$response->getContent()) {
+        if (! $response->getContent()) {
             if (in_array($response->getStatusCode(), array(201, 205))) {
                 $view = $this->getController()->getIdentifier()->name;
                 $response->setContent($this->getController()->view($view)->execute('display', $context));
+
                 if ($response->getStatusCode() == 205) {
                     $response->setStatus(200);
                 }

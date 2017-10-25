@@ -29,9 +29,9 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     {
         parent::__construct($config);
 
-        $this->setComponent($config->component);
-
         $this->_application = $config->application;
+
+        $this->setComponent($config->component);
 
         if (PHP_SAPI == 'cli') {
             $this->registerCallback('after.load', array($this, 'updateLegacyPluginsParams'));
@@ -79,56 +79,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     }
 
     /**
-     * Method to get a dispatcher object.
-     *
-     * @throws \UnexpectedValueException If the controller doesn't implement the ControllerInterface
-     *
-     * @return ControllerAbstract
-     */
-    public function getComponent()
-    {
-        if (! ($this->_controller instanceof LibBaseDispatcherAbstract)) {
-
-            $this->_controller = $this->getController();
-
-            if (! $this->_controller instanceof LibBaseDispatcherAbstract) {
-                throw new \UnexpectedValueException(
-                    'Dispatcher: '.get_class($this->_controller).' does not implement LibBaseDispatcherAbstract'
-                );
-            }
-        }
-
-        return $this->_controller;
-    }
-
-    /**
-     * Method to set a dispatcher object.
-     *
-     * @param mixed $component An object that implements ControllerInterface, ServiceIdentifier object
-     *                         or valid identifier string
-     *
-     * @return DispatcherAbstract
-     */
-    public function setComponent($component, $config = array())
-    {
-        if (! ($component instanceof LibBaseDispatcherAbstract)) {
-
-            if (is_string($component) && strpos($component, '.') === false) {
-                $identifier = clone $this->getIdentifier();
-                $identifier->package = $component;
-            } else {
-                $identifier = $this->getIdentifier($component);
-            }
-
-            $component = $identifier;
-        }
-
-        $this->setController($component, $config);
-
-        return $this;
-    }
-
-    /**
     *  if the plugins table still has a legacy params field, rename it to meta
     *  to be consistent with Anahita's convention
     *  @todo remove this method in the future releases
@@ -147,6 +97,57 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
            print "Please run the previous command one more time!\n";
            exit(0);
         }
+    }
+
+    /**
+     * Method to get a dispatcher object.
+     *
+     * @throws \UnexpectedValueException If the controller doesn't implement the ControllerInterface
+     *
+     * @return LibBaseControllerAbstract
+     */
+    public function getComponent()
+    {
+        if (! ($this->_controller instanceof LibBaseControllerAbstract)) {
+
+            $this->_controller = $this->getController();
+
+            if (! $this->_controller instanceof LibBaseControllerAbstract) {
+                throw new \UnexpectedValueException(
+                    'Dispatcher: '.get_class($this->_controller).' does not implement LibBaseDispatcherAbstract',
+                    KHttpResponse::INTERNAL_SERVER_ERROR
+                );
+            }
+        }
+
+        return $this->_controller;
+    }
+
+    /**
+     * Method to set a dispatcher object.
+     *
+     * @param mixed $component An object that implements ControllerInterface, ServiceIdentifier object
+     *                         or valid identifier string
+     *
+     * @return ComApplicationDispatcher
+     */
+    public function setComponent($component, $config = array())
+    {
+        if (! ($component instanceof LibBaseControllerAbstract)) {
+
+            if (is_string($component) && strpos($component, '.') === false) {
+                $identifier = clone $this->getIdentifier();
+                $identifier->package = $component;
+            } else {
+                $identifier = $this->getIdentifier($component);
+            }
+
+            $component = $identifier;
+        }
+
+        $this->setController($component, $config);
+
+        return $this;
     }
 
     /**
@@ -291,13 +292,19 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         define('ANPATH_COMPONENT', ANPATH_BASE.DS.'components'.DS.$name);
 
         if (! file_exists(ANPATH_COMPONENT)) {
-            throw new LibBaseControllerExceptionNotFound('Component '.$name.' not found');
+            throw new LibBaseControllerExceptionNotFound(
+                'Component '.$name.' not found',
+                KHttpResponse::INTERNAL_SERVER_ERROR
+            );
         }
 
         $app = KService::get('repos:settings.app')->find(array('package' => $name));
 
         if (isset($app) && $app->enabled != 1) {
-            throw new LibBaseControllerExceptionForbidden('Component '.$name.' is disabled');
+            throw new LibBaseControllerExceptionForbidden(
+                'Component '.$name.' is disabled',
+                KHttpResponse::INTERNAL_SERVER_ERROR
+            );
         }
 
         $this->getComponent()->dispatch($context);
