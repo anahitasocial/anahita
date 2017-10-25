@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSharesControllerBehaviorSharable extends KControllerBehaviorAbstract
+class ComSharesControllerBehaviorSharable extends AnControllerBehaviorAbstract
 {
     /**
      * Share an object using share adapters.

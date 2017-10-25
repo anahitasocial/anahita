@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Abstract Controller. Nothing different from {@link KControllerAbstract} but override some methods
+ * Abstract Controller. Nothing different from {@link AnControllerAbstract} but override some methods
  * like getBehavior to allow for setting default behavior.
  *
  * @category   Anahita
@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerAbstract extends KControllerAbstract
+class LibBaseControllerAbstract extends AnControllerAbstract
 {
     /**
      * Controller State.
@@ -63,12 +63,22 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function getState()
     {
-        if (!isset($this->_state)) {
+        if (! isset($this->_state)) {
             $this->_state = new LibBaseControllerState();
         }
 
         return $this->_state;
     }
+
+    /**
+	 * Get the request information
+	 *
+	 * @return KConfig	A KConfig object with request information
+	 */
+	public function getRequest()
+	{
+		return $this->_request;
+	}
 
     /**
      * Set the request information.
@@ -119,7 +129,7 @@ class LibBaseControllerAbstract extends KControllerAbstract
      * @param   string  Method name
      * @param   array   Array containing all the arguments for the original call
      *
-     * @return KControllerBread
+     * @return AnControllerBread
      *
      * @see http://martinfowler.com/bliki/FluentInterface.html
      */
@@ -166,10 +176,10 @@ class LibBaseControllerAbstract extends KControllerAbstract
      */
     public function getResponse()
     {
-        if (!$this->_response instanceof LibBaseControllerResponse) {
+        if (! $this->_response instanceof LibBaseControllerResponse) {
             $this->_response = $this->getService($this->_response);
 
-            if (!$this->_response instanceof LibBaseControllerResponse) {
+            if (! $this->_response instanceof LibBaseControllerResponse) {
                 throw new UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');
             }
         }

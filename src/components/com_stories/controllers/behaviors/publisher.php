@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComStoriesControllerBehaviorPublisher extends KControllerBehaviorAbstract
+class ComStoriesControllerBehaviorPublisher extends AnControllerBehaviorAbstract
 {
     /**
      * Creates a story.

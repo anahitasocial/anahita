@@ -22,7 +22,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerBehaviorCoverable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
 {
     /**
      * Constructor.

@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleControllerBehaviorMentionable extends KControllerBehaviorAbstract
+class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstract
 {
     /*
      * contains the list of newly added mentions so they can be notified

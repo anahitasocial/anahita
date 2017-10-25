@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComNotificationsControllerBehaviorNotifier extends KControllerBehaviorAbstract
+class ComNotificationsControllerBehaviorNotifier extends AnControllerBehaviorAbstract
 {
     /**
      * Creates a notification.

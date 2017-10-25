@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComHashtagsControllerBehaviorHashtagable extends KControllerBehaviorAbstract
+class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstract
 {
     /**
      * Constructor.

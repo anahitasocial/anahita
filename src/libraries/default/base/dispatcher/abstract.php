@@ -51,7 +51,7 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
     /**
      * Method to get a controller object.
      *
-     * @return KControllerAbstract
+     * @return AnControllerAbstract
      */
     public function getController()
     {

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMailerControllerBehaviorMailer extends KControllerBehaviorAbstract
+class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 {
     /**
      * Email View.

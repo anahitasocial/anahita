@@ -250,7 +250,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Get a toolbar by identifier.
      *
-     * @return KControllerToolbarAbstract
+     * @return AnControllerToolbarAbstract
      */
     public function getToolbar($toolbar, $config = array())
     {

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorEnablable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
 {
     /**
      * Enable Entity.

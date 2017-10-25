@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseControllerPermissionAbstract extends KControllerBehaviorAbstract
+abstract class LibBaseControllerPermissionAbstract extends AnControllerBehaviorAbstract
 {
     /**
      * Initializes the default configuration for the object.

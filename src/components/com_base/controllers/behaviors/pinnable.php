@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
@@ -20,11 +20,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorPinnable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
 {
     /**
      * Pin Entity.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionPin($context)
@@ -37,7 +37,7 @@ class ComBaseControllerBehaviorPinnable extends KControllerBehaviorAbstract
 
     /**
      * Unpin Entity.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionUnpin($context)

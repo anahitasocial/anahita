@@ -152,7 +152,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      *
      * @throws KDatabaseRowsetException If the identifier is not a view identifier
      *
-     * @return KControllerAbstract
+     * @return AnControllerAbstract
      */
     public function setView($view)
     {
@@ -214,7 +214,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     /**
      * Get a toolbar by identifier.
      *
-     * @return KControllerToolbarAbstract
+     * @return AnControllerToolbarAbstract
      */
     public function getToolbar($toolbar, $config = array())
     {

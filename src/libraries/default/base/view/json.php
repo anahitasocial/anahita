@@ -185,7 +185,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
     {
         $result = array();
 
-        if ($this->_state->toolbar instanceof KControllerToolbarAbstract) {
+        if ($this->_state->toolbar instanceof AnControllerToolbarAbstract) {
             $this->_state->toolbar->reset();
             $method = 'add'.ucfirst($name).'Commands';
 

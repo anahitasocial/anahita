@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComComposerControllerBehaviorComposable extends KControllerBehaviorAbstract
+class ComComposerControllerBehaviorComposable extends AnControllerBehaviorAbstract
 {
     /**
      * Convienet method to render a story.

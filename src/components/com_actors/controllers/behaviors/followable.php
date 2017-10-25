@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComActorsControllerBehaviorFollowable extends KControllerBehaviorAbstract
+class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
 {
     /**
      * Constructor.

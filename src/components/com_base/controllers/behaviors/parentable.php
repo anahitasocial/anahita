@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
 {
     /**
      * Identifiable key. If this key exists in the request then this behavior

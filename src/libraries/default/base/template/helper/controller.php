@@ -38,7 +38,7 @@ class LibBaseTemplateHelperController extends KTemplateHelperAbstract
     /**
      * Returns a toolbar object of a view.
      *
-     * @return KControllerToolbarAbstract|null If no toolbar found then null is returned
+     * @return AnControllerToolbarAbstract|null If no toolbar found then null is returned
      */
     public function getToolbar()
     {
@@ -61,7 +61,7 @@ class LibBaseTemplateHelperController extends KTemplateHelperAbstract
      * 
      * @param string $name Controller name
      * 
-     * @return KControllerAbstract
+     * @return AnControllerAbstract
      */
     public function getController($name)
     {

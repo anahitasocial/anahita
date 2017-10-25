@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerBehaviorCommittable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
 {
     /**
      * Failed entities in the last commit.

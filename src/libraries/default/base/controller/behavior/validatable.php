@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,11 +26,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
 {
     /**
      * Validator.
-     * 
+     *
      * @var string
      */
     protected $_validator;
@@ -60,7 +60,7 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
 
     /**
      * Sets the validator.
-     * 
+     *
      * @param string $validator
      */
     public function setValidator($validator)
@@ -76,7 +76,7 @@ class LibBaseControllerBehaviorValidatable extends KControllerBehaviorAbstract
             }
 
             if ($identifier->path[1] != 'validator') {
-                throw new KControllerBehaviorException('Identifier: '.$identifier.' is not a validator identifier');
+                throw new AnControllerBehaviorException('Identifier: '.$identifier.' is not a validator identifier');
             }
 
             $validator = $identifier;

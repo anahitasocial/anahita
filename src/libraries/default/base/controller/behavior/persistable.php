@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerBehaviorPersistable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
 {
     /**
      * Restores a state for an action.

@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstract
+class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstract
 {
     /**
      * Check if the behavior is enabled or not.
@@ -90,7 +90,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
     /**
      * (non-PHPdoc).
      *
-     * @see KControllerBehaviorAbstract::execute()
+     * @see AnControllerBehaviorAbstract::execute()
      */
     public function execute($name, KCommandContext $context)
     {

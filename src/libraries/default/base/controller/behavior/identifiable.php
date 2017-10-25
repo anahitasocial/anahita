@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerBehaviorIdentifiable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
 {
     /**
      * Controller Domain Repository.

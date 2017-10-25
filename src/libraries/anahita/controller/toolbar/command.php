@@ -1,21 +1,21 @@
 <?php
 /**
- * @version     $Id: command.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Controller
- * @subpackage 	Toolbar
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
+* @package		An_Controller
+* @subpackage 	Toolbar
+* @copyright    Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+* @license      GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+*/
 
 /**
- * Controller Toolbar Command Class
+ * Abstract Controller Toolbar Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Controller
+ * @author      Rastin Mehr <rastin@anahitapolis.com> 
+ * @package     An_Controller
  * @subpackage 	Toolbar
+ * @uses        KInflector
  */
-class KControllerToolbarCommand extends KConfig
+class AnControllerToolbarCommand extends KConfig
 {
  	/**
      * The command name
@@ -35,7 +35,6 @@ class KControllerToolbarCommand extends KConfig
         parent::__construct($config);
 
         $this->append(array(
-            'icon'       => 'icon-32-'.$name,
             'id'         => $name,
             'label'      => ucfirst($name),
             'disabled'   => false,

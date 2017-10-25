@@ -13,7 +13,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSearchControllerBehaviorSearchable extends KControllerBehaviorAbstract
+class ComSearchControllerBehaviorSearchable extends AnControllerBehaviorAbstract
 {
     /**
      * Sets the search owner context and scope automatically.

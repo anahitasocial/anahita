@@ -1,25 +1,26 @@
 <?php
 /**
-* @version      $Id: interface.php 4628 2012-05-06 19:56:43Z johanjanssens $
-* @package		Koowa_Controller
+* @package		An_Controller
 * @subpackage 	Toolbar
 * @copyright    Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
 * @license      GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
 */
 
 /**
- * Controller Toolbar Interface
+ * Abstract Controller Toolbar Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Controller
+ * @author      Rastin Mehr <rastin@anahitapolis.com> 
+ * @package     An_Controller
  * @subpackage 	Toolbar
+ * @uses        KInflector
  */
-interface KControllerToolbarInterface
-{ 
+interface AnControllerToolbarInterface
+{
 	/**
      * Get the controller object
-     * 
-     * @return  KController
+     *
+     * @return  AnController
      */
     public function getController();
 
@@ -29,60 +30,45 @@ interface KControllerToolbarInterface
      * @return string
      */
     public function getName();
-    
+
     /**
      * Set the toolbar's title
      *
      * @param   string  Title
-     * @return  KControllerToolbarInterface
+     * @return  AnControllerToolbarInterface
      */
     public function setTitle($title);
-    
+
  	/**
      * Get the toolbar's title
      *
      * @return   string  Title
      */
     public function getTitle();
-    
-    /**
-     * Set the toolbar's icon
-     *
-     * @param   string  Icon
-     * @return  KControllerToolbarInterface
-     */
-    public function setIcon($icon);
-    
-	/**
-     * Get the toolbar's icon
-     *
-     * @return   string  Icon
-     */
-    public function getIcon();
-    
+
     /**
      * Add a separator
      *
-     * @return  KControllerToolbarInterface
+     * @return  AnControllerToolbarInterface
      */
     public function addSeparator();
-     
+
     /**
      * Add a command
      *
      * @param   string	The command name
      * @param	mixed	Parameters to be passed to the command
-     * @return  KControllerToolbarInterface
+     * @return  AnControllerToolbarInterface
      */
     public function addCommand($name, $config = array());
-    
+
  	/**
      * Get the list of commands
      *
      * @return  array
      */
     public function getCommands();
- 
+
     /**
      * Reset the commands array
      *

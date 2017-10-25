@@ -30,7 +30,7 @@ class ComBaseTemplateHelperToolbar extends KTemplateHelperAbstract
             $toolbar = clone $toolbar;
         }
 
-        if ($toolbar instanceof KControllerToolbarAbstract) {
+        if ($toolbar instanceof AnControllerToolbarAbstract) {
             //reset the toolbar
             $toolbar->reset();
 
