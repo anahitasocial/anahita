@@ -18,7 +18,7 @@ class ComApplicationViewJson extends LibBaseViewJson
      *
      * var string|KException
      */
-    public $content;
+    public $content = "";
 
     /**
      * Just return the content.

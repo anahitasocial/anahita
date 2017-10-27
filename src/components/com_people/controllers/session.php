@@ -34,27 +34,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     }
 
     /**
-     * Set the request information.
-     *
-     * @param array An associative array of request information
-     *
-     * @return LibBaseControllerAbstract
-     */
-    public function setRequest(array $request)
-    {
-        parent::setRequest($request);
-
-        if (isset($this->_request->return)) {
-            $return = $this->getService('com:people.filter.return')
-                           ->sanitize($this->_request->return);
-            $this->_request->return = $return;
-            $this->return = $return;
-        }
-
-        return $this;
-    }
-
-    /**
      * Initializes the default configuration for the object.
      *
      * you can set the redirect url for when a user is logged in
@@ -112,13 +91,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionPost(KCommandContext $context)
     {
-        try {
-            $result = $this->execute('add', $context);
-            return $result;
-        } catch (RuntimeException $e) {
-            $context->response->setRedirect(route('option=com_people&view=session'));
-            throw $e;
-        }
+        return $this->execute('add', $context);
     }
 
     /**
@@ -138,7 +111,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($data->return);
             $context->url = base64UrlDecode($data->return);
         } else {
-            $_SESSION['return'] = null;
+            unset($_SESSION['return']);
         }
 
         $credentials = array(
@@ -148,21 +121,19 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         );
 
         $response = $this->getService('com:people.authentication.response');
+
         dispatch_plugin('authentication.onAuthenticate', array(
                             'credentials' => $credentials,
                             'response' => $response
                         ));
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
-
-            $credentials['username'] = $response->username;
-            $credentials['password'] = $response->password;
-
-            $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
+            $this->getService('com:people.helper.person')
+                 ->login($credentials, $credentials['remember']);
 
             $this->getResponse()->status = KHttpResponse::CREATED;
 
-            if(!$context->url) {
+            if(! $context->url) {
                 $context->url = route(array(
                     'option' => 'com_people',
                     'view' => 'person',
@@ -171,10 +142,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             }
 
             $this->getResponse()->setRedirect($context->url);
-            $_SESSION['return'] = null;
-
+            unset($_SESSION['return']);
         } else {
-
             $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             $this->getResponse()->status = KHttpResponse::FORBIDDEN;
@@ -221,8 +190,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         }
 
         $person->activationCode = '';
-        $this->token = null;
-        $this->_request->token = null;
+        $this->token = '';
+        $this->_request->token = '';
 
         if ($this->reset_password) {
             $_SESSION['reset_password_prompt'] = 1;
@@ -241,7 +210,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $returnUrl = base64UrlDecode($this->return);
             $this->getResponse()->setRedirect($returnUrl);
         } else {
-            $_SESSION['return'] = null;
+            unset($_SESSION['return']);
             $this->setMessage('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
             $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
         }
@@ -249,5 +218,26 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $this->getResponse()->status = KHttpResponse::ACCEPTED;
 
         return true;
+    }
+
+    /**
+     * Set the request information.
+     *
+     * @param array An associative array of request information
+     *
+     * @return LibBaseControllerAbstract
+     */
+    public function setRequest(array $request)
+    {
+        parent::setRequest($request);
+
+        if (isset($this->_request->return)) {
+            $return = $this->getService('com:people.filter.return')
+                           ->sanitize($this->_request->return);
+            $this->_request->return = $return;
+            $this->return = $return;
+        }
+
+        return $this;
     }
 }

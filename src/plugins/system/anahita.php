@@ -44,7 +44,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
                   !@ini_get('suhosin.executor.include.whitelist') ||
                   strpos(@ini_get('suhosin.executor.include.whitelist'), 'tmpl://') === false
             ) {
-                $url = KService::get('application')->getRouter()->getBaseUrl();
+                $url = KService::get('com:application')->getRouter()->getBaseUrl();
                 $url .= '/templates/system/error_suhosin.html';
 
                 //@todo we don't have redirect methods
@@ -78,41 +78,49 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
         $viewer = KService::get('com:people.viewer');
 
-        if (!$viewer->guest() && !$viewer->enabled) {
+        if (! $viewer->guest() && ! $viewer->enabled) {
             KService::get('com:people.helper.person')->logout();
             KService::get('application.dispatcher')->getResponse()->setRedirect(route('index.php'));
         }
 
-        $credentials = array();
-        $remember = get_hash('AN_LOGIN_REMEMBER');
-
-        // for json requests obtain the username and password from the $_SERVER array
-        // else if the remember me cookie exists, decrypt and obtain the username and password from it
-        if (
-               $viewer->guest() &&
-               KRequest::has('server.PHP_AUTH_USER') &&
-               KRequest::has('server.PHP_AUTH_PW') &&
-               KRequest::format() == 'json'
-           ) {
-
-            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
-            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
-
-        } elseif ($viewer->guest() && isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '') {
-
-            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
-            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
-            $cookie = $crypt->decrypt($_COOKIE[$remember]);
-            $credentials = (array) @unserialize($cookie);
-
-        } else {
+        if (! $viewer->guest()) {
             return;
         }
 
-        if ($viewer->guest() && count($credentials)) {
+        $credentials = array();
+        $remember = get_hash('AN_LOGIN_REMEMBER');
+        // for json requests obtain the username and password from the $_SERVER array
+        // else if the remember me cookie exists, decrypt and obtain the username and password from it
+        if (isset($_COOKIE[$remember]) && !empty($_COOKIE[$remember])) {
+            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
+            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
+            $cookie = $crypt->decrypt($_COOKIE[$remember]);
 
             try {
+                $credentials = (array) unserialize($cookie);
+            } catch (RuntimeException $e) {
+                error_log($e->getMessage());
+            }
 
+            KService::get('com:people.helper.person')->login($credentials, true);
+
+            $url = KService::get('com:application')->getRouter()->getBaseUrl();
+            KService::get('application.dispatcher')
+            ->getResponse()
+            ->setRedirect($url)
+            ->send();
+
+            return;
+        }
+
+        if (KRequest::has('server.PHP_AUTH_USER') && KRequest::has('server.PHP_AUTH_PW')) {
+            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
+            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
+        }
+
+        if (count($credentials)) {
+
+            try {
                 $response = $this->getService('com:people.authentication.response');
                 dispatch_plugin('authentication.onAuthenticate', array(
                                     'credentials' => $credentials,

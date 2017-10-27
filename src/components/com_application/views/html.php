@@ -20,14 +20,14 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
      *
      * @return KException|string
      */
-    public $content;
+    public $content = "";
 
     /**
      * Template Parameters.
      *
      * KConfig
      */
-    protected $_params;
+    protected $_params = null;
 
     /**
      * Constructor.

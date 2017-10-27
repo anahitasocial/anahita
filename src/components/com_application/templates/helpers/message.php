@@ -34,7 +34,7 @@ class ComApplicationTemplateHelperMessage extends KTemplateHelperAbstract
 
         unset($config['buttons']);
 
-        if (!empty($buttons)) {
+        if (! empty($buttons)) {
             foreach ($buttons as $label => $attrbs) {
                 $buttons[$label] = $this->_renderButton($label, $attrbs);
             }

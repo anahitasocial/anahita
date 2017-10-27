@@ -74,7 +74,7 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
         //update removed mentions
       if (is_array($body_mentions)) {
           foreach ($entity_mentions as $mention) {
-              if (!in_array($mention, $body_mentions)) {
+              if (! in_array($mention, $body_mentions)) {
                   $entity->removeMention($mention);
               }
           }
@@ -121,7 +121,7 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
      */
     protected function _beforeControllerBrowse(KCommandContext $context)
     {
-        if (!$context->query) {
+        if (! $context->query) {
             $context->query = $this->_mixer->getRepository()->getQuery();
         }
 

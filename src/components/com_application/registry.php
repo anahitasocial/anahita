@@ -20,7 +20,7 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
      *
      * @var AnRegistry
      */
-    protected static $_clone;
+    protected static $_clone = null;
 
     /**
      * Array of instances for registries.
@@ -39,7 +39,7 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (! isset(self::$_clone)) {
+        if (is_null(self::$_clone)) {
             self::$_clone = new AnRegistry();
         }
 

@@ -31,7 +31,7 @@ define('ANPATH_VENDOR',         ANPATH_BASE.DS.'vendor');
 /*
  * Installation check, and check on removal of the install directory.
  */
-if (!file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH_CONFIGURATION.'/configuration.php') < 10)) {
+if (! file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH_CONFIGURATION.'/configuration.php') < 10)) {
     echo 'No configuration file found. Exiting...';
     exit();
 }

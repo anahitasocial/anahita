@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComConnectControllerBehaviorOauthorizable extends KControllerBehaviorAbstract
+class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbstract
 {
     /**
      * OAuth Adapter API.

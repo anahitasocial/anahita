@@ -18,7 +18,7 @@ class ComApplicationTemplateHelperRender extends KTemplateHelperAbstract
      *
      * @return KConfig
      */
-    protected $_params;
+    protected $_params = null;
 
     /**
      * Constructor.

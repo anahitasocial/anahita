@@ -19,21 +19,21 @@ class ComApplicationRouter extends KObject
      *
      * @var KHttpUrl
      */
-    protected $_clonable_url;
+    protected $_clonable_url = null;
 
     /**
      * If enabled then index.php is removed from the routes.
      *
      * @var bool
      */
-    protected $_enable_rewrite;
+    protected $_enable_rewrite = false;
 
     /**
      * base url.
      *
      * @var KHttpUrl
      */
-    protected $_base_url;
+    protected $_base_url = null;
 
     /**
      * Component routers.
@@ -228,7 +228,7 @@ class ComApplicationRouter extends KObject
      */
     public function getComponentRouter($component)
     {
-        if (!isset($this->_routers[$component])) {
+        if (! isset($this->_routers[$component])) {
             $identifier = clone $this->getIdentifier();
             $identifier->path = array();
             $identifier->package = str_replace('com_', '', $component);
@@ -262,7 +262,7 @@ class ComApplicationRouter extends KObject
         $url->path = $path;
         $url->format = $url->format ? $url->format : pick(KRequest::format(), 'html');
 
-        if (!empty($url->format)) {
+        if (! empty($url->format)) {
             $url->query['format'] = $url->format;
         }
     }

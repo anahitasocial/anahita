@@ -18,7 +18,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      *
      * @var ComApplication
      */
-    protected $_application;
+    protected $_application = null;
 
     /**
      * Constructor.
@@ -235,7 +235,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      */
     protected function _actionPrepclienv(KCommandContext $context)
     {
-        if (!empty($_SERVER['argv']) && count($_SERVER['argv']) > 1) {
+        if (! empty($_SERVER['argv']) && count($_SERVER['argv']) > 1) {
             $args = array_slice($_SERVER['argv'], 1);
 
             if (is_readable(realpath($args[0]))) {

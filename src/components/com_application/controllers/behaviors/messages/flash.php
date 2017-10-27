@@ -84,7 +84,7 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
      */
     public function __set($key, $value)
     {
-        return ($key === 'message') ? $this->getMessage() : $this[$key] = $value;
+        return ($key == 'message') ? $this->getMessage() : $this[$key] = $value;
     }
 
     /**

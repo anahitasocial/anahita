@@ -54,7 +54,7 @@ class anahita
     {
         static $instance;
 
-        if ($instance === null) {
+        if (is_null($instance)) {
             $instance = new self($config);
         }
 

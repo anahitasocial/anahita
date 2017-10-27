@@ -19,7 +19,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
      *
      * @var bool
      */
-    protected $_enabled;
+    protected $_enabled = false;
 
     /**
      * Constructor.
@@ -88,16 +88,6 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
     }
 
     /**
-     * (non-PHPdoc).
-     *
-     * @see AnControllerBehaviorAbstract::execute()
-     */
-    public function execute($name, KCommandContext $context)
-    {
-        return parent::execute($name, $context);
-    }
-
-    /**
      * Sets a message.
      *
      * @param string $type    The message type
@@ -136,7 +126,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
             $queue = $session->get($namespace->queue, new stdClass);
             $queue->$key = $value;
 
-            if (!$global && $this->_mixer->flash) {
+            if (! $global && $this->_mixer->flash) {
                 $this->_mixer->flash->$key = $value;
             }
 
@@ -178,7 +168,6 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
             $store = 'application.queue';
             $namespace = '__anahita';
         } else {
-            //$store = (string) $this->_mixer->getIdentifier();
             $store = 'controller.queue';
             $namespace = 'controller_persistance';
         }

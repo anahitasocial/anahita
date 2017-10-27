@@ -55,9 +55,9 @@
 * </code>
 *
 * @author		Johan Janssens <johan@nooku.org>
-* @author    Rastin Mehr <rastin@anahitapolis.com
-* @package     anahita_Plugins
-* @subpackage  Anahita
+* @author       Rastin Mehr <rastin@anahitapolis.com
+* @package      anahita_Plugins
+* @subpackage   Anahita
 */
 
 abstract class PlgAnahitaDefault extends KEventSubscriberDefault
@@ -67,7 +67,7 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
      *
      * @var KConfig
      */
-    protected $_params;
+    protected $_params = null;
 
     /**
   	 * Constructor
@@ -85,11 +85,11 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
         $this->_params = $config->meta;
 
         //Setup lazy wiring for publishers we are subscribing too
-        foreach($config->event_publishers as $publisher) {
+        foreach ($config->event_publishers as $publisher) {
             KService::setConfig($publisher, array('event_subscribers' => array($this)));
         }
 
-        if ( $dispatcher instanceof KEventDispatcher ) {
+        if ($dispatcher instanceof KEventDispatcher ) {
             $dispatcher->addEventSubscriber($this);
         }
   	}
@@ -105,7 +105,7 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
   	protected function _initialize(KConfig $config)
   	{
   	    $config->append(array(
-          	'params'           => array(),
+          	'params' => array(),
           	'event_publishers' => array()
           ));
 
@@ -121,7 +121,7 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
   	 */
   	public function loadLanguage($extension = '', $basePath = ANPATH_BASE)
   	{
-  		if(empty($extension)) {
+  		if (empty($extension)) {
   		    $extension = 'plg_'.$this->getIdentifier()->package.'_'.$this->getIdentifier()->name;
   		}
 
