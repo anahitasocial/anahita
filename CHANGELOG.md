@@ -1,10 +1,17 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.8 Birth Release
+=============================
+1. fixed bugs that prevented people to stay logged in if they chose to
+2. KController is AnController now
+3. refactored and merged Dispatcher controllers
+4. removed legacy files that were nolonger in use.  
+
 Anahita 4.3.7 Birth Release
 =============================
 1. added Google reCaptcha plugin
 1. fixed issue which was preventing all system plugins to load on pages other than Dashboard
-1. a number of bug fixes and code improvements 
+1. a number of bug fixes and code improvements
 
 Anahita 4.3.6 Birth Release
 =============================
