@@ -1,5 +1,3 @@
 <?php
 
-class ComComponentsDomainEntitysetAssignment extends AnDomainEntitysetDefault
-{
-}
+class ComComponentsDomainEntitysetAssignment extends AnDomainEntitysetDefault {}

@@ -1,25 +1,5 @@
 <?php
 
-
- /** 
-  * LICENSE: This source file is subject to version 3.01 of the PHP license
-  * that is available through the world-wide-web at the following URI:
-  * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
-  * the PHP License and are unable to obtain it through the web, please
-  * send a note to license@php.net so we can mail you a copy immediately.
-  * 
-  * @category   Anahita
-  *
-  * @author     Arash Sanieyan <ash@anahitapolis.com>
-  * @author     Rastin Mehr <rastin@anahitapolis.com>
-  * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
-  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
-  *
-  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
-  *
-  * @link       http://www.GetAnahita.com
-  */
-
  /**
   * Dispatcher Response.
   *
@@ -27,6 +7,7 @@
   *
   * @author     Arash Sanieyan <ash@anahitapolis.com>
   * @author     Rastin Mehr <rastin@anahitapolis.com>
+  * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
   * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
   *
   * @link       http://www.GetAnahita.com
@@ -35,19 +16,19 @@
  {
      /**
      * Transport object.
-     * 
+     *
      * @var LibBaseDispatcherResponseTransportAbstract
      */
     protected $_transport;
 
     /**
      * Request object.
-     * 
+     *
      * @var KConfig
      */
     protected $_request;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -55,9 +36,7 @@
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-
         $this->_transport = $config->transport;
-
         $this->_request = $config->request;
     }
 
@@ -85,8 +64,8 @@
      */
     public function getTransport()
     {
-        if (!$this->_transport instanceof LibBaseDispatcherResponseTransportAbstract) {
-            if (!($this->_transport instanceof KServiceIdentifier)) {
+        if (! $this->_transport instanceof LibBaseDispatcherResponseTransportAbstract) {
+            if (! ($this->_transport instanceof KServiceIdentifier)) {
                 $this->setTransport($this->_transport);
             }
 
@@ -109,7 +88,7 @@
      */
     public function setTransport($transport)
     {
-        if (!($transport instanceof LibBaseDispatcherResponseTransportAbstract)) {
+        if (! ($transport instanceof LibBaseDispatcherResponseTransportAbstract)) {
             if (is_string($transport) && strpos($transport, '.') === false) {
                 $identifier = 'com:base.dispatcher.response.transport.'.$transport;
             } else {
@@ -127,7 +106,7 @@
 
     /**
      * Return the request.
-     * 
+     *
      * @return KConfig
      */
     public function getRequest()
@@ -137,12 +116,12 @@
 
     /**
      * Set the response request.
-     * 
+     *
      * @param array $request
      */
     public function setRequest($request)
     {
-        if (!$request instanceof LibBaseControllerRequest) {
+        if (! $request instanceof LibBaseControllerRequest) {
             $request = new LibBaseControllerRequest($request);
         }
 

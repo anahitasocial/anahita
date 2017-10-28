@@ -12,14 +12,14 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstract
+class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstract
 {
     /**
      * Check if the behavior is enabled or not.
      *
      * @var bool
      */
-    protected $_enabled;
+    protected $_enabled = false;
 
     /**
      * Constructor.
@@ -48,7 +48,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
 
         static $once;
 
-        if (!$once) {
+        if (! $once) {
             $_SESSION['__controller_persistance'] = array('controller.queue' => new stdClass());
             $once = true;
         }
@@ -85,16 +85,6 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
             $message['message'] = AnTranslator::_($message['message']);
             $this->storeValue('message', $message, true);
         }
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see KControllerBehaviorAbstract::execute()
-     */
-    public function execute($name, KCommandContext $context)
-    {
-        return parent::execute($name, $context);
     }
 
     /**
@@ -136,7 +126,7 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
             $queue = $session->get($namespace->queue, new stdClass);
             $queue->$key = $value;
 
-            if (!$global && $this->_mixer->flash) {
+            if (! $global && $this->_mixer->flash) {
                 $this->_mixer->flash->$key = $value;
             }
 
@@ -178,7 +168,6 @@ class ComApplicationControllerBehaviorMessage extends KControllerBehaviorAbstrac
             $store = 'application.queue';
             $namespace = '__anahita';
         } else {
-            //$store = (string) $this->_mixer->getIdentifier();
             $store = 'controller.queue';
             $namespace = 'controller_persistance';
         }

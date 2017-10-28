@@ -22,7 +22,6 @@ class ComPeopleControllerBehaviorIdentifiable extends ComBaseControllerBehaviorI
     {
         if ($this->isDispatched()) {
             $username = $this->getRequest()->username;
-
             if ($username && $this->getRequest()->get('layout') != 'add') {
                 $this->setIdentifiableKey('username');
             }

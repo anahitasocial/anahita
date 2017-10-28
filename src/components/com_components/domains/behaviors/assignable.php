@@ -86,17 +86,17 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-                'profile_name' => ucfirst($this->getIdentifier()->package),
-                'profile_description' => AnTranslator::_('COM-'.$this->getIdentifier()->package.'-APP-DESCRIPTION'),
-                'profile_features' => array(),
-                'assignment_option' => self::OPTION_OPTIONAL,
-                'actor_identifiers' => array(),
-                'relationships' => array(
-                    'assignments' => array(
-                       'child' => 'com:components.domain.entity.assignment',
-                       'child_key' => 'componentEntity',
-                    ),
+            'profile_name' => ucfirst($this->getIdentifier()->package),
+            'profile_description' => AnTranslator::_('COM-'.$this->getIdentifier()->package.'-APP-DESCRIPTION'),
+            'profile_features' => array(),
+            'assignment_option' => self::OPTION_OPTIONAL,
+            'actor_identifiers' => array(),
+            'relationships' => array(
+                'assignments' => array(
+                   'child' => 'com:components.domain.entity.assignment',
+                   'child_key' => 'componentEntity',
                 ),
+            ),
         ));
 
         parent::_initialize($config);
@@ -108,11 +108,9 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     public function setAssignmentForIdentifier($identifier, $access = null)
     {
         if (is_array($identifier)) {
-
             foreach ($identifier as $identifier => $access) {
                 $this->setAssignmentForIdentifier($identifier, $access);
             }
-
         } else {
             //not a real identifier just the
             //the name part.
@@ -137,7 +135,6 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
     public function getAssignmentForIdentifier($identifier)
     {
         $assignment = $this->assignments->find(array('actortype' => (string) $identifier));
-
         $access = ($assignment) ? $assignment->access : self::ACCESS_NEVER;
 
         return (int) $access;

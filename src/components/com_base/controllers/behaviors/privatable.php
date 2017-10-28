@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,11 +26,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorPrivatable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorPrivatable extends AnControllerBehaviorAbstract
 {
     /**
      * Set a privacy for a privatable entity.
-     * 
+     *
      * @param KCommandContext $context Context parameter
      */
     protected function _actionSetprivacy($context)
@@ -48,7 +48,7 @@ class ComBaseControllerBehaviorPrivatable extends KControllerBehaviorAbstract
 
     /**
      * Authorize setting privacy.
-     * 
+     *
      * @return bool
      */
     public function canSetprivacy()

@@ -4,13 +4,14 @@
  * Flash memory. Can contain key value pairs.
  *
  * @category   Anahita
+ * @package    com_application
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
+ * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link       http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
 {
@@ -83,7 +84,7 @@ class ComApplicationControllerBehaviorMessageFlash extends ArrayObject
      */
     public function __set($key, $value)
     {
-        return ($key === 'message') ? $this->getMessage() : $this[$key] = $value;
+        return ($key == 'message') ? $this->getMessage() : $this[$key] = $value;
     }
 
     /**

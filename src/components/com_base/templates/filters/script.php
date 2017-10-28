@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateFilterScript extends ComDefaultTemplateFilterScript
+class ComBaseTemplateFilterScript extends KTemplateFilterScript
 {
     /**
      * Render script information.
@@ -52,8 +52,16 @@ class ComBaseTemplateFilterScript extends ComDefaultTemplateFilterScript
                     $link = false;
                 }
             }
+
+            return parent::_renderScript($script, $link, $attribs);
         }
 
-        return parent::_renderScript($script, $link, $attribs);
+        $document = KService::get('anahita:document');
+
+        if($link) {
+            return $document->addScript($script, 'text/javascript');
+        } else {
+            return $document->addScriptDeclaration($script);
+        }
     }
 }

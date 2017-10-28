@@ -67,14 +67,11 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     public function canRead()
     {
-        if (
-            $this->_mixer
-                 ->getRequest()
-                 ->get('layout') == 'signup' &&
-            $this->isRegistrationOpen()
-        ) {
+        $layout = $this->_mixer->getRequest()->get('layout');
+
+        if ($layout == 'signup' && $this->isRegistrationOpen()) {
             return $this->_viewer->guest();
-        } elseif ($this->_mixer->getRequest()->get('layout') == 'add') {
+        } elseif ($layout == 'add') {
             return $this->_viewer->admin();
         }
 
@@ -117,7 +114,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     public function setRegistrationOpen($can_register)
     {
         $this->_can_register = $can_register;
-
         return $this;
     }
 

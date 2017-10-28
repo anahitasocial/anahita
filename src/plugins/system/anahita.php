@@ -5,7 +5,6 @@
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -13,6 +12,12 @@
  */
 class PlgSystemAnahita extends PlgAnahitaDefault
 {
+    /**
+    *   Represents the person who has logged in
+    *   @param ComPeopleViewer
+    */
+    private $_viewer = null;
+
     /**
      * Constructor.
      *
@@ -22,7 +27,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
     public function __construct($dispatcher, KConfig $config)
     {
-
         // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
             if (!isset($_SERVER['HTTP_HOST'])) {
@@ -35,38 +39,16 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         }
 
         // Check for suhosin
-        if (in_array('suhosin', get_loaded_extensions())) {
-            //Attempt setting the whitelist value
-            @ini_set('suhosin.executor.include.whitelist', 'tmpl://, file://');
-
-            //Checking if the whitelist is ok
-            if (
-                  !@ini_get('suhosin.executor.include.whitelist') ||
-                  strpos(@ini_get('suhosin.executor.include.whitelist'), 'tmpl://') === false
-            ) {
-                $url = KService::get('application')->getRouter()->getBaseUrl();
-                $url .= '/templates/system/error_suhosin.html';
-
-                //@todo we don't have redirect methods
-                KService::get('application.dispatcher')->getResponse()->setRedirect($url);
-                KService::get('application.dispatcher')->getResponse()->send();
-
-                return;
-            }
-        }
+        $this->_handleSuhosinCheck();
 
         //Safety Extender compatibility
-        if (
-            extension_loaded('safeex') &&
-            strpos('tmpl', ini_get('safeex.url_include_proto_whitelist')) === false
-        ) {
-            $whitelist = ini_get('safeex.url_include_proto_whitelist');
-            $whitelist = (strlen($whitelist) ? $whitelist.',' : '').'tmpl';
-            ini_set('safeex.url_include_proto_whitelist', $whitelist);
-        }
+        $this->_handleSafeexCheck();
 
-        //KService::get('plg:storage.default');
+        //load language overwrites
         KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
+
+        //create viewer object
+        $this->_viewer = KService::get('com:people.viewer');
 
         parent::__construct($dispatcher, $config);
     }
@@ -76,62 +58,176 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      */
     public function onAfterDispatch(KEvent $event)
     {
-        $viewer = KService::get('com:people.viewer');
+        $this->_logoutIfDisabledAccount();
 
-        if (!$viewer->guest() && !$viewer->enabled) {
-            KService::get('com:people.helper.person')->logout();
-            KService::get('application.dispatcher')->getResponse()->setRedirect(route('index.php'));
-        }
-
-        $credentials = array();
-        $remember = get_hash('AN_LOGIN_REMEMBER');
-
-        // for json requests obtain the username and password from the $_SERVER array
-        // else if the remember me cookie exists, decrypt and obtain the username and password from it
-        if (
-               $viewer->guest() &&
-               KRequest::has('server.PHP_AUTH_USER') &&
-               KRequest::has('server.PHP_AUTH_PW') &&
-               KRequest::format() == 'json'
-           ) {
-
-            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
-            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
-
-        } elseif ($viewer->guest() && isset($_COOKIE[$remember]) && $_COOKIE[$remember] != '') {
-
-            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
-            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
-            $cookie = $crypt->decrypt($_COOKIE[$remember]);
-            $credentials = (array) @unserialize($cookie);
-
-        } else {
+        if (! $this->_viewer->guest()) {
             return;
         }
 
-        if ($viewer->guest() && count($credentials)) {
+        $credentials = array();
+        $credentials = $this->_getRememberMeCredentials();
 
-            try {
+        if (count($credentials) == 0) {
+            $credentials = $this->_getCredentialsFromServerArray();
+        }
 
-                $response = $this->getService('com:people.authentication.response');
-                dispatch_plugin('authentication.onAuthenticate', array(
-                                    'credentials' => $credentials,
-                                    'response' => $response
-                                ));
-
-                if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
-                    KService::get('com:people.helper.person')->login($credentials, true);
-                }
-
-            } catch (RuntimeException $e) {
-                //only throws exception if we are using JSON format
-                //otherwise let the current app handle it
-                if (KRequest::format() == 'json') {
-                    throw $e;
-                }
+        if (count($credentials)) {
+            if ($this->_authenticate($credentials)) {
+                $this->_login($credentials);
             }
         }
 
         return;
+    }
+
+    /**
+    *   Authenticate the credentials
+    *
+    *   @param array array('username' => 'janesmith', 'password' => 'somethingsecure')
+    *   @return boolean TRUE if authentication passes
+    */
+    private function _authenticate($credentials)
+    {
+        try {
+            $response = $this->getService('com:people.authentication.response');
+            dispatch_plugin('authentication.onAuthenticate', array(
+                                'credentials' => $credentials,
+                                'response' => $response
+                            ));
+
+            if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
+                return true;
+            }
+        } catch (RuntimeException $e) {
+            //only throws exception if we are using JSON format
+            //otherwise let the current app handle it
+            if (KRequest::format() == 'json') {
+                throw $e;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+    *   Loggin the user and keep them logged in
+    *
+    *   @param array array('username' => 'janesmith', 'password' => 'somethingsecure')
+    *   @return void
+    */
+    private function _login($credentials) {
+        $this->getService('com:people.helper.person')->login($credentials, true);
+        $this->getService('application.dispatcher')
+        ->getResponse()
+        ->setRedirect($this->_getCurrentUrl())
+        ->send();
+    }
+
+    /**
+    *   Obtains credentials for the people who have obted to stay logged in
+    *
+    *   @return array array('username' => 'janesmith', 'password' => 'somethingsecure')
+    */
+    private function _getRememberMeCredentials()
+    {
+        $credentials = array();
+        $remember = get_hash('AN_LOGIN_REMEMBER');
+
+        if (isset($_COOKIE[$remember]) && !empty($_COOKIE[$remember])) {
+            $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
+            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
+            $cookie = $crypt->decrypt($_COOKIE[$remember]);
+
+            try {
+                $credentials = (array) unserialize($cookie);
+            } catch (RuntimeException $e) {
+                error_log($e->getMessage());
+            }
+        }
+
+        return $credentials;
+    }
+
+    /**
+    *   Obtains credentials from server array
+    *
+    *   @return array array('username' => 'janesmith', 'password' => 'somethingsecure')
+    */
+    private function _getCredentialsFromServerArray()
+    {
+        $credentials = array();
+
+        if (KRequest::has('server.PHP_AUTH_USER') && KRequest::has('server.PHP_AUTH_PW')) {
+            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
+            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
+        }
+
+        return $credentials;
+    }
+
+    /**
+    *   Logout a user with disabled account
+    *
+    *   @return void
+    */
+    private function _logoutIfDisabledAccount()
+    {
+        if (! is_null($this->_viewer)) {
+            if (! $this->_viewer->guest() && ! $this->_viewer->enabled) {
+                $this->getService('com:people.helper.person')->logout();
+                $this->getService('application.dispatcher')->getResponse()->setRedirect(route('index.php'));
+            }
+        }
+
+        return;
+    }
+
+    /**
+    *   Returns existing url location
+    *
+    *   @return string
+    */
+    private function _getCurrentUrl()
+    {
+        $url = $this->getService('com:application')->getRouter()->getBaseUrl();
+        $url .= $_SERVER['REQUEST_URI'];
+
+        return $url;
+    }
+
+    private function _handleSuhosinCheck()
+    {
+        if (in_array('suhosin', get_loaded_extensions())) {
+            //Attempt setting the whitelist value
+            @ini_set('suhosin.executor.include.whitelist', 'tmpl://, file://');
+
+            //Checking if the whitelist is ok
+            if (
+                  !@ini_get('suhosin.executor.include.whitelist') ||
+                  strpos(@ini_get('suhosin.executor.include.whitelist'), 'tmpl://') === false
+            ) {
+                $url = $this->getService('com:application')->getRouter()->getBaseUrl();
+                $url .= '/templates/system/error_suhosin.html';
+
+                KService::get('application.dispatcher')
+                ->getResponse()
+                ->setRedirect($url)
+                ->send();
+            }
+        }
+
+        return;
+    }
+
+    private function _handleSafeexCheck()
+    {
+        if (
+            extension_loaded('safeex') &&
+            strpos('tmpl', ini_get('safeex.url_include_proto_whitelist')) === false
+        ) {
+            $whitelist = ini_get('safeex.url_include_proto_whitelist');
+            $whitelist = (strlen($whitelist) ? $whitelist.',' : '').'tmpl';
+            ini_set('safeex.url_include_proto_whitelist', $whitelist);
+        }
     }
 }

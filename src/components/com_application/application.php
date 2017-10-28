@@ -2,13 +2,15 @@
 
 /**
  *
- * @category    Anahita
- * @package     com_application
+ * @category   Anahita
+ * @package    com_application
  *
- * @author      Rastin Mehr <rastin@anahitapolis.com>
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @author     Arash Sanieyan <ash@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link        http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 
 class ComApplication extends KObject implements KServiceInstantiatable
@@ -18,21 +20,21 @@ class ComApplication extends KObject implements KServiceInstantiatable
      *
      * @var string
      */
-    protected $_template;
+    protected $_template = "";
 
     /**
      * Application Router.
      *
      * @var ComApplicationRouter
      */
-    protected $_router;
+    protected $_router = null;
 
     /**
   	 * The name of the application
   	 *
   	 * @var		array
   	 */
-  	protected $_name = null;
+  	protected $_name = "";
 
     /**
     * Site settings
@@ -52,7 +54,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
         $this->_name = $config->session_name;
 
         if ($config->session) {
-           $this->createSession( get_hash($config->_name) );
+           $this->createSession(get_hash($this->_name));
         }
 
         parent::__construct($config);
@@ -112,6 +114,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
         ));
 
         $repository = KService::get('repos:sessions.session');
+
         //purge guest sessions within 10 minutes expiry time
         $repository->purge(600);
 
@@ -129,9 +132,9 @@ class ComApplication extends KObject implements KServiceInstantiatable
      */
     public function getTemplate()
     {
-        if (!isset($this->_template)) {
+        if (empty($this->_template)) {
 
-            if (!KService::get('application.registry')->offsetExists('application-template')) {
+            if (! KService::get('application.registry')->offsetExists('application-template')) {
                 KService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
             }
 
@@ -150,6 +153,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
     public function setTemplate($template)
     {
         $this->_template = $template;
+        return $this;
     }
 
     /**
@@ -160,18 +164,17 @@ class ComApplication extends KObject implements KServiceInstantiatable
     public function setRouter($router)
     {
         $this->_router = $router;
-
         return $this;
     }
 
     /**
      * Return a reference to the JRouter object.
      *
-     * @return JRouter
+     * @return ComApplicationRouter
      */
     public function getRouter($name = null, $options = array())
     {
-        if (!isset($this->_router)) {
+        if (is_null($this->_router)) {
             $this->_router = KService::get('com:application.router', array(
                 'enable_rewrite' => $this->_site_settings->sef_rewrite
             ));
@@ -193,18 +196,15 @@ class ComApplication extends KObject implements KServiceInstantiatable
   	{
   		$name = $this->_name;
 
-  		if (empty( $name )) {
-
+  		if (empty($name)) {
   			$r = null;
-
-  			if (!preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
+  			if (! preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
                 throw new AnErrorException(
-                  "Can't get or parse the class name.",
-                  KHttpResponse::INTERNAL_SERVER_ERROR
+                    "Can't get or parse the class name ",
+                    KHttpResponse::INTERNAL_SERVER_ERROR
                 );
   			}
-
-  			$name = strtolower( $r[1] );
+  			$name = strtolower($r[1]);
   		}
 
   		return $name;

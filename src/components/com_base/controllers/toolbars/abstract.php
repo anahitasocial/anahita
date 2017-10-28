@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class ComBaseControllerToolbarAbstract extends KControllerToolbarAbstract
+abstract class ComBaseControllerToolbarAbstract extends AnControllerToolbarAbstract
 {
     /**
      * Constructor.
@@ -71,7 +71,7 @@ abstract class ComBaseControllerToolbarAbstract extends KControllerToolbarAbstra
      * @param string $command Comamd name
      * @param array  $config  Parameters to be passed to the command
      *
-     * @return KControllerToolbarAbstract
+     * @return AnControllerToolbarAbstract
      */
     public function addCommand($command, $config = array())
     {

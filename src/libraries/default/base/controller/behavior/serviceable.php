@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerBehaviorServiceable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
 {
     /**
      * An array of actions to exclude from the

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorOwnable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
 {
     /**
      * Default owner.

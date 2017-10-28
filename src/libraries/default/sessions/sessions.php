@@ -260,7 +260,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	{
 		if ($this->_state === self::STATE_DESTROYED) {
 			throw new LibSessionsException("Can't obtain the session name!\n");
-			return;
 		}
 
 		return session_name();
@@ -276,7 +275,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	{
 		if ($this->_state === self::STATE_DESTROYED) {
 			throw new LibSessionsException("Can't obtain the session id!\n");
-			return;
 		}
 
 		return session_id();
@@ -349,7 +347,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
    {
 	   if($this->_state !== self::STATE_ACTIVE && $this->_state !== self::STATE_EXPIRED) {
 		   throw new LibSessionsException("Session does not exist!\n");
-		   return;
 	   }
 
 	   $namespace = ($namespace === '') ? $this->_namespace : $namespace;
@@ -373,7 +370,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	{
 		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
-			return;
 		}
 
 		$namespace = ($namespace === '') ? $this->_namespace : $namespace;
@@ -399,7 +395,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 
 		if($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
-			return;
 		}
 
 		return isset($_SESSION[$this->_namespace][$name]);
@@ -416,7 +411,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	{
 		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
-			return;
 		}
 
 		$value = null;
@@ -472,7 +466,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 
 		if ($this->_state !==  self::STATE_DESTROYED) {
 			throw new LibSessionsException("Session is not destroyed!\n");
-			return false;
 		}
 
 		$this->_storage->register();
@@ -503,7 +496,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	{
 		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
-			return false;
 		}
 
 		session_regenerate_id();

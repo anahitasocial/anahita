@@ -42,6 +42,8 @@ class AnErrorException extends KException
      */
     public function __construct($errors = array(), $code = KHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
     {
+        $errors = (array) $errors;
+
         foreach ($errors as $error) {
             $this->_errors[] = $error;
         }

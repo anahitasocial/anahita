@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,17 +26,17 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
 {
     /**
      * Identifiable key. If this key exists in the request then this behavior
      * will fetch the actor entity using this key.
-     * 
+     *
      * @return string
      */
     protected $_identifiable_key;
 
-    /** 
+    /**
      * Constructor.
      *
      * @param KConfig $config An optional KConfig object with configuration options.
@@ -74,11 +74,11 @@ class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
 
     /**
      * Command handler.
-     * 
+     *
      * @param   string      The command name
      * @param   object      The command context
      *
-     * @return bool Can return both true or false.  
+     * @return bool Can return both true or false.
      */
     public function execute($name, KCommandContext $context)
     {
@@ -104,9 +104,9 @@ class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
 
     /**
      * Set the parent.
-     * 
+     *
      * @param AnDomainEntityDefault $parent Set the parent entity
-     * 
+     *
      * @return ComBaseControllerBehaviorParentable
      */
     public function setParent($parent)
@@ -118,7 +118,7 @@ class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
 
     /**
      * Return the parent entity.
-     * 
+     *
      * @return AnDomainEntityDefault
      */
     public function getParent()
@@ -141,9 +141,9 @@ class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
 
     /**
      * Sets the identifiable key.
-     * 
+     *
      * @param string $key The identifiable key
-     * 
+     *
      * @return LibBaseControllerBehaviorIdentifiable
      */
     public function setIdentifiableKey($key)
@@ -153,7 +153,7 @@ class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
 
     /**
      * Return the identifiable key.
-     * 
+     *
      * @return string
      */
     public function getIdentifiableKey()
@@ -163,7 +163,7 @@ class ComBaseControllerBehaviorParentable extends KControllerBehaviorAbstract
 
     /**
      * Return the object handle.
-     * 
+     *
      * @return string
      */
     public function getHandle()

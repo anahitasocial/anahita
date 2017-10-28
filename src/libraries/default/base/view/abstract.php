@@ -67,14 +67,14 @@ abstract class LibBaseViewAbstract extends KObject
     public function __construct(KConfig $config = null)
     {
         //If no config is passed create it
-        if (!isset($config)) {
+        if (! isset($config)) {
             $config = new KConfig();
         }
 
         parent::__construct($config);
 
         //set the base url
-        if (!$config->base_url instanceof KHttpUrl) {
+        if (! $config->base_url instanceof KHttpUrl) {
             $this->_baseurl = $this->getService('koowa:http.url', array('url' => $config->base_url));
         } else {
             $this->_baseurl = $config->base_url;
@@ -87,7 +87,6 @@ abstract class LibBaseViewAbstract extends KObject
 
         //set the data
         $this->_state = $config->state;
-
         $this->_data = KConfig::unbox($config->data);
     }
 
@@ -207,7 +206,6 @@ abstract class LibBaseViewAbstract extends KObject
     public function getName()
     {
         $total = count($this->getIdentifier()->path);
-
         return $this->getIdentifier()->path[$total - 1];
     }
 
@@ -241,7 +239,6 @@ abstract class LibBaseViewAbstract extends KObject
     public function setLayout($layout)
     {
         $this->_layout = $layout;
-
         return $this;
     }
 
@@ -305,7 +302,7 @@ abstract class LibBaseViewAbstract extends KObject
      */
     public function getRoute($route = '', $fqr = true)
     {
-        if (!is_array($route)) {
+        if (! is_array($route)) {
             $parts = array();
             parse_str(trim($route), $parts);
             $route = $parts;
@@ -316,19 +313,19 @@ abstract class LibBaseViewAbstract extends KObject
         $route = array();
 
         //Check to see if there is component information in the route if not add it
-        if (!isset($parts['option'])) {
+        if (! isset($parts['option'])) {
             $route['option'] = 'com_'.$this->getIdentifier()->package;
         }
 
         //Add the view information to the route if it's not set
-        if (!isset($parts['view'])) {
+        if (! isset($parts['view'])) {
             $route['view'] = $this->getName();
 
             //Add the layout information to the route if it's not set
-            if (!isset($parts['layout'])) {
+            if (! isset($parts['layout'])) {
                 $route['layout'] = $this->getLayout();
 
-                //@TODO temporary. who are we to day what's the default la
+                //@TODO temporary. who are we today what's the default layout
                 if ($route['layout'] == 'default') {
                     unset($route['layout']);
                 }
@@ -348,9 +345,9 @@ abstract class LibBaseViewAbstract extends KObject
 
         $parts = array_merge($route, $parts);
         $parts = http_build_query($parts);
-        $route = $this->getService('application')->getRouter()->build($parts, $fqr);
+        $route = $this->getService('com:application')->getRouter()->build($parts, $fqr);
 
-        //if ($fqr && false) {
+        //if ($fqr) {
         //    $route->scheme = $this->getBaseUrl()->scheme;
         //    $route->host = $this->getBaseUrl()->host;
         //}
@@ -370,7 +367,6 @@ abstract class LibBaseViewAbstract extends KObject
         } catch (Exception $e) {
             $trace = str_replace("\n", '<br />', $e->getTraceAsString());
             trigger_error($e->getMessage().'<br />'.$trace, E_USER_ERROR);
-
             return '';
         }
     }

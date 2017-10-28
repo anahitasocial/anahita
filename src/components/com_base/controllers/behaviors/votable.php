@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorVotable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
 {
     /**
      * Renders ComBaseTemplateHelperUi::vote().

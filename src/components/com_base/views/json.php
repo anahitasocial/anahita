@@ -11,6 +11,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseViewJson extends LibBaseViewJson
-{
-}
+class ComBaseViewJson extends LibBaseViewJson{}

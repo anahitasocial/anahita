@@ -35,7 +35,7 @@ class ComSettingsViewAssignmentsHtml extends ComBaseViewHtml
         }
 
         $apps = array();
-
+        
         foreach($components as $component) {
            if ($component->isAssignable()) {
               $apps[] = $component;

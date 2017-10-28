@@ -15,4 +15,4 @@ defined('ANPATH_BASE') or die('Restricted access');
 
 require_once ANPATH_BASE.'/includes/framework.php';
 
-KService::get('com://site/application.dispatcher')->run();
+KService::get('com://site/application.dispatcher')->route();

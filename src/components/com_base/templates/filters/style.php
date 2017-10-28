@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateFilterStyle extends ComDefaultTemplateFilterStyle
+class ComBaseTemplateFilterStyle extends KTemplateFilterStyle
 {
     /**
      * Render style information.
@@ -53,8 +53,16 @@ class ComBaseTemplateFilterStyle extends ComDefaultTemplateFilterStyle
                     $link = false;
                 }
             }
+
+            return parent::_renderStyle($style, $link, $attribs);
         }
 
-        return parent::_renderStyle($style, $link, $attribs);
+        $document = KService::get('anahita:document');
+
+        if($link) {
+            return $document->addStyleSheet($style, 'text/css', null, $attribs);
+        } else {
+            return $document->addStyleDeclaration($style);
+        }
     }
 }

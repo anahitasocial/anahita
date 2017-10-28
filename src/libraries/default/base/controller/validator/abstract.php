@@ -24,7 +24,7 @@ abstract class LibBaseControllerValidatorAbstract extends KObject
     /**
      * Controller.
      *
-     * @var KControllerAbstract
+     * @var AnControllerAbstract
      */
     protected $_controller;
 
@@ -60,7 +60,7 @@ abstract class LibBaseControllerValidatorAbstract extends KObject
     /**
      * Get the controller object.
      *
-     * @return KControllerAbstract
+     * @return AnControllerAbstract
      */
     public function getController()
     {

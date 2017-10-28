@@ -63,17 +63,17 @@ class plgUserAnahita extends PlgAnahitaDefault
                         'enabled' => 1
                     ));
 
-        if (!isset($person)) {
+        if (is_null($person)) {
             $msg = "Did not find a user with username: ".$credentials->username;
             throw new AnErrorException($msg, KHttpResponse::UNAUTHORIZED);
-            return false;
+        } else {
+            $person->visited();
+            $session = KService::get('com:sessions');
+            $session->set('person', (object) $person->getData());
+            return true;
         }
 
-        $person->visited();
-        $session = KService::get('com:sessions');
-        $session->set('person', (object) $person->getData());
-
-        return true;
+        return false;
     }
 
     /**

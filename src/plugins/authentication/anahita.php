@@ -7,13 +7,13 @@ class plgAuthenticationAnahita extends PlgAnahitaDefault
         $credentials = $event->credentials;
         $response = $event->response;
 
-        if ($credentials->username === "") {
+        if (empty($credentials->username)) {
             $response->status = ComPeopleAuthentication::STATUS_FAILURE;
             $response->error_message = 'Empty username not allowed';
             return false;
         }
 
-        if ($credentials->password === "") {
+        if (empty($credentials->password)) {
             $response->status = ComPeopleAuthentication::STATUS_FAILURE;
             $response->error_message = 'Empty password not allowed';
             return false;
@@ -26,7 +26,7 @@ class plgAuthenticationAnahita extends PlgAnahitaDefault
             'enabled' => 1
         ));
 
-        if (isset($person)) {
+        if (! is_null($person)) {
 
             $success = false;
 
@@ -38,11 +38,12 @@ class plgAuthenticationAnahita extends PlgAnahitaDefault
                 $crypt = $parts[0];
                 $salt = isset($parts[1]) ? $parts[1] : '';
 
-                if($person->password === md5($credentials->password.$salt).':'.$salt) {
+                if ($person->password === md5($credentials->password.$salt).':'.$salt) {
                     $success = true;
                     //legacy password will be upgraded to php's new password_hash()
                     $person->password = $credentials->password;
                 }
+
             } else {
                 $success = password_verify($credentials->password, $person->password);
             }

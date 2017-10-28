@@ -1,13 +1,13 @@
 <?php
 
 
- /** 
+ /**
   * LICENSE: This source file is subject to version 3.01 of the PHP license
   * that is available through the world-wide-web at the following URI:
   * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
   * the PHP License and are unable to obtain it through the web, please
   * send a note to license@php.net so we can mail you a copy immediately.
-  * 
+  *
   * @category   Anahita
   *
   * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -21,8 +21,8 @@
   */
 
  /**
-  * Request object. 
-  * 
+  * Request object.
+  *
   * A temporary request object until moving to Nooku 13.1
   *
   * @category   Anahita
@@ -37,10 +37,10 @@
  {
      /**
       * Sets a query value.
-      * 
+      *
       * @param string $key
       * @param mixed $value
-      * 
+      *
       * @return LibBaseControllerRequest
       */
      public function set($key, $value)
@@ -50,45 +50,43 @@
 
      /**
       * Return the request format.
-      * 
-      * @param $format The default format 
-      * 
+      *
+      * @param $format The default format
+      *
       * @return string
       */
      public function getFormat($format = 'html')
      {
-         return $this->get('format', 'html');
+         return $this->get('format', $format);
      }
 
      /**
       * set the request format.
-      * 
+      *
       * @param string $format Format
       */
      public function setFormat($format)
      {
          $this->offsetSet('format', $format);
-
          return $this;
      }
 
      /**
       * Removes a key from a request.
-      * 
+      *
       * @param string $key
       */
      public function remove($key)
      {
          $this->offsetUnset($key);
-
          return $this;
      }
 
      /**
       * Return whether it has a key or not.
-      * 
+      *
       * @param string $key
-      * 
+      *
       * @return bool
       */
      public function has($key)
@@ -98,7 +96,7 @@
 
      /**
       * Retunr if the request is get.
-      * 
+      *
       * @return bool
       */
      public function isGet()
@@ -164,7 +162,7 @@
 
      /**
       * Return if the request is ajax.
-      * 
+      *
       * @return bool
       */
      public function isAjax()

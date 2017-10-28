@@ -48,7 +48,7 @@ class ComBaseControllerResource extends LibBaseControllerResource
     /**
      * Get a toolbar by identifier.
      *
-     * @return KControllerToolbarAbstract
+     * @return AnControllerToolbarAbstract
      */
     public function getToolbar($toolbar, $config = array())
     {

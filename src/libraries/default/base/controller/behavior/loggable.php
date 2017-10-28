@@ -18,7 +18,7 @@ define('LOG_LEVEL_ERROR', 'ERROR');
  *
  * @uses AnLog
  */
-class LibBaseControllerBehaviorLoggable extends KControllerBehaviorAbstract
+class LibBaseControllerBehaviorLoggable extends AnControllerBehaviorAbstract
 {
     /**
      * Log instance.

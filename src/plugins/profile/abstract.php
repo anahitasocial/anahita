@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class PlgProfileAbstract extends PlgKoowaDefault
+abstract class PlgProfileAbstract extends PlgAnahitaDefault
 {
     /**
      * Called on the saving an actor profile information.

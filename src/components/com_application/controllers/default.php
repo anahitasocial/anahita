@@ -1,30 +1,16 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
  *
  * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Page Controller.
- *
- * @category   Anahita
+ * @package    com_application
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link       http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 class ComApplicationControllerDefault extends LibBaseControllerResource implements KServiceInstantiatable
 {
@@ -38,23 +24,13 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
         }
 
         return $container->get($config->service_identifier);
-    }
-
-    /**
-     * Constructor.
-     *
-     * @param KConfig $config An optional KConfig object with configuration options.
-     */
-    public function __construct(KConfig $config)
-    {
-        parent::__construct($config);
     }
 
     /**
@@ -67,7 +43,7 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'theme' => 'base',
+            'theme' => 'base'
         ));
 
         $config->append(array(

@@ -10,7 +10,7 @@
 *
 * @link       http://www.GetAnahita.com
 */
-class ComLocationsControllerBehaviorGeolocatable extends KControllerBehaviorAbstract
+class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbstract
 {
    /*
    *   temporary location object for adding and removing to a gelocatable

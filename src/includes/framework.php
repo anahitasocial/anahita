@@ -31,7 +31,7 @@ define('ANPATH_VENDOR',         ANPATH_BASE.DS.'vendor');
 /*
  * Installation check, and check on removal of the install directory.
  */
-if (!file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH_CONFIGURATION.'/configuration.php') < 10)) {
+if (! file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH_CONFIGURATION.'/configuration.php') < 10)) {
     echo 'No configuration file found. Exiting...';
     exit();
 }
@@ -42,7 +42,7 @@ require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
 //instantiate anahita
 Anahita::getInstance();
 
-KServiceIdentifier::setApplication('site', ANPATH_SITE);
+KServiceIdentifier::setApplication('site', ANPATH_BASE);
 KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => ANPATH_BASE)));
 KServiceIdentifier::addLocator(KService::get('anahita:service.locator.component'));
 

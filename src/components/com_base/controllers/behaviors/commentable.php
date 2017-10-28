@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
  * 
  * @category   Anahita
@@ -26,11 +26,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
 {
     /**
      * Comment Controller.
-     * 
+     *
      * @var ComBaseControllerComment
      */
     protected $_comment_controller;
@@ -71,7 +71,7 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 
     /**
      * Render the comments.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionGetcomments(KCommandContext $context)
@@ -120,9 +120,9 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 
     /**
      * Adds a comment.
-     * 
+     *
      * @param KCommandContext $context
-     * 
+     *
      * @return ComBaseDomainEntityComment
      */
     protected function _actionAddcomment(KCommandContext $context)
@@ -159,7 +159,7 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 
     /**
      * Vote on a comment.
-     * 
+     *
      * @param KCommandContext $context
      */
     protected function _actionVoteComment(KCommandContext $context)
@@ -169,7 +169,7 @@ class ComBaseControllerBehaviorCommentable extends KControllerBehaviorAbstract
 
     /**
      * Returns the comment controller.
-     * 
+     *
      * @return ComBaseControllerComment
      */
     public function getCommentController()

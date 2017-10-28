@@ -27,7 +27,7 @@ class anahita
      *
      * @var string
      */
-    protected static $_version = '4.3.7';
+    protected static $_version = '4.3.8';
 
     /**
      * Path to Anahita libraries.
@@ -54,7 +54,7 @@ class anahita
     {
         static $instance;
 
-        if ($instance === null) {
+        if (is_null($instance)) {
             $instance = new self($config);
         }
 

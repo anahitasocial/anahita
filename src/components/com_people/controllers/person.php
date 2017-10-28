@@ -69,18 +69,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionBrowse(KCommandContext $context)
     {
-        if (!$context->query) {
+        if (! $context->query) {
             $context->query = $this->getRepository()->getQuery();
         }
 
         $query = $context->query;
 
         if ($this->filter) {
-
-            if (
-                $this->filter['usertype'] &&
-                in_array($this->filter['usertype'], $this->_allowed_user_types)
-                ) {
+            if ($this->filter['usertype'] && in_array($this->filter['usertype'], $this->_allowed_user_types)) {
                 $query->filterUsertype($this->getService('koowa:filter.cmd')
                       ->sanitize($this->filter['usertype']));
             }
@@ -110,8 +106,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         $entities = $this->getState()->setList($query->toEntityset())->getList();
-
-        //print str_replace('#_', 'jos', $entities->getQuery());
 
         return $entities;
     }
@@ -169,8 +163,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
-        $edit = ($data->password && $data->username) ? 'account' : $this->edit;
-        $url = sprintf($person->getURL('false')."&get=settings&edit=%s", $edit);
+        $edit = ($data->password && $data->username) ? 'account' : 'profile';
+        $url = sprintf($person->getURL(false)."&get=settings&edit=%s", $edit);
         $context->response->setRedirect(route($url));
 
         return $person;

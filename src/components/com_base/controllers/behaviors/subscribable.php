@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseControllerBehaviorSubscribable extends KControllerBehaviorAbstract
+class ComBaseControllerBehaviorSubscribable extends AnControllerBehaviorAbstract
 {
     /**
      * If the viewer is subscribe then unsubscribe, if not subscribe then subscribe.
