@@ -37,10 +37,13 @@ class PlgUserConnect extends PlgAnahitaDefault
     {
         $user = $event->user;
 
+        if (! $this->_canPerform()) {
+            return false;
+        }
+
         $this->_createToken($user['username']);
 
         if ($this->_person) {
-
             $user = $this->_api->getUser();
 
             if (KRequest::get('post.import_avatar', 'cmd') && $user->large_avatar) {
@@ -60,9 +63,13 @@ class PlgUserConnect extends PlgAnahitaDefault
      *
      * @return bool True on success
      */
-    public function onBeforePerson(KEvent $event)
+    public function onBeforeLoginPerson(KEvent $event)
     {
         $user = $event->user;
+
+        if (! $this->_canPerform()) {
+            return false;
+        }
 
         if (isset($user['username'])) {
             $this->_createToken($user['username']);
@@ -141,5 +148,11 @@ class PlgUserConnect extends PlgAnahitaDefault
         }
 
         return $api;
+    }
+
+    private function _canPerform()
+    {
+        $option = KRequest::get('get.option', 'cmd', '');
+        return $option == 'com_connect' ? true : false;
     }
 }

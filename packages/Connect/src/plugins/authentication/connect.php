@@ -58,7 +58,7 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
                             'api' => $oauth_handler,
                         ));
 
-                if ($session) {
+                if (! is_null($session)) {
                     $response->status = ComPeopleAuthentication::STATUS_SUCCESS;
                     $response->username = $session->owner->username;
                     $response->password = '';
