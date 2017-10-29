@@ -36,6 +36,7 @@
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
+        
         $this->_transport = $config->transport;
         $this->_request = $config->request;
     }
@@ -65,6 +66,7 @@
     public function getTransport()
     {
         if (! $this->_transport instanceof LibBaseDispatcherResponseTransportAbstract) {
+
             if (! ($this->_transport instanceof KServiceIdentifier)) {
                 $this->setTransport($this->_transport);
             }
@@ -89,13 +91,18 @@
     public function setTransport($transport)
     {
         if (! ($transport instanceof LibBaseDispatcherResponseTransportAbstract)) {
+
             if (is_string($transport) && strpos($transport, '.') === false) {
                 $identifier = 'com:base.dispatcher.response.transport.'.$transport;
             } else {
                 $identifier = $this->getIdentifier($transport);
             }
 
-            register_default(array('identifier' => $identifier, 'default' => array('ComBaseDispatcherResponseTransportDefault')));
+            register_default(array(
+                'identifier' => $identifier,
+                'default' => array('ComBaseDispatcherResponseTransportDefault')
+            ));
+
             $transport = $identifier;
         }
 
@@ -126,6 +133,8 @@
         }
 
         $this->_request = $request;
+
+        return $this;
     }
 
     /**
@@ -134,7 +143,6 @@
     public function send()
     {
         $format = $this->getRequest()->getFormat();
-        $this->setTransport($format);
-        $this->getTransport()->send();
+        $this->setTransport($format)->getTransport()->send();
     }
  }

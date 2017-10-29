@@ -23,7 +23,7 @@ class ComPeopleViewer extends KObject implements KServiceInstantiatable
       */
      public static function getInstance(KConfigInterface $config, KServiceInterface $container)
      {
-         if (!$container->has($config->service_identifier)) {
+         if (! $container->has($config->service_identifier)) {
 
              $person = null;
 

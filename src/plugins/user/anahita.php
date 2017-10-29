@@ -48,32 +48,25 @@ class plgUserAnahita extends PlgAnahitaDefault
     }
 
     /**
-     * Is called when a person logs in
+     * Is called before a person logs in
      *
      * @param $event->credentials
      * @return boolean
      */
-    public function onLoginPerson(KEvent $event)
+    public function onBeforeLoginPerson(KEvent $event)
     {
-        $credentials = $event->credentials;
-        $options = $event->options;
+        return true;
+    }
 
-        $person = KService::get('repos:people.person')->find(array(
-                        'username' => $credentials->username,
-                        'enabled' => 1
-                    ));
-
-        if (is_null($person)) {
-            $msg = "Did not find a user with username: ".$credentials->username;
-            throw new AnErrorException($msg, KHttpResponse::UNAUTHORIZED);
-        } else {
-            $person->visited();
-            $session = KService::get('com:sessions');
-            $session->set('person', (object) $person->getData());
-            return true;
-        }
-
-        return false;
+    /**
+     * Is called after a person logs in
+     *
+     * @param $event->person
+     * @return boolean
+     */
+    public function onAfterLoginPerson(KEvent $event)
+    {
+        return true;
     }
 
     /**
@@ -84,14 +77,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onLogoutPerson(KEvent $event)
     {
-        $person = $event->person;
-
-        if ($person->id === 0) {
-            return false;
-        }
-
-        KService::get('repos:sessions.session')->destroy(array('nodeId' => $person->id));
-
-        return KService::get('com:sessions')->destroy();
+        return true;
     }
 }

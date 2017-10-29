@@ -60,7 +60,7 @@ class PlgUserConnect extends PlgAnahitaDefault
      *
      * @return bool True on success
      */
-    public function onLoginPerson(KEvent $event)
+    public function onBeforePerson(KEvent $event)
     {
         $user = $event->user;
 

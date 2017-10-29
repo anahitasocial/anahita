@@ -3,9 +3,10 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.3.8 Birth Release
 =============================
 1. fixed bugs that prevented people to stay logged in if they chose to
-2. KController is AnController now
-3. refactored and merged Dispatcher controllers
-4. removed legacy files that were nolonger in use.  
+1. KController is AnController now
+1. refactored and merged Dispatcher controllers
+1. removed legacy files that were no longer in use.
+1. improved RESTful authentication and login  
 
 Anahita 4.3.7 Birth Release
 =============================

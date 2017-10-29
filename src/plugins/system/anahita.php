@@ -64,6 +64,21 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             return;
         }
 
+        if (KRequest::method() === 'GET') {
+            $this->_handleAutoLogin();
+        }
+
+        return;
+    }
+
+    /**
+    *   Handles all scenarios where user is logged back in.
+    *   For example if they had checked "Stay Logged In" last time that they'd logged on.
+    *
+    *   @return void
+    */
+    private function _handleAutoLogin()
+    {
         $credentials = array();
         $credentials = $this->_getRememberMeCredentials();
 
@@ -76,8 +91,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
                 $this->_login($credentials);
             }
         }
-
-        return;
     }
 
     /**
@@ -98,6 +111,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
                 return true;
             }
+
         } catch (RuntimeException $e) {
             //only throws exception if we are using JSON format
             //otherwise let the current app handle it

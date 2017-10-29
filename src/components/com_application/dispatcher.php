@@ -161,7 +161,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     {
         //route the application
         $url = clone KRequest::url();
-
         $url = $this->_application->getRouter()->parse($url);
 
         KRequest::set('get', $url->query);

@@ -15,6 +15,14 @@
 
 class ComApplication extends KObject implements KServiceInstantiatable
 {
+
+    /**
+     * Session.
+     *
+     * @var LibSessions
+     */
+    protected $_session = null;
+
     /**
      * Template.
      *
@@ -54,7 +62,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
         $this->_name = $config->session_name;
 
         if ($config->session) {
-           $this->createSession(get_hash($this->_name));
+           $this->_session = $this->createSession(get_hash($this->_name));
         }
 
         parent::__construct($config);
@@ -124,6 +132,11 @@ class ComApplication extends KObject implements KServiceInstantiatable
 
   		return $session;
   	}
+
+    public function getSession()
+    {
+        return $this->_session;
+    }
 
     /**
      * Get the template.
