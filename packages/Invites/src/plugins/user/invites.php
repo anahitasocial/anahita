@@ -20,7 +20,7 @@ class plgUserInvites extends PlgAnahitaDefault
      *
      * @return bool True on success
      */
-    public function onLoginPerson(KEvent $event)
+    public function onAfterLoginPerson(KEvent $event)
     {
         KRequest::set('session.invite_token', null);
     }

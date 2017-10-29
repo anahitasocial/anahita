@@ -25,7 +25,7 @@ class plgUserAutoFollow extends PlgAnahitaDefault
      */
     public function onAfterStoreUser(KEvent $event)
     {
-        if (!$event->person) {
+        if (! $event->person) {
             return false;
         }
 

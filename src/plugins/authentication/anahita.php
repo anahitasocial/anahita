@@ -2,7 +2,7 @@
 
 class plgAuthenticationAnahita extends PlgAnahitaDefault
 {
-    function onAuthenticate(KEvent $event)
+    public function onAuthenticate(KEvent $event)
     {
         $credentials = $event->credentials;
         $response = $event->response;
