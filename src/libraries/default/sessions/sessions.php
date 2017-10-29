@@ -139,7 +139,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
-		if (!$container->has($config->service_identifier)) {
+		if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance  = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -349,7 +349,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		   throw new LibSessionsException("Session does not exist!\n");
 	   }
 
-	   $namespace = ($namespace === '') ? $this->_namespace : $namespace;
+	   $namespace = empty($namespace) ? $this->_namespace : $namespace;
 
 	   if (isset($_SESSION[$namespace][$property])) {
 		   return $_SESSION[$namespace][$property];
@@ -372,9 +372,9 @@ class LibSessions extends KObject implements KServiceInstantiatable
 			throw new LibSessionsException("Session isn't active!\n");
 		}
 
-		$namespace = ($namespace === '') ? $this->_namespace : $namespace;
+		$namespace = empty($namespace) ? $this->_namespace : $namespace;
 
-		if ($value === null) {
+		if (is_null($value)) {
 			unset($_SESSION[$namespace][$name]);
 		} else {
 			$_SESSION[$namespace][$name] = $value;
@@ -392,7 +392,6 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	*/
 	public function has($name)
 	{
-
 		if($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
 		}
@@ -445,7 +444,7 @@ class LibSessions extends KObject implements KServiceInstantiatable
 		// must also be unset. If a cookie is used to propagate the session id (default behavior),
 		// then the session cookie must be deleted.
 		if (isset($_COOKIE[session_name()])) {
-			setcookie(session_name(), '', time() - 42000, '/');
+			setcookie(session_name(), '', time() - $this->_expire, '/');
 		}
 
 		session_unset();
@@ -597,13 +596,11 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	*/
 	protected function _setTimers()
 	{
-		if(!$this->has('session.timer.start'))
-		{
+		if (! $this->has('session.timer.start')) {
 			$start = time();
-
-			$this->set('session.timer.start' , $start );
-			$this->set('session.timer.last' , $start );
-			$this->set('session.timer.now' , $start );
+			$this->set('session.timer.start', $start);
+			$this->set('session.timer.last', $start);
+			$this->set('session.timer.now', $start);
 		}
 
 		$this->set('session.timer.last', $this->get('session.timer.now'));

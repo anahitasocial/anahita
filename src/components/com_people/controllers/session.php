@@ -71,17 +71,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $viewer = get_viewer();
-
-        $this->_state->setItem($viewer);
-
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
                 'return' => $this->getService('com:people.filter.return')->sanitize($_SESSION['return'])
             ));
         }
-
-        return $viewer;
     }
 
     /**
@@ -128,7 +122,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
                         ));
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
-            $this->getService('com:people.helper.person')
+            $person = $this->getService('com:people.helper.person')
                  ->login($credentials, $credentials['remember']);
 
             $this->getResponse()->status = KHttpResponse::CREATED;
@@ -137,14 +131,17 @@ class ComPeopleControllerSession extends ComBaseControllerResource
                 $context->url = route(array(
                     'option' => 'com_people',
                     'view' => 'person',
-                    'uniqueAlias' => $credentials['username']
+                    'uniqueAlias' => $person->username
                 ));
             }
 
             $this->getResponse()->setRedirect($context->url);
             unset($_SESSION['return']);
+            
+            $this->_state->setItem($person);
+
         } else {
-            $this->setMessage('COM-PEOPLE-AUTHENTICATION-FAILED', 'error');
+            $this->setMessage(translate('COM-PEOPLE-AUTHENTICATION-FAILED'), 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             $this->getResponse()->status = KHttpResponse::FORBIDDEN;
             $this->getResponse()->setRedirect(route('option=com_people&view=session'));

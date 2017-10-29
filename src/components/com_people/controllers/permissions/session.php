@@ -11,4 +11,21 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleControllerPermissionSession extends LibBaseControllerPermissionDefault {}
+class ComPeopleControllerPermissionSession extends LibBaseControllerPermissionDefault
+{
+    /**
+     * return true if viewer is a guest.
+     *
+     * @return bool
+     */
+    public function canAdd()
+    {
+        $viewer = $this->getService('com:people.viewer');
+
+        if ($viewer->guest()) {
+            return true;
+        }
+
+        return false;
+    }
+}

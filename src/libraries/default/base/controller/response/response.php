@@ -1,13 +1,13 @@
 <?php
 
 
- /** 
+ /**
   * LICENSE: This source file is subject to version 3.01 of the PHP license
   * that is available through the world-wide-web at the following URI:
   * http://www.php.net/license/3_01.txt.  If you did not receive a copy of
   * the PHP License and are unable to obtain it through the web, please
   * send a note to license@php.net so we can mail you a copy immediately.
-  * 
+  *
   * @category   Anahita
   *
   * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -35,7 +35,7 @@
  {
      /**
       * Response status code.
-      * 
+      *
       * @var int
       */
      protected $_status_code;
@@ -56,26 +56,26 @@
 
      /**
       * Array of headers.
-      * 
+      *
       * @var array
       */
      protected $_headers = array();
 
      /**
       * Content type.
-      * 
+      *
       * @var string
       */
      protected $_content_type;
 
      /**
       * Set the response content.
-      * 
+      *
       * @var string
       */
      protected $_content;
 
-     /** 
+     /**
       * Constructor.
       *
       * @param KConfig $config An optional KConfig object with configuration options.
@@ -113,7 +113,7 @@
      /**
       * Return the status code.
       *
-      * @return int 
+      * @return int
       */
      public function getStatusCode()
      {
@@ -132,7 +132,7 @@
 
      /**
       *  Set the response status.
-      * 
+      *
       * @param int    $status  The response status code
       * @param string $message The status message
       *
@@ -154,7 +154,7 @@
 
      /**
       * Sets status or a header.
-      * 
+      *
       * @param string $key     A string key
       * @param string $value   A string value
       */
@@ -183,14 +183,17 @@
      {
          $this->_redirect = null;
 
-         if (!empty($location)) {
-             if (!is_string($location) && !is_numeric($location) && !is_callable(array($location, '__toString'))) {
+         if (! empty($location)) {
+
+             $isCallable = is_callable(array($location, '__toString'));
+
+             if (! is_string($location) && !is_numeric($location) && !$isCallable) {
                  throw new \UnexpectedValueException(
                     'The Response location must be a string or object implementing __toString(), "'.gettype($location).'" given.'
                 );
              }
 
-             if (!$code) {
+             if (! $code) {
                  $code = $this->_status_code;
              }
 
@@ -203,23 +206,22 @@
 
      /**
       * Set the response content.
-      * 
+      *
       * @param string $content The response content
-      * 
+      *
       * @return LibBaseControllerResponseAbstract
       */
      public function setContent($content)
      {
          $this->_content = $content;
-
          return $this;
      }
 
      /**
-      * Return the response content. If the content is a closure 
+      * Return the response content. If the content is a closure
       * or a object implementing __toString then evaluate first
       * then return the content.
-      * 
+      *
       * @return string
       */
      public function getContent()
@@ -229,9 +231,9 @@
 
      /**
       * Set the content type.
-      * 
+      *
       * @param string $type
-      * 
+      *
       * @return LibBaseControllerResponseAbstract
       */
      public function setContentType($type)
@@ -254,7 +256,7 @@
 
      /**
       * Set the header value.
-      * 
+      *
       * @param string $name   The header name
       * @param string $value  The header value
       */
@@ -265,7 +267,7 @@
 
      /**
       * Removes a header.
-      * 
+      *
       * @param string $name The header name
       */
      public function removeHeader($name)
@@ -275,9 +277,9 @@
 
      /**
       * Return the value for a header.
-      * 
+      *
       * @param string $name Header name
-      * 
+      *
       * @return string
       */
      public function getHeader($name)
@@ -287,7 +289,7 @@
 
      /**
       * Return all the headers.
-      * 
+      *
       * @return KConfig
       */
      public function getHeaders()
@@ -313,7 +315,6 @@
     public function isRedirect()
     {
         $code = $this->getStatusCode();
-
         return (300 <= $code && 400 > $code);
     }
 
@@ -325,7 +326,6 @@
     public function isSuccess()
     {
         $code = $this->getStatusCode();
-
         return (200 <= $code && 300 > $code);
     }
  }

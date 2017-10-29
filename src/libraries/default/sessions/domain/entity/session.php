@@ -80,11 +80,11 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
     protected function _beforeEntityUpdate(KCommandContext $context)
     {
         if ($this->getModifiedData()) {
-            $viewer = get_viewer();
+            $viewer = KService::get('com:people.viewer');
             $this->setData(array(
                 'time' => time(),
                 'nodeId' => (int) $viewer->id,
-                'guest' => $viewer->guest(),
+                'guest' => (int) $viewer->guest(),
                 'username' => $viewer->username,
                 'usertype' => $viewer->usertype
             ));
