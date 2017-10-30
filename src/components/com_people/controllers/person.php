@@ -110,15 +110,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         return $entities;
     }
 
-    protected function _actionPost(KCommandContext $context)
-    {
-        dispatch_plugin('user.onBeforeSavePerson', array('data' => $context->data));
-
-        $person = parent::_actionPost($context);
-
-        dispatch_plugin('user.onAfterSavePerson', array('person' => $person));
-    }
-
     /**
      * Edit a person's data and synchronize with the person with the user entity.
      *
