@@ -130,6 +130,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         $data = $context->data;
 
+        dispatch_plugin('user.onBeforeEditPerson', array('data' => $context->data));
+
         //dont' set the usertype yet, until we find the conditions are met
         $usertype = null;
 
@@ -161,6 +163,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $person->timestamp();
 
+        dispatch_plugin('user.onAfterEditPerson', array('person' => $person));
+
         $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
         $edit = ($data->password && $data->username) ? 'account' : 'profile';
@@ -180,6 +184,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     protected function _actionAdd(KCommandContext  $context)
     {
         $data = $context->data;
+
+        dispatch_plugin('user.onBeforeAddPerson', array('data' => $context->data));
 
         $isFirstUser = !(bool) $this->getService('repos:people.person')
                                     ->getQuery(true)
@@ -205,6 +211,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         } else {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
+
+        dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
 
         $redirectUrl = 'option=com_people';
 
@@ -240,10 +248,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         dispatch_plugin('user.onBeforeDeletePerson', array('data' => $context->data));
 
         $person = parent::_actionDelete($context);
+        $person_id = $person->id;
 
         $this->getService('repos:sessions.session')->destroy(array('nodeId' => $person->id));
 
-        dispatch_plugin('user.onAfterDeletePerson', array('person' => $person));
+        dispatch_plugin('user.onAfterDeletePerson', array('id' => $person_id));
 
         return $person;
     }

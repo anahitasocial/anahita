@@ -23,14 +23,6 @@ class ComPeopleHelperPerson extends KObject
      */
     public function login(array $credentials, $remember = false)
     {
-        $results = dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $credentials));
-
-        foreach ($results as $result) {
-            if ($result instanceof Exception || $result === false) {
-                return false;
-            }
-        }
-
         $person = $this->getService('repos:people.person')->find(array(
                         'username' => $credentials['username'],
                         'enabled' => 1
@@ -68,17 +60,14 @@ class ComPeopleHelperPerson extends KObject
     }
 
     /**
-     * Deletes a session and logs out the viewer.
-
-     * @return bool
+     *  Deletes a session and logs out the viewer.
+     *
+     *  @param object ComPeopleDomainEntityPerson
+     *  @return bool
      */
-    public function logout()
+    public function logout($person)
     {
-        $viewer = $this->getService('com:people.viewer');
-
-        dispatch_plugin('user.onLogoutPerson', array('person' => $viewer));
-
-        $this->_destroySession($viewer);
+        $this->_destroySession($person);
 
         $oneYear = 365 * 24 * 3600;
         $hash = get_hash('AN_LOGIN_REMEMBER');

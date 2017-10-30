@@ -33,26 +33,24 @@ class PlgUserConnect extends PlgAnahitaDefault
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser(KEvent $event)
+    public function onAfterAddPerson(KEvent $event)
     {
-        $user = $event->user;
+        $person = $event->person;
 
         if (! $this->_canPerform()) {
             return false;
         }
 
-        $this->_createToken($user['username']);
+        $this->_createToken($person->username);
 
-        if ($this->_person) {
-            $user = $this->_api->getUser();
+        $user = $this->_api->getUser();
 
-            if (KRequest::get('post.import_avatar', 'cmd') && $user->large_avatar) {
-                $this->_person->setPortraitImage(array('url' => $user->large_avatar));
-            }
-
-            $this->_person->enabled = true;
-            $this->_person->save();
+        if (KRequest::get('post.import_avatar', 'cmd') && $user->large_avatar) {
+            $person->setPortraitImage(array('url' => $user->large_avatar));
         }
+
+        $person->enabled = true;
+        $person->save();
     }
 
     /**
@@ -65,14 +63,14 @@ class PlgUserConnect extends PlgAnahitaDefault
      */
     public function onBeforeLoginPerson(KEvent $event)
     {
-        $user = $event->user;
+        $credentials = $event->credentials;
 
         if (! $this->_canPerform()) {
             return false;
         }
 
-        if (isset($user['username'])) {
-            $this->_createToken($user['username']);
+        if (isset($credentials['username'])) {
+            $this->_createToken($credentials['username']);
         }
     }
 
