@@ -11,7 +11,6 @@ class plgUserAnahita extends PlgAnahitaDefault
     */
     public function onBeforeAddPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -23,7 +22,6 @@ class plgUserAnahita extends PlgAnahitaDefault
     */
     public function onAfterAddPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -35,7 +33,6 @@ class plgUserAnahita extends PlgAnahitaDefault
     */
     public function onBeforeEditPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -47,7 +44,6 @@ class plgUserAnahita extends PlgAnahitaDefault
     */
     public function onAfterEditPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -59,7 +55,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onBeforeDeletePerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -71,7 +66,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onAfterDeletePerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -83,7 +77,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onBeforeLoginPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -95,7 +88,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onAfterLoginPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -107,7 +99,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onBeforeLogoutPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 
@@ -119,7 +110,6 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onAfterLogoutPerson(KEvent $event)
     {
-        error_log(__FUNCTION__);
         return true;
     }
 }
