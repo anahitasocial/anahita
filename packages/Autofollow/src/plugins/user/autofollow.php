@@ -23,12 +23,8 @@ class plgUserAutoFollow extends PlgAnahitaDefault
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser(KEvent $event)
+    public function onAfterAddPerson(KEvent $event)
     {
-        if (! $event->person) {
-            return false;
-        }
-
         $person = $event->person;
         $actor_ids = explode(',', $this->_params->actor_ids);
 

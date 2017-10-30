@@ -101,6 +101,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         $data = $context->data;
 
+        dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $data));
+
         if ($data->return) {
             $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($data->return);
             $context->url = base64UrlDecode($data->return);
@@ -125,7 +127,10 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $person = $this->getService('com:people.helper.person')
                  ->login($credentials, $credentials['remember']);
 
+            $this->_state->setItem($person);
             $this->getResponse()->status = KHttpResponse::CREATED;
+
+            dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 
             if(! $context->url) {
                 $context->url = route(array(
@@ -137,9 +142,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
             $this->getResponse()->setRedirect($context->url);
             unset($_SESSION['return']);
-            
-            $this->_state->setItem($person);
-
         } else {
             $this->setMessage(translate('COM-PEOPLE-AUTHENTICATION-FAILED'), 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
@@ -157,7 +159,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        $this->getService('com:people.helper.person')->logout();
+        $viewer = $this->getService('com:people.viewer');
+        $person_id = $viewer->id;
+        dispatch_plugin('user.onBeforeLogoutPerson', array('person' => $viewer));
+        $this->getService('com:people.helper.person')->logout($viewer);
+        dispatch_plugin('user.onAfterLogoutPerson', array('id' => $person_id));
         $context->response->setRedirect(route('index.php?'));
     }
 
@@ -200,7 +206,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             'remember' => true,
         );
 
+        dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $credentials));
+
         $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
+
+        dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 
         if ($this->return) {
             $_SESSION['return'] = $this->getService('com:people.filter.return')->sanitize($this->return);

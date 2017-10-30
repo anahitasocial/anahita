@@ -4,24 +4,50 @@ class plgUserAnahita extends PlgAnahitaDefault
 {
 
     /**
-    * Is called before a person is added or edited
+    * Is called before a person is added
     *
     * @param $event->data
     * @return boolean
     */
-    public function onBeforeSavePerson(KEvent $event)
+    public function onBeforeAddPerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
         return true;
     }
 
     /**
-    * Is called before a person is added or edited
+    * Is called before a person is added
     *
     * @param $event->person
     * @return boolean
     */
-    public function onAfterSavePerson(KEvent $event)
+    public function onAfterAddPerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
+        return true;
+    }
+
+    /**
+    * Is called before a person is edited
+    *
+    * @param $event->data
+    * @return boolean
+    */
+    public function onBeforeEditPerson(KEvent $event)
+    {
+        error_log(__FUNCTION__);
+        return true;
+    }
+
+    /**
+    * Is called before a person is edited
+    *
+    * @param $event->person
+    * @return boolean
+    */
+    public function onAfterEditPerson(KEvent $event)
+    {
+        error_log(__FUNCTION__);
         return true;
     }
 
@@ -33,17 +59,19 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onBeforeDeletePerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
         return true;
     }
 
     /**
      * Is called before a person id deleted
      *
-     * @param $event->person
+     * @param $event->id person id
      * @return boolean
      */
     public function onAfterDeletePerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
         return true;
     }
 
@@ -55,6 +83,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onBeforeLoginPerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
         return true;
     }
 
@@ -66,17 +95,31 @@ class plgUserAnahita extends PlgAnahitaDefault
      */
     public function onAfterLoginPerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
         return true;
     }
 
     /**
-     * Is called when a person logs out
+     * Is called before a person logs out
      *
      * @param $event->person
      * @return boolean
      */
-    public function onLogoutPerson(KEvent $event)
+    public function onBeforeLogoutPerson(KEvent $event)
     {
+        error_log(__FUNCTION__);
+        return true;
+    }
+
+    /**
+     * Is called after a person logs out
+     *
+     * @param $event->id person id
+     * @return boolean
+     */
+    public function onAfterLogoutPerson(KEvent $event)
+    {
+        error_log(__FUNCTION__);
         return true;
     }
 }
