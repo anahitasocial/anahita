@@ -79,12 +79,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     */
     private function _handleAutoLogin()
     {
-        $credentials = array();
         $credentials = $this->_getRememberMeCredentials();
-
-        if (count($credentials) == 0) {
-            $credentials = $this->_getCredentialsFromServerArray();
-        }
 
         if (count($credentials)) {
             if ($this->_authenticate($credentials)) {
@@ -157,23 +152,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             } catch (RuntimeException $e) {
                 error_log($e->getMessage());
             }
-        }
-
-        return $credentials;
-    }
-
-    /**
-    *   Obtains credentials from server array
-    *
-    *   @return array array('username' => 'janesmith', 'password' => 'somethingsecure')
-    */
-    private function _getCredentialsFromServerArray()
-    {
-        $credentials = array();
-
-        if (KRequest::has('server.PHP_AUTH_USER') && KRequest::has('server.PHP_AUTH_PW')) {
-            $credentials['username'] = KRequest::get('server.PHP_AUTH_USER', 'raw');
-            $credentials['password'] = KRequest::get('server.PHP_AUTH_PW', 'raw');
         }
 
         return $credentials;
