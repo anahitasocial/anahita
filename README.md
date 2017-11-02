@@ -71,6 +71,10 @@ If you have the suhosin patch installed on your server you might get an error. A
 
 Anahita is installed and managed via command line interface, because this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
+Also since MySql 5.7 `ONLY_FULL_GROUP_BY` is enabled by default and this is causing errors in Anahita. Connect to your MySql database via command line and run the following command to disable `ONLY_FULL_GROUP_BY`:
+
+`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`
+
 ### Installing a stable package
 
 ![Installing Anahita using the Birth release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
