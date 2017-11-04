@@ -7,6 +7,7 @@ Anahita 4.3.8 Birth Release
 1. refactored and merged Dispatcher controllers
 1. removed legacy files that were no longer in use.
 1. improved RESTful authentication and login  
+1. added blockquote tag support to the editor
 
 Anahita 4.3.7 Birth Release
 =============================
