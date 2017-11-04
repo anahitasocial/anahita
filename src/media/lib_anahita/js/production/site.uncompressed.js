@@ -23987,34 +23987,34 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
  */
 
 ;(function ($, window, document) {
-    
+
     'use strict';
-    
+
     $.widget("anahita.editor", {
-        
+
         _create : function () {
-            
+
             var self = this;
-    
-            this._createEditor();   
-            this._createToolbar(); 
+
+            this._createEditor();
+            this._createToolbar();
             this._setContent();
 
             this._on( this.element.closest('form'), {
-                   
+
                 'beforeSubmit' : function ( event ) {
                     self._getContent();
                 },
-                
+
                 submit : function ( event ) {
                     self._getContent();
                 },
-                
+
                 reset : function ( event ) {
                     self._clear();
                 }
             });
-            
+
             this.editor.wysiwyg({
                   hotKeys: {
                     'ctrl+b meta+b': 'bold',
@@ -24031,34 +24031,35 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                 dragAndDropImages: true,
               });
         },
-        
+
         _createEditor : function () {
-            
+
             this.element.attr('required', false).hide();
-            
+
             this.editor = $(document.createElement('div')).addClass('editor');
             this.editor.attr('id', this.element.attr('id') + '-editor');
             this.editor.insertAfter(this.element);
-            
-            
+
+
         },
-        
+
         _createToolbar : function () {
-            
+
             this.toolbar = $(document.createElement('div'))
                             .addClass('btn-toolbar')
                             .attr('data-role', 'editor-toolbar')
-                            .attr('data-target', this.editor.attr('id')); 
-            
+                            .attr('data-target', this.editor.attr('id'));
+
             var text = '';
-            
+
             //format blocks
             text += ''
             + '<div class="btn-group">'
             + '<a class="btn dropdown-toggle" data-toggle="dropdown" title="" data-original-title="Text Format">'
-            + '<b class="caret"></b> Text' 
+            + '<b class="caret"></b> Text'
             + '</a>'
             + '<ul class="dropdown-menu">'
+            + '<li><a data-edit="formatblock blockquote" data-original-title="Blockquote">blockquote</a></li>'
             + '<li><a data-edit="formatblock p" data-original-title="Paragraph">p</a></li>'
             + '<li><a data-edit="formatblock pre" data-original-title="Preformatted">pre</a></li>'
             + '<li><a data-edit="formatblock address" data-original-title="Address">addr</a></li>'
@@ -24075,58 +24076,59 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
             + '<a class="btn" data-edit="insertunorderedlist" data-original-title="Bullet list">ul</a>'
             + '<a class="btn" data-edit="insertorderedlist" data-original-title="Number list">ol</a>'
             + '</div>';
-            
+
             this.toolbar.html(text);
-            
+
             this.toolbar.insertAfter(this.element);
-            
+
             this.toolbar.find('[data-toggle="dropdown"]').dropdown();
         },
-        
-        _setContent : function() {           
-            
+
+        _setContent : function() {
+
             if(this.element.val()) {
-            
+
                 this.editor.html(this.element.val());
-            
+
             } else {
-            
+
                 this.editor.html('<p><br/></p>');
             }
         },
-        
+
         _getContent : function() {
-            
+
             this.element.html(this.editor.html());
         },
-        
+
         _clear : function () {
-           
-           this.editor.html('<p><br/></p>'); 
+
+           this.editor.html('<p><br/></p>');
            this.element.html('');
         }
     });
-    
+
     var bindEditor = function() {
-      
+
       var elements = $('[data-behavior="Editor"]');
-        
+
         $.each(elements, function( index, element ){
-            
+
             if( !$(element).is(":data('anahita-editor')") ) {
-            
+
               $(element).editor();
             }
         });
     };
-    
+
     bindEditor();
-    
+
     $(document).ajaxSuccess(function() {
         bindEditor();
     });
-    
+
 }(jQuery, window, document));
+
 ///media/lib_anahita/js/anahita/gist.js
 /**
  * Author: Rastin Mehr
