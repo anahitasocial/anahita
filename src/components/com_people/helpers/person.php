@@ -86,16 +86,17 @@ class ComPeopleHelperPerson extends KObject
     private function _createSession(ComPeopleDomainEntityPerson $person)
     {
         $session = $this->getService('com:application', array('session' => true))->getSession();
-        $session->set('person', (object) $person->getData());
 
         $repo = $this->getService('repos:sessions.session');
         $entity = $repo->findOrAddNew(array('sessionId' => $session->getId()));
         $entity->setData(array(
-            'nodeId' => $person->id,
-            'username' => $person->username,
-            'usertype' => $person->usertype,
+            'nodeId' => (int) $person->id,
+            'username' => (string) $person->username,
+            'usertype' => (string) $person->usertype,
             'guest' => 0
-        ))->save();
+        ));
+
+        $session->set('person', (object) $person->getData());
     }
 
     /**
