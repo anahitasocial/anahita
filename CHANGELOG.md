@@ -1,5 +1,12 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.9 Birth Release
+=============================
+1. fixed bug on the login form
+1. fixed bug on person profile redirects after each save
+1. updated README.md to include instructions on disabling MySql strict mode
+1. improved login session creation code
+
 Anahita 4.3.8 Birth Release
 =============================
 1. fixed bugs that prevented people to stay logged in if they chose to
