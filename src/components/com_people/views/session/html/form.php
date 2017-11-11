@@ -1,7 +1,7 @@
 <? defined('KOOWA') or die('Restricted access') ?>
 
-<? $return = empty($return) ? '' : $return; ?>
-<? $connect = isset($connect) ? false : true; ?>
+<? $return = empty($return) ? null : $return; ?>
+<? $connect = empty($connect) ? false : true; ?>
 
 <form
     action="<?= @route() ?>"
@@ -30,8 +30,7 @@
             <? endif;?>
         </legend>
 
-        <? if ($connect): ?>
-        <? KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service') ?>
+        <? if ($connect && KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
         <p class="lead"><?= @text('COM-PEOPLE-SOCIALMEDIA-LOGIN') ?></p>
         <p><?= $this->renderHelper('com:connect.template.helper.service.renderLogins') ?></p>
         <hr/>
