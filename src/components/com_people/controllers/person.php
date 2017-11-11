@@ -40,7 +40,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
                 'com:mailer.controller.behavior.mailer'
             ),
             'request' => array(
-                'reset_password' => 0
+                'reset_password' => 0,
+                'edit' => 'profile'
             )
         ));
 
@@ -158,8 +159,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
 
-        $edit = ($data->password && $data->username) ? 'account' : 'profile';
+        $edit = ($data->password && $data->username) ? 'account' : $this->_request->edit;
         $url = sprintf($person->getURL(false)."&get=settings&edit=%s", $edit);
+        error_log($url);
         $context->response->setRedirect(route($url));
 
         return $person;
