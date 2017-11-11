@@ -1,7 +1,7 @@
 <? defined('KOOWA') or die('Restricted access') ?>
 
 <? $return = empty($return) ? '' : $return; ?>
-<? $connect = empty($connect) ? false : true; ?>
+<? $connect = isset($connect) ? false : true; ?>
 
 <form
     action="<?= @route() ?>"
