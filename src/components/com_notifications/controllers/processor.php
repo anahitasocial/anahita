@@ -99,15 +99,10 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     public function sendNotification($notification)
     {
-        // Experimenting with the idea of emailing out notifications
-        // only to the top 700 subscribers who have recently visited.
-        // if the total subscriber count is > 700
         $subscriberIds = $notification->subscriberIds->toArray();
         $query = $this->getService('repos:people.person')
                        ->getQuery(true)
-                       ->id($subscriberIds)
-                       ->order('person_tbl.last_visit_date', 'DESC')
-                       ->limit(700);
+                       ->id($subscriberIds);
 
         $people = $query->fetchSet();
 
