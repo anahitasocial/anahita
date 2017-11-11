@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.3.8 Birth Release
+*Version:* 4.3.9 Birth Release
 
 Anahita is a social networking framework and platform for building knowledge sharing apps and services. Use Anahita to launch:
 
@@ -73,7 +73,13 @@ Anahita is installed and managed via command line interface, because this is the
 
 Also since MySql 5.7 `ONLY_FULL_GROUP_BY` is enabled by default and this is causing errors in Anahita. Connect to your MySql database via command line and run the following command to disable `ONLY_FULL_GROUP_BY`:
 
+### MySql strict mode
+
+Since version 5.7 MySql is set on strict mode by default. That causes Anahita to throw errors, especially if you are
+upgrading from older releases. To disable strict mode, you can run the following commands:
+
 `SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`
+`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'NO_ZERO_DATE',''));`
 
 ### Installing a stable package
 
