@@ -374,42 +374,39 @@ $console
     $database = $config->getDatabaseInfo();
     $errors = array();
 
-    if ($input->getOption('drop-tables')) {
+    $db = new \mysqli(
+        $database['host'],
+        $database['user'],
+        $database['password'],
+        $database['name'],
+        $database['port']
+    );
 
-        $db = new \mysqli(
-            $database['host'],
-            $database['user'],
-            $database['password'],
-            $database['name'],
-            $database['port']
-        );
+    //check connection
+    if ($db->connect_errno) {
+        $errorMsg = sprintf("Connect failed: %s\n", mysqli_connect_error());
+        $output->writeLn('<error>'.$errorMsg.'</error>');
+        exit;
+    }
 
-        //check connection
-        if ($db->connect_errno) {
-            $errorMsg = sprintf("Connect failed: %s\n", mysqli_connect_error());
-            $output->writeLn('<error>'.$errorMsg.'</error>');
-            exit;
+    $query = sprintf("SELECT `TABLE_NAME` FROM information_schema.tables WHERE `table_schema` = '%s'", $database['name']);
+
+    $tables = array();
+    if ($result = $db->query($query)) {
+        while($row = $result->fetch_row()) {
+            $tables[] = $row[0];
         }
+    }
 
-        $query = sprintf("SELECT `TABLE_NAME` FROM information_schema.tables WHERE `table_schema` = '%s'", $database['name']);
-
-        $tables = array();
-        if ($result = $db->query($query)) {
-            while($row = $result->fetch_row()) {
-                $tables[] = $row[0];
-            }
-        }
-
-        foreach($tables as $table) {
-            $db->query(sprintf("DROP TABLE %s", $table));
-        }
+    foreach($tables as $table) {
+        $db->query(sprintf("DROP TABLE %s", $table));
     }
 
     $output->writeLn('<info>Loading data. This may take a while...</info>');
 
     if ($content = file_get_contents($file)) {
         $queries = str_replace('#__', $database['prefix'], $content);
-        if (!$db->multi_query($queries)) {
+        if (! $db->multi_query($queries)) {
             $errorMsg = sprintf("Couldn't process file %s", $file);
             $output->writeLn('<error>'.$errorMsg.'</error>');
             exit;
