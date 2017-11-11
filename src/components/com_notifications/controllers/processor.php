@@ -112,13 +112,14 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         $settings = AnHelperArray::indexBy($settings, 'person.id');
 
+        /*
         $mails = $this->_renderMails(array(
                         'notification' => $notification,
                         'people' => $people,
                         'settings' => $settings
                     ));
-
-        $this->mail($mails);
+        */            
+        //$this->mail($mails);
     }
 
     /**
