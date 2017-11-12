@@ -65,7 +65,8 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
         parent::_afterEntityInsert($context);
 
         if ($this->_send_after_insert) {
-            $command = sprintf('php %s/index.php %s id=%d', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
+            //don't run more than 1 minute
+            $command = sprintf('php -d max_execution_time=60 %s/index.php %s id=%d >/dev/null', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
             //error_log($command);
             $result = exec_in_background($command);
         }

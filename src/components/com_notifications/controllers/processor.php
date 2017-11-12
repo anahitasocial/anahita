@@ -60,6 +60,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     protected function _actionProcess(KCommandContext $context)
     {
+        // run this no more than 1 minute
+        //set_time_limit(60);
+
         $query = $this->getService('repos:notifications.notification')
                       ->getQuery(true)
                       ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
@@ -112,14 +115,13 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         $settings = AnHelperArray::indexBy($settings, 'person.id');
 
-        /*
         $mails = $this->_renderMails(array(
                         'notification' => $notification,
                         'people' => $people,
                         'settings' => $settings
                     ));
-        */            
-        //$this->mail($mails);
+
+        $this->mail($mails);
     }
 
     /**
