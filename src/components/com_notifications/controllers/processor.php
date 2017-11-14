@@ -76,8 +76,6 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             $query->id($ids);
         }
 
-        print_query($query);
-
         $notifications = $query->fetchSet();
 
         $this->sendNotifications($notifications);
