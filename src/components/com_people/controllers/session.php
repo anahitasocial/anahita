@@ -71,11 +71,16 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
+        $viewer = get_viewer();
+        $this->_state->setItem($viewer);
+        
         if (isset($_SESSION['return'])) {
             $this->_state->append(array(
                 'return' => $this->getService('com:people.filter.return')->sanitize($_SESSION['return'])
             ));
         }
+        
+        return $viewer;
     }
 
     /**
