@@ -64,10 +64,19 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                       ->getQuery(true)
                       ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
 
+        $limit = get_config_value('notifications.send_limit');
+
+        if($limit) {
+            $query->limit($limit);
+            $query->order('creationTime', 'ASC');
+        }
+
         if ($this->id) {
             $ids = (array) KConfig::unbox($this->id);
             $query->id($ids);
         }
+
+        print_query($query);
 
         $notifications = $query->fetchSet();
 
