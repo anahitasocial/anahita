@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.10 Birth Release
+=============================
+1. updated plyr.io javascript library to version 2.0.18
+
 Anahita 4.3.9 Birth Release
 =============================
 1. fixed bug on the login form
