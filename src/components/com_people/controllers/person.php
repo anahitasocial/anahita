@@ -161,7 +161,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $edit = ($data->password && $data->username) ? 'account' : $this->_request->edit;
         $url = sprintf($person->getURL(false)."&get=settings&edit=%s", $edit);
-        error_log($url);
         $context->response->setRedirect(route($url));
 
         return $person;
