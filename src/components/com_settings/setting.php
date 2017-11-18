@@ -124,7 +124,7 @@
          return $default;
      }
 
-     protected function __get($key)
+     public function __get($key)
      {
          if ($key === 'template' && !is_dir(ANPATH_THEMES.DS.$this->get($key))) {
              return $this->_default_template;
@@ -154,7 +154,7 @@
          return $this->_settings->$key;
      }
 
-     protected function __set($key, $value)
+     public function __set($key, $value)
      {
          return $this->set($key, $value);
      }
