@@ -90,7 +90,10 @@ class Map
     {
         $this->_src = $src;
         $this->_target = $target;
+
+        $this->isWindows = strpos(strtoupper(PHP_OS), 'WIN') === 0;
     }
+
 
     public function copy()
     {
@@ -98,21 +101,29 @@ class Map
            if (is_link($this->_target)) {
                unlink($this->_target);
            } else {
-               exec("rm -rf {$this->_target}");
+                if($this->isWindows) {
+                    exec('del /f "'.str_replace("/", "\\", $this->_target).'"');
+                } else {
+                    exec("rm -rf {$this->_target}");
+                }
            }
         }
 
-        exec("cp -r {$this->_src} {$this->_target}");
+        if($this->isWindows) {
+            exec('copy /y '.str_replace("/", "\\", $this->_src).' '.str_replace("/", "\\", $this->_target).'');
+        } else {
+            exec("cp -r {$this->_src} {$this->_target}");
+        }
+
     }
 
     public function unlink()
     {
-        //unlink($this->_target);
-    		if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
-    			rmdir($this->_target);
-    		} else {
-    			unlink($this->_target);
-    		}
+        if ($this->isWindows && is_dir($this->_target)) {
+            rmdir($this->_target);
+        } else {
+            unlink($this->_target);
+        }
     }
 
     public function symlink()
@@ -125,14 +136,18 @@ class Map
         } elseif (is_link($this->_target)) {
             $this->unlink();
         } elseif (is_dir($this->_target)) {
-            exec("rm -rf {$this->_target}");
+            if($this->isWindows) {
+                exec("rd /s /q {$this->_target}");
+            } else {
+                exec("rm -rf {$this->_target}");
+            }
         }
 
-        if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
-        	// Windows doesn't support relative symlinking so use absolute ones
-        	@symlink($this->_src, $this->_target);
+        if ($this->isWindows) {
+            // Windows doesn't support relative symlinking so use absolute ones
+            @symlink($this->_src, $this->_target);
         } else {
-        	@symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
+            @symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
         }
     }
 
