@@ -23,10 +23,11 @@ class ComPeopleHelperPerson extends KObject
      */
     public function login(array $credentials, $remember = false)
     {
+        $uniqueAlias = strpos($credentials['username'], '@') ? 'email' : 'username';
         $person = $this->getService('repos:people.person')->find(array(
-                        'username' => $credentials['username'],
-                        'enabled' => 1
-                    ));
+            $uniqueAlias => $credentials['username'],
+            'enabled' => 1
+        ));
 
         if (is_null($person)) {
             $msg = "Did not find a user with username: ".$credentials['username'];
