@@ -81,6 +81,8 @@ class Mapper
     }
 }
 
+use \Symfony\Component\Filesystem\Filesystem;
+
 class Map
 {
     protected $_src;
@@ -90,40 +92,22 @@ class Map
     {
         $this->_src = $src;
         $this->_target = $target;
-
-        $this->isWindows = strpos(strtoupper(PHP_OS), 'WIN') === 0;
+        $this->_fs = new Filesystem();
     }
 
 
     public function copy()
     {
         if (file_exists($this->_target)) {
-           if (is_link($this->_target)) {
-               unlink($this->_target);
-           } else {
-                if($this->isWindows) {
-                    exec('del /f "'.str_replace("/", "\\", $this->_target).'"');
-                } else {
-                    exec("rm -rf {$this->_target}");
-                }
-           }
+           $this->_fs->remove($this->_target);
         }
 
-        if($this->isWindows) {
-            exec('copy /y '.str_replace("/", "\\", $this->_src).' '.str_replace("/", "\\", $this->_target).'');
-        } else {
-            exec("cp -r {$this->_src} {$this->_target}");
-        }
-
+        $this->_fs->copy($this->_src, $this->_target);
     }
 
     public function unlink()
     {
-        if ($this->isWindows && is_dir($this->_target)) {
-            rmdir($this->_target);
-        } else {
-            unlink($this->_target);
-        }
+        $this->_fs->remove($this->_target);
     }
 
     public function symlink()
@@ -134,21 +118,12 @@ class Map
         if (!file_exists($path)) {
             mkdir($path, 0755, true);
         } elseif (is_link($this->_target)) {
-            $this->unlink();
+            $this->_fs->remove($this->_target);
         } elseif (is_dir($this->_target)) {
-            if($this->isWindows) {
-                exec("rd /s /q {$this->_target}");
-            } else {
-                exec("rm -rf {$this->_target}");
-            }
+            $this->_fs->remove($this->_target);
         }
 
-        if ($this->isWindows) {
-            // Windows doesn't support relative symlinking so use absolute ones
-            @symlink($this->_src, $this->_target);
-        } else {
-            @symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
-        }
+        $this->_fs->symlink($this->_src, $this->_target);
     }
 
     /**
