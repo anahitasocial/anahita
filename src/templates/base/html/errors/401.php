@@ -2,4 +2,4 @@
     die;
 } ?>
 
-<?= @template('errors/401')?>
+<?= @template('errors/405')?>
