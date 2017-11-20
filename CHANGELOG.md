@@ -4,7 +4,9 @@ Anahita 4.3.10 Birth Release
 =============================
 1. updated plyr.io javascript library to version 2.0.18
 1. fixed authentication with email bug
+1. fixed session add bug for json requests
 1. fixed the 401 error page which was trying to load itself
+1. site:symlink command now works for both windows and nix platforms
 
 Anahita 4.3.9 Birth Release
 =============================
