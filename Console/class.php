@@ -81,59 +81,43 @@ class Mapper
     }
 }
 
+use \Symfony\Component\Filesystem\Filesystem;
+
 class Map
 {
     protected $_src;
     protected $_target;
+    protected $_fs;
 
     public function __construct($src, $target)
     {
         $this->_src = $src;
         $this->_target = $target;
+        $this->_fs = new Filesystem();
     }
+
 
     public function copy()
     {
         if (file_exists($this->_target)) {
-           if (is_link($this->_target)) {
-               unlink($this->_target);
-           } else {
-               exec("rm -rf {$this->_target}");
-           }
+           $this->_fs->remove($this->_target);
         }
 
-        exec("cp -r {$this->_src} {$this->_target}");
+        $this->_fs->copy($this->_src, $this->_target);
     }
 
     public function unlink()
     {
-        //unlink($this->_target);
-    		if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
-    			rmdir($this->_target);
-    		} else {
-    			unlink($this->_target);
-    		}
+        $this->_fs->remove($this->_target);
     }
 
     public function symlink()
     {
-        //check if the parent directory exits
-        $path = dirname($this->_target);
-
-        if (!file_exists($path)) {
-            mkdir($path, 0755, true);
-        } elseif (is_link($this->_target)) {
-            $this->unlink();
-        } elseif (is_dir($this->_target)) {
-            exec("rm -rf {$this->_target}");
+        if(file_exists($this->_target)) {
+            $this->_fs->remove($this->_target);
         }
 
-        if (strpos(strtoupper(PHP_OS), 'WIN') === 0) {
-        	// Windows doesn't support relative symlinking so use absolute ones
-        	@symlink($this->_src, $this->_target);
-        } else {
-        	@symlink($this->_findRelativePath($this->_target, $this->_src), $this->_target);
-        }
+        $this->_fs->symlink($this->_src, $this->_target);
     }
 
     /**
