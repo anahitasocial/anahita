@@ -87,6 +87,7 @@ class Map
 {
     protected $_src;
     protected $_target;
+    protected $_fs;
 
     public function __construct($src, $target)
     {
@@ -112,14 +113,7 @@ class Map
 
     public function symlink()
     {
-        //check if the parent directory exits
-        $path = dirname($this->_target);
-
-        if (!file_exists($path)) {
-            mkdir($path, 0755, true);
-        } elseif (is_link($this->_target)) {
-            $this->_fs->remove($this->_target);
-        } elseif (is_dir($this->_target)) {
+        if(file_exists($this->_target)) {
             $this->_fs->remove($this->_target);
         }
 
