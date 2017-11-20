@@ -71,14 +71,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionRead(KCommandContext $context)
     {
-        $viewer = $this->getService('com:people.viewer');
-        $this->_state->setItem($viewer);
-
-        if (! $viewer->guest()) {
-            $this->getResponse()->setRedirect(route($viewer->getURL()));
+        if (! $this->_state->viewer->guest()) {
+            $this->_state->setItem($this->_state->viewer);
+            $this->getResponse()->setRedirect(route($this->_state->viewer->getURL()));
         }
 
-        return $viewer;
+        return $this->_state->viewer;
     }
 
     /**
@@ -128,17 +126,18 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
             $person = $this->getService('com:people.helper.person')
-                 ->login($credentials, $credentials['remember']);
+                           ->login($credentials, $credentials['remember']);
 
             $this->_state->setItem($person);
+
             $this->getResponse()->status = KHttpResponse::CREATED;
 
-            dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
+            dispatch_plugin('user.onAfterLoginPerson', array('person' => $this->person));
 
             if(! $context->url) {
                 $context->url = route(array(
                     'option' => 'com_people',
-                    'view' => 'person',
+                    'view' => 'people',
                     'uniqueAlias' => $person->username
                 ));
             }
@@ -151,8 +150,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getResponse()->status = KHttpResponse::FORBIDDEN;
             $this->getResponse()->setRedirect(route('option=com_people&view=session'));
         }
-
-        return true;
     }
 
     /**
@@ -162,7 +159,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      */
     protected function _actionDelete(KCommandContext $context)
     {
-        $viewer = $this->getService('com:people.viewer');
+        $viewer = $this->_state->viewer;
         $person_id = $viewer->id;
         dispatch_plugin('user.onBeforeLogoutPerson', array('person' => $viewer));
         $this->getService('com:people.helper.person')->logout($viewer);
