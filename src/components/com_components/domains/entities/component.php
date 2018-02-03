@@ -43,7 +43,6 @@ class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implement
             'behaviors' => array(
                 'orderable',
                 'authorizer',
-                'assignable',
             ),
             'query_options' => array(
                 'where' => array('parent' => 0)
