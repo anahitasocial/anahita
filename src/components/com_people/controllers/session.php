@@ -113,8 +113,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         $credentials = array(
             'username' => $data->username,
-            'password' => $data->password,
-            'remember' => $data->remember
+            'password' => $data->password
         );
 
         $response = $this->getService('com:people.authentication.response');
@@ -125,11 +124,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
                         ));
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
-            $person = $this->getService('com:people.helper.person')
-                           ->login($credentials, $credentials['remember']);
-
+            $person = $this->getService('com:people.helper.person')->login($credentials);
             $this->_state->setItem($person);
-
             $this->getResponse()->status = KHttpResponse::CREATED;
 
             dispatch_plugin('user.onAfterLoginPerson', array('person' => $this->person));
@@ -202,13 +198,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         $credentials = array(
             'username' => $person->username,
-            'password' => $person->password,
-            'remember' => true,
+            'password' => $person->password
         );
 
         dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $credentials));
 
-        $this->getService('com:people.helper.person')->login($credentials, $credentials['remember']);
+        $this->getService('com:people.helper.person')->login($credentials);
 
         dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 

@@ -57,17 +57,6 @@
                 </a>
             </div>
         </div>
-
-        <div class="control-group">
-            <label class="checkbox">
-                <input
-                    type="checkbox"
-                    name="remember"
-                    value="true"
-                    alt="<?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>"/>
-                <?= @text('COM-PEOPLE-SESSION-REMEMBER-ME'); ?>
-            </label>
-        </div>
     </fieldset>
 
     <div class="form-actions">

@@ -125,7 +125,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     *   @return void
     */
     private function _login($credentials) {
-        $this->getService('com:people.helper.person')->login($credentials, true);
+        $this->getService('com:people.helper.person')->login($credentials);
         $this->getService('application.dispatcher')
         ->getResponse()
         ->setRedirect($this->_getCurrentUrl())
