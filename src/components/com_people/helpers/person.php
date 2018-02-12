@@ -21,7 +21,7 @@ class ComPeopleHelperPerson extends KObject
      *
      * @return bool
      */
-    public function login(array $credentials, $remember = false)
+    public function login(array $credentials, $remember = true)
     {
         $uniqueAlias = strpos($credentials['username'], '@') ? 'email' : 'username';
         $person = $this->getService('repos:people.person')->find(array(
@@ -44,7 +44,7 @@ class ComPeopleHelperPerson extends KObject
             }
         }
 
-        //if remember is true, create a remember cookie that contains the ecrypted username and password
+        // create a remember cookie that contains the ecrypted username and password
         if ($remember) {
             $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
             $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
