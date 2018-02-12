@@ -3,6 +3,7 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.3.11 Birth Release
 =============================
 1. removed assignable behavior from component entity
+1. users are now permanently logged in until they logout
 
 Anahita 4.3.10 Birth Release
 =============================
