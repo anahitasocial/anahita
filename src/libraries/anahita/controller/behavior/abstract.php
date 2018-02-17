@@ -15,7 +15,7 @@
  * @subpackage 	Toolbar
  * @uses        AnInflector
  */
-abstract class AnControllerBehaviorAbstract extends KBehaviorAbstract
+abstract class AnControllerBehaviorAbstract extends AnBehaviorAbstract
 {
 	/**
 	 * Command handler

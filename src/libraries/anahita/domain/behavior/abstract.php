@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class AnDomainBehaviorAbstract extends KBehaviorAbstract
+abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
 {
     /**
      * A reference to the repository.

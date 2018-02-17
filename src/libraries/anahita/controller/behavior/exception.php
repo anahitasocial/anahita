@@ -15,4 +15,4 @@
  * @package     Koowa_Controller
  * @subpackage  Behavior
  */
-class AnControllerBehaviorException extends KBehaviorException {}
+class AnControllerBehaviorException extends AnBehaviorException {}
