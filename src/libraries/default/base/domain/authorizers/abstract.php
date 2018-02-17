@@ -60,7 +60,7 @@ abstract class LibBaseDomainAuthorizerAbstract extends KObject
      */
     final public function execute($action, KCommandContext $context)
     {
-        $method = '_'.KInflector::variablize('authorize.'.$action);
+        $method = '_'.AnInflector::variablize('authorize.'.$action);
 
         $result = self::AUTH_NOT_IMPLEMENTED;
 

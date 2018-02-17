@@ -31,7 +31,7 @@ class KServiceLocatorPlugin extends KServiceLocatorAbstract
 	 */
 	public function findClass(KServiceIdentifier $identifier)
 	{
-	    $classpath = KInflector::camelize(implode('_', $identifier->path));
+	    $classpath = AnInflector::camelize(implode('_', $identifier->path));
 		$classname = 'Plg'.ucfirst($identifier->package).$classpath.ucfirst($identifier->name);
 
 		//Don't allow the auto-loader to load plugin classes if they don't exists yet

@@ -167,7 +167,7 @@
          } elseif ($key == 'content') {
              $this->setContent($value);
          } else {
-             $key = implode('-', array_map('ucfirst', KInflector::explode($key)));
+             $key = implode('-', array_map('ucfirst', AnInflector::explode($key)));
              $this->setHeader($key, $value);
          }
      }

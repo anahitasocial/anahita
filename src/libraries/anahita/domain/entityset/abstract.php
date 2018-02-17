@@ -76,7 +76,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      */
     public function __call($method, $arguments = array())
     {
-        $parts = KInflector::explode($method);
+        $parts = AnInflector::explode($method);
 
         if ($parts[0] == 'is' && isset($parts[1])) {
             $behavior = lcfirst(substr($method, 2));

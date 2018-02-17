@@ -23,7 +23,7 @@ class ComMediumViewMediaHtml extends ComBaseViewHtml
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'list_item_view' => KInflector::singularize($this->getName()),
+            'list_item_view' => AnInflector::singularize($this->getName()),
             'template_paths' => array(dirname(__FILE__).'/html'),
         ));
 

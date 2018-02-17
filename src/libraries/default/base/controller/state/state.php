@@ -261,7 +261,7 @@ class LibBaseControllerState extends KConfig
     public function __call($method, $args)
     {
         if (count($args) > 0) {
-            $this->__set(KInflector::underscore($method), $args[0]);
+            $this->__set(AnInflector::underscore($method), $args[0]);
 
             return $this;
         }

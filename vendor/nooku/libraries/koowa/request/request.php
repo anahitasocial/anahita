@@ -16,7 +16,7 @@ KRequest::getInstance();
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Request
  * @uses        KFilter
- * @uses        KInflector
+ * @uses        AnInflector
  * @uses        KService
  * @static
  */

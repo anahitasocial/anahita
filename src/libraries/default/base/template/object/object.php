@@ -141,7 +141,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      */
     public function __call($method, $arguments)
     {
-        $attribute = implode('-', KInflector::explode($method));
+        $attribute = implode('-', AnInflector::explode($method));
         $this->setAttribute($attribute, $arguments[0], isset($arguments[1]) ? $arguments[1] : null);
 
         return $this;

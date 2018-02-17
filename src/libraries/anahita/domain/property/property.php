@@ -45,7 +45,7 @@ class AnDomainProperty extends KObject
 
         if (empty($config->type)) {
             $config->append(array(
-                'column' => KInflector::underscore($config->name),
+                'column' => AnInflector::underscore($config->name),
             ));
 
             $config->column = $description->getRepository()->getResources()->getColumn($config->column);
@@ -80,7 +80,7 @@ class AnDomainProperty extends KObject
         }*/
 
         $config->append(array(
-            'column' => KInflector::underscore($config->name),
+            'column' => AnInflector::underscore($config->name),
         ));
 
         if (is_string($config->column)) {
@@ -119,7 +119,7 @@ class AnDomainProperty extends KObject
         //If name is sinuglar, then it's belongs 
         //If name is plurarl, then it's has
         if (empty($config['type'])) {
-            if (KInflector::isSingular($config['name'])) {
+            if (AnInflector::isSingular($config['name'])) {
                 $config['type'] = 'belongs_to';
             } else {
                 $config['type'] = 'has';
@@ -156,7 +156,7 @@ class AnDomainProperty extends KObject
         //set the default cardinality 
         //If name singular 1 else many 		
         $config->append(array(
-            'cardinality' => KInflector::isSingular($config['name']) ? 1 : 'many',
+            'cardinality' => AnInflector::isSingular($config['name']) ? 1 : 'many',
         ));
 
         $cardinality = (int) $config->cardinality;
@@ -301,8 +301,8 @@ class AnDomainProperty extends KObject
         $config['child'] = $description->getEntityIdentifier();
 
         $config->append(array(
-            'type_column' => KInflector::underscore($config->name).'_type',
-            'child_column' => KInflector::underscore($config->name).'_id',
+            'type_column' => AnInflector::underscore($config->name).'_type',
+            'child_column' => AnInflector::underscore($config->name).'_id',
         ));
 
         if (is_string($config->type_column)) {

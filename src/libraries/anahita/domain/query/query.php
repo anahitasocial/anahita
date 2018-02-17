@@ -405,7 +405,7 @@ class AnDomainQuery extends KObject implements KCommandInterface
         ));
 
         if (!isset($this->link[$options->as])) {
-            $options->resource->setAlias(KInflector::underscore($options->as));
+            $options->resource->setAlias(AnInflector::underscore($options->as));
 
             $destination = $query->getRepository()->getDescription()->getInheritanceColumn();
 
@@ -667,7 +667,7 @@ class AnDomainQuery extends KObject implements KCommandInterface
      * If a method is format of fetch|select[Function Name]Value(s)(property). This will be translated in to
      * fetchValue('{Function Name}(property)'). For example fetchCount => fetchValue('COUNT({property}')
      *
-     * If not of the above then KInflector::underscore($method) will be inserted as a state
+     * If not of the above then AnInflector::underscore($method) will be inserted as a state
      */
     public function __call($method, $arguments = array())
     {
@@ -694,7 +694,7 @@ class AnDomainQuery extends KObject implements KCommandInterface
 
             if ($match[1] == 'select') {
                 $method = 'columns';
-            } elseif (KInflector::isPlural($match[2])) {
+            } elseif (AnInflector::isPlural($match[2])) {
                 $method = 'fetchValues';
             } else {
                 $method = 'fetchValue';
@@ -704,7 +704,7 @@ class AnDomainQuery extends KObject implements KCommandInterface
 
             return $this->$method($function);
         } elseif (count($arguments) > 0) {
-            $this->__set(KInflector::underscore($method), $arguments[0]);
+            $this->__set(AnInflector::underscore($method), $arguments[0]);
         } else {
             throw new BadMethodCallException('Call to undefined method :'.$method);
         }

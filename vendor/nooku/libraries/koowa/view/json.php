@@ -81,7 +81,7 @@ class KViewJson extends KViewAbstract
 	public function display()
 	{
 		if(empty($this->output)) {
-			$this->output = KInflector::isPlural($this->getName()) ? $this->_getList() : $this->_getItem();
+			$this->output = AnInflector::isPlural($this->getName()) ? $this->_getList() : $this->_getItem();
 		}
 
 		if (!is_string($this->output)) {
@@ -154,7 +154,7 @@ class KViewJson extends KViewAbstract
 	        }
 	        
 	        //Singularize the view name
-	        $name = KInflector::singularize($this->getName());
+	        $name = AnInflector::singularize($this->getName());
 		    
 		    $items = array();
 			foreach($list as $item) 

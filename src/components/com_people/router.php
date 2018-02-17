@@ -50,7 +50,7 @@ class ComPeopleRouter extends ComActorsRouterDefault
         } elseif (
              count($segments) &&
              !is_numeric($segments[0]) &&
-             !in_array(KInflector::singularize($segments[0]), array('person', 'session', 'token'))
+             !in_array(AnInflector::singularize($segments[0]), array('person', 'session', 'token'))
         ) {
             $query['username'] = $segments[0];
             //@TODO the parent::parse wants a numeric ID in order

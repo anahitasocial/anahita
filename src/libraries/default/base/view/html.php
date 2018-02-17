@@ -46,7 +46,7 @@ class LibBaseViewHtml extends LibBaseViewTemplate
         }
 
         if ($property == $name) {
-            if (KInflector::isPlural($name)) {
+            if (AnInflector::isPlural($name)) {
                 $this->_state->setList($value);
             } else {
                 $this->_state->setItem($value);
@@ -71,12 +71,12 @@ class LibBaseViewHtml extends LibBaseViewTemplate
 
         //Assign the data of the model to the view
         if ($items = $this->_state->getList()) {
-            $this->_data[ KInflector::pluralize($name) ] = $items;
+            $this->_data[ AnInflector::pluralize($name) ] = $items;
             $this->_data['items'] = $items;
         }
 
         if ($item = $this->_state->getItem()) {
-            $this->_data[ KInflector::singularize($name) ] = $item;
+            $this->_data[ AnInflector::singularize($name) ] = $item;
             $this->_data['item'] = $item;
         }
 

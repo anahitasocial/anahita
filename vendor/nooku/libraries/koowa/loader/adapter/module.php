@@ -13,7 +13,7 @@
  * @author		Johan Janssens <johan@nooku.org>
  * @package     Koowa_Loader
  * @subpackage 	Adapter
- * @uses		KInflector
+ * @uses		AnInflector
  */
 class KLoaderAdapterModule extends KLoaderAdapterAbstract
 {
@@ -59,10 +59,10 @@ class KLoaderAdapterModule extends KLoaderAdapterAbstract
 				if($parts[0] != 'view')
 			    {
 			        foreach($parts as $key => $value) {
-					    $parts[$key] = KInflector::pluralize($value);
+					    $parts[$key] = AnInflector::pluralize($value);
 				    }
 			    }
-			    else $parts[0] = KInflector::pluralize($parts[0]);
+			    else $parts[0] = AnInflector::pluralize($parts[0]);
 
 				$path = implode('/', $parts).'/'.$file;
 			}

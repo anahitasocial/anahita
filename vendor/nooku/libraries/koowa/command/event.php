@@ -17,7 +17,7 @@
  * @package     Koowa_Command
  * @uses        KService
  * @uses        KEventDispatcher
- * @uses        KInflector
+ * @uses        AnInflector
  */
 class KCommandEvent extends KCommand
 {
@@ -80,14 +80,14 @@ class KCommandEvent extends KCommand
             $identifier = $context->caller->getIdentifier();
             
             if($identifier->path) {
-                $type = KInflector::implode($identifier->path);                
+                $type = AnInflector::implode($identifier->path);                
             } else {
                 $type = $identifier->name;
             }
         }
         
         $parts = explode('.', $name);   
-        $name  = 'on'.ucfirst(array_shift($parts)).ucfirst($type).KInflector::implode($parts);
+        $name  = 'on'.ucfirst(array_shift($parts)).ucfirst($type).AnInflector::implode($parts);
         
         $event = new KEvent(clone($context));
         $event->setPublisher($context->caller);

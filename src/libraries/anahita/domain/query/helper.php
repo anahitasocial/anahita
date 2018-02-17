@@ -38,7 +38,7 @@ class AnDomainQueryHelper
      public static function applyFilters($query, $filters)
      {
          foreach ($filters as $filter => $value) {
-             $method = KInflector::variablize($filter);
+             $method = AnInflector::variablize($filter);
              $value = KConfig::unbox($value);
              if (!is_array($value) || !is_numeric(key($value))) {
                  $args = array($value);

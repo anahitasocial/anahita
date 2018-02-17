@@ -200,7 +200,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
             $this->_beforeLayout($template);
         }
 
-        $method = '_layout'.KInflector::camelize($template);
+        $method = '_layout'.AnInflector::camelize($template);
 
         if (method_exists($this, $method)) {
             $this->$method();

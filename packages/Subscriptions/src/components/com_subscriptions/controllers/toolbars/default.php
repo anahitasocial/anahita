@@ -96,7 +96,7 @@ class ComSubscriptionsControllerToolbarDefault extends ComBaseControllerToolbarD
     {
         $entity = $this->getController()->getItem();
 
-        $name = KInflector::pluralize($this->getController()->getIdentifier()->name);
+        $name = AnInflector::pluralize($this->getController()->getIdentifier()->name);
         $redirect = 'option=com_'.$this->getIdentifier()->package.'&view='.$name;
 
         $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))

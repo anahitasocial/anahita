@@ -118,7 +118,7 @@ class ComComponentsDomainBehaviorAssignable extends LibBaseDomainBehaviorEnablea
             //com:[pluralized name].domain.entity.[name]
 
             if (strpos($identifier, '.') === false) {
-                $identifier = 'com:'.KInflector::pluralize($identifier).'.domain.entity.'.$identifier;
+                $identifier = 'com:'.AnInflector::pluralize($identifier).'.domain.entity.'.$identifier;
             }
 
             $assignment = $this->assignments->findOrAddNew(array('actortype' => $identifier));

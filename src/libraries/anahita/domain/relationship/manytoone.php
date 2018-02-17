@@ -149,7 +149,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         ));
 
         $config->append(array(
-             'name' => (int) $config->cardinality == 1 ? $this->_child->name : KInflector::pluralize($this->_child->name),
+             'name' => (int) $config->cardinality == 1 ? $this->_child->name : AnInflector::pluralize($this->_child->name),
         ));
 
         $name = $config->name;

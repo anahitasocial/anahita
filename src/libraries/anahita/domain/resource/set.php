@@ -64,7 +64,7 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
         $config = new KConfig($config);
 
         if (empty($config->link) && !empty($this->_resources)) {
-            $name = KInflector::singularize($this->main()->getName());
+            $name = AnInflector::singularize($this->main()->getName());
             $config->link = array('child' => $name.'_id','parent' => 'id');
         }
 

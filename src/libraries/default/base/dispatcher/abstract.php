@@ -112,8 +112,8 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
             if (is_string($controller) && strpos($controller, '.') === false) {
 
                 // Controlle name is always singular
-                if (KInflector::isPlural($controller)) {
-                    $controller = KInflector::singularize($controller);
+                if (AnInflector::isPlural($controller)) {
+                    $controller = AnInflector::singularize($controller);
                 }
 
                 $identifier = clone $this->getIdentifier();

@@ -152,7 +152,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
         }
 
         if ($this->getState()->getList()) {
-            $data[KInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
+            $data[AnInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
         }
 
         $config->append(array(

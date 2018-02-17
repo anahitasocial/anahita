@@ -58,7 +58,7 @@ class KViewHtml extends KViewTemplate
 			    $name  = $this->getName();
 
 			    //Assign the data of the model to the view
-			    if(KInflector::isPlural($name))
+			    if(AnInflector::isPlural($name))
 			    {
 				    $this->assign($name, 	$model->getList())
 					     ->assign('total',	$model->getTotal());

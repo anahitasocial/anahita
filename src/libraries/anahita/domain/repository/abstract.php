@@ -122,7 +122,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     protected function _initialize(KConfig $config)
     {
         if (empty($config->resources)) {
-            $resource = $this->getIdentifier()->package.'_'.KInflector::pluralize($this->getIdentifier()->name);
+            $resource = $this->getIdentifier()->package.'_'.AnInflector::pluralize($this->getIdentifier()->name);
 
             $config->append(array(
                 'resources' => array($resource),
@@ -745,7 +745,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     public function __call($method, $args)
     {
         // If the method is of the form is[Bahavior] handle it.
-        $parts = KInflector::explode($method);
+        $parts = AnInflector::explode($method);
 
         if ($parts[0] == 'is' && isset($parts[1])) {
             if ($this->hasBehavior(strtolower($parts[1]))) {

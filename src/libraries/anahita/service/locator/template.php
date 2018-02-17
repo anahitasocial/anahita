@@ -44,18 +44,18 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
      */
     public function findClass(KServiceIdentifier $identifier)
     {
-        $classname = 'Tmpl'.ucfirst($identifier->package).KInflector::implode($identifier->path).ucfirst($identifier->name);
+        $classname = 'Tmpl'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
         if (!$this->getService('koowa:loader')->loadClass($classname, $identifier->basepath)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
             if (!$classname) {
-                //$path      = KInflector::implode($identifier->path);
+                //$path      = AnInflector::implode($identifier->path);
                 $classpath = $identifier->path;
                 $classtype = !empty($classpath) ? array_shift($classpath) : '';
 
                 //Create the fallback path and make an exception for views
-                $path = ($classtype != 'view') ? ucfirst($classtype).KInflector::camelize(implode('_', $classpath)) : ucfirst($classtype);
+                $path = ($classtype != 'view') ? ucfirst($classtype).AnInflector::camelize(implode('_', $classpath)) : ucfirst($classtype);
 
                 $classes[] = 'Tmpl'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
                 $classes[] = 'Tmpl'.ucfirst($identifier->package).$path.'Default';
@@ -102,7 +102,7 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
             if (count($parts)) {
                 if ($parts[0] != 'html') {
                     foreach ($parts as $key => $value) {
-                        $parts[$key] = KInflector::pluralize($value);
+                        $parts[$key] = AnInflector::pluralize($value);
                     }
                 }
 

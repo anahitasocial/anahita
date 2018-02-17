@@ -96,7 +96,7 @@ class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstr
         if ($this->hashtag) {
             $query = $context->query;
             $hashtags = array();
-            $entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
+            $entityType = AnInflector::singularize($this->_mixer->getIdentifier()->name);
             $this->hashtag = (is_string($this->hashtag)) ? array($this->hashtag) : $this->hashtag;
 
             $edgeType = 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag';

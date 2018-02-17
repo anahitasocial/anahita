@@ -13,7 +13,7 @@
  * @author		Johan Janssens <johan@nooku.org>
  * @package     Koowa_Loader
  * @subpackage 	Adapter
- * @uses		KInflector
+ * @uses		AnInflector
  */
 class KLoaderAdapterPlugin extends KLoaderAdapterAbstract
 {

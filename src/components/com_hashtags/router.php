@@ -41,7 +41,7 @@ class ComHashtagsRouter extends ComBaseRouterDefault
                 $vars['alias'] = $identifier;
             }
 
-            $vars['view'] = KInflector::singularize($this->getIdentifier()->package);
+            $vars['view'] = AnInflector::singularize($this->getIdentifier()->package);
         }
 
         return $vars;

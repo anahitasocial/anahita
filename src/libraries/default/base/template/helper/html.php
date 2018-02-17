@@ -311,7 +311,7 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
      */
     public function __call($method, $args)
     {
-        $inflected = strtolower(KInflector::variablize($method));
+        $inflected = strtolower(AnInflector::variablize($method));
         if (method_exists($this, $inflected)) {
             return call_user_func_array(array($this, $inflected), $args);
         }

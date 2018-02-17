@@ -13,7 +13,7 @@
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @package     An_Controller
  * @subpackage 	Toolbar
- * @uses        KInflector
+ * @uses        AnInflector
  */
 abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract implements AnControllerToolbarInterface
 {
@@ -72,7 +72,7 @@ abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract impl
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'title'         => KInflector::humanize(KInflector::pluralize($this->getName())),
+            'title'         => AnInflector::humanize(AnInflector::pluralize($this->getName())),
             'controller'    => null,
         ));
 
@@ -212,7 +212,7 @@ abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract impl
      */
     public function __call($method, $args)
     {
-		$parts = KInflector::explode($method);
+		$parts = AnInflector::explode($method);
 
 		if($parts[0] == 'add' && isset($parts[1]))
 		{

@@ -65,7 +65,7 @@ class LibBaseTemplateHelperController extends KTemplateHelperAbstract
      */
     public function getController($name)
     {
-        $name = KInflector::singularize($name);
+        $name = AnInflector::singularize($name);
 
         if (!isset(self::$_controllers['controller.'.$name])) {
             if (strpos($name, '.') == false) {
