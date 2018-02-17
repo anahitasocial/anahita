@@ -28,7 +28,7 @@ class ComSubscriptionsViewCouponHtml extends ComBaseViewHtml
     protected function _layoutForm()
     {
         if (!$this->expiresOn) {
-            $expiresOn = new KDate();
+            $expiresOn = new AnDate();
 
             $expiresOn->addMonths(1);
 
@@ -48,7 +48,7 @@ class ComSubscriptionsViewCouponHtml extends ComBaseViewHtml
         ));
 
         $this->set(array(
-            'expiresOn' => new KDate($config),
+            'expiresOn' => new AnDate($config),
         ));
     }
 }

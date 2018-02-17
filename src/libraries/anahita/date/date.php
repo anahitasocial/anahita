@@ -1,10 +1,11 @@
 <?php
 /**
- * @version     $Id: date.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Date
+ * @package     Anahita_Date
  * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
 
 /**
@@ -32,8 +33,8 @@ define('DATE_FORMAT_TIMESTAMP', 4);
  */
 define('DATE_FORMAT_UNIXTIME', 5);
 
-define( 'SECONDS_IN_HOUR', 3600 );
-define( 'SECONDS_IN_DAY', 86400 );
+define('SECONDS_IN_HOUR', 3600);
+define('SECONDS_IN_DAY', 86400);
 
  /**
  * Date object
@@ -42,10 +43,11 @@ define( 'SECONDS_IN_DAY', 86400 );
  * Pierre-Alain Joye Released under the New BSD license
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Date
+ * @author      Rastin Mehr <rastin@anahitapolis.com>
+ * @package     Anahita_Date
  * @uses        KObject
  */
-class KDate extends KObject
+class AnDate extends KObject
 {
     /**
      * The year
@@ -108,19 +110,21 @@ class KDate extends KObject
      * @see setDate()
      * @param object    An optional KConfig object with configuration options
      *                  Recognized key values include 'date'
-     * @return KDate The new Date object
+     * @return AnDate The new Date object
      */
-    public function __construct( KConfig $config = null)
-    { 
+    public function __construct(KConfig $config = null)
+    {
         //If no config is passed create it
-        if(!isset($config)) $config = new KConfig();
+        if (! isset($config)) {
+            $config = new KConfig();
+        }
         
         parent::__construct($config);
 
-        if ($config->date instanceof KDate) {
-            $this->copy( $config->date );
+        if ($config->date instanceof AnDate) {
+            $this->copy($config->date);
         } else {
-            $this->setDate( $config->date );
+            $this->setDate($config->date);
         }
     }
 
@@ -135,10 +139,10 @@ class KDate extends KObject
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'date'  => date( 'Y-m-d H:i:s' )
+            'date'  => date('Y-m-d H:i:s')
         ));
 
-         parent::_initialize($config);
+        parent::_initialize($config);
     }
 
     /**
@@ -151,29 +155,24 @@ class KDate extends KObject
      * @param   int     $format Optional format constant (DATE_FORMAT_*) of the input date.
      *                  This parameter isn't really needed anymore, but you could
      *                  use it to force DATE_FORMAT_UNIXTIME.
-     * @return KDate
+     * @return AnDate
      */
-    public function setDate( $date, $format = DATE_FORMAT_ISO )
+    public function setDate($date, $format = DATE_FORMAT_ISO)
     {
         $regex = '/^(\d{4})-?(\d{2})-?(\d{2})([T\s]?(\d{2}):?(\d{2}):?(\d{2})(\.\d+)?(Z|[\+\-]\d{2}:?\d{2})?)?$/i';
 
-        if (preg_match( $regex, $date, $regs ) && $format != DATE_FORMAT_UNIXTIME)
-        {
+        if (preg_match($regex, $date, $regs) && $format != DATE_FORMAT_UNIXTIME) {
             $this->year         = $regs[1];
             $this->month        = $regs[2];
             $this->day          = $regs[3];
-            $this->hour         = isset( $regs[5] ) ? $regs[5] : 0;
-            $this->minute       = isset( $regs[6] ) ? $regs[6] : 0;
-            $this->second       = isset( $regs[7] ) ? $regs[7] : 0;
-            $this->partsecond   = (float) isset( $regs[8] ) ? $regs[8] : 0;
-        }
-        elseif (is_numeric( $date ))
-        {
+            $this->hour         = isset($regs[5]) ? $regs[5] : 0;
+            $this->minute       = isset($regs[6]) ? $regs[6] : 0;
+            $this->second       = isset($regs[7]) ? $regs[7] : 0;
+            $this->partsecond   = (float) isset($regs[8]) ? $regs[8] : 0;
+        } elseif (is_numeric($date)) {
             // UNIXTIME
-            $this->setDate( date( 'Y-m-d H:i:s', $date ) );
-        }
-        else
-        {
+            $this->setDate(date('Y-m-d H:i:s', $date));
+        } else {
             // unknown format
             $this->year         = 0;
             $this->month        = 1;
@@ -196,12 +195,11 @@ class KDate extends KObject
      * @param int $format format constant (DATE_FORMAT_*) of the output date
      * @return string the date in the requested format
      */
-    public function getDate( $format = DATE_FORMAT_ISO )
+    public function getDate($format = DATE_FORMAT_ISO)
     {
-        switch ($format)
-        {
+        switch ($format) {
             case DATE_FORMAT_ISO:
-                return $this->format( '%Y-%m-%d %H:%M:%S' );
+                return $this->format('%Y-%m-%d %H:%M:%S');
                 break;
 
             case DATE_FORMAT_ISO_BASIC:
@@ -220,15 +218,22 @@ class KDate extends KObject
                 break;
 
             case DATE_FORMAT_TIMESTAMP:
-                return $this->format( '%Y%m%d%H%M%S' );
+                return $this->format('%Y%m%d%H%M%S');
                 break;
 
             case DATE_FORMAT_UNIXTIME:
-                return mktime( $this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year );
+                return mktime(
+                    $this->hour,
+                    $this->minute,
+                    $this->second,
+                    $this->month,
+                    $this->day,
+                    $this->year
+                );
                 break;
 
             default:
-                return $this->format( $format );
+                return $this->format($format);
                 break;
         }
     }
@@ -240,7 +245,7 @@ class KDate extends KObject
      *
      * @param object Date $date Date to copy from
      */
-    public function copy( $date )
+    public function copy($date)
     {
         $this->year = $date->year;
         $this->month = $date->month;
@@ -253,15 +258,29 @@ class KDate extends KObject
     /**
      * Formats the date
      */
-    public function format( $format )
+    public function format($format)
     {
-        $timestamp = mktime( $this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year );
-        return strftime( $format, $timestamp );
+        $timestamp = mktime(
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->month,
+            $this->day,
+            $this->year
+        );
+        return strftime($format, $timestamp);
     }
 
     public function getTimestamp()
     {
-        $timestamp = mktime( $this->hour, $this->minute, $this->second, $this->month, $this->day, $this->year );
+        $timestamp = mktime(
+            $this->hour,
+            $this->minute,
+            $this->second,
+            $this->month,
+            $this->day,
+            $this->year
+        );
         return $timestamp;
     }
 
@@ -271,10 +290,9 @@ class KDate extends KObject
      * @param   int     the year
      * @return  int     the year
      */
-    public function year( $value = null )
+    public function year($value = null)
     {
-        if ($value !== null)
-        {
+        if ($value !== null) {
             if ($value < 0 || $value > 9999) {
                 $this->year = 0;
             } else {
@@ -290,10 +308,9 @@ class KDate extends KObject
      * @param   int     the month
      * @return  int     the month
      */
-    public function month( $value = null )
+    public function month($value = null)
     {
-        if ($value !== null)
-        {
+        if ($value !== null) {
             if ($value < 1 || $value > 12) {
                 $this->month = 1;
             } else {
@@ -309,10 +326,9 @@ class KDate extends KObject
      * @param int the day
      * @return int the day
      */
-    public function day( $value = null )
+    public function day($value = null)
     {
-        if ($value !== null)
-        {
+        if ($value !== null) {
             if ($value > 31 || $value < 1) {
                 $this->day = 1;
             } else {
@@ -328,10 +344,9 @@ class KDate extends KObject
      * @param int the hour
      * @return int the hour
      */
-    public function hour( $value = null )
+    public function hour($value = null)
     {
-        if ($value !== null)
-        {
+        if ($value !== null) {
             if ($value > 23 || $value < 0) {
                 $this->hour = 0;
             } else {
@@ -347,10 +362,9 @@ class KDate extends KObject
      * @param int the minute
      * @return int the minute
      */
-    public function minute( $value = null )
+    public function minute($value = null)
     {
-        if ($value !== null)
-        {
+        if ($value !== null) {
             if ($value > 59 || $value < 0) {
                 $this->minute = 0;
             } else {
@@ -366,10 +380,9 @@ class KDate extends KObject
      * @param int the second
      * @return int the second
      */
-    public function second( $value = null )
+    public function second($value = null)
     {
-        if ($value !== null)
-        {
+        if ($value !== null) {
             if ($value > 59 || $value < 0) {
                 $this->second = 0;
             } else {
@@ -382,9 +395,9 @@ class KDate extends KObject
     /**
      * Adds (+/-) a number of years to the current date.
      *
-     * @return KDate
+     * @return AnDate
      */
-    public function addYears( $n )
+    public function addYears($n)
     {
         $this->year += $n;
         return $this;
@@ -394,25 +407,22 @@ class KDate extends KObject
      * Adds (+/-) a number of months to the current date.
      *
      * @param int Positive or negative number of months
-     * @return KDate
+     * @return AnDate
      */
-    public function addMonths( $n )
+    public function addMonths($n)
     {
-        $an = abs( $n );
-        $years = floor( $an / 12 );
+        $an = abs($n);
+        $years = floor($an / 12);
         $months = $an % 12;
 
-        if ($n < 0)
-        {
+        if ($n < 0) {
             $this->year -= $years;
             $this->month -= $months;
             if ($this->month < 1) {
                 $this->year--;
                 $this->month = 12 + $this->month;
             }
-        }
-        else
-        {
+        } else {
             $this->year += $years;
             $this->month += $months;
             if ($this->month > 12) {
@@ -428,11 +438,11 @@ class KDate extends KObject
      * Adds (+/-) a number of days to the current date.
      *
      * @param int The number of days
-     * @return KDate
+     * @return AnDate
      */
-    public function addDays( $n )
+    public function addDays($n)
     {
-        $this->setDate( $this->getTimestamp() + SECONDS_IN_DAY * $n, DATE_FORMAT_UNIXTIME );
+        $this->setDate($this->getTimestamp() + SECONDS_IN_DAY * $n, DATE_FORMAT_UNIXTIME);
         return $this;
     }
 
@@ -440,11 +450,11 @@ class KDate extends KObject
      * Adds (+/-) a number of hours to the current date.
      *
      * @param int The number of days
-     * @return KDate
+     * @return AnDate
      */
-    public function addHours( $n )
+    public function addHours($n)
     {
-        $this->setDate( $this->getTimestamp() + SECONDS_IN_HOUR * $n, DATE_FORMAT_UNIXTIME );
+        $this->setDate($this->getTimestamp() + SECONDS_IN_HOUR * $n, DATE_FORMAT_UNIXTIME);
         return $this;
     }
 
@@ -452,11 +462,11 @@ class KDate extends KObject
      * Adds (+/-) a number of minutes to the current date.
      *
      * @param int The number of days
-     * @return KDate
+     * @return AnDate
      */
-    public function addMinutes( $n )
+    public function addMinutes($n)
     {
-        $this->setDate( $this->getTimestamp() + 60 * $n, DATE_FORMAT_UNIXTIME );
+        $this->setDate($this->getTimestamp() + 60 * $n, DATE_FORMAT_UNIXTIME);
         return $this;
     }
 
@@ -464,11 +474,11 @@ class KDate extends KObject
      * Adds (+/-) a number of seconds to the current date.
      *
      * @param int The number of days
-     * @return KDate
+     * @return AnDate
      */
-    public function addSeconds( $n )
+    public function addSeconds($n)
     {
-        $this->setDate( $this->getTimestamp() + $n, DATE_FORMAT_UNIXTIME );
+        $this->setDate($this->getTimestamp() + $n, DATE_FORMAT_UNIXTIME);
         return $this;
     }
 
@@ -483,14 +493,14 @@ class KDate extends KObject
      *
      * @return integer  the number of days since the epoch
      */
-    public function toDays( KDate $date = null)
+    public function toDays(AnDate $date = null)
     {
-        $year   = isset($date) ? $date->year  : $this->year;
-        $month  = isset($date) ? $date->month : $this->month;
-        $day    = isset($date) ? $date->day   : $this->day;
+        $year = isset($date) ? $date->year  : $this->year;
+        $month = isset($date) ? $date->month : $this->month;
+        $day = isset($date) ? $date->day   : $this->day;
 
-        $century    = (int) substr( $year, 0, 2 );
-        $year       = (int) substr( $year, 2, 2 );
+        $century = (int) substr($year, 0, 2);
+        $year = (int) substr($year, 2, 2);
 
         if ($month > 2) {
             $month -= 3;
@@ -505,23 +515,23 @@ class KDate extends KObject
         }
 
         return (
-            floor( (146097 * $century) / 4 ) +
-            floor( (1461 * $year) / 4 ) +
-            floor( (153 * $month + 2) / 5 ) +
+            floor((146097 * $century) / 4) +
+            floor((1461 * $year) / 4) +
+            floor((153 * $month + 2) / 5) +
             $day + 1721119);
     }
 
     /**
      * Returns day of week for given date (0 = Sunday)
      *
-     * @param   KDate
+     * @param   AnDate
      * @return  int     the number of the day in the week
      */
-    public function getDayOfWeek( KDate $date = null)
+    public function getDayOfWeek(AnDate $date = null)
     {
-        $year   = isset($date) ? $date->year  : $this->year;
-        $month  = isset($date) ? $date->month : $this->month;
-        $day    = isset($date) ? $date->day   : $this->day;
+        $year = isset($date) ? $date->year  : $this->year;
+        $month = isset($date) ? $date->month : $this->month;
+        $day = isset($date) ? $date->day   : $this->day;
 
         if ($month > 2) {
             $month -= 2;
@@ -543,20 +553,20 @@ class KDate extends KObject
     /**
      * Returns the full weekday name for the given date
      *
-     * @param   mixed   $day     KDate or the weekday number (0-6)
+     * @param   mixed   $day     AnDate or the weekday number (0-6)
      * @return  string  the full name of the day of the week
      */
-    public static function getWeekdayFullname( $day = null )
+    public static function getWeekdayFullname($day = null)
     {
-        if ($day === null ) {
-            $day = new KDate();
+        if ($day === null) {
+            $day = new AnDate();
         }
-        if ($day instanceof KDate ) {
-            $weekday    = self::getDayOfWeek( $day );
-        } else if (is_int( $day )) {
-            $weekday    = $day;
+        if ($day instanceof AnDate) {
+            $weekday = self::getDayOfWeek($day);
+        } elseif (is_int($day)) {
+            $weekday = $day;
         }
-        $names      = self::getWeekDays();
+        $names = self::getWeekDays();
         return $names[$weekday];
     }
 
@@ -569,9 +579,9 @@ class KDate extends KObject
      * @return string  the abbreviated name of the day of the week
      * @see Date_Calc::getWeekdayFullname()
      */
-    public static function getWeekdayAbbrname( $day, $length = 3)
+    public static function getWeekdayAbbrname($day, $length = 3)
     {
-        return substr( self::getWeekdayFullname( $day ), 0, $length );
+        return substr(self::getWeekdayFullname($day), 0, $length);
     }
 
     /**
@@ -581,10 +591,10 @@ class KDate extends KObject
      *
      * @return string  the full name of the month
      */
-    public static function getMonthFullname( $month )
+    public static function getMonthFullname($month)
     {
-        $month  = (int) $month;
-        $names  = self::getMonthNames();
+        $month = (int) $month;
+        $names = self::getMonthNames();
         return $names[$month];
     }
 
@@ -614,8 +624,7 @@ class KDate extends KObject
     public static function getMonthNames()
     {
         static $months;
-        if(!isset($months))
-        {
+        if (!isset($months)) {
             $months = array();
             for ($i = 1; $i < 13; $i++) {
                 $months[$i] = strftime('%B', mktime(0, 0, 0, $i, 1, 2001));
@@ -635,8 +644,7 @@ class KDate extends KObject
     public static function getWeekDays()
     {
         static $weekdays = null;
-        if ($weekdays == null)
-        {
+        if ($weekdays == null) {
             $weekdays   = array();
             for ($i = 0; $i < 7; $i++) {
                 $weekdays[$i] = strftime('%A', mktime(0, 0, 0, 1, $i, 2001));
@@ -661,7 +669,7 @@ class KDate extends KObject
         if ($month == 2) {
             if (self::isLeapYear($year)) {
                 return 29;
-             } else {
+            } else {
                 return 28;
             }
         } elseif ($month == 4 or $month == 6 or $month == 9 or $month == 11) {
@@ -680,7 +688,7 @@ class KDate extends KObject
      *                       Do not add leading 0's for years prior to 1000.
      * @return boolean
      */
-    public static function isLeapYear( $year )
+    public static function isLeapYear($year)
     {
         if (preg_match('/\D/', $year)) {
             return false;
@@ -698,15 +706,18 @@ class KDate extends KObject
     }
 
     /**
-     * @param   KDate
+     * @param   AnDate
      * @return  boolean
      */
-    public static function isToday( KDate $date )
+    public static function isToday(AnDate $date)
     {
         static $today;
         if (!isset($today)) {
-            $today  = new KDate;
+            $today  = new AnDate;
         }
-        return ($today->day == $date->day && $today->month == $date->month && $today->year == $date->year);
+        return (
+            $today->day == $date->day &&
+            $today->month == $date->month &&
+            $today->year == $date->year);
     }
 }

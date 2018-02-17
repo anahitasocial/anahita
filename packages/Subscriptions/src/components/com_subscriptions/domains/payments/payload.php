@@ -82,7 +82,7 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
      *
      * @param int    $frequency  The frequency
      * @param string $unit       The unit for which the frequency happens
-     * @param KDate  $start_date The start date
+     * @param AnDate  $start_date The start date
      */
     public function setRecurring($frequency, $unit, $start_date)
     {

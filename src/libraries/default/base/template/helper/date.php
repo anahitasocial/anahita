@@ -50,7 +50,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
     /**
      * current time.
      *
-     * @var KDate
+     * @var AnDate
      */
     protected $_current_time;
 
@@ -71,7 +71,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
      * Date picker. Return a selcetor with all the date components.
      *
      * @param string $name
-     * @param KDate  $date
+     * @param AnDate  $date
      * @param array  $options
      */
     public function picker($name, $options = array())
@@ -79,7 +79,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
         $options = new KConfig($options);
 
         $options->append(array(
-            'date' => new KDate(),
+            'date' => new AnDate(),
         ));
 
         $date = $options->date;
@@ -87,7 +87,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
         $html = $this->getService('com:base.template.helper.html');
 
         if (is_string($date)) {
-            $date = new KDate(new KConfig(array('date' => $date)));
+            $date = new AnDate(new KConfig(array('date' => $date)));
         }
 
         $month = $date->month;
@@ -117,7 +117,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
             $days[$i + 1] = $num;
         }
 
-        $current = new KDate();
+        $current = new AnDate();
 
         foreach (range(0, 100) as $i) {
             $years[$current->year + $i] = $current->year + $i;
@@ -133,7 +133,7 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
     /**
      * Return a human friendly format of the date.
      *
-     * @param KDate $date
+     * @param AnDate $date
      * @param array $config Optional array to pass format
      *
      * @return string

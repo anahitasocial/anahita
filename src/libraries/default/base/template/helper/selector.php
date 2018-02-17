@@ -441,7 +441,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
     public function year($options = array())
     {
         $options = new KConfig($options);
-        $date = new KDate(new KConfig());
+        $date = new AnDate(new KConfig());
         $year = $date->year;
 
         $options->append(array(

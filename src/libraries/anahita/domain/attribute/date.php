@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
+class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
 {
     /**
      * Factory Method.
@@ -63,7 +63,7 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
      */
     public function setDate($date, $format = DATE_FORMAT_ISO)
     {
-        if ($date instanceof KDate) {
+        if ($date instanceof AnDate) {
             $this->copy($date);
         } elseif (is_array($date) || $date instanceof KConfig) {
             foreach ($date as $key => $value) {
@@ -99,11 +99,11 @@ class AnDomainAttributeDate extends KDate implements AnDomainAttributeInterface
      * date it returns 0 if receiver is before the dat it returns 1 and if it's after the date
      * it returns -1.
      *
-     * @param KDate $date
+     * @param AnDate $date
      *
      * @return int
      */
-    public function compare(KDate $date)
+    public function compare(AnDate $date)
     {
         $thisTimestamp = $this->getTimestamp();
         $dateTimestamp = $date->getTimestamp();

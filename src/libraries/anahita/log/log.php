@@ -106,7 +106,7 @@ class AnLog extends KObject implements KServiceInstantiatable
     public function addEntry($entry)
 	{
 		// Set some default field values if not already set.
-		$date = new KDate();
+		$date = new AnDate();
 
 		if (!isset ($entry['date'])) {
 			$entry['date'] = $date->format("%Y-%m-%d");
@@ -156,7 +156,7 @@ class AnLog extends KObject implements KServiceInstantiatable
 			return true;
 		}
 
-		$now = new KDate();
+		$now = new AnDate();
 		$date = $now->getDate();
 
 		if (!file_exists($this->_path)) {

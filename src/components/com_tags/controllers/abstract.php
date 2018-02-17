@@ -104,7 +104,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
             ->order('count', 'DESC');
 
             if ($this->sort == 'trending') {
-                $now = new KDate();
+                $now = new AnDate();
                 $entities->where('edge.created_on', '>', $now->addDays(-(int) $this->days)->getDate());
             }
         }
