@@ -234,7 +234,7 @@ abstract class LibBaseViewAbstract extends KObject
      *
      * @param    string  The template name.
      *
-     * @return KViewAbstract
+     * @return LibBaseViewAbstract
      */
     public function setLayout($layout)
     {

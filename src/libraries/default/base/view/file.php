@@ -1,8 +1,6 @@
 <?php
 
 /** 
- * LICENSE: ##LICENSE##.
- * 
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -74,7 +72,6 @@ class LibBaseViewFile extends LibBaseViewAbstract
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-
         $this->set($config->toArray());
     }
 
@@ -93,7 +90,7 @@ class LibBaseViewFile extends LibBaseViewAbstract
             'path' => '',
             'filename' => $this->getIdentifier()->path[$count - 1].'.'.$this->getIdentifier()->name,
             'disposition' => 'attachment',
-           ));
+        ));
 
         parent::_initialize($config);
     }
@@ -101,7 +98,7 @@ class LibBaseViewFile extends LibBaseViewAbstract
     /**
      * Return the views output.
      *
-     * @return KViewFile
+     * @return AnViewFile
      */
     public function display()
     {
@@ -173,7 +170,7 @@ class LibBaseViewFile extends LibBaseViewAbstract
     /**
      * Set the header disposition headers.
      *
-     * @return KViewFile
+     * @return LibBaseViewFile
      */
     protected function _setDisposition()
     {
