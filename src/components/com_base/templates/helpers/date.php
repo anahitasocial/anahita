@@ -19,7 +19,7 @@ class ComBaseTemplateHelperDate extends LibBaseTemplateHelperDate
      *
      * If format is null the date is given in human friendly format
      *
-     * @param	KDate|string	A date in an US English date format
+     * @param	AnDate|string	A date in an US English date format
      * @param	string	format optional format for strftime
      * @returns	string	formated date
      *
@@ -40,8 +40,8 @@ class ComBaseTemplateHelperDate extends LibBaseTemplateHelperDate
             }
         }
 
-        if (!(is_object($date) && $date->inherits('KDate'))) {
-            $date = new KDate(new KConfig(array('date' => $date)));
+        if (!(is_object($date) && $date->inherits('AnDate'))) {
+            $date = new AnDate(new KConfig(array('date' => $date)));
         }
 
         return $this->humanize($date, array(

@@ -44,14 +44,14 @@ class AnServiceLocatorAnahita extends KServiceLocatorAbstract
      */
     public function findClass(KServiceIdentifier $identifier)
     {
-        $classname = 'An'.ucfirst($identifier->package).KInflector::implode($identifier->path).ucfirst($identifier->name);
+        $classname = 'An'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
         if (!class_exists($classname)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
             if (!$classname) {
                 // use default class instead
-                $classname = 'An'.ucfirst($identifier->package).KInflector::implode($identifier->path).'Default';
+                $classname = 'An'.ucfirst($identifier->package).AnInflector::implode($identifier->path).'Default';
 
                 if (!class_exists($classname)) {
                     $classname = false;

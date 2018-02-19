@@ -1,8 +1,5 @@
 <?php
-
-/** 
- * LICENSE: ##LICENSE##.
- * 
+/**
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -10,32 +7,9 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @version    SVN: $Id$
- *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * HTML Helper. Can be used in the views to generate HTML elements.
- * 
- * <code>
- *  //creates a link tag
- *  <?= @html('a','someurl')->class('link-class') ?>
- *  
- *  //creates a select box and set the selected value to 1
- *  <?= @html('select', 'select-name', array('options'=>array('value1','value2'),1));
- * 
- * </code>
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServiceInstantiatable
+class LibBaseTemplateHelperHtml extends LibBaseTemplateHelperAbstract implements KServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
@@ -59,11 +33,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
     /**
      * Return a tag object. This method clones a prototype tag instead of instantiating a new tag to optimize
      * memory and speed consumption.
-     * 
+     *
      * @param $name string
      * @param $content string
      * @param $attributes array
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function tag($name, $content, $attributes = array())
@@ -81,10 +55,10 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
     /**
      * Create select option tags. The options are passed as an associative array of $value, $content
      * $value being the option tag value and the $content, the value of the option.
-     * 
+     *
      * @param  $options array select options
      * @param  $selected string[Optional] the value selected
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function options($options, $selected = array())
@@ -116,12 +90,12 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
     }
 
     /**
-     * Create a select tag. 
-     * 
+     * Create a select tag.
+     *
      * @param $name string
      * @param $selectedOption string|array
-     * @param $attributes array 
-     * 
+     * @param $attributes array
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function select($name, $options = null, $attributes = array())
@@ -142,11 +116,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create a textarea tag.
-     * 
+     *
      * @param  string                           $name
      * @param  string                           $value
      * @param  array                            $attributes
-     *                                                       
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function textarea($name, $value = '', $attributes = array())
@@ -158,12 +132,12 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create an input field tag.
-     * 
+     *
      * @param string $type
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function input($type, $name, $value = '', $attributes = array())
@@ -177,11 +151,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create a text field tag.
-     * 
+     *
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function textfield($name, $value = '', $attributes = array())
@@ -191,11 +165,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create a hidden field tag.
-     * 
+     *
      * @param  string                           $name
      * @param  string                           $value
      * @param  array                            $attributes
-     *                                                       
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function hiddenfield($name, $value = '', $attributes = array())
@@ -205,11 +179,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create a password field tag.
-     * 
+     *
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function passwordfield($name, $attributes = array())
@@ -219,11 +193,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create a button tag.
-     * 
+     *
      * @param string $name
      * @param string $value
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function button($value, $name = null, $attributes = array())
@@ -237,11 +211,11 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create a link tag.
-     * 
+     *
      * @param string       $content
      * @param string|array $url
      * @param array        $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function link($content, $url = '', $attributes = array())
@@ -253,12 +227,12 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create &gt;input type="radio" /&lt;.
-     * 
+     *
      * @param string $name
      * @param string $value
      * @param bool   $checked
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function radio($name, $value = '', $checked = false, $attributes = array())
@@ -274,12 +248,12 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create &gt;input type="checkbox" /&lt;.
-     * 
+     *
      * @param string $name
      * @param string $value
      * @param bool   $checked
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function checkbox($name, $value = '', $checked = false, $attributes = array())
@@ -295,10 +269,10 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
 
     /**
      * Create &gt;img src="" /&lt; tag.
-     * 
+     *
      * @param string $src
      * @param array  $attributes
-     * 
+     *
      * @return LibBaseTemplateHelperHtmlElement
      */
     public function image($src, $attributes = array())
@@ -311,7 +285,7 @@ class LibBaseTemplateHelperHtml extends KTemplateHelperAbstract implements KServ
      */
     public function __call($method, $args)
     {
-        $inflected = strtolower(KInflector::variablize($method));
+        $inflected = strtolower(AnInflector::variablize($method));
         if (method_exists($this, $inflected)) {
             return call_user_func_array(array($this, $inflected), $args);
         }

@@ -1,8 +1,7 @@
 <?php
-
-/** 
- * LICENSE: ##LICENSE##.
- * 
+/**
+ * Renders the previous template of the current template path.
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -10,36 +9,22 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @version    SVN: $Id$
- *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * Renders the previous template of the current template path.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibBaseTemplateHelperPrevious extends KTemplateHelperAbstract
+class LibBaseTemplateHelperPrevious extends LibBaseTemplateHelperAbstract
 {
     /**
      * paths.
-     * 
+     *
      * @var array
      */
     protected $_paths = array();
 
     /**
      * Render the previous template of the current template.
-     * 
+     *
      * @param array $data
-     * 
+     *
      * @return string
      */
     public function load($data = array())
@@ -47,7 +32,7 @@ class LibBaseTemplateHelperPrevious extends KTemplateHelperAbstract
         $current = $this->_template->getPath();
 
         if (!$current) {
-            throw new KTemplateException('There are no template being rendered');
+            throw new LibBaseTemplateException('There are no template being rendered');
         }
 
         if (!isset($this->_paths[$current])) {
@@ -75,7 +60,7 @@ class LibBaseTemplateHelperPrevious extends KTemplateHelperAbstract
             }
 
             if (!$previous) {
-                throw new KTemplateException("The {$current} template has no previous");
+                throw new LibBaseTemplateException("The {$current} template has no previous");
             }
 
             $this->_paths[$current] = $previous;

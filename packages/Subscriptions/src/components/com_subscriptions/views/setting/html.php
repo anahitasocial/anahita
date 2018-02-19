@@ -41,7 +41,7 @@ class ComSubscriptionsViewSettingHtml extends ComBaseViewHtml
 
         $packages = $this->getService('repos:subscriptions.package')->getQuery()->fetchSet()->order('ordering');
 
-        $endDate = new KDate();
+        $endDate = new AnDate();
 
         if ($this->actor->hasSubscription(false)) {
             $selectedPackageId = $this->actor->subscription->package->id;
@@ -50,7 +50,7 @@ class ComSubscriptionsViewSettingHtml extends ComBaseViewHtml
                 'date' => $this->actor->subscription->endDate,
            ));
 
-            $endDate = new KDate($config);
+            $endDate = new AnDate($config);
         }
 
         $this->set(array(

@@ -46,7 +46,7 @@ class ComSubscriptionsControllerToolbarPackage extends ComSubscriptionsControlle
         $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-EDIT')))
                 ->href($entity->getURL().'&layout='.$layout);
 
-        if (KInflector::isPlural($view)) {
+        if (AnInflector::isPlural($view)) {
             $command->setAttribute('data-action', 'edit');
         }
     }

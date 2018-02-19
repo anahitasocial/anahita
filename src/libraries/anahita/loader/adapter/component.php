@@ -79,10 +79,10 @@ class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
             if (count($parts)) {
                 if ($parts[0] != 'view') {
                     foreach ($parts as $key => $value) {
-                        $parts[$key] = KInflector::pluralize($value);
+                        $parts[$key] = AnInflector::pluralize($value);
                     }
                 } else {
-                    $parts[0] = KInflector::pluralize($parts[0]);
+                    $parts[0] = AnInflector::pluralize($parts[0]);
                 }
                 $path = implode('/', $parts);
             }

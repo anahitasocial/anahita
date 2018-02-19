@@ -77,7 +77,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
 
         //Add alias filter for media:// namespace
         $this->getTemplate()->getFilter('alias')->append(
-            array('media://' => (string) $this->_mediaurl.'/'), KTemplateFilter::MODE_READ | KTemplateFilter::MODE_WRITE
+            array('media://' => (string) $this->_mediaurl.'/'), LibBaseTemplateFilter::MODE_READ | LibBaseTemplateFilter::MODE_WRITE
         );
     }
 
@@ -93,7 +93,11 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         $config->append(array(
             'escape' => 'htmlspecialchars',
             'template' => $this->getName(),
-            'template_filters' => array('shorttag', 'alias', 'variable'),
+            'template_filters' => array(
+                'shorttag', 
+                'alias', 
+                'variable',
+            ),
             'template_paths' => array(),
             'auto_assign' => true,
             'media_url' => '/media',
@@ -134,7 +138,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      */
     public function getTemplate()
     {
-        if (! $this->_template instanceof KTemplateAbstract) {
+        if (! $this->_template instanceof LibBaseTemplateAbstract) {
             //Make sure we have a template identifier
             if (! ($this->_template instanceof KServiceIdentifier)) {
                 $this->setTemplate($this->_template);
@@ -162,7 +166,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      */
     public function setTemplate($template)
     {
-        if (! ($template instanceof KTemplateAbstract)) {
+        if (! ($template instanceof LibBaseTemplateAbstract)) {
             if (is_string($template) && strpos($template, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('template');
@@ -200,7 +204,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
             $this->_beforeLayout($template);
         }
 
-        $method = '_layout'.KInflector::camelize($template);
+        $method = '_layout'.AnInflector::camelize($template);
 
         if (method_exists($this, $method)) {
             $this->$method();

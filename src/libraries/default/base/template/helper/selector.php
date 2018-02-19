@@ -1,18 +1,15 @@
 <?php
-
 /**
- * Selector Helper provides various selection for list of months, years, days, countries, states and/or provinces
- * currency and usertypes.
- *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements KServiceInstantiatable
+class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implements KServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
@@ -441,7 +438,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
     public function year($options = array())
     {
         $options = new KConfig($options);
-        $date = new KDate(new KConfig());
+        $date = new AnDate(new KConfig());
         $year = $date->year;
 
         $options->append(array(
@@ -580,7 +577,7 @@ class LibBaseTemplateHelperSelector extends KTemplateHelperAbstract implements K
 
         $options = KConfig::unbox($options);
 
-        $states = $this->_html->select($options['name'], array('options' => $states, 'selected' => $selected),     array_merge($options, array('country' => 'us')));
+        $states = $this->_html->select($options['name'], array('options' => $states, 'selected' => $selected), array_merge($options, array('country' => 'us')));
         $provinces = $this->_html->select($options['name'], array('options' => $provinces, 'selected' => $selected), array_merge($options, array('country' => 'canada')));
         $custom = $this->_html->textfield($options['name'], $selected, array_merge($options, array('country' => 'custom')));
 

@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComStoriesTemplateHelperParser extends KTemplateHelperAbstract
+class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
 {
     /**
      * Parse Template.

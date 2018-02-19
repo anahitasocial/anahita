@@ -38,7 +38,7 @@ class ComBaseControllerService extends ComBaseControllerResource
         parent::setView($view);
 
         if (!$this->_view instanceof ComBaseViewAbstract) {
-            $name = KInflector::isPlural($this->view) ? 'nodes' : 'node';
+            $name = AnInflector::isPlural($this->view) ? 'nodes' : 'node';
             $defaults[] = 'ComBaseView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComBaseView'.ucfirst($name).ucfirst($this->_view->name);
             $defaults[] = 'ComBaseView'.ucfirst($this->_view->name);

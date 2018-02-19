@@ -947,7 +947,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             }
         }
 
-        $parts = KInflector::explode($method);
+        $parts = AnInflector::explode($method);
 
         if ($parts[0] == 'is') {
             if (isset($this->_mixed_methods[$method])) {
@@ -959,7 +959,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
         if (!isset($this->_mixed_methods[$method])) {
             if ($parts[0] == 'get' || $parts[0] == 'set') {
-                $property = lcfirst(KInflector::implode(array_slice($parts, 1)));
+                $property = lcfirst(AnInflector::implode(array_slice($parts, 1)));
                 $property = $this->getEntityDescription()->getProperty($property);
                 if ($property) {
                     if ($parts[0] == 'get') {

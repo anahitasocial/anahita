@@ -139,7 +139,7 @@ class LibBaseControllerAbstract extends AnControllerAbstract
         if (strpos($method, '_') === false) {
 
             if (count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions())) {
-                $this->{KInflector::underscore($method)} = $args[0];
+                $this->{AnInflector::underscore($method)} = $args[0];
                 return $this;
             }
 

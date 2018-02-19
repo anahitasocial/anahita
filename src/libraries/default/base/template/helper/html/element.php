@@ -102,7 +102,7 @@ class LibBaseTemplateHelperHtmlElement
      */
     public function __call($method, $args)
     {
-        $parts = KInflector::explode($method);
+        $parts = AnInflector::explode($method);
         $name = implode('-', $parts);
 
         return $this->set($name, $args[0]);

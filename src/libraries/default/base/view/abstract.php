@@ -159,7 +159,7 @@ abstract class LibBaseViewAbstract extends KObject
     {
         //If one argument is passed we assume a setter method is being called
         if (!isset($this->_mixed_methods[$method]) && count($args) == 1) {
-            $this->set(KInflector::underscore($method), $args[0]);
+            $this->set(AnInflector::underscore($method), $args[0]);
 
             return $this;
         }
@@ -234,7 +234,7 @@ abstract class LibBaseViewAbstract extends KObject
      *
      * @param    string  The template name.
      *
-     * @return KViewAbstract
+     * @return LibBaseViewAbstract
      */
     public function setLayout($layout)
     {

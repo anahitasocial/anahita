@@ -102,7 +102,7 @@ class ComBaseControllerComment extends ComBaseControllerService
         parent::setView($view);
 
         if (!$this->_view instanceof LibBaseViewAbstract) {
-            $view = KInflector::isPlural($view) ? 'comments' : 'comment';
+            $view = AnInflector::isPlural($view) ? 'comments' : 'comment';
             $defaults[] = 'ComBaseView'.ucfirst($view).ucfirst($this->_view->name);
             register_default(array(
                 'identifier' => $this->_view,

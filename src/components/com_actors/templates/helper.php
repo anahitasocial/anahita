@@ -28,7 +28,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComActorsTemplateHelper extends KTemplateHelperAbstract implements KServiceInstantiatable
+class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements KServiceInstantiatable
 {
     /**
      * Force creation of a singleton.

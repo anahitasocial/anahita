@@ -128,7 +128,7 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
         if ($this->mention) {
             $query = $context->query;
             $usernames = array();
-            $entityType = KInflector::singularize($this->_mixer->getIdentifier()->name);
+            $entityType = AnInflector::singularize($this->_mixer->getIdentifier()->name);
             $this->mention = (is_string($this->mention)) ? array($this->mention) : $this->mention;
 
             $edgeType = 'ComTagsDomainEntityTag,ComPeopleDomainEntityMention,com:people.domain.entity.mention';
@@ -176,7 +176,7 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
 
         if ($entity instanceof ComBaseDomainEntityComment) {
             $parentIdentifier = $entity->parent->getIdentifier()->name;
-            $parentController = $this->getService('com:'.KInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
+            $parentController = $this->getService('com:'.AnInflector::pluralize($parentIdentifier).'.controller.'.$parentIdentifier);
 
             if ($parentController->isNotifier() && $entity->parent->isSubscribable()) {
                 $data = array(

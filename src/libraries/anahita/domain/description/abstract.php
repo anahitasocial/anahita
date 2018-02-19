@@ -146,7 +146,7 @@ abstract class AnDomainDescriptionAbstract
             $columns = $this->_repository->getResources()->main()->getColumns();
             foreach ($columns as $column) {
                 if ($column->primary) {
-                    $config->identity_property = KInflector::variablize($column->name);
+                    $config->identity_property = AnInflector::variablize($column->name);
                     break;
                 }
             }
@@ -169,7 +169,7 @@ abstract class AnDomainDescriptionAbstract
             $columns = $this->_repository->getResources()->main()->getColumns();
 
             foreach ($columns as $column) {
-                $name = KInflector::variablize($column->name);
+                $name = AnInflector::variablize($column->name);
                 //merge the existing attributes
                 $attributes[$name] = array_merge(
                         array('required' => $column->required, 'column' => $column, 'type' => $column->type, 'default' => $column->default),

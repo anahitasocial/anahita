@@ -58,7 +58,7 @@ abstract class AnDomainPropertyAbstract
             $instance = $description->getProperty($name);
         } else {
             if (!isset(self::$_instances[$property])) {
-                $classname = 'AnDomain'.KInflector::camelize($property);
+                $classname = 'AnDomain'.AnInflector::camelize($property);
                 self::$_instances[$property] = new $classname();
             }
             $instance = clone self::$_instances[$property];

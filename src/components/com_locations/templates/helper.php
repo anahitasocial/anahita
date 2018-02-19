@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComLocationsTemplateHelper extends KTemplateHelperAbstract
+class ComLocationsTemplateHelper extends LibBaseTemplateHelperAbstract
 {
     /**
     *   Method to render a location's address

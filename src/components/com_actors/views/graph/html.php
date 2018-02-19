@@ -23,7 +23,7 @@ class ComActorsViewGraphHtml extends ComBaseViewHtml
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'list_item_view' => KInflector::singularize($this->getIdentifier()->package),
+            'list_item_view' => AnInflector::singularize($this->getIdentifier()->package),
             'template_paths' => array(dirname(__FILE__).'/html'),
         ));
 

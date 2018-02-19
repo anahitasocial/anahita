@@ -15,7 +15,7 @@
  *
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Command
- * @uses        KInflector
+ * @uses        AnInflector
  */
 class KCommand extends KObject implements KCommandInterface
 {
@@ -90,7 +90,7 @@ class KCommand extends KObject implements KCommandInterface
         }
 
         $parts  = explode('.', $name);
-        $method = !empty($type) ? '_'.$type.ucfirst(KInflector::implode($parts)) : '_'.lcfirst(KInflector::implode($parts));
+        $method = !empty($type) ? '_'.$type.ucfirst(AnInflector::implode($parts)) : '_'.lcfirst(AnInflector::implode($parts));
 
         if(in_array($method, $this->getMethods())) {
             return $this->$method($context);

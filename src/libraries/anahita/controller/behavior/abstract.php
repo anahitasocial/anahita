@@ -13,9 +13,9 @@
  * @author      Rastin Mehr <rastin@anahitapolis.com> 
  * @package     An_Controller
  * @subpackage 	Toolbar
- * @uses        KInflector
+ * @uses        AnInflector
  */
-abstract class AnControllerBehaviorAbstract extends KBehaviorAbstract
+abstract class AnControllerBehaviorAbstract extends AnBehaviorAbstract
 {
 	/**
 	 * Command handler

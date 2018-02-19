@@ -13,7 +13,7 @@
  * @author		Johan Janssens <johan@nooku.org>
  * @package     Koowa_Service
  * @subpackage 	Locator
- * @uses 		KInflector
+ * @uses 		AnInflector
  */
 class KServiceLocatorKoowa extends KServiceLocatorAbstract
 {
@@ -32,12 +32,12 @@ class KServiceLocatorKoowa extends KServiceLocatorAbstract
 	 */
 	public function findClass(KServiceIdentifier $identifier)
 	{
-        $classname = 'K'.ucfirst($identifier->package).KInflector::implode($identifier->path).ucfirst($identifier->name);
+        $classname = 'K'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
 		if (!class_exists($classname))
 		{
 			// use default class instead
-			$classname = 'K'.ucfirst($identifier->package).KInflector::implode($identifier->path).'Default';
+			$classname = 'K'.ucfirst($identifier->package).AnInflector::implode($identifier->path).'Default';
 
 			if (!class_exists($classname)) {
 				$classname = false;

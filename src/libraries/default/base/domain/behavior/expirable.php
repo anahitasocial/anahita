@@ -37,7 +37,7 @@ class LibBaseDomainBehaviorExpirable extends AnDomainBehaviorAbstract
     /**
      * Sets the end date of an expirable.
      *
-     * @param AnDomainAttributeDate|KDate|array $date The end date
+     * @param AnDomainAttributeDate|AnDate|array $date The end date
      */
     public function setEndDate($date)
     {
@@ -50,7 +50,7 @@ class LibBaseDomainBehaviorExpirable extends AnDomainBehaviorAbstract
     /**
      * Sets the start date of an expirable.
      *
-     * @param AnDomainAttributeDate|KDate|array $date The start date
+     * @param AnDomainAttributeDate|AnDate|array $date The start date
      */
     public function setStartDate($date)
     {

@@ -117,7 +117,7 @@ class AnServiceClass
             }
 
             if (empty($config['name'])) {
-                $path = KInflector::implode($config['identifier']->path);
+                $path = AnInflector::implode($config['identifier']->path);
                 $config['name'] = array($path.ucfirst($config['identifier']->name), $path.'Default');
             }
 
@@ -150,7 +150,7 @@ class AnServiceClass
             }
         }
 
-        $classbase = 'Lib'.ucfirst($identifier->package).KInflector::implode($identifier->path);
+        $classbase = 'Lib'.ucfirst($identifier->package).AnInflector::implode($identifier->path);
         $loader = KService::get('koowa:loader');
         $classname = $classbase.ucfirst($identifier->name);
 
@@ -223,7 +223,7 @@ function get_prefix($object, $config = array())
             break;
         }
 
-        $parts = KInflector::explode($class);
+        $parts = AnInflector::explode($class);
 
         if ($parts[0] == 'lib') {
             $classes[] = 'Com'.ucfirst($parts[1]);

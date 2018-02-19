@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComNotificationsTemplateHelperNotifications extends KTemplateHelperAbstract
+class ComNotificationsTemplateHelperNotifications extends LibBaseTemplateHelperAbstract
 {
     /**
      * Group a set of notifications by date.

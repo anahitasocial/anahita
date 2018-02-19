@@ -44,7 +44,7 @@ class AnServiceLocatorComponent extends KServiceLocatorComponent
      */
     public function findClass(KServiceIdentifier $identifier)
     {
-        $path = KInflector::camelize(implode('_', $identifier->path));
+        $path = AnInflector::camelize(implode('_', $identifier->path));
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
         $loader = $this->getService('koowa:loader');
           //Manually load the class to set the basepath
@@ -79,7 +79,7 @@ class AnServiceLocatorComponent extends KServiceLocatorComponent
         $classpath = $identifier->path;
         $classtype = !empty($classpath) ? array_shift($classpath) : '';
         $paths = array();
-        $paths[] = ucfirst($classtype).KInflector::camelize(implode('_', $classpath));
+        $paths[] = ucfirst($classtype).AnInflector::camelize(implode('_', $classpath));
         if ($classtype == 'view') {
             $paths[] = ucfirst($classtype);
         }

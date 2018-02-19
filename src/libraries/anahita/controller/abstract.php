@@ -12,7 +12,7 @@
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @package     An_Controller
  * @subpackage 	Toolbar
- * @uses        KInflector
+ * @uses        AnInflector
  */
 abstract class AnControllerAbstract extends KObject
 {
@@ -243,7 +243,7 @@ abstract class AnControllerAbstract extends KObject
         }
 
         //Check if a behavior is mixed
-		$parts = KInflector::explode($method);
+		$parts = AnInflector::explode($method);
 
 		if ($parts[0] == 'is' && isset($parts[1])) {
             if(! isset($this->_mixed_methods[$method])) {

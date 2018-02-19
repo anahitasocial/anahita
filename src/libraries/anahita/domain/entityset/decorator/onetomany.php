@@ -178,7 +178,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     public function __call($method, $arguments)
     {
         $object = $this->getObject();
-        $parts = KInflector::explode($method);
+        $parts = AnInflector::explode($method);
 
         if ($parts[0] == 'is' && isset($parts[1])) {
             $behavior = lcfirst(substr($method, 2));

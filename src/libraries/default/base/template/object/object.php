@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -33,7 +33,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      *
      * @param string $name   Template object name
      * @param array  $config Array of configuration
-     * 
+     *
      * @return LibBaseTemplateObject
      */
     public static function getInstance($name, $config = array())
@@ -60,7 +60,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
 
     /**
      * Sets the name of the command.
-     * 
+     *
      * @param string $name
      */
     public function setName($name)
@@ -86,7 +86,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      * @param string $name  Attribute name
      * @param mixed  $value Attribute
      * @param string $glue  If glue is set, then if there's an old value it will be appended
-     * 
+     *
      *  @return LibBaseTemplateObject
      */
     public function setAttribute($name, $value, $glue = false)
@@ -113,7 +113,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      * Retrn the value of an attribute.
      *
      * @param string $name Attribute name
-     * 
+     *
      * @return string
      */
     public function getAttribute($name)
@@ -136,12 +136,12 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      *
      * @param string $method
      * @param array  $arguments
-     * 
+     *
      * @return LibBaseTemplateObject
      */
     public function __call($method, $arguments)
     {
-        $attribute = implode('-', KInflector::explode($method));
+        $attribute = implode('-', AnInflector::explode($method));
         $this->setAttribute($attribute, $arguments[0], isset($arguments[1]) ? $arguments[1] : null);
 
         return $this;
@@ -149,7 +149,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
 
     /**
      * Retur the attributes in key="value" spaced.
-     * 
+     *
      * (non-PHPdoc)
      *
      * @see KConfig::__toString()

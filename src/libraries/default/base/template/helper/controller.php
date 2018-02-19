@@ -1,8 +1,5 @@
 <?php
-
-/** 
- * LICENSE: ##LICENSE##.
- * 
+/**
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -10,23 +7,9 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @version    SVN: $Id$
- *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * Template Controller Helper. This helper is used to dispatcher and render another controller.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibBaseTemplateHelperController extends KTemplateHelperAbstract
+class LibBaseTemplateHelperController extends LibBaseTemplateHelperAbstract
 {
     /**
      * Static Controller Cache.
@@ -58,14 +41,14 @@ class LibBaseTemplateHelperController extends KTemplateHelperAbstract
 
     /**
      * Returns a controller object.
-     * 
+     *
      * @param string $name Controller name
-     * 
+     *
      * @return AnControllerAbstract
      */
     public function getController($name)
     {
-        $name = KInflector::singularize($name);
+        $name = AnInflector::singularize($name);
 
         if (!isset(self::$_controllers['controller.'.$name])) {
             if (strpos($name, '.') == false) {
@@ -85,9 +68,9 @@ class LibBaseTemplateHelperController extends KTemplateHelperAbstract
 
     /**
      * Returns a controller object.
-     * 
+     *
      * @param string $name Controller name
-     * 
+     *
      * @return LibBaseViewAbstract
      */
     public function getView($name)

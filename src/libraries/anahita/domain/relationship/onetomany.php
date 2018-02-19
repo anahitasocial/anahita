@@ -72,7 +72,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
     {
         $child = clone $this->_parent;
 
-        $child->name = KInflector::singularize($config->name);
+        $child->name = AnInflector::singularize($config->name);
 
         $config->append(array(
             'entityset' => 'anahita:domain.entityset.onetomany',

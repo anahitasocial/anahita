@@ -102,7 +102,7 @@ class KMixinBehavior extends KMixinAbstract
      */
     public function addBehavior($behavior, $config = array())
     {
-        if (!($behavior instanceof KBehaviorInterface)) {
+        if (!($behavior instanceof AnBehaviorInterface)) {
            $behavior = $this->_mixer->getBehavior($behavior, $config);
         }
 
@@ -150,8 +150,8 @@ class KMixinBehavior extends KMixinAbstract
            $behavior = $this->getService($identifier, $config);
 
            //Check the behavior interface
-		   if(!($behavior instanceof KBehaviorInterface)) {
-			   throw new KBehaviorException("Behavior $identifier does not implement KBehaviorInterface");
+		   if(!($behavior instanceof AnBehaviorInterface)) {
+			   throw new AnBehaviorException("Behavior $identifier does not implement AnBehaviorInterface");
 		   }
        }
        else $behavior = $this->_behaviors[$identifier->name];

@@ -9,14 +9,14 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationTemplateFilterHtml extends KTemplateFilterAbstract implements KTemplateFilterWrite
+class ComApplicationTemplateFilterHtml extends LibBaseTemplateFilterAbstract implements LibBaseTemplateFilterWrite
 {
     /**
      * Convert the alias.
      *
      * @param string
      *
-     * @return KTemplateFilterAlias
+     * @return LibBaseTemplateFilterAlias
      */
     public function write(&$text)
     {

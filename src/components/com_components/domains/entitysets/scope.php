@@ -90,7 +90,7 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
     public function find($scope)
     {
         if (strpos($scope, '.') === false) {
-            $scope = $scope.'.'.KInflector::singularize($scope);
+            $scope = $scope.'.'.AnInflector::singularize($scope);
         }
 
         if (isset($this[$scope])) {

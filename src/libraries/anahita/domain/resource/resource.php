@@ -102,7 +102,7 @@ class AnDomainResource extends KObject
 
         $config->append(array(
             'link_type' => 'strong',
-            'alias' => KInflector::singularize($name[count($name) - 1]).'_tbl',
+            'alias' => AnInflector::singularize($name[count($name) - 1]).'_tbl',
         ));
 
         parent::_initialize($config);

@@ -41,7 +41,7 @@ class KServiceLocatorComponent extends KServiceLocatorAbstract
 	 */
 	public function findClass(KServiceIdentifier $identifier)
 	{ 
-	    $path      = KInflector::camelize(implode('_', $identifier->path));
+	    $path      = AnInflector::camelize(implode('_', $identifier->path));
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
         
       	//Manually load the class to set the basepath
@@ -51,7 +51,7 @@ class KServiceLocatorComponent extends KServiceLocatorAbstract
 			$classtype = !empty($classpath) ? array_shift($classpath) : '';
 					
 			//Create the fallback path and make an exception for views
-			$path = ($classtype != 'view') ? ucfirst($classtype).KInflector::camelize(implode('_', $classpath)) : ucfirst($classtype);
+			$path = ($classtype != 'view') ? ucfirst($classtype).AnInflector::camelize(implode('_', $classpath)) : ucfirst($classtype);
 						
 			/*
 			 * Find the classname to fallback too and auto-load the class
@@ -103,10 +103,10 @@ class KServiceLocatorComponent extends KServiceLocatorAbstract
 				if($parts[0] != 'view') 
 			    {
 			        foreach($parts as $key => $value) {
-					    $parts[$key] = KInflector::pluralize($value);
+					    $parts[$key] = AnInflector::pluralize($value);
 				    }
 			    } 
-			    else $parts[0] = KInflector::pluralize($parts[0]);
+			    else $parts[0] = AnInflector::pluralize($parts[0]);
 			    
 				$path = implode('/', $parts).'/'.strtolower($identifier->name);
 			} 

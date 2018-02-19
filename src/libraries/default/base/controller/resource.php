@@ -81,7 +81,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         if ($this->_request->get) {
             $action = strtolower('get'.$this->_request->get);
         } else {
-            $action = KInflector::isPlural($this->view) ? 'browse' : 'read';
+            $action = AnInflector::isPlural($this->view) ? 'browse' : 'read';
         }
 
         $result = null;

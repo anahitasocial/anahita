@@ -211,7 +211,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         parent::setView($view);
 
         if (!$this->_view instanceof ComBaseViewAbstract) {
-            $name = KInflector::isPlural($this->view) ? 'actors' : 'actor';
+            $name = AnInflector::isPlural($this->view) ? 'actors' : 'actor';
             $defaults[] = 'ComActorsView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComActorsView'.ucfirst($name).ucfirst($this->_view->name);
             register_default(array(
@@ -303,7 +303,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         $url = null;
 
         if ($context->action == 'delete') {
-            $url = 'option=com_'.$this->getIdentifier()->package.'&view='.KInflector::pluralize($this->getIdentifier()->name);
+            $url = 'option=com_'.$this->getIdentifier()->package.'&view='.AnInflector::pluralize($this->getIdentifier()->name);
         } elseif ($context->action == 'add') {
             $url = $context->result->getURL().'&get=settings';
         }

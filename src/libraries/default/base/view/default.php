@@ -12,4 +12,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseViewDefault extends LibBaseViewHtml{}
+class LibBaseViewDefault extends LibBaseViewHtml
+{
+}

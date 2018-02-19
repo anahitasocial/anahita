@@ -46,7 +46,7 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
         $this->getService('anahita:language')->load('tpl_'.$this->getIdentifier()->package);
         $this->getTemplate()->getFilter('alias')
              ->append(array('@render(\'' => '$this->renderHelper(\'render.'))
-             ->append(array('base://' => $this->getBaseUrl().'/'), KTemplateFilter::MODE_WRITE);
+             ->append(array('base://' => $this->getBaseUrl().'/'), LibBaseTemplateFilter::MODE_WRITE);
     }
 
     /**

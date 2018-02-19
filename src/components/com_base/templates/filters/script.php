@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateFilterScript extends KTemplateFilterScript
+class ComBaseTemplateFilterScript extends LibBaseTemplateFilterScript
 {
     /**
      * Render script information.

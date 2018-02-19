@@ -12,6 +12,6 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     An_Controller
  * @subpackage 	Toolbar
- * @uses        KInflector
+ * @uses        AnInflector
  */
 class AnControllerToolbarDefault extends AnControllerToolbarAbstract {}

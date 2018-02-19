@@ -78,19 +78,19 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
     protected function _initialize(KConfig $config)
     {
         $identifier = clone $this->_parent;
-        $identifier->name = KInflector::singularize($this->_name);
+        $identifier->name = AnInflector::singularize($this->_name);
         $config->append(array(
             'entityset' => 'anahita:domain.entityset.manytomany',
             'target' => $identifier,
-            'target_child_key' => KInflector::variablize($identifier->name),
+            'target_child_key' => AnInflector::variablize($identifier->name),
             'target_parent_key' => 'id',
         ));
 
         if (!$config->as) {
             //keep the as always the same for the two many to many relationship
-            $names = array($config->parent->name, KInflector::singularize($config->name));
+            $names = array($config->parent->name, AnInflector::singularize($config->name));
             sort($names);
-            $config->as = $names[0].ucfirst(KInflector::pluralize($names[1]));
+            $config->as = $names[0].ucfirst(AnInflector::pluralize($names[1]));
         }
 
         parent::_initialize($config);
@@ -198,7 +198,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
      */
     public function getSet($root)
     {
-        $child = ucfirst(KInflector::pluralize($this->getChild()->name));
+        $child = ucfirst(AnInflector::pluralize($this->getChild()->name));
         $parent = $this->getJunctionAlias().'.'.$this->_child_key;
         $filters = $this->getQueryFilters();
         $filters['where'] = array($parent => $root);

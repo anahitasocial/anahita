@@ -89,7 +89,7 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
             //if there's an id pluralize the view
             if (isset($query['id']) && !is_array($query['id'])) {
                 //remove the singularize view
-                $query['view'] = KInflector::pluralize($query['view']);
+                $query['view'] = AnInflector::pluralize($query['view']);
                 $id = $query['id'];
                 unset($query['id']);
             }
@@ -124,7 +124,7 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
             $vars['view'] = $this->getIdentifier()->package;
         } elseif (count($segments) == 1) {
             if (is_numeric(current($segments))) {
-                $vars['view'] = KInflector::singularize($this->getIdentifier()->package);
+                $vars['view'] = AnInflector::singularize($this->getIdentifier()->package);
                 $vars['id'] = array_pop($segments);
             } else {
                 $vars['view'] = array_pop($segments);
@@ -135,7 +135,7 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
 
             if (preg_match('/(\w+\/)?(\d+)(\/\w+)?/', $path, $matches)) {
                 $view = (!empty($matches[1])) ? trim($matches[1], '/') : $this->getIdentifier()->package;
-                $vars['view'] = KInflector::singularize($view);
+                $vars['view'] = AnInflector::singularize($view);
                 $vars['id'] = $matches[2];
 
                 if (isset($matches[3])) {

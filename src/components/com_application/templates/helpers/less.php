@@ -14,7 +14,7 @@ require_once 'less/compiler.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationTemplateHelperLess extends KTemplateHelperAbstract
+class ComApplicationTemplateHelperLess extends LibBaseTemplateHelperAbstract
 {
     /**
      * Compiles a less css file. The the compiler will create a css file output.

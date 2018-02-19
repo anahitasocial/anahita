@@ -4,6 +4,7 @@ Anahita 4.3.11 Birth Release
 =============================
 1. removed assignable behavior from component entity
 1. users are now permanently logged in until they logout
+1. merged data, inflector, behaviors, view, and template from Nooku into Anahita and removed unused code.
 
 Anahita 4.3.10 Birth Release
 =============================

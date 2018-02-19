@@ -105,7 +105,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
      */
     public function redirect(KCommandContext $context)
     {
-        $url['view'] = KInflector::pluralize($this->getIdentifier()->name);
+        $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
         $url['option'] = $this->getIdentifier()->package;
 
         if ($context->action == 'add') {
@@ -129,7 +129,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
         parent::setView($view);
 
         if (!$this->_view instanceof ComBaseViewAbstract) {
-            $name = KInflector::isPlural($this->view) ? 'media' : 'medium';
+            $name = AnInflector::isPlural($this->view) ? 'media' : 'medium';
             $defaults[] = 'ComMediumView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComMediumView'.ucfirst($name).ucfirst($this->_view->name);
             register_default(array('identifier' => $this->_view, 'default' => $defaults));

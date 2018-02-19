@@ -94,7 +94,7 @@ class AnServiceLocatorRepository extends KServiceLocatorAbstract implements KSer
         $identifier = clone $identifier;
 
         if (!$identifier->name) {
-            $identifier->name = KInflector::singularize($identifier->package);
+            $identifier->name = AnInflector::singularize($identifier->package);
         }
 
         $identifier->type = 'com';

@@ -105,7 +105,7 @@ class ComSubscriptionsDomainEntityCoupon extends AnDomainEntityDefault
     /**
      * Sets the end date of an expirable.
      *
-     * @param AnDomainAttributeDate|KDate|array $date The expirary date
+     * @param AnDomainAttributeDate|AnDate|array $date The expirary date
      */
     public function setExpiresOn($date)
     {

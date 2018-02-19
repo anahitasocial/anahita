@@ -15,7 +15,7 @@ class ComSubscriptionsControllerCoupon extends ComBaseControllerService
     protected function _actionPost(KCommandContext $context)
     {
         $data = $context->data;
-        $date = new KDate();
+        $date = new AnDate();
         $date->day((int) $data->expiresOnDay);
         $date->month((int) $data->expiresOnMonth);
         $date->year((int) $data->expiresOnYear);

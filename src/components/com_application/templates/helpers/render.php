@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationTemplateHelperRender extends KTemplateHelperAbstract
+class ComApplicationTemplateHelperRender extends LibBaseTemplateHelperAbstract
 {
     /**
      * Template parameters.

@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateFilterStyle extends KTemplateFilterStyle
+class ComBaseTemplateFilterStyle extends LibBaseTemplateFilterStyle
 {
     /**
      * Render style information.

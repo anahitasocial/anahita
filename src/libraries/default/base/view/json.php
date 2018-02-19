@@ -73,7 +73,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
         //if data is set the just json encode those
         if (count($this->_data)) {
             $this->output = $this->_data;
-        } elseif (KInflector::isPlural($name)) {
+        } elseif (AnInflector::isPlural($name)) {
             $this->output = $this->_getList();
         } else {
             $this->output = $this->_getItem();
@@ -104,7 +104,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
         $data = array();
 
         if ($items = $this->_state->getList()) {
-            $name = KInflector::singularize($this->getName());
+            $name = AnInflector::singularize($this->getName());
 
             foreach ($items as $item) {
                 $this->_state->setItem($item);

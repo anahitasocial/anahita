@@ -140,7 +140,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
         $data = $context->data;
 
         if ($data->day || $data->month || $data->year) {
-            $date = new KDate();
+            $date = new AnDate();
             $date->day((int) $data->day);
             $date->month((int) $data->month);
             $date->year((int) $data->year);

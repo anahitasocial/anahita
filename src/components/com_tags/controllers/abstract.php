@@ -104,7 +104,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
             ->order('count', 'DESC');
 
             if ($this->sort == 'trending') {
-                $now = new KDate();
+                $now = new AnDate();
                 $entities->where('edge.created_on', '>', $now->addDays(-(int) $this->days)->getDate());
             }
         }
@@ -124,7 +124,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         parent::setView($view);
 
         if (!$this->_view instanceof ComBaseViewAbstract) {
-            $name = KInflector::isPlural($this->view) ? 'tags' : 'tag';
+            $name = AnInflector::isPlural($this->view) ? 'tags' : 'tag';
             $defaults[] = 'ComTagsView'.ucfirst($view).ucfirst($this->_view->name);
             $defaults[] = 'ComTagsView'.ucfirst($name).ucfirst($this->_view->name);
             register_default(array('identifier' => $this->_view, 'default' => $defaults));
@@ -141,7 +141,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     public function redirect(KCommandContext $context)
     {
         $url = array();
-        $url['view'] = KInflector::pluralize($this->getIdentifier()->name);
+        $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
         $url['option'] = $this->getIdentifier()->package;
 
         if ($context->action == 'add') {

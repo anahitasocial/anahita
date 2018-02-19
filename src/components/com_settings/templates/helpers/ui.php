@@ -137,7 +137,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
           foreach($templates as $template){
               $options[] = array(
-                'name' => KInflector::humanize($template),
+                'name' => AnInflector::humanize($template),
                 'value' => $template
               );
           }

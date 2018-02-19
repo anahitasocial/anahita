@@ -28,7 +28,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateHelperJavascript extends KTemplateHelperAbstract
+class LibBaseTemplateHelperJavascript extends LibBaseTemplateHelperAbstract
 {
     /**
      * Compress a javascript file and put the output in the.

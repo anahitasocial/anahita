@@ -1,8 +1,6 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
+/**
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -25,8 +23,8 @@
  * 		$this->path = path/to/file');
  * 		// OR
  * 		$this->output = $file_contents;
- * 
- * 		$this->filename = foobar.pdf'; 
+ *
+ * 		$this->filename = foobar.pdf';
  *
  * 		// optional:
  * 		$this->mimetype    = 'application/pdf';
@@ -47,21 +45,21 @@ class LibBaseViewFile extends LibBaseViewAbstract
 {
     /**
      * The file path.
-     * 
+     *
      * @var string
      */
     public $path = '';
 
     /**
      * The file name.
-     * 
+     *
      * @var string
      */
     public $filename = '';
 
     /**
      * The file disposition.
-     * 
+     *
      * @var string
      */
     public $disposition = 'attachment';
@@ -74,7 +72,6 @@ class LibBaseViewFile extends LibBaseViewAbstract
     public function __construct(KConfig $config)
     {
         parent::__construct($config);
-
         $this->set($config->toArray());
     }
 
@@ -93,7 +90,7 @@ class LibBaseViewFile extends LibBaseViewAbstract
             'path' => '',
             'filename' => $this->getIdentifier()->path[$count - 1].'.'.$this->getIdentifier()->name,
             'disposition' => 'attachment',
-           ));
+        ));
 
         parent::_initialize($config);
     }
@@ -101,7 +98,7 @@ class LibBaseViewFile extends LibBaseViewAbstract
     /**
      * Return the views output.
      *
-     * @return KViewFile
+     * @return AnViewFile
      */
     public function display()
     {
@@ -173,11 +170,11 @@ class LibBaseViewFile extends LibBaseViewAbstract
     /**
      * Set the header disposition headers.
      *
-     * @return KViewFile
+     * @return LibBaseViewFile
      */
     protected function _setDisposition()
     {
-        // @TODO :Content-Disposition: inline; filename="foo"; modification-date="'.$date.'"; size=123;	
+        // @TODO :Content-Disposition: inline; filename="foo"; modification-date="'.$date.'"; size=123;
         if (isset($this->disposition) && $this->disposition == 'inline') {
             header('Content-Disposition: inline; filename="'.$this->filename.'"');
         } else {
