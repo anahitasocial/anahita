@@ -590,8 +590,8 @@ abstract class LibBaseTemplateAbstract extends KObject
      */
     public function addFilter($filters)
     {
-        $filters =  (array) KConfig::unbox($filters);
-        
+        $filters = (array) KConfig::unbox($filters);
+
         foreach ($filters as $filter) {
             if (!($filter instanceof LibBaseTemplateFilterInterface)) {
                 $filter = $this->getFilter($filter);
