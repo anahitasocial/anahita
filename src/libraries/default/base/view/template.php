@@ -77,7 +77,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
 
         //Add alias filter for media:// namespace
         $this->getTemplate()->getFilter('alias')->append(
-            array('media://' => (string) $this->_mediaurl.'/'), KTemplateFilter::MODE_READ | KTemplateFilter::MODE_WRITE
+            array('media://' => (string) $this->_mediaurl.'/'), LibBaseTemplateFilter::MODE_READ | LibBaseTemplateFilter::MODE_WRITE
         );
     }
 
@@ -93,7 +93,11 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         $config->append(array(
             'escape' => 'htmlspecialchars',
             'template' => $this->getName(),
-            'template_filters' => array('shorttag', 'alias', 'variable'),
+            'template_filters' => array(
+                'shorttag', 
+                'alias', 
+                'variable',
+            ),
             'template_paths' => array(),
             'auto_assign' => true,
             'media_url' => '/media',

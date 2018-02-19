@@ -12,14 +12,14 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComNotificationsTemplateFilterBlockquote extends KTemplateFilterAbstract implements KTemplateFilterRead
+class ComNotificationsTemplateFilterBlockquote extends LibBaseTemplateFilterAbstract implements LibBaseTemplateFilterRead
 {
     /**
      * Fixes blockquotes.
      *
      * @param string Block of text to parse
      *
-     * @return KTemplateFilterLink
+     * @return LibBaseTemplateFilterLink
      */
     public function read(&$text)
     {

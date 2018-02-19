@@ -1,20 +1,16 @@
 <?php
 /**
- * @version     $Id: abstract.php 1919 2010-04-25 20:49:47Z johanjanssens $
- * @package     Koowa_Template
- * @subpackage  Filter
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- */
-
-/**
- * Abstract Template Filter
+ * @category   Anahita
  *
- * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Template
- * @subpackage  Filter
+ * @author	   Johan Janssens <johan@nooku.org>
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright  Copyright (C) 2018 rmd Studio Inc.
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
+ * @link       http://www.GetAnahita.com
  */
-abstract class KTemplateFilterAbstract extends KObject implements KTemplateFilterInterface
+abstract class LibBaseTemplateFilterAbstract extends KObject implements LibBaseTemplateFilterInterface
 {
     /**
      * The behavior priority
@@ -35,10 +31,9 @@ abstract class KTemplateFilterAbstract extends KObject implements KTemplateFilte
      *
      * @param   object  An optional KConfig object with configuration options
      */
-    public function __construct( KConfig $config = null)
+    public function __construct(KConfig $config = null)
     {
         parent::__construct($config);
-
         $this->_priority = $config->priority;
     }
 
@@ -53,7 +48,7 @@ abstract class KTemplateFilterAbstract extends KObject implements KTemplateFilte
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_NORMAL,
+            'priority' => KCommand::PRIORITY_NORMAL,
         ));
 
         parent::_initialize($config);
@@ -86,7 +81,7 @@ abstract class KTemplateFilterAbstract extends KObject implements KTemplateFilte
      * @param   object      The command context
      * @return  boolean     Always returns TRUE
      */
-    final public function execute( $name, KCommandContext $context)
+    final public function execute($name, KCommandContext $context)
     {
         //Set the template
         $this->_template = $context->caller;
@@ -94,11 +89,11 @@ abstract class KTemplateFilterAbstract extends KObject implements KTemplateFilte
         //Set the data
         $data = $context->data;
 
-        if(($name & KTemplateFilter::MODE_READ) && $this instanceof KTemplateFilterRead) {
+        if (($name & LibBaseTemplateFilter::MODE_READ) && $this instanceof LibBaseTemplateFilterRead) {
             $this->read($data);
         }
 
-        if(($name & KTemplateFilter::MODE_WRITE) && $this instanceof KTemplateFilterWrite) {
+        if (($name & LibBaseTemplateFilter::MODE_WRITE) && $this instanceof LibBaseTemplateFilterWrite) {
             $this->write($data);
         }
 
@@ -118,21 +113,19 @@ abstract class KTemplateFilterAbstract extends KObject implements KTemplateFilte
      * @param   string  String containing xml style attributes
      * @return  array   Key/Value pairs for the attributes
      */
-    protected function _parseAttributes( $string )
+    protected function _parseAttributes($string)
     {
         $result = array();
 
-        if(!empty($string))
-        {
+        if (!empty($string)) {
             $attr   = array();
 
-            preg_match_all( '/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $attr );
+            preg_match_all('/([\w:-]+)[\s]?=[\s]?"([^"]*)"/i', $string, $attr);
 
-            if (is_array($attr))
-            {
+            if (is_array($attr)) {
                 $numPairs = count($attr[1]);
-                for($i = 0; $i < $numPairs; $i++ ) {
-                     $result[$attr[1][$i]] = $attr[2][$i];
+                for ($i = 0; $i < $numPairs; $i++) {
+                    $result[$attr[1][$i]] = $attr[2][$i];
                 }
             }
         }

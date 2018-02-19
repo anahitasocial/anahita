@@ -294,7 +294,7 @@ abstract class LibBaseTemplateAbstract extends KObject
         $context = $this->getCommandContext();
         $context->data = $this->_contents;
                 
-        $result = $this->getCommandChain()->run(KTemplateFilter::MODE_WRITE, $context);
+        $result = $this->getCommandChain()->run(LibBaseTemplateFilter::MODE_WRITE, $context);
         
         return $context->data;
     }
@@ -329,7 +329,7 @@ abstract class LibBaseTemplateAbstract extends KObject
 
     /**
      * Loads a template using the identifier by converting an identifier to a path. On the contrary to
-     * KTemplateAbstract if a KServiceIdentifier is passed, it will not append the path directory as the
+     * LibBaseTemplateAbstract if a KServiceIdentifier is passed, it will not append the path directory as the
      * default path of $template->_search_paths.
      *
      * @param  KServiceIdentifier $template Template Identifier
@@ -439,7 +439,7 @@ abstract class LibBaseTemplateAbstract extends KObject
             
             //Check the helper interface
             if (!($helper instanceof LibBaseTemplateHelperInterface)) {
-                throw new LibBaseTemplateHelperException("Template helper $identifier does not implement KTemplateHelperInterface");
+                throw new LibBaseTemplateHelperException("Template helper $identifier does not implement LibBaseTemplateHelperInterface");
             }
 
             $this->_helpers[$name] = $helper;
@@ -492,8 +492,6 @@ abstract class LibBaseTemplateAbstract extends KObject
     }
 
     /**
-     * Caches the found paths. @see KTemplateAbstract::findPath for more detail.
-     *
      * @param	string			The file name to look for.
      *
      * @return mixed The full path and file name for the target file, or FALSE
@@ -531,7 +529,7 @@ abstract class LibBaseTemplateAbstract extends KObject
      *
      * @param string|array The path(s) to add.
      *
-     * @return KTemplateAbstract
+     * @return LibBaseTemplateAbstract
      */
     public function addSearchPath($paths, $append = false)
     {
@@ -566,7 +564,7 @@ abstract class LibBaseTemplateAbstract extends KObject
         if (!isset($this->_parsed_data[$path])) {
             $context = $this->getCommandContext();
             $context->data = $path;
-            $this->getCommandChain()->run(KTemplateFilter::MODE_READ, $context);
+            $this->getCommandChain()->run(LibBaseTemplateFilter::MODE_READ, $context);
             $this->_parsed_data[$path] = $context->data;
         }
 
@@ -588,14 +586,14 @@ abstract class LibBaseTemplateAbstract extends KObject
      * Adds one or more filters for template transformation
      *
      * @param array 	Array of one or more behaviors to add.
-     * @return KTemplate
+     * @return LibBaseTemplate
      */
     public function addFilter($filters)
     {
         $filters =  (array) KConfig::unbox($filters);
         
         foreach ($filters as $filter) {
-            if (!($filter instanceof KTemplateFilterInterface)) {
+            if (!($filter instanceof LibBaseTemplateFilterInterface)) {
                 $filter = $this->getFilter($filter);
             }
             
@@ -612,7 +610,7 @@ abstract class LibBaseTemplateAbstract extends KObject
     /**
      * Get a filter by identifier.
      *
-     * @return KTemplateFilterInterface
+     * @return LibBaseTemplateFilterInterface
      */
     public function getFilter($filter)
     {
@@ -633,8 +631,8 @@ abstract class LibBaseTemplateAbstract extends KObject
             
             $filter = KService::get($identifier);
 
-            if (!($filter instanceof KTemplateFilterInterface)) {
-                throw new LibBaseTemplateException("Template filter $identifier does not implement KTemplateFilterInterface");
+            if (!($filter instanceof LibBaseTemplateFilterInterface)) {
+                throw new LibBaseTemplateException("Template filter $identifier does not implement LibBaseTemplateFilterInterface");
             }
         } else {
             $filter = $this->_filters[$identifier->name];

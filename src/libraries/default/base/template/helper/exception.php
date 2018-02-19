@@ -9,4 +9,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateHelperException extends LibBaseTemplateException {}
+class LibBaseTemplateHelperException extends LibBaseTemplateException
+{
+}
