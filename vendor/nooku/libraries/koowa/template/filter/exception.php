@@ -15,4 +15,4 @@
  * @package     Koowa_Template
  * @subpackage  Filter
  */
-class KTemplateFilterException extends KTemplateException {}
+class KTemplateFilterException extends LibBaseTemplateException {}

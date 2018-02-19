@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -24,11 +24,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
+class LibBaseTemplateHelperJavascriptFile extends LibBaseTemplateHelperAbstract
 {
     /**
      * Cache dir.
-     * 
+     *
      * @var string
      */
     protected $_cache_dir;
@@ -42,7 +42,7 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 
     /**
      * File.
-     * 
+     *
      * @var string
      */
     protected $_file;
@@ -91,7 +91,7 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 
     /**
      * Return the content of the file and all of the files included in it.
-     * 
+     *
      * @return string
      */
     public function getData()
@@ -101,16 +101,16 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 
     /**
      * Write the output of the file into and output.
-     * 
+     *
      * @param string $output Compress file
      * @param bool   $force  Determine whether to foce the compression regardless of the
-     *                       cache value 
-     * 
+     *                       cache value
+     *
      * @return string
      */
     public function write($output)
     {
-        //lets parse the file		
+        //lets parse the file
         if ($this->_hasBeenModified($this->_file) || !file_exists($output)) {
             //get the data
             file_put_contents($output, $this->getData());
@@ -122,11 +122,11 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
 
     /**
      * Parses a file and return its content. The method traverse through
-     * all the imported javascript file within the file and append their 
+     * all the imported javascript file within the file and append their
      * content to the content of the $file.
-     * 
+     *
      * @param string $file The file to parse
-     * 
+     *
      * @return string
      */
     protected function _parseFile($file)
@@ -161,7 +161,7 @@ class LibBaseTemplateHelperJavascriptFile extends KTemplateHelperAbstract
     }
 
     /**
-     * Check if the file or any of the imported files within it has been modified since 
+     * Check if the file or any of the imported files within it has been modified since
      * the last time it was cached.
      *
      * @param string $file The file to check

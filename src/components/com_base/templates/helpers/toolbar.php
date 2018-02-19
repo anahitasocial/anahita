@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateHelperToolbar extends KTemplateHelperAbstract
+class ComBaseTemplateHelperToolbar extends LibBaseTemplateHelperAbstract
 {
     /**
      * Return a container of commands by calling add[Name]Commands on the toolbar

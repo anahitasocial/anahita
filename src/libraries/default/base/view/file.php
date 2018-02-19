@@ -1,6 +1,6 @@
 <?php
 
-/** 
+/**
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -23,8 +23,8 @@
  * 		$this->path = path/to/file');
  * 		// OR
  * 		$this->output = $file_contents;
- * 
- * 		$this->filename = foobar.pdf'; 
+ *
+ * 		$this->filename = foobar.pdf';
  *
  * 		// optional:
  * 		$this->mimetype    = 'application/pdf';
@@ -45,21 +45,21 @@ class LibBaseViewFile extends LibBaseViewAbstract
 {
     /**
      * The file path.
-     * 
+     *
      * @var string
      */
     public $path = '';
 
     /**
      * The file name.
-     * 
+     *
      * @var string
      */
     public $filename = '';
 
     /**
      * The file disposition.
-     * 
+     *
      * @var string
      */
     public $disposition = 'attachment';
@@ -174,7 +174,7 @@ class LibBaseViewFile extends LibBaseViewAbstract
      */
     protected function _setDisposition()
     {
-        // @TODO :Content-Disposition: inline; filename="foo"; modification-date="'.$date.'"; size=123;	
+        // @TODO :Content-Disposition: inline; filename="foo"; modification-date="'.$date.'"; size=123;
         if (isset($this->disposition) && $this->disposition == 'inline') {
             header('Content-Disposition: inline; filename="'.$this->filename.'"');
         } else {

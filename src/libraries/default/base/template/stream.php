@@ -1,23 +1,16 @@
 <?php
 /**
- * @version		$Id: stream.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package		Koowa_Template
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
+ * @category   Anahita
+ *
+ * @author	   Johan Janssens <johan@nooku.org>
+ * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright  Copyright (C) 2018 rmd Studio Inc.
+ * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
+ *
+ * @link       http://www.GetAnahita.com
  */
-
- /**
-  * Abstract stream wrapper to convert markup of mostly-PHP templates into PHP prior to include().
-  *
-  * Based in large part on the example at
-  * http://www.php.net/manual/en/function.stream-wrapper-register.php
-  *
-  * @author     Johan Janssens <johan@nooku.org>
-  * @category   Koowa
-  * @package    Koowa_Template
-  */
-class KTemplateStream
+class LibBaseTemplateStream
 {
     /**
      * Current stream position.
@@ -152,10 +145,9 @@ class KTemplateStream
      */
     public function stream_close()
     {
-
     }
 
-	/**
+    /**
      * Signal that stream_select is not supported by returning false
      *
      * @param  int   Can be STREAM_CAST_FOR_SELECT or STREAM_CAST_AS_STREAM
@@ -173,35 +165,35 @@ class KTemplateStream
      */
     public function stream_seek($offset, $whence)
     {
-        switch ($whence)
-        {
+        switch ($whence) {
             case SEEK_SET:
 
                 if ($offset < strlen($this->_data) && $offset >= 0) {
-                $this->_pos = $offset;
+                    $this->_pos = $offset;
                     return true;
+                } else {
+                    return false;
                 }
-                else return false;
                 break;
 
             case SEEK_CUR:
 
-                if ($offset >= 0)
-                {
+                if ($offset >= 0) {
                     $this->_pos += $offset;
                     return true;
+                } else {
+                    return false;
                 }
-                else return false;
                 break;
 
             case SEEK_END:
 
-                if (strlen($this->_data) + $offset >= 0)
-                {
+                if (strlen($this->_data) + $offset >= 0) {
                     $this->_pos = strlen($this->_data) + $offset;
                     return true;
+                } else {
+                    return false;
                 }
-                else return false;
                 break;
 
             default:

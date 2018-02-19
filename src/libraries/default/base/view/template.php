@@ -134,7 +134,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      */
     public function getTemplate()
     {
-        if (! $this->_template instanceof KTemplateAbstract) {
+        if (! $this->_template instanceof LibBaseTemplateAbstract) {
             //Make sure we have a template identifier
             if (! ($this->_template instanceof KServiceIdentifier)) {
                 $this->setTemplate($this->_template);
@@ -162,7 +162,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      */
     public function setTemplate($template)
     {
-        if (! ($template instanceof KTemplateAbstract)) {
+        if (! ($template instanceof LibBaseTemplateAbstract)) {
             if (is_string($template) && strpos($template, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('template');

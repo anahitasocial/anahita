@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSearchTemplateHelperScopes extends KTemplateHelperAbstract
+class ComSearchTemplateHelperScopes extends LibBaseTemplateHelperAbstract
 {
     /**
      * Groups the scopes into posts, actors and others.

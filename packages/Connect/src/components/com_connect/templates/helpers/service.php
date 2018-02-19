@@ -12,7 +12,7 @@
   *
   * @link       http://www.GetAnahita.com
   */
- class ComConnectTemplateHelperService extends KTemplateHelperAbstract
+ class ComConnectTemplateHelperService extends LibBaseTemplateHelperAbstract
  {
      /**
      * Render logins, If $return_array is set to true, then it returns an array instead of a string.

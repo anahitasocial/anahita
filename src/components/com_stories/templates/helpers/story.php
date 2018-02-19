@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComStoriesTemplateHelperStory extends KTemplateHelperAbstract
+class ComStoriesTemplateHelperStory extends LibBaseTemplateHelperAbstract
 {
     /**
      * Renders a set of names for actors.

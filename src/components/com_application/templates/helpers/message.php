@@ -13,7 +13,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationTemplateHelperMessage extends KTemplateHelperAbstract
+class ComApplicationTemplateHelperMessage extends LibBaseTemplateHelperAbstract
 {
     /**
      * Renders a message using the passed configuration.

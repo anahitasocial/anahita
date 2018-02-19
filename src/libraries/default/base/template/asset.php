@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -49,21 +49,21 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
 
     /**
      * Base media paths to search.
-     * 
+     *
      * @var array
      */
     protected $_paths = array();
 
     /**
      * Media physical path on the server.
-     * 
+     *
      * @var array
      */
     protected $_file_paths = array();
 
     /**
      * URLs.
-     * 
+     *
      * @var array
      */
     protected $_urls = array();
@@ -101,9 +101,9 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
     }
 
     /**
-     * Add relative search base paths from ANPATH_BASE in which look for the media. The paths are added 
+     * Add relative search base paths from ANPATH_BASE in which look for the media. The paths are added
      * to the beginging of the search list.
-     * 
+     *
      * @param $path string|array Adds a base path
      */
     public function addPath($path)
@@ -128,9 +128,9 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
 
     /**
      * Return a URL full path. This method should be called after $this->getPath.
-     * 
+     *
      * @param string $url Return the file for a URL
-     * 
+     *
      * @return string|null
      */
     public function getFilePath($url)
@@ -141,9 +141,9 @@ class LibBaseTemplateAsset extends KObject implements KServiceInstantiatable
     /**
      * Searches through a list of paths  to find a media file. To obtain the media
      * full physical path.
-     * 
+     *
      * @param string $url      Asset file whose path is being searched
-     * @param string $filepath If a path variable is passed the file path would be set 
+     * @param string $filepath If a path variable is passed the file path would be set
      *
      * @return string
      */

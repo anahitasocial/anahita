@@ -1,8 +1,5 @@
 <?php
-
 /**
- * LICENSE: ##LICENSE##.
- *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -10,23 +7,9 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @version    SVN: $Id$
- *
  * @link       http://www.GetAnahita.com
  */
-
-/**
- * Date Helper.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServiceInstantiatable
+class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements KServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
@@ -123,9 +106,9 @@ class LibBaseTemplateHelperDate extends KTemplateHelperAbstract implements KServ
             $years[$current->year + $i] = $current->year + $i;
         }
 
-        $year = $html->select($name.'[year]',  array('options' => $years,  'selected' => $year))->class('input-medium');
+        $year = $html->select($name.'[year]', array('options' => $years,  'selected' => $year))->class('input-medium');
         $month = $html->select($name.'[month]', array('options' => $months, 'selected' => $month))->class('input-medium');
-        $day = $html->select($name.'[day]',   array('options' => $days,   'selected' => $day))->class('input-small');
+        $day = $html->select($name.'[day]', array('options' => $days,   'selected' => $day))->class('input-small');
 
         return $year.' '.$month.' '.$day;
     }

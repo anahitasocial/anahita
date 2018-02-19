@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateHelperUi extends KTemplateHelperAbstract
+class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
 {
     /**
      * Constructor.

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,7 +30,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
 {
     /**
      * Objects.
-     * 
+     *
      * @var array
      */
     protected $_objects = array();
@@ -52,12 +52,12 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
 
     /**
      * Unses a object from the queue using its key and returns it. If an array of
-     * names is passed then a new container is returned. If no name is passed then 
+     * names is passed then a new container is returned. If no name is passed then
      * return the top element.
-     * 
+     *
      * @param string|array $name The object name or an array of object names. If name is null
-     *                           then return the first element 
-     * 
+     *                           then return the first element
+     *
      * @return LibBaseTemplateObject|LibBaseTemplateObjectContainer
      */
     public function extract($name = null)
@@ -92,7 +92,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
 
     /**
      * Return the count of objects.
-     * 
+     *
      * @return int
      */
     public function count()
@@ -102,7 +102,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
 
     /**
      * Return ArrayIterator.
-     * 
+     *
      * @return ArrayIterator
      */
     public function getIterator()
@@ -132,7 +132,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      *
      * @param   string  The key name.
      * @param   mixed   The value for the key
-     * 
+     *
      * @throws KConfigException if the $name is empty
      */
     public function offsetSet($name, $object)
@@ -177,7 +177,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      *
      * @param string $method    Method name
      * @param array  $arguments Array of arguments
-     * 
+     *
      * @return mixed
      */
     public function __call($method, $arguments)
@@ -199,12 +199,12 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
 
     /**
      * Rearrange the objects according to the order arrangement. If head is set to true
-     * then the sort order is applied to the head of the objects if false then it's applied 
+     * then the sort order is applied to the head of the objects if false then it's applied
      * to the tail.
      *
      * @param array $order An array of order=>name
-     * @param bool  $head  Whether to apply the sort order to the head of array or tail 
-     * 
+     * @param bool  $head  Whether to apply the sort order to the head of array or tail
+     *
      * @return LibBaseTemplateObjectContainer
      */
     public function sort($order, $head = true)

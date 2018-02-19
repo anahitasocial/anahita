@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsTemplateHelper extends KTemplateHelperAbstract
+class ComSettingsTemplateHelper extends LibBaseTemplateHelperAbstract
 {
   /**
    * Gets the meta object for the app
