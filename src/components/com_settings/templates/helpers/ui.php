@@ -262,8 +262,6 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
           'class' => 'input-block-level'
         ));
 
-        $config->name = 'meta['.$config->name.']';
-
         return $this->_render('formfield_custom', $config);
     }
 
