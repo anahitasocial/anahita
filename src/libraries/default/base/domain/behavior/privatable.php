@@ -308,10 +308,6 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         if ($viewer->id) {
             $where[] = "WHEN FIND_IN_SET('".self::REG."', $access) THEN 1";
 
-            if ($viewer->usertype != 'registered') {
-                $where[] = "WHEN FIND_IN_SET('".self::SPECIAL."', $access) THEN 1";
-            }
-
             $where[] = 'WHEN FIND_IN_SET('.$viewer->id.", $access) THEN 1";
 
             if ($config->graph_check) {
