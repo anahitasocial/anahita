@@ -42,12 +42,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             if ($entity->portraitSet()) {
                 $sizes = $entity->getPortraitSizes();
                 foreach ($sizes as $name => $size) {
-                    $url = null;
-
-                    if ($entity->portraitSet()) {
-                        $url = $entity->getPortraitURL($name);
-                    }
-
+                    $url = $entity->getPortraitURL($name);
                     $parts = explode('x', $size);
                     $width = 0;
                     $height = 0;
@@ -75,7 +70,42 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
 
             $data['imageURL'] = $imageURL;
         }
+        
+        if ($entity->isCoverable()) {
+            $coverURL = array();
+            
+            if ($entity->coverSet()) {
+                $coverSizes = $entity->getCoverSizes();
+                foreach ($coverSizes as $name => $size) {
+                    $url = $entity->getCoverURL($name);
+                    $parts = explode('x', $size);
+                    $width = 0;
+                    $height = 0;
 
+                    if (count($parts) == 0) {
+                        continue;
+                    } elseif (count($parts) == 1) {
+                        $height = $width = $parts[0];
+                    } else {
+                        $width = $parts[0];
+                        $height = $parts[1];
+                        //hack to set the ratio based on the original
+                        if ($height == 'auto' && isset($sizes['original'])) {
+                            $original_size = explode('x', $sizes['original']);
+                            $height = ($width * $original_size[1]) / $original_size[0];
+                        }
+                    }
+
+                    $coverURL[$name] = array(
+                        'size' => array('width' => (int) $width,'height' => (int) $height),
+                        'url' => $url,
+                    );
+                }
+            }
+            
+            $data['coverURL'] = $coverURL;
+        }
+        
         // @todo check for $entity->isAuthorizer() and $entity->authorize('administration') scenarios later on
         if ($entity->isAdministrable()) {
             $data['administratorIds'] = array_values($entity->administratorIds->toArray());
@@ -92,6 +122,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
 
             if ($entity->isLeadable()) {
                 $data['isFollower'] = $viewer->leading($entity);
+                $data['isBlocked'] = $viewer->blocking($entity);
             }
         }
 
