@@ -222,8 +222,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         $context->response->setRedirect(route($redirectUrl));
-        $context->response->status = 200;
-
+        
         return $person;
     }
 
