@@ -24,13 +24,12 @@ class ComActorsViewActorsHtml extends ComBaseViewHtml
     {
         $config->append(array(
             'list_item_view' => AnInflector::singularize($this->getIdentifier()->package),
-            'template_paths' => array(dirname(__FILE__).'/html'),
+            'template_paths' => array(
+                dirname(__FILE__).'/html',
+                ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/actors'
+            ),
         ));
 
         parent::_initialize($config);
-
-        $config->append(array(
-            'template_paths' => array(ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/actors'),
-        ));
     }
 }
