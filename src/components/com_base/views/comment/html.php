@@ -39,13 +39,12 @@ class ComBaseViewCommentHtml extends ComBaseViewHtml
     {
         $config->append(array(
             'layout' => 'list',
-            'template_paths' => array(dirname(__FILE__).'/html'),
+            'template_paths' => array(
+                dirname(__FILE__).'/html',
+                ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_base/comment'
+            ),
         ));
 
         parent::_initialize($config);
-
-        $config->append(array(
-            'template_paths' => array(ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_base/comment'),
-        ));
     }
 }

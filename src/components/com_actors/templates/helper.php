@@ -161,7 +161,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements K
     {
         if (is_null($actor) || !isset($actor->id)) {
             $linked = false;
-            $name = '<span class="actor-name">'.AnTranslator::_('LIB-AN-UNKOWN-PERSON').'</span>';
+            $name = '<span class="actor-name">'.AnTranslator::_('LIB-AN-UNKNOWN-PERSON').'</span>';
         } else {
             $name = '<span class="actor-name" actorid="'.$actor->id.'">'.$actor->name.'</span>';
             if($actor->verified){

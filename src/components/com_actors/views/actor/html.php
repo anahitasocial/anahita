@@ -23,14 +23,13 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'template_paths' => array(dirname(__FILE__).'/html'),
+            'template_paths' => array(
+                dirname(__FILE__).'/html',
+                ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/actor'
+            ),
         ));
 
         parent::_initialize($config);
-
-        $config->append(array(
-            'template_paths' => array(ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/actor'),
-        ));
 
         $this->enabled_apps = null;
     }

@@ -24,13 +24,12 @@ class ComMediumViewMediaHtml extends ComBaseViewHtml
     {
         $config->append(array(
             'list_item_view' => AnInflector::singularize($this->getName()),
-            'template_paths' => array(dirname(__FILE__).'/html'),
+            'template_paths' => array(
+                dirname(__FILE__).'/html',
+                ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_medium/media'
+            ),
         ));
 
         parent::_initialize($config);
-
-        $config->append(array(
-            'template_paths' => array(ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_medium/media'),
-        ));
     }
 }
