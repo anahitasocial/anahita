@@ -228,13 +228,13 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     {
         if (is_string($behavior)) {
             if (strpos($behavior, '.') === false) {
-
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller','behavior');
                 $identifier->name = $behavior;
-
-                register_default(array('identifier' => $identifier, 'prefix' => $this));
-
+                register_default(array(
+                    'identifier' => $identifier, 
+                    'prefix' => $this
+                ));
                 $behavior = $identifier;
             }
         }

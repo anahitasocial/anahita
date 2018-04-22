@@ -23,6 +23,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         parent::__construct($config);
         $this->registerCallback('after.add', array($this, 'mailActivationLink'));
+        $this->registerCallback('after.signup', array($this, 'mailActivationLink'));
     }
 
     /**
@@ -141,6 +142,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         //add the validations here
         $this->getRepository()
         ->getValidator()
+        ->addValidation('givenName', 'required')
+        ->addValidation('familyName', 'required')
         ->addValidation('username', 'uniqueness')
         ->addValidation('email', 'uniqueness');
 
@@ -165,15 +168,15 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         return $person;
     }
-
+    
     /**
-     * Person add action creates a new person object.
+     * Person signup action creates a new person object.
      *
      * @param KCommandContext $context Commaind chain context
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionAdd(KCommandContext  $context)
+    protected function _actionSignup(KCommandContext  $context)
     {
         $data = $context->data;
 
@@ -187,6 +190,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $this->getRepository()
         ->getValidator()
+        ->addValidation('givenName', 'required')
+        ->addValidation('familyName', 'required')
         ->addValidation('username', 'uniqueness')
         ->addValidation('email', 'uniqueness');
 
@@ -198,33 +203,69 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($isFirstUser) {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
-        } elseif ($viewer->admin() && in_array($data->usertype, $this->_allowed_user_types)) {
-            $person->usertype = $data->usertype;
         } else {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
 
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
 
-        $redirectUrl = 'option=com_people';
-
         if ($isFirstUser) {
             $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
-        } elseif ($viewer->admin()) {
-            $redirectUrl .= '&view=people';
-            if ($person->admin()) {
-                $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
-            }
         } else {
-            $redirectUrl .= '&view=session';
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
         }
-
-        $context->response->setRedirect(route($redirectUrl));
         
+        $this->getResponse()->status = KHttpResponse::OK;
+
         return $person;
     }
+
+    /**
+     * Person add action creates a new person object.
+     *
+     * @param KCommandContext $context Commaind chain context
+     *
+     * @return AnDomainEntityAbstract
+     */
+     protected function _actionAdd(KCommandContext  $context)
+     {
+         $data = $context->data;
+
+         dispatch_plugin('user.onBeforeAddPerson', array('data' => $context->data));
+
+         $person = parent::_actionAdd($context);
+
+         $this->getRepository()
+         ->getValidator()
+         ->addValidation('givenName', 'required')
+         ->addValidation('familyName', 'required')
+         ->addValidation('usertype', 'required')
+         ->addValidation('username', 'uniqueness')
+         ->addValidation('email', 'uniqueness');
+
+         if ($person->validate() === false) {
+             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+         }
+
+         $viewer = get_viewer();
+
+         if (in_array($data->usertype, $this->_allowed_user_types)) {
+             $person->usertype = $data->usertype;
+         } else {
+             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+         }
+
+         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
+
+         if ($person->admin()) {
+             $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
+         }
+         
+         $context->response->setRedirect(route('option=com_people&view=people'));
+         
+         return $person;
+     }
 
     /**
      * Deletes an actor and all of the necessary cleanup. It also dispatches all the apps to
@@ -258,7 +299,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $url = null;
 
         if ($context->action === 'delete') {
-
             $viewer = $this->getService('com:people.viewer');
 
             if ($viewer->id == $this->getItem()->id) {

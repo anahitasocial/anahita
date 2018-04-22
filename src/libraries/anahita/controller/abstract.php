@@ -198,7 +198,7 @@ abstract class AnControllerAbstract extends KObject
      *                  for this action.
      * @return  AnControllerAbstract
      */
-    public function registerActionAlias( $alias, $action )
+    public function registerActionAlias($alias, $action)
     {
         $alias = strtolower($alias);
 

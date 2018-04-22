@@ -36,6 +36,10 @@ if (! file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH
     exit();
 }
 
+header("Access-Control-Allow-Origin: http://localhost:3000");
+header("Access-Control-Allow-Credentials: true");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+
 // Platform : setup
 require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
 
