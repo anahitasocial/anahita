@@ -29,6 +29,7 @@ class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
         if ($viewer->eql($entity) || $viewer->admin()) {
             $data['email'] = $entity->email;
             $data['usertype'] = $entity->usertype;
+            $data['gender'] = $entity->gender;
         }
 
         return $data;
