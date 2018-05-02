@@ -22,9 +22,10 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
      */
     public function validateEmail($email)
     {
+        $viewer = $this->getService('com:people.viewer');
         $person = $this->getService('repos:people.person')->find(array('email' => $email));
 
-        if ($person) {
+        if ($person && !$person->eql($viewer)) {
             $this->setMessage('Email is already in use');
             return false;
         }
@@ -41,9 +42,10 @@ class ComPeopleControllerValidatorPerson extends LibBaseControllerValidatorDefau
      */
     public function validateUsername($username)
     {
+        $viewer = $this->getService('com:people.viewer');
         $person = $this->getService('repos:people.person')->find(array('username' => $username));
 
-        if ($person) {
+        if ($person && !$person->eql($viewer)) {
             $this->setMessage('Username is already in use');
             return false;
         }
