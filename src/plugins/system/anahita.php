@@ -47,9 +47,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         //load language overwrites
         KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
 
-        //create viewer object
-        $this->_viewer = KService::get('com:people.viewer');
-
         parent::__construct($dispatcher, $config);
     }
 
@@ -58,6 +55,9 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      */
     public function onAfterDispatch(KEvent $event)
     {
+        //create viewer object
+        $this->_viewer = KService::get('com:people.viewer');
+        
         $this->_logoutIfDisabledAccount();
 
         if (! $this->_viewer->guest()) {

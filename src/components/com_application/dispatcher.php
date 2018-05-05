@@ -286,6 +286,8 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      */
     protected function _actionDispatch(KCommandContext $context)
     {
+        dispatch_plugin('system.onBeforeDispatch', array( $context ));
+        
         $name = 'com_'.$this->getComponent()->getIdentifier()->package;
 
         define('ANPATH_COMPONENT', ANPATH_BASE.DS.'components'.DS.$name);
