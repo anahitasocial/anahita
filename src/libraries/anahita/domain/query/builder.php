@@ -283,7 +283,8 @@ class AnDomainQueryBuilder extends KObject
             if ($link['bind_type']) {
                 $type = $this->_inheritanceTree($description);
                 if (!empty($type) && $type != '%') {
-                    $conditions[] = $link['bind_type'].' LIKE \''.$this->_inheritanceTree($description).'\'';
+                    $operator = substr($this->_inheritanceTree($description), -1) == '%' ? 'LIKE' : '=';
+                    $conditions[] = $link['bind_type']. ' ' . $operator . ' \'' .$this->_inheritanceTree($description).'\'';
                 }
             }
 
@@ -352,7 +353,8 @@ class AnDomainQueryBuilder extends KObject
             foreach ($scopes as $index => $scope) {
                 $inheritance_type = $this->_inheritanceTree($scope);
                 if (!empty($inheritance_type) && $inheritance_type != '%') {
-                    $scopes[$index] = $type_column_name.' LIKE \''.$inheritance_type.'\'';
+                    $operator = substr($inheritance_type, -1) == '%' ? 'LIKE' : '=';
+                    $scopes[$index] = $type_column_name.' '.$operator.' \''.$inheritance_type.'\'';
                 } else {
                     unset($scopes[$index]);
                 }
