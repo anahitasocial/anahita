@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
+class ComPeopleDomainSerializerPerson extends ComActorsDomainSerializerActor
 {
     /**
      * {@inheritdoc}

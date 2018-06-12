@@ -20,7 +20,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
     {
         $data = new KConfig();
 
-        $viewer = KService::has('com:people.viewer') ? KService::get('com:people.viewer') : null;
+        $viewer = $this->getService('com:people.viewer');
 
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();
 
@@ -115,34 +115,25 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             }
         }
 
-        if ($viewer && !$viewer->eql($entity)) {
-            if ($entity->isFollowable()) {
-                $data['isLeader'] = $viewer->following($entity);
-            }
-
-            if ($entity->isLeadable()) {
-                $data['isFollower'] = $viewer->leading($entity);
-                $data['isBlocked'] = $viewer->blocking($entity);
-            }
-        }
-
-        if ($entity->isModifiable() && !is_person($entity)) {
-
+        if ($entity->isModifiable()) {
             $data->append(array(
                 'author' => null,
                 'creationTime' => null,
                 'editor' => null,
                 'updateTime' => null,
             ));
-
-            if (isset($entity->author)) {
-                $data['author'] = $entity->author->toSerializableArray();
-                $data['creationTime'] = $entity->creationTime->getDate();
-            }
-
-            if (isset($entity->editor)) {
-                $data['editor'] = $entity->editor->toSerializableArray();
-                $data['updateTime'] = $entity->updateTime->getDate();
+            
+            $data['creationTime'] = $entity->creationTime->getDate();
+            $data['updateTime'] = $entity->updateTime->getDate();
+            
+            if (!is_person($entity)) {
+                if (isset($entity->author)) {
+                    $data['author'] = $entity->author->toSerializableArray();
+                }
+                
+                if (isset($entity->editor)) {
+                    $data['editor'] = $entity->editor->toSerializableArray();
+                }
             }
         }
 
@@ -162,15 +153,6 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             }
         }
 
-        if ($entity->isFollowable()) {
-            $data['followerCount'] = $entity->followerCount;
-        }
-
-        if ($entity->isLeadable()) {
-            $data['leaderCount'] = $entity->leaderCount;
-            $data['mutualCount'] = $entity->mutualCount;
-        }
-
         if ($entity->isSubscribable()) {
             $data['subscriberCount'] = $entity->subscriberCount;
         }
@@ -179,7 +161,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             $data['voteUpCount'] = $entity->voteUpCount;
         }
 
-        if ($entity->isOwnable()) {
+        if (!is_person($entity) && $entity->isOwnable()) {
             $data['owner'] = $entity->owner->toSerializableArray();
         }
 

@@ -40,14 +40,18 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
     {
         $config->append(array(
             'attributes' => array(
-                'administratorIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
+                'administratorIds' => array(
+                        'type' => 'set', 
+                        'default' => 'set', 
+                        'write' => 'private'
+                    ),
                 ),
                 'relationships' => array(
                     'administrators' => array(
-                    'parent_delete' => 'ignore',
-                    'through' => 'com:actors.domain.entity.administrator',
-                    'target' => 'com:people.domain.entity.person',
-                    'child_key' => 'administrable',
+                        'parent_delete' => 'ignore',
+                        'through' => 'com:actors.domain.entity.administrator',
+                        'target' => 'com:people.domain.entity.person',
+                        'child_key' => 'administrable',
                     ),
                 ),
         ));

@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Serializer behavior. This behavior allows to serialize an entity into an scalar 
  * array of key/value pairs. The result then can be converted into JSON,XML or 
@@ -26,6 +11,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -107,7 +93,10 @@ class AnDomainBehaviorSerializable extends AnDomainBehaviorAbstract
                 $identifier = clone $this->_repository->getIdentifier();
                 $identifier->path = array('domain','serializer');
                 $identifier->name = $serializer;
-                register_default(array('identifier' => $identifier, 'prefix' => $this->_repository->getClone()));
+                register_default(array(
+                    'identifier' => $identifier, 
+                    'prefix' => $this->_repository->getClone()
+                ));
             } else {
                 $identifier = $this->getIdentifier($serializer);
             }

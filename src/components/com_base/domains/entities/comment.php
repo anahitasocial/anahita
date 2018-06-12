@@ -33,13 +33,16 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
             ),
             'behaviors' => array(
                 'parentable' => array(
-                    'parent' => 'com:base.domain.entity.node', ),
-                    'com:hashtags.domain.behavior.hashtagable',
-                    'com:people.domain.behavior.mentionable',
-                    'modifiable',
-                    'authorizer',
-                    'locatable',
-                    'votable', ),
+                    'parent' => 'com:base.domain.entity.node', 
+                ),
+                'com:hashtags.domain.behavior.hashtagable' => array(
+                    'target' => $this->getIdentifier()->identifier,
+                ),
+                'com:people.domain.behavior.mentionable',
+                'modifiable',
+                'authorizer',
+                'locatable',
+                'votable', ),
         ));
 
         parent::_initialize($config);

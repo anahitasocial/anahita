@@ -50,12 +50,10 @@ class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstr
     {
         $entity = $this->getItem();
         $terms = $this->extractHashtagTerms($entity->body);
-
+        
         if (is_array($terms)) {
-            $terms_search = array_map('strtolower', $terms);
-
             foreach ($entity->hashtags as $hashtag) {
-                if (!in_array($hashtag->name, $terms_search)) {
+                if (!in_array($hashtag->name, array_map('strtolower', $terms))) {
                     $entity->removeHashtag($hashtag->name);
                 }
             }
