@@ -44,7 +44,6 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
                 'dictionariable',
                 'subscribable',
                 'describable',
-                'com:people.domain.behavior.mentionable',
                 'com:locations.domain.behavior.geolocatable',
             ),
         ));
@@ -56,6 +55,9 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
                 'modifiable_properties' => array('name', 'body'),
             ),
             'com:hashtags.domain.behavior.hashtagable' => array(
+                'target' => $this->getIdentifier()->identifier,
+            ),
+            'com:people.domain.behavior.mentionable' => array(
                 'target' => $this->getIdentifier()->identifier,
             ),
             'commentable' => array('comment' => array('length' => 5000)),

@@ -27,7 +27,7 @@
             'relationships' => array(
                 'mentions' => array(
                     'through' => 'com:people.domain.entity.mention',
-                    'target' => 'com:tags.domain.entity.node',
+                    'target' => $config->target ? $config->target : 'com:base.domain.entity.node',
                     'child_key' => 'tagable',
                     'target_child_key' => 'mention',
                     'inverse' => true,
@@ -113,7 +113,7 @@
         $this->get('mentions')
         ->getQuery()
         ->select('person.username')
-        ->join('left', 'people_people AS person', 'person.node_id = node.id');
+        ->join('left', 'people_people AS person', 'person.node_id = @col(id)');
 
         return $this->get('mentions');
     }
