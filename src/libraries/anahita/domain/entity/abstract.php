@@ -713,9 +713,6 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
         if (gettype($property) === 'integer') {
             $properties = $this->getEntityDescription()->getProperty();
-            
-            print_r($this->getEntityDescription()->getProperty()); die;
-            
             $access = (int) $property;
             $data = array();
 
