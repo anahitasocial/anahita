@@ -105,15 +105,6 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             
             $data['coverURL'] = $coverURL;
         }
-        
-        // @todo check for $entity->isAuthorizer() and $entity->authorize('administration') scenarios later on
-        if ($entity->isAdministrable()) {
-            $data['administratorIds'] = array_values($entity->administratorIds->toArray());
-
-            if ($viewer) {
-                $data['isAdministrated'] = $viewer->administrator($entity);
-            }
-        }
 
         if ($entity->isModifiable()) {
             $data->append(array(

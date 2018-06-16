@@ -39,6 +39,15 @@ class ComActorsDomainSerializerActor extends ComBaseDomainSerializerDefault
             $data['leaderCount'] = $entity->leaderCount;
             $data['mutualCount'] = $entity->mutualCount;
         }
+        
+        // @todo check for $entity->isAuthorizer() and $entity->authorize('administration') scenarios later on
+        if ($entity->isAdministrable()) {
+            $data['administratorIds'] = array_values($entity->administratorIds->toArray());
+
+            if ($viewer) {
+                $data['isAdministrated'] = $viewer->administrator($entity);
+            }
+        }
     
         return $data;
     }
