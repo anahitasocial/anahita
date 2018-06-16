@@ -23,11 +23,12 @@
      */
     protected function _initialize(KConfig $config)
     {
+        $repoIdentifier = $config->mixer->getIdentifier()->identifier;
         $config->append(array(
             'relationships' => array(
                 'mentions' => array(
                     'through' => 'com:people.domain.entity.mention',
-                    'target' => $config->target ? $config->target : 'com:base.domain.entity.node',
+                    'target' => str_replace('repository', 'entity', $repoIdentifier),
                     'child_key' => 'tagable',
                     'target_child_key' => 'mention',
                     'inverse' => true,

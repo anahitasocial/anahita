@@ -35,12 +35,8 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
                 'parentable' => array(
                     'parent' => 'com:base.domain.entity.node', 
                 ),
-                'com:hashtags.domain.behavior.hashtagable' => array(
-                    'target' => $this->getIdentifier()->identifier,
-                ),
-                'com:people.domain.behavior.mentionable' => array(
-                    'target' => $this->getIdentifier()->identifier,
-                ),
+                'com:hashtags.domain.behavior.hashtagable',
+                'com:people.domain.behavior.mentionable',
                 'modifiable',
                 'authorizer',
                 'locatable',
