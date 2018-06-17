@@ -9,20 +9,12 @@
             "disabled": 1
         },
         {
-            "name": "browser_key",
+            "name": "api_key",
             "size": "60",
             "type": "text",
             "default": "",
-            "label": "Browser API Key",
-            "placeholder": "Browser API Key"
-        },
-        {
-            "name": "server_key",
-            "size": "60",
-            "type": "text",
-            "default": "",
-            "label": "Server API Key",
-            "placeholder": "Server API Key"
+            "label": "API Key",
+            "placeholder": "Please enter API key"
         }
     ]
 }
