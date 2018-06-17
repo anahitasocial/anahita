@@ -172,7 +172,12 @@ abstract class AnDomainDescriptionAbstract
                 $name = AnInflector::variablize($column->name);
                 //merge the existing attributes
                 $attributes[$name] = array_merge(
-                        array('required' => $column->required, 'column' => $column, 'type' => $column->type, 'default' => $column->default),
+                        array(
+                            'required' => $column->required, 
+                            'column' => $column, 
+                            'type' => $column->type, 
+                            'default' => $column->default
+                        ),
                         isset($attributes[$name]) ? $attributes[$name] : array());
             }
 
@@ -232,8 +237,10 @@ abstract class AnDomainDescriptionAbstract
 
         //if property name is the same as the identity property
         //then set the identity property
-        if (is_string($this->_identity_property) &&
-             $property->getName() == $this->_identity_property) {
+        if (
+            is_string($this->_identity_property) &&
+            $property->getName() == $this->_identity_property
+        ) {
             $this->setIdentityProperty($property);
         }
 

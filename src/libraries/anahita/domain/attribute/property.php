@@ -180,7 +180,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     public function isMaterializable(array $data)
     {
         $key = $this->getColumn()->key();
-
+        
         return array_key_exists($key, $data);
     }
 
@@ -197,8 +197,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
         $key = $this->getColumn()->key();
         $value = null;
         if ($this->isMaterializable($data)) {
-            //only set the value type if it's not null
-            if ($data[$key] !== null) {
+            if (!is_null($data[$key])) {
                 if ($this->isScalar()) {
                     $value = $data[$key];
                     settype($value, $this->getType());

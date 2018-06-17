@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
+class ComPeopleDomainSerializerPerson extends ComActorsDomainSerializerActor
 {
     /**
      * {@inheritdoc}
@@ -21,14 +21,15 @@ class ComPeopleDomainSerializerPerson extends ComBaseDomainSerializerDefault
         $data = parent::toSerializableArray($entity);
 
         $data['username'] = $entity->username;
-
-        if (
-            KService::has('com:people.viewer') &&
-            KService::get('com:people.viewer')->eql($entity) &&
-            KService::get('com:people.viewer')->admin()
-        ) {
+        $data['givenName'] = $entity->givenName;
+        $data['familyName'] = $entity->familyName;
+        
+        $viewer = $this->getService('com:people.viewer');
+        
+        if ($viewer->eql($entity) || $viewer->admin()) {
             $data['email'] = $entity->email;
-            $data['userType'] = $entity->userType;
+            $data['usertype'] = $entity->usertype;
+            $data['gender'] = $entity->gender;
         }
 
         return $data;

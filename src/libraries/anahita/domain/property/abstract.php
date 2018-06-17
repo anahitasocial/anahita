@@ -309,7 +309,7 @@ abstract class AnDomainPropertyAbstract
     }
 
     /**
-     * Return if a property is uniquable.
+     * Return if a property is serializable.
      *
      * @return bool
      */

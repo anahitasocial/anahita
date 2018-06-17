@@ -57,7 +57,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     public function api($config = array())
     {
         $config = array_merge_recursive($config, array(
-            'key' => get_config_value('locations.browser_key'),
+            'key' => get_config_value('locations.api_key'),
             'service' => $this->_service,
             'libraries' => array()
         ));

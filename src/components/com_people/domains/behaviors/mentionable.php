@@ -23,11 +23,12 @@
      */
     protected function _initialize(KConfig $config)
     {
+        $repoIdentifier = $config->mixer->getIdentifier()->identifier;
         $config->append(array(
             'relationships' => array(
                 'mentions' => array(
                     'through' => 'com:people.domain.entity.mention',
-                    'target' => 'com:tags.domain.entity.node',
+                    'target' => str_replace('repository', 'entity', $repoIdentifier),
                     'child_key' => 'tagable',
                     'target_child_key' => 'mention',
                     'inverse' => true,
@@ -113,7 +114,7 @@
         $this->get('mentions')
         ->getQuery()
         ->select('person.username')
-        ->join('left', 'people_people AS person', 'person.node_id = node.id');
+        ->join('left', 'people_people AS person', 'person.node_id = @col(id)');
 
         return $this->get('mentions');
     }

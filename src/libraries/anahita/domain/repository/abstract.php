@@ -140,13 +140,15 @@ abstract class AnDomainRepositoryAbstract extends KCommand
         $description->path = array('domain','description');
         register_default(array(
             'identifier' => $description,
-            'prefix' => $config->prototype, ));
+            'prefix' => $config->prototype, 
+        ));
 
         $query = clone $this->getIdentifier();
         $query->path = array('domain','query');
         register_default(array(
             'identifier' => $query,
-            'prefix' => $config->prototype, ));
+            'prefix' => $config->prototype, 
+        ));
 
         $config->append(array(
             'query' => $query,

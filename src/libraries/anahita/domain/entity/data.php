@@ -263,8 +263,9 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 
         //if a property is serialzable but not materizable
         //then the data must be missing
-        if ($property->isSerializable() &&
-                !$property->isMaterializable($this->_row)
+        if (
+            $property->isSerializable() &&
+            !$property->isMaterializable($this->_row)
         ) {
             //lazy load the value alogn with all the entities whose
             //$key value is missing
@@ -297,9 +298,8 @@ class AnDomainEntityData extends KObject implements ArrayAccess
 
             $repository->getCommandChain()->enable();
         }
-
+        
         $value = $property->materialize($this->_row, $this->_entity);
-
         $this->_setPropertyValue($property->getName(), $value);
 
         //when materilize a proxy property

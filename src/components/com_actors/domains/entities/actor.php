@@ -42,6 +42,11 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 'body' => array('format' => 'string'),
                 'status',
                 'statusUpdateTime',
+                'meta' => array(
+                    'type' => 'json',
+                    'default' => 'json',
+                    'write' => 'private'
+                ),
             )),
             'behaviors' => to_hash(array(
                 'subscribable',
@@ -64,9 +69,10 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                                 'medium' => '160xauto',
                                 'large' => '480xauto',
                                 'square' => 56, ), ),
-            )
-        ), ));
-
+                            )
+            ), 
+        ));
+        
         parent::_initialize($config);
     }
 

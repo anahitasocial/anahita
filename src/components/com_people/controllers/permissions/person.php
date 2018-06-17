@@ -57,24 +57,22 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
 
         parent::_initialize($config);
     }
-
-    /**
-     * if a token is passed in the reqeust, then it allows reading.
-     *
-     * (non-PHPdoc)
-     *
-     * @see ComActorsControllerPermissionAbstract::canRead()
-     */
-    public function canRead()
+    
+    public function canSignup() 
     {
-        $layout = $this->_mixer->getRequest()->get('layout');
-
-        if ($layout == 'signup' && $this->isRegistrationOpen()) {
-            return $this->_viewer->guest();
-        } elseif ($layout == 'add') {
-            return $this->_viewer->admin();
+        if ($this->_viewer->guest() && $this->isRegistrationOpen()) {
+            return true;
         }
-
+        
+        return false;
+    }
+    
+    public function canRead() 
+    {        
+        if ($this->_viewer->guest() && $this->isRegistrationOpen() && !$this->getItem()) {
+            return true;
+        }
+        
         return parent::canRead();
     }
 
@@ -86,10 +84,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     public function canAdd()
     {
         if ($this->_viewer->admin()) {
-            return true;
-        }
-
-        if ($this->_viewer->guest() && $this->isRegistrationOpen()) {
             return true;
         }
 

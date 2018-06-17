@@ -1,23 +1,12 @@
 <?php
 
  /**
-  * LICENSE: ##LICENSE##.
-  *
-  * @category   Anahita
-  *
-  * @author     Rastin Mehr <rastin@anahitapolis.com>
-  * @copyright  2008 - 2014 rmdStudio Inc.
-  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
-  *
-  * @link       http://www.GetAnahita.com
-  */
-
- /**
   * Hashtagable Behavior.
   *
   * @category   Anahita
   *
   * @author     Rastin Mehr <rastin@anahitapolis.com>
+  * @copyright  2008 - 2014 rmdStudio Inc.
   * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
   *
   * @link       http://www.GetAnahita.com
@@ -33,11 +22,12 @@
      */
     protected function _initialize(KConfig $config)
     {
+        $repoIdentifier = $config->mixer->getIdentifier()->identifier;
         $config->append(array(
             'relationships' => array(
                 'hashtags' => array(
                     'through' => 'com:hashtags.domain.entity.tag',
-                    'target' => 'com:base.domain.entity.node',
+                    'target' => str_replace('repository', 'entity', $repoIdentifier),
                     'child_key' => 'tagable',
                     'target_child_key' => 'hashtag',
                     'inverse' => true,
@@ -87,11 +77,9 @@
 
         if ($hashtag = $this->getService('repos:hashtags.hashtag')->find(array('name' => $term))) {
             $this->hashtags->extract($hashtag);
-
-            return $this;
         }
 
-        return;
+        return $this;
     }
 
     /**

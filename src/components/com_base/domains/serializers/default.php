@@ -20,7 +20,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
     {
         $data = new KConfig();
 
-        $viewer = KService::has('com:people.viewer') ? KService::get('com:people.viewer') : null;
+        $viewer = $this->getService('com:people.viewer');
 
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();
 
@@ -42,12 +42,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             if ($entity->portraitSet()) {
                 $sizes = $entity->getPortraitSizes();
                 foreach ($sizes as $name => $size) {
-                    $url = null;
-
-                    if ($entity->portraitSet()) {
-                        $url = $entity->getPortraitURL($name);
-                    }
-
+                    $url = $entity->getPortraitURL($name);
                     $parts = explode('x', $size);
                     $width = 0;
                     $height = 0;
@@ -75,43 +70,61 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
 
             $data['imageURL'] = $imageURL;
         }
+        
+        if ($entity->isCoverable()) {
+            $coverURL = array();
+            
+            if ($entity->coverSet()) {
+                $coverSizes = $entity->getCoverSizes();
+                foreach ($coverSizes as $name => $size) {
+                    $url = $entity->getCoverURL($name);
+                    $parts = explode('x', $size);
+                    $width = 0;
+                    $height = 0;
 
-        // @todo check for $entity->isAuthorizer() and $entity->authorize('administration') scenarios later on
-        if ($entity->isAdministrable()) {
-            $data['administratorIds'] = array_values($entity->administratorIds->toArray());
+                    if (count($parts) == 0) {
+                        continue;
+                    } elseif (count($parts) == 1) {
+                        $height = $width = $parts[0];
+                    } else {
+                        $width = $parts[0];
+                        $height = $parts[1];
+                        //hack to set the ratio based on the original
+                        if ($height == 'auto' && isset($sizes['original'])) {
+                            $original_size = explode('x', $sizes['original']);
+                            $height = ($width * $original_size[1]) / $original_size[0];
+                        }
+                    }
 
-            if ($viewer) {
-                $data['isAdministrated'] = $viewer->administrator($entity);
+                    $coverURL[$name] = array(
+                        'size' => array('width' => (int) $width,'height' => (int) $height),
+                        'url' => $url,
+                    );
+                }
             }
+            
+            $data['coverURL'] = $coverURL;
         }
 
-        if ($viewer && !$viewer->eql($entity)) {
-            if ($entity->isFollowable()) {
-                $data['isLeader'] = $viewer->following($entity);
-            }
-
-            if ($entity->isLeadable()) {
-                $data['isFollower'] = $viewer->leading($entity);
-            }
-        }
-
-        if ($entity->isModifiable() && !is_person($entity)) {
-
+        if ($entity->isModifiable()) {
             $data->append(array(
                 'author' => null,
                 'creationTime' => null,
                 'editor' => null,
                 'updateTime' => null,
             ));
-
-            if (isset($entity->author)) {
-                $data['author'] = $entity->author->toSerializableArray();
-                $data['creationTime'] = $entity->creationTime->getDate();
-            }
-
-            if (isset($entity->editor)) {
-                $data['editor'] = $entity->editor->toSerializableArray();
-                $data['updateTime'] = $entity->updateTime->getDate();
+            
+            $data['creationTime'] = $entity->creationTime->getDate();
+            $data['updateTime'] = $entity->updateTime->getDate();
+            
+            if (!is_person($entity)) {
+                if (isset($entity->author)) {
+                    $data['author'] = $entity->author->toSerializableArray();
+                }
+                
+                if (isset($entity->editor)) {
+                    $data['editor'] = $entity->editor->toSerializableArray();
+                }
             }
         }
 
@@ -131,15 +144,6 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             }
         }
 
-        if ($entity->isFollowable()) {
-            $data['followerCount'] = $entity->followerCount;
-        }
-
-        if ($entity->isLeadable()) {
-            $data['leaderCount'] = $entity->leaderCount;
-            $data['mutualCount'] = $entity->mutualCount;
-        }
-
         if ($entity->isSubscribable()) {
             $data['subscriberCount'] = $entity->subscriberCount;
         }
@@ -148,7 +152,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             $data['voteUpCount'] = $entity->voteUpCount;
         }
 
-        if ($entity->isOwnable()) {
+        if (!is_person($entity) && $entity->isOwnable()) {
             $data['owner'] = $entity->owner->toSerializableArray();
         }
 

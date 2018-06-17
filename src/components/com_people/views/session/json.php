@@ -1,8 +1,5 @@
 <?php
-
 /**
- * Search result in Html format.
- *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -14,11 +11,6 @@
  */
 class ComPeopleViewSessionJson extends ComBaseViewJson
 {
-    /**
-     * (non-PHPdoc).
-     *
-     * @see LibBaseViewJson::display()
-     */
     public function display()
     {
         if (!$this->_state->getItem()) {

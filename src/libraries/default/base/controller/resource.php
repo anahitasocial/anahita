@@ -102,9 +102,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
                     $view->set($key, $value);
                 }
             }
-
             $content = $view->display();
-
             //Set the data in the response
             $context->response->setContent($content);
         }
@@ -165,7 +163,14 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
                 $identifier = $this->getIdentifier($view);
             }
 
-            register_default(array('identifier' => $identifier, 'prefix' => $this, 'name' => array('View'.ucfirst($identifier->name), 'ViewDefault')));
+            register_default(array(
+                'identifier' => $identifier, 
+                'prefix' => $this, 
+                'name' => array(
+                    'View'.ucfirst($identifier->name), 
+                    'ViewDefault'
+                )
+            ));
 
             $view = $identifier;
         }
@@ -190,7 +195,6 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         //Check for layout, view or format property
         if (in_array($key, array('layout', 'format'))) {
             $this->getRequest()->set($key, $value);
-
             return $this;
         }
 
@@ -223,9 +227,10 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller', 'toolbar');
                 $identifier->name = $toolbar;
-
-                register_default(array('identifier' => $identifier, 'prefix' => $this));
-
+                register_default(array(
+                    'identifier' => $identifier, 
+                    'prefix' => $this
+                ));
                 $toolbar = $identifier;
             }
         }

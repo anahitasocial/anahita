@@ -241,9 +241,9 @@ class KService implements KServiceInterface
 				$identifier = $identifier->getIdentifier();
 			}
 		}
-
+        
 	    $alias = (string) $identifier;
-
+        
 		if (array_key_exists($alias, self::$_aliases)) {
 	        $identifier = self::$_aliases[$alias];
 		}

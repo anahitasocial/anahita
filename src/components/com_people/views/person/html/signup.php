@@ -23,6 +23,7 @@
             class="well recaptcha"
             autocomplete="off"
         >
+            <input type="hidden" name="action" value="signup" />
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>
