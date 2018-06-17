@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.12 Birth Release
+=============================
+1. fixes in com_people and com_actors REST APIs
+2. fixes in template overrides mechanism
+3. locations services now only requires one API key from google maps platform 
+
 Anahita 4.3.11 Birth Release
 =============================
 1. removed assignable behavior from component entity
