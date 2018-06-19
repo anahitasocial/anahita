@@ -24,7 +24,7 @@ class ComConnectRouter extends ComBaseRouterDefault
     public function build(&$query)
     {
         $segments = array();
-        if (isset($query['oid'])) {
+        if (false && isset($query['oid'])) {
             $segments[] = '@'.$query['oid'];
             unset($query['oid']);
         }

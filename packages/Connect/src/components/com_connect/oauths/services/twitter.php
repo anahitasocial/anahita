@@ -26,9 +26,9 @@ class ComConnectOauthServiceTwitter extends ComConnectOauthServiceAbstract
             'service_name' => 'Twitter',
             'api_url' => 'https://api.twitter.com/1.1',
             'request_token_url' => 'https://api.twitter.com/oauth/request_token',
-            'authorize_url' => 'https://api.twitter.com/oauth/authenticate',
+            'authorize_url' => 'https://api.twitter.com/oauth/authorize',
             'access_token_url' => 'https://api.twitter.com/oauth/access_token',
-            'authenticate_url' => '',
+            'authenticate_url' => 'https://api.twitter.com/oauth/authenticate',
         ));
 
         parent::_initialize($config);
@@ -60,16 +60,15 @@ class ComConnectOauthServiceTwitter extends ComConnectOauthServiceAbstract
      protected function _getUserData()
      {
          $profile = $this->get('account/verify_credentials.json');
-
+         
          $data = array(
             'id' => $profile->id ,
-            'profile_url' => 'http://twitter.com/'.$profile->username,
+            'profile_url' => 'https://twitter.com/'.$profile->screen_name,
             'name' => $profile->name,
             'username' => $profile->screen_name,
-            'large_avatar' => 'http://api.twitter.com/1/users/profile_image?screen_name='.$profile->screen_name.'&size=original',
-            'thumb_avatar' => $profile->profile_image_url,
+            'thumb_avatar' => $profile->profile_image_url_https,
         );
-
-         return $data;
+        
+        return $data;
      }
 }

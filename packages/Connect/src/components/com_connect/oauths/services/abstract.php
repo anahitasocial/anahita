@@ -311,21 +311,20 @@ abstract class ComConnectOauthServiceAbstract extends KObject
             $response = $this->requestRequestToken();
             $data['oauth_token'] = $response->oauth_token;
         }
-
+        
         $data = KConfig::unbox($data);
-
+        
         foreach ($data as $key => $value) {
             if (is_array($value)) {
                 $data[ $key ] = implode(',', $value);
             }
         }
-
+        
         $data = http_build_query($data);
-
         if (!empty($data)) {
             $data = '?'.$data;
         }
-
+        
         return $this->authorize_url.$data;
     }
 
@@ -339,12 +338,12 @@ abstract class ComConnectOauthServiceAbstract extends KObject
     public function requestRequestToken($data = array())
     {
         $config = new KConfig(array('data' => $data));
-
+        
         $config->append(array(
             'url' => $this->request_token_url,
             'data' => array('oauth_callback' => $this->getConsumer()->callback_url),
         ));
-
+        
         $request = $this->getRequest($config);
         $response = $request->send();
 
