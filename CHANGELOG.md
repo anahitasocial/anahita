@@ -5,6 +5,9 @@ Anahita 4.3.12 Birth Release
 1. fixes in com_people and com_actors REST APIs
 2. fixes in template overrides mechanism
 3. locations services now only requires one API key from google maps platform 
+4. fixed facebook and twitter OAuth.
+5. facebook OAuth is now readonly, because facebook as deprecated publish_stream and publish_actions permission.
+6. twitter OAuth is now available for people actors only for the sake of simplicity. Database migration will remove the paired group actors with twitter.
 
 Anahita 4.3.11 Birth Release
 =============================
