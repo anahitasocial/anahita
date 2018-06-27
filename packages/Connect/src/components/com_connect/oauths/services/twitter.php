@@ -39,7 +39,7 @@ class ComConnectOauthServiceTwitter extends ComConnectOauthServiceAbstract
      */
     public function canAddService($actor)
     {
-        return true;
+        return $actor->inherits('ComPeopleDomainEntityPerson');
     }
 
      /**
@@ -59,8 +59,7 @@ class ComConnectOauthServiceTwitter extends ComConnectOauthServiceAbstract
       */
      protected function _getUserData()
      {
-         $profile = $this->get('account/verify_credentials.json');
-         
+         $profile = $this->get('account/verify_credentials.json'); 
          $data = array(
             'id' => $profile->id ,
             'profile_url' => 'https://twitter.com/'.$profile->screen_name,

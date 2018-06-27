@@ -64,11 +64,15 @@ class ComConnectControllerLogin extends ComBaseControllerResource
 
         $service = $this->getAPI()->getName();
         $profileId = $this->getAPI()->getUser()->id;
-        $token = $this->getService('repos:connect.session')->find(array('profileId' => $profileId, 'api' => $service));
+        $token = $this->getService('repos:connect.session')
+                      ->find(array(
+                          'profileId' => $profileId, 
+                          'api' => $service
+                      ));
+                      
         $return_url = KRequest::get('session.return', 'raw');
 
         if ($token) {
-
             $person = $token->owner;
             KRequest::set('session.oauth', null);
 

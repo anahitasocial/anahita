@@ -24,11 +24,8 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-
             'resources' => array('table' => 'connect_sessions'),
-
             'attributes' => array(
-
                 'id' => array('key' => true),
                 'component',
                 'tokenKey',
@@ -37,9 +34,7 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
                 'profileId',
 
             ),
-
             'relationships' => array(
-
                 'owner' => array(
                     'polymorphic' => true,
                     'required' => true,
@@ -100,7 +95,6 @@ class ComConnectDomainEntitySession extends AnDomainEntityDefault
     public function echoStory($data)
     {
         $service = $this->getService('com:connect.domain.echoer.'.$this->get('api'));
-
         return $service->echoStory($this, $data);
     }
 

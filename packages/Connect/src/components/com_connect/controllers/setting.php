@@ -28,7 +28,9 @@ class ComConnectControllerSetting extends ComBaseControllerResource
         $config->append(array(
             'behaviors' => array(
                 'oauthorizable',
-                'ownable',
+                'ownable' => array(
+                    'default' => $this->getService('com:people.viewer'),
+                ),
             ),
         ));
 
@@ -64,9 +66,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
         $data = $context->data;
 
         $this->getBehavior('oauthorizable')->execute('action.getaccesstoken', $context);
-
         $user = $this->getAPI()->getUser();
-
         $session = $this->getService('repos:connect.session')
                         ->findOrAddNew(array(
                             'profileId' => $user->id,

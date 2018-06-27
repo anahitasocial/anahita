@@ -48,7 +48,7 @@
         $consumer = new ComConnectOauthConsumer(new KConfig(array(
             'key' => $key,
             'secret' => $secret,
-            'callback_url' => KRequest::base().'/components/com_connect/callback.php',
+            'callback_url' => KRequest::base(), 
         )));
 
         return $consumer;

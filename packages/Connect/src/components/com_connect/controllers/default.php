@@ -37,7 +37,7 @@ class ComConnectControllerDefault extends ComBaseControllerResource
     public function canGet()
     {
         if (!$this->actor) {
-            $this->actor = get_viewer();
+            $this->actor = $this->getService('com:people.viewer');
         }
 
         if (!$this->actor) {
@@ -57,6 +57,8 @@ class ComConnectControllerDefault extends ComBaseControllerResource
         }
 
         $this->api = $api;
+        
+        return true;
     }
 
     /**

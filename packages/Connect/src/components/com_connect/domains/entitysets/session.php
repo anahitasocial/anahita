@@ -22,10 +22,11 @@ class ComConnectDomainEntitysetSession extends AnDomainEntitysetDefault
      */
     public function getSessionApi($service)
     {
-        $session = $this->find(array('api' => $service));
-        if ($session) {
+        if ($session = $this->find(array('api' => $service))) {
             return $session->api;
         }
+        
+        return null;
     }
 
     /**
@@ -35,7 +36,7 @@ class ComConnectDomainEntitysetSession extends AnDomainEntitysetDefault
      */
     public function __get($key)
     {
-        if (!$this->_repository->getDescription()->getProperty($key)) {
+        if (! $this->_repository->getDescription()->getProperty($key)) {
             return $this->getSessionApi($key);
         }
 

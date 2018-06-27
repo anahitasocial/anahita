@@ -24,11 +24,12 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
     {
         $config->append(array(
             'service_name' => 'Facebook',
+            'readonly' => true,
             'version' => '2.8',
             'api_url' => 'https://graph.facebook.com',
             'request_token_url' => '',
             'access_token_url' => 'https://graph.facebook.com/oauth/access_token',
-            'authenticate_url' => '',
+            'authenticate_url' => 'https://graph.facebook.com/oauth/authenticate',
             'authorize_url' => 'https://graph.facebook.com/oauth/authorize',
         ));
 
@@ -63,7 +64,6 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
         $url = $this->access_token_url.'?'.http_build_query($params);
         $response = $this->getRequest(array('url' => $url))->send();
         $result = $response->parseJSON();
-
         $this->setToken($result->access_token);
 
         return $result->access_token;
@@ -87,6 +87,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      protected function _getUserData()
      {
          $me = $this->get('me');
+         
          $data = array(
                 'profile_url' => 'https://www.facebook.com/profile.php?id='.$me->id,
                 'name' => $me->name,
@@ -95,7 +96,10 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
                 'email' => $me->email,
                 'description' => $me->about,
                 'thumb_avatar' => $this->getRequest(array('url' => $this->api_url.'/me/picture'))->getURL(),
-                'large_avatar' => $this->getRequest(array('url' => $this->api_url.'/me/picture', 'data' => array('type' => 'large')))->getURL(),
+                'large_avatar' => $this->getRequest(array(
+                    'url' => $this->api_url.'/me/picture', 
+                    'data' => array('type' => 'large')
+                ))->getURL(),
             );
 
          return $data;
@@ -110,7 +114,11 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      */
     public function getAuthorizationURL($query = array())
     {
-        $query['scope'] = implode(',', array('email'));
+        $permissions = array(
+            'email', 
+            'user_friends',
+        );
+        $query['scope'] = implode(',', $permissions);
         $query['redirect_uri'] = $this->_consumer->callback_url;
         $query['client_id'] = $this->_consumer->key;
 
@@ -138,10 +146,12 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
         $data = array_map(function ($user) {return $user['id'];}, $data['data']);
         $data[] = '-1';
 
-        $query = $this->getService('repos:people.person')->getQuery(true)
+        $query = $this->getService('repos:people.person')
+        ->getQuery(true)
         ->where(array(
-                'sessions.profileId' => $data,
-                'sessions.api' => 'facebook', ));
+            'sessions.profileId' => $data,
+            'sessions.api' => 'facebook'
+        ));
 
         return $query->toEntitySet();
     }

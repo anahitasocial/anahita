@@ -92,10 +92,13 @@ class PlgUserConnect extends PlgAnahitaDefault
         }
 
         if ($token = $api->getToken()) {
-
             $person = KService::get('repos:people.person')->find(array('username' => $username));
             $user = $api->getUser();
-            $session = KService::get('repos:connect.session')->findOrAddNew(array('profileId' => $user->id, 'api' => $api->getName()));
+            $session = KService::get('repos:connect.session')
+            ->findOrAddNew(array(
+                'profileId' => $user->id, 
+                'api' => $api->getName()
+            ));
 
             $session->setData(array(
                 'component' => 'com_connect',
@@ -126,13 +129,12 @@ class PlgUserConnect extends PlgAnahitaDefault
             } else {
                 $session = new KConfig(KRequest::get('session.oauth', 'raw', array()));
 
-                if (!$session->token || !$session->api || !$session->consumer) {
+                if (! ($session->token && $session->api && $session->consumer)) {
                     return;
                 }
 
                 KRequest::set('session.oauth', null);
-
-                KService::get('koowa:loader')->loadIdentifier('com://site/connect.oauth.consumer');
+                KService::get('koowa:loader')->loadIdentifier('com:connect.oauth.consumer');
 
                 $api = KService::get('com:connect.oauth.service.'.$session->api, array(
                     'consumer' => new ComConnectOauthConsumer($session->consumer),

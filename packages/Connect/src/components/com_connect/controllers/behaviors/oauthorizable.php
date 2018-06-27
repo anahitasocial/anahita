@@ -109,7 +109,6 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     public function getAPI()
     {
         if (!isset($this->_api)) {
-
             $session = KRequest::get('session.oauth', 'raw', array());
             $session = new KConfig($session);
             $api = pick($this->getRequest()->server, $session->api);
@@ -132,9 +131,9 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
                      'get=accesstoken',
                 );
 
-                if ($this->oid) {
-                    $query[] = 'oid='.$this->oid;
-                }
+                // if ($this->oid) {
+                //    $query[] = 'oid='.$this->oid;
+                // }
 
                 $callback = route(implode($query, '&'), true);
 

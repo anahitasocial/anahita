@@ -17,8 +17,6 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
      * @param object $response    Authentication response object
      *
      * @return bool
-     *
-     * @since 1.5
      */
     public function onAuthenticate(KEvent $event)
     {
@@ -29,12 +27,11 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
             return;
         }
 
-        if (!isset($credentials->oauth_token) || !isset($credentials->oauth_handler)) {
+        if (! (isset($credentials->oauth_token) && isset($credentials->oauth_handler))) {
             return;
         }
 
         try {
-
             extract($credentials, EXTR_SKIP);
 
             //if oatuh secret not set then set it to null

@@ -1,19 +1,5 @@
 <?php
 
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
 require_once dirname(__FILE__).'/../core.php';
 
 /**
@@ -23,9 +9,10 @@ require_once dirname(__FILE__).'/../core.php';
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 abstract class ComConnectOauthServiceAbstract extends KObject
 {
@@ -462,12 +449,15 @@ abstract class ComConnectOauthServiceAbstract extends KObject
         $response = $this->getRequest(array(
             'url' => $resource,
             'method' => $method,
-            'data' => $data, ))->send();
+            'data' => $data, 
+        ))->send();
+        
         $result = null;
         if (strlen($response)) {
             $result = $response->{'parse'.$this->_response_format}();
+            return $result;
         }
 
-        return $result;
+        return false;
     }
 }
