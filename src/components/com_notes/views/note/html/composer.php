@@ -22,30 +22,32 @@
 
 	<div class="clearfix">
 		<span class="connect">
-    	<? $app = @service('repos:components.component')->find(array('component' => 'com_connect')); ?>
-		<? if ($app && $app->authorize('echo', array('actor' => $actor))) : ?>
-            <?
-            $services = ComConnectHelperApi::getServices();
-            @service('repos:connect.session');
-            $sessions = $actor->sessions->toArray();
-            foreach ($sessions as $key => $session) {
-                if ($session->getApi()->isReadOnly()) {
-                    unset($sessions[$key]);
-                }
-            }
-            ?>
-			<? if (count($sessions) > 0) : ?>
-				<? foreach ($sessions as $session) : ?>
-				<span>
-    				<a class="btn btn-<?= $session->api->getName() ?> connect-link" data-behavior="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?= $session->getName() ?>" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
-    					<?= @helper('com:connect.template.helper.service.icon', $session->api->getName())?>
-    			    </a>
-			    </span>
-				<? endforeach;?>
-			<? elseif (count($services) > 0) : ?>
-			<a href="<?= @route($actor->getURL().'&get=settings&edit=connect') ?>" class="btn">
-			    <?= @text('COM-CONNECT-ENABLE-SHARE')?>
-			</a>
+		<? if ($actor->inherits('ComPeopleDomainEntityPerson')): ?>	
+	    	<? $app = @service('repos:components.component')->find(array('component' => 'com_connect')); ?>
+			<? if ($app && $app->authorize('echo', array('actor' => $actor))) : ?>
+	            <?
+	            $services = ComConnectHelperApi::getServices();
+	            @service('repos:connect.session');
+	            $sessions = $actor->sessions->toArray();
+	            foreach ($sessions as $key => $session) {
+	                if ($session->getApi()->isReadOnly()) {
+	                    unset($sessions[$key]);
+	                }
+	            }
+	            ?>
+				<? if (count($sessions) > 0) : ?>
+					<? foreach ($sessions as $session) : ?>
+					<span>
+	    				<a class="btn btn-<?= $session->api->getName() ?> connect-link" data-behavior="Checkbox" data-checkbox-name="channels[]" data-checkbox-value="<?= $session->getName() ?>" title="<?= sprintf(@text('COM-CONNECT-SHARE-POST'), ucfirst($session->api->getName()))?>">
+	    					<?= @helper('com:connect.template.helper.service.icon', $session->api->getName())?>
+	    			    </a>
+				    </span>
+					<? endforeach;?>
+				<? elseif (count($services) > 0) : ?>
+				<a href="<?= @route($actor->getURL().'&get=settings&edit=connect') ?>" class="btn">
+				    <?= @text('COM-CONNECT-ENABLE-SHARE')?>
+				</a>
+				<? endif; ?>
 			<? endif; ?>
 		<? endif; ?>
 		</span>
