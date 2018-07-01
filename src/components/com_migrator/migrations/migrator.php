@@ -26,4 +26,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMigratorMigrationMigrator extends KCommand{}
+class ComMigratorMigrationMigrator extends AnCommand{}

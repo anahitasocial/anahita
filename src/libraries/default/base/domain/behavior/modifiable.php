@@ -127,9 +127,9 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
     /**
      * Before Update timestamp modified on and modifier.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         $entity = $context->entity;
         $modified = array_keys(KConfig::unbox($entity->getModifiedData()));

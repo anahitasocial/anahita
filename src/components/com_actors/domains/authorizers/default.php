@@ -16,11 +16,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Check to see if viewer can enable or disable a person's account.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeChangeEnabled(KCommandContext $context)
+    protected function _authorizeChangeEnabled(AnCommandContext $context)
     {
         return $this->_authorizeAdministration($context);
     }
@@ -28,11 +28,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
     * Check to see if the viewer can edit this actor
     *
-    * @param KCommandContext $context Context parameter
+    * @param AnCommandContext $context Context parameter
     *
     * @return bool
     */
-    protected function _authorizeEdit(KCommandContext $context)
+    protected function _authorizeEdit(AnCommandContext $context)
     {
         return $this->_authorizeAdministration($context);
     }
@@ -40,11 +40,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Check if the actor authorize adminisrating it.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeAdministration(KCommandContext $context)
+    protected function _authorizeAdministration(AnCommandContext $context)
     {
         $ret = false;
 
@@ -65,11 +65,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Check if the viewer can set certain privacy value.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeSetPrivacyValue(KCommandContext $context)
+    protected function _authorizeSetPrivacyValue(AnCommandContext $context)
     {
         $value = $context->value;
 
@@ -97,11 +97,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Check if the actor authorize viewing a resource.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeAccess(KCommandContext $context)
+    protected function _authorizeAccess(AnCommandContext $context)
     {
         //if entity is not privatable then it doesn't have access to allow method
         if (!$this->_entity->isPrivatable()) {
@@ -126,11 +126,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Authorizes an action on resources owned by the actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeAction(KCommandContext $context)
+    protected function _authorizeAction(AnCommandContext $context)
     {
         //if entity is not privatable then it doesn't have access to allow method
         if (!$this->_entity->isPrivatable()) {
@@ -182,11 +182,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      * If true then owner's name is visiable to the viewer, if not the default name is
      * displayed.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeFollower(KCommandContext $context)
+    protected function _authorizeFollower(AnCommandContext $context)
     {
         //viewer can only follow actor if and only if viewer is leadable and actor is followable
         if ($this->_entity->isFollowable() && !$this->_viewer->isLeadable()) {
@@ -221,11 +221,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * If true then the viewer can add new followers to the this actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeLead(KCommandContext $context)
+    protected function _authorizeLead(AnCommandContext $context)
     {
         //obviously guests cannot add new followers
         if (is_guest($this->_viewer)) {
@@ -248,11 +248,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Return if the viewer can request to follow the actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeRequester(KCommandContext $context)
+    protected function _authorizeRequester(AnCommandContext $context)
     {
         return $this->_entity->allowFollowRequest;
     }
@@ -260,11 +260,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Checks whether the viewer can unfollow the actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeUnfollow(KCommandContext $context)
+    protected function _authorizeUnfollow(AnCommandContext $context)
     {
         //if the viewer is not following then return false;
         //Riddle : How can you unfollow an actor that you are not following
@@ -287,11 +287,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      * Return if the viewer can remove an admin of an actor. It returns true
      * if an actor has at least two actors.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeRemoveAdmin(KCommandContext $context)
+    protected function _authorizeRemoveAdmin(AnCommandContext $context)
     {
         if ($this->_entity->isAdministrable()) {
             return ($this->_entity->administratorIds->count() >= 2);
@@ -303,7 +303,7 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Check if a node authroize being subscribed too.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
@@ -325,11 +325,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * Check if a person can be deleted by the viewer.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeDelete(KCommandContext $context)
+    protected function _authorizeDelete(AnCommandContext $context)
     {
         return $this->_entity->authorize('administration');
     }
@@ -337,11 +337,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
     /**
      * If true then viewer can block the entity.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeBlock(KCommandContext $context)
+    protected function _authorizeBlock(AnCommandContext $context)
     {
         if (is_guest($this->_viewer)) {
             return false;
@@ -375,11 +375,11 @@ class ComActorsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDefault
      /**
       * If true the viewer can remove a follower from an actor.
       *
-      * @param KCommandContext $context Context parameter
+      * @param AnCommandContext $context Context parameter
       *
       * @return bool
       */
-     protected function _authorizeUnlead(KCommandContext $context)
+     protected function _authorizeUnlead(AnCommandContext $context)
      {
          return $this->_authorizeAdministration($context);
      }

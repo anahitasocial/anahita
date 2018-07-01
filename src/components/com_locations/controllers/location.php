@@ -34,9 +34,9 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
      * Browse Service
      * @todo move all queries to the query class
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         if ($this->locatable) {
 
@@ -68,7 +68,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
     *
     *
     */
-    public function fetchLocatable(KCommandContext $context)
+    public function fetchLocatable(AnCommandContext $context)
     {
         $this->locatable = KService::get('repos:nodes.node')
                            ->getQuery()

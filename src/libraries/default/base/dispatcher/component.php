@@ -53,7 +53,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     /**
      * @see KDispatcherAbstract::_actionDispatch()
      */
-    protected function _actionDispatch(KCommandContext $context)
+    protected function _actionDispatch(AnCommandContext $context)
     {
         $identifier = clone $this->getIdentifier();
         $identifier->name = 'aliases';
@@ -80,9 +80,9 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     /**
      * Get action.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         return $this->getController()->execute('get', $context);
     }
@@ -90,9 +90,9 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     /**
      * Options action.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionOptions(KCommandContext $context)
+    protected function _actionOptions(AnCommandContext $context)
     {
         $context->response->status = KHttpResponse::OK;
         $context->response->set('Content-Length', 0);
@@ -101,9 +101,9 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     /**
      * Post action.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         $context->append(array(
             'data' => KRequest::get('post', 'raw', array()),
@@ -135,9 +135,9 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     /**
      * Get action.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         //this wil not affect the json calls
         $redirect = KRequest::get('server.HTTP_REFERER', 'url');
@@ -150,11 +150,11 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     /**
      * Renders a controller view.
      *
-     * @param KCommandContext $context The context parameter
+     * @param AnCommandContext $context The context parameter
      *
      * @return string
      */
-    protected function _actionForward(KCommandContext $context)
+    protected function _actionForward(AnCommandContext $context)
     {
         $response = $this->getController()->getResponse();
 

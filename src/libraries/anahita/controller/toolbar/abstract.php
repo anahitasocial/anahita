@@ -51,7 +51,7 @@ abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract impl
         parent::__construct($config);
 
         if(is_null($config->controller)) {
-			throw new KMixinException('controller [AnController] option is required');
+			throw new AnMixinException('controller [AnController] option is required');
 		}
 
         // Set the controller

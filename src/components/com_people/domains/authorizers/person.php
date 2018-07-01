@@ -15,11 +15,11 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     /**
      * Check if the actor authorize adminisrating it.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeAdministration(KCommandContext $context)
+    protected function _authorizeAdministration(AnCommandContext $context)
     {
         //if viewer is the same as the person
         if ($this->_viewer->eql($this->_entity)) {
@@ -42,7 +42,7 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     /**
      * Check to see if viewer has permission to change usertype.
      */
-    protected function _authorizeChangeUsertype(KCommandContext $context)
+    protected function _authorizeChangeUsertype(AnCommandContext $context)
     {
         if ($this->_entity->eql($this->_viewer)) {
             return false;
@@ -62,11 +62,11 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     /**
      * Check to see if viewer can enable or disable a person's account.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeChangeEnabled(KCommandContext $context)
+    protected function _authorizeChangeEnabled(AnCommandContext $context)
     {
         //non-admins cannot change enabled status of anybody
         if (!$this->_viewer->admin()) {
@@ -89,11 +89,11 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     /**
      * Check if a person can be deleted by the viewer.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _authorizeDelete(KCommandContext $context)
+    protected function _authorizeDelete(AnCommandContext $context)
     {
         //if viewer same as the person whose profile being vieweed and viewer is a super admin don't allow to delete
         if ($this->_viewer->eql($this->_entity) && $this->_entity->superadmin()) {
@@ -106,11 +106,11 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
     /**
      * Whether the viewer can mention this person or not.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    protected function _authorizeMention(KCommandContext $context)
+    protected function _authorizeMention(AnCommandContext $context)
     {
         if (
             $this->_entity->blocking($this->_viewer) ||

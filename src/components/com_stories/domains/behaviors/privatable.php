@@ -31,7 +31,7 @@ class ComStoriesDomainBehaviorPrivatable extends ComMediumDomainBehaviorPrivatab
     /**
      * {@inheritdoc}
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
         $repository = $query->getRepository();

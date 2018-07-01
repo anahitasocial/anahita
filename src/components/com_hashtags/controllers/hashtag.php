@@ -15,9 +15,9 @@ class ComHashtagsControllerHashtag extends ComTagsControllerDefault
     /**
      * Read Service.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         $entity = parent::_actionRead($context);
         $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-HASHTAGS-TERM'), $entity->name));

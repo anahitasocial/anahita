@@ -12,7 +12,7 @@
  */
 class ComSubscriptionsControllerCoupon extends ComBaseControllerService
 {
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         $data = $context->data;
         $date = new AnDate();

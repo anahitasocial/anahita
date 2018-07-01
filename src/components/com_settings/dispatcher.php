@@ -2,7 +2,7 @@
 
 class ComSettingsDispatcher extends ComBaseDispatcherDefault
 {
-    protected function _actionDispatch(KCommandContext $context)
+    protected function _actionDispatch(AnCommandContext $context)
     {
         if ($this->getController()->getView()->getName() == 'settings') {
             $this->getController()->execute('read', $context);

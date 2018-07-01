@@ -58,9 +58,9 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
      * After Insert command. Called after a notification is inserted. This method
      * tries to send the notification.
      *
-     * @param KCommandContext $context The command context
+     * @param AnCommandContext $context The command context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         parent::_afterEntityInsert($context);
 

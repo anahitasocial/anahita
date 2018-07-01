@@ -133,7 +133,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
      *
      * @param object POST data
      */
-    public function fetchPhoto(KCommandContext $context)
+    public function fetchPhoto(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -161,7 +161,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
      *
      * @param object POST data
      */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         if ($context->action == 'addphoto') {
             if ($context->data->id) {

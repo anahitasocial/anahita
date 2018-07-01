@@ -38,7 +38,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         // Mixin the toolbar
         if ($config->dispatch_events) {
-            $this->mixin(new KMixinToolbar($config->append(array('mixer' => $this))));
+            $this->mixin(new AnMixinToolbar($config->append(array('mixer' => $this))));
         }
 
         $this->getService('anahita:language')->load($this->getIdentifier()->package);
@@ -70,11 +70,11 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     /**
      * Get action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return string
      */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $action = null;
 

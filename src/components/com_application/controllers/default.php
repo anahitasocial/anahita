@@ -56,9 +56,9 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
     /**
      * Renders the page.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionRender(KCommandContext $context)
+    protected function _actionRender(AnCommandContext $context)
     {
         if ($context->data instanceof Exception) {
             $this->getView()->content($context->data);

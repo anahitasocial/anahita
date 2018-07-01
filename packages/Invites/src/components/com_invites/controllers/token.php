@@ -32,9 +32,9 @@ class ComInvitesControllerToken extends ComBaseControllerService
     /**
      * Token Read.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         if ($this->invitetoken) {
 
@@ -64,9 +64,9 @@ class ComInvitesControllerToken extends ComBaseControllerService
     /**
      * Store a token for a service.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
         $value = KRequest::get('session.invite_token', 'string', null);

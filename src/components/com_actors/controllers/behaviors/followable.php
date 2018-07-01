@@ -35,9 +35,9 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Add a set of actors to the owners list of requester.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _actionAddrequest(KCommandContext $context)
+    protected function _actionAddrequest(AnCommandContext $context)
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
@@ -57,9 +57,9 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Add a set of actors to the owners list of requester.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _actionDeleterequest(KCommandContext $context)
+    protected function _actionDeleterequest(AnCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->removeRequester($this->actor);
@@ -69,9 +69,9 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      * Add $data->actor to the current actor resource. status is set to
      * KHttpResponse::RESET_CONTENT;.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _actionFollow(KCommandContext $context)
+    protected function _actionFollow(AnCommandContext $context)
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
@@ -109,9 +109,9 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Add a person to the. The data passed is set my the receiver controller::getCommandChain()::getContext()::data.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _actionUnfollow(KCommandContext $context)
+    protected function _actionUnfollow(AnCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->removeFollower($this->actor);
@@ -122,11 +122,11 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Add a leader to this actor.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      *
      * @return ComActorsDomainEntityActor object
      */
-    protected function _actionLead(KCommandContext $context)
+    protected function _actionLead(AnCommandContext $context)
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
@@ -166,11 +166,11 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Remove a leader from this actor.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      *
      * @return ComActorsDomainEntityActor object
      */
-    protected function _actionUnlead(KCommandContext $context)
+    protected function _actionUnlead(AnCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->removeLeader($this->actor);
@@ -181,11 +181,11 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * The viewers blocks the actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComActorsDomainEntityActor object
      */
-    protected function _actionBlock(KCommandContext $context)
+    protected function _actionBlock(AnCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
         $this->getItem()->addBlocker($this->actor);
@@ -196,7 +196,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * The viewers unblocks the actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComActorsDomainEntityActor object
      */
@@ -211,11 +211,11 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Read Owner's Socialgraph.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return AnDomainEntitysetDefault
      */
-    protected function _actionGetgraph(KCommandContext $context)
+    protected function _actionGetgraph(AnCommandContext $context)
     {
         $this->getState()->insert('type', 'followers');
 
@@ -282,11 +282,11 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Set the subejct before perform graph actions.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComActorsDomainEntityActor object
      */
-    public function getActor(KCommandContext $context)
+    public function getActor(AnCommandContext $context)
     {
         $data = $context->data;
 

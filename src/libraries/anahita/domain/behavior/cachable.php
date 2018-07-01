@@ -69,7 +69,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     {
         $config->append(array(
             'enable' => true,
-            'priority' => KCommand::PRIORITY_LOWEST,
+            'priority' => AnCommand::PRIORITY_LOWEST,
         ));
 
         parent::_initialize($config);
@@ -80,9 +80,9 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      * 
      * This cache is only persisted throughout a request 
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         if ($this->_enable) {
             $key = $this->_getCacheKey($context->query);
@@ -99,9 +99,9 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      * Stores the objects in the cache. This cache is persisted during the
      * request life cycle.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterRepositoryFetch(KCommandContext $context)
+    protected function _afterRepositoryFetch(AnCommandContext $context)
     {
         if ($this->_enable) {
             $key = $this->_getCacheKey($context->query);
@@ -112,9 +112,9 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     /**
      * Clean and disable the cahce before insert.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityInsert(KCommandContext $context)
+    protected function _beforeEntityInsert(AnCommandContext $context)
     {
         self::$_cache->exchangeArray(array());
     }
@@ -122,9 +122,9 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     /**
      * Clean and disable the cahce before delete.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityDelete(KCommandContext $context)
+    protected function _beforeEntityDelete(AnCommandContext $context)
     {
         self::$_cache->exchangeArray(array());
     }
@@ -132,9 +132,9 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     /**
      * Clean and disable the cahce before update.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         self::$_cache->exchangeArray(array());
     }
@@ -184,6 +184,6 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 }

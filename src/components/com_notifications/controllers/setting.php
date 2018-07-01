@@ -48,9 +48,9 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
     /**
      * Sets a notification setting.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         $data = $context->data;
 

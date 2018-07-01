@@ -93,9 +93,9 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
     /**
      * If a query keyowrd is set it will incorporate it in the search.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
 

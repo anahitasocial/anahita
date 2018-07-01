@@ -19,7 +19,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
      *
      * @todo very large function perhaps it should be done as command chain
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntitysetDefault
      */

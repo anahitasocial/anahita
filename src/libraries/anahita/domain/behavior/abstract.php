@@ -105,7 +105,7 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
      *
      * @return bool Can return both true or false.  
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $identifier = $context->caller->getIdentifier();
 

@@ -153,11 +153,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Parses the route.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @return bool
      */
-    protected function _actionRoute(KCommandContext $context)
+    protected function _actionRoute(AnCommandContext $context)
     {
         //route the application
         $url = clone KRequest::url();
@@ -230,9 +230,9 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Prepares the CLI mode.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionPrepclienv(KCommandContext $context)
+    protected function _actionPrepclienv(AnCommandContext $context)
     {
         if (! empty($_SERVER['argv']) && count($_SERVER['argv']) > 1) {
             $args = array_slice($_SERVER['argv'], 1);
@@ -280,11 +280,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Dispatches the component.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @return void
      */
-    protected function _actionDispatch(KCommandContext $context)
+    protected function _actionDispatch(AnCommandContext $context)
     {
         dispatch_plugin('system.onBeforeDispatch', array( $context ));
         
@@ -325,11 +325,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
 
     /**
     *   Outputs html content
-    *   @param KCommandContext $context Command chain context
+    *   @param AnCommandContext $context Command chain context
     *
     *   @return void
     */
-    protected function _render(KCommandContext $context)
+    protected function _render(AnCommandContext $context)
     {
         dispatch_plugin('system.onBeforeRender', array( $context ));
 
@@ -353,7 +353,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      *
      * @param CommandContext $context A command context object
      */
-    public function _actionSend(KCommandContext $context)
+    public function _actionSend(AnCommandContext $context)
     {
         $context->response->send();
         exit(0);
@@ -362,7 +362,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Callback to handle Exception.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *                                 caller => KObject, data => mixed
      *
      * @return void

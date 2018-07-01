@@ -1,25 +1,18 @@
 <?php
-/**
- * @version		$Id: event.php 4628M 2012-05-16 05:43:36Z (local) $
- * @package		Koowa_Command
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
- */
-
-/**
+ 
+ /**
  * Event Command
  * 
  * The event commend will translate the command name to a onCommandName format 
  * and let the event dispatcher dispatch to any registered event handlers.
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Command
- * @uses        KService
- * @uses        KEventDispatcher
- * @uses        AnInflector
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @package     AnCommand
+ * @link        https://www.GetAnahita.com
  */
-class KCommandEvent extends KCommand
+class AnCommandEvent extends AnCommand
 {
     /**
      * The event dispatcher object
@@ -36,12 +29,12 @@ class KCommandEvent extends KCommand
     public function __construct( KConfig $config = null) 
     { 
         //If no config is passed create it
-        if(!isset($config)) $config = new KConfig();
+        if (! isset($config)) $config = new KConfig();
         
         parent::__construct($config);
         
-         if(is_null($config->event_dispatcher)) {
-			throw new KMixinException('event_dispatcher [KEventDispatcher] option is required');
+        if (is_null($config->event_dispatcher)) {
+			throw new AnMixinException('event_dispatcher [KEventDispatcher] option is required');
 		}
         
         $this->_event_dispatcher = $config->event_dispatcher;
@@ -71,15 +64,14 @@ class KCommandEvent extends KCommand
      * @param   object      The command context
      * @return  boolean     Always returns true
      */
-    public function execute( $name, KCommandContext $context) 
+    public function execute( $name, AnCommandContext $context) 
     {
         $type = '';
         
-        if($context->caller)
-        {   
+        if ($context->caller) {   
             $identifier = $context->caller->getIdentifier();
             
-            if($identifier->path) {
+            if ($identifier->path) {
                 $type = AnInflector::implode($identifier->path);                
             } else {
                 $type = $identifier->name;
@@ -87,7 +79,7 @@ class KCommandEvent extends KCommand
         }
         
         $parts = explode('.', $name);   
-        $name  = 'on'.ucfirst(array_shift($parts)).ucfirst($type).AnInflector::implode($parts);
+        $name = 'on'.ucfirst(array_shift($parts)).ucfirst($type).AnInflector::implode($parts);
         
         $event = new KEvent(clone($context));
         $event->setPublisher($context->caller);

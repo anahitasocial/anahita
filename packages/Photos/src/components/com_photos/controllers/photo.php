@@ -50,7 +50,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
     /**
      * Browse Photos.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionBrowse($context)
     {
@@ -80,7 +80,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
     /**
      * Method to upload and Add a photo.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionAdd($context)
     {

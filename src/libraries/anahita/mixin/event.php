@@ -1,11 +1,4 @@
 <?php
-/**
- * @version     $Id: event.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Mixin
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Event Mixin
@@ -14,10 +7,13 @@
  * event dispatcher and allow adding and removing listeners.
  *  
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Mixin
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnMixin
  * @uses        KEventDispatcher
  */
-class KMixinEvent extends KMixinAbstract
+class AnMixinEvent extends AnMixinAbstract
 {   
     /**
      * Event dispatcher object
@@ -45,28 +41,25 @@ class KMixinEvent extends KMixinAbstract
     {
         parent::__construct($config);
         
-        if(is_null($config->event_dispatcher)) {
-			throw new KMixinException('event_dispatcher [KEventDispatcher] option is required');
+        if (is_null($config->event_dispatcher)) {
+			throw new AnMixinException('event_dispatcher [KEventDispatcher] option is required');
 		}
             
         //Set the event dispatcher
         $this->_event_dispatcher = $config->event_dispatcher;
         
         //Add the event listeners
-        if(!empty($config->event_listeners))
-        {
-            foreach($config->event_listeners as $event => $listener) {
+        if (! empty($config->event_listeners)) {
+            foreach ($config->event_listeners as $event => $listener) {
                $this->addEventListener($event, $listener);
             }
         }
         
         //Add the event handlers
-        if(!empty($config->event_subscribers))
-        {
+        if (! empty($config->event_subscribers)) {
             $subscribers = (array) KConfig::unbox($config->event_subscribers);
             
-            foreach($subscribers as $key => $value) 
-            {
+            foreach ($subscribers as $key => $value) {
                 if(is_numeric($key)) {
                     $this->addEventSubscriber($value);
                 } else {
@@ -158,11 +151,11 @@ class KMixinEvent extends KMixinAbstract
      */
     public function addEventSubscriber($subscriber, $config = array(), $priority = null)
     {
-        if (!($subscriber instanceof KEventSubscriberInterface)) {
+        if (! ($subscriber instanceof KEventSubscriberInterface)) {
             $subscriber = $this->getEventSubscriber($subscriber, $config);
         }
         
-        $priority =  is_int($priority) ? $priority : $subscriber->getPriority(); 
+        $priority = is_int($priority) ? $priority : $subscriber->getPriority(); 
         $this->_event_dispatcher->addEventSubscriber($subscriber, $priority);
     
         return $this;
@@ -177,7 +170,7 @@ class KMixinEvent extends KMixinAbstract
      */
     public function removeEventDispatcher($subscriber)
     {
-        if (!($subscriber instanceof KEventSubscriberInterface)) {
+        if (! ($subscriber instanceof KEventSubscriberInterface)) {
             $subscriber = $this->getEventSubscriber($subscriber, $config);
         }
         
@@ -192,30 +185,28 @@ class KMixinEvent extends KMixinAbstract
      */
     public function getEventSubscriber($subscriber, $config = array())
     {
-        if(!($subscriber instanceof KServiceIdentifier))
-        {
+        if (! ($subscriber instanceof KServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
-            if(is_string($subscriber) && strpos($subscriber, '.') === false )
-            {
+            if (is_string($subscriber) && strpos($subscriber, '.') === false ) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('event', 'handler');
                 $identifier->name = $subscriber;
+            } else {
+                $identifier = $this->getIdentifier($subscriber);
             }
-            else $identifier = $this->getIdentifier($subscriber);
         }
     
-        if(!isset($this->_event_subscribers[(string) $identifier]))
-        {
+        if (! isset($this->_event_subscribers[(string) $identifier])) {
             $config['event_dispatcher'] = $this->getEventDispatcher();
-             
             $subscriber = $this->getService($identifier, $config);
              
             //Check the event subscriber interface
-            if(!($subscriber instanceof KEventSubscriberInterface)) {
+            if (! ($subscriber instanceof KEventSubscriberInterface)) {
                 throw new KEventSubscriberException("Event Subscriber $identifier does not implement KEventSubscriberInterface");
             }
+        } else {
+            $subscriber = $this->_event_subscribers[(string) $identifier];
         }
-        else $subscriber = $this->_event_subscribers[(string) $identifier];
          
         return $subscriber;
     }

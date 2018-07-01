@@ -54,7 +54,7 @@ abstract class KEventSubscriberAbstract extends KObject implements KEventSubscri
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-    		'priority' => KCommand::PRIORITY_NORMAL
+    		'priority' => AnCommand::PRIORITY_NORMAL
         ));
 
         parent::_initialize($config);

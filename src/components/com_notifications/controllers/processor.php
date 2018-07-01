@@ -56,9 +56,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     /**
      * Process an array of notifications.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionProcess(KCommandContext $context)
+    protected function _actionProcess(AnCommandContext $context)
     {
         // run this no more than 1 minute
         //set_time_limit(60);

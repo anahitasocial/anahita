@@ -74,9 +74,9 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
      * If the message is still in the flash, push that to the global
      * message stack. This gives a chance for the message to be seen.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterControllerGet(KCommandContext $context)
+    protected function _afterControllerGet(AnCommandContext $context)
     {
         $flash = $this->_mixer->getState()->flash;
         $message = $flash->getMessage();
@@ -182,6 +182,6 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 }

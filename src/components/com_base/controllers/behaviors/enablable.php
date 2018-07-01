@@ -16,7 +16,7 @@ class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
     /**
      * Enable Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionEnable($context)
     {
@@ -29,7 +29,7 @@ class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
     /**
      * Disable Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionDisable($context)
     {

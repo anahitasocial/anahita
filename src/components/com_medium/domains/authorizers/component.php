@@ -16,11 +16,11 @@ class ComMediumDomainAuthorizerComponent extends LibBaseDomainAuthorizerAbstract
     /**
      * Authorizes whether the viewer can pubilsh anything within this component or not.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    protected function _authorizeAction(KCommandContext $context)
+    protected function _authorizeAction(AnCommandContext $context)
     {
         $method = '_authorize'.ucfirst($context->action);
 

@@ -25,7 +25,7 @@ class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
     /**
      * Pin Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionPin($context)
     {
@@ -38,7 +38,7 @@ class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
     /**
      * Unpin Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionUnpin($context)
     {

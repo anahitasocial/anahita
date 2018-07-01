@@ -38,9 +38,9 @@ class ComMediumDomainBehaviorEnableable extends LibBaseDomainBehaviorEnableable
      * Only brings the media that are enabled or disabled but the viewer or one 
      * of the actor they are administrating are the owner
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
         $repos = $query->getRepository();

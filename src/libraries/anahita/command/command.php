@@ -1,23 +1,18 @@
 <?php
-/**
- * @version		$Id: command.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package		Koowa_Command
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
- */
 
 /**
- * Command handler
- *
- * The command handler will translate the command name into a function format and
- * call it for the object class to handle it if the method exists.
- *
- * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Command
- * @uses        AnInflector
- */
-class KCommand extends KObject implements KCommandInterface
+* Command handler
+*
+* The command handler will translate the command name into a function format and
+* call it for the object class to handle it if the method exists.
+*
+* @author      Johan Janssens <johan@nooku.org>
+* @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+* @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+* @package     AnCommand
+* @link        https://www.GetAnahita.com
+*/
+class AnCommand extends KObject implements AnCommandInterface
 {
     /**
      * Priority levels
@@ -43,7 +38,7 @@ class KCommand extends KObject implements KCommandInterface
     public function __construct( KConfig $config = null)
     {
         //If no config is passed create it
-        if(!isset($config)) $config = new KConfig();
+        if (! isset($config)) $config = new KConfig();
 
         parent::__construct($config);
 
@@ -61,7 +56,7 @@ class KCommand extends KObject implements KCommandInterface
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority'   => KCommand::PRIORITY_NORMAL,
+            'priority' => AnCommand::PRIORITY_NORMAL,
         ));
 
         parent::_initialize($config);
@@ -74,25 +69,24 @@ class KCommand extends KObject implements KCommandInterface
      * @param   object      The command context
      * @return  boolean     Can return both true or false.
      */
-    public function execute( $name, KCommandContext $context)
+    public function execute( $name, AnCommandContext $context)
     {
         $type = '';
 
-        if($context->caller)
-        {
+        if ($context->caller) {
             $identifier = clone $context->caller->getIdentifier();
 
-            if($identifier->path) {
+            if ($identifier->path) {
                 $type = array_shift($identifier->path);
             } else {
                 $type = $identifier->name;
             }
         }
 
-        $parts  = explode('.', $name);
+        $parts = explode('.', $name);
         $method = !empty($type) ? '_'.$type.ucfirst(AnInflector::implode($parts)) : '_'.lcfirst(AnInflector::implode($parts));
 
-        if(in_array($method, $this->getMethods())) {
+        if (in_array($method, $this->getMethods())) {
             return $this->$method($context);
         }
 

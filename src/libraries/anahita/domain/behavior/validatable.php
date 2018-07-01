@@ -78,7 +78,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_LOWEST,
+            'priority' => AnCommand::PRIORITY_LOWEST,
             'validator' => $this->_repository->getIdentifier()->name,
         ));
 
@@ -230,7 +230,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      * Called before a property value is set. This method will try to invoke _sanitize[Property Name]
      * if it exist.
      *
-     * KCommandContxt $context Context parmeter. Contains keys property, value
+     * AnCommandContxt $context Context parmeter. Contains keys property, value
      *
      * @return bool If false is returned the property value will not be set
      */
@@ -252,7 +252,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     /**
      * Validates an entity using the entity validator object.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      * 
      * @return bool
      */

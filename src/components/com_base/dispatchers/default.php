@@ -75,7 +75,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      *
      * @return string
      */
-    protected function _actionRender(KCommandContext $context)
+    protected function _actionRender(AnCommandContext $context)
     {
         if ($context->request->getFormat() == 'html' && KRequest::type() == 'HTTP') {
             $this->_setPageTitle();
@@ -87,9 +87,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     /**
      * Sets the page title/description.
      *
-     * KCommandContext $context Command Context
+     * AnCommandContext $context Command Context
      */
-    public function setPageTitle(KCommandContext $context)
+    public function setPageTitle(AnCommandContext $context)
     {
         $controller = $this->getController();
 
@@ -151,9 +151,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      * Allows the component to handle exception. By default this
      * action passes the exception to the application exception handler.
      *
-     * @param KCommandContext $context Command context
+     * @param AnCommandContext $context Command context
      */
-    protected function _actionException(KCommandContext $context)
+    protected function _actionException(AnCommandContext $context)
     {
         $viewer = get_viewer();
 

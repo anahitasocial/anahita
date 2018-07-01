@@ -238,7 +238,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         parent::_afterEntityInstantiate($config);
     }
 
-    protected function _beforeEntityInsert(KCommandContext $context)
+    protected function _beforeEntityInsert(AnCommandContext $context)
     {
         $this->alias = $this->username;
 
@@ -261,7 +261,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         )));
     }
 
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         if ($this->getModifiedData()->username) {
             $this->alias = $this->username;

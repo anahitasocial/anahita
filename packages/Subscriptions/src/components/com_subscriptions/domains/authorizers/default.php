@@ -16,7 +16,7 @@ class ComSubscriptionsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDef
     /**
      * Check if a medium authorizes acccess.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
@@ -28,7 +28,7 @@ class ComSubscriptionsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDef
     /**
      * Check if a node authroize being updated.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
@@ -40,7 +40,7 @@ class ComSubscriptionsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDef
     /**
      * Check if a node authroize being updated.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
@@ -60,7 +60,7 @@ class ComSubscriptionsDomainAuthorizerDefault extends LibBaseDomainAuthorizerDef
     /**
      * Check if a node authroize being updated.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */

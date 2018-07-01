@@ -54,11 +54,11 @@ abstract class LibBaseDomainAuthorizerAbstract extends KObject
      * Executes an authorization action with the passed arguments.
      * 
      * @param string          $name    The command name
-     * @param KCommandContext $context The command context
+     * @param AnCommandContext $context The command context
      * 
      * @return bool Can return both true or false.  
      */
-    final public function execute($action, KCommandContext $context)
+    final public function execute($action, AnCommandContext $context)
     {
         $method = '_'.AnInflector::variablize('authorize.'.$action);
 

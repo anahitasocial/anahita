@@ -38,7 +38,7 @@ class ComStoriesDomainAuthorizerStory extends LibBaseDomainAuthorizerDefault
     /**
      * Check if a node authroize being updated.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -60,7 +60,7 @@ class ComStoriesDomainAuthorizerStory extends LibBaseDomainAuthorizerDefault
     /**
      * Checks if a comment can be added to a story.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -84,7 +84,7 @@ class ComStoriesDomainAuthorizerStory extends LibBaseDomainAuthorizerDefault
     /**
      * Authoriz vote.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -108,7 +108,7 @@ class ComStoriesDomainAuthorizerStory extends LibBaseDomainAuthorizerDefault
     /**
      * Authoriz deleting a comment.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -139,7 +139,7 @@ class ComStoriesDomainAuthorizerStory extends LibBaseDomainAuthorizerDefault
     /**
      * Checks if a comment of a  node can be edited.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */

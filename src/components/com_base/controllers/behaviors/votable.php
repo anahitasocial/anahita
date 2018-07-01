@@ -31,7 +31,7 @@ class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
     /**
      * Renders ComBaseTemplateHelperUi::vote().
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return string
      */
@@ -57,7 +57,7 @@ class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
     /**
      * Subscribe the viewer to the subscribable object.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionVote($context)
     {
@@ -77,7 +77,7 @@ class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
     /**
      * Remove the viewer's subscription from the subscribable object.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionUnvote($context)
     {

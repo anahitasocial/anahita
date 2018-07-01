@@ -56,7 +56,7 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
     /**
      * Sets the value of lastChanger to the last person who opened or closed a todo.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     public function setLastChanger($context)
     {
@@ -66,7 +66,7 @@ class ComTodosControllerTodo extends ComMediumControllerDefault
     /**
      * Browse Todos.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionBrowse($context)
     {

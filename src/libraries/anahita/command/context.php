@@ -1,19 +1,15 @@
 <?php
-/**
- * @version     $Id: interface.php 1366 2009-11-28 01:34:00Z johan $
- * @package     Koowa_Command
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
-/**
+ /**
  * Command Context
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Command
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @package     AnCommand
+ * @link        https://www.GetAnahita.com
  */
-class KCommandContext extends KConfig
+class AnCommandContext extends KConfig
 {
     /**
      * Error
@@ -32,7 +28,7 @@ class KCommandContext extends KConfig
     /**
      * Set the error
      *
-     * @return  KCommandContext
+     * @return  AnCommandContext
      */
     public function setError($error) 
     {

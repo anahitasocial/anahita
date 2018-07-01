@@ -59,9 +59,9 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
     /**
      * Validating Entity.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _onEntityValidate(KCommandContext $context)
+    protected function _onEntityValidate(AnCommandContext $context)
     {
         $this->parent->getRepository()
                      ->getBehavior('commentable')
@@ -71,9 +71,9 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
     /**
      * Resets the comment stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $this->parent->getRepository()
                      ->getBehavior('commentable')
@@ -84,9 +84,9 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
     /**
      * Resets the comment stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->parent->getRepository()
                      ->getBehavior('commentable')

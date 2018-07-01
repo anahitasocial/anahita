@@ -23,7 +23,7 @@ class LibBaseTemplateFilterTemplate extends LibBaseTemplateFilterAbstract implem
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_HIGH,
+            'priority' => AnCommand::PRIORITY_HIGH,
         ));
 
         parent::_initialize($config);

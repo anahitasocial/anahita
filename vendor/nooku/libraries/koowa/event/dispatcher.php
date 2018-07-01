@@ -231,7 +231,7 @@ class KEventDispatcher extends KObject
      * @param  string    The event name
      * @param  object    An object implementing the KObjectHandlable interface
      * @param  integer   The event priority
-     * @return KCommandChain
+     * @return AnCommandChain
      */
     public function setEventPriority($name, KObjectHandable $listener, $priority)
     {

@@ -1,19 +1,15 @@
 <?php
-/**
- * @version     $Id: toolbar.php 4628M 2012-05-07 01:41:34Z (local) $
- * @package     Koowa_Mixin
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Toolbar Mixin Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Mixin
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnMixin
  */
-class KMixinToolbar extends KMixinAbstract
+class AnMixinToolbar extends AnMixinAbstract
 {
 	/**
 	 * List of toolbars
@@ -35,14 +31,12 @@ class KMixinToolbar extends KMixinAbstract
 		parent::__construct($config);
 
 	    //Add the toolbars
-        if(!empty($config->toolbars))
-        {
+        if (! empty($config->toolbars)) {
             $this->_mixer->mixin($this);
 
             $toolbars = (array) KConfig::unbox($config->toolbars);
 
-            foreach($toolbars as $key => $value)
-            {
+            foreach ($toolbars as $key => $value) {
                 if(is_numeric($key)) {
                     $this->addToolbar($value);
                 } else {
@@ -89,7 +83,7 @@ class KMixinToolbar extends KMixinAbstract
      */
     public function addToolbar($toolbar, $config = array(), $priority = KEvent::PRIORITY_NORMAL)
     {
-        if (!($toolbar instanceof AnControllerToolbarInterface)) {
+        if (! ($toolbar instanceof AnControllerToolbarInterface)) {
             $toolbar = $this->_mixer->getToolbar($toolbar, $config);
         }
 
@@ -97,7 +91,7 @@ class KMixinToolbar extends KMixinAbstract
         $this->_toolbars[$toolbar->getIdentifier()->name] = $toolbar;
 
         //Add the toolbar
-        if($this->inherits('KMixinEvent')) {
+        if ($this->inherits('AnMixinEvent')) {
             $this->addEventSubscriber($toolbar, $priority);
         }
 
@@ -112,29 +106,28 @@ class KMixinToolbar extends KMixinAbstract
     public function getToolbar($toolbar, $config = array())
     {
        $identifier = $toolbar;
-       if(!($toolbar instanceof KServiceIdentifier))
-       {
+       if (! ($toolbar instanceof KServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
-           if(is_string($toolbar) && strpos($toolbar, '.') === false )
-           {
+           if (is_string($toolbar) && strpos($toolbar, '.') === false ) {
                $identifier = clone $this->getIdentifier();
                $identifier->path = array('controller', 'toolbar');
                $identifier->name = $toolbar;
-           }
-           else $identifier = $this->getIdentifier($toolbar);
+           } else { 
+			   $identifier = $this->getIdentifier($toolbar);
+		   }
        }
 
-       if(!isset($this->_toolbars[$identifier->name]))
-       {
+       if (! isset($this->_toolbars[$identifier->name])) {
            $config['controller'] = $this->getMixer();
            $toolbar = $this->getService($identifier, $config);
 
            //Check the toolbar interface
-		   if(!($toolbar instanceof AnControllerToolbarInterface)) {
+		   if (! ($toolbar instanceof AnControllerToolbarInterface)) {
 			   throw new AnControllerToolbarException("Controller toolbar $identifier does not implement AnControllerToolbarInterface");
 		   }
-       }
-       else $toolbar = $this->_toolbars[$identifier->name];
+       } else { 
+		   $toolbar = $this->_toolbars[$identifier->name]; 
+	   }
 
        return $toolbar;
     }

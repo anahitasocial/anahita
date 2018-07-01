@@ -32,7 +32,7 @@ class ComNotesControllerNote extends ComMediumControllerDefault
     /**
      * Adds a new post.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionAdd($context)
     {

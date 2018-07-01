@@ -43,9 +43,9 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     /**
      * reassign subscriber to a different package.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionEditsubscription(KCommandContext $context)
+    protected function _actionEditsubscription(AnCommandContext $context)
     {
         if ($subscription = $this->_subscriber->changeSubscriptionTo($this->getItem())) {
             $subscription->endDate = $context->data->endDate;
@@ -55,9 +55,9 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     /**
      * Add a subscriber.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionAddsubscriber(KCommandContext $context)
+    protected function _actionAddsubscriber(AnCommandContext $context)
     {
         if ($subscription = $this->_subscriber->subscribeTo($this->getItem())) {
             $subscription->endDate = $context->data->endDate;
@@ -67,9 +67,9 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     /**
      * remove a subscriber.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionDeletesubscriber(KCommandContext $context)
+    protected function _actionDeletesubscriber(AnCommandContext $context)
     {
         $this->_subscriber->subscription->delete();
     }
@@ -77,11 +77,11 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     /**
      * Set the entity meta fields.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    public function setMeta(KCommandContext $context)
+    public function setMeta(AnCommandContext $context)
     {
         $data = $context->data;
         $this->getItem()->setValue('actorIds', $data->actor_ids);
@@ -90,11 +90,11 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
     /**
      * Fetches an entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return ComActorsDomainEntityActor
      */
-    public function fetchSubscriber(KCommandContext $context)
+    public function fetchSubscriber(AnCommandContext $context)
     {
         if (!$this->_subscriber) {
 
@@ -114,7 +114,7 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      *
      * @param object POST data
      */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         $actions = array('editsubscription', 'addsubscriber', 'deletesubscriber');
 
@@ -132,10 +132,10 @@ class ComSubscriptionsControllerPackage extends ComBaseControllerService
      *
      * sets correct end date value to be used for a subscription setting
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * @param void
      */
-    public function setEndDate(KCommandContext $context)
+    public function setEndDate(AnCommandContext $context)
     {
         $data = $context->data;
 

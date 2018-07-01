@@ -40,10 +40,10 @@ class ComConnectControllerSetting extends ComBaseControllerResource
     /**
      * Removes a token.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * @param void
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         $this->getResponse()->status = KHttpResponse::NO_CONTENT;
 
@@ -58,10 +58,10 @@ class ComConnectControllerSetting extends ComBaseControllerResource
     /**
      * After getting the access token store the token in the session and redirect.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * @param void
      */
-    protected function _actionGetaccesstoken(KCommandContext $context)
+    protected function _actionGetaccesstoken(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -96,10 +96,10 @@ class ComConnectControllerSetting extends ComBaseControllerResource
      *
      * Renders the actor setting for connect
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * @param void
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         $apis = ComConnectHelperApi::getServices();
 

@@ -98,7 +98,7 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
     /**
      * Validate Action. Calls the method validate<$key> on the validator object.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionValidate($context)
     {

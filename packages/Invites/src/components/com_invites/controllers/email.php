@@ -44,7 +44,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
     /**
      * Read.
      *
-     * @param KCommandContext $contxt
+     * @param AnCommandContext $contxt
      */
     protected function _actionInvite($context)
     {

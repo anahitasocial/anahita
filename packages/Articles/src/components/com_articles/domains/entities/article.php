@@ -56,7 +56,7 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
     /**
      * Creates a new revision before updating.
      */
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         $modifications = $this->getModifiedData();
 

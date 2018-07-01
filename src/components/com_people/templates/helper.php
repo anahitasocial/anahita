@@ -23,7 +23,7 @@ class ComPeopleTemplateHelper extends LibBaseTemplateHelperAbstract
      */
     public function viewerMenuLinks($actor)
     {
-        $context = new KCommandContext();
+        $context = new AnCommandContext();
         $context->menuItems = new LibBaseTemplateObjectContainer();
         $context->actor = $actor;
         $context->actor->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));

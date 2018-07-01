@@ -37,7 +37,7 @@ class ComActorsViewActorJson extends ComBaseViewJson
     protected function _getItem()
     {
         $item = parent::_getItem();
-        $context = new KCommandContext();
+        $context = new AnCommandContext();
         $context->gadgets = new LibBaseTemplateObjectContainer();
         $context->actor = $this->_state->getItem();
         $context->composers = new LibBaseTemplateObjectContainer();

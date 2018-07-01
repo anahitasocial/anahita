@@ -72,12 +72,12 @@ class LibSessionsDomainEntitySession extends AnDomainEntityDefault
         return $this;
     }
 
-    protected function _beforeEntityInsert(KCommandContext $context)
+    protected function _beforeEntityInsert(AnCommandContext $context)
     {
         $this->time = time();
     }
 
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         if ($this->getModifiedData()) {
             $viewer = KService::get('com:people.viewer');

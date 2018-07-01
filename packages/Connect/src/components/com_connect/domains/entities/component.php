@@ -51,11 +51,11 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * Authorizes echo.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return false
      */
-    public function authorizeEcho(KCommandContext $context)
+    public function authorizeEcho(AnCommandContext $context)
     {
         $actor = $context->actor;
 

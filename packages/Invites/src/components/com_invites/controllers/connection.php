@@ -16,9 +16,9 @@ class ComInvitesControllerConnection extends ComInvitesControllerDefault
     /**
      * Context.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $serviceType = pick($this->service, 'facebook');
 

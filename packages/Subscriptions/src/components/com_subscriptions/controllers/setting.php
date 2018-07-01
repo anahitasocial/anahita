@@ -38,10 +38,10 @@ class ComSubscriptionsControllerSetting extends ComBaseControllerResource
      *
      * Renders the actor setting for package subscription
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * @param void
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         $this->getService('repos:subscriptions.package');
         $this->setItem($this->actor->subscription);

@@ -72,9 +72,9 @@ class LibBaseDomainBehaviorDefaultable extends AnDomainBehaviorAbstract
     /**
      * Set the order before inserting.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityInsert(KCommandContext $context)
+    protected function _beforeEntityInsert(AnCommandContext $context)
     {
         //if the entity default is set to 
         //true then, set the previous default entity to false
@@ -87,9 +87,9 @@ class LibBaseDomainBehaviorDefaultable extends AnDomainBehaviorAbstract
     /**
      * Reorder After Update.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         //if default has changed
         if ($this->_mixer->getModifiedData()->isDefault) {

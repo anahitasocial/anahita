@@ -322,9 +322,9 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
     /**
      * Try to increment the coupong before inserting.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityInsert(KCommandContext $context)
+    protected function _beforeEntityInsert(AnCommandContext $context)
     {
         if (!empty($this->couponCode)) {
             $coupon = $this->getService('repos:subscriptions.coupon')

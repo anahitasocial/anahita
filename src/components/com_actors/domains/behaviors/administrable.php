@@ -97,7 +97,7 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
      *
      * @param KConfig $config Configuration
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         if ($this->author) {
             $this->addAdministrator($this->author);

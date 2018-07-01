@@ -29,7 +29,7 @@ class ComBaseControllerService extends ComBaseControllerResource
     /**
      * Set the default Node View.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComBaseControllerService
      */
@@ -75,9 +75,9 @@ class ComBaseControllerService extends ComBaseControllerResource
      * Generic POST action for a medium. If an entity exists then execute edit
      * else execute add.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         $action = $this->getItem() ? 'edit' : 'add';
         $result = $this->execute($action, $context);

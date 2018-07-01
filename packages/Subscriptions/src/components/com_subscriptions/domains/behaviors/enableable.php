@@ -18,9 +18,9 @@ class ComSubscriptionsDomainBehaviorEnableable extends LibBaseDomainBehaviorEnab
      * Only brings the media that are enabled or disabled but the viewer or one
      * of the actor they are administrating are the owner
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         if (!get_viewer()->admin()) {
             $query = $context->query;

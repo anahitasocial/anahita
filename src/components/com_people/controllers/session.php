@@ -67,9 +67,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Return the session.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         if (! $this->_state->viewer->guest()) {
             $this->_state->setItem($this->_state->viewer);
@@ -82,9 +82,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Post method.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         return $this->execute('add', $context);
     }
@@ -92,13 +92,13 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Authenticate a person and create a new session If a username password is passed then the user is first logged in.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @throws LibBaseControllerExceptionUnauthorized If authentication failed
      * @throws LibBaseControllerExceptionForbidden    If person is authenticated but forbidden
      * @throws RuntimeException                       for unkown error
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -151,9 +151,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Deletes a session and logs out the user.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         $viewer = $this->_state->viewer;
         $person_id = $viewer->id;
@@ -166,11 +166,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Logs in a user if an activation token is provided.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @return bool true on success
      */
-    protected function _actionTokenlogin(KCommandContext $context)
+    protected function _actionTokenlogin(AnCommandContext $context)
     {
         if ($this->token == '') {
             throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);

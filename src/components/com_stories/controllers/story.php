@@ -70,7 +70,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
      *
      * @see ComBaseControllerService::_actionAdd()
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -80,7 +80,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
     /**
      * Browse action.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionBrowse($context)
     {

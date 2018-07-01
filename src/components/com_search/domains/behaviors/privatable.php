@@ -16,7 +16,7 @@ class ComSearchDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
     /**
      * {@inheritdoc}
      */
-    protected function _beforeQuerySelect(KCommandContext $context)
+    protected function _beforeQuerySelect(AnCommandContext $context)
     {
         if (KService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin()) {
             return;

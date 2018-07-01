@@ -79,11 +79,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Browse Action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntitysetDefault
      */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $context->append(array(
             'query' => $this->getRepository()->getQuery(),
@@ -128,11 +128,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Add an actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $entity = parent::_actionAdd($context);
 
@@ -154,11 +154,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Edit's an actor data.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $entity = parent::_actionEdit($context);
 
@@ -202,7 +202,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Set the default Actor View.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComActorsControllerDefault
      */
@@ -227,11 +227,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      * Deletes an actor and all of the necessary cleanup. It also dispatches all the apps to
      * clean up after the deleted actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         $this->getService('repos:components')
              ->fetchSet()
@@ -274,11 +274,11 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Overwrite the setPrivacy action in privatable behavior.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @see   ComActorsDomainBehaviorPrivatable
      */
-    protected function _actionSetPrivacy(KCommandContext $context)
+    protected function _actionSetPrivacy(AnCommandContext $context)
     {
         if ($this->hasBehavior('privatable')) {
             $this->getBehavior('privatable')->execute('action.setprivacy', $context);
@@ -296,9 +296,9 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     /**
      * Set the necessary redirect.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function redirect(KCommandContext $context)
+    public function redirect(AnCommandContext $context)
     {
         $url = null;
 

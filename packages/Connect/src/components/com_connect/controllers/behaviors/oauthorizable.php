@@ -49,7 +49,7 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Handles callback.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionGetaccesstoken($context)
     {
@@ -74,7 +74,7 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Authorize an oauth profile to an actor. It needs to authorize.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionOauthorize($context)
     {
@@ -89,9 +89,9 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Set the api to the data in the context.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeControllerGet(KCommandContext $context)
+    protected function _beforeControllerGet(AnCommandContext $context)
     {
         if ($this->_mixer->getRequest()->get == 'accesstoken') {
             $this->_mixer->execute('getaccesstoken', $context);

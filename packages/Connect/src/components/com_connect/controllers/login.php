@@ -35,7 +35,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
     /**
      * After getting the access token store the token in the session and redirect.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * @param void
      */ 
     protected function _actionGetaccesstoken($context)
@@ -53,7 +53,7 @@ class ComConnectControllerLogin extends ComBaseControllerResource
     /**
      * Redners the login form.
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         if (!$this->getAPI()) {
             $context->response->setRedirect(route('option=com_people&view=session'));

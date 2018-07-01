@@ -120,7 +120,7 @@
         return $this->get('locations');
     }
 
-    protected function _beforeQuerySelect(KCommandContext $context)
+    protected function _beforeQuerySelect(AnCommandContext $context)
     {
         $query = $context->query;
 
@@ -132,7 +132,7 @@
     /**
     * Filter the nodes nearby a particular longitude and latitude
     */
-    protected function _filterDistance(KCommandContext $context)
+    protected function _filterDistance(AnCommandContext $context)
     {
         $query = $context->query;
         $location = $query->search_nearby;

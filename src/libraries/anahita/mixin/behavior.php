@@ -1,19 +1,16 @@
 <?php
-/**
- * @version     $Id: behavior.php 4628M 2012-05-11 07:06:16Z (local) $
- * @package     Koowa_Mixin
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Behavior Mixin Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Mixin
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnMixin
+ * @uses        KObject
  */
-class KMixinBehavior extends KMixinAbstract
+class AnMixinBehavior extends AnMixinAbstract
 {
 	/**
 	 * List of behaviors
@@ -44,17 +41,15 @@ class KMixinBehavior extends KMixinAbstract
 		//Set the auto mixin state
 		$this->_auto_mixin = $config->auto_mixin;
 
-		if ( $config->mixer instanceof KObject )
+		if ($config->mixer instanceof KObject )
 		    $config->mixer->mixin($this);
 
 	    //Add the behaviors
-        if(!empty($config->behaviors))
-        {
+        if (! empty($config->behaviors)) {
             $behaviors = (array) KConfig::unbox($config->behaviors);
 
-            foreach($behaviors as $key => $value)
-            {
-                if(is_numeric($key)) {
+            foreach ($behaviors as $key => $value) {
+                if (is_numeric($key)) {
                     $this->addBehavior($value);
                 } else {
                     $this->addBehavior($key, $value);
@@ -102,7 +97,7 @@ class KMixinBehavior extends KMixinAbstract
      */
     public function addBehavior($behavior, $config = array())
     {
-        if (!($behavior instanceof AnBehaviorInterface)) {
+        if (! ($behavior instanceof AnBehaviorInterface)) {
            $behavior = $this->_mixer->getBehavior($behavior, $config);
         }
 
@@ -131,30 +126,28 @@ class KMixinBehavior extends KMixinAbstract
     public function getBehavior($behavior, $config = array())
     {
        $identifier = $behavior;
-       if(!($behavior instanceof KServiceIdentifier))
-       {
+       if(! ($behavior instanceof KServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
-           if(is_string($behavior) && strpos($behavior, '.') === false )
-           {
+           if (is_string($behavior) && strpos($behavior, '.') === false ) {
                $identifier = clone $this->getIdentifier();
-               $identifier->path  = array($identifier->path[0], 'behavior');
-               $identifier->name  = $behavior;
-           }
-           else $identifier = $this->getIdentifier($behavior);
+               $identifier->path = array($identifier->path[0], 'behavior');
+               $identifier->name = $behavior;
+           } else { 
+			   $identifier = $this->getIdentifier($behavior);
+		   }
        }
 
-       if(!isset($this->_behaviors[$identifier->name]))
-       {
+       if (! isset($this->_behaviors[$identifier->name])) {
            $config['mixer'] = $this->getMixer();
-
            $behavior = $this->getService($identifier, $config);
 
            //Check the behavior interface
-		   if(!($behavior instanceof AnBehaviorInterface)) {
+		   if(! ($behavior instanceof AnBehaviorInterface)) {
 			   throw new AnBehaviorException("Behavior $identifier does not implement AnBehaviorInterface");
 		   }
-       }
-       else $behavior = $this->_behaviors[$identifier->name];
+       } else {
+		   $behavior = $this->_behaviors[$identifier->name];
+	   }
 
        return $behavior;
     }

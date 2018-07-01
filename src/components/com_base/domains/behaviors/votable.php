@@ -76,7 +76,7 @@
             if ($this->isSubscribable() && !$this->subscribed($voter)) {
                 $this->addSubscriber($voter);
             }
-            $this->_mixer->execute('after.voteup', new KCommandContext(array('vote' => $voteup)));
+            $this->_mixer->execute('after.voteup', new AnCommandContext(array('vote' => $voteup)));
         }
     }
 

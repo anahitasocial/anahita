@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainQuery extends KObject implements KCommandInterface
+class AnDomainQuery extends KObject implements AnCommandInterface
 {
     /**
      * Query Operation.
@@ -919,9 +919,9 @@ class AnDomainQuery extends KObject implements KCommandInterface
     /**
      * (non-PHPdoc).
      *
-     * @see KCommandInterface::execute()
+     * @see AnCommandInterface::execute()
      */
-    public function execute($command, KCommandContext $context)
+    public function execute($command, AnCommandContext $context)
     {
         $identifier = $context->caller->getIdentifier();
         $type = $identifier->path;

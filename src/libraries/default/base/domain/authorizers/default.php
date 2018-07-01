@@ -31,7 +31,7 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
     /**
      * Check if a node authroize being subscribed too.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -66,7 +66,7 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
     /**
      * Check if a node authroize being voted.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -96,7 +96,7 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
     /**
      * Checks if a comment can be added to a  node.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      * 
      * @return bool
      */
@@ -137,7 +137,7 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
                      * @TODO We need to communicate back the nature of not having a 
                      * permission to comment on an entity.Right now we are using
                      * the entity iself as the communication mechanism. Perpas an error
-                     * object to KCommandContext
+                     * object to AnCommandContext
                      */
                     $this->_entity->__require_follow = false;
 

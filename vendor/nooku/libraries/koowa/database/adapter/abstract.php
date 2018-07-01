@@ -117,7 +117,7 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
       		$config->mixer = $this;
 
 			// Mixin the command interface
-      		$this->mixin(new KMixinCommand($config));
+      		$this->mixin(new AnMixinCommand($config));
 	}
 
 	/**
@@ -145,7 +145,7 @@ abstract class KDatabaseAdapterAbstract extends KObject implements KDatabaseAdap
     		'charset'			=> 'UTF-8',
        	 	'table_prefix'  	=> 'an_',
     	    'table_needle'		=> '#__',
-    		'command_chain'     => $this->getService('koowa:command.chain'),
+    		'command_chain'     => $this->getService('anahita:command.chain'),
     		'dispatch_events'   => true,
     		'event_dispatcher'  => $this->getService('koowa:event.dispatcher'),
     		'enable_callbacks' 	=> false,

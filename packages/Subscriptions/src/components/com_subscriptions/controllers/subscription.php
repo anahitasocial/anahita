@@ -76,9 +76,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     /**
      * Adds a subscription.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $payload = $this->_order->getPayload();
 
@@ -124,9 +124,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     /**
      * Mail an invoice after adding a subscription.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function mailInvoice(KCommandContext $context)
+    public function mailInvoice(AnCommandContext $context)
     {
         if ($this->getItem()) {
 

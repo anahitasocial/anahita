@@ -20,7 +20,7 @@ class ComSubscriptionsDispatcher extends ComBaseDispatcherDefault
      *
      * @see ComBaseDispatcher::_actionDispatch()
      */
-    protected function _actionDispatch(KCommandContext $context)
+    protected function _actionDispatch(AnCommandContext $context)
     {
         if ($this->action === 'confirm' && $this->token) {
             $context->data->append(array(
@@ -37,9 +37,9 @@ class ComSubscriptionsDispatcher extends ComBaseDispatcherDefault
     /**
      * Redirects to HTTPs.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function redirectHttps(KCommandContext $context)
+    public function redirectHttps(AnCommandContext $context)
     {
         if (KRequest::url()->scheme === 'http') {
             $url = clone KRequest::url();

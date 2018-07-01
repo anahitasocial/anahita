@@ -32,7 +32,7 @@ class ComArticlesControllerRevision extends ComMediumControllerDefault
     /**
      * Restores an article back to a revision.
      *
-     * @param KCommandContext $context Context paramter
+     * @param AnCommandContext $context Context paramter
      */
     protected function _actionRestore($context)
     {

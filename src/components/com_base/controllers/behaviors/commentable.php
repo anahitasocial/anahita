@@ -38,11 +38,11 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Intercept a get method to check whether to show the comments only or not.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    protected function _beforeControllerGet(KCommandContext $context)
+    protected function _beforeControllerGet(AnCommandContext $context)
     {
         if ($this->cid) {
             $context->response->content = $this->getCommentController()->id($this->cid)->display();
@@ -72,9 +72,9 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Render the comments.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionGetcomments(KCommandContext $context)
+    protected function _actionGetcomments(AnCommandContext $context)
     {
         $this->getCommentController()->getRequest()->remove('get');
 
@@ -88,11 +88,11 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Adds a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return ComBaseDomainEntityComment
      */
-    protected function _actionDeletecomment(KCommandContext $context)
+    protected function _actionDeletecomment(AnCommandContext $context)
     {
         $ret = $this->getCommentController()->id($this->cid)->delete();
         $context->response->status = KHttpResponse::NO_CONTENT;
@@ -101,11 +101,11 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Adds a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return ComBaseDomainEntityComment
      */
-    protected function _actionEditcomment(KCommandContext $context)
+    protected function _actionEditcomment(AnCommandContext $context)
     {
         $data = $context->data;
         $comment = $this->getCommentController()->id($this->cid)->edit(array('body' => $data->body));
@@ -121,11 +121,11 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Adds a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return ComBaseDomainEntityComment
      */
-    protected function _actionAddcomment(KCommandContext $context)
+    protected function _actionAddcomment(AnCommandContext $context)
     {
         $data = $context->data;
         $comment = $this->getCommentController()->add(array('body' => $data->body));
@@ -150,9 +150,9 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Vote on a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionUnvoteComment(KCommandContext $context)
+    protected function _actionUnvoteComment(AnCommandContext $context)
     {
         $this->getCommentController()->id($this->cid)->execute('unvote', $context);
     }
@@ -160,9 +160,9 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Vote on a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionVoteComment(KCommandContext $context)
+    protected function _actionVoteComment(AnCommandContext $context)
     {
         $this->getCommentController()->id($this->cid)->execute('vote', $context);
     }
@@ -203,7 +203,7 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     /**
      * Toggles comment status.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionCommentstatus($context)
     {

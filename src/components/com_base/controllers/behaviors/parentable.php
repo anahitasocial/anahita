@@ -66,7 +66,7 @@ class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
     {
         $config->append(array(
             'identifiable_key' => 'pid',
-            'priority' => KCommand::PRIORITY_HIGHEST,
+            'priority' => AnCommand::PRIORITY_HIGHEST,
         ));
 
         parent::_initialize($config);
@@ -80,7 +80,7 @@ class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
      *
      * @return bool Can return both true or false.
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $parts = explode('.', $name);
 
@@ -168,6 +168,6 @@ class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 }

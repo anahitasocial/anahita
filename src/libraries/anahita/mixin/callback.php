@@ -1,19 +1,16 @@
 <?php
-/**
- * @version		$Id: callback.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package		Koowa_Mixin
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
- */
 
 /**
  * Callback Command Mixin
  *
- * @author		Johan Janssens <johan@nooku.org>
- * @package     Koowa_Mixin
+ * @author      Johan Janssens <johan@nooku.org>
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnMixin
+ * @uses        KObject
  */
-class KMixinCallback extends KMixinAbstract implements KCommandInterface
+class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
 {
  	/**
  	 * Array of callbacks
@@ -45,8 +42,8 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
 	{
 		parent::__construct($config);
 
-		if(is_null($config->command_chain)) {
-			throw new KMixinException('command_chain [KCommandChain] option is required');
+		if (is_null($config->command_chain)) {
+			throw new AnMixinException('command_chain [AnCommandChain] option is required');
 		}
 
 		//Set the command priority
@@ -67,8 +64,8 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
     protected function _initialize(KConfig $config)
     {
     	$config->append(array(
-    		'command_chain'		=> null,
-    		'callback_priority'	=> KCommand::PRIORITY_HIGH
+    		'command_chain'	=> null,
+    		'callback_priority'	=> AnCommand::PRIORITY_HIGH
     	));
 
     	parent::_initialize($config);
@@ -82,20 +79,18 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
 	 *
 	 * @return boolean
 	 */
-	public function execute( $name, KCommandContext $context)
+	public function execute( $name, AnCommandContext $context)
 	{
 		$result    = true;
 
-		if(isset($this->_callbacks[$name]))
-		{
+		if (isset($this->_callbacks[$name])) {
 			$callbacks = $this->_callbacks[$name];
-			$params    = $this->_params[$name];
+			$params = $this->_params[$name];
 
-			foreach($callbacks as $key => $callback)
-   			{
+			foreach ($callbacks as $key => $callback) {
                 $param = $params[$key];
 
-                if(is_array($param) && is_numeric(key($param))) {
+                if (is_array($param) && is_numeric(key($param))) {
    				    $result = call_user_func_array($callback, $params);
                 } else {
                     $result = call_user_func($callback,  $context->append($param));
@@ -122,7 +117,7 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
 		$result = array();
 		$command = strtolower($command);
 
-		if (isset($this->_callbacks[$command]) ) {
+		if (isset($this->_callbacks[$command])) {
        	 	$result = $this->_callbacks[$command];
 		}
 
@@ -146,28 +141,23 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
 	public function registerCallback($commands, $callback, $params = array())
 	{
 		$commands = (array) $commands;
-		$params  = (array) KConfig::unbox($params);
+		$params = (array) KConfig::unbox($params);
 
-		foreach($commands as $command)
-		{
+		foreach ($commands as $command) {
 			$command = strtolower($command);
 
-			if (!isset($this->_callbacks[$command]) )
-			{
+			if (! isset($this->_callbacks[$command])) {
        	 		$this->_callbacks[$command] = array();
-       	 		$this->_params[$command]   = array();
+       	 		$this->_params[$command] = array();
 			}
 
 			//Don't re-register commands.
 			$index = array_search($callback, $this->_callbacks[$command], true);
 
-			if ( $index === false )
-			{
+			if ($index === false) {
 		        $this->_callbacks[$command][] = $callback;
-    		    $this->_params[$command][]    = $params;
-			}
-			else
-			{
+    		    $this->_params[$command][] = $params;
+			} else {
 			   $this->_params[$command][$index] = array_merge($this->_params[$command][$index], $params);
 			}
 		}
@@ -186,22 +176,17 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
 	{
 		$commands  = (array) $commands;
 
-		foreach($commands as $command)
-		{
+		foreach ($commands as $command) {
 			$command = strtolower($command);
 
-			if (isset($this->_callbacks[$command]) )
-			{
-			    if ( $callback )
-			    {
+			if (isset($this->_callbacks[$command])) {
+			    if ($callback) {
 			        $key = array_search($callback, $this->_callbacks[$command], true);
-			        if ( $key !== false ) {
+			        if ($key !== false) {
 			            unset($this->_callbacks[$command][$key]);
 			            unset($this->_params[$command][$key]);
 			        }
-			    } 
-			    else 
-			    {
+			    } else {
 			        unset($this->_callbacks[$command]);
 			        unset($this->_params[$command]);			        
 			    }
@@ -214,7 +199,7 @@ class KMixinCallback extends KMixinAbstract implements KCommandInterface
 	/**
 	 * Get the methods that are available for mixin.
 	 *
-	 * This functions overloads KMixinAbstract::getMixableMethods and excludes the execute()
+	 * This functions overloads AnMixinAbstract::getMixableMethods and excludes the execute()
 	 * function from the list of available mixable methods.
 	 *
 	 * @return array An array of methods

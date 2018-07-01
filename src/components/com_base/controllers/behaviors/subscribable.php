@@ -16,7 +16,7 @@ class ComBaseControllerBehaviorSubscribable extends AnControllerBehaviorAbstract
     /**
      * If the viewer is subscribe then unsubscribe, if not subscribe then subscribe.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionTogglesubscription($context)
     {
@@ -32,7 +32,7 @@ class ComBaseControllerBehaviorSubscribable extends AnControllerBehaviorAbstract
     /**
      * Subscribe the viewer to the subscribable object.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionSubscribe($context)
     {
@@ -42,7 +42,7 @@ class ComBaseControllerBehaviorSubscribable extends AnControllerBehaviorAbstract
     /**
      * Remove the viewer's subscription from the subscribable object.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionUnsubscribe($context)
     {

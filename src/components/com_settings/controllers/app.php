@@ -33,7 +33,7 @@ class ComSettingsControllerApp extends ComBaseControllerService
         parent::_initialize($config);
     }
 
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-APPS');
 
@@ -42,7 +42,7 @@ class ComSettingsControllerApp extends ComBaseControllerService
         return parent::_actionGet($context);
     }
 
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         parent::_actionEdit($context);
 
@@ -54,10 +54,10 @@ class ComSettingsControllerApp extends ComBaseControllerService
     /**
     *   browse service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
 

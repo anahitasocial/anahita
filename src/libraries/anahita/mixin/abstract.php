@@ -1,11 +1,4 @@
 <?php
-/**
- * @version     $Id: abstract.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Mixin
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Abstract mixing class
@@ -15,10 +8,13 @@
  * to KObject derived classes.
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Mixin
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnMixin
  * @uses        KObject
  */
-abstract class KMixinAbstract implements KMixinInterface
+abstract class AnMixinAbstract implements AnMixinInterface
 {
     /**
      * The object doing the mixin
@@ -48,7 +44,7 @@ abstract class KMixinAbstract implements KMixinInterface
      */
     public function __construct(KConfig $config)
     {
-        if(!empty($config)) {
+        if( !empty($config)) {
             $this->_initialize($config);
         }
 
@@ -85,7 +81,7 @@ abstract class KMixinAbstract implements KMixinInterface
      * Set the mixer object
      *
      * @param object The mixer object
-     * @return KMixinInterface
+     * @return AnMixinInterface
      */
     public function setMixer($mixer)
     {
@@ -115,12 +111,11 @@ abstract class KMixinAbstract implements KMixinInterface
      */
     public function getMethods()
     {
-        if(!$this->__methods)
-        {
+        if (! $this->__methods) {
             $methods = array();
 
             $reflection = new ReflectionClass($this);
-            foreach($reflection->getMethods() as $method) {
+            foreach ($reflection->getMethods() as $method) {
                 $methods[] = $method->name;
             }
 
@@ -140,8 +135,7 @@ abstract class KMixinAbstract implements KMixinInterface
      */
     public function getMixableMethods(KObject $mixer = null)
     {
-        if(!$this->__mixable_methods)
-        {
+        if (! $this->__mixable_methods) {
             $methods = array();
 
             //Get all the public methods
@@ -152,9 +146,8 @@ abstract class KMixinAbstract implements KMixinInterface
 
             //Remove the base class methods
             $reflection = new ReflectionClass(__CLASS__);
-            foreach($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
-            {
-                if(isset($methods[$method->name])) {
+            foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+                if (isset($methods[$method->name])) {
                     unset($methods[$method->name]);
                 }
             }
@@ -227,11 +220,9 @@ abstract class KMixinAbstract implements KMixinInterface
     public function __call($method, $arguments)
     {
         //Make sure we don't end up in a recursive loop
-        if(isset($this->_mixer) && !($this->_mixer instanceof $this))
-        {
+        if (isset($this->_mixer) && !($this->_mixer instanceof $this)) {
             // Call_user_func_array is ~3 times slower than direct method calls.
-            switch(count($arguments))
-            {
+            switch (count($arguments)) {
                 case 0 :
                     $result = $this->_mixer->$method();
                     break;

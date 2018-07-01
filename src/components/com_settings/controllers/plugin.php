@@ -40,10 +40,10 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     /**
     *   get service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return object entity
     */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-PLUGINS');
 
@@ -55,10 +55,10 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     /**
     *   browse service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
 
@@ -74,10 +74,10 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     /**
     *   edit service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $entity = parent::_actionEdit($context);
 

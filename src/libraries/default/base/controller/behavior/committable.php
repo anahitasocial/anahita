@@ -31,7 +31,7 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_HIGHEST,
+            'priority' => AnCommand::PRIORITY_HIGHEST,
         ));
 
         parent::_initialize($config);
@@ -42,11 +42,11 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
      * manuall commit.
      *
      * @param string          $name    The command name
-     * @param KCommandContext $context The command context
+     * @param AnCommandContext $context The command context
      *
      * @return bool Can return both true or false.
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $parts = explode('.', $name);
         $result = $context->result;
@@ -150,6 +150,6 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 }

@@ -40,11 +40,11 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
     /**
      * Add a cover.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    public function addCover(KCommandContext $context)
+    public function addCover(AnCommandContext $context)
     {
         $entity = $this->getItem();
 
@@ -62,11 +62,11 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
     /**
      * edit a cover.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    public function editCover(KCommandContext $context)
+    public function editCover(AnCommandContext $context)
     {
         $entity = $this->getItem();
 

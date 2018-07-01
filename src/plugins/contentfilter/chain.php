@@ -37,7 +37,7 @@ class PlgContentfilterChain extends KObject
     /**
      * Command Chain.
      *
-     * @var KCommandChain
+     * @var AnCommandChain
      */
     protected $_chain;
 
@@ -50,7 +50,7 @@ class PlgContentfilterChain extends KObject
     {
         parent::__construct($config);
 
-        $this->_chain = $this->getService('koowa:command.chain');
+        $this->_chain = $this->getService('anahita:command.chain');
     }
 
     /**

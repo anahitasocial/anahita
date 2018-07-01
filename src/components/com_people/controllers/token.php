@@ -43,9 +43,9 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     /**
      * Dispatches a correct action based on the state.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         return $this->execute('add', $context);
     }
@@ -53,9 +53,9 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     /**
      * Resets a password.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
         $email = $data->email;
@@ -79,9 +79,9 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     /**
      * Send an email confirmation after reset.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function mailConfirmation(KCommandContext $context)
+    public function mailConfirmation(AnCommandContext $context)
     {
         if ($this->person) {
             $settings = $this->getService('com:settings.setting');

@@ -19,9 +19,9 @@
      *
      * Only brings the entities that are enabled
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
         $query->where('IF(@col(enabled)=FALSE,0,1)');

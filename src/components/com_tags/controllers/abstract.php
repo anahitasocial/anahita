@@ -53,9 +53,9 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     /**
      * Read Service.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         $entity = parent::_actionRead($context);
 
@@ -87,9 +87,9 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     /**
      * Browse Service.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
 
@@ -115,7 +115,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     /**
      * Set the default Actor View.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComActorsControllerDefault
      */
@@ -136,9 +136,9 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     /**
      * Set the necessary redirect.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function redirect(KCommandContext $context)
+    public function redirect(AnCommandContext $context)
     {
         $url = array();
         $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);

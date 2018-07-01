@@ -22,7 +22,7 @@ class PlgContentfilterMention extends PlgContentfilterAbstract
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_LOW,
+            'priority' => AnCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);

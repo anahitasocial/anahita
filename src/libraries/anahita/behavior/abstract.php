@@ -13,7 +13,7 @@
  * @author		Rastin Mehr <rastin@anahitapolis.com>
  * @package     Anahita_Behavior
  */
-abstract class AnBehaviorAbstract extends KMixinAbstract implements AnBehaviorInterface
+abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorInterface
 {
 	/**
 	 * The behavior priority
@@ -74,7 +74,7 @@ abstract class AnBehaviorAbstract extends KMixinAbstract implements AnBehaviorIn
 	protected function _initialize(KConfig $config)
     {
     	$config->append(array(
-			'priority'   => KCommand::PRIORITY_NORMAL,
+			'priority'   => AnCommand::PRIORITY_NORMAL,
     	    'auto_mixin' => false
 	  	));
 	  	
@@ -102,7 +102,7 @@ abstract class AnBehaviorAbstract extends KMixinAbstract implements AnBehaviorIn
 	 * @param 	object   	The command context
 	 * @return 	boolean		Can return both true or false.  
 	 */
-	public function execute( $name, KCommandContext $context) 
+	public function execute( $name, AnCommandContext $context) 
 	{
 		$identifier = clone $context->caller->getIdentifier();
 		$type       = array_pop($identifier->path);

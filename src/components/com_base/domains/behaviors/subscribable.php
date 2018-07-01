@@ -46,9 +46,9 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
     /**
      * Subscribe the author to the node.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         if ($this->isOwnable() && $this->owner->isNotifiable() && !$this->owner->eql($this->author)) {
             $this->addSubscriber($this->owner);

@@ -65,11 +65,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Browse Action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComPeopleDomainEntityPerson
      */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         if (! $context->query) {
             $context->query = $this->getRepository()->getQuery();
@@ -115,11 +115,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Edit a person's data and synchronize with the person with the user entity.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -172,11 +172,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Person signup action creates a new person object.
      *
-     * @param KCommandContext $context Commaind chain context
+     * @param AnCommandContext $context Commaind chain context
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionSignup(KCommandContext  $context)
+    protected function _actionSignup(AnCommandContext  $context)
     {
         $data = $context->data;
 
@@ -224,11 +224,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Person add action creates a new person object.
      *
-     * @param KCommandContext $context Commaind chain context
+     * @param AnCommandContext $context Commaind chain context
      *
      * @return AnDomainEntityAbstract
      */
-     protected function _actionAdd(KCommandContext  $context)
+     protected function _actionAdd(AnCommandContext  $context)
      {
          $data = $context->data;
 
@@ -271,11 +271,11 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      * Deletes an actor and all of the necessary cleanup. It also dispatches all the apps to
      * clean up after the deleted actor.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         dispatch_plugin('user.onBeforeDeletePerson', array('data' => $context->data));
 
@@ -292,9 +292,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Set the necessary redirect.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function redirect(KCommandContext $context)
+    public function redirect(AnCommandContext $context)
     {
         $url = null;
 
@@ -316,9 +316,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Mail an activation link.
      *
-     * @param KCommandContext $context The context parameter
+     * @param AnCommandContext $context The context parameter
      */
-    public function mailActivationLink(KCommandContext $context)
+    public function mailActivationLink(AnCommandContext $context)
     {
         $person = $context->result;
         $viewer = get_viewer();
@@ -345,9 +345,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Notify admins that a new admin has joined the network.
      *
-     * @param KCommandContext $context The context parameter
+     * @param AnCommandContext $context The context parameter
      */
-    public function mailAdminsNewAdmin(KCommandContext $context)
+    public function mailAdminsNewAdmin(AnCommandContext $context)
     {
         $person = $context->result;
 
@@ -360,9 +360,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Autologin the first user which is also the first super admin.
      *
-     * @param KCommandContext $context The context parameter
+     * @param AnCommandContext $context The context parameter
      */
-    public function activateFirstAdmin(KCommandContext $context)
+    public function activateFirstAdmin(AnCommandContext $context)
     {
         $person = $context->result;
         $url = route('option=com_people&view=session&token='.$person->activationCode);

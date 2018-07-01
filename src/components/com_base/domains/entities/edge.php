@@ -61,10 +61,10 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
 /**
  * Validates an entity.
  *
- * @param KCommandContext $context
+ * @param AnCommandContext $context
  */
-    //protected function _beforeEntityInsert(KCommandContext $context)
-    protected function _onEntityValidate(KCommandContext $context)
+    //protected function _beforeEntityInsert(AnCommandContext $context)
+    protected function _onEntityValidate(AnCommandContext $context)
     {
         if ($this->nodeA->id === $this->nodeB->id) {
             return false;

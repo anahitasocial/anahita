@@ -16,7 +16,7 @@ class ComTodosDomainAuthorizerTodo extends ComMediumDomainAuthorizerDefault
     /**
      * Check if a node authroize being updated.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */

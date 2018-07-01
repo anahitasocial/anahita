@@ -142,11 +142,11 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
     /**
      * Authorizers subscripting to a package.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    public function authorizeSubscribePackage(KCommandContext $context)
+    public function authorizeSubscribePackage(AnCommandContext $context)
     {
         $viewer = $context->viewer;
 
@@ -156,11 +156,11 @@ class ComSubscriptionsDomainEntityPackage extends ComBaseDomainEntityNode
     /**
      * Authorizers upgrading to a package.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    public function authorizeUpgradePackage(KCommandContext $context)
+    public function authorizeUpgradePackage(AnCommandContext $context)
     {
         $viewer = $context->viewer;
 

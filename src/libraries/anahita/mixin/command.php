@@ -1,11 +1,4 @@
 <?php
-/**
- * @version     $Id: command.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Mixin
- * @copyright   Copyright (C) 2007 - 2010 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Command Mixin
@@ -14,17 +7,21 @@
  * of responsability or chain of command pattern.
  *  
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Mixin
- * @uses        KCommandChain
- * @uses        KCommandInterface
- * @uses        KCommandEvent
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnMixin
+ * @uses        KObject
+ * @uses        AnCommandChain
+ * @uses        AnCommandInterface
+ * @uses        AnCommandEvent
  */
-class KMixinCommand extends KMixinAbstract
+class AnMixinCommand extends AnMixinAbstract
 {   
     /**
      * Chain of command object
      *
-     * @var KCommandChain
+     * @var AnCommandChain
      */
     protected $_command_chain;
     
@@ -37,8 +34,8 @@ class KMixinCommand extends KMixinAbstract
     {
         parent::__construct($config);
         
-        if(is_null($config->command_chain)) {
-			throw new KMixinException('command_chain [KCommandChain] option is required');
+        if (is_null($config->command_chain)) {
+			throw new AnMixinException('command_chain [AnCommandChain] option is required');
 		}
             
         //Create a command chain object 
@@ -48,17 +45,16 @@ class KMixinCommand extends KMixinAbstract
         $config->mixer = $this->_mixer;
         
         //Mixin the callback mixer if callbacks have been enabled
-        if($config->enable_callbacks) {
-            $this->_mixer->mixin(new KMixinCallback($config));
+        if ($config->enable_callbacks) {
+            $this->_mixer->mixin(new AnMixinCallback($config));
         }
         
         //Enqueue the event command with a lowest priority to make sure it runs last
-        if($config->dispatch_events) 
-        { 
-            $this->_mixer->mixin(new KMixinEvent($config));
+        if ($config->dispatch_events) { 
+            $this->_mixer->mixin(new AnMixinEvent($config));
             
-            //@TODO : Add KCommandChain::getCommand()     
-            $event = $this->_command_chain->getService('koowa:command.event', array(
+            //@TODO : Add AnCommandChain::getCommand()     
+            $event = $this->_command_chain->getService('anahita:command.event', array(
             	'event_dispatcher' => $config->event_dispatcher
             ));
             
@@ -80,9 +76,9 @@ class KMixinCommand extends KMixinAbstract
             'command_chain'     => null,
             'event_dispatcher'  => null,
             'dispatch_events'   => true,
-            'event_priority'    => KCommand::PRIORITY_LOWEST,
+            'event_priority'    => AnCommand::PRIORITY_LOWEST,
             'enable_callbacks'  => false,
-            'callback_priority' => KCommand::PRIORITY_HIGH,
+            'callback_priority' => AnCommand::PRIORITY_HIGH,
         ));
         
         parent::_initialize($config);
@@ -94,7 +90,7 @@ class KMixinCommand extends KMixinAbstract
      * This functions inserts a 'caller' variable in the context which contains
      * the mixer object.
      *
-     * @return  KCommandContext
+     * @return  AnCommandContext
      */
     public function getCommandContext()
     {
@@ -107,7 +103,7 @@ class KMixinCommand extends KMixinAbstract
     /**
      * Get the chain of command object
      *
-     * @return  KCommandChain
+     * @return  AnCommandChain
      */
     public function getCommandChain()
     {
@@ -120,7 +116,7 @@ class KMixinCommand extends KMixinAbstract
      * @param   object 	A command chain object
      * @return  KObject The mixer object
      */
-    public function setCommandChain(KCommandChain $chain)
+    public function setCommandChain(AnCommandChain $chain)
     {
         $this->_command_chain = $chain;
         return $this->_mixer;

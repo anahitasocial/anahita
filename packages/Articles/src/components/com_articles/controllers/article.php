@@ -41,7 +41,7 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
      *
      * @see ComBaseControllerService::_actionEdit()
      */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $result = parent::_actionEdit($context);
         $this->registerCallback('after.edit', array($this, 'redirect'));
@@ -50,9 +50,9 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
     /**
      * Article post action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    public function redirect(KCommandContext $context)
+    public function redirect(AnCommandContext $context)
     {
         if ($context->action == 'edit' || $context->action == 'add') {
             $context->response->setRedirect(route($this->getItem()->getURL().'&layout=edit'));

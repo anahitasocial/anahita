@@ -97,7 +97,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      *
      * (non-PHPdoc)
      *
-     * @see KMixinAbstract::getMethods()
+     * @see AnMixinAbstract::getMethods()
      */
     public function getMethods()
     {
@@ -110,11 +110,11 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     /**
      * Service Browse.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainQuery
      */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         if (!$context->query) {
             $context->query = $this->getRepository()->getQuery();
@@ -165,11 +165,11 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     /**
      * Add Action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $context->response->status = KHttpResponse::CREATED;
         $entity = $this->getRepository()->getEntity()->setData($context['data']);
@@ -181,11 +181,11 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     /**
      * Edit Action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $context->response->status = KHttpResponse::RESET_CONTENT;
 
@@ -197,7 +197,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      *
      * @return mixed
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         return $this->getItem();
     }
@@ -205,11 +205,11 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     /**
      * Delete Action.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         $context->response->status = KHttpResponse::NO_CONTENT;
         $entity = $this->getItem()->delete();
