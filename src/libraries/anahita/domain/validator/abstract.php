@@ -451,7 +451,7 @@ abstract class AnDomainValidatorAbstract extends KObject
                 $value = strip_tags($value);
 
                 //check if the value exists
-                if (KHelperString::strlen($value) <= 0 || ctype_space($value)) {
+                if (AnHelperString::strlen($value) <= 0 || ctype_space($value)) {
 
                     $entity->addError(array(
                         'message' => sprintf(
@@ -544,7 +544,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
                     if (isset($options['max'])) {
 
-                        $greater = KHelperString::strlen($value) > (int) $options['max'];
+                        $greater = AnHelperString::strlen($value) > (int) $options['max'];
 
                         if ($greater) {
 
@@ -566,7 +566,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
                     if (isset($options['min'])) {
 
-                        $lesser = KHelperString::strlen($value) < (int) $options['min'];
+                        $lesser = AnHelperString::strlen($value) < (int) $options['min'];
 
                         if ($lesser) {
 
@@ -588,7 +588,7 @@ abstract class AnDomainValidatorAbstract extends KObject
                 }
             } else {
 
-                if (KHelperString::strlen($value) != (int) $options) {
+                if (AnHelperString::strlen($value) != (int) $options) {
 
                     $entity->addError(array(
                         'message' => sprintf(

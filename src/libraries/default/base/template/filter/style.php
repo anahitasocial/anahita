@@ -89,7 +89,7 @@ class LibBaseTemplateFilterStyle extends LibBaseTemplateFilterAbstract implement
      */
     protected function _renderStyle($style, $link, $attribs = array())
     {
-        $attribs = KHelperArray::toString($attribs);
+        $attribs = AnHelperArray::toString($attribs);
 
         if (!$link) {
             $html  = '<style type="text/css" '.$attribs.'>'."\n";

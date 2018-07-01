@@ -232,7 +232,7 @@ class KRequest
            $GLOBALS['_'.$hash] = array();
         }
 
-        $GLOBALS['_'.$hash] = KHelperArray::merge($GLOBALS['_'.$hash], $value);
+        $GLOBALS['_'.$hash] = AnHelperArray::merge($GLOBALS['_'.$hash], $value);
     }
 
     /**

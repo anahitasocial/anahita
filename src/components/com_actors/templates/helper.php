@@ -98,7 +98,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements K
         if ($actor->portraitSet()) {
             $src = $actor->getPortraitURL($size);
 
-            $name = KHelperString::ucwords($actor->name);
+            $name = AnHelperString::ucwords($actor->name);
             $verified = ($actor->verified) ? 'verified' : '';
             $img = '<img '.$width.' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-avatar-'.$actor->id.'" size="'.$size.'" class="actor-avatar actor-avatar-'.$actor->id.' '.$size.' '.$verified.'" />';
         } else {
@@ -136,7 +136,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements K
         if ($actor->coverSet()) {
             $src = $actor->getCoverURL($size);
 
-            $name = KHelperString::ucwords($actor->name);
+            $name = AnHelperString::ucwords($actor->name);
             $img = '<img '.$width.' alt="'.$name.'" class="cover" src="'.$src.'"  />';
         }
 
