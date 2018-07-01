@@ -23,7 +23,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
      *
      * @return AnDomainEntitysetDefault
      */
-    public function onBeforeControllerGet(KEvent $event)
+    public function onBeforeControllerGet(AnEvent $event)
     {
         parent::onBeforeControllerGet($event);
 

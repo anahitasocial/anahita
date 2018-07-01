@@ -372,9 +372,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Called before the setting page is displayed.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onSettingDisplay(KEvent $event)
+    public function onSettingDisplay(AnEvent $event)
     {
         $tabs = $event->tabs;
         $viewer = get_viewer();

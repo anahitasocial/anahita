@@ -15,7 +15,7 @@
  * @subpackage 	Toolbar
  * @uses        AnInflector
  */
-abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract implements AnControllerToolbarInterface
+abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract implements AnControllerToolbarInterface
 {
     /**
      * The toolbar title

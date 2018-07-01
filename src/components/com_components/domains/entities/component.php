@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implements KEventSubscriberInterface
+class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implements AnEventSubscriberInterface
 {
     /**
      * Subscriptions.
@@ -72,9 +72,9 @@ class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implement
     /**
      * Registers event dispatcher.
      *
-     * @param KEventDispatcher $dispatcher Event dispatche
+     * @param AnEventDispatcher $dispatcher Event dispatche
      */
-    public function registerEventDispatcher(KEventDispatcher $dispatcher)
+    public function registerEventDispatcher(AnEventDispatcher $dispatcher)
     {
         $dispatcher->addEventSubscriber($this);
     }

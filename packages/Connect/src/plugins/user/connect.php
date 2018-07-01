@@ -33,7 +33,7 @@ class PlgUserConnect extends PlgAnahitaDefault
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterAddPerson(KEvent $event)
+    public function onAfterAddPerson(AnEvent $event)
     {
         $person = $event->person;
 
@@ -61,7 +61,7 @@ class PlgUserConnect extends PlgAnahitaDefault
      *
      * @return bool True on success
      */
-    public function onBeforeLoginPerson(KEvent $event)
+    public function onBeforeLoginPerson(AnEvent $event)
     {
         $credentials = $event->credentials;
 

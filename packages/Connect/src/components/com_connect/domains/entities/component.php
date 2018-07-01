@@ -34,7 +34,7 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * {@inheritdoc}
      */
-    public function onSettingDisplay(KEvent $event)
+    public function onSettingDisplay(AnEvent $event)
     {
         $actor = $event->actor;
         $tabs = $event->tabs;
@@ -69,9 +69,9 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * On Destroy Nodes.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onDeleteActor(KEvent $event)
+    public function onDeleteActor(AnEvent $event)
     {
         $this
         ->getService('repos:connect.session')

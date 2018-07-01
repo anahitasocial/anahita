@@ -13,7 +13,7 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Event
  */
-class KEventDispatcher extends KObject
+class AnEventDispatcher extends KObject
 {
     /**
 	 * List of event listeners
@@ -38,7 +38,7 @@ class KEventDispatcher extends KObject
 	/**
      * The event object
      * 
-     * @var KEvent
+     * @var AnEvent
      */
     protected $_event = null;
 	
@@ -60,16 +60,16 @@ class KEventDispatcher extends KObject
      * the event and returning their return values.
      *
      * @param   string  The event name
-     * @param   object|array   An array, a KConfig or a KEvent object 
-     * @return  KEventDispatcher
+     * @param   object|array   An array, a KConfig or a AnEvent object 
+     * @return  AnEventDispatcher
      */
     public function dispatchEvent($name, $event = array())
     {
         $result = array();
         
         //Make sure we have an event object
-        if(!$event instanceof KEvent) {
-            $event = new KEvent($event);
+        if(!$event instanceof AnEvent) {
+            $event = new AnEvent($event);
         }
         
         $event->setName($name)
@@ -99,9 +99,9 @@ class KEventDispatcher extends KObject
      * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest), 
      *                 default is 3. If no priority is set, the command priority will be used 
      *                 instead.
-     * @return KEventDispatcher
+     * @return AnEventDispatcher
      */
-    public function addEventListener($name, KObjectHandlable $listener, $priority = KEvent::PRIORITY_NORMAL)
+    public function addEventListener($name, KObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
     {
         if(is_object($listener))
         {
@@ -120,7 +120,7 @@ class KEventDispatcher extends KObject
      *
      * @param   string  The event name
      * @param   object  An object implementing the KObjectHandlable interface
-     * @return  KEventDispatcher
+     * @return  AnEventDispatcher
      */
     public function removeEventListener($name, KObjectHandlable $listener)
     {
@@ -138,9 +138,9 @@ class KEventDispatcher extends KObject
      * Add an event subscriber
      *
      * @param  object	The event subscriber to add
-     * @return  KEventDispatcher
+     * @return  AnEventDispatcher
      */
-    public function addEventSubscriber(KEventSubscriberInterface $subscriber, $priority = null)
+    public function addEventSubscriber(AnEventSubscriberInterface $subscriber, $priority = null)
     {
         $handle = $subscriber->getHandle();
     
@@ -163,9 +163,9 @@ class KEventDispatcher extends KObject
      * Remove an event subscriber
      *
      * @param  object	The event subscriber to remove
-     * @return  KEventDispatcher
+     * @return  AnEventDispatcher
      */
-    public function removeEventSubscriber(KEventSubscriberInterface $subscriber)
+    public function removeEventSubscriber(AnEventSubscriberInterface $subscriber)
     {
         $handle = $subscriber->getHandle();
     
@@ -266,7 +266,7 @@ class KEventDispatcher extends KObject
      * @param  object	The event dispatcher
      * @return boolean	TRUE if the handler is already connected to the dispatcher. FALSE otherwise.
      */
-    public function isSubscribed(KEventSubscriberInterface $subscriber)
+    public function isSubscribed(AnEventSubscriberInterface $subscriber)
     {
         $handle = $subscriber->getHandle();
         return isset($this->_subscribers[$handle]);

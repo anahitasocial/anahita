@@ -35,9 +35,9 @@ class ComBaseControllerToolbarActorbar extends ComBaseControllerToolbarMenubar
     /**
      * Before Controller _actionRead is executed.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onBeforeControllerGet(KEvent $event)
+    public function onBeforeControllerGet(AnEvent $event)
     {
         $this->getController()->actorbar = $this;
 

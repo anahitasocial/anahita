@@ -16,9 +16,9 @@ class ComPhotosControllerToolbarSet extends ComMediumControllerToolbarDefault
     /**
      * Called after controller browse.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onAfterControllerBrowse(KEvent $event)
+    public function onAfterControllerBrowse(AnEvent $event)
     {
         $filter = $this->getController()->filter;
         $actor = $this->getController()->actor;

@@ -53,7 +53,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     /**
      * Remebers handling.
      */
-    public function onAfterDispatch(KEvent $event)
+    public function onAfterDispatch(AnEvent $event)
     {
         //create viewer object
         $this->_viewer = KService::get('com:people.viewer');

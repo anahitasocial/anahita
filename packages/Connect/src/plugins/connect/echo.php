@@ -10,9 +10,9 @@ class PlgConnectEcho extends PlgAnahitaDefault
     /**
      * Called for getting share adapters.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onGetShareAdapters(KEvent $event)
+    public function onGetShareAdapters(AnEvent $event)
     {
         $adapters = $event->adapters;
         $request = $event->request;

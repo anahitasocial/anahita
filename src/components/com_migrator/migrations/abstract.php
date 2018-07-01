@@ -122,7 +122,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
            'tables' => self::AUTO_DETECT_TABLES,
            'db' => $this->getService('anahita:database'),
            'command_chain' => $this->getService('anahita:command.chain'),
-           'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
+           'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
            'component' => $this->getIdentifier()->package,
         ));
 

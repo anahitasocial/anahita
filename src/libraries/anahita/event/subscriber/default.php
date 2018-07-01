@@ -15,7 +15,7 @@
  * @package     Koowa_Event
  * @subpackage 	Subscriber
  */
-class KEventSubscriberDefault extends KEventSubscriberAbstract
+class AnEventSubscriberDefault extends AnEventSubscriberAbstract
 {
  	
 }

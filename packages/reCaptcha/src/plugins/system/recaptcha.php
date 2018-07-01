@@ -40,7 +40,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     /**
      * onAfterRender handler.
      */
-    public function onAfterRoute(KEvent $event)
+    public function onAfterRoute(AnEvent $event)
     {
         if (KRequest::method() === 'POST' && $this->_hasRecaptcha()) {
             $recaptchaResponse = KRequest::get('post.g-recaptcha-response', 'string', null);
@@ -54,7 +54,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     /**
      * onAfterRender handler.
      */
-    public function onAfterDispatch(KEvent $event)
+    public function onAfterDispatch(AnEvent $event)
     {
 
     }
@@ -62,7 +62,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     /**
      * onBeforeRender handler.
      */
-    public function onBeforeRender(KEvent $event)
+    public function onBeforeRender(AnEvent $event)
     {
         if($this->_option == 'com_people' && $this->_viewer->guest()) {
             if (in_array($this->_view, array('session', 'person'))) {
@@ -83,7 +83,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     /**
      * onAfterRender handler.
      */
-    public function onAfterRender(KEvent $event)
+    public function onAfterRender(AnEvent $event)
     {
 
     }

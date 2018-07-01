@@ -13,4 +13,4 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Dispatcher
  */
-class KEventException extends KException {}
+class AnEventException extends KException {}

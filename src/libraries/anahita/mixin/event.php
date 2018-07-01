@@ -11,14 +11,14 @@
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
- * @uses        KEventDispatcher
+ * @uses        AnEventDispatcher
  */
 class AnMixinEvent extends AnMixinAbstract
 {   
     /**
      * Event dispatcher object
      *
-     * @var KEventDispatcher
+     * @var AnEventDispatcher
      */
     protected $_event_dispatcher;
     
@@ -42,7 +42,7 @@ class AnMixinEvent extends AnMixinAbstract
         parent::__construct($config);
         
         if (is_null($config->event_dispatcher)) {
-			throw new AnMixinException('event_dispatcher [KEventDispatcher] option is required');
+			throw new AnMixinException('event_dispatcher [AnEventDispatcher] option is required');
 		}
             
         //Set the event dispatcher
@@ -91,7 +91,7 @@ class AnMixinEvent extends AnMixinAbstract
 	/**
      * Get the event dispatcher
      *
-     * @return  KEventDispatcher
+     * @return  AnEventDispatcher
      */
     public function getEventDispatcher()
     {
@@ -104,7 +104,7 @@ class AnMixinEvent extends AnMixinAbstract
      * @param   object 		An event dispatcher object
      * @return  KObject     The mixer object
      */
-    public function setEventDispatcher(KEventDispatcher $dispatcher)
+    public function setEventDispatcher(AnEventDispatcher $dispatcher)
     {
         $this->_event_dispatcher = $dispatcher;
         return $this->getMixer();
@@ -120,7 +120,7 @@ class AnMixinEvent extends AnMixinAbstract
      *                 instead.
      * @return  KObject The mixer objects
      */
-    public function addEventListener($event, KObjectHandlable $listener, $priority = KEvent::PRIORITY_NORMAL)
+    public function addEventListener($event, KObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
     {
         $this->_event_dispatcher->addEventListener($event, $listener, $priority);
         return $this->getMixer();
@@ -151,7 +151,7 @@ class AnMixinEvent extends AnMixinAbstract
      */
     public function addEventSubscriber($subscriber, $config = array(), $priority = null)
     {
-        if (! ($subscriber instanceof KEventSubscriberInterface)) {
+        if (! ($subscriber instanceof AnEventSubscriberInterface)) {
             $subscriber = $this->getEventSubscriber($subscriber, $config);
         }
         
@@ -170,7 +170,7 @@ class AnMixinEvent extends AnMixinAbstract
      */
     public function removeEventDispatcher($subscriber)
     {
-        if (! ($subscriber instanceof KEventSubscriberInterface)) {
+        if (! ($subscriber instanceof AnEventSubscriberInterface)) {
             $subscriber = $this->getEventSubscriber($subscriber, $config);
         }
         
@@ -181,7 +181,7 @@ class AnMixinEvent extends AnMixinAbstract
     /**
      * Get a event subscriber by identifier
      *
-     * @return KEventSubsriberInterface
+     * @return AnEventSubsriberInterface
      */
     public function getEventSubscriber($subscriber, $config = array())
     {
@@ -201,8 +201,8 @@ class AnMixinEvent extends AnMixinAbstract
             $subscriber = $this->getService($identifier, $config);
              
             //Check the event subscriber interface
-            if (! ($subscriber instanceof KEventSubscriberInterface)) {
-                throw new KEventSubscriberException("Event Subscriber $identifier does not implement KEventSubscriberInterface");
+            if (! ($subscriber instanceof AnEventSubscriberInterface)) {
+                throw new AnEventSubscriberException("Event Subscriber $identifier does not implement AnEventSubscriberInterface");
             }
         } else {
             $subscriber = $this->_event_subscribers[(string) $identifier];

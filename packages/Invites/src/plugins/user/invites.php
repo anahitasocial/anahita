@@ -20,7 +20,7 @@ class plgUserInvites extends PlgAnahitaDefault
      *
      * @return bool True on success
      */
-    public function onAfterLoginPerson(KEvent $event)
+    public function onAfterLoginPerson(AnEvent $event)
     {
         KRequest::set('session.invite_token', null);
     }
@@ -35,7 +35,7 @@ class plgUserInvites extends PlgAnahitaDefault
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterStoreUser(KEvent $event)
+    public function onAfterStoreUser(AnEvent $event)
     {
         if(!$event->isnew && $event->success){
             KRequest::set('session.invite_token', null);

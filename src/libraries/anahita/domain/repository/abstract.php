@@ -157,7 +157,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             'entityset' => $entityset,
             'description' => $description,
             'command_chain' => $this->getService('anahita:command.chain'),
-            'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
+            'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
             'dispatch_events' => true,
             'enable_callbacks' => true,
             'behaviors' => array(

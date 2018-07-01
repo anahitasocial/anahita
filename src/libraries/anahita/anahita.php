@@ -96,7 +96,7 @@ class anahita
         KServiceIdentifier::setApplication('', '');
 
         //create a central event dispatcher
-        KService::set('anahita:event.dispatcher', KService::get('koowa:event.dispatcher'));
+        KService::set('anahita:event.dispatcher', KService::get('anahita:event.dispatcher'));
     }
 
     /**

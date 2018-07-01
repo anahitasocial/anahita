@@ -16,9 +16,9 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Before Controller _actionRead is executed.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onBeforeControllerRead(KEvent $event)
+    public function onBeforeControllerRead(AnEvent $event)
     {
         if ($this->getController()->getItem()) {
             $this->addToolbarCommands();
@@ -28,9 +28,9 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Called after controller browse.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onAfterControllerBrowse(KEvent $event)
+    public function onAfterControllerBrowse(AnEvent $event)
     {
         $filter = $this->getController()->filter;
 

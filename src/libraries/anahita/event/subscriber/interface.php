@@ -15,7 +15,7 @@
  * @package     Koowa_Event
  * @subpackage 	Subscriber
  */
-interface KEventSubscriberInterface
+interface AnEventSubscriberInterface
 {
     /**
      * Get the priority of the subscriber

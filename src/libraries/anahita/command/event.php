@@ -17,7 +17,7 @@ class AnCommandEvent extends AnCommand
     /**
      * The event dispatcher object
      *
-     * @var KEventDispatcher
+     * @var AnEventDispatcher
      */
     protected $_dispatcher;
     
@@ -34,7 +34,7 @@ class AnCommandEvent extends AnCommand
         parent::__construct($config);
         
         if (is_null($config->event_dispatcher)) {
-			throw new AnMixinException('event_dispatcher [KEventDispatcher] option is required');
+			throw new AnMixinException('event_dispatcher [AnEventDispatcher] option is required');
 		}
         
         $this->_event_dispatcher = $config->event_dispatcher;
@@ -81,7 +81,7 @@ class AnCommandEvent extends AnCommand
         $parts = explode('.', $name);   
         $name = 'on'.ucfirst(array_shift($parts)).ucfirst($type).AnInflector::implode($parts);
         
-        $event = new KEvent(clone($context));
+        $event = new AnEvent(clone($context));
         $event->setPublisher($context->caller);
         
         $this->_event_dispatcher->dispatchEvent($name, $event);

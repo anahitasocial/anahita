@@ -81,7 +81,7 @@ class AnMixinToolbar extends AnMixinAbstract
 	 * 					or valid identifier string
      * @return  KObject	The mixer object
      */
-    public function addToolbar($toolbar, $config = array(), $priority = KEvent::PRIORITY_NORMAL)
+    public function addToolbar($toolbar, $config = array(), $priority = AnEvent::PRIORITY_NORMAL)
     {
         if (! ($toolbar instanceof AnControllerToolbarInterface)) {
             $toolbar = $this->_mixer->getToolbar($toolbar, $config);

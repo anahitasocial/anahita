@@ -60,7 +60,7 @@ class AnCommandContext extends KConfig
      * Set the command subject
      *
      * @param object	The command subject
-     * @return KEvent
+     * @return AnEvent
      */
     public function setSubject(KObjectServiceable $subject)
     {

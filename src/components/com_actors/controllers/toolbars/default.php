@@ -30,9 +30,9 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Called after controller browse.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onAfterControllerBrowse(KEvent $event)
+    public function onAfterControllerBrowse(AnEvent $event)
     {
         if ($this->getController()->canAdd()) {
             $this->addCommand('new');
@@ -42,9 +42,9 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Called after controller Getgraph.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onAfterControllerGetgraph(KEvent $event)
+    public function onAfterControllerGetgraph(AnEvent $event)
     {
         $actor = $this->getController()->actor;
         $type = $this->getController()->type;

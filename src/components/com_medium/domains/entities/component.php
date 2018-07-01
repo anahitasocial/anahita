@@ -81,11 +81,11 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * Called on when the stories are being aggregated.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      *
      * @return bool
      */
-    public function onStoryAggregation(KEvent $event)
+    public function onStoryAggregation(AnEvent $event)
     {
         if (!empty($this->_story_aggregation)) {
             $event->aggregations->append(array(
@@ -97,9 +97,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * On Setting display.
      *
-     * @param KEvent $event The event parameter
+     * @param AnEvent $event The event parameter
      */
-    public function onSettingDisplay(KEvent $event)
+    public function onSettingDisplay(AnEvent $event)
     {
         $actor = $event->actor;
         $tabs = $event->tabs;
@@ -109,9 +109,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * On Viewer Menu display.
      *
-     * @param KEvent $event The event parameter
+     * @param AnEvent $event The event parameter
      */
-    public function onMenuDisplay(KEvent $event)
+    public function onMenuDisplay(AnEvent $event)
     {
         $actor = $event->actor;
         $menuItems = $event->menuItems;
@@ -124,9 +124,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * On Dashboard event.
      *
-     * @param KEvent $event The event parameter
+     * @param AnEvent $event The event parameter
      */
-    public function onProfileDisplay(KEvent $event)
+    public function onProfileDisplay(AnEvent $event)
     {
         $actor = $event->actor;
         $gadgets = $event->gadgets;
@@ -138,9 +138,9 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * On Dashboard event.
      *
-     * @param KEvent $event The event parameter
+     * @param AnEvent $event The event parameter
      */
-    public function onDashboardDisplay(KEvent $event)
+    public function onDashboardDisplay(AnEvent $event)
     {
         $actor = $event->actor;
         $gadgets = $event->gadgets;

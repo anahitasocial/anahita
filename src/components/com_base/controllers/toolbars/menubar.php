@@ -16,9 +16,9 @@ class ComBaseControllerToolbarMenubar extends ComBaseControllerToolbarAbstract
     /**
      * Before Controller _actionRead is executed.
      *
-     * @param KEvent $event Dispatcher event
+     * @param AnEvent $event Dispatcher event
      */
-    public function onBeforeControllerGet(KEvent $event)
+    public function onBeforeControllerGet(AnEvent $event)
     {
         $this->getController()->menubar = $this;
 

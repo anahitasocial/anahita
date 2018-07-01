@@ -15,7 +15,7 @@
  * @package     Koowa_Event
  * @subpackage 	Subscriber
  */
-abstract class KEventSubscriberAbstract extends KObject implements KEventSubscriberInterface
+abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubscriberInterface
 {
  	/**
      * List of subscribed events

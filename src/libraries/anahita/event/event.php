@@ -16,7 +16,7 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Event
  */
-class KEvent extends KConfig
+class AnEvent extends KConfig
 {
  	/**
      * Priority levels
@@ -51,7 +51,7 @@ class KEvent extends KConfig
     /**
      * Dispatcher that dispatched this event
      * 
-     * @var KEventDispatcher 
+     * @var AnEventDispatcher 
      */
     protected $_dispatcher;
          
@@ -69,7 +69,7 @@ class KEvent extends KConfig
      * Set the event name
      *
      * @param string	The event name
-     * @return KEvent
+     * @return AnEvent
      */
     public function setName($name)
     {
@@ -91,7 +91,7 @@ class KEvent extends KConfig
      * Set the event publisher
      *
      * @param object	The event publisher
-     * @return KEvent
+     * @return AnEvent
      */
     public function setPublisher(KObjectServiceable $publisher)
     {
@@ -103,9 +103,9 @@ class KEvent extends KConfig
      * Stores the EventDispatcher that dispatches this Event
      *
      * @param EventDispatcher $dispatcher
-     * @return KEvent
+     * @return AnEvent
      */
-    public function setDispatcher(KEventDispatcher $dispatcher)
+    public function setDispatcher(AnEventDispatcher $dispatcher)
     {
         $this->_dispatcher = $dispatcher;
         return $this;
@@ -114,7 +114,7 @@ class KEvent extends KConfig
     /**
      * Returns the EventDispatcher that dispatches this Event
      *
-     * @return KEventDispatcher
+     * @return AnEventDispatcher
      */
     public function getDispatcher()
     {
@@ -138,7 +138,7 @@ class KEvent extends KConfig
      * further event listener will be triggered once any trigger calls
      * stopPropagation().
      * 
-     * @return KEvent
+     * @return AnEvent
      */
     public function stopPropagation()
     {
