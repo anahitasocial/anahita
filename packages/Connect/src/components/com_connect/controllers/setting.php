@@ -45,7 +45,7 @@ class ComConnectControllerSetting extends ComBaseControllerResource
      */
     protected function _actionDelete(AnCommandContext $context)
     {
-        $this->getResponse()->status = KHttpResponse::NO_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::NO_CONTENT;
 
         $token = $this->getService('repos:connect.session')->fetchSet(array(
                         'owner' => $this->actor,

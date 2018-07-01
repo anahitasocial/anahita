@@ -24,7 +24,7 @@ class ComMediumControllerBehaviorComposable extends ComComposerControllerBehavio
 
         if ($data->composed && $data->story) {
             if ($context->response->isRedirect()) {
-                $context->response->setStatus(KHttpResponse::OK);
+                $context->response->setStatus(AnHttpResponse::OK);
                 $context->response->removeHeader('Location');
             }
 

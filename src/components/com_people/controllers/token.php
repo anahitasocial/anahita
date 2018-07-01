@@ -69,7 +69,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
 
         if ($person) {
             $person->requiresReactivation()->save();
-            $this->getResponse()->status = KHttpResponse::CREATED;
+            $this->getResponse()->status = AnHttpResponse::CREATED;
             $this->person = $person;
         } else {
             throw new LibBaseControllerExceptionNotFound('Email Not Found');

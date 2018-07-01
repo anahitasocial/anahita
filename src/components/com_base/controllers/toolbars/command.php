@@ -86,7 +86,7 @@ class ComBaseControllerToolbarCommand extends LibBaseTemplateObject
     /**
      * Return the command method.
      *
-     * @return string Return a HTTP method. @see KHttpRequest
+     * @return string Return a HTTP method. @see AnHttpRequest
      */
     public function getMethod()
     {
@@ -95,9 +95,9 @@ class ComBaseControllerToolbarCommand extends LibBaseTemplateObject
 
     /**
      * Set the command method of submittion. The method must be one of the
-     * KHttpRequest.
+     * AnHttpRequest.
      *
-     * @param string $method The post method. Must be one of the @see KHttpRequest
+     * @param string $method The post method. Must be one of the @see AnHttpRequest
      *
      * @return ComBaseControllerToolbarCommand
      */

@@ -171,7 +171,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      */
     protected function _actionAdd(AnCommandContext $context)
     {
-        $context->response->status = KHttpResponse::CREATED;
+        $context->response->status = AnHttpResponse::CREATED;
         $entity = $this->getRepository()->getEntity()->setData($context['data']);
         $this->setItem($entity);
 
@@ -187,7 +187,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      */
     protected function _actionEdit(AnCommandContext $context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
 
         return $this->getItem()->setData($context['data']);
     }
@@ -211,7 +211,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      */
     protected function _actionDelete(AnCommandContext $context)
     {
-        $context->response->status = KHttpResponse::NO_CONTENT;
+        $context->response->status = AnHttpResponse::NO_CONTENT;
         $entity = $this->getItem()->delete();
 
         return $entity;

@@ -94,7 +94,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
      */
     protected function _actionOptions(AnCommandContext $context)
     {
-        $context->response->status = KHttpResponse::OK;
+        $context->response->status = AnHttpResponse::OK;
         $context->response->set('Content-Length', 0);
     }
 

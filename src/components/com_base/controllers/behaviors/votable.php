@@ -61,7 +61,7 @@ class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
      */
     protected function _actionVote($context)
     {
-        $context->response->status = KHttpResponse::CREATED;
+        $context->response->status = AnHttpResponse::CREATED;
 
         $this->getItem()->voteup(get_viewer());
 

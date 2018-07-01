@@ -148,7 +148,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         ->addValidation('email', 'uniqueness');
 
         if ($person->validate() === false) {
-            throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+            throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 
         //now check to see if usertype can be set, otherwise the value is unchanged
@@ -196,7 +196,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         ->addValidation('email', 'uniqueness');
 
         if ($person->validate() === false) {
-            throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+            throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 
         $viewer = get_viewer();
@@ -216,7 +216,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
         }
         
-        $this->getResponse()->status = KHttpResponse::OK;
+        $this->getResponse()->status = AnHttpResponse::OK;
 
         return $person;
     }
@@ -245,7 +245,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
          ->addValidation('email', 'uniqueness');
 
          if ($person->validate() === false) {
-             throw new AnErrorException($person->getErrors(), KHttpResponse::BAD_REQUEST);
+             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
          }
 
          $viewer = get_viewer();

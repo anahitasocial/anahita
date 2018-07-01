@@ -43,7 +43,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
             throw new LibBaseControllerExceptionForbidden('Forbidden');
         }
 
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->addRequester($this->actor);
         $this->createNotification(array(
             'subject' => $this->actor,
@@ -61,13 +61,13 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      */
     protected function _actionDeleterequest(AnCommandContext $context)
     {
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->removeRequester($this->actor);
     }
 
     /**
      * Add $data->actor to the current actor resource. status is set to
-     * KHttpResponse::RESET_CONTENT;.
+     * AnHttpResponse::RESET_CONTENT;.
      *
      * @param AnCommandContext $context Context Parameter
      */
@@ -77,7 +77,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
             throw new LibBaseControllerExceptionForbidden('Forbidden');
         }
 
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
 
         if (!$this->getItem()->leading($this->actor)) {
             $this->getItem()->addFollower($this->actor);
@@ -113,7 +113,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      */
     protected function _actionUnfollow(AnCommandContext $context)
     {
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->removeFollower($this->actor);
 
         return $this->getItem();
@@ -132,7 +132,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
             throw new LibBaseControllerExceptionForbidden('Forbidden');
         }
 
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
 
         if (!$this->getItem()->following($this->actor)) {
             $this->getItem()->addLeader($this->actor);
@@ -172,7 +172,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      */
     protected function _actionUnlead(AnCommandContext $context)
     {
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->removeLeader($this->actor);
 
         return $this->getItem();
@@ -187,7 +187,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      */
     protected function _actionBlock(AnCommandContext $context)
     {
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->addBlocker($this->actor);
 
         return $this->getItem();
@@ -202,7 +202,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      */
     protected function _actionUnblock($context)
     {
-        $this->getResponse()->status = KHttpResponse::RESET_CONTENT;
+        $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->removeBlocker($this->actor);
 
         return $this->getItem();

@@ -111,7 +111,7 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
         $output = $this->getValidator()->getMessage();
 
         if ($result === false) {
-            $context->response->status = KHttpResponse::PRECONDITION_FAILED;
+            $context->response->status = AnHttpResponse::PRECONDITION_FAILED;
 
             if (is_string($output)) {
                 $output = array('errorMsg' => $output);

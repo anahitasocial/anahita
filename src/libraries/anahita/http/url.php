@@ -1,11 +1,4 @@
 <?php
-/**
- * @version     $Id: url.php 4687 2012-06-04 19:50:30Z johanjanssens $
- * @package     Koowa_Http
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * HTTP Url Class
@@ -19,14 +12,14 @@
  * The following is a simple example. Say that the page address is currently
  * `http://anonymous::guest@example.com/path/to/index.php/foo/bar?baz=dib#anchor`.
  *
- * You can use KHttpUrl to parse this complex string very easily:
+ * You can use AnHttpUrl to parse this complex string very easily:
  *
  * <code>
  * <?php
  *     // Create a url object;
  *
  *     $url = 'http://anonymous:guest@example.com/path/to/index.php/foo/bar.xml?baz=dib#anchor'
- *     $url = KService::get('koowa:http.url', array('url' => $url) );
+ *     $url = KService::get('anahita:http.url', array('url' => $url) );
  *
  *     // the $ur properties are ...
  *     //
@@ -82,10 +75,13 @@
  * </code>
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @category    Koowa
- * @package     Koowa_Http
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @category    Anahita
+ * @package     AnHttp
  */
-class KHttpUrl extends KObject
+class AnHttpUrl extends KObject
 {
     /**
      * The url parts
@@ -198,7 +194,7 @@ class KHttpUrl extends KObject
     public function __construct(KConfig $config = null)
     {
         //If no config is passed create it
-        if(!isset($config)) $config = new KConfig();
+        if (! isset($config)) $config = new KConfig();
 
         parent::__construct($config);
 
@@ -264,15 +260,14 @@ class KHttpUrl extends KObject
         $url = '';
 
         //Add the scheme
-        if(($parts & self::SCHEME) && !empty($this->scheme)) {
+        if (($parts & self::SCHEME) && !empty($this->scheme)) {
             $url .=  urlencode($this->scheme).'://';
         }
 
         //Add the username and password
-        if(($parts & self::USER) && !empty($this->user))
-        {
+        if (($parts & self::USER) && !empty($this->user)) {
             $url .= urlencode($this->user);
-            if(($parts & self::PASS) && !empty($this->pass)) {
+            if (($parts & self::PASS) && !empty($this->pass)) {
                 $url .= ':' . urlencode($this->pass);
             }
 
@@ -280,31 +275,30 @@ class KHttpUrl extends KObject
         }
 
         // Add the host and port, if any.
-        if(($parts & self::HOST) && !empty($this->host))
-        {
+        if (($parts & self::HOST) && !empty($this->host)) {
             $url .=  urlencode($this->host);
 
-            if(($parts & self::PORT) && !empty($this->port)) {
+            if (($parts & self::PORT) && !empty($this->port)) {
                 $url .=  ':' . (int) $this->port;
             }
         }
 
         // Add the rest of the url. we use trim() instead of empty() on string
         // elements to allow for string-zero values.
-        if(($parts & self::PATH) && !empty($this->path))
-        {
+        if (($parts & self::PATH) && !empty($this->path)) {
             $url .= $this->_pathEncode($this->path);
-            if(($parts & self::FORMAT) && trim($this->format) !== '') {
+            if (($parts & self::FORMAT) && trim($this->format) !== '') {
                 $url .= '.' . urlencode($this->format);
             }
         }
 
         $query = $this->getQuery();
-        if(($parts & self::QUERY) && !empty($query)) {
+        
+        if (($parts & self::QUERY) && !empty($query)) {
             $url .= '?' . $this->getQuery();
         }
 
-        if(($parts & self::FRAGMENT) && trim($this->fragment) !== '') {
+        if (($parts & self::FRAGMENT) && trim($this->fragment) !== '') {
             $url .=  '#' . urlencode($this->fragment);
         }
 
@@ -315,19 +309,18 @@ class KHttpUrl extends KObject
      * Set the url
      *
      * @param   $url  string
-     * @return  KHttpUrl
+     * @return  AnHttpUrl
      */
     public function setUrl($url)
     {
-        if(!empty($url))
-        {
+        if (! empty($url)) {
             $segments = parse_url($url);
 
             foreach ($segments as $key => $value) {
                 $this->$key = $value;
             }
 
-            if($this->format = pathinfo($this->path, PATHINFO_EXTENSION)) {
+            if ($this->format = pathinfo($this->path, PATHINFO_EXTENSION)) {
                 $this->path = str_replace('.'.$this->format, '', $this->path);
             }
         }
@@ -336,18 +329,17 @@ class KHttpUrl extends KObject
     }
 
     /**
-     * Sets the query string in the url, for KHttpUrl::getQuery() and KHttpUrl::$query.
+     * Sets the query string in the url, for AnHttpUrl::getQuery() and AnHttpUrl::$query.
      *
      * This will overwrite any previous values.
      *
      * @param   $query  string|array    The query string to use; for example `foo=bar&baz=dib`.
-     * @return  KHttpUrl
+     * @return  AnHttpUrl
      */
     public function setQuery($query, $merge = false)
     {
-        if(!is_array($query))
-        {
-            if(strpos($query, '&amp;') !== false) {
+        if (! is_array($query)) {
+            if (strpos($query, '&amp;') !== false) {
                $query = str_replace('&amp;','&',$query);
             }
 
@@ -355,8 +347,7 @@ class KHttpUrl extends KObject
             parse_str($query, $query);
         }
 
-        if(is_array($query)) 
-        {
+        if (is_array($query)) {
         	if ( $merge ) {
         		$query = array_merge($this->_query, $query);
         	}
@@ -379,14 +370,14 @@ class KHttpUrl extends KObject
     }
 
     /**
-     * Sets the KHttpUrl::$path array and $format from a string.
+     * Sets the AnHttpUrl::$path array and $format from a string.
      *
      * This will overwrite any previous values. Also, resets the format based
      * on the final path value.
      *
      * @param   $path   string  The path string to use; for example,"/foo/bar/baz/dib". A leading slash will *not* create
      * an empty first element; if the string has a leading slash, it is ignored.
-     * @return  KHttpUrl
+     * @return  AnHttpUrl
      */
     public function setPath($path)
     {
@@ -401,13 +392,11 @@ class KHttpUrl extends KObject
             $this->path[$key] = urldecode($val);
         }
 
-        if ($val = end($this->path))
-        {
+        if ($val = end($this->path)) {
             // find the last dot in the value
             $pos = strrpos($val, '.');
 
-            if ($pos !== false)
-            {
+            if ($pos !== false) {
                 $key = key($this->path);
                 $this->format = substr($val, $pos + 1);
                 $this->path[$key] = substr($val, 0, $pos);
@@ -432,7 +421,7 @@ class KHttpUrl extends KObject
     /**
      * Converts an array of path elements into a string.
      *
-     * Does not use urlencode(); instead, only converts characters found in KHttpUrl::$_encode_path.
+     * Does not use urlencode(); instead, only converts characters found in AnHttpUrl::$_encode_path.
      *
      * @param  $spec array The path elements.
      * @return string A url path string.

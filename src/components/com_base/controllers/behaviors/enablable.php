@@ -20,7 +20,7 @@ class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
      */
     protected function _actionEnable($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->enable();
 
         return;
@@ -33,7 +33,7 @@ class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
      */
     protected function _actionDisable($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->disable();
 
         return;

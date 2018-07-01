@@ -29,7 +29,7 @@
          $isAjax = $response->getRequest()->isAjax();
 
          if (isset($headers['Location']) && $response->isSuccess() && !$isAjax) {
-             $response->setStatus(KHttpResponse::SEE_OTHER);
+             $response->setStatus(AnHttpResponse::SEE_OTHER);
          }
 
          return parent::sendHeaders();

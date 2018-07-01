@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionMethodNotAllowed extends RuntimeException
 {
-    protected $code = KHttpResponse::METHOD_NOT_ALLOWED;
+    protected $code = AnHttpResponse::METHOD_NOT_ALLOWED;
 }

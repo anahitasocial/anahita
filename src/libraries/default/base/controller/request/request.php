@@ -153,7 +153,7 @@
       *
       * @param   bool     Only allow internal url's
       *
-      * @return  KHttpUrl    A KHttpUrl object
+      * @return  AnHttpUrl    A AnHttpUrl object
       */
      public function getReferrer($isInternal = true)
      {

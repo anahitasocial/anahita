@@ -117,7 +117,7 @@
             $confirm = route('option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true);
             $cancel = route('option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true);
             $url = $gateway->getAuthorizationURL($payload, $confirm, $cancel);
-            $context->response->setRedirect($url, KHttpResponse::SEE_OTHER);
+            $context->response->setRedirect($url, AnHttpResponse::SEE_OTHER);
 
         } catch (Exception $error) {
             throw new RuntimeException($error->getMessage());

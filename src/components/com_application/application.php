@@ -214,7 +214,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
   			if (! preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
                 throw new AnErrorException(
                     "Can't get or parse the class name ",
-                    KHttpResponse::INTERNAL_SERVER_ERROR
+                    AnHttpResponse::INTERNAL_SERVER_ERROR
                 );
   			}
   			$name = strtolower($r[1]);

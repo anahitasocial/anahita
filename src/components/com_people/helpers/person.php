@@ -31,7 +31,7 @@ class ComPeopleHelperPerson extends KObject
 
         if (is_null($person)) {
             $msg = "Did not find a user with username: ".$credentials['username'];
-            throw new AnErrorException($msg, KHttpResponse::UNAUTHORIZED);
+            throw new AnErrorException($msg, AnHttpResponse::UNAUTHORIZED);
         } else {
             $person->visited();
             $this->_createSession($person);

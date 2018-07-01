@@ -128,7 +128,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
             //Create the view
             $config = array(
                 'media_url' => AnRequest::root().'/media',
-                'base_url' => AnRequest::url()->getUrl(KHttpUrl::BASE),
+                'base_url' => AnRequest::url()->getUrl(AnHttpUrl::BASE),
                 'state' => $this->getState(),
             );
 

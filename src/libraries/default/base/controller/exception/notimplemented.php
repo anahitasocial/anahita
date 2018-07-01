@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionNotImplemented extends RuntimeException
 {
-    protected $code = KHttpResponse::NOT_IMPLEMENTED;
+    protected $code = AnHttpResponse::NOT_IMPLEMENTED;
 }

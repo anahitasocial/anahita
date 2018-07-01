@@ -21,28 +21,28 @@ class AnRequest
     /**
      * URL of the request regardless of the server
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected static $_url = null;
 
     /**
      * Base path of the request.
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected static $_base = null;
 
     /**
      * Root path of the request.
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected static $_root = null;
 
     /**
      * Referrer of the request
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected static $_referrer = null;
 
@@ -330,13 +330,13 @@ class AnRequest
      * @see     http://en.wikipedia.org/wiki/HTTP_referrer
      *
      * @param   boolean     Only allow internal url's
-     * @return  KHttpUrl    A KHttpUrl object
+     * @return  AnHttpUrl    A AnHttpUrl object
      */
     public static function referrer($isInternal = true)
     {
         if (! isset(self::$_referrer)) {
             if ($referrer = AnRequest::get('server.HTTP_REFERER', 'url')) {
-                self::$_referrer = KService::get('koowa:http.url', array('url' => $referrer));
+                self::$_referrer = KService::get('anahita:http.url', array('url' => $referrer));
 
                 if ($isInternal) {
                     if (! KService::get('koowa:filter.internalurl')->validate((string) self::$_referrer)) {
@@ -352,7 +352,7 @@ class AnRequest
     /**
      * Return the URI of the request regardless of the server
      *
-     * @return  KHttpUrl    A KHttpUri object
+     * @return  AnHttpUrl    A AnHttpUri object
      */
     public static function url()
     {
@@ -394,7 +394,7 @@ class AnRequest
             $url = KService::get('koowa:filter.url')->sanitize($url);
 
             // Create the URI object
-            self::$_url = KService::get('koowa:http.url', array('url' => $url));
+            self::$_url = KService::get('anahita:http.url', array('url' => $url));
 
         }
 
@@ -404,7 +404,7 @@ class AnRequest
     /**
      * Returns the base path of the request.
      *
-     * @return  object  A KHttpUrl object
+     * @return  object  A AnHttpUrl object
      */
     public static function base()
     {
@@ -423,7 +423,7 @@ class AnRequest
             // Sanitize the url since we can't trust the server var
             $path = KService::get('koowa:filter.url')->sanitize($path);
 
-            self::$_base = KService::get('koowa:http.url', array('url' => $path));
+            self::$_base = KService::get('anahita:http.url', array('url' => $path));
         }
 
         return self::$_base;
@@ -435,13 +435,13 @@ class AnRequest
      * In most case this value will be the same as AnRequest::base however it can be
      * changed by pushing in a different value
      *
-     * @return  object  A KHttpUrl object
+     * @return  object  A AnHttpUrl object
      */
     public static function root($path = null)
     {
         if (! is_null($path)) {
             if (! $path instanceof KhttpUrl) {
-                $path = KService::get('koowa:http.url', array('url' => $path));
+                $path = KService::get('anahita:http.url', array('url' => $path));
             }
 
             self::$_root = $path;

@@ -30,7 +30,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
     /**
      * Base URL to use within the mails.
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected $_base_url;
 

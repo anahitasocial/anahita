@@ -126,7 +126,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
             $person = $this->getService('com:people.helper.person')->login($credentials);
             $this->_state->setItem($person);
-            $this->getResponse()->status = KHttpResponse::CREATED;
+            $this->getResponse()->status = AnHttpResponse::CREATED;
 
             dispatch_plugin('user.onAfterLoginPerson', array('person' => $this->person));
 
@@ -143,7 +143,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         } else {
             $this->setMessage(translate('COM-PEOPLE-AUTHENTICATION-FAILED'), 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
-            $this->getResponse()->status = KHttpResponse::FORBIDDEN;
+            $this->getResponse()->status = AnHttpResponse::FORBIDDEN;
             $this->getResponse()->setRedirect(route('option=com_people&view=session'));
         }
     }
@@ -173,13 +173,13 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     protected function _actionTokenlogin(AnCommandContext $context)
     {
         if ($this->token == '') {
-            throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);
+            throw new AnErrorException(array('No token is provided'), AnHttpResponse::FORBIDDEN);
         }
 
         $person = $this->getService('repos:people.person')->find(array('activationCode' => $this->token));
 
         if (! $person) {
-            throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
+            throw new AnErrorException(array('This token is invalid'), AnHttpResponse::NOT_FOUND);
         }
 
         $newPerson = ($person->registrationDate->compare($person->lastVisitDate)) ? true : false;
@@ -217,7 +217,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
         }
 
-        $this->getResponse()->status = KHttpResponse::ACCEPTED;
+        $this->getResponse()->status = AnHttpResponse::ACCEPTED;
 
         return true;
     }

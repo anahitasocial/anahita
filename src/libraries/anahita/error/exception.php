@@ -40,7 +40,7 @@ class AnErrorException extends KException
      *
      * @param array $config An optional KConfig object with configuration options.
      */
-    public function __construct($errors = array(), $code = KHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
+    public function __construct($errors = array(), $code = AnHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
     {
         $errors = (array) $errors;
 
@@ -48,7 +48,7 @@ class AnErrorException extends KException
             $this->_errors[] = $error;
         }
 
-        $message = KHttpResponse::getMessage($code);
+        $message = AnHttpResponse::getMessage($code);
 
         parent::__construct($message, $code, $previous);
     }

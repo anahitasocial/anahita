@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionInternal extends RuntimeException
 {
-    protected $code = KHttpResponse::INTERNAL_SERVER_ERROR;
+    protected $code = AnHttpResponse::INTERNAL_SERVER_ERROR;
 }

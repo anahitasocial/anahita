@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionNotFound extends RuntimeException
 {
-    protected $code = KHttpResponse::NOT_FOUND;
+    protected $code = AnHttpResponse::NOT_FOUND;
 }

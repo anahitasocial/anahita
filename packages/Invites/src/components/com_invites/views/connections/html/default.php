@@ -16,7 +16,7 @@
 $settings = @service('com:settings.setting');
 $subject = htmlspecialchars(sprintf(@text('COM-INVITES-MESSAGE-SUBJECT'), $settings->sitename));
 $body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name($viewer, false), $settings->sitename));
-$url = @route()->getUrl(KHttpUrl::SCHEME | KHttpUrl::HOST | KHttpUrl::PORT);
+$url = @route()->getUrl(AnHttpUrl::SCHEME | AnHttpUrl::HOST | AnHttpUrl::PORT);
 ?>
 $('body').invitesFacebook({
 		'appId' :  <?= $service->getAppID() ?>,

@@ -29,7 +29,7 @@ class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
      */
     protected function _actionPin($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->pinned = 1;
 
         return $this->getItem();
@@ -42,7 +42,7 @@ class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
      */
     protected function _actionUnpin($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->pinned = 0;
 
         return $this->getItem();

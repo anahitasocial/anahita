@@ -397,7 +397,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      */
     public function get($resource = null, $data = array())
     {
-        return $this->call($resource, KHttpRequest::GET, $data);
+        return $this->call($resource, AnHttpRequest::GET, $data);
     }
 
     /**
@@ -409,7 +409,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      */
     public function post($resource, $data = array())
     {
-        return $this->call($resource, KHttpRequest::POST, $data);
+        return $this->call($resource, AnHttpRequest::POST, $data);
     }
 
     /**
@@ -421,7 +421,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      */
     public function delete($resource, $data = array())
     {
-        return $this->call($resource, KHttpRequest::DELETE, $data);
+        return $this->call($resource, AnHttpRequest::DELETE, $data);
     }
 
     /**
@@ -433,7 +433,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      */
     public function put($resource, $data = array())
     {
-        return $this->call($resource, KHttpRequest::PUT, $data);
+        return $this->call($resource, AnHttpRequest::PUT, $data);
     }
 
     /**

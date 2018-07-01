@@ -95,7 +95,7 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     protected function _actionDeletecomment(AnCommandContext $context)
     {
         $ret = $this->getCommentController()->id($this->cid)->delete();
-        $context->response->status = KHttpResponse::NO_CONTENT;
+        $context->response->status = AnHttpResponse::NO_CONTENT;
     }
 
     /**
@@ -129,7 +129,7 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     {
         $data = $context->data;
         $comment = $this->getCommentController()->add(array('body' => $data->body));
-        $context->response->status = KHttpResponse::CREATED;
+        $context->response->status = AnHttpResponse::CREATED;
         $context->comment = $comment;
 
         if ($this->isDispatched()) {

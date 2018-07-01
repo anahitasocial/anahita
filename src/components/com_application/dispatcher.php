@@ -115,7 +115,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
             if (! $this->_controller instanceof LibBaseControllerAbstract) {
                 throw new \UnexpectedValueException(
                     'Dispatcher: '.get_class($this->_controller).' does not implement LibBaseDispatcherAbstract',
-                    KHttpResponse::INTERNAL_SERVER_ERROR
+                    AnHttpResponse::INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -250,7 +250,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
                 if ($i == 0) {
                     if (strpos($arg, '/') !== false) {
                         $arg = substr_replace($arg, '?', strpos($arg, '&'), 1);
-                        $url = KService::get('koowa:http.url', array('url' => $arg));
+                        $url = KService::get('anahita:http.url', array('url' => $arg));
                         AnRequest::url()->path = AnRequest::base().$url->path;
                         $_GET = $url->query;
                     } else {
@@ -295,7 +295,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         if (! file_exists(ANPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound(
                 'Component '.$name.' not found',
-                KHttpResponse::INTERNAL_SERVER_ERROR
+                AnHttpResponse::INTERNAL_SERVER_ERROR
             );
         }
 
@@ -304,7 +304,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         if (isset($app) && $app->enabled != 1) {
             throw new LibBaseControllerExceptionForbidden(
                 'Component '.$name.' is disabled',
-                KHttpResponse::INTERNAL_SERVER_ERROR
+                AnHttpResponse::INTERNAL_SERVER_ERROR
             );
         }
 
@@ -388,7 +388,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
 
         //check if the error is code is valid
         if ($code < 400 || $code >= 600) {
-            $code = KHttpResponse::INTERNAL_SERVER_ERROR;
+            $code = AnHttpResponse::INTERNAL_SERVER_ERROR;
         }
 
         $context->response->status = $code;

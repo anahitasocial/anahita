@@ -120,7 +120,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
         $photo->setExifData($exif);
         $photo->save();
         $this->setItem($photo);
-        $this->getResponse()->status = KHttpResponse::CREATED;
+        $this->getResponse()->status = AnHttpResponse::CREATED;
 
         if ($photo->body && preg_match('/\S/', $photo->body)) {
             $context->append(array(

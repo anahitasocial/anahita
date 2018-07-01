@@ -114,7 +114,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             throw new RuntimeException("Subscription can not be added");
         }
 
-        $this->getResponse()->status = KHttpResponse::CREATED;
+        $this->getResponse()->status = AnHttpResponse::CREATED;
         dispatch_plugin('subscriptions.onAfterSubscribe', array('subscription' => $subscription));
         $this->setItem($subscription);
 

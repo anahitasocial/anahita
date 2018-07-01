@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionBadRequest extends RuntimeException
 {
-    protected $code = KHttpResponse::BAD_REQUEST;
+    protected $code = AnHttpResponse::BAD_REQUEST;
 }

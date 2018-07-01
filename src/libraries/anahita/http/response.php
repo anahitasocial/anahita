@@ -1,11 +1,4 @@
 <?php
-/**
- * @version     $Id: response.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Http
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * HTTP Response class
@@ -14,9 +7,13 @@
  * @see http://en.wikipedia.org/wiki/List_of_HTTP_status_codes
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Http
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @category    Anahita
+ * @package     AnHttp
  */
-class KHttpResponse
+class AnHttpResponse
 {
     // [Successful 2xx]  
     const OK                        = 200;  

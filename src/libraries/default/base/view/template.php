@@ -52,8 +52,8 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         parent::__construct($config);
 
         //set the media url
-        if (!$config->media_url instanceof KHttpUrl) {
-            $this->_mediaurl = KService::get('koowa:http.url', array('url' => $config->media_url));
+        if (!$config->media_url instanceof AnHttpUrl) {
+            $this->_mediaurl = KService::get('anahita:http.url', array('url' => $config->media_url));
         } else {
             $this->_mediaurl = $config->media_url;
         }
@@ -234,7 +234,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     /**
      * Get the view media url.
      *
-     * @return object A KHttpUrl object
+     * @return object A AnHttpUrl object
      */
     public function getMediaUrl()
     {
