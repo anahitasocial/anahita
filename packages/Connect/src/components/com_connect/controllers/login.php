@@ -37,19 +37,17 @@ class ComConnectControllerLogin extends ComBaseControllerResource
      *
      * @param KCommandContext $context Context parameter
      * @param void
-     */
+     */ 
     protected function _actionGetaccesstoken($context)
     {
-        parent::_actionGetaccesstoken($context);
-
-        $token = $this->getAPI()->getToken();
-
-        if (empty($token)) {
-            $context->response->setRedirect(route('index.php?'));
-            return false;
+        $this->getBehavior('oauthorizable')->execute('action.getaccesstoken', $context);
+        
+        if ($token = $this->getAPI()->getToken()) {
+            $context->response->setRedirect('view=login');
+            return true;
         }
-
-        $context->response->setRedirect('view=login');
+        
+        $context->response->setRedirect(route('option=com_people&view=session'));
     }
 
     /**
@@ -58,10 +56,10 @@ class ComConnectControllerLogin extends ComBaseControllerResource
     protected function _actionRead(KCommandContext $context)
     {
         if (!$this->getAPI()) {
-            $context->response->setRedirect(route('option=com_people&view=person&get=settings&edit=connect'));
+            $context->response->setRedirect(route('option=com_people&view=session'));
             return false;
         }
-
+        
         $service = $this->getAPI()->getName();
         $profileId = $this->getAPI()->getUser()->id;
         $token = $this->getService('repos:connect.session')

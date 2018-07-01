@@ -24,6 +24,7 @@ class ComConnectOauthServiceTwitter extends ComConnectOauthServiceAbstract
     {
         $config->append(array(
             'service_name' => 'Twitter',
+            'version' => '1.0',
             'api_url' => 'https://api.twitter.com/1.1',
             'request_token_url' => 'https://api.twitter.com/oauth/request_token',
             'authorize_url' => 'https://api.twitter.com/oauth/authorize',
