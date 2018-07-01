@@ -136,8 +136,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionAdd($context);
 
-        if ($entity->isPortraitable() && KRequest::has('files.portrait')) {
-            $file = KRequest::get('files.portrait', 'raw');
+        if ($entity->isPortraitable() && AnRequest::has('files.portrait')) {
+            $file = AnRequest::get('files.portrait', 'raw');
 
             if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
                 $entity->setPortrait(array(
@@ -162,8 +162,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         $entity = parent::_actionEdit($context);
 
-        if ($entity->isPortraitable() && KRequest::has('files.portrait')) {
-            $file = KRequest::get('files.portrait', 'raw');
+        if ($entity->isPortraitable() && AnRequest::has('files.portrait')) {
+            $file = AnRequest::get('files.portrait', 'raw');
 
             if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
 

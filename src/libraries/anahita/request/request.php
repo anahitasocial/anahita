@@ -1,26 +1,22 @@
 <?php
-/**
- * @version    	$Id: request.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package    	Koowa_Request
- * @copyright  	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license    	GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link 		http://www.nooku.org
- */
 
 //Instantiate the request singleton
-KRequest::getInstance();
+AnRequest::getInstance();
 
 /**
  * Request class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Request
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnRequest
  * @uses        KFilter
  * @uses        AnInflector
  * @uses        KService
  * @static
  */
-class KRequest
+class AnRequest
 {
     /**
      * URL of the request regardless of the server
@@ -74,30 +70,26 @@ class KRequest
     {
         $content = self::content();
 
-        if(self::type() == 'HTTP')
-        {
-            if(strpos(PHP_SAPI, 'cgi') !== false) {
-                $authorization = KRequest::get('server.REDIRECT_HTTP_AUTHORIZATION', 'string');
+        if (self::type() == 'HTTP') {
+            if (strpos(PHP_SAPI, 'cgi') !== false) {
+                $authorization = AnRequest::get('server.REDIRECT_HTTP_AUTHORIZATION', 'string');
             } else {
-                $authorization = KRequest::get('server.HTTP_AUTHORIZATION', 'url');
+                $authorization = AnRequest::get('server.HTTP_AUTHORIZATION', 'url');
             }
 
-	        if (strstr($authorization,"Basic"))
-	        {
-	            $parts = explode(':',base64_decode(substr($authorization, 6)));
+	        if (strstr($authorization, 'Basic')) {
+	            $parts = explode(':', base64_decode(substr($authorization, 6)));
 
-	            if (count($parts) == 2)
-			    {
-				    KRequest::set('server.PHP_AUTH_USER', $parts[0]);
-				    KRequest::set('server.PHP_AUTH_PW'  , $parts[1]);
+	            if (count($parts) == 2) {
+				    AnRequest::set('server.PHP_AUTH_USER', $parts[0]);
+				    AnRequest::set('server.PHP_AUTH_PW'  , $parts[1]);
 			    }
 		    }
         }
 
 
         if (!empty($content['data'])) {
-
-            if (!isset($GLOBALS['_REQUEST'])) {
+            if (! isset($GLOBALS['_REQUEST'])) {
                 $GLOBALS['_REQUEST'] = array();
             }
 
@@ -133,9 +125,8 @@ class KRequest
     {
         static $instance;
 
-        if ($instance === NULL)
-        {
-            if(!$config instanceof KConfig) {
+        if ($instance === NULL) {
+            if (! $config instanceof KConfig) {
                 $config = new KConfig($config);
             }
 
@@ -152,7 +143,7 @@ class KRequest
      * @param   string              Variable identifier, prefixed by hash name eg post.foo.bar
      * @param   mixed               Filter(s), can be a KFilter object, a filter name, an array of filter names or a filter identifier
      * @param   mixed               Default value when the variable doesn't exist
-     * @throws  KRequestException   When an invalid filter was passed
+     * @throws  AnRequestException   When an invalid filter was passed
      * @return  mixed               The sanitized data
      */
     public static function get($identifier, $filter, $default = null)
@@ -160,12 +151,10 @@ class KRequest
         list($hash, $keys) = self::_parseIdentifier($identifier);
 
         $result = null;
-        if(isset($GLOBALS['_'.$hash]))
-        {
+        if (isset($GLOBALS['_'.$hash])) {
             $result = $GLOBALS['_'.$hash];
-            foreach($keys as $key)
-            {
-                if(array_key_exists($key, $result)) {
+            foreach ($keys as $key) {
+                if (array_key_exists($key, $result)) {
                     $result = $result[$key];
                 } else {
                     $result = null;
@@ -185,7 +174,7 @@ class KRequest
             $result = self::_stripSlashes( $result );
         }
 
-        if(!($filter instanceof KFilterInterface)) {
+        if (! ($filter instanceof KFilterInterface)) {
             $filter = KService::get('koowa:filter.factory')->instantiate($filter);
         }
 
@@ -208,27 +197,26 @@ class KRequest
         }
 
         // Store cookies persistently
-        if($hash == 'COOKIE' && strpos(KRequest::scheme(), 'http') !== false)
-        {
+        if ($hash == 'COOKIE' && strpos(AnRequest::scheme(), 'http') !== false) {
             // rewrite the $keys as foo[bar][bar]
             $ckeys = $keys; // get a copy
             $name = array_shift($ckeys);
-            foreach($ckeys as $ckey) {
+            foreach ($ckeys as $ckey) {
                 $name .= '['.$ckey.']';
             }
 
-            if(!setcookie($name, $value)) {
-                throw new KRequestException("Couldn't set cookie, headers already sent.");
+            if (! setcookie($name, $value)) {
+                throw new AnRequestException("Couldn't set cookie, headers already sent.");
             }
         }
 
         // Store in $GLOBALS
-        foreach(array_reverse($keys, true) as $key) {
+        foreach (array_reverse($keys, true) as $key) {
             $value = array($key => $value);
         }
 
         // Add the global if it's doesn't exist
-        if(!isset($GLOBALS['_'.$hash])) {
+        if (! isset($GLOBALS['_'.$hash])) {
            $GLOBALS['_'.$hash] = array();
         }
 
@@ -245,9 +233,8 @@ class KRequest
     {
         list($hash, $keys) = self::_parseIdentifier($identifier);
 
-        foreach($keys as $key)
-        {
-            if(isset($GLOBALS['_'.$hash]) && array_key_exists($key, $GLOBALS['_'.$hash])) {
+        foreach ($keys as $key) {
+            if (isset($GLOBALS['_'.$hash]) && array_key_exists($key, $GLOBALS['_'.$hash])) {
                 return true;
             }
         }
@@ -269,13 +256,11 @@ class KRequest
     {
         $result = '';
 
-        if (!isset(self::$_content) && isset($_SERVER['CONTENT_TYPE']))
-        {
+        if (! isset(self::$_content) && isset($_SERVER['CONTENT_TYPE'])) {
             $type = $_SERVER['CONTENT_TYPE'];
 
             // strip parameters from content-type like "; charset=UTF-8"
-            if (is_string($type))
-            {
+            if (is_string($type)) {
                 if (preg_match('/^([^,\;]*)/', $type, $matches)) {
                     $type = $matches[1];
                 }
@@ -283,11 +268,10 @@ class KRequest
 
             self::$_content['type'] = $type;
 
-
             $data = '';
-            if (isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > 0)
-            {
+            if (isset($_SERVER['CONTENT_LENGTH']) && $_SERVER['CONTENT_LENGTH'] > 0) {
                 $input = fopen('php://input', 'r');
+                
                 while ($chunk = fread($input, 1024)) {
                     $data .= $chunk;
                 }
@@ -311,20 +295,17 @@ class KRequest
      */
     public static function accept($type = null)
     {
-        if (!isset(self::$_accept) && isset($_SERVER['HTTP_ACCEPT']))
-        {
-            $accept = KRequest::get('server.HTTP_ACCEPT', 'string');
+        if (! isset(self::$_accept) && isset($_SERVER['HTTP_ACCEPT'])) {
+            $accept = AnRequest::get('server.HTTP_ACCEPT', 'string');
             self::$_accept['format'] = self::_parseAccept($accept);
 
-            if (isset($_SERVER['HTTP_ACCEPT_ENCODING']))
-            {
-                $accept = KRequest::get('server.HTTP_ACCEPT_ENCODING', 'string');
+            if (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) {
+                $accept = AnRequest::get('server.HTTP_ACCEPT_ENCODING', 'string');
                 self::$_accept['encoding'] = self::_parseAccept($accept);
             }
 
-            if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
-            {
-                $accept = KRequest::get('server.HTTP_ACCEPT_LANGUAGE', 'string');
+            if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
+                $accept = AnRequest::get('server.HTTP_ACCEPT_LANGUAGE', 'string');
                 self::$_accept['language'] = self::_parseAccept($accept);
             }
         }
@@ -353,15 +334,12 @@ class KRequest
      */
     public static function referrer($isInternal = true)
     {
-        if(!isset(self::$_referrer))
-        {
-            if($referrer = KRequest::get('server.HTTP_REFERER', 'url'))
-            {
+        if (! isset(self::$_referrer)) {
+            if ($referrer = AnRequest::get('server.HTTP_REFERER', 'url')) {
                 self::$_referrer = KService::get('koowa:http.url', array('url' => $referrer));
 
-                if($isInternal)
-                {
-                    if(!KService::get('koowa:filter.internalurl')->validate((string)self::$_referrer)) {
+                if ($isInternal) {
+                    if (! KService::get('koowa:filter.internalurl')->validate((string) self::$_referrer)) {
                         return null;
                     }
                 }
@@ -378,19 +356,16 @@ class KRequest
      */
     public static function url()
     {
-        if(!isset(self::$_url))
-        {
+        if (! isset(self::$_url)) {
             $url = self::scheme().'://';
 
-            if (PHP_SAPI !== 'cli')
-        	{
+            if (PHP_SAPI !== 'cli') {
         		/*
             	 * Since we are assigning the URI from the server variables, we first need
              	 * to determine if we are running on apache or IIS.  If PHP_SELF and REQUEST_URI
              	 * are present, we will assume we are running on apache.
              	 */
-        	    if (!empty ($_SERVER['PHP_SELF']) && !empty ($_SERVER['REQUEST_URI']))
-                {
+        	    if (! empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI'])) {
                 	/*
                  	 * To build the entire URI we need to prepend the protocol, and the http host
                  	 * to the URI string.
@@ -402,9 +377,7 @@ class KRequest
                  	 * running on IIS and will therefore need to work some magic with the SCRIPT_NAME and
                  	 * QUERY_STRING environment variables.
                  	 */
-                }
-                else
-                {
+                } else {
                     // IIS uses the SCRIPT_NAME variable instead of a REQUEST_URI variable
                     $url .= $_SERVER['HTTP_HOST'] . $_SERVER['SCRIPT_NAME'];
 
@@ -413,8 +386,9 @@ class KRequest
                         $url .= '?' . $_SERVER['QUERY_STRING'];
                     }
                 }
-        	}
-        	else $url .= 'koowa';
+        	} else {
+                $url .= 'koowa';
+            }
 
             // Sanitize the url since we can't trust the server var
             $url = KService::get('koowa:filter.url')->sanitize($url);
@@ -434,16 +408,15 @@ class KRequest
      */
     public static function base()
     {
-        if(!isset(self::$_base))
-        {
+        if(! isset(self::$_base)) {
             // Get the base request path
-            if (strpos(PHP_SAPI, 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI']))
-            {
+            if (strpos(PHP_SAPI, 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI'])) {
                 // PHP-CGI on Apache with "cgi.fix_pathinfo = 0"
                 // We don't have user-supplied PATH_INFO in PHP_SELF
                 $path = $_SERVER['PHP_SELF'];
+            } else { 
+                $path = $_SERVER['SCRIPT_NAME']; 
             }
-            else $path = $_SERVER['SCRIPT_NAME'];
 
             $path = rtrim(dirname($path), '/\\');
 
@@ -459,23 +432,22 @@ class KRequest
     /**
      * Returns the root path of the request.
      *
-     * In most case this value will be the same as KRequest::base however it can be
+     * In most case this value will be the same as AnRequest::base however it can be
      * changed by pushing in a different value
      *
      * @return  object  A KHttpUrl object
      */
     public static function root($path = null)
     {
-        if(!is_null($path))
-        {
-            if(!$path instanceof KhttpUrl) {
+        if (! is_null($path)) {
+            if (! $path instanceof KhttpUrl) {
                 $path = KService::get('koowa:http.url', array('url' => $path));
             }
 
             self::$_root = $path;
         }
 
-        if(is_null(self::$_root)) {
+        if (is_null(self::$_root)) {
             self::$_root = self::$_base;
         }
 
@@ -492,36 +464,28 @@ class KRequest
     {
         $scheme = 'cli';
 
-        if (PHP_SAPI !== 'cli')
-        {
-
+        if (PHP_SAPI !== 'cli') {
             $isSSL = false;
 
-            if ( isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on' )
-            {
+            if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
                  $isSSL = true;
             }
 
-            if ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1 )
-            {
+            if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1) {
                  $isSSL = true;
             }
 
-            if ( isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443 ) )
-            {
+            if (isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443)) {
                  $isSSL = true;
             }
 
-            if ( isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on' )
-            {
+            if (isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on') {
                 $isSSL = true;
             }
 
-            if ( isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true )
-            {
+            if (isset($_SERVER['HTTP_USESSL']) && $_SERVER['HTTP_USESSL'] == true) {
                 $isSSL = true;
             }
-
 
             $scheme = ($isSSL) ? 'https' : 'http';
         }
@@ -548,17 +512,15 @@ class KRequest
     {
         $method = '';
 
-        if(PHP_SAPI != 'cli')
-        {
+        if (PHP_SAPI != 'cli') {
             $method  =  strtoupper($_SERVER['REQUEST_METHOD']);
 
-            if($method == 'POST')
-            {
-                if(isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
+            if ($method == 'POST') {
+                if (isset($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE'])) {
                     $method = strtoupper($_SERVER['HTTP_X_HTTP_METHOD_OVERRIDE']);
                 }
 
-                if(self::has('post._method')) {
+                if (self::has('post._method')) {
                     $method = strtoupper(self::get('post._method', 'cmd'));
                 }
             }
@@ -576,7 +538,7 @@ class KRequest
     {
         $type = 'HTTP';
 
-        if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
             $type = 'AJAX';
         }
 
@@ -592,11 +554,11 @@ class KRequest
     {
         $token = null;
 
-        if(self::has('server.HTTP_X_TOKEN')) {
+        if (self::has('server.HTTP_X_TOKEN')) {
             $token = self::get('server.HTTP_X_TOKEN', 'md5');
         }
 
-        if(self::has('request._token')) {
+        if (self::has('request._token')) {
             $token = self::get('request._token', 'md5');
         }
 
@@ -616,22 +578,21 @@ class KRequest
     {
         $format = null;
 
-        if(count(self::accept('format')) == 1)
-        {
-            $mime   = explode('/', key(self::accept('format')));
+        if (count(self::accept('format')) == 1) {
+            $mime = explode('/', key(self::accept('format')));
             $format = $mime[1];
 
-            if($pos = strpos($format, '+')) {
+            if ($pos = strpos($format, '+')) {
                 $format = substr($format, 0, $pos);
             }
 
             //Format cannot be *
-            if($format == '*') {
+            if ($format == '*') {
                 $format = null;
             }
         }
 
-        if(self::has('request.format')) {
+        if (self::has('request.format')) {
             $format = self::get('request.format', 'word');
         }
 
@@ -650,8 +611,7 @@ class KRequest
         $hash  = $identifier;
 
         // Validate the variable format
-        if(strpos($identifier, '.') !== false)
-        {
+        if (strpos($identifier, '.') !== false) {
             // Split the variable name into it's parts
             $parts = explode('.', $identifier);
 
@@ -674,13 +634,11 @@ class KRequest
      */
     protected static function _parseAccept( $accept, array $defaults = NULL)
     {
-        if (!empty($accept))
-        {
+        if (! empty($accept)) {
             // Get all of the types
             $types = explode(',', $accept);
 
-            foreach ($types as $type)
-            {
+            foreach ($types as $type) {
                 // Split the type into parts
                 $parts = explode(';', $type);
 
@@ -690,8 +648,7 @@ class KRequest
                 // Default quality is 1.0
                 $options = array('quality' => 1.0);
 
-                foreach ($parts as $part)
-                {
+                foreach ($parts as $part) {
                     // Prevent undefined $value notice below
                     if (strpos($part, '=') === FALSE) {
                         continue;
@@ -700,10 +657,13 @@ class KRequest
                     // Separate the key and value
                     list ($key, $value) = explode('=', trim($part));
 
-                    switch ($key)
-                    {
-                        case 'q'       : $options['quality'] = (float) trim($value); break;
-                        case 'version' : $options['version'] = (float) trim($value); break;
+                    switch ($key) {
+                        case 'q': 
+                            $options['quality'] = (float) trim($value); 
+                            break;
+                        case 'version': 
+                            $options['version'] = (float) trim($value); 
+                            break;
                     }
                 }
 
@@ -729,8 +689,8 @@ class KRequest
      */
     protected static function _stripSlashes( $value )
     {
-        if(!is_object($value)) {
-            $value = is_array( $value ) ? array_map( array( 'KRequest', '_stripSlashes' ), $value ) : stripslashes( $value );
+        if (! is_object($value)) {
+            $value = is_array( $value ) ? array_map( array( 'AnRequest', '_stripSlashes' ), $value ) : stripslashes( $value );
         }
 
         return $value;

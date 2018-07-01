@@ -143,8 +143,8 @@
 
         if ($subscription->persisted()) {
 
-            KRequest::set('session.signup', null);
-            KRequest::set('session.subscriber_id', $subscription->person->id);
+            AnRequest::set('session.signup', null);
+            AnRequest::set('session.subscriber_id', $subscription->person->id);
             $url = route('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
 
             if (get_viewer()->guest()) {
@@ -257,8 +257,8 @@
     public function execute($name, AnCommandContext $context)
     {
         $data = $context->data;
-        $data->append(KRequest::get('session.signup', 'raw', array()));
-        KRequest::set('session.signup', $data->toArray());
+        $data->append(AnRequest::get('session.signup', 'raw', array()));
+        AnRequest::set('session.signup', $data->toArray());
         $result = parent::execute($name, $context);
 
         return $result;

@@ -57,7 +57,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
      */
     protected function _initialize(KConfig $config)
     {
-        $base_url = KRequest::base();
+        $base_url = AnRequest::base();
         $settings = $this->getService('com:settings.setting');
 
         if (PHP_SAPI == 'cli' && $settings->live_site != '') {

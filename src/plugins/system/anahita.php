@@ -64,7 +64,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             return;
         }
 
-        if (KRequest::method() === 'GET') {
+        if (AnRequest::method() === 'GET') {
             $this->_handleAutoLogin();
         }
 
@@ -110,7 +110,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         } catch (RuntimeException $e) {
             //only throws exception if we are using JSON format
             //otherwise let the current app handle it
-            if (KRequest::format() == 'json') {
+            if (AnRequest::format() == 'json') {
                 throw $e;
             }
         }

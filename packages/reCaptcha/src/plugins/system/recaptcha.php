@@ -30,10 +30,10 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     {
         parent::__construct($dispatcher, $config);
 
-        $this->_option = KRequest::get('get.option', 'string', '');
-        $this->_view = KRequest::get('get.view', 'cmd', '');
-        $this->_layout = KRequest::get('get.layout', 'cmd', '');
-        $this->_id = KRequest::get('get.id', 'int', 0);
+        $this->_option = AnRequest::get('get.option', 'string', '');
+        $this->_view = AnRequest::get('get.view', 'cmd', '');
+        $this->_layout = AnRequest::get('get.layout', 'cmd', '');
+        $this->_id = AnRequest::get('get.id', 'int', 0);
         $this->_viewer = KService::get('com:people.viewer');
     }
 
@@ -42,8 +42,8 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
      */
     public function onAfterRoute(AnEvent $event)
     {
-        if (KRequest::method() === 'POST' && $this->_hasRecaptcha()) {
-            $recaptchaResponse = KRequest::get('post.g-recaptcha-response', 'string', null);
+        if (AnRequest::method() === 'POST' && $this->_hasRecaptcha()) {
+            $recaptchaResponse = AnRequest::get('post.g-recaptcha-response', 'string', null);
             if (! $this->_verifyResponse($recaptchaResponse)) {
                 throw new KException("Unauthorized Request", 403);
                 return;
@@ -99,7 +99,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     */
     private function _hasRecaptcha()
     {
-        $action = KRequest::get('post.action', 'cmd', 'add');
+        $action = AnRequest::get('post.action', 'cmd', 'add');
 
         if ($action == 'add' && $this->_id === 0) {
             if ($this->_option === 'com_people' && $this->_viewer->guest()) {

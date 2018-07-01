@@ -105,10 +105,10 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $data));
 
         if ($data->return) {
-            KRequest::set('session.return', $data->return);
+            AnRequest::set('session.return', $data->return);
             $context->url = base64UrlDecode($data->return);
         } else {
-            KRequest::set('session.return', '');
+            AnRequest::set('session.return', '');
         }
 
         $credentials = array(
@@ -139,7 +139,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             }
 
             $this->getResponse()->setRedirect($context->url);
-            KRequest::set('session.return', '');
+            AnRequest::set('session.return', '');
         } else {
             $this->setMessage(translate('COM-PEOPLE-AUTHENTICATION-FAILED'), 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
@@ -193,7 +193,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $this->_request->token = '';
 
         if ($this->reset_password) {
-            KRequest::set('session.reset_password_prompt', 1);
+            AnRequest::set('session.reset_password_prompt', 1);
         }
 
         $credentials = array(
@@ -208,7 +208,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 
         if ($this->return) {
-            KRequest::set('session.return', $this->return);
+            AnRequest::set('session.return', $this->return);
             $returnUrl = base64UrlDecode($this->return);
             $this->getResponse()->setRedirect($returnUrl);
         } else {

@@ -160,12 +160,12 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     protected function _actionRoute(AnCommandContext $context)
     {
         //route the application
-        $url = clone KRequest::url();
+        $url = clone AnRequest::url();
         $url = $this->_application->getRouter()->parse($url);
 
-        KRequest::set('get', $url->query);
+        AnRequest::set('get', $url->query);
 
-        $url->query = KRequest::get('get', 'raw');
+        $url->query = AnRequest::get('get', 'raw');
 
         //set the request
         $this->getRequest()->append($url->query);
@@ -224,7 +224,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         //set the default timezone to UTC
         date_default_timezone_set('UTC');
 
-        KRequest::root(str_replace('/'.$this->_application->getName(), '', KRequest::base()));
+        AnRequest::root(str_replace('/'.$this->_application->getName(), '', AnRequest::base()));
     }
 
     /**
@@ -251,10 +251,10 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
                     if (strpos($arg, '/') !== false) {
                         $arg = substr_replace($arg, '?', strpos($arg, '&'), 1);
                         $url = KService::get('koowa:http.url', array('url' => $arg));
-                        KRequest::url()->path = KRequest::base().$url->path;
+                        AnRequest::url()->path = AnRequest::base().$url->path;
                         $_GET = $url->query;
                     } else {
-                        KRequest::url()->path = KRequest::base();
+                        AnRequest::url()->path = AnRequest::base();
                         parse_str($arg, $_GET);
                     }
                 } else {
@@ -264,8 +264,8 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         }
 
         $_GET['format'] = 'json';
-        KRequest::url()->format = 'json';
-        KRequest::url()->setQuery($_GET);
+        AnRequest::url()->format = 'json';
+        AnRequest::url()->setQuery($_GET);
 
         KService::get('com:plugins.helper')->import('cli');
         dispatch_plugin('cli.onCli');

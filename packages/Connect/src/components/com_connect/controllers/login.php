@@ -68,11 +68,11 @@ class ComConnectControllerLogin extends ComBaseControllerResource
                           'api' => $service
                       ));
                       
-        $return_url = KRequest::get('session.return', 'raw');
+        $return_url = AnRequest::get('session.return', 'raw');
 
         if ($token) {
             $person = $token->owner;
-            KRequest::set('session.oauth', null);
+            AnRequest::set('session.oauth', null);
 
             $credentials = array(
                 'username' => $person->username,

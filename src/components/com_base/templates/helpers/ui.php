@@ -576,7 +576,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
             $url .= '&oid='.$actor->uniqueAlias;
         }
 
-        $term = KRequest::get('get.term', 'raw');
+        $term = AnRequest::get('get.term', 'raw');
         $term = KService::get('com:search.filter.term')->sanitize($term);
 
         $config = new KConfig($config);

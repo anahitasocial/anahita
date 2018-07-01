@@ -75,22 +75,22 @@ class LibBaseHelperUrl extends KObject implements KServiceInstantiatable
         $parts = array();
 
         if (!isset($url['option'])) {
-            $parts['option'] = KRequest::get('get.option', 'cmd');
+            $parts['option'] = AnRequest::get('get.option', 'cmd');
         }
 
         //if not view is set the set
         if (!isset($url['view'])) {
-            $parts['view'] = KRequest::get('get.view', 'cmd');
+            $parts['view'] = AnRequest::get('get.view', 'cmd');
 
             //only try to set the layout if we are setting the view
-            if (!isset($url['layout']) && KRequest::has('get.layout')) {
-                $parts['layout'] = KRequest::get('get.layout', 'cmd');
+            if (!isset($url['layout']) && AnRequest::has('get.layout')) {
+                $parts['layout'] = AnRequest::get('get.layout', 'cmd');
             }
         }
 
         //carry format
-        if (!isset($url['format']) && KRequest::has('get.format')) {
-            $parts['format'] = KRequest::get('get.format', 'cmd');
+        if (!isset($url['format']) && AnRequest::has('get.format')) {
+            $parts['format'] = AnRequest::get('get.format', 'cmd');
         }
 
         foreach ($parts as $key => $value) {

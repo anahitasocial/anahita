@@ -41,8 +41,8 @@ class ComSubscriptionsDispatcher extends ComBaseDispatcherDefault
      */
     public function redirectHttps(AnCommandContext $context)
     {
-        if (KRequest::url()->scheme === 'http') {
-            $url = clone KRequest::url();
+        if (AnRequest::url()->scheme === 'http') {
+            $url = clone AnRequest::url();
             $url->scheme = 'https';
             $context->response->setRedirect($url);
             return false;

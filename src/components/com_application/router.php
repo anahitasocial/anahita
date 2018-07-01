@@ -72,16 +72,16 @@ class ComApplicationRouter extends KObject
      */
     protected function _initialize(KConfig $config)
     {
-        $base = clone KRequest::base();
+        $base = clone AnRequest::base();
 
         foreach (array('host', 'scheme', 'port', 'user', 'pass') as $part) {
-            $base->$part = KRequest::url()->$part;
+            $base->$part = AnRequest::url()->$part;
         }
 
         if (PHP_SAPI == 'cli') {
             $base->scheme = extension_loaded('openssl') ? 'https' : 'http';
             $settings = $this->getService('com:settings.setting');
-            $base->host = KRequest::get('server.HOSTNAME', 'url', $settings->live_site);
+            $base->host = AnRequest::get('server.HOSTNAME', 'url', $settings->live_site);
             $base->path = '';
         }
 
@@ -260,7 +260,7 @@ class ComApplicationRouter extends KObject
         $path = trim($path, '/');
 
         $url->path = $path;
-        $url->format = $url->format ? $url->format : pick(KRequest::format(), 'html');
+        $url->format = $url->format ? $url->format : pick(AnRequest::format(), 'html');
 
         if (! empty($url->format)) {
             $url->query['format'] = $url->format;

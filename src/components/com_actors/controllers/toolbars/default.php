@@ -81,7 +81,7 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
                 }
             }
 
-            $graphType = KRequest::get('get.type', 'cmd', 'followers');
+            $graphType = AnRequest::get('get.type', 'cmd', 'followers');
 
             if ($actor1->authorize('administration') && $graphType != 'leadables') {
                 $this->_update = false;

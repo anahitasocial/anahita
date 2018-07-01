@@ -53,7 +53,7 @@ class PlgStorageLocal extends PlgStorageAbstract
     {
         $config->append(array(
              'root' => ANPATH_ROOT,
-             'base_uri' => KRequest::base()
+             'base_uri' => AnRequest::base()
         ));
 
         parent::_initialize($config);

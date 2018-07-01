@@ -22,7 +22,7 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
     {
         //Built the session identifier based on the action
         $identifier = $this->_mixer->getIdentifier().'.'.$action;
-        $state = KRequest::get('session.'.$identifier, 'raw', array());
+        $state = AnRequest::get('session.'.$identifier, 'raw', array());
 
         //Append the data to the request object
         $this->getState()->append($state);
@@ -41,7 +41,7 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
         $identifier = $this->_mixer->getIdentifier().'.'.$action;
 
         //Set the state in the session
-        KRequest::set('session.'.$identifier, KConfig::unbox($state));
+        AnRequest::set('session.'.$identifier, KConfig::unbox($state));
     }
 
     /**

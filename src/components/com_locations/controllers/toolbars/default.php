@@ -29,7 +29,7 @@ class ComLocationsControllerToolbarDefault extends ComTagsControllerToolbarDefau
     {
         //@todo not crazy about this approach, but there was no way
         //that I could obtain the locatable from the controller
-        $locatable_id = KRequest::get('get.locatable_id', 'int', 0);
+        $locatable_id = AnRequest::get('get.locatable_id', 'int', 0);
 
         if(!$this->_locatable && $locatable_id)
         {

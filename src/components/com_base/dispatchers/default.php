@@ -77,7 +77,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     protected function _actionRender(AnCommandContext $context)
     {
-        if ($context->request->getFormat() == 'html' && KRequest::type() == 'HTTP') {
+        if ($context->request->getFormat() == 'html' && AnRequest::type() == 'HTTP') {
             $this->_setPageTitle();
         }
 
@@ -160,7 +160,7 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
         if ($viewer->guest() && $context->data instanceof LibBaseControllerExceptionUnauthorized) {
 
             $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
-            $return = base64_encode(KRequest::url());
+            $return = base64_encode(AnRequest::url());
             $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
             $context->response->send();
             exit(0);

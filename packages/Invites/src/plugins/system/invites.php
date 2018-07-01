@@ -18,8 +18,8 @@ class plgSystemInvites extends PlgAnahitaDefault
      */
     public function onAfterRoute()
     {
-        $token = KRequest::get('session.invite_token', 'string', null);
-        $option = KRequest::get('get.option', 'string', null);
+        $token = AnRequest::get('session.invite_token', 'string', null);
+        $option = AnRequest::get('get.option', 'string', null);
         $isGuest = get_viewer()->guest();
 
         if ($token && $option === 'com_people' && $isGuest) {

@@ -22,7 +22,7 @@ class plgUserInvites extends PlgAnahitaDefault
      */
     public function onAfterLoginPerson(AnEvent $event)
     {
-        KRequest::set('session.invite_token', null);
+        AnRequest::set('session.invite_token', null);
     }
 
     /**
@@ -38,7 +38,7 @@ class plgUserInvites extends PlgAnahitaDefault
     public function onAfterStoreUser(AnEvent $event)
     {
         if(!$event->isnew && $event->success){
-            KRequest::set('session.invite_token', null);
+            AnRequest::set('session.invite_token', null);
         }
     }
 }

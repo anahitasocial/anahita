@@ -59,7 +59,7 @@ class ComSettingsDomainEntityTemplate extends KObject
         if (file_exists($path['manifest'])) {
 
             $this->alias = $template;
-            $this->thumbnail = KRequest::root().'/templates/'.$template.'/thumbnail.png';
+            $this->thumbnail = AnRequest::root().'/templates/'.$template.'/thumbnail.png';
 
             $manifest = json_decode(file_get_contents($path['manifest']));
 

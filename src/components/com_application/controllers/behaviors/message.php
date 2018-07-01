@@ -64,7 +64,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'enabled' => KRequest::format() != 'json' && $config->mixer->isDispatched(),
+            'enabled' => AnRequest::format() != 'json' && $config->mixer->isDispatched(),
         ));
 
         parent::_initialize($config);

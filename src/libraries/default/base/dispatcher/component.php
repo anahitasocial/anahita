@@ -65,11 +65,11 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         //if a command line the either do get or
         //post depending if there are any action
         if (PHP_SAPI === 'cli') {
-            $method = KRequest::get('post.action', 'cmd', 'get');
+            $method = AnRequest::get('post.action', 'cmd', 'get');
         } elseif (file_exists(ANPATH_COMPONENT.'/'.$this->getIdentifier()->package.'.php')) {
             $method = 'renderlegacy';
         } else {
-            $method = strtolower(KRequest::method());
+            $method = strtolower(AnRequest::method());
         }
 
         $result = $this->execute($method, $context);
@@ -106,7 +106,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     protected function _actionPost(AnCommandContext $context)
     {
         $context->append(array(
-            'data' => KRequest::get('post', 'raw', array()),
+            'data' => AnRequest::get('post', 'raw', array()),
         ));
 
         //backward compatiblity
@@ -126,7 +126,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
         if ($context->request->getFormat() == 'json' || $context->request->isAjax()) {
             $this->registerCallback('after.post', array($this, 'forward'));
         } else {
-            $context->response->setRedirect(KRequest::get('server.HTTP_REFERER', 'url'));
+            $context->response->setRedirect(AnRequest::get('server.HTTP_REFERER', 'url'));
         }
 
         return $this->getController()->execute($action, $context);
@@ -140,7 +140,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements KS
     protected function _actionDelete(AnCommandContext $context)
     {
         //this wil not affect the json calls
-        $redirect = KRequest::get('server.HTTP_REFERER', 'url');
+        $redirect = AnRequest::get('server.HTTP_REFERER', 'url');
         $this->getController()->getResponse()->setRedirect($redirect);
         $result = $this->getController()->execute('delete', $context);
 

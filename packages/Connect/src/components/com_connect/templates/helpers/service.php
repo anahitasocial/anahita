@@ -73,8 +73,8 @@
     {
         $url = 'index.php?option=com_connect&view=login&server='.$service;
 
-        if (KRequest::get('get.return', 'cmd')) {
-            $url .= '&return='.KRequest::get('get.return', 'raw');
+        if (AnRequest::get('get.return', 'cmd')) {
+            $url .= '&return='.AnRequest::get('get.return', 'raw');
         }
 
         return route($url);

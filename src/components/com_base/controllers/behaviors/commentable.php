@@ -52,7 +52,7 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
             $cid = (int) preg_replace_callback('/[^\d]+/', function($matches) { return ''; }, $this->permalink);
             $offset = $this->getItem()->getCommentOffset($cid);
             $start = (int) ($offset / $this->limit) * $this->limit;
-            $url = KRequest::url();
+            $url = AnRequest::url();
             $query = $url->getQuery(true);
 
             if ($this->start != $start) {

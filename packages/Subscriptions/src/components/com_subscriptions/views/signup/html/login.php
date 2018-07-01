@@ -13,7 +13,7 @@
             </p>
 
             <p>
-                <? $return = base64UrlEncode(KRequest::url()); ?>
+                <? $return = base64UrlEncode(AnRequest::url()); ?>
                 <a class="btn btn-primary btn-large" href="<?= @route('option=people&view=session&connect=1&return='.$return) ?>" >
                     <?= @text('LIB-AN-ACTION-LOGIN') ?>
                 </a>
