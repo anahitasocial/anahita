@@ -11,19 +11,19 @@
  */
 interface AnCommandInterface extends KObjectHandlable
 {
-	/**
-	 * Generic Command handler
-	 *
-	 * @param 	string 	The command name
-	 * @param 	object  The command context
-	 * @return	boolean
-	 */
-	public function execute( $name, AnCommandContext $context);
+    /**
+     * Generic Command handler
+     *
+     * @param 	string 	The command name
+     * @param 	object  The command context
+     * @return	boolean
+     */
+    public function execute($name, AnCommandContext $context);
 
-	/**
-	 * Get the priority of the command
-	 *
-	 * @return	integer The command priority
-	 */
-  	public function getPriority();
+    /**
+     * Get the priority of the command
+     *
+     * @return	integer The command priority
+     */
+    public function getPriority();
 }

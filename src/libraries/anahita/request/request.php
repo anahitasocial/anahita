@@ -77,14 +77,14 @@ class AnRequest
                 $authorization = AnRequest::get('server.HTTP_AUTHORIZATION', 'url');
             }
 
-	        if (strstr($authorization, 'Basic')) {
-	            $parts = explode(':', base64_decode(substr($authorization, 6)));
+            if (strstr($authorization, 'Basic')) {
+                $parts = explode(':', base64_decode(substr($authorization, 6)));
 
-	            if (count($parts) == 2) {
-				    AnRequest::set('server.PHP_AUTH_USER', $parts[0]);
-				    AnRequest::set('server.PHP_AUTH_PW'  , $parts[1]);
-			    }
-		    }
+                if (count($parts) == 2) {
+                    AnRequest::set('server.PHP_AUTH_USER', $parts[0]);
+                    AnRequest::set('server.PHP_AUTH_PW', $parts[1]);
+                }
+            }
         }
 
 
@@ -96,25 +96,27 @@ class AnRequest
             if ($content['type'] == 'application/x-www-form-urlencoded') {
                 if (in_array(self::method(), array('PUT', 'DELETE'))) {
                     parse_str($content['data'], $GLOBALS['_'.self::method()]);
-                    $GLOBALS['_REQUEST'] = array_merge($GLOBALS['_REQUEST'],  $GLOBALS['_'.self::method()]);
+                    $GLOBALS['_REQUEST'] = array_merge($GLOBALS['_REQUEST'], $GLOBALS['_'.self::method()]);
                 }
             }
 
             if ($content['type'] == 'application/json') {
                 if (in_array(self::method(), array('POST', 'PUT', 'DELETE'))) {
                     $GLOBALS['_'.self::method()] = json_decode($content['data'], true);
-                    $GLOBALS['_REQUEST'] = array_merge($GLOBALS['_REQUEST'],  $GLOBALS['_'.self::method()]);
+                    $GLOBALS['_REQUEST'] = array_merge($GLOBALS['_REQUEST'], $GLOBALS['_'.self::method()]);
                 }
             }
         }
-     }
+    }
 
     /**
      * Clone
      *
      * Prevent creating clones of this class
      */
-    final private function __clone() { }
+    final private function __clone()
+    {
+    }
 
     /**
      * Force creation of a singleton
@@ -125,7 +127,7 @@ class AnRequest
     {
         static $instance;
 
-        if ($instance === NULL) {
+        if ($instance === null) {
             if (! $config instanceof KConfig) {
                 $config = new KConfig($config);
             }
@@ -165,13 +167,13 @@ class AnRequest
 
 
         // If the value is null return the default
-        if(is_null($result)) {
+        if (is_null($result)) {
             return $default;
         }
 
         // Handle magic quotes compatability
         if (get_magic_quotes_gpc() && !in_array($hash, array('FILES', 'SESSION'))) {
-            $result = self::_stripSlashes( $result );
+            $result = self::_stripSlashes($result);
         }
 
         if (! ($filter instanceof KFilterInterface)) {
@@ -192,7 +194,7 @@ class AnRequest
         list($hash, $keys) = self::_parseIdentifier($identifier);
 
         // Add to _REQUEST hash if original hash is get, post, or cookies
-        if(in_array($hash, array('GET', 'POST', 'COOKIE'))) {
+        if (in_array($hash, array('GET', 'POST', 'COOKIE'))) {
             self::set('request.'.implode('.', $keys), $value);
         }
 
@@ -217,7 +219,7 @@ class AnRequest
 
         // Add the global if it's doesn't exist
         if (! isset($GLOBALS['_'.$hash])) {
-           $GLOBALS['_'.$hash] = array();
+            $GLOBALS['_'.$hash] = array();
         }
 
         $GLOBALS['_'.$hash] = AnHelperArray::merge($GLOBALS['_'.$hash], $value);
@@ -360,19 +362,19 @@ class AnRequest
             $url = self::scheme().'://';
 
             if (PHP_SAPI !== 'cli') {
-        		/*
+                /*
             	 * Since we are assigning the URI from the server variables, we first need
              	 * to determine if we are running on apache or IIS.  If PHP_SELF and REQUEST_URI
              	 * are present, we will assume we are running on apache.
              	 */
-        	    if (! empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI'])) {
-                	/*
+                if (! empty($_SERVER['PHP_SELF']) && !empty($_SERVER['REQUEST_URI'])) {
+                    /*
                  	 * To build the entire URI we need to prepend the protocol, and the http host
                  	 * to the URI string.
                  	 */
                     $url .= $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
-                	/*
+                    /*
                  	 * Since we do not have REQUEST_URI to work with, we will assume we are
                  	 * running on IIS and will therefore need to work some magic with the SCRIPT_NAME and
                  	 * QUERY_STRING environment variables.
@@ -386,7 +388,7 @@ class AnRequest
                         $url .= '?' . $_SERVER['QUERY_STRING'];
                     }
                 }
-        	} else {
+            } else {
                 $url .= 'koowa';
             }
 
@@ -395,7 +397,6 @@ class AnRequest
 
             // Create the URI object
             self::$_url = KService::get('anahita:http.url', array('url' => $url));
-
         }
 
         return self::$_url;
@@ -408,14 +409,14 @@ class AnRequest
      */
     public static function base()
     {
-        if(! isset(self::$_base)) {
+        if (! isset(self::$_base)) {
             // Get the base request path
             if (strpos(PHP_SAPI, 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI'])) {
                 // PHP-CGI on Apache with "cgi.fix_pathinfo = 0"
                 // We don't have user-supplied PATH_INFO in PHP_SELF
                 $path = $_SERVER['PHP_SELF'];
-            } else { 
-                $path = $_SERVER['SCRIPT_NAME']; 
+            } else {
+                $path = $_SERVER['SCRIPT_NAME'];
             }
 
             $path = rtrim(dirname($path), '/\\');
@@ -468,15 +469,15 @@ class AnRequest
             $isSSL = false;
 
             if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
-                 $isSSL = true;
+                $isSSL = true;
             }
 
             if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 1) {
-                 $isSSL = true;
+                $isSSL = true;
             }
 
-            if (isset($_SERVER['SERVER_PORT']) && ( $_SERVER['SERVER_PORT'] == 443)) {
-                 $isSSL = true;
+            if (isset($_SERVER['SERVER_PORT']) && ($_SERVER['SERVER_PORT'] == 443)) {
+                $isSSL = true;
             }
 
             if (isset($_SERVER['HTTP_HTTPS']) && strtolower($_SERVER['HTTP_HTTPS']) == 'on') {
@@ -632,7 +633,7 @@ class AnRequest
      * @param array     default values
      * @return array
      */
-    protected static function _parseAccept( $accept, array $defaults = NULL)
+    protected static function _parseAccept($accept, array $defaults = null)
     {
         if (! empty($accept)) {
             // Get all of the types
@@ -650,19 +651,19 @@ class AnRequest
 
                 foreach ($parts as $part) {
                     // Prevent undefined $value notice below
-                    if (strpos($part, '=') === FALSE) {
+                    if (strpos($part, '=') === false) {
                         continue;
                     }
 
                     // Separate the key and value
-                    list ($key, $value) = explode('=', trim($part));
+                    list($key, $value) = explode('=', trim($part));
 
                     switch ($key) {
-                        case 'q': 
-                            $options['quality'] = (float) trim($value); 
+                        case 'q':
+                            $options['quality'] = (float) trim($value);
                             break;
-                        case 'version': 
-                            $options['version'] = (float) trim($value); 
+                        case 'version':
+                            $options['version'] = (float) trim($value);
                             break;
                     }
                 }
@@ -687,10 +688,10 @@ class AnRequest
      * @param   array   Array of (nested arrays of) strings
      * @return  array   The input array with stripshlashes applied to it
      */
-    protected static function _stripSlashes( $value )
+    protected static function _stripSlashes($value)
     {
         if (! is_object($value)) {
-            $value = is_array( $value ) ? array_map( array( 'AnRequest', '_stripSlashes' ), $value ) : stripslashes( $value );
+            $value = is_array($value) ? array_map(array( 'AnRequest', '_stripSlashes' ), $value) : stripslashes($value);
         }
 
         return $value;

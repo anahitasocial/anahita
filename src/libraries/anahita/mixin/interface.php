@@ -18,7 +18,7 @@ interface AnMixinInterface extends KObjectHandlable
      */
     public function getMixableMethods();
 
-	/**
+    /**
      * Get the mixer object
      *
      * @return object 	The mixer object

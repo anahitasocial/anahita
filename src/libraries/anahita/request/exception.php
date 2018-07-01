@@ -9,4 +9,6 @@
  * @link        https://www.GetAnahita.com
  * @package     AnRequest
  */
-class AnRequestException extends KException {}
+class AnRequestException extends KException
+{
+}

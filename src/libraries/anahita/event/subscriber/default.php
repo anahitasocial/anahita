@@ -10,4 +10,6 @@
  * @package     AnEvent
  * @subpackage 	Subscriber
  */
-class AnEventSubscriberDefault extends AnEventSubscriberAbstract {}
+class AnEventSubscriberDefault extends AnEventSubscriberAbstract
+{
+}

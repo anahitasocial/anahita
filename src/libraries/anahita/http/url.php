@@ -178,7 +178,7 @@ class AnHttpUrl extends KObject
      *
      * @var array
      */
-    protected $_encode_path = array (
+    protected $_encode_path = array(
         ' ' => '+',
         '/' => '%2F',
         '?' => '%3F',
@@ -194,7 +194,9 @@ class AnHttpUrl extends KObject
     public function __construct(KConfig $config = null)
     {
         //If no config is passed create it
-        if (! isset($config)) $config = new KConfig();
+        if (! isset($config)) {
+            $config = new KConfig();
+        }
 
         parent::__construct($config);
 
@@ -230,7 +232,7 @@ class AnHttpUrl extends KObject
             $this->setQuery($val);
         }
 
-        if($key == 'path') {
+        if ($key == 'path') {
             $this->setPath($val);
         }
     }
@@ -245,7 +247,7 @@ class AnHttpUrl extends KObject
     public function &__get($key)
     {
         if ($key == 'query') {
-           return $this->_query;
+            return $this->_query;
         }
     }
 
@@ -340,7 +342,7 @@ class AnHttpUrl extends KObject
     {
         if (! is_array($query)) {
             if (strpos($query, '&amp;') !== false) {
-               $query = str_replace('&amp;','&',$query);
+                $query = str_replace('&amp;', '&', $query);
             }
 
             //Set the query vars
@@ -348,9 +350,9 @@ class AnHttpUrl extends KObject
         }
 
         if (is_array($query)) {
-        	if ( $merge ) {
-        		$query = array_merge($this->_query, $query);
-        	}
+            if ($merge) {
+                $query = array_merge($this->_query, $query);
+            }
             $this->_query = $query;
         }
 
@@ -365,8 +367,8 @@ class AnHttpUrl extends KObject
      */
     public function getQuery($toArray = false)
     {
-		$result = $toArray ? $this->_query : http_build_query($this->_query, '', '&');
-		return $result;
+        $result = $toArray ? $this->_query : http_build_query($this->_query, '', '&');
+        return $result;
     }
 
     /**

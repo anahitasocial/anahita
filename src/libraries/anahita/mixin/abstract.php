@@ -44,7 +44,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      */
     public function __construct(KConfig $config)
     {
-        if( !empty($config)) {
+        if (!empty($config)) {
             $this->_initialize($config);
         }
 
@@ -67,7 +67,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
         ));
     }
 
-  	/**
+    /**
      * Get the mixer object
      *
      * @return object 	The mixer object
@@ -99,7 +99,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      */
     public function getHandle()
     {
-        return spl_object_hash( $this );
+        return spl_object_hash($this);
     }
 
     /**
@@ -223,10 +223,10 @@ abstract class AnMixinAbstract implements AnMixinInterface
         if (isset($this->_mixer) && !($this->_mixer instanceof $this)) {
             // Call_user_func_array is ~3 times slower than direct method calls.
             switch (count($arguments)) {
-                case 0 :
+                case 0:
                     $result = $this->_mixer->$method();
                     break;
-                case 1 :
+                case 1:
                     $result = $this->_mixer->$method($arguments[0]);
                     break;
                 case 2:

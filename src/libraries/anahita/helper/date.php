@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Date Helper.
  *
@@ -22,9 +7,10 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 class AnHelperDate extends KObject
 {
@@ -36,7 +22,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts the $minute into seconds.
-     * 
+     *
      * @param int minute
      *
      * @return int
@@ -48,7 +34,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts the $hour into seconds.
-     * 
+     *
      * @param int hour
      *
      * @return int
@@ -60,7 +46,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts the $days into seconds.
-     * 
+     *
      * @param int day
      *
      * @return int
@@ -72,7 +58,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts the $week into seconds.
-     * 
+     *
      * @param int week
      *
      * @return int
@@ -84,7 +70,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts the $month into seconds.
-     * 
+     *
      * @param int month
      *
      * @return int
@@ -96,7 +82,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts the $year into seconds.
-     * 
+     *
      * @param int year
      *
      * @return int
@@ -108,7 +94,7 @@ class AnHelperDate extends KObject
 
     /**
      * Converts Seconds to .. another unit (minute, days and etc).
-     * 
+     *
      * @param string $unit
      * @param int    $seconds
      *

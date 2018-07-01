@@ -1,5 +1,5 @@
 <?php
- 
+
 /**
  * Array Helper.
  *
@@ -335,14 +335,14 @@ class AnHelperArray
      * @param array
      * @return array    An array of values resulted from merging the arguments together.
      */
-    public static function merge( array &$array1, array &$array2 )
+    public static function merge(array &$array1, array &$array2)
     {
         $args = func_get_args();
         $merged = array_shift($args);
 
         foreach ($args as $array) {
             foreach ($array as $key => &$value) {
-                if (is_array( $value ) && isset($merged[$key]) && is_array($merged[$key])){
+                if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
                     $merged[$key] = self::merge($merged[$key], $value);
                 } else {
                     $merged[$key] = $value;

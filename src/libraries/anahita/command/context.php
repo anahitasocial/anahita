@@ -30,7 +30,7 @@ class AnCommandContext extends KConfig
      *
      * @return  AnCommandContext
      */
-    public function setError($error) 
+    public function setError($error)
     {
         $this->_error = $error;
         return $this;
@@ -41,7 +41,7 @@ class AnCommandContext extends KConfig
      *
      * @return  string  The error
      */
-    public function getError() 
+    public function getError()
     {
         return $this->_error;
     }

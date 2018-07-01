@@ -2,9 +2,9 @@
 
 /**
 * Command Chain
-* 
-* The command queue implements a double linked list. The command handle is used 
-* as the key. Each command can have a priority, default priority is 3 The queue 
+*
+* The command queue implements a double linked list. The command handle is used
+* as the key. Each command can have a priority, default priority is 3 The queue
 * is ordered by priority, commands with a higher priority are called first.
 *
 * @author      Johan Janssens <johan@nooku.org>
@@ -14,17 +14,17 @@
 * @link        https://www.GetAnahita.com
 */
 class AnCommandChain extends KObjectQueue
-{ 
+{
     /**
      * Enabled status of the chain
-     * 
+     *
      * @var boolean
      */
     protected $_enabled = true;
     
     /**
      * The chain's break condition
-     * 
+     *
      * @see run()
      * @var boolean
      */
@@ -32,7 +32,7 @@ class AnCommandChain extends KObjectQueue
     
     /**
      * The command context object
-     * 
+     *
      * @var AnCommandContext
      */
     protected $_context = null;
@@ -52,15 +52,17 @@ class AnCommandChain extends KObjectQueue
      */
     public function __construct(KConfig $config = null)
     {
-         //If no config is passed create it
-        if (! isset($config)) $config = new KConfig();
+        //If no config is passed create it
+        if (! isset($config)) {
+            $config = new KConfig();
+        }
         
         parent::__construct($config);
         
         $this->_break_condition = (boolean) $config->break_condition;
-        $this->_enabled         = (boolean) $config->enabled;
-        $this->_context         = $config->context;
-        $this->_stack           = $config->stack;
+        $this->_enabled = (boolean) $config->enabled;
+        $this->_context = $config->context;
+        $this->_stack = $config->stack;
     }
 
     /**
@@ -85,9 +87,9 @@ class AnCommandChain extends KObjectQueue
     
     /**
      * Attach a command to the chain
-     * 
+     *
      * The priority parameter can be used to override the command priority while enqueueing the command.
-     * 
+     *
      * @param AnCommandInterface $command
      * @param integer $priority The command priority, usually between 1 (high priority) and 5 (lowest),
      *                default is 3. If no priority is set, the command priority will be used instead.
@@ -175,7 +177,7 @@ class AnCommandChain extends KObjectQueue
     
     /**
      * Disable the chain
-     * 
+     *
      * If the chain is disabled running the chain will always return TRUE
      *
      * @return  void
@@ -188,7 +190,7 @@ class AnCommandChain extends KObjectQueue
     
     /**
      * Set the priority of a command
-     * 
+     *
      * @param AnCommandInterface $command
      * @param integer           $priority
      * @return \AnCommandChain
@@ -205,7 +207,7 @@ class AnCommandChain extends KObjectQueue
     
     /**
      * Get the priority of a command
-     * 
+     *
      * @param  AnCommandInterface $object
      * @return integer The command priority
      * @throws InvalidArgumentException if the object doesn't implement AnCommandInterface
@@ -221,11 +223,11 @@ class AnCommandChain extends KObjectQueue
     
     /**
      * Factory method for a command context.
-     * 
+     *
      * @return  AnCommandContext
      */
     public function getContext()
-    {   
+    {
         return clone $this->_context;
     }
 

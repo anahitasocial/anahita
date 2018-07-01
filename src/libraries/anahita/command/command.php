@@ -35,10 +35,12 @@ class AnCommand extends KObject implements AnCommandInterface
      *
      * @param   object  An optional KConfig object with configuration options
      */
-    public function __construct( KConfig $config = null)
+    public function __construct(KConfig $config = null)
     {
         //If no config is passed create it
-        if (! isset($config)) $config = new KConfig();
+        if (! isset($config)) {
+            $config = new KConfig();
+        }
 
         parent::__construct($config);
 
@@ -69,7 +71,7 @@ class AnCommand extends KObject implements AnCommandInterface
      * @param   object      The command context
      * @return  boolean     Can return both true or false.
      */
-    public function execute( $name, AnCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $type = '';
 

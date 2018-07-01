@@ -20,10 +20,10 @@ interface AnEventSubscriberInterface
     public function getPriority();
           
     /**
-     * Get a list of subscribed events 
-     *       
+     * Get a list of subscribed events
+     *
      * Event handlers always start with 'on' and need to be public methods
-     * 
+     *
      * @return array An array of public methods
      */
     public function getSubscriptions();

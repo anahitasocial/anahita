@@ -12,7 +12,7 @@
  */
 abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubscriberInterface
 {
- 	/**
+    /**
      * List of subscribed events
      *
      * @var array
@@ -26,19 +26,19 @@ abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubsc
      */
     protected $_priority;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param 	object 	An optional KConfig object with configuration options.
-	 */
-	public function __construct(KConfig $config)
-	{
-		parent::__construct($config);
+    /**
+     * Constructor.
+     *
+     * @param 	object 	An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
+        parent::__construct($config);
 
-		$this->_priority = $config->priority;
-	}
+        $this->_priority = $config->priority;
+    }
 
- 	/**
+    /**
      * Initializes the options for the object
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -49,7 +49,7 @@ abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubsc
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-    		'priority' => AnCommand::PRIORITY_NORMAL
+            'priority' => AnCommand::PRIORITY_NORMAL
         ));
 
         parent::_initialize($config);

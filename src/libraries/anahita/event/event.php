@@ -14,7 +14,7 @@
  */
 class AnEvent extends KConfig
 {
- 	/**
+    /**
      * Priority levels
      */
     const PRIORITY_HIGHEST = 1;
@@ -22,15 +22,15 @@ class AnEvent extends KConfig
     const PRIORITY_NORMAL  = 3;
     const PRIORITY_LOW     = 4;
     const PRIORITY_LOWEST  = 5;
- 	
- 	/**
+    
+    /**
      * The propagation state of the event
-     * 
-     * @var boolean 
+     *
+     * @var boolean
      */
     protected $_propagate = true;
- 	
- 	/**
+    
+    /**
      * The event name
      *
      * @var array
@@ -46,14 +46,14 @@ class AnEvent extends KConfig
     
     /**
      * Dispatcher that dispatched this event
-     * 
-     * @var AnEventDispatcher 
+     *
+     * @var AnEventDispatcher
      */
     protected $_dispatcher;
          
     /**
      * Get the event name
-     * 
+     *
      * @return string	The event name
      */
     public function getName()
@@ -133,7 +133,7 @@ class AnEvent extends KConfig
      * If multiple event listeners are connected to the same event, no
      * further event listener will be triggered once any trigger calls
      * stopPropagation().
-     * 
+     *
      * @return AnEvent
      */
     public function stopPropagation()

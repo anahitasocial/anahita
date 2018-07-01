@@ -12,46 +12,46 @@
 class AnEventDispatcher extends KObject
 {
     /**
-	 * List of event listeners
-	 * 
-	 * An associative array of event listeners queues where keys are holding the event 
-	 * name and the value is an KObjectQueue object.
-	 *
-	 * @var array
-	 */
-	protected $_listeners;
-	
-	/**
-	 * List of event subscribers 
-	 *
-	 * Associative array of subscribers, where key holds the subscriber handle
-	 * and the value the subscri object
-	 *
-	 * @var array
-	 */
-	protected $_subscribers;
-	
-	/**
+     * List of event listeners
+     * 
+     * An associative array of event listeners queues where keys are holding the event 
+     * name and the value is an KObjectQueue object.
+     *
+     * @var array
+     */
+    protected $_listeners;
+    
+    /**
+     * List of event subscribers 
+     *
+     * Associative array of subscribers, where key holds the subscriber handle
+     * and the value the subscri object
+     *
+     * @var array
+     */
+    protected $_subscribers;
+    
+    /**
      * The event object
      * 
      * @var AnEvent
      */
     protected $_event = null;
-	
-	/**
+    
+    /**
      * Constructor.
      *
      * @param   object  An optional KConfig object with configuration options
      */
-	public function __construct(KConfig $config = null) 
-	{
-		parent::__construct($config);
-	    
-		$this->_subscribers = array();
-	    $this->_listeners   = array();
-	}
-	
- 	/**
+    public function __construct(KConfig $config = null)
+    {
+        parent::__construct($config);
+        
+        $this->_subscribers = array();
+        $this->_listeners   = array();
+    }
+    
+    /**
      * Dispatches an event by dispatching arguments to all listeners that handle
      * the event and returning their return values.
      *
@@ -136,7 +136,7 @@ class AnEventDispatcher extends KObject
         $handle = $subscriber->getHandle();
     
         if (! isset($this->_subscribers[$handle])) {
-            $subscriptions = $subscriber->getSubscriptions(); 
+            $subscriptions = $subscriber->getSubscriptions();
             $priority = is_int($priority) ? $priority : $subscriber->getPriority();
     
             foreach ($subscriptions as $subscription) {
@@ -208,13 +208,13 @@ class AnEventDispatcher extends KObject
     {
         $result = false;
         if (isset($this->_listeners[$name])) {
-             $result = (boolean) count($this->_listeners[$name]); 
+            $result = (boolean) count($this->_listeners[$name]);
         }
         
         return $result;
     }
      
-	/**
+    /**
      * Set the priority of an event
      * 
      * @param  string    The event name

@@ -9,4 +9,6 @@
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
  */
-class AnMixinException extends KException {}
+class AnMixinException extends KException
+{
+}

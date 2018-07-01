@@ -1,5 +1,5 @@
 <?php
- 
+
  /**
  * Event Command
  * 
@@ -26,16 +26,18 @@ class AnCommandEvent extends AnCommand
      *
      * @param   object  An optional KConfig object with configuration options
      */
-    public function __construct( KConfig $config = null) 
-    { 
+    public function __construct(KConfig $config = null)
+    {
         //If no config is passed create it
-        if (! isset($config)) $config = new KConfig();
+        if (! isset($config)) {
+            $config = new KConfig();
+        }
         
         parent::__construct($config);
         
         if (is_null($config->event_dispatcher)) {
-			throw new AnMixinException('event_dispatcher [AnEventDispatcher] option is required');
-		}
+            throw new AnMixinException('event_dispatcher [AnEventDispatcher] option is required');
+        }
         
         $this->_event_dispatcher = $config->event_dispatcher;
     }
@@ -64,21 +66,21 @@ class AnCommandEvent extends AnCommand
      * @param   object      The command context
      * @return  boolean     Always returns true
      */
-    public function execute( $name, AnCommandContext $context) 
+    public function execute($name, AnCommandContext $context)
     {
         $type = '';
         
-        if ($context->caller) {   
+        if ($context->caller) {
             $identifier = $context->caller->getIdentifier();
             
             if ($identifier->path) {
-                $type = AnInflector::implode($identifier->path);                
+                $type = AnInflector::implode($identifier->path);
             } else {
                 $type = $identifier->name;
             }
         }
         
-        $parts = explode('.', $name);   
+        $parts = explode('.', $name);
         $name = 'on'.ucfirst(array_shift($parts)).ucfirst($type).AnInflector::implode($parts);
         
         $event = new AnEvent(clone($context));

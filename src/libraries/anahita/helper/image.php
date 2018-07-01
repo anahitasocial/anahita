@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,9 +30,9 @@ class AnHelperImage extends KObject
 {
     /**
      * Parses a string based size convention to width and height.
-     * 
+     *
      * @param string|array $size
-     * 
+     *
      * @return array
      */
     public static function parseSize($size)
@@ -52,10 +52,10 @@ class AnHelperImage extends KObject
 
     /**
      * Resizes an image using the passed size and return the resized image resource.
-     * 
+     *
      * @param resource $image The image resource
      * @param string   $size  The image size
-     * 
+     *
      * @return resource
      */
     public static function resize($image, $size)
@@ -110,10 +110,10 @@ class AnHelperImage extends KObject
 
     /**
      * Outputs an image to the desired image type.
-     * 
+     *
      * @param  resource $image The image resource
      * @param  string   $type  The image mimetype
-     *                          
+     *
      * @return string
      */
     public static function output($image, $type)
@@ -130,13 +130,13 @@ class AnHelperImage extends KObject
             case 'jpeg':
                 $args = array($image, null, 100);
                 break;
-            case 'png' :
+            case 'png':
                 $args = array($image, null, 9);
                 break;
-            case 'gif';
+            case 'gif':
                 $args = array($image, null);
                 break;
-            default :
+            default:
                 return;
         }
         ob_start();

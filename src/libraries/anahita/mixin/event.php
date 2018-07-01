@@ -2,10 +2,10 @@
 
 /**
  * Event Mixin
- * 
+ *
  * Class can be used as a mixin in classes that want to implement a an
  * event dispatcher and allow adding and removing listeners.
- *  
+ *
  * @author      Johan Janssens <johan@nooku.org>
  * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
@@ -14,7 +14,7 @@
  * @uses        AnEventDispatcher
  */
 class AnMixinEvent extends AnMixinAbstract
-{   
+{
     /**
      * Event dispatcher object
      *
@@ -42,8 +42,8 @@ class AnMixinEvent extends AnMixinAbstract
         parent::__construct($config);
         
         if (is_null($config->event_dispatcher)) {
-			throw new AnMixinException('event_dispatcher [AnEventDispatcher] option is required');
-		}
+            throw new AnMixinException('event_dispatcher [AnEventDispatcher] option is required');
+        }
             
         //Set the event dispatcher
         $this->_event_dispatcher = $config->event_dispatcher;
@@ -51,7 +51,7 @@ class AnMixinEvent extends AnMixinAbstract
         //Add the event listeners
         if (! empty($config->event_listeners)) {
             foreach ($config->event_listeners as $event => $listener) {
-               $this->addEventListener($event, $listener);
+                $this->addEventListener($event, $listener);
             }
         }
         
@@ -60,7 +60,7 @@ class AnMixinEvent extends AnMixinAbstract
             $subscribers = (array) KConfig::unbox($config->event_subscribers);
             
             foreach ($subscribers as $key => $value) {
-                if(is_numeric($key)) {
+                if (is_numeric($key)) {
                     $this->addEventSubscriber($value);
                 } else {
                     $this->addEventSubscriber($key, $value);
@@ -71,7 +71,7 @@ class AnMixinEvent extends AnMixinAbstract
     
     /**
      * Initializes the options for the object
-     * 
+     *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
      * @param   object  An optional KConfig object with configuration options
@@ -88,7 +88,7 @@ class AnMixinEvent extends AnMixinAbstract
         parent::_initialize($config);
     }
     
-	/**
+    /**
      * Get the event dispatcher
      *
      * @return  AnEventDispatcher
@@ -110,13 +110,13 @@ class AnMixinEvent extends AnMixinAbstract
         return $this->getMixer();
     }
     
-	/**
+    /**
      * Add an event listener
      *
      * @param  string  The event name
      * @param  object  An object implementing the KObjectHandlable interface
-     * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest), 
-     *                 default is 3. If no priority is set, the command priority will be used 
+     * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest),
+     *                 default is 3. If no priority is set, the command priority will be used
      *                 instead.
      * @return  KObject The mixer objects
      */
@@ -142,10 +142,10 @@ class AnMixinEvent extends AnMixinAbstract
     /**
      * Add an event subscriber
      *
-     * @param   mixed	An object that implements KObjectServiceable, KServiceIdentifier object 
-	 * 					or valid identifier string
-	 * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest), 
-     *                 default is 3. If no priority is set, the command priority will be used 
+     * @param   mixed	An object that implements KObjectServiceable, KServiceIdentifier object
+     * 					or valid identifier string
+     * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest),
+     *                 default is 3. If no priority is set, the command priority will be used
      *                 instead.
      * @return  KObject	The mixer object
      */
@@ -155,7 +155,7 @@ class AnMixinEvent extends AnMixinAbstract
             $subscriber = $this->getEventSubscriber($subscriber, $config);
         }
         
-        $priority = is_int($priority) ? $priority : $subscriber->getPriority(); 
+        $priority = is_int($priority) ? $priority : $subscriber->getPriority();
         $this->_event_dispatcher->addEventSubscriber($subscriber, $priority);
     
         return $this;
@@ -187,7 +187,7 @@ class AnMixinEvent extends AnMixinAbstract
     {
         if (! ($subscriber instanceof KServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
-            if (is_string($subscriber) && strpos($subscriber, '.') === false ) {
+            if (is_string($subscriber) && strpos($subscriber, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('event', 'handler');
                 $identifier->name = $subscriber;

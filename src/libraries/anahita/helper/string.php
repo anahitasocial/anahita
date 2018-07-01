@@ -50,16 +50,16 @@ class AnHelperString
      * @return mixed Number of characters before the first match or FALSE on failure
      * @see http://www.php.net/strpos
      */
-    public static function strpos($str, $search, $offset = FALSE)
+    public static function strpos($str, $search, $offset = false)
     {
         if (strlen($str) && strlen($search)) {
-            if ($offset === FALSE) {
+            if ($offset === false) {
                 return mb_strpos($str, $search);
             } else {
                 return mb_strpos($str, $search, $offset);
             }
-        } else { 
-            return FALSE;
+        } else {
+            return false;
         }
     }
 
@@ -75,25 +75,25 @@ class AnHelperString
      */
     public static function strrpos($str, $search)
     {
-        if ($offset === FALSE) {
+        if ($offset === false) {
             # Emulate behaviour of strrpos rather than raising warning
             if (empty($str)) {
-                return FALSE;
+                return false;
             }
             return mb_strrpos($str, $search);
         } else {
             if (! is_int($offset)) {
-                trigger_error('utf8_strrpos expects parameter 3 to be long',E_USER_WARNING);
-                return FALSE;
+                trigger_error('utf8_strrpos expects parameter 3 to be long', E_USER_WARNING);
+                return false;
             }
 
             $str = mb_substr($str, $offset);
 
-            if (FALSE !== ($pos = mb_strrpos($str, $search))) {
+            if (false !== ($pos = mb_strrpos($str, $search))) {
                 return $pos + $offset;
             }
 
-            return FALSE;
+            return false;
         }
     }
 
@@ -108,9 +108,9 @@ class AnHelperString
      * @return mixed string or FALSE if failure
      * @see http://www.php.net/substr
      */
-    public static function substr($str, $offset, $length = FALSE)
+    public static function substr($str, $offset, $length = false)
     {
-        if ($length === FALSE) {
+        if ($length === false) {
             return mb_substr($str, $offset);
         } else {
             return mb_substr($str, $offset, $length);
@@ -180,7 +180,7 @@ class AnHelperString
      * @param int optional count value to be passed by referene
      * @see http://www.php.net/str_ireplace
     */
-    public static function str_ireplace($search, $replace, $str, $count = NULL)
+    public static function str_ireplace($search, $replace, $str, $count = null)
     {
         if (! is_array($search)) {
             $slen = strlen($search);
@@ -195,7 +195,7 @@ class AnHelperString
             $lstr = AnHelperString::strtolower($str);
             $i = 0;
             $matched = 0;
-            while (preg_match('/(.*)'.$search.'/Us',$lstr, $matches)) {
+            while (preg_match('/(.*)'.$search.'/Us', $lstr, $matches)) {
                 if ($i === $count) {
                     break;
                 }
@@ -206,11 +206,10 @@ class AnHelperString
                 $i++;
             }
             return $str;
-
         } else {
             foreach (array_keys($search) as $k) {
                 if (is_array($replace)) {
-                    if (array_key_exists($k,$replace)) {
+                    if (array_key_exists($k, $replace)) {
                         $str = AnHelperString::str_ireplace($search[$k], $replace[$k], $str, $count);
                     } else {
                         $str = AnHelperString::str_ireplace($search[$k], '', $str, $count);
@@ -235,8 +234,8 @@ class AnHelperString
     */
     public static function str_split($str, $split_len = 1)
     {
-        if (! preg_match('/^[0-9]+$/',$split_len) || $split_len < 1) {
-            return FALSE;
+        if (! preg_match('/^[0-9]+$/', $split_len) || $split_len < 1) {
+            return false;
         }
 
         $len = AnHelperString::strlen($str);
@@ -276,19 +275,19 @@ class AnHelperString
      * @return int the length of the initial segment of str1 which does not contain any of the characters in str2
      * @see http://www.php.net/strcspn
     */
-    public static function strcspn($str, $mask, $start = NULL, $length = NULL)
+    public static function strcspn($str, $mask, $start = null, $length = null)
     {
         if (empty($mask) || strlen($mask) == 0) {
-            return NULL;
+            return null;
         }
 
-        $mask = preg_replace('!([\\\\\\-\\]\\[/^])!','\\\${1}',$mask);
+        $mask = preg_replace('!([\\\\\\-\\]\\[/^])!', '\\\${1}', $mask);
 
-        if ($start !== NULL || $length !== NULL) {
+        if ($start !== null || $length !== null) {
             $str = AnHelperString::substr($str, $start, $length);
         }
 
-        preg_match('/^[^'.$mask.']+/u',$str, $matches);
+        preg_match('/^[^'.$mask.']+/u', $str, $matches);
 
         if (isset($matches[0])) {
             return utf8_strlen($matches[0]);
@@ -317,13 +316,13 @@ class AnHelperString
 
         $lstr = AnHelperString::strtolower($str);
         $lsearch = AnHelperString::strtolower($search);
-        preg_match('|^(.*)'.preg_quote($lsearch).'|Us',$lstr, $matches);
+        preg_match('|^(.*)'.preg_quote($lsearch).'|Us', $lstr, $matches);
 
         if (count($matches) === 2) {
             return substr($str, strlen($matches[1]));
         }
 
-        return FALSE;
+        return false;
     }
 
     /**
@@ -337,8 +336,8 @@ class AnHelperString
      */
     public static function strrev($str)
     {
-         preg_match_all('/./us', $str, $ar);
-         return join('',array_reverse($ar[0]));
+        preg_match_all('/./us', $str, $ar);
+        return join('', array_reverse($ar[0]));
     }
 
     /**
@@ -352,15 +351,15 @@ class AnHelperString
      * @param int length optional
      * @see http://www.php.net/strspn
     */
-    public static function strspn($str, $mask, $start = NULL, $length = NULL)
+    public static function strspn($str, $mask, $start = null, $length = null)
     {
-        $mask = preg_replace('!([\\\\\\-\\]\\[/^])!','\\\${1}',$mask);
+        $mask = preg_replace('!([\\\\\\-\\]\\[/^])!', '\\\${1}', $mask);
 
-        if ($start !== NULL || $length !== NULL) {
+        if ($start !== null || $length !== null) {
             $str = AnHelperString::substr($str, $start, $length);
         }
 
-        preg_match('/^['.$mask.']+/u',$str, $matches);
+        preg_match('/^['.$mask.']+/u', $str, $matches);
 
         if (isset($matches[0])) {
             return AnHelperString::strlen($matches[0]);
@@ -380,15 +379,15 @@ class AnHelperString
      * @param int length (optional)
      * @see http://www.php.net/substr_replace
     */
-    public static function substr_replace($str, $repl, $start, $length = NULL )
+    public static function substr_replace($str, $repl, $start, $length = null)
     {
         preg_match_all('/./us', $str, $ar);
         preg_match_all('/./us', $repl, $rar);
-        if ($length === NULL) {
+        if ($length === null) {
             $length = AnHelperString::strlen($str);
         }
-        array_splice( $ar[0], $start, $length, $rar[0] );
-        return join('',$ar[0]);
+        array_splice($ar[0], $start, $length, $rar[0]);
+        return join('', $ar[0]);
     }
 
     /**
@@ -404,14 +403,16 @@ class AnHelperString
      * @return string the trimmed string
      * @see http://www.php.net/ltrim
     */
-    public static function ltrim( $str, $charlist = FALSE )
+    public static function ltrim($str, $charlist = false)
     {
-        if ($charlist === FALSE) return ltrim($str);
+        if ($charlist === false) {
+            return ltrim($str);
+        }
 
         //quote charlist for use in a characterclass
-        $charlist = preg_replace('!([\\\\\\-\\]\\[/^])!','\\\${1}',$charlist);
+        $charlist = preg_replace('!([\\\\\\-\\]\\[/^])!', '\\\${1}', $charlist);
 
-        return preg_replace('/^['.$charlist.']+/u','',$str);
+        return preg_replace('/^['.$charlist.']+/u', '', $str);
     }
 
     /**
@@ -427,16 +428,16 @@ class AnHelperString
      * @return string the trimmed string
      * @see http://www.php.net/rtrim
     */
-    public static function rtrim( $str, $charlist = FALSE )
+    public static function rtrim($str, $charlist = false)
     {
-         if ($charlist === FALSE) {
+        if ($charlist === false) {
             return rtrim($str);
-         }
+        }
 
         //quote charlist for use in a characterclass
-        $charlist = preg_replace('!([\\\\\\-\\]\\[/^])!','\\\${1}',$charlist);
+        $charlist = preg_replace('!([\\\\\\-\\]\\[/^])!', '\\\${1}', $charlist);
 
-        return preg_replace('/['.$charlist.']+$/u','',$str);
+        return preg_replace('/['.$charlist.']+$/u', '', $str);
     }
 
     /**
@@ -452,9 +453,9 @@ class AnHelperString
      * @return string the trimmed string
      * @see http://www.php.net/trim
     */
-    public static function trim( $str, $charlist = FALSE )
+    public static function trim($str, $charlist = false)
     {
-        if ($charlist === FALSE) {
+        if ($charlist === false) {
             return trim($str);
         }
 
@@ -497,11 +498,11 @@ class AnHelperString
     */
     public static function ucwords($str)
     {
-         // Note: [\x0c\x09\x0b\x0a\x0d\x20] matches;
+        // Note: [\x0c\x09\x0b\x0a\x0d\x20] matches;
         // form feeds, horizontal tabs, vertical tabs, linefeeds and carriage returns
         // This corresponds to the definition of a "word" defined at http://www.php.net/ucwords
         $pattern = '/(^|([\x0c\x09\x0b\x0a\x0d\x20]+))([^\x0c\x09\x0b\x0a\x0d\x20]{1})[^\x0c\x09\x0b\x0a\x0d\x20]*/u';
-        return preg_replace_callback($pattern, 'AnHelperString::ucwords_callback',$str);
+        return preg_replace_callback($pattern, 'AnHelperString::ucwords_callback', $str);
     }
 
     /**
@@ -518,7 +519,7 @@ class AnHelperString
     {
         $leadingws = $matches[2];
         $ucfirst = AnHelperString::strtoupper($matches[3]);
-        $ucword = AnHelperString::substr_replace(ltrim($matches[0]),$ucfirst,0,1);
+        $ucword = AnHelperString::substr_replace(ltrim($matches[0]), $ucfirst, 0, 1);
         return $leadingws . $ucword;
     }
 
@@ -562,7 +563,7 @@ class AnHelperString
 
         $len = strlen($str);
 
-        for($i = 0; $i < $len; $i++) {
+        for ($i = 0; $i < $len; $i++) {
             $in = ord($str{$i});
 
             if ($mState == 0) {
@@ -571,25 +572,25 @@ class AnHelperString
                 if (0 == (0x80 & ($in))) {
                     // US-ASCII, pass straight through.
                     $mBytes = 1;
-                } else if (0xC0 == (0xE0 & ($in))) {
+                } elseif (0xC0 == (0xE0 & ($in))) {
                     // First octet of 2 octet sequence
                     $mUcs4 = ($in);
                     $mUcs4 = ($mUcs4 & 0x1F) << 6;
                     $mState = 1;
                     $mBytes = 2;
-                } else if (0xE0 == (0xF0 & ($in))) {
+                } elseif (0xE0 == (0xF0 & ($in))) {
                     // First octet of 3 octet sequence
                     $mUcs4 = ($in);
                     $mUcs4 = ($mUcs4 & 0x0F) << 12;
                     $mState = 2;
                     $mBytes = 3;
-                } else if (0xF0 == (0xF8 & ($in))) {
+                } elseif (0xF0 == (0xF8 & ($in))) {
                     // First octet of 4 octet sequence
                     $mUcs4 = ($in);
                     $mUcs4 = ($mUcs4 & 0x07) << 18;
                     $mState = 3;
                     $mBytes = 4;
-                } else if (0xF8 == (0xFC & ($in))) {
+                } elseif (0xF8 == (0xFC & ($in))) {
                     /* First octet of 5 octet sequence.
                      *
                      * This is illegal because the encoded codepoint must be either
@@ -602,18 +603,17 @@ class AnHelperString
                     $mUcs4 = ($mUcs4 & 0x03) << 24;
                     $mState = 4;
                     $mBytes = 5;
-                } else if (0xFC == (0xFE & ($in))) {
+                } elseif (0xFC == (0xFE & ($in))) {
                     // First octet of 6 octet sequence, see comments for 5 octet sequence.
                     $mUcs4 = ($in);
                     $mUcs4 = ($mUcs4 & 1) << 30;
                     $mState = 5;
                     $mBytes = 6;
-
                 } else {
                     /* Current octet is neither in the US-ASCII range nor a legal first
                      * octet of a multi-octet sequence.
                      */
-                    return FALSE;
+                    return false;
                 }
             } else {
                 // When mState is non-zero, we expect a continuation of the multi-octet
@@ -642,8 +642,8 @@ class AnHelperString
                             (($mUcs4 & 0xFFFFF800) == 0xD800) ||
                             // Codepoints outside the Unicode range are illegal
                             ($mUcs4 > 0x10FFFF)) {
-                                return FALSE;
-                            }
+                            return false;
+                        }
 
                         //initialize UTF8 cache
                         $mState = 0;
@@ -655,12 +655,12 @@ class AnHelperString
                      *((0xC0 & (*in) != 0x80) && (mState != 0))
                      * Incomplete multi-octet sequence.
                      */
-                    return FALSE;
+                    return false;
                 }
             }
         }
         
-        return TRUE;
+        return true;
     }
 
     /**
@@ -682,12 +682,12 @@ class AnHelperString
     public static function compliant($str)
     {
         if (strlen($str) == 0) {
-            return TRUE;
+            return true;
         }
         // If even just the first character can be matched, when the /u
         // modifier is used, then it's valid UTF-8. If the UTF-8 is somehow
         // invalid, nothing at all will match, even if the string contains
         // some valid sequences
-        return (preg_match('/^.{1}/us',$str,$ar) == 1);
+        return (preg_match('/^.{1}/us', $str, $ar) == 1);
     }
 }
