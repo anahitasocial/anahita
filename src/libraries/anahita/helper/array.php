@@ -287,14 +287,14 @@ class AnHelperArray
      */
     public static function settype(array $array, $type, $recursive = true)
     {
-        foreach($array as $k => $v)
-        {
-            if($recursive && is_array($v)) {
+        foreach ($array as $k => $v) {
+            if ($recursive && is_array($v)) {
                 $array[$k] = self::settype($v, $type, $recursive);
             } else {
                 settype($array[$k], $type);
             }
         }
+        
         return $array;
     }
     
@@ -308,13 +308,14 @@ class AnHelperArray
     {
         $count = 0;
 
-        foreach($array as $v){
-            if(is_array($v)){
+        foreach ($array as $v) {
+            if (is_array($v)) {
                 $count += self::count($v);
             } else {
                 $count++;
             }
         }
+        
         return $count;
     }
     
@@ -336,17 +337,15 @@ class AnHelperArray
      */
     public static function merge( array &$array1, array &$array2 )
     {
-        $args   = func_get_args();
+        $args = func_get_args();
         $merged = array_shift($args);
 
-        foreach($args as $array)
-        {
-            foreach ( $array as $key => &$value )
-            {
-                if ( is_array ( $value ) && isset ( $merged [$key] ) && is_array ( $merged [$key] ) ){
-                    $merged [$key] = self::merge ( $merged [$key], $value );
+        foreach ($args as $array) {
+            foreach ($array as $key => &$value) {
+                if (is_array( $value ) && isset($merged[$key]) && is_array($merged[$key])){
+                    $merged[$key] = self::merge($merged[$key], $value);
                 } else {
-                    $merged [$key] = $value;
+                    $merged[$key] = $value;
                 }
             }
         }
@@ -365,9 +364,8 @@ class AnHelperArray
     {
         $result = array();
 
-        foreach($array as $k => $v)
-        {
-            if(is_object($v)) {
+        foreach ($array as $k => $v) {
+            if (is_object($v)) {
                 $result[$k] = $v->$index;
             } else {
                 $result[$k] = $v[$index];
@@ -391,34 +389,29 @@ class AnHelperArray
     {
         $output = array();
 
-        if($array instanceof KConfig)
-        {
+        if ($array instanceof KConfig) {
             $data = array();
-            foreach($array as $key => $item)
-            {
+            foreach ($array as $key => $item) {
                 $data[$key] = (string) $item;
             }
             $array = $data;
         }
 
-        if(is_object($array)) {
+        if (is_object($array)) {
             $array = (array) KConfig::unbox($array);
         }
 
-        if(is_array($array))
-        {
-            foreach($array as $key => $item)
-            {
-                if(is_array($item))
-                {
-                    if($keepOuterKey) {
+        if (is_array($array)) {
+            foreach ($array as $key => $item) {
+                if (is_array($item)) {
+                    if ($keepOuterKey) {
                         $output[] = $key;
                     }
-
                     // This is value is an array, go and do it again!
                     $output[] = AnHelperArray::toString($item, $inner_glue, $outer_glue, $keepOuterKey);
+                } else {
+                    $output[] = $key.$inner_glue.'"'.str_replace('"', '&quot;', $item).'"';
                 }
-                else $output[] = $key.$inner_glue.'"'.str_replace('"', '&quot;', $item).'"';
             }
         }
 
