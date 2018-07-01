@@ -39,9 +39,9 @@ class ComActorsDomainEntityAdministrator extends ComBaseDomainEntityEdge
     /**
      * Resets the votable stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $this->administrable->getRepository()
                             ->getBehavior('administrable')
@@ -53,7 +53,7 @@ class ComActorsDomainEntityAdministrator extends ComBaseDomainEntityEdge
     /**
      * Resets the votable stats.
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->administrable->getRepository()
                             ->getBehavior('administrable')

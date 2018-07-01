@@ -30,9 +30,9 @@ class ComMediumControllerBehaviorCommentable extends ComBaseControllerBehaviorCo
     /**
      * Create a story after a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function createCommentStory(KCommandContext $context)
+    public function createCommentStory(AnCommandContext $context)
     {
         //called by the comment controller as as callback
         $entity = $context->comment;

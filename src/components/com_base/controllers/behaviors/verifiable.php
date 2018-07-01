@@ -20,7 +20,7 @@ class ComBaseControllerBehaviorVerifiable extends AnControllerBehaviorAbstract
     */
     protected function _actionVerify($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->verify();
         return;
     }
@@ -32,7 +32,7 @@ class ComBaseControllerBehaviorVerifiable extends AnControllerBehaviorAbstract
     */
     protected function _actionUnverify($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->unverify();
         return;
     }

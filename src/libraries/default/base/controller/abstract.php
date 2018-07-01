@@ -203,7 +203,7 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     /**
      * Sets the context response.
      *
-     * @return KCommandContext
+     * @return AnCommandContext
      */
     public function getCommandContext()
     {
@@ -220,7 +220,7 @@ class LibBaseControllerAbstract extends AnControllerAbstract
      * @param mixed $behavior Behavior name
      * @param array $config   An array of options to configure the behavior with
      *
-     * @see KMixinBehavior::getBehavior()
+     * @see AnMixinBehavior::getBehavior()
      *
      * @return AnDomainBehaviorAbstract
      */

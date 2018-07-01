@@ -68,11 +68,11 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     /**
      * Search and return the result.
      *
-     * @param KCommandContext $context Controller command chain context
+     * @param AnCommandContext $context Controller command chain context
      *
      * @return string The result to render
      */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $this->setView('searches');
 

@@ -20,7 +20,7 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
      *
      * @see ComBaseDispatcherDefault::_actionDispatch()
      */
-    protected function _actionDispatch(KCommandContext $context)
+    protected function _actionDispatch(AnCommandContext $context)
     {
         if (
             $this->getController()->getIdentifier()->name === 'session' &&
@@ -43,7 +43,7 @@ class ComPeopleDispatcher extends ComBaseDispatcherDefault
      *
      * @see ComBaseDispatcherDefault::_actionException()
      */
-    protected function _actionException(KCommandContext $context)
+    protected function _actionException(AnCommandContext $context)
     {
         if (
             $context->data instanceof LibBaseControllerExceptionUnauthorized &&

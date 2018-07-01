@@ -9,7 +9,7 @@ class plgUserAnahita extends PlgAnahitaDefault
     * @param $event->data
     * @return boolean
     */
-    public function onBeforeAddPerson(KEvent $event)
+    public function onBeforeAddPerson(AnEvent $event)
     {
         return true;
     }
@@ -20,7 +20,7 @@ class plgUserAnahita extends PlgAnahitaDefault
     * @param $event->person
     * @return boolean
     */
-    public function onAfterAddPerson(KEvent $event)
+    public function onAfterAddPerson(AnEvent $event)
     {
         return true;
     }
@@ -31,7 +31,7 @@ class plgUserAnahita extends PlgAnahitaDefault
     * @param $event->data
     * @return boolean
     */
-    public function onBeforeEditPerson(KEvent $event)
+    public function onBeforeEditPerson(AnEvent $event)
     {
         return true;
     }
@@ -42,7 +42,7 @@ class plgUserAnahita extends PlgAnahitaDefault
     * @param $event->person
     * @return boolean
     */
-    public function onAfterEditPerson(KEvent $event)
+    public function onAfterEditPerson(AnEvent $event)
     {
         return true;
     }
@@ -53,7 +53,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      * @param $event->data
      * @return boolean
      */
-    public function onBeforeDeletePerson(KEvent $event)
+    public function onBeforeDeletePerson(AnEvent $event)
     {
         return true;
     }
@@ -64,7 +64,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      * @param $event->id person id
      * @return boolean
      */
-    public function onAfterDeletePerson(KEvent $event)
+    public function onAfterDeletePerson(AnEvent $event)
     {
         return true;
     }
@@ -75,7 +75,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      * @param $event->credentials
      * @return boolean
      */
-    public function onBeforeLoginPerson(KEvent $event)
+    public function onBeforeLoginPerson(AnEvent $event)
     {
         return true;
     }
@@ -86,7 +86,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      * @param $event->person
      * @return boolean
      */
-    public function onAfterLoginPerson(KEvent $event)
+    public function onAfterLoginPerson(AnEvent $event)
     {
         return true;
     }
@@ -97,7 +97,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      * @param $event->person
      * @return boolean
      */
-    public function onBeforeLogoutPerson(KEvent $event)
+    public function onBeforeLogoutPerson(AnEvent $event)
     {
         return true;
     }
@@ -108,7 +108,7 @@ class plgUserAnahita extends PlgAnahitaDefault
      * @param $event->id person id
      * @return boolean
      */
-    public function onAfterLogoutPerson(KEvent $event)
+    public function onAfterLogoutPerson(AnEvent $event)
     {
         return true;
     }

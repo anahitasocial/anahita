@@ -103,7 +103,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
 
         $this->_tables = Kconfig::unbox($config->tables);
 
-        $this->mixin(new KMixinCommand($config));
+        $this->mixin(new AnMixinCommand($config));
     }
 
     /**
@@ -121,8 +121,8 @@ abstract class ComMigratorMigrationAbstract extends KObject
            'output_path' => $path,
            'tables' => self::AUTO_DETECT_TABLES,
            'db' => $this->getService('anahita:database'),
-           'command_chain' => $this->getService('koowa:command.chain'),
-           'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
+           'command_chain' => $this->getService('anahita:command.chain'),
+           'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
            'component' => $this->getIdentifier()->package,
         ));
 

@@ -170,9 +170,9 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     /**
      * After an entity is instantaited.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterEntityInstantiate(KCommandContext $context)
+    protected function _afterEntityInstantiate(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -293,9 +293,9 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     /**
      * Called after the entity is updated.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterEntityUpdate(KCommandContext $context)
+    protected function _afterEntityUpdate(AnCommandContext $context)
     {
         if (isset($this->_pending_files[$this->_mixer])) {
             $files = $this->_pending_files[$this->_mixer];
@@ -311,9 +311,9 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     /**
      * Called after inserting the entity.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         if (isset($this->_pending_files[$this->_mixer])) {
             $files = $this->_pending_files[$this->_mixer];
@@ -329,11 +329,11 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     /**
      * Delete a photo image from the storage.
      *
-     * @param  KCommandContext $context Context parameter
+     * @param  AnCommandContext $context Context parameter
      *
      * @return bool
      */
-    protected function _beforeEntityDelete(KCommandContext $context)
+    protected function _beforeEntityDelete(AnCommandContext $context)
     {
         $this->_mixer->removeCoverImage();
     }

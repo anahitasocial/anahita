@@ -51,7 +51,7 @@
 
     <div class="form-actions">
         <? if ($coupon->persisted()): ?>
-            <? if (KRequest::type() == 'AJAX'): ?>
+            <? if (AnRequest::type() == 'AJAX'): ?>
             <a data-action="cancel" class="btn" href="<?= @route($coupon->getURL().'&layout=list') ?>">
                 <?= @text('LIB-AN-ACTION-CANCEL') ?>
             </a>

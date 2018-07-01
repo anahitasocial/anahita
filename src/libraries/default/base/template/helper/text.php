@@ -101,7 +101,7 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
                             }
                         }
                     }
-                    $truncate .= KHelperString::substr($line_matchings[2], 0, $left + $entities_length);
+                    $truncate .= AnHelperString::substr($line_matchings[2], 0, $left + $entities_length);
                     // maximum lenght is reached, so get off the loop
                     break;
                 } else {
@@ -118,7 +118,7 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
             if (strlen($text) <= $length) {
                 return $text;
             } else {
-                $truncate = KHelperString::substr($text, 0, $length - strlen($ending));
+                $truncate = AnHelperString::substr($text, 0, $length - strlen($ending));
             }
         }
 
@@ -128,7 +128,7 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
             $spacepos = strrpos($truncate, ' ');
             if (isset($spacepos)) {
                 // ...and cut the text in this position
-                $truncate = KHelperString::substr($truncate, 0, $spacepos);
+                $truncate = AnHelperString::substr($truncate, 0, $spacepos);
             }
         }
 
@@ -165,20 +165,20 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
      */
     public function substring($text, $searchword, $length = 200)
     {
-        $textlen = KHelperString::strlen($text);
-        $lsearchword = KHelperString::strtolower($searchword);
+        $textlen = AnHelperString::strlen($text);
+        $lsearchword = AnHelperString::strtolower($searchword);
         $wordfound = false;
         $pos = 0;
 
         while ($wordfound === false && $pos < $textlen) {
-            if (($wordpos = @KHelperString::strpos($text, ' ', $pos + $length)) !== false) {
+            if (($wordpos = @AnHelperString::strpos($text, ' ', $pos + $length)) !== false) {
                 $chunk_size = $wordpos - $pos;
             } else {
                 $chunk_size = $length;
             }
 
-            $chunk = KHelperString::substr($text, $pos, $chunk_size);
-            $wordfound = KHelperString::strpos(KHelperString::strtolower($chunk), $lsearchword);
+            $chunk = AnHelperString::substr($text, $pos, $chunk_size);
+            $wordfound = AnHelperString::strpos(AnHelperString::strtolower($chunk), $lsearchword);
 
             if ($wordfound === false) {
                 $pos += $chunk_size + 1;
@@ -188,10 +188,10 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
         if ($wordfound !== false) {
             return (($pos > 0) ? '...&nbsp;' : '').$chunk.'&nbsp;...';
         } else {
-            if (($wordpos = @KHelperString::strpos($text, ' ', $length)) !== false) {
-                return KHelperString::substr($text, 0, $wordpos).'&nbsp;...';
+            if (($wordpos = @AnHelperString::strpos($text, ' ', $length)) !== false) {
+                return AnHelperString::substr($text, 0, $wordpos).'&nbsp;...';
             } else {
-                return KHelperString::substr($text, 0, $length);
+                return AnHelperString::substr($text, 0, $length);
             }
         }
     }
@@ -210,7 +210,7 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
         settype($words, 'array');
         foreach ($words as $word) {
             if (strlen($word) >= $min) {
-                $text = KHelperString::str_ireplace($word, '<span class="an-text-highlight">'.$word.'</span>', $text);
+                $text = AnHelperString::str_ireplace($word, '<span class="an-text-highlight">'.$word.'</span>', $text);
             }
         }
 
@@ -256,6 +256,6 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
     {
         return htmlspecialchars(
                $this->getService('koowa:filter.string')
-               ->sanitize(KHelperString::str_ireplace(array("\r\n", "\n"), '', $text)), ENT_QUOTES);
+               ->sanitize(AnHelperString::str_ireplace(array("\r\n", "\n"), '', $text)), ENT_QUOTES);
     }
 }

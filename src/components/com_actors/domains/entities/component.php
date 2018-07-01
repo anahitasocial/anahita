@@ -66,11 +66,11 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * Called on when the stories are being aggregated.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      *
      * @return bool
      */
-    public function onStoryAggregation(KEvent $event)
+    public function onStoryAggregation(AnEvent $event)
     {
         if (!empty($this->_story_aggregation)) {
             $event->aggregations->append(array(

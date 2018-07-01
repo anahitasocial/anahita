@@ -74,8 +74,8 @@ abstract class LibBaseViewAbstract extends KObject
         parent::__construct($config);
 
         //set the base url
-        if (! $config->base_url instanceof KHttpUrl) {
-            $this->_baseurl = $this->getService('koowa:http.url', array('url' => $config->base_url));
+        if (! $config->base_url instanceof AnHttpUrl) {
+            $this->_baseurl = $this->getService('anahita:http.url', array('url' => $config->base_url));
         } else {
             $this->_baseurl = $config->base_url;
         }
@@ -255,7 +255,7 @@ abstract class LibBaseViewAbstract extends KObject
     /**
      * Get the view base url.
      *
-     * @return object A KHttpUrl object
+     * @return object A AnHttpUrl object
      */
     public function getBaseUrl()
     {

@@ -76,9 +76,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     /**
      * Adds a subscription.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $payload = $this->_order->getPayload();
 
@@ -114,7 +114,7 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
             throw new RuntimeException("Subscription can not be added");
         }
 
-        $this->getResponse()->status = KHttpResponse::CREATED;
+        $this->getResponse()->status = AnHttpResponse::CREATED;
         dispatch_plugin('subscriptions.onAfterSubscribe', array('subscription' => $subscription));
         $this->setItem($subscription);
 
@@ -124,9 +124,9 @@ class ComSubscriptionsControllerSubscription extends ComBaseControllerService
     /**
      * Mail an invoice after adding a subscription.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function mailInvoice(KCommandContext $context)
+    public function mailInvoice(AnCommandContext $context)
     {
         if ($this->getItem()) {
 

@@ -60,9 +60,9 @@ class ComComponentsDomainBehaviorScopeable extends LibBaseDomainBehaviorEnableab
     /**
      * Cacthes the before get.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onBeforeFetch(KEvent $event)
+    public function onBeforeFetch(AnEvent $event)
     {
         $event->scope->append($this->_mixer->getScopes());
     }

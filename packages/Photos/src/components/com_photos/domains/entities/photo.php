@@ -89,11 +89,11 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
     /**
      * Track the filename.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      *
      * @see self::_afterEntityDelete
      */
-    protected function _beforeEntityDelete(KCommandContext $context)
+    protected function _beforeEntityDelete(AnCommandContext $context)
     {
         //we need the filename since when it's deleted the filename
         //is set to null
@@ -103,9 +103,9 @@ class ComPhotosDomainEntityPhoto extends ComMediumDomainEntityMedium
     /**
      * Delete the photo from all the sets.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         if (!empty($this->__sets)) {
             foreach ($this->__sets as $set) {

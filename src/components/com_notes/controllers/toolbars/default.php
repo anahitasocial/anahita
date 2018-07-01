@@ -16,9 +16,9 @@ class ComNotesControllerToolbarDefault extends ComMediumControllerToolbarDefault
     /**
      * Called after controller browse.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onAfterControllerBrowse(KEvent $event)
+    public function onAfterControllerBrowse(AnEvent $event)
     {
         return;
     }

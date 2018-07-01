@@ -38,7 +38,7 @@ abstract class LibBaseControllerPermissionAbstract extends AnControllerBehaviorA
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-             'priority' => KCommand::PRIORITY_LOW,
+             'priority' => AnCommand::PRIORITY_LOW,
              'auto_mixin' => true,
         ));
 
@@ -49,11 +49,11 @@ abstract class LibBaseControllerPermissionAbstract extends AnControllerBehaviorA
      * Command handler.
      *
      * @param string          $name    The command name
-     * @param KCommandContext $context The command context
+     * @param AnCommandContext $context The command context
      *
      * @return bool Can return both true or false.
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $parts = explode('.', $name);
 
@@ -85,14 +85,14 @@ abstract class LibBaseControllerPermissionAbstract extends AnControllerBehaviorA
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 
     /**
      * Authorizes an action. This method can be overriden by the mixer. This method
      * will call can[Action Name].
      *
-     * @param KCommandContext $context The CommandChain Context
+     * @param AnCommandContext $context The CommandChain Context
      *
      * @return bool
      */

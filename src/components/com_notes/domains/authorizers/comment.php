@@ -16,7 +16,7 @@ class ComNotesDomainAuthorizerComment extends ComMediumDomainAuthorizerDefault
     /**
      * Notes comment can not be edited.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */

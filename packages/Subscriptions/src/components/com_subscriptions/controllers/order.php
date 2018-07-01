@@ -42,7 +42,7 @@ class ComSubscriptionsControllerOrder extends ComBaseControllerService
     /**
      * Service Browse.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionBrowse($context)
     {

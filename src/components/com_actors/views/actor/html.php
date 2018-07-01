@@ -39,7 +39,7 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
      */
     protected function _layoutDefault()
     {
-        $context = new KCommandContext();
+        $context = new AnCommandContext();
 
         $context->gadgets = new LibBaseTemplateObjectContainer();
         $context->actor = $this->_state->getItem();

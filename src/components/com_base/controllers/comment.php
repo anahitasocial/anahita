@@ -53,7 +53,7 @@ class ComBaseControllerComment extends ComBaseControllerService
     /**
      * Creates a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return AnDomainEntityAbstract
      */
@@ -68,7 +68,7 @@ class ComBaseControllerComment extends ComBaseControllerService
     /**
      * Delete a Comment belonging to a node.
      *
-     * @param KCommandContext $context post data
+     * @param AnCommandContext $context post data
      *
      * @return bool
      */
@@ -80,7 +80,7 @@ class ComBaseControllerComment extends ComBaseControllerService
     /**
      * Edit a comment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionEdit($context)
     {

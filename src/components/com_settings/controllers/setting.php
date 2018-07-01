@@ -52,10 +52,10 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     /**
     *   read service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-SYSTEM');
 
@@ -67,10 +67,10 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     /**
     *   read service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         $this->getView()->set('setting', $this->_entity);
     }
@@ -78,10 +78,10 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     /**
     *   edit service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -99,11 +99,11 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     /**
     * method to fetch setting entity
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *
     *  @return ComSettingsDomainEntitySetting object
     */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         if (!$this->_entity) {
             $this->_entity = $this->getService('com:settings.domain.entity.setting')->load();

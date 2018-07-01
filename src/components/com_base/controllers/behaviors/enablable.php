@@ -16,11 +16,11 @@ class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
     /**
      * Enable Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionEnable($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->enable();
 
         return;
@@ -29,11 +29,11 @@ class ComBaseControllerBehaviorEnablable extends AnControllerBehaviorAbstract
     /**
      * Disable Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionDisable($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->disable();
 
         return;

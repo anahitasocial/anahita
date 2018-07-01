@@ -60,7 +60,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
     {
         $config->append(array(
             'repository' => $config->mixer->getIdentifier()->name,
-            'priority' => KCommand::PRIORITY_HIGHEST,
+            'priority' => AnCommand::PRIORITY_HIGHEST,
         ));
 
         parent::_initialize($config);
@@ -74,7 +74,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      *
      * @return bool Can return both true or false.
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $parts = explode('.', $name);
 
@@ -135,7 +135,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
         $item = $this->_mixer->getState()->getItem();
 
         if ($item == null && $this->_mixer->getState()->isUnique()) {
-            $item = $this->fetchEntity(new KCommandContext());
+            $item = $this->fetchEntity(new AnCommandContext());
         }
 
         //create an new entity
@@ -193,9 +193,9 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
     /**
      * Fetches an entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         $context->append(array(
             'identity_scope' => array(),
@@ -272,6 +272,6 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 }

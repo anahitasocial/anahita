@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionForbidden extends RuntimeException
 {
-    protected $code = KHttpResponse::FORBIDDEN;
+    protected $code = AnHttpResponse::FORBIDDEN;
 }

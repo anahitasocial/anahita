@@ -22,7 +22,7 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
     {
         //Built the session identifier based on the action
         $identifier = $this->_mixer->getIdentifier().'.'.$action;
-        $state = KRequest::get('session.'.$identifier, 'raw', array());
+        $state = AnRequest::get('session.'.$identifier, 'raw', array());
 
         //Append the data to the request object
         $this->getState()->append($state);
@@ -41,7 +41,7 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
         $identifier = $this->_mixer->getIdentifier().'.'.$action;
 
         //Set the state in the session
-        KRequest::set('session.'.$identifier, KConfig::unbox($state));
+        AnRequest::set('session.'.$identifier, KConfig::unbox($state));
     }
 
     /**
@@ -50,9 +50,9 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
      * This functions merges the request information with any model state information
      * that was saved in the session and returns the result.
      *
-     * @param 	KCommandContext		The active command context
+     * @param 	AnCommandContext		The active command context
      */
-    protected function _beforeControllerBrowse(KCommandContext $context)
+    protected function _beforeControllerBrowse(AnCommandContext $context)
     {
         $this->restoreState($context->action);
     }
@@ -60,9 +60,9 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
     /**
      * Saves the model state in the session.
      *
-     * @param 	KCommandContext		The active command context
+     * @param 	AnCommandContext		The active command context
      */
-    protected function _afterControllerBrowse(KCommandContext $context)
+    protected function _afterControllerBrowse(AnCommandContext $context)
     {
         $this->persistState($context->action);
     }

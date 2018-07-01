@@ -29,7 +29,7 @@ class ComNotificationsTemplateFilterLink extends LibBaseTemplateFilterAbstract i
             foreach ($matches[1] as $index => $match) {
                 $attribs = $this->_parseAttributes($match);
                 $attribs['style'] = 'color:#076da0;text-decoration:none';
-                $attribs = KHelperArray::toString($attribs);
+                $attribs = AnHelperArray::toString($attribs);
                 $text = str_replace($matches[0][$index], '<a '.$attribs.' >', $text);
             }
         }

@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-interface LibBaseTemplateFilterInterface extends KCommandInterface
+interface LibBaseTemplateFilterInterface extends AnCommandInterface
 {
     /**
      * Get the template object

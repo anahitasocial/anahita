@@ -8,7 +8,7 @@ $components = $this->getService('com://site/people.template.helper')->viewerMenu
 <ul class="nav">
 <? if ($viewer->guest()): ?>
 	<li>
-		<? $return = base64UrlEncode(KRequest::url()); ?>
+		<? $return = base64UrlEncode(AnRequest::url()); ?>
 		<a href="<?= @route('option=com_people&view=session&return='.$return) ?>">
 		<?= @text('LIB-AN-ACTION-LOGIN') ?>
 		</a>

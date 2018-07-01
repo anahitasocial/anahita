@@ -8,7 +8,7 @@ if (!defined('ANPATH_BASE')) {
     KService::get('com://site/application.dispatcher')->load();
 }
 
-$ids = (array) KRequest::get('get.id', 'int', array());
+$ids = (array) AnRequest::get('get.id', 'int', array());
 $controller = KService::get('com:notifications.controller.processor');
 
 if (!empty($ids)) {

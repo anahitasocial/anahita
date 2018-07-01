@@ -627,7 +627,7 @@ function get_config_value($extension, $key = null, $default = null)
  *
  * @param string $plugin     The plugin name
  * @param array  $args       An array of arugments
- * @param mixed  $dispatcher The dispatcher to use, by default it uses koowa:event.dispatcher
+ * @param mixed  $dispatcher The dispatcher to use, by default it uses anahita:event.dispatcher
  */
 function dispatch_plugin($plugin, $args = array(), $dispatcher = null)
 {

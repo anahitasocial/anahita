@@ -382,9 +382,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     /**
      * Adds a filter to the query based on the access mode.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         if (KService::has('viewer')) {
             $query = $context->query;

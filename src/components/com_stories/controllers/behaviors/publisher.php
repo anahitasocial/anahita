@@ -31,7 +31,7 @@ class ComStoriesControllerBehaviorPublisher extends AnControllerBehaviorAbstract
     /**
      * Creates a story.
      *
-     * @param array|KCommandContext $config Config. Can be a story data or KCommandContext if the method
+     * @param array|AnCommandContext $config Config. Can be a story data or AnCommandContext if the method
      *                                      is used as a callback
      *
      * @return ComStoriesDomainEntityStory

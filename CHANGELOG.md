@@ -8,6 +8,8 @@ Anahita 4.3.12 Birth Release
 4. fixed facebook and twitter OAuth.
 5. facebook OAuth is now readonly, because facebook as deprecated publish_stream and publish_actions permission.
 6. twitter OAuth is now available for people actors only for the sake of simplicity. Database migration will remove the paired group actors with twitter.
+7. Nooku/Koowa KHelper, KMixin, KCommand, KEvent, KRequest, and KHttp moved to Anahita library as AnHelper, AnMixin, AnCommand, AnEvent, AnRequest, and AnHttp.
+
 
 Anahita 4.3.11 Birth Release
 =============================

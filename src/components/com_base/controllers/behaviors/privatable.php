@@ -31,7 +31,7 @@ class ComBaseControllerBehaviorPrivatable extends AnControllerBehaviorAbstract
     /**
      * Set a privacy for a privatable entity.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionSetprivacy($context)
     {

@@ -73,7 +73,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     /**
      * Browse Action.
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      *
      * @return AnDomainQuery
      */
@@ -101,9 +101,9 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     /**
      * Set the necessary redirect.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function redirect(KCommandContext $context)
+    public function redirect(AnCommandContext $context)
     {
         $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
         $url['option'] = $this->getIdentifier()->package;
@@ -120,7 +120,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     /**
      * Set the default Actor View.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return ComActorsControllerDefault
      */
@@ -141,11 +141,11 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     /**
      * Can be used as a cabllack to automatically create a story.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return ComStoriesDomainEntityStory
      */
-    public function createStoryCallback(KCommandContext $context)
+    public function createStoryCallback(AnCommandContext $context)
     {
         if ($context->result !== false) {
             $data = $context->data;

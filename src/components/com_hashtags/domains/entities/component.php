@@ -27,9 +27,9 @@ class ComHashtagsDomainEntityComponent extends ComComponentsDomainEntityComponen
     /**
      * On Dashboard event.
      *
-     * @param KEvent $event The event parameter
+     * @param AnEvent $event The event parameter
      */
-    public function onDashboardDisplay(KEvent $event)
+    public function onDashboardDisplay(AnEvent $event)
     {
         $actor = $event->actor;
         $gadgets = $event->gadgets;

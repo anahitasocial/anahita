@@ -13,4 +13,4 @@
  * @author		Rastin Mehr <rastin@anahitapolis.com>
  * @package     Anahita_Controller
  */
-interface AnBehaviorInterface extends KCommandInterface, KObjectServiceable {}
+interface AnBehaviorInterface extends AnCommandInterface, KObjectServiceable {}

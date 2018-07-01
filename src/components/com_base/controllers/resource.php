@@ -69,7 +69,7 @@ class ComBaseControllerResource extends LibBaseControllerResource
     /**
      * Sets the context response.
      *
-     * @return KCommandContext
+     * @return AnCommandContext
      */
     public function getCommandContext()
     {

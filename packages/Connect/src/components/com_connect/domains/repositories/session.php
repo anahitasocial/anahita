@@ -17,7 +17,7 @@ class ComConnectDomainRepositorySession extends AnDomainRepositoryDefault
     /**
      * Modify session query to only bring the sessions that are available.
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
         $services = array_keys(ComConnectHelperApi::getServices());

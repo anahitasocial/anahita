@@ -115,7 +115,7 @@ class ComBaseDomainBehaviorCommentable extends AnDomainBehaviorAbstract
     public function addComment($comment)
     {
         if (is_string($comment)) {
-            $comment = KHelperString::trim($comment);
+            $comment = AnHelperString::trim($comment);
 
             $comment = array(
                 'author' => get_viewer() ,

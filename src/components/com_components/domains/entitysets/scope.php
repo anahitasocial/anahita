@@ -28,10 +28,10 @@ class ComComponentsDomainEntitysetScope extends KObjectArray implements KService
             if (! $registry->offsetExists('scopes')) {
                 $components = $container->get('repos:components.component')->fetchSet();
 
-                $dispatcher = $container->get('koowa:event.dispatcher');
+                $dispatcher = $container->get('anahita:event.dispatcher');
                 $components->registerEventDispatcher($dispatcher);
 
-                $event = new KEvent(array('scope' => array()));
+                $event = new AnEvent(array('scope' => array()));
                 $dispatcher->dispatchEvent('onBeforeFetch', $event);
 
                 $scopes = new self();

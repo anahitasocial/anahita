@@ -59,9 +59,9 @@
     /**
      * Renders the sign up view.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $this->_request->append(array(
             'layout' => 'default',
@@ -81,7 +81,7 @@
     /**
      * Confirm the payment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionPayment($context)
     {
@@ -92,7 +92,7 @@
     /**
      * Confirm the payment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionConfirm($context)
     {
@@ -103,7 +103,7 @@
     /**
      * Express Payment.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionXpayment($context)
     {
@@ -117,7 +117,7 @@
             $confirm = route('option=com_subscriptions&view=signup&action=confirm&xpayment=true&id='.$package->id, true);
             $cancel = route('option=com_subscriptions&view=signup&action=cancel&xpayment=true&id='.$package->id, true);
             $url = $gateway->getAuthorizationURL($payload, $confirm, $cancel);
-            $context->response->setRedirect($url, KHttpResponse::SEE_OTHER);
+            $context->response->setRedirect($url, AnHttpResponse::SEE_OTHER);
 
         } catch (Exception $error) {
             throw new RuntimeException($error->getMessage());
@@ -127,7 +127,7 @@
     /**
      * Process Action.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return boolean
      */
@@ -143,8 +143,8 @@
 
         if ($subscription->persisted()) {
 
-            KRequest::set('session.signup', null);
-            KRequest::set('session.subscriber_id', $subscription->person->id);
+            AnRequest::set('session.signup', null);
+            AnRequest::set('session.subscriber_id', $subscription->person->id);
             $url = route('option=com_subscriptions&view=signup&layout=processed&id='.$this->getItem()->id);
 
             if (get_viewer()->guest()) {
@@ -165,11 +165,11 @@
     /**
      * Validates before confirm and process.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    public function validatePayment(KCommandContext $context)
+    public function validatePayment(AnCommandContext $context)
     {
         $data = $context->data;
         $package = $this->getItem();
@@ -220,11 +220,11 @@
     /**
      * Validates a user.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    public function validateUser(KCommandContext $context)
+    public function validateUser(AnCommandContext $context)
     {
         $package = $this->getItem();
 
@@ -241,9 +241,9 @@
     /**
      * Fetches an entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         $entity = $this->getBehavior('identifiable')->fetchEntity($context);
         $this->instantiateDataFromSession($context);
@@ -254,11 +254,11 @@
     /**
      * Override context.
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $data = $context->data;
-        $data->append(KRequest::get('session.signup', 'raw', array()));
-        KRequest::set('session.signup', $data->toArray());
+        $data->append(AnRequest::get('session.signup', 'raw', array()));
+        AnRequest::set('session.signup', $data->toArray());
         $result = parent::execute($name, $context);
 
         return $result;
@@ -269,7 +269,7 @@
      *
      * @param $context
      */
-    public function instantiateDataFromSession(KCommandContext $context)
+    public function instantiateDataFromSession(AnCommandContext $context)
     {
         $data = $context->data;
         $package = $this->getItem();
@@ -350,12 +350,12 @@
 
         $creditcard = $data->creditcard;
         $name = trim($creditcard->name);
-        $space = KHelperString::strpos($name, ' ');
+        $space = AnHelperString::strpos($name, ' ');
 
         $creditcard_data = array(
             'type' => $creditcard->type,
-            'first_name' => KHelperString::ucwords(KHelperString::substr($name, 0, $space)),
-            'last_name' => KHelperString::ucwords(KHelperString::substr($name, $space + 1)),
+            'first_name' => AnHelperString::ucwords(AnHelperString::substr($name, 0, $space)),
+            'last_name' => AnHelperString::ucwords(AnHelperString::substr($name, $space + 1)),
             'number' => $creditcard->number,
             'month' => $creditcard->month,
             'year' => $creditcard->year,

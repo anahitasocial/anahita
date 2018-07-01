@@ -37,7 +37,7 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
     /**
      * Browse Topics.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      */
     protected function _actionBrowse($context)
     {
@@ -48,7 +48,7 @@ class ComTopicsControllerTopic extends ComMediumControllerDefault
     /**
      * When a topic is added, then create a notification.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionAdd($context)
     {

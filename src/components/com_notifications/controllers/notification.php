@@ -38,7 +38,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
      *
      * @return string
      */
-    protected function _actionGetcount(KCommandContext $context)
+    protected function _actionGetcount(AnCommandContext $context)
     {
         $count = $this->actor->numOfNewNotifications();
         return $this->getView()->newNotifications($count)->display();
@@ -47,7 +47,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
     /**
      * Return a set of notification objects.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntitysetDefault
      */
@@ -91,7 +91,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
     /**
      * Fake deleting a notification by removing the owner from the notification owners.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract
      */

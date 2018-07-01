@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -30,10 +30,10 @@ class AnHelperFile extends KObject
 {
     /**
      * Return the travel path between two file paths (relative path).
-     * 
+     *
      * @param string $from The starting path
      * @param string $to   The the end path
-     * 
+     *
      * @return string
      */
     public static function getTravelPath($from, $to)

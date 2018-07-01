@@ -36,9 +36,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Remove admin.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionRemoveadmin(KCommandContext $context)
+    protected function _actionRemoveadmin(AnCommandContext $context)
     {
         $this->getItem()->removeAdministrator($this->admin);
     }
@@ -46,9 +46,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Add Admin.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionAddadmin(KCommandContext $context)
+    protected function _actionAddadmin(AnCommandContext $context)
     {
         $this->getItem()->addAdministrator($this->admin);
     }
@@ -56,9 +56,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Get Candidates.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionGetcandidates(KCommandContext $context)
+    protected function _actionGetcandidates(AnCommandContext $context)
     {
         if ($context->request->getFormat() != 'html') {
             $data = $context->data;
@@ -81,9 +81,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Get settings.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionGetsettings(KCommandContext $context)
+    protected function _actionGetsettings(AnCommandContext $context)
     {
         $entity = $this->getItem();
         $this->getToolbar('actorbar')->setActor($entity);
@@ -99,9 +99,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Add App.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionAddapp(KCommandContext $context)
+    protected function _actionAddapp(AnCommandContext $context)
     {
         $data = $context->data;
         $this->getItem()->components->insert($data->app);
@@ -111,9 +111,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Remove App.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionRemoveapp(KCommandContext $context)
+    protected function _actionRemoveapp(AnCommandContext $context)
     {
         $data = $context->data;
         $this->getItem()->components->extract($data->app);
@@ -123,9 +123,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Confirm a request.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionConfirmrequest(KCommandContext $context)
+    protected function _actionConfirmrequest(AnCommandContext $context)
     {
         $this->getItem()->addFollower($this->getState()->requester);
     }
@@ -133,9 +133,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Ignores a request.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _actionIgnorerequest(KCommandContext $context)
+    protected function _actionIgnorerequest(AnCommandContext $context)
     {
         $this->getItem()->removeRequester($this->getState()->requester);
     }
@@ -143,9 +143,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Fetches the requester.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    public function fetchRequester(KCommandContext $context)
+    public function fetchRequester(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -160,9 +160,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     /**
      * Fetches the requester.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    public function fetchAdmin(KCommandContext $context)
+    public function fetchAdmin(AnCommandContext $context)
     {
         $data = $context->data;
 

@@ -70,7 +70,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
      *
      * @see ComBaseControllerService::_actionAdd()
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -80,7 +80,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
     /**
      * Browse action.
      * 
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
     protected function _actionBrowse($context)
     {
@@ -120,7 +120,7 @@ class ComStoriesControllerStory extends ComBaseControllerService
      */
     protected function _actionDelete($context)
     {
-        $context->response->status = KHttpResponse::NO_CONTENT;
+        $context->response->status = AnHttpResponse::NO_CONTENT;
         $this->getItem()->delete();
         $context->response->setRedirect(route($this->getItem()->owner->getURL()));
     }

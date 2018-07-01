@@ -51,10 +51,10 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     /**
     *   read service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return boolean
     */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-TEMPLATES');
 
@@ -66,10 +66,10 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     /**
     *   browse service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return array of entities
     */
-    protected function _actionBrowse(KCommandContext $context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $exclude = array(
           'base',
@@ -94,10 +94,10 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     /**
     *   read service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         $this->getView()->set('item', $this->_entity);
     }
@@ -105,10 +105,10 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     /**
     *   edit service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
         $data = $context->data;
 
@@ -126,11 +126,11 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     /**
     * method to fetch setting entity
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *
     *  @return ComSettingsDomainEntitySetting object
     */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         if (!$this->_entity) {
             if ($entity = $this->getService('com:settings.domain.entity.template')->load($this->alias)) {

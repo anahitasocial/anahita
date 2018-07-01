@@ -176,9 +176,9 @@ class LibBaseDomainBehaviorStorable extends AnDomainBehaviorAbstract
      *
      * When an entity is deleted, the call of this command removes the deleted entity storage
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _beforeEntityDelete(KCommandContext $context)
+    protected function _beforeEntityDelete(AnCommandContext $context)
     {
         $entity = $context->entity;
         $entity->removeStorage();

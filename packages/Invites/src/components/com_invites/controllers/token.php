@@ -32,9 +32,9 @@ class ComInvitesControllerToken extends ComBaseControllerService
     /**
      * Token Read.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         if ($this->invitetoken) {
 
@@ -47,7 +47,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
             }
 
             if ($this->viewer->guest()) {
-                KRequest::set('session.invite_token', $token->value);
+                AnRequest::set('session.invite_token', $token->value);
             }
 
             $this->setItem($token);
@@ -55,7 +55,7 @@ class ComInvitesControllerToken extends ComBaseControllerService
         } else {
             $service = pick($this->service, 'facebook');
             $token = $this->getRepository()->getEntity()->reset();
-            KRequest::set('session.invite_token', $token->value);
+            AnRequest::set('session.invite_token', $token->value);
             $this->getView()->value($token->value);
             return $this->getView()->display();
         }
@@ -64,19 +64,19 @@ class ComInvitesControllerToken extends ComBaseControllerService
     /**
      * Store a token for a service.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
-        $value = KRequest::get('session.invite_token', 'string', null);
+        $value = AnRequest::get('session.invite_token', 'string', null);
 
         if (empty($data->value) || $value != $data->value) {
             throw new LibBaseControllerExceptionBadRequest('Invalid token signature');
             return;
         }
 
-        KRequest::set('session.invite_token', null);
+        AnRequest::set('session.invite_token', null);
 
         $token = $this->getRepository()->getEntity(array(
                         'data' => array(

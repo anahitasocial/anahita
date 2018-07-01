@@ -25,11 +25,11 @@ class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
     /**
      * Pin Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionPin($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->pinned = 1;
 
         return $this->getItem();
@@ -38,11 +38,11 @@ class ComBaseControllerBehaviorPinnable extends AnControllerBehaviorAbstract
     /**
      * Unpin Entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionUnpin($context)
     {
-        $context->response->status = KHttpResponse::RESET_CONTENT;
+        $context->response->status = AnHttpResponse::RESET_CONTENT;
         $this->getItem()->pinned = 0;
 
         return $this->getItem();

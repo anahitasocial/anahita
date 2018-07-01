@@ -159,12 +159,12 @@ class KObject implements KObjectHandlable, KObjectServiceable
      * When using mixin(), the calling object inherits the methods of the mixed
      * in objects, in a LIFO order.
      *
-     * @param   KMixinInterface  $object An object that implements KMinxInterface
+     * @param   AnMixinInterface  $object An object that implements KMinxInterface
      * @return  KObject
      */
-    public function mixin(KMixinInterface $object, $config = array())
+    public function mixin(AnMixinInterface $object, $config = array())
     {
-        if ( !$object instanceof KMixinInterface )
+        if ( !$object instanceof AnMixinInterface )
         {
             if ( !$object instanceof KServiceIdentifier ) 
             {
@@ -182,10 +182,10 @@ class KObject implements KObjectHandlable, KObjectServiceable
             $config = new KConfig($config);
             $config->mixer = $this;
             $object = new $identifier->classname($config);
-            if(!$object instanceof KMixinInterface)
+            if(!$object instanceof AnMixinInterface)
             {
                 throw new \UnexpectedValueException(
-                        'Mixin: '.get_class($mixin).' does not implement KMixinInterface'
+                        'Mixin: '.get_class($mixin).' does not implement AnMixinInterface'
                 );
             }
         }

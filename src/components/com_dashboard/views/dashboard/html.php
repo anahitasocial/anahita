@@ -36,7 +36,7 @@ class ComDashboardViewDashboardHtml extends ComBaseViewHtml
         $this->set('gadgets', new LibBaseTemplateObjectContainer());
         $this->set('composers', new LibBaseTemplateObjectContainer());
 
-        $context = new KCommandContext();
+        $context = new AnCommandContext();
         $context->actor = $this->viewer;
         $context->gadgets = $this->gadgets;
         $context->composers = $this->composers;

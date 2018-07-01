@@ -38,11 +38,11 @@ class ComActorsDomainAuthorizerComponent extends LibBaseDomainAuthorizerDefault
     /**
      * Authorize whether we can add a new actor or not.
      * 
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      * 
      * @return bool
      */
-    protected function _authorizeAdd(KCommandContext $context)
+    protected function _authorizeAdd(AnCommandContext $context)
     {
         $can_publish = get_config_value($this->_entity->component, 'can_publish', self::CAN_ADD_ADMIN);
 

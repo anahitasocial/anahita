@@ -52,7 +52,7 @@ class ComConnectOauthServiceGoogle extends ComConnectOauthServiceAbstract
             'redirect_uri' => $this->_consumer->callback_url,
             'grant_type' => 'authorization_code',
         );
-        $response = $this->getRequest(array('url' => $this->access_token_url, 'method' => KHttpRequest::POST, 'data' => $post))->send();
+        $response = $this->getRequest(array('url' => $this->access_token_url, 'method' => AnHttpRequest::POST, 'data' => $post))->send();
         $result = $response->parseJSON();
         $this->setToken($result->access_token);
 

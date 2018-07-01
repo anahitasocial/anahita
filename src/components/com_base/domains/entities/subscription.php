@@ -36,9 +36,9 @@ class ComBaseDomainEntitySubscription extends ComBaseDomainEntityEdge
     /**
      * Resets the votable stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $this->subscribee->getRepository()
                          ->getBehavior('subscribable')
@@ -48,9 +48,9 @@ class ComBaseDomainEntitySubscription extends ComBaseDomainEntityEdge
     /**
      * Resets the votable stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->subscribee->getRepository()
                          ->getBehavior('subscribable')

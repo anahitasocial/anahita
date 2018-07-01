@@ -19,7 +19,7 @@ class ComTodosDomainBehaviorNode extends LibBaseDomainBehaviorNode
      *
      * @see LibBaseDomainBehaviorNode::_afterRepositoryDeletenodes()
      */
-    protected function _afterRepositoryDeletenodes(KCommandContext $context)
+    protected function _afterRepositoryDeletenodes(AnCommandContext $context)
     {
         parent::_afterRepositoryDeletenodes($context);
 

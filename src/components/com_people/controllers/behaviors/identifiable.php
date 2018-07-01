@@ -18,7 +18,7 @@ class ComPeopleControllerBehaviorIdentifiable extends ComBaseControllerBehaviorI
      *
      * @see ComBaseControllerBehaviorIdentifiable::fetchEntity()
      */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         if ($this->isDispatched()) {
             $username = $this->getRequest()->username;

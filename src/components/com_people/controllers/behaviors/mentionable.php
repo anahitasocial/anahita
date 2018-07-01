@@ -53,11 +53,11 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
     /**
      * Extracts mention usernames from the entity body and updates the entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    public function updateMentionsFromBody(KCommandContext $context)
+    public function updateMentionsFromBody(AnCommandContext $context)
     {
         $entity = $this->getItem();
         $body_mentions = $this->extractMentions($entity->body);
@@ -117,9 +117,9 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
     /**
      * Applies the hashtag filtering to the browse query.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeControllerBrowse(KCommandContext $context)
+    protected function _beforeControllerBrowse(AnCommandContext $context)
     {
         if (! $context->query) {
             $context->query = $this->_mixer->getRepository()->getQuery();
@@ -155,9 +155,9 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
     /**
      * Notify the people who have been mentioned.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    public function notifyMentioned(KCommandContext $context)
+    public function notifyMentioned(AnCommandContext $context)
     {
         $entity = $this->getItem();
         $subscribers = array();

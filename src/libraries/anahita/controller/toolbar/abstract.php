@@ -15,7 +15,7 @@
  * @subpackage 	Toolbar
  * @uses        AnInflector
  */
-abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract implements AnControllerToolbarInterface
+abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract implements AnControllerToolbarInterface
 {
     /**
      * The toolbar title
@@ -51,7 +51,7 @@ abstract class AnControllerToolbarAbstract extends KEventSubscriberAbstract impl
         parent::__construct($config);
 
         if(is_null($config->controller)) {
-			throw new KMixinException('controller [AnController] option is required');
+			throw new AnMixinException('controller [AnController] option is required');
 		}
 
         // Set the controller

@@ -67,9 +67,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Return the session.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      */
-    protected function _actionRead(KCommandContext $context)
+    protected function _actionRead(AnCommandContext $context)
     {
         if (! $this->_state->viewer->guest()) {
             $this->_state->setItem($this->_state->viewer);
@@ -82,9 +82,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Post method.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionPost(KCommandContext $context)
+    protected function _actionPost(AnCommandContext $context)
     {
         return $this->execute('add', $context);
     }
@@ -92,23 +92,23 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Authenticate a person and create a new session If a username password is passed then the user is first logged in.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @throws LibBaseControllerExceptionUnauthorized If authentication failed
      * @throws LibBaseControllerExceptionForbidden    If person is authenticated but forbidden
      * @throws RuntimeException                       for unkown error
      */
-    protected function _actionAdd(KCommandContext $context)
+    protected function _actionAdd(AnCommandContext $context)
     {
         $data = $context->data;
 
         dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $data));
 
         if ($data->return) {
-            KRequest::set('session.return', $data->return);
+            AnRequest::set('session.return', $data->return);
             $context->url = base64UrlDecode($data->return);
         } else {
-            KRequest::set('session.return', '');
+            AnRequest::set('session.return', '');
         }
 
         $credentials = array(
@@ -126,7 +126,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
             $person = $this->getService('com:people.helper.person')->login($credentials);
             $this->_state->setItem($person);
-            $this->getResponse()->status = KHttpResponse::CREATED;
+            $this->getResponse()->status = AnHttpResponse::CREATED;
 
             dispatch_plugin('user.onAfterLoginPerson', array('person' => $this->person));
 
@@ -139,11 +139,11 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             }
 
             $this->getResponse()->setRedirect($context->url);
-            KRequest::set('session.return', '');
+            AnRequest::set('session.return', '');
         } else {
             $this->setMessage(translate('COM-PEOPLE-AUTHENTICATION-FAILED'), 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
-            $this->getResponse()->status = KHttpResponse::FORBIDDEN;
+            $this->getResponse()->status = AnHttpResponse::FORBIDDEN;
             $this->getResponse()->setRedirect(route('option=com_people&view=session'));
         }
     }
@@ -151,9 +151,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Deletes a session and logs out the user.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      */
-    protected function _actionDelete(KCommandContext $context)
+    protected function _actionDelete(AnCommandContext $context)
     {
         $viewer = $this->_state->viewer;
         $person_id = $viewer->id;
@@ -166,20 +166,20 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Logs in a user if an activation token is provided.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @return bool true on success
      */
-    protected function _actionTokenlogin(KCommandContext $context)
+    protected function _actionTokenlogin(AnCommandContext $context)
     {
         if ($this->token == '') {
-            throw new AnErrorException(array('No token is provided'), KHttpResponse::FORBIDDEN);
+            throw new AnErrorException(array('No token is provided'), AnHttpResponse::FORBIDDEN);
         }
 
         $person = $this->getService('repos:people.person')->find(array('activationCode' => $this->token));
 
         if (! $person) {
-            throw new AnErrorException(array('This token is invalid'), KHttpResponse::NOT_FOUND);
+            throw new AnErrorException(array('This token is invalid'), AnHttpResponse::NOT_FOUND);
         }
 
         $newPerson = ($person->registrationDate->compare($person->lastVisitDate)) ? true : false;
@@ -193,7 +193,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $this->_request->token = '';
 
         if ($this->reset_password) {
-            KRequest::set('session.reset_password_prompt', 1);
+            AnRequest::set('session.reset_password_prompt', 1);
         }
 
         $credentials = array(
@@ -208,7 +208,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 
         if ($this->return) {
-            KRequest::set('session.return', $this->return);
+            AnRequest::set('session.return', $this->return);
             $returnUrl = base64UrlDecode($this->return);
             $this->getResponse()->setRedirect($returnUrl);
         } else {
@@ -217,7 +217,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
         }
 
-        $this->getResponse()->status = KHttpResponse::ACCEPTED;
+        $this->getResponse()->status = AnHttpResponse::ACCEPTED;
 
         return true;
     }

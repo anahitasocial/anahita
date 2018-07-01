@@ -23,7 +23,7 @@ class LibBaseTemplateFilterScript extends LibBaseTemplateFilterAbstract implemen
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_LOW,
+            'priority' => AnCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);
@@ -93,7 +93,7 @@ class LibBaseTemplateFilterScript extends LibBaseTemplateFilterAbstract implemen
      */
     protected function _renderScript($script, $link, $attribs = array())
     {
-        $attribs = KHelperArray::toString($attribs);
+        $attribs = AnHelperArray::toString($attribs);
 
         if (!$link) {
             $html  = '<script type="text/javascript" '.$attribs.'>'."\n";

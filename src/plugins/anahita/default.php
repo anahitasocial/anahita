@@ -39,7 +39,7 @@
 * <?php
 * class PlgAnahitaFoo extends PlgAnahitaDefault
 * {
-* 		public function onBeforeControllerBrowse(KEvent $event)
+* 		public function onBeforeControllerBrowse(AnEvent $event)
 * 		{
 * 			//The publisher is a reference to the object that is triggering this event
 * 			$publisher = $event->getPublisher();
@@ -60,7 +60,7 @@
 * @subpackage   Anahita
 */
 
-abstract class PlgAnahitaDefault extends KEventSubscriberDefault
+abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
 {
     /**
      * Plugin Parameters
@@ -89,7 +89,7 @@ abstract class PlgAnahitaDefault extends KEventSubscriberDefault
             KService::setConfig($publisher, array('event_subscribers' => array($this)));
         }
 
-        if ($dispatcher instanceof KEventDispatcher ) {
+        if ($dispatcher instanceof AnEventDispatcher ) {
             $dispatcher->addEventSubscriber($this);
         }
   	}

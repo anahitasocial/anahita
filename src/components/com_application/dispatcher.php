@@ -115,7 +115,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
             if (! $this->_controller instanceof LibBaseControllerAbstract) {
                 throw new \UnexpectedValueException(
                     'Dispatcher: '.get_class($this->_controller).' does not implement LibBaseDispatcherAbstract',
-                    KHttpResponse::INTERNAL_SERVER_ERROR
+                    AnHttpResponse::INTERNAL_SERVER_ERROR
                 );
             }
         }
@@ -153,19 +153,19 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Parses the route.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @return bool
      */
-    protected function _actionRoute(KCommandContext $context)
+    protected function _actionRoute(AnCommandContext $context)
     {
         //route the application
-        $url = clone KRequest::url();
+        $url = clone AnRequest::url();
         $url = $this->_application->getRouter()->parse($url);
 
-        KRequest::set('get', $url->query);
+        AnRequest::set('get', $url->query);
 
-        $url->query = KRequest::get('get', 'raw');
+        $url->query = AnRequest::get('get', 'raw');
 
         //set the request
         $this->getRequest()->append($url->query);
@@ -224,15 +224,15 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         //set the default timezone to UTC
         date_default_timezone_set('UTC');
 
-        KRequest::root(str_replace('/'.$this->_application->getName(), '', KRequest::base()));
+        AnRequest::root(str_replace('/'.$this->_application->getName(), '', AnRequest::base()));
     }
 
     /**
      * Prepares the CLI mode.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _actionPrepclienv(KCommandContext $context)
+    protected function _actionPrepclienv(AnCommandContext $context)
     {
         if (! empty($_SERVER['argv']) && count($_SERVER['argv']) > 1) {
             $args = array_slice($_SERVER['argv'], 1);
@@ -250,11 +250,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
                 if ($i == 0) {
                     if (strpos($arg, '/') !== false) {
                         $arg = substr_replace($arg, '?', strpos($arg, '&'), 1);
-                        $url = KService::get('koowa:http.url', array('url' => $arg));
-                        KRequest::url()->path = KRequest::base().$url->path;
+                        $url = KService::get('anahita:http.url', array('url' => $arg));
+                        AnRequest::url()->path = AnRequest::base().$url->path;
                         $_GET = $url->query;
                     } else {
-                        KRequest::url()->path = KRequest::base();
+                        AnRequest::url()->path = AnRequest::base();
                         parse_str($arg, $_GET);
                     }
                 } else {
@@ -264,8 +264,8 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         }
 
         $_GET['format'] = 'json';
-        KRequest::url()->format = 'json';
-        KRequest::url()->setQuery($_GET);
+        AnRequest::url()->format = 'json';
+        AnRequest::url()->setQuery($_GET);
 
         KService::get('com:plugins.helper')->import('cli');
         dispatch_plugin('cli.onCli');
@@ -280,11 +280,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Dispatches the component.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *
      * @return void
      */
-    protected function _actionDispatch(KCommandContext $context)
+    protected function _actionDispatch(AnCommandContext $context)
     {
         dispatch_plugin('system.onBeforeDispatch', array( $context ));
         
@@ -295,7 +295,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         if (! file_exists(ANPATH_COMPONENT)) {
             throw new LibBaseControllerExceptionNotFound(
                 'Component '.$name.' not found',
-                KHttpResponse::INTERNAL_SERVER_ERROR
+                AnHttpResponse::INTERNAL_SERVER_ERROR
             );
         }
 
@@ -304,7 +304,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         if (isset($app) && $app->enabled != 1) {
             throw new LibBaseControllerExceptionForbidden(
                 'Component '.$name.' is disabled',
-                KHttpResponse::INTERNAL_SERVER_ERROR
+                AnHttpResponse::INTERNAL_SERVER_ERROR
             );
         }
 
@@ -325,11 +325,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
 
     /**
     *   Outputs html content
-    *   @param KCommandContext $context Command chain context
+    *   @param AnCommandContext $context Command chain context
     *
     *   @return void
     */
-    protected function _render(KCommandContext $context)
+    protected function _render(AnCommandContext $context)
     {
         dispatch_plugin('system.onBeforeRender', array( $context ));
 
@@ -353,7 +353,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      *
      * @param CommandContext $context A command context object
      */
-    public function _actionSend(KCommandContext $context)
+    public function _actionSend(AnCommandContext $context)
     {
         $context->response->send();
         exit(0);
@@ -362,7 +362,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Callback to handle Exception.
      *
-     * @param KCommandContext $context Command chain context
+     * @param AnCommandContext $context Command chain context
      *                                 caller => KObject, data => mixed
      *
      * @return void
@@ -388,7 +388,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
 
         //check if the error is code is valid
         if ($code < 400 || $code >= 600) {
-            $code = KHttpResponse::INTERNAL_SERVER_ERROR;
+            $code = AnHttpResponse::INTERNAL_SERVER_ERROR;
         }
 
         $context->response->status = $code;

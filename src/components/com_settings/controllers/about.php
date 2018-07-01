@@ -33,10 +33,10 @@ class ComSettingsControllerAbout extends ComBaseControllerResource
     /**
     *   read service
     *
-    *  @param KCommandContext $context Context Parameter
+    *  @param AnCommandContext $context Context Parameter
     *  @return void
     */
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-ABOUT');
 

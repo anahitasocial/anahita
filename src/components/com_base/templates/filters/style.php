@@ -45,7 +45,7 @@ class ComBaseTemplateFilterStyle extends LibBaseTemplateFilterStyle
         }
 
         //if ajax try to get the content of the file
-        if (KRequest::type() == 'AJAX') {
+        if (AnRequest::type() == 'AJAX') {
             if ($link) {
                 $file = $this->getService('com:base.template.asset')->getFilePath($style);
                 if ($file) {

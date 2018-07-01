@@ -61,7 +61,7 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
         $config->append(array(
             'identifiable_key' => 'oid',
             'default' => null,
-            'priority' => KCommand::PRIORITY_HIGHEST,
+            'priority' => AnCommand::PRIORITY_HIGHEST,
         ));
 
         parent::_initialize($config);
@@ -75,7 +75,7 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
      *
      * @return bool Can return both true or false.
      */
-    public function execute($name, KCommandContext $context)
+    public function execute($name, AnCommandContext $context)
     {
         $parts = explode('.', $name);
 
@@ -90,11 +90,11 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
      * If the context->data actor is not already set them set the owner to the data
      * before controller add.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    protected function _beforeControllerAdd(KCommandContext $context)
+    protected function _beforeControllerAdd(AnCommandContext $context)
     {
         if (!$context->data['owner'] instanceof ComActorsDomainEntityActor) {
             if ($this->getRepository()->hasBehavior('ownable')) {
@@ -130,11 +130,11 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
     /**
      * Fetches an entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return ComActorsDomainEntityActor
      */
-    protected function _fetchOwner(KCommandContext $context)
+    protected function _fetchOwner(AnCommandContext $context)
     {
         $actor = pick($this->getActor(), $this->_default);
         $value = $this->{$this->getIdentifiableKey()};
@@ -193,6 +193,6 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
      */
     public function getHandle()
     {
-        return KMixinAbstract::getHandle();
+        return AnMixinAbstract::getHandle();
     }
 }

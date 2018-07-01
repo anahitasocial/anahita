@@ -83,7 +83,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
         //Set the mixer in the config
         $config->mixer = $this;
 
-        $this->mixin(new KMixinCommand($config));
+        $this->mixin(new AnMixinCommand($config));
     }
 
     /**
@@ -97,9 +97,9 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
     {
         $config->append(array(
             'adapter' => null,
-            'command_chain' => $this->getService('koowa:command.chain'),
+            'command_chain' => $this->getService('anahita:command.chain'),
             'dispatch_events' => true,
-            'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
+            'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
             'enable_callbacks' => false,
         ));
 

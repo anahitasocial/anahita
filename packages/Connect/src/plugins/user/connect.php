@@ -33,7 +33,7 @@ class PlgUserConnect extends PlgAnahitaDefault
      * @param	bool		true if user was succesfully stored in the database
      * @param	string		message
      */
-    public function onAfterAddPerson(KEvent $event)
+    public function onAfterAddPerson(AnEvent $event)
     {
         $person = $event->person;
 
@@ -45,7 +45,7 @@ class PlgUserConnect extends PlgAnahitaDefault
 
         $user = $this->_api->getUser();
 
-        if (KRequest::get('post.import_avatar', 'cmd') && $user->large_avatar) {
+        if (AnRequest::get('post.import_avatar', 'cmd') && $user->large_avatar) {
             $person->setPortraitImage(array('url' => $user->large_avatar));
         }
 
@@ -61,7 +61,7 @@ class PlgUserConnect extends PlgAnahitaDefault
      *
      * @return bool True on success
      */
-    public function onBeforeLoginPerson(KEvent $event)
+    public function onBeforeLoginPerson(AnEvent $event)
     {
         $credentials = $event->credentials;
 
@@ -117,7 +117,7 @@ class PlgUserConnect extends PlgAnahitaDefault
      */
     protected function _getApi()
     {
-        $post = KRequest::get('post', 'string');
+        $post = AnRequest::get('post', 'string');
 
         $api = null;
 
@@ -127,13 +127,13 @@ class PlgUserConnect extends PlgAnahitaDefault
                 $api = ComConnectHelperApi::getApi($post['oauth_handler']);
                 $api->setToken($post['oauth_token'], isset($post['oauth_secret']) ? $post['oauth_secret'] : '');
             } else {
-                $session = new KConfig(KRequest::get('session.oauth', 'raw', array()));
+                $session = new KConfig(AnRequest::get('session.oauth', 'raw', array()));
 
                 if (! ($session->token && $session->api && $session->consumer)) {
                     return;
                 }
 
-                KRequest::set('session.oauth', null);
+                AnRequest::set('session.oauth', null);
                 KService::get('koowa:loader')->loadIdentifier('com:connect.oauth.consumer');
 
                 $api = KService::get('com:connect.oauth.service.'.$session->api, array(
@@ -152,7 +152,7 @@ class PlgUserConnect extends PlgAnahitaDefault
 
     private function _canPerform()
     {
-        $option = KRequest::get('get.option', 'cmd', '');
+        $option = AnRequest::get('get.option', 'cmd', '');
         return $option == 'com_connect' ? true : false;
     }
 }

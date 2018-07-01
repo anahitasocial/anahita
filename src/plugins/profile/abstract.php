@@ -16,21 +16,21 @@ abstract class PlgProfileAbstract extends PlgAnahitaDefault
     /**
      * Called on the saving an actor profile information.
      *
-     * @param KEvent $event Event parameter
+     * @param AnEvent $event Event parameter
      */
-    abstract public function onSave(KEvent $event);
+    abstract public function onSave(AnEvent $event);
 
     /**
      * Called on displaying profile information.
      *
-     * @param KEvent $event Event parameter
+     * @param AnEvent $event Event parameter
      */
-    abstract public function onDisplay(KEvent $event);
+    abstract public function onDisplay(AnEvent $event);
 
     /**
      * Called on displaying profile information in a form layout.
      *
-     * @param KEvent $event Event parameter
+     * @param AnEvent $event Event parameter
      */
-    abstract public function onEdit(KEvent $event);
+    abstract public function onEdit(AnEvent $event);
 }

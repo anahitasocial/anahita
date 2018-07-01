@@ -75,9 +75,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      *
      * @return string
      */
-    protected function _actionRender(KCommandContext $context)
+    protected function _actionRender(AnCommandContext $context)
     {
-        if ($context->request->getFormat() == 'html' && KRequest::type() == 'HTTP') {
+        if ($context->request->getFormat() == 'html' && AnRequest::type() == 'HTTP') {
             $this->_setPageTitle();
         }
 
@@ -87,9 +87,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
     /**
      * Sets the page title/description.
      *
-     * KCommandContext $context Command Context
+     * AnCommandContext $context Command Context
      */
-    public function setPageTitle(KCommandContext $context)
+    public function setPageTitle(AnCommandContext $context)
     {
         $controller = $this->getController();
 
@@ -151,16 +151,16 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      * Allows the component to handle exception. By default this
      * action passes the exception to the application exception handler.
      *
-     * @param KCommandContext $context Command context
+     * @param AnCommandContext $context Command context
      */
-    protected function _actionException(KCommandContext $context)
+    protected function _actionException(AnCommandContext $context)
     {
         $viewer = get_viewer();
 
         if ($viewer->guest() && $context->data instanceof LibBaseControllerExceptionUnauthorized) {
 
             $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
-            $return = base64_encode(KRequest::url());
+            $return = base64_encode(AnRequest::url());
             $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
             $context->response->send();
             exit(0);

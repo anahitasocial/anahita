@@ -17,11 +17,11 @@ class ComBaseControllerBehaviorIdentifiable extends LibBaseControllerBehaviorIde
     /**
      * Fetches an entity.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      *
      * @return AnDomainEntityAbstract The identified entity
      */
-    public function fetchEntity(KCommandContext $context)
+    public function fetchEntity(AnCommandContext $context)
     {
         $entity = parent::fetchEntity($context);
 

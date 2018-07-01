@@ -63,10 +63,10 @@ abstract class AnControllerAbstract extends KObject
         $config->mixer = $this;
 
         // Mixin the command interface
-        $this->mixin(new KMixinCommand($config));
+        $this->mixin(new AnMixinCommand($config));
 
         // Mixin the behavior interface
-        $this->mixin(new KMixinBehavior($config));
+        $this->mixin(new AnMixinBehavior($config));
 
         //Set the request
 		$this->setRequest((array) KConfig::unbox($config->request));
@@ -83,9 +83,9 @@ abstract class AnControllerAbstract extends KObject
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'command_chain'     => $this->getService('koowa:command.chain'),
+            'command_chain'     => $this->getService('anahita:command.chain'),
             'dispatch_events'   => true,
-            'event_dispatcher'  => $this->getService('koowa:event.dispatcher'),
+            'event_dispatcher'  => $this->getService('anahita:event.dispatcher'),
             'enable_callbacks'  => true,
             'dispatched'		=> false,
             'request'		    => null,
@@ -113,7 +113,7 @@ abstract class AnControllerAbstract extends KObject
      * @return  mixed|false The value returned by the called method, false in error case.
      * @throws  AnControllerException
      */
-    public function execute($action, KCommandContext $context)
+    public function execute($action, AnCommandContext $context)
     {
         $action = strtolower($action);
 
@@ -153,7 +153,7 @@ abstract class AnControllerAbstract extends KObject
      * @param   object  An object that implements KMinxInterface
      * @return  KObject
      */
-    public function mixin(KMixinInterface $object, $config = array())
+    public function mixin(AnMixinInterface $object, $config = array())
     {
         if ($object instanceof AnControllerBehaviorAbstract) {
             foreach ($object->getMethods() as $method) {
@@ -231,7 +231,7 @@ abstract class AnControllerAbstract extends KObject
             $data = !empty($args) ? $args[0] : array();
 
             //Create a context object
-            if(! ($data instanceof KCommandContext)) {
+            if(! ($data instanceof AnCommandContext)) {
                 $context = $this->getCommandContext();
                 $context->data   = $data;
                 $context->result = false;

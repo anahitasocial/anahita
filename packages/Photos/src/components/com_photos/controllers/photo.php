@@ -50,7 +50,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
     /**
      * Browse Photos.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionBrowse($context)
     {
@@ -80,12 +80,12 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
     /**
      * Method to upload and Add a photo.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionAdd($context)
     {
         $data = $context->data;
-        $file = KRequest::get('files.file', 'raw');
+        $file = AnRequest::get('files.file', 'raw');
         $content = @file_get_contents($file['tmp_name']);
         $filesize = strlen($content);
         $uploadlimit = $this->_max_upload_limit * 1024 * 1024;
@@ -120,7 +120,7 @@ class ComPhotosControllerPhoto extends ComMediumControllerDefault
         $photo->setExifData($exif);
         $photo->save();
         $this->setItem($photo);
-        $this->getResponse()->status = KHttpResponse::CREATED;
+        $this->getResponse()->status = AnHttpResponse::CREATED;
 
         if ($photo->body && preg_match('/\S/', $photo->body)) {
             $context->append(array(

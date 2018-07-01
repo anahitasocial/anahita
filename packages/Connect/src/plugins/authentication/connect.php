@@ -18,7 +18,7 @@ class PlgAuthenticationConnect extends PlgAnahitaDefault
      *
      * @return bool
      */
-    public function onAuthenticate(KEvent $event)
+    public function onAuthenticate(AnEvent $event)
     {
         $credentials = $event->credentials;
         $response = $event->response;

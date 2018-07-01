@@ -34,13 +34,14 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * {@inheritdoc}
      */
-    public function onSettingDisplay(KEvent $event)
+    public function onSettingDisplay(AnEvent $event)
     {
+        $viewer = $this->getService('com:people.viewer');
         $actor = $event->actor;
         $tabs = $event->tabs;
         $services = ComConnectHelperApi::getServices();
 
-        if (count($services)) {
+        if ($actor->eql($viewer) && count($services)) {
             $tabs->insert('connect', array(
                 'label' => AnTranslator::_('COM-CONNECT-PROFILE-EDIT'),
                 'controller' => 'com://site/connect.controller.setting' 
@@ -51,11 +52,11 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * Authorizes echo.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return false
      */
-    public function authorizeEcho(KCommandContext $context)
+    public function authorizeEcho(AnCommandContext $context)
     {
         $actor = $context->actor;
 
@@ -69,9 +70,9 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
     /**
      * On Destroy Nodes.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onDeleteActor(KEvent $event)
+    public function onDeleteActor(AnEvent $event)
     {
         $this
         ->getService('repos:connect.session')

@@ -130,7 +130,7 @@ abstract class LibBaseTemplateAbstract extends KObject
         register_shutdown_function(array($this, '__destroy'));
         
          // Mixin a command chain
-        $this->mixin(new KMixinCommand($config->append(array('mixer' => $this))));
+        $this->mixin(new AnMixinCommand($config->append(array('mixer' => $this))));
 
         $this->_data = KConfig::unbox($config->data);
 
@@ -170,7 +170,7 @@ abstract class LibBaseTemplateAbstract extends KObject
             'data' => array(),
             'stack' => $this->getService('com:base.template.stack'),
             'view' => null,
-            'command_chain' => $this->getService('koowa:command.chain'),
+            'command_chain' => $this->getService('anahita:command.chain'),
             'dispatch_events' => false,
             'enable_callbacks' => false,
         ));

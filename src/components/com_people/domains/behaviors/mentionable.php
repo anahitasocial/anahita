@@ -98,7 +98,7 @@
      */
     protected function invalidateUsername($username)
     {
-        $this->_mixer->set('body', KHelperString::str_ireplace('@'.$username, $username, $this->_mixer->body));
+        $this->_mixer->set('body', AnHelperString::str_ireplace('@'.$username, $username, $this->_mixer->body));
     }
 
     /**

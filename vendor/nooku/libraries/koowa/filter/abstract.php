@@ -72,7 +72,7 @@ abstract class KFilterAbstract extends KObject implements KFilterInterface
 	 *
 	 * @return object
 	 */
-	final public function execute($name, KCommandContext $context)
+	final public function execute($name, AnCommandContext $context)
 	{
 		$function = '_'.$name;
 		return $this->$function($context->data);
@@ -182,7 +182,7 @@ abstract class KFilterAbstract extends KObject implements KFilterInterface
 	 */
   	public function getPriority()
   	{
-  		return KCommand::PRIORITY_NORMAL;
+  		return AnCommand::PRIORITY_NORMAL;
   	}
 
 	/**

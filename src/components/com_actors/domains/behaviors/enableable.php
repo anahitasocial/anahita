@@ -33,9 +33,9 @@ class ComActorsDomainBehaviorEnableable extends LibBaseDomainBehaviorEnableable
      * 
      * Only brings the actor that are enabled
      *
-     * @param KCommandContext $context Context Parameter
+     * @param AnCommandContext $context Context Parameter
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         if (get_viewer()->admin()) {
             return;

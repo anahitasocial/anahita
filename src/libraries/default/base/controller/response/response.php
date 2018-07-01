@@ -102,7 +102,7 @@
          $config->append(array(
              'content' => '',
              'content_type' => 'text/html',
-             'status_code' => KHttpResponse::OK,
+             'status_code' => AnHttpResponse::OK,
              'status_message' => 'OK',
              'headers' => array(),
          ));
@@ -144,7 +144,7 @@
              throw new InvalidArgumentException('Response status is missing');
          }
 
-         if (!$message && !KHttpResponse::getMessage($status)) {
+         if (!$message && !AnHttpResponse::getMessage($status)) {
              throw new InvalidArgumentException('Response message is missing');
          }
 

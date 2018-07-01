@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfilterInterface
+abstract class PlgContentfilterAbstract extends AnCommand implements PlgContentfilterInterface
 {
     /**
      * Array of stripped tags.
@@ -46,11 +46,11 @@ abstract class PlgContentfilterAbstract extends KCommand implements PlgContentfi
      * Command handler.
      *
      * @param string          $name    The command name
-     * @param KCommandContext $context The command context
+     * @param AnCommandContext $context The command context
      *
      * @return bool Can return both true or false.
      */
-    final public function execute($name, KCommandContext $context)
+    final public function execute($name, AnCommandContext $context)
     {
         if ($context->config->filter) {
             $filters = (array) KConfig::unbox($context->config->filter);

@@ -16,7 +16,7 @@ class ComBaseDomainAuthorizerComment extends LibBaseDomainAuthorizerDefault
     /**
      * Checks if a comment of a  node can be deleted.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
@@ -46,7 +46,7 @@ class ComBaseDomainAuthorizerComment extends LibBaseDomainAuthorizerDefault
     /**
      * Checks if a comment of a  node can be edited.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */

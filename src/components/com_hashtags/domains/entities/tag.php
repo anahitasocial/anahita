@@ -37,9 +37,9 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     /**
      * After entity insert reset stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $this->resetStats();
     }
@@ -47,9 +47,9 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     /**
      * After entity delete reset stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->resetStats();
     }
@@ -57,7 +57,7 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     /**
      * Resets the hashtag.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
     private function resetStats()
     {

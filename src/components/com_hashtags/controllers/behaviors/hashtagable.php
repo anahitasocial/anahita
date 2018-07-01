@@ -42,11 +42,11 @@ class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstr
     /**
      * Extracts hashtag terms from the entity body and updates the entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return void
      */
-    public function updateHashtagsFromBody(KCommandContext $context)
+    public function updateHashtagsFromBody(AnCommandContext $context)
     {
         $entity = $this->getItem();
         $terms = $this->extractHashtagTerms($entity->body);
@@ -83,9 +83,9 @@ class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstr
     /**
      * Applies the hashtag filtering to the browse query.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeControllerBrowse(KCommandContext $context)
+    protected function _beforeControllerBrowse(AnCommandContext $context)
     {
         if (!$context->query) {
             $context->query = $this->_mixer->getRepository()->getQuery();

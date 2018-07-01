@@ -81,7 +81,7 @@ class ComConnectOauthRequest extends KObject
     {
         $config->append(array(
             'signature' => new OAuthSignatureMethod_HMAC_SHA1(),
-            'method' => KHttpRequest::GET,
+            'method' => AnHttpRequest::GET,
             'data' => array(),
             'options' => array(
                 'timeout' => 30,
@@ -103,7 +103,7 @@ class ComConnectOauthRequest extends KObject
     {
         $url = $this->_internal_request->get_normalized_http_url();
 
-        if ($this->getMethod() == KHttpRequest::GET) {
+        if ($this->getMethod() == AnHttpRequest::GET) {
             $url = $this->_internal_request->to_url();
         }
 
@@ -172,19 +172,19 @@ class ComConnectOauthRequest extends KObject
         }
 
         switch ($method) {
-            case KHttpRequest::POST  :
+            case AnHttpRequest::POST  :
                 curl_setopt($ch, CURLOPT_POST, true);
                 if (!empty($data)) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
                 }
                 break;
-            case KHttpRequest::PUT    :
+            case AnHttpRequest::PUT    :
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PUT');
                 if (!empty($data)) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
                 }
                 break;
-            case KHttpRequest::DELETE:
+            case AnHttpRequest::DELETE:
                 curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
                 if (!empty($data)) {
                     curl_setopt($ch, CURLOPT_POSTFIELDS, $data);

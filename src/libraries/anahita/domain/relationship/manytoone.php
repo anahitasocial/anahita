@@ -91,7 +91,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         $data[(string) $this->_child_column] = $entity ? $entity->get($this->_parent_key) : null;
 
         if ($this->_polymorphic) {
-            if ($entity instanceof KMixinAbstract) {
+            if ($entity instanceof AnMixinAbstract) {
                 $entity = $entity->getMixer();
             }
 

@@ -38,9 +38,9 @@ class ComPhotosDomainEntityEdge extends ComBaseDomainEntityEdge
     /**
      * After adding a relationship, set the photo count for the set;.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $this->set->setValue('photo_count', $this->set->photos->reset()->getTotal());
     }
@@ -48,9 +48,9 @@ class ComPhotosDomainEntityEdge extends ComBaseDomainEntityEdge
     /**
      * After deleting a relationship, set the photo count for the set;.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $total = $this->set->photos->reset()->getTotal();
 

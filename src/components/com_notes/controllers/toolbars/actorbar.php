@@ -16,11 +16,11 @@ class ComNotesControllerToolbarActorbar extends ComBaseControllerToolbarActorbar
     /**
      * Before _actionGet controller event.
      *
-     * @param KEvent $event Event object
+     * @param AnEvent $event Event object
      *
      * @return string
      */
-    public function onBeforeControllerGet(KEvent $event)
+    public function onBeforeControllerGet(AnEvent $event)
     {
         parent::onBeforeControllerGet($event);
 

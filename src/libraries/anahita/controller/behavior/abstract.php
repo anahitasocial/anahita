@@ -28,7 +28,7 @@ abstract class AnControllerBehaviorAbstract extends AnBehaviorAbstract
 	 * @param 	object   	The command context
 	 * @return 	boolean		Can return both true or false.
 	 */
-	public function execute( $name, KCommandContext $context)
+	public function execute( $name, AnCommandContext $context)
 	{
 		$this->setMixer($context->caller);
 

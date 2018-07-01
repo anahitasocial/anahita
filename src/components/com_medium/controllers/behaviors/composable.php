@@ -16,15 +16,15 @@ class ComMediumControllerBehaviorComposable extends ComComposerControllerBehavio
     /**
      * Renders a story after an entity is created through composer.
      *
-     * @param KCommandContext $context Context parameter
+     * @param AnCommandContext $context Context parameter
      */
-    protected function _afterControllerAdd(KCommandContext $context)
+    protected function _afterControllerAdd(AnCommandContext $context)
     {
         $data = $context->data;
 
         if ($data->composed && $data->story) {
             if ($context->response->isRedirect()) {
-                $context->response->setStatus(KHttpResponse::OK);
+                $context->response->setStatus(AnHttpResponse::OK);
                 $context->response->removeHeader('Location');
             }
 

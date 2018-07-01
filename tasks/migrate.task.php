@@ -11,7 +11,7 @@ use \Symfony\Component\Console\Input\InputArgument;
 use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
-require_once 'vendor/nooku/libraries/koowa/event/subscriber/interface.php';
+require_once 'src/libraries/anahita/event/subscriber/interface.php';
 require_once 'vendor/nooku/libraries/koowa/object/handlable.php';
 
 function ask_for_component($input, $output, $console) {
@@ -25,7 +25,7 @@ function ask_for_component($input, $output, $console) {
     return (array) $component;
 }
 
-class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObjectHandlable
+class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KObjectHandlable
 {
     protected $_migrators = array();
 
@@ -47,7 +47,7 @@ class Migrators implements \IteratorAggregate,\KEventSubscriberInterface , \KObj
 
         $paths = new DirectoryFilter($components, array(WWW_ROOT.'/components'));
 
-        $this->_event_dispatcher = \KService::get('koowa:event.dispatcher');
+        $this->_event_dispatcher = \KService::get('anahita:event.dispatcher');
 
         foreach ($paths as $path) {
             $component  = str_replace('com_','', basename($path));

@@ -51,9 +51,9 @@ class ComStoriesDomainRepositoryStory extends AnDomainRepositoryDefault
     /**
      * Before fetch.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
         //$query->where('@col(comment.id) IS NULL');

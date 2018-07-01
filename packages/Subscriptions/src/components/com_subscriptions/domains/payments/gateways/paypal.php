@@ -135,7 +135,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
         } else {
             $gateway = new Merchant_Billing_Paypal($this->_gateway_config);
 
-            $ip = KRequest::get('server.REMOTE_ADDR', 'raw');
+            $ip = AnRequest::get('server.REMOTE_ADDR', 'raw');
 
             if (!$this->getService('koowa:filter.ip')->validate($ip) || strlen($ip) <= 7) {
                 $ip = '127.0.0.1';

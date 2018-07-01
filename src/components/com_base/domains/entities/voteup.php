@@ -33,9 +33,9 @@ class ComBaseDomainEntityVoteup extends ComBaseDomainEntityEdge
     /**
      * Resets the votable stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $this->votee->getRepository()
                     ->getBehavior('votable')
@@ -45,9 +45,9 @@ class ComBaseDomainEntityVoteup extends ComBaseDomainEntityEdge
     /**
      * Resets the votable stats.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->votee->getRepository()
                     ->getBehavior('votable')

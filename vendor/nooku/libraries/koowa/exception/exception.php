@@ -36,7 +36,7 @@ class KException extends Exception implements KExceptionInterface
      * @param integer The exception code
      * @param object  The previous exception
      */
-    public function __construct($message = null, $code = KHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
+    public function __construct($message = null, $code = AnHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
     {
         if (!$message) {
             throw new $this('Unknown '. get_class($this));

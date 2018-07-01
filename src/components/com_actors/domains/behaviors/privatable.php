@@ -31,7 +31,7 @@ class ComActorsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
     /**
      * {@inheritdoc}
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         if (KService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin()) {
             return;

@@ -120,9 +120,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Sets the enity data after it has been fetched from the database storage.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      */
-    protected function _afterEntityFetch(KCommandContext $context)
+    protected function _afterEntityFetch(AnCommandContext $context)
     {
         //set the persistd flag
         $this->setPersisted(true);
@@ -370,7 +370,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
         }
 
         //if a value is mixin then get its mixer
-        if ($value instanceof KMixinAbstract) {
+        if ($value instanceof AnMixinAbstract) {
             $value = $value->getMixer();
         }
 
@@ -892,7 +892,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     {
         if ($entity instanceof AnDomainEntityProxy) {
             $object = $entity->getObject();
-        } elseif ($entity instanceof KMixinAbstract) {
+        } elseif ($entity instanceof AnMixinAbstract) {
             $object = $entity->getMixer();
         } else {
             $object = $entity;
@@ -978,14 +978,14 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      * Executes a command on entity.
      *
      * @param string                $command The command to execute. It must of form part1.part2
-     * @param KCommandContext|array $context The command context
+     * @param AnCommandContext|array $context The command context
      *
      * @return bool
      */
     public function execute($command, $context)
     {
-        if (!$context instanceof  KCommandContext) {
-            $context = new KCommandContext($context);
+        if (!$context instanceof  AnCommandContext) {
+            $context = new AnCommandContext($context);
         }
 
         $parts = explode('.', $command);

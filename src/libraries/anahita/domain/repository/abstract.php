@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class AnDomainRepositoryAbstract extends KCommand
+abstract class AnDomainRepositoryAbstract extends AnCommand
 {
     /**
      * Entity Description.
@@ -105,8 +105,8 @@ abstract class AnDomainRepositoryAbstract extends KCommand
         // Mixin the behavior interface
         $config->mixer = $this;
 
-        $this->mixin(new KMixinCommand($config));
-        $this->mixin(new KMixinBehavior($config));
+        $this->mixin(new AnMixinCommand($config));
+        $this->mixin(new AnMixinBehavior($config));
 
         //insert the reposiry with highest priority
         $this->getCommandChain()->enqueue($this, -PHP_INT_MAX);
@@ -156,8 +156,8 @@ abstract class AnDomainRepositoryAbstract extends KCommand
             'store' => $this->getService('anahita:domain.store.database'),
             'entityset' => $entityset,
             'description' => $description,
-            'command_chain' => $this->getService('koowa:command.chain'),
-            'event_dispatcher' => $this->getService('koowa:event.dispatcher'),
+            'command_chain' => $this->getService('anahita:command.chain'),
+            'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
             'dispatch_events' => true,
             'enable_callbacks' => true,
             'behaviors' => array(
@@ -179,11 +179,11 @@ abstract class AnDomainRepositoryAbstract extends KCommand
      * Command handler.
      *
      * @param string          $name    The command name
-     * @param KCommandContext $context The command context
+     * @param AnCommandContext $context The command context
      *
      * @return bool Can return both true or false.
      */
-    final public function execute($command, KCommandContext $context)
+    final public function execute($command, AnCommandContext $context)
     {
         $identifier = $context->caller->getIdentifier();
 
@@ -522,7 +522,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
      * @param mixed $behavior Behavior name
      * @param array $config   An array of options to configure the behavior with
      *
-     * @see KMixinBehavior::getBehavior()
+     * @see AnMixinBehavior::getBehavior()
      *
      * @return AnDomainBehaviorAbstract
      */
@@ -724,7 +724,7 @@ abstract class AnDomainRepositoryAbstract extends KCommand
         //insert the identity
         $this->_space->insertEntity($entity, $keys);
 
-        $context = new KCommandContext();
+        $context = new AnCommandContext();
         $context->data = $data;
         $context->keys = $keys;
 
@@ -778,11 +778,11 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     /**
      * If a query is unique then repository tries to search existing entities.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      *
      * @return bool
      */
-    protected function _beforeRepositoryFetch(KCommandContext $context)
+    protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
         //check if the query is retrieving a unique entity
         //if yes check if we already have the entity in the
@@ -818,9 +818,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     /**
      * After an enttiy has been instantiated, all of its states are reset.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      */
-    protected function _afterEntityInstantiate(KCommandContext $context)
+    protected function _afterEntityInstantiate(AnCommandContext $context)
     {
         $entity = $context->entity;
 
@@ -845,9 +845,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     /**
      * After an enttiy has been inserted into the repository.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $entity = $context->entity;
         $id = $this->getDescription()->getIdentityProperty()->getName();
@@ -875,9 +875,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     /**
      * Set the state after an entity has been updated.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      */
-    protected function _afterEntityUpdate(KCommandContext $context)
+    protected function _afterEntityUpdate(AnCommandContext $context)
     {
         $this->getSpace()->setEntityState($context->entity, AnDomain::STATE_UPDATED);
     }
@@ -885,9 +885,9 @@ abstract class AnDomainRepositoryAbstract extends KCommand
     /**
      * Set the state after an entity has been deleted.
      *
-     * @param KCommandContext $context Context
+     * @param AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->getSpace()->setEntityState($context->entity, AnDomain::STATE_DESTROYED);
     }

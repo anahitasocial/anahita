@@ -16,7 +16,7 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Filter
  */
-class KFilterChain extends KCommandChain
+class KFilterChain extends AnCommandChain
 {
     /**
      * Run the commands in the chain
@@ -25,7 +25,7 @@ class KFilterChain extends KCommandChain
      * @param array   The data to be filtered
      * @return  mixed
      */
-    final public function run( $name, KCommandContext $context )
+    final public function run( $name, AnCommandContext $context )
     {
         $function = '_'.$name;
         $result =  $this->$function($context);
@@ -38,7 +38,7 @@ class KFilterChain extends KCommandChain
      * @param   scalar  Value to be validated
      * @return  bool    True when the data is valid
      */
-    final protected function _validate( KCommandContext $context )
+    final protected function _validate( AnCommandContext $context )
     {
         foreach($this as $filter)
         {
@@ -56,7 +56,7 @@ class KFilterChain extends KCommandChain
      * @param   scalar  Valuae to be sanitized
      * @return  mixed
      */
-    final protected function _sanitize( KCommandContext $context )
+    final protected function _sanitize( AnCommandContext $context )
     {
         foreach($this as $filter) {
             $context->data = $filter->execute( 'sanitize', $context );

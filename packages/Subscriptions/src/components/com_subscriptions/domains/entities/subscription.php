@@ -92,9 +92,9 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
     /**
      * After adding a subscriptions add the person as a follower to all the package actors.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityInsert(KCommandContext $context)
+    protected function _afterEntityInsert(AnCommandContext $context)
     {
         $actorIds = $this->package->getActorIds();
 
@@ -113,9 +113,9 @@ class ComSubscriptionsDomainEntitySubscription extends ComBaseDomainEntityEdge
     /**
      * After deleting a subscription, unfollow the person from all the package actors.
      *
-     * KCommandContext $context Context
+     * AnCommandContext $context Context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $actorIds = $this->package->getActorIds();
 

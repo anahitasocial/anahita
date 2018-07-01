@@ -101,7 +101,7 @@
       */
      public function isGet()
      {
-         return KRequest::method() == 'GET';
+         return AnRequest::method() == 'GET';
      }
 
      /**
@@ -141,7 +141,7 @@
       */
      public function getMethod()
      {
-         return KRequest::method();
+         return AnRequest::method();
      }
 
      /**
@@ -153,11 +153,11 @@
       *
       * @param   bool     Only allow internal url's
       *
-      * @return  KHttpUrl    A KHttpUrl object
+      * @return  AnHttpUrl    A AnHttpUrl object
       */
      public function getReferrer($isInternal = true)
      {
-         return KRequest::referrer($isInternal);
+         return AnRequest::referrer($isInternal);
      }
 
      /**
@@ -167,6 +167,6 @@
       */
      public function isAjax()
      {
-         return KRequest::type() == 'AJAX';
+         return AnRequest::type() == 'AJAX';
      }
  }

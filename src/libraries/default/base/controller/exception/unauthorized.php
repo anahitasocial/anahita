@@ -28,5 +28,5 @@
  */
 class LibBaseControllerExceptionUnauthorized extends RuntimeException
 {
-    protected $code = KHttpResponse::UNAUTHORIZED;
+    protected $code = AnHttpResponse::UNAUTHORIZED;
 }

@@ -57,9 +57,9 @@
       * If a repository has more than one resource (table), this mehtod ensures
       * the related records in the other tables.
       * 
-      * @param KCommandContext $context. [node_ids => an array of deleted nodes]
+      * @param AnCommandContext $context. [node_ids => an array of deleted nodes]
       */
-     protected function _afterRepositoryDeletenodes(KCommandContext $context)
+     protected function _afterRepositoryDeletenodes(AnCommandContext $context)
      {
          $ids = $context['node_ids'];
 

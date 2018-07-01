@@ -49,7 +49,7 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Handles callback.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionGetaccesstoken($context)
     {
@@ -58,13 +58,13 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
         $token = (array) $this->getAPI()->getToken();
         $consumer = (array) $this->_consumer;
 
-        KRequest::set('session.oauth', array(
+        AnRequest::set('session.oauth', array(
                             'api' => $this->getAPI()->getName(),
                             'token' => $token,
                             'consumer' => $consumer
                         ));
 
-        $return = KRequest::get('session.return', 'raw', null);
+        $return = AnRequest::get('session.return', 'raw', null);
 
         if ($return) {
             $context->append(array('data' => array('return' => $return)));
@@ -74,13 +74,13 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Authorize an oauth profile to an actor. It needs to authorize.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
     protected function _actionOauthorize($context)
     {
         $data = $context->data;
-        KRequest::set('session.return', (string) $data->return);
-        KRequest::set('session.oauth', null);
+        AnRequest::set('session.return', (string) $data->return);
+        AnRequest::set('session.oauth', null);
         $view = $this->_mixer->getIdentifier()->name;
         $this->getAPI()->setToken(null);
         $context->response->setRedirect($this->getAPI()->getAuthorizationURL());
@@ -89,9 +89,9 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Set the api to the data in the context.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeControllerGet(KCommandContext $context)
+    protected function _beforeControllerGet(AnCommandContext $context)
     {
         if ($this->_mixer->getRequest()->get == 'accesstoken') {
             $this->_mixer->execute('getaccesstoken', $context);
@@ -109,7 +109,7 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     public function getAPI()
     {
         if (!isset($this->_api)) {
-            $session = KRequest::get('session.oauth', 'raw', array());
+            $session = AnRequest::get('session.oauth', 'raw', array());
             $session = new KConfig($session);
             $api = pick($this->getRequest()->server, $session->api);
 
@@ -160,8 +160,9 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     public function canOauthorize()
     {
         $api = $this->getAPI();
+        $viewer = $this->getService('com:people.viewer');
 
-        if ($api && $this->actor) {
+        if ($api && $this->actor->eql($viewer)) {
             return $api->canAddService($this->actor);
         }
 

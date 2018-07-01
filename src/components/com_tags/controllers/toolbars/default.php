@@ -16,9 +16,9 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Before Controller _actionRead is executed.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onBeforeControllerGet(KEvent $event)
+    public function onBeforeControllerGet(AnEvent $event)
     {
         parent::onBeforeControllerGet($event);
 
@@ -30,9 +30,9 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     /**
      * Called after controller browse.
      *
-     * @param KEvent $event
+     * @param AnEvent $event
      */
-    public function onBeforeControllerBrowse(KEvent $event)
+    public function onBeforeControllerBrowse(AnEvent $event)
     {
         if ($this->getController()->canAdd()) {
             $this->addCommand('new');

@@ -30,11 +30,11 @@ class ComSubscriptionsControllerVat extends ComBaseControllerService
     /**
      * Set the tax info of the entity.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      *
      * @return bool
      */
-    public function setTaxInfo(KCommandContext $context)
+    public function setTaxInfo(AnCommandContext $context)
     {
         $vats = $context->data->federal_tax;
         $this->getItem()->setFederalTax(KConfig::unbox($vats));

@@ -23,7 +23,7 @@ class LibBaseTemplateFilterStyle extends LibBaseTemplateFilterAbstract implement
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_LOW,
+            'priority' => AnCommand::PRIORITY_LOW,
         ));
 
         parent::_initialize($config);
@@ -89,7 +89,7 @@ class LibBaseTemplateFilterStyle extends LibBaseTemplateFilterAbstract implement
      */
     protected function _renderStyle($style, $link, $attribs = array())
     {
-        $attribs = KHelperArray::toString($attribs);
+        $attribs = AnHelperArray::toString($attribs);
 
         if (!$link) {
             $html  = '<style type="text/css" '.$attribs.'>'."\n";

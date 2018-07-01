@@ -38,9 +38,9 @@ class ComStoriesDomainBehaviorAggregatable extends AnDomainBehaviorAbstract
     /**
      * After fetch.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeQuerySelect(KCommandContext $context)
+    protected function _beforeQuerySelect(AnCommandContext $context)
     {
         $query = $context->query;
 
@@ -52,9 +52,9 @@ class ComStoriesDomainBehaviorAggregatable extends AnDomainBehaviorAbstract
     /**
      * After fetch.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterRepositoryFetch(KCommandContext $context)
+    protected function _afterRepositoryFetch(AnCommandContext $context)
     {
         $query = $context->query;
 

@@ -48,7 +48,7 @@ abstract class LibBaseTemplateFilterAbstract extends KObject implements LibBaseT
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'priority' => KCommand::PRIORITY_NORMAL,
+            'priority' => AnCommand::PRIORITY_NORMAL,
         ));
 
         parent::_initialize($config);
@@ -81,7 +81,7 @@ abstract class LibBaseTemplateFilterAbstract extends KObject implements LibBaseT
      * @param   object      The command context
      * @return  boolean     Always returns TRUE
      */
-    final public function execute($name, KCommandContext $context)
+    final public function execute($name, AnCommandContext $context)
     {
         //Set the template
         $this->_template = $context->caller;

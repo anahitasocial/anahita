@@ -336,7 +336,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
         $config->paginator = $paginator;
 
         //convert url to the httpurl object
-        $config->url = $this->getService('koowa:http.url', array('url' => $config->url));
+        $config->url = $this->getService('anahita:http.url', array('url' => $config->url));
 
         $pages = array();
 
@@ -525,7 +525,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
         }
 
         //remove q from the url
-        $uri = $this->getService('koowa:http.url', array('url' => $path));
+        $uri = $this->getService('anahita:http.url', array('url' => $path));
         $data = $uri->getQuery(true);
 
         unset($data['q']);
@@ -576,7 +576,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
             $url .= '&oid='.$actor->uniqueAlias;
         }
 
-        $term = KRequest::get('get.term', 'raw');
+        $term = AnRequest::get('get.term', 'raw');
         $term = KService::get('com:search.filter.term')->sanitize($term);
 
         $config = new KConfig($config);

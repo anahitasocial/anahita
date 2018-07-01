@@ -36,10 +36,10 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
    *  Method to add a location to a geolocatable node.
    *  If the location node doesn't exist, create it.
    *
-   *  @param KCommandContext $context
+   *  @param AnCommandContext $context
    *  @return instance of ComBaseDomainEntityNode entity with gelocatable behavior
    */
-   protected function _actionAddlocation(KCommandContext $context)
+   protected function _actionAddlocation(AnCommandContext $context)
    {
        return $this->getItem()->addLocation($this->_location);
    }
@@ -48,10 +48,10 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
    *  Method to remove a location from a geolocatable node
    *
    *
-   *  @param KCommandContext $context
+   *  @param AnCommandContext $context
    *  @return instance of ComBaseDomainEntityNode entity with gelocatable behavior
    */
-   protected function _actionDeletelocation(KCommandContext $context)
+   protected function _actionDeletelocation(AnCommandContext $context)
    {
        return $this->getItem()->deleteLocation($this->_location);
    }
@@ -59,10 +59,10 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
    /**
    *   Method to fetch or create a location enitty
    *
-   *   @param KCommandContext $context
+   *   @param AnCommandContext $context
    *   @return ComLocationsDomainEntityLocation entity
    */
-   public function fetchLocation(KCommandContext $context)
+   public function fetchLocation(AnCommandContext $context)
    {
        $data = $context->data;
 

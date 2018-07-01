@@ -17,7 +17,7 @@ class ComApplicationRouter extends KObject
     /**
      * cloneable url.
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected $_clonable_url = null;
 
@@ -31,7 +31,7 @@ class ComApplicationRouter extends KObject
     /**
      * base url.
      *
-     * @var KHttpUrl
+     * @var AnHttpUrl
      */
     protected $_base_url = null;
 
@@ -57,7 +57,7 @@ class ComApplicationRouter extends KObject
         $this->_base_url = $config->base_url;
 
         if (is_string($this->_base_url)) {
-            $this->_base_url = $this->getService('koowa:http.url', array('url' => $this->_base_url));
+            $this->_base_url = $this->getService('anahita:http.url', array('url' => $this->_base_url));
         }
 
         $this->_clonable_url = $config->url;
@@ -72,23 +72,23 @@ class ComApplicationRouter extends KObject
      */
     protected function _initialize(KConfig $config)
     {
-        $base = clone KRequest::base();
+        $base = clone AnRequest::base();
 
         foreach (array('host', 'scheme', 'port', 'user', 'pass') as $part) {
-            $base->$part = KRequest::url()->$part;
+            $base->$part = AnRequest::url()->$part;
         }
 
         if (PHP_SAPI == 'cli') {
             $base->scheme = extension_loaded('openssl') ? 'https' : 'http';
             $settings = $this->getService('com:settings.setting');
-            $base->host = KRequest::get('server.HOSTNAME', 'url', $settings->live_site);
+            $base->host = AnRequest::get('server.HOSTNAME', 'url', $settings->live_site);
             $base->path = '';
         }
 
         $config->append(array(
             'base_url' => $base,
             'enable_rewrite' => false,
-            'url' => clone KService::get('koowa:http.url')
+            'url' => clone KService::get('anahita:http.url')
         ));
 
         parent::_initialize($config);
@@ -107,7 +107,7 @@ class ComApplicationRouter extends KObject
     /**
      * Return the base url.
      *
-     * @return KHttpUrl
+     * @return AnHttpUrl
      */
     public function getBaseUrl()
     {
@@ -243,7 +243,7 @@ class ComApplicationRouter extends KObject
     /**
      * Fixes the url path.
      *
-     * @param KHttpUrl $url
+     * @param AnHttpUrl $url
      */
     protected function _fixUrlForParsing($url)
     {
@@ -260,7 +260,7 @@ class ComApplicationRouter extends KObject
         $path = trim($path, '/');
 
         $url->path = $path;
-        $url->format = $url->format ? $url->format : pick(KRequest::format(), 'html');
+        $url->format = $url->format ? $url->format : pick(AnRequest::format(), 'html');
 
         if (! empty($url->format)) {
             $url->query['format'] = $url->format;

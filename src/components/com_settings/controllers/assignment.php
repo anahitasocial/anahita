@@ -30,7 +30,7 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
         ));
     }
 
-    protected function _actionGet(KCommandContext $context)
+    protected function _actionGet(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-ASSIGNMENTS');
 
@@ -39,7 +39,7 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
         return parent::_actionGet($context);
     }
 
-    protected function _actionEdit(KCommandContext $context)
+    protected function _actionEdit(AnCommandContext $context)
     {
       $data = $context->data;
 

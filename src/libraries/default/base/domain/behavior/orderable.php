@@ -72,9 +72,9 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
     /**
      * Before Update.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityUpdate(KCommandContext $context)
+    protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         if ($this->getModifiedData()->ordering) {
             $store = $this->getRepository()->getStore();
@@ -108,9 +108,9 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
     /**
      * Set the order before inserting.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _beforeEntityInsert(KCommandContext $context)
+    protected function _beforeEntityInsert(AnCommandContext $context)
     {
         $max = $this->getScopedQuery($context->entity)->fetchValue('MAX(@col(ordering))');
         $this->ordering = $max + 1;
@@ -119,9 +119,9 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
     /**
      * Reorder After Update.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterEntityUpdate(KCommandContext $context)
+    protected function _afterEntityUpdate(AnCommandContext $context)
     {
         if ($this->getModifiedData()->ordering) {
             $this->reorder();
@@ -131,9 +131,9 @@ class LibBaseDomainBehaviorOrderable extends AnDomainBehaviorAbstract
     /**
      * Reorder After Delete.
      *
-     * @param KCommandContext $context
+     * @param AnCommandContext $context
      */
-    protected function _afterEntityDelete(KCommandContext $context)
+    protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->reorder();
     }

@@ -15,7 +15,7 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Filter
  */
-interface KFilterInterface extends KCommandInterface, KServiceInstantiatable
+interface KFilterInterface extends AnCommandInterface, KServiceInstantiatable
 {
     /**
      * Validate a value or data collection
