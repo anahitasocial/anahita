@@ -1,18 +1,13 @@
 <?php
-/**
- * @version     $Id: abstract.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Event
- * @subpackage 	Subscriber
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Abstract Event Subscriber Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Event
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnEvent
  * @subpackage 	Subscriber
  */
 abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubscriberInterface
@@ -79,16 +74,14 @@ abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubsc
      */
     public function getSubscriptions()
     {
-        if(!$this->__subscriptions)
-        {
+        if (! $this->__subscriptions) {
             $subscriptions  = array();
 
             //Get all the public methods
             $reflection = new ReflectionClass($this);
 
-            foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method)
-            {
-                if(substr($method->name, 0, 2) == 'on') {
+            foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
+                if (substr($method->name, 0, 2) === 'on') {
                     $subscriptions[] = $method->name;
                 }
             }

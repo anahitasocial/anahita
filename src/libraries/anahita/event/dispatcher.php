@@ -1,17 +1,13 @@
 <?php
-/**
- * @version     $Id: dispatcher.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Event
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Class to handle dispatching of events.
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Event
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnEvent
  */
 class AnEventDispatcher extends KObject
 {
@@ -68,21 +64,18 @@ class AnEventDispatcher extends KObject
         $result = array();
         
         //Make sure we have an event object
-        if(!$event instanceof AnEvent) {
+        if (! $event instanceof AnEvent) {
             $event = new AnEvent($event);
         }
         
-        $event->setName($name)
-              ->setDispatcher($this);
+        $event->setName($name)->setDispatcher($this);
              
         //Nofity the listeners
-        if(isset($this->_listeners[$name])) 
-        {
-            foreach($this->_listeners[$name] as $listener) 
-            {
+        if (isset($this->_listeners[$name])) {
+            foreach ($this->_listeners[$name] as $listener) {
                 $listener->$name($event);
                 
-                if (!$event->canPropagate()) {
+                if (! $event->canPropagate()) {
                     break;
                 }
             }
@@ -103,9 +96,8 @@ class AnEventDispatcher extends KObject
      */
     public function addEventListener($name, KObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
     {
-        if(is_object($listener))
-        {
-            if(!isset($this->_listeners[$name])) {
+        if (is_object($listener)) {
+            if (! isset($this->_listeners[$name])) {
                 $this->_listeners[$name] = new KObjectQueue();
             }
             
@@ -124,9 +116,8 @@ class AnEventDispatcher extends KObject
      */
     public function removeEventListener($name, KObjectHandlable $listener)
     {
-        if(is_object($listener))
-        {
-            if(isset($this->_listeners[$name])) {
+        if (is_object($listener)) {
+            if (isset($this->_listeners[$name])) {
                 $this->_listeners[$name]->dequeue($listener);
             }
         }
@@ -144,12 +135,11 @@ class AnEventDispatcher extends KObject
     {
         $handle = $subscriber->getHandle();
     
-        if(!isset($this->_subscribers[$handle]))
-        {
+        if (! isset($this->_subscribers[$handle])) {
             $subscriptions = $subscriber->getSubscriptions(); 
-            $priority      = is_int($priority) ? $priority : $subscriber->getPriority();
+            $priority = is_int($priority) ? $priority : $subscriber->getPriority();
     
-            foreach($subscriptions as $subscription) {
+            foreach ($subscriptions as $subscription) {
                 $this->addEventListener($subscription, $subscriber, $priority);
             }
     
@@ -169,11 +159,10 @@ class AnEventDispatcher extends KObject
     {
         $handle = $subscriber->getHandle();
     
-        if(isset($this->_subscribers[$handle]))
-        {
+        if (isset($this->_subscribers[$handle])) {
             $subscriptions = $subscriber->getSubscriptions();
     
-            foreach($subscriptions as $subscription) {
+            foreach ($subscriptions as $subscription) {
                 $this->removeEventListener($subscription, $subscriber);
             }
     
@@ -202,7 +191,7 @@ class AnEventDispatcher extends KObject
     public function getListeners($name)
     {
         $result = array();
-        if(isset($this->_listeners[$name])) {
+        if (isset($this->_listeners[$name])) {
             $result = $this->_listeners[$name];
         }
         
@@ -218,7 +207,7 @@ class AnEventDispatcher extends KObject
     public function hasListeners($name)
     {
         $result = false;
-        if(isset($this->_listeners[$name])) {
+        if (isset($this->_listeners[$name])) {
              $result = (boolean) count($this->_listeners[$name]); 
         }
         
@@ -235,7 +224,7 @@ class AnEventDispatcher extends KObject
      */
     public function setEventPriority($name, KObjectHandable $listener, $priority)
     {
-        if(isset($this->_listeners[$name])) {
+        if (isset($this->_listeners[$name])) {
             $this->_listeners[$name]->setPriority($listener, $priority);
         }
         
@@ -253,7 +242,7 @@ class AnEventDispatcher extends KObject
     {
         $result = false;
         
-        if(isset($this->_listeners[$name])) {
+        if (isset($this->_listeners[$name])) {
             $result = $this->_listeners[$name]->getPriority($listener);
         }
         

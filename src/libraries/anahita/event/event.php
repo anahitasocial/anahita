@@ -1,11 +1,4 @@
 <?php
-/**
- * @version     $Id: event.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Event
- * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link        http://www.nooku.org
- */
 
 /**
  * Event Class
@@ -14,7 +7,10 @@
  * further listeners in your event listener.
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Event
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        https://www.GetAnahita.com
+ * @package     AnEvent
  */
 class AnEvent extends KConfig
 {
