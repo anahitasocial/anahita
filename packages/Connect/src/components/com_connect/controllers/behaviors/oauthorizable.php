@@ -160,8 +160,9 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     public function canOauthorize()
     {
         $api = $this->getAPI();
+        $viewer = $this->getService('com:people.viewer');
 
-        if ($api && $this->actor) {
+        if ($api && $this->actor->eql($viewer)) {
             return $api->canAddService($this->actor);
         }
 

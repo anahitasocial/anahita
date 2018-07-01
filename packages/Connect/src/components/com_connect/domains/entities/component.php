@@ -36,11 +36,12 @@ class ComConnectDomainEntityComponent extends ComComponentsDomainEntityComponent
      */
     public function onSettingDisplay(AnEvent $event)
     {
+        $viewer = $this->getService('com:people.viewer');
         $actor = $event->actor;
         $tabs = $event->tabs;
         $services = ComConnectHelperApi::getServices();
 
-        if (count($services)) {
+        if ($actor->eql($viewer) && count($services)) {
             $tabs->insert('connect', array(
                 'label' => AnTranslator::_('COM-CONNECT-PROFILE-EDIT'),
                 'controller' => 'com://site/connect.controller.setting' 
