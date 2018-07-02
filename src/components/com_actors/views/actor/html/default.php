@@ -10,7 +10,7 @@
 
 <? if ($item->coverSet()): ?>
 <div
-	class="profile-cover parallax-window"
+	class="cover-container parallax-window"
 	data-parallax="scroll"
 	data-image-src="<?= $item->getCoverURL('large'); ?>"
 	data-src-large="<?= $item->getCoverURL('large'); ?>"
@@ -18,7 +18,7 @@
 </div>
 <? endif; ?>
 
-<div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">
+<div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="node-container">
 	<div class="span2">
 		<div id="actor-avatar">
 		<?= @avatar($item, 'medium', false) ?>

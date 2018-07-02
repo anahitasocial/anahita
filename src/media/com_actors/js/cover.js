@@ -11,16 +11,11 @@
     'use strict';
 
     $.widget("anahita.cover", {
-
         options : {
-            profile : '#actor-profile',
             mobileWidth : 767
         },
 
         _create : function () {
-
-            this.profile = $(this.options.profile);
-
             this._setBackgroundImage();
 
             this._on( window, {
@@ -31,7 +26,6 @@
         },
 
         _setBackgroundImage : function() {
-
             if ( $(window).width() < this.options.mobileWidth ) {
                var src = this.element.data('src-medium');
             } else {
@@ -43,8 +37,8 @@
     });
 
     $(document).ready(function(){
-        if( $('.profile-cover').length ) {
-            $('.profile-cover').cover();
+        if( $('.cover-container').length ) {
+            $('.cover-container').cover();
         }
     });
 

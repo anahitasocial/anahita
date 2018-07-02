@@ -8,7 +8,7 @@
 
 <? if ($article->coverSet()): ?>
 <div
-	class="profile-cover"
+	class="cover-container parallax-window"
 	data-parallax="scroll"
 	data-image-src="<?= $article->getCoverURL('large'); ?>"
 	data-src-large="<?= $article->getCoverURL('large'); ?>"
@@ -16,7 +16,7 @@
 </div>
 <? endif; ?>
 
-<div class="row-fluid<?= ($article->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">
+<div class="row-fluid<?= ($article->coverSet()) ? ' has-cover' : '' ?>" id="node-container">
 	<div class="span8">
 	<?= @helper('ui.header') ?>
 	<?= @template('article') ?>
