@@ -1,6 +1,22 @@
 <? defined('KOOWA') or die; ?>
 
-<div class="row">
+<? if (defined('ANDEBUG') && ANDEBUG) : ?>
+<script src="com_actors/js/cover.js" />
+<? else: ?>
+<script src="com_actors/js/min/cover.min.js" />
+<? endif; ?>
+
+<? if ($article->coverSet()): ?>
+<div
+	class="profile-cover"
+	data-parallax="scroll"
+	data-image-src="<?= $article->getCoverURL('large'); ?>"
+	data-src-large="<?= $article->getCoverURL('large'); ?>"
+	data-src-medium="<?= $article->getCoverURL('medium'); ?>">
+</div>
+<? endif; ?>
+
+<div class="row-fluid<?= ($article->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">
 	<div class="span8">
 	<?= @helper('ui.header') ?>
 	<?= @template('article') ?>

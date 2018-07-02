@@ -30,6 +30,7 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
             ),
             'behaviors' => array(
                 'pinnable',
+                'coverable',
             ),
         ));
     }
