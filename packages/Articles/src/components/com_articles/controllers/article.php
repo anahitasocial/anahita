@@ -47,6 +47,26 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
         $result = parent::_actionEdit($context);
         $this->registerCallback('after.edit', array($this, 'redirect'));
     }
+    
+    /**
+     * When a article is added, then create a notification.
+     *
+     * @param AnCommandContext $context Context parameter
+     */
+    protected function _actionAdd($context)
+    {
+        $entity = parent::_actionAdd($context);
+
+        if ($entity->owner->isSubscribable()) {
+            $notification = $this->createNotification(array(
+                'name' => 'article_add',
+                'object' => $entity,
+                'subscribers' => $entity->owner->subscriberIds->toArray(),
+            ))->setType('post', array('new_post' => true));
+        }
+
+        return $entity;
+    }
 
     /**
      * Article post action.
@@ -55,7 +75,7 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
      */
     public function redirect(AnCommandContext $context)
     {
-        if ($context->action == 'edit' || $context->action == 'add') {
+        if ($context->action === 'edit' || $context->action === 'add') {
             $context->response->setRedirect(route($this->getItem()->getURL().'&layout=edit'));
         } else {
             return parent::redirect($context);

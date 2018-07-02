@@ -1,16 +1,8 @@
 <? defined('KOOWA') or die; ?>
 
-<? if (defined('ANDEBUG') && ANDEBUG) : ?>
-<script src="com_actors/js/cover.js" />
-<? else: ?>
-<script src="com_actors/js/min/cover.min.js" />
-<? endif; ?>
-
 <? if ($article->coverSet()): ?>
 <div
 	class="cover-container parallax-window"
-	data-parallax="scroll"
-	data-image-src="<?= $article->getCoverURL('large'); ?>"
 	data-src-large="<?= $article->getCoverURL('large'); ?>"
 	data-src-medium="<?= $article->getCoverURL('medium'); ?>">
 </div>

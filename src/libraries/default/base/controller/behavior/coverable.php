@@ -62,27 +62,12 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
         if ($entity->isCoverable() && AnRequest::has('files.cover')) {
             $file = AnRequest::get('files.cover', 'raw');
             if ($this->_mixer->bellowSizeLimit($file) && $file['error'] == 0) {
-
                 $this->getItem()->setCover(array(
                     'url' => $file['tmp_name'],
                     'mimetype' => $file['type']
                 ));
-
-                $story = $this->createStory(array(
-                   'name' => 'cover_edit',
-                   'owner' => $entity,
-                   'target' => $entity,
-                ));
-
             } else {
-
                 $entity->removeCoverImage();
-
-                $this->getService('repos:stories.story')->destroy(array(
-                    'name' => 'cover_edit',
-                    'owner' => $entity,
-                    'component' => 'com_'.$this->getIdentifier()->package
-                ));
             }
         }
 

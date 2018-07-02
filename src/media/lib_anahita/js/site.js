@@ -52,6 +52,7 @@
 //@depends anahita/editor.js
 //@depends anahita/gist.js
 //@depends anahita/plyr.js
+//@depends anahita/cover.js
 
 //@depends anahita/actions/vote.js
 //@depends anahita/actions/entity.js

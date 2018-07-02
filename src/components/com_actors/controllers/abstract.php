@@ -166,26 +166,12 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
             $file = AnRequest::get('files.portrait', 'raw');
 
             if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
-
                 $this->getItem()->setPortrait(array(
                     'url' => $file['tmp_name'],
                     'mimetype' => $file['type']
                 ));
-
-                $story = $this->createStory(array(
-                   'name' => 'avatar_edit',
-                   'owner' => $entity,
-                   'target' => $entity
-               ));
-
             } else {
                 $this->getItem()->removePortraitImage();
-
-                $this->getService('repos:stories.story')->destroy(array(
-                    'name' => 'avatar_edit',
-                    'owner' => $entity,
-                    'component' => 'com_'.$this->getIdentifier()->package
-                ));
             }
         }
 
