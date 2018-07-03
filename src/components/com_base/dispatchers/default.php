@@ -135,6 +135,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
             $document->setLink(route($item->getURL()));
             if ($item->isPortraitable()) {
                 $document->setImage($item->getPortraitURL('medium'));
+            } else if ($item->isCoverable()) {
+                $document->setImage($item->getCoverURL('medium'));
             }
 
             if ($item instanceof ComActorsDomainEntityActor) {
