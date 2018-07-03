@@ -6,7 +6,7 @@ html
     letter-spacing: 0;
 }
 
-.profile-cover
+.cover-container
 {
    position: absolute;
    top: 0;
@@ -37,22 +37,23 @@ html
    }
 }
 
-#actor-profile.has-cover
+#node-container.has-cover
 {
-   .span2
-   {
-      margin-top: 260px;
-   }
-}
-
-#actor-profile.has-cover
-{
+  .span2
+  {
+     margin-top: 260px;
+  }    
 
   @media(max-width: 768px)
   {
      .span2
      {
         margin-top: 60px;
+     }
+     
+     .span8
+     { 
+        margin-top: 150px;
      }
   }
 
@@ -63,17 +64,12 @@ html
         margin-top: 260px;
      }
 
+     .span4,
      .span6,
      .span8
      {
        margin-top: 360px;
      }
-
-     .span4
-     {
-       margin-top: 340px;
-     }
-
   }
 }
 

@@ -36,7 +36,7 @@
 		<div class="control-group">
 			<label class="control-label" for="article-excerpt"><?= @text('COM-ARTICLES-ARTICLE-EXCERPT') ?></label>
 			<div class="controls">
-				<input id="article-excerpt" class="input-block-level" name="excerpt" maxlength="250" type="text" required />
+				<input id="article-excerpt" class="input-block-level" name="excerpt" maxlength="250" type="text" />
 			</div>
 		</div>
 

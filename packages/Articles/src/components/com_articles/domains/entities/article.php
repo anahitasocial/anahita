@@ -42,6 +42,7 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
 
         $config->append(array(
             'behaviors' => array(
+                'coverable',
                 'hittable',
                 'pinnable',
                 'modifiable' => array(
@@ -122,5 +123,23 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
     public function isPublished()
     {
         return $this->access !== LibBaseDomainBehaviorPrivatable::ADMIN;
+    }
+    
+    /**
+     * Return the cover file for a size.
+     *
+     * @see LibBaseDomainBehaviorCoverable
+     *
+     * @return string
+     */
+    public function getCoverFile($size)
+    {
+        if (strpos($this->coverFilename, '/')) {
+            $cover = str_replace('/', '/covers/'.$size, $this->coverFilename);
+        } else {
+            $cover = $this->component.'/covers/'.$size.$this->coverFilename;
+        }
+
+        return $cover;
     }
 }

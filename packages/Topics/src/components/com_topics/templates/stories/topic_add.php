@@ -13,6 +13,6 @@
 	    <?= @helper('text.truncate', $body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
 	</div>
 </data>
-<? if ($type == 'notification') :?>
+<? if ($type === 'notification') :?>
 <? $commands->insert('view-post', array('label' => @text('COM-TOPICS-TOPIC-VIEW')))->href($object->getURL())?>
 <? endif;?>

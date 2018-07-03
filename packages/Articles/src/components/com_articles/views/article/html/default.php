@@ -1,6 +1,15 @@
 <? defined('KOOWA') or die; ?>
 
-<div class="row">
+<? if ($article->coverSet()): ?>
+<div
+	class="cover-container parallax-window light"
+	data-trigger="Cover"
+	data-src-large="<?= $article->getCoverURL('large'); ?>"
+	data-src-medium="<?= $article->getCoverURL('medium'); ?>">
+</div>
+<? endif; ?>
+
+<div class="row-fluid<?= ($article->coverSet()) ? ' has-cover' : '' ?>" id="node-container">
 	<div class="span8">
 	<?= @helper('ui.header') ?>
 	<?= @template('article') ?>

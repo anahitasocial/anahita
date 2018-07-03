@@ -299,8 +299,14 @@ ol.sub-steps
   border: 3px solid @white;
 }
 
-.profile-cover{
-  background-color: @grayDark;
+.cover-container {
+  &.light {
+      background-color: @grayLighter;
+  }
+  
+  &.dark {
+      background-color: @grayDark;
+  }
 }
 
 .map-container {

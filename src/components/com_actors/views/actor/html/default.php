@@ -1,24 +1,17 @@
 <? defined('KOOWA') or die('Restricted access') ?>
 
-<? if (defined('ANDEBUG') && ANDEBUG) : ?>
-<script src="com_actors/js/cover.js" />
-<? else: ?>
-<script src="com_actors/js/min/cover.min.js" />
-<? endif; ?>
-
 <? $socialgraphGadget = $gadgets->extract('socialgraph') ?>
 
 <? if ($item->coverSet()): ?>
 <div
-	class="profile-cover parallax-window"
-	data-parallax="scroll"
-	data-image-src="<?= $item->getCoverURL('large'); ?>"
+	class="cover-container parallax-window light"
+	data-trigger="Cover"
 	data-src-large="<?= $item->getCoverURL('large'); ?>"
 	data-src-medium="<?= $item->getCoverURL('medium'); ?>">
 </div>
 <? endif; ?>
 
-<div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="actor-profile">
+<div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="node-container">
 	<div class="span2">
 		<div id="actor-avatar">
 		<?= @avatar($item, 'medium', false) ?>
@@ -39,7 +32,6 @@
 	</div>
 
 	<div class="span6" id="container-main">
-
 		<? if ($item->isEnableable() && !$item->enabled): ?>
 		<?= @message(@text('COM-ACTORS-PROFILE-DISABLED-PROMPT'), array('type' => 'warning')) ?>
 		<? endif; ?>

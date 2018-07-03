@@ -1,7 +1,7 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
+ * Coverable Behavior.
  *
  * @category   Anahita
  *
@@ -9,18 +9,7 @@
  * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Coverable Behavior.
- *
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
 {
@@ -47,7 +36,7 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
     public function addCover(AnCommandContext $context)
     {
         $entity = $this->getItem();
-
+        
         if ($entity->isCoverable() && AnRequest::has('files.cover')) {
             $file = AnRequest::get('files.cover', 'raw');
 
@@ -69,33 +58,16 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
     public function editCover(AnCommandContext $context)
     {
         $entity = $this->getItem();
-
+        
         if ($entity->isCoverable() && AnRequest::has('files.cover')) {
-
             $file = AnRequest::get('files.cover', 'raw');
-
             if ($this->_mixer->bellowSizeLimit($file) && $file['error'] == 0) {
-
                 $this->getItem()->setCover(array(
                     'url' => $file['tmp_name'],
                     'mimetype' => $file['type']
                 ));
-
-                $story = $this->createStory(array(
-                   'name' => 'cover_edit',
-                   'owner' => $entity,
-                   'target' => $entity,
-                ));
-
             } else {
-
                 $entity->removeCoverImage();
-
-                $this->getService('repos:stories.story')->destroy(array(
-                    'name' => 'cover_edit',
-                    'owner' => $entity,
-                    'component' => 'com_'.$this->getIdentifier()->package
-                ));
             }
         }
 

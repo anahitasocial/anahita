@@ -1,6 +1,40 @@
 <? defined('KOOWA') or die('Restricted access'); ?>
-
+<? $uploadSizeLimit = ini_get('upload_max_filesize'); ?>
 <? $article = empty($article) ? @service('repos:articles.article')->getEntity()->reset() : $article; ?>
+
+<form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post" enctype="multipart/form-data">
+	<fieldset>
+		<legend><?= @text('COM-ARTICLES-ARTICLE-COVER') ?></legend>
+	
+		<? if ($article->coverSet()): ?>
+		<div class="control-group ">
+			<?= @cover($article, 'medium', false) ?>
+		</div>
+		<? endif ?>
+		
+		<div class="control-group ">
+			<label class="control-label" for="article-cover">
+				<?= sprintf(@text('LIB-AN-COVER-SELECT-IMAGE-ON-YOUR-COMPUTER'), $uploadSizeLimit, 1600) ?>
+			</label>
+			
+			<div class="controls">
+				<input type="file" name="cover" accept="image/*" data-limit="<?= $uploadSizeLimit ?>" />
+			</div>
+		</div>
+	</fieldset>
+	
+    <div class="form-actions">
+		<? if ($article->coverSet()): ?>
+        <button data-trigger="DeleteCover" class="btn btn-danger">
+            <?= @text('LIB-AN-COVER-DELETE') ?>
+        </button>
+	    <? else: ?>
+		<button class="btn btn-primary" data-loading-text="<?= @text('LIB-AN-FILE-UPLOADING') ?>">
+			<?= @text('LIB-AN-ACTION-UPLOAD') ?>
+		</button>
+		<? endif ?>
+    </div>
+</form>
 
 <form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post">
 	<fieldset>
@@ -12,7 +46,16 @@
 			</label>
 
 			<div class="controls">
-				<input required class="input-block-level" id="article-title" name="title" value="<?= stripslashes($article->title) ?>" size="50" maxlength="255" type="text">
+				<input 
+					required 
+					class="input-block-level" 
+					id="article-title" 
+					name="title" 
+					value="<?= stripslashes($article->title) ?>" 
+					size="50" 
+					maxlength="255" 
+					type="text"
+				/>
 			</div>
 		</div>
 
@@ -42,7 +85,7 @@
 			</label>
 
 			<div class="controls">
-				<textarea required maxlength="500" class="input-block-level" name="excerpt" cols="10" rows="5" id="article-excerpt"><?= @escape($article->excerpt) ?></textarea>
+				<textarea maxlength="500" class="input-block-level" name="excerpt" cols="10" rows="5" id="article-excerpt"><?= @escape($article->excerpt) ?></textarea>
 			</div>
 		</div>
 
@@ -57,13 +100,11 @@
 			<a href="<?= ($article->persisted()) ? @route($article->getURL()) : @route('view=articles&oid='.$actor->id) ?>" class="btn">
 				<?= @text('LIB-AN-ACTION-CLOSE') ?>
 			</a>
-
-			<? $action = ($article->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
-      <? $actionLoading = ($article->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
-      <button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
-          <?= @text($action) ?>
-      </button>
-		</div>
-
+		    <? $action = ($article->persisted()) ? 'LIB-AN-ACTION-UPDATE' : 'LIB-AN-ACTION-POST' ?>
+	        <? $actionLoading = ($article->persisted()) ? 'LIB-AN-MEDIUM-UPDATING' : 'LIB-AN-MEDIUM-POSTING' ?>
+	        <button class="btn btn-primary" data-loading-text="<?= @text($actionLoading) ?>">
+	            <?= @text($action) ?>
+	        </button>
+	    </div>
 	</fieldset>
 </form>

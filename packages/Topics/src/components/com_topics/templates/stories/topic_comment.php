@@ -16,7 +16,7 @@
     </div>
 </data>
 
-<? if ($type == 'notification') :?>
+<? if ($type === 'notification') :?>
 <? $commands->insert('view-comment', array('label' => @text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id)?>
 <data name="email_body">
     <h4 class="entity-title">

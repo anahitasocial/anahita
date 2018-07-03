@@ -20,6 +20,12 @@
 		</div>
 	</div>
 
+	<? if ($article->coverSet()): ?>
+	<div class="entity-portrait-medium">
+		<?= @cover($article, 'medium') ?>
+	</div>
+	<? endif ?>
+
 	<h3 class="entity-title">
 		<a href="<?= @route($article->getURL()) ?>">
 			<?= @escape($article->title) ?>
@@ -29,6 +35,14 @@
 	<? if ($article->excerpt): ?>
 	<div class="entity-excerpt">
 		<?= @escape($article->excerpt) ?>
+	</div>
+    <? else: ?>
+	<div class="entity-description">
+	<?= @helper('text.truncate',
+        @content($article->body,
+           array('exclude' => 'gist')),
+           array('length' => 1000, 'consider_html' => true));
+    ?>
 	</div>
 	<? endif; ?>
 
