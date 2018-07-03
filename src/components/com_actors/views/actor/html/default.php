@@ -31,7 +31,6 @@
 	</div>
 
 	<div class="span6" id="container-main">
-
 		<? if ($item->isEnableable() && !$item->enabled): ?>
 		<?= @message(@text('COM-ACTORS-PROFILE-DISABLED-PROMPT'), array('type' => 'warning')) ?>
 		<? endif; ?>
