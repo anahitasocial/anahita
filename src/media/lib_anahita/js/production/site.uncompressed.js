@@ -14759,7 +14759,6 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
 }(jQuery, window, document));
 
 
-
 ///media/lib_anahita/js/vendors/bootstrap/bootstrap-affix.js
 /* ==========================================================
  * bootstrap-affix.js v2.3.2
