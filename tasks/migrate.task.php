@@ -93,7 +93,7 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      * (non-PHPdoc)
-     * @see KEventSubscriberInterface::getPriority()
+     * @see AnEventSubscriberInterface::getPriority()
      */
     public function getPriority()
     {
@@ -102,7 +102,7 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      * (non-PHPdoc)
-     * @see KEventSubscriberInterface::getSubscriptions()
+     * @see AnEventSubscriberInterface::getSubscriptions()
      */
     public function getSubscriptions()
     {
@@ -111,9 +111,9 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      *
-     * @param \KEvent $event
+     * @param \AnEvent $event
      */
-    public function onBeforeSchemaVersionUp(\KEvent $event)
+    public function onBeforeSchemaVersionUp(\AnEvent $event)
     {
         $name = $event->caller->getComponent();
         $this->_output->writeLn('<info>Migrating up '.$name.' version '.$event->version.'</info>');
@@ -121,9 +121,9 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      *
-     * @param \KEvent $event
+     * @param \AnEvent $event
      */
-    public function onBeforeSchemaVersionDown(\KEvent $event)
+    public function onBeforeSchemaVersionDown(\AnEvent $event)
     {
         $name = $event->caller->getComponent();
         $this->_output->writeLn('<info>Rolling back '.$name.' version '.$event->version.'</info>');
@@ -131,9 +131,9 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      *
-     * @param \KEvent $event
+     * @param \AnEvent $event
      */
-    public function onBeforeSchemaMigration(\KEvent $event)
+    public function onBeforeSchemaMigration(\AnEvent $event)
     {
         if (!count($event->versions)) {
             $name = $event->caller->getComponent();
@@ -143,9 +143,9 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      *
-     * @param \KEvent $event
+     * @param \AnEvent $event
      */
-    public function onAfterSchemaMigration(\KEvent $event)
+    public function onAfterSchemaMigration(\AnEvent $event)
     {
         if ($event->caller->getComponent() == 'anahita') {
           $path = ANAHITA_ROOT.'/vendor/anahita-platform/installation/sql';
