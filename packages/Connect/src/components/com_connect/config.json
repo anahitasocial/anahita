@@ -3,6 +3,27 @@
         {
             "name": "spacer",
             "type": "legend",
+            "default": "Callback URLs"
+        },
+        {
+            "name": "callback_url_login",
+            "size": "60",
+            "type": "text",
+            "default": "https://{www.yourdomain.com}/connect/login/server/{twitter | facebook | linkedin}/token",
+            "label": "Login",
+            "disabled": "true"
+        },
+        {
+            "name": "callback_url_setting",
+            "size": "60",
+            "type": "text",
+            "default": "https://{www.yourdomain.com}/connect/setting/server/{twitter | facebook | linkedin}/token",
+            "label": "Setting",
+            "disabled": "true"
+        },
+        {
+            "name": "spacer",
+            "type": "legend",
             "default": "Facebook Connect"
         },
         {

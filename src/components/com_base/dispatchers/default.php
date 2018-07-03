@@ -155,10 +155,9 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
      */
     protected function _actionException(AnCommandContext $context)
     {
-        $viewer = get_viewer();
+        $viewer = $this->getService('com:people.viewer');
 
         if ($viewer->guest() && $context->data instanceof LibBaseControllerExceptionUnauthorized) {
-
             $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
             $return = base64_encode(AnRequest::url());
             $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
