@@ -300,7 +300,13 @@ ol.sub-steps
 }
 
 .cover-container {
-  background-color: @grayDark;
+  &.light {
+      background-color: @grayLighter;
+  }
+  
+  &.dark {
+      background-color: @grayDark;
+  }
 }
 
 .map-container {

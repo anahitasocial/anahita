@@ -4,7 +4,8 @@
 
 <? if ($item->coverSet()): ?>
 <div
-	class="cover-container parallax-window"
+	class="cover-container parallax-window light"
+	data-trigger="Cover"
 	data-src-large="<?= $item->getCoverURL('large'); ?>"
 	data-src-medium="<?= $item->getCoverURL('medium'); ?>">
 </div>

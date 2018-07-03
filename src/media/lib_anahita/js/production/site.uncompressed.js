@@ -20491,8 +20491,8 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
     });
 
     $(document).ready(function(){
-        if( $('.cover-container').length ) {
-            $('.cover-container').cover();
+        if( $('[data-trigger="Cover"]').length ) {
+            $('[data-trigger="Cover"]').cover();
         }
     });
 
