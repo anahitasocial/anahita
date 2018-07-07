@@ -51,13 +51,15 @@
             } else {
                var src = this.imageLarge.src
             }
-
+            
             var self = this;
-
             this.element.fadeTo('fast', 0, function() {
-                self.element.css('background-image', 'url(' + src + ')').removeClass('uiActivityIndicator');
+                self.element
+                .css('background-image', 'url(' + src + ')')
+                .removeClass('uiActivityIndicator');
+            }).fadeTo('slow', 1, function() {
                 self.element.parallax({ imageSrc: src });
-            }).fadeTo('slow', 1);
+            });
         }
     });
 
