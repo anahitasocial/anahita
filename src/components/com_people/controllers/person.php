@@ -23,7 +23,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     {
         parent::__construct($config);
         $this->registerCallback('after.add', array($this, 'mailActivationLink'));
-        $this->registerCallback('after.signup', array($this, 'mailActivationLink'));
     }
 
     /**
