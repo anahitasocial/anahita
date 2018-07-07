@@ -20485,7 +20485,7 @@ var sortable = $.widget("ui.sortable", $.ui.mouse, {
                 self.element
                 .css('background-image', 'url(' + src + ')')
                 .removeClass('uiActivityIndicator');
-            }).fadeTo('slow', 1, function() {
+            }).fadeTo('fast', 1, function() {
                 self.element.parallax({ imageSrc: src });
             });
         }
