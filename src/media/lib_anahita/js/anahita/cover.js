@@ -55,11 +55,9 @@
             var self = this;
             this.element.fadeTo('fast', 0, function() {
                 self.element
-                .css('background-image', 'url(' + src + ')')
-                .removeClass('uiActivityIndicator');
-            }).fadeTo('fast', 1, function() {
-                self.element.parallax({ imageSrc: src });
-            });
+                .removeClass('uiActivityIndicator')
+                .css('background-image', 'url(' + src + ')');
+            }).fadeTo('fast', 1);
         }
     });
 

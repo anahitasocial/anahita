@@ -13,7 +13,6 @@
 //@depends vendors/jquery.swipebox.js
 //@depends vendors/tinycon.js
 //@depends vendors/plyr.js
-//@depends vendors/parallax.js
 
 //@depends vendors/bootstrap/bootstrap-affix.js
 //@depends vendors/bootstrap/bootstrap-alert.js

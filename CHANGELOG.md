@@ -3,16 +3,17 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.3.12 Birth Release
 =============================
 1. fixes in com_people and com_actors REST APIs
-2. fixes in template overrides mechanism
-3. locations services now only requires one API key from google maps platform 
-4. fixed facebook and twitter OAuth.
-5. facebook OAuth is now readonly, because facebook as deprecated publish_stream and publish_actions permission.
-6. twitter OAuth is now available for people actors only for the sake of simplicity. Database migration will remove the paired group actors with twitter.
-7. Nooku/Koowa KHelper, KMixin, KCommand, KEvent, KRequest, and KHttp moved to Anahita library as AnHelper, AnMixin, AnCommand, AnEvent, AnRequest, and AnHttp.
-8. added cover image to articles 
-9. added notifications to articles 
-10. removed actor avatar and cover stories
-11. updated Shiraz styling to accommodate recent changes
+1. fixes in template overrides mechanism
+1. locations services now only requires one API key from google maps platform 
+1. fixed facebook and twitter OAuth.
+1. facebook OAuth is now readonly, because facebook as deprecated publish_stream and publish_actions permission.
+1. twitter OAuth is now available for people actors only for the sake of simplicity. Database migration will remove the paired group actors with twitter.
+1. Nooku/Koowa KHelper, KMixin, KCommand, KEvent, KRequest, and KHttp moved to Anahita library as AnHelper, AnMixin, AnCommand, AnEvent, AnRequest, and AnHttp.
+1. added cover image to articles 
+1. added notifications to articles 
+1. removed actor avatar and cover stories
+1. updated Shiraz styling to accommodate recent changes
+1. removed parallax jquery plugin  
 
 
 Anahita 4.3.11 Birth Release
