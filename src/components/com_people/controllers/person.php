@@ -209,7 +209,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
 
         if ($isFirstUser) {
-            $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
+            $this->registerCallback('after.signup', array($this, 'activateFirstAdmin'));
         } else {
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
@@ -364,7 +364,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     public function activateFirstAdmin(AnCommandContext $context)
     {
         $person = $context->result;
-        $url = route('option=com_people&view=session&token='.$person->activationCode);
+        $url = route('option=com_people&view=session&isFirstPerson=1&token='.$person->activationCode);
         $context->response->setRedirect($url);
     }
 
