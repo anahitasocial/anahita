@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /assets/
+Allow: /
 Disallow: /cache/
 Disallow: /components/
 Disallow: /includes/
