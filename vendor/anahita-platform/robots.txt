@@ -3,7 +3,6 @@ Allow: /
 Disallow: /cache/
 Disallow: /components/
 Disallow: /includes/
-Disallow: /language/
 Disallow: /libraries/
 Disallow: /log/
 Disallow: /plugins/
