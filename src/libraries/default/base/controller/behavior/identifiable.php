@@ -222,7 +222,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
 
             $entity = $this->getRepository()->fetch($query, $mode);
 
-            if (empty($entity) || !count($entity)) {
+            if (empty($entity)) {
                 $exception = new LibBaseControllerExceptionNotFound('Resource Not Found');
 
                 //see if the entity exits or not

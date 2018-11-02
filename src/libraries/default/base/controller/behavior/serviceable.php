@@ -31,7 +31,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
         parent::__construct($config);
 
         //inverse of exclude_actions
-        if (count($config->only)) {
+        if (!empty($config->only)) {
             $actions = (array) $config['only'];
 
             $exclude = array();
