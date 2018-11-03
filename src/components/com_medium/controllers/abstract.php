@@ -77,7 +77,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
      *
      * @return AnDomainQuery
      */
-    protected function _actionBrowse($context)
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
 
