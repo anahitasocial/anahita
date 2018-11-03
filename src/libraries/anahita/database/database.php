@@ -91,6 +91,8 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
 		if (defined('MYSQLI_OPT_INT_AND_FLOAT_NATIVE')) {
 			$db->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 		}
+        
+        $db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 
         $config->append(array(
     		'connection' => $db,
