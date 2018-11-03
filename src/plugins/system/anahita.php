@@ -81,7 +81,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
         $credentials = $this->_getRememberMeCredentials();
 
-        if (count($credentials)) {
+        if (!empty($credentials)) {
             if ($this->_authenticate($credentials)) {
                 $this->_login($credentials);
             }

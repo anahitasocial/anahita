@@ -28,7 +28,7 @@
 		<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 400, 'consider_html' => true)) ?>
 	</div>
 
-	<? if(count($locations)) : ?>
+	<? if(!empty($locations)) : ?>
 	<div class="entity-meta">
 			<?= @template('_locations') ?>
 	</div>

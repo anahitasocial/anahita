@@ -158,7 +158,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
   	 */
     protected function _load()
     {
-        if (count($this->_plugins) == 0) {
+        if (empty($this->_plugins)) {
             $this->_plugins = KService::get('repos:settings.plugin')
                               ->getQuery()
                               ->where('enabled', '=', 1)

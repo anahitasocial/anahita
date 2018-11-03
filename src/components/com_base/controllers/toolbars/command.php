@@ -115,7 +115,7 @@ class ComBaseControllerToolbarCommand extends LibBaseTemplateObject
      */
     public function __call($method, $arguments)
     {
-        if (count($arguments) &&
+        if (!empty($arguments) &&
             in_array(strtolower($method), array('method', 'data', 'href', 'label'))) {
             $this->{'set'.ucfirst($method)}($arguments[0]);
         } else {

@@ -38,7 +38,7 @@
 			<? endforeach; ?>
 		</div>
 
-		<? if (count($commands) > 0) : ?>
+		<? if (!empty($commands)) : ?>
 		<div class="actions">
 		<?= @helper('ui.commands', $commands)?>
 		</div>

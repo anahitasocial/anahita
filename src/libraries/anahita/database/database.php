@@ -92,7 +92,7 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
 			$db->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 		}
         
-        $db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+        $this->_setSQLMode($db);
 
         $config->append(array(
     		'connection' => $db,
@@ -102,5 +102,15 @@ class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatabl
         ));
 
         parent::_initialize($config);
+    }
+    
+    protected function _setSQLMode($db) 
+    {
+        $res = $db->query("SELECT @@SESSION.sql_mode");
+        $row = $res->fetch_row();
+        
+        if (strpos($row[0], 'ONLY_FULL_GROUP_BY') !== -1) {
+            $db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+        }
     }
 }

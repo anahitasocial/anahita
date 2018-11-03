@@ -29,7 +29,7 @@
 		<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>
 	</div>
 
-	<? if (count($commands)) : ?>
+	<? if (!empty($commands)) : ?>
 	<div class="entity-actions">
 		<? if ($action = $commands->extract('follow')) : ?>
 			<?= @helper('ui.command', $action->class('btn btn-primary')) ?>

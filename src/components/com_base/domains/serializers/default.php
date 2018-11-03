@@ -47,7 +47,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                     $width = 0;
                     $height = 0;
 
-                    if (count($parts) == 0) {
+                    if (empty($parts)) {
                         continue;
                     } elseif (count($parts) == 1) {
                         $height = $width = $parts[0];
@@ -82,7 +82,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                     $width = 0;
                     $height = 0;
 
-                    if (count($parts) == 0) {
+                    if (empty($parts)) {
                         continue;
                     } elseif (count($parts) == 1) {
                         $height = $width = $parts[0];

@@ -259,7 +259,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
             $where['value'] = $value;
         }
 
-        $where['condition'] = count($this->where) ? $condition : '';
+        $where['condition'] = !empty($this->where) ? $condition : '';
 
         $this->where[] = $where;
 
@@ -275,7 +275,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
      */
     public function clause($condition = 'AND')
     {
-        if (!count($this->where)) {
+        if (empty($this->where)) {
             $condition = null;
         }
         $clause = new AnDomainQueryClause($this, $condition);
@@ -703,7 +703,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
             $function = strtoupper($match[2]).'('.$column.')';
 
             return $this->$method($function);
-        } elseif (count($arguments) > 0) {
+        } elseif (!empty($arguments)) {
             $this->__set(AnInflector::underscore($method), $arguments[0]);
         } else {
             throw new BadMethodCallException('Call to undefined method :'.$method);
