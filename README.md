@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.3.12 Birth Release
+*Version:* 4.3.13 Birth Release
 
 Anahita is a platform and framework for developing open science and knowledge sharing applications on a social networking foundation. Use Anahita to build:
 
@@ -70,16 +70,6 @@ http://getcomposer.org/ or just run the following command:
 If you have the suhosin patch installed on your server you might get an error. Add this line to your php.ini file to fix it: `suhosin.executor.include.whitelist = tmpl://, file://`
 
 Anahita is installed and managed via command line interface, because this is the most reliable approach especially after you accumulate large amounts of data in your database.
-
-Also since MySql 5.7 `ONLY_FULL_GROUP_BY` is enabled by default and this is causing errors in Anahita. Connect to your MySql database via command line and run the following command to disable `ONLY_FULL_GROUP_BY`:
-
-### MySql strict mode
-
-Since version 5.7 MySql is set on strict mode by default. That causes Anahita to throw errors, especially if you are
-upgrading from older releases. To disable strict mode, you can run the following commands:
-
-`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));`
-`SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'NO_ZERO_DATE',''));`
 
 ### Installing a stable package
 
