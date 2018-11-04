@@ -1,6 +1,6 @@
 <?php
 
-class AnDatabase extends KDatabaseAdapterMysqli implements KServiceInstantiatable
+class AnDatabaseAbstract extends KDatabaseAdapterMysqli implements KServiceInstantiatable
 {
 	/**
      * Force creation of a singleton
