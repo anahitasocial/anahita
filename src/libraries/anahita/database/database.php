@@ -8,7 +8,7 @@
  * @link        https://www.GetAnahita.com
  */
 
-class AnDatabase extends AnDatabaseAbstract 
+class AnDatabase extends KObject implements KServiceInstantiatable 
 {
     /**
 	 * Database operations
@@ -46,4 +46,21 @@ class AnDatabase extends AnDatabaseAbstract
     const STATUS_CREATED  = 'created';
     const STATUS_UPDATED  = 'updated';
     const STATUS_FAILED   = 'failed';
+	
+	/**
+     * Force creation of a singleton
+     *
+     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object	A KServiceInterface object
+     * @return AnDatabaseTableInterface
+     */
+    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    {
+        if (! $container->has($config->service_identifier)) {
+            $instance = new AnDatabaseAdapterMysqli($config);
+            $container->set($config->service_identifier, $instance);
+        }
+
+        return $container->get($config->service_identifier);
+    }
 }

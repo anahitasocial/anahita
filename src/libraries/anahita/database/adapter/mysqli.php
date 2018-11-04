@@ -82,6 +82,12 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
 	 * @var string
 	 */
 	protected $_database;
+	
+	public function __construct(KConfig $config)
+	{
+		parent::__construct($config);
+		$this->connect();
+	}
 
 	/**
      * Initializes the options for the object
@@ -93,28 +99,64 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
      */
     protected function _initialize(KConfig $config)
     {
-    		$config->append(array(
-	    		'options'	=> array(
-	    			'host'		=> ini_get('mysqli.default_host'),
-	    			'username'	=> ini_get('mysqli.default_user'),
-	    			'password'  => ini_get('mysqli.default_pw'),
-	    			'database'	=> '',
-	    			'port'		=> ini_get("mysqli.default_port"),
-	    			'socket'	=> ini_get("mysqli.default_socket")
-	    		)
+		$settings = $this->getService('com:settings.setting');
+        $database = $settings->db;
+        $prefix = $settings->dbprefix;
+        $port = NULL;
+		$socket	= NULL;
+        $host = $settings->host;
+        $username = $settings->user;
+        $password = $settings->password;
+
+		$targetSlot = substr(strstr($host, ":"), 1);
+
+        if (!empty($targetSlot)) {
+			// Get the port number or socket name
+			if (is_numeric($targetSlot)) {
+                $port = $targetSlot;
+            } else {
+				$socket	= $targetSlot;
+            }
+
+			// Extract the host name only
+			$host = substr($host, 0, strlen($host) - (strlen($targetSlot) + 1));
+
+            // This will take care of the following notation: ":3306"
+			if($host === '') {
+				$host = 'localhost';
+            }
+		}
+
+		$config->append(array(
+	    	'options' => array(
+	    		'host' => $host,
+	    		'username' => $username,
+	    		'password' => $password,
+	    		'database' => $database,
+	    		'port' => $port,
+	    		'socket' => $socket
+	    	),
+			'table_prefix' => $settings->dbprefix,
+			'charset' => 'utf8mb4',
+			'connected' => false,
         ));
 
         parent::_initialize($config);
     }
-
+	
 	/**
 	 * Connect to the db
 	 *
 	 * @return AnDatabaseAdapterMysqli
 	 */
-	 public function connect()
-	 {
-		$mysqli = new mysqli(
+	public function connect()
+	{
+		//test to see if driver exists
+        if (! function_exists( 'mysqli_connect' )) {
+            throw new Exception('The MySQL adapter "mysqli" is not available!');
+		}
+		
+		$db = new mysqli(
 			$this->_options->host,
 			$this->_options->username,
 			$this->_options->password,
@@ -122,22 +164,42 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
 			$this->_options->port,
 			$this->_options->socket
 		);
-
+		
+		$db->set_charset("utf8mb4");
+		
+		$database = $this->_options->database;
+		
+		if (!$db->select_db($database)) {
+            throw new Exception("The database \"$database\" doesn't seem to exist!");
+		}
+		
 		if (mysqli_connect_errno()) {
 			throw new AnDatabaseAdapterException('Connect failed: (' . mysqli_connect_errno() . ') ' . mysqli_connect_error(), mysqli_connect_errno());
 		}
-
+		
+		$this->_setSQLMode($db);
+		
 		// If supported, request real datatypes from MySQL instead of returning everything as a string.
 		if (defined('MYSQLI_OPT_INT_AND_FLOAT_NATIVE')) {
-			$mysqli->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
+			$db->options(MYSQLI_OPT_INT_AND_FLOAT_NATIVE, true);
 		}
-
-		$this->_connection = $mysqli;
-		$this->_connected  = true;
-		$this->_database   = $this->_options->database;
-
+		
+		$this->_connection = $db;
+		$this->_connected = true;
+		$this->_database = $database;
+		
 		return $this;
- 	}
+	}
+	
+	protected function _setSQLMode($db) 
+    {
+        $res = $db->query("SELECT @@SESSION.sql_mode");
+        $row = $res->fetch_row();
+        
+        if (strpos($row[0], 'ONLY_FULL_GROUP_BY') !== -1) {
+            $db->query("SET SESSION sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
+        }
+    }
 
 	/**
 	 * Disconnect from db
@@ -181,7 +243,7 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
 
 	    $this->_connection = $resource;
 
-			return $this;
+		return $this;
 	}
 
 	/**

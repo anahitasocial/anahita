@@ -89,7 +89,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
 		    parent::__construct($config);
 
 		    // Set the connection
-		    $this->setConnection($config->connection);
+		    // $this->setConnection($config->connection);
 
 			// Set the default charset. http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html
 			if (!empty($config->charset)) {
