@@ -31,7 +31,7 @@ class ComMigratorMigrationVersion extends KObject implements ArrayAccess
     /**
      * Database Adapter.
      * 
-     * @var KDatabaseAdapter
+     * @var AnDatabaseAdapter
      */
     protected $_db;
 

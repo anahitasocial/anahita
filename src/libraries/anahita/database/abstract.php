@@ -1,13 +1,13 @@
 <?php
 
-class AnDatabaseAbstract extends KDatabaseAdapterMysqli implements KServiceInstantiatable
+class AnDatabaseAbstract extends AnDatabaseAdapterMysqli implements KServiceInstantiatable
 {
 	/**
      * Force creation of a singleton
      *
      * @param 	object 	An optional KConfig object with configuration options
      * @param 	object	A KServiceInterface object
-     * @return KDatabaseTableInterface
+     * @return AnDatabaseTableInterface
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {

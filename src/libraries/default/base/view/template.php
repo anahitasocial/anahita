@@ -160,7 +160,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      * @param   mixed   An object that implements KObjectIdentifiable, an object that
      *                  implements KIndentifierInterface or valid identifier string
      *
-     * @throws KDatabaseRowsetException If the identifier is not a table identifier
+     * @throws AnDatabaseRowsetException If the identifier is not a table identifier
      *
      * @return LibBaseViewAbstract
      */

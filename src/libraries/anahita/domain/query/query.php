@@ -220,7 +220,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
     /**
      * If a $key is an array then a query will be created from the array.
      *
-     * @see KDatabaseQuery::where()
+     * @see AnDatabaseQuery::where()
      */
     public function where($key, $constraint = null, $value = null, $condition = 'AND')
     {

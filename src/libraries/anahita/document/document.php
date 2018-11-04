@@ -190,7 +190,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
      *
      * @param 	object 	An optional KConfig object with configuration options
      * @param 	object	A KServiceInterface object
-     * @return KDatabaseTableInterface
+     * @return AnDatabaseTableInterface
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {
