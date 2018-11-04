@@ -399,7 +399,7 @@ class AnDomainQueryBuilder extends KObject
 
         //converts subclause to string only if there's at least one where statement in it
         if (isset($where['clause'])) {
-            if (count($where['clause']) == 0) {
+            if (empty($where['clause'])) {
                 return '';
             }
 
@@ -610,7 +610,7 @@ class AnDomainQueryBuilder extends KObject
         $string = str_replace('@MYSQL_JOIN_PLACEHOLDER', $this->join($query), $string);
         $string = $this->parseMethods($query, $string);
 
-        if (count($query->binds)) {
+        if (!empty($query->binds)) {
             foreach ($query->binds as $key => $value) {
                 $key = ':'.$key;
                 $value = $this->_store->quoteValue($value);

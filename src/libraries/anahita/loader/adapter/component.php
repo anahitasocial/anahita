@@ -76,7 +76,7 @@ class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
             $component = 'com_'.strtolower(array_shift($parts));
             $file = array_pop($parts);
             $path = null;
-            if (count($parts)) {
+            if (!empty($parts)) {
                 if ($parts[0] != 'view') {
                     foreach ($parts as $key => $value) {
                         $parts[$key] = AnInflector::pluralize($value);

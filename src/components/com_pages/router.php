@@ -44,7 +44,7 @@ class ComPagesRouter extends ComBaseRouterAbstract
     {
         $query = array('view' => 'page');
 
-        if (count($segments)) {
+        if (!empty($segments)) {
             $query['layout'] = str_replace('-', '_', implode('/', $segments));
         }
 

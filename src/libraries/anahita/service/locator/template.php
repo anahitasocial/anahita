@@ -99,7 +99,7 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
         $theme = strtolower($identifier->package);
 
         if (!empty($identifier->name)) {
-            if (count($parts)) {
+            if (!empty($parts)) {
                 if ($parts[0] != 'html') {
                     foreach ($parts as $key => $value) {
                         $parts[$key] = AnInflector::pluralize($value);

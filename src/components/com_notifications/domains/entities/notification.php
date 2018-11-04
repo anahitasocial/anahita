@@ -171,7 +171,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 
         $ids = array_unique($ids);
 
-        if (count($ids) > 0) {
+        if (!empty($ids)) {
             $this->set('subscriberIds', AnDomainAttribute::getInstance('set')->setData($ids));
         } else {
             $this->delete();
