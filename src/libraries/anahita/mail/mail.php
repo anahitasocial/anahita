@@ -377,21 +377,21 @@ class AnMail extends KObject implements KServiceInstantiatable
         ->setTo($this->_to)
         ->setBody($this->_body);
 
-        if(count($this->_cc)) {
+        if(!empty($this->_cc)) {
             $message->setCc($this->_cc);
         }
 
-        if(count($this->_bcc)) {
+        if(!empty($this->_bcc)) {
             $message->setBcc($this->_bcc);
         }
 
-        if(count($this->_sender)) {
+        if(!empty($this->_sender)) {
             $message->setSender($this->_sender);
         } else {
             $message->setSender($this->_site_settings->mailfrom, $this->_site_settings->fromname);
         }
 
-        if(count($this->_from)) {
+        if(!empty($this->_from)) {
             $message->setFrom($this->_from);
         } else {
             $message->setFrom($this->_site_settings->mailfrom, $this->_site_settings->fromname);

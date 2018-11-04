@@ -130,7 +130,7 @@ class ComApplicationRouter extends KObject
         $segments = explode('/', trim($url->path, '/'));
         $segments = array_filter($segments);
 
-        if (count($segments)) {
+        if (!empty($segments)) {
             $component = array_shift($segments);
             $url->query = array_merge(array('option' => 'com_'.$component), $url->query);
             $component = str_replace('com_', '', $url->query['option']);

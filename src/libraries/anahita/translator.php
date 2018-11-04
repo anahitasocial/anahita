@@ -35,7 +35,7 @@ class AnTranslator
 	{
 		$language = KService::get('anahita:language');
 		$args = func_get_args();
-		if (count($args) > 0) {
+		if (!empty($args)) {
 			$args[0] = $language->_($args[0]);
 			return call_user_func_array('sprintf', $args);
 		}
@@ -54,7 +54,7 @@ class AnTranslator
 	{
 		$language = KService::get('anahita:language');
 		$args = func_get_args();
-		if (count($args) > 0) {
+		if (!empty($args)) {
 			$args[0] = $language->_($args[0]);
 			return call_user_func_array('printf', $args);
 		}

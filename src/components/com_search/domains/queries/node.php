@@ -117,7 +117,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 
         $comment_query = '';
 
-        if (count($comments) && $this->_state->search_comments) {
+        if (!empty($comments) && $this->_state->search_comments) {
             $comment_query = 'OR (@col(node.type) LIKE :comment_type AND node.parent_type IN (:parent_types) )';
         }
 

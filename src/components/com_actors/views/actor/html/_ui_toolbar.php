@@ -2,7 +2,7 @@
 
 <? $commands = $toolbar->getCommands() ?>
 
-<? if (count($commands)): ?>
+<? if (!empty($commands)): ?>
     <div class="actor-profile-toolbar btn-toolbar clearfix">
     	<? if ($command = $commands->extract('addrequest')): ?>
             <?= @helper('ui.command', $command->class('btn btn-primary')) ?>

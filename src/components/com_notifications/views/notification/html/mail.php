@@ -61,7 +61,7 @@ EOF;
                 </table>
 		      </td>
 		   </tr>
-			<? if ($commands && count($commands) > 0) : ?>
+			<? if (!empty($commands)) : ?>
 			<tr>
 				<td style="<?= $well?>">
 					<? foreach ($commands as $command) :  ?>

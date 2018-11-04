@@ -73,7 +73,7 @@ EOF;
                 </table>
 		      </td>
 		   </tr>
-		   <? if ($commands && count($commands) > 0) : ?>
+		   <? if (!empty($commands)) : ?>
 		   <? $setting_command = $commands->extract('notification_setting'); ?>
 			<tr>
 				<td style="<?= $well ?>">

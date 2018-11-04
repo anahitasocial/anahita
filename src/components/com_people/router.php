@@ -48,7 +48,7 @@ class ComPeopleRouter extends ComActorsRouterDefault
         if ($path == 'signup') {
             return array('view' => 'person','layout' => 'signup');
         } elseif (
-             count($segments) &&
+             !empty($segments) &&
              !is_numeric($segments[0]) &&
              !in_array(AnInflector::singularize($segments[0]), array('person', 'session', 'token'))
         ) {

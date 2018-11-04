@@ -73,7 +73,7 @@ class AnServiceLocatorAnahita extends KServiceLocatorAbstract
     {
         $path = '';
 
-        if (count($identifier->path)) {
+        if (!empty($identifier->path)) {
             $path .= implode('/', $identifier->path);
         }
 
