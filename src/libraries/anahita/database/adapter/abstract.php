@@ -108,10 +108,10 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
             $this->_options = $config->options;
 
             //Set the mixer in the config
-              $config->mixer = $this;
+            $config->mixer = $this;
 
             // Mixin the command interface
-              $this->mixin(new AnMixinCommand($config));
+            $this->mixin(new AnMixinCommand($config));
     }
 
     /**

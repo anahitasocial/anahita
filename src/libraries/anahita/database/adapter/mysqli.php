@@ -103,7 +103,7 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
         $database = $settings->db;
         $prefix = $settings->dbprefix;
         $port = null;
-        $socket    = null;
+        $socket = null;
         $host = $settings->host;
         $username = $settings->user;
         $password = $settings->password;
@@ -115,7 +115,7 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
             if (is_numeric($targetSlot)) {
                 $port = $targetSlot;
             } else {
-                $socket    = $targetSlot;
+                $socket = $targetSlot;
             }
 
             // Extract the host name only
@@ -137,8 +137,7 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
                 'socket' => $socket
             ),
             'table_prefix' => $settings->dbprefix,
-            'charset' => 'utf8mb4',
-            'connected' => false,
+            'charset' => 'utf8mb4'
         ));
 
         parent::_initialize($config);
