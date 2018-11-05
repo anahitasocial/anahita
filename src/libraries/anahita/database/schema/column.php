@@ -9,86 +9,86 @@
  */
 class AnDatabaseSchemaColumn extends KObject
 {
-	/**
-	 * Column name
-	 *
-	 * @var string
-	 */
-	public $name;
+    /**
+     * Column name
+     *
+     * @var string
+     */
+    public $name;
 
-	/**
-	 * Column type
-	 *
-	 * @var	string
-	 */
-	public $type;
+    /**
+     * Column type
+     *
+     * @var	string
+     */
+    public $type;
 
-	/**
-	 * Column length
-	 *
-	 * @var integer
-	 */
-	public $length;
+    /**
+     * Column length
+     *
+     * @var integer
+     */
+    public $length;
 
-	/**
-	 * Column scope
-	 *
-	 * @var string
-	 */
-	public $scope;
+    /**
+     * Column scope
+     *
+     * @var string
+     */
+    public $scope;
 
-	/**
-	 * Column default value
-	 *
-	 * @var string
-	 */
-	public $default;
+    /**
+     * Column default value
+     *
+     * @var string
+     */
+    public $default;
 
-	/**
-	 * Required column
-	 *
-	 * @var bool
-	 */
-	public $required = false;
+    /**
+     * Required column
+     *
+     * @var bool
+     */
+    public $required = false;
 
-	/**
-	 * Is the column a primary key
-	 *
-	 * @var bool
-	 */
-	public $primary = false;
+    /**
+     * Is the column a primary key
+     *
+     * @var bool
+     */
+    public $primary = false;
 
-	/**
-	 * Is the column autoincremented
-	 *
-	 * @var	bool
-	 */
-	public $autoinc = false;
+    /**
+     * Is the column autoincremented
+     *
+     * @var	bool
+     */
+    public $autoinc = false;
 
-	/**
-	 * Is the column unqiue
-	 *
-	 * @var	bool
-	 */
-	public $unique = false;
+    /**
+     * Is the column unqiue
+     *
+     * @var	bool
+     */
+    public $unique = false;
 
-	/**
-	 * Related index columns
-	 *
-	 * @var	bool
-	 */
-	public $related = array();
+    /**
+     * Related index columns
+     *
+     * @var	bool
+     */
+    public $related = array();
 
-	/**
-	 * Filter object
-	 *
-	 * Public access is allowed via __get() with $filter.
-	 *
-	 * @var	KFilter
-	 */
-	protected $_filter;
+    /**
+     * Filter object
+     *
+     * Public access is allowed via __get() with $filter.
+     *
+     * @var	KFilter
+     */
+    protected $_filter;
 
-	/**
+    /**
      * Implements the virtual $filter property.
      *
      * The value can be a KFilter object, a filter name, an array of filter
@@ -100,7 +100,7 @@ class AnDatabaseSchemaColumn extends KObject
     public function __set($key, $value)
     {
         if ($key == 'filter') {
-        	$this->_filter = $value;
+            $this->_filter = $value;
         }
     }
 
@@ -113,13 +113,12 @@ class AnDatabaseSchemaColumn extends KObject
      */
     public function __get($key)
     {
-        if ($key == 'filter')
-        {
-           if(!isset($this->_filter)) {
+        if ($key == 'filter') {
+            if (!isset($this->_filter)) {
                 $this->_filter = $this->type;
             }
 
-            if(!($this->_filter instanceof KFilterInterface)) {
+            if (!($this->_filter instanceof KFilterInterface)) {
                 $this->_filter = $this->getService('koowa:filter.factory')->instantiate($this->_filter);
             }
 

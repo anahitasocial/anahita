@@ -10,119 +10,121 @@
  
 abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAdapterInterface
 {
-	/**
-	 * Active state of the connection
-	 *
-	 * @var boolean
-	 */
-	protected $_connected = null;
+    /**
+     * Active state of the connection
+     *
+     * @var boolean
+     */
+    protected $_connected = null;
 
-	/**
-	 * The database connection resource
-	 *
-	 * @var mixed
-	 */
-	protected $_connection = null;
+    /**
+     * The database connection resource
+     *
+     * @var mixed
+     */
+    protected $_connection = null;
 
-	/**
-	 * Last auto-generated insert_id
-	 *
-	 * @var integer
-	 */
-	protected $_insert_id;
+    /**
+     * Last auto-generated insert_id
+     *
+     * @var integer
+     */
+    protected $_insert_id;
 
-	/**
-	 * The affected row count
-	 *
-	 * @var int
-	 */
-	protected $_affected_rows;
+    /**
+     * The affected row count
+     *
+     * @var int
+     */
+    protected $_affected_rows;
 
-	/**
-	 * Schema cache
-	 *
-	 * @var array
-	 */
-	protected $_table_schema = null;
+    /**
+     * Schema cache
+     *
+     * @var array
+     */
+    protected $_table_schema = null;
 
-	/**
-	 * The table prefix
-	 *
-	 * @var string
-	 */
-	protected $_table_prefix = '';
+    /**
+     * The table prefix
+     *
+     * @var string
+     */
+    protected $_table_prefix = '';
 
-	/**
-	 * The table needle
-	 *
-	 * @var string
-	 */
-	protected $_table_needle = '';
+    /**
+     * The table needle
+     *
+     * @var string
+     */
+    protected $_table_needle = '';
 
-	/**
-	 * Quote for named objects
-	 *
-	 * @var string
-	 */
-	protected $_name_quote = '`';
+    /**
+     * Quote for named objects
+     *
+     * @var string
+     */
+    protected $_name_quote = '`';
 
-	/**
-	 * The connection options
-	 *
-	 * @var KConfig
-	 */
-	protected $_options = null;
+    /**
+     * The connection options
+     *
+     * @var KConfig
+     */
+    protected $_options = null;
 
-	/**
-	 * Constructor.
-	 *
-	 * @param 	object 	An optional KConfig object with configuration options.
-	 * Recognized key values include 'command_chain', 'charset', 'table_prefix',
-	 * (this list is not meant to be comprehensive).
-	 */
-	public function __construct( KConfig $config = null )
-	{
-			//If no config is passed create it
-			if(!isset($config)) $config = new KConfig();
+    /**
+     * Constructor.
+     *
+     * @param 	object 	An optional KConfig object with configuration options.
+     * Recognized key values include 'command_chain', 'charset', 'table_prefix',
+     * (this list is not meant to be comprehensive).
+     */
+    public function __construct(KConfig $config = null)
+    {
+        //If no config is passed create it
+            if (!isset($config)) {
+                $config = new KConfig();
+            }
 
-			// Initialize the options
-		    parent::__construct($config);
+            // Initialize the options
+            parent::__construct($config);
 
-		    // Set the connection
-		    // $this->setConnection($config->connection);
+            // Set the connection
+            // $this->setConnection($config->connection);
 
-			// Set the default charset. http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html
-			if (!empty($config->charset)) {
-				//$this->setCharset($config->charset);
-			}
+            // Set the default charset. http://dev.mysql.com/doc/refman/5.1/en/charset-connection.html
+            if (!empty($config->charset)) {
+                //$this->setCharset($config->charset);
+            }
 
-			// Set the table prefix
-			$this->_table_prefix = $config->table_prefix;
+            // Set the table prefix
+            $this->_table_prefix = $config->table_prefix;
 
-			// Set the table prefix
-			$this->_table_needle = $config->table_needle;
+            // Set the table prefix
+            $this->_table_needle = $config->table_needle;
 
-			// Set the connection options
-			$this->_options = $config->options;
+            // Set the connection options
+            $this->_options = $config->options;
 
-		 	//Set the mixer in the config
-      		$config->mixer = $this;
+            //Set the mixer in the config
+              $config->mixer = $this;
 
-			// Mixin the command interface
-      		$this->mixin(new AnMixinCommand($config));
-	}
+            // Mixin the command interface
+              $this->mixin(new AnMixinCommand($config));
+    }
 
-	/**
-	 * Destructor
-	 *
-	 * Free any resources that are open.
-	 */
-	public function __destruct()
-	{
-		 $this->disconnect();
-	}
+    /**
+     * Destructor
+     *
+     * Free any resources that are open.
+     */
+    public function __destruct()
+    {
+        $this->disconnect();
+    }
 
-  	/**
+    /**
      * Initializes the options for the object
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -132,118 +134,118 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      */
     protected function _initialize(KConfig $config)
     {
-    	$config->append(array(
-    		'options'			=> array(),
-    		'charset'			=> 'UTF-8',
-       	 	'table_prefix'  	=> 'an_',
-    	    'table_needle'		=> '#__',
-    		'command_chain'     => $this->getService('anahita:command.chain'),
-    		'dispatch_events'   => true,
-    		'event_dispatcher'  => $this->getService('anahita:event.dispatcher'),
-    		'enable_callbacks' 	=> false,
-    		'connection'		=> null,
+        $config->append(array(
+            'options' => array(),
+            'charset' => 'UTF-8',
+            'table_prefix' => 'an_',
+            'table_needle' => '#__',
+            'command_chain' => $this->getService('anahita:command.chain'),
+            'dispatch_events' => true,
+            'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
+            'enable_callbacks' => false,
+            'connection' => null,
         ));
 
         parent::_initialize($config);
     }
 
-	/**
-	 * Get a database query object
-	 *
-	 * @return AnDatabaseQuery
-	 */
-	public function getQuery(KConfig $config = null)
-	{
-		if(!isset($config)) {
-			$config = new KConfig(array('adapter' => $this));
-		}
-
-		return new AnDatabaseQuery($config);
-	}
-
-	/**
-	 * Reconnect to the db
-	 *
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function reconnect()
-	{
-		$this->disconnect();
-		$this->connect();
-
-		return $this;
-	}
-
-	/**
-	 * Disconnect from db
-	 *
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function disconnect()
-	{
-		$this->_connection = null;
-		$this->_connected  = false;
-
-		return $this;
-	}
-
-	/**
-	 * Get the database name
-	 *
-	 * @return string	The database name
-	 */
-	abstract function getDatabase();
-
-	/**
-	 * Set the database name
-	 *
-	 * @param 	string 	The database name
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	abstract function setDatabase($database);
-
-	/**
-	 * Get the connection
-	 *
-	 * Provides access to the underlying database connection. Useful for when
-	 * you need to call a proprietary method such as postgresql's lo_* methods
-	 *
-	 * @return resource
-	 */
-	public function getConnection()
-	{
-		return $this->_connection;
-	}
-
-	/**
-	 * Set the connection
-	 *
-	 * @param 	resource 	The connection resource
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function setConnection($resource)
-	{
-	    $this->_connection = $resource;
-		return $this;
-	}
-
-	/**
-	 * Get the insert id of the last insert operation
-	 *
-	 * @return mixed The id of the last inserted row(s)
-	 */
- 	public function getInsertId()
+    /**
+     * Get a database query object
+     *
+     * @return AnDatabaseQuery
+     */
+    public function getQuery(KConfig $config = null)
     {
-    	return $this->_insert_id;
+        if (!isset($config)) {
+            $config = new KConfig(array('adapter' => $this));
+        }
+
+        return new AnDatabaseQuery($config);
     }
 
-	/**
+    /**
+     * Reconnect to the db
+     *
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function reconnect()
+    {
+        $this->disconnect();
+        $this->connect();
+
+        return $this;
+    }
+
+    /**
+     * Disconnect from db
+     *
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function disconnect()
+    {
+        $this->_connection = null;
+        $this->_connected  = false;
+
+        return $this;
+    }
+
+    /**
+     * Get the database name
+     *
+     * @return string	The database name
+     */
+    abstract public function getDatabase();
+
+    /**
+     * Set the database name
+     *
+     * @param 	string 	The database name
+     * @return  AnDatabaseAdapterAbstract
+     */
+    abstract public function setDatabase($database);
+
+    /**
+     * Get the connection
+     *
+     * Provides access to the underlying database connection. Useful for when
+     * you need to call a proprietary method such as postgresql's lo_* methods
+     *
+     * @return resource
+     */
+    public function getConnection()
+    {
+        return $this->_connection;
+    }
+
+    /**
+     * Set the connection
+     *
+     * @param 	resource 	The connection resource
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function setConnection($resource)
+    {
+        $this->_connection = $resource;
+        return $this;
+    }
+
+    /**
+     * Get the insert id of the last insert operation
+     *
+     * @return mixed The id of the last inserted row(s)
+     */
+    public function getInsertId()
+    {
+        return $this->_insert_id;
+    }
+
+    /**
      * Preforms a select query
      *
      * Use for SELECT and anything that returns rows.
      *
      * If <var>key</var> is not empty then the returned array is indexed by the value
-	 * of the database key.  Returns <var>null</var> if the query fails.
+     * of the database key.  Returns <var>null</var> if the query fails.
      *
      * @param	string|object  	A full SQL query to run. Data inside the query should be properly escaped.
      * @param   integer			The fetch mode. Controls how the result will be returned to the caller. This
@@ -252,55 +254,52 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      * @return  mixed 			The return value of this function on success depends on the fetch type.
      * 					    	In all cases, FALSE is returned on failure.
      */
-	public function select($query, $mode = AnDatabase::FETCH_ARRAY_LIST, $key = '')
-	{
-		$context = $this->getCommandContext();
-		$context->query	 	= $query;
-		$context->operation = AnDatabase::OPERATION_SELECT;
-		$context->mode		= $mode;
+    public function select($query, $mode = AnDatabase::FETCH_ARRAY_LIST, $key = '')
+    {
+        $context = $this->getCommandContext();
+        $context->query        = $query;
+        $context->operation = AnDatabase::OPERATION_SELECT;
+        $context->mode        = $mode;
 
-		// Excute the insert operation
-		if($this->getCommandChain()->run('before.select', $context) !== false)
-		{
-			if($result = $this->execute( $context->query, AnDatabase::RESULT_USE))
-			{
-				switch($context->mode)
-				{
-					case AnDatabase::FETCH_ARRAY       :
-						$context->result = $this->_fetchArray($result);
-						break;
+        // Excute the insert operation
+        if ($this->getCommandChain()->run('before.select', $context) !== false) {
+            if ($result = $this->execute($context->query, AnDatabase::RESULT_USE)) {
+                switch ($context->mode) {
+                    case AnDatabase::FETCH_ARRAY:
+                        $context->result = $this->_fetchArray($result);
+                        break;
 
-					case AnDatabase::FETCH_ARRAY_LIST  :
-						$context->result = $this->_fetchArrayList($result, $key);
-						break;
+                    case AnDatabase::FETCH_ARRAY_LIST:
+                        $context->result = $this->_fetchArrayList($result, $key);
+                        break;
 
-					case AnDatabase::FETCH_FIELD       :
-						$context->result = $this->_fetchField($result, $key);
-						break;
+                    case AnDatabase::FETCH_FIELD:
+                        $context->result = $this->_fetchField($result, $key);
+                        break;
 
-					case AnDatabase::FETCH_FIELD_LIST  :
-						$context->result = $this->_fetchFieldList($result, $key);
-						break;
+                    case AnDatabase::FETCH_FIELD_LIST:
+                        $context->result = $this->_fetchFieldList($result, $key);
+                        break;
 
-					case AnDatabase::FETCH_OBJECT      :
-						$context->result = $this->_fetchObject($result);
-						break;
+                    case AnDatabase::FETCH_OBJECT:
+                        $context->result = $this->_fetchObject($result);
+                        break;
 
-					case AnDatabase::FETCH_OBJECT_LIST :
-						$context->result = $this->_fetchObjectList($result, $key);
-						break;
+                    case AnDatabase::FETCH_OBJECT_LIST:
+                        $context->result = $this->_fetchObjectList($result, $key);
+                        break;
 
-					default : $result->free();
-				}
-			}
+                    default: $result->free();
+                }
+            }
 
-			$this->getCommandChain()->run('after.select', $context);
-		}
+            $this->getCommandChain()->run('after.select', $context);
+        }
 
-		return KConfig::unbox($context->result);
-	}
+        return KConfig::unbox($context->result);
+    }
 
-	/**
+    /**
      * Preforms a show query
      *
      * @param	string|object  	A full SQL query to run. Data inside the query should be properly escaped.
@@ -309,55 +308,52 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      * @return  mixed 			The return value of this function on success depends on the fetch type.
      * 					    	In all cases, FALSE is returned on failure.
      */
-	public function show($query, $mode = AnDatabase::FETCH_ARRAY_LIST)
-	{
-		$context = $this->getCommandContext();
-		$context->query	 	= $query;
-		$context->operation = AnDatabase::OPERATION_SHOW;
-		$context->mode		= $mode;
+    public function show($query, $mode = AnDatabase::FETCH_ARRAY_LIST)
+    {
+        $context = $this->getCommandContext();
+        $context->query        = $query;
+        $context->operation = AnDatabase::OPERATION_SHOW;
+        $context->mode        = $mode;
 
-		// Excute the insert operation
-		if($this->getCommandChain()->run('before.show', $context) !== false)
-		{
-			if($result = $this->execute( $context->query, AnDatabase::RESULT_USE))
-			{
-				switch($context->mode)
-				{
-					case AnDatabase::FETCH_ARRAY       :
-						$context->result = $this->_fetchArray($result);
-						break;
+        // Excute the insert operation
+        if ($this->getCommandChain()->run('before.show', $context) !== false) {
+            if ($result = $this->execute($context->query, AnDatabase::RESULT_USE)) {
+                switch ($context->mode) {
+                    case AnDatabase::FETCH_ARRAY:
+                        $context->result = $this->_fetchArray($result);
+                        break;
 
-					case AnDatabase::FETCH_ARRAY_LIST  :
-						$context->result = $this->_fetchArrayList($result);
-						break;
+                    case AnDatabase::FETCH_ARRAY_LIST:
+                        $context->result = $this->_fetchArrayList($result);
+                        break;
 
-					case AnDatabase::FETCH_FIELD       :
-						$context->result = $this->_fetchField($result);
-						break;
+                    case AnDatabase::FETCH_FIELD:
+                        $context->result = $this->_fetchField($result);
+                        break;
 
-					case AnDatabase::FETCH_FIELD_LIST  :
-						$context->result = $this->_fetchFieldList($result);
-						break;
+                    case AnDatabase::FETCH_FIELD_LIST:
+                        $context->result = $this->_fetchFieldList($result);
+                        break;
 
-					case AnDatabase::FETCH_OBJECT      :
-						$context->result = $this->_fetchObject($result);
-						break;
+                    case AnDatabase::FETCH_OBJECT:
+                        $context->result = $this->_fetchObject($result);
+                        break;
 
-					case AnDatabase::FETCH_OBJECT_LIST :
-						$context->result = $this->_fetchObjectList($result);
-						break;
+                    case AnDatabase::FETCH_OBJECT_LIST:
+                        $context->result = $this->_fetchObjectList($result);
+                        break;
 
-					default : $result->free();
-				}
-			}
+                    default: $result->free();
+                }
+            }
 
-			$this->getCommandChain()->run('after.show', $context);
-		}
+            $this->getCommandChain()->run('after.show', $context);
+        }
 
-		return KConfig::unbox($context->result);
-	}
+        return KConfig::unbox($context->result);
+    }
 
-	/**
+    /**
      * Inserts a row of data into a table.
      *
      * Automatically quotes the data values
@@ -368,42 +364,40 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      * @return bool|integer  If the insert query was executed returns the number of rows updated, or 0 if
      * 					     no rows where updated, or -1 if an error occurred. Otherwise FALSE.
      */
-	public function insert($table, array $data)
-	{
-		$context = $this->getCommandContext();
-		$context->table 	= $table;
-		$context->data 		= $data;
-		$context->operation	= AnDatabase::OPERATION_INSERT;
+    public function insert($table, array $data)
+    {
+        $context = $this->getCommandContext();
+        $context->table    = $table;
+        $context->data        = $data;
+        $context->operation    = AnDatabase::OPERATION_INSERT;
 
-		//Excute the insert operation
-		if($this->getCommandChain()->run('before.insert', $context) !== false)
-		{
-			//Check if we have valid data to insert, if not return false
-			if(count($context->data))
-			{
-				foreach($context->data as $key => $val)
-				{
-					$vals[] = $this->quoteValue($val);
-					$keys[] = '`'.$key.'`';
-				}
+        //Excute the insert operation
+        if ($this->getCommandChain()->run('before.insert', $context) !== false) {
+            //Check if we have valid data to insert, if not return false
+            if (count($context->data)) {
+                foreach ($context->data as $key => $val) {
+                    $vals[] = $this->quoteValue($val);
+                    $keys[] = '`'.$key.'`';
+                }
 
-				$context->query = 'INSERT INTO '.$this->quoteName($this->getTableNeedle().$context->table )
-					 . '('.implode(', ', $keys).') VALUES ('.implode(', ', $vals).')';
+                $context->query = 'INSERT INTO '.$this->quoteName($this->getTableNeedle().$context->table)
+                     . '('.implode(', ', $keys).') VALUES ('.implode(', ', $vals).')';
 
-				//Execute the query
-				$context->result = $this->execute($context->query);
+                //Execute the query
+                $context->result = $this->execute($context->query);
 
-				$context->affected = $this->_affected_rows;
+                $context->affected = $this->_affected_rows;
 
-				$this->getCommandChain()->run('after.insert', $context);
-			}
-			else $context->affected = false;
-		}
+                $this->getCommandChain()->run('after.insert', $context);
+            } else {
+                $context->affected = false;
+            }
+        }
 
-		return $context->affected;
-	}
+        return $context->affected;
+    }
 
-	/**
+    /**
      * Updates a table with specified data based on a WHERE clause
      *
      * Automatically quotes the data values
@@ -415,155 +409,153 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      * @return integer  If the update query was executed returns the number of rows updated, or 0 if
      * 					no rows where updated, or -1 if an error occurred. Otherwise FALSE.
      */
-	public function update($table, array $data, $where = null)
-	{
-		$context = $this->getCommandContext();
-		$context->table 	= $table;
-		$context->data  	= $data;
-		$context->where   	= $where;
-		$context->operation	= AnDatabase::OPERATION_UPDATE;
+    public function update($table, array $data, $where = null)
+    {
+        $context = $this->getCommandContext();
+        $context->table    = $table;
+        $context->data    = $data;
+        $context->where    = $where;
+        $context->operation    = AnDatabase::OPERATION_UPDATE;
 
-		//Excute the update operation
-		if($this->getCommandChain()->run('before.update', $context) !==  false)
-		{
-			if(count($context->data))
-			{
-				foreach($context->data as $key => $val) {
-					$vals[] = '`'.$key.'` = '.$this->quoteValue($val);
-				}
+        //Excute the update operation
+        if ($this->getCommandChain()->run('before.update', $context) !==  false) {
+            if (count($context->data)) {
+                foreach ($context->data as $key => $val) {
+                    $vals[] = '`'.$key.'` = '.$this->quoteValue($val);
+                }
 
-				//Create query statement
-				$context->query = 'UPDATE '.$this->quoteName($this->getTableNeedle().$context->table)
-			  		.' SET '.implode(', ', $vals)
-			  		.' '.$context->where
-				;
+                //Create query statement
+                $context->query = 'UPDATE '.$this->quoteName($this->getTableNeedle().$context->table)
+                    .' SET '.implode(', ', $vals)
+                    .' '.$context->where
+                ;
 
-				//Execute the query
-				$context->result = $this->execute($context->query);
+                //Execute the query
+                $context->result = $this->execute($context->query);
 
-				$context->affected = $this->_affected_rows;
-				$this->getCommandChain()->run('after.update', $context);
-			}
-			else $context->affected = false;
-		}
+                $context->affected = $this->_affected_rows;
+                $this->getCommandChain()->run('after.update', $context);
+            } else {
+                $context->affected = false;
+            }
+        }
 
         return $context->affected;
-	}
+    }
 
-	/**
+    /**
      * Deletes rows from the table based on a WHERE clause.
      *
      * @param string 	The table to update
      * @param mixed  	A query string or a AnDatabaseQuery object to limit which rows are updated.
      * @return integer 	Number of rows affected, or -1 if an error occured.
      */
-	public function delete($table, $where)
-	{
-		$context = $this->getCommandContext();
-		$context->table 	= $table;
-		$context->data  	= null;
-		$context->where   	= $where;
-		$context->operation	= AnDatabase::OPERATION_DELETE;
+    public function delete($table, $where)
+    {
+        $context = $this->getCommandContext();
+        $context->table    = $table;
+        $context->data    = null;
+        $context->where    = $where;
+        $context->operation    = AnDatabase::OPERATION_DELETE;
 
-		//Excute the delete operation
-		if($this->getCommandChain()->run('before.delete', $context) !== false)
-		{
-			//Create query statement
-			$context->query = 'DELETE FROM '.$this->quoteName($this->getTableNeedle().$context->table)
-				  .' '.$context->where
-			;
+        //Excute the delete operation
+        if ($this->getCommandChain()->run('before.delete', $context) !== false) {
+            //Create query statement
+            $context->query = 'DELETE FROM '.$this->quoteName($this->getTableNeedle().$context->table)
+                  .' '.$context->where
+            ;
 
-			//Execute the query
-			$context->result = $this->execute($context->query);
+            //Execute the query
+            $context->result = $this->execute($context->query);
 
-			$context->affected = $this->_affected_rows;
-			$this->getCommandChain()->run('after.delete', $context);
-		}
+            $context->affected = $this->_affected_rows;
+            $this->getCommandChain()->run('after.delete', $context);
+        }
 
-		return $context->affected;
-	}
+        return $context->affected;
+    }
 
-	/**
-	 * Use and other queries that don't return rows
-	 *
-	 * @param  string 	The query to run. Data inside the query should be properly escaped.
-	 * @param  integer 	The result maode, either the constant AnDatabase::RESULT_USE or AnDatabase::RESULT_STORE
+    /**
+     * Use and other queries that don't return rows
+     *
+     * @param  string 	The query to run. Data inside the query should be properly escaped.
+     * @param  integer 	The result maode, either the constant AnDatabase::RESULT_USE or AnDatabase::RESULT_STORE
      * 					depending on the desired behavior. By default, AnDatabase::RESULT_STORE is used. If you
      * 					use AnDatabase::RESULT_USE all subsequent calls will return error Commands out of sync
      * 					unless you free the result first.
-	 * @throws AnDatabaseException
-	 * @return boolean 	For SELECT, SHOW, DESCRIBE or EXPLAIN will return a result object.
-	 * 					For other successful queries  return TRUE.
-	 */
-	public function execute($sql, $mode = AnDatabase::RESULT_STORE )
-	{
-		//Replace the database table prefix
-		$sql = $this->replaceTableNeedle( $sql );
+     * @throws AnDatabaseException
+     * @return boolean 	For SELECT, SHOW, DESCRIBE or EXPLAIN will return a result object.
+     * 					For other successful queries  return TRUE.
+     */
+    public function execute($sql, $mode = AnDatabase::RESULT_STORE)
+    {
+        //Replace the database table prefix
+        $sql = $this->replaceTableNeedle($sql);
 
-		$result = $this->_connection->query($sql, $mode);
+        $result = $this->_connection->query($sql, $mode);
 
-		if($result === false) {
-			throw new AnDatabaseException($this->_connection->error.' of the following query : '.$sql, $this->_connection->errno);
-		}
+        if ($result === false) {
+            throw new AnDatabaseException($this->_connection->error.' of the following query : '.$sql, $this->_connection->errno);
+        }
 
-		$this->_affected_rows = $this->_connection->affected_rows;
-		$this->_insert_id     = $this->_connection->insert_id;
+        $this->_affected_rows = $this->_connection->affected_rows;
+        $this->_insert_id     = $this->_connection->insert_id;
 
-		return $result;
-	}
+        return $result;
+    }
 
-	/**
-	 * Set the table prefix
-	 *
-	 * @param string The table prefix
-	 * @return AnDatabaseAdapterAbstract
-	 * @see AnDatabaseAdapterAbstract::replaceTableNeedle
-	 */
-	public function setTablePrefix($prefix)
-	{
-		$this->_table_prefix = $prefix;
-		return $this;
-	}
+    /**
+     * Set the table prefix
+     *
+     * @param string The table prefix
+     * @return AnDatabaseAdapterAbstract
+     * @see AnDatabaseAdapterAbstract::replaceTableNeedle
+     */
+    public function setTablePrefix($prefix)
+    {
+        $this->_table_prefix = $prefix;
+        return $this;
+    }
 
- 	/**
-	 * Get the table prefix
-	 *
-	 * @return string The table prefix
-	 * @see AnDatabaseAdapterAbstract::replaceTableNeedle
-	 */
-	public function getTablePrefix()
-	{
-		return $this->_table_prefix;
-	}
+    /**
+     * Get the table prefix
+     *
+     * @return string The table prefix
+     * @see AnDatabaseAdapterAbstract::replaceTableNeedle
+     */
+    public function getTablePrefix()
+    {
+        return $this->_table_prefix;
+    }
 
-	/**
-	 * Get the table needle
-	 *
-	 * @return string The table needle
-	 * @see AnDatabaseAdapterAbstract::replaceTableNeedle
-	 */
-	public function getTableNeedle()
-	{
-		return $this->_table_needle;
-	}
+    /**
+     * Get the table needle
+     *
+     * @return string The table needle
+     * @see AnDatabaseAdapterAbstract::replaceTableNeedle
+     */
+    public function getTableNeedle()
+    {
+        return $this->_table_needle;
+    }
 
-	/**
-	 * This function replaces the table needles in a query string with the actual table prefix.
-	 *
-	 * @param  string 	The SQL query string
-	 * @return string	The SQL query string
-	 */
-	public function replaceTableNeedle( $sql, $replace = null)
-	{
-		$needle  = $this->getTableNeedle();
-	    $replace = isset($replace) ? $replace : $this->getTablePrefix();
-		$sql     = trim( $sql );
+    /**
+     * This function replaces the table needles in a query string with the actual table prefix.
+     *
+     * @param  string 	The SQL query string
+     * @return string	The SQL query string
+     */
+    public function replaceTableNeedle($sql, $replace = null)
+    {
+        $needle  = $this->getTableNeedle();
+        $replace = isset($replace) ? $replace : $this->getTablePrefix();
+        $sql     = trim($sql);
 
-		$pattern = "($needle(?=[a-z0-9]))";
-    	$sql = preg_replace($pattern, $replace, $sql);
+        $pattern = "($needle(?=[a-z0-9]))";
+        $sql = preg_replace($pattern, $replace, $sql);
 
-		return $sql;
-	}
+        return $sql;
+    }
 
     /**
      * Safely quotes a value for an SQL statement.
@@ -578,18 +570,15 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      */
     public function quoteValue($value)
     {
-        if (is_array($value))
-        {
+        if (is_array($value)) {
             //Quote array values, not keys, then combine with commas.
             foreach ($value as $k => $v) {
                 $value[$k] = $this->quoteValue($v);
             }
 
             $value = implode(', ', $value);
-        }
-        else
-        {
-            if(is_string($value) && !is_null($value)) {
+        } else {
+            if (is_string($value) && !is_null($value)) {
                 $value = $this->_quoteValue($value);
             }
         }
@@ -612,8 +601,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      */
     public function quoteName($spec)
     {
-        if (is_array($spec))
-        {
+        if (is_array($spec)) {
             foreach ($spec as $key => $val) {
                 $spec[$key] = $this->quoteName($val);
             }
@@ -625,7 +613,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
         $spec = trim($spec);
 
         // Quote all the lower case parts
-        $spec = preg_replace_callback('#(?:\b|\#)+(?<!`)([a-z0-9\.\#\-_]+)(?!`)\b#', array($this, '_quoteName') , $spec);
+        $spec = preg_replace_callback('#(?:\b|\#)+(?<!`)([a-z0-9\.\#\-_]+)(?!`)\b#', array($this, '_quoteName'), $spec);
 
         return $spec;
     }
@@ -686,7 +674,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      * @param   string         The column name of the index to use
      * @return  array   If <var>key</var> is empty as sequential array of returned rows.
      */
-    abstract protected function _fetchObjectList($result, $key='' );
+    abstract protected function _fetchObjectList($result, $key='');
 
     /**
      * Parse the raw table schema information
@@ -736,7 +724,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
     {
         $result =  '';
 
-        if(is_array($name)) {
+        if (is_array($name)) {
             $name = $name[0];
         }
 
@@ -747,14 +735,13 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
             return $name;
         }
 
-        if ($pos = strrpos($name, '.'))
-        {
+        if ($pos = strrpos($name, '.')) {
             $table  = $this->_quoteName(substr($name, 0, $pos));
             $column = $this->_quoteName(substr($name, $pos + 1));
-
             $result =  "$table.$column";
+        } else {
+            $result = $this->_name_quote. $name.$this->_name_quote;
         }
-        else $result = $this->_name_quote. $name.$this->_name_quote;
 
         return $result;
     }

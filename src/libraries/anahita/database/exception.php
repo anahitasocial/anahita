@@ -8,4 +8,6 @@
  * @link        https://www.GetAnahita.com
  */
  
-class AnDatabaseException extends KException {}
+class AnDatabaseException extends KException
+{
+}

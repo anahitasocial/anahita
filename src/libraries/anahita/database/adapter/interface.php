@@ -9,73 +9,73 @@
  */
 interface AnDatabaseAdapterInterface
 {
-	/**
-	 * Get a database query object
-	 *
-	 * @return AnDatabaseQuery
-	 */
-	public function getQuery(KConfig $config = null);
+    /**
+     * Get a database query object
+     *
+     * @return AnDatabaseQuery
+     */
+    public function getQuery(KConfig $config = null);
 
-	/**
-	 * Connect to the db
-	 *
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function connect();
+    /**
+     * Connect to the db
+     *
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function connect();
 
-	/**
-	 * Reconnect to the db
-	 *
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function reconnect();
+    /**
+     * Reconnect to the db
+     *
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function reconnect();
 
-	/**
-	 * Disconnect from db
-	 *
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function disconnect();
+    /**
+     * Disconnect from db
+     *
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function disconnect();
 
-	/**
-	 * Get the connection
-	 *
-	 * Provides access to the underlying database connection. Useful for when
-	 * you need to call a proprietary method such as postgresql's lo_* methods
-	 *
-	 * @return resource
-	 */
-	public function getConnection();
+    /**
+     * Get the connection
+     *
+     * Provides access to the underlying database connection. Useful for when
+     * you need to call a proprietary method such as postgresql's lo_* methods
+     *
+     * @return resource
+     */
+    public function getConnection();
 
-	/**
-	 * Set the connection
-	 *
-	 * @param 	resource 	The connection resource
-	 * @return  AnDatabaseAdapterAbstract
-	 */
-	public function setConnection($resource);
+    /**
+     * Set the connection
+     *
+     * @param 	resource 	The connection resource
+     * @return  AnDatabaseAdapterAbstract
+     */
+    public function setConnection($resource);
 
-	/**
-	 * Determines if the connection to the server is active.
-	 *
-	 * @return      boolean
-	 */
-	public function isConnected();
+    /**
+     * Determines if the connection to the server is active.
+     *
+     * @return      boolean
+     */
+    public function isConnected();
 
-	/**
-	 * Get the insert id of the last insert operation
-	 *
-	 * @return mixed The id of the last inserted row(s)
-	 */
- 	public function getInsertId();
+    /**
+     * Get the insert id of the last insert operation
+     *
+     * @return mixed The id of the last inserted row(s)
+     */
+    public function getInsertId();
 
-	/**
-	 * Retrieves the column schema information about the given table
-	 *
-	 * @param 	string 	A table name
-	 * @return	AnDatabaseSchemaTable
-	 */
-	public function getTableSchema($table);
+    /**
+     * Retrieves the column schema information about the given table
+     *
+     * @param 	string 	A table name
+     * @return	AnDatabaseSchemaTable
+     */
+    public function getTableSchema($table);
 
     /**
      * Lock a table.
@@ -93,7 +93,7 @@ interface AnDatabaseAdapterInterface
      */
     public function unlockTable();
 
-	/**
+    /**
      * Preforms a select query
      *
      * Use for SELECT and anything that returns rows.
@@ -105,9 +105,9 @@ interface AnDatabaseAdapterInterface
      * 						unless you free the result first.
      * @return  mixed 		If successfull returns a result object otherwise FALSE
      */
-	public function select($sql, $mode = AnDatabase::RESULT_STORE);
+    public function select($sql, $mode = AnDatabase::RESULT_STORE);
 
-	/**
+    /**
      * Preforms a show query
      *
      * @param	string|object  	A full SQL query to run. Data inside the query should be properly escaped.
@@ -116,9 +116,9 @@ interface AnDatabaseAdapterInterface
      * @return  mixed 			The return value of this function on success depends on the fetch type.
      * 					    	In all cases, FALSE is returned on failure.
      */
-	public function show($query, $mode = AnDatabase::FETCH_ARRAY_LIST);
+    public function show($query, $mode = AnDatabase::FETCH_ARRAY_LIST);
 
-	/**
+    /**
      * Inserts a row of data into a table.
      *
      * Automatically quotes the data values
@@ -128,9 +128,9 @@ interface AnDatabaseAdapterInterface
      * 					the value is the value to insert for that column.
      * @return integer  If successfull the new rows primary key value, false is no row was inserted.
      */
-	public function insert($table, array $data);
+    public function insert($table, array $data);
 
-	/**
+    /**
      * Updates a table with specified data based on a WHERE clause
      *
      * Automatically quotes the data values
@@ -141,63 +141,63 @@ interface AnDatabaseAdapterInterface
      * @param mixed 	A sql string or AnDatabaseQuery object to limit which rows are updated.
      * @return integer  If successfull the Number of rows affected, otherwise false
      */
-	public function update($table, array $data, $where = null);
+    public function update($table, array $data, $where = null);
 
-	/**
+    /**
      * Deletes rows from the table based on a WHERE clause.
      *
      * @param string The table to update
      * @param mixed  A query string or a AnDatabaseQuery object to limit which rows are updated.
      * @return integer Number of rows affected
      */
-	public function delete($table, $where);
+    public function delete($table, $where);
 
-	/**
-	 * Use and other queries that don't return rows
-	 *
-	 * @param  string 	The query to run. Data inside the query should be properly escaped.
-	 * @param  integer 	The result maode, either the constant AnDatabase::RESULT_USE or AnDatabase::RESULT_STORE
+    /**
+     * Use and other queries that don't return rows
+     *
+     * @param  string 	The query to run. Data inside the query should be properly escaped.
+     * @param  integer 	The result maode, either the constant AnDatabase::RESULT_USE or AnDatabase::RESULT_STORE
      * 					depending on the desired behavior. By default, AnDatabase::RESULT_STORE is used. If you
      * 					use AnDatabase::RESULT_USE all subsequent calls will return error Commands out of sync
      * 					unless you free the result first.
-	 * @throws AnDatabaseException
-	 * @return boolean 	For SELECT, SHOW, DESCRIBE or EXPLAIN will return a result object.
-	 * 					For other successful queries  return TRUE.
-	 */
-	public function execute($sql, $mode = AnDatabase::RESULT_STORE );
+     * @throws AnDatabaseException
+     * @return boolean 	For SELECT, SHOW, DESCRIBE or EXPLAIN will return a result object.
+     * 					For other successful queries  return TRUE.
+     */
+    public function execute($sql, $mode = AnDatabase::RESULT_STORE);
 
-	/**
-	 * Set the table prefix
-	 *
-	 * @param string The table prefix
-	 * @return AnDatabaseAdapterAbstract
-	 * @see AnDatabaseAdapterAbstract::replaceTableNeedle
-	 */
-	public function setTablePrefix($prefix);
+    /**
+     * Set the table prefix
+     *
+     * @param string The table prefix
+     * @return AnDatabaseAdapterAbstract
+     * @see AnDatabaseAdapterAbstract::replaceTableNeedle
+     */
+    public function setTablePrefix($prefix);
 
- 	/**
-	 * Get the table prefix
-	 *
-	 * @return string The table prefix
-	 * @see AnDatabaseAdapterAbstract::replaceTableNeedle
-	 */
-	public function getTablePrefix();
+    /**
+     * Get the table prefix
+     *
+     * @return string The table prefix
+     * @see AnDatabaseAdapterAbstract::replaceTableNeedle
+     */
+    public function getTablePrefix();
 
-	/**
-	 * Get the table needle
-	 *
-	 * @return string The table needle
-	 * @see AnDatabaseAdapterAbstract::replaceTableNeedle
-	 */
-	public function getTableNeedle();
+    /**
+     * Get the table needle
+     *
+     * @return string The table needle
+     * @see AnDatabaseAdapterAbstract::replaceTableNeedle
+     */
+    public function getTableNeedle();
 
-	/**
-	 * This function replaces the table needles in a query string with the actual table prefix.
-	 *
-	 * @param  string 	The SQL query string
-	 * @return string	The SQL query string
-	 */
-	public function replaceTableNeedle( $sql );
+    /**
+     * This function replaces the table needles in a query string with the actual table prefix.
+     *
+     * @param  string 	The SQL query string
+     * @return string	The SQL query string
+     */
+    public function replaceTableNeedle($sql);
 
     /**
      * Safely quotes a value for an SQL statement.

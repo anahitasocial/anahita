@@ -7,4 +7,6 @@
  * @link        http://www.nooku.org
  * @link        https://www.GetAnahita.com
  */
-class AnDatabaseAdapterException extends AnDatabaseException {}
+class AnDatabaseAdapterException extends AnDatabaseException
+{
+}

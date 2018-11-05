@@ -8,46 +8,46 @@
  * @link        https://www.GetAnahita.com
  */
 
-class AnDatabase extends KObject implements KServiceInstantiatable 
+class AnDatabase extends KObject implements KServiceInstantiatable
 {
     /**
-	 * Database operations
-	 */
-	const OPERATION_SELECT = 'select';
-	const OPERATION_INSERT = 'insert';
-	const OPERATION_UPDATE = 'update';
-	const OPERATION_DELETE = 'delete';
-	const OPERATION_SHOW   = 'show';
+     * Database operations
+     */
+    const OPERATION_SELECT = 'select';
+    const OPERATION_INSERT = 'insert';
+    const OPERATION_UPDATE = 'update';
+    const OPERATION_DELETE = 'delete';
+    const OPERATION_SHOW   = 'show';
 
-	/**
-	 * Database result mode
-	 */
-	const RESULT_STORE = 0;
-	const RESULT_USE   = 1;
+    /**
+     * Database result mode
+     */
+    const RESULT_STORE = 0;
+    const RESULT_USE   = 1;
 
-	/**
-	 * Database fetch mode
-	 */
-	const FETCH_ROW         = 0;
-	const FETCH_ROWSET      = 1;
+    /**
+     * Database fetch mode
+     */
+    const FETCH_ROW         = 0;
+    const FETCH_ROWSET      = 1;
 
-	const FETCH_ARRAY       = 0;
-	const FETCH_ARRAY_LIST  = 1;
-	const FETCH_FIELD       = 2;
-	const FETCH_FIELD_LIST  = 3;
-	const FETCH_OBJECT      = 4;
-	const FETCH_OBJECT_LIST = 5;
+    const FETCH_ARRAY       = 0;
+    const FETCH_ARRAY_LIST  = 1;
+    const FETCH_FIELD       = 2;
+    const FETCH_FIELD_LIST  = 3;
+    const FETCH_OBJECT      = 4;
+    const FETCH_OBJECT_LIST = 5;
 
-	/**
-	 * Row states
-	 */
-	const STATUS_LOADED   = 'loaded';
-	const STATUS_DELETED  = 'deleted';
+    /**
+     * Row states
+     */
+    const STATUS_LOADED   = 'loaded';
+    const STATUS_DELETED  = 'deleted';
     const STATUS_CREATED  = 'created';
     const STATUS_UPDATED  = 'updated';
     const STATUS_FAILED   = 'failed';
-	
-	/**
+    
+    /**
      * Force creation of a singleton
      *
      * @param 	object 	An optional KConfig object with configuration options
