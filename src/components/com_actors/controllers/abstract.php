@@ -50,7 +50,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _initialize(KConfig $config)
     {
         $config->append(array(
-            'max_upload_limit' => ini_get('upload_max_filesize'),
+            'max_upload_limit' => (int) ini_get('upload_max_filesize'),
         ));
 
         parent::_initialize($config);
