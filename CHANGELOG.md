@@ -4,6 +4,8 @@ Anahita 4.3.13 Birth Release
 =============================
 1. fixed warnings in php 7.2.8
 1. disables ONLY_FULL_GROUP_BY per db session if it is enabled. This mode is enabled by default in MySql 5.7 which was preventing Anahita to work properly.
+1. moved KDatabase to AnDatabase
+1. removed legacy KDatabase classes
 
 Anahita 4.3.12 Birth Release
 =============================

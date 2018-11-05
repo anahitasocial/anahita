@@ -1,131 +1,125 @@
 <?php
 /**
- * @version		$Id: query.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package     Koowa_Database
- * @subpackage  Query
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
+ * @package     Anahita_Database
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
-
-/**
- * Database Select Class for database select statement generation
- *
- * @author		Johan Janssens <johan@nooku.org>
- * @package     Koowa_Database
- * @subpackage  Query
- */
-class KDatabaseQuery
+class AnDatabaseQuery
 {
-	/**
-	 * Count operation
-	 *
-	 * @var boolean
-	 */
-	public $count	  = false;
+    /**
+     * Count operation
+     *
+     * @var boolean
+     */
+    public $count      = false;
 
-	/**
-	 * Distinct operation
-	 *
-	 * @var boolean
-	 */
-	public $distinct  = false;
+    /**
+     * Distinct operation
+     *
+     * @var boolean
+     */
+    public $distinct  = false;
 
-	/**
-	 * The columns
-	 *
-	 * @var array
-	 */
-	public $columns = array();
+    /**
+     * The columns
+     *
+     * @var array
+     */
+    public $columns = array();
 
-	/**
-	 * The from element
-	 *
-	 * @var array
-	 */
-	public $from = array();
+    /**
+     * The from element
+     *
+     * @var array
+     */
+    public $from = array();
 
-	/**
-	 * The join element
-	 *
-	 * @var array
-	 */
-	public $join = array();
+    /**
+     * The join element
+     *
+     * @var array
+     */
+    public $join = array();
 
-	/**
-	 * The where element
-	 *
-	 * @var array
-	 */
-	public $where = array();
+    /**
+     * The where element
+     *
+     * @var array
+     */
+    public $where = array();
 
-	/**
-	 * The group element
-	 *
-	 * @var array
-	 */
-	public $group = array();
+    /**
+     * The group element
+     *
+     * @var array
+     */
+    public $group = array();
 
-	/**
-	 * The having element
-	 *
-	 * @var array
-	 */
-	public $having = array();
+    /**
+     * The having element
+     *
+     * @var array
+     */
+    public $having = array();
 
-	/**
-	 * The order element
-	 *
-	 * @var string
-	 */
-	public $order = array();
+    /**
+     * The order element
+     *
+     * @var string
+     */
+    public $order = array();
 
-	/**
-	 * The limit element
-	 *
-	 * @var integer
-	 */
-	public $limit = null;
+    /**
+     * The limit element
+     *
+     * @var integer
+     */
+    public $limit = null;
 
-	/**
-	 * The limit offset element
-	 *
-	 * @var integer
-	 */
-	public $offset = null;
+    /**
+     * The limit offset element
+     *
+     * @var integer
+     */
+    public $offset = null;
 
-	/**
-	 * Database connector
-	 *
-	 * @var		object
-	 */
-	protected $_adapter;
+    /**
+     * Database connector
+     *
+     * @var		object
+     */
+    protected $_adapter;
 
-	/**
-	 * Table prefix
-	 *
-	 * @var		object
-	 */
-	protected $_prefix;
+    /**
+     * Table prefix
+     *
+     * @var		object
+     */
+    protected $_prefix;
 
-	/**
-	 * Object constructor
-	 *
-	 * Can be overloaded/supplemented by the child class
-	 *
-	 * @param 	object 	An optional KConfig object with configuration options.
-	 */
-	public function __construct( KConfig $config )
-	{
+    /**
+     * Object constructor
+     *
+     * Can be overloaded/supplemented by the child class
+     *
+     * @param 	object 	An optional KConfig object with configuration options.
+     */
+    public function __construct(KConfig $config)
+    {
         //If no config is passed create it
-		if(!isset($config)) $config = new KConfig();
+        if (!isset($config)) {
+            $config = new KConfig();
+        }
 
-	    //Initialise the object
+        //Initialise the object
         $this->_initialize($config);
 
-		//set the model adapter
-		$this->_adapter = $config->adapter;
-	}
+        //set the model adapter
+        $this->_adapter = $config->adapter;
+    }
 
 
     /**
@@ -135,28 +129,28 @@ class KDatabaseQuery
      */
     protected function _initialize(KConfig $config)
     {
-    	$config->append(array(
+        $config->append(array(
             'adapter' => '',
         ));
     }
 
     /**
-     * Gets the database adapter for this particular KDatabaseQuery object.
+     * Gets the database adapter for this particular AnDatabaseQuery object.
      *
-     * @return KDatabaseAdapterInterface
+     * @return AnDatabaseAdapterInterface
      */
     public function getAdapter()
     {
         return $this->_adapter;
     }
 
-	/**
-     * Set the database adapter for this particular KDatabaseQuery object.
+    /**
+     * Set the database adapter for this particular AnDatabaseQuery object.
      *
-     * @param object A KDatabaseAdapterInterface object
-     * @return KDatabaseQuery
+     * @param object A AnDatabaseAdapterInterface object
+     * @return AnDatabaseQuery
      */
-    public function setAdapter(KDatabaseAdapterInterface $adapter)
+    public function setAdapter(AnDatabaseAdapterInterface $adapter)
     {
         $this->_adapter = $adapter;
         return $this;
@@ -166,20 +160,20 @@ class KDatabaseQuery
      * Built a select query
      *
      * @param   array|string    A string or an array of column names
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function select( $columns = '*')
+    public function select($columns = '*')
     {
         settype($columns, 'array');
 
-        $this->columns = array_unique( array_merge( $this->columns, $columns ) );
+        $this->columns = array_unique(array_merge($this->columns, $columns));
         return $this;
     }
 
     /**
      * Built a count query
      *
-     * @return KDatabaseQuery
+     * @return AnDatabaseQuery
      */
     public function count()
     {
@@ -191,7 +185,7 @@ class KDatabaseQuery
     /**
      * Make the query distinct
      *
-     * @return KDatabaseQuery
+     * @return AnDatabaseQuery
      */
     public function distinct()
     {
@@ -203,9 +197,9 @@ class KDatabaseQuery
      * Built the from clause of the query
      *
      * @param   array|string    A string or array of table names
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function from( $tables )
+    public function from($tables)
     {
         settype($tables, 'array');
 
@@ -213,9 +207,8 @@ class KDatabaseQuery
         $needle = $this->_adapter->getTableNeedle();
 
         //Prepent the table prefix
-        foreach($tables as &$table)
-        {
-            if(strpos($table, $needle) !== 0) {
+        foreach ($tables as &$table) {
+            if (strpos($table, $needle) !== 0) {
                 $table = $needle.$table;
             }
         }
@@ -230,7 +223,7 @@ class KDatabaseQuery
      * @param string        The type of join; empty for a plain JOIN, or "LEFT", "INNER", etc.
      * @param string        The table name to join to.
      * @param string|array  Join on this condition.
-     * @return KDatabaseQuery
+     * @return AnDatabaseQuery
      */
     public function join($type, $table, $condition)
     {
@@ -239,7 +232,7 @@ class KDatabaseQuery
         //The table needle
         $needle = $this->_adapter->getTableNeedle();
 
-        if(strpos($table, $needle) !== 0) {
+        if (strpos($table, $needle) !== 0) {
             $table = $needle.$table;
         }
 
@@ -259,17 +252,15 @@ class KDatabaseQuery
      * @param   string          The comparison used for the constraint
      * @param   string|array    The value compared to the property value using the constraint
      * @param   string          The where condition, defaults to 'AND'
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function where( $property, $constraint = null, $value = null, $condition = 'AND' )
+    public function where($property, $constraint = null, $value = null, $condition = 'AND')
     {
-        if(!empty($property))
-        {
+        if (!empty($property)) {
             $where = array();
             $where['property'] = $property;
 
-            if(isset($constraint))
-            {
+            if (isset($constraint)) {
                 $constraint = strtoupper($constraint);
                 $condition  = strtoupper($condition);
 
@@ -281,7 +272,7 @@ class KDatabaseQuery
 
             //Make sure we don't store the same where clauses twice
             $signature = md5($property.$constraint.$value);
-            if(!isset($this->where[$signature])) {
+            if (!isset($this->where[$signature])) {
                 $this->where[$signature] = $where;
             }
         }
@@ -293,13 +284,13 @@ class KDatabaseQuery
      * Built the group clause of the query
      *
      * @param   array|string    A string or array of ordering columns
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function group( $columns )
+    public function group($columns)
     {
         settype($columns, 'array'); //force to an array
 
-        $this->group = array_unique( array_merge( $this->group, $columns));
+        $this->group = array_unique(array_merge($this->group, $columns));
         return $this;
     }
 
@@ -307,13 +298,13 @@ class KDatabaseQuery
      * Built the having clause of the query
      *
      * @param   array|string    A string or array of ordering columns
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function having( $columns )
+    public function having($columns)
     {
         settype($columns, 'array'); //force to an array
 
-        $this->having = array_unique( array_merge( $this->having, $columns ));
+        $this->having = array_unique(array_merge($this->having, $columns));
         return $this;
     }
 
@@ -322,14 +313,13 @@ class KDatabaseQuery
      *
      * @param   array|string  A string or array of ordering columns
      * @param   string        Either DESC or ASC
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function order( $columns, $direction = 'ASC' )
+    public function order($columns, $direction = 'ASC')
     {
         settype($columns, 'array'); //force to an array
 
-        foreach($columns as $column)
-        {
+        foreach ($columns as $column) {
             $this->order[] = array(
                 'column'    => $column,
                 'direction' => $direction
@@ -344,9 +334,9 @@ class KDatabaseQuery
      *
      * @param   integer Number of items to fetch.
      * @param   integer Offset to start fetching at.
-     * @return  KDatabaseQuery
+     * @return  AnDatabaseQuery
      */
-    public function limit( $limit, $offset = 0 )
+    public function limit($limit, $offset = 0)
     {
         $this->limit  = (int) $limit;
         $this->offset = (int) $offset;
@@ -362,44 +352,39 @@ class KDatabaseQuery
     public function __toString()
     {
         $query = '';
-        if(!empty($this->columns) || $this->count)
-        {
+        if (!empty($this->columns) || $this->count) {
             $query = 'SELECT';
 
-            if($this->distinct) {
+            if ($this->distinct) {
                 $query .= ' DISTINCT';
             }
 
-            if($this->count) {
+            if ($this->count) {
                 $query .= ' COUNT(*)';
             }
         }
 
-        if (!empty($this->columns) && ! $this->count)
-        {
+        if (!empty($this->columns) && ! $this->count) {
             $columns = array();
-            foreach($this->columns as $column) {
+            foreach ($this->columns as $column) {
                 $columns[] = $this->_adapter->quoteName($column);
             }
 
             $query .= ' '.implode(' , ', $columns);
         }
 
-        if (!empty($this->from))
-        {
+        if (!empty($this->from)) {
             $tables = array();
-            foreach($this->from as $table) {
+            foreach ($this->from as $table) {
                 $tables[] = $this->_adapter->quoteName($table);
             }
 
             $query .= ' FROM '.implode(' , ', $tables);
         }
 
-        if (!empty($this->join))
-        {
+        if (!empty($this->join)) {
             $joins = array();
-            foreach ($this->join as $join)
-            {
+            foreach ($this->join as $join) {
                 $tmp = ' ';
 
                 if (! empty($join['type'])) {
@@ -415,23 +400,20 @@ class KDatabaseQuery
             $query .= implode(' ', $joins);
         }
 
-        if (!empty($this->where))
-        {
+        if (!empty($this->where)) {
             $query .= ' WHERE';
 
-            foreach($this->where as $where)
-            {
-                if(isset($where['condition'])) {
+            foreach ($this->where as $where) {
+                if (isset($where['condition'])) {
                     $query .= ' '.$where['condition'];
                 }
 
                 $query .= ' '. $this->_adapter->quoteName($where['property']);
 
-                if(isset($where['constraint']))
-                {
+                if (isset($where['constraint'])) {
                     $value = $this->_adapter->quoteValue($where['value']);
 
-                    if(in_array($where['constraint'], array('IN', 'NOT IN'))) {
+                    if (in_array($where['constraint'], array('IN', 'NOT IN'))) {
                         $value = ' ( '.$value. ' ) ';
                     }
 
@@ -440,28 +422,25 @@ class KDatabaseQuery
             }
         }
 
-        if (!empty($this->group))
-        {
+        if (!empty($this->group)) {
             $columns = array();
-            foreach($this->group as $column) {
+            foreach ($this->group as $column) {
                 $columns[] = $this->_adapter->quoteName($column);
             }
 
             $query .= ' GROUP BY '.implode(' , ', $columns);
         }
 
-        if (!empty($this->having))
-        {
+        if (!empty($this->having)) {
             $columns = array();
-            foreach($this->having as $column) {
+            foreach ($this->having as $column) {
                 $columns[] = $this->_adapter->quoteName($column);
             }
 
             $query .= ' HAVING '.implode(' , ', $columns);
         }
 
-        if (!empty($this->order) )
-        {
+        if (!empty($this->order)) {
             $query .= ' ORDER BY ';
 
             $list = array();

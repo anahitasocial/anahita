@@ -127,11 +127,11 @@ function dbinsert($table, $data)
  * Fetches a row of data from the database.
  *
  * @param string $select The Select query
- * @param int    $mode   The fetch mode. @see KDatabase
+ * @param int    $mode   The fetch mode. @see AnDatabase
  *
  * @return mixed
  */
-function dbfetch($select, $mode = KDatabase::FETCH_ARRAY_LIST)
+function dbfetch($select, $mode = AnDatabase::FETCH_ARRAY_LIST)
 {
     $select = str_replace('an_', '#__', $select);
     $db = KService::get('anahita:database');
@@ -217,5 +217,5 @@ function dbtable_exists($table)
  */
 function dbexists($select)
 {
-    return !is_null(dbfetch($select, KDatabase::FETCH_FIELD));
+    return !is_null(dbfetch($select, AnDatabase::FETCH_FIELD));
 }

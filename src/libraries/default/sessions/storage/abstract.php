@@ -18,7 +18,7 @@ class LibSessionsStorageAbstract extends KObject implements SessionHandlerInterf
      *
      * @param 	object 	An optional KConfigInterface object with configuration options
      * @param 	object	A KServiceInterface object
-     * @return KDatabaseTableInterface
+     * @return AnDatabaseTableInterface
      */
     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
     {

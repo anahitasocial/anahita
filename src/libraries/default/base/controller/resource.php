@@ -148,7 +148,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      * @param mixed $view An object that implements KObjectIdentifiable, an object that
      *                    implements KIndentifierInterface or valid identifier string
      *
-     * @throws KDatabaseRowsetException If the identifier is not a view identifier
+     * @throws AnDatabaseRowsetException If the identifier is not a view identifier
      *
      * @return AnControllerAbstract
      */

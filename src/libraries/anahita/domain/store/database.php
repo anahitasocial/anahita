@@ -23,7 +23,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
     /**
      * Database adapter.
      *
-     * @var object KDatabaseAbtract
+     * @var object AnDatabaseAbtract
      */
     protected $_adapter;
 
@@ -77,7 +77,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
         $this->_adapter = $config->adapter;
 
         if (!$this->_adapter) {
-            throw new AnDomainStoreException('adapter [KDatabaseAdapterInterface] is required option');
+            throw new AnDomainStoreException('adapter [AnDatabaseAdapterInterface] is required option');
         }
 
         //Set the mixer in the config
@@ -123,13 +123,13 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
 
         if ($this->getCommandChain()->run('before.fetch', $context) !== false) {
             $modes = array(
-                    AnDomain::FETCH_ROW => KDatabase::FETCH_ARRAY,
-                    AnDomain::FETCH_ROW_LIST => KDatabase::FETCH_ARRAY_LIST,
-                    AnDomain::FETCH_ENTITY => KDatabase::FETCH_ARRAY,
-                    AnDomain::FETCH_ENTITY_SET => KDatabase::FETCH_ARRAY_LIST,
-                    AnDomain::FETCH_ENTITY_LIST => KDatabase::FETCH_ARRAY_LIST,
-                    AnDomain::FETCH_VALUE => KDatabase::FETCH_FIELD,
-                    AnDomain::FETCH_VALUE_LIST => KDatabase::FETCH_FIELD_LIST,
+                    AnDomain::FETCH_ROW => AnDatabase::FETCH_ARRAY,
+                    AnDomain::FETCH_ROW_LIST => AnDatabase::FETCH_ARRAY_LIST,
+                    AnDomain::FETCH_ENTITY => AnDatabase::FETCH_ARRAY,
+                    AnDomain::FETCH_ENTITY_SET => AnDatabase::FETCH_ARRAY_LIST,
+                    AnDomain::FETCH_ENTITY_LIST => AnDatabase::FETCH_ARRAY_LIST,
+                    AnDomain::FETCH_VALUE => AnDatabase::FETCH_FIELD,
+                    AnDomain::FETCH_VALUE_LIST => AnDatabase::FETCH_FIELD_LIST,
             );
 
             $mode = $modes[$mode];
@@ -290,7 +290,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
     public function getColumns($table)
     {
         if (!isset($this->_columns[$table])) {
-            $fields = $this->_adapter->select('SHOW COLUMNS FROM #__'.$table, KDatabase::FETCH_ARRAY_LIST);
+            $fields = $this->_adapter->select('SHOW COLUMNS FROM #__'.$table, AnDatabase::FETCH_ARRAY_LIST);
 
             static    $column;
 

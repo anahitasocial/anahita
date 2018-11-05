@@ -54,7 +54,7 @@ class AnDomainQueryBuilder extends KObject
     /**
      * Database Adapter.
      * 
-     * @var KDatabaseAbstract
+     * @var AnDatabaseAbstract
      */
     protected $_store;
 

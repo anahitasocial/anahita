@@ -71,7 +71,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
     /**
      * Database adapter.
      *
-     * @var KDatabaseAdapterAbstract
+     * @var AnDatabaseAdapterAbstract
      */
     protected $_db;
 
@@ -428,7 +428,7 @@ EOF
     public function getTables()
     {
         if ($this->_tables == self::AUTO_DETECT_TABLES) {
-            $tables = $this->_db->show('SHOW TABLES', KDatabase::FETCH_FIELD_LIST);
+            $tables = $this->_db->show('SHOW TABLES', AnDatabase::FETCH_FIELD_LIST);
             $prefix = $this->_db->getTablePrefix().$this->getIdentifier()->package.'_';
             $schemas = array();
             foreach ($tables as $table) {
@@ -485,7 +485,7 @@ EOF
     /**
      * Return the database adapter.
      *
-     * @return KDatabaseAdapterAbstract
+     * @return AnDatabaseAdapterAbstract
      */
     public function getDatabaseAdapter()
     {
@@ -495,7 +495,7 @@ EOF
     /**
      * Set the database adapter.
      *
-     * @param KDatabaseAdapterAbstract $adapter Database adapter
+     * @param AnDatabaseAdapterAbstract $adapter Database adapter
      */
     public function setDatabaseAdapter($adapter)
     {
