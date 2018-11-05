@@ -11,12 +11,12 @@
     'use strict';
 
     if ( $('[data-trigger="video-player"]').length ) {
-        plyr.setup('.an-media-video');
+        Plyr.setup('.an-media-video');
     }
 
     $(document).ajaxSuccess(function() {
         if ( $('[data-trigger="video-player"]').length ) {
-            plyr.setup('.an-media-video');
+            Plyr.setup('.an-media-video');
         }
     });
 
