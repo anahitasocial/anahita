@@ -31,7 +31,7 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validations.
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_validations;
 
@@ -52,9 +52,9 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_description = $config->description;
 
@@ -69,9 +69,9 @@ abstract class AnDomainValidatorAbstract extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $description = $this->_description;
 
@@ -121,7 +121,7 @@ abstract class AnDomainValidatorAbstract extends KObject
             $validations = $this->getValidations($property);
         }
 
-        $validations = (array) KConfig::unbox($validations);
+        $validations = (array) AnConfig::unbox($validations);
 
         foreach ($validations as $validation => $options) {
 
@@ -136,7 +136,7 @@ abstract class AnDomainValidatorAbstract extends KObject
                 continue;
             }
 
-            $config = new KConfig(array(
+            $config = new AnConfig(array(
                 'property' => $property,
                 'value' => $value,
                 'options' => $options,
@@ -163,7 +163,7 @@ abstract class AnDomainValidatorAbstract extends KObject
         //if entity is persisted only look at the modified
         //properties
         if ($entity->isModified()) {
-            $properties = array_intersect_key($description->getProperty(), KConfig::unbox($entity->getModifiedData()));
+            $properties = array_intersect_key($description->getProperty(), AnConfig::unbox($entity->getModifiedData()));
         } else {
             $properties = $description->getProperty();
         }
@@ -196,7 +196,7 @@ abstract class AnDomainValidatorAbstract extends KObject
             $validations = $this->getValidations($property);
         }
 
-        $validations = (array) KConfig::unbox($validations);
+        $validations = (array) AnConfig::unbox($validations);
 
         foreach ($validations as $validation => $options) {
 
@@ -211,7 +211,7 @@ abstract class AnDomainValidatorAbstract extends KObject
                 continue;
             }
 
-            $config = new KConfig(array(
+            $config = new AnConfig(array(
                  'property' => $property,
                  'value' => $value,
                  'entity' => $entity,
@@ -258,7 +258,7 @@ abstract class AnDomainValidatorAbstract extends KObject
      *
      * @param AnDomainPropertyAbstract|string $property Property
      *
-     * @return KConfig
+     * @return AnConfig
      */
     public function getValidations($property)
     {
@@ -269,7 +269,7 @@ abstract class AnDomainValidatorAbstract extends KObject
         $name = $property->getName();
 
         if (!$this->_validations->$name) {
-            $this->_validations->$name = new KConfig();
+            $this->_validations->$name = new AnConfig();
         }
 
         return $this->_validations->$name;
@@ -309,22 +309,22 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Sanitize length.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _sanitizeLength(KConfig $config)
+    protected function _sanitizeLength(AnConfig $config)
     {
         $property = $config->property;
         $value = $config->value;
-        $options = KConfig::unbox($config->options);
+        $options = AnConfig::unbox($config->options);
         //if a number is just passed then treat it as max
         if (!is_array($options)) {
             $options = array('max' => $options);
         }
 
         if ($property->isAttribute() && $property->isScalar() && isset($options['max'])) {
-            $helper = new LibBaseTemplateHelperText(new KConfig());
+            $helper = new LibBaseTemplateHelperText(new AnConfig());
             $value = $helper->truncate($value, array('length' => $options['max'], 'consider_html' => true, 'ending' => ''));
         }
 
@@ -334,11 +334,11 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Sanitizes format of a property using a KFilter.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _sanitizeFormat(KConfig $config)
+    protected function _sanitizeFormat(AnConfig $config)
     {
         $property = $config->property;
         $value = $config->value;
@@ -354,11 +354,11 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validate format of a property using a KFilter.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _validateFormat(KConfig $config)
+    protected function _validateFormat(AnConfig $config)
     {
         $property = $config->property;
         $value = $config->value;
@@ -384,16 +384,16 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validate scope of a property.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _validateScope(KConfig $config)
+    protected function _validateScope(AnConfig $config)
     {
         $property = $config->property;
         $value = $config->value;
         $entity = $config->entity;
-        $options = KConfig::unbox($config->options);
+        $options = AnConfig::unbox($config->options);
 
         if (!in_array($value, $options)) {
             $entity->addError(array(
@@ -412,15 +412,15 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validate precense.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _validateRequired(KConfig $config)
+    protected function _validateRequired(AnConfig $config)
     {
         $entity = $config->entity;
         $property = $config->property;
-        $value = KConfig::unbox($config['value']);
+        $value = AnConfig::unbox($config['value']);
         $present = true;
 
         if ($entity->getEntityState() === AnDomain::STATE_DELETED) {
@@ -518,16 +518,16 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validate length.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _validateLength(KConfig $config)
+    protected function _validateLength(AnConfig $config)
     {
         $property = $config->property;
         $value = $config->value;
         $entity = $config->entity;
-        $options = KConfig::unbox($config->options);
+        $options = AnConfig::unbox($config->options);
 
         //if a number is just passed then treat it as max
         if (!is_array($options)) {
@@ -536,7 +536,7 @@ abstract class AnDomainValidatorAbstract extends KObject
 
         if ($property->isAttribute() && $property->isScalar()) {
 
-            $options = KConfig::unbox($options);
+            $options = AnConfig::unbox($options);
 
             if (is_array($options)) {
                 //check the min/max length
@@ -613,11 +613,11 @@ abstract class AnDomainValidatorAbstract extends KObject
     /**
      * Validate uniquess.
      *
-     * @param KConfig $config Configuration. Contains keys property,value,entity
+     * @param AnConfig $config Configuration. Contains keys property,value,entity
      *
      * @return bool Return true if it's valid or false if it's not
      */
-    protected function _validateUniqueness(KConfig $config)
+    protected function _validateUniqueness(AnConfig $config)
     {
         $property = $config->property;
         $value = $config->value;

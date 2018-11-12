@@ -58,7 +58,7 @@ class ComSharesSharerRequest extends KObject
      * @param ComActorsDomainEntityActor $target The target actor
      * @param mixed                      $object
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->sharer = $config->sharer;
         $this->target = $config->target;

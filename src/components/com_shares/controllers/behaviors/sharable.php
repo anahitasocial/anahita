@@ -31,14 +31,14 @@ class ComSharesControllerBehaviorSharable extends AnControllerBehaviorAbstract
     /**
      * Share an object using share adapters.
      * 
-     * @param KConfig $config An array options. 
+     * @param AnConfig $config An array options. 
      *                        mixed object
      *                        ComActorsDomainEntityActor $subject
      *                        ComActorsDomainEntityActor $target
      */
     public function shareObject($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         if (!$config->object) {
             throw new InvalidArgumentException('Not object specified to share');

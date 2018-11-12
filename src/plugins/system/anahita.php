@@ -25,7 +25,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      * @param array $config  Array of configuration
      */
 
-    public function __construct($dispatcher, KConfig $config)
+    public function __construct($dispatcher, AnConfig $config)
     {
         // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
@@ -45,7 +45,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         $this->_handleSafeexCheck();
 
         //load language overwrites
-        KService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
+        AnService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
 
         parent::__construct($dispatcher, $config);
     }
@@ -56,7 +56,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     public function onAfterDispatch(AnEvent $event)
     {
         //create viewer object
-        $this->_viewer = KService::get('com:people.viewer');
+        $this->_viewer = AnService::get('com:people.viewer');
         
         $this->_logoutIfDisabledAccount();
 
@@ -201,7 +201,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
                 $url = $this->getService('com:application')->getRouter()->getBaseUrl();
                 $url .= '/templates/system/error_suhosin.html';
 
-                KService::get('application.dispatcher')
+                AnService::get('application.dispatcher')
                 ->getResponse()
                 ->setRedirect($url)
                 ->send();

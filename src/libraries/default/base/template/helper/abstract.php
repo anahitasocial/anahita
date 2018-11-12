@@ -24,9 +24,9 @@ abstract class LibBaseTemplateHelperAbstract extends KObject implements LibBaseT
      *
      * Prevent creating instances of this class by making the contructor private
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 

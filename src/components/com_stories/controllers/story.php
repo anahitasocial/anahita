@@ -17,9 +17,9 @@ class ComStoriesControllerStory extends ComBaseControllerService
     /** 
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -31,9 +31,9 @@ class ComStoriesControllerStory extends ComBaseControllerService
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'behaviors' => array(
@@ -85,15 +85,15 @@ class ComStoriesControllerStory extends ComBaseControllerService
         $query->order('creationTime', 'desc');
 
         if ($this->component) {
-            $query->clause()->component((array) KConfig::unbox($this->component));
+            $query->clause()->component((array) AnConfig::unbox($this->component));
         }
 
         if ($this->name) {
-            $query->clause()->name((array) KConfig::unbox($this->name));
+            $query->clause()->name((array) AnConfig::unbox($this->name));
         }
 
         if ($this->subject) {
-            $query->clause()->where('subject.id', 'IN', (array) KConfig::unbox($this->subject));
+            $query->clause()->where('subject.id', 'IN', (array) AnConfig::unbox($this->subject));
         }
 
         return $this->setList($query->toEntitySet())->getList();

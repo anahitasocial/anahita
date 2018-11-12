@@ -41,7 +41,7 @@ class ComActorsViewActorJson extends ComBaseViewJson
         $context->gadgets = new LibBaseTemplateObjectContainer();
         $context->actor = $this->_state->getItem();
         $context->composers = new LibBaseTemplateObjectContainer();
-        $context->profile = new KConfig();
+        $context->profile = new AnConfig();
 
         if ($this->_state->getItem()->authorize('access')) {
             $this->_state->getItem()->components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));

@@ -46,7 +46,7 @@ class ComSubscriptionsViewSettingHtml extends ComBaseViewHtml
         if ($this->actor->hasSubscription(false)) {
             $selectedPackageId = $this->actor->subscription->package->id;
 
-            $config = new KConfig(array(
+            $config = new AnConfig(array(
                 'date' => $this->actor->subscription->endDate,
            ));
 

@@ -33,7 +33,7 @@
   *
   * @link       http://www.GetAnahita.com
   */
- class LibBaseControllerRequest extends KConfig
+ class LibBaseControllerRequest extends AnConfig
  {
      /**
       * Sets a query value.

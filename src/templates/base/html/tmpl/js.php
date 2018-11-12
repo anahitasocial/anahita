@@ -1,7 +1,7 @@
 <? defined('KOOWA') or die; ?>
 
-<? $document = KService::get('anahita:document'); ?>
-<? $path = KService::get('com:application')->getRouter()->getBaseUrl().'/media/lib_anahita/js/production/'; ?>
+<? $document = AnService::get('anahita:document'); ?>
+<? $path = AnService::get('com:application')->getRouter()->getBaseUrl().'/media/lib_anahita/js/production/'; ?>
 
 <? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <?

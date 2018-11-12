@@ -83,20 +83,20 @@ class anahita
 
         require_once dirname(__FILE__).'/loader/adapter/anahita.php';
 
-        KLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
-        KLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
+        AnLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
+        AnLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
 
         AnServiceClass::getInstance();
 
-        KServiceIdentifier::addLocator(new AnServiceLocatorAnahita());
-        KServiceIdentifier::addLocator(new AnServiceLocatorRepository());
+        AnServiceIdentifier::addLocator(new AnServiceLocatorAnahita());
+        AnServiceIdentifier::addLocator(new AnServiceLocatorRepository());
 
         //register an empty path for the application
         //a workaround to remove the applicaiton path from an identifier
-        KServiceIdentifier::setApplication('', '');
+        AnServiceIdentifier::setApplication('', '');
 
         //create a central event dispatcher
-        KService::set('anahita:event.dispatcher', KService::get('anahita:event.dispatcher'));
+        AnService::set('anahita:event.dispatcher', AnService::get('anahita:event.dispatcher'));
     }
 
     /**

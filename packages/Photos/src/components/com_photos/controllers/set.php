@@ -16,9 +16,9 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -66,7 +66,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
     protected function _actionUpdatephotos($context)
     {
         $this->execute('addphoto', $context);
-        $photo_ids = (array) KConfig::unbox($context->data->photo_id);
+        $photo_ids = (array) AnConfig::unbox($context->data->photo_id);
 
         foreach ($this->getItem()->photos as $photo) {
             if (!in_array($photo->id, $photo_ids)) {
@@ -86,7 +86,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
      */
     protected function _actionReorder($context)
     {
-        $photo_ids = (array) KConfig::unbox($context->data->photo_id);
+        $photo_ids = (array) AnConfig::unbox($context->data->photo_id);
         $this->getItem()->reorder($photo_ids);
 
         return $this->getItem();
@@ -141,7 +141,7 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
             'photo_id' => $this->photo_id,
         ));
 
-        $photo_id = (array) KConfig::unbox($data->photo_id);
+        $photo_id = (array) AnConfig::unbox($data->photo_id);
 
         if (!empty($photo_id)) {
             $photo = $this->actor->photos->fetchSet(array('id' => $photo_id));

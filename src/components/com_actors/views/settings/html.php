@@ -33,9 +33,9 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'template_paths' => array(
@@ -52,7 +52,7 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
      */
     protected function _layoutProfile()
     {
-        $this->profile = new KConfig();
+        $this->profile = new AnConfig();
 
         dispatch_plugin('profile.onEdit', array('actor' => $this->_state->getItem(), 'profile' => $this->profile));
     }
@@ -87,7 +87,7 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
                 foreach ($actions as $action) {
                     $label = AnTranslator::_(strtoupper('COM-'.$identifier->package.'-PERMISSION'.'-'.$identifier->name.'-'.$action));
                     $name = 'com_'.$identifier->package.':'.$identifier->name.':'.$action;
-                    $permissions[] = new KConfig(array('label' => $label, 'name' => $name));
+                    $permissions[] = new AnConfig(array('label' => $label, 'name' => $name));
                 }
             }
 

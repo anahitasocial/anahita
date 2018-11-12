@@ -8,8 +8,8 @@
  *
  * <code>
  * //fetches a peron with $id
- * $actor  = KService::get('repos:actors.actor')->fetch($some_actor_id);
- * $person = KService::get('repos:people.person')->fetch($some_person_id);
+ * $actor  = AnService::get('repos:actors.actor')->fetch($some_actor_id);
+ * $person = AnService::get('repos:people.person')->fetch($some_person_id);
  * if ( $actor->isFollowable() )
  * {
  *      //adding the person as a follower
@@ -44,9 +44,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -58,9 +58,9 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
 
@@ -386,7 +386,7 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
      */
     protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
-        if (KService::has('viewer')) {
+        if (AnService::has('viewer')) {
             $query = $context->query;
             $repository = $query->getRepository();
             $viewer = get_viewer();

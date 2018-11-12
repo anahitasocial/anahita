@@ -43,14 +43,14 @@ class KFilterTidy extends KFilterAbstract
     /**
      * Constructor
      *
-     * @param  object  An optional KConfig object with configuration options
+     * @param  object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
         $this->_encdoing = $config->encoding;
-        $this->_config   = KConfig::unbox($config->config);
+        $this->_config   = AnConfig::unbox($config->config);
     }
 
  	/**
@@ -58,10 +58,10 @@ class KFilterTidy extends KFilterAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'encoding'      => 'utf8',

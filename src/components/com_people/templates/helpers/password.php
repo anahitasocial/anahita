@@ -21,7 +21,7 @@ class ComPeopleTemplateHelperPassword extends LibBaseTemplateHelperAbstract
      */
     public function input($options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
         $options->append(array(
             'id' => 'person-password',
             'name' => 'password',

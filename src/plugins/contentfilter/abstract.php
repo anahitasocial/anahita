@@ -31,15 +31,15 @@ abstract class PlgContentfilterAbstract extends AnCommand implements PlgContentf
      * Constructor.
      *
      * @param mixed $dispatcher A dispatcher
-     * @param object $config    An optional KConfig object with configuration options.
+     * @param object $config    An optional AnConfig object with configuration options.
      */
-    public function __construct($dispatcher = null, KConfig $config)
+    public function __construct($dispatcher = null, AnConfig $config)
     {
         parent::__construct($dispatcher, $config);
 
         $this->_name = $config->name;
 
-        KService::get('plg:contentfilter.chain')->addFilter($this);
+        AnService::get('plg:contentfilter.chain')->addFilter($this);
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class PlgContentfilterAbstract extends AnCommand implements PlgContentf
     final public function execute($name, AnCommandContext $context)
     {
         if ($context->config->filter) {
-            $filters = (array) KConfig::unbox($context->config->filter);
+            $filters = (array) AnConfig::unbox($context->config->filter);
 
             if (!in_array($this->_name, $filters)) {
                 return $context->data;
@@ -61,7 +61,7 @@ abstract class PlgContentfilterAbstract extends AnCommand implements PlgContentf
         }
 
         if ($context->config->exclude) {
-            $exclude = (array) KConfig::unbox($context->config->exclude);
+            $exclude = (array) AnConfig::unbox($context->config->exclude);
 
             if (in_array($this->_name, $exclude)) {
                 return $context->data;

@@ -47,7 +47,7 @@ class AnServiceClass
      *
      * Prevent creating instances of this class by making the contructor private
      */
-    final private function __construct(KConfig $config)
+    final private function __construct(AnConfig $config)
     {
         //Create the identifier registry 
         self::$_defaults = new ArrayObject();
@@ -67,15 +67,15 @@ class AnServiceClass
      * 
      * @param  array  An optional array with configuration options.
      *
-     * @return KService
+     * @return AnService
      */
     public static function getInstance($config = array())
     {
         static $instance;
 
         if ($instance === null) {
-            if (!$config instanceof KConfig) {
-                $config = new KConfig($config);
+            if (!$config instanceof AnConfig) {
+                $config = new AnConfig($config);
             }
 
             $instance = new self($config);
@@ -104,7 +104,7 @@ class AnServiceClass
     public static function registerDefault($config)
     {
         if (!isset($config['identifier'])) {
-            throw new AnException('identifier [KServiceIdentifier] options is requied');
+            throw new AnException('identifier [AnServiceIdentifier] options is requied');
         }
 
         $strIdentifier = (string) $config['identifier'];
@@ -134,7 +134,7 @@ class AnServiceClass
     /**
      * Finds the default class for an identifier or return null.
      *
-     * @param KServiceIdentifier $identifier The identifier of the class 
+     * @param AnServiceIdentifier $identifier The identifier of the class 
      * 
      * @return string|bool Return the class name or false if not found
      */
@@ -151,7 +151,7 @@ class AnServiceClass
         }
 
         $classbase = 'Lib'.ucfirst($identifier->package).AnInflector::implode($identifier->path);
-        $loader = KService::get('koowa:loader');
+        $loader = AnService::get('koowa:loader');
         $classname = $classbase.ucfirst($identifier->name);
 
         if (!class_exists($classname)) {

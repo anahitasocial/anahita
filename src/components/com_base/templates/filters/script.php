@@ -56,7 +56,7 @@ class ComBaseTemplateFilterScript extends LibBaseTemplateFilterScript
             return parent::_renderScript($script, $link, $attribs);
         }
 
-        $document = KService::get('anahita:document');
+        $document = AnService::get('anahita:document');
 
         if($link) {
             return $document->addScript($script, 'text/javascript');

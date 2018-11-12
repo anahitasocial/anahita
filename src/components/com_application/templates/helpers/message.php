@@ -55,7 +55,7 @@ class ComApplicationTemplateHelperMessage extends LibBaseTemplateHelperAbstract
      */
     protected function _renderMessage($message, $config)
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'type' => 'info',
@@ -80,7 +80,7 @@ class ComApplicationTemplateHelperMessage extends LibBaseTemplateHelperAbstract
      */
     protected function _renderButton($label, $attrbs)
     {
-        $attrbs = new KConfig($attrbs);
+        $attrbs = new AnConfig($attrbs);
 
         $attrbs->append(array(
             'class' => '',
@@ -94,7 +94,7 @@ class ComApplicationTemplateHelperMessage extends LibBaseTemplateHelperAbstract
             unset($attrbs->type);
         }
 
-        $attrbs = KConfig::unbox($attrbs);
+        $attrbs = AnConfig::unbox($attrbs);
 
         foreach ($attrbs as $key => $value) {
             $attrbs[$key] = $key.'="'.$value.'"';

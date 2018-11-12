@@ -31,7 +31,7 @@ class plgUserAutoFollow extends PlgAnahitaDefault
         foreach ($actor_ids as $actor_id) {
             $actor_id = (int) $actor_id;
             if ($actor_id) {
-                $actor = KService::get('repos:actors.actor')->find(array('id' => $actor_id));
+                $actor = AnService::get('repos:actors.actor')->find(array('id' => $actor_id));
                 if ($actor && $actor->isFollowable()) {
                     $actor->addFollower($person);
                     $actor->save();

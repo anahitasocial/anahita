@@ -45,7 +45,7 @@
         $api = strtolower($api);
         $key = get_config_value('com_connect.'.$api.'_key');
         $secret = get_config_value('com_connect.'.$api.'_secret');
-        $consumer = new ComConnectOauthConsumer(new KConfig(array(
+        $consumer = new ComConnectOauthConsumer(new AnConfig(array(
             'key' => $key,
             'secret' => $secret,
             'callback_url' => AnRequest::base(), 
@@ -65,14 +65,14 @@
     {
         $service = strtolower($service);
         $identifier = 'com:connect.oauth.service.'.$service;
-        if (!KService::has($identifier)) {
+        if (!AnService::has($identifier)) {
             $config = array();
             $config['consumer'] = self::getConsumer($service);
             $config['enabled'] = self::enabled($service);
-            KService::set($identifier, KService::get($identifier, $config));
+            AnService::set($identifier, AnService::get($identifier, $config));
         }
 
-        return    KService::get($identifier);
+        return    AnService::get($identifier);
     }
 
     /**

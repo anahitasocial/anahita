@@ -9,17 +9,17 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implements KServiceInstantiatable
+class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
@@ -374,9 +374,9 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -392,7 +392,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
      */
     public function month($options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'selected' => null,
@@ -425,7 +425,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
             $months = AnHelperArray::merge($array, $months);
         }
 
-        return $this->_html->select($options->name, array('options' => $months, 'selected' => $selected), KConfig::unbox($options));
+        return $this->_html->select($options->name, array('options' => $months, 'selected' => $selected), AnConfig::unbox($options));
     }
 
     /**
@@ -437,8 +437,8 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
      */
     public function year($options = array())
     {
-        $options = new KConfig($options);
-        $date = new AnDate(new KConfig());
+        $options = new AnConfig($options);
+        $date = new AnDate(new AnConfig());
         $year = $date->year;
 
         $options->append(array(
@@ -459,7 +459,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
             $years = AnHelperArray::merge($array, $years);
         }
 
-        return $this->_html->select($options->name, array('options' => $years, 'selected' => $selected), KConfig::unbox($options));
+        return $this->_html->select($options->name, array('options' => $years, 'selected' => $selected), AnConfig::unbox($options));
     }
 
     /**
@@ -471,7 +471,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
      */
     public function day($options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'selected' => null,
@@ -488,7 +488,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
             $days = AnHelperArray::merge($array, $days);
         }
 
-        return $this->_html->select($options->name, array('options' => $days, 'selected' => $selected), KConfig::unbox($options));
+        return $this->_html->select($options->name, array('options' => $days, 'selected' => $selected), AnConfig::unbox($options));
     }
 
     /**
@@ -500,7 +500,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
      */
     public function country($options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'id' => 'an-se-selection-countries-'.uniqid(),
@@ -524,7 +524,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
             $countries[$use_country_code ? $key : $name] = AnTranslator::_($name);
         }
 
-        return $this->_html->select($options->name, array('options' => $countries, 'selected' => $selected), KConfig::unbox($options));
+        return $this->_html->select($options->name, array('options' => $countries, 'selected' => $selected), AnConfig::unbox($options));
     }
 
     /**
@@ -536,7 +536,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
      */
     public function state($options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'country_selector' => 'countery-selector',
@@ -575,7 +575,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
 
         unset($options->selected);
 
-        $options = KConfig::unbox($options);
+        $options = AnConfig::unbox($options);
 
         $states = $this->_html->select($options['name'], array('options' => $states, 'selected' => $selected), array_merge($options, array('country' => 'us')));
         $provinces = $this->_html->select($options['name'], array('options' => $provinces, 'selected' => $selected), array_merge($options, array('country' => 'canada')));
@@ -597,7 +597,7 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
      */
     public function currency($options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'name' => 'currency',
@@ -608,6 +608,6 @@ class LibBaseTemplateHelperSelector extends LibBaseTemplateHelperAbstract implem
         unset($options->selected);
         $currencies = array_combine(self::$ISO_CURRENCY_SYMBOLS, self::$ISO_CURRENCY_SYMBOLS);
 
-        return $this->_html->select($options->name, array('options' => $currencies, 'selected' => $selected), KConfig::unbox($options));
+        return $this->_html->select($options->name, array('options' => $currencies, 'selected' => $selected), AnConfig::unbox($options));
     }
 }

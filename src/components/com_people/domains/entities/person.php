@@ -7,7 +7,7 @@
  * Here's how to get a person object, set a property and save
  * <code>
  * //fetches a peron with $id
- * $person = KService::get('repos:people.person')->fetch($id);
+ * $person = AnService::get('repos:people.person')->fetch($id);
  * $person->name = 'Doctor Who';
  * $person->save();
  * </code>
@@ -45,9 +45,9 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'resources' => array('people_people'),
@@ -227,7 +227,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     /**
      * {@inheritdoc}
      */
-    protected function _afterEntityInstantiate(KConfig $config)
+    protected function _afterEntityInstantiate(AnConfig $config)
     {
         $config->append(array('data' => array(
             'author' => $this,
@@ -248,7 +248,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
             $this->password = $this->activationCode;
         }
 
-        $this->lastVisitDate = AnDomainAttributeDate::getInstance(new KConfig(array(
+        $this->lastVisitDate = AnDomainAttributeDate::getInstance(new AnConfig(array(
             'date' => array(
                 'hour' => 0,
                 'minute' => 0,

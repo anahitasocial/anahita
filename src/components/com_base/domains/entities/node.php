@@ -19,9 +19,9 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'inheritance' => array(
@@ -62,7 +62,7 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
     /**
      * Initialize a new node.
      */
-    protected function _afterEntityInstantiate(KConfig $config)
+    protected function _afterEntityInstantiate(AnConfig $config)
     {
         $config->append(array('data' => array(
             'component' => 'com_'.$this->getIdentifier()->package,

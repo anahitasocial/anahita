@@ -23,9 +23,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -39,9 +39,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'parser' => 'com:notifications.template.helper.parser',
@@ -68,7 +68,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                       ->status(ComNotificationsDomainEntityNotification::STATUS_NOT_SENT);
 
         if ($this->id) {
-            $ids = (array) KConfig::unbox($this->id);
+            $ids = (array) AnConfig::unbox($this->id);
             $query->id($ids);
         }
 
@@ -134,7 +134,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
     protected function _renderMails($config)
     {
         $mails = array();
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
         $settings = $config->settings;
         $people = $config->people;
         $notification = $config->notification;
@@ -156,10 +156,10 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
             //since each owner revieces the mail, they are in fact the viewer
             //so we need to set the as viewer while processing the notification
-            KService::set('com:people.viewer', $person);
+            AnService::set('com:people.viewer', $person);
 
             $notification->owner = $person;
-            $data = new KConfig($this->_parser->parse($notification));
+            $data = new AnConfig($this->_parser->parse($notification));
 
             $data->append(array(
                 'email_subject' => $data->title,

@@ -38,7 +38,7 @@ class ComStoriesControllerBehaviorPublisher extends AnControllerBehaviorAbstract
      */
     public function createStory($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'subject' => get_viewer(),

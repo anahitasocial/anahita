@@ -13,16 +13,16 @@
  * @author		Johan Janssens <johan@nooku.org>
  * @package     Koowa_Filter
  */
-class KFilterFactory extends KObject implements KServiceInstantiatable
+class KFilterFactory extends KObject implements AnServiceInstantiatable
 {
 	/**
      * Force creation of a singleton
      *
-     * @param 	object 	An optional KConfig object with configuration options
-     * @param 	object	A KServiceInterface object
+     * @param 	object 	An optional AnConfig object with configuration options
+     * @param 	object	A AnServiceInterface object
      * @return KFilterFactory
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
        // Check if an instance with this identifier already exists or not
         if (!$container->has($config->service_identifier))
@@ -40,7 +40,7 @@ class KFilterFactory extends KObject implements KServiceInstantiatable
 	 * Factory method for KFilterInterface classes.
 	 *
 	 * @param	string 	Filter indentifier
-	 * @param 	object 	An optional KConfig object with configuration options
+	 * @param 	object 	An optional AnConfig object with configuration options
 	 * @return KFilterAbstract
 	 */
 	public function instantiate($identifier, $config = array())
@@ -63,7 +63,7 @@ class KFilterFactory extends KObject implements KServiceInstantiatable
 	 * Create a filter based on it's name
 	 *
 	 * If the filter is not an identifier this function will create it directly
-	 * instead of going through the KService identification process.
+	 * instead of going through the AnService identification process.
 	 *
 	 * @param 	string	Filter identifier
 	 * @throws	KFilterException	When the filter could not be found
@@ -79,7 +79,7 @@ class KFilterFactory extends KObject implements KServiceInstantiatable
 
 			$filter = $this->getService($filter, $config);
 
-		} catch(KServiceServiceException $e) {
+		} catch(AnServiceServiceException $e) {
 			throw new KFilterException('Invalid filter: '.$filter);
 		}
 

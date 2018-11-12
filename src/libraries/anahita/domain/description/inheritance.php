@@ -48,7 +48,7 @@ class AnDomainDescriptionInheritance
      * Constuctor the inheritance object.
      *
      * @param array              $tree       Array of inheritance tree
-     * @param KServiceIdentifier $identifier The entity identifier
+     * @param AnServiceIdentifier $identifier The entity identifier
      * 
      * @return AnDomainDescriptionInheritance
      */
@@ -72,7 +72,7 @@ class AnDomainDescriptionInheritance
     /**
      * Returns the inheritance tree.
      *
-     * @return KServiceIdentifier
+     * @return AnServiceIdentifier
      */
     public function getIdentifier()
     {

@@ -23,9 +23,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options.
+     * @param   object  An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -49,9 +49,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $permission = clone $this->getIdentifier();
         $permission->path = array($permission->path[0], 'permission');
@@ -121,7 +121,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     {
         if (!$this->_view instanceof LibBaseViewAbstract) {
             //Make sure we have a view identifier
-            if (!($this->_view instanceof KServiceIdentifier)) {
+            if (!($this->_view instanceof AnServiceIdentifier)) {
                 $this->setView($this->_view);
             }
 

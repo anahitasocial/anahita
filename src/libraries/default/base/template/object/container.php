@@ -43,7 +43,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      *
      * @return LibBaseTemplateObject
      *
-     * @throws KConfigException if the $name is empty
+     * @throws AnConfigException if the $name is empty
      */
     public function insert($name, array $data)
     {
@@ -133,13 +133,13 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      * @param   string  The key name.
      * @param   mixed   The value for the key
      *
-     * @throws KConfigException if the $name is empty
+     * @throws AnConfigException if the $name is empty
      */
     public function offsetSet($name, $object)
     {
         if (!$object instanceof LibBaseTemplateObjectInterface) {
             if (empty($name)) {
-                throw new KConfigException('Template object name must be unique and non empty');
+                throw new AnConfigException('Template object name must be unique and non empty');
             }
 
             $object = LibBaseTemplateObject::getInstance($name, $object);

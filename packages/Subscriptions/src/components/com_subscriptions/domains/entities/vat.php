@@ -18,9 +18,9 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'attributes' => array(
@@ -52,7 +52,7 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
     {
         $meta = clone $this->meta;
 
-        $taxes = new KConfig($taxes);
+        $taxes = new AnConfig($taxes);
         $values = array();
 
         foreach ($taxes as $tax) {
@@ -82,7 +82,7 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
     {
         $taxes = pick($this->meta->federal_taxes, array());
         foreach ($taxes as &$tax) {
-            $tax = new KConfig($tax);
+            $tax = new AnConfig($tax);
         }
 
         return $taxes;

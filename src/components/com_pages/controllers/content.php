@@ -24,9 +24,9 @@ class ComPagesControllerPage extends ComBaseControllerResource
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -51,9 +51,9 @@ class ComPagesControllerPage extends ComBaseControllerResource
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'base_path' => get_config_value('com_pages.content_path'),

@@ -27,10 +27,10 @@ class KObjectStack extends KObject implements Countable
     /**
      * Constructor
      *
-     * @param KConfig|null $config  An optional KConfig object with configuration options
+     * @param AnConfig|null $config  An optional AnConfig object with configuration options
      * @return \KObjectStack
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 

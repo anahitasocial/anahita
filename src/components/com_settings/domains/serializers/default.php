@@ -15,7 +15,7 @@ class ComSettingsDomainSerializerDefault extends AnDomainSerializerDefault
 {
     public function toSerializableArray($entity)
     {
-        $data = new KConfig();
+        $data = new AnConfig();
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();
 
         $data['name'] = $entity->name;
@@ -24,6 +24,6 @@ class ComSettingsDomainSerializerDefault extends AnDomainSerializerDefault
             $data['ordering'] = $entity->ordering;
         }
 
-        return KConfig::unbox($data);
+        return AnConfig::unbox($data);
     }
 }

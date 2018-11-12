@@ -44,9 +44,9 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration
+     * @param AnConfig $config Property Configuration
      */
-    public function setConfig(KConfig $config)
+    public function setConfig(AnConfig $config)
     {
         parent::setConfig($config);
 
@@ -66,9 +66,9 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $child = clone $this->_parent;
 
@@ -118,9 +118,9 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
     }
 
     /**
-     * Set the collection class KServiceIdentifier.
+     * Set the collection class AnServiceIdentifier.
      *
-     * @param KServiceIdentifier|string $collection
+     * @param AnServiceIdentifier|string $collection
      *
      * @return class instance
      */
@@ -159,7 +159,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
             $config['property'] = $this->_child_key;
             $config['service_identifier'] = $this->getChildRepository()->getDescription()->getEntityIdentifier();
 
-            return new AnDomainEntityProxy(new KConfig($config));
+            return new AnDomainEntityProxy(new AnConfig($config));
         } else {
             return $this->getSet($entity);
         }
@@ -214,7 +214,7 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
             'property' => $this->_child_key,
         );
 
-        $set = KService::get('anahita:domain.entityset.decorator.onetomany', $options);
+        $set = AnService::get('anahita:domain.entityset.decorator.onetomany', $options);
 
         return $set;
     }

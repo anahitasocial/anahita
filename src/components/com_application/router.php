@@ -45,11 +45,11 @@ class ComApplicationRouter extends KObject
     /**
      * Constructor.
      *
-     * @param array $config An optional KConfig object with configuration options.
+     * @param array $config An optional AnConfig object with configuration options.
      */
     public function __construct($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         parent::__construct($config);
 
@@ -68,9 +68,9 @@ class ComApplicationRouter extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $base = clone AnRequest::base();
 
@@ -88,7 +88,7 @@ class ComApplicationRouter extends KObject
         $config->append(array(
             'base_url' => $base,
             'enable_rewrite' => false,
-            'url' => clone KService::get('anahita:http.url')
+            'url' => clone AnService::get('anahita:http.url')
         ));
 
         parent::_initialize($config);

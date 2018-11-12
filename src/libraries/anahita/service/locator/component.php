@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnServiceLocatorComponent extends KServiceLocatorComponent
+class AnServiceLocatorComponent extends AnServiceLocatorComponent
 {
     /** 
      * The type.
@@ -42,7 +42,7 @@ class AnServiceLocatorComponent extends KServiceLocatorComponent
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
-    public function findClass(KServiceIdentifier $identifier)
+    public function findClass(AnServiceIdentifier $identifier)
     {
         $path = AnInflector::camelize(implode('_', $identifier->path));
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
@@ -67,7 +67,7 @@ class AnServiceLocatorComponent extends KServiceLocatorComponent
     /**
      * Find a class.
      * 
-     * @param KServiceIdentifier $identifier
+     * @param AnServiceIdentifier $identifier
      * 
      * @return string
      */

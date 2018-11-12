@@ -45,9 +45,9 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_child = $config->child;
 
@@ -113,7 +113,7 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
      */
     public function addNew($data = array(), $config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
         $config['data'] = $data;
         $config->append(array(
             'relationship' => array(),

@@ -16,9 +16,9 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -33,9 +33,9 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'request' => array(

@@ -1,13 +1,13 @@
 <?php
 
-class LibSessionsStorageAbstract extends KObject implements SessionHandlerInterface, KServiceInstantiatable
+class LibSessionsStorageAbstract extends KObject implements SessionHandlerInterface, AnServiceInstantiatable
 {
 	/**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
 		parent::__construct($config);
 		$this->register();
@@ -16,11 +16,11 @@ class LibSessionsStorageAbstract extends KObject implements SessionHandlerInterf
 	/**
      * Force creation of a singleton
      *
-     * @param 	object 	An optional KConfigInterface object with configuration options
-     * @param 	object	A KServiceInterface object
+     * @param 	object 	An optional AnConfigInterface object with configuration options
+     * @param 	object	A AnServiceInterface object
      * @return AnDatabaseTableInterface
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
 		if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;

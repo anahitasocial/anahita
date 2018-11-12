@@ -44,7 +44,7 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
     {
         if (!$this->_validator instanceof LibBaseControllerValidatorAbstract) {
             //Make sure we have a view identifier
-           if (!($this->_validator instanceof KServiceIdentifier)) {
+           if (!($this->_validator instanceof AnServiceIdentifier)) {
                $this->setValidator($this->_validator);
            }
 

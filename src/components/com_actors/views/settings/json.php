@@ -35,7 +35,7 @@ class ComActorsViewSettingsJson extends ComBaseViewJson
                 'can_enable' => true,
         ));
 
-        $config = new KConfig();
+        $config = new AnConfig();
 
         foreach ($this->_state->getItem()->components as $component) {
             $permissions = array();

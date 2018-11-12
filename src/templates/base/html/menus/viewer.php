@@ -35,7 +35,7 @@ $components = $this->getService('com:people.template.helper')->viewerMenuLinks($
 				</a>
 			</li>
 
-			<? if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
+			<? if (AnService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
 			<li class="divider"></li>
             <li>
             	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
@@ -63,7 +63,7 @@ $components = $this->getService('com:people.template.helper')->viewerMenuLinks($
             <? endforeach; ?>
             <? endif; ?>
 
-            <? if (KService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
+            <? if (AnService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
             <li>
             	<a href="<?= @route('option=com_invites&view=email') ?>">
             	<?= @text('TMPL-MENU-ITEM-VIEWER-INVITE') ?>
@@ -72,7 +72,7 @@ $components = $this->getService('com:people.template.helper')->viewerMenuLinks($
 			<li class="divider"></li>
             <? endif; ?>
 
-            <? if (KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>
+            <? if (AnService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>
             <li>
                  <? if ($viewer->admin()): ?>
                  <a href="<?= @route('option=com_subscriptions&view=orders') ?>">

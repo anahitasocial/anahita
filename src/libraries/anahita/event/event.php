@@ -12,7 +12,7 @@
  * @link        https://www.GetAnahita.com
  * @package     AnEvent
  */
-class AnEvent extends KConfig
+class AnEvent extends AnConfig
 {
     /**
      * Priority levels

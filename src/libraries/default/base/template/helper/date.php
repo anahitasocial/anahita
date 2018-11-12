@@ -9,17 +9,17 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements KServiceInstantiatable
+class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
@@ -40,9 +40,9 @@ class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -59,7 +59,7 @@ class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements
      */
     public function picker($name, $options = array())
     {
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'date' => new AnDate(),
@@ -70,7 +70,7 @@ class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements
         $html = $this->getService('com:base.template.helper.html');
 
         if (is_string($date)) {
-            $date = new AnDate(new KConfig(array('date' => $date)));
+            $date = new AnDate(new AnConfig(array('date' => $date)));
         }
 
         $month = $date->month;
@@ -123,7 +123,7 @@ class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements
      */
     public function humanize($date, $config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'format' => '%B %d %Y',

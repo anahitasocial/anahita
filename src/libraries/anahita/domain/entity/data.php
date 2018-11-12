@@ -86,9 +86,9 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_entity = $config->entity;
         $this->_description = $config->entity->getEntityDescription();

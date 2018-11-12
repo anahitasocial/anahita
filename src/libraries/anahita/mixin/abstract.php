@@ -40,9 +40,9 @@ abstract class AnMixinAbstract implements AnMixinInterface
     /**
      * Object constructor
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         if (!empty($config)) {
             $this->_initialize($config);
@@ -57,10 +57,10 @@ abstract class AnMixinAbstract implements AnMixinInterface
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      * @return void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'mixer' =>  $this,

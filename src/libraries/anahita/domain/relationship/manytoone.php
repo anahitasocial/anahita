@@ -39,9 +39,9 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration
+     * @param AnConfig $config Property Configuration
      */
-    public function setConfig(KConfig $config)
+    public function setConfig(AnConfig $config)
     {
         parent::setConfig($config);
 
@@ -61,9 +61,9 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         //disable the chain for the belongs to relationship
         $config->append(array(
@@ -138,7 +138,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
      */
     public function setInverse($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         if (!isset($this->_parent)) {
             throw new AnException('Can not have an inverse relationship with a polymorphic parent');
@@ -163,7 +163,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         $config['cardinality'] = $cardinality;
 
         $this->getParentRepository()->getDescription()
-            ->setRelationship($name, KConfig::unbox($config));
+            ->setRelationship($name, AnConfig::unbox($config));
     }
 
     /**
@@ -225,7 +225,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
             $key = $this->_type_column->key();
             $parent = isset($data[$key]) ? $data[$key] : null;
             if ($parent) {
-                $parent = KService::getIdentifier($parent);
+                $parent = AnService::getIdentifier($parent);
                 if (!$parent->application) {
                     $parent->application = $this->_child->application;
                 }
@@ -248,6 +248,6 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         $config['service_identifier'] = AnDomain::getRepository($parent)
                     ->getDescription()->getEntityIdentifier();
 
-        return new AnDomainEntityProxy(new KConfig($config));
+        return new AnDomainEntityProxy(new AnConfig($config));
     }
 }

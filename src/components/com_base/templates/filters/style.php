@@ -57,7 +57,7 @@ class ComBaseTemplateFilterStyle extends LibBaseTemplateFilterStyle
             return parent::_renderStyle($style, $link, $attribs);
         }
 
-        $document = KService::get('anahita:document');
+        $document = AnService::get('anahita:document');
 
         if($link) {
             return $document->addStyleSheet($style, 'text/css', null, $attribs);

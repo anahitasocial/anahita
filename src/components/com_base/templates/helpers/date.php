@@ -30,7 +30,7 @@ class ComBaseTemplateHelperDate extends LibBaseTemplateHelperDate
         $relative = true;
 
         if (is_array($format)) {
-            $config = new KConfig($format);
+            $config = new AnConfig($format);
             $format = $config->format;
             $offset = $config->offset;
             $relative = $config->relative;
@@ -41,7 +41,7 @@ class ComBaseTemplateHelperDate extends LibBaseTemplateHelperDate
         }
 
         if (!(is_object($date) && $date->inherits('AnDate'))) {
-            $date = new AnDate(new KConfig(array('date' => $date)));
+            $date = new AnDate(new AnConfig(array('date' => $date)));
         }
 
         return $this->humanize($date, array(

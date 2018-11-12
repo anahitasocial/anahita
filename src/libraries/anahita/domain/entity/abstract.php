@@ -65,9 +65,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         //very crucial to first store this instance in the service container
         //as this instnace will be used to clone other instances
@@ -82,10 +82,10 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
         $config->prototype = $this;
 
         $config->append(array(
-            'auto_generate' => count(KConfig::unbox($config->attributes)) == 0,
+            'auto_generate' => count(AnConfig::unbox($config->attributes)) == 0,
         ));
 
-        $this->getService($config->repository, KConfig::unbox($config));
+        $this->getService($config->repository, AnConfig::unbox($config));
 
         if (!$this->getEntityDescription()->getIdentityProperty()) {
             throw new AnDomainDescriptionException('Entity '.$this->getIdentifier().' need an identity property');
@@ -97,9 +97,9 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $identifier = clone $this->getIdentifier();
 
@@ -235,7 +235,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      */
     public function getModifiedData()
     {
-        return new KConfig($this->_modified);
+        return new AnConfig($this->_modified);
     }
 
     /**
@@ -435,7 +435,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             $current = $this->get($name);
 
             if ($current instanceof AnDomainDecoratorOnetomany) {
-                $values = KConfig::unbox($value);
+                $values = AnConfig::unbox($value);
                 //can be an KObjectArray or KObjectSet object
                 if ($values instanceof KObject && $values instanceof Iterator) {
                     $current->delete();
@@ -1197,7 +1197,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
     {
         $data = unserialize($data);
         $this->_repository = AnDomain::getRepository($data['identifier']);
-        $this->_data = new AnDomainEntityData(new KConfig(array('entity' => $this)));
+        $this->_data = new AnDomainEntityData(new AnConfig(array('entity' => $this)));
         $this->_data->setRowData($data['row']);
         $this->__service_container = $this->_repository->getService();
         $this->__service_identifier = $this->_repository->getIdentifier($data['identifier']);
@@ -1210,7 +1210,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      */
     public function __clone()
     {
-        $this->_data = new AnDomainEntityData(new KConfig(array('entity' => $this)));
+        $this->_data = new AnDomainEntityData(new AnConfig(array('entity' => $this)));
     }
 
     /**

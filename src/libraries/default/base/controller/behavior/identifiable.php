@@ -31,9 +31,9 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -54,9 +54,9 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options.
+     * @param   object  An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'repository' => $config->mixer->getIdentifier()->name,
@@ -180,7 +180,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
     public function getRepository()
     {
         if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof KServiceIdentifier) {
+            if (!$this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -204,9 +204,9 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
         $identifiable_key = $this->getIdentifiableKey();
 
         if ($values = $this->$identifiable_key) {
-            $scope = KConfig::unbox($context->identity_scope);
+            $scope = AnConfig::unbox($context->identity_scope);
 
-            $values = KConfig::unbox($values);
+            $values = AnConfig::unbox($values);
 
             $scope[$identifiable_key] = $values;
 

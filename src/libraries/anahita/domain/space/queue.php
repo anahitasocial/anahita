@@ -40,9 +40,9 @@ class AnDomainSpaceQueue extends KObjectQueue
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         parent::__construct($config);
 

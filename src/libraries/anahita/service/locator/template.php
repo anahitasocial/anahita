@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnServiceLocatorTemplate extends KServiceLocatorAbstract
+class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
 {
     /** 
      * The type.
@@ -42,7 +42,7 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
-    public function findClass(KServiceIdentifier $identifier)
+    public function findClass(AnServiceIdentifier $identifier)
     {
         $classname = 'Tmpl'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
@@ -65,7 +65,9 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
                 $classes[] = 'LibApplication'.$path.'Default';
                 $classes[] = 'LibBase'.$path.ucfirst($identifier->name);
                 $classes[] = 'LibBase'.$path.'Default';
+                $classes[] = 'An'.$path.ucfirst($identifier->name);
                 $classes[] = 'K'.$path.ucfirst($identifier->name);
+                $classes[] = 'An'.$path.'Default';
                 $classes[] = 'K'.$path.'Default';
 
                 foreach ($classes as $class) {
@@ -91,7 +93,7 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
      *
      * @return string Returns the path
      */
-    public function findPath(KServiceIdentifier $identifier)
+    public function findPath(AnServiceIdentifier $identifier)
     {
         $path = '';
         $parts = $identifier->path;

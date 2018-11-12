@@ -24,9 +24,9 @@ class AnMixinToolbar extends AnMixinAbstract
     /**
      * Constructor
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -34,7 +34,7 @@ class AnMixinToolbar extends AnMixinAbstract
         if (! empty($config->toolbars)) {
             $this->_mixer->mixin($this);
 
-            $toolbars = (array) KConfig::unbox($config->toolbars);
+            $toolbars = (array) AnConfig::unbox($config->toolbars);
 
             foreach ($toolbars as $key => $value) {
                 if (is_numeric($key)) {
@@ -51,10 +51,10 @@ class AnMixinToolbar extends AnMixinAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * @return void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         parent::_initialize($config);
 
@@ -77,7 +77,7 @@ class AnMixinToolbar extends AnMixinAbstract
     /**
      * Add one or more toolbars
      *
-     * @param   mixed	An object that implements KObjectServiceable, KServiceIdentifier object
+     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @return  KObject	The mixer object
      */
@@ -106,7 +106,7 @@ class AnMixinToolbar extends AnMixinAbstract
     public function getToolbar($toolbar, $config = array())
     {
         $identifier = $toolbar;
-        if (! ($toolbar instanceof KServiceIdentifier)) {
+        if (! ($toolbar instanceof AnServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
            if (is_string($toolbar) && strpos($toolbar, '.') === false) {
                $identifier = clone $this->getIdentifier();

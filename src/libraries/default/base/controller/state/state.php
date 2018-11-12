@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseControllerState extends KConfig
+class LibBaseControllerState extends AnConfig
 {
     /**
      * States.
@@ -105,7 +105,7 @@ class LibBaseControllerState extends KConfig
      * @param   bool     TRUE if the state uniquely indetifies an enitity, FALSE otherwise. Default FALSE.
      * @param   array       Array of required states to determine if the state is unique. Only applicable if the state is unqiue.
      *
-     * @return KConfigState
+     * @return AnConfigState
      */
     public function insert($name, $default = null, $unique = false, $required = array())
     {
@@ -133,7 +133,7 @@ class LibBaseControllerState extends KConfig
      *
      * @param   string      The name of the state
      *
-     * @return KConfigState
+     * @return AnConfigState
      */
     public function remove($name)
     {

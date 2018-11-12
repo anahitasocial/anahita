@@ -21,7 +21,7 @@ class plgAuthenticationAnahita extends PlgAnahitaDefault
 
         $uniqueAlias = strpos($credentials->username, '@') ? 'email' : 'username';
 
-        $person = KService::get('repos:people.person')->find(array(
+        $person = AnService::get('repos:people.person')->find(array(
             $uniqueAlias => $credentials->username,
             'enabled' => 1
         ));

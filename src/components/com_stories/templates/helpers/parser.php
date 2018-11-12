@@ -38,9 +38,9 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -56,11 +56,11 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
             $this->_template->addFilter($filter);
         }
 
-        $this->_template->getFilter('alias')->append(KConfig::unbox($config->alias));
+        $this->_template->getFilter('alias')->append(AnConfig::unbox($config->alias));
 
         $this->getService('anahita:language')->load('com_stories');
 
-        $this->_template->addSearchPath(KConfig::unbox($config->paths), true);
+        $this->_template->addSearchPath(AnConfig::unbox($config->paths), true);
     }
 
     /**
@@ -68,9 +68,9 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'paths' => array(

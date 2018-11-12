@@ -30,9 +30,9 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -110,7 +110,7 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
     {
         if (!isset($this->_api)) {
             $session = AnRequest::get('session.oauth', 'raw', array());
-            $session = new KConfig($session);
+            $session = new AnConfig($session);
             $api = pick($this->getRequest()->server, $session->api);
 
             if (!$api) {
@@ -137,7 +137,7 @@ class ComConnectControllerBehaviorOauthorizable extends AnControllerBehaviorAbst
 
                 $callback = route(implode($query, '&'), true);
 
-                $this->_consumer = new ComConnectOauthConsumer(new KConfig(array(
+                $this->_consumer = new ComConnectOauthConsumer(new AnConfig(array(
                     'key' => $key,
                     'secret' => $secret,
                     'callback_url' => (string) $callback,

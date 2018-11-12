@@ -18,7 +18,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
      */
     public function toSerializableArray($entity)
     {
-        $data = new KConfig();
+        $data = new AnConfig();
 
         $viewer = $this->getService('com:people.viewer');
 
@@ -161,6 +161,6 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             $data['latitude'] = $entity->geoLatitude;
         }
 
-        return KConfig::unbox($data);
+        return AnConfig::unbox($data);
     }
 }

@@ -71,7 +71,7 @@ class Application extends \Symfony\Component\Console\Application
             define('ANPATH_BASE', WWW_ROOT);
             $_SERVER['HTTP_HOST'] = '';
             require_once ( ANPATH_BASE.'/includes/framework.php' );
-            \KService::get('com://site/application.dispatcher')->load();
+            \AnService::get('com://site/application.dispatcher')->load();
             global $composerLoader, $console;
             $composerLoader = $_composerLoader;
             $console = $this;

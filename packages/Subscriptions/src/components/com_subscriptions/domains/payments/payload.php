@@ -66,9 +66,9 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -86,7 +86,7 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
      */
     public function setRecurring($frequency, $unit, $start_date)
     {
-        $this->_recurring_options = new KConfig(array(
+        $this->_recurring_options = new AnConfig(array(
              'frequency' => $frequency, 'unit' => $unit, 'start_date' => $start_date,
         ));
 
@@ -106,7 +106,7 @@ class ComSubscriptionsDomainPaymentPayload extends KObject
     /**
      * Return the recurring options if ther are any.
      *
-     * @return KConfig
+     * @return AnConfig
      */
     public function getRecurring()
     {

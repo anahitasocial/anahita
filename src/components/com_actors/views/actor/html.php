@@ -18,9 +18,9 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'template_paths' => array(
@@ -45,7 +45,7 @@ class ComActorsViewActorHtml extends ComBaseViewHtml
         $context->actor = $this->_state->getItem();
         $context->composers = new LibBaseTemplateObjectContainer();
         $context->commands = $this->getTemplate()->renderHelper('toolbar.commands', 'toolbar');
-        $context->profile = new KConfig();
+        $context->profile = new AnConfig();
 
         $context->gadgets->insert('socialgraph', array(
             'title' => translate(array('COM-ACTORS-GADGET-LABEL-SOCIALGRAPH', 'COM-'.strtoupper($this->getIdentifier()->package).'-GADGET-LABEL-SOCIALGRAPH')),

@@ -36,9 +36,9 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
     /**
      * Object constructor
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -58,10 +58,10 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'command_chain'    => null,
@@ -129,19 +129,19 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
      *
      * If the callback has already been registered. It will not be re-registered.
      *
-     * If params are passed as a associative array or as a KConfig object they will be merged with the
+     * If params are passed as a associative array or as a AnConfig object they will be merged with the
      * context of the command chain and passed along. If they are passed as an indexed array they
      * will be passed to the callback directly.
      *
      * @param  	string|array	The command name to register the callback for or an array of command names
      * @param 	callback		The callback function to register
-     * @param   array|object    An associative array of config parameters or a KConfig object
+     * @param   array|object    An associative array of config parameters or a AnConfig object
      * @return  KObject	The mixer object
      */
     public function registerCallback($commands, $callback, $params = array())
     {
         $commands = (array) $commands;
-        $params = (array) KConfig::unbox($params);
+        $params = (array) AnConfig::unbox($params);
 
         foreach ($commands as $command) {
             $command = strtolower($command);

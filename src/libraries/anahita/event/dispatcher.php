@@ -41,9 +41,9 @@ class AnEventDispatcher extends KObject
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         parent::__construct($config);
         
@@ -56,7 +56,7 @@ class AnEventDispatcher extends KObject
      * the event and returning their return values.
      *
      * @param   string  The event name
-     * @param   object|array   An array, a KConfig or a AnEvent object 
+     * @param   object|array   An array, a AnConfig or a AnEvent object 
      * @return  AnEventDispatcher
      */
     public function dispatchEvent($name, $event = array())

@@ -24,7 +24,7 @@ class PlgSystemSubscriptions extends PlgAnahitaDefault
             return;
         }
 
-        KService::get('repos:subscriptions.package');
+        AnService::get('repos:subscriptions.package');
 
         //if subscribe then unsubsribe
         if (isset($person->subscription) && $person->subscription->getTimeLeft() < 0) {
@@ -32,7 +32,7 @@ class PlgSystemSubscriptions extends PlgAnahitaDefault
             $person->unsubscribe();
 
             $url = route('index.php?option=com_subscriptions&view=packages');
-            KService::get('application.dispatcher')
+            AnService::get('application.dispatcher')
             ->getResponse()
             ->setRedirect($url)
             ->send();

@@ -16,9 +16,9 @@ class ComSubscriptionsControllerVat extends ComBaseControllerService
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         $this->registerCallback(array(
@@ -37,6 +37,6 @@ class ComSubscriptionsControllerVat extends ComBaseControllerService
     public function setTaxInfo(AnCommandContext $context)
     {
         $vats = $context->data->federal_tax;
-        $this->getItem()->setFederalTax(KConfig::unbox($vats));
+        $this->getItem()->setFederalTax(AnConfig::unbox($vats));
     }
 }

@@ -68,11 +68,11 @@ class AnError extends KObject implements KObjectHandlable
     /** 
      * Constructor.
      *
-     * @param array $config An optional KConfig object with configuration options.
+     * @param array $config An optional AnConfig object with configuration options.
      */
     public function __construct($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $this->_message = $config->message;
         $this->_code = $config->code;

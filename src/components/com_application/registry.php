@@ -13,7 +13,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationRegistry extends KObject implements KServiceInstantiatable
+class ComApplicationRegistry extends KObject implements AnServiceInstantiatable
 {
     /**
      * clonable registry.
@@ -32,12 +32,12 @@ class ComApplicationRegistry extends KObject implements KServiceInstantiatable
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (is_null(self::$_clone)) {
             self::$_clone = new AnRegistry();

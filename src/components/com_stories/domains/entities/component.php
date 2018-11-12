@@ -33,9 +33,9 @@ class ComStoriesDomainEntityComponent extends ComComponentsDomainEntityComponent
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             //'assignment_option'   => self::ASSIGNMENT_OPTION_ALWAYS

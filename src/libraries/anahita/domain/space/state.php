@@ -38,7 +38,7 @@ class AnDomainSpaceState extends KObject
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
     public function __construct()
     {

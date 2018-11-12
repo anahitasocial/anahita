@@ -35,24 +35,24 @@ class KObject implements KObjectHandlable, KObjectServiceable
     /**
      * The service identifier
      *
-     * @var KServiceIdentifier
+     * @var AnServiceIdentifier
      */
     private $__service_identifier;
 
     /**
      * The service container
      *
-     * @var KService
+     * @var AnService
      */
     private $__service_container;
 
     /**
      * Constructor
      *
-     * @param KConfig|null $config  An optional KConfig object with configuration options
+     * @param AnConfig|null $config  An optional AnConfig object with configuration options
      * @return \KObjectDecorator
      */
-    public function __construct( KConfig $config = null)
+    public function __construct( AnConfig $config = null)
     {
         //Set the service container
         if(isset($config->service_container)) {
@@ -75,10 +75,10 @@ class KObject implements KObjectHandlable, KObjectServiceable
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   KConfig $object An optional KConfig object with configuration options
+     * @param   AnConfig $object An optional AnConfig object with configuration options
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         //do nothing
     }
@@ -166,7 +166,7 @@ class KObject implements KObjectHandlable, KObjectServiceable
     {
         if ( !$object instanceof AnMixinInterface )
         {
-            if ( !$object instanceof KServiceIdentifier ) 
+            if ( !$object instanceof AnServiceIdentifier ) 
             {
                 //Create the complete identifier if a partial identifier was passed
                 if (is_string($object) && strpos($object, '.') === false)
@@ -179,7 +179,7 @@ class KObject implements KObjectHandlable, KObjectServiceable
             }
             else  $identifier = $object;
 
-            $config = new KConfig($config);
+            $config = new AnConfig($config);
             $config->mixer = $this;
             $object = new $identifier->classname($config);
             if(!$object instanceof AnMixinInterface)
@@ -295,7 +295,7 @@ class KObject implements KObjectHandlable, KObjectServiceable
 	 *
 	 * @param	string|object	$identifier The class identifier or identifier object
      * @throws	KObjectException if the service container has not been defined.
-	 * @return	KServiceIdentifier
+	 * @return	AnServiceIdentifier
 	 * @see 	KObjectServiceable
 	 */
 	final public function getIdentifier($identifier = null)

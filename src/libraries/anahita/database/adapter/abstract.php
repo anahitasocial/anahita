@@ -69,22 +69,22 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
     /**
      * The connection options
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_options = null;
 
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * Recognized key values include 'command_chain', 'charset', 'table_prefix',
      * (this list is not meant to be comprehensive).
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
             if (!isset($config)) {
-                $config = new KConfig();
+                $config = new AnConfig();
             }
 
             // Initialize the options
@@ -129,10 +129,10 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'options' => array(),
@@ -154,10 +154,10 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
      *
      * @return AnDatabaseQuery
      */
-    public function getQuery(KConfig $config = null)
+    public function getQuery(AnConfig $config = null)
     {
         if (!isset($config)) {
-            $config = new KConfig(array('adapter' => $this));
+            $config = new AnConfig(array('adapter' => $this));
         }
 
         return new AnDatabaseQuery($config);
@@ -296,7 +296,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
             $this->getCommandChain()->run('after.select', $context);
         }
 
-        return KConfig::unbox($context->result);
+        return AnConfig::unbox($context->result);
     }
 
     /**
@@ -350,7 +350,7 @@ abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAd
             $this->getCommandChain()->run('after.show', $context);
         }
 
-        return KConfig::unbox($context->result);
+        return AnConfig::unbox($context->result);
     }
 
     /**

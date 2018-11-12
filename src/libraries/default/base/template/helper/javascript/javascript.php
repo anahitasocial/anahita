@@ -60,7 +60,7 @@ class LibBaseTemplateHelperJavascript extends LibBaseTemplateHelperAbstract
         foreach ($langs as $lang) {
             $path = $base.'/'.$tag.'.'.$lang.'.js';
             if (is_readable($path)) {
-                $src = KService::get('com:application')->getRouter()->getBaseUrl().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
+                $src = AnService::get('com:application')->getRouter()->getBaseUrl().'/language/'.$tag.'/'.$tag.'.'.$lang.'.js';
                 $scripts .= '<script type="text/javascript" src="'.$src.'"></script>'."\n";
             }
         }

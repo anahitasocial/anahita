@@ -163,7 +163,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
     /**
      * state.
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_state;
 
@@ -177,9 +177,9 @@ class AnDomainQuery extends KObject implements AnCommandInterface
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -202,9 +202,9 @@ class AnDomainQuery extends KObject implements AnCommandInterface
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'repository' => $this->getIdentifier()->name,
@@ -370,7 +370,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
 
                 AnDomainQueryHelper::addRelationship($this, $name);
                 $link = $this->getLink($name);
-                $config = new KConfig($condition);
+                $config = new AnConfig($condition);
                 $config->append(array(
                         'type' => $link->type,
                         'bind_type' => $link->bind_type,
@@ -396,7 +396,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
 
         settype($condition, 'array');
 
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'type' => 'strong',
@@ -422,7 +422,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
                 $link['conditions'][$key] = $value instanceof AnDomainResourceColumn ? clone $value : $value;
             }
 
-            $this->link[$options->as] = new KConfig($link);
+            $this->link[$options->as] = new AnConfig($link);
 
             $this->distinct = true;
         }
@@ -450,7 +450,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
     public function getRepository()
     {
         if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof KServiceIdentifier) {
+            if (!$this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -732,7 +732,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
      */
     public function __set($name, $value)
     {
-        $state = KConfig::unbox($this->_state->$name);
+        $state = AnConfig::unbox($this->_state->$name);
 
         if (is_array($state) && is_array($value)) {
             settype($value, 'array');
@@ -847,7 +847,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
      */
     public function toEntitySet()
     {
-        return KService::get($this->getRepository()->getEntitySet(), array('query' => clone $this, 'repository' => $this->getRepository()));
+        return AnService::get($this->getRepository()->getEntitySet(), array('query' => clone $this, 'repository' => $this->getRepository()));
     }
 
     /**

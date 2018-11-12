@@ -122,8 +122,8 @@ class AnHelperArray
      */
     public static function insert($array, $values, $index = null)
     {
-        $values = (array) KConfig::unbox($values);
-        $array = (array) KConfig::unbox($array);
+        $values = (array) AnConfig::unbox($values);
+        $array = (array) AnConfig::unbox($array);
         if ($index === null) {
             foreach ($values as $value) {
                 array_push($array, $value);
@@ -194,7 +194,7 @@ class AnHelperArray
      */
     public static function toArray($object)
     {
-        $object = KConfig::unbox($object);
+        $object = AnConfig::unbox($object);
 
         if (is($object, 'KObjectArray') || is($object, 'KObjectSet')) {
             return $object->toArray();
@@ -389,7 +389,7 @@ class AnHelperArray
     {
         $output = array();
 
-        if ($array instanceof KConfig) {
+        if ($array instanceof AnConfig) {
             $data = array();
             foreach ($array as $key => $item) {
                 $data[$key] = (string) $item;
@@ -398,7 +398,7 @@ class AnHelperArray
         }
 
         if (is_object($array)) {
-            $array = (array) KConfig::unbox($array);
+            $array = (array) AnConfig::unbox($array);
         }
 
         if (is_array($array)) {

@@ -30,7 +30,7 @@ class PackageCommand extends Command
         }
 
         $this->getApplication()->loadFramework();
-        \KService::get('koowa:loader')->loadIdentifier('com://site/migrator.helper');
+        \AnService::get('koowa:loader')->loadIdentifier('com://site/migrator.helper');
 
         foreach ($packages as $package) {
 
@@ -76,7 +76,7 @@ class PackageCommand extends Command
 
     protected function _installPlugin($manifest, $output)
     {
-        $plugins = \KService::get('repos:cli.plugin', array('resources' => 'plugins'));
+        $plugins = \AnService::get('repos:cli.plugin', array('resources' => 'plugins'));
 
         $group = (string) $manifest->group;
 
@@ -99,9 +99,9 @@ class PackageCommand extends Command
 
     protected function _installComponent($manifest, $output, $path, $schema)
     {
-        $name = \KService::get('koowa:filter.cmd')->sanitize($manifest->name);
+        $name = \AnService::get('koowa:filter.cmd')->sanitize($manifest->name);
         $name = 'com_'.strtolower($name);
-        $components = \KService::get('repos:cli.component', array('resources'=>'components'));
+        $components = \AnService::get('repos:cli.component', array('resources'=>'components'));
 
         //find or create a component
         $component = $components->findOrAddNew(array(
@@ -134,7 +134,7 @@ class PackageCommand extends Command
             $queries = dbparse(file_get_contents($path.'/schemas/schema.sql'));
 
             foreach ($queries as $query) {
-                 \KService::get('anahita:database')->execute($query);
+                 \AnService::get('anahita:database')->execute($query);
             }
         }
     }

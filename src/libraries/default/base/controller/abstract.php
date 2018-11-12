@@ -17,7 +17,7 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     /**
      * Controller State.
      *
-     * @var KConfigState
+     * @var AnConfigState
      */
     protected $_state;
 
@@ -31,9 +31,9 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options.
+     * @param   object  An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -45,9 +45,9 @@ class LibBaseControllerAbstract extends AnControllerAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'response' => 'com:base.controller.response',
@@ -59,7 +59,7 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     /**
      * Return the controller state.
      *
-     * @return KConfigState
+     * @return AnConfigState
      */
     public function getState()
     {
@@ -73,7 +73,7 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     /**
 	 * Get the request information
 	 *
-	 * @return KConfig	A KConfig object with request information
+	 * @return AnConfig	A AnConfig object with request information
 	 */
 	public function getRequest()
 	{

@@ -96,9 +96,9 @@ abstract class ComConnectOauthServiceAbstract extends KObject
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -120,9 +120,9 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'readonly' => false,
@@ -130,7 +130,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
             'token' => null,
             'version' => '1.0',
             'scope' => array(),
-            'consumer' => new ComConnectOauthConsumer(new KConfig()),
+            'consumer' => new ComConnectOauthConsumer(new AnConfig()),
             'response_format' => 'json',
             'api_url' => '',
             'request_token_url' => '',
@@ -245,7 +245,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
     public function setConsumer($consumer)
     {
         //never let hte consumer to be null
-        $this->_consumer = pick($consumer, new ComConnectOauthConsumer(new KConfig()));
+        $this->_consumer = pick($consumer, new ComConnectOauthConsumer(new AnConfig()));
 
         return $this;
     }
@@ -270,7 +270,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      */
     public function setToken($key, $secret = null)
     {
-        $key = KConfig::unbox($key);
+        $key = AnConfig::unbox($key);
 
         if (is_array($key)) {
             extract($key, EXTR_OVERWRITE);
@@ -299,7 +299,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
             $data['oauth_token'] = $response->oauth_token;
         }
         
-        $data = KConfig::unbox($data);
+        $data = AnConfig::unbox($data);
         
         foreach ($data as $key => $value) {
             if (is_array($value)) {
@@ -324,7 +324,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
      */
     public function requestRequestToken($data = array())
     {
-        $config = new KConfig(array('data' => $data));
+        $config = new AnConfig(array('data' => $data));
         
         $config->append(array(
             'url' => $this->request_token_url,
@@ -347,7 +347,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
     /**
      * Get the access token using an authorized request token.
      *
-     * @param KConfig|array $data
+     * @param AnConfig|array $data
      *
      * @return string
      */
@@ -355,7 +355,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
     {
         $secret = isset($_SESSION['oauth_token_secret']) ? $_SESSION['oauth_token_secret'] : null;
 
-        $data = new KConfig($data);
+        $data = new AnConfig($data);
 
         $this->setToken($data->oauth_token, $secret);
 
@@ -384,7 +384,7 @@ abstract class ComConnectOauthServiceAbstract extends KObject
         $config['token'] = $this->getToken();
         $config['version'] = $this->getVersion();
 
-        return new ComConnectOauthRequest(new KConfig($config));
+        return new ComConnectOauthRequest(new AnConfig($config));
     }
 
     /**

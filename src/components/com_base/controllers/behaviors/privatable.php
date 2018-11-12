@@ -37,7 +37,7 @@ class ComBaseControllerBehaviorPrivatable extends AnControllerBehaviorAbstract
     {
         $data = $context->data;
 
-        $names = KConfig::unbox($data->privacy_name);
+        $names = AnConfig::unbox($data->privacy_name);
 
         settype($names, 'array');
 

@@ -9,7 +9,7 @@
  * @package     AnCommand
  * @link        https://www.GetAnahita.com
  */
-class AnCommandContext extends KConfig
+class AnCommandContext extends AnConfig
 {
     /**
      * Error

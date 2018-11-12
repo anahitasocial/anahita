@@ -29,7 +29,7 @@ interface KObjectServiceable
 	 * Get a service identifier.
 	 *
      * @param	string|object	$identifier The class identifier or identifier object
-	 * @return	KServiceIdentifier
+	 * @return	AnServiceIdentifier
 	 */
 	public function getIdentifier($identifier = null);
 }

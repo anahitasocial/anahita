@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnLoaderAdapterTemplate extends KLoaderAdapterAbstract
+class AnLoaderAdapterTemplate extends AnLoaderAdapterAbstract
 {
     /** 
      * The adapter type.

@@ -30,7 +30,7 @@
             <? endif;?>
         </legend>
 
-        <? if ($connect && KService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
+        <? if ($connect && AnService::get('koowa:loader')->loadIdentifier('com://site/connect.template.helper.service')): ?>
         <p class="lead"><?= @text('COM-PEOPLE-SOCIALMEDIA-LOGIN') ?></p>
         <p><?= $this->renderHelper('com:connect.template.helper.service.renderLogins') ?></p>
         <hr/>

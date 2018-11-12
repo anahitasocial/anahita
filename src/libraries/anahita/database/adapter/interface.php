@@ -14,7 +14,7 @@ interface AnDatabaseAdapterInterface
      *
      * @return AnDatabaseQuery
      */
-    public function getQuery(KConfig $config = null);
+    public function getQuery(AnConfig $config = null);
 
     /**
      * Connect to the db

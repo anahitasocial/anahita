@@ -26,17 +26,17 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComStoriesDomainAggregations extends KObjectArray implements KServiceInstantiatable
+class ComStoriesDomainAggregations extends KObjectArray implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $registry = $container->get('application.registry', array('key' => $config->service_identifier));
@@ -47,7 +47,7 @@ class ComStoriesDomainAggregations extends KObjectArray implements KServiceInsta
                 $dispatcher = $container->get('anahita:event.dispatcher');
                 $components->registerEventDispatcher($dispatcher);
 
-                $aggregations = new KConfig();
+                $aggregations = new AnConfig();
                 $event = new AnEvent(array('aggregations' => $aggregations));
 
                 $dispatcher->dispatchEvent('onStoryAggregation', $event);

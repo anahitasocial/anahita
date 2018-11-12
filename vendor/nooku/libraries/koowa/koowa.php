@@ -44,17 +44,18 @@ class Koowa
     final private function __construct($config = array())
     {
         //Initialize the path
-        $this->_path = dirname(__FILE__);
+        // $this->_path = dirname(__FILE__);
+        $this->_path = ANPATH_LIBRARIES.'/anahita';
 
         //Load the legacy functions
-        require_once $this->_path.'/legacy.php';
+        // require_once $this->_path.'/legacy.php';
 
         //Setup the loader
         require_once $this->_path.'/loader/loader.php';
-        $loader = KLoader::getInstance($config);
+        $loader = AnLoader::getInstance($config);
 
         //Setup the factory
-        $service = KService::getInstance($config);
+        $service = AnService::getInstance($config);
         $service->set('koowa:loader', $loader);
     }
 

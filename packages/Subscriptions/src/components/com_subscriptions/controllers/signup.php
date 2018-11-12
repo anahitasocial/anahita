@@ -11,9 +11,9 @@
      /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -41,9 +41,9 @@
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'behaviors' => to_hash(array(
@@ -287,9 +287,9 @@
     /**
      * Instantiate coupon.
      *
-     * @param KConfig $data The request data
+     * @param AnConfig $data The request data
      */
-    protected function _instantiateCoupon(KConfig $data)
+    protected function _instantiateCoupon(AnConfig $data)
     {
         $this->coupon_code = $data->coupon_code;
         $this->coupon = $this->getService('repos:subscriptions.coupon')
@@ -305,14 +305,14 @@
     /**
      * Instantiate a contact object.
      *
-     * @param KConfig $data The request data
+     * @param AnConfig $data The request data
      *
      * @return KObject
      */
     protected function _instantiateContact($data)
     {
         $data->append(array(
-            'contact' => new KConfig(),
+            'contact' => new AnConfig(),
         ));
 
         $contact = new KObject();
@@ -332,7 +332,7 @@
     /**
      * Instantiate a Merchant_Billing_CreditCard object.
      *
-     * @param KConfig $data
+     * @param AnConfig $data
      *
      * @return Merchant_Billing_CreditCard
      */
@@ -345,7 +345,7 @@
         }
 
         $data->append(array(
-            'creditcard' => new KConfig(),
+            'creditcard' => new AnConfig(),
         ));
 
         $creditcard = $data->creditcard;
@@ -373,7 +373,7 @@
     /**
      * Instantiate a ComPeopleDomainEntityPerson object
      *
-     * @param KConfig $data
+     * @param AnConfig $data
      *
      * @return ComPeopleDomainEntityPerson instance
      */
@@ -382,7 +382,7 @@
         if (get_viewer()->guest()) {
 
             $data->append(array(
-                'person' => new KConfig(),
+                'person' => new AnConfig(),
             ));
 
             $person_data = array(

@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInterface
+class LibBaseTemplateObject extends AnConfig implements LibBaseTemplateObjectInterface
 {
     /**
      * Instantiate a template object.
@@ -92,7 +92,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
     public function setAttribute($name, $value, $glue = false)
     {
         //get attributes
-        $attrbs = KConfig::unbox(pick($this->attribs, array()));
+        $attrbs = AnConfig::unbox(pick($this->attribs, array()));
 
         //get the existing value
         $old = isset($attrbs[$name]) ? $attrbs[$name] : null;
@@ -128,7 +128,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      */
     public function getAttributes()
     {
-        return KConfig::unbox(pick($this->attribs, array()));
+        return AnConfig::unbox(pick($this->attribs, array()));
     }
 
     /**
@@ -152,7 +152,7 @@ class LibBaseTemplateObject extends KConfig implements LibBaseTemplateObjectInte
      *
      * (non-PHPdoc)
      *
-     * @see KConfig::__toString()
+     * @see AnConfig::__toString()
      */
     public function __toString()
     {

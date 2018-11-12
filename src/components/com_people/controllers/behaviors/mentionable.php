@@ -21,9 +21,9 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -65,7 +65,7 @@ class ComPeopleControllerBehaviorMentionable extends AnControllerBehaviorAbstrac
 
         // @todo we should be accessing username, but for now we are using alias
         // until the design in the domain entities is improved
-        $entity_mentions = KConfig::unbox($entity->mentions->alias);
+        $entity_mentions = AnConfig::unbox($entity->mentions->alias);
 
         if (is_array($entity_mentions)) {
             $entity_mentions = array_map('strtolower', $entity_mentions);

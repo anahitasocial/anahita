@@ -44,9 +44,9 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration
+     * @param AnConfig $config Property Configuration
      */
-    public function setConfig(KConfig $config)
+    public function setConfig(AnConfig $config)
     {
         $identifier = $config->description->getRepository()->getIdentifier();
 
@@ -54,7 +54,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
 
         parent::setConfig($config);
 
-        $this->_target = KService::getIdentifier($config->target);
+        $this->_target = AnService::getIdentifier($config->target);
 
         if (!$this->_target->application) {
             $this->_target->application = $identifier->application;
@@ -73,9 +73,9 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $identifier = clone $this->_parent;
         $identifier->name = AnInflector::singularize($this->_name);
@@ -164,7 +164,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
     /**
      * Return the target identifier.
      *
-     * @return KServiceIdentifier
+     * @return AnServiceIdentifier
      */
     public function getTarget()
     {
@@ -211,7 +211,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
             'child' => $this->getChildRepository(),
         );
 
-        $set = KService::get('anahita:domain.entityset.decorator.manytomany', $options);
+        $set = AnService::get('anahita:domain.entityset.decorator.manytomany', $options);
 
         return $set;
     }

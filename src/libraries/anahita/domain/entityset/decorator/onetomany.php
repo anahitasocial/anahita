@@ -16,12 +16,12 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
@@ -49,9 +49,9 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_root = $config->root;
 
@@ -110,7 +110,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      */
     public function addNew($data = array(), $config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
         $config['data'] = $data;
         $entity = $this->getRepository()->getEntity($config);
         $this->insert($entity);

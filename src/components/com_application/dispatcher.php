@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KServiceInstantiatable
+class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnServiceInstantiatable
 {
     /**
      * Application.
@@ -23,9 +23,9 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -46,9 +46,9 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'application' => null,
@@ -61,12 +61,12 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
@@ -86,7 +86,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     public function updateLegacyPluginsParams()
     {
         //Renaming a legacy database table field otherwise cli would break
-        $db = KService::get('anahita:domain.store.database');
+        $db = AnService::get('anahita:domain.store.database');
         $pluginColumns = $db->getColumns('plugins');
 
         if (isset($pluginColumns['params'])) {
@@ -250,7 +250,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
                 if ($i == 0) {
                     if (strpos($arg, '/') !== false) {
                         $arg = substr_replace($arg, '?', strpos($arg, '&'), 1);
-                        $url = KService::get('anahita:http.url', array('url' => $arg));
+                        $url = AnService::get('anahita:http.url', array('url' => $arg));
                         AnRequest::url()->path = AnRequest::base().$url->path;
                         $_GET = $url->query;
                     } else {
@@ -267,12 +267,12 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
         AnRequest::url()->format = 'json';
         AnRequest::url()->setQuery($_GET);
 
-        KService::get('com:plugins.helper')->import('cli');
+        AnService::get('com:plugins.helper')->import('cli');
         dispatch_plugin('cli.onCli');
 
         //if there's a file then just load the file and exit
         if (! empty($file)) {
-            KService::get('koowa:loader')->loadFile($file);
+            AnService::get('koowa:loader')->loadFile($file);
             exit(0);
         }
     }
@@ -299,7 +299,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
             );
         }
 
-        $app = KService::get('repos:settings.app')->find(array('package' => $name));
+        $app = AnService::get('repos:settings.app')->find(array('package' => $name));
 
         if (isset($app) && $app->enabled != 1) {
             throw new LibBaseControllerExceptionForbidden(

@@ -57,9 +57,9 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -73,9 +73,9 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'priority' => AnCommand::PRIORITY_LOWEST,
@@ -184,7 +184,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     public function getValidator()
     {
         if (!$this->_validator instanceof AnDomainValidatorAbstract) {
-            if (!$this->_validator instanceof KServiceIdentifier) {
+            if (!$this->_validator instanceof AnServiceIdentifier) {
                 $this->setValidator($this->_validator);
             }
 
@@ -201,7 +201,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     /**
      * Method to set the validator.
      *
-     * @param mixed $validator Validator object. Can be an KServiceIdentifier or string     
+     * @param mixed $validator Validator object. Can be an AnServiceIdentifier or string     
      *
      * @return AnDomainBehaviorValidatable
      */

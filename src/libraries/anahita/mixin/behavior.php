@@ -32,9 +32,9 @@ class AnMixinBehavior extends AnMixinAbstract
     /**
      * Constructor
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -47,7 +47,7 @@ class AnMixinBehavior extends AnMixinAbstract
 
         //Add the behaviors
         if (! empty($config->behaviors)) {
-            $behaviors = (array) KConfig::unbox($config->behaviors);
+            $behaviors = (array) AnConfig::unbox($config->behaviors);
 
             foreach ($behaviors as $key => $value) {
                 if (is_numeric($key)) {
@@ -64,10 +64,10 @@ class AnMixinBehavior extends AnMixinAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * @return void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         parent::_initialize($config);
 
@@ -91,7 +91,7 @@ class AnMixinBehavior extends AnMixinAbstract
     /**
      * Add one or more behaviors to the controller
      *
-     * @param   mixed	An object that implements KObjectServiceable, KServiceIdentifier object
+     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @param	array An optional associative array of configuration settings
      * @return  KObject	The mixer object
@@ -119,7 +119,7 @@ class AnMixinBehavior extends AnMixinAbstract
     /**
      * Get a behavior by identifier
      *
-     * @param   mixed	An object that implements KObjectServiceable, KServiceIdentifier object
+     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @param	array An optional associative array of configuration settings
      * @return AnControllerBehaviorAbstract
@@ -127,7 +127,7 @@ class AnMixinBehavior extends AnMixinAbstract
     public function getBehavior($behavior, $config = array())
     {
         $identifier = $behavior;
-        if (! ($behavior instanceof KServiceIdentifier)) {
+        if (! ($behavior instanceof AnServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
            if (is_string($behavior) && strpos($behavior, '.') === false) {
                $identifier = clone $this->getIdentifier();

@@ -43,7 +43,7 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 */
 	public function open($save_path, $session_name)
 	{
-        $this->_repository = KService::get('repos:sessions.session');
+        $this->_repository = AnService::get('repos:sessions.session');
         return true;
 	}
 

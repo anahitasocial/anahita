@@ -33,10 +33,10 @@ class KObjectDecorator extends KObject
     /**
      * Constructor
      *
-     * @param KConfig|null $config  An optional KConfig object with configuration options
+     * @param AnConfig|null $config  An optional AnConfig object with configuration options
      * @return \KObjectDecorator
      */
-    public function __construct( KConfig $config = null)
+    public function __construct( AnConfig $config = null)
     {
         parent::__construct($config);
 

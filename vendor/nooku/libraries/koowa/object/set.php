@@ -29,13 +29,13 @@ class KObjectSet extends KObject implements Iterator, ArrayAccess, Countable, Se
     /**
      * Constructor
      *
-     * @param KConfig|null $config  An optional KConfig object with configuration options
+     * @param AnConfig|null $config  An optional AnConfig object with configuration options
      * @return \KObjectSet
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
-        if(!isset($config)) $config = new KConfig();
+        if(!isset($config)) $config = new AnConfig();
 
         parent::__construct($config);
 

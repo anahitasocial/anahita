@@ -26,9 +26,9 @@ class PlgContentfilterChain extends KObject
         static $_instance;
 
         if (!$_instance) {
-            $_instance = new self(new KConfig(array('service_container' => KService::getInstance())));
-            KService::set('plg:contentfilter.chain', $_instance);
-            KService::get('com:plugins.helper')->import('contentfilter');
+            $_instance = new self(new AnConfig(array('service_container' => AnService::getInstance())));
+            AnService::set('plg:contentfilter.chain', $_instance);
+            AnService::get('com:plugins.helper')->import('contentfilter');
         }
 
         return $_instance;
@@ -44,9 +44,9 @@ class PlgContentfilterChain extends KObject
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -67,7 +67,7 @@ class PlgContentfilterChain extends KObject
         $context->data = $text;
         $context->config = $config;
         if ($context->config->filter) {
-            $filter = (array) KConfig::unbox($context->config->filter);
+            $filter = (array) AnConfig::unbox($context->config->filter);
             $filter[] = 'ptag';
             $context->config->filter = $filter;
         }

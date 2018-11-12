@@ -23,7 +23,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
     /**
      * Mailer test options.
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_test_options;
 
@@ -37,9 +37,9 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -53,9 +53,9 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $base_url = AnRequest::base();
         $settings = $this->getService('com:settings.setting');
@@ -138,7 +138,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
      */
     public function renderMail($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'layout' => 'default',
@@ -214,7 +214,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
         foreach($mails as $mail) {
             $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
-            $subject = KService::get('koowa:filter.string')->sanitize($mail['subject']);
+            $subject = AnService::get('koowa:filter.string')->sanitize($mail['subject']);
 
             if (isset($mail['body'])) {
                 $body = $mail['body'];
@@ -230,7 +230,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
             if ($this->_test_options->enabled && $this->_test_options->log) {
 
-                $subject = KService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
+                $subject = AnService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
                 $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
 
                 if (!file_exists(dirname($file))) {

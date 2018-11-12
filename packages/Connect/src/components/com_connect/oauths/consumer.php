@@ -18,9 +18,9 @@ class ComConnectOauthConsumer extends OAuthConsumer
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config->key, $config->secret, $config->callback_url);
     }

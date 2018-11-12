@@ -22,11 +22,11 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     /**
     *   Class constructor
     *   @param $dispatcher optional dispatcher object
-    *   @param $config optional KConfig object
+    *   @param $config optional AnConfig object
     *
     *   @return void
     */
-    public function __construct($dispatcher = null,  KConfig $config)
+    public function __construct($dispatcher = null,  AnConfig $config)
     {
         parent::__construct($dispatcher, $config);
 
@@ -34,7 +34,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
         $this->_view = AnRequest::get('get.view', 'cmd', '');
         $this->_layout = AnRequest::get('get.layout', 'cmd', '');
         $this->_id = AnRequest::get('get.id', 'int', 0);
-        $this->_viewer = KService::get('com:people.viewer');
+        $this->_viewer = AnService::get('com:people.viewer');
     }
 
     /**
@@ -127,11 +127,11 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     private function _addScripts()
     {
         $api = 'https://www.google.com/recaptcha/api.js';
-        $base = KService::get('com:application')->getRouter()->getBaseUrl();
+        $base = AnService::get('com:application')->getRouter()->getBaseUrl();
         $recaptcha = $base.'/media/plg_recaptcha/js/';
         $recaptcha .= ANDEBUG ? 'recaptcha.js' : 'min/recaptcha.min.js';
 
-        $document = KService::get('anahita:document');
+        $document = AnService::get('anahita:document');
         $jsDeclaration = "
             var recaptcha = null;
             $(document).ready(function(){

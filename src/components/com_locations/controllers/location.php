@@ -16,9 +16,9 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -70,7 +70,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
     */
     public function fetchLocatable(AnCommandContext $context)
     {
-        $this->locatable = KService::get('repos:nodes.node')
+        $this->locatable = AnService::get('repos:nodes.node')
                            ->getQuery()
                            ->disableChain()
                            ->id($this->locatable_id)

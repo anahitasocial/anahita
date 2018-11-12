@@ -12,7 +12,7 @@ require_once ANPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class AnMail extends KObject implements KServiceInstantiatable
+class AnMail extends KObject implements AnServiceInstantiatable
 {
 
     const PRIORITY_HIGHEST = 1;
@@ -122,11 +122,11 @@ class AnMail extends KObject implements KServiceInstantiatable
     /**
 	 * Constructor.
 	 *
-	 * @param 	object 	An optional KConfig object with configuration options.
+	 * @param 	object 	An optional AnConfig object with configuration options.
 	 * Recognized key values include 'command_chain', 'charset', 'table_prefix',
 	 * (this list is not meant to be comprehensive).
 	 */
-	public function __construct(KConfig $config = null)
+	public function __construct(AnConfig $config = null)
 	{
         parent::__construct($config);
 
@@ -144,10 +144,10 @@ class AnMail extends KObject implements KServiceInstantiatable
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $settings = $this->getService('com:settings.setting');
 
@@ -167,12 +167,12 @@ class AnMail extends KObject implements KServiceInstantiatable
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $instance = new AnMail($config);
