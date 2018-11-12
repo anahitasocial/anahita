@@ -15,6 +15,6 @@
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @package     Anahita_Inflector
  */
-class AnInflectorException extends KException
+class AnInflectorException extends AnException
 {
 }

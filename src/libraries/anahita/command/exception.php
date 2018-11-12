@@ -9,6 +9,6 @@
  * @package     AnCommand
  * @link        https://www.GetAnahita.com
  */
-class AnCommandException extends KException
+class AnCommandException extends AnException
 {
 }

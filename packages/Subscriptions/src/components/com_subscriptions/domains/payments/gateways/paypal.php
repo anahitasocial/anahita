@@ -109,7 +109,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
         if ($response->success()) {
             return $gateway->url_for_token($response->TOKEN);
         } else {
-            throw new KException($response->message());
+            throw new AnException($response->message());
         }
     }
 

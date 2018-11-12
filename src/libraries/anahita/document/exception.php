@@ -1,3 +1,3 @@
 <?php
 
-class AnDocumentException extends KException {}
+class AnDocumentException extends AnException {}

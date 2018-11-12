@@ -18,7 +18,7 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
     /**
      * Page content to display.
      *
-     * @return KException|string
+     * @return AnException|string
      */
     public $content = "";
 

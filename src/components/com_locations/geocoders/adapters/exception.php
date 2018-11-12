@@ -11,4 +11,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComLocationsGeocoderAdapterException extends KException {}
+class ComLocationsGeocoderAdapterException extends AnException {}

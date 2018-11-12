@@ -15,6 +15,6 @@
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @package     Anahita_Date
  */
-class AnDateException extends KException
+class AnDateException extends AnException
 {
 }

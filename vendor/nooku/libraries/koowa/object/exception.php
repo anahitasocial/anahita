@@ -13,7 +13,7 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Object
  */
-class KObjectException extends KException
+class KObjectException extends AnException
 {
     /**
      * Constructor

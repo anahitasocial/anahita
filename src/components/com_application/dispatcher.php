@@ -371,8 +371,8 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements KSer
     {
         $exception = $context->data;
 
-        //if KException then conver it to KException
-        if ($exception instanceof KException) {
+        //if AnException then conver it to AnException
+        if ($exception instanceof AnException) {
             $exception = new RuntimeException($exception->getMessage(), $exception->getCode());
         }
 

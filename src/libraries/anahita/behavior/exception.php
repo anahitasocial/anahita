@@ -13,4 +13,4 @@
  * @author		Rastin Mehr <rastin@anahitapolis.com>
  * @package     Anahita_Behavior
  */
-class AnBehaviorException extends KException {}
+class AnBehaviorException extends AnException {}

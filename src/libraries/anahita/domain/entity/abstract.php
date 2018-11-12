@@ -688,7 +688,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
             } else {
                 //only set the property if it's not write proteced (write != private )
                 if ($property->getWriteAccess() < AnDomain::ACCESS_PROTECTED) {
-                    throw new KException(get_class($this).'::$'.$name.' is write protected');
+                    throw new AnException(get_class($this).'::$'.$name.' is write protected');
                 }
 
                 $this->set($name, $value);

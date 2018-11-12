@@ -13,4 +13,4 @@
  * @subpackage 	Toolbar
  * @uses        AnInflector
  */
-class AnControllerException extends KException {}
+class AnControllerException extends AnException {}

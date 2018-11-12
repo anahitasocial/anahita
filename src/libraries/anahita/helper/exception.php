@@ -1,5 +1,5 @@
 <?php
 
-class AnHelperException extends KException
+class AnHelperException extends AnException
 {
 }

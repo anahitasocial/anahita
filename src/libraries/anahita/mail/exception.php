@@ -1,3 +1,3 @@
 <?php
 
-class AnMailException extends KException {}
+class AnMailException extends AnException {}

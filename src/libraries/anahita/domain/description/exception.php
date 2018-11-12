@@ -26,6 +26,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainDescriptionException extends KException
+class AnDomainDescriptionException extends AnException
 {
 }

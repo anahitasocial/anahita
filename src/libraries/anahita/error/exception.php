@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnErrorException extends KException
+class AnErrorException extends AnException
 {
     /**
      * An array of Exceptions and Error object.

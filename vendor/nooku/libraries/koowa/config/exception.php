@@ -13,4 +13,4 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Config
  */
-class KConfigException extends KException {}
+class KConfigException extends AnException {}
