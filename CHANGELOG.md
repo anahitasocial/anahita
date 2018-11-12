@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.3.14 Birth Release
+=============================
+1. fixed: plyr styling 
+1. changed: KException to AnException 
+
 Anahita 4.3.13 Birth Release
 =============================
 1. fixed warnings in php 7.2.8
