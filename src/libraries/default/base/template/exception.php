@@ -10,6 +10,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateException extends KException
+class LibBaseTemplateException extends AnException
 {
 }

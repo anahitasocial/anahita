@@ -1,26 +1,14 @@
 <?php
 /**
- * @version		$Id: exception.php 4628 2012-05-06 19:56:43Z johanjanssens $
- * @package		Koowa_Exception
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
+ * @package     Anahita_Exception
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
-
-/**
- * Exception Class
- *
- * KException is the base class for all koowa related exceptions and
- * provides an additional method for printing up a detailed view of an
- * exception.
- *
- * KException has support for nested exceptions which is a feature that
- * was only added in PHP 5.3
- *
- * @author      Johan Janssens <johan@nooku.org>
- * @package     Koowa_Exception
- */
-class KException extends Exception implements KExceptionInterface
+ 
+class AnException extends Exception implements AnExceptionInterface
 {
     /**
      * Previous exception if nested exception
@@ -85,6 +73,6 @@ class KException extends Exception implements KExceptionInterface
      */
     public function __toString()
     {
-         return "Exception '".get_class($this) ."' with message '".$this->getMessage()."' in ".$this->getFile().":".$this->getLine();
+        return "Exception '".get_class($this) ."' with message '".$this->getMessage()."' in ".$this->getFile().":".$this->getLine();
     }
 }

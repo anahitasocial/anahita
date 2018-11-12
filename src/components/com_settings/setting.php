@@ -55,7 +55,7 @@
          $filepath = $this->path();
 
          if (!file_exists($filepath) || (filesize($filepath) < 10)) {
-             throw new KException('No configuration file found!', 500);
+             throw new AnException('No configuration file found!', 500);
          }
 
          require_once $filepath;

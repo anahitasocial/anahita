@@ -11,6 +11,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainExceptionValidation extends KException
+class AnDomainExceptionValidation extends AnException
 {
 }

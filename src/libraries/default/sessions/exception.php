@@ -1,3 +1,3 @@
 <?php
 
-class LibSessionsException extends KException {}
+class LibSessionsException extends AnException {}

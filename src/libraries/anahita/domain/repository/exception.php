@@ -26,6 +26,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainRepositoryException extends KException
+class AnDomainRepositoryException extends AnException
 {
 }

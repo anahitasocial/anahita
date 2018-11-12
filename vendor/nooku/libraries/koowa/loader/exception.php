@@ -13,4 +13,4 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Loader
  */
-class KLoaderException extends KException {}
+class KLoaderException extends AnException {}

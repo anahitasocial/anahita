@@ -11,6 +11,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainStoreException extends KException
+class AnDomainStoreException extends AnException
 {
 }

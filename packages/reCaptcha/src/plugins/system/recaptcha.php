@@ -45,7 +45,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
         if (AnRequest::method() === 'POST' && $this->_hasRecaptcha()) {
             $recaptchaResponse = AnRequest::get('post.g-recaptcha-response', 'string', null);
             if (! $this->_verifyResponse($recaptchaResponse)) {
-                throw new KException("Unauthorized Request", 403);
+                throw new AnException("Unauthorized Request", 403);
                 return;
             }
         }

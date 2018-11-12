@@ -83,7 +83,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     public function serialize($entity)
     {
         if (!is_null($entity) && is_scalar($entity)) {
-            throw new KException($this->getName().' be an instnaceof '.$this->getParent());
+            throw new AnException($this->getName().' be an instnaceof '.$this->getParent());
         }
 
         $data = array();
@@ -141,7 +141,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         $config = new KConfig($config);
 
         if (!isset($this->_parent)) {
-            throw new KException('Can not have an inverse relationship with a polymorphic parent');
+            throw new AnException('Can not have an inverse relationship with a polymorphic parent');
         }
 
         $config->append(array(

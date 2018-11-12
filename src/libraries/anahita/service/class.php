@@ -104,7 +104,7 @@ class AnServiceClass
     public static function registerDefault($config)
     {
         if (!isset($config['identifier'])) {
-            throw new KException('identifier [KServiceIdentifier] options is requied');
+            throw new AnException('identifier [KServiceIdentifier] options is requied');
         }
 
         $strIdentifier = (string) $config['identifier'];

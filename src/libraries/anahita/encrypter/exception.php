@@ -1,3 +1,3 @@
 <?php
 
-class AnEncrypterException extends KException{}
+class AnEncrypterException extends AnException{}

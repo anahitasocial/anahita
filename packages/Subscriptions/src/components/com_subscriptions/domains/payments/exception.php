@@ -12,4 +12,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSubscriptionsDomainPaymentException extends KException {}
+class ComSubscriptionsDomainPaymentException extends AnException {}

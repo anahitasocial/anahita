@@ -13,4 +13,4 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Filter
  */
-class KFilterException extends KException {}
+class KFilterException extends AnException {}

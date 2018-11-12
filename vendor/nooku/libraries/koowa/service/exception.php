@@ -13,4 +13,4 @@
  * @author      Johan Janssens <johan@nooku.org>
  * @package     Koowa_Service
  */
-class KServiceException extends KException {}
+class KServiceException extends AnException {}

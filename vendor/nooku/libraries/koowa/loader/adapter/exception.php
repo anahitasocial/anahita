@@ -15,4 +15,4 @@
  * @package     Koowa_Loader
  * @subpackage  Adapter
  */
-class KLoaderAdapterException extends KException {}
+class KLoaderAdapterException extends AnException {}

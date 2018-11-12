@@ -9,6 +9,6 @@
  * @link        https://www.GetAnahita.com
  * @package     AnEvent
  */
-class AnEventException extends KException
+class AnEventException extends AnException
 {
 }

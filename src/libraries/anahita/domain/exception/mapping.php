@@ -11,6 +11,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainExceptionMapping extends KException
+class AnDomainExceptionMapping extends AnException
 {
 }

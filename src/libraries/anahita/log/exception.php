@@ -1,3 +1,3 @@
 <?php
 
-class AnLogException extends KException {}
+class AnLogException extends AnException {}

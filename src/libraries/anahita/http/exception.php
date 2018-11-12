@@ -10,6 +10,6 @@
  * @category    Anahita
  * @package     AnHttp
  */
-class AnHttpException extends KException
+class AnHttpException extends AnException
 {
 }

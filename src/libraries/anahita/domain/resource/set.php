@@ -165,7 +165,7 @@ class AnDomainResourceSet extends KObject implements IteratorAggregate, Countabl
             }
         }
 
-        //throw new KException('Column '.$name.' doesn\'t exists');
+        //throw new AnException('Column '.$name.' doesn\'t exists');
     }
 
     /**

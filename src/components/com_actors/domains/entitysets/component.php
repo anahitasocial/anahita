@@ -28,7 +28,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     public function __construct(KConfig $config)
     {
         if (!$config->actor) {
-            throw new KException('Actor object is missing');
+            throw new AnException('Actor object is missing');
         }
 
         $this->_actor = $config->actor;
