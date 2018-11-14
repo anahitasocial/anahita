@@ -27,7 +27,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnFilterSlug extends KFilterAbstract
+class AnFilterSlug extends AnFilterAbstract
 {
     /**
      * The slut length.
