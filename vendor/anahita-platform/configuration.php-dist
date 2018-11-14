@@ -1,6 +1,6 @@
 <?php
 
-class AnConfig{
+class AnSiteConfig{
 
 	/* Site Settings */
 	var $sitename = 'Anahita Website';
