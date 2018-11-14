@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 <?
 $query = 'avatars=1';
 if (is($entity, 'ComBaseDomainEntityComment')) {

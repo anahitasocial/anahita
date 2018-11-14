@@ -54,7 +54,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 
         foreach ($emails as $email) {
 
-            if ($this->getService('koowa:filter.email')->validate($email)) {
+            if ($this->getService('anahita:filter.email')->validate($email)) {
 
                 $person = $this->getService('repos:people.person')->find(array('email' => $email));
 

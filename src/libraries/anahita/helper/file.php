@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnHelperFile extends KObject
+class AnHelperFile extends AnObject
 {
     /**
      * Return the travel path between two file paths (relative path).

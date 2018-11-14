@@ -11,7 +11,7 @@
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
- * @uses        KObject
+ * @uses        AnObject
  * @uses        AnCommandChain
  * @uses        AnCommandInterface
  * @uses        AnCommandEvent
@@ -114,7 +114,7 @@ class AnMixinCommand extends AnMixinAbstract
      * Set the chain of command object
      *
      * @param   object 	A command chain object
-     * @return  KObject The mixer object
+     * @return  AnObject The mixer object
      */
     public function setCommandChain(AnCommandChain $chain)
     {

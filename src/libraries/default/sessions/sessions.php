@@ -1,6 +1,6 @@
 <?php
 
-class LibSessions extends KObject implements AnServiceInstantiatable
+class LibSessions extends AnObject implements AnServiceInstantiatable
 {
 
 	/**

@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComComponentsDomainEntitysetScope extends KObjectArray implements AnServiceInstantiatable
+class ComComponentsDomainEntitysetScope extends AnObjectArray implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.

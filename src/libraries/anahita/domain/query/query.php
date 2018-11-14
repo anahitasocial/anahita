@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainQuery extends KObject implements AnCommandInterface
+class AnDomainQuery extends AnObject implements AnCommandInterface
 {
     /**
      * Query Operation.
@@ -244,7 +244,7 @@ class AnDomainQuery extends KObject implements AnCommandInterface
             $constraint = strtoupper($constraint);
             $condition = strtoupper($condition);
 
-            $list = $value instanceof KObjectSet || is_array($value);
+            $list = $value instanceof AnObjectSet || is_array($value);
 
             //fix the contstraint
             if ($list || $value instanceof self) {

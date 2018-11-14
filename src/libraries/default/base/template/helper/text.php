@@ -255,7 +255,7 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
     public function script($text)
     {
         return htmlspecialchars(
-               $this->getService('koowa:filter.string')
+               $this->getService('anahita:filter.string')
                ->sanitize(AnHelperString::str_ireplace(array("\r\n", "\n"), '', $text)), ENT_QUOTES);
     }
 }

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class PlgStorageDefault extends KObject implements AnServiceInstantiatable
+class PlgStorageDefault extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.

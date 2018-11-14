@@ -11,7 +11,7 @@
  * @link        http://www.GetAnahita.com
  */
 
- class ComSettingsSetting extends KObject implements AnServiceInstantiatable
+ class ComSettingsSetting extends AnObject implements AnServiceInstantiatable
  {
      /**
      *  path to the settings file
@@ -64,7 +64,7 @@
          if (class_exists('JConfig')) {
              $this->_settings = new JConfig();
          } else {
-             $this->_settings = new AnConfig();
+             $this->_settings = new AnSiteConfig();
          }
 
          $this->_default_template = 'shiraz';

@@ -31,7 +31,7 @@
   *
   * @link       http://www.GetAnahita.com
   */
- class LibBaseControllerResponse extends KObject
+ class LibBaseControllerResponse extends AnObject
  {
      /**
       * Response status code.

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsDomainEntityTemplate extends KObject
+class ComSettingsDomainEntityTemplate extends AnObject
 {
     /**
     * @param entity atributes

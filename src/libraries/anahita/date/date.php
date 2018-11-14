@@ -45,9 +45,9 @@ define('SECONDS_IN_DAY', 86400);
  * @author      Johan Janssens <johan@nooku.org>
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @package     Anahita_Date
- * @uses        KObject
+ * @uses        AnObject
  */
-class AnDate extends KObject
+class AnDate extends AnObject
 {
     /**
      * The year

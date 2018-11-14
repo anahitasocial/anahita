@@ -7,7 +7,7 @@
  * @link        http://www.nooku.org
  * @link        https://www.GetAnahita.com
  */
-class AnDatabaseSchemaTable extends KObject
+class AnDatabaseSchemaTable extends AnObject
 {
     /**
      * Table name

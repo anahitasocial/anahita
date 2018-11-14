@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $commands = @commands('list') ?>
 <? $highlight = ($item->isEnableable() && !$item->enabled) ? 'an-highlight' : '' ?>

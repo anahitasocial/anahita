@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<?php defined('ANAHITA') or die('Restricted access') ?>
 
 <div class="an-entity an-comment cid-<?= $comment->id ?>">
 	<div class="clearfix">

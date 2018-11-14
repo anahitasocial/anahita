@@ -2,10 +2,6 @@
 
 define('ANAHITA', 1);
 
-/**
- * Include Koowa.
- */
-require_once ANPATH_LIBRARIES.'/koowa/koowa.php';
 require_once ANPATH_LIBRARIES.'/anahita/functions.php';
 require_once ANPATH_LIBRARIES.'/anahita/translator.php';
 
@@ -27,7 +23,7 @@ class anahita
      *
      * @var string
      */
-    protected static $_version = '4.3.14';
+    protected static $_version = '4.4.0';
 
     /**
      * Path to Anahita libraries.
@@ -48,7 +44,7 @@ class anahita
      *
      * @param  array  An optional array with configuration options.
      *
-     * @return Koowa
+     * @return Anahita
      */
     final public static function getInstance($config = array())
     {
@@ -72,14 +68,13 @@ class anahita
     {
         //store the path
         $this->_path = dirname(__FILE__);
-        $cache_prefix = isset($config['cache_prefix']) ? $config['cache_prefix'] : '';
-        $cache_enabled = isset($config['cache_enabled']) ? $config['cache_enabled'] : 0;
-
-        //instantiate koowa
-        Koowa::getInstance(array(
-            'cache_prefix' => $cache_prefix,
-            'cache_enabled' => (bool) $cache_enabled,
-        ));
+        require_once $this->_path.'/legacy.php';
+        
+        require_once $this->_path.'/loader/loader.php';
+        $loader = AnLoader::getInstance($config);
+        
+        $service = AnService::getInstance($config);
+        $service->set('anahita:loader', $loader);
 
         require_once dirname(__FILE__).'/loader/adapter/anahita.php';
 

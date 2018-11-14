@@ -10,6 +10,6 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPhotosFilterPost extends KFilterString
+class ComPhotosFilterPost extends AnFilterString
 {
 }

@@ -13,7 +13,7 @@
  * @link       https://www.GetAnahita.com
  */
 
-class ComApplication extends KObject implements AnServiceInstantiatable
+class ComApplication extends AnObject implements AnServiceInstantiatable
 {
 
     /**

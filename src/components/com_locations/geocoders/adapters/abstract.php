@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class ComLocationsGeocoderAdapterAbstract extends KObject implements ComLocationsGeocoderAdapterInterface
+abstract class ComLocationsGeocoderAdapterAbstract extends AnObject implements ComLocationsGeocoderAdapterInterface
 {
     /**
     * service name

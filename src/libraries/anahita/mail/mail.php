@@ -12,7 +12,7 @@ require_once ANPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class AnMail extends KObject implements AnServiceInstantiatable
+class AnMail extends AnObject implements AnServiceInstantiatable
 {
 
     const PRIORITY_HIGHEST = 1;

@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComStoriesDomainAggregations extends KObjectArray implements AnServiceInstantiatable
+class ComStoriesDomainAggregations extends AnObjectArray implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.

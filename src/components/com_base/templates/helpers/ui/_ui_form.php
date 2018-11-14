@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? foreach ($inputs as $label => $input) : ?>
 <div class="control-group">

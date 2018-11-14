@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSubscriptionsDomainPaymentPayload extends KObject
+class ComSubscriptionsDomainPaymentPayload extends AnObject
 {
     /**
      * Description.

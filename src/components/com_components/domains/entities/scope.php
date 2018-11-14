@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComComponentsDomainEntityScope extends KObject
+class ComComponentsDomainEntityScope extends AnObject
 {
     /**
      * The entity type

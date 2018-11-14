@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class PlgStorageAbstract extends KObject
+abstract class PlgStorageAbstract extends AnObject
 {
     /**
      * Storage Parameter Configuration.

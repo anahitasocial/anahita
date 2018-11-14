@@ -15,7 +15,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseViewAbstract extends KObject
+abstract class LibBaseViewAbstract extends AnObject
 {
     /**
      * The view state.
@@ -173,9 +173,9 @@ abstract class LibBaseViewAbstract extends KObject
      * @param   string|array|object The name of the property, an associative array or an object
      * @param   mixed               The value of the property
      *
-     * @throws KObjectException
+     * @throws AnObjectException
      *
-     * @return KObject
+     * @return AnObject
      */
     public function set($property, $value = null)
     {

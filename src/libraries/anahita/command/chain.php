@@ -13,7 +13,7 @@
 * @package     AnCommand
 * @link        https://www.GetAnahita.com
 */
-class AnCommandChain extends KObjectQueue
+class AnCommandChain extends AnObjectQueue
 {
     /**
      * Enabled status of the chain
@@ -40,7 +40,7 @@ class AnCommandChain extends KObjectQueue
     /**
      * The chain stack
      *
-     * @var     KObjectStack
+     * @var     AnObjectStack
      */
     protected $_stack;
 
@@ -76,7 +76,7 @@ class AnCommandChain extends KObjectQueue
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'stack' => $this->getService('koowa:object.stack'),
+            'stack' => $this->getService('anahita:object.stack'),
             'context' => new AnCommandContext(),
             'enabled' => true,
             'break_condition' => false,
@@ -97,7 +97,7 @@ class AnCommandChain extends KObjectQueue
      * @return AnCommandChain
      * @throws InvalidArgumentException if the object doesn't implement AnCommandInterface
      */
-    public function enqueue(KObjectHandlable $command, $priority = null)
+    public function enqueue(AnObjectHandlable $command, $priority = null)
     {
         if (! $command instanceof AnCommandInterface) {
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
@@ -114,7 +114,7 @@ class AnCommandChain extends KObjectQueue
      * @return boolean	TRUE on success FALSE on failure
      * @throws InvalidArgumentException if the object implement AnCommandInterface
      */
-    public function dequeue(KObjectHandlable $command)
+    public function dequeue(AnObjectHandlable $command)
     {
         if (! $command instanceof AnCommandInterface) {
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
@@ -130,7 +130,7 @@ class AnCommandChain extends KObjectQueue
      * @return bool
      * @throws InvalidArgumentException if the object implement AnCommandInterface
      */
-    public function contains(KObjectHandlable $command)
+    public function contains(AnObjectHandlable $command)
     {
         if (! $command instanceof AnCommandInterface) {
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
@@ -196,7 +196,7 @@ class AnCommandChain extends KObjectQueue
      * @return \AnCommandChain
      * @throws InvalidArgumentException if the object doesn't implement AnCommandInterface
      */
-    public function setPriority(KObjectHandlable $command, $priority)
+    public function setPriority(AnObjectHandlable $command, $priority)
     {
         if (! $command instanceof AnCommandInterface) {
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
@@ -212,7 +212,7 @@ class AnCommandChain extends KObjectQueue
      * @return integer The command priority
      * @throws InvalidArgumentException if the object doesn't implement AnCommandInterface
      */
-    public function getPriority(KObjectHandlable $command)
+    public function getPriority(AnObjectHandlable $command)
     {
         if (! $command instanceof AnCommandInterface) {
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
@@ -234,7 +234,7 @@ class AnCommandChain extends KObjectQueue
     /**
      * Get the chain object stack
      *
-     * @return  KObjectStack
+     * @return  AnObjectStack
      */
     public function getStack()
     {

@@ -115,9 +115,9 @@ class LibBaseTemplateFilterForm extends LibBaseTemplateFilterAbstract implements
             $text = str_replace($match[0], $match[0].$input, $text, $count);
         }
        
-        // GET : Add token to .-koowa-grid forms
+        // GET : Add token to .-anahita-grid forms
         $matches = array();
-        preg_match_all('#(<\s*?form\s+?.*?class=(?:\'|")[^\'"]*?-koowa-grid.*?(?:\'|").*?)#im', $text, $matches, PREG_SET_ORDER);
+        preg_match_all('#(<\s*?form\s+?.*?class=(?:\'|")[^\'"]*?-anahita-grid.*?(?:\'|").*?)#im', $text, $matches, PREG_SET_ORDER);
         
         foreach ($matches as $match) {
             $input = ' data-token-name="'.$this->_tokenName().'" data-token-value="'.$this->_tokenValue().'"';

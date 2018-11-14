@@ -11,12 +11,12 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainSpace extends KObject
+class AnDomainSpace extends AnObject
 {
     /**
      * Entity set.
      *
-     * @var KObjectQueue
+     * @var AnObjectQueue
      */
     protected $_entities;
 
@@ -297,7 +297,7 @@ class AnDomainSpace extends KObject
      * @param AnDomainRepositoryAbstract $repository If the repository is set then return the entities
      *                                               for the $repository
      *
-     * @return KObjectQeueue
+     * @return AnObjectQeueue
      */
     public function getEntities($repository = null)
     {

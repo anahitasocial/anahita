@@ -75,7 +75,7 @@ class ComActorsControllerToolbarActorbar extends ComBaseControllerToolbarActorba
             $types[] = 'Blockeds';
         }
 
-        $filter = $this->getService('koowa:filter.cmd');
+        $filter = $this->getService('anahita:filter.cmd');
 
         foreach ($types as $type) {
             $label = array(strtoupper('COM-'.$this->getIdentifier()->package.'-NAV-LINK-SOCIALGRAPH-'.$type));

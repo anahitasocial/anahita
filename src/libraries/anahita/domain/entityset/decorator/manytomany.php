@@ -160,7 +160,7 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
     /**
      * Removes an object relation from the aggregation.
      * 
-     * @see KObjectSet::extract()
+     * @see AnObjectSet::extract()
      */
     public function extract($target)
     {

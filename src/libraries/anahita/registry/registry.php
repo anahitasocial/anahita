@@ -40,7 +40,7 @@ class AnRegistry extends ArrayObject
      *
      * @var bool
      */
-    protected $_cache_prefix = 'koowa-cache-loader';
+    protected $_cache_prefix = 'anahita-cache-loader';
 
     /**
      * Enable class caching.
@@ -108,7 +108,7 @@ class AnRegistry extends ArrayObject
      * @param   int     The offset of the item
      * @param   mixed   The item's value
      *
-     * @return object KObjectArray
+     * @return object AnObjectArray
      */
     public function offsetSet($offset, $value)
     {

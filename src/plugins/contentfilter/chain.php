@@ -13,7 +13,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class PlgContentfilterChain extends KObject
+class PlgContentfilterChain extends AnObject
 {
     /**
      * Return the singleton instnace of PlgContentfilterChain. This method also imports all the

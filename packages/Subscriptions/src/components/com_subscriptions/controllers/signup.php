@@ -307,7 +307,7 @@
      *
      * @param AnConfig $data The request data
      *
-     * @return KObject
+     * @return AnObject
      */
     protected function _instantiateContact($data)
     {
@@ -315,7 +315,7 @@
             'contact' => new AnConfig(),
         ));
 
-        $contact = new KObject();
+        $contact = new AnObject();
         $contact->set(array(
             'address' => $data->contact->address,
             'city' => $data->contact->city,

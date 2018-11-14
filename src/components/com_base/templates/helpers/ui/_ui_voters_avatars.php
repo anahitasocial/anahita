@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 <? if ($entity->voteUpCount > 0) : ?>
 
 <div class="modal-header">

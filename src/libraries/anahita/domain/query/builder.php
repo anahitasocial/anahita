@@ -28,7 +28,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainQueryBuilder extends KObject
+class AnDomainQueryBuilder extends AnObject
 {
     /**
      * Singleton Instance.
@@ -421,7 +421,7 @@ class AnDomainQueryBuilder extends KObject
             $constraint = $where['constraint'];
 
             if (is_object($value) || is_array($columns)) {
-                if ($value instanceof KObjectSet || is_array($value)) {
+                if ($value instanceof AnObjectSet || is_array($value)) {
                     $values = $value;
                     $keys = array();
                     $clauses = array();

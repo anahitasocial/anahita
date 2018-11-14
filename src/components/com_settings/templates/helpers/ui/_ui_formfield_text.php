@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <div class="control-group">
   <label class="control-label" for="<?= $id ?>">

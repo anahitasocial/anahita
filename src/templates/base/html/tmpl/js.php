@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? $document = AnService::get('anahita:document'); ?>
 <? $path = AnService::get('com:application')->getRouter()->getBaseUrl().'/media/lib_anahita/js/production/'; ?>

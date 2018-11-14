@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseControllerValidatorAbstract extends KObject
+abstract class LibBaseControllerValidatorAbstract extends AnObject
 {
     /**
      * Validation error message.

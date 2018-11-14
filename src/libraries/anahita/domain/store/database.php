@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
+class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
 {
     /**
      * Resource columns.

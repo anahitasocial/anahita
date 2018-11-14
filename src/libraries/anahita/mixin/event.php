@@ -102,7 +102,7 @@ class AnMixinEvent extends AnMixinAbstract
      * Set the chain of command object
      *
      * @param   object 		An event dispatcher object
-     * @return  KObject     The mixer object
+     * @return  AnObject     The mixer object
      */
     public function setEventDispatcher(AnEventDispatcher $dispatcher)
     {
@@ -114,13 +114,13 @@ class AnMixinEvent extends AnMixinAbstract
      * Add an event listener
      *
      * @param  string  The event name
-     * @param  object  An object implementing the KObjectHandlable interface
+     * @param  object  An object implementing the AnObjectHandlable interface
      * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest),
      *                 default is 3. If no priority is set, the command priority will be used
      *                 instead.
-     * @return  KObject The mixer objects
+     * @return  AnObject The mixer objects
      */
-    public function addEventListener($event, KObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
+    public function addEventListener($event, AnObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
     {
         $this->_event_dispatcher->addEventListener($event, $listener, $priority);
         return $this->getMixer();
@@ -130,10 +130,10 @@ class AnMixinEvent extends AnMixinAbstract
      * Remove an event listener
      *
      * @param   string  The event name
-     * @param   object  An object implementing the KObjectHandlable interface
-     * @return  KObject  The mixer object
+     * @param   object  An object implementing the AnObjectHandlable interface
+     * @return  AnObject  The mixer object
      */
-    public function removeEventListener($event, KObjectHandlable $listener)
+    public function removeEventListener($event, AnObjectHandlable $listener)
     {
         $this->_event_dispatcher->removeEventListener($event, $listener, $priority);
         return $this->getMixer();
@@ -142,12 +142,12 @@ class AnMixinEvent extends AnMixinAbstract
     /**
      * Add an event subscriber
      *
-     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param   mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest),
      *                 default is 3. If no priority is set, the command priority will be used
      *                 instead.
-     * @return  KObject	The mixer object
+     * @return  AnObject	The mixer object
      */
     public function addEventSubscriber($subscriber, $config = array(), $priority = null)
     {
@@ -165,8 +165,8 @@ class AnMixinEvent extends AnMixinAbstract
      * Remove an event listener
      *
      * @param   string  The event name
-     * @param   object  An object implementing the KObjectHandlable interface
-     * @return  KObject  The mixer object
+     * @param   object  An object implementing the AnObjectHandlable interface
+     * @return  AnObject  The mixer object
      */
     public function removeEventDispatcher($subscriber)
     {

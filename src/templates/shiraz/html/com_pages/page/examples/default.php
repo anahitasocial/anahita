@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? @title('Page Examples')?>
 <? @description('The following are some examples of html pages that you can create for the com_pages.')?>

@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleFilterReturn extends KFilterInternalurl
+class ComPeopleFilterReturn extends AnFilterInternalurl
 {
     /**
      * Sanitize a value.

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? @title('Anahita - Open source social networking platform and framework'); ?>
 <? @description('a remarkable open source platform for building knowledge sharing apps and services'); ?>

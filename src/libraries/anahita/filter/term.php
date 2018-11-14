@@ -22,7 +22,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnFilterTerm extends KFilterAbstract
+class AnFilterTerm extends AnFilterAbstract
 {
     /**
      * Validate a value.

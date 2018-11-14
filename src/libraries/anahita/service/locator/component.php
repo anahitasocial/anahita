@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnServiceLocatorComponent extends AnServiceLocatorComponent
+class AnServiceLocatorComponent extends AnServiceLocatorAbstract
 {
     /** 
      * The type.
@@ -38,7 +38,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorComponent
     /**
      * Get the classname based on an identifier.
      *
-     * @param 	mixed  		 An identifier object - koowa:[path].name
+     * @param 	mixed  		 An identifier object - anahita:[path].name
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
@@ -46,7 +46,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorComponent
     {
         $path = AnInflector::camelize(implode('_', $identifier->path));
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
-        $loader = $this->getService('koowa:loader');
+        $loader = $this->getService('anahita:loader');
           //Manually load the class to set the basepath
         if (!$loader->loadClass($classname, $identifier->basepath)) {
             //the default can be in either in the default folder
@@ -73,7 +73,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorComponent
      */
     protected function _findClass($identifier)
     {
-        $loader = $this->getService('koowa:loader');
+        $loader = $this->getService('anahita:loader');
         $classname = null;
         //Create the fallback path and make an exception for views
         $classpath = $identifier->path;
@@ -93,7 +93,6 @@ class AnServiceLocatorComponent extends AnServiceLocatorComponent
         $namespaces[] = 'LibBase';
         $namespaces[] = 'ComDefault';
         $namespaces[] = 'An';
-        $namespaces[] = 'K';
         $namespaces = array_unique($namespaces);
         $classes = array();
         foreach ($namespaces as $namespace) {
@@ -115,4 +114,38 @@ class AnServiceLocatorComponent extends AnServiceLocatorComponent
 
         return $classname;
     }
+    
+    /**
+	 * Get the path based on an identifier
+	 *
+	 * @param  object  	An identifier object - com:[//application/]component.view.[.path].name
+	 * @return string	Returns the path
+	 */
+	public function findPath(AnServiceIdentifier $identifier)
+	{
+        $path  = '';
+	    $parts = $identifier->path;
+				
+		$component = 'com_'.strtolower($identifier->package);
+			
+		if(!empty($identifier->name))
+		{
+			if(count($parts)) 
+			{
+				if($parts[0] != 'view') 
+			    {
+			        foreach($parts as $key => $value) {
+					    $parts[$key] = AnInflector::pluralize($value);
+				    }
+			    } 
+			    else $parts[0] = AnInflector::pluralize($parts[0]);
+			    
+				$path = implode('/', $parts).'/'.strtolower($identifier->name);
+			} 
+			else $path  = strtolower($identifier->name);	
+		}
+				
+		$path = $identifier->basepath.'/components/'.$component.'/'.$path.'.php';	
+		return $path;
+	}
 }

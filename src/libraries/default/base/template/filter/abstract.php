@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseTemplateFilterAbstract extends KObject implements LibBaseTemplateFilterInterface
+abstract class LibBaseTemplateFilterAbstract extends AnObject implements LibBaseTemplateFilterInterface
 {
     /**
      * The behavior priority

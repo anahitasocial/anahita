@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnError extends KObject implements KObjectHandlable
+class AnError extends AnObject implements AnObjectHandlable
 {
     /**
      * Generic error codes.

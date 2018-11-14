@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseHelperUrl extends KObject implements AnServiceInstantiatable
+class LibBaseHelperUrl extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.

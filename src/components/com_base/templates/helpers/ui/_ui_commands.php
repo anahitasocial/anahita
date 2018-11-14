@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? if (!empty($commands)) : ?>
 <ul class="an-actions">

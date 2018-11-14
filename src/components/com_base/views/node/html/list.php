@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if ($item->inherits('ComBaseDomainEntityComment')): ?>
 <?= @template('list_comment') ?>

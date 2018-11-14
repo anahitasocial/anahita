@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Koowa Event Exception class
+ * Anahita Event Exception class
  *
  * @author      Johan Janssens <johan@nooku.org>
  * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.

@@ -32,7 +32,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnFilePathfinder extends KObject
+class AnFilePathfinder extends AnObject
 {
     /**
      * Base media paths to search.

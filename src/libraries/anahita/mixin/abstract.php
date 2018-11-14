@@ -3,16 +3,16 @@
 /**
  * Abstract mixing class
  *
- * This class does not extend from KObject and acts as a special core
+ * This class does not extend from AnObject and acts as a special core
  * class that is intended to offer semi-multiple inheritance features
- * to KObject derived classes.
+ * to AnObject derived classes.
  *
  * @author      Johan Janssens <johan@nooku.org>
  * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
- * @uses        KObject
+ * @uses        AnObject
  */
 abstract class AnMixinAbstract implements AnMixinInterface
 {
@@ -133,7 +133,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      * @param object The mixer requesting the mixable methods.
      * @return array An array of public methods
      */
-    public function getMixableMethods(KObject $mixer = null)
+    public function getMixableMethods(AnObject $mixer = null)
     {
         if (! $this->__mixable_methods) {
             $methods = array();

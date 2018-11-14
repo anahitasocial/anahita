@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainResourceSet extends KObject implements IteratorAggregate, Countable
+class AnDomainResourceSet extends AnObject implements IteratorAggregate, Countable
 {
     /**
      * Resources.

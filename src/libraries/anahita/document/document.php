@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class AnDocument extends KObject implements AnServiceInstantiatable
+class AnDocument extends AnObject implements AnServiceInstantiatable
 {
     /**
 	 * Document title

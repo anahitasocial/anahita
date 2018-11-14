@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class ComBaseRouterAbstract extends KObject implements AnServiceInstantiatable
+abstract class ComBaseRouterAbstract extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Route patterns.

@@ -5,8 +5,8 @@ namespace Console;
 require_once 'Console/class.php';
 require_once 'Console/Config.php';
 
-require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/interface.php';
-require_once __DIR__.'/../vendor/nooku/libraries/koowa/config/config.php';
+require_once __DIR__.'/../src/libraries/anahita/config/interface.php';
+require_once __DIR__.'/../src/libraries/anahita/config/config.php';
 require_once __DIR__.'/../src/libraries/anahita/functions.php';
 
 use \Symfony\Component\Console\Command\Command;

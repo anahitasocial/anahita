@@ -8,7 +8,7 @@
  * @link        https://www.GetAnahita.com
  */
 
-class AnDatabase extends KObject implements AnServiceInstantiatable
+class AnDatabase extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Database operations

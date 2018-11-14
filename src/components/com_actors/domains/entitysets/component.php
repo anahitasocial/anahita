@@ -83,7 +83,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::insert()
+     * @see AnObjectSet::insert()
      */
     public function insert($component)
     {
@@ -103,7 +103,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectDecorator::__call()
+     * @see AnObjectDecorator::__call()
      */
     public function __call($method, $arguments)
     {
@@ -113,7 +113,7 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::extract()
+     * @see AnObjectSet::extract()
      */
     public function extract($component)
     {

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $trendingHashtags = $gadgets->extract('hashtags-trending'); ?>
 <? $trendingLocations = $gadgets->extract('locations-trending'); ?>

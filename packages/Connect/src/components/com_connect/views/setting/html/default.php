@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <h3><?= @text('COM-CONNECT-PROFILE-SETTING-TITLE') ?></h3>
 

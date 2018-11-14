@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <form id="set-form" method="post" action="<?= @route('option=com_photos&view=set&oid='.$actor->id.'&layout=selector_list&reset=1') ?>">
 	<input type="hidden" name="action" value="addphoto" />

@@ -45,7 +45,7 @@ interface AnServiceInterface
      *
      * @param  string|object	An identifier string or KIdentfier object
      * @param  string|array 	A mixin identifier or a array of mixin identifiers
-     * @see KObject::mixin
+     * @see AnObject::mixin
      */
     public static function addMixin($identifier, $mixins);
 
@@ -61,10 +61,10 @@ interface AnServiceInterface
      * Returns an identifier object.
 	 *
 	 * Accepts various types of parameters and returns a valid identifier. Parameters can either be an
-	 * object that implements KObjectServiceable, or a AnServiceIdentifier object, or valid identifier
+	 * object that implements AnObjectServiceable, or a AnServiceIdentifier object, or valid identifier
 	 * string. Function will also check for identifier mappings and return the mapped identifier.
 	 *
-	 * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
 	 * @return AnServiceIdentifier
 	 */
@@ -73,7 +73,7 @@ interface AnServiceInterface
 	/**
 	 * Set the configuration options for an identifier
 	 *
-	 * @param mixed	  An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 				  or valid identifier string
 	 * @param array	  An associative array of configuration options
 	 */
@@ -82,7 +82,7 @@ interface AnServiceInterface
 	/**
 	 * Get the configuration options for an identifier
 	 *
-	 * @param mixed	  An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 				  or valid identifier string
 	 *  @param array  An associative array of configuration options
 	 */

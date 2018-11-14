@@ -99,7 +99,7 @@ abstract class LibBaseDispatcherAbstract extends LibBaseControllerAbstract
     /**
      * Method to set a controller object attached to the dispatcher.
      *
-     * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      *
      * @throws KDispatcherException If the identifier is not a controller identifier

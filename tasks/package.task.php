@@ -30,7 +30,7 @@ class PackageCommand extends Command
         }
 
         $this->getApplication()->loadFramework();
-        \AnService::get('koowa:loader')->loadIdentifier('com://site/migrator.helper');
+        \AnService::get('anahita:loader')->loadIdentifier('com://site/migrator.helper');
 
         foreach ($packages as $package) {
 
@@ -99,7 +99,7 @@ class PackageCommand extends Command
 
     protected function _installComponent($manifest, $output, $path, $schema)
     {
-        $name = \AnService::get('koowa:filter.cmd')->sanitize($manifest->name);
+        $name = \AnService::get('anahita:filter.cmd')->sanitize($manifest->name);
         $name = 'com_'.strtolower($name);
         $components = \AnService::get('repos:cli.component', array('resources'=>'components'));
 

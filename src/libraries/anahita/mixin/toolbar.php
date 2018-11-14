@@ -77,9 +77,9 @@ class AnMixinToolbar extends AnMixinAbstract
     /**
      * Add one or more toolbars
      *
-     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param   mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
-     * @return  KObject	The mixer object
+     * @return  AnObject	The mixer object
      */
     public function addToolbar($toolbar, $config = array(), $priority = AnEvent::PRIORITY_NORMAL)
     {

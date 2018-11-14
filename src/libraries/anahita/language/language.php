@@ -8,7 +8,7 @@
  * @subpackage	Language
  * @since		4.3
  */
-class AnLanguage extends KObject implements AnServiceInstantiatable
+class AnLanguage extends AnObject implements AnServiceInstantiatable
 {
     /**
     *   Debug mode

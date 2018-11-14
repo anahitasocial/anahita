@@ -13,7 +13,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationRegistry extends KObject implements AnServiceInstantiatable
+class ComApplicationRegistry extends AnObject implements AnServiceInstantiatable
 {
     /**
      * clonable registry.

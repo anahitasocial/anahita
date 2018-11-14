@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? $coupon = empty($coupon) ? @service('repos:subscriptions.coupon')->getEntity()->reset() : $coupon; ?>
 

@@ -62,7 +62,7 @@ class AnCommandContext extends AnConfig
      * @param object	The command subject
      * @return AnEvent
      */
-    public function setSubject(KObjectServiceable $subject)
+    public function setSubject(AnObjectServiceable $subject)
     {
         $this->_subject = $publisher;
         return $this;

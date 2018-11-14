@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainProperty extends KObject
+class AnDomainProperty extends AnObject
 {
     /**
      * Attribute factory method.

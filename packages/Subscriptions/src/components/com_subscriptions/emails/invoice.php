@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access'); ?>
+<?php defined('ANAHITA') or die('Restricted access'); ?>
 
 <?= get_config_value('subscriptions.welcome_message'); ?>
 

@@ -12,7 +12,7 @@
  *
  * @link       https://www.GetAnahita.com
  */
-class AnHelperDate extends KObject
+class AnHelperDate extends AnObject
 {
     /**
      * Scientific values of each time unit.

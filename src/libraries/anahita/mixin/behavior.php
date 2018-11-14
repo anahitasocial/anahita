@@ -8,7 +8,7 @@
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
- * @uses        KObject
+ * @uses        AnObject
  */
 class AnMixinBehavior extends AnMixinAbstract
 {
@@ -41,7 +41,7 @@ class AnMixinBehavior extends AnMixinAbstract
         //Set the auto mixin state
         $this->_auto_mixin = $config->auto_mixin;
 
-        if ($config->mixer instanceof KObject) {
+        if ($config->mixer instanceof AnObject) {
             $config->mixer->mixin($this);
         }
 
@@ -91,10 +91,10 @@ class AnMixinBehavior extends AnMixinAbstract
     /**
      * Add one or more behaviors to the controller
      *
-     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param   mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @param	array An optional associative array of configuration settings
-     * @return  KObject	The mixer object
+     * @return  AnObject	The mixer object
      */
     public function addBehavior($behavior, $config = array())
     {
@@ -119,7 +119,7 @@ class AnMixinBehavior extends AnMixinAbstract
     /**
      * Get a behavior by identifier
      *
-     * @param   mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param   mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @param	array An optional associative array of configuration settings
      * @return AnControllerBehaviorAbstract

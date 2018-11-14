@@ -76,7 +76,7 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
     /**
      * {@inheritdoc}
      */
-    public function getMixableMethods(KObject $mixer = null)
+    public function getMixableMethods(AnObject $mixer = null)
     {
         $methods = parent::getMixableMethods($mixer);
 

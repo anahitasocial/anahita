@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class ComMigratorMigrationAbstract extends KObject
+abstract class ComMigratorMigrationAbstract extends AnObject
 {
     /**
      * If set then it wil try to auto detect the schemas.
@@ -91,7 +91,7 @@ abstract class ComMigratorMigrationAbstract extends KObject
     {
         parent::__construct($config);
 
-        $this->getService('koowa:loader')->loadIdentifier('com://site/migrator.helper');
+        $this->getService('anahita:loader')->loadIdentifier('com://site/migrator.helper');
 
         $this->_component = $config->component;
 
@@ -376,7 +376,7 @@ EOF;
             $path = dirname($this->getIdentifier()->filepath).'/migrations';
 
             if (file_exists($path."/$version.php")) {
-                $this->getService('koowa:loader')->loadFile($path."/$version.php");
+                $this->getService('anahita:loader')->loadFile($path."/$version.php");
                 $class = 'Com'.ucfirst($this->getIdentifier()->package).'SchemaMigration'.$version;
             } else {
                 $class = 'ComMigratorMigrationVersion';

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleHelperPerson extends KObject
+class ComPeopleHelperPerson extends AnObject
 {
     /**
      * Logs in a user.

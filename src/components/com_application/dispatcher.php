@@ -198,7 +198,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
 
         $identifier = clone $this->getIdentifier();
         $identifier->name = 'application';
-        $this->getService('koowa:loader')->loadIdentifier($identifier);
+        $this->getService('anahita:loader')->loadIdentifier($identifier);
 
         //no need to create session when using CLI (command line interface)
         $session = (PHP_SAPI == 'cli') ? false : true;
@@ -272,7 +272,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
 
         //if there's a file then just load the file and exit
         if (! empty($file)) {
-            AnService::get('koowa:loader')->loadFile($file);
+            AnService::get('anahita:loader')->loadFile($file);
             exit(0);
         }
     }
@@ -363,7 +363,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
      * Callback to handle Exception.
      *
      * @param AnCommandContext $context Command chain context
-     *                                 caller => KObject, data => mixed
+     *                                 caller => AnObject, data => mixed
      *
      * @return void
      */

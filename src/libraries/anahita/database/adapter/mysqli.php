@@ -573,7 +573,7 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
 
         list($type, $length, $scope) = $this->_parseColumnType($info->Type);
 
-        $column = $this->getService('koowa:database.schema.column');
+        $column = $this->getService('anahita:database.schema.column');
         $column->name = $info->Field;
         $column->type = $type;
         $column->length = ($length  ? $length  : null);

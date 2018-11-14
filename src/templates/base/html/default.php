@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -15,7 +15,7 @@
         </div>
 
         <?= @template('tmpl/navbar') ?>
-
+	
         <div class="container">
         <?= $this->getView()->content; ?>
         </div>

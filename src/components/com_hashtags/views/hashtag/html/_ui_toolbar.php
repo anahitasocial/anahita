@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <div class="btn-toolbar clearfix">
     <div class="pull-right btn-group">

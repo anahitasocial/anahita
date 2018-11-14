@@ -14,7 +14,7 @@
  * @subpackage 	Toolbar
  * @uses        AnInflector
  */
-abstract class AnControllerAbstract extends KObject
+abstract class AnControllerAbstract extends AnObject
 {
     /**
      * Array of class methods to call for a given action.
@@ -151,7 +151,7 @@ abstract class AnControllerAbstract extends KObject
      * Mixin an object
      *
      * @param   object  An object that implements KMinxInterface
-     * @return  KObject
+     * @return  AnObject
      */
     public function mixin(AnMixinInterface $object, $config = array())
     {

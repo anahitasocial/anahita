@@ -12,7 +12,7 @@ use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 require_once 'src/libraries/anahita/event/subscriber/interface.php';
-require_once 'vendor/nooku/libraries/koowa/object/handlable.php';
+require_once 'src/libraries/anahita/object/handlable.php';
 
 function ask_for_component($input, $output, $console) {
 
@@ -25,7 +25,7 @@ function ask_for_component($input, $output, $console) {
     return (array) $component;
 }
 
-class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KObjectHandlable
+class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \AnObjectHandlable
 {
     protected $_migrators = array();
 
@@ -84,7 +84,7 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      * (non-PHPdoc)
-     * @see KObjectHandlable::getHandle()
+     * @see AnObjectHandlable::getHandle()
      */
     public function getHandle()
     {

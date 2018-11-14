@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if ($actorbar->getTitle() && $actorbar->getActor()) : ?>
 <div class="an-media-header">

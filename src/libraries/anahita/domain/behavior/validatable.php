@@ -103,7 +103,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
         }
 
         if (!isset($this->_errors[$this->_mixer])) {
-            $this->_errors[$this->_mixer] = new KObjectSet();
+            $this->_errors[$this->_mixer] = new AnObjectSet();
         }
 
         $this->_errors[$this->_mixer]->insert($error);

@@ -60,7 +60,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements An
         $identifier->path = array();
 
         //Load the component aliases
-        $this->getService('koowa:loader')->loadIdentifier($identifier);
+        $this->getService('anahita:loader')->loadIdentifier($identifier);
 
         //if a command line the either do get or
         //post depending if there are any action

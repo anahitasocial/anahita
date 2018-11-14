@@ -27,7 +27,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnFilterSlug extends KFilterSlug
+class AnFilterSlug extends KFilterAbstract
 {
     /**
      * The slut length.
@@ -45,6 +45,8 @@ class AnFilterSlug extends KFilterSlug
     {
         parent::__construct($config);
         $this->_slug_length = $config->slug_length;
+        $this->_length    = $config->length;
+		$this->_separator = $config->separator;
     }
 
     /**
@@ -58,6 +60,8 @@ class AnFilterSlug extends KFilterSlug
     {
         $config->append(array(
             'slug_length' => 255,
+            'separator' => '-',
+    		'length' 	=> 255
         ));
 
         parent::_initialize($config);
@@ -190,51 +194,5 @@ class AnFilterSlug extends KFilterSlug
     	}
 
     	return $unicode;
-        /*
-        $unicode = '';
-        $values = array();
-        $num_octets = 1;
-        $unicode_length = 0;
-
-        $string_length = strlen($utf8_string);
-        for ($i = 0; $i < $string_length; ++$i) {
-            $value = ord($utf8_string[ $i ]);
-
-            if ($value < 128) {
-                if ($length && ($unicode_length >= $length)) {
-                    break;
-                }
-                $unicode .= chr($value);
-                ++$unicode_length;
-            } else {
-                if (count($values) == 0) {
-                    $num_octets = ($value < 224) ? 2 : 3;
-                }
-
-                $values[] = $value;
-
-                if ($length && ($unicode_length + ($num_octets * 3)) > $length) {
-                    break;
-                }
-                if (count($values) == $num_octets) {
-                    if ($num_octets == 4) {
-                        $unicode .= '%'.dechex($values[0]).'%'.dechex($values[1]).'%'.dechex($values[2]).'%'.dechex($values[3]);
-                        $unicode_length += 12;
-                    } else if ($num_octets == 3) {
-                        $unicode .= '%'.dechex($values[0]).'%'.dechex($values[1]).'%'.dechex($values[2]);
-                        $unicode_length += 9;
-                    } else {
-                        $unicode .= '%'.dechex($values[0]).'%'.dechex($values[1]);
-                        $unicode_length += 6;
-                    }
-
-                    $values = array();
-                    $num_octets = 1;
-                }
-            }
-        }
-
-        return $unicode;
-        */
     }
 }

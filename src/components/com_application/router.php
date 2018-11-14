@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComApplicationRouter extends KObject
+class ComApplicationRouter extends AnObject
 {
     /**
      * cloneable url.

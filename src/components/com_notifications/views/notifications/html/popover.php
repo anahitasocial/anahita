@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <div class="popover-title">
     <?= @text('COM-NOTIFICATIONS-POPOVER-TITLE') ?>

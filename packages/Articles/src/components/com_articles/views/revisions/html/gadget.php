@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <div data-behavior="InfiniteScroll" data-InfiniteScroll-options="{'url':'<?= @route('layout=gadget') ?>'}" class="an-entities">
 <?= @template('gadget_list') ?>

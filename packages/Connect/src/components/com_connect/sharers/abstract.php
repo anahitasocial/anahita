@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class ComConnectSharerAbstract extends KObject implements ComSharesSharerInterface
+abstract class ComConnectSharerAbstract extends AnObject implements ComSharesSharerInterface
 {
     /**
      * An authenticated oauth session.

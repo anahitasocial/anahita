@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $uploadSizeLimit = ini_get('upload_max_filesize'); ?>
 

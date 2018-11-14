@@ -97,7 +97,7 @@ class AnDomain
         $identifier = AnService::getIdentifier($identifier);
 
         if (!$identifier->basepath) {
-            $adapters = AnService::get('koowa:loader')->getAdapters();
+            $adapters = AnService::get('anahita:loader')->getAdapters();
             $basepath = pick($adapters[$identifier->type]->getBasePath(), ANPATH_BASE);
             $applications = array_flip(AnServiceIdentifier::getApplications());
 

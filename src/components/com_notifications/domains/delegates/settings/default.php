@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComNotificationsDomainDelegateSettingDefault extends KObject implements ComNotificationsDomainDelegateSettingInterface
+class ComNotificationsDomainDelegateSettingDefault extends AnObject implements ComNotificationsDomainDelegateSettingInterface
 {
     /**
      * Checks with whether to notify a person or not.

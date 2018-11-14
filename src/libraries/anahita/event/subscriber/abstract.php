@@ -10,7 +10,7 @@
  * @package     AnEvent
  * @subpackage 	Subscriber
  */
-abstract class AnEventSubscriberAbstract extends KObject implements AnEventSubscriberInterface
+abstract class AnEventSubscriberAbstract extends AnObject implements AnEventSubscriberInterface
 {
     /**
      * List of subscribed events

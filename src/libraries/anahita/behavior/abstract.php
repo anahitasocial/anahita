@@ -151,7 +151,7 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
      * @param object The mixer requesting the mixable methods. 
      * @return array An array of methods
      */
-    public function getMixableMethods(KObject $mixer = null)
+    public function getMixableMethods(AnObject $mixer = null)
     {
         $methods   = parent::getMixableMethods($mixer);
         $methods[] = 'is'.ucfirst($this->getIdentifier()->name);
@@ -174,12 +174,12 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	 * @param	array  			An optional associative array of configuration settings.
 	 * @throws	AnServiceServiceException
 	 * @return	object  		Return object on success, throws exception on failure
-	 * @see 	KObjectServiceable
+	 * @see 	AnObjectServiceable
 	 */
 	final public function getService($identifier = null, array $config = array())
 	{
 	    if(!isset($this->__service_container)) {
-	        throw new KObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
+	        throw new AnObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
 	    }
 	    if ( !isset($identifier) ) {
 	    	$result =  $this->__service_container;
@@ -194,7 +194,7 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	 * Gets the service identifier.
 	 *
 	 * @return	AnServiceIdentifier
-	 * @see 	KObjectServiceable
+	 * @see 	AnObjectServiceable
 	 */
 	final public function getIdentifier($identifier = null)
 	{

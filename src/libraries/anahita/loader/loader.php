@@ -10,7 +10,6 @@
  
 require_once dirname(__FILE__).'/adapter/interface.php';
 require_once dirname(__FILE__).'/adapter/abstract.php';
-require_once dirname(__FILE__).'/adapter/koowa.php';
 require_once dirname(__FILE__).'/adapter/anahita.php';
 require_once dirname(__FILE__).'/registry.php';
 
@@ -55,8 +54,8 @@ class AnLoader
             $this->_registry->enableCache($config['cache_enabled']);
         }
 
-        //Add the koowa class loader
-        $this->addAdapter(new AnLoaderAdapterKoowa(
+        //Add the anahita class loader
+        $this->addAdapter(new AnLoaderAdapterAnahita(
             array('basepath' => dirname(dirname(__FILE__)))
         ));
 
@@ -121,7 +120,7 @@ class AnLoader
      */
     public static function addAdapter(AnLoaderAdapterInterface $adapter)
     {
-        self::$_adapters[$adapter->getType()]     = $adapter;
+        self::$_adapters[$adapter->getType()] = $adapter;
         self::$_prefix_map[$adapter->getPrefix()] = $adapter->getType();
     }
 

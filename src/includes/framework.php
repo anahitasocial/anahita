@@ -47,7 +47,7 @@ AnLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => ANPATH_BAS
 AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.component'));
 
 AnLoader::addAdapter(new AnLoaderAdapterPlugin(array('basepath' => ANPATH_ROOT)));
-AnServiceIdentifier::addLocator(AnService::get('koowa:service.locator.plugin'));
+AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.plugin'));
 
 AnLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath' => ANPATH_BASE)));
 AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.template'));

@@ -1,6 +1,6 @@
 <?php
 
-class LibSessionsStorageAbstract extends KObject implements SessionHandlerInterface, AnServiceInstantiatable
+class LibSessionsStorageAbstract extends AnObject implements SessionHandlerInterface, AnServiceInstantiatable
 {
 	/**
      * Constructor.

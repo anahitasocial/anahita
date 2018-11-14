@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 <? $uploadSizeLimit = ini_get('upload_max_filesize'); ?>
 <? $article = empty($article) ? @service('repos:articles.article')->getEntity()->reset() : $article; ?>
 

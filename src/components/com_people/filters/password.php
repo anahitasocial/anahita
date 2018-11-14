@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleFilterPassword extends KFilterRaw
+class ComPeopleFilterPassword extends AnFilterRaw
 {
     /**
      * Password min length.

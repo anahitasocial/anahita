@@ -61,7 +61,7 @@ class ComNotificationsDomainEntitySetting extends ComBaseDomainEntityEdge
      */
     public function setValue($type, $value, $send_email)
     {
-        $filter = $this->getService('koowa:filter.cmd');
+        $filter = $this->getService('anahita:filter.cmd');
         $type = $filter->sanitize($type);
         $value = $filter->sanitize($value);
 

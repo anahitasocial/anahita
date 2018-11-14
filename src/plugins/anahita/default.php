@@ -1,15 +1,15 @@
 <?php
 
 /**
-* Default Koowa plugin
+* Default Anahita plugin
 *
-* Koowa plugins can handle a number of events that are dynamically generated. A plugin
+* Anahita plugins can handle a number of events that are dynamically generated. A plugin
 * need to be wired to a specific event publisher in order for it to receive events from
 * that publisher.
 *
 * <code>
 * <?php
-* class PlgKoowaFoo extends PlgKoowaDefault
+* class PlgAnahitaFoo extends PlgAnahitaDefault
 * {
 *   protected function _initialize(AnConfig $config)
 *   {
@@ -33,7 +33,7 @@
 * onAfterDatabase[Action]
 * where [Action] is Select, Insert, Update or Delete
 *
-* You can create your own Koowa plugins very easily :
+* You can create your own Anahita plugins very easily :
 *
 * <code>
 * <?php

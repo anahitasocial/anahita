@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <form class="composer-form" action="<?= @route() ?>" method="post">
 	<input type="hidden" name="composed" value="1" />

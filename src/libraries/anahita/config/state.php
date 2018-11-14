@@ -58,7 +58,7 @@ class AnConfigState extends AnConfig
      * Insert a new state
      *
      * @param   string      The name of the state
-     * @param   mixed       Filter(s), can be a KFilterInterface object, a filter name or an array of filter names
+     * @param   mixed       Filter(s), can be a AnFilterInterface object, a filter name or an array of filter names
      * @param   mixed       The default value of the state
      * @param   boolean     TRUE if the state uniquely indetifies an enitity, FALSE otherwise. Default FALSE.
      * @param   array       Array of required states to determine if the state is unique. Only applicable if the state is unqiue.
@@ -128,8 +128,8 @@ class AnConfigState extends AnConfig
                 {
                     if($value !== '')
                     {
-                        if(!($filter instanceof KFilterInterface)) {
-                            $filter = AnService::get('koowa:filter.factory')->instantiate($filter);
+                        if(!($filter instanceof AnFilterInterface)) {
+                            $filter = AnService::get('anahita:filter.factory')->instantiate($filter);
                         }
 
                         $value = $filter->sanitize($value);

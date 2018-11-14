@@ -214,7 +214,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
         foreach($mails as $mail) {
             $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
-            $subject = AnService::get('koowa:filter.string')->sanitize($mail['subject']);
+            $subject = AnService::get('anahita:filter.string')->sanitize($mail['subject']);
 
             if (isset($mail['body'])) {
                 $body = $mail['body'];
@@ -230,7 +230,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
             if ($this->_test_options->enabled && $this->_test_options->log) {
 
-                $subject = AnService::get('koowa:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
+                $subject = AnService::get('anahita:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
                 $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
 
                 if (!file_exists(dirname($file))) {

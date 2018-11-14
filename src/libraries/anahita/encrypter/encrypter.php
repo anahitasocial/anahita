@@ -14,7 +14,7 @@
  * @license     MIT https://opensource.org/licenses/MIT
  *
  */
-class AnEncrypter extends KObject
+class AnEncrypter extends AnObject
 {
     /**
      * The encryption key.

@@ -27,7 +27,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainQueryClause extends KObject implements IteratorAggregate, Countable
+class AnDomainQueryClause extends AnObject implements IteratorAggregate, Countable
 {
     /**
      * Parent Query.
@@ -143,7 +143,7 @@ class AnDomainQueryClause extends KObject implements IteratorAggregate, Countabl
     /**
      * If the $method is one of the MySQL.
      * 
-     * @see KObject::__call()
+     * @see AnObject::__call()
      */
     public function __call($method, $arguments)
     {

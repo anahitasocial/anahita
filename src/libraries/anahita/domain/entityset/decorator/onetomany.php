@@ -121,7 +121,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     /**
      * Insert an entity to the aggregation.
      *
-     * @see KObjectSet::insert()
+     * @see AnObjectSet::insert()
      */
     public function insert($entity)
     {
@@ -140,7 +140,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     /**
      * Removes an object from the aggregation.
      *
-     * @see KObjectSet::extract()
+     * @see AnObjectSet::extract()
      */
     public function extract($entity)
     {
@@ -194,16 +194,16 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      *
      * Required by interface ArrayAccess
      *
-     * @param KObjectHandlable $object
+     * @param AnObjectHandlable $object
      *
      * @return bool Returns TRUE if the object exists in the storage, and FALSE otherwise
      *
-     * @throws InvalidArgumentException if the object doesn't implement KObjectHandlable
+     * @throws InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
     public function offsetExists($object)
     {
-        if (!$object instanceof KObjectHandlable) {
-            throw new InvalidArgumentException('Object needs to implement KObjectHandlable');
+        if (!$object instanceof AnObjectHandlable) {
+            throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
         return $this->contains($object);
@@ -214,16 +214,16 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      *
      * Required by interface ArrayAccess
      *
-     * @param KObjectHandlable $object
+     * @param AnObjectHandlable $object
      *
-     * @return KObjectHandlable
+     * @return AnObjectHandlable
      *
-     * @throws InvalidArgumentException if the object doesn't implement KObjectHandlable
+     * @throws InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
     public function offsetGet($object)
     {
-        if (!$object instanceof KObjectHandlable) {
-            throw new InvalidArgumentException('Object needs to implement KObjectHandlable');
+        if (!$object instanceof AnObjectHandlable) {
+            throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
         return $this->getObject()->offsetGet($object);
@@ -234,17 +234,17 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      *
      * Required by interface ArrayAccess
      *
-     * @param KObjectHandlable $object
+     * @param AnObjectHandlable $object
      * @param mixed            $data   The data to associate with the object [UNUSED]
      *
-     * @return \KObjectSet
+     * @return \AnObjectSet
      *
-     * @throws InvalidArgumentException if the object doesn't implement KObjectHandlable
+     * @throws InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
     public function offsetSet($object, $data)
     {
-        if (!$object instanceof KObjectHandlable) {
-            throw new InvalidArgumentException('Object needs to implement KObjectHandlable');
+        if (!$object instanceof AnObjectHandlable) {
+            throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
         $this->insert($object);
@@ -257,16 +257,16 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      *
      * Required by interface ArrayAccess
      *
-     * @param KObjectHandlable $object
+     * @param AnObjectHandlable $object
      *
-     * @return \KObjectSet
+     * @return \AnObjectSet
      *
-     * @throws InvalidArgumentException if the object doesn't implement the KObjectHandlable interface
+     * @throws InvalidArgumentException if the object doesn't implement the AnObjectHandlable interface
      */
     public function offsetUnset($object)
     {
-        if (!$object instanceof KObjectHandlable) {
-            throw new InvalidArgumentException('Object needs to implement KObjectHandlable');
+        if (!$object instanceof AnObjectHandlable) {
+            throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
         $this->extract($object);

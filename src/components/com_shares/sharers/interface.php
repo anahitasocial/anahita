@@ -29,7 +29,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-interface ComSharesSharerInterface extends KObjectHandlable, KObjectServiceable
+interface ComSharesSharerInterface extends AnObjectHandlable, AnObjectServiceable
 {
     /**
      * Return a boolean value whether it can share a request or not.

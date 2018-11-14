@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Serializable
+abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, Serializable
 {
     /**
      * Static cache to store runtime information of an entity.
@@ -436,8 +436,8 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
 
             if ($current instanceof AnDomainDecoratorOnetomany) {
                 $values = AnConfig::unbox($value);
-                //can be an KObjectArray or KObjectSet object
-                if ($values instanceof KObject && $values instanceof Iterator) {
+                //can be an AnObjectArray or AnObjectSet object
+                if ($values instanceof AnObject && $values instanceof Iterator) {
                     $current->delete();
 
                     foreach ($values as $value) {
@@ -1162,7 +1162,7 @@ abstract class AnDomainEntityAbstract extends KObject implements ArrayAccess, Se
      *
      * (non-PHPdoc)
      *
-     * @see KObject::getMethods()
+     * @see AnObject::getMethods()
      */
     public function getMethods()
     {

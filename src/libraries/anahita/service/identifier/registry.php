@@ -22,7 +22,7 @@ class AnServiceIdentifierRegistry extends ArrayObject
  	 *
  	 * @var boolean
  	 */
-    protected $_cache_prefix = 'koowa-cache-identifier';
+    protected $_cache_prefix = 'anahita-cache-identifier';
 
 	/**
      * Enable class caching
@@ -88,7 +88,7 @@ class AnServiceIdentifierRegistry extends ArrayObject
      *
      * @param   int     The offset of the item
      * @param   mixed   The item's value
-     * @return  object  KObjectArray
+     * @return  object  AnObjectArray
      */
     public function offsetSet($offset, $value)
     {

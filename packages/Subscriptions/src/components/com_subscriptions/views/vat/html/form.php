@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? $vat = empty($vat) ? @service('repos:subscriptions.vat')->getEntity()->reset() : $vat; ?>
 

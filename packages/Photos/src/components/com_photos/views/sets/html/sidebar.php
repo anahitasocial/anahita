@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? if (count($sets)): ?>
 	<div id="sets" class="an-entities">

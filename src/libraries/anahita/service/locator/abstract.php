@@ -8,7 +8,7 @@
  * @link        https://www.GetAnahita.com
  */
  
-abstract class AnServiceLocatorAbstract extends KObject implements AnServiceLocatorInterface
+abstract class AnServiceLocatorAbstract extends AnObject implements AnServiceLocatorInterface
 {
 	/**
 	 * The type

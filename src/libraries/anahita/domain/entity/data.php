@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainEntityData extends KObject implements ArrayAccess
+class AnDomainEntityData extends AnObject implements ArrayAccess
 {
     /**
      * Synchornization locks.
@@ -24,7 +24,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     /**
      * Set a lock for a repository.
      *
-     * @param KObject $object
+     * @param AnObject $object
      * @param bool    $lock
      */
     protected function _lock($object, $lock)
@@ -39,7 +39,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     /**
      * Return if a repository is locked.
      *
-     * @param KObject $object
+     * @param AnObject $object
      *
      * @return bool
      */
@@ -202,7 +202,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
      * @param   string     The offset of the item
      * @param   mixed   The item's value
      *
-     * @return object KObjectSet
+     * @return object AnObjectSet
      */
     public function offsetSet($key, $value)
     {
@@ -221,7 +221,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
      *
      * @param   int     The offset of the item
      *
-     * @return object KObjectSet
+     * @return object AnObjectSet
      */
     public function offsetUnset($key)
     {

@@ -1,4 +1,4 @@
-<? if (!defined('KOOWA')) {
+<? if (!defined('ANAHITA')) {
     die;
 } ?>
 

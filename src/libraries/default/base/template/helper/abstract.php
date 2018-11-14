@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseTemplateHelperAbstract extends KObject implements LibBaseTemplateHelperInterface
+abstract class LibBaseTemplateHelperAbstract extends AnObject implements LibBaseTemplateHelperInterface
 {
     /**
      * Template object

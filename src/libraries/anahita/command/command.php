@@ -12,7 +12,7 @@
 * @package     AnCommand
 * @link        https://www.GetAnahita.com
 */
-class AnCommand extends KObject implements AnCommandInterface
+class AnCommand extends AnObject implements AnCommandInterface
 {
     /**
      * Priority levels

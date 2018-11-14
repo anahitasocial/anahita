@@ -78,7 +78,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($this->filter) {
             if ($this->filter['usertype'] && in_array($this->filter['usertype'], $this->_allowed_user_types)) {
-                $query->filterUsertype($this->getService('koowa:filter.cmd')
+                $query->filterUsertype($this->getService('anahita:filter.cmd')
                       ->sanitize($this->filter['usertype']));
             }
 
@@ -87,7 +87,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             }
         }
 
-        if ($this->getService('koowa:filter.email')->validate($this->q)) {
+        if ($this->getService('anahita:filter.email')->validate($this->q)) {
             $query->filterEmail($this->q);
         }
 

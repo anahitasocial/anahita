@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMigratorMigrationVersion extends KObject implements ArrayAccess
+class ComMigratorMigrationVersion extends AnObject implements ArrayAccess
 {
     /**
      * Database Adapter.

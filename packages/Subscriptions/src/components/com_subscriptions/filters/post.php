@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSubscriptionsFilterHtml extends KFilterHtml
+class ComSubscriptionsFilterHtml extends AnFilterHtml
 {
     /**
      * Initializes the default configuration for the object.

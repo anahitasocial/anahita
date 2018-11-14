@@ -13,7 +13,7 @@ require_once 'core.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class ComConnectOauthRequest extends KObject
+class ComConnectOauthRequest extends AnObject
 {
     /**
      * Internal Oauth Request.

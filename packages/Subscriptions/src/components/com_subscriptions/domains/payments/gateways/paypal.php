@@ -13,7 +13,7 @@ require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComSubscriptionsDomainPaymentGatewayInterface
+class ComSubscriptionsDomainPaymentGatewayPaypal extends AnObject implements ComSubscriptionsDomainPaymentGatewayInterface
 {
     /**
      * Gateway config.
@@ -137,7 +137,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
             $ip = AnRequest::get('server.REMOTE_ADDR', 'raw');
 
-            if (!$this->getService('koowa:filter.ip')->validate($ip) || strlen($ip) <= 7) {
+            if (!$this->getService('anahita:filter.ip')->validate($ip) || strlen($ip) <= 7) {
                 $ip = '127.0.0.1';
             }
 

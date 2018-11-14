@@ -9,13 +9,13 @@
  * @link        https://www.GetAnahita.com
  * @package     AnEvent
  */
-class AnEventDispatcher extends KObject
+class AnEventDispatcher extends AnObject
 {
     /**
      * List of event listeners
      * 
      * An associative array of event listeners queues where keys are holding the event 
-     * name and the value is an KObjectQueue object.
+     * name and the value is an AnObjectQueue object.
      *
      * @var array
      */
@@ -88,17 +88,17 @@ class AnEventDispatcher extends KObject
      * Add an event listener
      *
      * @param  string  The event name
-     * @param  object  An object implementing the KObjectHandlable interface
+     * @param  object  An object implementing the AnObjectHandlable interface
      * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest), 
      *                 default is 3. If no priority is set, the command priority will be used 
      *                 instead.
      * @return AnEventDispatcher
      */
-    public function addEventListener($name, KObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
+    public function addEventListener($name, AnObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
     {
         if (is_object($listener)) {
             if (! isset($this->_listeners[$name])) {
-                $this->_listeners[$name] = new KObjectQueue();
+                $this->_listeners[$name] = new AnObjectQueue();
             }
             
             $this->_listeners[$name]->enqueue($listener, $priority);
@@ -111,10 +111,10 @@ class AnEventDispatcher extends KObject
      * Remove an event listener
      *
      * @param   string  The event name
-     * @param   object  An object implementing the KObjectHandlable interface
+     * @param   object  An object implementing the AnObjectHandlable interface
      * @return  AnEventDispatcher
      */
-    public function removeEventListener($name, KObjectHandlable $listener)
+    public function removeEventListener($name, AnObjectHandlable $listener)
     {
         if (is_object($listener)) {
             if (isset($this->_listeners[$name])) {
@@ -186,7 +186,7 @@ class AnEventDispatcher extends KObject
      * Get a list of listeners for a specific event
      *
      * @param   string  		The event name
-     * @return  KObjectQueue	An object queue containing the listeners
+     * @return  AnObjectQueue	An object queue containing the listeners
      */
     public function getListeners($name)
     {
@@ -218,11 +218,11 @@ class AnEventDispatcher extends KObject
      * Set the priority of an event
      * 
      * @param  string    The event name
-     * @param  object    An object implementing the KObjectHandlable interface
+     * @param  object    An object implementing the AnObjectHandlable interface
      * @param  integer   The event priority
      * @return AnCommandChain
      */
-    public function setEventPriority($name, KObjectHandable $listener, $priority)
+    public function setEventPriority($name, AnObjectHandable $listener, $priority)
     {
         if (isset($this->_listeners[$name])) {
             $this->_listeners[$name]->setPriority($listener, $priority);
@@ -235,10 +235,10 @@ class AnEventDispatcher extends KObject
      * Get the priority of an event
      * 
      * @param   string  The event name
-     * @param   object  An object implementing the KObjectHandlable interface
+     * @param   object  An object implementing the AnObjectHandlable interface
      * @return  integer|false The event priority or FALSE if the event isn't listened for.
      */
-    public function getEventPriority($name, KObjectHandable $listener)
+    public function getEventPriority($name, AnObjectHandable $listener)
     {
         $result = false;
         

@@ -8,7 +8,7 @@
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
- * @uses        KObject
+ * @uses        AnObject
  */
 class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
 {
@@ -136,7 +136,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
      * @param  	string|array	The command name to register the callback for or an array of command names
      * @param 	callback		The callback function to register
      * @param   array|object    An associative array of config parameters or a AnConfig object
-     * @return  KObject	The mixer object
+     * @return  AnObject	The mixer object
      */
     public function registerCallback($commands, $callback, $params = array())
     {
@@ -170,7 +170,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
      *
      * @param  	string|array	The method name to unregister the callback from or an array of method names
      * @param 	callback		The callback function to unregister
-     * @return  KObject The mixer object
+     * @return  AnObject The mixer object
      */
     public function unregisterCallback($commands, $callback = null)
     {
@@ -204,7 +204,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
      *
      * @return array An array of methods
      */
-    public function getMixableMethods(KObject $mixer = null)
+    public function getMixableMethods(AnObject $mixer = null)
     {
         return array_diff(parent::getMixableMethods(), array('execute', 'getPriority'));
     }

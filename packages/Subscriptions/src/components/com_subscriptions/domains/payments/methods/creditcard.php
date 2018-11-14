@@ -38,7 +38,7 @@ class ComSubscriptionsDomainPaymentMethodCreditcard implements ComSubscriptionsD
     /**
      * The adress associated with the creditcard.
      * 
-     * @var KObject
+     * @var AnObject
      */
     public $address;
 

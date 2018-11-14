@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainResource extends KObject
+class AnDomainResource extends AnObject
 {
     /**
      * Resource Table.

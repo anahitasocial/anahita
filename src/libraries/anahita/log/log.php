@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnLog extends KObject implements AnServiceInstantiatable
+class AnLog extends AnObject implements AnServiceInstantiatable
 {
     /**
 	 * Log File Pointer

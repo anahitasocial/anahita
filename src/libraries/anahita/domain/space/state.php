@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainSpaceState extends KObject
+class AnDomainSpaceState extends AnObject
 {
     /**
      * State Machine.

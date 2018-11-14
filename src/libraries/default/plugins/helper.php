@@ -12,7 +12,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class LibPluginsHelper extends KObject implements AnServiceInstantiatable
+class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
 {
     /**
     *   array of plugins

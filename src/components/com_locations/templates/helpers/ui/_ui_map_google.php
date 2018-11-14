@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access') ?>
+<? defined('ANAHITA') or die('Restricted access') ?>
 
 <? if (defined('ANDEBUG') && ANDEBUG) : ?>
 <script src="com_locations/js/map.google.js" />

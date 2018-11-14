@@ -73,7 +73,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     /**
      * Resources.
      *
-     * @var KObjectQeueue
+     * @var AnObjectQeueue
      */
     protected $_resources;
 

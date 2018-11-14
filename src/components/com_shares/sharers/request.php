@@ -28,7 +28,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSharesSharerRequest extends KObject
+class ComSharesSharerRequest extends AnObject
 {
     /**
      * The sharer actor.

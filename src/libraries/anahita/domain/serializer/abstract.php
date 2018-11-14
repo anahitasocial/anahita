@@ -16,7 +16,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainSerializerAbstract extends KObject
+class AnDomainSerializerAbstract extends AnObject
 {
     /**
      * Return an array of serializable data of the entity in format of associative array.

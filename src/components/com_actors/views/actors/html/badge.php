@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? @listItemView()->layout('list') ?>
 <? $items->order('status_update_time', 'desc'); ?>

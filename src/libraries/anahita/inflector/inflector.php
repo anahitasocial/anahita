@@ -329,7 +329,7 @@ class AnInflector
     }
 
     /**
-     * Converts a class name to its table name according to Koowa
+     * Converts a class name to its table name according to Anahita
      * naming conventions.
      *
      * Converts "Person" to "people"
@@ -349,7 +349,7 @@ class AnInflector
     }
 
     /**
-     * Converts a table name to its class name according to Koowa
+     * Converts a table name to its class name according to Anahita
      * naming conventions.
      *
      * Converts "people" to "Person"

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <? if (count($items)) :?>
 	<? foreach ($items as $item): ?>

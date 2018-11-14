@@ -196,7 +196,7 @@ class AnHelperArray
     {
         $object = AnConfig::unbox($object);
 
-        if (is($object, 'KObjectArray') || is($object, 'KObjectSet')) {
+        if (is($object, 'AnObjectArray') || is($object, 'AnObjectSet')) {
             return $object->toArray();
         }
 
@@ -217,7 +217,7 @@ class AnHelperArray
         $value = $item;
         foreach ($parts as $part) {
             if ($value) {
-                if (is($value, 'KObject')) {
+                if (is($value, 'AnObject')) {
                     $value = $value->get($part);
                 } else {
                     $value = is_array($value) ? $value[$part] : $value->$part;

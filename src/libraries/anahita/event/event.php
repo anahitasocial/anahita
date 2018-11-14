@@ -89,7 +89,7 @@ class AnEvent extends AnConfig
      * @param object	The event publisher
      * @return AnEvent
      */
-    public function setPublisher(KObjectServiceable $publisher)
+    public function setPublisher(AnObjectServiceable $publisher)
     {
         $this->_publisher = $publisher;
         return $this;

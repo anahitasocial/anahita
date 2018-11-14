@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainEntityProxy extends KObjectDecorator implements ArrayAccess
+class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
 {
     /**
      * An array of similar uniques.

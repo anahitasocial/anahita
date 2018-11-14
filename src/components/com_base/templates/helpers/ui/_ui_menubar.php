@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access') ?>
+<? defined('ANAHITA') or die('Restricted access') ?>
 
 <? if ($menubar->getTitle()) : ?>
 <h1 class="an-page-header"><?=$menubar->getTitle()?></h1>

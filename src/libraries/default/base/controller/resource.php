@@ -145,7 +145,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     /**
      * Method to set a view object attached to the controller.
      *
-     * @param mixed $view An object that implements KObjectIdentifiable, an object that
+     * @param mixed $view An object that implements AnObjectIdentifiable, an object that
      *                    implements KIndentifierInterface or valid identifier string
      *
      * @throws AnDatabaseRowsetException If the identifier is not a view identifier

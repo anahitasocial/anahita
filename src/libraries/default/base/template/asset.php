@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateAsset extends KObject implements AnServiceInstantiatable
+class LibBaseTemplateAsset extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.

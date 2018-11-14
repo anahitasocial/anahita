@@ -17,7 +17,7 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
     /**
      * Failed entities in the last commit.
      *
-     * @var KObjectSet
+     * @var AnObjectSet
      */
     protected $_failed_commits;
 
@@ -136,7 +136,7 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
     /**
      * Return a set of entities that failed the commits.
      *
-     * @return KObjectSet
+     * @return AnObjectSet
      */
     public function getFailedCommits()
     {

@@ -176,8 +176,8 @@ class AnRequest
             $result = self::_stripSlashes($result);
         }
 
-        if (! ($filter instanceof KFilterInterface)) {
-            $filter = AnService::get('koowa:filter.factory')->instantiate($filter);
+        if (! ($filter instanceof AnFilterInterface)) {
+            $filter = AnService::get('anahita:filter.factory')->instantiate($filter);
         }
 
         return $filter->sanitize($result);
@@ -341,7 +341,7 @@ class AnRequest
                 self::$_referrer = AnService::get('anahita:http.url', array('url' => $referrer));
 
                 if ($isInternal) {
-                    if (! AnService::get('koowa:filter.internalurl')->validate((string) self::$_referrer)) {
+                    if (! AnService::get('anahita:filter.internalurl')->validate((string) self::$_referrer)) {
                         return null;
                     }
                 }
@@ -389,11 +389,11 @@ class AnRequest
                     }
                 }
             } else {
-                $url .= 'koowa';
+                $url .= 'anahita';
             }
 
             // Sanitize the url since we can't trust the server var
-            $url = AnService::get('koowa:filter.url')->sanitize($url);
+            $url = AnService::get('anahita:filter.url')->sanitize($url);
 
             // Create the URI object
             self::$_url = AnService::get('anahita:http.url', array('url' => $url));
@@ -422,7 +422,7 @@ class AnRequest
             $path = rtrim(dirname($path), '/\\');
 
             // Sanitize the url since we can't trust the server var
-            $path = AnService::get('koowa:filter.url')->sanitize($path);
+            $path = AnService::get('anahita:filter.url')->sanitize($path);
 
             self::$_base = AnService::get('anahita:http.url', array('url' => $path));
         }

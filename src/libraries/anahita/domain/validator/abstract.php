@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class AnDomainValidatorAbstract extends KObject
+abstract class AnDomainValidatorAbstract extends AnObject
 {
     /**
      * Validations.
@@ -280,11 +280,11 @@ abstract class AnDomainValidatorAbstract extends KObject
      *
      * @param string $filter Filter name
      *
-     * @return KFilterChain
+     * @return AnFilterChain
      */
     public function getFilter($filter)
     {
-        if (!$filter instanceof KFilterAbstract) {
+        if (!$filter instanceof AnFilterAbstract) {
             $filter = (string) $filter;
 
             if (!isset($this->_filters[$filter])) {

@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleViewer extends KObject implements AnServiceInstantiatable
+class ComPeopleViewer extends AnObject implements AnServiceInstantiatable
 {
     /**
       * Force creation of a singleton.

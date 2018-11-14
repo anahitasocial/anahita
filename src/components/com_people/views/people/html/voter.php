@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? $entity = @service('repos:base.node')->fetch($nid); ?>
 

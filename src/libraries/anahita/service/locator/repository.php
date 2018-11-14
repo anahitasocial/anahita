@@ -60,7 +60,7 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
     /**
      * Get the classname based on an identifier.
      *
-     * @param 	mixed  		 An identifier object - koowa:[path].name
+     * @param 	mixed  		 An identifier object - anahita:[path].name
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
@@ -72,7 +72,7 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
     /**
      * Get the path based on an identifier.
      *
-     * @param  object  	An identifier object - koowa:[path].name
+     * @param  object  	An identifier object - anahita:[path].name
      *
      * @return string Returns the path
      */

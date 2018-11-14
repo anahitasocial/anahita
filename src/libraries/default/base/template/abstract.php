@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseTemplateAbstract extends KObject
+abstract class LibBaseTemplateAbstract extends AnObject
 {
     /**
      * The template data
@@ -181,7 +181,7 @@ abstract class LibBaseTemplateAbstract extends KObject
     /**
      * Method to set a view object attached to the controller.
      *
-     * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      *
      * @return LibBaseTemplateAbstract
@@ -410,7 +410,7 @@ abstract class LibBaseTemplateAbstract extends KObject
     /**
      * Get a template helper.
      *
-     * @param	mixed	An object that implements KObjectIdentifiable, an object that
+     * @param	mixed	An object that implements AnObjectIdentifiable, an object that
      *                  implements AnServiceIdentifierInterface or valid identifier string
      * @param	mixed	Parameters to be passed to the helper
      *

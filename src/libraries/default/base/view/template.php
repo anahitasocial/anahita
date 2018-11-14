@@ -157,7 +157,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     /**
      * Method to set a template object attached to the view.
      *
-     * @param   mixed   An object that implements KObjectIdentifiable, an object that
+     * @param   mixed   An object that implements AnObjectIdentifiable, an object that
      *                  implements KIndentifierInterface or valid identifier string
      *
      * @throws AnDatabaseRowsetException If the identifier is not a table identifier

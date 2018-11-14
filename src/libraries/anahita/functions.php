@@ -197,7 +197,7 @@ function is_eql()
     } elseif (count($values) == 2) {
         $v1 = $values[0];
         $v2 = $values[1];
-        if ($v1 instanceof KObject && $v1->inherits('AnDomainEntityAbstract')) {
+        if ($v1 instanceof AnObject && $v1->inherits('AnDomainEntityAbstract')) {
             return $v1->eql($v2);
         }
         if ($v1 instanceof AnDomainAttributeInterface) {
@@ -228,7 +228,7 @@ function is()
     $classes = func_get_args();
     $object = array_shift($classes);
     foreach ($classes as $class) {
-        if ($object instanceof KObject) {
+        if ($object instanceof AnObject) {
             $ret = $object->inherits($class);
         } elseif (is_object($object)) {
             $ret = $object instanceof $class;
@@ -545,7 +545,7 @@ function inspect($data, $var_dump = true)
             $dump[$key] = $value;
         } elseif (is($value, 'AnDomainEntityAbstract', 'AnDomainEntitysetAbstract')) {
             $dump[$key] = $value->inspect(false);
-        } elseif (is($value, 'KObjectIdentifiable')) {
+        } elseif (is($value, 'AnObjectIdentifiable')) {
             $dump[$key] = (string) $value->getIdentifier();
         } elseif (is_object($value)) {
             $dump[$key] = get_class($value);

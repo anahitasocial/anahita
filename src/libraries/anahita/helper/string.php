@@ -32,8 +32,8 @@ if (function_exists('iconv') || ((!strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' &&
  * All functions assume the validity of utf-8 strings.
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @category    Koowa
- * @package     Koowa_Helper
+ * @category    Anahita
+ * @package     Anahita_Helper
  * @subpackage  String
  * @static
  */

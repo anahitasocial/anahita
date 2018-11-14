@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 <form>
 <? foreach ($apps as $app) : ?>
 <?= @helper('ui.form', array(

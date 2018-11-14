@@ -10,7 +10,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMediumFilterHtml extends KFilterHtml
+class ComMediumFilterHtml extends AnFilterHtml
 {
     /**
      * Initializes the default configuration for the object.

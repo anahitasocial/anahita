@@ -12,7 +12,7 @@
   *
   * @link       http://www.GetAnahita.com
   */
- abstract class LibBaseDispatcherResponseTransportAbstract extends KObject
+ abstract class LibBaseDispatcherResponseTransportAbstract extends AnObject
  {
      /**
       * Response object.

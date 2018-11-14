@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? @title('No navigation bar')?>
 <? @description('An example of a page without a navigation bar.') ?>

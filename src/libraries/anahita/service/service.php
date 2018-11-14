@@ -66,8 +66,8 @@ class AnService implements AnServiceInterface
       //Create the service container
 	    self::$_services = new AnServiceContainer();
 
-	    //Auto-load the koowa adapter
-      AnServiceIdentifier::addLocator(new AnServiceLocatorKoowa());
+	    //Auto-load the anahita adapter
+      AnServiceIdentifier::addLocator(new AnServiceLocatorAnahita());
 	}
 
 	/**
@@ -103,7 +103,7 @@ class AnService implements AnServiceInterface
 	 * Get an instance of a class based on a class identifier only creating it
 	 * if it doesn't exist yet.
 	 *
-	 * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
 	 * @param	array   An optional associative array of configuration settings.
 	 * @return	object  Return object on success, throws exception on failure
@@ -131,7 +131,7 @@ class AnService implements AnServiceInterface
 	/**
 	 * Insert the object instance using the identifier
 	 *
-	 * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
 	 * @param object The object instance to store
 	 */
@@ -146,7 +146,7 @@ class AnService implements AnServiceInterface
 	/**
 	 * Check if the object instance exists based on the identifier
 	 *
-	 * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
 	 * @return boolean Returns TRUE on success or FALSE on failure.
 	 */
@@ -171,10 +171,10 @@ class AnService implements AnServiceInterface
      * The mixins are mixed when the indentified object is first instantiated see {@link get}
      * Mixins are also added to objects that already exist in the service container.
      *
-     * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
      * @param  string|array   A mixin identifier or a array of mixin identifiers
-     * @see KObject::mixin
+     * @see AnObject::mixin
      */
     public static function addMixin($identifier, $mixins)
     {
@@ -199,7 +199,7 @@ class AnService implements AnServiceInterface
     /**
      * Get the mixins for an identifier
      *
-     * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
      * @return array 	An array of mixins
      */
@@ -221,17 +221,17 @@ class AnService implements AnServiceInterface
 	 * Returns an identifier object.
 	 *
 	 * Accepts various types of parameters and returns a valid identifier. Parameters can either be an
-	 * object that implements KObjectServiceable, or a AnServiceIdentifier object, or valid identifier
+	 * object that implements AnObjectServiceable, or a AnServiceIdentifier object, or valid identifier
 	 * string. Function will also check for identifier mappings and return the mapped identifier.
 	 *
-	 * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
 	 * @return AnServiceIdentifier
 	 */
 	public static function getIdentifier($identifier)
 	{
 	    if (!is_string($identifier)) {
-			if($identifier instanceof KObjectServiceable) {
+			if($identifier instanceof AnObjectServiceable) {
 				$identifier = $identifier->getIdentifier();
 			}
 		}
@@ -259,7 +259,7 @@ class AnService implements AnServiceInterface
 	 * Set an alias for an identifier
 	 *
 	 * @param string  The alias
-	 * @param mixed	  An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 				  or valid identifier string
 	 */
 	public static function setAlias($alias, $identifier)
@@ -292,7 +292,7 @@ class AnService implements AnServiceInterface
 	/**
 	 * Set the configuration options for an identifier
 	 *
-	 * @param mixed	  An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 				  or valid identifier string
 	 * @param array	  An associative array of configuration options
 	 */
@@ -311,7 +311,7 @@ class AnService implements AnServiceInterface
 	/**
 	 * Get the configuration options for an identifier
 	 *
-	 * @param mixed	  An object that implements KObjectServiceable, AnServiceIdentifier object
+	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 				  or valid identifier string
 	 *  @param array  An associative array of configuration options
 	 */
@@ -336,14 +336,14 @@ class AnService implements AnServiceInterface
     /**
      * Perform the actual mixin of all registered mixins with an object
      *
-     * @param	mixed	An object that implements KObjectServiceable, AnServiceIdentifier object
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
 	 * 					or valid identifier string
-     * @param   object  A KObject instance to used as the mixer
+     * @param   object  A AnObject instance to used as the mixer
      * @return void
      */
     protected static function _mixin($identifier, $instance)
     {
-        if (isset(self::$_mixins[$identifier]) && $instance instanceof KObject) {
+        if (isset(self::$_mixins[$identifier]) && $instance instanceof AnObject) {
 			$mixins = self::$_mixins[$identifier];
 
 			foreach ($mixins as $mixin) {
@@ -365,8 +365,8 @@ class AnService implements AnServiceInterface
         $result = null;
 
         //Load the class manually using the basepath
-        if (self::get('koowa:loader')->loadClass($identifier->classname, $identifier->basepath)) {
-			if (array_key_exists('KObjectServiceable', class_implements($identifier->classname))) {
+        if (self::get('anahita:loader')->loadClass($identifier->classname, $identifier->basepath)) {
+			if (array_key_exists('AnObjectServiceable', class_implements($identifier->classname))) {
                 //Create the configuration object
                 $config = new AnConfig(array_merge(self::getConfig($identifier), $config));
 

@@ -151,7 +151,7 @@ class AnServiceClass
         }
 
         $classbase = 'Lib'.ucfirst($identifier->package).AnInflector::implode($identifier->path);
-        $loader = AnService::get('koowa:loader');
+        $loader = AnService::get('anahita:loader');
         $classname = $classbase.ucfirst($identifier->name);
 
         if (!class_exists($classname)) {

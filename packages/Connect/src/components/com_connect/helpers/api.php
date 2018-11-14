@@ -12,7 +12,7 @@
   *
   * @link       http://www.GetAnahita.com
   */
- class ComConnectHelperApi extends KObject
+ class ComConnectHelperApi extends AnObject
  {
      /**
      * Return an array of services.

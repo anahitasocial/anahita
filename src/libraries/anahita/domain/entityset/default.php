@@ -118,7 +118,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
     /**
      * If the missed method is implemented by the query object then delegate the call to the query object.
      *
-     * @see KObject::__call()
+     * @see AnObject::__call()
      */
     public function __call($method, $arguments = array())
     {

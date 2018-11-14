@@ -81,7 +81,7 @@
  * @category    Anahita
  * @package     AnHttp
  */
-class AnHttpUrl extends KObject
+class AnHttpUrl extends AnObject
 {
     /**
      * The url parts

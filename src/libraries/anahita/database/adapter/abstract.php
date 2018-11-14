@@ -8,7 +8,7 @@
  * @link        https://www.GetAnahita.com
  */
  
-abstract class AnDatabaseAdapterAbstract extends KObject implements AnDatabaseAdapterInterface
+abstract class AnDatabaseAdapterAbstract extends AnObject implements AnDatabaseAdapterInterface
 {
     /**
      * Active state of the connection

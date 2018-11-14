@@ -14,7 +14,7 @@ require_once dirname(__FILE__).'/../core.php';
  *
  * @link       https://www.GetAnahita.com
  */
-abstract class ComConnectOauthServiceAbstract extends KObject
+abstract class ComConnectOauthServiceAbstract extends AnObject
 {
     /**
      * Request Token URL.

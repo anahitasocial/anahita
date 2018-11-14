@@ -9,7 +9,7 @@
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
  */
-interface AnMixinInterface extends KObjectHandlable
+interface AnMixinInterface extends AnObjectHandlable
 {
     /**
      * Get the methods that are available for mixin.

@@ -38,7 +38,7 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
     /**
      * Get the classname based on an identifier.
      *
-     * @param 	mixed  		 An identifier object - koowa:[path].name
+     * @param 	mixed  		 An identifier object - anahita:[path].name
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
@@ -46,7 +46,7 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
     {
         $classname = 'Tmpl'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
-        if (!$this->getService('koowa:loader')->loadClass($classname, $identifier->basepath)) {
+        if (!$this->getService('anahita:loader')->loadClass($classname, $identifier->basepath)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
             if (!$classname) {
@@ -66,12 +66,10 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
                 $classes[] = 'LibBase'.$path.ucfirst($identifier->name);
                 $classes[] = 'LibBase'.$path.'Default';
                 $classes[] = 'An'.$path.ucfirst($identifier->name);
-                $classes[] = 'K'.$path.ucfirst($identifier->name);
                 $classes[] = 'An'.$path.'Default';
-                $classes[] = 'K'.$path.'Default';
 
                 foreach ($classes as $class) {
-                    if ($this->getService('koowa:loader')->loadClass($class,  $identifier->basepath)) {
+                    if ($this->getService('anahita:loader')->loadClass($class,  $identifier->basepath)) {
                         $classname = $class;
                         break;
                     }

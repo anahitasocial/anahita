@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComLocationsGeocoderDefault extends KObject implements AnServiceInstantiatable
+class ComLocationsGeocoderDefault extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton
