@@ -1,20 +1,13 @@
 <?php
 /**
-* @version		$Id: md5.php 4628 2012-05-06 19:56:43Z johanjanssens $
-* @package      Anahita_Filter
-* @copyright    Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
-* @license      GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
-* @link 		http://www.nooku.org
-*/
-
-/**
- * MD5 filter
- *
- * Validates or sanitizes an md5 hash (32 chars [a-f0-9])
- *
- * @author      Johan Janssens <johan@nooku.org>
  * @package     Anahita_Filter
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
+ 
 class AnFilterMd5 extends AnFilterAbstract
 {
     /**

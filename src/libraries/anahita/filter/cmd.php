@@ -1,21 +1,13 @@
 <?php
 /**
-* @version		$Id: cmd.php 4628 2012-05-06 19:56:43Z johanjanssens $
-* @package      Anahita_Filter
-* @copyright    Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
-* @license      GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
-* @link 		http://www.nooku.org
-*/
-
-/**
- * Command filter.
- *
- * A 'command' is a string containing only the characters [A-Za-z0-9.-_]. Used
- * for names of views, controllers, etc
- *
- * @author      Johan Janssens <johan@nooku.org>
  * @package     Anahita_Filter
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
+ 
 class AnFilterCmd extends AnFilterAbstract
 {
     /**

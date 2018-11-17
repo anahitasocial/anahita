@@ -1,21 +1,13 @@
 <?php
 /**
- * @version		$Id: object.php 4647 2012-05-13 21:28:58Z johanjanssens $
- * @package		Anahita_Object
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
- */
-
-/**
- * Object class
- *
- * Provides getters and setters, mixin, object handles
- *
- * @author      Johan Janssens <johan@nooku.org>
- * @category    Anahita
  * @package     Anahita_Object
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
+ 
 class AnObject implements AnObjectHandlable, AnObjectServiceable
 {
     /**

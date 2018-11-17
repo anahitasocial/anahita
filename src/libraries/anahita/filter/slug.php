@@ -1,32 +1,15 @@
 <?php
 
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Slut Filter. A modification to the KFilterSlug that allows utf-8 characters
- * in the slug.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
+ /**
+  * @package     Anahita_Filter
+  * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+  * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+  * @copyright   Copyright (C) 2013 Arash Sanieyan <ash@anahitapolis.com>
+  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+  * @link        http://www.nooku.org
+  * @link        https://www.GetAnahita.com
+  */
+  
 class AnFilterSlug extends AnFilterAbstract
 {
     /**

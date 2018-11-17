@@ -1,24 +1,13 @@
 <?php
 /**
- * @version		$Id: queue.php 4644 2012-05-13 21:06:36Z johanjanssens $
- * @package		Anahita_Object
- * @copyright	Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
- * @license		GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
- * @link     	http://www.nooku.org
- */
-
-/**
- * Object Queue Class
- *
- * AnObjectQueue is a type of container adaptor implemented as a double linked list
- * and specifically designed such that its first element is always the greatest of
- * the elements it contains based on the priority of the element.
- *
- * @author      Johan Janssens <johan@nooku.org>
- * @category    Anahita
  * @package     Anahita_Object
- * @see 		http://www.php.net/manual/en/class.splpriorityqueue.php
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
+ 
 class AnObjectQueue extends AnObject implements Iterator, Countable
 {
     /**

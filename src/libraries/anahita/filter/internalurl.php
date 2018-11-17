@@ -1,23 +1,13 @@
 <?php
 /**
-* @version		$Id: internalurl.php 4688 2012-06-04 19:57:05Z johanjanssens $
-* @package      Anahita_Filter
-* @copyright    Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
-* @license      GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
-* @link 		http://www.nooku.org
-*/
-
-/**
- * Internal url filter
- *
- * Check if an refers to a legal URL inside the system. Use when
- * redirecting to an URL that was passed in a request
- *
- * @todo        Do a proper implementation, see AnahitaFilterEditlink for ideas
- *
- * @author      Johan Janssens <johan@nooku.org>
  * @package     Anahita_Filter
+ * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+ * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+ * @link        http://www.nooku.org
+ * @link        https://www.GetAnahita.com
  */
+ 
 class AnFilterInternalurl extends AnFilterAbstract
 {
     /**
