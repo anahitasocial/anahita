@@ -2,11 +2,12 @@
 <? $uploadSizeLimit = ini_get('upload_max_filesize'); ?>
 <? $article = empty($article) ? @service('repos:articles.article')->getEntity()->reset() : $article; ?>
 
+<? if (!empty($article->id)): ?>
 <form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend><?= @text('COM-ARTICLES-ARTICLE-COVER') ?></legend>
 	
-		<? if ($article->coverSet()): ?>
+		<? if ($article->hasCover()): ?>
 		<div class="control-group ">
 			<?= @cover($article, 'medium', false) ?>
 		</div>
@@ -24,7 +25,7 @@
 	</fieldset>
 	
     <div class="form-actions">
-		<? if ($article->coverSet()): ?>
+		<? if ($article->hasCover()): ?>
         <button data-trigger="DeleteCover" class="btn btn-danger">
             <?= @text('LIB-AN-COVER-DELETE') ?>
         </button>
@@ -35,6 +36,7 @@
 		<? endif ?>
     </div>
 </form>
+<? endif; ?>
 
 <form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post">
 	<fieldset>

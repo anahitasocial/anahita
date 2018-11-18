@@ -5,7 +5,7 @@
 </data>
 
 <data name="body">
-	<? if ($object->coverSet()): ?>
+	<? if ($object->hasCover()): ?>
 	<div class="entity-portrait-medium">
 		<?= @cover($object, 'medium') ?>
 	</div>

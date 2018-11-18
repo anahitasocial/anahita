@@ -49,7 +49,8 @@ class ComTagsDomainQueryNode extends AnDomainQueryDefault
                 'node.leader_count',
                 'node.parent_id',
                 'node.parent_type',
-                'node.filename'
+                'node.filename',
+                'node.cover_filename'
         ));
     }
 

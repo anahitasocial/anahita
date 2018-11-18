@@ -4,7 +4,7 @@
 
 <h3><?= @text('LIB-AN-COVER-EDIT') ?></h3>
 
-<? if ($item->coverSet()): ?>
+<? if ($item->hasCover()): ?>
 <p><?= @cover($item, 'medium', false) ?></p>
 <? endif ?>
 
@@ -18,7 +18,7 @@
         </div>
     </div>
 
-    <? if ($item->coverSet()): ?>
+    <? if ($item->hasCover()): ?>
     <div class="form-actions">
         <button data-trigger="DeleteCover" class="btn btn-danger">
             <?= @text('LIB-AN-COVER-DELETE') ?>

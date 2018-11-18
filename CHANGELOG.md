@@ -4,6 +4,10 @@ Anahita 4.4.0
 =============================
 1. changed: all koowa classes are now merged with Anahita framework. All classes prefixed with K are now using An prefix. Unused code have been removed.  
 1. changed: in configuration.php file AnConfig is now AnSiteConfig 
+1. changed: coverSet() is now hasCover()
+1. changed: portraitSet() is now hasPortrait()
+1. added: cover to node list, actor list, and person list layouts
+1. changed: using + for all new (entity) buttons
 
 Anahita 4.3.14 Birth Release
 =============================

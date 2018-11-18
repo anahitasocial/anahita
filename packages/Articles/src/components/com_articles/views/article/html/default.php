@@ -1,6 +1,6 @@
 <? defined('ANAHITA') or die; ?>
 
-<? if ($article->coverSet()): ?>
+<? if ($article->hasCover()): ?>
 <div
 	class="cover-container light"
 	data-trigger="Cover"
@@ -9,7 +9,7 @@
 </div>
 <? endif; ?>
 
-<div class="row-fluid<?= ($article->coverSet()) ? ' has-cover' : '' ?>" id="node-container">
+<div class="row-fluid<?= ($article->hasCover()) ? ' has-cover' : '' ?>" id="node-container">
 	<div class="span8">
 	<?= @helper('ui.header') ?>
 	<?= @template('article') ?>

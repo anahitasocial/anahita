@@ -61,7 +61,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
      */
     public function getAvatarURL($actor, $size = 'square')
     {
-        if ($actor->portraitSet()) {
+        if ($actor->hasPortrait()) {
             return $actor->getPortraitURL($size);
         }
 
@@ -95,7 +95,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
             return '<img '.$width.' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'" size="'.$size.'" class="actor-avatar '.$size.'" />';
         }
 
-        if ($actor->portraitSet()) {
+        if ($actor->hasPortrait()) {
             $src = $actor->getPortraitURL($size);
 
             $name = AnHelperString::ucwords($actor->name);
@@ -133,7 +133,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
             $width = '';
         }
 
-        if ($actor->coverSet()) {
+        if ($actor->hasCover()) {
             $src = $actor->getCoverURL($size);
 
             $name = AnHelperString::ucwords($actor->name);

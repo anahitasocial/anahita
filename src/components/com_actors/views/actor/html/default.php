@@ -2,7 +2,7 @@
 
 <? $socialgraphGadget = $gadgets->extract('socialgraph') ?>
 
-<? if ($item->coverSet()): ?>
+<? if ($item->hasCover()): ?>
 <div
 	class="cover-container light"
 	data-trigger="Cover"
@@ -11,7 +11,7 @@
 </div>
 <? endif; ?>
 
-<div class="row-fluid<?= ($item->coverSet()) ? ' has-cover' : '' ?>" id="node-container">
+<div class="row-fluid<?= ($item->hasCover()) ? ' has-cover' : '' ?>" id="node-container">
 	<div class="span2">
 		<div id="actor-avatar">
 		<?= @avatar($item, 'medium', false) ?>

@@ -20,7 +20,7 @@
 		</div>
 	</div>
 
-	<? if ($article->coverSet()): ?>
+	<? if ($article->hasCover()): ?>
 	<div class="entity-portrait-medium">
 		<?= @cover($article, 'medium') ?>
 	</div>

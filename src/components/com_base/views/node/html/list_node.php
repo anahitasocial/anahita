@@ -20,12 +20,19 @@
 		</div>
 	</div>
 
-	<? if ($item->isPortraitable()): ?>
+	<? if ($item->isPortraitable() && $item->hasPortrait()): ?>
 	<div class="entity-portrait-medium">
 		<a title="<?= @escape($item->title) ?>" href="<?= @route($item->getURL()) ?>">
 			<img alt="<?= @escape($item->title) ?>" src="<?= $item->getPortraitURL('medium') ?>" />
 		</a>
 	</div>
+   <? elseif ($item->isCoverable() && $item->hasCover()): ?>
+   <a title="<?= @escape($item->title) ?>" href="<?= @route($item->getURL()) ?>">
+	   <div 
+		   class="entity-cover-medium" 
+		   style="background-image: url(<?= $item->getCoverURL('medium') ?>)"
+	   ></div>
+   </a>
 	<? endif; ?>
 
 	<? if (!empty($item->title)): ?>
