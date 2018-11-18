@@ -9,8 +9,6 @@ require_once ANPATH_LIBRARIES.'/anahita/translator.php';
  * Service Class.
  *
  * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -68,17 +66,17 @@ class anahita
      */
     final private function __construct($config = array())
     {
-        //store the path
         $this->_path = dirname(__FILE__);
+        
         require_once $this->_path.'/loader/loader.php';
         
         $loader = AnLoader::getInstance($config);
         $service = AnService::getInstance($config);
         $service->set('anahita:loader', $loader);
 
-        require_once dirname(__FILE__).'/loader/adapter/anahita.php';
+        require_once $this->_path.'/loader/adapter/anahita.php';
 
-        AnLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
+        AnLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => $this->_path)));
         AnLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
 
         AnServiceClass::getInstance();
@@ -86,11 +84,11 @@ class anahita
         AnServiceIdentifier::addLocator(new AnServiceLocatorAnahita());
         AnServiceIdentifier::addLocator(new AnServiceLocatorRepository());
 
-        //register an empty path for the application
-        //a workaround to remove the applicaiton path from an identifier
+        // register an empty path for the application
+        // a workaround to remove the applicaiton path from an identifier
         AnServiceIdentifier::setApplication('', '');
 
-        //create a central event dispatcher
+        // create a central event dispatcher
         AnService::set('anahita:event.dispatcher', AnService::get('anahita:event.dispatcher'));
     }
 
