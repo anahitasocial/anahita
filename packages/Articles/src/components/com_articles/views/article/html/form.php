@@ -2,6 +2,7 @@
 <? $uploadSizeLimit = ini_get('upload_max_filesize'); ?>
 <? $article = empty($article) ? @service('repos:articles.article')->getEntity()->reset() : $article; ?>
 
+<? if (!empty($article->id)): ?>
 <form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend><?= @text('COM-ARTICLES-ARTICLE-COVER') ?></legend>
@@ -35,6 +36,7 @@
 		<? endif ?>
     </div>
 </form>
+<? endif; ?>
 
 <form action="<?= @route($article->getURL().'&oid='.$actor->id) ?>" method="post">
 	<fieldset>

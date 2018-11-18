@@ -18,45 +18,24 @@
         _create : function () {
             this.element.addClass('uiActivityIndicator');
             
-            this.imageMedium = new Image();
-            this.imageMedium.src = this.element.data('src-medium');
+            var size = ($(window).width() < this.options.mobileWidth) ? 'src-medium' : 'src-large';
             
-            this.imageLarge = new Image();
-            this.imageLarge.src = this.element.data('src-large');
-            
-            this._on(this.imageMedium, {
-                load: function (event) {
-                    if ($(window).width() < this.options.mobileWidth) {
-                        this._setBackgroundImage();
-                    }
-                }
-            });
-
-            this._on(this.imageLarge, {
-                load: function (event) {
-                    this._setBackgroundImage();
-                }
-            });
+            this.coverImage = new Image();
+            this.coverImage.src = this.element.data(size);
 
             this._on(window, {
-                resize: function (event) {
+                load : function() {
                     this._setBackgroundImage();
-                }
+                },
             });
         },
 
         _setBackgroundImage : function() {
-            if ( $(window).width() < this.options.mobileWidth ) {
-               var src = this.imageMedium.src
-            } else {
-               var src = this.imageLarge.src
-            }
-            
             var self = this;
             this.element.fadeTo('fast', 0, function() {
                 self.element
                 .removeClass('uiActivityIndicator')
-                .css('background-image', 'url(' + src + ')');
+                .css('background-image', 'url(' + self.coverImage.src + ')');
             }).fadeTo('fast', 1);
         }
     });
