@@ -39,7 +39,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->isPortraitable()) {
             $imageURL = array();
 
-            if ($entity->portraitSet()) {
+            if ($entity->hasPortrait()) {
                 $sizes = $entity->getPortraitSizes();
                 foreach ($sizes as $name => $size) {
                     $url = $entity->getPortraitURL($name);
@@ -74,7 +74,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->isCoverable()) {
             $coverURL = array();
             
-            if ($entity->coverSet()) {
+            if ($entity->hasCover()) {
                 $coverSizes = $entity->getCoverSizes();
                 foreach ($coverSizes as $name => $size) {
                     $url = $entity->getCoverURL($name);

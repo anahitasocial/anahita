@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <? if ($item->portraitSet()): ?>
+    <? if ($item->hasPortrait()): ?>
     <div class="form-actions">
         <button data-trigger="DeleteAvatar" class="btn btn-danger">
             <?= @text('LIB-AN-AVATAR-DELETE') ?>

@@ -1,8 +1,5 @@
 <?php
-
 /** 
- * LICENSE: ##LICENSE##.
- * 
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -15,17 +12,6 @@
  * @link       http://www.GetAnahita.com
  */
 
-/**
- * Domain Space. Implements unit of work and domain entitis states.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
 class LibBaseDomainSpace extends AnDomainSpace implements AnServiceInstantiatable
 {
     /**

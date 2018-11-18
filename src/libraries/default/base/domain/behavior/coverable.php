@@ -1,27 +1,14 @@
 <?php
-
 /**
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2015 rmdStudio Inc./Peerglobe Technology Inc
+ * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
  */
 
-/**
- * Coverable Behavior.
- *
- * An cover representation of a node
- *
- * @category   Anahita
- *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
 class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 {
     /**
@@ -88,7 +75,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
      *
      * @return bool
      */
-    public function coverSet()
+    public function hasCover()
     {
         return !empty($this->coverFilename);
     }
@@ -202,11 +189,14 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
         $config->mimetype = strtolower($config->mimetype);
 
-        //the allowed mimetypes
-        $mimetypes = array('image/jpeg' => 'jpg', 'image/png' => 'png');
+        // the allowed mimetypes
+        $mimetypes = array(
+            'image/jpeg' => 'jpg', 
+            'image/png' => 'png'
+        );
 
-        //force mimetype to jpeg if invalid
-        //@TODO is this wise ?? No it isn't, but until we find a more reliable method to detect mimetypes
+        // force mimetype to jpeg if invalid
+        // @TODO is this wise ?? No it isn't, but until we find a more reliable method to detect mimetypes
         if (!isset($mimetypes[$config->mimetype])) {
             $config->mimetype = 'image/jpeg';
         }

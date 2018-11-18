@@ -24,6 +24,15 @@
 			</div>
 		</div>
 	</div>
+	
+	<? if ($item->isCoverable() && $item->hasCover()): ?>
+	<a title="<?= @escape($item->title) ?>" href="<?= @route($item->getURL()) ?>">
+		<div 
+			class="entity-cover-medium" 
+			style="background-image: url(<?= $item->getCoverURL('medium') ?>)"
+		></div>
+	</a>
+	<? endif; ?>
 
 	<div class="entity-description">
 		<?= @helper('text.truncate', @content($item->body, array('exclude' => array('syntax', 'video'))), array('length' => 200, 'consider_html' => true)); ?>

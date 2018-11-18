@@ -6,7 +6,7 @@
 	<fieldset>
 		<legend><?= @text('COM-ARTICLES-ARTICLE-COVER') ?></legend>
 	
-		<? if ($article->coverSet()): ?>
+		<? if ($article->hasCover()): ?>
 		<div class="control-group ">
 			<?= @cover($article, 'medium', false) ?>
 		</div>
@@ -24,7 +24,7 @@
 	</fieldset>
 	
     <div class="form-actions">
-		<? if ($article->coverSet()): ?>
+		<? if ($article->hasCover()): ?>
         <button data-trigger="DeleteCover" class="btn btn-danger">
             <?= @text('LIB-AN-COVER-DELETE') ?>
         </button>
