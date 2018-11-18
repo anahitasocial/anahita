@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,18 +26,18 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnLoaderAdapterTemplate extends KLoaderAdapterAbstract
+class AnLoaderAdapterTemplate extends AnLoaderAdapterAbstract
 {
-    /** 
+    /**
      * The adapter type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'tmpl';
 
     /**
      * The class prefix.
-     * 
+     *
      * @var string
      */
     protected $_prefix = 'Tmpl';
@@ -45,7 +45,7 @@ class AnLoaderAdapterTemplate extends KLoaderAdapterAbstract
     /**
      * Get the path based on a class name.
      *
-     * @param  string		  	The class name 
+     * @param  string		  	The class name
      *
      * @return string|false Returns the path on success FALSE on failure
      */

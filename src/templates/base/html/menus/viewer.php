@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <?
 $num_notifications = empty($num_notifications) ? get_viewer()->numOfNewNotifications() : $num_notifications;
@@ -35,7 +35,7 @@ $components = $this->getService('com:people.template.helper')->viewerMenuLinks($
 				</a>
 			</li>
 
-			<? if (KService::get('koowa:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
+			<? if (AnService::get('anahita:loader')->loadClass('ComGroupsDomainEntityGroup')): ?>
 			<li class="divider"></li>
             <li>
             	<a href="<?= @route('option=com_groups&view=groups&oid='.$viewer->uniqueAlias.'&filter=following') ?>">
@@ -63,7 +63,7 @@ $components = $this->getService('com:people.template.helper')->viewerMenuLinks($
             <? endforeach; ?>
             <? endif; ?>
 
-            <? if (KService::get('koowa:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
+            <? if (AnService::get('anahita:loader')->loadClass('ComInvitesDomainEntityToken')): ?>
             <li>
             	<a href="<?= @route('option=com_invites&view=email') ?>">
             	<?= @text('TMPL-MENU-ITEM-VIEWER-INVITE') ?>
@@ -72,7 +72,7 @@ $components = $this->getService('com:people.template.helper')->viewerMenuLinks($
 			<li class="divider"></li>
             <? endif; ?>
 
-            <? if (KService::get('koowa:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>
+            <? if (AnService::get('anahita:loader')->loadClass('ComSubscriptionsDomainEntityOrder')) : ?>
             <li>
                  <? if ($viewer->admin()): ?>
                  <a href="<?= @route('option=com_subscriptions&view=orders') ?>">

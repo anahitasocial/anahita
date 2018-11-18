@@ -17,9 +17,9 @@
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'priority' => AnCommand::PRIORITY_HIGH,
@@ -44,7 +44,7 @@
         foreach ($ids as $id) {
             $id = (int) $id;
 
-            $medium = KService::get('repos:medium.medium')->getQuery()->disableChain()->id($id)->fetch();
+            $medium = AnService::get('repos:medium.medium')->getQuery()->disableChain()->id($id)->fetch();
 
             if (isset($medium->id) && $medium->authorize('access')) {
                 if ($medium->getRepository()->hasBehavior('portraitable')) {

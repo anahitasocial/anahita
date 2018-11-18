@@ -22,9 +22,9 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
   /**
    * Constructor
    *
-   * @param KConfig $config An optional KConfig object with configuration options.
+   * @param AnConfig $config An optional AnConfig object with configuration options.
    */
-  public function __construct(KConfig $config)
+  public function __construct(AnConfig $config)
   {
       parent::__construct($config);
 
@@ -36,9 +36,9 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
    *
    * Called from {@link __construct()} as a first step of object instantiation.
    *
-   * @param KConfig $config An optional KConfig object with configuration options.
+   * @param AnConfig $config An optional AnConfig object with configuration options.
    */
-   protected function _initialize(KConfig $config)
+   protected function _initialize(AnConfig $config)
    {
         $config->append(array(
             'attributes' => array(
@@ -132,7 +132,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
     */
     protected function _beforeEntityUpdate()
     {
-        $keys = array_keys(KConfig::unbox($this->getModifiedData()));
+        $keys = array_keys(AnConfig::unbox($this->getModifiedData()));
 
         $fields = array(
           'geoAddress',

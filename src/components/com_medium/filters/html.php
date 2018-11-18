@@ -10,16 +10,16 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMediumFilterHtml extends KFilterHtml
+class ComMediumFilterHtml extends AnFilterHtml
 {
     /**
      * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             //whilte list these tags
@@ -28,11 +28,11 @@ class ComMediumFilterHtml extends KFilterHtml
         ));
 
         if ($config->tag_list) {
-            $config['tag_list'] = KConfig::unbox($config->tag_list);
+            $config['tag_list'] = AnConfig::unbox($config->tag_list);
         }
 
         if ($config->tag_method) {
-            $config['tag_method'] = KConfig::unbox($config->tag_method);
+            $config['tag_method'] = AnConfig::unbox($config->tag_method);
         }
 
         $config['attribute_method'] = 0;

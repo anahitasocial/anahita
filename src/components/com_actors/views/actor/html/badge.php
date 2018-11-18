@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <div class="module-border well">
 	<h2 class="block-title">

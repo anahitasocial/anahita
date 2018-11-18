@@ -11,28 +11,28 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleViewer extends KObject implements KServiceInstantiatable
+class ComPeopleViewer extends AnObject implements AnServiceInstantiatable
 {
     /**
       * Force creation of a singleton.
       *
-      * @param KConfigInterface  $config    An optional KConfig object with configuration options
-      * @param KServiceInterface $container A KServiceInterface object
+      * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+      * @param AnServiceInterface $container A AnServiceInterface object
       *
-      * @return KServiceInstantiatable
+      * @return AnServiceInstantiatable
       */
-     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
      {
          if (! $container->has($config->service_identifier)) {
 
              $person = null;
 
              if (PHP_SAPI != 'cli') {
-                $session = KService::get('com:sessions');
+                $session = AnService::get('com:sessions');
                 $person = $session->has('person') ? $session->get('person') : null;
              }
 
-             $repository = KService::get('repos:people.person');
+             $repository = AnService::get('repos:people.person');
 
              if(isset($person->id)) {
                  $viewer = $repository->find(array('id' => $person->id));

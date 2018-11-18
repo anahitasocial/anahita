@@ -41,7 +41,7 @@ class LibBaseControllerBehaviorPersistable extends AnControllerBehaviorAbstract
         $identifier = $this->_mixer->getIdentifier().'.'.$action;
 
         //Set the state in the session
-        AnRequest::set('session.'.$identifier, KConfig::unbox($state));
+        AnRequest::set('session.'.$identifier, AnConfig::unbox($state));
     }
 
     /**

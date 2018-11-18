@@ -13,7 +13,7 @@
  * @link       https://www.GetAnahita.com
  */
 
-class ComApplication extends KObject implements KServiceInstantiatable
+class ComApplication extends AnObject implements AnServiceInstantiatable
 {
 
     /**
@@ -57,7 +57,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
     *
     * @param	integer	A client identifier.
     */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         $this->_name = $config->session_name;
 
@@ -75,7 +75,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
      *
      * @param array $options Initialization options
      */
-     protected function _initialize(KConfig $config)
+     protected function _initialize(AnConfig $config)
      {
          $config->append(array(
              'session' => false,
@@ -88,11 +88,11 @@ class ComApplication extends KObject implements KServiceInstantiatable
     /**
      * Force creation of a singleton
      *
-     * @param 	object 	An optional KConfig object with configuration options
-     * @param 	object	A KServiceInterface object
+     * @param 	object 	An optional AnConfig object with configuration options
+     * @param 	object	A AnServiceInterface object
      * @return AnDatabaseTableInterface
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
@@ -117,11 +117,11 @@ class ComApplication extends KObject implements KServiceInstantiatable
   	 */
   	public function createSession($name)
   	{
-        $session = KService::get('com:sessions', array(
+        $session = AnService::get('com:sessions', array(
             'name' => $name
         ));
 
-        $repository = KService::get('repos:sessions.session');
+        $repository = AnService::get('repos:sessions.session');
 
         //purge guest sessions within 10 minutes expiry time
         $repository->purge(600);
@@ -147,11 +147,11 @@ class ComApplication extends KObject implements KServiceInstantiatable
     {
         if (empty($this->_template)) {
 
-            if (! KService::get('application.registry')->offsetExists('application-template')) {
-                KService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
+            if (! AnService::get('application.registry')->offsetExists('application-template')) {
+                AnService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
             }
 
-            $template = KService::get('application.registry')->offsetGet('application-template');
+            $template = AnService::get('application.registry')->offsetGet('application-template');
             $this->setTemplate(pick($template, 'base'));
         }
 
@@ -188,7 +188,7 @@ class ComApplication extends KObject implements KServiceInstantiatable
     public function getRouter($name = null, $options = array())
     {
         if (is_null($this->_router)) {
-            $this->_router = KService::get('com:application.router', array(
+            $this->_router = AnService::get('com:application.router', array(
                 'enable_rewrite' => $this->_site_settings->sef_rewrite
             ));
         }

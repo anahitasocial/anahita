@@ -24,7 +24,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     /**
      * Collection Identifier.
      *
-     * @var KServiceIdentifier
+     * @var AnServiceIdentifier
      */
     protected $_entityset;
 
@@ -38,7 +38,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     /**
      * Return the repository validator.
      *
-     * @var string|KServiceIdentifier|AnDomainValidatorAbstract
+     * @var string|AnServiceIdentifier|AnDomainValidatorAbstract
      */
     protected $_validator;
 
@@ -66,25 +66,25 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     /**
      * Query Identifier.
      *
-     * @var KServiceIdentifier
+     * @var AnServiceIdentifier
      */
     protected $_query;
 
     /**
      * Resources.
      *
-     * @var KObjectQeueue
+     * @var AnObjectQeueue
      */
     protected $_resources;
 
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
-        KService::set($config->service_identifier, $this);
+        AnService::set($config->service_identifier, $this);
 
         parent::__construct($config);
 
@@ -94,11 +94,11 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $this->_space = $config->space;
         $this->_resources = $config->resources;
         $this->_description = new AnDomainDescriptionDefault($config);
-        //$this->_description		 = $this->getService($config->description, KConfig::unbox($config));
+        //$this->_description		 = $this->getService($config->description, AnConfig::unbox($config));
 
         //now set the attributes and relationships
-        $this->_description->setAttribute(KConfig::unbox($config->attributes));
-        $this->_description->setRelationship(KConfig::unbox($config->relationships));
+        $this->_description->setAttribute(AnConfig::unbox($config->attributes));
+        $this->_description->setRelationship(AnConfig::unbox($config->relationships));
 
         $this->_query = $this->getService($config->query, $config->toArray());
 
@@ -117,9 +117,9 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         if (empty($config->resources)) {
             $resource = $this->getIdentifier()->package.'_'.AnInflector::pluralize($this->getIdentifier()->name);
@@ -168,8 +168,8 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         ));
 
         //set the resources
-        $resources = array_reverse((array) KConfig::unbox($config->resources));
-        $config['resources'] = new AnDomainResourceSet(new KConfig(array('store' => $config->store, 'resources' => $resources)));
+        $resources = array_reverse((array) AnConfig::unbox($config->resources));
+        $config['resources'] = new AnDomainResourceSet(new AnConfig(array('store' => $config->store, 'resources' => $resources)));
         $config['repository'] = $this;
 
         parent::_initialize($config);
@@ -400,7 +400,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             $this->getCommandChain()->enable();
         }
 
-        return KConfig::unbox($context->data);
+        return AnConfig::unbox($context->data);
     }
 
     /**
@@ -446,7 +446,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $this->getCommandChain()->run('after.instantiate', $context);
 
         //set the entity data
-        $data = KConfig::unbox($context['data']);
+        $data = AnConfig::unbox($context['data']);
         $entity->setData($data, AnDomain::ACCESS_PROTECTED);
 
         return $entity;
@@ -455,7 +455,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     /**
      * Return the entityset Identifier.
      *
-     * @return KServiceIdentifier
+     * @return AnServiceIdentifier
      */
     public function getEntitySet()
     {
@@ -623,7 +623,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         if (!$entity ||
                  ($entity->getEntityState() & AnDomain::STATE_DELETED ||
                   $entity->getEntityState() &  AnDomain::STATE_DESTROYED)) {
-            $config = new KConfig($config);
+            $config = new AnConfig($config);
             $config->append(array(
                 'data' => $data,
             ));
@@ -809,7 +809,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //since the identifier doesn't have an
         //application set, it gets the application of the parent
         //repository
-        $identifier = KService::getIdentifier($identifier);
+        $identifier = AnService::getIdentifier($identifier);
         $identifier->application = $this->getIdentifier()->application;
 
         return clone AnDomain::getRepository($identifier)->getClone();

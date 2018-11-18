@@ -11,16 +11,16 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComLocationsGeocoderDefault extends KObject implements KServiceInstantiatable
+class ComLocationsGeocoderDefault extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton
      *
-     * @param 	object 	An optional KConfig object with configuration options
-     * @param 	object	A KServiceInterface object
+     * @param 	object 	An optional AnConfig object with configuration options
+     * @param 	object	A AnServiceInterface object
      * @return AnDatabaseTableInterface
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
 

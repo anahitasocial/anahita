@@ -38,9 +38,9 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_repository = $config->mixer;
 
@@ -52,8 +52,8 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
             }
         }
 
-        $this->_mixer->getDescription()->setAttribute(KConfig::unbox($config->attributes));
-        $this->_mixer->getDescription()->setRelationship(KConfig::unbox($config->relationships));
+        $this->_mixer->getDescription()->setAttribute(AnConfig::unbox($config->attributes));
+        $this->_mixer->getDescription()->setRelationship(AnConfig::unbox($config->relationships));
     }
 
     /**
@@ -61,9 +61,9 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'attributes' => array(),
@@ -76,7 +76,7 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
     /**
      * {@inheritdoc}
      */
-    public function getMixableMethods(KObject $mixer = null)
+    public function getMixableMethods(AnObject $mixer = null)
     {
         $methods = parent::getMixableMethods($mixer);
 

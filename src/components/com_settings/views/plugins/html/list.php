@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? foreach ($items as $item) : ?>
 <tr data-ordering="<?= $item->ordering ?>" data-url="<?= @route($item->getURL()) ?>">

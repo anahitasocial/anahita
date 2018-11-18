@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <form action="<?= @route() ?>" method="get">
 <? foreach($params as $name=>$value) : ?>

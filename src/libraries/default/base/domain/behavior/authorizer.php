@@ -41,13 +41,13 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
      /**
       * Constructor.
       *
-      * @param KConfig $config An optional KConfig object with configuration options.
+      * @param AnConfig $config An optional AnConfig object with configuration options.
       */
-     public function __construct(KConfig $config)
+     public function __construct(AnConfig $config)
      {
          parent::__construct($config);
 
-         $authorizers = array_reverse(array_unique(KConfig::unbox($config->authorizers)));
+         $authorizers = array_reverse(array_unique(AnConfig::unbox($config->authorizers)));
 
          foreach ($authorizers as $authorizer) {
              $this->addAuthorizer($authorizer);
@@ -59,9 +59,9 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'authorizers' => array($config->mixer->getIdentifier()->name),
@@ -85,12 +85,12 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
                 $identifier->name = $authorizer;
                 register_default(array('identifier' => $identifier, 'prefix' => $this->_repository->getClone()));
             } else {
-                $identifier = KService::getIdentifier($authorizer);
+                $identifier = AnService::getIdentifier($authorizer);
             }
 
             $authorizer = $identifier;
 
-            $authorizer = KService::get($authorizer);
+            $authorizer = AnService::get($authorizer);
         }
 
         array_unshift($this->_authorizers, $authorizer);
@@ -110,7 +110,7 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
             $config = array($action => $config);
         }
 
-        $config = KConfig::unbox($config);
+        $config = AnConfig::unbox($config);
 
         $context = $this->_mixer->getRepository()->getCommandContext();
 

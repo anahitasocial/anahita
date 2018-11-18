@@ -44,7 +44,7 @@
      */
     public function login($service, $config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'html' => $this->icon($service),

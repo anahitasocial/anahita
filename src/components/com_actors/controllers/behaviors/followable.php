@@ -16,9 +16,9 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -234,9 +234,9 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
                     throw new LibBaseControllerExceptionForbidden('Forbidden');
                 }
 
-                $excludeIds = KConfig::unbox($entity->followers->id);
+                $excludeIds = AnConfig::unbox($entity->followers->id);
 
-                $excludeIds = array_merge($excludeIds, KConfig::unbox($entity->blockeds->id));
+                $excludeIds = array_merge($excludeIds, AnConfig::unbox($entity->blockeds->id));
 
                 if ($viewer->admin()) {
                     $entities = $this->_mixer->getService('com:people.domain.entity.person')
@@ -262,7 +262,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
             return false;
         }
 
-        $xid = (array) KConfig::unbox($this->getState()->xid);
+        $xid = (array) AnConfig::unbox($this->getState()->xid);
 
         if (!empty($xid)) {
             $entities->where('id', 'NOT IN', $xid);

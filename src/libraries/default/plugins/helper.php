@@ -12,7 +12,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class LibPluginsHelper extends KObject implements KServiceInstantiatable
+class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
 {
     /**
     *   array of plugins
@@ -27,12 +27,12 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
     /**
      * Force creation of a singleton.
      *
-     * @param   object  An optional KConfig object with configuration options
-     * @param   object  A KServiceInterface object
+     * @param   object  An optional AnConfig object with configuration options
+     * @param   object  A AnServiceInterface object
      *
      * @return KDispatcherDefault
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         // Check if an instance with this identifier already exists or not
         if (!$container->has($config->service_identifier)) {
@@ -143,7 +143,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
                   'element' => $plugin->element,
                   'meta' => $plugin->meta
                 );
-                $config = new KConfig($config);
+                $config = new AnConfig($config);
                 $instance = new $className($dispatcher, $config);
             }
         }
@@ -159,7 +159,7 @@ class LibPluginsHelper extends KObject implements KServiceInstantiatable
     protected function _load()
     {
         if (empty($this->_plugins)) {
-            $this->_plugins = KService::get('repos:settings.plugin')
+            $this->_plugins = AnService::get('repos:settings.plugin')
                               ->getQuery()
                               ->where('enabled', '=', 1)
                               ->toEntityset();

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if (count($items)): ?>
 <ul class="nav nav-pills nav-stacked">

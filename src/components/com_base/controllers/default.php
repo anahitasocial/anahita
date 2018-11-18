@@ -11,17 +11,17 @@
  *
  * @link       http://www.GetAnahita.com
  */
-final class ComBaseControllerDefault extends ComBaseControllerService implements KServiceInstantiatable
+final class ComBaseControllerDefault extends ComBaseControllerService implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         $strIdentifier = (string) $config->service_identifier;
         $registery = $container->get('application.registry', array('key' => $strIdentifier.'_default_class'));

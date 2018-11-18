@@ -16,7 +16,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     /**
      * The property type.
      *
-     * @var KServiceIdentifier
+     * @var AnServiceIdentifier
      */
     protected $_type;
 
@@ -44,9 +44,9 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration
+     * @param AnConfig $config Property Configuration
      */
-    public function setConfig(KConfig $config)
+    public function setConfig(AnConfig $config)
     {
         parent::setConfig($config);
 
@@ -66,9 +66,9 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'type' => 'string',

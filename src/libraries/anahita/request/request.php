@@ -13,7 +13,7 @@ AnRequest::getInstance();
  * @package     AnRequest
  * @uses        KFilter
  * @uses        AnInflector
- * @uses        KService
+ * @uses        AnService
  * @static
  */
 class AnRequest
@@ -66,7 +66,7 @@ class AnRequest
      *
      * Prevent creating instances of this class by making the contructor private
      */
-    final private function __construct(KConfig $config)
+    final private function __construct(AnConfig $config)
     {
         $content = self::content();
 
@@ -128,8 +128,8 @@ class AnRequest
         static $instance;
 
         if ($instance === null) {
-            if (! $config instanceof KConfig) {
-                $config = new KConfig($config);
+            if (! $config instanceof AnConfig) {
+                $config = new AnConfig($config);
             }
 
             $instance = new self($config);
@@ -176,8 +176,8 @@ class AnRequest
             $result = self::_stripSlashes($result);
         }
 
-        if (! ($filter instanceof KFilterInterface)) {
-            $filter = KService::get('koowa:filter.factory')->instantiate($filter);
+        if (! ($filter instanceof AnFilterInterface)) {
+            $filter = AnService::get('anahita:filter.factory')->instantiate($filter);
         }
 
         return $filter->sanitize($result);
@@ -338,10 +338,10 @@ class AnRequest
     {
         if (! isset(self::$_referrer)) {
             if ($referrer = AnRequest::get('server.HTTP_REFERER', 'url')) {
-                self::$_referrer = KService::get('anahita:http.url', array('url' => $referrer));
+                self::$_referrer = AnService::get('anahita:http.url', array('url' => $referrer));
 
                 if ($isInternal) {
-                    if (! KService::get('koowa:filter.internalurl')->validate((string) self::$_referrer)) {
+                    if (! AnService::get('anahita:filter.internalurl')->validate((string) self::$_referrer)) {
                         return null;
                     }
                 }
@@ -389,14 +389,14 @@ class AnRequest
                     }
                 }
             } else {
-                $url .= 'koowa';
+                $url .= 'anahita';
             }
 
             // Sanitize the url since we can't trust the server var
-            $url = KService::get('koowa:filter.url')->sanitize($url);
+            $url = AnService::get('anahita:filter.url')->sanitize($url);
 
             // Create the URI object
-            self::$_url = KService::get('anahita:http.url', array('url' => $url));
+            self::$_url = AnService::get('anahita:http.url', array('url' => $url));
         }
 
         return self::$_url;
@@ -422,9 +422,9 @@ class AnRequest
             $path = rtrim(dirname($path), '/\\');
 
             // Sanitize the url since we can't trust the server var
-            $path = KService::get('koowa:filter.url')->sanitize($path);
+            $path = AnService::get('anahita:filter.url')->sanitize($path);
 
-            self::$_base = KService::get('anahita:http.url', array('url' => $path));
+            self::$_base = AnService::get('anahita:http.url', array('url' => $path));
         }
 
         return self::$_base;
@@ -442,7 +442,7 @@ class AnRequest
     {
         if (! is_null($path)) {
             if (! $path instanceof KhttpUrl) {
-                $path = KService::get('anahita:http.url', array('url' => $path));
+                $path = AnService::get('anahita:http.url', array('url' => $path));
             }
 
             self::$_root = $path;

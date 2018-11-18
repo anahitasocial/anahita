@@ -33,9 +33,9 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'searchable_properties' => array('order_id'),
@@ -56,7 +56,7 @@ class ComSubscriptionsDomainEntityOrder extends AnDomainEntityDefault
      *
      * @return unknown_type
      */
-    protected function _afterEntityInstantiate(KConfig $config)
+    protected function _afterEntityInstantiate(AnConfig $config)
     {
         $config->append(array(
           'data' => array(

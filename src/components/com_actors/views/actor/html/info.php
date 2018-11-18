@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? foreach ($profile as $header => $values)  : ?>
 	<h4><?= @text($header) ?></h4>

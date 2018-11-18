@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <h4><?= @text('COM-PHOTOS-SET-CHANGE-COVER') ?></h4>
 

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $url = (strlen($gadget->url)) ? @route($gadget->url) : ''; ?>
 

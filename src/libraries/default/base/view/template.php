@@ -45,15 +45,15 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
         //set the media url
         if (!$config->media_url instanceof AnHttpUrl) {
-            $this->_mediaurl = KService::get('anahita:http.url', array('url' => $config->media_url));
+            $this->_mediaurl = AnService::get('anahita:http.url', array('url' => $config->media_url));
         } else {
             $this->_mediaurl = $config->media_url;
         }
@@ -73,7 +73,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         }
 
         // Add default template paths
-        $this->getTemplate()->addSearchPath(KConfig::unbox($config->template_paths));
+        $this->getTemplate()->addSearchPath(AnConfig::unbox($config->template_paths));
 
         //Add alias filter for media:// namespace
         $this->getTemplate()->getFilter('alias')->append(
@@ -86,9 +86,9 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'escape' => 'htmlspecialchars',
@@ -134,13 +134,13 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     /**
      * Get the identifier for the template with the same name.
      *
-     * @return KServiceIdentifierInterface
+     * @return AnServiceIdentifierInterface
      */
     public function getTemplate()
     {
         if (! $this->_template instanceof LibBaseTemplateAbstract) {
             //Make sure we have a template identifier
-            if (! ($this->_template instanceof KServiceIdentifier)) {
+            if (! ($this->_template instanceof AnServiceIdentifier)) {
                 $this->setTemplate($this->_template);
             }
 
@@ -157,7 +157,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
     /**
      * Method to set a template object attached to the view.
      *
-     * @param   mixed   An object that implements KObjectIdentifiable, an object that
+     * @param   mixed   An object that implements AnObjectIdentifiable, an object that
      *                  implements KIndentifierInterface or valid identifier string
      *
      * @throws AnDatabaseRowsetException If the identifier is not a table identifier

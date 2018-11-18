@@ -9,7 +9,7 @@
  * @package     AnCommand
  * @link        https://www.GetAnahita.com
  */
-interface AnCommandInterface extends KObjectHandlable
+interface AnCommandInterface extends AnObjectHandlable
 {
     /**
      * Generic Command handler

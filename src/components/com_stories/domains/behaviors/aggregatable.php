@@ -75,7 +75,7 @@ class ComStoriesDomainBehaviorAggregatable extends AnDomainBehaviorAbstract
     {
         $cases = array();
 
-        $config = KConfig::unbox($config);
+        $config = AnConfig::unbox($config);
         $config[] = array(
              'WHEN @col(name) LIKE "avatar_edit"  THEN IF(@col(subject.id) = @col(target.id), "", @col(id))',
              'WHEN @col(name) LIKE "actor_follow" THEN @col(subject.id)',

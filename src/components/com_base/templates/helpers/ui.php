@@ -16,12 +16,12 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
-        $this->_template->addSearchPath(KConfig::unbox($config->paths), true);
+        $this->_template->addSearchPath(AnConfig::unbox($config->paths), true);
     }
 
     /**
@@ -29,9 +29,9 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $path[] = dirname(__FILE__).'/ui';
 
@@ -49,8 +49,8 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
 
         parent::_initialize($config);
 
-        $paths = KConfig::unbox($config->paths);
-        array_unshift($paths, ANPATH_THEMES.'/'.KService::get('application')->getTemplate().'/html/com_base/ui');
+        $paths = AnConfig::unbox($config->paths);
+        array_unshift($paths, ANPATH_THEMES.'/'.AnService::get('application')->getTemplate().'/html/com_base/ui');
         $config->paths = $paths;
     }
 
@@ -91,7 +91,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
      */
     public function message($message, $config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'type' => 'info',
@@ -206,7 +206,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
      */
     public function command($command)
     {
-        $attributes = KConfig::unbox($command->getAttributes());
+        $attributes = AnConfig::unbox($command->getAttributes());
 
         if (isset($attributes['icon'])) {
             $icon = 'icon-'.$attributes['icon'];
@@ -291,7 +291,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
     /**
      * Renders a pagination using the paginator object.
      *
-     * @param AnDomainEntitysetDefault|KConfigPaginator $paginator Paginator object
+     * @param AnDomainEntitysetDefault|AnConfigPaginator $paginator Paginator object
      * @param array                                     $config    Configuration
      *
      * @returns string
@@ -302,7 +302,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
             return '';
         }
 
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'url' => (string) $this->_template->getView()->getRoute(),
@@ -314,7 +314,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
 
         if (is($paginator, 'AnDomainEntitysetDefault')) {
             $entityset = $paginator;
-            $paginator = new KConfigPaginator(array(
+            $paginator = new AnConfigPaginator(array(
                 'offset' => $entityset->getOffset(),
                 'limit' => 20,
             ));
@@ -322,8 +322,8 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
             $paginator->total = $entityset->getTotal();
         }
 
-        if (!$paginator instanceof KConfigPaginator) {
-            $paginator = new KConfigPaginator($paginator);
+        if (!$paginator instanceof AnConfigPaginator) {
+            $paginator = new AnConfigPaginator($paginator);
         }
 
         $paginator->display = 5;
@@ -380,7 +380,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
      */
     public function editor($config)
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'name' => 'description',
@@ -403,7 +403,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
         }
 
         $tags = $this->getService('com:base.template.helper.html');
-        $textarea = $tags->textarea($config->name, $config->content, KConfig::unbox($config->html));
+        $textarea = $tags->textarea($config->name, $config->content, AnConfig::unbox($config->html));
         $textarea->set('data-behavior', 'Editor')->id(rand());
 
         return  $textarea;
@@ -419,9 +419,9 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
     public function privacy($config = array())
     {
         if ($config instanceof AnDomainEntityAbstract) {
-            $config = new KConfig(array('entity' => $config));
+            $config = new AnConfig(array('entity' => $config));
         } else {
-            $config = new KConfig($config);
+            $config = new AnConfig($config);
         }
 
         $config->append(array(
@@ -441,7 +441,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
         if (is($config->options, 'ComActorsDomainEntityActor')) {
             $actor = $config->options;
 
-            $options = new KConfig(array(
+            $options = new AnConfig(array(
                 LibBaseDomainBehaviorPrivatable::GUEST => AnTranslator::_('LIB-AN-PRIVACYLABEL-PUBLIC'),
                 LibBaseDomainBehaviorPrivatable::REG => AnTranslator::_('LIB-AN-PRIVACYLABEL-REGISTERED'),
             ));
@@ -495,7 +495,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
 
             //trim the options based on the actor
             if ($config->entity && !$config->entity->eql($actor)) {
-                $current_index = array_search($actor->access, array_keys(KConfig::unbox($config->options)));
+                $current_index = array_search($actor->access, array_keys(AnConfig::unbox($config->options)));
                 $i = 0;
 
                 foreach ($config->options as $key => $value) {
@@ -536,7 +536,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
 
         $placeholder = isset($config['placeholder']) ? $config['placeholder'] : AnTranslator::_('LIB-AN-FILTER-PLACEHOLDER');
 
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'search_action' => $path,
@@ -577,9 +577,9 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
         }
 
         $term = AnRequest::get('get.term', 'raw');
-        $term = KService::get('com:search.filter.term')->sanitize($term);
+        $term = AnService::get('com:search.filter.term')->sanitize($term);
 
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'label' => $label,
@@ -600,7 +600,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
      */
     public function form($inputs, $options = array())
     {
-        return $this->_render('form', array('inputs' => $inputs, 'options' => new KConfig($options)));
+        return $this->_render('form', array('inputs' => $inputs, 'options' => new AnConfig($options)));
     }
 
     /**
@@ -628,7 +628,7 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
     {
         $data['helper'] = $this;
         $file = '_ui_'.$ui.'.php';
-        $data = KConfig::unbox($data);
+        $data = AnConfig::unbox($data);
 
         return (string) $this->_template->loadTemplate('_ui_'.$ui, $data);
     }

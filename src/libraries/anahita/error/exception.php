@@ -38,7 +38,7 @@ class AnErrorException extends AnException
     /**
      * Constructor.
      *
-     * @param array $config An optional KConfig object with configuration options.
+     * @param array $config An optional AnConfig object with configuration options.
      */
     public function __construct($errors = array(), $code = AnHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
     {

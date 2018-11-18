@@ -1,33 +1,16 @@
 <?php
 
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Slut Filter. A modification to the KFilterSlug that allows utf-8 characters
- * in the slug.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @link       http://www.GetAnahita.com
- */
-class AnFilterSlug extends KFilterSlug
+ /**
+  * @package     Anahita_Filter
+  * @copyright   Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
+  * @copyright   Copyright (C) 2018 Rastin Mehr. All rights reserved.
+  * @copyright   Copyright (C) 2013 Arash Sanieyan <ash@anahitapolis.com>
+  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
+  * @link        http://www.nooku.org
+  * @link        https://www.GetAnahita.com
+  */
+  
+class AnFilterSlug extends AnFilterAbstract
 {
     /**
      * The slut length.
@@ -39,12 +22,14 @@ class AnFilterSlug extends KFilterSlug
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         $this->_slug_length = $config->slug_length;
+        $this->_length    = $config->length;
+        $this->_separator = $config->separator;
     }
 
     /**
@@ -52,12 +37,14 @@ class AnFilterSlug extends KFilterSlug
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'slug_length' => 255,
+            'separator' => '-',
+            'length' 	=> 255
         ));
 
         parent::_initialize($config);
@@ -114,8 +101,8 @@ class AnFilterSlug extends KFilterSlug
      *
      * @return bool Return true of the passed string is UTF-8 o/w returns false
      */
-    protected function _utf8( $str ) {
-
+    protected function _utf8($str)
+    {
         mbstring_binary_safe_encoding();
 
         $length = strlen($str);
@@ -123,21 +110,36 @@ class AnFilterSlug extends KFilterSlug
         reset_mbstring_encoding();
 
         for ($i=0; $i < $length; $i++) {
-    		$c = ord($str[$i]);
-    		if ($c < 0x80) $n = 0; // 0bbbbbbb
-    		elseif (($c & 0xE0) == 0xC0) $n=1; // 110bbbbb
-    		elseif (($c & 0xF0) == 0xE0) $n=2; // 1110bbbb
-    		elseif (($c & 0xF8) == 0xF0) $n=3; // 11110bbb
-    		elseif (($c & 0xFC) == 0xF8) $n=4; // 111110bb
-    		elseif (($c & 0xFE) == 0xFC) $n=5; // 1111110b
-    		else return false; // Does not match any model
-    		for ($j=0; $j<$n; $j++) { // n bytes matching 10bbbbbb follow ?
-    			if ((++$i == $length) || ((ord($str[$i]) & 0xC0) != 0x80))
-    				return false;
-    		}
-    	}
+            $c = ord($str[$i]);
+            if ($c < 0x80) {
+                $n = 0;
+            } // 0bbbbbbb
+            elseif (($c & 0xE0) == 0xC0) {
+                $n=1;
+            } // 110bbbbb
+            elseif (($c & 0xF0) == 0xE0) {
+                $n=2;
+            } // 1110bbbb
+            elseif (($c & 0xF8) == 0xF0) {
+                $n=3;
+            } // 11110bbb
+            elseif (($c & 0xFC) == 0xF8) {
+                $n=4;
+            } // 111110bb
+            elseif (($c & 0xFE) == 0xFC) {
+                $n=5;
+            } // 1111110b
+            else {
+                return false;
+            } // Does not match any model
+            for ($j=0; $j<$n; $j++) { // n bytes matching 10bbbbbb follow ?
+                if ((++$i == $length) || ((ord($str[$i]) & 0xC0) != 0x80)) {
+                    return false;
+                }
+            }
+        }
 
-    	return true;
+        return true;
     }
 
     /**
@@ -152,82 +154,39 @@ class AnFilterSlug extends KFilterSlug
     protected function _utf8encode($utf8_string, $length)
     {
         $unicode = '';
-    	$values = array();
-    	$num_octets = 1;
-    	$unicode_length = 0;
-    	mbstring_binary_safe_encoding();
-    	$string_length = strlen( $utf8_string );
-    	reset_mbstring_encoding();
-    	for ($i = 0; $i < $string_length; $i++ ) {
-    		$value = ord( $utf8_string[ $i ] );
-    		if ( $value < 128 ) {
-    			if ( $length && ( $unicode_length >= $length ) )
-    				break;
-    			$unicode .= chr($value);
-    			$unicode_length++;
-    		} else {
-    			if ( count( $values ) == 0 ) {
-    				if ( $value < 224 ) {
-    					$num_octets = 2;
-    				} elseif ( $value < 240 ) {
-    					$num_octets = 3;
-    				} else {
-    					$num_octets = 4;
-    				}
-    			}
-    			$values[] = $value;
-    			if ( $length && ( $unicode_length + ($num_octets * 3) ) > $length )
-    				break;
-    			if ( count( $values ) == $num_octets ) {
-    				for ( $j = 0; $j < $num_octets; $j++ ) {
-    					$unicode .= '%' . dechex( $values[ $j ] );
-    				}
-    				$unicode_length += $num_octets * 3;
-    				$values = array();
-    				$num_octets = 1;
-    			}
-    		}
-    	}
-
-    	return $unicode;
-        /*
-        $unicode = '';
         $values = array();
         $num_octets = 1;
         $unicode_length = 0;
-
+        mbstring_binary_safe_encoding();
         $string_length = strlen($utf8_string);
-        for ($i = 0; $i < $string_length; ++$i) {
+        reset_mbstring_encoding();
+        for ($i = 0; $i < $string_length; $i++) {
             $value = ord($utf8_string[ $i ]);
-
             if ($value < 128) {
                 if ($length && ($unicode_length >= $length)) {
                     break;
                 }
                 $unicode .= chr($value);
-                ++$unicode_length;
+                $unicode_length++;
             } else {
                 if (count($values) == 0) {
-                    $num_octets = ($value < 224) ? 2 : 3;
+                    if ($value < 224) {
+                        $num_octets = 2;
+                    } elseif ($value < 240) {
+                        $num_octets = 3;
+                    } else {
+                        $num_octets = 4;
+                    }
                 }
-
                 $values[] = $value;
-
                 if ($length && ($unicode_length + ($num_octets * 3)) > $length) {
                     break;
                 }
                 if (count($values) == $num_octets) {
-                    if ($num_octets == 4) {
-                        $unicode .= '%'.dechex($values[0]).'%'.dechex($values[1]).'%'.dechex($values[2]).'%'.dechex($values[3]);
-                        $unicode_length += 12;
-                    } else if ($num_octets == 3) {
-                        $unicode .= '%'.dechex($values[0]).'%'.dechex($values[1]).'%'.dechex($values[2]);
-                        $unicode_length += 9;
-                    } else {
-                        $unicode .= '%'.dechex($values[0]).'%'.dechex($values[1]);
-                        $unicode_length += 6;
+                    for ($j = 0; $j < $num_octets; $j++) {
+                        $unicode .= '%' . dechex($values[ $j ]);
                     }
-
+                    $unicode_length += $num_octets * 3;
                     $values = array();
                     $num_octets = 1;
                 }
@@ -235,6 +194,5 @@ class AnFilterSlug extends KFilterSlug
         }
 
         return $unicode;
-        */
     }
 }

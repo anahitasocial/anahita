@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $highlight = ($todo->open) ? 'an-highlight' : '' ?>
 <div class="an-entity <?= $highlight ?>">

@@ -25,23 +25,23 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
     /**
      * Template Parameters.
      *
-     * KConfig
+     * AnConfig
      */
     protected $_params = null;
 
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $config->media_url = 'base://media';
         $config->base_url = $config->service_container->get('application')->getRouter()->getBaseUrl();
 
         parent::__construct($config);
 
-        $this->_params = new KConfig();
+        $this->_params = new AnConfig();
         $this->setParams($config->params);
         $this->getService('anahita:language')->load('tpl_'.$this->getIdentifier()->package);
         $this->getTemplate()->getFilter('alias')
@@ -54,9 +54,9 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $identifier = clone $this->getIdentifier();
 
@@ -150,7 +150,7 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
     /**
      * Get template parameters.
      *
-     * @return KConfig
+     * @return AnConfig
      */
     public function getParams()
     {

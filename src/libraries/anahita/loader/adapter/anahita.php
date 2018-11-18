@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,18 +26,18 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnLoaderAdapterAnahita extends KLoaderAdapterAbstract
+class AnLoaderAdapterAnahita extends AnLoaderAdapterAbstract
 {
-    /** 
+    /**
      * The adapter type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'anahita';
 
     /**
      * The class prefix.
-     * 
+     *
      * @var string
      */
     protected $_prefix = 'An';
@@ -45,7 +45,7 @@ class AnLoaderAdapterAnahita extends KLoaderAdapterAbstract
     /**
      * Get the path based on a class name.
      *
-     * @param  string		  	The class name 
+     * @param  string		  	The class name
      *
      * @return string|false Returns the path on success FALSE on failure
      */
@@ -53,7 +53,7 @@ class AnLoaderAdapterAnahita extends KLoaderAdapterAbstract
     {
         $path = false;
 
-        $word = preg_replace('/(?<=\\w)([A-Z])/', ' \\1',  $classname);
+        $word = preg_replace('/(?<=\\w)([A-Z])/', ' \\1', $classname);
         $parts = explode(' ', $word);
 
         // If class start with a 'An' it is a anahita framework class and we handle it

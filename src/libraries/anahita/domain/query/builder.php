@@ -28,7 +28,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainQueryBuilder extends KObject
+class AnDomainQueryBuilder extends AnObject
 {
     /**
      * Singleton Instance.
@@ -45,7 +45,7 @@ class AnDomainQueryBuilder extends KObject
     public static function getInstance()
     {
         if (!self::$_instance) {
-            self::$_instance = new self(new KConfig());
+            self::$_instance = new self(new AnConfig());
         }
 
         return self::$_instance;
@@ -159,7 +159,7 @@ class AnDomainQueryBuilder extends KObject
                 } elseif ($property->isAttribute()) {
                     $columns[] = $property->getColumn();
                 } elseif ($property->isRelationship() && $property->isManyToOne()) {
-                    $columns = array_merge($columns, array_values(KConfig::unbox($property->getColumns())));
+                    $columns = array_merge($columns, array_values(AnConfig::unbox($property->getColumns())));
                 }
             }
 
@@ -329,7 +329,7 @@ class AnDomainQueryBuilder extends KObject
         $link = null;
         $type_check = true;
 
-        if ($query instanceof KConfig) {
+        if ($query instanceof AnConfig) {
             $type_check = false;
             $query = $query->query;
         }
@@ -341,7 +341,7 @@ class AnDomainQueryBuilder extends KObject
             //the table type column name
             $type_column_name = $resource.'.'.$description->getInheritanceColumn()->name;
 
-            $scopes = KConfig::unbox($query->instance_of);
+            $scopes = AnConfig::unbox($query->instance_of);
             if (empty($scopes)) {
                 $scopes = array($description);
             } else {
@@ -421,7 +421,7 @@ class AnDomainQueryBuilder extends KObject
             $constraint = $where['constraint'];
 
             if (is_object($value) || is_array($columns)) {
-                if ($value instanceof KObjectSet || is_array($value)) {
+                if ($value instanceof AnObjectSet || is_array($value)) {
                     $values = $value;
                     $keys = array();
                     $clauses = array();
@@ -635,10 +635,10 @@ class AnDomainQueryBuilder extends KObject
     {
         $inheritance = '';
 
-        if ($description instanceof KServiceIdentifier ||
+        if ($description instanceof AnServiceIdentifier ||
                 (is_string($description) && strpos($description, '.') && !strpos($description, ','))
                 ) {
-            $description = KService::get($description)->getRepository()->getDescription();
+            $description = AnService::get($description)->getRepository()->getDescription();
         } elseif ($description instanceof AnDomainRepositoryAbstract) {
             $description = $description->getDescription();
         }

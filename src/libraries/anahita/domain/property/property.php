@@ -26,16 +26,16 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainProperty extends KObject
+class AnDomainProperty extends AnObject
 {
     /**
      * Attribute factory method.
      *
-     * @param KConfigInterface $config An optional KConfig object with configuration options
+     * @param AnConfigInterface $config An optional AnConfig object with configuration options
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function setAttribute(KConfigInterface $config)
+    public static function setAttribute(AnConfigInterface $config)
     {
         $description = $config->description;
 
@@ -103,11 +103,11 @@ class AnDomainProperty extends KObject
     /**
      * Relationship factory method.
      *
-     * @param KConfigInterface $config An optional KConfig object with configuration options
+     * @param AnConfigInterface $config An optional AnConfig object with configuration options
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function setRelationship(KConfigInterface $config)
+    public static function setRelationship(AnConfigInterface $config)
     {
         $description = $config->description;
 
@@ -144,11 +144,11 @@ class AnDomainProperty extends KObject
      * Add many-to-many or one-to-many or one-to-one relationship to a mapper. The cardinality
      * of a relationship can be an integer or the string 'many'.
      *
-     * @param KConfig $config Relationship options
+     * @param AnConfig $config Relationship options
      *
      * @return AnDomainRelationshipManytoone
      */
-    protected static function _has(KConfig $config)
+    protected static function _has(AnConfig $config)
     {
         //since the mixer is a singleton use the mixer object directly
         $description = $config['description'];
@@ -290,11 +290,11 @@ class AnDomainProperty extends KObject
     /**
      * Creates a belongs to relationship (many to one).
      * 	 	 
-     * @param KConfig $config Relationship options
+     * @param AnConfig $config Relationship options
      * 
      * @return AnDomainRelationshipManytoone
      */
-    protected static function _belongsTo(KConfig $config)
+    protected static function _belongsTo(AnConfig $config)
     {
         $description = $config['description'];
 

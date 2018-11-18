@@ -19,9 +19,9 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     /**
      * Constructor
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         $this->_service = get_config_value('locations.service', 'google');
@@ -32,15 +32,15 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'paths' => array(dirname(__FILE__).'/ui'),
         ));
 
-        $paths = KConfig::unbox($config->paths);
+        $paths = AnConfig::unbox($config->paths);
         array_unshift($paths, ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_locations/ui');
         $config->paths = $paths;
 

@@ -13,7 +13,7 @@ require_once 'core.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class ComConnectOauthResponse extends KConfig
+class ComConnectOauthResponse extends AnConfig
 {
     /**
      * Response Text.
@@ -25,7 +25,7 @@ class ComConnectOauthResponse extends KConfig
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
     public function __construct($text, $config)
     {
@@ -55,30 +55,30 @@ class ComConnectOauthResponse extends KConfig
     }
 
     /**
-     * Parse the resposne as query and return KConfig.
+     * Parse the resposne as query and return AnConfig.
      *
-     * @return KConfig
+     * @return AnConfig
      */
     public function parseQuery()
     {
         $array = array();
         parse_str($this, $array);
 
-        return new KConfig($array);
+        return new AnConfig($array);
     }
 
     /**
-     * Parse the resposne as json and return KConfig.
+     * Parse the resposne as json and return AnConfig.
      *
-     * @return KConfig
+     * @return AnConfig
      */
     public function parseJSON()
     {
-        return new KConfig(json_decode((string) $this, true));
+        return new AnConfig(json_decode((string) $this, true));
     }
 
     /**
-     * Parse the resposne as xml and return KConfig.
+     * Parse the resposne as xml and return AnConfig.
      *
      * @return SimpleXMLElement
      */

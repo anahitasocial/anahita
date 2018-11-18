@@ -37,13 +37,13 @@ class ComStoriesDomainRepositoryStory extends AnDomainRepositoryDefault
      */
     public function create($data)
     {
-        $data = new KConfig($data);
+        $data = new AnConfig($data);
 
         $data->append(array(
             'owner' => $data->target ? $data->target : $data->subject,
         ));
 
-        $data = KConfig::unbox($data);
+        $data = AnConfig::unbox($data);
 
         return $this->getEntity(array('data' => $data));
     }
@@ -63,7 +63,7 @@ class ComStoriesDomainRepositoryStory extends AnDomainRepositoryDefault
         //apply the privacy 
         $privtable = $this->getBehavior('com://site/medium.domain.behavior.privatable');
 
-        $query->privacy = pick($query->privacy, new KConfig());
+        $query->privacy = pick($query->privacy, new AnConfig());
 
         //weak link  the stories with object nodes
         //and use the object.access instead of the story access if there are ny

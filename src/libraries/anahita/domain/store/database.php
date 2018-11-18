@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
+class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
 {
     /**
      * Resource columns.
@@ -68,9 +68,9 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -91,9 +91,9 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'adapter' => null,
@@ -223,7 +223,7 @@ class AnDomainStoreDatabase extends KObject implements AnDomainStoreInterface
         $context->data = $data;
         $context->repository = $repository;
         $context->keys = $keys;
-        $context->query = AnDomainQuery::getInstance($repository, $keys)->update(KConfig::unbox($data));
+        $context->query = AnDomainQuery::getInstance($repository, $keys)->update(AnConfig::unbox($data));
 
         if ($this->getCommandChain()->run('before.update', $context) !== false) {
             $context->result = $this->execute($context->query);

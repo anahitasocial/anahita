@@ -13,7 +13,7 @@ require_once 'core.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class ComConnectOauthRequest extends KObject
+class ComConnectOauthRequest extends AnObject
 {
     /**
      * Internal Oauth Request.
@@ -25,7 +25,7 @@ class ComConnectOauthRequest extends KObject
     /**
      * CURL Request OPtions.
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_options;
 
@@ -39,19 +39,19 @@ class ComConnectOauthRequest extends KObject
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
     public function __construct($config = array())
     {
         if (is_array($config)) {
-            $config = new KConfig($config);
+            $config = new AnConfig($config);
         }
 
         parent::__construct($config);
 
-        $params = new KConfig();
+        $params = new AnConfig();
 
-        $this->_data = KConfig::unbox($config->data);
+        $this->_data = AnConfig::unbox($config->data);
 
         if (is_array($this->_data)) {
             $params->append($this->_data);
@@ -61,7 +61,7 @@ class ComConnectOauthRequest extends KObject
             'oauth_version' => $config->version,
         ));
 
-        $this->_internal_request = OAuthRequest::from_consumer_and_token($config->consumer, $config->token, $config->method, $config->url, KConfig::unbox($params));
+        $this->_internal_request = OAuthRequest::from_consumer_and_token($config->consumer, $config->token, $config->method, $config->url, AnConfig::unbox($params));
 
         if (!empty($config->signature)) {
             $this->_internal_request->sign_request($config->signature, $config->consumer, $config->token);
@@ -75,9 +75,9 @@ class ComConnectOauthRequest extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'signature' => new OAuthSignatureMethod_HMAC_SHA1(),

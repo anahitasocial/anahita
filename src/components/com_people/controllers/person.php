@@ -17,9 +17,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         $this->registerCallback('after.add', array($this, 'mailActivationLink'));
@@ -30,9 +30,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'behaviors' => array(
@@ -78,7 +78,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         if ($this->filter) {
             if ($this->filter['usertype'] && in_array($this->filter['usertype'], $this->_allowed_user_types)) {
-                $query->filterUsertype($this->getService('koowa:filter.cmd')
+                $query->filterUsertype($this->getService('anahita:filter.cmd')
                       ->sanitize($this->filter['usertype']));
             }
 
@@ -87,7 +87,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             }
         }
 
-        if ($this->getService('koowa:filter.email')->validate($this->q)) {
+        if ($this->getService('anahita:filter.email')->validate($this->q)) {
             $query->filterEmail($this->q);
         }
 
@@ -100,7 +100,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
 
         if ($this->ids) {
-            $ids = KConfig::unbox($this->ids);
+            $ids = AnConfig::unbox($this->ids);
             $query->id($ids);
         } else {
             $query->limit($this->limit, $this->start);

@@ -15,7 +15,7 @@
  * @subpackage 	Toolbar
  * @uses        AnInflector
  */
-class AnControllerToolbarCommand extends KConfig
+class AnControllerToolbarCommand extends AnConfig
 {
  	/**
      * The command name
@@ -28,7 +28,7 @@ class AnControllerToolbarCommand extends KConfig
      * Constructor.
      *
      * @param	string 			The command name
-     * @param   array|KConfig 	An associative array of configuration settings or a KConfig instance.
+     * @param   array|AnConfig 	An associative array of configuration settings or a AnConfig instance.
      */
     public function __construct( $name, $config = array() )
     {

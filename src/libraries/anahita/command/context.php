@@ -9,7 +9,7 @@
  * @package     AnCommand
  * @link        https://www.GetAnahita.com
  */
-class AnCommandContext extends KConfig
+class AnCommandContext extends AnConfig
 {
     /**
      * Error
@@ -62,7 +62,7 @@ class AnCommandContext extends KConfig
      * @param object	The command subject
      * @return AnEvent
      */
-    public function setSubject(KObjectServiceable $subject)
+    public function setSubject(AnObjectServiceable $subject)
     {
         $this->_subject = $publisher;
         return $this;

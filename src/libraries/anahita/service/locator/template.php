@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,7 +16,7 @@
  */
 
 /**
- * Template Locator. 
+ * Template Locator.
  *
  * @category   Anahita
  *
@@ -26,11 +26,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnServiceLocatorTemplate extends KServiceLocatorAbstract
+class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
 {
-    /** 
+    /**
      * The type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'tmpl';
@@ -38,15 +38,15 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
     /**
      * Get the classname based on an identifier.
      *
-     * @param 	mixed  		 An identifier object - koowa:[path].name
+     * @param 	mixed  		 An identifier object - anahita:[path].name
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
-    public function findClass(KServiceIdentifier $identifier)
+    public function findClass(AnServiceIdentifier $identifier)
     {
         $classname = 'Tmpl'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
-        if (!$this->getService('koowa:loader')->loadClass($classname, $identifier->basepath)) {
+        if (!$this->getService('anahita:loader')->loadClass($classname, $identifier->basepath)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
             if (!$classname) {
@@ -65,11 +65,11 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
                 $classes[] = 'LibApplication'.$path.'Default';
                 $classes[] = 'LibBase'.$path.ucfirst($identifier->name);
                 $classes[] = 'LibBase'.$path.'Default';
-                $classes[] = 'K'.$path.ucfirst($identifier->name);
-                $classes[] = 'K'.$path.'Default';
+                $classes[] = 'An'.$path.ucfirst($identifier->name);
+                $classes[] = 'An'.$path.'Default';
 
                 foreach ($classes as $class) {
-                    if ($this->getService('koowa:loader')->loadClass($class,  $identifier->basepath)) {
+                    if ($this->getService('anahita:loader')->loadClass($class, $identifier->basepath)) {
                         $classname = $class;
                         break;
                     }
@@ -91,7 +91,7 @@ class AnServiceLocatorTemplate extends KServiceLocatorAbstract
      *
      * @return string Returns the path
      */
-    public function findPath(KServiceIdentifier $identifier)
+    public function findPath(AnServiceIdentifier $identifier)
     {
         $path = '';
         $parts = $identifier->path;

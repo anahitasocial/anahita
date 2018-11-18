@@ -18,9 +18,9 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'service_name' => 'Facebook',
@@ -142,7 +142,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
             throw new \LogicException("Can't get connections from facebook");
         }
 
-        $data = KConfig::unbox($data);
+        $data = AnConfig::unbox($data);
         $data = array_map(function ($user) {return $user['id'];}, $data['data']);
         $data[] = '-1';
 
@@ -164,7 +164,7 @@ class ComConnectOauthServiceFacebook extends ComConnectOauthServiceAbstract
     public function getAppID()
     {
         $data = $this->get('/app');
-        $data = KConfig::unbox($data);
+        $data = AnConfig::unbox($data);
         return $data['id'];
     }
 }

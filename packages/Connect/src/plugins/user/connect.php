@@ -92,9 +92,9 @@ class PlgUserConnect extends PlgAnahitaDefault
         }
 
         if ($token = $api->getToken()) {
-            $person = KService::get('repos:people.person')->find(array('username' => $username));
+            $person = AnService::get('repos:people.person')->find(array('username' => $username));
             $user = $api->getUser();
-            $session = KService::get('repos:connect.session')
+            $session = AnService::get('repos:connect.session')
             ->findOrAddNew(array(
                 'profileId' => $user->id, 
                 'api' => $api->getName()
@@ -127,16 +127,16 @@ class PlgUserConnect extends PlgAnahitaDefault
                 $api = ComConnectHelperApi::getApi($post['oauth_handler']);
                 $api->setToken($post['oauth_token'], isset($post['oauth_secret']) ? $post['oauth_secret'] : '');
             } else {
-                $session = new KConfig(AnRequest::get('session.oauth', 'raw', array()));
+                $session = new AnConfig(AnRequest::get('session.oauth', 'raw', array()));
 
                 if (! ($session->token && $session->api && $session->consumer)) {
                     return;
                 }
 
                 AnRequest::set('session.oauth', null);
-                KService::get('koowa:loader')->loadIdentifier('com:connect.oauth.consumer');
+                AnService::get('anahita:loader')->loadIdentifier('com:connect.oauth.consumer');
 
-                $api = KService::get('com:connect.oauth.service.'.$session->api, array(
+                $api = AnService::get('com:connect.oauth.service.'.$session->api, array(
                     'consumer' => new ComConnectOauthConsumer($session->consumer),
                     'token' => $session->token,
                 ));

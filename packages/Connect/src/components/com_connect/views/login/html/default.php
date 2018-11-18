@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $alert_title = sprintf(@text('COM-CONNECT-LOGIN-PROMPT-HI'), $api->getUser()->name, ucfirst($api->getName())) ?>
 <? $return = base64UrlEncode(AnRequest::url()); ?>

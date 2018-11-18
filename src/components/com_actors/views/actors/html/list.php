@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? @listItemView()->layout('list') ?>
 <? foreach ($items as $item) : ?>

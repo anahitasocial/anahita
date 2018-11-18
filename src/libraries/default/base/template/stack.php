@@ -10,16 +10,16 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class LibBaseTemplateStack extends KObjectStack implements KServiceInstantiatable
+class LibBaseTemplateStack extends AnObjectStack implements AnServiceInstantiatable
 {
     /**
      * Force creation of a singleton
      *
-     * @param   object  An optional KConfig object with configuration options
-     * @param   object  A KServiceServiceInterface object
+     * @param   object  An optional AnConfig object with configuration options
+     * @param   object  A AnServiceServiceInterface object
      * @return LibBaseTemplateStack
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         // Check if an instance with this identifier already exists or not
         if (!$container->has($config->service_identifier)) {

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? @title('Landing Page')?>
 <? @description('An example of a landing page.') ?>
@@ -17,7 +17,7 @@
 	</div>
 
 	<div class="span4">
-	<? $actors = KService::get('repos:actors.actor')->getQuery()->disableChain()->limit(2)->fetchSet(); ?>
+	<? $actors = AnService::get('repos:actors.actor')->getQuery()->disableChain()->limit(2)->fetchSet(); ?>
 	<ul class="thumbnails">
 	<? foreach ($actors as $actor): ?>
 	<li><?= @avatar($actor) ?></li>

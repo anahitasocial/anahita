@@ -1,17 +1,17 @@
 <?php
 
 /**
-* Default Koowa plugin
+* Default Anahita plugin
 *
-* Koowa plugins can handle a number of events that are dynamically generated. A plugin
+* Anahita plugins can handle a number of events that are dynamically generated. A plugin
 * need to be wired to a specific event publisher in order for it to receive events from
 * that publisher.
 *
 * <code>
 * <?php
-* class PlgKoowaFoo extends PlgKoowaDefault
+* class PlgAnahitaFoo extends PlgAnahitaDefault
 * {
-*   protected function _initialize(KConfig $config)
+*   protected function _initialize(AnConfig $config)
 *   {
 *       $config->append(array(
 *           'event_publishers' => array('com://site/foo.controller.bar')
@@ -33,7 +33,7 @@
 * onAfterDatabase[Action]
 * where [Action] is Select, Insert, Update or Delete
 *
-* You can create your own Koowa plugins very easily :
+* You can create your own Anahita plugins very easily :
 *
 * <code>
 * <?php
@@ -65,20 +65,20 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
     /**
      * Plugin Parameters
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_params = null;
 
     /**
   	 * Constructor
   	 */
-     public function __construct($dispatcher = null,  KConfig $config)
+     public function __construct($dispatcher = null,  AnConfig $config)
      {
 	    //Inject the identifier
-		$config->service_identifier = KService::getIdentifier('plg:anahita.'.$config->name);
+		$config->service_identifier = AnService::getIdentifier('plg:anahita.'.$config->name);
 
 		//Inject the service container
-		$config->service_container = KService::getInstance();
+		$config->service_container = AnService::getInstance();
 
 		parent::__construct($config);
 
@@ -86,7 +86,7 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
 
         //Setup lazy wiring for publishers we are subscribing too
         foreach ($config->event_publishers as $publisher) {
-            KService::setConfig($publisher, array('event_subscribers' => array($this)));
+            AnService::setConfig($publisher, array('event_subscribers' => array($this)));
         }
 
         if ($dispatcher instanceof AnEventDispatcher ) {
@@ -99,10 +99,10 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
   	 *
   	 * Called from {@link __construct()} as a first step of object instantiation.
   	 *
-  	 * @param   object  An optional KConfig object with configuration options.
+  	 * @param   object  An optional AnConfig object with configuration options.
   	 * @return  void
   	 */
-  	protected function _initialize(KConfig $config)
+  	protected function _initialize(AnConfig $config)
   	{
   	    $config->append(array(
           	'params' => array(),
@@ -125,6 +125,6 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
   		    $extension = 'plg_'.$this->getIdentifier()->package.'_'.$this->getIdentifier()->name;
   		}
 
-  		return KService::get('anahita:language')->load( strtolower($extension), $basePath);
+  		return AnService::get('anahita:language')->load( strtolower($extension), $basePath);
   	}
 }

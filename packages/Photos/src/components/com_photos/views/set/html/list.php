@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <div class="an-entity an-entity-portraiable an-entity-tiled">
 	<div class="clearfix">

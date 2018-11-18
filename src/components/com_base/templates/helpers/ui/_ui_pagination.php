@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access') ?>
+<? defined('ANAHITA') or die('Restricted access') ?>
 
 <? if (count($pages) > 1) : ?>
 <div class="pagination" data-behavior="pagination" data-pagination-options="<?= htmlspecialchars(json_encode($options), ENT_QUOTES) ?>">

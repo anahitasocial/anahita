@@ -36,7 +36,7 @@ class ComTodosSchemaMigration2 extends ComMigratorMigrationVersion
                 }
             }
 
-            $todos = KService::get('com:todos.domain.entity.todo')
+            $todos = AnService::get('com:todos.domain.entity.todo')
                     ->getRepository()
                     ->getQuery()
                     ->disableChain()

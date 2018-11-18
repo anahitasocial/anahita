@@ -19,7 +19,7 @@ class AnTranslator
 	 */
 	public static function _($string, $jsSafe = false)
 	{
-		$language = KService::get('anahita:language');
+		$language = AnService::get('anahita:language');
 		return $language->_($string, $jsSafe);
 	}
 
@@ -33,7 +33,7 @@ class AnTranslator
 	 */
 	public static function sprintf($string)
 	{
-		$language = KService::get('anahita:language');
+		$language = AnService::get('anahita:language');
 		$args = func_get_args();
 		if (!empty($args)) {
 			$args[0] = $language->_($args[0]);
@@ -52,7 +52,7 @@ class AnTranslator
 	 */
 	public static function printf($string)
 	{
-		$language = KService::get('anahita:language');
+		$language = AnService::get('anahita:language');
 		$args = func_get_args();
 		if (!empty($args)) {
 			$args[0] = $language->_($args[0]);

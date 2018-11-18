@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <? if (count($photos)) :?>
 <? foreach ($photos as $photo) : ?>

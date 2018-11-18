@@ -17,7 +17,7 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
     /**
      * Failed entities in the last commit.
      *
-     * @var KObjectSet
+     * @var AnObjectSet
      */
     protected $_failed_commits;
 
@@ -26,9 +26,9 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'priority' => AnCommand::PRIORITY_HIGHEST,
@@ -136,7 +136,7 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
     /**
      * Return a set of entities that failed the commits.
      *
-     * @return KObjectSet
+     * @return AnObjectSet
      */
     public function getFailedCommits()
     {

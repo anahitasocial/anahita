@@ -37,7 +37,7 @@ class ComStoriesTemplateHelperStory extends LibBaseTemplateHelperAbstract
      */
     public function actorName($actor, $truncate_after = 1)
     {
-        $helper = KService::get('com:actors.template.helper');
+        $helper = AnService::get('com:actors.template.helper');
 
         if (is_array($actor)) {
             $actors = $actor;
@@ -86,7 +86,7 @@ class ComStoriesTemplateHelperStory extends LibBaseTemplateHelperAbstract
             $value = AnTranslator::_('LIB-AN-THEIR');
         } else {
             if ($actor->eql($story->subject)) {
-                $value = AnTranslator::_(KService::get('com:actors.template.helper')->noune($actor, array('type' => 'possessive')));
+                $value = AnTranslator::_(AnService::get('com:actors.template.helper')->noune($actor, array('type' => 'possessive')));
             } elseif ($actor->eql(get_viewer())) {
                 $value = AnTranslator::_('LIB-AN-YOUR');
             } else {

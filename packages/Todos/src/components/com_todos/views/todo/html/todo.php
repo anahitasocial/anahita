@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access') ?>
+<? defined('ANAHITA') or die('Restricted access') ?>
 
 <? $highlight = ($todo->open) ? 'an-highlight' : '' ?>
 <div class="an-entity <?= $highlight ?>">

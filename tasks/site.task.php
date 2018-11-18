@@ -45,7 +45,6 @@ class Symlink extends Command
 
         $patterns['#^installation/.+#'] = '';
         $mapper->addCrawlMap('vendor/anahita-platform', $patterns);
-        $mapper->addCrawlMap('vendor/nooku', $patterns);
         $mapper->addCrawlMap('src', $patterns);
         $mapper->symlink();
         $mapper->getMap('vendor/anahita-platform/index.php', 'index.php')->copy();

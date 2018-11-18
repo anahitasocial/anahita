@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die;?>
+<? defined('ANAHITA') or die;?>
 
 <div id="an-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="anModalLabel" aria-hidden="true">
   <div class="modal-header">

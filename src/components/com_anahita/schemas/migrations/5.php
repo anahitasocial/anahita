@@ -73,7 +73,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         $ids = dbfetch('SELECT id FROM `#__nodes` WHERE type LIKE \'ComActorsDomainEntityActor%\' AND '.$query_regexp);
 
         foreach ($ids as $id) {
-            $entity = KService::get('repos:actors.actor')->getQuery()->disableChain()->fetch($id);
+            $entity = AnService::get('repos:actors.actor')->getQuery()->disableChain()->fetch($id);
             $hashtagTerms = $this->extractHashtagTerms($entity->description);
 
             foreach ($hashtagTerms as $term) {
@@ -88,7 +88,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         $ids = dbfetch('SELECT id FROM `#__nodes` WHERE type LIKE \'ComBaseDomainEntityComment%\' AND '.$query_regexp);
 
         foreach ($ids as $id) {
-            $entity = KService::get('com:base.domain.entity.comment')->getRepository()->getQuery()->disableChain()->fetch($id);
+            $entity = AnService::get('com:base.domain.entity.comment')->getRepository()->getQuery()->disableChain()->fetch($id);
             $hashtagTerms = $this->extractHashtagTerms($entity->body);
 
             foreach ($hashtagTerms as $term) {
@@ -111,7 +111,7 @@ class ComAnahitaSchemaMigration5 extends ComMigratorMigrationVersion
         $ids = dbfetch($query);
 
         foreach ($ids as $id) {
-            $entity = KService::get("repos:medium.medium")->getQuery()->disableChain()->find(array('id'=> $id));
+            $entity = AnService::get("repos:medium.medium")->getQuery()->disableChain()->find(array('id'=> $id));
 
             $hashtagTerms = $this->extractHashtagTerms($entity->description);
 

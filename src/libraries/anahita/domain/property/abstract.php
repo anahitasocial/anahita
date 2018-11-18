@@ -41,11 +41,11 @@ abstract class AnDomainPropertyAbstract
      * then creating a new instance.
      *
      * @param string  $property The property type
-     * @param KConfig $config   The property configuration
+     * @param AnConfig $config   The property configuration
      *
      * @return AnDomainPropertyAbstract
      */
-    public static function getInstance($property, KConfig $config)
+    public static function getInstance($property, AnConfig $config)
     {
         $description = $config['description'];
         $name = $config['name'];
@@ -112,14 +112,14 @@ abstract class AnDomainPropertyAbstract
      * Property original configuration. Having this prevents from recreating an existing
      * property.
      *
-     * @var KConfig
+     * @var AnConfig
      */
     private $__config;
 
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
     final private function __construct()
     {
@@ -130,9 +130,9 @@ abstract class AnDomainPropertyAbstract
      * Configures a property. Property are cloned so using this method, it's possibled to
      * re-configured a cloned property.
      *
-     * @param KConfig $config Property Configuration
+     * @param AnConfig $config Property Configuration
      */
-    public function setConfig(KConfig $config)
+    public function setConfig(AnConfig $config)
     {
         //if the property configuration has been set
         //then don't allow it to change
@@ -160,9 +160,9 @@ abstract class AnDomainPropertyAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         //by default every property is write protected
         //meaning it's not possibl to do mass assignement

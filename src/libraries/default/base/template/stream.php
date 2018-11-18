@@ -68,7 +68,7 @@ class LibBaseTemplateStream
         $identifier = str_replace('tmpl://', '', $path);
 
         //Get the template object from the template stack and parse it
-        $template = KService::get($identifier)->top();
+        $template = AnService::get($identifier)->top();
 
         //Get the template path
         $this->_path = $template->getPath();

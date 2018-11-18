@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <div class="an-entity an-record">
 	<h4 class="entity-title">

@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleFilterUsername extends KFilterAbstract
+class ComPeopleFilterUsername extends AnFilterAbstract
 {
     /**
      * Validate a value.

@@ -25,9 +25,9 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'attributes' => array(
@@ -78,9 +78,9 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
     /**
      * Initializes the options for an entity after being created.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _afterEntityInstantiate(KConfig $config)
+    protected function _afterEntityInstantiate(AnConfig $config)
     {
         $data = $config->data;
 
@@ -158,7 +158,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
     public function setSubscribers($subscribers)
     {
         //flatten the array
-        $subscribers = AnHelperArray::getValues(KConfig::unbox($subscribers));
+        $subscribers = AnHelperArray::getValues(AnConfig::unbox($subscribers));
         $ids = array();
 
         foreach ($subscribers as $subscriber) {
@@ -187,7 +187,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
      */
     public function removeSubscribers($subscribers)
     {
-        $subscribers = KConfig::unbox($subscribers);
+        $subscribers = AnConfig::unbox($subscribers);
 
         if (is($subscribers, 'AnDomainEntityAbstract')) {
             $subscribers = array($subscribers);

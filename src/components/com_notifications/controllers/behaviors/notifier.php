@@ -22,7 +22,7 @@ class ComNotificationsControllerBehaviorNotifier extends AnControllerBehaviorAbs
      */
     public function createNotification($data = array())
     {
-        $data = new KConfig($data);
+        $data = new AnConfig($data);
         $viewer = $this->getService('com:people.viewer');
 
         $data->append(array(

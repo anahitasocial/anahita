@@ -19,9 +19,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
           'paths' => array(dirname(__FILE__).'/ui'),
@@ -29,14 +29,14 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
 
         parent::_initialize($config);
 
-        $paths = KConfig::unbox($config->paths);
+        $paths = AnConfig::unbox($config->paths);
         array_unshift($paths, ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_settings/ui');
         $config->paths = $paths;
     }
 
     public function sorting($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
           'label' => 'LIB-AN-SORT-'.strtoupper($config['field']),
@@ -100,7 +100,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function plugin_types($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
           'selected' => '',
@@ -109,7 +109,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
           'params' => array()
         ));
 
-        $query = KService::get('repos:settings.plugin')->getQuery();
+        $query = AnService::get('repos:settings.plugin')->getQuery();
 
         $query->order('name')->set('distinct', true);
 
@@ -123,7 +123,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function templates($config = array())
     {
-          $config = new KConfig($config);
+          $config = new AnConfig($config);
 
           $exclude = array(
             'base',
@@ -152,7 +152,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function languages($config = array())
     {
-          $config = new KConfig($config);
+          $config = new AnConfig($config);
           $path = ANPATH_SITE.DS.'language';
           $languages = preg_grep('/^([^.])/', scandir($path));
           $options = array();
@@ -178,7 +178,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function formfield_text($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'class' => 'input-block-level',
@@ -205,7 +205,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function formfield_textarea($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'class' => 'input-block-level',
@@ -232,7 +232,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function formfield_select($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'class' => 'input-block-level',
@@ -256,7 +256,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function formfield_custom($config)
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
           'class' => 'input-block-level'
@@ -273,7 +273,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
     */
     public function params($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'type' => 'component'

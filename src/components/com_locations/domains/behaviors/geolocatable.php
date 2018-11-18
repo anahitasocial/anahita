@@ -23,9 +23,9 @@
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'relationships' => array(
@@ -49,7 +49,7 @@
      */
      public function editLocations($locations)
      {
-         $new_ids = (array) KConfig::unbox($locations->id);
+         $new_ids = (array) AnConfig::unbox($locations->id);
 
          foreach ($this->locations as $location) {
              if (!in_array($location->id, $new_ids)) {
@@ -95,7 +95,7 @@
      */
      public function deleteLocation($locations)
      {
-         $delete_ids = (array) KConfig::unbox($locations->id);
+         $delete_ids = (array) AnConfig::unbox($locations->id);
 
          foreach ($this->locations as $location) {
              if (in_array($location->id, $delete_ids)) {

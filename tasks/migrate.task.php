@@ -12,7 +12,7 @@ use \Symfony\Component\Console\Input\InputOption;
 use \Symfony\Component\Console\Output\OutputInterface;
 
 require_once 'src/libraries/anahita/event/subscriber/interface.php';
-require_once 'vendor/nooku/libraries/koowa/object/handlable.php';
+require_once 'src/libraries/anahita/object/handlable.php';
 
 function ask_for_component($input, $output, $console) {
 
@@ -25,7 +25,7 @@ function ask_for_component($input, $output, $console) {
     return (array) $component;
 }
 
-class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KObjectHandlable
+class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \AnObjectHandlable
 {
     protected $_migrators = array();
 
@@ -47,13 +47,13 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
         $paths = new DirectoryFilter($components, array(WWW_ROOT.'/components'));
 
-        $this->_event_dispatcher = \KService::get('anahita:event.dispatcher');
+        $this->_event_dispatcher = \AnService::get('anahita:event.dispatcher');
 
         foreach ($paths as $path) {
             $component  = str_replace('com_','', basename($path));
             $identifier = 'com://site/'.$component.'.schema.migration';
             register_default(array('identifier'=>$identifier,'default'=>'ComMigratorMigrationDefault'));
-            $migrator = \KService::get($identifier, array('event_dispatcher'=>$this->_event_dispatcher));
+            $migrator = \AnService::get($identifier, array('event_dispatcher'=>$this->_event_dispatcher));
 
             if (($check_max_version && $migrator->getMaxVersion() > 0) || !$check_max_version ) {
                 $this->_migrators[] = $migrator;
@@ -84,7 +84,7 @@ class Migrators implements \IteratorAggregate,\AnEventSubscriberInterface , \KOb
 
     /**
      * (non-PHPdoc)
-     * @see KObjectHandlable::getHandle()
+     * @see AnObjectHandlable::getHandle()
      */
     public function getHandle()
     {
@@ -339,7 +339,7 @@ if (strtoupper(substr(PHP_OS, 0, 3)) != 'WIN') {
         $file = $input->getArgument('file');
         $console->loadFramework();
         $config = new Config(WWW_ROOT);
-        $config = new \KConfig($config->getDatabaseInfo());
+        $config = new \AnConfig($config->getDatabaseInfo());
         $cmd = "mysqldump --add-drop-table --extended-insert=FALSE --add-locks --skip-comments -u {$config->user} -p{$config->password} -h{$config->host} -P{$config->port} {$config->name}";
 
         if ($input->getOption('replace-prefix')) {

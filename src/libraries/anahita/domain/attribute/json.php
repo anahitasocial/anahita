@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainAttributeJson extends KConfig implements AnDomainAttributeInterface
+class AnDomainAttributeJson extends AnConfig implements AnDomainAttributeInterface
 {
     /**
      * Instantiate the json attribute with JSON values.

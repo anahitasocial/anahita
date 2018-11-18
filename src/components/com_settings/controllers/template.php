@@ -22,9 +22,9 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -37,9 +37,9 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         parent::_initialize($config);
 
@@ -116,7 +116,7 @@ class ComSettingsControllerTemplate extends ComBaseControllerResource
         unset($data->secret);
         unset($data->dbtype);
 
-        $this->_entity->setData(KConfig::unbox($data));
+        $this->_entity->setData(AnConfig::unbox($data));
 
         if ($this->_entity->save()) {
             $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');

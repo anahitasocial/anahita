@@ -90,16 +90,16 @@ class AnDomain
      *
      * @param string $identifier Entity Identifier
      *
-     * @return KServiceIdentifier
+     * @return AnServiceIdentifier
      */
     public static function getEntityIdentifier($identifier)
     {
-        $identifier = KService::getIdentifier($identifier);
+        $identifier = AnService::getIdentifier($identifier);
 
         if (!$identifier->basepath) {
-            $adapters = KService::get('koowa:loader')->getAdapters();
+            $adapters = AnService::get('anahita:loader')->getAdapters();
             $basepath = pick($adapters[$identifier->type]->getBasePath(), ANPATH_BASE);
-            $applications = array_flip(KServiceIdentifier::getApplications());
+            $applications = array_flip(AnServiceIdentifier::getApplications());
 
             if (isset($applications[$basepath])) {
                 $identifier->application = $applications[$basepath];
@@ -121,19 +121,19 @@ class AnDomain
     public static function getRepository($identifier, $config = array())
     {
         if (strpos($identifier, 'repos:') === 0) {
-            $repository = KService::get($identifier);
+            $repository = AnService::get($identifier);
         } else {
             $strIdentifier = (string) $identifier;
 
-            if (!KService::has($identifier)) {
+            if (!AnService::has($identifier)) {
                 $identifier = self::getEntityIdentifier($identifier);
             }
 
-            if (!KService::has($identifier)) {
-                KService::set($strIdentifier, KService::get($identifier, $config));
+            if (!AnService::has($identifier)) {
+                AnService::set($strIdentifier, AnService::get($identifier, $config));
             }
 
-            $repository = KService::get($identifier)->getRepository();
+            $repository = AnService::get($identifier)->getRepository();
         }
 
         return $repository;

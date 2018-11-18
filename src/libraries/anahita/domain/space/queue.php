@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainSpaceQueue extends KObjectQueue
+class AnDomainSpaceQueue extends AnObjectQueue
 {
     /**
      * Array of entities segmented per repository.
@@ -40,9 +40,9 @@ class AnDomainSpaceQueue extends KObjectQueue
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         parent::__construct($config);
 
@@ -52,9 +52,9 @@ class AnDomainSpaceQueue extends KObjectQueue
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectQueue::enqueue()
+     * @see AnObjectQueue::enqueue()
      */
-    public function enqueue(KObjectHandlable $object, $priority)
+    public function enqueue(AnObjectHandlable $object, $priority)
     {
         $this->getRepositoryEntities($object->getRepository())->insert($object);
 
@@ -64,9 +64,9 @@ class AnDomainSpaceQueue extends KObjectQueue
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectQueue::dequeue()
+     * @see AnObjectQueue::dequeue()
      */
-    public function dequeue(KObjectHandlable $object)
+    public function dequeue(AnObjectHandlable $object)
     {
         $this->getRepositoryEntities($object->getRepository())->extract($object);
 

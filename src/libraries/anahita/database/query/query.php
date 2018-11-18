@@ -105,13 +105,13 @@ class AnDatabaseQuery
      *
      * Can be overloaded/supplemented by the child class
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         //If no config is passed create it
         if (!isset($config)) {
-            $config = new KConfig();
+            $config = new AnConfig();
         }
 
         //Initialise the object
@@ -125,9 +125,9 @@ class AnDatabaseQuery
     /**
      * Initializes the options for the object
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'adapter' => '',

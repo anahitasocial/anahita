@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? $topic = @service('repos:topics.topic')->getEntity()->reset(); ?>
 

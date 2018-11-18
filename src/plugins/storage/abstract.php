@@ -11,12 +11,12 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class PlgStorageAbstract extends KObject
+abstract class PlgStorageAbstract extends AnObject
 {
     /**
      * Storage Parameter Configuration.
      *
-     * @var KConfig
+     * @var AnConfig
      */
     protected $_params;
 
@@ -31,16 +31,16 @@ abstract class PlgStorageAbstract extends KObject
      * Constructor.
      *
      * @param mixed $dispatcher A dispatcher
-     * @param array $config     An optional KConfig object with configuration options.
+     * @param array $config     An optional AnConfig object with configuration options.
      */
-    public function __construct($dispatcher = null, KConfig $config)
+    public function __construct($dispatcher = null, AnConfig $config)
     {
         parent::__construct($config);
 
         $this->_params = $config->meta;
         $this->_folder = $config->folder;
 
-        KService::set('plg:storage.default', $this);
+        AnService::set('plg:storage.default', $this);
     }
 
     /**
@@ -48,9 +48,9 @@ abstract class PlgStorageAbstract extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'folder' => 'assets',

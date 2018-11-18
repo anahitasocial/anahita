@@ -18,9 +18,9 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'behaviors' => array('com:mailer.controller.behavior.mailer'),
@@ -54,7 +54,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 
         foreach ($emails as $email) {
 
-            if ($this->getService('koowa:filter.email')->validate($email)) {
+            if ($this->getService('anahita:filter.email')->validate($email)) {
 
                 $person = $this->getService('repos:people.person')->find(array('email' => $email));
 

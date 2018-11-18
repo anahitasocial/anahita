@@ -17,7 +17,7 @@ class ComTodosSchemaMigration3 extends ComMigratorMigrationVersion
         /*
         $timeThen = microtime(true);
 
-        $db = KService::get('anahita:database');
+        $db = AnService::get('anahita:database');
 
         //change todo formats from html to string
         $entities = dbfetch('SELECT id, body FROM `#__nodes` WHERE type LIKE "%com:todos.domain.entity.todo" ');

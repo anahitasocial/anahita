@@ -42,18 +42,18 @@ require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
 //instantiate anahita
 Anahita::getInstance();
 
-KServiceIdentifier::setApplication('site', ANPATH_BASE);
-KLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => ANPATH_BASE)));
-KServiceIdentifier::addLocator(KService::get('anahita:service.locator.component'));
+AnServiceIdentifier::setApplication('site', ANPATH_BASE);
+AnLoader::addAdapter(new AnLoaderAdapterComponent(array('basepath' => ANPATH_BASE)));
+AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.component'));
 
-KLoader::addAdapter(new KLoaderAdapterPlugin(array('basepath' => ANPATH_ROOT)));
-KServiceIdentifier::addLocator(KService::get('koowa:service.locator.plugin'));
+AnLoader::addAdapter(new AnLoaderAdapterPlugin(array('basepath' => ANPATH_ROOT)));
+AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.plugin'));
 
-KLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath' => ANPATH_BASE)));
-KServiceIdentifier::addLocator(KService::get('anahita:service.locator.template'));
+AnLoader::addAdapter(new AnLoaderAdapterTemplate(array('basepath' => ANPATH_BASE)));
+AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.template'));
 
-KService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
-KService::setAlias('anahita:domain.space', 'com:base.domain.space');
+AnService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
+AnService::setAlias('anahita:domain.space', 'com:base.domain.space');
 
 //make sure for the autoloader to be reigstered after nooku
 if (PHP_SAPI != 'cli') {
@@ -62,5 +62,5 @@ if (PHP_SAPI != 'cli') {
   $autoloader->register();
 }
 
-KLoader::getInstance()->loadIdentifier('com://site/application.aliases');
-KService::get('com:settings.setting');
+AnLoader::getInstance()->loadIdentifier('com://site/application.aliases');
+AnService::get('com:settings.setting');

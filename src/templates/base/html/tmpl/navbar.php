@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die;?>
+<? defined('ANAHITA') or die;?>
 
 <div class="navbar <?= ($this->getView()->getParams()->navbarInverse) ? 'navbar-inverse' : '' ?> navbar-fixed-top">
     <div class="navbar-inner">
@@ -25,7 +25,7 @@
 	            	<? endif; ?>
 	            </span>
             </div>
-
+            
             <div id="mobile-main-menu" class="nav-collapse collapse menu-mobile hidden-desktop">
             <?= @template('menus/mobile') ?>
             </div>

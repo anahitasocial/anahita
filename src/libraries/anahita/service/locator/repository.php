@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,10 +16,10 @@
  */
 
 /**
- * Repositroy locator is KService locator to return repository objects of any entities.  
- * 
+ * Repositroy locator is AnService locator to return repository objects of any entities.
+ *
  * The format of the identifier must be repos:[//application/]<Component Name>.<Entity Name>. This will translate
- * to KService::get(com:[//application/]<Component Name>.domain.entity.<Entity Name>
+ * to AnService::get(com:[//application/]<Component Name>.domain.entity.<Entity Name>
  *
  * @category   Anahita
  *
@@ -29,17 +29,17 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnServiceLocatorRepository extends KServiceLocatorAbstract implements KServiceInstantiatable
+class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnServiceInstantiatable
 {
     /**
      * Return.
      *
-     * @param KConfigInterface  $config    An optional KConfig object with configuration options
-     * @param KServiceInterface $container A KServiceInterface object
+     * @param AnConfigInterface  $config    An optional AnConfig object with configuration options
+     * @param AnServiceInterface $container A AnServiceInterface object
      *
-     * @return KServiceInstantiatable
+     * @return AnServiceInstantiatable
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $identifier = self::_identifier($config->service_identifier);
@@ -60,11 +60,11 @@ class AnServiceLocatorRepository extends KServiceLocatorAbstract implements KSer
     /**
      * Get the classname based on an identifier.
      *
-     * @param 	mixed  		 An identifier object - koowa:[path].name
+     * @param 	mixed  		 An identifier object - anahita:[path].name
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
-    public function findClass(KServiceIdentifier $identifier)
+    public function findClass(AnServiceIdentifier $identifier)
     {
         return __CLASS__;
     }
@@ -72,24 +72,24 @@ class AnServiceLocatorRepository extends KServiceLocatorAbstract implements KSer
     /**
      * Get the path based on an identifier.
      *
-     * @param  object  	An identifier object - koowa:[path].name
+     * @param  object  	An identifier object - anahita:[path].name
      *
      * @return string Returns the path
      */
-    public function findPath(KServiceIdentifier $identifier)
+    public function findPath(AnServiceIdentifier $identifier)
     {
         return self::_identifier($identifier)->filepath;
     }
 
     /**
-     * Converts a repos locator identifier repos:[//application/]<Component>.<Name> to a 
+     * Converts a repos locator identifier repos:[//application/]<Component>.<Name> to a
      * component identifier.
      *
-     * @param KServiceIdentifier $identifier
-     * 
-     * @return KServiceIdentifier
+     * @param AnServiceIdentifier $identifier
+     *
+     * @return AnServiceIdentifier
      */
-    protected static function _identifier(KServiceIdentifier $identifier)
+    protected static function _identifier(AnServiceIdentifier $identifier)
     {
         $identifier = clone $identifier;
 

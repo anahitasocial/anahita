@@ -13,7 +13,7 @@ require_once ANPATH_LIBRARIES.'/merchant/merchant.php';
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComSubscriptionsDomainPaymentGatewayInterface
+class ComSubscriptionsDomainPaymentGatewayPaypal extends AnObject implements ComSubscriptionsDomainPaymentGatewayInterface
 {
     /**
      * Gateway config.
@@ -25,9 +25,9 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -44,9 +44,9 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'test_mode' => get_config_value('subscriptions.test_mode', true),
@@ -120,7 +120,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
      */
     public function process(ComSubscriptionsDomainPaymentPayload $payload)
     {
-        $options = new KConfig();
+        $options = new AnConfig();
 
         $options->append(array(
             'description' => $payload->description,
@@ -137,7 +137,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
 
             $ip = AnRequest::get('server.REMOTE_ADDR', 'raw');
 
-            if (!$this->getService('koowa:filter.ip')->validate($ip) || strlen($ip) <= 7) {
+            if (!$this->getService('anahita:filter.ip')->validate($ip) || strlen($ip) <= 7) {
                 $ip = '127.0.0.1';
             }
 
@@ -167,7 +167,7 @@ class ComSubscriptionsDomainPaymentGatewayPaypal extends KObject implements ComS
             $options['start_date'] = $payload->getRecurring()->start_date;
         }
 
-        $args[] = KConfig::unbox($options);
+        $args[] = AnConfig::unbox($options);
 
         $gateway->post(array(
             'TAXAMT' => $payload->tax_amount,

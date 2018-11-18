@@ -29,9 +29,9 @@ class LibBaseTemplateFilterForm extends LibBaseTemplateFilterAbstract implements
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         parent::__construct($config);
         
@@ -44,10 +44,10 @@ class LibBaseTemplateFilterForm extends LibBaseTemplateFilterAbstract implements
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      * @return void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'token_value' => '',
@@ -115,9 +115,9 @@ class LibBaseTemplateFilterForm extends LibBaseTemplateFilterAbstract implements
             $text = str_replace($match[0], $match[0].$input, $text, $count);
         }
        
-        // GET : Add token to .-koowa-grid forms
+        // GET : Add token to .-anahita-grid forms
         $matches = array();
-        preg_match_all('#(<\s*?form\s+?.*?class=(?:\'|")[^\'"]*?-koowa-grid.*?(?:\'|").*?)#im', $text, $matches, PREG_SET_ORDER);
+        preg_match_all('#(<\s*?form\s+?.*?class=(?:\'|")[^\'"]*?-anahita-grid.*?(?:\'|").*?)#im', $text, $matches, PREG_SET_ORDER);
         
         foreach ($matches as $match) {
             $input = ' data-token-name="'.$this->_tokenName().'" data-token-value="'.$this->_tokenValue().'"';

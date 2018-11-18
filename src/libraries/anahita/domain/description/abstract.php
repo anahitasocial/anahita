@@ -67,7 +67,7 @@ abstract class AnDomainDescriptionAbstract
     /**
      * Entity identifier.
      *
-     * @var KServiceIdentifier
+     * @var AnServiceIdentifier
      */
     protected $_entity_identifier;
 
@@ -103,9 +103,9 @@ abstract class AnDomainDescriptionAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_initialize($config);
 
@@ -190,9 +190,9 @@ abstract class AnDomainDescriptionAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $entity_identifier = $config->entity_identifier;
 
@@ -480,7 +480,7 @@ abstract class AnDomainDescriptionAbstract
     /**
      * Return the entity class name.
      *
-     * @return KServiceIdentifier
+     * @return AnServiceIdentifier
      */
     public function getEntityIdentifier()
     {
@@ -530,7 +530,7 @@ abstract class AnDomainDescriptionAbstract
 
             $config['name'] = pick($this->getAlias($name), $name);
             $config['description'] = $this;
-            $property = AnDomainProperty::setAttribute(new KConfig($config));
+            $property = AnDomainProperty::setAttribute(new AnConfig($config));
         }
 
         return $property;
@@ -559,7 +559,7 @@ abstract class AnDomainDescriptionAbstract
 
             $config['name'] = pick($this->getAlias($name), $name);
             $config['description'] = $this;
-            $property = AnDomainProperty::setRelationship(new KConfig($config));
+            $property = AnDomainProperty::setRelationship(new AnConfig($config));
 
             if ($property instanceof AnDomainRelationshipOnetomany) {
                 //if the entity is abstract then

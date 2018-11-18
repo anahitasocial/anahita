@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if (defined('ANDEBUG') && ANDEBUG) : ?>
   <? if($entity->authorize('edit')): ?>

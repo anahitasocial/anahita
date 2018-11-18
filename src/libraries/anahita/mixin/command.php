@@ -11,7 +11,7 @@
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        https://www.GetAnahita.com
  * @package     AnMixin
- * @uses        KObject
+ * @uses        AnObject
  * @uses        AnCommandChain
  * @uses        AnCommandInterface
  * @uses        AnCommandEvent
@@ -28,9 +28,9 @@ class AnMixinCommand extends AnMixinAbstract
     /**
      * Object constructor
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         
@@ -67,10 +67,10 @@ class AnMixinCommand extends AnMixinAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'command_chain'     => null,
@@ -114,7 +114,7 @@ class AnMixinCommand extends AnMixinAbstract
      * Set the chain of command object
      *
      * @param   object 	A command chain object
-     * @return  KObject The mixer object
+     * @return  AnObject The mixer object
      */
     public function setCommandChain(AnCommandChain $chain)
     {

@@ -16,7 +16,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
     /**
      * Factory Method.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
     public static function getInstance($config = null)
     {
@@ -25,7 +25,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
         $instance = $instance ? clone $instance : new self();
 
         if (!$config) {
-            $config = new KConfig();
+            $config = new AnConfig();
         }
 
         $config->append(array(
@@ -40,12 +40,12 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
     public function __construct($config = null)
     {
         if (!$config) {
-            $config = new KConfig();
+            $config = new AnConfig();
         }
 
         $config->append(array(
@@ -65,7 +65,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
     {
         if ($date instanceof AnDate) {
             $this->copy($date);
-        } elseif (is_array($date) || $date instanceof KConfig) {
+        } elseif (is_array($date) || $date instanceof AnConfig) {
             foreach ($date as $key => $value) {
                 $this->$key = $value;
             }

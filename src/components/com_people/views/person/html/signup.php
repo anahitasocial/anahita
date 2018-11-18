@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? @service('application.dispatcher')->getRequest()->tmpl = 'component'; ?>
 <? $anybody = @service('repos:people.person')->getQuery(true)->fetchValue('id'); ?>

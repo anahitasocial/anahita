@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? $photos = $set->photos->order('photoSets.ordering'); ?>
 

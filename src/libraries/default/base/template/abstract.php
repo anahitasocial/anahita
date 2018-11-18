@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseTemplateAbstract extends KObject
+abstract class LibBaseTemplateAbstract extends AnObject
 {
     /**
      * The template data
@@ -111,9 +111,9 @@ abstract class LibBaseTemplateAbstract extends KObject
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         
@@ -132,7 +132,7 @@ abstract class LibBaseTemplateAbstract extends KObject
          // Mixin a command chain
         $this->mixin(new AnMixinCommand($config->append(array('mixer' => $this))));
 
-        $this->_data = KConfig::unbox($config->data);
+        $this->_data = AnConfig::unbox($config->data);
 
         $this->_parsed_data = new ArrayObject();
     }
@@ -162,9 +162,9 @@ abstract class LibBaseTemplateAbstract extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'data' => array(),
@@ -181,7 +181,7 @@ abstract class LibBaseTemplateAbstract extends KObject
     /**
      * Method to set a view object attached to the controller.
      *
-     * @param	mixed	An object that implements KObjectServiceable, KServiceIdentifier object
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      *
      * @return LibBaseTemplateAbstract
@@ -218,7 +218,7 @@ abstract class LibBaseTemplateAbstract extends KObject
     {
         if (!$this->_view instanceof LibBaseViewAbstract) {
             //Make sure we have a view identifier
-            if (!($this->_view instanceof KServiceIdentifier)) {
+            if (!($this->_view instanceof AnServiceIdentifier)) {
                 $this->setView($this->_view);
             }
 
@@ -329,10 +329,10 @@ abstract class LibBaseTemplateAbstract extends KObject
 
     /**
      * Loads a template using the identifier by converting an identifier to a path. On the contrary to
-     * LibBaseTemplateAbstract if a KServiceIdentifier is passed, it will not append the path directory as the
+     * LibBaseTemplateAbstract if a AnServiceIdentifier is passed, it will not append the path directory as the
      * default path of $template->_search_paths.
      *
-     * @param  KServiceIdentifier $template Template Identifier
+     * @param  AnServiceIdentifier $template Template Identifier
      * @param  array              $data     Template data
      * @param  bool               $process  If TRUE process the data using a tmpl stream. Default TRUE.
      *
@@ -410,8 +410,8 @@ abstract class LibBaseTemplateAbstract extends KObject
     /**
      * Get a template helper.
      *
-     * @param	mixed	An object that implements KObjectIdentifiable, an object that
-     *                  implements KServiceIdentifierInterface or valid identifier string
+     * @param	mixed	An object that implements AnObjectIdentifiable, an object that
+     *                  implements AnServiceIdentifierInterface or valid identifier string
      * @param	mixed	Parameters to be passed to the helper
      *
      * @return LibBaseTemplateHelperInterface
@@ -590,7 +590,7 @@ abstract class LibBaseTemplateAbstract extends KObject
      */
     public function addFilter($filters)
     {
-        $filters = (array) KConfig::unbox($filters);
+        $filters = (array) AnConfig::unbox($filters);
 
         foreach ($filters as $filter) {
             if (!($filter instanceof LibBaseTemplateFilterInterface)) {
@@ -620,7 +620,7 @@ abstract class LibBaseTemplateAbstract extends KObject
             $identifier->path = array('template', 'filter');
             $identifier->name = $filter;
         } else {
-            $identifier = KService::getIdentifier($filter);
+            $identifier = AnService::getIdentifier($filter);
         }
 
         if (!isset($this->_filters[$filter])) {
@@ -629,7 +629,7 @@ abstract class LibBaseTemplateAbstract extends KObject
                 'prefix' => $this
             ));
             
-            $filter = KService::get($identifier);
+            $filter = AnService::get($identifier);
 
             if (!($filter instanceof LibBaseTemplateFilterInterface)) {
                 throw new LibBaseTemplateException("Template filter $identifier does not implement LibBaseTemplateFilterInterface");

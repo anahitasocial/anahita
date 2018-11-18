@@ -18,7 +18,7 @@ class ComLocationsDomainBehaviorPrivatable extends ComTagsDomainBehaviorPrivatab
      */
     protected function _beforeQuerySelect(AnCommandContext $context)
     {
-        if (KService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin()) {
+        if (AnService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin()) {
             return;
         }
 
@@ -26,11 +26,11 @@ class ComLocationsDomainBehaviorPrivatable extends ComTagsDomainBehaviorPrivatab
 
         $repository = $query->getRepository();
 
-        $config = pick($query->privacy, new KConfig());
+        $config = pick($query->privacy, new AnConfig());
 
         $config->append(array(
             'visible_to_leaders' => true,
-            'viewer' => KService::get('com:people.viewer'),
+            'viewer' => AnService::get('com:people.viewer'),
             'graph_check' => true,
         ));
 

@@ -38,13 +38,13 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
-        $this->_modifiable_properties = KConfig::unbox($config->modifiable_properties);
+        $this->_modifiable_properties = AnConfig::unbox($config->modifiable_properties);
     }
 
     /**
@@ -52,9 +52,9 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'modifiable_properties' => array(),
@@ -78,13 +78,13 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
     /**
      * Executes the command after.instantiate.
      *
-     * @param KConfig $config Configuration parameter
+     * @param AnConfig $config Configuration parameter
      */
-    protected function _afterEntityInstantiate(KConfig $config)
+    protected function _afterEntityInstantiate(AnConfig $config)
     {
-        if (KService::has('com:people.viewer')) {
+        if (AnService::has('com:people.viewer')) {
             $config->data->append(array(
-                'author' => KService::get('com:people.viewer'),
+                'author' => AnService::get('com:people.viewer'),
             ));
         }
     }
@@ -132,10 +132,10 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
     protected function _beforeEntityUpdate(AnCommandContext $context)
     {
         $entity = $context->entity;
-        $modified = array_keys(KConfig::unbox($entity->getModifiedData()));
+        $modified = array_keys(AnConfig::unbox($entity->getModifiedData()));
         $modified = count(array_intersect($this->_modifiable_properties, $modified)) > 0;
 
-        if ($modified && KService::has('com:people.viewer')) {
+        if ($modified && AnService::has('com:people.viewer')) {
             $entity->editor = get_viewer();
         }
     }

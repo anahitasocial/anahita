@@ -45,9 +45,9 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'attributes' => array(
@@ -287,7 +287,7 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
      * Creates a where statement that checks actor id and access column values against viewer socialgraph and viewer id.
      *
      * @param string  $actor_id The name of the columm containing actor ids.
-     * @param KConfig $config   Configuration parameter
+     * @param AnConfig $config   Configuration parameter
      * @param string  $access   The name of the column containing access values
      *
      * @return string

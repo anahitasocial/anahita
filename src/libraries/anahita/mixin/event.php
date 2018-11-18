@@ -35,9 +35,9 @@ class AnMixinEvent extends AnMixinAbstract
     /**
      * Object constructor
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         
@@ -57,7 +57,7 @@ class AnMixinEvent extends AnMixinAbstract
         
         //Add the event handlers
         if (! empty($config->event_subscribers)) {
-            $subscribers = (array) KConfig::unbox($config->event_subscribers);
+            $subscribers = (array) AnConfig::unbox($config->event_subscribers);
             
             foreach ($subscribers as $key => $value) {
                 if (is_numeric($key)) {
@@ -74,10 +74,10 @@ class AnMixinEvent extends AnMixinAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'event_dispatcher' => null,
@@ -102,7 +102,7 @@ class AnMixinEvent extends AnMixinAbstract
      * Set the chain of command object
      *
      * @param   object 		An event dispatcher object
-     * @return  KObject     The mixer object
+     * @return  AnObject     The mixer object
      */
     public function setEventDispatcher(AnEventDispatcher $dispatcher)
     {
@@ -114,13 +114,13 @@ class AnMixinEvent extends AnMixinAbstract
      * Add an event listener
      *
      * @param  string  The event name
-     * @param  object  An object implementing the KObjectHandlable interface
+     * @param  object  An object implementing the AnObjectHandlable interface
      * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest),
      *                 default is 3. If no priority is set, the command priority will be used
      *                 instead.
-     * @return  KObject The mixer objects
+     * @return  AnObject The mixer objects
      */
-    public function addEventListener($event, KObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
+    public function addEventListener($event, AnObjectHandlable $listener, $priority = AnEvent::PRIORITY_NORMAL)
     {
         $this->_event_dispatcher->addEventListener($event, $listener, $priority);
         return $this->getMixer();
@@ -130,10 +130,10 @@ class AnMixinEvent extends AnMixinAbstract
      * Remove an event listener
      *
      * @param   string  The event name
-     * @param   object  An object implementing the KObjectHandlable interface
-     * @return  KObject  The mixer object
+     * @param   object  An object implementing the AnObjectHandlable interface
+     * @return  AnObject  The mixer object
      */
-    public function removeEventListener($event, KObjectHandlable $listener)
+    public function removeEventListener($event, AnObjectHandlable $listener)
     {
         $this->_event_dispatcher->removeEventListener($event, $listener, $priority);
         return $this->getMixer();
@@ -142,12 +142,12 @@ class AnMixinEvent extends AnMixinAbstract
     /**
      * Add an event subscriber
      *
-     * @param   mixed	An object that implements KObjectServiceable, KServiceIdentifier object
+     * @param   mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
      * 					or valid identifier string
      * @param  integer The event priority, usually between 1 (high priority) and 5 (lowest),
      *                 default is 3. If no priority is set, the command priority will be used
      *                 instead.
-     * @return  KObject	The mixer object
+     * @return  AnObject	The mixer object
      */
     public function addEventSubscriber($subscriber, $config = array(), $priority = null)
     {
@@ -165,8 +165,8 @@ class AnMixinEvent extends AnMixinAbstract
      * Remove an event listener
      *
      * @param   string  The event name
-     * @param   object  An object implementing the KObjectHandlable interface
-     * @return  KObject  The mixer object
+     * @param   object  An object implementing the AnObjectHandlable interface
+     * @return  AnObject  The mixer object
      */
     public function removeEventDispatcher($subscriber)
     {
@@ -185,7 +185,7 @@ class AnMixinEvent extends AnMixinAbstract
      */
     public function getEventSubscriber($subscriber, $config = array())
     {
-        if (! ($subscriber instanceof KServiceIdentifier)) {
+        if (! ($subscriber instanceof AnServiceIdentifier)) {
             //Create the complete identifier if a partial identifier was passed
             if (is_string($subscriber) && strpos($subscriber, '.') === false) {
                 $identifier = clone $this->getIdentifier();

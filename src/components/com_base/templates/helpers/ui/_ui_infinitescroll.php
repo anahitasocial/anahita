@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access') ?>
+<? defined('ANAHITA') or die('Restricted access') ?>
 
 <div id="<?= $id ?>" class="an-entities masonry" data-columns="<?= $columns ?>" data-trigger="InfiniteScroll" data-url="<?= @route($url) ?>">
 

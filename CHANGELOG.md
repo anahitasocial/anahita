@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.0
+=============================
+1. changed: all koowa classes are now merged with Anahita framework. All classes prefixed with K are now using An prefix. Unused code have been removed.  
+1. changed: in configuration.php file AnConfig is now AnSiteConfig 
+
 Anahita 4.3.14 Birth Release
 =============================
 1. fixed: plyr styling 

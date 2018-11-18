@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? $location = empty($location) ? @service('repos:locations.location')->getEntity()->reset() : $location; ?>
 

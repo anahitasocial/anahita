@@ -39,7 +39,7 @@ class AnDomainQueryHelper
      {
          foreach ($filters as $filter => $value) {
              $method = AnInflector::variablize($filter);
-             $value = KConfig::unbox($value);
+             $value = AnConfig::unbox($value);
              if (!is_array($value) || !is_numeric(key($value))) {
                  $args = array($value);
              } else {

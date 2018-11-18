@@ -11,7 +11,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class AnDocument extends KObject implements KServiceInstantiatable
+class AnDocument extends AnObject implements AnServiceInstantiatable
 {
     /**
 	 * Document title
@@ -139,11 +139,11 @@ class AnDocument extends KObject implements KServiceInstantiatable
     /**
 	 * Constructor.
 	 *
-	 * @param 	object 	An optional KConfig object with configuration options.
+	 * @param 	object 	An optional AnConfig object with configuration options.
 	 * Recognized key values include 'command_chain', 'charset', 'table_prefix',
 	 * (this list is not meant to be comprehensive).
 	 */
-	public function __construct(KConfig $config = null)
+	public function __construct(AnConfig $config = null)
 	{
         $this->setCharset($config->charset);
         $this->setLanguage($config->language);
@@ -166,10 +166,10 @@ class AnDocument extends KObject implements KServiceInstantiatable
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
     	$config->append(array(
     		'charset' => 'utf-8',
@@ -188,11 +188,11 @@ class AnDocument extends KObject implements KServiceInstantiatable
     /**
      * Force creation of a singleton
      *
-     * @param 	object 	An optional KConfig object with configuration options
-     * @param 	object	A KServiceInterface object
+     * @param 	object 	An optional AnConfig object with configuration options
+     * @param 	object	A AnServiceInterface object
      * @return AnDatabaseTableInterface
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         if (!$container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
@@ -510,7 +510,7 @@ class AnDocument extends KObject implements KServiceInstantiatable
         $description = strip_tags($description);
         $description = htmlentities($description);
         $description = str_replace(array('#', '@'), '', $description);
-        $description = KService::get('com:base.template.helper.text')->truncate($description, array('length' => 160));
+        $description = AnService::get('com:base.template.helper.text')->truncate($description, array('length' => 160));
         $description = trim($description);
 
         $this->_description = $description;

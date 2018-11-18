@@ -16,9 +16,9 @@ class ComBaseViewHtml extends LibBaseViewHtml
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -35,14 +35,14 @@ class ComBaseViewHtml extends LibBaseViewHtml
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $paths[] = dirname($this->getIdentifier()->filepath).'/html';
         $paths[] = implode(DS, array(
                       ANPATH_THEMES,
-                      KService::get('com:application')->getTemplate(),
+                      AnService::get('com:application')->getTemplate(),
                       'html',
                       $this->getIdentifier()->type.'_'.$this->getIdentifier()->package,
                       $this->getName(), ));

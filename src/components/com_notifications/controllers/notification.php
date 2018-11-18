@@ -18,9 +18,9 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'behaviors' => array(
@@ -81,7 +81,7 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
         //actor. prevents from admin zeroing others notifications
         if ($entities->count() > 0 && get_viewer()->eql($this->actor)) {
             //set the number of notification, since it's going to be
-            KService::setConfig('com:viewer.html', array('data' => array('num_notifications' => $this->actor->numOfNewNotifications())));
+            AnService::setConfig('com:viewer.html', array('data' => array('num_notifications' => $this->actor->numOfNewNotifications())));
             $this->registerCallback('after.get', array($this->actor, 'viewedNotifications'), $entities->toArray());
         }
 

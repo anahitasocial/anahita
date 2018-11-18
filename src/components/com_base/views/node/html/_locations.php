@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if(count($locations)) : ?>
 <ul class="an-meta inline">

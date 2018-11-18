@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,11 +26,11 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnServiceLocatorAnahita extends KServiceLocatorAbstract
+class AnServiceLocatorAnahita extends AnServiceLocatorAbstract
 {
-    /** 
+    /**
      * The type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'anahita';
@@ -38,11 +38,11 @@ class AnServiceLocatorAnahita extends KServiceLocatorAbstract
     /**
      * Get the classname based on an identifier.
      *
-     * @param 	mixed  		 An identifier object - koowa:[path].name
+     * @param 	mixed  		 An identifier object - anahita:[path].name
      *
      * @return string|false Return object on success, returns FALSE on failure
      */
-    public function findClass(KServiceIdentifier $identifier)
+    public function findClass(AnServiceIdentifier $identifier)
     {
         $classname = 'An'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
@@ -65,11 +65,11 @@ class AnServiceLocatorAnahita extends KServiceLocatorAbstract
     /**
      * Get the path based on an identifier.
      *
-     * @param  object  	An identifier object - koowa:[path].name
+     * @param  object  	An identifier object - anahita:[path].name
      *
      * @return string Returns the path
      */
-    public function findPath(KServiceIdentifier $identifier)
+    public function findPath(AnServiceIdentifier $identifier)
     {
         $path = '';
 

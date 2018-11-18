@@ -19,7 +19,7 @@
  *     // Create a url object;
  *
  *     $url = 'http://anonymous:guest@example.com/path/to/index.php/foo/bar.xml?baz=dib#anchor'
- *     $url = KService::get('anahita:http.url', array('url' => $url) );
+ *     $url = AnService::get('anahita:http.url', array('url' => $url) );
  *
  *     // the $ur properties are ...
  *     //
@@ -81,7 +81,7 @@
  * @category    Anahita
  * @package     AnHttp
  */
-class AnHttpUrl extends KObject
+class AnHttpUrl extends AnObject
 {
     /**
      * The url parts
@@ -189,13 +189,13 @@ class AnHttpUrl extends KObject
     /**
      * Constructor
      *
-     * @param   $config KConfig An optional KConfig object with configuration options
+     * @param   $config AnConfig An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
         if (! isset($config)) {
-            $config = new KConfig();
+            $config = new AnConfig();
         }
 
         parent::__construct($config);
@@ -208,10 +208,10 @@ class AnHttpUrl extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param   $config KConfig An optional KConfig object with configuration options
+     * @param   $config AnConfig An optional AnConfig object with configuration options
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'url'  => '',

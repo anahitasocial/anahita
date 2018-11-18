@@ -16,9 +16,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -40,7 +40,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      * as follow
      *
      * <code>
-     * KService::setConfig('com:people.controller.session', array(
+     * AnService::setConfig('com:people.controller.session', array(
      *  'redirect_to_after_login'  => 'mynewurl'
      *  'redirect_to_after_logout' => 'mynewurl'
      * ));
@@ -48,9 +48,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'redirect_to_after_login' => '',

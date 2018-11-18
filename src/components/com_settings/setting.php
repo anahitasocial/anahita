@@ -11,7 +11,7 @@
  * @link        http://www.GetAnahita.com
  */
 
- class ComSettingsSetting extends KObject implements KServiceInstantiatable
+ class ComSettingsSetting extends AnObject implements AnServiceInstantiatable
  {
      /**
      *  path to the settings file
@@ -60,13 +60,7 @@
 
          require_once $filepath;
 
-         //Checking for the legacy JConfig first
-         if (class_exists('JConfig')) {
-             $this->_settings = new JConfig();
-         } else {
-             $this->_settings = new AnConfig();
-         }
-
+         $this->_settings = new AnSiteConfig();
          $this->_default_template = 'shiraz';
          $this->_default_language = 'en-GB';
      }
@@ -76,10 +70,10 @@
       *
       * Called from {@link __construct()} as a first step of object instantiation.
       *
-      * @param 	object 	An optional KConfig object with configuration options.
+      * @param 	object 	An optional AnConfig object with configuration options.
       * @return  void
       */
-     protected function _initialize(KConfig $config)
+     protected function _initialize(AnConfig $config)
      {
      	$config->append(array(
      		'path' => ANPATH_ROOT,
@@ -92,11 +86,11 @@
      /**
       * Force creation of a singleton
       *
-      * @param 	object 	An optional KConfig object with configuration options
-      * @param 	object	A KServiceInterface object
+      * @param 	object 	An optional AnConfig object with configuration options
+      * @param 	object	A AnServiceInterface object
       * @return AnDatabaseTableInterface
       */
-     public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
      {
          if (!$container->has($config->service_identifier)) {
              $classname = $config->service_identifier->classname;

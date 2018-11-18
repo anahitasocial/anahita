@@ -1,3 +1,3 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <?= @template('form') ?>

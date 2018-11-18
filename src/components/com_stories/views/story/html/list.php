@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <?
 $subject = is_array($subject) ? array_shift($subject) : $subject;

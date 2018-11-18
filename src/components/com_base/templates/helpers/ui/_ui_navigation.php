@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access') ?>
+<? defined('ANAHITA') or die('Restricted access') ?>
 
 <? if ($navigation->getPageTitle()) : ?>
 <h1 class="an-page-header"><?=$navigation->getPageTitle()?></h1>

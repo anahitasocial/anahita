@@ -22,7 +22,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComHashtagsFilterHashtag extends KFilterAbstract
+class ComHashtagsFilterHashtag extends AnFilterAbstract
 {
     /**
      * Validate a value.

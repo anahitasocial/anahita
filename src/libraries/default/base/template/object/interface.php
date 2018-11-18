@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-interface LibBaseTemplateObjectInterface extends KConfigInterface
+interface LibBaseTemplateObjectInterface extends AnConfigInterface
 {
     /**
      * Return a template object name that uniquly identifieds a template object.

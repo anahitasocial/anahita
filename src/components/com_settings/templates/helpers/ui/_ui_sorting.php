@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if ($sort == $field): ?>
 <u><?= @text($label) ?></u>

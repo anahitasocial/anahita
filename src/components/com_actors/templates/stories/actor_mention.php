@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access');?>
+<?php defined('ANAHITA') or die('Restricted access');?>
 
 <data name="title">
 	<?= sprintf(@text('COM-ACTORS-NOTIFICATION-MENTION'), @name($subject), @route($object->getURL())) ?>

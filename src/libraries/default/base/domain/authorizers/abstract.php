@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class LibBaseDomainAuthorizerAbstract extends KObject
+abstract class LibBaseDomainAuthorizerAbstract extends AnObject
 {
     /**
      * Viewer.

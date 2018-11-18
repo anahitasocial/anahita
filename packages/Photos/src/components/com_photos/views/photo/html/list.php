@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <? if ($photo->authorize('edit')) : ?>
 <div class="an-entity editable" data-url="<?= @route($photo->getURL()) ?>">

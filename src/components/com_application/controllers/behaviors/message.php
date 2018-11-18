@@ -24,16 +24,16 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
         $this->_enabled = $config->enabled;
         $namespace = $this->_getQueueNamespace(false);
 
-        $session = KService::get('com:sessions', array(
+        $session = AnService::get('com:sessions', array(
                         'namespace' => $namespace->namespace,
                         'storage' => (PHP_SAPI == 'cli') ? 'none' : 'database'
                     ));
@@ -59,9 +59,9 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'enabled' => AnRequest::format() != 'json' && $config->mixer->isDispatched(),
@@ -121,7 +121,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
     {
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
-            $session = KService::get('com:sessions', array('namespace' => $namespace->namespace));
+            $session = AnService::get('com:sessions', array('namespace' => $namespace->namespace));
 
             $queue = $session->get($namespace->queue, new stdClass);
             $queue->$key = $value;
@@ -146,7 +146,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
 
         if ($this->_enabled) {
             $namespace = $this->_getQueueNamespace($global);
-            $session = KService::get('com:sessions', array('namespace' => $namespace->namespace));
+            $session = AnService::get('com:sessions', array('namespace' => $namespace->namespace));
             $queue = $session->get($namespace->queue, new stdClass());
             $ret = isset($queue[$key]) ? $queue[$key] : null;
         }
@@ -172,7 +172,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
             $namespace = 'controller_persistance';
         }
 
-        return new KConfig(array('queue' => $store, 'namespace' => $namespace));
+        return new AnConfig(array('queue' => $store, 'namespace' => $namespace));
     }
 
     /**

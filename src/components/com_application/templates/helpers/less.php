@@ -23,7 +23,7 @@ class ComApplicationTemplateHelperLess extends LibBaseTemplateHelperAbstract
      */
     public function compile($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'parse_urls' => true,

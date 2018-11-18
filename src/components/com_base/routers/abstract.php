@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-abstract class ComBaseRouterAbstract extends KObject implements KServiceInstantiatable
+abstract class ComBaseRouterAbstract extends AnObject implements AnServiceInstantiatable
 {
     /**
      * Route patterns.
@@ -23,9 +23,9 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
         $this->_patterns = $config['patterns'];
@@ -36,9 +36,9 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $package = $this->getIdentifier()->package;
 
@@ -54,12 +54,12 @@ abstract class ComBaseRouterAbstract extends KObject implements KServiceInstanti
     /**
      * Force creation of a singleton.
      *
-     * @param   object  An optional KConfig object with configuration options
-     * @param   object  A KServiceInterface object
+     * @param   object  An optional AnConfig object with configuration options
+     * @param   object  A AnServiceInterface object
      *
      * @return KDispatcherDefault
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         // Check if an instance with this identifier already exists or not
         if (!$container->has($config->service_identifier)) {

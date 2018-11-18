@@ -35,7 +35,7 @@ class ComStoriesDomainBehaviorPrivatable extends ComMediumDomainBehaviorPrivatab
     {
         $query = $context->query;
         $repository = $query->getRepository();
-        $query->privacy = pick($query->privacy, new KConfig());
+        $query->privacy = pick($query->privacy, new AnConfig());
         //weak link  the stories with object nodes
         //and use the object.access instead of the story access if there are ny
         $query->link('object', array('type' => 'weak', 'bind_type' => false));

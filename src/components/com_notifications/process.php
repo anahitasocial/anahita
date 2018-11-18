@@ -5,11 +5,11 @@ if (!defined('ANPATH_BASE')) {
     $base = str_replace('/components/com_notifications', '', $base);
     define('ANPATH_BASE', $base);
     require_once ANPATH_BASE.'/includes/framework.php';
-    KService::get('com://site/application.dispatcher')->load();
+    AnService::get('com://site/application.dispatcher')->load();
 }
 
 $ids = (array) AnRequest::get('get.id', 'int', array());
-$controller = KService::get('com:notifications.controller.processor');
+$controller = AnService::get('com:notifications.controller.processor');
 
 if (!empty($ids)) {
     $controller->id($ids);

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <h1><?= @text('COM-SUBSCRIPTIONS-INVOICE') ?></h1>
 

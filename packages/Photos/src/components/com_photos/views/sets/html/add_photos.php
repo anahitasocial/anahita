@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <form id="photos-set-assignment" method="post" action="<?= @route('view=set&oid='.$actor->id) ?>">
 	<? foreach ($photos as $photo): ?>

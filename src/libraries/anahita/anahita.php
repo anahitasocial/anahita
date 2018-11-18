@@ -2,10 +2,6 @@
 
 define('ANAHITA', 1);
 
-/**
- * Include Koowa.
- */
-require_once ANPATH_LIBRARIES.'/koowa/koowa.php';
 require_once ANPATH_LIBRARIES.'/anahita/functions.php';
 require_once ANPATH_LIBRARIES.'/anahita/translator.php';
 
@@ -27,7 +23,7 @@ class anahita
      *
      * @var string
      */
-    protected static $_version = '4.3.14';
+    protected static $_version = '4.4.0';
 
     /**
      * Path to Anahita libraries.
@@ -41,14 +37,16 @@ class anahita
      *
      * Prevent creating clones of this class
      */
-    final private function __clone(){}
+    final private function __clone()
+    {
+    }
 
     /**
      * Singleton instance.
      *
      * @param  array  An optional array with configuration options.
      *
-     * @return Koowa
+     * @return Anahita
      */
     final public static function getInstance($config = array())
     {
@@ -72,31 +70,28 @@ class anahita
     {
         //store the path
         $this->_path = dirname(__FILE__);
-        $cache_prefix = isset($config['cache_prefix']) ? $config['cache_prefix'] : '';
-        $cache_enabled = isset($config['cache_enabled']) ? $config['cache_enabled'] : 0;
-
-        //instantiate koowa
-        Koowa::getInstance(array(
-            'cache_prefix' => $cache_prefix,
-            'cache_enabled' => (bool) $cache_enabled,
-        ));
+        require_once $this->_path.'/loader/loader.php';
+        
+        $loader = AnLoader::getInstance($config);
+        $service = AnService::getInstance($config);
+        $service->set('anahita:loader', $loader);
 
         require_once dirname(__FILE__).'/loader/adapter/anahita.php';
 
-        KLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
-        KLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
+        AnLoader::addAdapter(new AnLoaderAdapterAnahita(array('basepath' => dirname(__FILE__))));
+        AnLoader::addAdapter(new AnLoaderAdapterDefault(array('basepath' => ANPATH_LIBRARIES.'/default')));
 
         AnServiceClass::getInstance();
 
-        KServiceIdentifier::addLocator(new AnServiceLocatorAnahita());
-        KServiceIdentifier::addLocator(new AnServiceLocatorRepository());
+        AnServiceIdentifier::addLocator(new AnServiceLocatorAnahita());
+        AnServiceIdentifier::addLocator(new AnServiceLocatorRepository());
 
         //register an empty path for the application
         //a workaround to remove the applicaiton path from an identifier
-        KServiceIdentifier::setApplication('', '');
+        AnServiceIdentifier::setApplication('', '');
 
         //create a central event dispatcher
-        KService::set('anahita:event.dispatcher', KService::get('anahita:event.dispatcher'));
+        AnService::set('anahita:event.dispatcher', AnService::get('anahita:event.dispatcher'));
     }
 
     /**

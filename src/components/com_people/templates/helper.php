@@ -42,7 +42,7 @@ class ComPeopleTemplateHelper extends LibBaseTemplateHelperAbstract
     public function usertypes($options = array())
     {
         $viewer = get_viewer();
-        $options = new KConfig($options);
+        $options = new AnConfig($options);
 
         $options->append(array(
             'id' => 'person-userType',
@@ -66,6 +66,6 @@ class ComPeopleTemplateHelper extends LibBaseTemplateHelperAbstract
 
         $html = $this->getService('com:base.template.helper.html');
 
-        return $html->select($options->name, array('options' => $usertypes, 'selected' => $selected), KConfig::unbox($options));
+        return $html->select($options->name, array('options' => $usertypes, 'selected' => $selected), AnConfig::unbox($options));
     }
 }

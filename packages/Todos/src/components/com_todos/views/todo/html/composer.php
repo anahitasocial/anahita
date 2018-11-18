@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access'); ?>
+<? defined('ANAHITA') or die('Restricted access'); ?>
 
 <? $todo = @service('repos:todos.todo')->getEntity()->reset() ?>
 

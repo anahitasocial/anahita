@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <? @title(sprintf(@text('COM-NOTES-META-TITLE-NOTE'), $actor->name).' - '.@date($note->creationTime)) ?>
 <? @description(@helper('text.truncate', strip_tags($note->body), array('length' => 156))) ?>

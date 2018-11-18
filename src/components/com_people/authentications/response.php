@@ -1,6 +1,6 @@
 <?php
 
-class ComPeopleAuthenticationResponse extends KObject
+class ComPeopleAuthenticationResponse extends AnObject
 {
     public $status = ComPeopleAuthentication::STATUS_FAILURE;
     public $type = '';

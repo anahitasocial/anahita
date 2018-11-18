@@ -45,14 +45,14 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
     /**
      * Configurator.
      *
-     * @param KConfig $config Property Configuration
+     * @param AnConfig $config Property Configuration
      */
-    public function setConfig(KConfig $config)
+    public function setConfig(AnConfig $config)
     {
         $identifier = $config->description->getRepository()->getIdentifier();
 
         if ($config->parent) {
-            $this->_parent = KService::getIdentifier($config->parent);
+            $this->_parent = AnService::getIdentifier($config->parent);
 
             //adopt the child application
             if (!$this->_parent->application) {
@@ -68,7 +68,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
                 $identifier->name = $config->child;
                 $config->child = $identifier;
             }
-            $this->_child = KService::getIdentifier($config->child);
+            $this->_child = AnService::getIdentifier($config->child);
             //adopt the parent application
             if (!$this->_child->application) {
                 $this->_child->application = $identifier->application;
@@ -78,7 +78,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
         $this->_parent_key = $config->parent_key;
 
         if (is_array($config->query)) {
-            $config->query = new KConfig($config->query);
+            $config->query = new AnConfig($config->query);
         }
 
         $this->_query_filters = $config->query;
@@ -89,9 +89,9 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'parent_key' => 'id',

@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <form action="<?= @route('view=template&alias='.$item->alias) ?>" method="post">
     <input type="hidden" name="action" value="edit" />

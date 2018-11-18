@@ -16,9 +16,9 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -40,9 +40,9 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'state' => array(
@@ -160,7 +160,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
                             'comment' => $this->isCommentable() ? $data->comment : null,
                     ),
             ));
-            $story = $this->createStory(KConfig::unbox($context->story));
+            $story = $this->createStory(AnConfig::unbox($context->story));
             $data->story = $story;
 
             return $story;

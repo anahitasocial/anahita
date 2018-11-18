@@ -1,1 +1,1 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>

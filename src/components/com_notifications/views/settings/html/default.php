@@ -1,4 +1,4 @@
-<?php defined('KOOWA') or die('Restricted access') ?>
+<?php defined('ANAHITA') or die('Restricted access') ?>
 <?php
 $actorbar->setTitle(sprintf(@text('COM-NOTIFICATIONS-ACTOR-EDIT-NOTIFICATION-SETTINGS-TITLE'), $actor->name));
 $actorbar->setDescription(@text('COM-NOTIFICATIONS-ACTOR-EDIT-NOTIFICATION-SETTINGS-DESCRIPTION'));

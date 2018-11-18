@@ -7,7 +7,7 @@
  * @link        http://www.nooku.org
  * @link        https://www.GetAnahita.com
  */
-class AnDatabaseSchemaColumn extends KObject
+class AnDatabaseSchemaColumn extends AnObject
 {
     /**
      * Column name
@@ -118,8 +118,8 @@ class AnDatabaseSchemaColumn extends KObject
                 $this->_filter = $this->type;
             }
 
-            if (!($this->_filter instanceof KFilterInterface)) {
-                $this->_filter = $this->getService('koowa:filter.factory')->instantiate($this->_filter);
+            if (!($this->_filter instanceof AnFilterInterface)) {
+                $this->_filter = $this->getService('anahita:filter.factory')->instantiate($this->_filter);
             }
 
             return $this->_filter;

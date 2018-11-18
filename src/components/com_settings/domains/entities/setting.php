@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsDomainEntitySetting extends KObject
+class ComSettingsDomainEntitySetting extends AnObject
 {
     /**
     * @param entity atributes
@@ -28,9 +28,9 @@ class ComSettingsDomainEntitySetting extends KObject
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
 
         $this->_attributes = array(
@@ -102,7 +102,7 @@ class ComSettingsDomainEntitySetting extends KObject
 
             chmod($this->_config_file_path, 0644);
 
-            $content = "<?php\nclass AnConfig{\n";
+            $content = "<?php\nclass AnSiteConfig{\n";
 
             foreach($this->_attributes as $key=>$value) {
               if(!is_array($value)){
@@ -201,19 +201,19 @@ class ComSettingsDomainEntitySetting extends KObject
             );
 
             if(in_array($name, $strings)){
-              $value = $this->getService('koowa:filter.string')->sanitize($value);
+              $value = $this->getService('anahita:filter.string')->sanitize($value);
             }
 
             if(in_array($name, $integers)){
-              $value = $this->getService('koowa:filter.int')->sanitize($value);
+              $value = $this->getService('anahita:filter.int')->sanitize($value);
             }
 
             if(in_array($name, $cmds)){
-              $value = $this->getService('koowa:filter.cmd')->sanitize($value);
+              $value = $this->getService('anahita:filter.cmd')->sanitize($value);
             }
 
             if(in_array($name, $emails)){
-              $value = $this->getService('koowa:filter.email')->sanitize($value);
+              $value = $this->getService('anahita:filter.email')->sanitize($value);
             }
 
             $this->_attributes[$name] = $value;

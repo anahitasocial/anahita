@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <?= @helper('ui.header') ?>
 <?= @helper('ui.filterbox', @route('layout=list&sort='.$sort)) ?>

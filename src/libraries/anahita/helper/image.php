@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnHelperImage extends KObject
+class AnHelperImage extends AnObject
 {
     /**
      * Parses a string based size convention to width and height.

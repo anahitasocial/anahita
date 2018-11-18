@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <ul class="search-scopes nav nav-tabs nav-stacked">
 	<li class="<?= empty($current_scope) ? 'active' : ''; ?>" >

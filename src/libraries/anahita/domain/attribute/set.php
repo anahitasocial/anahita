@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainAttributeSet extends KObjectArray implements AnDomainAttributeInterface, Countable
+class AnDomainAttributeSet extends AnObjectArray implements AnDomainAttributeInterface, Countable
 {
     /**
      * Set the set data.

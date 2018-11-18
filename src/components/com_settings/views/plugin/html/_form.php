@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <form action="<?= @route($item->getURL()) ?>" method="post" class="an-entity">
 

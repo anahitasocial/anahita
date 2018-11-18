@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die ?>
+<? defined('ANAHITA') or die ?>
 
 <div class="an-socialgraph-stat">
     <? if ($actor->isFollowable()) : ?>

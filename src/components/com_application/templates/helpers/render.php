@@ -16,16 +16,16 @@ class ComApplicationTemplateHelperRender extends LibBaseTemplateHelperAbstract
     /**
      * Template parameters.
      *
-     * @return KConfig
+     * @return AnConfig
      */
     protected $_params = null;
 
     /**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -41,7 +41,7 @@ class ComApplicationTemplateHelperRender extends LibBaseTemplateHelperAbstract
      */
     public function logo($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'show_logo' => pick($this->_params->showLogo, 1),
@@ -63,7 +63,7 @@ class ComApplicationTemplateHelperRender extends LibBaseTemplateHelperAbstract
      */
     public function favicon($config = array())
     {
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'favicon' => pick($this->_params->favicon, 'favicon.ico'),
@@ -97,7 +97,7 @@ class ComApplicationTemplateHelperRender extends LibBaseTemplateHelperAbstract
     {
         require_once 'less/compiler.php';
 
-        $config = new KConfig($config);
+        $config = new AnConfig($config);
 
         $config->append(array(
             'parse_urls' => true,
@@ -141,7 +141,7 @@ class ComApplicationTemplateHelperRender extends LibBaseTemplateHelperAbstract
      */
     public function messages()
     {
-        $session = KService::get('com:sessions');
+        $session = AnService::get('com:sessions');
         $queue = (array) $session->get('controller.queue', array());
 
         $session->set('controller.queue', null);

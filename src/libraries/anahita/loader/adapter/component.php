@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -26,7 +26,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnLoaderAdapterComponent extends KLoaderAdapterAbstract
+class AnLoaderAdapterComponent extends AnLoaderAdapterAbstract
 {
     /**
      * The adapter type.

@@ -31,9 +31,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * Constructor.
      *
-     * @param 	object 	An optional KConfig object with configuration options
+     * @param 	object 	An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         parent::__construct($config);
 
@@ -55,9 +55,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
         $config->append(array(
             'repository' => $this->getIdentifier()->name,
@@ -98,7 +98,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      */
     public function find($needle, $set = false)
     {
-        if ($needle instanceof KObjectHandlable) {
+        if ($needle instanceof AnObjectHandlable) {
             return parent::find($needle);
         }
 
@@ -130,7 +130,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
             return;
         }
 
-        return new AnDomainEntityset(new KConfig(array(
+        return new AnDomainEntityset(new AnConfig(array(
             'data' => $entities,
             'repository' => $this->_repository,
           )));
@@ -165,7 +165,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function getRepository()
     {
         if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof KServiceIdentifier) {
+            if (!$this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -219,9 +219,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::contains()
+     * @see AnObjectSet::contains()
      */
-    public function contains(KObjectHandlable $object)
+    public function contains(AnObjectHandlable $object)
     {
         $this->_loadData();
 
@@ -231,9 +231,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::extract()
+     * @see AnObjectSet::extract()
      */
-    public function extract(KObjectHandlable $object)
+    public function extract(AnObjectHandlable $object)
     {
         $this->_loadData();
 
@@ -243,9 +243,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::insert()
+     * @see AnObjectSet::insert()
      */
-    public function insert(KObjectHandlable $object)
+    public function insert(AnObjectHandlable $object)
     {
         $this->_loadData();
         parent::insert($object);
@@ -254,9 +254,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::merge()
+     * @see AnObjectSet::merge()
      */
-    public function merge(KObjectSet $set)
+    public function merge(AnObjectSet $set)
     {
         $this->_loadData();
         parent::merge($set);
@@ -265,7 +265,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::top()
+     * @see AnObjectSet::top()
      */
     public function top()
     {
@@ -448,7 +448,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::serialize()
+     * @see AnObjectSet::serialize()
      */
     public function serialize()
     {
@@ -501,7 +501,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     /**
      * (non-PHPdoc).
      *
-     * @see KObjectSet::__clone()
+     * @see AnObjectSet::__clone()
      */
     public function __clone()
     {

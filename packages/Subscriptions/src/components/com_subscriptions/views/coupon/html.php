@@ -43,7 +43,7 @@ class ComSubscriptionsViewCouponHtml extends ComBaseViewHtml
      */
     protected function _layoutEdit()
     {
-        $config = new KConfig(array(
+        $config = new AnConfig(array(
             'date' => $this->item->expiresOn,
         ));
 

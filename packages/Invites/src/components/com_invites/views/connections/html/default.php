@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die('Restricted access');?>
+<? defined('ANAHITA') or die('Restricted access');?>
 
 <? if (isset($service)) : ?>
 <script data-inline src="https://connect.facebook.net/en_US/all.js"></script>

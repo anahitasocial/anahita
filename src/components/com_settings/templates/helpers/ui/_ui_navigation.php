@@ -1,4 +1,4 @@
-<? defined('KOOWA') or die; ?>
+<? defined('ANAHITA') or die; ?>
 
 <ul id="setting-tabs" class="nav nav-pills nav-stacked" >
     <li class="nav-header">

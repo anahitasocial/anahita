@@ -12,7 +12,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class AnDomainEntityData extends KObject implements ArrayAccess
+class AnDomainEntityData extends AnObject implements ArrayAccess
 {
     /**
      * Synchornization locks.
@@ -24,7 +24,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     /**
      * Set a lock for a repository.
      *
-     * @param KObject $object
+     * @param AnObject $object
      * @param bool    $lock
      */
     protected function _lock($object, $lock)
@@ -39,7 +39,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     /**
      * Return if a repository is locked.
      *
-     * @param KObject $object
+     * @param AnObject $object
      *
      * @return bool
      */
@@ -86,9 +86,9 @@ class AnDomainEntityData extends KObject implements ArrayAccess
     /**
      * Constructor.
      *
-     * @param   object  An optional KConfig object with configuration options
+     * @param   object  An optional AnConfig object with configuration options
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
         $this->_entity = $config->entity;
         $this->_description = $config->entity->getEntityDescription();
@@ -202,7 +202,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
      * @param   string     The offset of the item
      * @param   mixed   The item's value
      *
-     * @return object KObjectSet
+     * @return object AnObjectSet
      */
     public function offsetSet($key, $value)
     {
@@ -221,7 +221,7 @@ class AnDomainEntityData extends KObject implements ArrayAccess
      *
      * @param   int     The offset of the item
      *
-     * @return object KObjectSet
+     * @return object AnObjectSet
      */
     public function offsetUnset($key)
     {

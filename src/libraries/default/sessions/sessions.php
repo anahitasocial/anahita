@@ -1,6 +1,6 @@
 <?php
 
-class LibSessions extends KObject implements KServiceInstantiatable
+class LibSessions extends AnObject implements AnServiceInstantiatable
 {
 
 	/**
@@ -67,9 +67,9 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	/**
      * Constructor.
      *
-     * @param KConfig $config An optional KConfig object with configuration options.
+     * @param AnConfig $config An optional AnConfig object with configuration options.
      */
-    public function __construct(KConfig $config)
+    public function __construct(AnConfig $config)
     {
 		if (session_status() === PHP_SESSION_ACTIVE) {
 			session_unset();
@@ -113,10 +113,10 @@ class LibSessions extends KObject implements KServiceInstantiatable
      *
      * Called from {@link __construct()} as a first step of object instantiation.
      *
-     * @param 	object 	An optional KConfig object with configuration options.
+     * @param 	object 	An optional AnConfig object with configuration options.
      * @return  void
      */
-    protected function _initialize(KConfig $config)
+    protected function _initialize(AnConfig $config)
     {
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
@@ -133,11 +133,11 @@ class LibSessions extends KObject implements KServiceInstantiatable
 	/**
      * Force creation of a singleton
      *
-     * @param 	object 	An optional KConfigInterface object with configuration options
-     * @param 	object	A KServiceInterface object
+     * @param 	object 	An optional AnConfigInterface object with configuration options
+     * @param 	object	A AnServiceInterface object
      * @return AnDatabaseTableInterface
      */
-    public static function getInstance(KConfigInterface $config, KServiceInterface $container)
+    public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
 		if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;

@@ -21,7 +21,7 @@
   */
  function get_hash($seed = '', $algorithm = 'sha256')
  {
-     $settings = KService::get('com:settings.setting');
+     $settings = AnService::get('com:settings.setting');
      return hash($algorithm, $settings->secret .  $seed);
  }
 
@@ -36,7 +36,7 @@
   */
 function route($route, $fqr = true)
 {
-    return KService::get('application')->getRouter()->build($route, $fqr);
+    return AnService::get('application')->getRouter()->build($route, $fqr);
 }
 
 /**
@@ -197,7 +197,7 @@ function is_eql()
     } elseif (count($values) == 2) {
         $v1 = $values[0];
         $v2 = $values[1];
-        if ($v1 instanceof KObject && $v1->inherits('AnDomainEntityAbstract')) {
+        if ($v1 instanceof AnObject && $v1->inherits('AnDomainEntityAbstract')) {
             return $v1->eql($v2);
         }
         if ($v1 instanceof AnDomainAttributeInterface) {
@@ -228,7 +228,7 @@ function is()
     $classes = func_get_args();
     $object = array_shift($classes);
     foreach ($classes as $class) {
-        if ($object instanceof KObject) {
+        if ($object instanceof AnObject) {
             $ret = $object->inherits($class);
         } elseif (is_object($object)) {
             $ret = $object instanceof $class;
@@ -322,7 +322,7 @@ function translate($texts, $force = true)
     settype($texts, 'array');
     $debug = isset($_GET['dbg']);
     $debug_list = array();
-    $language = KService::get('anahita:language');
+    $language = AnService::get('anahita:language');
     $has_key = false;
     $translatable = false;
 
@@ -537,7 +537,7 @@ function mime_type($filename)
 function inspect($data, $var_dump = true)
 {
     $dump = array();
-    $data = KConfig::unbox($data);
+    $data = AnConfig::unbox($data);
     foreach ($data as $key => $value) {
         if (is_array($value) || $value instanceof IteratorAggregate || $value instanceof Iterator) {
             $dump[$key] = inspect($value, false);
@@ -545,7 +545,7 @@ function inspect($data, $var_dump = true)
             $dump[$key] = $value;
         } elseif (is($value, 'AnDomainEntityAbstract', 'AnDomainEntitysetAbstract')) {
             $dump[$key] = $value->inspect(false);
-        } elseif (is($value, 'KObjectIdentifiable')) {
+        } elseif (is($value, 'AnObjectIdentifiable')) {
             $dump[$key] = (string) $value->getIdentifier();
         } elseif (is_object($value)) {
             $dump[$key] = get_class($value);
@@ -609,7 +609,7 @@ function get_config_value($extension, $key = null, $default = null)
 
     if ($type == 'com') {
 
-        $meta = KService::get('com:settings.template.helper')->getMeta($name);
+        $meta = AnService::get('com:settings.template.helper')->getMeta($name);
 
         if ($key) {
           return isset($meta->$key) ? $meta->$key : $default;
@@ -634,12 +634,12 @@ function dispatch_plugin($plugin, $args = array(), $dispatcher = null)
     $parts = explode('.', $plugin);
     $type = $parts[0];
     $event = $parts[1];
-    $dispatcher = pick($dispatcher, KService::get('anahita:event.dispatcher'));
+    $dispatcher = pick($dispatcher, AnService::get('anahita:event.dispatcher'));
 
     static $plugins = array();
 
     if (! isset($plugins[$type])) {
-        $plugins[$type] = KService::get('com:plugins.helper')->import(
+        $plugins[$type] = AnService::get('com:plugins.helper')->import(
             $type,
             null,
             true,
@@ -702,7 +702,7 @@ function flush_chunk()
  * Easy way to set a path for an identifier. The each path segment is seperated by /
  * Allows to set relative path using ..
  *
- * @param KServiceIdentifier $identifier
+ * @param AnServiceIdentifier $identifier
  * @param string             $path
  */
 function append_identifier_path($identifier, $path)
@@ -750,7 +750,7 @@ function is_person($actor)
  */
 function get_viewer()
 {
-    return KService::get('com:people.viewer');
+    return AnService::get('com:people.viewer');
 }
 
 /**
