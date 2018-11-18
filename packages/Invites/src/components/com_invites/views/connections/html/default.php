@@ -30,7 +30,7 @@ $('body').invitesFacebook({
 <?= @helper('ui.header') ?>
 
 <a href="#" data-trigger="Invite" class="btn btn-primary">
-	+ <?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
+	<?= @text('COM-INVITES-ACTION-FB-INVITE') ?>
 </a>
 
 <div class="an-entities">
