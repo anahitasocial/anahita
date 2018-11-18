@@ -44,7 +44,7 @@ class AnFilterTidy extends AnFilterAbstract
         $this->_config   = AnConfig::unbox($config->config);
     }
 
- 	/**
+    /**
      * Initializes the config for the object
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -57,13 +57,13 @@ class AnFilterTidy extends AnFilterAbstract
         $config->append(array(
             'encoding'      => 'utf8',
             'config'        =>  array(
-                	'clean'                       => true,
-                	'drop-proprietary-attributes' => true,
-            		'output-html'                 => true,
-            		'show-body-only'              => true,
-            		'bare'                        => true,
-            		'wrap'                        => 0,
-            		'word-2000'                   => true,
+                    'clean'                       => true,
+                    'drop-proprietary-attributes' => true,
+                    'output-html'                 => true,
+                    'show-body-only'              => true,
+                    'bare'                        => true,
+                    'wrap'                        => 0,
+                    'word-2000'                   => true,
                 )
             ));
 
@@ -90,10 +90,9 @@ class AnFilterTidy extends AnFilterAbstract
     protected function _sanitize($value)
     {
         //Tidy is not installed, return the input
-        if($tidy = $this->getTidy($value))
-        {
-            if($tidy->cleanRepair()) {
-               $value = (string) $tidy;
+        if ($tidy = $this->getTidy($value)) {
+            if ($tidy->cleanRepair()) {
+                $value = (string) $tidy;
             }
         }
 
@@ -107,8 +106,7 @@ class AnFilterTidy extends AnFilterAbstract
      */
     public function getTidy($string)
     {
-        if(class_exists('Tidy'))
-        {
+        if (class_exists('Tidy')) {
             if (!$this->_tidy) {
                 $this->_tidy = new Tidy();
             }
@@ -118,5 +116,4 @@ class AnFilterTidy extends AnFilterAbstract
 
         return $this->_tidy;
     }
-
 }

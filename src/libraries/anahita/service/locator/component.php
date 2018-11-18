@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -28,9 +28,9 @@
  */
 class AnServiceLocatorComponent extends AnServiceLocatorAbstract
 {
-    /** 
+    /**
      * The type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'com';
@@ -47,7 +47,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $path = AnInflector::camelize(implode('_', $identifier->path));
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
         $loader = $this->getService('anahita:loader');
-          //Manually load the class to set the basepath
+        //Manually load the class to set the basepath
         if (!$loader->loadClass($classname, $identifier->basepath)) {
             //the default can be in either in the default folder
             //be a registered default class
@@ -66,9 +66,9 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
 
     /**
      * Find a class.
-     * 
+     *
      * @param AnServiceIdentifier $identifier
-     * 
+     *
      * @return string
      */
     protected function _findClass($identifier)
@@ -116,36 +116,35 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
     }
     
     /**
-	 * Get the path based on an identifier
-	 *
-	 * @param  object  	An identifier object - com:[//application/]component.view.[.path].name
-	 * @return string	Returns the path
-	 */
-	public function findPath(AnServiceIdentifier $identifier)
-	{
+     * Get the path based on an identifier
+     *
+     * @param  object  	An identifier object - com:[//application/]component.view.[.path].name
+     * @return string	Returns the path
+     */
+    public function findPath(AnServiceIdentifier $identifier)
+    {
         $path  = '';
-	    $parts = $identifier->path;
-				
-		$component = 'com_'.strtolower($identifier->package);
-			
-		if(!empty($identifier->name))
-		{
-			if(count($parts)) 
-			{
-				if($parts[0] != 'view') 
-			    {
-			        foreach($parts as $key => $value) {
-					    $parts[$key] = AnInflector::pluralize($value);
-				    }
-			    } 
-			    else $parts[0] = AnInflector::pluralize($parts[0]);
-			    
-				$path = implode('/', $parts).'/'.strtolower($identifier->name);
-			} 
-			else $path  = strtolower($identifier->name);	
-		}
-				
-		$path = $identifier->basepath.'/components/'.$component.'/'.$path.'.php';	
-		return $path;
-	}
+        $parts = $identifier->path;
+                
+        $component = 'com_'.strtolower($identifier->package);
+            
+        if (!empty($identifier->name)) {
+            if (count($parts)) {
+                if ($parts[0] != 'view') {
+                    foreach ($parts as $key => $value) {
+                        $parts[$key] = AnInflector::pluralize($value);
+                    }
+                } else {
+                    $parts[0] = AnInflector::pluralize($parts[0]);
+                }
+                
+                $path = implode('/', $parts).'/'.strtolower($identifier->name);
+            } else {
+                $path  = strtolower($identifier->name);
+            }
+        }
+                
+        $path = $identifier->basepath.'/components/'.$component.'/'.$path.'.php';
+        return $path;
+    }
 }

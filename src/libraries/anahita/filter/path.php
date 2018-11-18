@@ -10,7 +10,7 @@
  
 class AnFilterPath extends AnFilterAbstract
 {
-	const PATTERN = '#^(?:[a-z]:/|~*/)[a-z0-9_\.-\s/~]*$#i';
+    const PATTERN = '#^(?:[a-z]:/|~*/)[a-z0-9_\.-\s/~]*$#i';
 
     /**
      * Validate a value

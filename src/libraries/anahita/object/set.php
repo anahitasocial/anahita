@@ -34,7 +34,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
       *
       * @var array
       */
-     protected $_object_set = null;
+    protected $_object_set = null;
     
     /**
      * Constructor.
@@ -71,13 +71,12 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
     {
         $result = false;
 
-        if($handle = $object->getHandle())
-        {
+        if ($handle = $object->getHandle()) {
             $this->_object_set->offsetSet($handle, $object);
             $result = true;
         }
 
-       return $result;
+        return $result;
     }
     
     /**
@@ -93,8 +92,8 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
     {
         $handle = $object->getHandle();
 
-        if($this->_object_set->offsetExists($handle)) {
-           $this->_object_set->offsetUnset($handle);
+        if ($this->_object_set->offsetExists($handle)) {
+            $this->_object_set->offsetUnset($handle);
         }
 
         return $this;
@@ -106,7 +105,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      * @param   AnObjectHandlable $object
      * @return  bool Returns TRUE if the object is in the set, FALSE otherwise
      */
-    public function contains( AnObjectHandlable $object)
+    public function contains(AnObjectHandlable $object)
     {
         return $this->_object_set->offsetExists($object->getHandle());
     }
@@ -117,9 +116,9 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      * @param   AnObjectSet  $set
      * @return  AnObjectQueue
      */
-    public function merge( AnObjectSet $set)
+    public function merge(AnObjectSet $set)
     {
-        foreach($set as $object) {
+        foreach ($set as $object) {
             $this->insert($object);
         }
 
@@ -137,7 +136,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetExists($object)
     {
-        if(!$object instanceof AnObjectHandlable) {
+        if (!$object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -155,7 +154,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetGet($object)
     {
-        if(!$object instanceof AnObjectHandlable) {
+        if (!$object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -174,7 +173,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetSet($object, $data)
     {
-        if(!$object instanceof AnObjectHandlable) {
+        if (!$object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -193,7 +192,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetUnset($object)
     {
-        if(!$object instanceof AnObjectHandlable) {
+        if (!$object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -237,22 +236,22 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
         return $this->_object_set->count();
     }
 
-	/**
+    /**
      * Return the first object in the set
      *
      * @return	mixed \AnObject or NULL is queue is empty
      */
-	public function top()
-	{
-	    $objects = array_values($this->_object_set->getArrayCopy());
+    public function top()
+    {
+        $objects = array_values($this->_object_set->getArrayCopy());
 
-	    $object = null;
-	    if(isset($objects[0])) {
-	        $object  = $objects[0];
-	    }
+        $object = null;
+        if (isset($objects[0])) {
+            $object  = $objects[0];
+        }
 
-	    return $object;
-	}
+        return $object;
+    }
     
     /**
      * Defined by IteratorAggregate
@@ -295,7 +294,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
         return key($this->_object_set);
     }
 
-	/**
+    /**
      * Return the current element
      *
      * @return  mixed
@@ -305,7 +304,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
         return current($this->_object_set);
     }
 
-	/**
+    /**
      * Move forward to next element
      *
      * @return  void

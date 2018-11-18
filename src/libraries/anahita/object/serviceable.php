@@ -10,22 +10,22 @@
  
 interface AnObjectServiceable
 {
-	/**
-	 * Get an instance of a class based on a class identifier only creating it
-	 * if it doesn't exist yet.
-	 *
-	 * @param	string|object	$identifier The class identifier or identifier object
-	 * @param	array  			$config     An optional associative array of configuration settings.
-	 * @throws	AnObjectException
-	 * @return	object  		Return object on success, throws exception on failure
-	 */
-	public function getService($identifier, array $config = array());
-
-	/**
-	 * Get a service identifier.
-	 *
+    /**
+     * Get an instance of a class based on a class identifier only creating it
+     * if it doesn't exist yet.
+     *
      * @param	string|object	$identifier The class identifier or identifier object
-	 * @return	AnServiceIdentifier
-	 */
-	public function getIdentifier($identifier = null);
+     * @param	array  			$config     An optional associative array of configuration settings.
+     * @throws	AnObjectException
+     * @return	object  		Return object on success, throws exception on failure
+     */
+    public function getService($identifier, array $config = array());
+
+    /**
+     * Get a service identifier.
+     *
+     * @param	string|object	$identifier The class identifier or identifier object
+     * @return	AnServiceIdentifier
+     */
+    public function getIdentifier($identifier = null);
 }

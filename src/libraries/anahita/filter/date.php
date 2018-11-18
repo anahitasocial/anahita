@@ -42,14 +42,13 @@ class AnFilterDate extends AnFilterTimestamp
      */
     protected function _sanitize($value)
     {
-         // Look for Ymd keys?
+        // Look for Ymd keys?
         if (is_array($value)) {
             $value = $this->_arrayToDate($value);
         }
 
         $result = '0000-00-00';
-        if (!(empty($value) || $value == $result))
-        {
+        if (!(empty($value) || $value == $result)) {
             $format = 'Y-m-d';
 
             if (is_numeric($value)) {

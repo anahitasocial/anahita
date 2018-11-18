@@ -10,20 +10,20 @@
  
 abstract class AnServiceLocatorAbstract extends AnObject implements AnServiceLocatorInterface
 {
-	/**
-	 * The type
-	 *
-	 * @var string
-	 */
-	protected $_type = '';
+    /**
+     * The type
+     *
+     * @var string
+     */
+    protected $_type = '';
 
-	/**
-	 * Get the type
-	 *
-	 * @return string	Returns the type
-	 */
-	public function getType()
-	{
-		return $this->_type;
-	}
+    /**
+     * Get the type
+     *
+     * @return string	Returns the type
+     */
+    public function getType()
+    {
+        return $this->_type;
+    }
 }

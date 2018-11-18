@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -28,9 +28,9 @@
  */
 class AnServiceLocatorAnahita extends AnServiceLocatorAbstract
 {
-    /** 
+    /**
      * The type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'anahita';

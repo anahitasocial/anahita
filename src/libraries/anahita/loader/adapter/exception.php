@@ -8,4 +8,6 @@
  * @link        https://www.GetAnahita.com
  */
  
-class AnLoaderAdapterException extends AnException {}
+class AnLoaderAdapterException extends AnException
+{
+}

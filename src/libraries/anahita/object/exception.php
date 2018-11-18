@@ -29,12 +29,9 @@ class AnObjectException extends AnException
         $traces = $this->getTrace();
 
         //Traverse up the trace stack to find the actual function that was not found
-        if($traces[0]['function'] == '__call')
-        {
-            foreach($traces as $trace)
-            {
-                if($trace['function'] != '__call')
-                {
+        if ($traces[0]['function'] == '__call') {
+            foreach ($traces as $trace) {
+                if ($trace['function'] != '__call') {
                     $this->message = "Call to undefined method : ".$trace['class'].$trace['type'].$trace['function'];
                     $this->file    = $trace['file'];
                     $this->line    = $trace['line'];
@@ -44,4 +41,3 @@ class AnObjectException extends AnException
         }
     }
 }
-

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,7 +16,7 @@
  */
 
 /**
- * Template Locator. 
+ * Template Locator.
  *
  * @category   Anahita
  *
@@ -28,9 +28,9 @@
  */
 class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
 {
-    /** 
+    /**
      * The type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'tmpl';
@@ -69,7 +69,7 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
                 $classes[] = 'An'.$path.'Default';
 
                 foreach ($classes as $class) {
-                    if ($this->getService('anahita:loader')->loadClass($class,  $identifier->basepath)) {
+                    if ($this->getService('anahita:loader')->loadClass($class, $identifier->basepath)) {
                         $classname = $class;
                         break;
                     }

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -17,7 +17,7 @@
 
 /**
  * Service Class.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -49,7 +49,7 @@ class AnServiceClass
      */
     final private function __construct(AnConfig $config)
     {
-        //Create the identifier registry 
+        //Create the identifier registry
         self::$_defaults = new ArrayObject();
     }
 
@@ -64,7 +64,7 @@ class AnServiceClass
 
     /**
      * Force creation of a singleton.
-     * 
+     *
      * @param  array  An optional array with configuration options.
      *
      * @return AnService
@@ -134,8 +134,8 @@ class AnServiceClass
     /**
      * Finds the default class for an identifier or return null.
      *
-     * @param AnServiceIdentifier $identifier The identifier of the class 
-     * 
+     * @param AnServiceIdentifier $identifier The identifier of the class
+     *
      * @return string|bool Return the class name or false if not found
      */
     public static function findDefaultClass($identifier)
@@ -177,13 +177,13 @@ class AnServiceClass
                 }
                 foreach ($classes as $class) {
                     //make sure to find  path first
-                   //then try to load it 
-                   if ($loader->findPath($class, $identifier->basepath) &&
+                    //then try to load it
+                    if ($loader->findPath($class, $identifier->basepath) &&
                         $loader->loadClass($class, $identifier->basepath)
                            ) {
-                       $classname = $class;
-                       break;
-                   }
+                        $classname = $class;
+                        break;
+                    }
                 }
             }
         }

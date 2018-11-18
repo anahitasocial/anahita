@@ -32,14 +32,15 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function __construct(AnConfig $config = null)
     {
-         //If no config is passed create it
-        if(!isset($config)) $config = new AnConfig();
+        //If no config is passed create it
+        if (!isset($config)) {
+            $config = new AnConfig();
+        }
 
         parent::__construct($config);
 
         $this->_object_list   = new ArrayObject();
         $this->_priority_list = new ArrayObject();
-
     }
 
     /**
@@ -50,12 +51,11 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      * @return  boolean		TRUE on success FALSE on failure
      * @throws  InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
-    public function enqueue( AnObjectHandlable $object, $priority)
+    public function enqueue(AnObjectHandlable $object, $priority)
     {
         $result = false;
 
-        if($handle = $object->getHandle())
-        {
+        if ($handle = $object->getHandle()) {
             $this->_object_list->offsetSet($handle, $object);
 
             $this->_priority_list->offsetSet($handle, $priority);
@@ -74,14 +74,12 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      * @return  boolean	TRUE on success FALSE on failure
      * @throws  InvalidArgumentException if the object implement AnObjectHandlable
      */
-    public function dequeue( AnObjectHandlable $object)
+    public function dequeue(AnObjectHandlable $object)
     {
         $result = false;
 
-        if($handle = $object->getHandle())
-        {
-            if($this->_object_list->offsetExists($handle))
-            {
+        if ($handle = $object->getHandle()) {
+            if ($this->_object_list->offsetExists($handle)) {
                 $this->_object_list->offsetUnset($handle);
                 $this->_priority_list->offsetUnSet($handle);
 
@@ -102,9 +100,8 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function setPriority(AnObjectHandlable $object, $priority)
     {
-        if($handle = $object->getHandle())
-        {
-            if($this->_priority_list->offsetExists($handle)) {
+        if ($handle = $object->getHandle()) {
+            if ($this->_priority_list->offsetExists($handle)) {
                 $this->_priority_list->offsetSet($handle, $priority);
                 $this->_priority_list->asort();
             }
@@ -124,9 +121,8 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
     {
         $result = false;
 
-        if($handle = $object->getHandle())
-        {
-            if($this->_priority_list->offsetExists($handle)) {
+        if ($handle = $object->getHandle()) {
+            if ($this->_priority_list->offsetExists($handle)) {
                 $result = $this->_priority_list->offsetGet($handle);
             }
         }
@@ -157,14 +153,14 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
     {
         $result = false;
 
-        if($handle = $object->getHandle()) {
+        if ($handle = $object->getHandle()) {
             $result = $this->_object_list->offsetExists($handle);
         }
 
         return $result;
     }
 
- 	/**
+    /**
      * Returns the number of elements in the queue
      *
      * Required by the Countable interface
@@ -176,87 +172,87 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
         return count($this->_object_list);
     }
 
-	/**
+    /**
      * Rewind the Iterator to the top
      *
      * Required by the Iterator interface
      *
      * @return	object AnObjectQueue
      */
-	public function rewind()
-	{
-		reset($this->_object_list);
-		reset($this->_priority_list);
+    public function rewind()
+    {
+        reset($this->_object_list);
+        reset($this->_priority_list);
 
-		return $this;
-	}
+        return $this;
+    }
 
-	/**
+    /**
      * Check whether the queue contains more object
      *
      * Required by the Iterator interface
      *
      * @return	boolean
      */
-	public function valid()
-	{
-		return !is_null(key($this->_priority_list));
-	}
+    public function valid()
+    {
+        return !is_null(key($this->_priority_list));
+    }
 
-	/**
+    /**
      * Return current object index
      *
      * Required by the Iterator interface
      *
      * @return	mixed
      */
-	public function key()
-	{
-		return key($this->_priority_list);
-	}
+    public function key()
+    {
+        return key($this->_priority_list);
+    }
 
-	/**
+    /**
      * Return current object pointed by the iterator
      *
      * Required by the Iterator interface
      *
      * @return	mixed
      */
-	public function current()
-	{
-		return $this->_object_list[$this->key()];
-	}
+    public function current()
+    {
+        return $this->_object_list[$this->key()];
+    }
 
-	/**
+    /**
      * Move to the next object
      *
      * Required by the Iterator interface
      *
      * @return	void
      */
-	public function next()
-	{
-		return next($this->_priority_list);
-	}
+    public function next()
+    {
+        return next($this->_priority_list);
+    }
 
-	/**
+    /**
      * Return the object from the top of the queue
      *
      * @return	AnObject or NULL is queue is empty
      */
-	public function top()
-	{
-	    $handles = array_keys((array)$this->_priority_list);
+    public function top()
+    {
+        $handles = array_keys((array)$this->_priority_list);
 
-	    $object = null;
-	    if(isset($handles[0])) {
-	        $object  = $this->_object_list[$handles[0]];
-	    }
+        $object = null;
+        if (isset($handles[0])) {
+            $object  = $this->_object_list[$handles[0]];
+        }
 
-	    return $object;
-	}
+        return $object;
+    }
 
-	/**
+    /**
      * Checks whether the queue is empty
      *
      * @return boolean
@@ -266,7 +262,7 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
         return !count($this->_object_list);
     }
 
-	/**
+    /**
      * Preform a deep clone of the object
      *
      * @return void

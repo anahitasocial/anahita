@@ -8,4 +8,6 @@
  * @link        https://www.GetAnahita.com
  */
  
-class AnServiceIdentifierException extends AnServiceException {}
+class AnServiceIdentifierException extends AnServiceException
+{
+}

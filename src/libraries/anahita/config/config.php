@@ -24,18 +24,14 @@ class AnConfig implements AnConfigInterface
      */
     public function __construct($config = array())
     {
-        if($config instanceof AnConfig) 
-        {
+        if ($config instanceof AnConfig) {
             $data = $config->toArray();
-        } 
-        else 
-        {
+        } else {
             $data = $config;
         }
 
         $this->_data = array();
-        if(is_array($data))
-        {
+        if (is_array($data)) {
             foreach ($data as $key => $value) {
                 $this->__set($key, $value);
             }
@@ -52,14 +48,14 @@ class AnConfig implements AnConfigInterface
     public function get($name, $default = null)
     {
         $result = $default;
-        if(isset($this->_data[$name])) {
+        if (isset($this->_data[$name])) {
             $result = $this->_data[$name];
         }
 
         return $result;
     }
 
-	/**
+    /**
      * Return the data
      *
      * If the data being passed is an instance of AnConfig the data will be transformed
@@ -84,29 +80,23 @@ class AnConfig implements AnConfigInterface
     {
         $config = AnConfig::unbox($config);
 
-        if(is_array($config))
-        {
-            if(!is_numeric(key($config)))
-            {
-                foreach($config as $key => $value)
-                {
-                    if(array_key_exists($key, $this->_data))
-                    {
-                        if(!empty($value) && ($this->_data[$key] instanceof AnConfig)) {
+        if (is_array($config)) {
+            if (!is_numeric(key($config))) {
+                foreach ($config as $key => $value) {
+                    if (array_key_exists($key, $this->_data)) {
+                        if (!empty($value) && ($this->_data[$key] instanceof AnConfig)) {
                             $this->_data[$key] = $this->_data[$key]->append($value);
                         }
+                    } else {
+                        $this->__set($key, $value);
                     }
-                    else $this->__set($key, $value);
                 }
-            }
-            else
-            {
-                foreach($config as $value)
-                {
+            } else {
+                foreach ($config as $value) {
                     if (!in_array($value, $this->_data, true)) {
                         $this->_data[] = $value;
                     }
-                 }
+                }
             }
         }
 
@@ -208,10 +198,9 @@ class AnConfig implements AnConfigInterface
     public function offsetGet($offset)
     {
         $result = null;
-        if(isset($this->_data[$offset]))
-        {
+        if (isset($this->_data[$offset])) {
             $result = $this->_data[$offset];
-            if($result instanceof AnConfig) {
+            if ($result instanceof AnConfig) {
                 $result = $result->toArray();
             }
         }
@@ -260,8 +249,7 @@ class AnConfig implements AnConfigInterface
     {
         $array = array();
         $data  = $this->_data;
-        foreach ($data as $key => $value)
-        {
+        foreach ($data as $key => $value) {
             if ($value instanceof AnConfig) {
                 $array[$key] = $value->toArray();
             } else {
@@ -272,7 +260,7 @@ class AnConfig implements AnConfigInterface
         return $array;
     }
 
- 	/**
+    /**
      * Returns a string with the encapsulated data in JSON format
      *
      * @return string  Returns the data encoded to JSON
@@ -282,7 +270,7 @@ class AnConfig implements AnConfigInterface
         return json_encode($this->toArray());
     }
 
- 	/**
+    /**
      * Deep clone of this instance to ensure that nested AnConfigs
      * are also cloned.
      *
@@ -291,8 +279,7 @@ class AnConfig implements AnConfigInterface
     public function __clone()
     {
         $array = array();
-        foreach ($this->_data as $key => $value)
-        {
+        foreach ($this->_data as $key => $value) {
             if ($value instanceof AnConfig || $value instanceof stdClass) {
                 $array[$key] = clone $value;
             } else {

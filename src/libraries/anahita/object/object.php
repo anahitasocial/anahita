@@ -44,20 +44,20 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      * @param AnConfig|null $config  An optional AnConfig object with configuration options
      * @return \AnObjectDecorator
      */
-    public function __construct( AnConfig $config = null)
+    public function __construct(AnConfig $config = null)
     {
         //Set the service container
-        if(isset($config->service_container)) {
+        if (isset($config->service_container)) {
             $this->__service_container = $config->service_container;
         }
 
         //Set the service identifier
-        if(isset($config->service_identifier)) {
+        if (isset($config->service_identifier)) {
             $this->__service_identifier = $config->service_identifier;
         }
 
         //Initialise the object
-        if($config) {
+        if ($config) {
             $this->_initialize($config);
         }
     }
@@ -83,21 +83,18 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      * @throws  AnObjectException If trying to access protected or private properties
      * @return  AnObject
      */
-    public function set( $property, $value = null )
+    public function set($property, $value = null)
     {
-        if(is_object($property)) {
+        if (is_object($property)) {
             $property = get_object_vars($property);
         }
 
-        if(is_array($property))
-        {
+        if (is_array($property)) {
             foreach ($property as $k => $v) {
                 $this->set($k, $v);
             }
-        }
-        else
-        {
-            if('_' == substr($property, 0, 1)) {
+        } else {
+            if ('_' == substr($property, 0, 1)) {
                 throw new AnObjectException("Protected or private properties can't be set outside of object scope in ".get_class($this));
             }
 
@@ -124,20 +121,16 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
     {
         $result = $default;
 
-        if(is_null($property))
-        {
+        if (is_null($property)) {
             $result  = get_object_vars($this);
 
-            foreach ($result as $key => $value)
-            {
+            foreach ($result as $key => $value) {
                 if ('_' == substr($key, 0, 1)) {
                     unset($result[$key]);
                 }
             }
-        }
-        else
-        {
-            if(isset($this->$property)) {
+        } else {
+            if (isset($this->$property)) {
                 $result = $this->$property;
             }
         }
@@ -156,26 +149,24 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     public function mixin(AnMixinInterface $object, $config = array())
     {
-        if ( !$object instanceof AnMixinInterface )
-        {
-            if ( !$object instanceof AnServiceIdentifier ) 
-            {
+        if (!$object instanceof AnMixinInterface) {
+            if (!$object instanceof AnServiceIdentifier) {
                 //Create the complete identifier if a partial identifier was passed
-                if (is_string($object) && strpos($object, '.') === false)
-                {
+                if (is_string($object) && strpos($object, '.') === false) {
                     $identifier = clone $this->getIdentifier();
                     $identifier->path = 'mixin';
                     $identifier->name = $object;
+                } else {
+                    $identifier = $this->getIdentifier($object);
                 }
-                else $identifier = $this->getIdentifier($object);                
+            } else {
+                $identifier = $object;
             }
-            else  $identifier = $object;
 
             $config = new AnConfig($config);
             $config->mixer = $this;
             $object = new $identifier->classname($config);
-            if(!$object instanceof AnMixinInterface)
-            {
+            if (!$object instanceof AnMixinInterface) {
                 throw new \UnexpectedValueException(
                         'Mixin: '.get_class($mixin).' does not implement AnMixinInterface'
                 );
@@ -183,10 +174,9 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
         }
         $methods = $object->getMixableMethods($this);
 
-        foreach($methods as $method) {            
+        foreach ($methods as $method) {
             $this->_mixed_methods[$method] = $object;
-            if ( !empty($this->__methods) && !in_array($method, $this->__methods) ) 
-            {
+            if (!empty($this->__methods) && !in_array($method, $this->__methods)) {
                 $this->__methods[] = $method;
             }
         }
@@ -211,9 +201,8 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
 
         $objects = array_values($this->_mixed_methods);
 
-        foreach($objects as $object)
-        {
-            if($object instanceof $class) {
+        foreach ($objects as $object) {
+            if ($object instanceof $class) {
                 return true;
             }
         }
@@ -231,7 +220,7 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     public function getHandle()
     {
-        return spl_object_hash( $this );
+        return spl_object_hash($this);
     }
 
     /**
@@ -243,12 +232,11 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     public function getMethods()
     {
-        if(!$this->__methods)
-        {
+        if (!$this->__methods) {
             $methods = array();
 
             $reflection = new ReflectionClass($this);
-            foreach($reflection->getMethods() as $method) {
+            foreach ($reflection->getMethods() as $method) {
                 $methods[] = $method->name;
             }
 
@@ -258,61 +246,60 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
         return $this->__methods;
     }
 
-	/**
-	 * Get an instance of a class based on a class identifier only creating it
-	 * if it does not exist yet.
-	 *
-	 * @param	string|object	$identifier The class identifier or identifier object
-	 * @param	array  			$config     An optional associative array of configuration settings.
-	 * @throws	AnObjectException if the service container has not been defined.
-	 * @return	object  		Return object on success, throws exception on failure
-	 * @see 	AnObjectServiceable
-	 */
-	final public function getService($identifier = null, array $config = array())
-	{
-	    if(!isset($this->__service_container)) {
-	        throw new AnObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
-	    }
-	    if ( !isset($identifier) ) {
-	    	$result =  $this->__service_container;
-	    }
-	    else {
-	    	$result =  $this->__service_container->get($identifier, $config);
-	    }
-	    return $result;
-	}
-
-	/**
-	 * Gets the service identifier.
-	 *
-	 * @param	string|object	$identifier The class identifier or identifier object
+    /**
+     * Get an instance of a class based on a class identifier only creating it
+     * if it does not exist yet.
+     *
+     * @param	string|object	$identifier The class identifier or identifier object
+     * @param	array  			$config     An optional associative array of configuration settings.
      * @throws	AnObjectException if the service container has not been defined.
-	 * @return	AnServiceIdentifier
-	 * @see 	AnObjectServiceable
-	 */
-	final public function getIdentifier($identifier = null)
-	{
-		if(isset($identifier))
-		{
-		    if(!isset($this->__service_container)) {
-	            throw new AnObjectException("Failed to call ".get_class($this)."::getIdentifier(). No service_container object defined.");
-	        }
+     * @return	object  		Return object on success, throws exception on failure
+     * @see 	AnObjectServiceable
+     */
+    final public function getService($identifier = null, array $config = array())
+    {
+        if (!isset($this->__service_container)) {
+            throw new AnObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
+        }
+        if (!isset($identifier)) {
+            $result =  $this->__service_container;
+        } else {
+            $result =  $this->__service_container->get($identifier, $config);
+        }
+        return $result;
+    }
 
-		    $result = $this->__service_container->getIdentifier($identifier);
-		}
-		else  $result = $this->__service_identifier;
+    /**
+     * Gets the service identifier.
+     *
+     * @param	string|object	$identifier The class identifier or identifier object
+     * @throws	AnObjectException if the service container has not been defined.
+     * @return	AnServiceIdentifier
+     * @see 	AnObjectServiceable
+     */
+    final public function getIdentifier($identifier = null)
+    {
+        if (isset($identifier)) {
+            if (!isset($this->__service_container)) {
+                throw new AnObjectException("Failed to call ".get_class($this)."::getIdentifier(). No service_container object defined.");
+            }
 
-	    return $result;
-	}
+            $result = $this->__service_container->getIdentifier($identifier);
+        } else {
+            $result = $this->__service_identifier;
+        }
 
-	/**
+        return $result;
+    }
+
+    /**
      * Preform a deep clone of the object.
      *
      * @return void
      */
     public function __clone()
     {
-        foreach($this->_mixed_methods as $method => $object) {
+        foreach ($this->_mixed_methods as $method => $object) {
             $this->_mixed_methods[$method] = clone $object;
         }
     }
@@ -327,8 +314,7 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     public function __call($method, $arguments)
     {
-        if(isset($this->_mixed_methods[$method]))
-        {
+        if (isset($this->_mixed_methods[$method])) {
             $object = $this->_mixed_methods[$method];
             $result = null;
 
@@ -336,12 +322,11 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
             $object->setMixer($this);
 
             // Call_user_func_array is ~3 times slower than direct method calls.
-            switch(count($arguments))
-            {
-                case 0 :
+            switch (count($arguments)) {
+                case 0:
                     $result = $object->$method();
                     break;
-                case 1 :
+                case 1:
                     $result = $object->$method($arguments[0]);
                     break;
                 case 2:

@@ -46,8 +46,8 @@ class AnFilterHtml extends AnFilterAbstract
     protected $_xssAuto = true;
 
 
-    protected $_tagBlacklist = array ('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
-    protected $_attrBlacklist = array ('action', 'background', 'codebase', 'dynsrc', 'lowsrc'); // also will strip ALL event handlers
+    protected $_tagBlacklist = array('applet', 'body', 'bgsound', 'base', 'basefont', 'embed', 'frame', 'frameset', 'head', 'html', 'id', 'iframe', 'ilayer', 'layer', 'link', 'meta', 'name', 'object', 'script', 'style', 'title', 'xml');
+    protected $_attrBlacklist = array('action', 'background', 'codebase', 'dynsrc', 'lowsrc'); // also will strip ALL event handlers
 
     /**
      * Constructor
@@ -59,27 +59,27 @@ class AnFilterHtml extends AnFilterAbstract
         parent::__construct($config);
 
         // List of user-defined tags
-        if(isset($config->tag_list)) {
+        if (isset($config->tag_list)) {
             $this->_tagsArray = array_map('strtolower', (array) $config->tag_list);
         }
 
         // List of user-defined attributes
-        if(isset($config->attribute_list)) {
+        if (isset($config->attribute_list)) {
             $this->_attrArray = array_map('strtolower', (array) $config->attribute_list);
         }
 
         // WhiteList method = 0, BlackList method = 1
-        if(isset($config->tag_method)) {
+        if (isset($config->tag_method)) {
             $this->_tagsMethod = $config->tag_method;
         }
 
         // WhiteList method = 0, BlackList method = 1
-        if(isset($config->attribute_method)) {
+        if (isset($config->attribute_method)) {
             $this->_attrMethod = $config->attribute_method;
         }
 
         //If false, only auto clean essentials, if true allow clean blacklisted tags/attr
-        if(isset($config->xss_auto)) {
+        if (isset($config->xss_auto)) {
             $this->_xssAuto = $config->xss_auto;
         }
     }
@@ -109,7 +109,7 @@ class AnFilterHtml extends AnFilterAbstract
         $value = (string) $value;
 
         // Filter var for XSS and other 'bad' code etc.
-        if (!empty ($value)) {
+        if (!empty($value)) {
             $value = $this->_remove($this->_decode($value));
         }
 
@@ -127,8 +127,7 @@ class AnFilterHtml extends AnFilterAbstract
         $loopCounter = 0;
 
         // Iteration provides nested tag protection
-        while ($source != $this->_cleanTags($source))
-        {
+        while ($source != $this->_cleanTags($source)) {
             $source = $this->_cleanTags($source);
             $loopCounter ++;
         }
@@ -151,8 +150,7 @@ class AnFilterHtml extends AnFilterAbstract
         // Is there a tag? If so it will certainly start with a '<'
         $tagOpen_start  = strpos($source, '<');
 
-        while ($tagOpen_start !== false)
-        {
+        while ($tagOpen_start !== false) {
             // Get some information about the tag we are processing
             $preTag         .= substr($postTag, 0, $tagOpen_start);
             $postTag        = substr($postTag, $tagOpen_start);
@@ -181,19 +179,19 @@ class AnFilterHtml extends AnFilterAbstract
             $currentTag     = substr($fromTagOpen, 0, $tagOpen_end);
             $tagLength      = strlen($currentTag);
             $tagLeft        = $currentTag;
-            $attrSet        = array ();
+            $attrSet        = array();
             $currentSpace   = strpos($tagLeft, ' ');
 
             // Are we an open tag or a close tag?
             if (substr($currentTag, 0, 1) == '/') {
                 // Close Tag
                 $isCloseTag     = true;
-                list ($tagName) = explode(' ', $currentTag);
+                list($tagName) = explode(' ', $currentTag);
                 $tagName        = substr($tagName, 1);
             } else {
                 // Open Tag
                 $isCloseTag     = false;
-                list ($tagName) = explode(' ', $currentTag);
+                list($tagName) = explode(' ', $currentTag);
             }
 
             /*
@@ -212,8 +210,7 @@ class AnFilterHtml extends AnFilterAbstract
              * Time to grab any attributes from the tag... need this section in
              * case attributes have spaces in the values.
              */
-            while ($currentSpace !== false)
-            {
+            while ($currentSpace !== false) {
                 $attr           = '';
                 $fromSpace      = substr($tagLeft, ($currentSpace +1));
                 $nextSpace      = strpos($fromSpace, ' ');
@@ -266,8 +263,7 @@ class AnFilterHtml extends AnFilterAbstract
                     // Open or Single tag
                     $attrSet = $this->_cleanAttributes($attrSet);
                     $preTag .= '<'.$tagName;
-                    for ($i = 0; $i < count($attrSet); $i ++)
-                    {
+                    for ($i = 0; $i < count($attrSet); $i ++) {
                         $preTag .= ' '.$attrSet[$i];
                     }
 
@@ -307,8 +303,7 @@ class AnFilterHtml extends AnFilterAbstract
         $newSet = array();
 
         // Iterate through attribute pairs
-        for ($i = 0; $i < count($attrSet); $i ++)
-        {
+        for ($i = 0; $i < count($attrSet); $i ++) {
             // Skip blank spaces
             if (!$attrSet[$i]) {
                 continue;
@@ -316,7 +311,7 @@ class AnFilterHtml extends AnFilterAbstract
 
             // Split into name/value pairs
             $attrSubSet = explode('=', trim($attrSet[$i]), 2);
-            list ($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
+            list($attrSubSet[0]) = explode(' ', $attrSubSet[0]);
 
             /*
              * Remove all "non-regular" attribute names
@@ -393,7 +388,7 @@ class AnFilterHtml extends AnFilterAbstract
     {
         // entity decode
         $trans_tbl = get_html_translation_table(HTML_ENTITIES);
-        foreach($trans_tbl as $k => $v) {
+        foreach ($trans_tbl as $k => $v) {
             $ttr[$v] = utf8_encode($k);
         }
         $source = strtr($source, $ttr);
@@ -401,17 +396,23 @@ class AnFilterHtml extends AnFilterAbstract
         // convert decimal
         //$source = preg_replace('/&#(\d+);/me', "chr(\\1)", $source); // decimal notation
         $source = preg_replace_callback(
-                       '/&#(\d+);/m', 
-                       function ( $m ) { return chr( $m[1] ); }, 
-                       $source );
+                       '/&#(\d+);/m',
+                       function ($m) {
+                           return chr($m[1]);
+                       },
+                       $source
+        );
 
         // convert hex
         //$source = preg_replace('/&#x([a-f0-9]+);/mei', "chr(0x\\1)", $source); // hex notation
         
         $source = preg_replace_callback(
-                       '/&#x([a-f0-9]+);/mi', 
-                       function ( $m ) { return chr( '0x'.$m[1] ); }, 
-                       $source );
+                       '/&#x([a-f0-9]+);/mi',
+                       function ($m) {
+                           return chr('0x'.$m[1]);
+                       },
+                       $source
+        );
         
         return $source;
     }

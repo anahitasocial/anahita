@@ -34,4 +34,3 @@ class AnFilterDigit extends AnFilterAbstract
         return preg_replace($pattern, '', $value);
     }
 }
-

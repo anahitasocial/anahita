@@ -8,4 +8,6 @@
  * @link        https://www.GetAnahita.com
  */
  
-class AnFilterException extends AnException {}
+class AnFilterException extends AnException
+{
+}

@@ -73,11 +73,11 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
      */
     protected $_filepath = '';
 
-     /**
-     * The classname
-     *
-     * @var string
-     */
+    /**
+    * The classname
+    *
+    * @var string
+    */
     protected $_classname = '';
 
     /**
@@ -96,12 +96,12 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
     public function __construct($identifier)
     {
         //Check if the identifier is valid
-        if(strpos($identifier, ':') === FALSE) {
+        if (strpos($identifier, ':') === false) {
             throw new AnServiceIdentifierException('Malformed identifier : '.$identifier);
         }
 
         //Get the parts
-        if(false === $parts = parse_url($identifier)) {
+        if (false === $parts = parse_url($identifier)) {
             throw new AnServiceIdentifierException('Malformed identifier : '.$identifier);
         }
 
@@ -109,7 +109,7 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
         $this->type = $parts['scheme'];
 
         //Set the application
-        if(isset($parts['host'])) {
+        if (isset($parts['host'])) {
             $this->application = $parts['host'];
         }
 
@@ -121,7 +121,7 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
         $this->_package = array_shift($this->_path);
 
         // Set the name (last part)
-        if(count($this->_path)) {
+        if (count($this->_path)) {
             $this->_name = array_pop($this->_path);
         }
 
@@ -129,13 +129,13 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
         $this->_identifier = $identifier;
     }
 
-	/**
-	 * Serialize the identifier
-	 *
-	 * @return string 	The serialised identifier
-	 */
-	public function serialize()
-	{
+    /**
+     * Serialize the identifier
+     *
+     * @return string 	The serialised identifier
+     */
+    public function serialize()
+    {
         $data = array(
             'application' => $this->_application,
             'type'		  => $this->_type,
@@ -149,46 +149,46 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
         );
 
         return serialize($data);
-	}
+    }
 
-	/**
-	 * Unserialize the identifier
-	 *
-	 * @return string 	The serialised identifier
-	 */
-	public function unserialize($data)
-	{
-	    $data = unserialize($data);
+    /**
+     * Unserialize the identifier
+     *
+     * @return string 	The serialised identifier
+     */
+    public function unserialize($data)
+    {
+        $data = unserialize($data);
 
-	    foreach($data as $property => $value) {
-	        $this->{'_'.$property} = $value;
-	    }
-	}
+        foreach ($data as $property => $value) {
+            $this->{'_'.$property} = $value;
+        }
+    }
 
-	/**
-	 * Set an application path
-	 *
-	 * @param string	The name of the application
-	 * @param string	The path of the application
-	 * @return void
+    /**
+     * Set an application path
+     *
+     * @param string	The name of the application
+     * @param string	The path of the application
+     * @return void
      */
     public static function setApplication($application, $path)
     {
         self::$_applications[$application] = $path;
     }
 
-	/**
-	 * Get an application path
-	 *
-	 * @param string	The name of the application
-	 * @return string	The path of the application
+    /**
+     * Get an application path
+     *
+     * @param string	The name of the application
+     * @return string	The path of the application
      */
     public static function getApplication($application)
     {
         return isset(self::$_applications[$application]) ? self::$_applications[$application] : null;
     }
 
-	/**
+    /**
      * Get a list of applications
      *
      * @return array
@@ -198,7 +198,7 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
         return self::$_applications;
     }
 
-	/**
+    /**
      * Add a identifier adapter
      *
      * @param object    A AnServiceLocator
@@ -209,7 +209,7 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
         self::$_locators[$locator->getType()] = $locator;
     }
 
-	/**
+    /**
      * Get the registered adapters
      *
      * @return array
@@ -229,31 +229,27 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
      */
     public function __set($property, $value)
     {
-        if(isset($this->{'_'.$property}))
-        {
+        if (isset($this->{'_'.$property})) {
             //Force the path to an array
-            if($property == 'path')
-            {
-                if(is_scalar($value)) {
-                     $value = (array) $value;
+            if ($property == 'path') {
+                if (is_scalar($value)) {
+                    $value = (array) $value;
                 }
             }
 
             //Set the basepath
-            if($property == 'application')
-            {
-               if(!isset(self::$_applications[$value])) {
+            if ($property == 'application') {
+                if (!isset(self::$_applications[$value])) {
                     throw new AnServiceIdentifierException('Unknow application : '.$value);
-               }
+                }
 
-               $this->_basepath = self::$_applications[$value];
+                $this->_basepath = self::$_applications[$value];
             }
 
             //Set the type
-            if($property == 'type')
-            {
+            if ($property == 'type') {
                 //Check the type
-                if(!isset(self::$_locators[$value]))  {
+                if (!isset(self::$_locators[$value])) {
                     throw new AnServiceIdentifierException('Unknow type : '.$value);
                 }
             }
@@ -277,13 +273,12 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
      */
     public function &__get($property)
     {
-        if(isset($this->{'_'.$property}))
-        {
-            if($property == 'filepath' && empty($this->_filepath)) {
+        if (isset($this->{'_'.$property})) {
+            if ($property == 'filepath' && empty($this->_filepath)) {
                 $this->_filepath = self::$_locators[$this->_type]->findPath($this);
             }
 
-            if($property == 'classname' && empty($this->_classname)) {
+            if ($property == 'classname' && empty($this->_classname)) {
                 $this->_classname = self::$_locators[$this->_type]->findClass($this);
             }
 
@@ -309,27 +304,26 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
      */
     public function __toString()
     {
-        if($this->_identifier == '')
-        {
-            if(!empty($this->_type)) {
+        if ($this->_identifier == '') {
+            if (!empty($this->_type)) {
                 $this->_identifier .= $this->_type;
             }
 
-            if(!empty($this->_application)) {
+            if (!empty($this->_application)) {
                 $this->_identifier .= '://'.$this->_application.'/';
             } else {
                 $this->_identifier .= ':';
             }
 
-            if(!empty($this->_package)) {
+            if (!empty($this->_package)) {
                 $this->_identifier .= $this->_package;
             }
 
-            if(count($this->_path)) {
-                $this->_identifier .= '.'.implode('.',$this->_path);
+            if (count($this->_path)) {
+                $this->_identifier .= '.'.implode('.', $this->_path);
             }
 
-            if(!empty($this->_name)) {
+            if (!empty($this->_name)) {
                 $this->_identifier .= '.'.$this->_name;
             }
         }

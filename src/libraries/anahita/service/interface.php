@@ -10,34 +10,34 @@
  
 interface AnServiceInterface
 {
-	/**
-	 * Get an instance of a class based on a class identifier only creating it
-	 * if it doesn't exist yet.
-	 *
-	 * @param	string|object	The class identifier or identifier object
-	 * @param	array  			An optional associative array of configuration settings.
-	 * @throws	AnServiceServiceException
-	 * @return	object  		Return object on success, throws exception on failure
-	 */
-	public static function get($identifier, array $config = array());
+    /**
+     * Get an instance of a class based on a class identifier only creating it
+     * if it doesn't exist yet.
+     *
+     * @param	string|object	The class identifier or identifier object
+     * @param	array  			An optional associative array of configuration settings.
+     * @throws	AnServiceServiceException
+     * @return	object  		Return object on success, throws exception on failure
+     */
+    public static function get($identifier, array $config = array());
 
-	/**
-	 * Insert the object instance using the identifier
-	 *
-	 * @param mixed  The class identifier
-	 * @param object The object instance to store
-	 */
-	public static function set($identifier, $object);
+    /**
+     * Insert the object instance using the identifier
+     *
+     * @param mixed  The class identifier
+     * @param object The object instance to store
+     */
+    public static function set($identifier, $object);
 
-	/**
-	 * Check if the object instance exists based on the identifier
-	 *
-	 * @param mixed  The class identifier
-	 * @return boolean Returns TRUE on success or FALSE on failure.
-	 */
-	public static function has($identifier);
+    /**
+     * Check if the object instance exists based on the identifier
+     *
+     * @param mixed  The class identifier
+     * @return boolean Returns TRUE on success or FALSE on failure.
+     */
+    public static function has($identifier);
 
-	/**
+    /**
      * Set a mixin or an array of mixins for an identifier
      *
      * The mixins are mixed when the indentified object is first instantiated see {@link get}
@@ -59,59 +59,59 @@ interface AnServiceInterface
 
     /**
      * Returns an identifier object.
-	 *
-	 * Accepts various types of parameters and returns a valid identifier. Parameters can either be an
-	 * object that implements AnObjectServiceable, or a AnServiceIdentifier object, or valid identifier
-	 * string. Function will also check for identifier mappings and return the mapped identifier.
-	 *
-	 * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
-	 * 					or valid identifier string
-	 * @return AnServiceIdentifier
-	 */
-	public static function getIdentifier($identifier);
+     *
+     * Accepts various types of parameters and returns a valid identifier. Parameters can either be an
+     * object that implements AnObjectServiceable, or a AnServiceIdentifier object, or valid identifier
+     * string. Function will also check for identifier mappings and return the mapped identifier.
+     *
+     * @param	mixed	An object that implements AnObjectServiceable, AnServiceIdentifier object
+     * 					or valid identifier string
+     * @return AnServiceIdentifier
+     */
+    public static function getIdentifier($identifier);
 
-	/**
-	 * Set the configuration options for an identifier
-	 *
-	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
-	 * 				  or valid identifier string
-	 * @param array	  An associative array of configuration options
-	 */
-	public static function setConfig($identifier, array $config);
+    /**
+     * Set the configuration options for an identifier
+     *
+     * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
+     * 				  or valid identifier string
+     * @param array	  An associative array of configuration options
+     */
+    public static function setConfig($identifier, array $config);
 
-	/**
-	 * Get the configuration options for an identifier
-	 *
-	 * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
-	 * 				  or valid identifier string
-	 *  @param array  An associative array of configuration options
-	 */
-	public static function getConfig($identifier);
+    /**
+     * Get the configuration options for an identifier
+     *
+     * @param mixed	  An object that implements AnObjectServiceable, AnServiceIdentifier object
+     * 				  or valid identifier string
+     *  @param array  An associative array of configuration options
+     */
+    public static function getConfig($identifier);
 
-	/**
+    /**
      * Get the configuration options for all the identifiers
      *
      * @return array  An associative array of configuration options
      */
     public static function getConfigs();
 
-	/**
-	 * Set an alias for an identifier
-	 *
-	 * @param string  The alias
-	 * @param mixed   The class indentifier or identifier object
-	 */
-	public static function setAlias($alias, $identifier);
+    /**
+     * Set an alias for an identifier
+     *
+     * @param string  The alias
+     * @param mixed   The class indentifier or identifier object
+     */
+    public static function setAlias($alias, $identifier);
 
-	/**
-	 * Get an alias for an identifier
-	 *
-	 * @param  string  The alias
-	 * @return mixed   The class indentifier or identifier object, or NULL if no alias was found.
-	 */
-	public static function getAlias($alias);
+    /**
+     * Get an alias for an identifier
+     *
+     * @param  string  The alias
+     * @return mixed   The class indentifier or identifier object, or NULL if no alias was found.
+     */
+    public static function getAlias($alias);
 
-	/**
+    /**
      * Get a list of aliasses
      *
      * @return array

@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,8 +16,8 @@
  */
 
 /**
- * Repositroy locator is AnService locator to return repository objects of any entities.  
- * 
+ * Repositroy locator is AnService locator to return repository objects of any entities.
+ *
  * The format of the identifier must be repos:[//application/]<Component Name>.<Entity Name>. This will translate
  * to AnService::get(com:[//application/]<Component Name>.domain.entity.<Entity Name>
  *
@@ -82,11 +82,11 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
     }
 
     /**
-     * Converts a repos locator identifier repos:[//application/]<Component>.<Name> to a 
+     * Converts a repos locator identifier repos:[//application/]<Component>.<Name> to a
      * component identifier.
      *
      * @param AnServiceIdentifier $identifier
-     * 
+     *
      * @return AnServiceIdentifier
      */
     protected static function _identifier(AnServiceIdentifier $identifier)

@@ -21,7 +21,7 @@ class AnFilterTime extends AnFilterTimestamp
      */
     protected function _validate($value)
     {
-         // look for His keys?
+        // look for His keys?
         if (is_array($value)) {
             $value = $this->_arrayToTime($value);
         }
@@ -53,4 +53,3 @@ class AnFilterTime extends AnFilterTimestamp
         return date($format, strtotime($value));
     }
 }
-

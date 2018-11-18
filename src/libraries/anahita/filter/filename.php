@@ -10,25 +10,25 @@
  
 class AnFilterFilename extends AnFilterAbstract
 {
-	/**
-	 * Validate a value
-	 *
-	 * @param	scalar	Value to be validated
-	 * @return	bool	True when the variable is valid
-	 */
-	protected function _validate($value)
-	{
-	   	return ((string) $value === $this->sanitize($value));
-	}
+    /**
+     * Validate a value
+     *
+     * @param	scalar	Value to be validated
+     * @return	bool	True when the variable is valid
+     */
+    protected function _validate($value)
+    {
+        return ((string) $value === $this->sanitize($value));
+    }
 
-	/**
-	 * Sanitize a value
-	 *
-	 * @param	scalar	Value to be sanitized
-	 * @return	string
-	 */
-	protected function _sanitize($value)
-	{
-    	return basename($value);
-	}
+    /**
+     * Sanitize a value
+     *
+     * @param	scalar	Value to be sanitized
+     * @return	string
+     */
+    protected function _sanitize($value)
+    {
+        return basename($value);
+    }
 }

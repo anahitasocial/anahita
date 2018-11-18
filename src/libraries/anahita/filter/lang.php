@@ -35,7 +35,7 @@ class AnFilterLang extends AnFilterAbstract
         $value = trim($value);
 
         $parts  = explode('-', $value, 2);
-        if(2 != count($parts)) {
+        if (2 != count($parts)) {
             return null;
         }
 
@@ -44,7 +44,7 @@ class AnFilterLang extends AnFilterAbstract
         $result = implode('-', $parts);
 
         // just making sure :-)
-        if($this->_validate($result)) {
+        if ($this->_validate($result)) {
             return $result;
         }
 

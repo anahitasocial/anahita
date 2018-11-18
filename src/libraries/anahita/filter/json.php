@@ -45,13 +45,11 @@ class AnFilterJson extends AnFilterAbstract
     protected function _sanitize($value)
     {
         // If instance of AnConfig casting to string will make it encode itself to JSON
-        if($value instanceof AnConfig) {
+        if ($value instanceof AnConfig) {
             $result = (string) $value;
-        }
-        else
-        {
+        } else {
             //Don't re-encode if the value is already in json format
-            if(is_string($value) && (json_decode($value) !== NULL)) {
+            if (is_string($value) && (json_decode($value) !== null)) {
                 $result = $value;
             } else {
                 $result = json_encode($value);

@@ -46,11 +46,11 @@ class AnLoader
         //Create the class registry
         $this->_registry = new AnLoaderRegistry();
 
-        if(isset($config['cache_prefix'])) {
+        if (isset($config['cache_prefix'])) {
             $this->_registry->setCachePrefix($config['cache_prefix']);
         }
 
-        if(isset($config['cache_enabled'])) {
+        if (isset($config['cache_enabled'])) {
             $this->_registry->enableCache($config['cache_enabled']);
         }
 
@@ -68,7 +68,9 @@ class AnLoader
      *
      * Prevent creating clones of this class
      */
-    final private function __clone() { }
+    final private function __clone()
+    {
+    }
 
     /**
      * Singleton instance
@@ -80,7 +82,7 @@ class AnLoader
     {
         static $instance;
 
-        if ($instance === NULL) {
+        if ($instance === null) {
             $instance = new self($config);
         }
 
@@ -112,7 +114,7 @@ class AnLoader
         return $this->_registry;
     }
 
- 	/**
+    /**
      * Add a loader adapter
      *
      * @param object    A AnLoaderAdapter
@@ -124,7 +126,7 @@ class AnLoader
         self::$_prefix_map[$adapter->getPrefix()] = $adapter->getType();
     }
 
-	/**
+    /**
      * Get the registered adapters
      *
      * @return array
@@ -146,27 +148,26 @@ class AnLoader
         $result = false;
 
         //Extra filter added to circomvent issues with Zend Optimiser and strange classname.
-        if((ctype_upper(substr($class, 0, 1)) || (strpos($class, '.') !== false)))
-        {
+        if ((ctype_upper(substr($class, 0, 1)) || (strpos($class, '.') !== false))) {
             //Pre-empt further searching for the named class or interface.
             //Do not use autoload, because this method is registered with
             //spl_autoload already.
-            if (!class_exists($class, false) && !interface_exists($class, false))
-            {
+            if (!class_exists($class, false) && !interface_exists($class, false)) {
                 //Get the path
-                $path = self::findPath( $class, $basepath );
+                $path = self::findPath($class, $basepath);
 
                 if ($path !== false) {
                     $result = self::loadFile($path);
                 }
+            } else {
+                $result = true;
             }
-            else $result = true;
         }
 
         return $result;
     }
 
-	/**
+    /**
      * Load a class based on an identifier
      *
      * @param string|object The identifier or identifier object
@@ -202,8 +203,7 @@ class AnLoader
          * Don't re-include files and stat the file if it exists
          * realpath is needed to resolve symbolic links
          */
-        if (!in_array(realpath($path), get_included_files()) && file_exists($path))
-        {
+        if (!in_array(realpath($path), get_included_files()) && file_exists($path)) {
             $mask = E_ALL ^ E_WARNING;
             if (defined('E_DEPRECATED')) {
                 $mask = $mask ^ E_DEPRECATED;
@@ -235,25 +235,24 @@ class AnLoader
         //Switch the base
         $base = $basepath ? $basepath : $base;
 
-        if(!$this->_registry->offsetExists($base.'-'.(string) $class))
-        {
+        if (!$this->_registry->offsetExists($base.'-'.(string) $class)) {
             $result = false;
 
             $word  = preg_replace('/(?<=\\w)([A-Z])/', ' \\1', $class);
             $parts = explode(' ', $word);
 
-            if(isset(self::$_prefix_map[$parts[0]]))
-            {
-                $result = self::$_adapters[self::$_prefix_map[$parts[0]]]->findPath( $class, $basepath);
+            if (isset(self::$_prefix_map[$parts[0]])) {
+                $result = self::$_adapters[self::$_prefix_map[$parts[0]]]->findPath($class, $basepath);
 
                 if ($result !== false) {
-                   //Get the canonicalized absolute pathname
-                   $result = realpath($result);
+                    //Get the canonicalized absolute pathname
+                    $result = realpath($result);
                 }
                 $this->_registry->offsetSet($base.'-'.(string) $class, $result);
             }
-
-        } else $result = $this->_registry->offsetGet($base.'-'.(string)$class);
+        } else {
+            $result = $this->_registry->offsetGet($base.'-'.(string)$class);
+        }
 
         return $result;
     }

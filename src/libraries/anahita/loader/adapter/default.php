@@ -1,8 +1,8 @@
 <?php
 
-/** 
+/**
  * LICENSE: ##LICENSE##.
- * 
+ *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
@@ -16,7 +16,7 @@
  */
 
 /**
- * Default adapter searches for classes with names _<Type><Package><Path><Name>.  
+ * Default adapter searches for classes with names _<Type><Package><Path><Name>.
  *
  * @category   Anahita
  *
@@ -28,16 +28,16 @@
  */
 class AnLoaderAdapterDefault extends AnLoaderAdapterAbstract
 {
-    /** 
+    /**
      * The adapter type.
-     * 
+     *
      * @var string
      */
     protected $_type = 'lib';
 
     /**
      * The class prefix.
-     * 
+     *
      * @var string
      */
     protected $_prefix = 'Lib';
@@ -45,7 +45,7 @@ class AnLoaderAdapterDefault extends AnLoaderAdapterAbstract
     /**
      * Get the path based on a class name.
      *
-     * @param  string		  	The class name 
+     * @param  string		  	The class name
      *
      * @return string|false Returns the path on success FALSE on failure
      */

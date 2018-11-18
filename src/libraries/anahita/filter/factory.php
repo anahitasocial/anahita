@@ -10,7 +10,7 @@
  
 class AnFilterFactory extends AnObject implements AnServiceInstantiatable
 {
-	/**
+    /**
      * Force creation of a singleton
      *
      * @param 	object 	An optional AnConfig object with configuration options
@@ -19,9 +19,8 @@ class AnFilterFactory extends AnObject implements AnServiceInstantiatable
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-       // Check if an instance with this identifier already exists or not
-        if (!$container->has($config->service_identifier))
-        {
+        // Check if an instance with this identifier already exists or not
+        if (!$container->has($config->service_identifier)) {
             //Create the singleton
             $classname = $config->service_identifier->classname;
             $instance  = new $classname($config);
@@ -31,60 +30,57 @@ class AnFilterFactory extends AnObject implements AnServiceInstantiatable
         return $container->get($config->service_identifier);
     }
 
-	/**
-	 * Factory method for AnFilterInterface classes.
-	 *
-	 * @param	string 	Filter indentifier
-	 * @param 	object 	An optional AnConfig object with configuration options
-	 * @return AnFilterAbstract
-	 */
-	public function instantiate($identifier, $config = array())
-	{
-		//Get the filter(s) we need to create
-		$filters = (array) $identifier;
+    /**
+     * Factory method for AnFilterInterface classes.
+     *
+     * @param	string 	Filter indentifier
+     * @param 	object 	An optional AnConfig object with configuration options
+     * @return AnFilterAbstract
+     */
+    public function instantiate($identifier, $config = array())
+    {
+        //Get the filter(s) we need to create
+        $filters = (array) $identifier;
 
-		//Create the filter chain
-		$filter = array_shift($filters);
-		$filter = $this->_createFilter($filter, $config);
+        //Create the filter chain
+        $filter = array_shift($filters);
+        $filter = $this->_createFilter($filter, $config);
 
-		foreach($filters as $name) {
-			$filter->addFilter(self::_createFilter($name, $config));
-		}
+        foreach ($filters as $name) {
+            $filter->addFilter(self::_createFilter($name, $config));
+        }
 
-		return $filter;
-	}
+        return $filter;
+    }
 
-	/**
-	 * Create a filter based on it's name
-	 *
-	 * If the filter is not an identifier this function will create it directly
-	 * instead of going through the AnService identification process.
-	 *
-	 * @param 	string	Filter identifier
-	 * @throws	AnFilterException	When the filter could not be found
-	 * @return  AnFilterInterface
-	 */
-	protected function _createFilter($filter, $config)
-	{
-		try
-		{
-			if(is_string($filter) && strpos($filter, '.') === false ) {
-				$filter = 'com:default.filter.'.trim($filter);
-			}
+    /**
+     * Create a filter based on it's name
+     *
+     * If the filter is not an identifier this function will create it directly
+     * instead of going through the AnService identification process.
+     *
+     * @param 	string	Filter identifier
+     * @throws	AnFilterException	When the filter could not be found
+     * @return  AnFilterInterface
+     */
+    protected function _createFilter($filter, $config)
+    {
+        try {
+            if (is_string($filter) && strpos($filter, '.') === false) {
+                $filter = 'com:default.filter.'.trim($filter);
+            }
 
-			$filter = $this->getService($filter, $config);
+            $filter = $this->getService($filter, $config);
+        } catch (AnServiceServiceException $e) {
+            throw new AnFilterException('Invalid filter: '.$filter);
+        }
 
-		} catch(AnServiceServiceException $e) {
-			throw new AnFilterException('Invalid filter: '.$filter);
-		}
+        //Check the filter interface
+        if (!($filter instanceof AnFilterInterface)) {
+            $identifier = $filter->getIdentifier();
+            throw new AnFilterException("Filter $identifier does not implement AnFilterInterface");
+        }
 
-	    //Check the filter interface
-		if(!($filter instanceof AnFilterInterface))
-		{
-			$identifier = $filter->getIdentifier();
-			throw new AnFilterException("Filter $identifier does not implement AnFilterInterface");
-		}
-
-		return $filter;
-	}
+        return $filter;
+    }
 }

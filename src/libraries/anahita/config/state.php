@@ -10,7 +10,7 @@
  
 class AnConfigState extends AnConfig
 {
-	/**
+    /**
      * Retrieve a configuration item and return $default if there is no element set.
      *
      * @param string
@@ -20,7 +20,7 @@ class AnConfigState extends AnConfig
     public function get($name, $default = null)
     {
         $result = $default;
-        if(isset($this->_data[$name])) {
+        if (isset($this->_data[$name])) {
             $result = $this->_data[$name]->value;
         }
 
@@ -36,9 +36,9 @@ class AnConfigState extends AnConfig
      */
     public function __set($name, $value)
     {
-    	if(isset($this->_data[$name])) {
-    		$this->_data[$name]->value = $value;
-    	}
+        if (isset($this->_data[$name])) {
+            $this->_data[$name]->value = $value;
+        }
     }
 
     /**
@@ -49,7 +49,7 @@ class AnConfigState extends AnConfig
      */
     public function __unset($name)
     {
-        if(isset($this->_data[$name])) {
+        if (isset($this->_data[$name])) {
             $this->_data[$name]->value = $this->_data[$name]->default;
         }
     }
@@ -67,12 +67,12 @@ class AnConfigState extends AnConfig
     public function insert($name, $filter, $default = null, $unique = false, $required = array())
     {
         $state = new stdClass();
-        $state->name     = $name;
-        $state->filter   = $filter;
-        $state->value    = $default;
-        $state->unique   = $unique;
+        $state->name = $name;
+        $state->filter = $filter;
+        $state->value = $default;
+        $state->unique = $unique;
         $state->required = $required;
-        $state->default  = $default;
+        $state->default = $default;
         $this->_data[$name] = $state;
 
         return $this;
@@ -84,7 +84,7 @@ class AnConfigState extends AnConfig
      * @param   string      The name of the state
      * @return  AnConfigState
      */
-    public function remove( $name )
+    public function remove($name)
     {
         unset($this->_data[$name]);
         return $this;
@@ -98,43 +98,40 @@ class AnConfigState extends AnConfig
      */
     public function reset($default = true)
     {
-        foreach($this->_data as $state) {
+        foreach ($this->_data as $state) {
             $state->value = $default ? $state->default : null;
         }
 
         return $this;
     }
 
-     /**
-     * Set the state data
-     *
-     * This function will only filter values if we have a value. If the value
-     * is an empty string it will be filtered to NULL.
-     *
-     * @param   array|object    An associative array of state values by name
-     * @return  AnConfigState
-     */
+    /**
+    * Set the state data
+    *
+    * This function will only filter values if we have a value. If the value
+    * is an empty string it will be filtered to NULL.
+    *
+    * @param   array|object    An associative array of state values by name
+    * @return  AnConfigState
+    */
     public function setData(array $data)
     {
         // Filter data
-        foreach($data as $key => $value)
-        {
-            if(isset($this->_data[$key]))
-            {
+        foreach ($data as $key => $value) {
+            if (isset($this->_data[$key])) {
                 $filter = $this->_data[$key]->filter;
 
                 //Only filter if we have a value
-                if($value !== null)
-                {
-                    if($value !== '')
-                    {
-                        if(!($filter instanceof AnFilterInterface)) {
+                if ($value !== null) {
+                    if ($value !== '') {
+                        if (!($filter instanceof AnFilterInterface)) {
                             $filter = AnService::get('anahita:filter.factory')->instantiate($filter);
                         }
 
                         $value = $filter->sanitize($value);
+                    } else {
+                        $value = null;
                     }
-                    else $value = null;
 
                     $this->_data[$key]->value = $value;
                 }
@@ -156,40 +153,34 @@ class AnConfigState extends AnConfig
     {
         $data = array();
 
-        foreach ($this->_data as $name => $state)
-        {
-            if(isset($state->value))
-            {
+        foreach ($this->_data as $name => $state) {
+            if (isset($state->value)) {
                 //Only return unique data
-                if($unique)
-                 {
+                if ($unique) {
                     //Unique values cannot be null or an empty string
-                    if($state->unique && $this->_validate($state))
-                    {
+                    if ($state->unique && $this->_validate($state)) {
                         $result = true;
 
                         //Check related states to see if they are set
-                        foreach($state->required as $required)
-                        {
-                            if(!$this->_validate($this->_data[$required]))
-                            {
+                        foreach ($state->required as $required) {
+                            if (!$this->_validate($this->_data[$required])) {
                                 $result = false;
                                 break;
                             }
                         }
 
                         //Prepare the data to be returned. Include states
-                        if($result)
-                        {
+                        if ($result) {
                             $data[$name] = $state->value;
 
-                            foreach($state->required as $required) {
+                            foreach ($state->required as $required) {
                                 $data[$required] = $this->_data[$required]->value;
                             }
                         }
                     }
+                } else {
+                    $data[$name] = $state->value;
                 }
-                else $data[$name] = $state->value;
             }
         }
 
@@ -208,15 +199,12 @@ class AnConfigState extends AnConfig
         //Get the unique states
         $states = $this->getData(true);
 
-        if(!empty($states))
-        {
+        if (!empty($states)) {
             $unique = true;
 
             //If a state contains multiple values the state is not unique
-            foreach($states as $state)
-            {
-                if(is_array($state) && count($state) > 1)
-                {
+            foreach ($states as $state) {
+                if (is_array($state) && count($state) > 1) {
                     $unique = false;
                     break;
                 }
@@ -236,14 +224,14 @@ class AnConfigState extends AnConfig
     {
         $states = $this->getData();
 
-        foreach($exclude as $state) {
+        foreach ($exclude as $state) {
             unset($states[$state]);
         }
 
         return (bool) (count($states) == 0);
     }
 
-	/**
+    /**
      * Return an associative array of the states.
      *
      * @param bool 	If TRUE return only as associative array of the state values. Default is TRUE.
@@ -251,19 +239,19 @@ class AnConfigState extends AnConfig
      */
     public function toArray($values = true)
     {
-        if($values)
-        {
+        if ($values) {
             $result = array();
-            foreach($this->_data as $state) {
+            foreach ($this->_data as $state) {
                 $result[$state->name] = $state->value;
             }
+        } else {
+            $result = $this->_data;
         }
-        else $result = $this->_data;
 
         return $result;
     }
 
-	/**
+    /**
      * Validate a unique state.
      *
      * @param  object  The state object.
@@ -272,15 +260,14 @@ class AnConfigState extends AnConfig
     protected function _validate($state)
     {
         // Unique values can't be null or empty string.
-        if(empty($state->value) && !is_numeric($state->value)) {
+        if (empty($state->value) && !is_numeric($state->value)) {
             return false;
         }
 
-        if(is_array($state->value))
-        {
+        if (is_array($state->value)) {
             // The first element of the array can't be null or empty string.
             $first = array_slice($state->value, 0, 1);
-            if(empty($first) && !is_numeric($first)) {
+            if (empty($first) && !is_numeric($first)) {
                 return false;
             }
         }

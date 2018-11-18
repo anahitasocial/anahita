@@ -10,9 +10,9 @@
  
 class AnFilterBase64 extends AnFilterAbstract
 {
-	/**
-	 * Validate a value
-	 *
+    /**
+     * Validate a value
+     *
      * @param   scalar  Value to be validated
      * @return  bool    True when the variable is valid
      */
@@ -22,7 +22,7 @@ class AnFilterBase64 extends AnFilterAbstract
         return (is_string($value) && preg_match($pattern, $value) == 1);
     }
 
-	/**
+    /**
      * Sanitize a value
      *
      * @param   scalar  Value to be sanitized

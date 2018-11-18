@@ -10,27 +10,26 @@
  
 class AnFilterUrl extends AnFilterAbstract
 {
-	/**
-	 * Validate a value
-	 *
-	 * @param	scalar	Value to be validated
-	 * @return	bool	True when the variable is valid
-	 */
-	protected function _validate($value)
-	{
-		$value = trim($value);
-		return (false !== filter_var($value, FILTER_VALIDATE_URL));
-	}
+    /**
+     * Validate a value
+     *
+     * @param	scalar	Value to be validated
+     * @return	bool	True when the variable is valid
+     */
+    protected function _validate($value)
+    {
+        $value = trim($value);
+        return (false !== filter_var($value, FILTER_VALIDATE_URL));
+    }
 
-	/**
-	 * Sanitize a value
-	 *
-	 * @param	scalar	Value to be sanitized
-	 * @return	string
-	 */
-	protected function _sanitize($value)
-	{
-		return filter_var($value, FILTER_SANITIZE_URL);
-	}
+    /**
+     * Sanitize a value
+     *
+     * @param	scalar	Value to be sanitized
+     * @return	string
+     */
+    protected function _sanitize($value)
+    {
+        return filter_var($value, FILTER_SANITIZE_URL);
+    }
 }
-

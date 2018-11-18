@@ -10,28 +10,28 @@
  
 class AnFilterAlpha extends AnFilterAbstract
 {
-	/**
-	 * Validate a variable
-	 *
-	 * @param	scalar	Value to be validated
-	 * @return	bool	True when the variable is valid
-	 */
-	protected function _validate($value)
-	{
-		$value = trim($value);
+    /**
+     * Validate a variable
+     *
+     * @param	scalar	Value to be validated
+     * @return	bool	True when the variable is valid
+     */
+    protected function _validate($value)
+    {
+        $value = trim($value);
 
-		return ctype_alpha($value);
-	}
+        return ctype_alpha($value);
+    }
 
-	/**
-	 * Sanitize a variable
-	 *
-	 * @param	scalar	Value to be sanitized
-	 * @return	string
-	 */
-	protected function _sanitize($value)
-	{
-		$pattern 	= '/[^[a-zA-Z]*/';
-    	return preg_replace($pattern, '', $value);
-	}
+    /**
+     * Sanitize a variable
+     *
+     * @param	scalar	Value to be sanitized
+     * @return	string
+     */
+    protected function _sanitize($value)
+    {
+        $pattern 	= '/[^[a-zA-Z]*/';
+        return preg_replace($pattern, '', $value);
+    }
 }

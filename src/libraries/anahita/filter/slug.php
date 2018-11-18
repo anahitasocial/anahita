@@ -29,7 +29,7 @@ class AnFilterSlug extends AnFilterAbstract
         parent::__construct($config);
         $this->_slug_length = $config->slug_length;
         $this->_length    = $config->length;
-		$this->_separator = $config->separator;
+        $this->_separator = $config->separator;
     }
 
     /**
@@ -44,7 +44,7 @@ class AnFilterSlug extends AnFilterAbstract
         $config->append(array(
             'slug_length' => 255,
             'separator' => '-',
-    		'length' 	=> 255
+            'length' 	=> 255
         ));
 
         parent::_initialize($config);
@@ -101,8 +101,8 @@ class AnFilterSlug extends AnFilterAbstract
      *
      * @return bool Return true of the passed string is UTF-8 o/w returns false
      */
-    protected function _utf8( $str ) {
-
+    protected function _utf8($str)
+    {
         mbstring_binary_safe_encoding();
 
         $length = strlen($str);
@@ -110,21 +110,36 @@ class AnFilterSlug extends AnFilterAbstract
         reset_mbstring_encoding();
 
         for ($i=0; $i < $length; $i++) {
-    		$c = ord($str[$i]);
-    		if ($c < 0x80) $n = 0; // 0bbbbbbb
-    		elseif (($c & 0xE0) == 0xC0) $n=1; // 110bbbbb
-    		elseif (($c & 0xF0) == 0xE0) $n=2; // 1110bbbb
-    		elseif (($c & 0xF8) == 0xF0) $n=3; // 11110bbb
-    		elseif (($c & 0xFC) == 0xF8) $n=4; // 111110bb
-    		elseif (($c & 0xFE) == 0xFC) $n=5; // 1111110b
-    		else return false; // Does not match any model
-    		for ($j=0; $j<$n; $j++) { // n bytes matching 10bbbbbb follow ?
-    			if ((++$i == $length) || ((ord($str[$i]) & 0xC0) != 0x80))
-    				return false;
-    		}
-    	}
+            $c = ord($str[$i]);
+            if ($c < 0x80) {
+                $n = 0;
+            } // 0bbbbbbb
+            elseif (($c & 0xE0) == 0xC0) {
+                $n=1;
+            } // 110bbbbb
+            elseif (($c & 0xF0) == 0xE0) {
+                $n=2;
+            } // 1110bbbb
+            elseif (($c & 0xF8) == 0xF0) {
+                $n=3;
+            } // 11110bbb
+            elseif (($c & 0xFC) == 0xF8) {
+                $n=4;
+            } // 111110bb
+            elseif (($c & 0xFE) == 0xFC) {
+                $n=5;
+            } // 1111110b
+            else {
+                return false;
+            } // Does not match any model
+            for ($j=0; $j<$n; $j++) { // n bytes matching 10bbbbbb follow ?
+                if ((++$i == $length) || ((ord($str[$i]) & 0xC0) != 0x80)) {
+                    return false;
+                }
+            }
+        }
 
-    	return true;
+        return true;
     }
 
     /**
@@ -139,43 +154,45 @@ class AnFilterSlug extends AnFilterAbstract
     protected function _utf8encode($utf8_string, $length)
     {
         $unicode = '';
-    	$values = array();
-    	$num_octets = 1;
-    	$unicode_length = 0;
-    	mbstring_binary_safe_encoding();
-    	$string_length = strlen( $utf8_string );
-    	reset_mbstring_encoding();
-    	for ($i = 0; $i < $string_length; $i++ ) {
-    		$value = ord( $utf8_string[ $i ] );
-    		if ( $value < 128 ) {
-    			if ( $length && ( $unicode_length >= $length ) )
-    				break;
-    			$unicode .= chr($value);
-    			$unicode_length++;
-    		} else {
-    			if ( count( $values ) == 0 ) {
-    				if ( $value < 224 ) {
-    					$num_octets = 2;
-    				} elseif ( $value < 240 ) {
-    					$num_octets = 3;
-    				} else {
-    					$num_octets = 4;
-    				}
-    			}
-    			$values[] = $value;
-    			if ( $length && ( $unicode_length + ($num_octets * 3) ) > $length )
-    				break;
-    			if ( count( $values ) == $num_octets ) {
-    				for ( $j = 0; $j < $num_octets; $j++ ) {
-    					$unicode .= '%' . dechex( $values[ $j ] );
-    				}
-    				$unicode_length += $num_octets * 3;
-    				$values = array();
-    				$num_octets = 1;
-    			}
-    		}
-    	}
+        $values = array();
+        $num_octets = 1;
+        $unicode_length = 0;
+        mbstring_binary_safe_encoding();
+        $string_length = strlen($utf8_string);
+        reset_mbstring_encoding();
+        for ($i = 0; $i < $string_length; $i++) {
+            $value = ord($utf8_string[ $i ]);
+            if ($value < 128) {
+                if ($length && ($unicode_length >= $length)) {
+                    break;
+                }
+                $unicode .= chr($value);
+                $unicode_length++;
+            } else {
+                if (count($values) == 0) {
+                    if ($value < 224) {
+                        $num_octets = 2;
+                    } elseif ($value < 240) {
+                        $num_octets = 3;
+                    } else {
+                        $num_octets = 4;
+                    }
+                }
+                $values[] = $value;
+                if ($length && ($unicode_length + ($num_octets * 3)) > $length) {
+                    break;
+                }
+                if (count($values) == $num_octets) {
+                    for ($j = 0; $j < $num_octets; $j++) {
+                        $unicode .= '%' . dechex($values[ $j ]);
+                    }
+                    $unicode_length += $num_octets * 3;
+                    $values = array();
+                    $num_octets = 1;
+                }
+            }
+        }
 
-    	return $unicode;
+        return $unicode;
     }
 }

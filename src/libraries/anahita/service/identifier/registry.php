@@ -10,59 +10,59 @@
  
 class AnServiceIdentifierRegistry extends ArrayObject
 {
- 	/**
- 	 * Cache
- 	 *
- 	 * @var boolean
- 	 */
+    /**
+     * Cache
+     *
+     * @var boolean
+     */
     protected $_cache = false;
 
     /**
- 	 * Cache Prefix
- 	 *
- 	 * @var boolean
- 	 */
+     * Cache Prefix
+     *
+     * @var boolean
+     */
     protected $_cache_prefix = 'anahita-cache-identifier';
 
-	/**
+    /**
      * Enable class caching
      *
      * @param  boolean	Enable or disable the cache. Default is TRUE.
      * @return boolean	TRUE if caching is enabled. FALSE otherwise.
      */
-	public function enableCache($enabled = true)
-	{
-	    if($enabled && extension_loaded('apcu')) {
+    public function enableCache($enabled = true)
+    {
+        if ($enabled && extension_loaded('apcu')) {
             $this->_cache = true;
         } else {
             $this->_cache = false;
         }
 
         return $this->_cache;
-	}
+    }
 
-	/**
+    /**
      * Set the cache prefix
      *
      * @param string The cache prefix
      * @return void
      */
-	public function setCachePrefix($prefix)
-	{
-	    $this->_cache_prefix = $prefix;
-	}
+    public function setCachePrefix($prefix)
+    {
+        $this->_cache_prefix = $prefix;
+    }
 
-	/**
+    /**
      * Get the cache prefix
      *
      * @return string	The cache prefix
      */
-	public function getCachePrefix()
-	{
-	    return $this->_cache_prefix;
-	}
+    public function getCachePrefix()
+    {
+        return $this->_cache_prefix;
+    }
 
- 	/**
+    /**
      * Get an item from the array by offset
      *
      * @param   int     The offset
@@ -70,15 +70,15 @@ class AnServiceIdentifierRegistry extends ArrayObject
      */
     public function offsetGet($offset)
     {
-        if(!parent::offsetExists($offset))
-        {
-            if($this->_cache) {
+        if (!parent::offsetExists($offset)) {
+            if ($this->_cache) {
                 $result = unserialize(apc_fetch($this->_cache_prefix.'-'.$offset));
             } else {
                 $result = false;
             }
+        } else {
+            $result = parent::offsetGet($offset);
         }
-        else $result = parent::offsetGet($offset);
 
         return $result;
     }
@@ -92,14 +92,14 @@ class AnServiceIdentifierRegistry extends ArrayObject
      */
     public function offsetSet($offset, $value)
     {
-        if($this->_cache) {
+        if ($this->_cache) {
             apc_store($this->_cache_prefix.'-'.$offset, serialize($value));
         }
 
         parent::offsetSet($offset, $value);
     }
 
-	/**
+    /**
      * Check if the offset exists
      *
      * @param   int     The offset
@@ -107,9 +107,8 @@ class AnServiceIdentifierRegistry extends ArrayObject
      */
     public function offsetExists($offset)
     {
-        if(false === $result = parent::offsetExists($offset))
-        {
-            if($this->_cache) {
+        if (false === $result = parent::offsetExists($offset)) {
+            if ($this->_cache) {
                 $result = apc_exists($this->_cache_prefix.'-'.$offset);
             }
         }

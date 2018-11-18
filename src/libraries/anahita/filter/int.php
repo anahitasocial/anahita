@@ -10,26 +10,25 @@
  
 class AnFilterInt extends AnFilterAbstract
 {
-	/**
-	 * Validate a value
-	 *
-	 * @param	scalar	Value to be validated
-	 * @return	bool	True when the variable is valid
-	 */
-	protected function _validate($value)
-	{
-		return empty($value) || (false !== filter_var($value, FILTER_VALIDATE_INT));
-	}
+    /**
+     * Validate a value
+     *
+     * @param	scalar	Value to be validated
+     * @return	bool	True when the variable is valid
+     */
+    protected function _validate($value)
+    {
+        return empty($value) || (false !== filter_var($value, FILTER_VALIDATE_INT));
+    }
 
-	/**
-	 * Sanitize a value
-	 *
-	 * @param	scalar	Value to be sanitized
-	 * @return	int
-	 */
-	protected function _sanitize($value)
-	{
-		return (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
-	}
+    /**
+     * Sanitize a value
+     *
+     * @param	scalar	Value to be sanitized
+     * @return	int
+     */
+    protected function _sanitize($value)
+    {
+        return (int) filter_var($value, FILTER_SANITIZE_NUMBER_INT);
+    }
 }
-

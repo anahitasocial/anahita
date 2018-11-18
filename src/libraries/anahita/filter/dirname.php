@@ -10,27 +10,27 @@
  
 class AnFilterDirname extends AnFilterAbstract
 {
-	/**
-	 * Validate a value
-	 *
-	 * @param	scalar	Variable to be validated
-	 * @return	bool	True when the variable is valid
-	 */
-	protected function _validate($value)
-	{
-		$value = trim($value);
-	   	return ((string) $value === $this->sanitize($value));
-	}
+    /**
+     * Validate a value
+     *
+     * @param	scalar	Variable to be validated
+     * @return	bool	True when the variable is valid
+     */
+    protected function _validate($value)
+    {
+        $value = trim($value);
+        return ((string) $value === $this->sanitize($value));
+    }
 
-	/**
-	 * Sanitize a value
-	 *
-	 * @param	scalar	Variable to be sanitized
-	 * @return	string
-	 */
-	protected function _sanitize($value)
-	{
-		$value = trim($value);
-    	return dirname($value);
-	}
+    /**
+     * Sanitize a value
+     *
+     * @param	scalar	Variable to be sanitized
+     * @return	string
+     */
+    protected function _sanitize($value)
+    {
+        $value = trim($value);
+        return dirname($value);
+    }
 }

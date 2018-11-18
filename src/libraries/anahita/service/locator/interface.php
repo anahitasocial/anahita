@@ -10,26 +10,26 @@
  
 interface AnServiceLocatorInterface
 {
-	/**
-	 * Get the classname based on an identifier
-	 *
-	 * @param 	object 			An identifier object - [application::]type.package.[.path].name
-	 * @return 	string|false 	Returns the class on success, returns FALSE on failure
-	 */
-	public function findClass(AnServiceIdentifier $identifier);
-
-	 /**
-     * Get the path based on an identifier
+    /**
+     * Get the classname based on an identifier
      *
-     * @param  object   An identifier object - [application::]type.package.[.path].name
-     * @return string	Returns the path
+     * @param 	object 			An identifier object - [application::]type.package.[.path].name
+     * @return 	string|false 	Returns the class on success, returns FALSE on failure
      */
+    public function findClass(AnServiceIdentifier $identifier);
+
+    /**
+    * Get the path based on an identifier
+    *
+    * @param  object   An identifier object - [application::]type.package.[.path].name
+    * @return string	Returns the path
+    */
     public function findPath(AnServiceIdentifier $identifier);
 
-	/**
-	 * Get the type
-	 *
-	 * @return string	Returns the type
-	 */
-	public function getType();
+    /**
+     * Get the type
+     *
+     * @return string	Returns the type
+     */
+    public function getType();
 }

@@ -25,7 +25,7 @@ class AnFilterTimestamp extends AnFilterAbstract
      */
     protected function _validate($value)
     {
-         // look for YmdHis keys?
+        // look for YmdHis keys?
         if (is_array($value)) {
             $value = $this->_arrayToTimestamp($value);
         }
@@ -74,9 +74,8 @@ class AnFilterTimestamp extends AnFilterAbstract
         }
 
         $result = '0000-00-00 00:00:00';
-        if (!(empty($value) || $value == $result))
-        {
-             $format = 'Y-m-d H:i:s';
+        if (!(empty($value) || $value == $result)) {
+            $format = 'Y-m-d H:i:s';
             if (is_int($value)) {
                 $result = date($format, $value);
             } else {

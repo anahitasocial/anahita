@@ -10,7 +10,7 @@
  
 class AnFilterTrim extends AnFilterAbstract
 {
-	/**
+    /**
      * List of characters provided to the trim() function
      *
      * If this is null, then trim() is called with no specific character list,
@@ -30,7 +30,7 @@ class AnFilterTrim extends AnFilterAbstract
         parent::__construct($config);
 
         // List of user-defined tags
-        if(isset($config->char_list)) {
+        if (isset($config->char_list)) {
             $this->_charList = $config->char_list;
         }
     }

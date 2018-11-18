@@ -8,4 +8,6 @@
  * @link        https://www.GetAnahita.com
  */
  
-class AnServiceException extends AnException {}
+class AnServiceException extends AnException
+{
+}

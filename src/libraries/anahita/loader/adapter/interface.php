@@ -10,26 +10,26 @@
  
 interface AnLoaderAdapterInterface
 {
-	/**
-	 * Get the type
-	 *
-	 * @return string	Returns the type
-	 */
-	public function getType();
+    /**
+     * Get the type
+     *
+     * @return string	Returns the type
+     */
+    public function getType();
 
-	/**
-	 * Get the class prefix
-	 *
-	 * @return string	Returns the class prefix
-	 */
-	public function getPrefix();
+    /**
+     * Get the class prefix
+     *
+     * @return string	Returns the class prefix
+     */
+    public function getPrefix();
 
-	/**
-	 * Get the base path
-	 *
-	 * @return string	Returns the base path
-	 */
-	public function getBasepath();
+    /**
+     * Get the base path
+     *
+     * @return string	Returns the base path
+     */
+    public function getBasepath();
 
     /**
      * Get the path based on a class name

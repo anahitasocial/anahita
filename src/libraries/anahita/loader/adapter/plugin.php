@@ -17,57 +17,55 @@
  */
 class AnLoaderAdapterPlugin extends AnLoaderAdapterAbstract
 {
-	/**
-	 * The adapter type
-	 *
-	 * @var string
-	 */
-	protected $_type = 'plg';
+    /**
+     * The adapter type
+     *
+     * @var string
+     */
+    protected $_type = 'plg';
 
-	/**
-	 * The class prefix
-	 *
-	 * @var string
-	 */
-	protected $_prefix = 'Plg';
+    /**
+     * The class prefix
+     *
+     * @var string
+     */
+    protected $_prefix = 'Plg';
 
-	/**
-	 * Get the path based on a class name
-	 *
-	 * @param  string		  	The class name
-	 * @return string|false		Returns the path on success FALSE on failure
-	 */
-	public function findPath($classname, $basepath = null)
-	{
-		$path = false;
+    /**
+     * Get the path based on a class name
+     *
+     * @param  string		  	The class name
+     * @return string|false		Returns the path on success FALSE on failure
+     */
+    public function findPath($classname, $basepath = null)
+    {
+        $path = false;
 
-		$word  = strtolower(preg_replace('/(?<=\\w)([A-Z])/', ' \\1', $classname));
-		$parts = explode(' ', $word);
+        $word  = strtolower(preg_replace('/(?<=\\w)([A-Z])/', ' \\1', $classname));
+        $parts = explode(' ', $word);
 
-		if (array_shift($parts) == 'plg')
-		{
-		    //Switch the basepath
-		    if(!empty($basepath)) {
-		        $this->_basepath = $basepath;
-		    }
+        if (array_shift($parts) == 'plg') {
+            //Switch the basepath
+            if (!empty($basepath)) {
+                $this->_basepath = $basepath;
+            }
 
-		    $type = array_shift($parts);
+            $type = array_shift($parts);
 
-			if(count($parts) > 1) {
-				$path = array_shift($parts).'/'.implode('/', $parts);
-			} else {
-				$path = array_shift($parts);
-			}
+            if (count($parts) > 1) {
+                $path = array_shift($parts).'/'.implode('/', $parts);
+            } else {
+                $path = array_shift($parts);
+            }
 
             //Plugins can have their own folder
-		    if (is_file($this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php')) {
-		        $path = $this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php';
-			} else {
-	            $path = $this->_basepath.'/plugins/'.$type.'/'.$path.'.php';
-			}
-	    }
+            if (is_file($this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php')) {
+                $path = $this->_basepath.'/plugins/'.$type.'/'.$path.'/'.$path.'.php';
+            } else {
+                $path = $this->_basepath.'/plugins/'.$type.'/'.$path.'.php';
+            }
+        }
 
-		return $path;
-
-	}
+        return $path;
+    }
 }

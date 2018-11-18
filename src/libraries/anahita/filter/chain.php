@@ -17,7 +17,7 @@ class AnFilterChain extends AnCommandChain
      * @param array   The data to be filtered
      * @return  mixed
      */
-    final public function run( $name, AnCommandContext $context )
+    final public function run($name, AnCommandContext $context)
     {
         $function = '_'.$name;
         $result =  $this->$function($context);
@@ -30,11 +30,10 @@ class AnFilterChain extends AnCommandChain
      * @param   scalar  Value to be validated
      * @return  bool    True when the data is valid
      */
-    final protected function _validate( AnCommandContext $context )
+    final protected function _validate(AnCommandContext $context)
     {
-        foreach($this as $filter)
-        {
-            if ( $filter->execute( 'validate', $context ) === false) {
+        foreach ($this as $filter) {
+            if ($filter->execute('validate', $context) === false) {
                 return false;
             }
         }
@@ -48,10 +47,10 @@ class AnFilterChain extends AnCommandChain
      * @param   scalar  Valuae to be sanitized
      * @return  mixed
      */
-    final protected function _sanitize( AnCommandContext $context )
+    final protected function _sanitize(AnCommandContext $context)
     {
-        foreach($this as $filter) {
-            $context->data = $filter->execute( 'sanitize', $context );
+        foreach ($this as $filter) {
+            $context->data = $filter->execute('sanitize', $context);
         }
 
         return $context->data;

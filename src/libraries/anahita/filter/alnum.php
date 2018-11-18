@@ -10,30 +10,30 @@
  
 class AnFilterAlnum extends AnFilterAbstract
 {
-	/**
-	 * Validate a variable
-	 *
-	 * @param	scalar	Value to be validated
-	 * @return	bool	True when the variable is valid
-	 */
-	protected function _validate($value)
-	{
-		$value = trim($value);
+    /**
+     * Validate a variable
+     *
+     * @param	scalar	Value to be validated
+     * @return	bool	True when the variable is valid
+     */
+    protected function _validate($value)
+    {
+        $value = trim($value);
 
-		return ctype_alnum($value);
-	}
+        return ctype_alnum($value);
+    }
 
-	/**
-	 * Sanitize a variable
-	 *
-	 * @param	scalar	Value to be sanitized
-	 * @return	string
-	 */
-	protected function _sanitize($value)
-	{
-		$value = trim($value);
+    /**
+     * Sanitize a variable
+     *
+     * @param	scalar	Value to be sanitized
+     * @return	string
+     */
+    protected function _sanitize($value)
+    {
+        $value = trim($value);
 
-	    $pattern 	= '/[^\w]*/';
-    	return preg_replace($pattern, '', $value);
-	}
+        $pattern 	= '/[^\w]*/';
+        return preg_replace($pattern, '', $value);
+    }
 }
