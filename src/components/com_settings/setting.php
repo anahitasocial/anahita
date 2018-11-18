@@ -60,13 +60,7 @@
 
          require_once $filepath;
 
-         //Checking for the legacy JConfig first
-         if (class_exists('JConfig')) {
-             $this->_settings = new JConfig();
-         } else {
-             $this->_settings = new AnSiteConfig();
-         }
-
+         $this->_settings = new AnSiteConfig();
          $this->_default_template = 'shiraz';
          $this->_default_language = 'en-GB';
      }

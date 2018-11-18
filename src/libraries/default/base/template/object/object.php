@@ -16,7 +16,7 @@
  */
 
 /**
- * Default tempalte object is a Kconfig that return the $config->id as the object id.
+ * Default tempalte object is a AnConfig that return the $config->id as the object id.
  *
  * @category   Anahita
  *

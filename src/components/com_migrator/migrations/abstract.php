@@ -101,7 +101,7 @@ abstract class ComMigratorMigrationAbstract extends AnObject
 
         $this->_output_path = $config->output_path;
 
-        $this->_tables = Kconfig::unbox($config->tables);
+        $this->_tables = AnConfig::unbox($config->tables);
 
         $this->mixin(new AnMixinCommand($config));
     }
