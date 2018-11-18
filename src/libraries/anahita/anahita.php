@@ -68,11 +68,9 @@ class anahita
     {
         //store the path
         $this->_path = dirname(__FILE__);
-        require_once $this->_path.'/legacy.php';
-        
         require_once $this->_path.'/loader/loader.php';
-        $loader = AnLoader::getInstance($config);
         
+        $loader = AnLoader::getInstance($config);
         $service = AnService::getInstance($config);
         $service->set('anahita:loader', $loader);
 

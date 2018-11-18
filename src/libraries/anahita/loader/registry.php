@@ -115,6 +115,6 @@ class AnLoaderRegistry extends ArrayObject
             }
         }
 
-        return $result;
+        return (bool) $result;
     }
 }
