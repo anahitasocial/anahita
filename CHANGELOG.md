@@ -7,6 +7,7 @@ Anahita 4.4.0
 1. changed: coverSet() is now hasCover()
 1. changed: portraitSet() is now hasPortrait()
 1. added: cover to node list, actor list, and person list layouts
+1. changed: using + for all new (entity) buttons
 
 Anahita 4.3.14 Birth Release
 =============================
