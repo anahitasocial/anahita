@@ -121,7 +121,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
             $data = array(
                 'data' => $data,
             );
-
+            
             if (is($items, 'AnDomainEntitysetAbstract')) {
                 $data['pagination'] = array(
                     'offset' => (int) $items->getOffset(),

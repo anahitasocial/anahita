@@ -783,9 +783,9 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
     public function fetchValue($column, $condition = array())
     {
         $query = self::getInstance($this, $condition);
-
+        
         $query->columns($column);
-
+        
         return $this->getRepository()->fetch($query, AnDomain::FETCH_VALUE);
     }
 

@@ -68,36 +68,36 @@ class ComStoriesControllerStory extends ComBaseControllerService
      * 
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionBrowse($context)
-    {
-        $query = $this->getRepository()->getQuery()->limit($this->limit, $this->start);
+     protected function _actionBrowse(AnCommandContext $context)
+     {
+         $entities = parent::_actionBrowse($context);
 
-        if ($this->filter == 'leaders') {
-            $ids = get_viewer()->leaderIds->toArray();
-            $ids[] = get_viewer()->id;
-            $query->where('owner.id', 'IN', $ids);
-        } else {
-            $query->owner($this->actor);
-        }
+         if ($this->filter == 'leaders') {
+             $ids = get_viewer()->leaderIds->toArray();
+             $ids[] = get_viewer()->id;
+             $entities->where('owner.id', 'IN', $ids);
+         } else {
+             $entities->owner($this->actor);
+         }
 
-        $query->aggregateKeys($this->getService('com://site/stories.domain.aggregations'));
+         $entities->aggregateKeys($this->getService('com:stories.domain.aggregations'));
+         
+         $entities->order('creationTime', 'desc');
 
-        $query->order('creationTime', 'desc');
+         if ($this->component) {
+             $entities->clause()->component((array) AnConfig::unbox($this->component));
+         }
 
-        if ($this->component) {
-            $query->clause()->component((array) AnConfig::unbox($this->component));
-        }
+         if ($this->name) {
+             $entities->clause()->name((array) AnConfig::unbox($this->name));
+         }
 
-        if ($this->name) {
-            $query->clause()->name((array) AnConfig::unbox($this->name));
-        }
+         if ($this->subject) {
+             $entities->clause()->where('subject.id', 'IN', (array) AnConfig::unbox($this->subject));
+         }
 
-        if ($this->subject) {
-            $query->clause()->where('subject.id', 'IN', (array) AnConfig::unbox($this->subject));
-        }
-
-        return $this->setList($query->toEntitySet())->getList();
-    }
+         return $this->setList($entities)->getList();
+     }
 
     /**
      * Delete a story.
