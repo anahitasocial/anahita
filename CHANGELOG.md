@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.1
+=============================
+1. added: fake total number for the stories to save on the query operation.
+2. added: owner field to the story json object
+
 Anahita 4.4.0
 =============================
 1. changed: all koowa classes are now merged with Anahita framework. All classes prefixed with K are now using An prefix. Unused code have been removed.  
