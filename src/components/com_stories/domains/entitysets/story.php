@@ -13,10 +13,11 @@ class ComStoriesDomainEntitysetStory extends AnDomainEntitysetDefault
 {
     /*
     * Because the number of stories can get very large, 
-    * we just return a small integer. The Client can send requests 
-    * and hope that more stories are returned. 
+    * we just return a not so very large integer. 
+    * It's unlikely that people would request more than a few hundred stories.
+    *  
     */
-    const MAX_TOTAL_STORIES = 20;
+    const MAX_TOTAL_STORIES = 777;
     
     /**
      * Return 
