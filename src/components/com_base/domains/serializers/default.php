@@ -68,7 +68,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                 }
             }
 
-            $data['imageURL'] = $imageURL;
+            $data['imageURL'] = (object) $imageURL;
         }
         
         if ($entity->isCoverable()) {
@@ -103,7 +103,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                 }
             }
             
-            $data['coverURL'] = $coverURL;
+            $data['coverURL'] = (object) $coverURL;
         }
 
         if ($entity->isModifiable()) {
