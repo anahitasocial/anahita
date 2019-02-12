@@ -32,15 +32,13 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
 
         $this->_enabled = $config->enabled;
         $namespace = $this->_getQueueNamespace(false);
-
-        $session = AnService::get('com:sessions', array(
-                        'namespace' => $namespace->namespace,
-                        'storage' => (PHP_SAPI == 'cli') ? 'none' : 'database'
-                    ));
-
         $data = array();
 
         if ($this->_enabled) {
+            $session = AnService::get('com:sessions', array(
+                        'namespace' => $namespace->namespace,
+                        'storage' => (PHP_SAPI == 'cli') ? 'none' : 'database'
+                    ));
             $data = (array) $session->set($namespace->queue, new stdClass(), $namespace->namespace);
         }
 
