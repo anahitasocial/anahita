@@ -18,14 +18,16 @@ class ComTagsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
      */
     protected function _beforeQuerySelect(AnCommandContext $context)
     {
-        if (AnService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin()) {
+        $viewer = $this->getService('com:people.viewer');
+        
+        if ($viewer->admin()) {
             return;
         }
 
         $query = $context->query;
 
         $repository = $query->getRepository();
-
+        
         $config = pick($query->privacy, new AnConfig());
 
         $config->append(array(
@@ -51,7 +53,8 @@ class ComTagsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
         $query->where($where);
 
         //comments privacy depends on their parent
-        $query->join('left', 'nodes AS parent', 'parent.id = node.parent_id');
+        $alias = $repository->getResources()->main()->getAlias();
+        $query->join('left', 'nodes AS parent', 'parent.id = '.$alias.'.parent_id');
 
         $c1 = $this->buildCondition('@col(owner.id)', $config, '@col(parent.access)');
         $c2 = $this->buildCondition('@col(owner.id)', $config, $config->use_access_column);
