@@ -66,7 +66,18 @@ if (!is_array($item->target) && !$item->target->eql($item->subject)) {
     </div>
 
 	<? if (!empty($comments) || $can_comment) : ?>
-    <?= @helper('ui.comments', $item->object, array('comments' => $comments, 'can_comment' => $can_comment, 'content_filter_exclude' => array('gist'), 'pagination' => false, 'show_guest_prompt' => false, 'truncate_body' => array('length' => 220, 'consider_html' => true, 'read_more' => true))) ?>
+    <?= @helper('ui.comments', $item->object, array(
+        'comments' => $comments, 
+        'can_comment' => $can_comment, 
+        'content_filter_exclude' => array('gist'), 
+        'pagination' => false, 
+        'show_guest_prompt' => false, 
+        'truncate_body' => array(
+            'length' => 220, 
+            'consider_html' => true, 
+            'read_more' => true,
+        )
+    )) ?>
     <? endif;?>
 
     <? if (!empty($comments) && $can_comment): ?>

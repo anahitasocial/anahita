@@ -29,7 +29,7 @@ class ComHashtagsRouter extends ComBaseRouterDefault
     public function parse(&$segments)
     {
         $vars = array();
-
+        
         if (empty($segments)) {
             $vars['view'] = $this->getIdentifier()->package;
         } elseif (count($segments) == 1) {

@@ -57,29 +57,27 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
      */
     protected function _actionRead(AnCommandContext $context)
     {
-        $entity = parent::_actionRead($context);
-
         $pkg = $this->getIdentifier()->package;
         $name = $this->getIdentifier()->name;
-
         $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-'.$pkg.'-TERM'), $name));
+        
+        $entity = parent::_actionRead($context);
 
-        if (!empty($entity->tagables)) {
-
+        if (!empty($entity->taggables)) {
             if ($this->scope) {
-                $entity->tagables->scope($this->scope);
+                $entity->taggables->scope($this->scope);
             }
-
+            
             if ($this->sort == 'top') {
-                $entity->tagables->sortTop();
+                $entity->taggables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC')->groupby('taggable.id');;
             } else {
-                $entity->tagables->sortRecent();
+                $entity->taggables->order('node.created_on', 'DESC');
             }
-
-            $entity->tagables->limit($this->limit, $this->start);
+            
+            $entity->taggables->limit($this->limit, $this->start);
         }
 
-        //print str_replace('#_', 'jos', $entity->tagables->getQuery());
+        // print str_replace('#_', 'jos', $entity->taggables->getQuery());
 
         return $entity;
     }
@@ -113,11 +111,11 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     }
 
     /**
-     * Set the default Actor View.
+     * Set the default Tag View.
      *
      * @param AnCommandContext $context Context parameter
      *
-     * @return ComActorsControllerDefault
+     * @return ComTagsControllerDefault
      */
     public function setView($view)
     {

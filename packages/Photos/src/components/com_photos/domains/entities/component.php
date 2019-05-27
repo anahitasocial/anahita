@@ -26,7 +26,7 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
             'story_aggregation' => array('photo_add' => 'target'),
             'behaviors' => array(
                     'scopeable' => array('class' => 'ComPhotosDomainEntityPhoto'),
-                    'hashtagable' => array('class' => 'ComPhotosDomainEntityPhoto'),
+                    'hashtaggable' => array('class' => 'ComPhotosDomainEntityPhoto'),
                 ),
         ));
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Hashtagable Behavior.
+ * Hashtaggable Behavior.
  *
  * @category   Anahita
  *
@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstract
+class ComHashtagsControllerBehaviorHashtaggable extends AnControllerBehaviorAbstract
 {
     /**
      * Constructor.
@@ -98,7 +98,7 @@ class ComHashtagsControllerBehaviorHashtagable extends AnControllerBehaviorAbstr
             $this->hashtag = (is_string($this->hashtag)) ? array($this->hashtag) : $this->hashtag;
 
             $edgeType = 'ComTagsDomainEntityTag,ComHashtagsDomainEntityTag,com:hashtags.domain.entity.tag';
-
+            
             $query
             ->join('left', 'edges AS hashtag_edge', '('.$entityType.'.id = hashtag_edge.node_b_id AND hashtag_edge.type=\''.$edgeType.'\')')
             ->join('left', 'nodes AS hashtag', 'hashtag_edge.node_a_id = hashtag.id');

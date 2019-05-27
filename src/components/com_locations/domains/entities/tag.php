@@ -23,11 +23,13 @@ final class ComLocationsDomainEntityTag extends ComTagsDomainEntityTag
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'relationships' => array(
-                'location' => array('parent' => 'com:locations.domain.entity.location'),
-            ),
             'aliases' => array(
                 'location' => 'nodeA',
+            ),
+            'relationships' => array(
+                'location' => array(
+                    'parent' => 'com:locations.domain.entity.location',
+                ),
             ),
         ));
 

@@ -48,11 +48,11 @@ class ComComponentsDomainEntityScope extends AnObject
     public $ownable;
 
     /**
-     * A flag whether to scope is hashtagable
+     * A flag whether to scope is hashtaggable
      *
      * @var bool
      */
-    public $hashtagable;
+    public $hashtaggable;
 
     /**
      * A flag whether to scope is geolocatable
@@ -84,7 +84,7 @@ class ComComponentsDomainEntityScope extends AnObject
         $this->commentable  = $config->commentable;
         $this->type         = $config->type;
         $this->ownable      = $config->ownable;
-        $this->hashtagable  = $config->hashtagable;
+        $this->hashtaggable  = $config->hashtaggable;
         $this->geolocatable = $config->geolocatable;
 
         $this->getService('anahita:language')->load('com_'.$this->identifier->package);
@@ -105,7 +105,7 @@ class ComComponentsDomainEntityScope extends AnObject
                 'node_type' => (string) $config->repository->getDescription()->getInheritanceColumnValue(),
                 'commentable' => $config->repository->isCommentable(),
                 'ownable' => $config->repository->isOwnable(),
-                'hashtagable' => $config->repository->isHashtagable(),
+                'hashtaggable' => $config->repository->isHashtaggable(),
                 'geolocatable' => $config->repository->isGeolocatable()
             ));
         }

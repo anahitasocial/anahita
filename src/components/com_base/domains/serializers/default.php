@@ -146,10 +146,16 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
 
         if ($entity->isSubscribable()) {
             $data['subscriberCount'] = $entity->subscriberCount;
+            $data['isSubscribed'] = $entity->subscribed($viewer);
         }
 
         if ($entity->isVotable()) {
             $data['voteUpCount'] = $entity->voteUpCount;
+            $data['isVotedUp'] = $entity->votedUp($viewer);
+        }
+        
+        if ($entity->isParentable()) {
+            $data['parentId'] = $entity->parent->id;
         }
 
         if (!is_person($entity) && $entity->isOwnable()) {
@@ -159,6 +165,14 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->inherits('ComLocationsDomainEntityLocation')) {
             $data['longitude'] = $entity->geoLongitude;
             $data['latitude'] = $entity->geoLatitude;
+        }
+        
+        if ($entity->isAuthorizer()) {
+            $data['authorized'] = array(
+                'administration' => $entity->authorize('administration') == true,
+                'edit' => $entity->authorize('edit'),
+                'delete' => $entity->authorize('delete'),
+            );
         }
 
         return AnConfig::unbox($data);

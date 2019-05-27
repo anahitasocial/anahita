@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
+final class ComHashtagsDomainEntityHashtag extends ComTagsDomainEntityNode
 {
     /*
      * hashtag regex pattern
@@ -41,11 +41,11 @@ final class ComHashtagsDomainEntityHashtag extends ComBaseDomainEntityNode
                 'describable',
             )),
             'relationships' => array(
-                'tagables' => array(
+                'taggables' => array(
                     'through' => 'tag',
                     'child_key' => 'hashtag',
-                    'target' => 'com:tags.domain.entity.node',
-                    'target_child_key' => 'tagable',
+                    'target' => 'com:base.domain.entity.node',
+                    'target_child_key' => 'taggable',
                 ),
             ),
         ));

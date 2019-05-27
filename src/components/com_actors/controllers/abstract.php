@@ -67,7 +67,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'enablable',
                 'verifiable',
                 'subscribable',
-                'com:hashtags.controller.behavior.hashtagable',
+                'com:hashtags.controller.behavior.hashtaggable',
                 'com:locations.controller.behavior.geolocatable',
                 'coverable',
             )),

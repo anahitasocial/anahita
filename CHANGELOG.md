@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.1
+=============================
+1. changed: renamed hashtagable to hashtaggable everywhere
+1. changed: the base class tag node identifier is now included in the type field of hashtags, locations, or any tags extending the tag node.
+1. changed: tag node (hashtag, location) json response now contains list of taggables with pagination 
+
 Anahita 4.4.0
 =============================
 1. changed: all koowa classes are now merged with Anahita framework. All classes prefixed with K are now using An prefix. Unused code have been removed.  

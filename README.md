@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.4.0 Birth Release
+*Version:* 4.4.1 Birth Release
 
 Anahita is a platform and framework for developing open science and knowledge sharing applications on a social networking foundation. Use Anahita to build:
 
@@ -19,7 +19,7 @@ Anahita provides a genuine nodes and graphs architecture as well as design patte
 ### Nodes
 1. **actors:** people, groups, or build your own custom actor
 1. **media:** notes, topics, todos, photos, articles, or build your own custom media
-1. **hashtags:** all actors, media, and comments are hashtagable  
+1. **hashtags:** all actors, media, and comments are hashtaggable  
 1. **locations:** all actors and media are geolocatable
 1. **stories:** updates created by actors for their followers
 
