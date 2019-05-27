@@ -48,6 +48,8 @@ The code in the master branch is called the **Embryo**. It is what we use to pow
 
 ## Upgrading
 
+If you are upgrading from 4.3.* to 4.4.*, in `www/configuration.php` file, change `AnConfig` to `AnSiteConfig`.
+
 If you are using any previous 4.* versions of Anahita, [here is how to upgrade] (https://www.getanahita.com/articles/158983-updating-from-anahita-4-2-to-4-3)
 
 ## Installation

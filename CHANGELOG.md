@@ -5,6 +5,8 @@ Anahita 4.4.1
 1. changed: renamed hashtagable to hashtaggable everywhere
 1. changed: the base class tag node identifier is now included in the type field of hashtags, locations, or any tags extending the tag node.
 1. changed: tag node (hashtag, location) json response now contains list of taggables with pagination 
+1. added: fake total number for the stories to save on the query operation.
+1. added: owner field to the story json object
 
 Anahita 4.4.0
 =============================
