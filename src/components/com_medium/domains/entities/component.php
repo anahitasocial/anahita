@@ -47,7 +47,7 @@ class ComMediumDomainEntityComponent extends ComComponentsDomainEntityComponent
                 'scopeable' => array(
                     'class' => 'ComMediumDomainEntityMedium',
                     'type' => 'post', ),
-                'hashtagable' => array(
+                'hashtaggable' => array(
                     'class' => 'ComMediumDomainEntityMedium',
                     'type' => 'post',
                 ),

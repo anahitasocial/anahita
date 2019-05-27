@@ -23,10 +23,12 @@ class ComTagsDomainEntityTag extends ComBaseDomainEntityEdge
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'inheritance' => array('abstract' => $this->getIdentifier()->classname === __CLASS__),
+            'inheritance' => array(
+                'abstract' => $this->getIdentifier()->classname === __CLASS__
+            ),
             'aliases' => array(
                 'tag' => 'nodeA',
-                'tagable' => 'nodeB',
+                'taggable' => 'nodeB',
             ),
         ));
 

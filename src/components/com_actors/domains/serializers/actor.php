@@ -42,7 +42,8 @@ class ComActorsDomainSerializerActor extends ComBaseDomainSerializerDefault
         
         // @todo check for $entity->isAuthorizer() and $entity->authorize('administration') scenarios later on
         if ($entity->isAdministrable()) {
-            $data['administratorIds'] = array_values($entity->administratorIds->toArray());
+            $administratorIds = array_values($entity->administratorIds->toArray());
+            $data['administratorIds'] = array_map('intval', $administratorIds);
 
             if ($viewer) {
                 $data['isAdministrated'] = $viewer->administrator($entity);

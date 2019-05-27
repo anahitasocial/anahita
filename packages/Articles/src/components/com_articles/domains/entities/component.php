@@ -25,7 +25,7 @@ class ComArticlesDomainEntityComponent extends ComMediumDomainEntityComponent
         $config->append(array(
                 'behaviors' => array(
                     'scopeable' => array('class' => 'ComArticlesDomainEntityArticle'),
-                    'hashtagable' => array('class' => 'ComArticlesDomainEntityArticle'),
+                    'hashtaggable' => array('class' => 'ComArticlesDomainEntityArticle'),
                 ),
         ));
 

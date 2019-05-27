@@ -14,7 +14,7 @@ if (!empty($scope)) {
 }
 ?>
 
-<?= @infinitescroll($item->tagables->fetchSet(), array(
+<?= @infinitescroll($item->taggables->fetchSet(), array(
   'url' => $url,
   'id' => 'an-hashtag-taggables'
 )) ?>

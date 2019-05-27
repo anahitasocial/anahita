@@ -93,11 +93,11 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'dictionariable'
             )),
             'relationships' => array(
-                'tagables' => array(
+                'taggables' => array(
                     'through' => 'tag',
                     'child_key' => 'location',
-                    'target' => 'com:tags.domain.entity.node',
-                    'target_child_key' => 'tagable',
+                    'target' => 'com:base.domain.entity.node',
+                    'target_child_key' => 'taggable',
                 ),
             ),
         ));

@@ -61,7 +61,7 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
                 'votable',
                 'privatable',
                 'subscribable',
-                'com:hashtags.controller.behavior.hashtagable',
+                'com:hashtags.controller.behavior.hashtaggable',
                 'com:locations.controller.behavior.geolocatable',
                 'com:people.controller.behavior.mentionable',
                 'ownable',

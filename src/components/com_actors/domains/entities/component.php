@@ -49,7 +49,7 @@ class ComActorsDomainEntityComponent extends ComComponentsDomainEntityComponent
                 'scopeable' => array(
                     'class' => 'ComActorsDomainEntityActor',
                     'type' => 'actor', ),
-                'hashtagable' => array(
+                'hashtaggable' => array(
                     'class' => 'ComActorsDomainEntityActor',
                     'type' => 'actor',
                 ),

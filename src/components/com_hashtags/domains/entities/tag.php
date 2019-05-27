@@ -23,11 +23,13 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'relationships' => array(
-                'hashtag' => array('parent' => 'com:hashtags.domain.entity.hashtag'),
-            ),
             'aliases' => array(
                 'hashtag' => 'nodeA',
+                'taggable' => 'nodeB',
+            ),
+            'relationships' => array(
+                'hashtag' => array('parent' => 'com:hashtags.domain.entity.hashtag'),
+                'taggable' => array('parent' => 'com:base.domain.entity.node'),
             ),
         ));
 
@@ -63,7 +65,7 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     {
         $this->hashtag->resetStats(array($this->hashtag));
 
-        if (count($this->hashtag->tagables) === 0) {
+        if (count($this->hashtag->taggables) === 0) {
             $this->hashtag->delete();
         }
     }

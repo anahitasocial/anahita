@@ -26,7 +26,7 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
             'story_aggregation' => array('todo_disable,todo_add,todo_enable' => 'target'),
             'behaviors' => array(
                     'scopeable' => array('class' => 'ComTodosDomainEntityTodo'),
-                    'hashtagable' => array('class' => 'ComTodosDomainEntityTodo'),
+                    'hashtaggable' => array('class' => 'ComTodosDomainEntityTodo'),
                 ),
         ));
 

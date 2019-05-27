@@ -32,7 +32,7 @@
                 'locations' => array(
                     'through' => 'com:locations.domain.entity.tag',
                     'target' => $config->target ? $config->target : 'com:base.domain.entity.node',
-                    'child_key' => 'tagable',
+                    'child_key' => 'taggable',
                     'target_child_key' => 'location',
                     'inverse' => true,
                 ),

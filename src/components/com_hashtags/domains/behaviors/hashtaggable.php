@@ -1,7 +1,7 @@
 <?php
 
  /**
-  * Hashtagable Behavior.
+  * Hashtaggable Behavior.
   *
   * @category   Anahita
   *
@@ -11,7 +11,7 @@
   *
   * @link       http://www.GetAnahita.com
   */
- class ComHashtagsDomainBehaviorHashtagable extends AnDomainBehaviorAbstract
+ class ComHashtagsDomainBehaviorHashtaggable extends AnDomainBehaviorAbstract
  {
      /**
      * Initializes the default configuration for the object.
@@ -22,13 +22,13 @@
      */
     protected function _initialize(AnConfig $config)
     {
-        $repoIdentifier = $config->mixer->getIdentifier()->identifier;
+        $identifier = $config->mixer->getIdentifier()->identifier;
         $config->append(array(
             'relationships' => array(
                 'hashtags' => array(
                     'through' => 'com:hashtags.domain.entity.tag',
-                    'target' => str_replace('repository', 'entity', $repoIdentifier),
-                    'child_key' => 'tagable',
+                    'target' => str_replace('repository', 'entity', $identifier),
+                    'child_key' => 'taggable',
                     'target_child_key' => 'hashtag',
                     'inverse' => true,
                 ),
@@ -39,7 +39,7 @@
     }
 
     /**
-     * Adds a hashtag to a hashtagable mixer entity.
+     * Adds a hashtag to a hashtaggable mixer entity.
      *
      * @param a word
      */
@@ -62,7 +62,7 @@
     }
 
     /**
-     * Removes a hashtag from a hashtagable mixer entity.
+     * Removes a hashtag from a hashtaggable mixer entity.
      *
      * @param a word
      */

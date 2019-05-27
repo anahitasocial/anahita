@@ -29,7 +29,7 @@
                 'mentions' => array(
                     'through' => 'com:people.domain.entity.mention',
                     'target' => str_replace('repository', 'entity', $repoIdentifier),
-                    'child_key' => 'tagable',
+                    'child_key' => 'taggable',
                     'target_child_key' => 'mention',
                     'inverse' => true,
                 ),

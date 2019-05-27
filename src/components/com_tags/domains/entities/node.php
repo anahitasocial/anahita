@@ -23,7 +23,9 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'inheritance' => array('ignore' => __CLASS__),
+            'inheritance' => array(
+                'abstract' => $this->getIdentifier()->classname === __CLASS__
+            ),
             'behaviors' => array(
               'privatable'
             ),

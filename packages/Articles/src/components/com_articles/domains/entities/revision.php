@@ -37,7 +37,7 @@ class ComArticlesDomainEntityRevision extends ComMediumDomainEntityMedium
 
         parent::_initialize($config);
 
-        AnHelperArray::unsetValues($config->behaviors, array('commentable', 'subscribable', 'hashtagable'));
+        AnHelperArray::unsetValues($config->behaviors, array('commentable', 'subscribable', 'hashtaggable'));
     }
 
 //end class

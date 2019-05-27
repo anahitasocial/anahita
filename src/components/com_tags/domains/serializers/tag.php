@@ -13,7 +13,7 @@
  */
 
 /**
- * Hashtag entity serializer.
+ * Tag entity serializer.
  *
  * @category   Anahita
  *
@@ -22,7 +22,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComHashtagsDomainSerializerHashtag extends ComTagsDomainSerializerTag
+class ComTagsDomainSerializerTag extends ComBaseDomainSerializerDefault
 {
     /**
      * {@inheritdoc}
@@ -31,9 +31,9 @@ class ComHashtagsDomainSerializerHashtag extends ComTagsDomainSerializerTag
     {
         $data = parent::toSerializableArray($entity);
 
-        unset($data['body']);
-        unset($data['author']);
-        unset($data['editor']);
+        $data['creationTime'] = $entity->creationTime->getDate();
+        $data['updateTime'] = $entity->updateTime->getDate();
+        $data['taggables'] = $entity->taggables->fetch();
 
         return $data;
     }
