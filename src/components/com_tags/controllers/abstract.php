@@ -59,6 +59,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     {
         $pkg = $this->getIdentifier()->package;
         $name = $this->getIdentifier()->name;
+        
         $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-'.$pkg.'-TERM'), $name));
         
         $entity = parent::_actionRead($context);
