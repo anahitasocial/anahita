@@ -165,6 +165,11 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->inherits('ComLocationsDomainEntityLocation')) {
             $data['longitude'] = $entity->geoLongitude;
             $data['latitude'] = $entity->geoLatitude;
+            $data['address'] = $entity->geoAddress;
+            $data['city'] = $entity->geoCity;
+            $data['province'] = $entity->geoStateProvince;
+            $data['country'] = $entity->geoCountry;
+            $data['postalcode'] = $entity->geoPostalcode; 
         }
         
         if ($entity->isAuthorizer()) {
