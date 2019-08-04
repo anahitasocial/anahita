@@ -32,7 +32,7 @@ class ComTagsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
 
         $config->append(array(
             'visible_to_leaders' => true,
-            'viewer' => AnService::get('com:people.viewer'),
+            'viewer' => $viewer,
             'graph_check' => true,
         ));
 

@@ -28,14 +28,6 @@ final class ComHashtagsDomainEntityHashtag extends ComTagsDomainEntityNode
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'attributes' => array(
-                'name' => array(
-                    'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
-                    'read' => 'public',
-                    'unique' => true
-                  ),
-            ),
             'behaviors' => to_hash(array(
                 'modifiable',
                 'describable',
