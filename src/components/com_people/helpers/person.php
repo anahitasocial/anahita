@@ -87,7 +87,7 @@ class ComPeopleHelperPerson extends AnObject
     private function _createSession(ComPeopleDomainEntityPerson $person)
     {
         $session = $this->getService('com:application', array('session' => true))->getSession();
-
+        
         $repo = $this->getService('repos:sessions.session');
         $entity = $repo->findOrAddNew(array('sessionId' => $session->getId()));
         $entity->setData(array(
@@ -96,7 +96,7 @@ class ComPeopleHelperPerson extends AnObject
             'usertype' => (string) $person->usertype,
             'guest' => 0
         ));
-
+        
         $session->set('person', (object) $person->getData());
     }
 

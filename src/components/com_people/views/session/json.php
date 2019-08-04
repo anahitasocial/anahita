@@ -19,4 +19,26 @@ class ComPeopleViewSessionJson extends ComBaseViewJson
             return parent::display();
         }
     }
+    
+    /**
+     * Serializes an item into an array.
+     *
+     * @return array
+     */
+    protected function _serializeToArray($item)
+    {
+        $data = array();
+        $serializer = $this->getService('com:actors.domain.serializer.actor');
+        
+        $data = $serializer->toSerializableArray($item);
+
+        $data['username'] = $item->username;
+        $data['givenName'] = $item->givenName;
+        $data['familyName'] = $item->familyName;
+        $data['email'] = $item->email;
+        $data['usertype'] = $item->usertype;
+        $data['gender'] = $item->gender;
+
+        return $data;
+    }
 }

@@ -54,7 +54,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             ComPeopleDomainEntityPerson::USERTYPE_REGISTERED,
         );
 
-        $viewer = get_viewer();
+        $viewer = $this->getService('com:people.viewer');
 
         if ($viewer->superadmin()) {
             $this->_allowed_user_types[] = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
@@ -198,8 +198,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 
-        $viewer = get_viewer();
-
         if ($isFirstUser) {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         } else {
@@ -246,8 +244,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
          if ($person->validate() === false) {
              throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
          }
-
-         $viewer = get_viewer();
 
          if (in_array($data->usertype, $this->_allowed_user_types)) {
              $person->usertype = $data->usertype;
