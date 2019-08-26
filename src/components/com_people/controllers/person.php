@@ -186,7 +186,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         }
         
         if (! $person->validate()) {
-            error_log(print_r($person->getErrors()->getMessage(), true));
+            // error_log(print_r($person->getErrors()->getMessage(), true));
             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 

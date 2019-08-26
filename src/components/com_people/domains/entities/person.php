@@ -168,9 +168,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     public function setPassword($password) {
         $this->_raw_password = trim($password);
         $encrypted = password_hash($this->_raw_password, PASSWORD_DEFAULT);
-        
-        error_log($this->_raw_password . ' - ' . $encrypted);
-        
         $this->set('password', $encrypted);
         
         return $this;
