@@ -66,7 +66,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'givenName' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
                     'read' => 'public',
                     'length' => array(
                         'min' => 3,
@@ -75,7 +74,6 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'familyName' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
                     'read' => 'public',
                     'length' => array(
                         'min' => 3,
