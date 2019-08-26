@@ -30,10 +30,6 @@
           'before.confirm',
           'layout.confirm', ),
           array($this, 'validatePayment'));
-
-        $this->getService('repos:people.person')->getValidator()
-             ->addValidation('username', 'uniqueness')
-             ->addValidation('email', 'uniqueness');
     }
 
     /**

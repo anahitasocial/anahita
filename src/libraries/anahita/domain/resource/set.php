@@ -114,7 +114,7 @@ class AnDomainResourceSet extends AnObject implements IteratorAggregate, Countab
      */
     public function getLinks()
     {
-        if (!isset($this->_links)) {
+        if (! isset($this->_links)) {
             $this->_links = array();
 
             foreach ($this->_resources as $resource) {

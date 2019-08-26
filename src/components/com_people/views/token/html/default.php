@@ -22,7 +22,9 @@
 							id="person-email"
 							class="input-block-level"
 							maxlength="100"
-							minlength="10" required  />
+							minlength="10" 
+							required  
+						/>
                     </div>
                 </div>
 

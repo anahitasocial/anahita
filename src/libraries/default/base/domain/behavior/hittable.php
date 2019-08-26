@@ -38,7 +38,12 @@ class LibBaseDomainBehaviorHittable extends AnDomainBehaviorAbstract
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'attributes' => array('hits' => array('default' => 0, 'write' => 'private')),
+            'attributes' => array(
+                'hits' => array(
+                    'default' => 0, 
+                    'write' => 'private'
+                ),
+            ),
         ));
 
         parent::_initialize($config);

@@ -25,7 +25,7 @@ class ComPeopleFilterUsername extends AnFilterAbstract
     {
         $value = trim($value);
         $pattern = '/^[A-Za-z][A-Za-z0-9_-]*$/';
-
+        
         return (is_string($value) && (preg_match($pattern, $value)) == 1);
     }
 

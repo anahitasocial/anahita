@@ -26,6 +26,11 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     * Allowed user types array
     */
     protected $_allowed_user_types;
+    
+    /*
+    * Holds Password value in plain text
+    */
+    public $_raw_password;
 
     /*
      * Mention regex pattern
@@ -58,19 +63,56 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'alias' => array(
                     'key' => true,
-                    'format' => 'username'
                 ),
-                'givenName',
-                'familyName',
+                'givenName' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'string',
+                    'read' => 'public',
+                    'length' => array(
+                        'min' => 3,
+                        'max' => 30,
+                    ),
+                ),
+                'familyName' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'string',
+                    'read' => 'public',
+                    'length' => array(
+                        'min' => 3,
+                        'max' => 30,
+                    ),
+                ),
+                'email' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'unique' => true,
+                    'format' => 'email',
+                    'length' => array(
+                        'min' => 8,
+                        'max' => 80,
+                    ),
+                ),
                 'username' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'key' => true,
-                    'format' => 'username'
+                    'unique' => true,
+                    'format' => 'username',
+                    'length' => array(
+                        'min' => 3,
+                        'max' => 30,
+                    ),
                 ),
-                'email',
                 'password' => array(
-                    'format' => 'password'
+                    'read' => 'protected',
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'length' => array(
+                        'min' => 8,
+                        'max' => 80,
+                    ),
                 ),
-                'usertype',
+                'usertype' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'default' => self::USERTYPE_GUEST,
+                ),
                 'gender',
                 'lastVisitDate' => array(
                     'default' => 'date'
@@ -92,7 +134,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'administrator',
                 'notifiable',
-                'leadable'
+                'leadable',
             )),
         ));
 
@@ -103,6 +145,35 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         parent::_initialize($config);
 
         AnHelperArray::unsetValues($config->behaviors, array('administrable'));
+    }
+    
+    /**
+     * Set the username and alias in the same time
+     *
+     * @param string $username The username of the person
+     */
+    public function setUsername($username) 
+    {
+        $this->set('alias', $username);
+        $this->set('username', $username);
+        
+        return $this;
+    }
+    
+    /**
+     * Set the raw and encyrpted passwords in the same time
+     *
+     * @param string $password The password of the person
+     */
+    public function setPassword($password) {
+        $this->_raw_password = trim($password);
+        $encrypted = password_hash($this->_raw_password, PASSWORD_DEFAULT);
+        
+        error_log($this->_raw_password . ' - ' . $encrypted);
+        
+        $this->set('password', $encrypted);
+        
+        return $this;
     }
 
     /**
@@ -206,6 +277,11 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     {
         $this->lastVisitDate = AnDomainAttributeDate::getInstance();
     }
+    
+    protected function _createRandomHash()
+    {
+        return bin2hex(openssl_random_pseudo_bytes(32));
+    }
 
     /**
      * Automatically sets the activation token for the user.
@@ -214,14 +290,8 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      */
     public function requiresReactivation()
     {
-        $this->_createActivationCode();
+        $this->activationCode = $this->_createRandomHash();
         return $this;
-    }
-
-    protected function _createActivationCode()
-    {
-        $token = bin2hex(openssl_random_pseudo_bytes(32));
-        $this->activationCode = $token;
     }
 
     /**
@@ -232,22 +302,14 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
         $config->append(array('data' => array(
             'author' => $this,
             'component' => 'com_people',
-            'enabled' => false
+            'enabled' => false,
         )));
 
         parent::_afterEntityInstantiate($config);
     }
 
     protected function _beforeEntityInsert(AnCommandContext $context)
-    {
-        $this->alias = $this->username;
-
-        $this->_createActivationCode();
-
-        if (!$this->password) {
-            $this->password = $this->activationCode;
-        }
-
+    {        
         $this->lastVisitDate = AnDomainAttributeDate::getInstance(new AnConfig(array(
             'date' => array(
                 'hour' => 0,
@@ -259,12 +321,5 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'day' => '01'
             )
         )));
-    }
-
-    protected function _beforeEntityUpdate(AnCommandContext $context)
-    {
-        if ($this->getModifiedData()->username) {
-            $this->alias = $this->username;
-        }
     }
 }

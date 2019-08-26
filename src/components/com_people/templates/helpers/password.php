@@ -27,7 +27,8 @@ class ComPeopleTemplateHelperPassword extends LibBaseTemplateHelperAbstract
             'name' => 'password',
             'class' => 'input-block-level',
             'required' => 'required',
-            'minlength' => ComPeopleFilterPassword::$MIN_LENGTH,
+            'minlength' => 8,
+            'maxlength' => 80,
         ));
 
         $html = $this->getService('com:base.template.helper.html');

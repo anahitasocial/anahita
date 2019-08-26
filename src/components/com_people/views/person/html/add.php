@@ -25,7 +25,7 @@
                             type="text"
                             id="person-given-name"
                             name="givenName"
-                            maxlength="25"
+                            maxlength="30"
                             minlength="3"
                          />
                     </div>
@@ -42,7 +42,7 @@
                             type="text"
                             id="person-family-name"
                             name="familyName"
-                            maxlength="25"
+                            maxlength="30"
                             minlength="3"
                          />
                     </div>
@@ -62,8 +62,8 @@
                             class="input-block-level"
                             name="username"
                             pattern="<?= @helper('regex.username') ?>"
-                            maxlength="100"
-                            minlength="6"
+                            maxlength="30"
+                            minlength="3"
                           />
                     </div>
                 </div>
@@ -82,8 +82,8 @@
                           pattern="<?= @helper('regex.email') ?>"
                           id="person-email"
                           class="input-block-level"
-                          maxlength="100"
-                          minlength="10"
+                          maxlength="80"
+                          minlength="8"
                         />
                     </div>
                 </div>

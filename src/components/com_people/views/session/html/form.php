@@ -45,7 +45,9 @@
                     placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>"
                     id="person-username"
                     type="text"
-                    size="25"/>
+                    maxlength="30"
+                    minlength="3"
+                />
             </div>
         </div>
 

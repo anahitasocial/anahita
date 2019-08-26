@@ -40,8 +40,8 @@
               name="username"
               pattern="<?= @helper('regex.username') ?>"
               value="<?= $item->username ?>"
-              maxlength="25"
-              minlength="6"
+              maxlength="30"
+              minlength="3"
            />
 	    </div>
 	</div>
@@ -60,9 +60,10 @@
             pattern="<?= @helper('regex.email') ?>"
             id="person-email"
             class="input-block-level"
-            maxlength="100"
             value="<?= $item->email ?>"
-         />
+            maxlength="80"
+            minlength="8"
+           />
 	    </div>
 	</div>
 

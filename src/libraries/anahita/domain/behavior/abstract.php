@@ -46,7 +46,7 @@ abstract class AnDomainBehaviorAbstract extends AnBehaviorAbstract
 
         parent::__construct($config);
 
-        if (!empty($config->aliases)) {
+        if (! empty($config->aliases)) {
             foreach ($config->aliases as $alias => $property) {
                 $this->_mixer->getDescription()->setAlias($property, $alias);
             }

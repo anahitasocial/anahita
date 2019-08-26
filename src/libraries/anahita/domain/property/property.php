@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Property Factory.
  * 
@@ -22,6 +7,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -39,7 +25,7 @@ class AnDomainProperty extends AnObject
     {
         $description = $config->description;
 
-        if (!$description) {
+        if (! $description) {
             throw new AnDomainAttributeException('description [AnDomainDescriptionAbstract] option is required');
         }
 
@@ -57,19 +43,19 @@ class AnDomainProperty extends AnObject
             }
         }
 
-        //if a default options is set then
-        //making the property requires allows using default options
-        //for cases when a property is null unless stated otherwise
+        // if a default options is set then
+        // making the property requires allows using default options
+        // for cases when a property is null unless stated otherwise
+        /*
         if (isset($config->default)) {
-            /*
             $config->append(array(
-                    'required'=>true
+                'required'=>true
             ));
-            */
         }
+        */
 
-        //prevents having a null value if
-        //a default option is set or the require is set
+        // prevents having a null value if
+        // a default option is set or the require is set
         /*
         if ( $config->required || $config->default )
         {
@@ -77,7 +63,8 @@ class AnDomainProperty extends AnObject
                     'required'	=> true,
                     'default' 	=> $config->type
             ));            
-        }*/
+        }
+        */
 
         $config->append(array(
             'column' => AnInflector::underscore($config->name),
@@ -87,7 +74,7 @@ class AnDomainProperty extends AnObject
             $config->column = $description->getRepository()->getResources()->getColumn($config->column);
         }
 
-        if (!$config->column) {
+        if (! $config->column) {
             throw new AnDomainPropertyException('Property '.$config->name.' is mapped to an invalid column for entity '.$description->getEntityIdentifier());
         }
 
@@ -173,7 +160,7 @@ class AnDomainProperty extends AnObject
             $child_description = $relationship->getChildRepository()->getDescription();
             $property = $child_description->getProperty($relationship->getChildKey());
 
-            if (!$property) {
+            if (! $property) {
                 $property = $child_description->setRelationship($relationship->getChildKey(), array('type' => 'belongs_to', 'parent' => $relationship->getParent()));
             }
 
@@ -182,12 +169,12 @@ class AnDomainProperty extends AnObject
             }
         }
         //if a through is not set then it's just one-to-many relationship
-        elseif (!$config->through) {
+        elseif (! $config->through) {
             $relationship = AnDomainPropertyAbstract::getInstance('relationship.onetomany', $config);
 
             //the child repository must have a belongs to relationship
             //if not then lets create one for it automatically
-            if (!$relationship->getChildProperty()) {
+            if (! $relationship->getChildProperty()) {
                 $child_key = $relationship->getChildKey();
                 $belongs_to_options = array('parent' => $description->getEntityIdentifier(),'type' => 'belongs_to');
 
@@ -201,6 +188,7 @@ class AnDomainProperty extends AnObject
 
                 $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
             }
+            
         } else {
             $through_one_to_many = null;
 
@@ -222,7 +210,7 @@ class AnDomainProperty extends AnObject
 
             //lets create a child relationship for the parent
             //in the link entity if it doesn't exists			
-            if (!$relationship->getChildProperty()) {
+            if (! $relationship->getChildProperty()) {
                 $child_key = $relationship->getChildKey();
 
                 $belongs_to_options = array('parent' => $description->getEntityIdentifier(),'type' => 'belongs_to');
@@ -236,7 +224,7 @@ class AnDomainProperty extends AnObject
 
             //lets create a child relationship for the target
             //in the link entity if it doesn't exists
-            if (!$relationship->getTargetChildProperty()) {
+            if (! $relationship->getTargetChildProperty()) {
                 $child_key = $relationship->getTargetChildKey();
 
                 $belongs_to_options = array('type' => 'belongs_to','parent' => $relationship->getTargetRepository()->getDescription()->getEntityIdentifier());
@@ -255,33 +243,32 @@ class AnDomainProperty extends AnObject
 
             if (empty($through_one_to_many)) {
                 $through_one_to_many = $description->setRelationship($target, array(
-                        'type' => 'has',
-                        'cardinality' => $config->cardinality,
-                        'child_key' => $relationship->getChildKey(),
-                        'parent_key' => $relationship->getParentKey(),
-                        'child' => $relationship->getChild(),
-                        'parent_delete' => $relationship->getDeleteRule(),
+                    'type' => 'has',
+                    'cardinality' => $config->cardinality,
+                    'child_key' => $relationship->getChildKey(),
+                    'parent_key' => $relationship->getParentKey(),
+                    'child' => $relationship->getChild(),
+                    'parent_delete' => $relationship->getDeleteRule(),
                 ));
             } elseif ($through_one_to_many->getName() != $target) {
                 $description->setAlias($through_one_to_many->getName(), $target);
             }
 
-            $through_one_to_many_target = $relationship->getTargetRepository()->getDescription()->setRelationship(
-                             $parent, array(
-                                'cardinality' => $config->cardinality,
-                                'type' => 'has',
-                                'child_key' => $relationship->getTargetChildKey(),
-                                'parent_key' => $relationship->getTargetParentKey(),
-                                'child' => $relationship->getChild(),
-                                'parent_delete' => $relationship->getDeleteRule(),
-                            ));
+            $through_one_to_many_target = $relationship->getTargetRepository()
+            ->getDescription()
+            ->setRelationship($parent, array(
+                    'cardinality' => $config->cardinality,
+                    'type' => 'has',
+                    'child_key' => $relationship->getTargetChildKey(),
+                    'parent_key' => $relationship->getTargetParentKey(),
+                    'child' => $relationship->getChild(),
+                    'parent_delete' => $relationship->getDeleteRule(),
+                )
+            );
 
-            /*
-             * Duplicate Delete for two object that have has many to has many 
-             * relationship with each other 
-             */
-// 			print $through_one_to_many_target->getParentRepository()->getIdentifier()->name.' has many '.$through_one_to_many_target->getName().'<br/>'.
-// 			$through_one_to_many->getParentRepository()->getIdentifier()->name.' has many '.$through_one_to_many->getName().'<br/><hr/>';
+             // Duplicate Delete for two object that have has many to has many relationship with each other 
+             // print $through_one_to_many_target->getParentRepository()->getIdentifier()->name.' has many '.$through_one_to_many_target->getName().'<br/>'.
+             // $through_one_to_many->getParentRepository()->getIdentifier()->name.' has many '.$through_one_to_many->getName().'<br/><hr/>';
         }
 
         return $relationship;
@@ -319,7 +306,7 @@ class AnDomainProperty extends AnObject
 
         //if the relationship is not polymorphic the we need to set 
         //a parent if none is set
-        if (!$config->polymorphic && !$config['parent']) {
+        if (! $config->polymorphic && ! $config['parent']) {
             $parent = clone $description->getEntityIdentifier();
             $parent->name = $config['name'];
             $config->append(array(

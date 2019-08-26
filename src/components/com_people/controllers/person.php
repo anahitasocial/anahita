@@ -138,15 +138,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $person = parent::_actionEdit($context);
 
-        //add the validations here
-        $this->getRepository()
-        ->getValidator()
-        ->addValidation('givenName', 'required')
-        ->addValidation('familyName', 'required')
-        ->addValidation('username', 'uniqueness')
-        ->addValidation('email', 'uniqueness');
-
-        if ($person->validate() === false) {
+        if (! $person->validate()) {
             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 
@@ -184,24 +176,18 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $isFirstUser = !(bool) $this->getService('repos:people.person')
                                     ->getQuery(true)
                                     ->fetchValue('id');
-
+        
         $person = parent::_actionAdd($context);
-
-        $this->getRepository()
-        ->getValidator()
-        ->addValidation('givenName', 'required')
-        ->addValidation('familyName', 'required')
-        ->addValidation('username', 'uniqueness')
-        ->addValidation('email', 'uniqueness');
-
-        if ($person->validate() === false) {
-            throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
-        }
-
+        
         if ($isFirstUser) {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
         } else {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+        }
+        
+        if (! $person->validate()) {
+            error_log(print_r($person->getErrors()->getMessage(), true));
+            throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
@@ -230,18 +216,10 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
          $data = $context->data;
 
          dispatch_plugin('user.onBeforeAddPerson', array('data' => $context->data));
-
+         
          $person = parent::_actionAdd($context);
 
-         $this->getRepository()
-         ->getValidator()
-         ->addValidation('givenName', 'required')
-         ->addValidation('familyName', 'required')
-         ->addValidation('usertype', 'required')
-         ->addValidation('username', 'uniqueness')
-         ->addValidation('email', 'uniqueness');
-
-         if ($person->validate() === false) {
+         if (! $person->validate()) {
              throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
          }
 

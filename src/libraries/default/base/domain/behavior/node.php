@@ -45,7 +45,7 @@
      {
          parent::__construct($config);
 
-         if (!$this->_repository->entityInherits('ComBaseDomainEntityNode')) {
+         if (! $this->_repository->entityInherits('ComBaseDomainEntityNode')) {
              throw new InvalidArgumentException(
                  $this->_repository
                  ->getDescription()
@@ -96,7 +96,7 @@
              $identifier->name = uniqid();
 
              $repository = $this->getService($identifier, array(
-                     'resources' => array($table),
+                'resources' => array($table),
              ));
 
              $this->_table_repositories[$table] = $repository;

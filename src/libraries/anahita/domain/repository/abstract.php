@@ -94,12 +94,12 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $this->_space = $config->space;
         $this->_resources = $config->resources;
         $this->_description = new AnDomainDescriptionDefault($config);
-        //$this->_description		 = $this->getService($config->description, AnConfig::unbox($config));
+        // $this->_description = $this->getService($config->description, AnConfig::unbox($config));
 
-        //now set the attributes and relationships
+        // now set the attributes and relationships
         $this->_description->setAttribute(AnConfig::unbox($config->attributes));
         $this->_description->setRelationship(AnConfig::unbox($config->relationships));
-
+        
         $this->_query = $this->getService($config->query, $config->toArray());
 
         // Mixin the behavior interface
@@ -268,7 +268,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
             switch ($operation) {
                 case(AnDomain::OPERATION_INSERT) :
-                    if (!count($context->data)) {
+                    if (! count($context->data)) {
                         throw new AnDomainRepositoryException('Attempting to store an entity with empty data');
                     }
 
@@ -291,7 +291,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             $this->getCommandChain()->run('after.'.$command, $context);
         }
 
-        return    $context->result !== false;
+        return $context->result !== false;
     }
 
     /**
@@ -310,7 +310,8 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     public function destroy($conditions)
     {
         $result = false;
-        if (!empty($conditions)) {
+        
+        if (! empty($conditions)) {
             $this->getCommandChain()->disable();
             $result = $this->getStore()->delete($this, $conditions);
             $this->getCommandChain()->enable();
@@ -334,7 +335,8 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     public function update($values, $conditions)
     {
         $result = false;
-        if (!empty($conditions)) {
+        
+        if (! empty($conditions)) {
             $this->getCommandChain()->disable();
             $result = $this->getStore()->update($this, $conditions, $values);
             $this->getCommandChain()->enable();
@@ -509,7 +511,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             $query->disableChain();
         }
 
-        if (!empty($condition)) {
+        if (! empty($condition)) {
             $query->where($condition);
         }
 
@@ -571,7 +573,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             throw new InvalidArgumentException('No condition pased to the repository::find');
         }
 
-        if (!is_array($needle)) {
+        if (! is_array($needle)) {
             $needle = array($this->_description->getIdentityProperty()->getName() => $needle);
         }
 
@@ -584,7 +586,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             $found = $entities->find($needle);
         }
 
-        if (!$found && $fetch) {
+        if (! $found && $fetch) {
             $this->getCommandChain()->disable();
             $query = $this->getQuery()->where($needle);
             $found = $this->fetch($query);
@@ -711,8 +713,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
         $inheritance_column = $description->getInheritanceColumn();
 
-        if ($inheritance_column &&
-                isset($data[$inheritance_column->key()])) {
+        if ($inheritance_column && isset($data[$inheritance_column->key()])) {
             $identifier = $data[$inheritance_column->key()];
             $identifier = substr($identifier, strrpos($identifier, ',') + 1);
         } else {
@@ -788,8 +789,10 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //if yes check if we already have the entity in the
         //repository or not
         $key = $context->query->getKey();
+        
         if ($key) {
             $context->data = $this->find($key, false);
+            
             if ($context->data) {
                 return false;
             }
