@@ -21,7 +21,7 @@
             <?= @text('COM-PEOPLE-SESSION-TITLE') ?>
             <? if (@service('com:people.controller.person')->permission->isRegistrationOpen()): ?>
             <small>
-                <? $signup_link = 'option=com_people&view=person&layout=signup' ?>
+                <? $signup_link = 'option=com_people&view=signup' ?>
                 <? $signup_link .= $return ? '&return='.$return : '' ?>
                 <a class="pull-right" href="<?= @route($signup_link) ?>">
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>

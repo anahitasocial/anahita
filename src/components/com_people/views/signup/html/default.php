@@ -16,14 +16,13 @@
         <? $return = empty($return) ? null : $return; ?>
 
         <form
-            action="<?= @route('view=person') ?>"
+            action="<?= @route('view=signup') ?>"
             method="post"
             name="person-form"
             id="person-form"
             class="well recaptcha"
             autocomplete="off"
         >
-            <input type="hidden" name="action" value="signup" />
             <fieldset>
                 <legend>
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT') ?>
