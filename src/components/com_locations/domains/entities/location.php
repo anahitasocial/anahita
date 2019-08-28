@@ -45,37 +45,60 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoLatitude' => array(
+                    'required' => true,
                     'format' => 'float',
                     'read' => 'public'
                 ),
                 'geoLongitude' => array(
+                    'required' => true,
                     'format' => 'float',
                     'read' => 'public'
                 ),
                 'geoAddress' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoCity' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoState_province' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoCountry' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoPostalcode' => array(
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 10,
+                    ),
                 ),
-                'enabled' => array('default' => 1)
             ),
             'aliases' => array(
                 'latitude' => 'geoLatitude',

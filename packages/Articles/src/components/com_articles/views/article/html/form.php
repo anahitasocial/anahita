@@ -54,8 +54,7 @@
 					id="article-title" 
 					name="title" 
 					value="<?= stripslashes($article->title) ?>" 
-					size="50" 
-					maxlength="255" 
+					maxlength="200" 
 					type="text"
 				/>
 			</div>
@@ -87,7 +86,14 @@
 			</label>
 
 			<div class="controls">
-				<textarea maxlength="500" class="input-block-level" name="excerpt" cols="10" rows="5" id="article-excerpt"><?= @escape($article->excerpt) ?></textarea>
+				<textarea 
+					maxlength="1000" 
+					class="input-block-level" 
+					name="excerpt" 
+					cols="10" 
+					rows="5" 
+					id="article-excerpt"
+				><?= @escape($article->excerpt) ?></textarea>
 			</div>
 		</div>
 

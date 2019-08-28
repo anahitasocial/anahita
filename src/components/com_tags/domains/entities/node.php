@@ -28,15 +28,16 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
                     'read' => 'public',
-                    'unique' => true
-                  ),
+                    'unique' => true,
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
+                'enabled' => array('default' => 1)  
             ),
             'inheritance' => array(
                 'abstract' => $this->getIdentifier()->classname === __CLASS__
             ),
-            'attributes' => array(
-                'enabled' => array('default' => 1)
-             ),
         ));
 
         parent::_initialize($config);
