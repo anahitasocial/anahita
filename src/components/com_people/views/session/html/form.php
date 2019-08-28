@@ -19,7 +19,7 @@
     <fieldset>
         <legend>
             <?= @text('COM-PEOPLE-SESSION-TITLE') ?>
-            <? if (@service('com:people.controller.person')->permission->isRegistrationOpen()): ?>
+            <? if (@service('com:people.controller.signup')->permission->isRegistrationOpen()): ?>
             <small>
                 <? $signup_link = 'option=com_people&view=signup' ?>
                 <? $signup_link .= $return ? '&return='.$return : '' ?>
