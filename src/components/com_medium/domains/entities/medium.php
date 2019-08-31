@@ -25,6 +25,11 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'inheritance' => array('abstract' => $this->getIdentifier()->classname === __CLASS__),
+            'attributes' => array(
+                'enabled' => array(
+                    'default' => 1,
+                ),
+            ),
             'relationships' => array(
                   'author' => array(
                       'parent' => 'com:people.domain.entity.person',
@@ -32,13 +37,6 @@ class ComMediumDomainEntityMedium extends ComBaseDomainEntityNode
                       'required' => true,
                    ),
             ),
-            'attributes' => array(
-                'name' => array(
-                    'read' => 'public', 
-                    'write' => 'public',
-                ),
-                'enabled' => array('default' => 1)
-             ),
             'behaviors' => array(
                 'votable',
                 'authorizer',

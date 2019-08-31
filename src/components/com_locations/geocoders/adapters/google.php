@@ -26,7 +26,7 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
             'name' => 'google',
             'version' => '3',
             'url' => 'https://maps.googleapis.com/maps/api/geocode/json?',
-            'key' => get_config_value('locations.api_key', null)
+            'key' => get_config_value('locations.api_key_geocoding', null)
         ));
 
         parent::_initialize($config);
@@ -46,10 +46,10 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
             $gecode .= '&key='.$this->_key;
         }
 
-        $data = json_decode(file_get_contents($gecode),true);
-
+        $data = json_decode(file_get_contents($gecode), true);
+        
         $this->_status = $data['status'];
-
+        
         if ($this->_status === 'OK') {
             $results = $data['results'][0]['geometry']['location'];
             $location = array(
@@ -60,6 +60,7 @@ class ComLocationsGeocoderAdapterGoogle extends ComLocationsGeocoderAdapterAbstr
 
             return $location;
         } else {
+            error_log(print_r($data, true));
             return false;
         }
     }

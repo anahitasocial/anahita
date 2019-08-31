@@ -19,7 +19,12 @@
 			</label>
 			
 			<div class="controls">
-				<input type="file" name="cover" accept="image/*" data-limit="<?= $uploadSizeLimit ?>" />
+				<input 
+					type="file" 
+					name="cover" 
+					accept="image/*" 
+					data-limit="<?= $uploadSizeLimit ?>" 
+				/>
 			</div>
 		</div>
 	</fieldset>
@@ -54,7 +59,7 @@
 					id="article-title" 
 					name="title" 
 					value="<?= stripslashes($article->title) ?>" 
-					maxlength="200" 
+					maxlength="100" 
 					type="text"
 				/>
 			</div>
@@ -70,7 +75,7 @@
                     'name' => 'description',
                     'content' => @escape($article->description),
                     'html' => array(
-                        'maxlength' => '20000',
+                        'maxlength' => '40000',
                         'cols' => '5',
                         'rows' => '5',
                         'class' => 'input-block-level',

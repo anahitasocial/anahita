@@ -24,9 +24,18 @@ class ComTopicsDomainEntityTopic extends ComMediumDomainEntityMedium
     {
         $config->append(array(
             'attributes' => array(
-                'name' => array('required' => AnDomain::VALUE_NOT_EMPTY),
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
                 'body' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'html',
+                    'length' => array(
+                        'max' => 5000,
+                    )
                 ),
             ),
             'behaviors' => array(

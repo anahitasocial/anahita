@@ -9,7 +9,15 @@
 		<div class="control-group">
 			<label class="control-label" for="article-title"><?= @text('COM-ARTICLES-ARTICLE-TITLE') ?></label>
 			<div class="controls">
-				<input id="article-title" class="input-block-level" name="title" value="" maxlength="255" type="text" required autofocus />
+				<input 
+					id="article-title" 
+					class="input-block-level" 
+					name="title"  
+					maxlength="100" 
+					type="text" 
+					required 
+					autofocus 
+				/>
 			</div>
 		</div>
 
@@ -23,7 +31,7 @@
                     'name' => 'description',
                     'content' => '',
                     'html' => array(
-                        'maxlength' => '20000',
+                        'maxlength' => '40000',
                         'cols' => '5',
                         'rows' => '5',
                         'class' => 'input-block-level',
@@ -36,7 +44,13 @@
 		<div class="control-group">
 			<label class="control-label" for="article-excerpt"><?= @text('COM-ARTICLES-ARTICLE-EXCERPT') ?></label>
 			<div class="controls">
-				<input id="article-excerpt" class="input-block-level" name="excerpt" maxlength="250" type="text" />
+				<input 
+					id="article-excerpt" 
+					class="input-block-level" 
+					name="excerpt" 
+					maxlength="1000" 
+					type="text" 
+				/>
 			</div>
 		</div>
 

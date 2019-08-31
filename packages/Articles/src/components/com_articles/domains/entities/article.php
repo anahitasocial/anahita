@@ -28,7 +28,7 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
                     'length' => array(
-                        'max' => 200,
+                        'max' => 100,
                     )
                 ),
                 'excerpt' => array(
@@ -41,7 +41,7 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'html',
                     'length' => array(
-                        'max' => 20000,
+                        'max' => 40000,
                     )
                 ),
             ),

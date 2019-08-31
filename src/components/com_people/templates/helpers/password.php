@@ -29,6 +29,7 @@ class ComPeopleTemplateHelperPassword extends LibBaseTemplateHelperAbstract
             'required' => 'required',
             'minlength' => 8,
             'maxlength' => 80,
+            'autocomplete' => 'new-password',
         ));
 
         $html = $this->getService('com:base.template.helper.html');
@@ -37,6 +38,7 @@ class ComPeopleTemplateHelperPassword extends LibBaseTemplateHelperAbstract
                     ->class($options['class'])
                     ->id($options['id'])
                     ->required($options['required'])
-                    ->minlength($options['minlength']);
+                    ->minlength($options['minlength'])
+                    ->autocomplete($options['autocomplete']);
     }
 }

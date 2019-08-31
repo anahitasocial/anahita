@@ -44,14 +44,21 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
         $config->append(array(
             'searchable_properties' => array('name', 'body'),
             'attributes' => array(
-                'name' => array('format' => 'string'),
+                'name' => array(
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
                 'body' => array(
                     'format' => 'string',
                     'length' => array(
-                        'max' => 20000,
+                        'max' => 5000,
                     ),
                 ),
-                'alias' => array('format' => 'slug'),
+                'alias' => array(
+                    'format' => 'slug'
+                ),
             ),
             'aliases' => array(
                 'title' => 'name',

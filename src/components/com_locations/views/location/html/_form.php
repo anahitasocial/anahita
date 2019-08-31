@@ -29,14 +29,12 @@
 					</label>
 					<div class="controls">
 						<textarea 
-							maxlength="1000" 
+							maxlength="500" 
 							id="entity-description" 
 							class="input-block-level" 
 							name="body" 
 							rows="5"
-						>
-							<?= $location->body ?>
-						</textarea>
+						><?= $location->body ?></textarea>
 					</div>
 				</div>
 				<div class="control-group">

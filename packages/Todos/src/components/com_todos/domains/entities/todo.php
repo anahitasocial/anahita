@@ -34,12 +34,18 @@ class ComTodosDomainEntityTodo extends ComMediumDomainEntityMedium
         $config->append(array(
             'resources' => array('todos_todos'),
             'attributes' => array(
-                'name' => array('required' => true),
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
                 'openStatusChangeTime' => array(
                     'column' => 'open_status_change_time',
                     'default' => 'date',
                     'type' => 'date',
-                    'write' => 'private', ),
+                    'write' => 'private', 
+                ),
                 'priority' => array(
                     'column' => 'ordering',
                     'default' => self::PRIORITY_NORMAL,

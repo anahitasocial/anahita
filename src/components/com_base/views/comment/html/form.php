@@ -24,7 +24,12 @@ if ($editor) {
 	<div class="comment-form-container">
 		<div class="control-group">
 			<div class="controls">
-			    <textarea name="body" cols="5" rows="3" class="input-block-level" required maxlength="5000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
+			    <textarea 
+                    name="body" 
+                    cols="5" 
+                    rows="3" 
+                    class="input-block-level" 
+                    required maxlength="10000"><?= isset($comment) ? $comment->getBody() : '' ?></textarea>
 			</div>
 		</div>
 

@@ -10,7 +10,15 @@
 			    <?= @text('LIB-AN-MEDIUM-TITLE') ?>
 			</label>
 			<div class="controls">
-				<input required class="input-block-level" id="topic-title" name="title" value="<?= @escape($topic->title) ?>" size="50" maxlength="255" type="text" />
+				<input 
+					required 
+					class="input-block-level" 
+					id="topic-title" 
+					name="title" 
+					value="<?= @escape($topic->title) ?>" 
+					maxlength="100" 
+					type="text" 
+				/>
 			</div>
 		</div>
 
@@ -23,7 +31,7 @@
                     'name' => 'body',
                     'content' => @escape($topic->body),
                     'html' => array(
-                        'maxlength' => '20000',
+                        'maxlength' => '5000',
                         'cols' => '10',
                         'rows' => '5',
                         'class' => 'input-block-level',

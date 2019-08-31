@@ -21,8 +21,8 @@
 							pattern="<?= @helper('regex.email') ?>"
 							id="person-email"
 							class="input-block-level"
-							maxlength="100"
-							minlength="10" 
+							maxlength="80"
+							minlength="8" 
 							required  
 						/>
                     </div>

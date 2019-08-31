@@ -47,13 +47,17 @@
                     type="text"
                     maxlength="30"
                     minlength="3"
+                    autocomplete
                 />
             </div>
         </div>
 
         <div class="control-group">
             <div class="controls">
-                <?= @helper('password.input', array('required' => true)) ?>
+                <?= @helper('password.input', array(
+                    'required' => true, 
+                    'autocomplete'=> 'current-password'
+                )) ?>
                 <a href="<?= @route('view=token') ?>">
                     <?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
                 </a>
@@ -64,6 +68,7 @@
     <div class="form-actions">
         <button
             type="submit"
+            name="submit-btn"
             class="btn btn-primary btn-large pull-right"
             data-loading-text="<?= @text('LIB-AN-ACTION-PLEASE-WAIT') ?>">
             <?= @text('COM-PEOPLE-ACTION-LOGIN') ?>

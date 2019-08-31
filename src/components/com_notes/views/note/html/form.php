@@ -10,7 +10,7 @@
 								required
 								name="body"
 								class="input-block-level"
-								maxlength="5000"
+								maxlength="280"
 								rows="5"
 								cols="25"
 						><?= @escape($item->body) ?></textarea>
