@@ -4,13 +4,26 @@
 
 	<div class="control-group">
 		<div class="controls">
-			<input type="text" class="input-block-level" name="title" value="<?= @escape($item->title) ?>" size="50" maxlength="255" required>
+			<input 
+				type="text" 
+				class="input-block-level" 
+				name="title" 
+				value="<?= @escape($item->title) ?>" 
+				maxlength="100" 
+				required
+			>
 		</div>
 	</div>
 
 	<div class="control-group">
 		<div class="controls">
-		<textarea name="body" class="input-block-level" maxlength="5000" rows="5" cols="25"><?= @escape($item->body) ?></textarea>
+			<textarea 
+				name="body" 
+				class="input-block-level" 
+				maxlength="5000" 
+				rows="5" 
+				cols="25"
+			><?= @escape($item->body) ?></textarea>
 		</div>
 	</div>
 

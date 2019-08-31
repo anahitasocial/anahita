@@ -25,8 +25,12 @@
                 <? endif;?>
 
             	<div class="form-actions">
-            	    <button class="btn" data-trigger="RemovePhotos"><?= @text('LIB-AN-ACTION-CANCEL') ?></button>
-            	    <button class="btn btn-primary" data-trigger="UploadPhotos"><?= @text('LIB-AN-ACTION-UPLOAD')?></button>
+            	    <button class="btn" data-trigger="RemovePhotos">
+						<?= @text('LIB-AN-ACTION-CANCEL') ?>
+					</button>
+            	    <button class="btn btn-primary" data-trigger="UploadPhotos">
+						<?= @text('LIB-AN-ACTION-UPLOAD')?>
+					</button>
             	</div>
             </form>
         </div>
