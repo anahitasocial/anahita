@@ -126,11 +126,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
             $person = $this->getService('com:people.helper.person')->login($credentials);
-            $this->_state->setItem($person);
+            $this->getState()->setItem($person);
             $this->getResponse()->status = AnHttpResponse::CREATED;
-
-            dispatch_plugin('user.onAfterLoginPerson', array('person' => $this->person));
-
+            
             if(! $context->url) {
                 $context->url = route(array(
                     'option' => 'com_people',

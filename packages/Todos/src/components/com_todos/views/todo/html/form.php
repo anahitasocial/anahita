@@ -11,14 +11,27 @@
 		<div class="control-group">
 			<label class="control-label" for="title"><?= @text('COM-TODOS-MEDIUM-TITLE') ?></label>
 			<div class="controls">
-				<input required name="title" class="input-block-level" value="<?= @escape($todo->title) ?>" size="50" maxlength="255" type="text">
+				<input 
+					required 
+					name="title" 
+					class="input-block-level" 
+					value="<?= @escape($todo->title) ?>" 
+					maxlength="100" 
+					type="text"
+				>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<label class="control-label" for="todo-description"><?= @text('COM-TODOS-MEDIUM-DESCRIPTION') ?></label>
 			<div class="controls">
-                <textarea maxlength="5000" class="input-block-level" name="description" cols="50" rows="5"><?= @escape($todo->description) ?></textarea>
+                <textarea 
+					maxlength="5000" 
+					class="input-block-level" 
+					name="description" 
+					cols="50" 
+					rows="5"
+				><?= @escape($todo->description) ?></textarea>
             </div>
 		</div>
 

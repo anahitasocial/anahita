@@ -109,7 +109,7 @@ abstract class AnDomainDescriptionAbstract
     {
         $this->_initialize($config);
 
-        if (!empty($config->aliases)) {
+        if (! empty($config->aliases)) {
             foreach ($config->aliases as $alias => $property) {
                 $this->setAlias($property, $alias);
             }
@@ -118,7 +118,7 @@ abstract class AnDomainDescriptionAbstract
         $this->_entity_identifier = $config->entity_identifier;
         $this->_repository = $config->repository;
 
-        if (!$this->_repository) {
+        if (! $this->_repository) {
             throw new AnDomainDescriptionException('repository [AnDomainRepositoryAbstract] option is required');
         }
 
@@ -128,6 +128,7 @@ abstract class AnDomainDescriptionAbstract
             //an object can only be abstract if it's
             //supports single table inheritance
             $this->_is_abstract = $config->inheritance->abstract;
+            
             if ($config->inheritance->ignore) {
                 $ignore = (array) $config->inheritance['ignore'];
                 foreach ($ignore as $class) {
@@ -142,8 +143,9 @@ abstract class AnDomainDescriptionAbstract
 
         $this->_entity_identifier = $this->_repository->getIdentifier($config->entity_identifier);
 
-        if (!$config->identity_property) {
+        if (! $config->identity_property) {
             $columns = $this->_repository->getResources()->main()->getColumns();
+            
             foreach ($columns as $column) {
                 if ($column->primary) {
                     $config->identity_property = AnInflector::variablize($column->name);
@@ -165,20 +167,19 @@ abstract class AnDomainDescriptionAbstract
             ));
 
             $attributes = $config['attributes'];
-
             $columns = $this->_repository->getResources()->main()->getColumns();
 
             foreach ($columns as $column) {
                 $name = AnInflector::variablize($column->name);
                 //merge the existing attributes
-                $attributes[$name] = array_merge(
-                        array(
+                $attributes[$name] = array_merge(array(
                             'required' => $column->required, 
                             'column' => $column, 
                             'type' => $column->type, 
                             'default' => $column->default
                         ),
-                        isset($attributes[$name]) ? $attributes[$name] : array());
+                        isset($attributes[$name]) ? $attributes[$name] : array()
+                    );
             }
 
             $config['attributes'] = $attributes;
@@ -237,10 +238,7 @@ abstract class AnDomainDescriptionAbstract
 
         //if property name is the same as the identity property
         //then set the identity property
-        if (
-            is_string($this->_identity_property) &&
-            $property->getName() == $this->_identity_property
-        ) {
+        if (is_string($this->_identity_property) && $property->getName() == $this->_identity_property) {
             $this->setIdentityProperty($property);
         }
 
@@ -495,12 +493,14 @@ abstract class AnDomainDescriptionAbstract
      */
     public function getUniqueIdentifiers()
     {
-        if (!isset($this->_unique_identifiers)) {
+        if (! isset($this->_unique_identifiers)) {
             $classname = $this->getEntityIdentifier()->classname;
             $this->_unique_identifiers = get_parents($classname, 'AnDomainEntity');
+            
             if (strpos($classname, 'AnDomainEntity') !== 0) {
                 $this->_unique_identifiers[] = $classname;
             }
+            
             $this->_unique_identifiers[] = (string) $this->getEntityIdentifier();
         }
 

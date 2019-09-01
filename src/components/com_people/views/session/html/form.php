@@ -19,9 +19,9 @@
     <fieldset>
         <legend>
             <?= @text('COM-PEOPLE-SESSION-TITLE') ?>
-            <? if (@service('com:people.controller.person')->permission->isRegistrationOpen()): ?>
+            <? if (@service('com:people.controller.signup')->permission->isRegistrationOpen()): ?>
             <small>
-                <? $signup_link = 'option=com_people&view=person&layout=signup' ?>
+                <? $signup_link = 'option=com_people&view=signup' ?>
                 <? $signup_link .= $return ? '&return='.$return : '' ?>
                 <a class="pull-right" href="<?= @route($signup_link) ?>">
                     <?= @text('COM-PEOPLE-ACTION-CREATE-AN-ACCOUNT')?>
@@ -45,13 +45,19 @@
                     placeholder="<?= @text('COM-PEOPLE-SESSION-PLACEHOLDER-USERNAME-EMAIL')?>"
                     id="person-username"
                     type="text"
-                    size="25"/>
+                    maxlength="30"
+                    minlength="3"
+                    autocomplete
+                />
             </div>
         </div>
 
         <div class="control-group">
             <div class="controls">
-                <?= @helper('password.input', array('required' => true)) ?>
+                <?= @helper('password.input', array(
+                    'required' => true, 
+                    'autocomplete'=> 'current-password'
+                )) ?>
                 <a href="<?= @route('view=token') ?>">
                     <?= @text('COM-PEOPLE-SESSION-FORGOT-PASSWORD'); ?>
                 </a>
@@ -62,6 +68,7 @@
     <div class="form-actions">
         <button
             type="submit"
+            name="submit-btn"
             class="btn btn-primary btn-large pull-right"
             data-loading-text="<?= @text('LIB-AN-ACTION-PLEASE-WAIT') ?>">
             <?= @text('COM-PEOPLE-ACTION-LOGIN') ?>

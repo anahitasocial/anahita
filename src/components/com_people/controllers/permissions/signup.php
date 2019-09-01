@@ -11,16 +11,22 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionDefault
+class ComPeopleControllerPermissionSignup extends ComActorsControllerPermissionDefault
 {
-
+    /**
+     * Flag to see whather registration is open or not.
+     *
+     * @var bool
+     */
+    protected $_can_register;
+    
     /**
      * Viewer object.
      *
      * @var ComPeopleDomainEntityPerson
      */
     protected $_viewer;
-
+    
     /**
      * Constructor.
      *
@@ -30,9 +36,10 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
     {
         parent::__construct($config);
 
+        $this->_can_register = $config->can_register;
         $this->_mixer->permission = $this;
     }
-
+    
     /**
      * Initializes the default configuration for the object.
      *
@@ -42,51 +49,47 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
      */
     protected function _initialize(AnConfig $config)
     {
+        $config->append(array(
+            'can_register' => (bool) get_config_value('people.allow_registration', true),
+        ));
+
         $this->_viewer = get_viewer();
 
         parent::_initialize($config);
     }
     
+    /**
+     * See if the controller allows to register.
+     *
+     * @param bool $can_register The value whether the user can register or not
+     */
+    public function setRegistrationOpen($can_register)
+    {
+        $this->_can_register = $can_register;
+        return $this;
+    }
+
+    /**
+     * Return whether the registration is open or not.
+     *
+     * @return bool
+     */
+    public function isRegistrationOpen()
+    {
+        return $this->_can_register;
+    }
+    
     public function canRead() 
-    {        
-        if ($this->_viewer->guest() && $this->isRegistrationOpen() && !$this->getItem()) {
+    {
+        return $this->canAdd();
+    }
+    
+    public function canAdd() 
+    {
+        if ($this->_viewer->guest() && $this->isRegistrationOpen()) {
             return true;
         }
         
-        return parent::canRead();
-    }
-
-    /**
-     * return true if viewer is an admin or a guest.
-     *
-     * @return bool
-     */
-    public function canAdd()
-    {
-        if ($this->_viewer->admin()) {
-            return true;
-        }
-
         return false;
-    }
-
-    /**
-     * return true if viewer has administration rights to the profile.
-     *
-     * @return bool
-     */
-    public function canEdit()
-    {
-        return $this->getItem()->authorize('administration');
-    }
-
-    /**
-     * Return true if viewer is a guest.
-     *
-     * @return bool
-     */
-    public function canResetPassword()
-    {
-        return $this->_viewer->guest();
     }
 }

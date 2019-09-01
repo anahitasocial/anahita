@@ -23,15 +23,21 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
+            'attributes' => array(
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'string',
+                    'read' => 'public',
+                    'unique' => true,
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
+                'enabled' => array('default' => 1)  
+            ),
             'inheritance' => array(
                 'abstract' => $this->getIdentifier()->classname === __CLASS__
             ),
-            'behaviors' => array(
-              'privatable'
-            ),
-            'attributes' => array(
-                'enabled' => array('default' => 1)
-             ),
         ));
 
         parent::_initialize($config);

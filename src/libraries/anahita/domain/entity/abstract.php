@@ -22,11 +22,11 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     {
         static $cache;
 
-        if (!$cache) {
+        if (! $cache) {
             $cache = new AnObjectArray();
         }
 
-        if (!isset($cache[$entity->getRepository()])) {
+        if (! isset($cache[$entity->getRepository()])) {
             $cache[$entity->getRepository()] = new ArrayObject();
         }
 
@@ -87,7 +87,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         $this->getService($config->repository, AnConfig::unbox($config));
 
-        if (!$this->getEntityDescription()->getIdentityProperty()) {
+        if (! $this->getEntityDescription()->getIdentityProperty()) {
             throw new AnDomainDescriptionException('Entity '.$this->getIdentifier().' need an identity property');
         }
     }
@@ -330,26 +330,25 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         //get the property
         $property = $description->getProperty($name);
 
-         if (!$property) {
+         if (! $property) {
              return parent::get($name, $default);
          }
 
         //get the property name
         $name = $property->getName();
+        $value = $this->_data->offsetGet($name);
 
-         $value = $this->_data->offsetGet($name);
-
-         if ($property->isRelationship() && $property->isOneToMany() && is_null($value)) {
-             //since it's an external relationship
+        if ($property->isRelationship() && $property->isOneToMany() && is_null($value)) {
+            //since it's an external relationship
             //lets instantitate a dummy relationship
             //this should happen for the one-to-one relationships
             if ($property->isOneToOne()) {
                 return;
             }
 
-             $value = $this->_data[$name] = $property->getSet($this);
+            $value = $this->_data[$name] = $property->getSet($this);
 
-             return $value;
+            return $value;
          }
 
          return is_null($value) ? $default : $value;
@@ -365,7 +364,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     {
         $property = $this->getEntityDescription()->getProperty($name);
 
-        if (!$property instanceof AnDomainPropertyAbstract) {
+        if (! $property instanceof AnDomainPropertyAbstract) {
             return parent::set($name, $value);
         }
 
@@ -391,6 +390,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         if ($property->isSerializable()) {
             $modify = true;
+            
             if ($property->isRelationship() && $property->isManyToOne() && $value) {
                 if (!is($value, 'AnDomainEntityAbstract', 'AnDomainEntityProxy')) {
                     throw new AnDomainExceptionType('Value of '.$property->getName().' must be a AnDomainEntityAbstract');
@@ -406,6 +406,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
                     $this->getRepository()->getSpace()->setSaveOrder($value, $this);
                 }
             }
+            
             //if value is not null do a composite type checking
             if (!is_null($value)) {
                 if ($property->isAttribute() && !$property->isScalar()) {
@@ -414,6 +415,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
                     }
                 }
             }
+            
         } elseif ($property->isRelationship() && $property->isOnetoOne()) {
             $child = $property->getChildProperty();
             $current = $this->get($property->getName());
@@ -431,6 +433,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             }
 
             $this->_data[$property->getName()] = $value;
+            
         } elseif ($property->isRelationship() && ($property->isManyToMany() || $property->isOneToMany())) {
             $current = $this->get($name);
 
@@ -452,7 +455,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         if ($modify) {
             //lets bring them back to their orignal type
-            if (!is_null($value) && $property->isAttribute() && $property->isScalar()) {
+            if (! is_null($value) && $property->isAttribute() && $property->isScalar()) {
                 settype($value, $property->getType());
             }
 
@@ -502,7 +505,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         }
 
         //prevent from creating two differne entities
-        if (!$this->_persisted) {
+        if (! $this->_persisted) {
             //if found another entity
             $entity = $this->getRepository()->find($keys, false);
 
@@ -531,11 +534,12 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         if ($this->_data->load($properties)) {
             //enttiy has been fetched for the first time
-            if (!$this->_persisted) {
+            if (! $this->_persisted) {
                 $keys = $this->getIdentifyingData();
                 $this->_persisted = true;
                 $this->getRepository()->getSpace()->insertEntity($this, $keys);
                 $this->reset();
+                
             } else {
                 //the loaded properties are no longer modified
                 foreach ($properties as $property) {
@@ -576,17 +580,17 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         switch ($this->getEntityState()) {
             case AnDomain::STATE_NEW :
-                //get all the serializable property/value pairs
+                // get all the serializable property/value pairs
                 foreach ($description->getProperty() as $name => $property) {
                     if ($property instanceof AnDomainPropertySerializable) {
                         $data[$name] = $name;
                     }
                 }
-                //@TODO why are we forcing to unset the property
-                //unset($data[$description->getIdentityProperty()->getName()]);
+                // @TODO why are we forcing to unset the property
+                // unset($data[$description->getIdentityProperty()->getName()]);
                 break;
             case AnDomain::STATE_MODIFIED :
-                //get all the updated serializable property/value pairs
+                // get all the updated serializable property/value pairs
                 $data = array_keys($this->_modified);
                 break;
             case  AnDomain::STATE_DELETED :
@@ -725,7 +729,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             return $data;
         }
 
-        if (!$prop = $description->getProperty($property)) {
+        if (! $prop = $description->getProperty($property)) {
             return $this->get($property, $default);
         }
 
@@ -793,7 +797,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
                 if ($value instanceof AnDomainEntityProxy) {
                     if ($property->isRelationship() && $property->isOneToOne()) {
-                        if (!$value->getObject()) {
+                        if (! $value->getObject()) {
                             $this->getRepository()->getCommandChain()->disable();
                             $this->set($name, null);
                             $this->getRepository()->getCommandChain()->enable();
@@ -925,10 +929,10 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     public function __call($method, $args)
     {
         //If the method hasn't been mixed yet, load all the behaviors
-        if (!isset($this->_mixed_methods[$method])) {
+        if (! isset($this->_mixed_methods[$method])) {
             $key = 'behavior.'.$method;
 
-            if (!self::_cache($this)->offsetExists($key)) {
+            if (! self::_cache($this)->offsetExists($key)) {
                 self::_cache($this)->offsetSet($key, false);
 
                 $behaviors = $this->getRepository()->getBehaviors();
@@ -957,10 +961,11 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             }
         }
 
-        if (!isset($this->_mixed_methods[$method])) {
+        if (! isset($this->_mixed_methods[$method])) {
             if ($parts[0] == 'get' || $parts[0] == 'set') {
                 $property = lcfirst(AnInflector::implode(array_slice($parts, 1)));
                 $property = $this->getEntityDescription()->getProperty($property);
+                
                 if ($property) {
                     if ($parts[0] == 'get') {
                         return $this->getData($property->getName());
@@ -984,7 +989,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      */
     public function execute($command, $context)
     {
-        if (!$context instanceof  AnCommandContext) {
+        if (! $context instanceof  AnCommandContext) {
             $context = new AnCommandContext($context);
         }
 
@@ -1012,7 +1017,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             return true;
         }
 
-        if (!parent::inherits($class)) {
+        if (! parent::inherits($class)) {
             //check the mixins registered with the entity mapper
             $behaviors = $this->getRepository()->getBehaviors();
 
@@ -1096,7 +1101,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         $serialized = $this->getAffectedRowData();
 
-        if (!empty($serialized)) {
+        if (! empty($serialized)) {
             $data['serilized'] = $serialized;
         }
 

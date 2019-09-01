@@ -12,7 +12,15 @@
 			</label>
 
 			<div class="controls">
-				<input id="topic-title" class="input-block-level" name="title" value="" size="50" maxlength="255" type="text" required autofocus />
+				<input 
+					id="topic-title" 
+					class="input-block-level" 
+					name="title"
+					maxlength="100" 
+					type="text" 
+					required 
+					autofocus 
+				/>
 			</div>
 		</div>
 
@@ -25,12 +33,12 @@
                     'name' => 'body',
                     'content' => '',
                     'html' => array(
-                        'maxlength' => '20000',
+                        'maxlength' => '5000',
                         'cols' => '5',
                         'rows' => '5',
                         'class' => 'input-block-level',
                         'id' => 'topic-body',
-                        ),
+                    ),
                 )); ?>
             </div>
         </div>

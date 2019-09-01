@@ -133,6 +133,16 @@
      {
          return $this->getMethod() == 'PUT';
      }
+     
+     /**
+      * Return if the request is patch.
+      *
+      * @return bool
+      */
+     public function isPatch()
+     {
+         return $this->getMethod() == 'PATCH';
+     }
 
      /**
       * Return if the request is put.

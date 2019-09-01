@@ -45,37 +45,66 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
+                'body' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 500,
+                    ),
                 ),
                 'geoLatitude' => array(
+                    'required' => true,
                     'format' => 'float',
                     'read' => 'public'
                 ),
                 'geoLongitude' => array(
+                    'required' => true,
                     'format' => 'float',
                     'read' => 'public'
                 ),
                 'geoAddress' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoCity' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoState_province' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoCountry' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
                 'geoPostalcode' => array(
                     'format' => 'string',
-                    'read' => 'public'
+                    'read' => 'public',
+                    'length' => array(
+                        'max' => 10,
+                    ),
                 ),
-                'enabled' => array('default' => 1)
             ),
             'aliases' => array(
                 'latitude' => 'geoLatitude',
@@ -141,13 +170,12 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
           'geoCountry',
           'geoPostalcode'
         );
-
+        
         if (count(array_intersect($keys, $fields))){
             $address = $this->addressToArray();
             unset($address['latitude']);
             unset($address['longitude']);
             $address = implode(',', $address);
-
             if($location = $this->_geocoder->geocode($address)) {
                 $this->latitude = $location['latitude'];
                 $this->longitude = $location['longitude'];

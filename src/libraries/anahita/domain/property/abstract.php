@@ -1,21 +1,6 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Abstract Domain Entity Property. This is the base class for Attribute or Relationship
  * properties of an entity.
  *
@@ -23,6 +8,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -50,14 +36,14 @@ abstract class AnDomainPropertyAbstract
         $description = $config['description'];
         $name = $config['name'];
 
-        if (!$name || !$description) {
+        if (! ($name && $description)) {
             throw new AnDomainPropertyException('name [string] or desription [AnDomainDescriptionAbstract] options are missing');
         }
 
         if ($description->getProperty($name)) {
             $instance = $description->getProperty($name);
         } else {
-            if (!isset(self::$_instances[$property])) {
+            if (! isset(self::$_instances[$property])) {
                 $classname = 'AnDomain'.AnInflector::camelize($property);
                 self::$_instances[$property] = new $classname();
             }
@@ -100,6 +86,13 @@ abstract class AnDomainPropertyAbstract
      * @var int
      */
     protected $_required;
+    
+    /**
+    * Array of min and max values for string length
+    *
+    * @var array('min' => min, 'max'=> max) where min < max
+    */
+    protected $_length;
 
     /**
      * Boolean value if a property is unique or not.
@@ -153,6 +146,7 @@ abstract class AnDomainPropertyAbstract
         $this->_required = $config->required;
         $this->_write_access = (int) $config->write;
         $this->_read_access = (int) $config->read;
+        $this->_length = $config->length;
     }
 
     /**
@@ -164,27 +158,27 @@ abstract class AnDomainPropertyAbstract
      */
     protected function _initialize(AnConfig $config)
     {
-        //by default every property is write protected
-        //meaning it's not possibl to do mass assignement
+        // @TODO
+        // by default we want every property to be write protected
+        // meaning it's not possibl to do mass assignement.
+        // Right now, that isn't the case.
+        
         $config->append(array(
             'unique' => false,
             'required' => false,
             'write' => AnDomain::ACCESS_PUBLIC,
             'read' => AnDomain::ACCESS_PROTECTED,
+            'length' => NULL,
         ));
 
         if (is_string($config->write)) {
-
             switch ($config->write) {
-
                 case 'private' :
                     $config->write = AnDomain::ACCESS_PRIVATE;
                     break;
-
                 case 'protected' :
                     $config->write = AnDomain::ACCESS_PROTECTED;
                     break;
-
                 case 'public' :
                     $config->write = AnDomain::ACCESS_PUBLIC;
                     break;
@@ -192,17 +186,13 @@ abstract class AnDomainPropertyAbstract
         }
 
         if (is_string($config->read)) {
-
             switch ($config->read) {
-
                 case 'private' :
                     $config->read = AnDomain::ACCESS_PRIVATE;
                     break;
-
                 case 'protected' :
                     $config->read = AnDomain::ACCESS_PROTECTED;
                     break;
-
                 case 'public' :
                     $config->read = AnDomain::ACCESS_PUBLIC;
                     break;
@@ -306,6 +296,26 @@ abstract class AnDomainPropertyAbstract
     public function isUnique()
     {
         return $this->_unique;
+    }
+    
+    /**
+     * Set min and max boundaries for string length
+     *
+     * @param array('min' => min, 'max' => max), min < max
+     */
+    public function setLength($length) 
+    {
+        $this->_length = $length;
+    }
+    
+    /**
+     * Return min and max boundaries for string length
+     *
+     * @return array('min' => min, 'max' => max), min < max
+     */
+    public function getLength() 
+    {
+        return $this->_length;
     }
 
     /**

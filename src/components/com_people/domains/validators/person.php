@@ -1,36 +1,10 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
- * Person object. It's the main actor node that represents the social network users. A person can added
- * applications to their profile.
- *
- * Here's how to get a person object, set a property and save
- * <code>
- * //fetches a peron with $id
- * $person = AnService::get('repos:people.person')->fetch($id);
- * $person->name = 'James Bond';
- * $person->save();
- * </code>
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -46,24 +20,16 @@ class ComPeopleDomainValidatorPerson extends AnDomainValidatorAbstract
      */
     public function validateEntity($person)
     {
-        $this->_validateField($person, 'email');
-        $this->_validateField($person, 'username');
-        $this->_validateField($person, 'password');
+        $this->_validatePassword($person);
 
         return parent::validateEntity($person);
     }
 
-    private function _validateField($person, $field)
+    protected function _validatePassword($person)
     {
-        if ($person->$field) {
-            if (!$this->getFilter($field)->validate($person->$field)) {
-                $person->addError(array(
-                    'message' => "Invalid $field format",
-                    'code' => AnError::INVALID_FORMAT,
-                    'key' => $field,
-                    'format' => $field
-                ));
-            }
+        if ($person->_raw_password) {
+            $validations = $person->getValidator()->getValidations('password');
+            $this->validateData($person, 'password', trim($person->_raw_password), $validations);
         }
     }
 }

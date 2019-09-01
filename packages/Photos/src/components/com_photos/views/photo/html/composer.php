@@ -1,5 +1,6 @@
 <? defined('ANAHITA') or die('Restricted access'); ?>
 
+<? $uploadSizeLimit = ini_get('upload_max_filesize'); ?>
 <? $photo = @service('repos:photos.photo')->getEntity()->reset() ?>
 
 <form class="composer-form" method="post" action="<?= @route() ?>" enctype="multipart/form-data">
@@ -11,7 +12,15 @@
 			    <?= @text('COM-PHOTOS-COMPOSER-FILE-SELECT') ?>
 			</label>
 			<div class="controls">
-				<input accept="image/*" id="photo-file" type="file" name="file" required autofocus />
+				<input 
+                    accept="image/*" 
+                    id="photo-file" 
+                    type="file" 
+                    name="file" 
+                    required 
+                    autofocus 
+                    data-limit="<?= $uploadSizeLimit ?>" 
+                />
 			</div>
 		</div>
 
@@ -20,7 +29,14 @@
 			    <?= @text('COM-PHOTOS-COMPOSER-PHOTO-POST-DESCRIPTION') ?>
 			</label>
 			<div class="controls">
-				<textarea id="photo-description" class="input-block-level" name="body" cols="5" rows="3" maxlength="5000"></textarea>
+				<textarea 
+                    id="photo-description" 
+                    class="input-block-level" 
+                    name="body" 
+                    cols="5" 
+                    rows="3" 
+                    maxlength="5000"
+                ></textarea>
 			</div>
 		</div>
 

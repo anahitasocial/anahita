@@ -1,27 +1,13 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Abstract Validator.
  *
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -74,13 +60,10 @@ abstract class AnDomainValidatorAbstract extends AnObject
     protected function _initialize(AnConfig $config)
     {
         $description = $this->_description;
-
         $properties = $description->getProperty();
-
         $validations = array();
 
         foreach ($properties as $property) {
-
             if ($property->isAttribute() && $property->getFormat()) {
                 $validations[$property->getName()]['format'] = $property->getFormat();
             }
@@ -88,9 +71,15 @@ abstract class AnDomainValidatorAbstract extends AnObject
             if ($property->isSerializable() && $property->isRequired()) {
                 $validations[$property->getName()]['required'] = true;
             }
+            
+            if ($property->isAttribute() && $property->getLength()) {
+                $validations[$property->getName()]['length'] = $property->getLength();
+            }
 
             if ($property->isSerializable() && $property->isUnique()) {
-                $validations[$property->getName()]['uniqueness'] = array('scope' => array());
+                // @TODO implement scope later, but for now we're using a boolean value
+                // $validations[$property->getName()]['uniqueness'] = array('scope' => array());
+                $validations[$property->getName()]['uniqueness'] = true;
             }
         }
 
@@ -124,7 +113,6 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $validations = (array) AnConfig::unbox($validations);
 
         foreach ($validations as $validation => $options) {
-
             if (is_numeric($validation)) {
                 $validation = $options;
                 $options = array();
@@ -160,16 +148,15 @@ abstract class AnDomainValidatorAbstract extends AnObject
     {
         $description = $entity->getEntityDescription();
 
-        //if entity is persisted only look at the modified
-        //properties
+        // if entity is persisted only look at the modified properties
         if ($entity->isModified()) {
             $properties = array_intersect_key($description->getProperty(), AnConfig::unbox($entity->getModifiedData()));
         } else {
             $properties = $description->getProperty();
         }
-
-        foreach ($properties as $property) {
-            $value = $entity->get($property->getName());
+        
+        foreach ($properties as $property) {            
+            $value = $entity->get($property->getName());            
             $entity->getValidator()->validateData($entity, $property, $value);
         }
 
@@ -184,7 +171,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
      * @param array                  $value       Property Value
      * @param array                  $validations An array of validations. If no validation are passed. Default validations are used
      *
-     * @return bool
+     * @return void
      */
     public function validateData($entity, $property, $value, $validations = array())
     {
@@ -195,33 +182,39 @@ abstract class AnDomainValidatorAbstract extends AnObject
         if (empty($validations)) {
             $validations = $this->getValidations($property);
         }
-
+        
         $validations = (array) AnConfig::unbox($validations);
-
-        foreach ($validations as $validation => $options) {
-
+        
+        // FOR DEBUGGING
+        // error_log($property->getName() . ' => ' . print_r($validations, true));
+        
+        /*
+        if (!is_object($value)) {
+            error_log($property->getName() . ' = ' . $value . ' ('.gettype($value).')');
+        } else if (is_object($value)) {
+            error_log($property->getName() . ' = ' . get_class($value));
+        }
+        */
+        
+        foreach ($validations as $validation => $options) {                                     
             if (is_numeric($validation)) {
                 $validation = $options;
                 $options = array();
             }
 
             $method = '_validate'.ucfirst($validation);
-
-            if (!method_exists($this, $method)) {
-                continue;
+            
+            if (method_exists($this, $method)) {
+                $isValid = $this->$method(new AnConfig(array(
+                    'property' => $property,
+                    'value' => $value,
+                    'entity' => $entity,
+                    'options' => $options,
+                )));
             }
-
-            $config = new AnConfig(array(
-                 'property' => $property,
-                 'value' => $value,
-                 'entity' => $entity,
-                 'options' => $options,
-             ));
-
-            $value = $this->$method($config);
         }
-
-        return $value;
+        
+        return;
     }
 
     /**
@@ -395,7 +388,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $entity = $config->entity;
         $options = AnConfig::unbox($config->options);
 
-        if (!in_array($value, $options)) {
+        if (! in_array($value, $options)) {
             $entity->addError(array(
                 'message' => $property->getName().' must be one of the value of '.implode($options, ','),
                 'code' => AnError::OUT_OF_SCOPE,
@@ -427,32 +420,24 @@ abstract class AnDomainValidatorAbstract extends AnObject
             return true;
         }
 
-        //if the serial id is missing for a new entity, then don't validate
-        //@TODO this causes no-incremental primary keys
-        //to pass the validation. Need a new serial type the represet
-        //incremental identity property
-        if (
-            $property === $entity->getEntityDescription()->getIdentityProperty() &&
-            ! $entity->persisted())
-        {
+        // if the serial id is missing for a new entity, then don't validate
+        // @TODO this causes no-incremental primary keys
+        // to pass the validation. Need a new serial type the represet
+        // incremental identity property
+        if ($property === $entity->getEntityDescription()->getIdentityProperty() && !$entity->persisted()) {
             return true;
         }
-
+        
         if ($property->isAttribute()) {
-            //if string and value can not be null
-            //then return false if values are either empty strings
-            //or just whitespace
-            if (
-                $property->getType() === 'string' &&
-                $property->isRequired() === AnDomain::VALUE_NOT_EMPTY
-            ) {
-
+            // if string and value can not be null
+            // then return false if values are either empty strings
+            // or just whitespace
+            if ($property->getType() === 'string' && $property->isRequired() === AnDomain::VALUE_NOT_EMPTY) {
                 //strip out html tags before measuring the lenght
                 $value = strip_tags($value);
 
                 //check if the value exists
                 if (AnHelperString::strlen($value) <= 0 || ctype_space($value)) {
-
                     $entity->addError(array(
                         'message' => sprintf(
                             AnTranslator::_('%s %s can not be empty!'),
@@ -467,17 +452,14 @@ abstract class AnDomainValidatorAbstract extends AnObject
                 }
 
             } else {
-
                 if ($property->isRequired() === AnDomain::VALUE_NOT_EMPTY) {
                     $present = !empty($value);
                 } else {
                     $present = !is_null($value);
                 }
-
             }
 
         } elseif ($property->isRelationship() && $property->isManyToOne()) {
-
             $present = !is_null($value);
             //if not null and the entity state is not new then check if it's serilized values are acceptable
             //i.e. not null or having an id = 0
@@ -498,7 +480,6 @@ abstract class AnDomainValidatorAbstract extends AnObject
         }
 
         if (!$present) {
-
             $entity->addError(array(
                 'message' => sprintf(
                     AnTranslator::_('%s %s can not be empty!'),
@@ -535,19 +516,15 @@ abstract class AnDomainValidatorAbstract extends AnObject
         }
 
         if ($property->isAttribute() && $property->isScalar()) {
-
             $options = AnConfig::unbox($options);
 
             if (is_array($options)) {
                 //check the min/max length
                 if (isset($options['max']) || isset($options['min'])) {
-
                     if (isset($options['max'])) {
-
                         $greater = AnHelperString::strlen($value) > (int) $options['max'];
 
                         if ($greater) {
-
                             $entity->addError(array(
                                 'message' => sprintf(
                                     AnTranslator::_('%s %s can not be greater than %d characters'),
@@ -565,11 +542,9 @@ abstract class AnDomainValidatorAbstract extends AnObject
                     }
 
                     if (isset($options['min'])) {
-
                         $lesser = AnHelperString::strlen($value) < (int) $options['min'];
 
                         if ($lesser) {
-
                             $entity->addError(array(
                                 'message' => sprintf(
                                     AnTranslator::_('%s %s can not be less than %d characters'),
@@ -586,24 +561,21 @@ abstract class AnDomainValidatorAbstract extends AnObject
                         }
                     }
                 }
-            } else {
+                
+            } else if (AnHelperString::strlen($value) != (int) $options) {
+                $entity->addError(array(
+                    'message' => sprintf(
+                        AnTranslator::_('%s %s must be %d characters'),
+                        $this->getIdentifier()->name,
+                        $property->getName(),
+                        $options
+                    ),
+                    'code' => AnError::INVALID_LENGTH,
+                    'key' => $property->getName(),
+                    'length' => (int) $options,
+                ));
 
-                if (AnHelperString::strlen($value) != (int) $options) {
-
-                    $entity->addError(array(
-                        'message' => sprintf(
-                            AnTranslator::_('%s %s must be %d characters'),
-                            $this->getIdentifier()->name,
-                            $property->getName(),
-                            $options
-                        ),
-                        'code' => AnError::INVALID_LENGTH,
-                        'key' => $property->getName(),
-                        'length' => (int) $options,
-                    ));
-
-                    return false;
-                }
+                return false;
             }
         }
 
@@ -626,11 +598,11 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $conditions = array();
 
         $query = $entity->getRepository()->getQuery();
-
+        
         if ($entity->persisted()) {
             $query->where($entity->getEntityDescription()->getIdentityProperty()->getName(), '<>', $entity->getIdentityId());
         }
-
+        
         $conditions[$property->getName()] = $value;
 
         if (isset($options['scope'])) {
@@ -641,7 +613,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
         }
 
         $query->where($conditions);
-
+        
         if ($query->disableChain()->fetch()) {
             $entity->addError(array(
                 'message' => sprintf(

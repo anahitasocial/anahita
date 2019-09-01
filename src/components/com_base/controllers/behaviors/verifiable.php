@@ -1,7 +1,7 @@
 <?php
 
 /**
-* Enablable Behavior.
+* Verifiable Behavior.
 *
 * @category   Anahita
 *

@@ -5,7 +5,15 @@
 
 	<div class="control-group">
 		<div class="controls">
-			<textarea class="input-block-level" id="note-body" name="body" cols="5" rows="3" required maxlength="5000"></textarea>
+			<textarea 
+				class="input-block-level" 
+				id="note-body" 
+				name="body" 
+				cols="5" 
+				rows="3" 
+				required 
+				maxlength="280"
+			></textarea>
     	</div>
     </div>
 

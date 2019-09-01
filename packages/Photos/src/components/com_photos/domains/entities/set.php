@@ -24,7 +24,12 @@ class ComPhotosDomainEntitySet extends ComMediumDomainEntityMedium
     {
         $config->append(array(
             'attributes' => array(
-                'name' => array('required' => true),
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
             ),
             'behaviors' => array(
                 'hittable',

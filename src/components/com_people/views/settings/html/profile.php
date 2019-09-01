@@ -14,9 +14,9 @@
 				type="text"
 				id="person-given-name"
 				name="givenName"
-				maxlength="25"
-				minlength="3"
 				value="<?= $item->givenName ?>"
+				maxlength="30"
+	            minlength="3"
 			 />
 		</div>
 	</div>
@@ -32,9 +32,9 @@
 				type="text"
 				id="person-family-name"
 				name="familyName"
-				maxlength="25"
-				minlength="3"
 				value="<?= $item->familyName ?>"
+				maxlength="30"
+	            minlength="3"
 			 />
 		</div>
 	</div>
@@ -44,7 +44,14 @@
 			<?= @text('COM-ACTORS-BODY') ?>
 		</label>
 		<div class="controls">
-			<textarea class="input-block-level" id="actor-body" name="body" rows="5" cols="5"><?= $item->body?></textarea>
+			<textarea 
+				class="input-block-level" 
+				id="actor-body" 
+				name="body" 
+				rows="5" 
+				cols="5"
+				maxlength="500"
+			><?= $item->body?></textarea>
 		</div>
 	</div>
 
@@ -60,10 +67,7 @@
 				'male' => @text('COM-PEOPLE-GENDER-MALE')
 			);
             ?>
-            <?= @html('select', 'gender', array(
-					'options' => $genderOptions,
-					'selected' => $item->gender)
-					)->class('input-block-level') ?>
+            <?= @html('select', 'gender', array('options' => $genderOptions, 'selected' => $item->gender))->class('input-block-level') ?>
         </div>
     </div>
 

@@ -26,8 +26,11 @@ class ComSubscriptionsDomainEntityVat extends AnDomainEntityDefault
             'attributes' => array(
                 'id',
                 'country' => array(
-                    'required' => true,
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'unique' => true,
+                    'length' => array(
+                        'max' => 2,
+                    ),
                 ),
                 'meta' => array(
                     'type' => 'json',

@@ -28,18 +28,15 @@ final class ComHashtagsDomainEntityHashtag extends ComTagsDomainEntityNode
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'attributes' => array(
-                'name' => array(
-                    'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
-                    'read' => 'public',
-                    'unique' => true
-                  ),
-            ),
             'behaviors' => to_hash(array(
                 'modifiable',
-                'describable',
             )),
+            'attributes' => array(
+                'alias' => array('format' => 'slug'),
+            ),
+            'aliases' => array(
+                'title' => 'name',
+            ),
             'relationships' => array(
                 'taggables' => array(
                     'through' => 'tag',
@@ -51,6 +48,39 @@ final class ComHashtagsDomainEntityHashtag extends ComTagsDomainEntityNode
         ));
 
         parent::_initialize($config);
+    }
+    
+    /**
+     * Override the name setter to set the alias at the same time.
+     *
+     * @param string $name
+     */
+    public function setName($name)
+    {
+        $this->set('name', $name);
+        $this->alias = $name;
+    }
+    
+    /**
+     * Returns the node URL.
+     *
+     * @return string
+     */
+    public function getURL()
+    {
+        if (! isset($this->_url)) {
+            $this->_url = 'option='.$this->component.'&view='.$this->getIdentifier()->name;
+
+            if ($this->id) {
+                $this->_url .= '&id='.$this->id;
+            }
+
+            if ($this->alias) {
+                $this->_url .= '&alias='.strtolower($this->alias);
+            }
+        }
+
+        return $this->_url;
     }
 
     /**

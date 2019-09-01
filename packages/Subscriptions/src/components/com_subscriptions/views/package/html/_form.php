@@ -10,7 +10,15 @@
                 <?= @text('LIB-AN-ENTITY-TITLE') ?>
             </label>
             <div class="controls">
-                <input required class="input-block-level" id="package-title" name="title" value="<?= @escape($package->title) ?>" size="50" maxlength="255" type="text" />
+                <input 
+                    required 
+                    class="input-block-level" 
+                    id="package-title" 
+                    name="title" 
+                    value="<?= @escape($package->title) ?>" 
+                    maxlength="100" 
+                    type="text" 
+                />
             </div>
         </div>
 
@@ -23,7 +31,7 @@
                     'name' => 'body',
                     'content' => @escape($package->body),
                     'html' => array(
-                        'maxlength' => '20000',
+                        'maxlength' => '500',
                         'cols' => '10',
                         'rows' => '5',
                         'class' => 'input-block-level',
@@ -39,7 +47,16 @@
             </label>
             <div class="controls">
                 <div class="input-append">
-                    <input class="span2" id="package-price" required type="text" placeholder="00.00" value="<?= $package->price ?>" size="10" maxlength="10" name="price" />
+                    <input 
+                        class="span2" 
+                        id="package-price" 
+                        required 
+                        type="text" 
+                        placeholder="00.00" 
+                        value="<?= $package->price ?>" 
+                        maxlength="10" 
+                        name="price" 
+                    />
                     <span class="add-on">
                         <?= get_config_value('subscriptions.currency', 'US') ?>
                     </span>

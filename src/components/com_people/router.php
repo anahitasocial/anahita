@@ -45,12 +45,10 @@ class ComPeopleRouter extends ComActorsRouterDefault
         $query = array();
         $path = implode('/', $segments);
 
-        if ($path == 'signup') {
-            return array('view' => 'person','layout' => 'signup');
-        } elseif (
+        if (
              !empty($segments) &&
              !is_numeric($segments[0]) &&
-             !in_array(AnInflector::singularize($segments[0]), array('person', 'session', 'token'))
+             !in_array(AnInflector::singularize($segments[0]), array('person', 'session', 'signup', 'token'))
         ) {
             $query['username'] = $segments[0];
             //@TODO the parent::parse wants a numeric ID in order

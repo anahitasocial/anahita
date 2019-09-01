@@ -27,7 +27,26 @@ class ComArticlesDomainEntityRevision extends ComMediumDomainEntityMedium
                 'parentable' => array('parent' => 'article'),
             ),
             'attributes' => array(
-                'excerpt' => 'excerpt',
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 100,
+                    )
+                ),
+                'excerpt' => array(
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 1000,
+                    )
+                ),
+                'body' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'html',
+                    'length' => array(
+                        'max' => 40000,
+                    )
+                ),
                 'revisionNum' => 'ordering',
             ),
             'aliases' => array(

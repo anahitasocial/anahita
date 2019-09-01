@@ -122,7 +122,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
 
         $data = $this->_entity->getRepository()->fetch($query, AnDomain::FETCH_ROW);
 
-        if (!empty($data)) {
+        if (! empty($data)) {
             $this->_row = array_merge($this->_row, (array) $data);
 
             foreach ($properties as $property) {
@@ -265,7 +265,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
         //then the data must be missing
         if (
             $property->isSerializable() &&
-            !$property->isMaterializable($this->_row)
+            ! $property->isMaterializable($this->_row)
         ) {
             //lazy load the value alogn with all the entities whose
             //$key value is missing

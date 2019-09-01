@@ -24,7 +24,6 @@ class ComPeopleViewer extends AnObject implements AnServiceInstantiatable
      public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
      {
          if (! $container->has($config->service_identifier)) {
-
              $person = null;
 
              if (PHP_SAPI != 'cli') {

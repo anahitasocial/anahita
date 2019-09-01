@@ -57,7 +57,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
     public function api($config = array())
     {
         $config = array_merge_recursive($config, array(
-            'key' => get_config_value('locations.api_key'),
+            'key' => get_config_value('locations.api_key_maps'),
             'service' => $this->_service,
             'libraries' => array()
         ));
@@ -105,7 +105,7 @@ class ComLocationsTemplateHelperUi extends ComBaseTemplateHelperUi
                 'url' => route($location->getURL())
             );
         }
-
+ 
         $config['locations'] = htmlspecialchars(json_encode($data), ENT_QUOTES);
         $config['service'] = get_config_value('locations.service', 'google');
 

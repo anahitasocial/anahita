@@ -44,9 +44,21 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
         $config->append(array(
             'searchable_properties' => array('name', 'body'),
             'attributes' => array(
-                'name' => array('format' => 'string'),
-                'body' => array('format' => 'string'),
-                'alias' => array('format' => 'slug'),
+                'name' => array(
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
+                'body' => array(
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 5000,
+                    ),
+                ),
+                'alias' => array(
+                    'format' => 'slug'
+                ),
             ),
             'aliases' => array(
                 'title' => 'name',
@@ -75,7 +87,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
      */
     public function getURL()
     {
-        if (!isset($this->_mixer->_url)) {
+        if (! isset($this->_mixer->_url)) {
             $this->_mixer->_url = 'option='.$this->component.'&view='.$this->_mixer->getIdentifier()->name;
 
             if ($this->_mixer->id) {

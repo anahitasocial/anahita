@@ -17,6 +17,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
+ 
 class ComSearchControllerSearch extends ComBaseControllerResource
 {
     /**
@@ -25,6 +26,13 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     * @param ComLocationsGeocoderAdapterAbstract object
     */
     protected $_geocoder = null;
+    
+    /**
+    * used to only use a substring of the passed search term
+    *
+    * @param int
+    */
+    const SEARCH_TERM_CHAR_LIMIT = 100;
 
     /**
      * Constructor
@@ -147,7 +155,9 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         parent::setRequest($request);
 
         if (isset($this->_request->term)) {
-            $value = $this->getService('anahita:filter.term')->sanitize($this->_request->term);
+            $substr = AnHelperString::substr($this->_request->term, 0, self::SEARCH_TERM_CHAR_LIMIT);
+            $value = $this->getService('anahita:filter.term')->sanitize($substr);
+            
             $this->_request->term = $value;
             $this->term = $value;
         }

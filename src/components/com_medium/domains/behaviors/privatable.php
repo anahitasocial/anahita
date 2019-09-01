@@ -18,7 +18,9 @@ class ComMediumDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
      */
     protected function _beforeRepositoryFetch(AnCommandContext $context)
     {
-        if (AnService::has('com:people.viewer') && is_person(get_viewer()) && get_viewer()->admin()) {
+        $viewer = $this->getService('com:people.viewer');
+        
+        if ($viewer->admin()) {
             return;
         }
 
@@ -27,7 +29,7 @@ class ComMediumDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
         $config = pick($query->privacy, new AnConfig());
 
         $config->append(array(
-            'viewer' => get_viewer(),
+            'viewer' => $viewer,
             'graph_check' => true,
         ));
 

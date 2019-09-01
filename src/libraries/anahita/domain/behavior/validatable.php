@@ -1,20 +1,5 @@
 <?php
 
-/** 
- * LICENSE: ##LICENSE##.
- * 
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
 /**
  * Validatable Behavior. 
  * 
@@ -32,6 +17,7 @@
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -64,7 +50,6 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
         parent::__construct($config);
 
         $this->_validator = $config->validator;
-
         $this->_errors = $this->getService('anahita:object.array');
     }
 
@@ -102,7 +87,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
             $error = new AnError($error);
         }
 
-        if (!isset($this->_errors[$this->_mixer])) {
+        if (! isset($this->_errors[$this->_mixer])) {
             $this->_errors[$this->_mixer] = new AnObjectSet();
         }
 
@@ -118,7 +103,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      */
     public function getErrors()
     {
-        if (!isset($this->_errors[$this->_mixer])) {
+        if (! isset($this->_errors[$this->_mixer])) {
             $this->_errors[$this->_mixer] = new AnObjectSet();
         }
 
@@ -149,8 +134,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     public function validateData($property, $validations = null)
     {
         $value = $this->_mixer->get($property);
-        $ret = $this->_mixer->getValidator()
-                        ->validateData($this->_mixer, $property, $value, $validations);
+        $ret = $this->_mixer->getValidator()->validateData($this->_mixer, $property, $value, $validations);
 
         return $ret !== false;
     }
@@ -166,8 +150,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     public function sanitizeData($property, $validations = null)
     {
         $value = $this->_mixer->get($property);
-        $value = $this->_mixer->getValidator()
-                        ->sanitizeData($this->_mixer, $property, $value, $validations);
+        $value = $this->_mixer->getValidator()->sanitizeData($this->_mixer, $property, $value, $validations);
 
         $this->_mixer->getRepository()->getCommandChain()->disable();
         $this->_mixer->set($property, $value);
@@ -183,8 +166,8 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
      */
     public function getValidator()
     {
-        if (!$this->_validator instanceof AnDomainValidatorAbstract) {
-            if (!$this->_validator instanceof AnServiceIdentifier) {
+        if (! $this->_validator instanceof AnDomainValidatorAbstract) {
+            if (! $this->_validator instanceof AnServiceIdentifier) {
                 $this->setValidator($this->_validator);
             }
 
@@ -216,7 +199,10 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
                 $identifier = $this->getIdentifier($validator);
             }
 
-            register_default(array('identifier' => $identifier, 'prefix' => $this->_repository->getClone()));
+            register_default(array(
+                'identifier' => $identifier, 
+                'prefix' => $this->_repository->getClone(),
+            ));
 
             $validator = $identifier;
         }
@@ -237,7 +223,7 @@ class AnDomainBehaviorValidatable extends AnDomainBehaviorAbstract
     protected function _beforeEntitySetdata($context)
     {
         $context['value'] = $this->_repository->getValidator()
-                        ->sanitizeData($context->entity, $context->property, $context->value);
+        ->sanitizeData($context->entity, $context->property, $context->value);
     }
 
     /**

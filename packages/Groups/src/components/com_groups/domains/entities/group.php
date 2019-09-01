@@ -11,6 +11,4 @@
   *
   * @link       http://www.GetAnahita.com
   */
- class ComGroupsDomainEntityGroup extends ComActorsDomainEntityActor
- {
- }
+ class ComGroupsDomainEntityGroup extends ComActorsDomainEntityActor {}

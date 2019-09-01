@@ -24,19 +24,33 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
     {
         $config->append(array(
             'attributes' => array(
-                'name' => array('required' => true),
-                'excerpt' => array(
+                'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
+                    'length' => array(
+                        'max' => 100,
+                    )
                 ),
-                'body' => array('format' => 'html'),
-            ),
-            'relationships' => array(
-                'revisions',
+                'excerpt' => array(
+                    'format' => 'string',
+                    'length' => array(
+                        'max' => 1000,
+                    )
+                ),
+                'body' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'format' => 'html',
+                    'length' => array(
+                        'max' => 40000,
+                    )
+                ),
             ),
             'aliases' => array(
                 'published' => 'enabled',
                 'title' => 'name',
+            ),
+            'relationships' => array(
+                'revisions',
             ),
         ));
 

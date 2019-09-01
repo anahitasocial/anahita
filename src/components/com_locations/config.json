@@ -9,12 +9,20 @@
             "disabled": 1
         },
         {
-            "name": "api_key",
+            "name": "api_key_geocoding",
             "size": "60",
             "type": "text",
             "default": "",
-            "label": "API Key",
-            "placeholder": "Please enter API key"
+            "label": "Geocoding API Key",
+            "placeholder": "Please enter Geocoding API key"
+        },
+        {
+            "name": "api_key_maps",
+            "size": "60",
+            "type": "text",
+            "default": "",
+            "label": "Maps API Key",
+            "placeholder": "Please enter Maps API key"
         }
     ]
 }
