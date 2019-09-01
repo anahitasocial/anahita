@@ -40,7 +40,15 @@
   			</select>
 
         <label name="SearchNearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
-        <input form="navbar-search" type="text" id="SearchNearby" data-trigger="SearchNearby" name="search_nearby" placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" />
+        <input 
+            form="navbar-search" 
+            type="text" 
+            id="SearchNearby" 
+            data-trigger="SearchNearby" 
+            name="search_nearby" 
+            placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" 
+            maxlength="100"
+        />
 
         <? $ranges = array(100,50,25,10,5); ?>
         <select form="navbar-search" disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">
