@@ -25,14 +25,6 @@
 					<i class="icon-facebook"></i>
 				</a>
 
-				<a title="Google+" class="btn btn-googleplus" href="https://plus.google.com/111222489368350494929/posts" target="_blank">
-					<i class="icon-googleplus"></i>
-				</a>
-
-				<a title="Blog" class="btn btn-feed" href="http://blog.getanahita.com" target="_blank">
-					<i class="icon-feed"></i>
-				</a>
-
 				<a title="GitHub" class="btn btn-github" href="https://github.com/anahitasocial/anahita" target="_blank">
 					<i class="icon-github"></i>
 				</a>
