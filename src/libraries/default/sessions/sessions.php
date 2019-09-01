@@ -343,13 +343,13 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 	* @param  string 	$namespace 	Namespace to use, default to 'default'
 	* @return mixed  Value of a variable
 	*/
-   public function get($property = null, $default = null, $namespace = 'default')
+   public function get($property = null, $default = null, $namespace = '')
    {
 	   if($this->_state !== self::STATE_ACTIVE && $this->_state !== self::STATE_EXPIRED) {
 		   throw new LibSessionsException("Session does not exist!\n");
 	   }
 
-	   $namespace = $namespace === 'default' ? $this->_namespace : $namespace;
+	   $namespace = empty($namespace) ? $this->_namespace : $namespace;
 
 	   if (isset($_SESSION[$namespace][$property])) {
 		   return $_SESSION[$namespace][$property];
@@ -366,13 +366,13 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 	 * @param  mixed  $value 		Value of a variable
 	 * @return mixed  Old value of a variable
 	 */
-	public function set($name, $value = null, $namespace = 'default')
+	public function set($name, $value = null, $namespace = '')
 	{
 		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
 		}
 
-		$namespace = $namespace === 'default' ? $this->_namespace : $namespace;
+		$namespace = empty($namespace) ? $this->_namespace : $namespace;
 
 		if (is_null($value)) {
 			unset($_SESSION[$namespace][$name]);

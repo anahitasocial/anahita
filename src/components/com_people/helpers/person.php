@@ -45,7 +45,7 @@ class ComPeopleHelperPerson extends AnObject
         }
 
         // create a remember cookie that contains the ecrypted username and password
-        if ($remember) {
+        if ($remember && false) {
             $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
             $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
             $cookie = $crypt->encrypt(serialize(array(
