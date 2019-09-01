@@ -1,5 +1,15 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.2
+=============================
+1. fixed: attribute validation in domain entities.
+1. fixed: attribute length (min/max) validation.
+1. changed: updated attribute validations in all entities.
+1. changed: updated form fields to follow the string length limits.
+1. changed: applied search term length char limit to 100.
+1. changed: in location component we now have 2 API keys. One for the geolocation and other for the map and places. 
+1. changed: tags now store inheritance identifiers correctly in the database.
+
 Anahita 4.4.1
 =============================
 1. changed: renamed hashtagable to hashtaggable everywhere
