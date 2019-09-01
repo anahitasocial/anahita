@@ -45,7 +45,7 @@ class ComPeopleHelperPerson extends AnObject
         }
 
         // create a remember cookie that contains the ecrypted username and password
-        if ($remember && false) {
+        if ($remember) {
             $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
             $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
             $cookie = $crypt->encrypt(serialize(array(
@@ -87,17 +87,23 @@ class ComPeopleHelperPerson extends AnObject
     private function _createSession(ComPeopleDomainEntityPerson $person)
     {
         $session = $this->getService('com:application', array('session' => true))->getSession();
-        
         $repo = $this->getService('repos:sessions.session');
         $entity = $repo->findOrAddNew(array('sessionId' => $session->getId()));
+        
         $entity->setData(array(
-            'nodeId' => (int) $person->id,
-            'username' => (string) $person->username,
-            'usertype' => (string) $person->usertype,
-            'guest' => 0
+            'nodeId' => $person->id,
+            'username' => $person->username,
+            'usertype' => $person->usertype,
+            'guest' => 0,
         ));
         
-        $session->set('person', (object) $person->getData());
+        $session->set('person', (object) array(
+            'id' => $person->id,
+            'username' => $person->username,
+            'givenName' => $person->givenName,
+            'familyName' => $person->familyName,
+            'usertype' => $person->usertype,
+        ));
     }
 
     /**
