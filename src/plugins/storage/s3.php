@@ -18,6 +18,9 @@ use Aws\Credentials\Credentials;
  */
 class PlgStorageS3 extends PlgStorageAbstract
 {
+    const ACL_PUBLIC_READ = 'public-read';
+    const ACL_PRIVATE = 'private';
+    
     /**
      * S3 storage.
      *
@@ -54,8 +57,8 @@ class PlgStorageS3 extends PlgStorageAbstract
             'version' => 'latest',
             'region' => $config->region,
             'scheme' => $config->scheme,
-            'credentials' => $config->credentials,
-            'debug' => (bool) ANDEBUG,
+            'credentials' => $config->credentials->toArray(),
+            // 'debug' => (bool) ANDEBUG,
         ]);
         
         $this->_bucket = $config->bucket;
@@ -90,7 +93,11 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _read($path)
     {
-        return $this->_s3->getObject($this->_bucket, $path)->body;
+        // return $this->_s3->getObject($this->_bucket, $path)->body;
+        return $this->_s3->getObject(array(
+            'Bucket' => $this->_bucket,
+            'Key' => $path,
+        ));
     }
 
     /**
@@ -98,8 +105,21 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _write($path, $data, $public)
     {
-        $acl = $public ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE;
-        return $this->_s3->putObject($data, $this->_bucket, $path, $acl);
+        $acl = $public ? self::ACL_PUBLIC_READ : self::ACL_PRIVATE;
+        // return $this->_s3->putObject($data, $this->_bucket, $path, $acl);
+        
+        try {
+            $this->_s3->putObject(array(
+                'ACL' => $acl,
+                'Body' => (string) $data,
+                'Bucket' => $this->_bucket,
+                'Key' => $path,
+            ));
+        } catch (Aws\S3\Exception\S3Exception $e) {
+            error_log($e->getMessage());
+        }
+        
+        return true;
     }
 
     /**
@@ -107,7 +127,12 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _exists($path)
     {
-        return $this->_s3->getObjectInfo($this->_bucket, $path, false);
+        $res = $this->_s3->getObject(array(
+            'Bucket' => $this->_bucket,
+            'Key' => $path,
+        ));
+        
+        return !empty($res['Body']);
     }
 
     /**
@@ -115,7 +140,11 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _delete($path)
     {
-        return $this->_s3->deleteObject($this->_bucket, $path);
+        return true;
+        return $this->_s3->deleteObject(array(
+            'Bucket' => $this->_bucket,
+            'Key' => $path,
+        ));
     }
 
     /**
@@ -123,7 +152,6 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _getUrl($path)
     {   
-        $scheme = $this->_ssl ? 'https' : 'http';
-        return $scheme . '://s3.' . $this->_params->region . '.amazonaws.com/'.$this->_bucket.'/'.$path;
+        return $this->_s3->getObjectUrl($this->_bucket, $path);
     }
 }
