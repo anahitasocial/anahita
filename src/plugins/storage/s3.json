@@ -17,29 +17,47 @@
         "Copyright 2016 rmdStudio Inc."
     ],
     "files": [
-        "s3lib.php",
-				"s3.php"
+		"s3.php"
     ],
 		"fields": [{
 			"type": "text",
 			"name": "folder",
 			"label": "The folder to store the data",
 			"default": "assets"
-		}, {
+		}, 
+        {
 			"name": "bucket",
 			"type": "text",
 			"label": "Bucket",
 			"description": "",
 			"size": "40",
 			"default": ""
-		}, {
+		},
+        {
+			"name": "region",
+			"type": "text",
+			"label": "Region",
+			"description": "",
+			"size": "40",
+			"default": "us-east-1"
+		},
+        {
+			"name": "profile",
+            "type": "text",
+			"label": "Profile",
+			"description": "",
+			"size": "40",
+			"default": "default"
+		}, 
+        {
 			"name": "access_key",
 			"type": "text",
 			"label": "Access  Key",
 			"description": "",
 			"size": "40",
 			"default": ""
-		}, {
+		}, 
+        {
 			"name": "secret_key",
 			"type": "text",
 			"label": "Secret Key",

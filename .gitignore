@@ -3,8 +3,14 @@
 composer.lock
 src/templates/shiraz/params.ini
 vendor/autoload.php
+vendor/aws/*
+vendor/bin/*
 vendor/composer/*
 vendor/dg/*
+vendor/guzzlehttp/*
+vendor/mtdowling/*
+vendor/psr/*
+vendor/ralouphie/*
 vendor/symfony/*
 vendor/swiftmailer/*
 www/*

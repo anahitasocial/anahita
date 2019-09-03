@@ -1,6 +1,9 @@
 <?php
+require_once ANPATH_VENDOR . DS . 'autoload.php';
 
-require_once 's3lib.php';
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+use Aws\Credentials\Credentials;
 
 /**
  * Amazon S3 storage plugin.
@@ -46,14 +49,17 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         parent::__construct($dispatcher, $config);
 
-        $this->_bucket = ($config->bucket != '') ? $config->bucket : $this->_params->bucket;
-        $this->_ssl = (boolean) $config->ssl;
-
-        $this->_s3 = new S3(
-            $this->_params->access_key,
-            $this->_params->secret_key,
-            $this->_ssl
-        );
+        $this->_s3 = new Aws\S3\S3Client([
+            'profile' => $config->profile,
+            'version' => 'latest',
+            'region' => $config->region,
+            'scheme' => $config->scheme,
+            'credentials' => $config->credentials,
+            'debug' => (bool) ANDEBUG,
+        ]);
+        
+        $this->_bucket = $config->bucket;
+        $this->_ssl = is_ssl();
     }
 
     /**
@@ -66,8 +72,14 @@ class PlgStorageS3 extends PlgStorageAbstract
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-             'bucket' => '',
-             'ssl' => is_ssl()
+             'bucket' => $this->_params->bucket,
+             'scheme' => is_ssl() ? 'https' : 'http',
+             'region' => $this->_params->region,
+             'profile' => $this->_params->profile,
+             'credentials' => array(
+                 'key' => $this->_params->access_key,
+                 'secret' => $this->_params->secret_key,
+             )
         ));
 
         parent::_initialize($config);
@@ -110,13 +122,8 @@ class PlgStorageS3 extends PlgStorageAbstract
      * {@inheritdoc}
      */
     protected function _getUrl($path)
-    {
-        if ($this->_ssl) {
-            $url = 'https://s3.amazonaws.com/'.$this->_bucket.'/'.$path;
-        } else {
-            $url = 'http://'.$this->_bucket.'.s3.amazonaws.com/'.$path;
-        }
-
-        return $url;
+    {   
+        $scheme = $this->_ssl ? 'https' : 'http';
+        return $scheme . '://s3.' . $this->_params->region . '.amazonaws.com/'.$this->_bucket.'/'.$path;
     }
 }
