@@ -36,13 +36,6 @@ class PlgStorageS3 extends PlgStorageAbstract
     protected $_bucket;
 
     /**
-     * use SSL
-     *
-     * @var boolean
-     */
-    protected $_ssl;
-
-    /**
      * Constructor.
      *
      * @param mixed $dispatcher A dispatcher
@@ -56,13 +49,12 @@ class PlgStorageS3 extends PlgStorageAbstract
             'profile' => $config->profile,
             'version' => 'latest',
             'region' => $config->region,
-            'scheme' => $config->scheme,
+            'scheme' => 'https',
             'credentials' => $config->credentials->toArray(),
             // 'debug' => (bool) ANDEBUG,
         ]);
         
         $this->_bucket = $config->bucket;
-        $this->_ssl = is_ssl();
     }
 
     /**
@@ -76,7 +68,6 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         $config->append(array(
              'bucket' => $this->_params->bucket,
-             'scheme' => is_ssl() ? 'https' : 'http',
              'region' => $this->_params->region,
              'profile' => $this->_params->profile,
              'credentials' => array(
