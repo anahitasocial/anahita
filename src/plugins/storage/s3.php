@@ -67,7 +67,7 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         $config->append(array(
              'bucket' => '',
-             'ssl' => is_ssl()
+             'ssl' => true,
         ));
 
         parent::_initialize($config);
@@ -111,12 +111,6 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _getUrl($path)
     {
-        if ($this->_ssl) {
-            $url = 'https://s3.amazonaws.com/'.$this->_bucket.'/'.$path;
-        } else {
-            $url = 'http://'.$this->_bucket.'.s3.amazonaws.com/'.$path;
-        }
-
-        return $url;
+        return sprintf('https://s3.amazonaws.com/%s/%s', $this->_bucket, $path);
     }
 }
