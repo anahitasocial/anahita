@@ -2,6 +2,8 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.4.2
 =============================
+1. changed: updated 3slib.php library
+1. changed: using ssl = true at all times with AWS s3
 1. fixed: attribute validation in domain entities.
 1. fixed: attribute length (min/max) validation.
 1. changed: updated attribute validations in all entities.
