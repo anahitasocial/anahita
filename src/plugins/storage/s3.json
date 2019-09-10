@@ -26,6 +26,99 @@
 			"label": "The folder to store the data",
 			"default": "assets"
 		}, {
+			"name": "region",
+			"type": "list",
+			"label": "Region",
+			"description": "",
+			"size": "40",
+			"default": "us-east-1",
+            "option": [
+                {
+                    "value": "ap-east-1",
+                    "text": "Asia Pacific (Hong Kong)"
+                },
+                {
+                    "value": "ap-south-1",
+                    "text": "Asia Pacific (Mumbai)"
+                },
+                {
+                    "value": "ap-northeast-3",
+                    "text": "Asia Pacific (Osaka-Local)"
+                },
+                {
+                    "value": "ap-northeast-2",
+                    "text": "Asia Pacific (Seoul)"
+                },
+                {
+                    "value": "ap-southeast-1",
+                    "text": "Asia Pacific (Singapore)"
+                },
+                {
+                    "value": "ap-southeast-2",
+                    "text": "Asia Pacific (Sydney)"
+                },
+                {
+                    "value": "ap-northeast-1",
+                    "text": "Asia Pacific (Tokyo)"
+                },
+                {
+                    "value": "ca-central-1",
+                    "text": "Canada (Central)"
+                },
+                {
+                    "value": "cn-north-1",
+                    "text": "China (Beijing)"
+                },
+                {
+                    "value": "cn-northwest-1",
+                    "text": "China (Ningxia)"
+                },
+                {
+                    "value": "eu-central-1",
+                    "text": "EU (Frankfurt)"
+                },
+                {
+                    "value": "eu-west-1",
+                    "text": "EU (Ireland)"
+                },
+                {
+                    "value": "eu-west-2",
+                    "text": "EU (London)"
+                },
+                {
+                    "value": "eu-west-3",
+                    "text": "EU (Paris)"
+                },
+                {
+                    "value": "eu-north-1",
+                    "text": "EU (Stockholm)"
+                },
+                {
+                    "value": "me-south-1",
+                    "text": "Middle East (Bahrain)"
+                },
+                {
+                    "value": "sa-east-1",
+                    "text": "South America (São Paulo)"
+                },
+                {
+                    "value": "us-east-1",
+                    "text": "US East (N. Virginia) - AWS Default"
+                },
+                {
+                    "value": "us-east-2",
+                    "text": "US East (Ohio)"
+                },
+                {
+                    "value": "us-west-1",
+                    "text": "US West (N. California)"
+                },
+                {
+                    "value": "us-west-2",
+                    "text": "US West (Oregon)"
+                }
+            ]
+		}, {
 			"name": "bucket",
 			"type": "text",
 			"label": "Bucket",

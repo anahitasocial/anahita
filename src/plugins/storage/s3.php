@@ -28,13 +28,13 @@ class PlgStorageS3 extends PlgStorageAbstract
      * @var string
      */
     protected $_bucket;
-
+    
     /**
-     * use SSL
+     * S3 region
      *
-     * @var boolean
+     * @var string
      */
-    protected $_ssl;
+    protected $_region;
 
     /**
      * Constructor.
@@ -46,13 +46,15 @@ class PlgStorageS3 extends PlgStorageAbstract
     {
         parent::__construct($dispatcher, $config);
 
-        $this->_bucket = ($config->bucket != '') ? $config->bucket : $this->_params->bucket;
-        $this->_ssl = (boolean) $config->ssl;
+        $this->_bucket = $config->bucket;
+        $this->_region = $config->region;
 
         $this->_s3 = new S3(
-            $this->_params->access_key,
-            $this->_params->secret_key,
-            $this->_ssl
+            $config->access_key,
+            $config->secret_key,
+            $config->ssl,
+            's3.amazonaws.com',
+            $config->region
         );
     }
 
@@ -64,9 +66,12 @@ class PlgStorageS3 extends PlgStorageAbstract
      * @param AnConfig $config An optional AnConfig object with configuration options.
      */
     protected function _initialize(AnConfig $config)
-    {
+    {        
         $config->append(array(
-             'bucket' => '',
+             'access_key' => $this->_params->access_key,
+             'secret_key' => $this->_params->secret_key,
+             'bucket' => $this->_params->bucket,
+             'region' => $this->_params->region,
              'ssl' => true,
         ));
 
@@ -111,6 +116,6 @@ class PlgStorageS3 extends PlgStorageAbstract
      */
     protected function _getUrl($path)
     {
-        return sprintf('https://s3.amazonaws.com/%s/%s', $this->_bucket, $path);
+        return sprintf('https://s3.%s.amazonaws.com/%s/%s', $this->_region, $this->_bucket, $path);
     }
 }

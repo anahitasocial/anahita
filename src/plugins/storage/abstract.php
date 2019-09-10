@@ -35,9 +35,10 @@ abstract class PlgStorageAbstract extends AnObject
      */
     public function __construct($dispatcher = null, AnConfig $config)
     {
+        $this->_params = $config->meta;
+        
         parent::__construct($config);
 
-        $this->_params = $config->meta;
         $this->_folder = $config->folder;
 
         AnService::set('plg:storage.default', $this);
