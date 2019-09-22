@@ -281,7 +281,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
      *
      * @return LibUsersDomainEntityUser
      */
-    public function requiresReactivation()
+    public function requiresActivation()
     {
         $this->activationCode = $this->_createRandomHash();
         return $this;

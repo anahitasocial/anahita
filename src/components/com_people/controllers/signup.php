@@ -63,12 +63,13 @@ class ComPeopleControllerSignup extends ComBaseControllerService
 
         if ($isFirstUser) {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
+            $person->requiresActivation();
         } else {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
         
         if (! $person->validate()) {
-            // error_log(print_r($person->getErrors()->getMessage(), true));
+            error_log(print_r($person->getErrors()->getMessage(), true));
             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
 

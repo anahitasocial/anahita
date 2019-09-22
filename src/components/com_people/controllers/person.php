@@ -173,16 +173,21 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
          dispatch_plugin('user.onBeforeAddPerson', array('data' => $context->data));
          
+         $data->password = bin2hex(openssl_random_pseudo_bytes(32));
+         
          $person = parent::_actionAdd($context);
-
-         if (! $person->validate()) {
-             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
-         }
 
          if (in_array($data->usertype, $this->_allowed_user_types)) {
              $person->usertype = $data->usertype;
          } else {
              $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+         }
+         
+         $person->requiresActivation();
+
+         if (! $person->validate()) {
+             error_log(print_r($person->getErrors()->getMessage(), true));
+             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
          }
 
          dispatch_plugin('user.onAfterAddPerson', array('person' => $person));

@@ -59,7 +59,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     {
         $data = $context->data;
         $email = $data->email;
-        //an email
+
         $person = $this->getService('repos:people.person')
                       ->getQuery()
                       ->email($email)
@@ -68,7 +68,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
                       ->fetch();
 
         if ($person) {
-            $person->requiresReactivation()->save();
+            $person->requiresActivation()->save();
             $this->getResponse()->status = AnHttpResponse::CREATED;
             $this->person = $person;
         } else {
