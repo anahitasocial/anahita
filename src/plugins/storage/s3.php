@@ -48,12 +48,14 @@ class PlgStorageS3 extends PlgStorageAbstract
 
         $this->_bucket = $config->bucket;
         $this->_region = $config->region;
+        
+        $endpoint = sprintf('s3.%s.amazonaws.com', $this->_region);
 
         $this->_s3 = new S3(
             $config->access_key,
             $config->secret_key,
             $config->ssl,
-            's3.amazonaws.com',
+            $endpoint,            
             $config->region
         );
     }
@@ -72,6 +74,7 @@ class PlgStorageS3 extends PlgStorageAbstract
              'secret_key' => $this->_params->secret_key,
              'bucket' => $this->_params->bucket,
              'region' => $this->_params->region,
+             'folder' => $this->_params->folder,
              'ssl' => true,
         ));
 

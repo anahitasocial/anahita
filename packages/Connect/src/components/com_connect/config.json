@@ -40,7 +40,7 @@
 
             "name": "facebook_enable",
             "type": "list",
-            "default": "0",
+            "selected": "0",
             "label": "Enable Service"
         },
         {
@@ -78,7 +78,7 @@
 
             "name": "twitter_enable",
             "type": "list",
-            "default": "0",
+            "selected": "0",
             "label": "Enable Service"
         },
         {
@@ -116,7 +116,7 @@
 
             "name": "linkedin_enable",
             "type": "list",
-            "default": "0",
+            "selected": "0",
             "label": "Enable Service"
         },
         {

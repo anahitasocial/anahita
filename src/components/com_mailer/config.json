@@ -14,7 +14,7 @@
             "name": "debug",
             "size": "60",
             "type": "list",
-            "default": "",
+            "selected": "",
             "label": "Redirect All Emails"
         },
         {

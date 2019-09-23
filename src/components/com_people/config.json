@@ -13,7 +13,7 @@
             ],
             "name": "allow_registration",
             "type": "list",
-            "default": "1",
+            "selected": "public",
             "label": "COM-PEOPLE-CONFIG-ALLOW-REGISTRATION"
         },
         {
@@ -29,7 +29,7 @@
           ],
           "name": "access",
           "type": "list",
-          "default": "registered",
+          "selected": "registered",
           "label": "COM-PEOPLE-CONFIG-DEFAULT-ACCESS"
         }
     ]

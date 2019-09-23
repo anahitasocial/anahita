@@ -391,7 +391,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                      'name' => sprintf('meta[%s]', $field->name),
                      'id' => 'param-'.$field->name,
                      'label' => AnTranslator::_($field->label),
-                     'selected' => ($value === '') ? $field->default : $value,
+                     'selected' => isset($value) ? $value : $field->selected,
                      'description' => isset($field->description) ? AnTranslator::_($field->description) : '',
                      'options' => $options,
                      'disabled' => isset($field->disabled) ? 1 : 0,

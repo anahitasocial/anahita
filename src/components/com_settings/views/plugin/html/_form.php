@@ -1,7 +1,6 @@
 <? defined('ANAHITA') or die; ?>
 
 <form action="<?= @route($item->getURL()) ?>" method="post" class="an-entity">
-
   <fieldset>
       <legend><?= @text('COM-SETTINGS-PLUGIN-DETAILS') ?></legend>
       <dl>

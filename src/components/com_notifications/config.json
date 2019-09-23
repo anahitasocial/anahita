@@ -14,7 +14,7 @@
             "type": "list",
             "name": "use_cron",
             "label": "Use Cron",
-            "default": 0
+            "selected": 0
         }
     ]
 }
