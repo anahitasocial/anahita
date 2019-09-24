@@ -23,7 +23,7 @@
     		var dropzoneOptions = {
     				
     				sending: function(file, xhr, data) {
-    					var access = $(this.element).find('select[name="access"]').val();
+    					var access = $(self.element).find('select[name="access"]').val();
     					data.append("access", access);
     				},
     				
