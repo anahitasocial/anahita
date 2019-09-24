@@ -50,24 +50,21 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                     ),
                 ),
                 'body' => array(
-                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'default' => '',
                     'format' => 'string',
                     'length' => array(
                         'max' => 500,
                     ),
                 ),
                 'geoLatitude' => array(
-                    'required' => true,
                     'format' => 'float',
-                    'read' => 'public'
+                    'read' => 'public',
                 ),
                 'geoLongitude' => array(
-                    'required' => true,
                     'format' => 'float',
-                    'read' => 'public'
+                    'read' => 'public',
                 ),
                 'geoAddress' => array(
-                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'format' => 'string',
                     'read' => 'public',
                     'length' => array(
@@ -147,7 +144,7 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
     protected function _beforeEntityInsert()
     {
         $address = implode(',', $this->addressToArray());
-
+        
         if ($location = $this->_geocoder->geocode($address)) {
             $this->latitude = $location['latitude'];
             $this->longitude = $location['longitude'];
