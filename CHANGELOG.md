@@ -1,6 +1,6 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.4.2
+Anahita 4.4.1
 =============================
 1. fixed: location entity description which was preventing it to create a new record.
 1. fixed: issue with photos multiple uploader which was always setting access value to public
@@ -15,9 +15,6 @@ Anahita 4.4.2
 1. changed: applied search term length char limit to 100.
 1. changed: in location component we now have 2 API keys. One for the geolocation and other for the map and places. 
 1. changed: tags now store inheritance identifiers correctly in the database.
-
-Anahita 4.4.1
-=============================
 1. changed: renamed hashtagable to hashtaggable everywhere
 1. changed: the base class tag node identifier is now included in the type field of hashtags, locations, or any tags extending the tag node.
 1. changed: tag node (hashtag, location) json response now contains list of taggables with pagination 
