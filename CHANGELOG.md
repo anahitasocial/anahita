@@ -2,6 +2,7 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.4.2
 =============================
+1. fixed: location entity description which was preventing it to create a new record.
 1. fixed: issue with photos multiple uploader which was always setting access value to public
 1. fixed: issue with storage folder always being set to assets
 1. added: support for AWS S3 regions 
