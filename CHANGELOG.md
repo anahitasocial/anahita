@@ -2,6 +2,9 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.4.2
 =============================
+1. fixed: issue with photos multiple uploader which was always setting access value to public
+1. fixed: issue with storage folder always being set to assets
+1. added: support for AWS S3 regions 
 1. changed: updated 3slib.php library
 1. changed: using ssl = true at all times with AWS s3
 1. fixed: attribute validation in domain entities.
