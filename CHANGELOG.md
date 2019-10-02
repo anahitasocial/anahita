@@ -2,6 +2,10 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.4.1
 =============================
+1. fixed: code for mail message rendering
+1. fixed: default person access is public
+1. changed: removed isRegistrationOpen in person controller canRead
+1. changed: improved signup controller
 1. fixed: location entity description which was preventing it to create a new record.
 1. fixed: issue with photos multiple uploader which was always setting access value to public
 1. fixed: issue with storage folder always being set to assets
