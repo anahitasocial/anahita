@@ -27,6 +27,7 @@ class ComPeopleControllerSignup extends ComBaseControllerService
                     'repository' => 'repos:people.person'
                 ),
                 'validatable',
+                'com:mailer.controller.behavior.mailer',
             ),
             'serviceable' => array(
                 'except' => array(
@@ -61,9 +62,10 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         
         $person = parent::_actionAdd($context);
 
+        $person->requiresActivation();
+
         if ($isFirstUser) {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
-            $person->requiresActivation();
         } else {
             $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
         }
@@ -74,10 +76,11 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         }
 
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
-
+        
         if ($isFirstUser) {
-            $this->registerCallback('after.post', array($this, 'activateFirstAdmin'));
+            $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
         } else {
+            $this->registerCallback('after.add', array($this, 'mailActivationLink'));
             $context->response->setHeader('X-User-Activation-Required', true);
             $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
         }
@@ -85,6 +88,29 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         $this->getResponse()->status = AnHttpResponse::OK;
 
         return $person;
+    }
+    
+    /**
+     * Mail an activation link.
+     *
+     * @param AnCommandContext $context The context parameter
+     */
+    public function mailActivationLink(AnCommandContext $context)
+    {
+        $person = $context->result;
+        $settings = $this->getService('com:settings.setting');
+        $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-ACTIVATE';
+        
+        $mails[] = array(
+            'to' => $person->email,
+            'subject' => sprintf(AnTranslator::_($subject), $settings->sitename),
+            'template' => 'account_activate',
+            'data' => array(
+                'person' => $person,
+            ),
+        );
+
+        $this->mail($mails);
     }
     
     /**

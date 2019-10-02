@@ -46,15 +46,6 @@ class ComPeopleControllerPermissionPerson extends ComActorsControllerPermissionD
 
         parent::_initialize($config);
     }
-    
-    public function canRead() 
-    {        
-        if ($this->_viewer->guest() && $this->isRegistrationOpen() && !$this->getItem()) {
-            return true;
-        }
-        
-        return parent::canRead();
-    }
 
     /**
      * return true if viewer is an admin or a guest.

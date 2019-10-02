@@ -163,7 +163,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
         $data = array_merge($config['data'], array('config' => $config));
 
         if ($layout && $template->findTemplate($layout)) {
-            $output = $template->loadTemplate($layout, array('output' => $output))->render();
+            $output = $template->loadTemplate($layout, $data)->render();
         } else {
             $output = $template->loadTemplate($config->template, $data)->render();
         }
@@ -229,7 +229,6 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
             ->send();
 
             if ($this->_test_options->enabled && $this->_test_options->log) {
-
                 $subject = AnService::get('anahita:filter.cmd')->sanitize(str_replace(' ', '_', $subject));
                 $file = $this->_test_options->log.'/'.$subject.'.'.time().'.html';
 
@@ -239,6 +238,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
                 file_put_contents($file, $body);
             }
+            
         }
     }
 }

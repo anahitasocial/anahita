@@ -29,7 +29,7 @@
           ],
           "name": "access",
           "type": "list",
-          "selected": "registered",
+          "selected": "public",
           "label": "COM-PEOPLE-CONFIG-DEFAULT-ACCESS"
         }
     ]
