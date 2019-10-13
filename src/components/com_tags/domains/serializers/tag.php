@@ -31,6 +31,9 @@ class ComTagsDomainSerializerTag extends ComBaseDomainSerializerDefault
     {
         $data = parent::toSerializableArray($entity);
 
+        $data['name'] = $entity->name;
+        $data['body'] = $entity->body;
+        $data['alias'] = $entity->alias;
         $data['creationTime'] = $entity->creationTime->getDate();
         $data['updateTime'] = $entity->updateTime->getDate();
         $data['taggables'] = $entity->taggables->fetch();
