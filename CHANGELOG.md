@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.2
+=============================
+1. fixed: issue with missing tag name and alias in json response
+
 Anahita 4.4.1
 =============================
 1. fixed: code for mail message rendering
