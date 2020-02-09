@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.2
+=============================
+1. removed: get_magic_quotes_gpc because it has been deprecated
+1. changed: in the term filter, added backslash before the dash in 
+regular expression.
+
 Anahita 4.4.1
 =============================
 1. fixed: code for mail message rendering
