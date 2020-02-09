@@ -20,7 +20,7 @@ class AnFilterTerm extends AnFilterAbstract
     protected function _validate($value)
     {
         $value = trim($value);
-        $pattern = '/\pL|[.#@_\s-0-9]/u';
+        $pattern = '/\pL|[.#@_\-\s0-9]/u';
 
         return is_string($value) && preg_replace($pattern, '', $value);
     }
@@ -35,7 +35,7 @@ class AnFilterTerm extends AnFilterAbstract
     protected function _sanitize($value)
     {
         $value = trim($value);
-        $pattern = '/(?![.#@_\s-0-9])\PL/u';
+        $pattern = '/(?![.#@_\-\s0-9])\PL/u';
 
         return preg_replace($pattern, '', $value);
     }

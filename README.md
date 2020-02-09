@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.4.2
+*Version:* 4.4.3 Birth Release
 
 Anahita is a platform and framework for developing open science and knowledge sharing applications on a social networking foundation. Use Anahita to build:
 
@@ -50,7 +50,7 @@ The code in the master branch is called the **Embryo**. It is what we use to pow
 
 If you are upgrading from 4.3.* to 4.4.*, in `www/configuration.php` file, change `AnConfig` to `AnSiteConfig`.
 
-If you are using any previous 4.* versions of Anahita, [here is how to upgrade] (https://www.getanahita.com/articles/158983-updating-from-anahita-4-2-to-4-3)
+If you are using any previous 4.* versions of Anahita, [here is how to upgrade](https://www.getanahita.com/articles/158983-updating-from-anahita-4-2-to-4-3)
 
 ## Installation
 
@@ -61,7 +61,7 @@ Before you start please make sure that your server meets the following requireme
 1. Linux or unix server
 1. Nginx or Apache 2.0+
 1. MySql 5.6+
-1. php 5.6+ with OPcache and APCU. Use PHP 7.0+ for best results.
+1. php 5.6+ with OPcache and APCU. Use PHP version 7.0.0 to 7.3.* for best results. (**PLEASE NOTE:** Anahita isn't yet supported on **PHP 7.4**, because the [upgrade list](https://github.com/php/php-src/blob/PHP-7.4/UPGRADING) is long and we are still working on it).
 1. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
