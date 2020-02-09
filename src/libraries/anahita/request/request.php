@@ -172,7 +172,7 @@ class AnRequest
         }
 
         // Handle magic quotes compatability
-        if (get_magic_quotes_gpc() && !in_array($hash, array('FILES', 'SESSION'))) {
+        if (!in_array($hash, array('FILES', 'SESSION'))) {
             $result = self::_stripSlashes($result);
         }
 
