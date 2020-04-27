@@ -43,10 +43,10 @@ class ComLocationsDomainQuerySelector extends AnDomainQueryDefault
         $nearby_longitude = null;
 
         //nearby
-        if( $this->locatable->geoLongitude && $this->locatable->geoLatitude ) {
+        if( $this->taggable->geoLongitude && $this->taggable->geoLatitude ) {
 
-          $nearby_latitude = $this->locatable->geoLatitude;
-          $nearby_longitude = $this->locatable->geoLongitude;
+          $nearby_latitude = $this->taggable->geoLatitude;
+          $nearby_longitude = $this->taggable->geoLongitude;
 
         } elseif ($this->nearby_latitude && $this->nearby_longitude) {
 

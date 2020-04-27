@@ -20,11 +20,11 @@
 </div>
 <? endif; ?>
 
-<? $locations_url = 'option=com_locations&view=locations&layout=list_tags&locatable_id='.$entity->id; ?>
+<? $locations_url = 'option=com_locations&view=locations&layout=list_tags&taggable_id='.$entity->id; ?>
 <ul class="an-locations" id="locations-<?= $entity->id ?>" data-url="<?= @route($locations_url) ?>"></ul>
 
 <? if($entity->authorize('edit')) : ?>
-<? $selector_url = 'option=com_locations&view=locations&layout=selector&locatable_id='.$entity->id; ?>
+<? $selector_url = 'option=com_locations&view=locations&layout=selector&taggable_id='.$entity->id; ?>
 <div class="toolbar">
   <button disabled class="btn btn-small" data-url="<?= @route($selector_url) ?>" data-trigger="LocationSelector" data-locatable="<?= $entity->id ?>">
   + <?= @text('LIB-AN-ACTION-ADD-LOCATION') ?>

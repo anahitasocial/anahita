@@ -149,4 +149,24 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
 
         $this->getResponse()->setRedirect(route($url));
     }
+    
+    /**
+    *  Method to fetch the taggable object
+    *
+    *
+    */
+    public function fetchTaggable(AnCommandContext $context)
+    {
+        $this->taggable = AnService::get('repos:nodes.node')
+                           ->getQuery()
+                           ->disableChain()
+                           ->id($this->taggable_id)
+                           ->fetch();
+
+        if(!$this->taggable) {
+            throw new LibBaseControllerExceptionNotFound('Locatable object does not exist');
+        }
+
+        return $this->taggable;
+    }
 }
