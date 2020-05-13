@@ -46,7 +46,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
                 $query = $this->getService('com:locations.domain.query.selector')
                               ->keyword($keyword)
                               ->excludeIds(AnHelperArray::collect($this->taggable->locations, 'id'))
-                              ->locatable($this->taggable)
+                              ->taggable($this->taggable)
                               ->nearbyLatitude($this->nearby_latitude)
                               ->nearbyLongitude($this->nearby_longitude);
 

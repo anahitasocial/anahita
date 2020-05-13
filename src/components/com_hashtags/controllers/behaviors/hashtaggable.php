@@ -101,7 +101,7 @@ class ComHashtagsControllerBehaviorHashtaggable extends AnControllerBehaviorAbst
             
             $query
             ->join('left', 'edges AS hashtag_edge', '('.$entityType.'.id = hashtag_edge.node_b_id AND hashtag_edge.type=\''.$edgeType.'\')')
-            ->join('left', 'nodes AS hashtag', 'hashtag_edge.node_a_id = hashtag.id');
+            ->join('left', 'nodes AS hashtag', 'hashtag_edge.node_a_id = @col(hashtag.id)');
 
             foreach ($this->hashtag as $hashtag) {
                 $hashtag = $this->getService('com:hashtags.filter.hashtag')->sanitize($hashtag);
@@ -111,10 +111,10 @@ class ComHashtagsControllerBehaviorHashtaggable extends AnControllerBehaviorAbst
             }
 
             $query
-            ->where('hashtag.name', 'IN', $hashtags)
+            ->where('@col(hashtag.name)', 'IN', $hashtags)
             ->group($entityType.'.id');
 
-            //print str_replace('#_', 'jos', $query);
+            // error_log(str_replace('#_', 'jos', $query));
         }
     }
 }
