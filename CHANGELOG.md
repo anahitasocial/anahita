@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.4
+=============================
+1. added: max length to the alias in describable behaviour
+1. changed: tags, locations, and hashtags controllers so they work with the rest api 
+1. changed: geolocatable behaviours to work with the REST api. For example addLocation now returns the location object
+
 Anahita 4.4.3
 =============================
 1. removed: get_magic_quotes_gpc because it has been deprecated
