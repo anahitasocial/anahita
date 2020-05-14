@@ -105,7 +105,6 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
        if (! isset($this->_location_controller)) {
            $identifier = 'com:locations.controller.location';
            $request = new LibBaseControllerRequest(array('format' => $this->getRequest()->getFormat()));
-
            $this->_location_controller = $this->getService($identifier, array(
                'read_only' => true,
                'request' => $request,
