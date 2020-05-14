@@ -57,7 +57,10 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
                     ),
                 ),
                 'alias' => array(
-                    'format' => 'slug'
+                    'format' => 'slug',
+                    'length' => array(
+                        'max' => 100,
+                    ),
                 ),
             ),
             'aliases' => array(

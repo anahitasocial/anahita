@@ -8,7 +8,7 @@
 
     <div data-behavior="LocationSelector">
         <div id="location-form-container">
-            <form action="<?= @route($locatable->getURL()) ?>" method="post">
+            <form action="<?= @route($taggable->getURL()) ?>" method="post">
                 <input type="hidden" name="action" value="addlocation" />
 
                 <div class="control-group">
@@ -79,7 +79,7 @@
         </div>
 
         <div id="locations-container">
-            <? $url = 'layout=list_selector&locatable_id='.$locatable->id; ?>
+            <? $url = 'layout=list_selector&taggable_id='.$taggable->id; ?>
             <?= @helper('ui.filterbox', @route($url), array('placeholder' => @text('LIB-AN-SEARCH-PLACEHOLDER'))) ?>
             <div class="an-entities" data-url="<?= @route($url.'&limit=100') ?>"></div>
         </div>

@@ -16,6 +16,11 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
    *   temporary location object for adding and removing to a gelocatable
    */
    protected $_location = null;
+   
+   /*
+   *   temporary location controller object for rendering a location object
+   */
+   protected $_location_controller = null;
 
    /**
     * Constructor.
@@ -41,7 +46,15 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
    */
    protected function _actionAddlocation(AnCommandContext $context)
    {
-       return $this->getItem()->addLocation($this->_location);
+       $this->getItem()->addLocation($this->_location);
+       
+       if ($this->isDispatched()) {
+           $context->response->content = $this->getLocationController()
+           ->setItem($this->_location)
+           ->display();
+       }
+       
+       return $this->_location;
    }
 
    /**
@@ -53,7 +66,8 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
    */
    protected function _actionDeletelocation(AnCommandContext $context)
    {
-       return $this->getItem()->deleteLocation($this->_location);
+       $this->getItem()->deleteLocation($this->_location);
+       return $this->_location;
    }
 
    /**
@@ -84,6 +98,22 @@ class ComLocationsControllerBehaviorGeolocatable extends AnControllerBehaviorAbs
        $this->_location = $this->getService('repos:locations.location')->findOrAddNew($attr);
 
        return $this->_location;
+   }
+   
+   public function getLocationController()
+   {
+       if (! isset($this->_location_controller)) {
+           $identifier = 'com:locations.controller.location';
+           $request = new LibBaseControllerRequest(array('format' => $this->getRequest()->getFormat()));
+
+           $this->_location_controller = $this->getService($identifier, array(
+               'read_only' => true,
+               'request' => $request,
+               'response' => $this->getResponse(),
+           ));
+       }
+       
+       return $this->_location_controller;
    }
 
    /**

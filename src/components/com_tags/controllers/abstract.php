@@ -64,21 +64,28 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         
         $entity = parent::_actionRead($context);
 
-        if (!empty($entity->taggables)) {
-            if ($this->scope) {
-                $entity->taggables->scope($this->scope);
-            }
-            
-            if ($this->sort == 'top') {
-                $entity->taggables->order('(COALESCE(node.comment_count,0) + COALESCE(node.vote_up_count,0) + COALESCE(node.subscriber_count,0) + COALESCE(node.follower_count,0))', 'DESC')->groupby('taggable.id');;
-            } else {
-                $entity->taggables->order('node.created_on', 'DESC');
-            }
-            
-            $entity->taggables->limit($this->limit, $this->start);
+        if ($this->scope) {
+            $entity->taggables->scope($this->scope);
         }
+        
+        $alias = $entity
+        ->taggables
+        ->getRepository()
+        ->getResources()
+        ->main()
+        ->getAlias();
+        
+        if ($this->sort == 'top') {
+            $conditions = '(COALESCE(:alias.comment_count,0) + COALESCE(:alias.vote_up_count,0) + COALESCE(:alias.subscriber_count,0) + COALESCE(:alias.follower_count,0))';
+            $conditions = str_replace(':alias', $alias, $conditions);
+            $entity->taggables->order($conditions, 'DESC')->groupby('@col(taggable.id)');
+        } else {
+            $entity->taggables->order($alias.'.created_on', 'DESC');
+        }
+        
+        $entity->taggables->limit($this->limit, $this->start);
 
-        // print str_replace('#_', 'jos', $entity->taggables->getQuery());
+        // error_log(str_replace('#_', 'jos', $entity->taggables->getQuery()));
 
         return $entity;
     }
@@ -93,13 +100,11 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $entities = parent::_actionBrowse($context);
 
         if(in_array($this->sort, array('top', 'trending')) && $this->q == '') {
-
             $package = $this->getIdentifier()->package;
-            $name = $this->getIdentifier()->name;
 
             $entities->select('COUNT(*) AS count')
-            ->join('RIGHT', 'edges AS edge', $name.'.id = edge.node_a_id')
-            ->where('edge.type', 'LIKE', '%com:'.$package.'.domain.entity.tag')->group($name.'.id')
+            ->join('RIGHT', 'edges AS edge', '@col(id) = edge.node_a_id')
+            ->where('edge.type', 'LIKE', '%com:'.$package.'.domain.entity.tag')->group('@col(id)')
             ->order('count', 'DESC');
 
             if ($this->sort == 'trending') {
@@ -148,5 +153,25 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         }
 
         $this->getResponse()->setRedirect(route($url));
+    }
+    
+    /**
+    *  Method to fetch the taggable object
+    *
+    *
+    */
+    public function fetchTaggable(AnCommandContext $context)
+    {
+        $this->taggable = AnService::get('repos:nodes.node')
+                           ->getQuery()
+                           ->disableChain()
+                           ->id($this->taggable_id)
+                           ->fetch();
+
+        if(!$this->taggable) {
+            throw new LibBaseControllerExceptionNotFound('Locatable object does not exist');
+        }
+
+        return $this->taggable;
     }
 }

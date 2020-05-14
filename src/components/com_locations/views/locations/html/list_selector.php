@@ -3,7 +3,7 @@
 <? foreach($locations as $location) : ?>
 <div class="an-entity">
     <div class="entity-title">
-        <a data-action="add-location" data-location="<?= $location->id ?>" href="<?= @route($locatable->getURL()) ?>">
+        <a data-action="add-location" data-location="<?= $location->id ?>" href="<?= @route($taggable->getURL()) ?>">
             <i class="icon-map-marker"></i>
             <?= $location->name ?>
         </a>
