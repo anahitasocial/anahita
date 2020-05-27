@@ -161,6 +161,11 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if (!is_person($entity) && $entity->isOwnable()) {
             $data['owner'] = $entity->owner->toSerializableArray();
         }
+        
+        if ($entity->isGeolocatable()) {
+            $data['longitude'] = $entity->geoLongitude;
+            $data['latitude'] = $entity->geoLatitude;
+        }
 
         if ($entity->inherits('ComLocationsDomainEntityLocation')) {
             $data['longitude'] = $entity->geoLongitude;
