@@ -28,6 +28,20 @@
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
+            'attributes' => array(
+                'geoLatitude' => array(
+                    'format' => 'float',
+                    'read' => 'public',
+                ),
+                'geoLongitude' => array(
+                    'format' => 'float',
+                    'read' => 'public',
+                ),
+            ),
+            'aliases' => array(
+                'latitude' => 'geoLatitude',
+                'longitude' => 'geoLongitude',
+            ),
             'relationships' => array(
                 'locations' => array(
                     'through' => 'com:locations.domain.entity.tag',
