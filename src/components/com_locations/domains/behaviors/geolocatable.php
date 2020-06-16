@@ -137,7 +137,7 @@
     protected function _beforeQuerySelect(AnCommandContext $context)
     {
         $query = $context->query;
-
+        
         if ($query->search_nearby) {
             $this->_filterDistance($context);
         }

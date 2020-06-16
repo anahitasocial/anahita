@@ -82,6 +82,10 @@ class ComSearchControllerSearch extends ComBaseControllerResource
      */
     protected function _actionGet(AnCommandContext $context)
     {
+        $this->getService('repos:search.node')
+        ->addBehavior('privatable')
+        ->addBehavior('com:locations.domain.behavior.geolocatable');
+        
         $this->setView('searches');
 
         if ($this->actor) {
@@ -107,7 +111,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         $query = $this->getService('com:search.domain.query.node')
                       ->searchTerm($this->term)
-                      ->limit($this->limit, $this->start);
+                      ->limit($this->limit, $this->start);                         
 
         if ($this->actor) {
            $query->ownerContext($this->actor);
@@ -134,7 +138,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->orderByRelevance();
         }
 
-        //print str_replace('#_', 'jos', $query);
+        // error_log(str_replace('#_', 'jos', $query));
 
         $entities = $query->toEntitySet();
 

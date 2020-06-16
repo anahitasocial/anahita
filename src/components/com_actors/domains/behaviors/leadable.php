@@ -25,11 +25,30 @@ class ComActorsDomainBehaviorLeadable extends AnDomainBehaviorAbstract
     {
         $config->append(array(
             'attributes' => array(
-                'leaderCount' => array('default' => 0, 'write' => 'private'),
-                'leaderIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'blockerIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'mutualIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'mutualCount' => array('default' => 0, 'write' => 'private'),
+                'leaderCount' => array(
+                    'default' => 0, 
+                    'write' => 
+                    'private'
+                ),
+                'leaderIds' => array(
+                    'type' => 'set', 
+                    'default' => 'set', 
+                    'write' => 'private'
+                ),
+                'blockerIds' => array(
+                    'type' => 'set', 
+                    'default' => 'set', 
+                    'write' => 'private'
+                ),
+                'mutualIds' => array(
+                    'type' => 'set', 
+                    'default' => 'set', 
+                    'write' => 'private'
+                ),
+                'mutualCount' => array(
+                    'default' => 0, 
+                    'write' => 'private',
+                ),
             ),
             'relationships' => array(
                 'blockers' => array(

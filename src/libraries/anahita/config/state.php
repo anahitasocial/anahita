@@ -152,7 +152,7 @@ class AnConfigState extends AnConfig
     public function getData($unique = false)
     {
         $data = array();
-
+        
         foreach ($this->_data as $name => $state) {
             if (isset($state->value)) {
                 //Only return unique data

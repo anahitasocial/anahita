@@ -80,7 +80,7 @@ class ComBaseControllerToolbarCommand extends LibBaseTemplateObject
      */
     public function getData()
     {
-        $this->getAttribute('data-data');
+        return $this->getAttribute('data-data');
     }
 
     /**
@@ -90,7 +90,7 @@ class ComBaseControllerToolbarCommand extends LibBaseTemplateObject
      */
     public function getMethod()
     {
-        $this->getAttribute('data-method');
+        return $this->getAttribute('data-method');
     }
 
     /**

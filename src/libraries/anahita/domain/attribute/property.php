@@ -196,8 +196,9 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     {
         $key = $this->getColumn()->key();
         $value = null;
-        if ($this->isMaterializable($data)) {
-            if (!is_null($data[$key])) {
+        
+        if ($this->isMaterializable($data)) {            
+            if (isset($data[$key])) {
                 if ($this->isScalar()) {
                     $value = $data[$key];
                     settype($value, $this->getType());
@@ -207,6 +208,9 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
                 }
             }
         } else {
+            // @NOTE this seems like a harsh throw. 
+            // If database is returning more than what the entity can hold, 
+            // it's unfortunate, but we don't have to halt the execution!
             throw new AnDomainExceptionMapping($this->getName().' Mapping Failed');
         }
 
