@@ -138,7 +138,7 @@
     {
         $query = $context->query;
         
-        if ($query->search_nearby) {
+        if ($query->search_distance) {
             $this->_filterDistance($context);
         }
     }
@@ -149,7 +149,7 @@
     protected function _filterDistance(AnCommandContext $context)
     {
         $query = $context->query;
-        $location = $query->search_nearby;
+        $location = $query->search_distance;
 
         $lat = $location['latitude'];
         $lng = $location['longitude'];

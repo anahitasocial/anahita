@@ -63,8 +63,11 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'sort' => 'relevant',
                 'direction' => 'ASC',
                 'term' => '',
+                'search_nearme' => false,
                 'search_nearby' => '',
-                'search_range' => 5,
+                'coord_long' => 0.0,
+                'coord_lat' => 0.0,
+                'search_range' => 20,
                 'search_comments' => false,
                 'scope' => 'all',
             ),
@@ -121,9 +124,18 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->searchComments($this->search_comments);
         }
 
-        if ($this->search_nearby && ($lnglat = $this->_geocoder->geocode($this->search_nearby))) {
-            $query->searchNearby($lnglat);
+        if ($this->search_nearme || $this->search_nearby) {
+            $lnglat['longitude'] = $this->coord_long;
+            $lnglat['latitude'] = $this->coord_lat;
+            
+            if ($this->search_nearby) {
+                $lnglat = $this->_geocoder->geocode($this->search_nearby);
+            }
+            
+            $query->searchDistance($lnglat);
             $query->searchRange($this->search_range);
+            
+            $query->order('distance', 'ASC');
         }
 
         if ($this->current_scope) {
@@ -132,8 +144,6 @@ class ComSearchControllerSearch extends ComBaseControllerResource
 
         if ($this->sort == 'recent') {
             $query->order('node.created_on', 'DESC');
-        } elseif ($this->search_nearby && $this->sort == 'distance' ) {
-            $query->order('distance', 'ASC');
         } else {
             $query->orderByRelevance();
         }
@@ -171,12 +181,16 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $this->_request->search_range = $value;
             $this->search_range = $value;
         }
-
-        if ($this->_request->search_comments == 1 || $this->_request->search_comments == 'true') {
-           $value = true;
-        } else {
-           $value = false;
+        
+        if (isset($this->_request->coord_long) && isset($this->_request->coord_lat)) {
+            $this->coord_long = floatval($this->_request->coord_long);
+            $this->coord_lat = floatval($this->_request->coord_lat);
         }
+        
+        $this->search_nearby = AnHelperString::substr($this->_request->search_nearby, 0, self::SEARCH_TERM_CHAR_LIMIT);
+        $this->search_nearme = $this->_request->search_nearme == 'true' ? true : false;
+        
+        $value = $this->_request->search_comments == 1 || $this->_request->search_comments == 'true';
 
         $this->_request->search_comments = $value;
         $this->search_comments = $value;

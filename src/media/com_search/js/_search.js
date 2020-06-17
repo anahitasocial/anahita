@@ -82,9 +82,7 @@
 				 'SearchNearby' : function ( event ) {
 
 						this.range.prop('disabled', false);
-						this.sort.find('option[value="distance"]').prop('disabled', false);
-						this.sort.val('distance');
-						this.searchOptions.sort = 'distance';
+						this.sort.val('relevant');
 						this.submit(this.nearby);
 				 }
 			});
@@ -95,7 +93,6 @@
 					 	event.preventDefault();
 						if($(event.currentTarget).val() == '') {
 								this.range.prop('disabled', true);
-								this.sort.find('option[value="distance"]').prop('disabled', true);
 								this.sort.val('relevant');
 
 								this.searchOptions.search_nearby = null;
