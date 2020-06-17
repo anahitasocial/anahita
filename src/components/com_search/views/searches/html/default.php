@@ -26,18 +26,14 @@
     <fieldset>
         <label name="SortOptions"><?= @text('COM-SEARCH-OPTION-SORT') ?></label>
         <select form="navbar-search" data-trigger="SortOption" id="SortOptions" name="sort">
-    				<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
-    					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
-    				</option>
+			<option <?= ($sort == 'relevant') ? 'selected' : '' ?> value="relevant">
+				<?= @text('COM-SEARCH-OPTION-SORT-MOST-RELEVANT') ?>
+			</option>
 
-    				<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
-    					<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
-    				</option>
-
-            <option <?= ($sort == 'distance') ? '' : 'disabled' ?> <?= ($sort == 'distance') ? 'selected' : '' ?> value="distance">
-    					<?= @text('COM-SEARCH-OPTION-SORT-DISTANCE') ?>
-    				</option>
-  			</select>
+			<option <?= ($sort == 'recent') ? 'selected' : '' ?> value="recent">
+				<?= @text('COM-SEARCH-OPTION-SORT-MOST-RECENT') ?>
+			</option>
+  		</select>
 
         <label name="SearchNearby"><?= @text('COM-SEARCH-OPTION-NEARBY') ?></label>
         <input 

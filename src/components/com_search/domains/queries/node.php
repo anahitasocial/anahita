@@ -43,7 +43,11 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
             'node.parent_id',
             'node.parent_type',
             'node.filename',
-            'node.cover_filename'
+            'node.cover_filename',
+            'node.comment_count',
+            'node.vote_up_count',
+            'node.subscriber_count',
+            'node.follower_count'
         ));
     }
 
@@ -137,7 +141,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
         $this->where('( '.$owner_query.' @col(node.type) IN (:types) '.$comment_query.')')
              ->bind('types', $types)
              ->bind('comment_type', 'ComBaseDomainEntityComment%')
-             ->bind('parent_types', $comments);
+             ->bind('parent_types', $comments);  
     }
 
     /**

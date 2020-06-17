@@ -19,7 +19,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
     public function toSerializableArray($entity)
     {
         $data = new AnConfig();
-
+        
         $viewer = $this->getService('com:people.viewer');
 
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();

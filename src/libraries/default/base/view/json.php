@@ -102,14 +102,13 @@ class LibBaseViewJson extends LibBaseViewAbstract
     protected function _getList()
     {
         $data = array();
-
+        
         if ($items = $this->_state->getList()) {
             $name = AnInflector::singularize($this->getName());
-
+            
             foreach ($items as $item) {
                 $this->_state->setItem($item);
-                $name = null;
-                $item = $this->_serializeToArray($item, $name);
+                $item = $this->_serializeToArray($item);
 
                 if (count($commands = $this->getToolbarCommands('list'))) {
                     $item['commands'] = $commands;

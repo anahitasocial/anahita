@@ -24,7 +24,8 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
     {
         $config->append(array(
             'inheritance' => array(
-                'abstract' => $this->getIdentifier()->package == 'base', ),
+                'abstract' => $this->getIdentifier()->package == 'base', 
+            ),
             'attributes' => array(
                 'body' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
