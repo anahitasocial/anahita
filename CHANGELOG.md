@@ -2,6 +2,9 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.4.4
 =============================
+1. added: search near me functionality to the search component 
+1. fixed: issue which was breaking the json search response when viewer was in the results and breaking the list.
+1. removed: closest sort from search. It is now happening in combination with recent or most relevant sorting whenever geo search is happening.  
 1. added: max length to the alias in describable behaviour
 1. changed: tags, locations, and hashtags controllers so they work with the rest api 
 1. changed: geolocatable behaviours to work with the REST api. For example addLocation now returns the location object
