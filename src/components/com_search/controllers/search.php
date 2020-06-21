@@ -122,16 +122,6 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->searchComments($this->search_comments);
         }
 
-        if ($this->coord_lng && $this->coord_lat) {
-            $lnglat['longitude'] = $this->coord_lng;
-            $lnglat['latitude'] = $this->coord_lat;
-            
-            $query->searchDistance($lnglat);
-            $query->searchRange($this->search_range);
-            
-            $query->order('distance', 'ASC');
-        }
-
         if ($this->current_scope) {
             $query->scope($this->current_scope);
         }
@@ -140,6 +130,16 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->order('node.created_on', 'DESC');
         } else {
             $query->orderByRelevance();
+        }
+
+        if ($this->coord_lng && $this->coord_lat) {
+            $lnglat['longitude'] = $this->coord_lng;
+            $lnglat['latitude'] = $this->coord_lat;
+            
+            $query->searchDistance($lnglat);
+            $query->searchRange($this->search_range);
+            
+            $query->order('distance', 'ASC');
         }
 
         // error_log(str_replace('#_', 'jos', $query));
