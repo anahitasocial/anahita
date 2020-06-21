@@ -18,6 +18,8 @@
 			sortOption : 'select[data-trigger="SortOption"]',
 			commentOption : 'input[data-trigger="SearchOption"]',
 			nearbyOption : 'input[data-trigger="SearchNearby"]',
+            coordLatOption : 'input[data-trigger="CoordLat"]',
+            coordLngOption : 'input[data-trigger="CoordLng"]',
 			rangeOption : 'select[data-trigger="SearchRange"]',
 			scope : '[data-trigger="ChangeScope"]',
 			results : '#an-search-results',
@@ -34,12 +36,15 @@
 			this.nearby = $(this.options.nearbyOption);
 			this.range = $(this.options.rangeOption);
 			this.scope = $(this.options.scope);
+            this.coordLng = $(this.options.coordLngOption);
+            this.coordLat = $(this.options.coordLatOption);
 
 			this.searchOptions = {
 				scope : 'all',
 				sort : 'recent',
 				search_comments : false,
-				search_nearby : null,
+                coord_lat: 0.0,
+                coord_lng: 0.0,
 				search_range : null,
 			};
 
@@ -56,8 +61,8 @@
 				click : function( event ) {
 					 event.preventDefault();
 					 $(this.options.searchScopes).find('li').removeClass('active');
-	 				 $(event.currentTarget).parent().addClass('active');
-					 this.submit($(event.currentTarget));
+	 				 $(event.target).parent().addClass('active');
+					 this.submit($(event.target));
 				}
 			});
 
@@ -65,7 +70,7 @@
 			this._on( this.sort, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.submit($(event.currentTarget));
+					this.submit($(event.target));
 				}
 			});
 
@@ -73,16 +78,14 @@
 			this._on( this.comments, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.submit($(event.currentTarget));
+					this.submit($(event.target));
 				}
 			});
 
 			//nearby options search
 			this._on( this.form, {
 				 'SearchNearby' : function ( event ) {
-
 						this.range.prop('disabled', false);
-						this.sort.val('relevant');
 						this.submit(this.nearby);
 				 }
 			});
@@ -91,12 +94,13 @@
 			this._on( this.nearby, {
 				 change : function ( event ) {
 					 	event.preventDefault();
-						if($(event.currentTarget).val() == '') {
+						if($(event.target).val() == '') {
 								this.range.prop('disabled', true);
 								this.sort.val('relevant');
 
-								this.searchOptions.search_nearby = null;
 								this.searchOptions.search_range = null;
+                                this.searchOptions.coord_lng = null;
+								this.searchOptions.coord_lat = null;
 								this.searchOptions.sort = 'relevant';
 								this.submit(this.form);
 						}
@@ -107,29 +111,30 @@
 			this._on( this.range, {
 				change : function ( event ) {
 					event.preventDefault();
-					this.submit($(event.currentTarget));
+					this.submit($(event.target));
 				}
 			});
 		},
 
-		submit : function( currentTarget ) {
+		submit : function( target ) {
 
 			var self = this;
 
 			this.searchOptions = $.extend(this.searchOptions, {
 					term : this.term.val(),
 					sort : this.sort.val(),
-					scope : currentTarget.data('scope'),
+					scope : target.data('scope'),
 					search_comments : this.comments.is(':checked'),
-					search_nearby : this.nearby.val(),
-					search_range : (this.nearby.val()) ? this.range.val() : null,
+					search_range : (this.range.val()) ? this.range.val() : null,
+                    coord_lng: (this.coordLng.val()) ? this.coordLng.val() : null,
+                    coord_lat: (this.coordLat.val()) ? this.coordLat.val() : null,
 			});
 
 			$.ajax({
 				url : this.form.attr('action'),
 				data : this.searchOptions,
 				beforeSend : function () {
-					currentTarget.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
+					target.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
 				},
 				success : function ( response, b, c ) {
 
@@ -141,7 +146,7 @@
 				},
 				complete : function () {
 
-					currentTarget.fadeTo('fast', 1).removeClass('uiActivityIndicator');
+					target.fadeTo('fast', 1).removeClass('uiActivityIndicator');
 
 					var newUrl = self.form.attr('action') + '?' + $.param(self.searchOptions);
 

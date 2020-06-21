@@ -45,6 +45,8 @@
             placeholder="<?= @text('COM-SEARCH-OPTION-NEARBY-PLACEHOLDER') ?>" 
             maxlength="100"
         />
+        <input type="hidden" form="navbar-search" data-trigger="CoordLng" id="coordLng" name="coord_lng" />
+        <input type="hidden" form="navbar-search" data-trigger="CoordLat" id="coordLat" name="coord_lat" />
 
         <? $ranges = array(100,50,25,10,5); ?>
         <select form="navbar-search" disabled id="SearchRange" data-trigger="SearchRange" name="search_range" class="input-small">

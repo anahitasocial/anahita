@@ -63,9 +63,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'sort' => 'relevant',
                 'direction' => 'ASC',
                 'term' => '',
-                'search_nearme' => false,
-                'search_nearby' => '',
-                'coord_long' => 0.0,
+                'coord_lng' => 0.0,
                 'coord_lat' => 0.0,
                 'search_range' => 20,
                 'search_comments' => false,
@@ -100,7 +98,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
              ->insert('term')
              ->insert('scope')
              ->insert('search_comments')
-             ->insert('search_nearby')
+             ->insert('search_distance')
              ->insert('search_range')
              ->insert('search_leaders');
 
@@ -124,13 +122,9 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $query->searchComments($this->search_comments);
         }
 
-        if ($this->search_nearme || $this->search_nearby) {
-            $lnglat['longitude'] = $this->coord_long;
+        if ($this->coord_lng && $this->coord_lat) {
+            $lnglat['longitude'] = $this->coord_lng;
             $lnglat['latitude'] = $this->coord_lat;
-            
-            if ($this->search_nearby) {
-                $lnglat = $this->_geocoder->geocode($this->search_nearby);
-            }
             
             $query->searchDistance($lnglat);
             $query->searchRange($this->search_range);
@@ -183,12 +177,9 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         }
         
         if (isset($this->_request->coord_long) && isset($this->_request->coord_lat)) {
-            $this->coord_long = floatval($this->_request->coord_long);
+            $this->coord_lng = floatval($this->_request->coord_lng);
             $this->coord_lat = floatval($this->_request->coord_lat);
         }
-        
-        $this->search_nearby = AnHelperString::substr($this->_request->search_nearby, 0, self::SEARCH_TERM_CHAR_LIMIT);
-        $this->search_nearme = $this->_request->search_nearme == 'true' ? true : false;
         
         $value = $this->_request->search_comments == 1 || $this->_request->search_comments == 'true';
 
