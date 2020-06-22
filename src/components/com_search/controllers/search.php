@@ -65,7 +65,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
                 'term' => '',
                 'coord_lng' => 0.0,
                 'coord_lat' => 0.0,
-                'search_range' => 20,
+                'search_range' => 100,
                 'search_comments' => false,
                 'scope' => 'all',
             ),
@@ -170,11 +170,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
             $this->term = $value;
         }
 
-        if (isset($this->_request->search_range)) {
-            $value = (int) $this->_request->search_range;
-            $this->_request->search_range = $value;
-            $this->search_range = $value;
-        }
+        $this->search_range = (int) $this->_request->search_range;
         
         if (isset($this->_request->coord_long) && isset($this->_request->coord_lat)) {
             $this->coord_lng = floatval($this->_request->coord_lng);
