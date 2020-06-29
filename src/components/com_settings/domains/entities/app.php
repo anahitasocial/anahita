@@ -25,15 +25,15 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('components'),
             'attributes' => array(
-                  'id',
-                  'enabled' => array(
+                'id',
+                'enabled' => array(
                     'default' => 1
-                  ),
-                  'meta' => array(
-                      'type' => 'json',
-                      'default' => 'json',
-                      'write' => 'private'
-                  ),
+                ),
+                'meta' => array(
+                    'type' => 'json',
+                    'default' => 'json',
+                    'write' => 'private'
+                ),
             ),
             'behaviors' => array(
                 'orderable',
