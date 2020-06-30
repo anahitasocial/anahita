@@ -13,39 +13,19 @@
  */
 class ComSettingsDomainSerializerApp extends ComSettingsDomainSerializerDefault
 {
-    private $_app_config = [];
-    
     public function toSerializableArray($entity)
     {
         $data = parent::toSerializableArray($entity);
 
         $data['package'] = $entity->package;
         
-        if ($meta = $this->_getMetaParams($entity)) {
+        $path = ANPATH_SITE.DS.'components'.DS.$entity->package.DS.'config.json';
+        $namespace = $entity->package;
+        
+        if ($meta = $this->_getMetaParams($entity, $path, $namespace)) {
             $data['meta'] = $meta;
         }
 
         return AnConfig::unbox($data);
-    }
-    
-    private function _getMetaParams($entity)
-    {
-        $package = $entity->option;    
-        $config_file_path = ANPATH_SITE.DS.'components'.DS.$package.DS.'config.json';
-
-        if(!file_exists($config_file_path)) {
-           return;
-        }
-        
-        if (!isset($this->_app_config[$package])) {
-            $this->_app_config[$package] = json_decode(file_get_contents($config_file_path));
-        }
-        
-        foreach($this->_app_config[$package]->fields as $field) {
-            $default = isset($field->default) ? $field->default : '';
-            $field->value = $entity->getValue($field->name, $default);
-        }
-        
-        return $this->_app_config[$package]->fields;
     }
 }

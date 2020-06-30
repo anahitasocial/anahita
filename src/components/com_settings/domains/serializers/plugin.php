@@ -13,44 +13,20 @@
  */
 class ComSettingsDomainSerializerPlugin extends ComSettingsDomainSerializerDefault
 {
-    private $_plugin_config = [];
-    
     public function toSerializableArray($entity)
     {
         $data = parent::toSerializableArray($entity);
         
         $data['type'] = $entity->type;
         $data['element'] = $entity->element;
+        
+        $namespace = $entity->type . '-' . $entity->element;    
+        $path = ANPATH_SITE.DS.'plugins'.DS.$entity->type.DS.$entity->element.'.json';
 
-        if ($meta = $this->_getMetaParams($entity)) {
+        if ($meta = $this->_getMetaParams($entity, $path, $namespace)) {
             $data['meta'] = $meta;
         }
 
         return AnConfig::unbox($data);
-    }
-    
-    private function _getMetaParams($entity)
-    {
-        $namespace = $entity->type . '-' . $entity->element;    
-        $config_file_path = ANPATH_SITE.DS.'plugins'.DS.$entity->type.DS.$entity->element.'.json';
-
-        if(!file_exists($config_file_path)) {
-           return;
-        }
-        
-        if (!isset($this->_plugin_config[$namespace])) {
-            $this->_plugin_config[$namespace] = json_decode(file_get_contents($config_file_path));
-        }
-        
-        if (!isset($this->_plugin_config[$namespace]->fields)) {
-            return;
-        }
-        
-        foreach($this->_plugin_config[$namespace]->fields as $field) {
-            $default = isset($field->default) ? $field->default : '';
-            $field->value = $entity->getValue($field->name, $default);
-        }
-        
-        return $this->_plugin_config[$namespace]->fields;
     }
 }
