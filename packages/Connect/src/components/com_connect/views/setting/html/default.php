@@ -24,13 +24,6 @@ if ($session && !$session->validateToken()) {
 		<div class="entity-description">
 			<?= @text('COM-CONNECT-API-DESC-'.strtoupper($api->getName())) ?>
 		</div>
-
-    <?
-    if ($session && !$session->validateToken()) {
-        $session->delete()->save();
-        $session = null;
-    }
-    ?>
 		<div class="entity-actions">
             <?
             $url = array(
