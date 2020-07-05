@@ -9,6 +9,9 @@ Anahita 4.4.4
 1. changed: tags, locations, and hashtags controllers so they work with the rest api 
 1. changed: geolocatable behaviours to work with the REST api. For example addLocation now returns the location object
 1. added: JSON view for Browse and Read in site settings component.
+1. changed: updated actor settings json response
+1. added: actor, optional apps, admins, and extended apps settings to the 
+Actor setting json response.
 
 Anahita 4.4.3
 =============================
