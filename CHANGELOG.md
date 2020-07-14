@@ -1,5 +1,13 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.4
+=============================
+1. added: json views for com_settings views
+1. changed: settings mvc to config 
+1. changed: all instances com:settings.setting to com:settings.config 
+1. changed: search nearby doesn't use the geolocation api in the back-end, instead the long and lat are passed via get request from the client side.
+1. fixes: general fixes in the search and settings components.
+
 Anahita 4.4.3
 =============================
 1. removed: get_magic_quotes_gpc because it has been deprecated

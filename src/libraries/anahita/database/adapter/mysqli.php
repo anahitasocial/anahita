@@ -99,7 +99,7 @@ class AnDatabaseAdapterMysqli extends AnDatabaseAdapterAbstract
      */
     protected function _initialize(AnConfig $config)
     {
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
         $database = $settings->db;
         $prefix = $settings->dbprefix;
         $port = null;

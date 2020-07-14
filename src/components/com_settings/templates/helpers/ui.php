@@ -65,9 +65,9 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
                   'label' => 'COM-SETTINGS-ABOUT',
                   'url' => 'option=com_settings&view=about'
               ),
-              'settings' => array(
-                  'label' => 'COM-SETTINGS-SYSTEM',
-                  'url' => 'option=com_settings&view=settings'
+              'configs' => array(
+                  'label' => 'COM-SETTINGS-CONFIGS',
+                  'url' => 'option=com_settings&view=config'
               ),
               'apps' => array(
                   'label' => 'COM-SETTINGS-APPS',
@@ -89,7 +89,7 @@ class ComSettingsTemplateHelperUi extends ComBaseTemplateHelperUi
         ));
 
         if(!isset($config['selected'])) {
-          $config['selected'] = 'settings';
+          $config['selected'] = 'configs';
         }
 
         return $this->_render('navigation', $config);

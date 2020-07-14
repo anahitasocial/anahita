@@ -4,60 +4,60 @@
   <input type="hidden" name="action" value="edit" />
 
     <fieldset>
-        <legend><?= @text('COM-SETTINGS-SYSTEM-SERVER') ?></legend>
+        <legend><?= @text('COM-SETTINGS-CONFIGS-SERVER') ?></legend>
 
         <? //site name ?>
         <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-SITENAME'),
+          'label' => @text('COM-SETTINGS-CONFIGS-SITENAME'),
           'name' => 'meta[sitename]',
-          'value' => $setting->sitename,
+          'value' => $config->sitename,
           'id' => 'setting-sitename',
         )) ?>
 
         <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-LIVE-SITE'),
+          'label' => @text('COM-SETTINGS-CONFIGS-LIVE-SITE'),
           'name' => 'meta[live_site]',
-          'value' => $setting->live_site,
+          'value' => $config->live_site,
           'id' => 'setting-live_site',
         )) ?>
 
         <? //template ?>
         <?= @helper('ui.templates', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-TEMPLATE'),
+          'label' => @text('COM-SETTINGS-CONFIGS-TEMPLATE'),
           'name' => 'meta[template]',
-          'selected' => $setting->template,
+          'selected' => $config->template,
           'id' => 'setting-template',
         )) ?>
 
         <? //language ?>
         <?= @helper('ui.languages', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-LANGUAGE'),
+          'label' => @text('COM-SETTINGS-CONFIGS-LANGUAGE'),
           'name' => 'meta[language]',
-          'selected' => $setting->language,
+          'selected' => $config->language,
           'id' => 'setting-language',
         )) ?>
 
         <? //log path ?>
         <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-LOG-PATH'),
+          'label' => @text('COM-SETTINGS-CONFIGS-LOG-PATH'),
           'name' => 'meta[log_path]',
-          'value' => $setting->log_path,
+          'value' => $config->log_path,
           'id' => 'setting-log_path',
         )) ?>
 
         <? //tmp path ?>
         <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-TMP-PATH'),
+          'label' => @text('COM-SETTINGS-CONFIGS-TMP-PATH'),
           'name' => 'meta[tmp_path]',
-          'value' => $setting->tmp_path,
+          'value' => $config->tmp_path,
           'id' => 'setting-tmp_path',
         )) ?>
 
         <? //Sectert Word ?>
         <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-SECRET'),
+          'label' => @text('COM-SETTINGS-CONFIGS-SECRET'),
           'name' => 'meta[secret]',
-          'value' => $setting->secret,
+          'value' => $config->secret,
           'id' => 'setting-secret',
           'disabled' => true
         )) ?>
@@ -66,27 +66,27 @@
         <?
           $options_error_reporting = array(
             0 => array(
-              'name' => @text('COM-SETTINGS-SYSTEM-ERROR-REPORTING-OPTION-DEFAULT'),
+              'name' => @text('COM-SETTINGS-CONFIGS-ERROR-REPORTING-OPTION-DEFAULT'),
               'value' => -1
             ),
             1 => array(
-              'name' => @text('COM-SETTINGS-SYSTEM-ERROR-REPORTING-OPTION-NONE'),
+              'name' => @text('COM-SETTINGS-CONFIGS-ERROR-REPORTING-OPTION-NONE'),
               'value' => 0
             ),
             2 => array(
-              'name' => @text('COM-SETTINGS-SYSTEM-ERROR-REPORTING-OPTION-SIMPLE'),
+              'name' => @text('COM-SETTINGS-CONFIGS-ERROR-REPORTING-OPTION-SIMPLE'),
               'value' => 7
             ),
             3 => array(
-              'name' => @text('COM-SETTINGS-SYSTEM-ERROR-REPORTING-OPTION-MAXIMUM'),
+              'name' => @text('COM-SETTINGS-CONFIGS-ERROR-REPORTING-OPTION-MAXIMUM'),
               'value' => 30719
             ),
           );
         ?>
         <?= @helper('ui.formfield_select', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-ERROR-REPORTING'),
+          'label' => @text('COM-SETTINGS-CONFIGS-ERROR-REPORTING'),
           'name' => 'meta[error_reporting]',
-          'selected' => (int) $setting->error_reporting,
+          'selected' => (int) $config->error_reporting,
           'id' => 'setting-error_reporting',
           'options' => $options_error_reporting,
         )) ?>
@@ -98,9 +98,9 @@
           $options_sef_rewrite[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
         ?>
         <?= @helper('ui.formfield_select', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-SEF-REWRITE'),
+          'label' => @text('COM-SETTINGS-CONFIGS-SEF-REWRITE'),
           'name' => 'meta[sef_rewrite]',
-          'selected' => (int) $setting->sef_rewrite,
+          'selected' => (int) $config->sef_rewrite,
           'id' => 'setting-sef_rewrite',
           'options' => $options_sef_rewrite,
         )) ?>
@@ -112,9 +112,9 @@
           $options_debug[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
         ?>
         <?= @helper('ui.formfield_select', array(
-          'label' => @text('COM-SETTINGS-SYSTEM-DEBUG'),
+          'label' => @text('COM-SETTINGS-CONFIGS-DEBUG'),
           'name' => 'meta[debug]',
-          'selected' => (int) $setting->debug,
+          'selected' => (int) $config->debug,
           'id' => 'setting-debug',
           'options' => $options_debug,
         )) ?>
@@ -122,52 +122,52 @@
     </fieldset>
 
     <fieldset>
-      <legend><?= @text('COM-SETTINGS-SYSTEM-DATABASE-SETTINGS') ?></legend>
+      <legend><?= @text('COM-SETTINGS-CONFIGS-DATABASE-SETTINGS') ?></legend>
 
       <? //database type ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-DBTYPE'),
+        'label' => @text('COM-SETTINGS-CONFIGS-DBTYPE'),
         'name' => 'meta[dbtype]',
-        'value' => $setting->dbtype,
+        'value' => $config->dbtype,
         'id' => 'setting-dbtype',
         'disabled' => true
       )) ?>
 
       <? //database hostname ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-HOST'),
+        'label' => @text('COM-SETTINGS-CONFIGS-HOST'),
         'name' => 'meta[host]',
-        'value' => $setting->host,
+        'value' => $config->host,
         'id' => 'setting-host',
       )) ?>
 
       <? //database username ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-USER'),
+        'label' => @text('COM-SETTINGS-CONFIGS-USER'),
         'name' => 'meta[user]',
-        'value' => $setting->user,
+        'value' => $config->user,
         'id' => 'setting-user',
       )) ?>
 
       <? //database name ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-DB'),
+        'label' => @text('COM-SETTINGS-CONFIGS-DB'),
         'name' => 'meta[db]',
-        'value' => $setting->db,
+        'value' => $config->db,
         'id' => 'setting-db',
       )) ?>
 
       <? //database table prefix ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-DBPREFIX'),
+        'label' => @text('COM-SETTINGS-CONFIGS-DBPREFIX'),
         'name' => 'meta[dbprefix]',
-        'value' => $setting->dbprefix,
+        'value' => $config->dbprefix,
         'id' => 'setting-dbprefix',
       )) ?>
     </fieldset>
 
     <fieldset>
-      <legend><?= @text('COM-SETTINGS-SYSTEM-MAIL-SETTINGS') ?></legend>
+      <legend><?= @text('COM-SETTINGS-CONFIGS-MAIL-SETTINGS') ?></legend>
 
       <? //Mailer ?>
       <?
@@ -187,34 +187,34 @@
         );
       ?>
       <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-MAILER'),
+        'label' => @text('COM-SETTINGS-CONFIGS-MAILER'),
         'name' => 'meta[mailer]',
-        'selected' => $setting->mailer,
+        'selected' => $config->mailer,
         'id' => 'setting-mailer',
         'options' => $options_mailer,
       )) ?>
 
       <? //mail from ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-MAILFROM'),
+        'label' => @text('COM-SETTINGS-CONFIGS-MAILFROM'),
         'name' => 'meta[mailfrom]',
-        'value' => $setting->mailfrom,
+        'value' => $config->mailfrom,
         'id' => 'setting-mailfrom',
       )) ?>
 
       <? //from name ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-FROMNAME'),
+        'label' => @text('COM-SETTINGS-CONFIGS-FROMNAME'),
         'name' => 'meta[fromname]',
-        'value' => $setting->fromname,
+        'value' => $config->fromname,
         'id' => 'setting-fromname',
       )) ?>
 
       <? //sendmail path ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SENDMAIL'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SENDMAIL'),
         'name' => 'meta[sendmail]',
-        'value' => $setting->sendmail,
+        'value' => $config->sendmail,
         'id' => 'setting-sendmail',
       )) ?>
 
@@ -225,9 +225,9 @@
         $options_smtpauth[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
       ?>
       <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SMTPAUTH'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTPAUTH'),
         'name' => 'meta[smtpauth]',
-        'selected' => (int) $setting->smtpauth,
+        'selected' => (int) $config->smtpauth,
         'id' => 'setting-caching',
         'options' => $options_smtpauth,
       )) ?>
@@ -250,36 +250,36 @@
         );
       ?>
       <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SMTPSECURE'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTPSECURE'),
         'name' => 'meta[smtpsecure]',
-        'selected' => $setting->smtpsecure,
+        'selected' => $config->smtpsecure,
         'id' => 'setting-smtpsecure',
         'options' => $options_smtpsecure,
       )) ?>
 
       <? //smtp port ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SMTPPORT'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTPPORT'),
         'name' => 'meta[smtpport]',
-        'value' => $setting->smtpport,
+        'value' => $config->smtpport,
         'id' => 'setting-smtpport',
         'required' => false,
       )) ?>
 
       <? //smtp user ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SMTPUSER'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTPUSER'),
         'name' => 'meta[smtpuser]',
-        'value' => $setting->smtpuser,
+        'value' => $config->smtpuser,
         'id' => 'setting-smtpuser',
         'required' => false,
       )) ?>
 
       <? //smtp pass ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SMTPPASS'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTPPASS'),
         'name' => 'meta[smtppass]',
-        'value' => $setting->smtppass,
+        'value' => $config->smtppass,
         'id' => 'setting-smtppass',
         'type' => 'password',
         'required' => false,
@@ -287,9 +287,9 @@
 
       <? //smtp host ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-SYSTEM-SMTPHOST'),
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTPHOST'),
         'name' => 'meta[smtphost]',
-        'value' => $setting->smtphost,
+        'value' => $config->smtphost,
         'id' => 'setting-smtphost',
         'required' => false,
       )) ?>

@@ -9,11 +9,17 @@
  * @link       http://www.GetAnahita.com
  */
 
-class ComSettingsViewSettingsJson extends ComBaseViewJson
+class ComSettingsViewConfigJson extends ComBaseViewJson
 {
     public function display()
     {
-        $data = $this->setting->get('_attributes');
+        $data = $this->config->get('_attributes');
+    
+        $data['debug'] = (bool) $data['debug'];
+        $data['sef_rewrite'] = (bool) $data['sef_rewrite'];
+        $data['error_reporting'] = (int) $data['error_reporting'];
+        $data['smtpauth'] = (bool) $data['smtpauth'];
+        $data['smtpport'] = (int) $data['smtpport'];
         
         $this->output = json_encode($data);
         

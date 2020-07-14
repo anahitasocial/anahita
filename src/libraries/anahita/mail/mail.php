@@ -149,7 +149,7 @@ class AnMail extends AnObject implements AnServiceInstantiatable
      */
     protected function _initialize(AnConfig $config)
     {
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
 
         $config->append(array(
     		'charset' => 'utf-8',

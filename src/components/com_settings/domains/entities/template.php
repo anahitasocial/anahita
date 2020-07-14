@@ -83,7 +83,7 @@ class ComSettingsDomainEntityTemplate extends AnObject
 
     public function isDefault()
     {
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
         return $settings->template === $this->alias;
     }
 

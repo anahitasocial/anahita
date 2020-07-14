@@ -3,7 +3,7 @@
 /**
  *
  * @category    Anahita
- * @package     com_settings
+ * @package     com_configs
  *
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
@@ -11,7 +11,7 @@
  * @link        http://www.GetAnahita.com
  */
 
- class ComSettingsSetting extends AnObject implements AnServiceInstantiatable
+ class ComSettingsConfig extends AnObject implements AnServiceInstantiatable
  {
      /**
      *  path to the settings file
@@ -28,7 +28,7 @@
      /**
      *
      */
-     protected $_settings = null;
+     protected $_configs = null;
 
      /**
      * @param string defaul template name
@@ -60,7 +60,7 @@
 
          require_once $filepath;
 
-         $this->_settings = new AnSiteConfig();
+         $this->_configs = new AnSiteConfig();
          $this->_default_template = 'shiraz';
          $this->_default_language = 'en-GB';
      }
@@ -111,8 +111,8 @@
      */
      public function get($key = null, $default = null)
      {
-         if (!empty($this->_settings->$key)) {
-             return $this->_settings->$key;
+         if (!empty($this->_configs->$key)) {
+             return $this->_configs->$key;
          }
 
          return $default;
@@ -141,11 +141,11 @@
      */
      public function set($key, $value = null)
      {
-         if (isset($this->_settings->$key)) {
-             $this->_settings->$key = $value;
+         if (isset($this->_configs->$key)) {
+             $this->_configs->$key = $value;
          }
 
-         return $this->_settings->$key;
+         return $this->_configs->$key;
      }
 
      public function __set($key, $value)

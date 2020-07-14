@@ -12,7 +12,7 @@
  * @link       http://www.GetAnahita.com
  */
 
-class ComSettingsControllerSetting extends ComBaseControllerResource
+class ComSettingsControllerConfig extends ComBaseControllerResource
 {
 
     /**
@@ -29,7 +29,7 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     {
         parent::__construct($config);
 
-        $this->registerCallback('before.read', array($this, 'fetchEntity'));
+        $this->registerCallback('before.get', array($this, 'fetchEntity'));
         $this->registerCallback('before.edit', array($this, 'fetchEntity'));
     }
 
@@ -57,22 +57,12 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     */
     protected function _actionGet(AnCommandContext $context)
     {
-        $title = AnTranslator::_('COM-SETTINGS-HEADER-SYSTEM');
+        $title = AnTranslator::_('COM-SETTINGS-HEADER-CONFIGS');
 
         $this->getToolbar('menubar')->setTitle($title);
-
+        $this->getView()->set('config', $this->_entity);
+        
         parent::_actionGet($context);
-    }
-
-    /**
-    *   read service
-    *
-    *  @param AnCommandContext $context Context Parameter
-    *  @return void
-    */
-    protected function _actionRead(AnCommandContext $context)
-    {
-        $this->getView()->set('setting', $this->_entity);
     }
 
     /**
@@ -83,17 +73,26 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     */
     protected function _actionEdit(AnCommandContext $context)
     {
-        $data = $context->data;
+        $data = AnConfig::unbox($context->data);
+        $data = isset($data['meta']) ? $data['meta'] : $data;
 
         //don't overwrite these two
-        unset($data->secret);
-        unset($data->dbtype);
+        unset($data['secret']);
+        unset($data['dbtype']);
 
-        $this->_entity->setData(AnConfig::unbox($data));
+        $this->_entity->setData($data);
 
         if ($this->_entity->save()) {
             $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
+            
+            $content = $this->getView()
+            ->set('config', $this->_entity)
+            ->display();
+            
+            $context->response->setContent($content);
         }
+        
+        return;
     }
 
     /**
@@ -101,12 +100,12 @@ class ComSettingsControllerSetting extends ComBaseControllerResource
     *
     *  @param AnCommandContext $context Context Parameter
     *
-    *  @return ComSettingsDomainEntitySetting object
+    *  @return ComSettingsDomainEntityConfig object
     */
     public function fetchEntity(AnCommandContext $context)
     {
         if (!$this->_entity) {
-            $this->_entity = $this->getService('com:settings.domain.entity.setting')->load();
+            $this->_entity = $this->getService('com:settings.domain.entity.config')->load();
         }
 
         return $this->_entity;

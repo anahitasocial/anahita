@@ -84,7 +84,7 @@ class ComPeopleControllerToken extends ComBaseControllerResource
     public function mailConfirmation(AnCommandContext $context)
     {
         if ($this->person) {
-            $settings = $this->getService('com:settings.setting');
+            $settings = $this->getService('com:settings.config');
             $mails[] = array(
                 'to' => $this->person->email,
                 'subject' => sprintf(AnTranslator::_('COM-PEOPLE-MAIL-SUBJECT-PASSWORD-RESET'), $settings->sitename),

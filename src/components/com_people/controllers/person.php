@@ -265,7 +265,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
             $template = 'account_activate';
         }
 
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
 
         $mails[] = array(
             'to' => $person->email,

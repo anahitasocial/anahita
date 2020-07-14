@@ -12,7 +12,7 @@
  * @link       https://www.GetAnahita.com
  */
 
-$settings = AnService::get('com:settings.setting');
+$settings = AnService::get('com:settings.config');
 $cache_prefix = md5($settings->secret).'-cache-system';
 $cache_enabled = (extension_loaded('apcu') && ini_get('apc.enabled'));
 

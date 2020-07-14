@@ -21,7 +21,7 @@
   */
  function get_hash($seed = '', $algorithm = 'sha256')
  {
-     $settings = AnService::get('com:settings.setting');
+     $settings = AnService::get('com:settings.config');
      return hash($algorithm, $settings->secret .  $seed);
  }
 

@@ -102,7 +102,7 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
 
             $this->content = $this->getTemplate()->loadTemplate('errors'.DS.$layout, array('error' => $error))->render();
 
-            $settings = $this->getService('com:settings.setting');
+            $settings = $this->getService('com:settings.config');
 
             if ($settings->debug) {
 

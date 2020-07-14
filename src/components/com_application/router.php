@@ -80,7 +80,7 @@ class ComApplicationRouter extends AnObject
 
         if (PHP_SAPI == 'cli') {
             $base->scheme = extension_loaded('openssl') ? 'https' : 'http';
-            $settings = $this->getService('com:settings.setting');
+            $settings = $this->getService('com:settings.config');
             $base->host = AnRequest::get('server.HOSTNAME', 'url', $settings->live_site);
             $base->path = '';
         }

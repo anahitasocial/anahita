@@ -98,7 +98,7 @@ class ComPeopleControllerSignup extends ComBaseControllerService
     public function mailActivationLink(AnCommandContext $context)
     {
         $person = $context->result;
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
         $subject = 'COM-PEOPLE-MAIL-SUBJECT-ACCOUNT-ACTIVATE';
         
         $mails[] = array(
