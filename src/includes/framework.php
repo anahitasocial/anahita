@@ -70,4 +70,4 @@ if (PHP_SAPI != 'cli') {
 }
 
 AnLoader::getInstance()->loadIdentifier('com://site/application.aliases');
-AnService::get('com:settings.setting');
+AnService::get('com:settings.config');
