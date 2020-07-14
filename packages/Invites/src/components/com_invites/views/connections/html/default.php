@@ -13,7 +13,7 @@
 
 <script>
 <?
-$settings = @service('com:settings.setting');
+$settings = @service('com:settings.config');
 $subject = htmlspecialchars(sprintf(@text('COM-INVITES-MESSAGE-SUBJECT'), $settings->sitename));
 $body = @helper('text.script', sprintf(@text('COM-INVITES-MESSAGE-BODY'), @name($viewer, false), $settings->sitename));
 $url = @route()->getUrl(AnHttpUrl::SCHEME | AnHttpUrl::HOST | AnHttpUrl::PORT);

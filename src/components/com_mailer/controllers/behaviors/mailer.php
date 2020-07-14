@@ -58,7 +58,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
     protected function _initialize(AnConfig $config)
     {
         $base_url = AnRequest::base();
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
 
         if (PHP_SAPI == 'cli' && $settings->live_site != '') {
             $scheme = is_ssl() ? 'https://' : 'http://';

@@ -12,6 +12,9 @@ Anahita 4.4.4
 1. changed: updated actor settings json response
 1. added: actor, optional apps, admins, and extended apps settings to the 
 Actor setting json response.
+1. added: json views for com_settings views
+1. changed: settings mvc to config 
+1. changed: all instances com:settings.setting to com:settings.config 
 
 Anahita 4.4.3
 =============================

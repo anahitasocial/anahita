@@ -69,7 +69,7 @@ class ComInvitesControllerEmail extends ComInvitesControllerDefault
 
                     $token->save();
 
-                    $settings = $this->getService('com:settings.setting');
+                    $settings = $this->getService('com:settings.config');
 
                     $mails[] = array(
                         'subject' => AnTranslator::sprintf('COM-INVITES-MESSAGE-SUBJECT', $settings->sitename),

@@ -70,7 +70,7 @@ class ComInvitesDomainEntityToken extends AnDomainEntityAbstract
      */
     protected function _afterEntityInstantiate(AnConfig $config)
     {
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
 
         $config->append(array(
             'data' => array(

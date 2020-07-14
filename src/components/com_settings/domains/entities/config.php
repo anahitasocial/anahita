@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Setting Domain Entity.
+ * Config Domain Entity.
  *
  * @category   Anahita
  *
@@ -11,7 +11,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComSettingsDomainEntitySetting extends AnObject
+class ComSettingsDomainEntityConfig extends AnObject
 {
     /**
     * @param entity atributes
@@ -78,11 +78,11 @@ class ComSettingsDomainEntitySetting extends AnObject
      *
      * @param array $properties An array of properties.
      *
-     * @return ComSettingsDomainEntitySetting entity object
+     * @return ComSettingsDomainEntityConfig entity object
      */
     public function load()
     {
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
 
         foreach($this->_attributes as $key => $value) {
           $this->_attributes[$key] = $settings->$key;
@@ -94,7 +94,7 @@ class ComSettingsDomainEntitySetting extends AnObject
     /**
      * Save system setting attributes
      *
-     * @return ComSettingsDomainEntitySetting entity object
+     * @return ComSettingsDomainEntityConfig entity object
      */
     public function save()
     {
@@ -131,13 +131,11 @@ class ComSettingsDomainEntitySetting extends AnObject
     *
     *  @param array of key => value data
     *
-    *  @return ComSettingsDomainEntitySetting object
+    *  @return ComSettingsDomainEntityConfig object
     */
     public function setData(array $data)
     {
-        $meta = $data['meta'];
-
-        foreach ($meta as $key => $value) {
+        foreach ($data as $key => $value) {
             $this->$key = $value;
         }
 
@@ -161,7 +159,7 @@ class ComSettingsDomainEntitySetting extends AnObject
     *  @param string attribute name
     *  @param attribute value
     *
-    *  @return ComSettingsDomainEntitySetting object
+    *  @return ComSettingsDomainEntityConfig object
     */
     public function __set($name, $value)
     {

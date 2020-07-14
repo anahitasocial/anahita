@@ -205,7 +205,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
 
         $this->_application = $this->getService('com:application', array('session' => $session));
 
-        $settings = $this->getService('com:settings.setting');
+        $settings = $this->getService('com:settings.config');
 
         $this->getService('anahita:language', array(
             'language' => $settings->language

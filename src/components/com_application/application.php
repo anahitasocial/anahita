@@ -67,7 +67,7 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
 
         parent::__construct($config);
 
-        $this->_site_settings = $this->getService('com:settings.setting');
+        $this->_site_settings = $this->getService('com:settings.config');
     }
 
     /**
