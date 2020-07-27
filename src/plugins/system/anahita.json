@@ -17,11 +17,6 @@
         "Copyright 2017 rmdStudio Inc."
     ],
     "media": {
-        "folder": [
-            "js",
-            "css",
-            "images"
-        ],
         "folder": "media",
         "destination": "lib_anahita"
     },

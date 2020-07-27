@@ -60,8 +60,10 @@ class ComSettingsControllerApp extends ComBaseControllerService
     protected function _actionBrowse(AnCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
+        
+        $sort = $this->getService('anahita:filter.alpha')->sanitize($this->sort);
 
-        $entities->order($this->sort);
+        $entities->order($sort);
 
         return $entities;
     }

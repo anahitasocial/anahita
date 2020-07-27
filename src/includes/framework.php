@@ -36,12 +36,10 @@ if (! file_exists(ANPATH_CONFIGURATION.'/configuration.php') || (filesize(ANPATH
     exit();
 }
 
-/*
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Methods: POST, GET, DELETE, PUT, PATCH, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Credentials: true');
-*/
 
 // Platform : setup
 require_once ANPATH_LIBRARIES.'/anahita/anahita.php';
@@ -70,4 +68,4 @@ if (PHP_SAPI != 'cli') {
 }
 
 AnLoader::getInstance()->loadIdentifier('com://site/application.aliases');
-AnService::get('com:settings.setting');
+AnService::get('com:settings.config');

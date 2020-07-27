@@ -1,10 +1,30 @@
 {
-    "fields": [{
-        "name": "uploadlimit",
-        "type": "custom",
-        "label": "Upload Limit (MB)",
-        "description": "Sets the file size upload limit",
-        "default" : "4",
-        "identifier": "com:photos.template.helper.ui.uploadlimit"
-    }]
+    "fields": [
+        {
+            "option": [
+                {
+                    "value": "2",
+                    "text": "2MB"
+                },
+                {
+                    "value": "4",
+                    "text": "4MB"
+                },
+                {
+                    "value": "8",
+                    "text": "8MB"
+                },
+                {
+                    "value": "10",
+                    "text": "10MB"
+                }
+            ],
+
+            "name": "uploadlimit",
+            "type": "list",
+            "selected": "4",
+            "label": "Upload Limit (MB)", 
+            "description": "Sets the file size upload limit"
+        }
+    ]
 }

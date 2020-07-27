@@ -46,8 +46,7 @@
             "default": "30",
             "label": "AN-SB-RENEW-NOTICE",
             "description": "AN-SB-RENEW-NOTICE-DESC",
-            "size": "10",
-            "default": ""
+            "size": "10"
         },
         {
             "option": [
@@ -480,8 +479,7 @@
             "type": "text",
             "label": "AN-SB-TOS-URL",
             "size": "70",
-            "default": "tos",
-            "default": ""
+            "default": "tos"
         },
         {
             "name": "privacy_content_layout",
