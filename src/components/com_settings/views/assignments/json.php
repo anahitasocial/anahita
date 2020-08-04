@@ -10,42 +10,23 @@
  */
 
 class ComSettingsViewAssignmentsJson extends ComBaseViewJson
-{
-    protected function _getList()
-    {
-        $components = $this->getService('repos:components.component')
-                           ->getQuery()
-                           ->enabled(true)
-                           ->order('name')
-                           ->fetchSet();
-
-        $actors = array();
-
-        foreach($components as $component) {
-          $identifiers = $component->getEntityIdentifiers('ComActorsDomainEntityActor');
-          foreach ($identifiers as $identifier) {
-              $identifier->application = null;
-              $actors[] = $identifier;
-          }
-        }
-
-        $apps = array();
-        
-        foreach($components as $component) {
-           if ($component->isAssignable()) {
-              $apps[] = $component;
-           }
-        }
-        
+{    
+    public function display()
+    {                
         $data = array();
         
-        foreach($actors as $i => $actor) {
+        foreach($this->actors as $i => $actor) {
             $data[$i] = array(
-                'identifier' => sprintf('com:%s.%s', $actor->package, $actor->name),
+                /* 
+                    This isn't an entity id, we are naming the identifier, id, 
+                    so the client side application can recognize the output
+                    as a list of entities.  
+                */
+                'id' => sprintf('com:%s.domain.entity.%s', $actor->package, $actor->name),
                 'apps' => array(),
             );
             
-            foreach($apps as $j => $app) {
+            foreach($this->apps as $j => $app) {
                 $selected = $app->getAssignmentForIdentifier($actor);
                 $isOptional = $app->getAssignmentOption() == ComComponentsDomainBehaviorAssignable::OPTION_OPTIONAL;
                 $options = array();
@@ -66,6 +47,19 @@ class ComSettingsViewAssignmentsJson extends ComBaseViewJson
             }
         }
         
-        return array('data' => $data);
+        $this->output = json_encode(array(
+            'data' => $data,
+            'pagination' => array(
+                'offset' => 0,
+                'limit' => 20,
+                'total' => count($this->actors),
+            ),
+        ));
+        
+        if (! empty($this->_padding)) {
+            $this->output = $this->_padding.'('.$this->output.');';
+        }
+        
+        return $this->output;
     }
 }

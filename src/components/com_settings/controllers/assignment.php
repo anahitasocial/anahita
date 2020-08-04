@@ -14,6 +14,8 @@
 
 class ComSettingsControllerAssignment extends ComBaseControllerResource
 {
+    private $_components = array();
+    
     /**
      * Initializes the options for the object.
      *
@@ -29,14 +31,19 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
             'toolbars' => array($this->getIdentifier()->name, 'menubar'),
         ));
     }
-
-    protected function _actionGet(AnCommandContext $context)
+    
+    protected function _actionBrowse(AnCommandContext $context)
     {
         $title = AnTranslator::_('COM-SETTINGS-HEADER-ASSIGNMENTS');
-
-        $this->getToolbar('menubar')->setTitle($title);
-
-        return parent::_actionGet($context);
+        $this->getToolbar('menubar')->setTitle($title); 
+ 
+        $this->_fetchComponents($context); 
+        $actors = $this->_getActors();
+        $apps = $this->_getApps();
+        
+        $this->getView()
+        ->set('actors', $actors)
+        ->set('apps', $apps);                  
     }
 
     protected function _actionEdit(AnCommandContext $context)
@@ -46,6 +53,66 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
       if ($app = $this->getService('repos:components.component')->fetch(array('id' => $data->app))) {
           $app->setAssignmentForIdentifier($data->actor, $data->access);
           $app->save();
+          
+          $this->_fetchComponents($context);
+          $apps = $this->_getApps();
+          
+          $actor = new AnServiceIdentifier($data->actor);
+          
+          $content = $this->getView()
+          ->set('actor', $actor)
+          ->set('apps', $apps)
+          ->display(); 
+          
+          $context->response->setContent($content);
       }
+      
+      return;
+    }
+    
+    private function _getApps()
+    {
+        $apps = array();
+        
+        if (count($this->_components)) {
+            foreach($this->_components as $component) {
+                if ($component->isAssignable()) {
+                   $apps[] = $component;
+                }
+            }
+        }
+        
+        return $apps;
+    }
+    
+    private function _getActors()
+    {
+        $actors = array();
+        
+        if (count($this->_components)) {
+            foreach($this->_components as $component) {
+              $identifiers = $component->getEntityIdentifiers('ComActorsDomainEntityActor');
+              
+              foreach ($identifiers as $identifier) {
+                  $identifier->application = null;
+                  $actors[] = $identifier;
+              }
+            }
+        }
+        
+        return $actors;
+    }
+    
+    private function _fetchComponents(AnCommandContext $context)
+    {
+        if (count($this->_components) === 0) {
+            $this->_components = $this->getService('repos:components.component')
+                               ->getQuery()
+                               ->enabled(true)
+                               ->order('name')
+                               ->fetchSet();
+        }
+        
+        return $this->_components;
     }
 }
