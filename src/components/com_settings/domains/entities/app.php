@@ -57,19 +57,21 @@ class ComSettingsDomainEntityApp extends AnDomainEntityDefault
      * @param string|array $property Property name
      * @param mixd         $value    Property value
      */
-    public function setData($property = AnDomain::ACCESS_PUBLIC, $default = null)
+    public function setData($property, $default = null)
     {
         $config_file_path = ANPATH_SITE.DS.'components'.DS.$this->package.DS.'config.json';
 
         if(file_exists($config_file_path)) {
-
-            $app_config = json_decode(file_get_contents($config_file_path));
-            $fields = $app_config->fields;
-
-            foreach ($fields as $field) {
-                $key = $field->name;
-                if(isset($property['meta'][$key])){
-                    $this->setValue($key, $property['meta'][$key]);
+            
+            $config = json_decode(file_get_contents($config_file_path));
+            
+            if(isset($config->fields)){
+                $fields = $config->fields;
+                foreach ($fields as $field) {
+                    $key = $field->name;
+                    if(isset($property['meta'][$key])){
+                        $this->setValue($key, $property['meta'][$key]);
+                    }
                 }
             }
         }

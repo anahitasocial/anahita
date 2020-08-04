@@ -15,7 +15,7 @@
           <h3 class="entity-title"><?= ucfirst($actor->package) ?></h3>
           <div class="entity-description">
               <? foreach ($apps as $app) : ?>
-              <form action="<?= @route('view=assignment') ?>">
+              <form action="<?= @route('view=assignment&format=json') ?>">
                   <input type="hidden" name="action" value="edit" />
                   <input type="hidden" name="app" value="<?= $app->id ?>" />
                   <input type="hidden" name="actor" value="<?= $actor ?>" />

@@ -25,12 +25,21 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
         $config->append(array(
             'resources' => array('plugins'),
             'attributes' => array(
-                  'id',
-                  'meta' => array(
-                      'type' => 'json',
-                      'default' => 'json',
-                      'write' => 'private'
-                  ),
+              'id',
+              'enabled' => array(
+                  'default' => 0
+              ),
+              'meta' => array(
+                  'type' => 'json',
+                  'default' => 'json',
+                  'write' => 'private'
+              ),
+              'element' => array(
+                 'write' => 'private', 
+              ),
+              'folder' => array(
+                 'write' => 'private', 
+              ),
             ),
             'behaviors' => array(
                 'orderable',
@@ -54,7 +63,7 @@ class ComSettingsDomainEntityPlugin extends AnDomainEntityDefault
      * @param string|array $property Property name
      * @param mixd         $value    Property value
      */
-    public function setData($property = AnDomain::ACCESS_PUBLIC, $default = null)
+    public function setData($property, $default = null)
     {
         $config_file_path = ANPATH_SITE.DS.'plugins'.DS.$this->type.DS.$this->element.'.json';
 

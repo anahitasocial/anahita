@@ -27,7 +27,7 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
             'request' => array(
                 'sort' => 'name',
                 'limit' => 99,
-                'type' => ''
+                'type' => '',
             ),
             'behaviors' => array(
                 'enablable'
@@ -61,12 +61,14 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     protected function _actionBrowse(AnCommandContext $context)
     {
         $entities = parent::_actionBrowse($context);
+        
+        $filter = $this->getService('anahita:filter.alpha');
 
-        if ($this->type) {
-            $entities->where('folder', '=', $this->type);
+        if ($type = $filter->sanitize($this->type)) {
+            $entities->where('folder', '=', $type);
         }
-
-        $entities->order($this->sort);
+        
+        $entities->order($filter->sanitize($this->sort));
 
         return $entities;
     }

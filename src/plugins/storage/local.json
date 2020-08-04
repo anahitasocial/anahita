@@ -19,12 +19,10 @@
     "files": [
         "local.php"
     ],
-    "fields": {
-        "input": {
-            "type": "text",
-            "name": "folder",
-            "label": "The folder to store the data",
-            "default": "assets"
-        }
-    }
+    "fields": [{
+        "type": "text",
+        "name": "folder",
+        "label": "The folder to store the data",
+        "default": "assets"
+    }]
 }
