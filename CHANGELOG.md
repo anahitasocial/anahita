@@ -15,6 +15,7 @@ Actor setting json response.
 1. added: json views for com_settings views
 1. changed: settings mvc to config 
 1. changed: all instances com:settings.setting to com:settings.config 
+1. changed: improved settings assignments REST API for the Browse and Edit operations
 
 Anahita 4.4.3
 =============================
