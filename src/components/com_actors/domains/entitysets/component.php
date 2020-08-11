@@ -88,26 +88,16 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     public function insert($component)
     {
         if (is_string($component)) {
-            $component = $this->getRepository()->fetch(array('component' => $component));
+            $component = $this->getRepository()->fetch(array(
+                'component' => $component
+            ));
         }
-
+        
         if ($component->isAssignable()) {
-            $assignment = $component->assignments->findOrAddNew(array('actor' => $this->_actor));
+            $assignment = $component->assignments->findOrAddNew(array(
+                'actor' => $this->_actor
+            ));
         }
-
-        if ($this->isLoaded()) {
-            parent::insert($component);
-        }
-    }
-
-    /**
-     * (non-PHPdoc).
-     *
-     * @see AnObjectDecorator::__call()
-     */
-    public function __call($method, $arguments)
-    {
-        return call_object_method($this->getObject(), $method, $arguments);
     }
 
     /**
@@ -118,19 +108,29 @@ class ComActorsDomainEntitysetComponent extends AnObjectDecorator
     public function extract($component)
     {
         if (is_string($component)) {
-            $component = $this->getRepository()->fetch(array('component' => $component));
+            $component = $this->getRepository()->fetch(array(
+                'component' => $component
+            ));
         }
 
         if ($component->isAssignable()) {
-            $assignment = $component->assignments->find(array('actor' => $this->_actor));
+            $assignment = $component->assignments->find(array(
+                'actor' => $this->_actor
+            ));
 
             if ($assignment) {
                 $assignment->delete();
             }
         }
-
-        if ($this->isLoaded()) {
-            parent::extract($component);
-        }
+    }
+    
+    /**
+     * (non-PHPdoc).
+     *
+     * @see AnObjectDecorator::__call()
+     */
+    public function __call($method, $arguments)
+    {
+        return call_object_method($this->getObject(), $method, $arguments);
     }
 }

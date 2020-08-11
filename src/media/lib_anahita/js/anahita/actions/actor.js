@@ -83,26 +83,27 @@
 		}
 
 		if ( action == 'removeadmin' ) {
-
-			$(this).attr('disabled', true);
-
 			$.ajax({
 				method : 'post',
-				url : this.href,
-				data : $(this).data(),
-				success : function () {
-					window.location.reload();
-				}
-			});
+                dataType: 'json',
+				url : elem.context.href,
+				data : elem.data(),
+                beforeSend : function () {
+					elem.toggleClass('disabled');
+				},
+			}).complete(function () {
+                elem.closest('.an-entity').remove();
+            });
 
 			return this;
 		}
 
 		if ( action == 'manageapps' ) {
-
+            console.log(elem.data());
 			$.ajax({
 				method : 'post',
-				url : elem.href,
+				url : elem.context.href,
+                dataType: 'json',
 				data : elem.data(),
 				beforeSend : function () {
 					elem.toggleClass('disabled');
@@ -111,14 +112,12 @@
 
 					elem.toggleClass('disabled').toggleClass('btn-primary');
 
-					if ( elem.attr('data-action') == 'addapp' ) {
-
+					if ( elem.attr('data-action') === 'addapp' ) {
+                        elem.data('action', 'removeapp');
 						elem.attr('data-action', 'removeapp').text(StringLibAnahita.action.disable);
-
 					} else {
-
+                        elem.data('action', 'addapp');
 						elem.attr('data-action', 'addapp').text(StringLibAnahita.action.enable);
-
 					}
 				}
 			});

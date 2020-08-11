@@ -136,12 +136,12 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
         }
 
         //lets get a list of components that this actor can enable
-        $this->enablable_apps = $this->getService('com:actors.domain.entityset.component', array(
+        $this->apps = $this->getService('com:actors.domain.entityset.component', array(
                 'actor' => $this->_state->getItem(),
                 'can_enable' => true,
             ));
 
-        if (count($this->enablable_apps)) {
+        if (count($this->apps)) {
             $tabs->insert('apps', array(
                 'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-APPS'),
             ));
