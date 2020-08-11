@@ -23,13 +23,23 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
         parent::__construct($config);
 
         $this->registerCallback(
-                array('before.confirmrequest', 'before.ignorerequest'),
+                array('before.confirmRequest', 'before.ignoreRequest'),
                 array($this, 'fetchRequester')
         );
 
         $this->registerCallback(
-                array('before.addadmin', 'before.removeadmin'),
+                array('before.addAdmin', 'before.removeAdmin'),
                 array($this, 'fetchAdmin')
+        );
+        
+        $this->registerCallback(
+                array('after.addApp', 'after.removeApp'),
+                array($this, 'fetchApp')
+        );
+        
+        $this->registerCallback(
+                array('before.getPermissions'),
+                array($this, 'fetchPermissions')
         );
     }
 
@@ -38,7 +48,7 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionRemoveadmin(AnCommandContext $context)
+    protected function _actionRemoveAdmin(AnCommandContext $context)
     {
         $this->getItem()->removeAdministrator($this->admin);
     }
@@ -48,7 +58,7 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionAddadmin(AnCommandContext $context)
+    protected function _actionAddAdmin(AnCommandContext $context)
     {
         $this->getItem()->addAdministrator($this->admin);
     }
@@ -58,7 +68,7 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionGetcandidates(AnCommandContext $context)
+    protected function _actionGetCandidates(AnCommandContext $context)
     {
         if ($context->request->getFormat() != 'html') {
             $data = $context->data;
@@ -83,7 +93,7 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionGetsettings(AnCommandContext $context)
+    protected function _actionGetSettings(AnCommandContext $context)
     {
         $entity = $this->getItem();
         $this->getToolbar('actorbar')->setActor($entity);
@@ -91,9 +101,45 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
              ->setTitle(
                  sprintf(AnTranslator::_('COM-ACTORS-PROFILE-HEADER-EDIT'),
                  $entity->name));
+                 
         $dispatcher = $this->getService('anahita:event.dispatcher');
         $entity->components->registerEventDispatcher($dispatcher);
         $dispatcher->addEventListener('onSettingDisplay', $this->_mixer);
+    }
+    
+    protected function _actionGetApps(AnCommandContext $context)
+    {
+        $apps = array();
+        $components = $this->getService('com:actors.domain.entityset.component', array(
+                'actor' => $this->getItem(),
+                'can_enable' => true,
+            ));
+            
+        foreach ($components as $component) {
+            $apps[] = array(
+                'id' => $component->option,
+                'name' => $component->getProfileName(),
+                'description' => $component->getProfileDescription(),
+                'enabled' => $component->enabledForActor($this->getItem()),
+            );
+        }    
+        
+        $content = $this->getView()
+        ->set('data', $apps)
+        ->set('pagination', array(
+            'offset' => 0,
+            'limit' => 20,
+            'total' => count($apps),
+        ))
+        ->layout('apps')
+        ->display();
+        
+        $context->response->setContent($content);
+    }
+    
+    protected function _actionGetPermissions(AnCommandContext $context)
+    {
+        return;
     }
 
     /**
@@ -101,11 +147,10 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionAddapp(AnCommandContext $context)
+    protected function _actionAddApp(AnCommandContext $context)
     {
         $data = $context->data;
         $this->getItem()->components->insert($data->app);
-        $this->commit();
     }
 
     /**
@@ -113,11 +158,28 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionRemoveapp(AnCommandContext $context)
+    protected function _actionRemoveApp(AnCommandContext $context)
     {
         $data = $context->data;
         $this->getItem()->components->extract($data->app);
-        $this->commit();
+    }
+    
+    public function fetchApp(AnCommandContext $context) 
+    {
+        $data = $context->data;
+        
+        $component = $this->getService('repos:components.component')->fetch(array(
+            'component' => $data->app
+        ));
+        
+        $content = json_encode(array(
+            'id' => $component->option,
+            'name' => $component->getProfileName(),
+            'description' => $component->getProfileDescription(),
+            'enabled' => $component->enabledForActor($this->getItem()),
+        ));
+        
+        $context->response->setContent($content); 
     }
 
     /**
@@ -125,7 +187,7 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionConfirmrequest(AnCommandContext $context)
+    protected function _actionConfirmRequest(AnCommandContext $context)
     {
         $this->getItem()->addFollower($this->getState()->requester);
     }
@@ -135,7 +197,7 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionIgnorerequest(AnCommandContext $context)
+    protected function _actionIgnoreRequest(AnCommandContext $context)
     {
         $this->getItem()->removeRequester($this->getState()->requester);
     }
@@ -171,5 +233,58 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
                  ->admin = $this->getService('repos:people.person')
                                 ->fetch($data->adminid);
         }
+    }
+    
+    public function fetchPermissions(AnCommandContext $context) 
+    {
+        
+        $data = array();
+        $components = $this->getItem()->components;
+        
+        foreach ($components as $component) {
+            if (! $component->isAssignable()) {
+                continue;
+            }
+
+            if (! count($component->getPermissions())) {
+                continue;
+            }
+            
+            foreach ($component->getPermissions() as $identifier => $actions) {
+                if (strpos($identifier, '.') === false) {
+                    $name = $identifier;
+                    $identifier = clone $component->getIdentifier();
+                    $identifier->path = array('domain','entity');
+                    $identifier->name = $name;
+                }
+                
+                $identifier = $this->getIdentifier($identifier);
+                
+                foreach ($actions as $action) {
+                    $key = $identifier->package.':'.$identifier->name.':'.$action;
+                    $value = $this->getItem()->getPermission($key);
+                    $permissions[] = array('name' => $key, 'value' => $value);
+                }
+                
+                $data[] = array(
+                    'id' => $component->id,
+                    'name' => $component->component, 
+                    'enabled' => true, 
+                    'permissions' => $permissions
+               );
+            }        
+        }
+        
+        $content = $this->getView()
+        ->set('data', $data)
+        ->set('pagination', array(
+            'offset' => 0,
+            'limit' => 20,
+            'total' => count($data),
+        ))
+        ->layout('permissions')
+        ->display();
+        
+        $context->response->setContent($content);
     }
 }

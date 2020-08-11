@@ -38,7 +38,7 @@
 
 			<div class="entity-actions">
                 <? if ($item->authorize('remove.admin', array('admin' => $actor))) : ?>
-                <a class="btn btn-danger" data-action="removeadmin" href="<?= @route($item->getURL()) ?>" data-adminid="<?= $actor->id ?>">
+                <a class="btn btn-danger" data-action="removeadmin" href="<?= @route($item->getURL() .  '&format=json') ?>" data-adminid="<?= $actor->id ?>">
                 	<?= @text('LIB-AN-ACTION-REMOVE') ?>
                 </a>
                 <? endif; ?>

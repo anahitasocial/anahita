@@ -3,23 +3,23 @@
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-APPS') ?></h3>
 
 <div class="an-entities">
-	<? foreach ($enablable_apps as $component) : ?>
+	<? foreach ($apps as $app) : ?>
 	<div class="an-entity">
 		<h4 class="entity-title">
-			<?= $component->getProfileName() ?>
+			<?= $app->getProfileName() ?>
 		</h4>
 
 		<div class="entity-description">
-		    <?= $component->getProfileDescription() ?>
+		    <?= $app->getProfileDescription() ?>
 		</div>
 
 		<div class="entity-actions">
-    		<? if (!$component->enabledForActor($item)) : ?>
-    		<a  class="btn btn-primary" data-action="addapp" data-app="<?= $component->component ?>" href="<?= @route($item->getURL()) ?>">
+    		<? if (!$app->enabledForActor($item)) : ?>
+    		<a  class="btn btn-primary" data-action="addapp" data-app="<?= $app->component ?>" href="<?= @route($item->getURL() . '&format=json') ?>">
     			<?= @text('COM-ACTORS-APP-ACTION-INSTALL') ?>
     		</a>
     		<? else : ?>
-    		<a class="btn" data-action="removeapp" data-app="<?= $component->component ?>" href="<?= @route($item->getURL()) ?>">
+    		<a class="btn" data-action="removeapp" data-app="<?= $app->component ?>" href="<?= @route($item->getURL() . '&format=json') ?>">
     			<?= @text('COM-ACTORS-APP-ACTION-UNINSTALL') ?>
     		</a>
     		<? endif;?>
