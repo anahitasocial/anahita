@@ -16,6 +16,8 @@ Actor setting json response.
 1. changed: settings mvc to config 
 1. changed: all instances com:settings.setting to com:settings.config 
 1. changed: improved settings assignments REST API for the Browse and Edit operations
+1. added: Actor Apps Settings REST API
+1. added: Actor Permissions Settings REST API 
 
 Anahita 4.4.3
 =============================
