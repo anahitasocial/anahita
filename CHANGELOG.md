@@ -18,6 +18,7 @@ Actor setting json response.
 1. changed: improved settings assignments REST API for the Browse and Edit operations
 1. added: Actor Apps Settings REST API
 1. added: Actor Permissions Settings REST API 
+1. added: checkpoints so only the person with the right privileges can view apps, permissions, and privacy values in the REST api.
 
 Anahita 4.4.3
 =============================

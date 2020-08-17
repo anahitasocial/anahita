@@ -36,11 +36,6 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
                 array('after.addApp', 'after.removeApp'),
                 array($this, 'fetchApp')
         );
-        
-        $this->registerCallback(
-                array('before.getPermissions'),
-                array($this, 'fetchPermissions')
-        );
     }
 
     /**
@@ -139,7 +134,73 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     
     protected function _actionGetPermissions(AnCommandContext $context)
     {
-        return;
+        $data = array();
+        $actor = $this->getItem();
+        $components = $this->getItem()->components;
+        
+        foreach ($components as $component) {
+            if (! $component->isAssignable()) {
+                continue;
+            }
+
+            if (! count($component->getPermissions())) {
+                continue;
+            }
+            
+            foreach ($component->getPermissions() as $identifier => $actions) {
+                if (strpos($identifier, '.') === false) {
+                    $name = $identifier;
+                    $identifier = clone $component->getIdentifier();
+                    $identifier->path = array('domain','entity');
+                    $identifier->name = $name;
+                }
+                
+                $identifier = $this->getIdentifier($identifier);
+                
+                foreach ($actions as $action) {
+                    $key = $identifier->package.':'.$identifier->name.':'.$action;
+                    $value = $actor->getPermission($key);
+                    $permissions[] = array('name' => $key, 'value' => $value);
+                }
+                
+                $data[] = array(
+                    'id' => $component->id,
+                    'name' => $component->component, 
+                    'enabled' => true, 
+                    'permissions' => $permissions
+               );
+            }        
+        }
+        
+        $content = $this->getView()
+        ->set('data', $data)
+        ->set('pagination', array(
+            'offset' => 0,
+            'limit' => 20,
+            'total' => count($data),
+        ))
+        ->layout('permissions')
+        ->display();
+        
+        $context->response->setContent($content);
+    }
+    
+    protected function _actionGetPrivacy(AnCommandContext $context)
+    {        
+        $data = array(
+            'allowFollowRequest' => (bool) $this->getItem()->allowFollowRequest,
+            'permissions' => array(
+                'name' => 'access',
+                'value' => $this->getItem()->access,
+            ),
+        );
+        
+        $content = $this->getView()
+        ->set('data', $data)
+        ->layout('privacy')
+        ->display();
+        
+        $context->response->setContent($content);
     }
 
     /**
@@ -235,56 +296,32 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
         }
     }
     
-    public function fetchPermissions(AnCommandContext $context) 
+    public function canGetapps()
     {
-        
-        $data = array();
-        $components = $this->getItem()->components;
-        
-        foreach ($components as $component) {
-            if (! $component->isAssignable()) {
-                continue;
-            }
-
-            if (! count($component->getPermissions())) {
-                continue;
-            }
-            
-            foreach ($component->getPermissions() as $identifier => $actions) {
-                if (strpos($identifier, '.') === false) {
-                    $name = $identifier;
-                    $identifier = clone $component->getIdentifier();
-                    $identifier->path = array('domain','entity');
-                    $identifier->name = $name;
-                }
-                
-                $identifier = $this->getIdentifier($identifier);
-                
-                foreach ($actions as $action) {
-                    $key = $identifier->package.':'.$identifier->name.':'.$action;
-                    $value = $this->getItem()->getPermission($key);
-                    $permissions[] = array('name' => $key, 'value' => $value);
-                }
-                
-                $data[] = array(
-                    'id' => $component->id,
-                    'name' => $component->component, 
-                    'enabled' => true, 
-                    'permissions' => $permissions
-               );
-            }        
+        if ($this->getItem()) {
+            return $this->getItem()->authorize('edit');
         }
-        
-        $content = $this->getView()
-        ->set('data', $data)
-        ->set('pagination', array(
-            'offset' => 0,
-            'limit' => 20,
-            'total' => count($data),
-        ))
-        ->layout('permissions')
-        ->display();
-        
-        $context->response->setContent($content);
+
+        return false;
+    }
+    
+    public function canGetpermissions()
+    {
+        if ($this->getItem()) {
+            error_log('Can Edit Permissions');
+            return $this->getItem()->authorize('edit');
+        }
+
+        return false;
+    }
+    
+    public function canGetprivacy()
+    {
+        if ($this->getItem()) {
+            error_log('Can Edit Privacy');
+            return $this->getItem()->authorize('edit');
+        }
+
+        return false;
     }
 }
