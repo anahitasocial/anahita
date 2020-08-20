@@ -484,8 +484,9 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
             $config->options = $options;
 
             if ($config->entity) {
+                $value = $config->entity->getPermission($config->name, LibBaseDomainBehaviorPrivatable::FOLLOWER);
                 $config->append(array(
-                    'selected' => $config->entity->getPermission($config->name, LibBaseDomainBehaviorPrivatable::FOLLOWER),
+                    'selected' => $value,
                 ));
             }
 
