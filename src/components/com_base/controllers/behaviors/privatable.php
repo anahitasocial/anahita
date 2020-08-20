@@ -40,7 +40,7 @@ class ComBaseControllerBehaviorPrivatable extends AnControllerBehaviorAbstract
         $names = AnConfig::unbox($data->privacy_name);
 
         settype($names, 'array');
-
+        
         foreach ($names as $name) {
             $this->getItem()->setPermission($name, $data->$name);
         }
