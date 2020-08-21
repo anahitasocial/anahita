@@ -96,28 +96,6 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
         $entity->components->registerEventDispatcher($dispatcher);
         $dispatcher->addEventListener('onSettingDisplay', $this->_mixer);
     }
-    
-    protected function _actionGetPrivacy(AnCommandContext $context)
-    {        
-        $data = array(
-            'allowFollowRequest' => (bool) $this->getItem()->allowFollowRequest,
-            'access' => $this->getItem()->access,
-            'permissions' => array(
-                'leadable:add' => $this->getItem()
-                    ->getPermission(
-                        'leadable:add', 
-                        LibBaseDomainBehaviorPrivatable::FOLLOWER
-                    ),
-            ),
-        );
-        
-        $content = $this->getView()
-        ->set('data', $data)
-        ->layout('privacy')
-        ->display();
-        
-        $context->response->setContent($content);
-    }
 
     /**
      * Confirm a request.
@@ -170,14 +148,5 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
                  ->admin = $this->getService('repos:people.person')
                                 ->fetch($data->adminid);
         }
-    }
-    
-    public function canGetprivacy()
-    {
-        if ($this->getItem()) {
-            return $this->getItem()->authorize('edit');
-        }
-
-        return false;
     }
 }

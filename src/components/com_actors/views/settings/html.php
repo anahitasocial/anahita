@@ -118,6 +118,10 @@ class ComActorsViewSettingsHtml extends ComBaseViewHtml
         $tabs->insert('cover', array(
            'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-COVER'),
         ));
+        
+        $tabs->insert('privacy', array(
+            'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-PRIVACY'),
+        ));
 
         $tabs->insert('permissions', array(
             'label' => AnTranslator::_('COM-ACTORS-PROFILE-EDIT-TAB-PERMISSIONS'),

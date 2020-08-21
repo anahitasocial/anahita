@@ -260,28 +260,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     }
 
     /**
-     * Overwrite the setPrivacy action in privatable behavior.
-     *
-     * @param AnCommandContext $context Context parameter
-     *
-     * @see   ComActorsDomainBehaviorPrivatable
-     */
-    protected function _actionSetPrivacy(AnCommandContext $context)
-    {
-        if ($this->hasBehavior('privatable')) {
-            $this->getBehavior('privatable')->execute('action.setprivacy', $context);
-        }
-
-        $data = $context->data;
-
-        if ($data->access != 'followers') {
-            $data->allowFollowRequest = false;
-        }
-
-        $this->getItem()->allowFollowRequest = (bool) $data->allowFollowRequest;
-    }
-
-    /**
      * Set the necessary redirect.
      *
      * @param AnCommandContext $context
