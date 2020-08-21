@@ -19,6 +19,17 @@ Actor setting json response.
 1. added: Actor Apps Settings REST API
 1. added: Actor Permissions Settings REST API 
 1. added: checkpoints so only the person with the right privileges can view apps, permissions, and privacy values in the REST api.
+1. added: permissionable controller behaviour for actors
+1. added: permissionable behaviour to the actor controller
+1. removed: permissions related methods from administrable behaviour.
+1. added: appable controller behaviour
+1. removed: app management methods from administrable behaviour
+1. changed: moved Privacy settings to it's own tab
+1. added: privatable controller behaviour
+1. removed: old privatable methods from the abstract controller and 
+administrable behaviour. 
+1. added: actor privacy tab translation labels to the actors translation 
+file.
 
 Anahita 4.4.3
 =============================
