@@ -1,30 +1,32 @@
 <? defined('ANAHITA') or die; ?>
 
-<? if (defined('ANDEBUG') && ANDEBUG) : ?>
-<script src="com_actors/js/permissions.js" />
-<? else: ?>
-<script src="com_actors/js/min/permissions.min.js" />
-<? endif; ?>
-
 <h3><?= @text('COM-ACTORS-PROFILE-EDIT-PERMISSIONS') ?></h3>
-<form id="profile-permissions" action="<?=@route($item->getURL())?>" method="post">
+<form action="<?=@route($item->getURL())?>" method="post">
 	<input type="hidden" name="action" value="setpermission" />
-<? foreach ($components as $component) : ?>
+	<? foreach ($components as $component) : ?>
 	<fieldset>
 		<legend><?= $component->name ?></legend>
 		<? foreach ($component->permissions as $permission) : ?>
 			<div class="control-group">
 				<label class="control-label" ><?= $permission->label ?></label>
 				<div class="controls">
-					<?= @helper('ui.privacy', array('entity' => $item, 'name' => $permission->name, 'auto_submit' => false))?>
+					<?= @helper('ui.privacy', array(
+						'entity' => $item, 
+						'name' => $permission->name, 
+						'auto_submit' => false
+					))?>
 				</div>
 			</div>
 		<? endforeach;?>
 	</fieldset>
-<? endforeach;?>
+	<? endforeach;?>
 
     <div class="form-actions">
-        <button type="submit" class="btn" data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>">
+        <button 
+			type="submit" 
+			class="btn" 
+			data-loading-text="<?= @text('LIB-AN-ACTION-SAVING') ?>"
+		>
             <?= @text('LIB-AN-ACTION-SAVE'); ?>
         </button>
     </div>

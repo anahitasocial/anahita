@@ -57,13 +57,11 @@ class ComActorsControllerBehaviorPrivatable extends ComBaseControllerBehaviorPri
         $data = array(
             'allowFollowRequest' => (bool) $this->getItem()->allowFollowRequest,
             'access' => $this->getItem()->access,
-            'permissions' => array(
-                'leadable:add' => $this->getItem()
-                    ->getPermission(
-                        'leadable:add', 
-                        LibBaseDomainBehaviorPrivatable::FOLLOWER
-                    ),
-            ),
+            'leadable:add' => $this->getItem()
+                ->getPermission(
+                    'leadable:add', 
+                    LibBaseDomainBehaviorPrivatable::FOLLOWER
+                ),
         );
         
         $content = json_encode($data);
