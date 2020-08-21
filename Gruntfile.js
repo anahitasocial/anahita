@@ -28,8 +28,8 @@ module.exports = function ( grunt ) {
                 'src/media/lib_anahita/js/production/site.js' :
                 ['src/media/lib_anahita/js/production/site.uncompressed.js'],
 
-                'src/media/com_actors/js/min/permissions.min.js' :
-                ['src/media/com_actors/js/permissions.js'],
+                'src/media/com_actors/js/min/privacy.min.js' :
+                ['src/media/com_actors/js/privacy.js'],
 
                 'src/media/com_search/js/min/_search.min.js' :
                 ['src/media/com_search/js/_search.js'],

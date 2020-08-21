@@ -1,7 +1,7 @@
 /**
  * Author: Rastin Mehr
  * Email: rastin@anahitapolis.com
- * Copyright 2015 rmdStudio Inc. www.rmdStudio.com
+ * Copyright 2020 rmdStudio Inc. www.rmdStudio.com
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
@@ -30,6 +30,6 @@
       });
     }
 
-    $('form#profile-permissions').followPermission();
+    $('form#profile-privacy').followPermission();
 
 }(jQuery, window, document));
