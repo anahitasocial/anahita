@@ -62,6 +62,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'com:notifications.controller.behavior.notifier',
                 'followable',
                 'administrable',
+                'appable',
                 'permissionable',
                 'ownable',
                 'privatable',
@@ -256,28 +257,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         }
 
         return parent::getToolbar($toolbar, $config);
-    }
-
-    /**
-     * Overwrite the setPrivacy action in privatable behavior.
-     *
-     * @param AnCommandContext $context Context parameter
-     *
-     * @see   ComActorsDomainBehaviorPrivatable
-     */
-    protected function _actionSetPrivacy(AnCommandContext $context)
-    {
-        if ($this->hasBehavior('privatable')) {
-            $this->getBehavior('privatable')->execute('action.setprivacy', $context);
-        }
-
-        $data = $context->data;
-
-        if ($data->access != 'followers') {
-            $data->allowFollowRequest = false;
-        }
-
-        $this->getItem()->allowFollowRequest = (bool) $data->allowFollowRequest;
     }
 
     /**

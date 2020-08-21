@@ -31,11 +31,6 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
                 array('before.addAdmin', 'before.removeAdmin'),
                 array($this, 'fetchAdmin')
         );
-        
-        $this->registerCallback(
-                array('after.addApp', 'after.removeApp'),
-                array($this, 'fetchApp')
-        );
     }
 
     /**
@@ -101,98 +96,6 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
         $entity->components->registerEventDispatcher($dispatcher);
         $dispatcher->addEventListener('onSettingDisplay', $this->_mixer);
     }
-    
-    protected function _actionGetApps(AnCommandContext $context)
-    {
-        $apps = array();
-        $components = $this->getService('com:actors.domain.entityset.component', array(
-                'actor' => $this->getItem(),
-                'can_enable' => true,
-            ));
-            
-        foreach ($components as $component) {
-            $apps[] = array(
-                'id' => $component->option,
-                'name' => $component->getProfileName(),
-                'description' => $component->getProfileDescription(),
-                'enabled' => $component->enabledForActor($this->getItem()),
-            );
-        }    
-        
-        $content = $this->getView()
-        ->set('data', $apps)
-        ->set('pagination', array(
-            'offset' => 0,
-            'limit' => 20,
-            'total' => count($apps),
-        ))
-        ->layout('apps')
-        ->display();
-        
-        $context->response->setContent($content);
-    }
-    
-    protected function _actionGetPrivacy(AnCommandContext $context)
-    {        
-        $data = array(
-            'allowFollowRequest' => (bool) $this->getItem()->allowFollowRequest,
-            'access' => $this->getItem()->access,
-            'permissions' => array(
-                'leadable:add' => $this->getItem()
-                    ->getPermission(
-                        'leadable:add', 
-                        LibBaseDomainBehaviorPrivatable::FOLLOWER
-                    ),
-            ),
-        );
-        
-        $content = $this->getView()
-        ->set('data', $data)
-        ->layout('privacy')
-        ->display();
-        
-        $context->response->setContent($content);
-    }
-
-    /**
-     * Add App.
-     *
-     * @param AnCommandContext $context Context parameter
-     */
-    protected function _actionAddApp(AnCommandContext $context)
-    {
-        $data = $context->data;
-        $this->getItem()->components->insert($data->app);
-    }
-
-    /**
-     * Remove App.
-     *
-     * @param AnCommandContext $context Context parameter
-     */
-    protected function _actionRemoveApp(AnCommandContext $context)
-    {
-        $data = $context->data;
-        $this->getItem()->components->extract($data->app);
-    }
-    
-    public function fetchApp(AnCommandContext $context) 
-    {
-        $data = $context->data;
-        
-        $component = $this->getService('repos:components.component')->fetch(array(
-            'component' => $data->app
-        ));
-        
-        $content = json_encode(array(
-            'id' => $component->option,
-            'name' => $component->getProfileName(),
-            'description' => $component->getProfileDescription(),
-            'enabled' => $component->enabledForActor($this->getItem()),
-        ));
-        
-        $context->response->setContent($content); 
-    }
 
     /**
      * Confirm a request.
@@ -245,23 +148,5 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
                  ->admin = $this->getService('repos:people.person')
                                 ->fetch($data->adminid);
         }
-    }
-    
-    public function canGetapps()
-    {
-        if ($this->getItem()) {
-            return $this->getItem()->authorize('edit');
-        }
-
-        return false;
-    }
-    
-    public function canGetprivacy()
-    {
-        if ($this->getItem()) {
-            return $this->getItem()->authorize('edit');
-        }
-
-        return false;
     }
 }

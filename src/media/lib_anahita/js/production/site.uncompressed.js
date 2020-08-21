@@ -28449,7 +28449,6 @@ typeof navigator === "object" && (function (global, factory) {
 		}
 
 		if ( action == 'manageapps' ) {
-            console.log(elem.data());
 			$.ajax({
 				method : 'post',
 				url : elem.context.href,

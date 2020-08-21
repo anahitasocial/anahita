@@ -23,7 +23,7 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
         
         $this->registerCallback(
             array('after.setpermission'), 
-            array($this, 'getPermission')
+            array($this, 'fetchPermission')
         );
     }
         
@@ -95,7 +95,7 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
      *
      * @param AnCommandContext $context Context parameter
      */
-    public function getPermission(AnCommandContext $context)
+    public function fetchPermission(AnCommandContext $context)
     {
         $data = array();
         $actions = array();
