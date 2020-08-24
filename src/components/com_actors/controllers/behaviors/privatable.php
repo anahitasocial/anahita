@@ -22,7 +22,7 @@ class ComActorsControllerBehaviorPrivatable extends ComBaseControllerBehaviorPri
         parent::__construct($config);
         
         $this->registerCallback(
-                array('after.getPrivacy', 'after.setPrivacy'),
+                array('after.getPrivacy', 'after.setprivacy'),
                 array($this, 'fetchPrivacy')
         );
     }
@@ -39,7 +39,7 @@ class ComActorsControllerBehaviorPrivatable extends ComBaseControllerBehaviorPri
      *
      * @see   ComActorsDomainBehaviorPrivatable
      */
-    protected function _actionSetPrivacy(AnCommandContext $context)
+    protected function _actionSetprivacy(AnCommandContext $context)
     {
         parent::_actionSetPrivacy($context);
 
@@ -57,12 +57,14 @@ class ComActorsControllerBehaviorPrivatable extends ComBaseControllerBehaviorPri
         $data = array(
             'allowFollowRequest' => (bool) $this->getItem()->allowFollowRequest,
             'access' => $this->getItem()->access,
-            'leadable:add' => $this->getItem()
-                ->getPermission(
+        );
+        
+        if ($this->getItem()->isAdministrable()) {
+            $data['leadable:add'] = $this->getItem()->getPermission(
                     'leadable:add', 
                     LibBaseDomainBehaviorPrivatable::FOLLOWER
-                ),
-        );
+                );
+        }
         
         $content = json_encode($data);
         
