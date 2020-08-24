@@ -22,12 +22,12 @@ class ComActorsControllerBehaviorPrivatable extends ComBaseControllerBehaviorPri
         parent::__construct($config);
         
         $this->registerCallback(
-                array('after.getPrivacy', 'after.setprivacy'),
+                array('after.getprivacy', 'after.setprivacy'),
                 array($this, 'fetchPrivacy')
         );
     }
     
-    protected function _actionGetPrivacy(AnCommandContext $context)
+    protected function _actionGetprivacy(AnCommandContext $context)
     {        
         return;
     }
