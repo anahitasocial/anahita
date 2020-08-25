@@ -44,6 +44,10 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
     const USERTYPE_REGISTERED = 'registered';
     const USERTYPE_ADMINISTRATOR = 'administrator';
     const USERTYPE_SUPER_ADMINISTRATOR = 'super-administrator';
+    
+    const GENDER_MALE = 'male';
+    const GENDER_FEMALE = 'female';
+    CONST GENDER_NEUTRAL = 'neutral';
 
     /**
      * Initializes the default configuration for the object.
@@ -109,7 +113,10 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'default' => self::USERTYPE_GUEST,
                 ),
-                'gender',
+                'gender' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'default' => self::GENDER_NEUTRAL,
+                ),
                 'lastVisitDate' => array(
                     'default' => 'date'
                 ),
