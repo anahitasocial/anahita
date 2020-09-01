@@ -60,17 +60,15 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
            );    
         }
 
-        $content = $this->getView()
+        $this->getView()
         ->set('data', $data)
         ->set('pagination', array(
             'offset' => 0,
             'limit' => 20,
             'total' => count($data),
-        ))
-        ->layout('permissions')
-        ->display();
+        ));
         
-        $context->response->setContent($content);
+        return $data;
     }
     
     /**

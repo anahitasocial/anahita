@@ -27,9 +27,12 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
             'before.follow',
             'before.lead',
             'before.unlead',
-            'before.addrequest', 'before.deleterequest',
-            'before.block', 'before.unblock', ),
-            array($this, 'getActor'));
+            'before.addrequest', 
+            'before.deleterequest',
+            'before.block', 
+            'before.unblock', 
+        ),
+        array($this, 'getActor'));
     }
 
     /**

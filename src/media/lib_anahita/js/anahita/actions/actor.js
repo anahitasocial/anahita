@@ -232,7 +232,7 @@
 	                dataType : 'json',
 					data : {
 						get : 'candidates',
-						value : query
+						q : query
 					},
 					beforeSend : function () {
 						self.$element.fadeTo('fast', 0.3).addClass('uiActivityIndicator');
