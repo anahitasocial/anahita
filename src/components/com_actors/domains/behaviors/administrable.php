@@ -132,12 +132,13 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
         $viewer = get_viewer();
         $query = $this->getService('repos:people.person')->getQuery();
 
-        //super admin can make anyone admin
         if (!$viewer->admin()) {
             $ids = $this->_mixer->followerIds->toArray();
             $ids = array_merge($ids, $viewer->followerIds->toArray());
-            $query->id($ids)->id($viewer->id, '<>')->id($this->administratorIds->toArray(), '<>');
+            $query->id($ids)->id($viewer->id, '<>');
         }
+        
+        $query->id($this->administratorIds->toArray(), '<>');
 
         return $query->toEntitySet();
     }

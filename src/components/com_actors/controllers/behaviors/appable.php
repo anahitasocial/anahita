@@ -29,14 +29,14 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     
     protected function _actionGetApps(AnCommandContext $context)
     {
-        $apps = array();
+        $data = array();
         $components = $this->getService('com:actors.domain.entityset.component', array(
                 'actor' => $this->getItem(),
                 'can_enable' => true,
             ));
             
         foreach ($components as $component) {
-            $apps[] = array(
+            $data[] = array(
                 'id' => $component->option,
                 'name' => $component->getProfileName(),
                 'description' => $component->getProfileDescription(),
@@ -44,17 +44,15 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
             );
         }    
         
-        $content = $this->getView()
-        ->set('data', $apps)
+        $this->getView()
+        ->set('data', $data)
         ->set('pagination', array(
             'offset' => 0,
             'limit' => 20,
-            'total' => count($apps),
-        ))
-        ->layout('apps')
-        ->display();
+            'total' => count($data),
+        ));
         
-        $context->response->setContent($content);
+        return $data;
     }
     
     /**

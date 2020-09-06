@@ -62,6 +62,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'com:notifications.controller.behavior.notifier',
                 'followable',
                 'administrable',
+                'requestable',
                 'appable',
                 'permissionable',
                 'ownable',

@@ -5,7 +5,6 @@
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -23,15 +22,56 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
         parent::__construct($config);
 
         $this->registerCallback(
-                array('before.confirmRequest', 'before.ignoreRequest'),
-                array($this, 'fetchRequester')
-        );
-
-        $this->registerCallback(
                 array('before.addAdmin', 'before.removeAdmin'),
                 array($this, 'fetchAdmin')
         );
     }
+    
+    /**
+     * Get Candidates.
+     *
+     * @param AnCommandContext $context Context parameter
+     */
+     protected function _actionGetadmins(AnCommandContext $context)
+     {
+         $data = $this->getItem()->administrators
+         ->limit($this->limit, $this->start)
+         ->toArray();
+         
+         $this->getView()
+         ->set('data', $data)
+         ->set('pagination', array(
+             'offset' => $this->start,
+             'limit' => $this->limit,
+             'total' => count($data),
+         ));
+         return $data;
+     }
+     
+     /**
+      * Get Candidates.
+      *
+      * @param AnCommandContext $context Context parameter
+      */
+     protected function _actionGetAdminsCandidates(AnCommandContext $context)
+     {
+         $data = $context->data;
+         
+         $data = $this->getItem()
+         ->getAdminCanditates()
+         ->keyword($this->q)
+         ->limit($this->limit, 0)
+         ->toArray();
+
+         $this->getView()
+         ->set('data', $data)
+         ->set('pagination', array(
+             'offset' => 0,
+             'limit' => $this->limit,
+             'total' => count($data),
+         ));
+         return $data;
+     }
 
     /**
      * Remove admin.
@@ -51,31 +91,33 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     protected function _actionAddAdmin(AnCommandContext $context)
     {
         $this->getItem()->addAdministrator($this->admin);
+        
+        $content = json_encode($this->admin->toSerializableArray());
+        $context->response->setContent($content);
     }
 
     /**
-     * Get Candidates.
+     * Get Candidates. Soon to be legacy
      *
      * @param AnCommandContext $context Context parameter
+     * @deprecated use _actionGetAdminsCandidates instead  
      */
     protected function _actionGetCandidates(AnCommandContext $context)
     {
-        if ($context->request->getFormat() != 'html') {
-            $data = $context->data;
-            $canditates = $this->getItem()->getAdminCanditates();
-            $canditates->keyword($this->value)->limit(10);
-            $people = array();
+        $data = $context->data;
+        $canditates = $this->getItem()->getAdminCanditates();
+        $canditates->keyword($this->q)->limit($this->limit, 0);
+        $people = array();
 
-            foreach ($canditates as $person) {
-                $people[] = array(
-                  'id' => $person->id,
-                  'value' => $person->name, );
-            }
-
-            $this->getView()->set($people);
-
-            return $people;
+        foreach ($canditates as $person) {
+            $people[] = array(
+              'id' => $person->id,
+              'value' => $person->name, );
         }
+
+        $this->getView()->set($people);
+
+        return $people;
     }
 
     /**
@@ -98,43 +140,6 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     }
 
     /**
-     * Confirm a request.
-     *
-     * @param AnCommandContext $context Context parameter
-     */
-    protected function _actionConfirmRequest(AnCommandContext $context)
-    {
-        $this->getItem()->addFollower($this->getState()->requester);
-    }
-
-    /**
-     * Ignores a request.
-     *
-     * @param AnCommandContext $context Context parameter
-     */
-    protected function _actionIgnoreRequest(AnCommandContext $context)
-    {
-        $this->getItem()->removeRequester($this->getState()->requester);
-    }
-
-    /**
-     * Fetches the requester.
-     *
-     * @param AnCommandContext $context Context parameter
-     */
-    public function fetchRequester(AnCommandContext $context)
-    {
-        $data = $context->data;
-
-        if ($this->getItem()) {
-            $this->getState()
-                 ->requester = $this->getItem()
-                                    ->requesters
-                                    ->fetch($data->requester);
-        }
-    }
-
-    /**
      * Fetches the requester.
      *
      * @param AnCommandContext $context Context parameter
@@ -144,9 +149,9 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
         $data = $context->data;
 
         if ($this->getItem()) {
-            $this->getState()
-                 ->admin = $this->getService('repos:people.person')
-                                ->fetch($data->adminid);
+            $repo = 'repos:people.person';
+            $admin = $this->getService($repo)->fetch($data->adminid);
+            $this->getState()->admin = $admin;
         }
     }
 }
