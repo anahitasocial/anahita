@@ -30,6 +30,7 @@ Actor setting json response.
 administrable behaviour. 
 1. added: actor privacy tab translation labels to the actors translation 
 file.
+1. added: GetFollowRequests action to the Actor Requestable behaviour 
 
 Anahita 4.4.3
 =============================
