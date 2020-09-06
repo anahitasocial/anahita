@@ -28,6 +28,27 @@ class ComActorsControllerBehaviorRequestable extends AnControllerBehaviorAbstrac
     }
     
     /**
+     * Gets list of follow requests
+     *
+     * @param AnCommandContext $context Context parameter
+     */
+    protected function _actionGetFollowRequests(AnCommandContext $context)
+    {
+        $data = $this->getItem()->requesters
+        ->limit($this->limit, $this->start)
+        ->toArray();
+
+        $this->getView()
+        ->set('data', $data)
+        ->set('pagination', array(
+            'offset' => $this->start,
+            'limit' => $this->limit,
+            'total' => count($data),
+        ));
+        return $data;
+    }
+    
+    /**
      * Confirm a request.
      *
      * @param AnCommandContext $context Context parameter
