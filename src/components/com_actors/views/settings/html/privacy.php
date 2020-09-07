@@ -23,7 +23,13 @@
             )) ?>
         <? if ($item->isFollowable()) : ?>
         <label class="checkbox">
-            <input type="checkbox" disabled name="allowFollowRequest" value="1" <?= $item->allowFollowRequest ? 'checked' : ''?> >
+            <input 
+                type="checkbox" 
+                <?= $item->access !== LibBaseDomainBehaviorPrivatable::FOLLOWER ? 'disabled' : '' ?> 
+                name="allowFollowRequest" 
+                value="1" 
+                <?= $item->allowFollowRequest ? 'checked' : '' ?> 
+                >
             <?= @text('COM-ACTORS-PERMISSION-CAN-SEND-FOLLOW-REQUEST') ?>
         </label>
         <? endif; ?>
