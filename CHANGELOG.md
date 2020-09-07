@@ -24,7 +24,7 @@ Actor setting json response.
 1. removed: permissions related methods from administrable behaviour.
 1. added: appable controller behaviour
 1. removed: app management methods from administrable behaviour
-1. changed: moved Privacy settings to it's own tab
+1. changed: moved Privacy settings to its own tab
 1. added: privatable controller behaviour
 1. removed: old privatable methods from the abstract controller and 
 administrable behaviour. 
