@@ -114,7 +114,7 @@ class ComSearchDomainQueryNode extends AnDomainQueryDefault
 
         foreach ($scopes as $scope) {
             $types[] = $scope->node_type;
-
+            
             if ($scope->commentable) {
                 $comments[] = (string) $scope->identifier;
             }

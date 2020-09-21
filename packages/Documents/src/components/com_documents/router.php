@@ -1,5 +1,3 @@
 <?php
 
-class ComDocumentsRouter extends ComMediumRouterDefault
-{
-}
+class ComDocumentsRouter extends ComMediumRouterDefault{}

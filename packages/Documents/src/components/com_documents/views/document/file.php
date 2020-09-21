@@ -1,13 +1,13 @@
-<?
+<?php
 
-class ComVchViewDocumentFile extends LibBaseViewFile
+class ComDocumentsViewDocumentFile extends LibBaseViewFile
 {
 	public function display()
 	{
 		$this->output   = $this->_state->getItem()->getFileContent();
-		$this->filename	= $this->_state->getItem()->name;
+		$this->filename	= $this->_state->getItem()->filename;
 		$this->mimetype = $this->_state->getItem()->mimetype;
-		$this->disposition = 'inline';	
+		$this->disposition = 'attachment';	
         	
 		return parent::display();		
 	}

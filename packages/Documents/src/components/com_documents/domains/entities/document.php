@@ -1,14 +1,14 @@
 <?php
 
 /**
- * Photo Entity.
+ * Document Entity.
  *
  * @category   Anahita
  *
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       https://www.GetAnahita.com
  */
 class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
 {
@@ -23,6 +23,20 @@ class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
+            'attributes' => array(
+                'name' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'length' => array(
+                        'max' => 100,
+                    ),
+                ),
+                'body' => array(
+                    'required' => AnDomain::VALUE_NOT_EMPTY,
+                    'length' => array(
+                        'max' => 5000,
+                    )
+                ),
+            ),
             'behaviors' => array(
                 'fileable',
             ),
@@ -31,12 +45,13 @@ class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
         parent::_initialize($config);
     }
     
-    protected function _toData()
+    protected function toData()
     {     
         $data = array();
         $data['id'] = $this->id;
         $data['name'] = $this->name;
         $data['mimeType'] = $this->mimeType;
+        
         return $data; 
     }
 }
