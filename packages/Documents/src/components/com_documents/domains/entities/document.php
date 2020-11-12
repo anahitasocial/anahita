@@ -44,14 +44,4 @@ class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
 
         parent::_initialize($config);
     }
-    
-    protected function toData()
-    {     
-        $data = array();
-        $data['id'] = $this->id;
-        $data['name'] = $this->name;
-        $data['mimeType'] = $this->mimeType;
-        
-        return $data; 
-    }
 }

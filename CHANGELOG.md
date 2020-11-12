@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.4.5
+=============================
+1. added: Documents app to the list of packages
+2. added: method getFileExtension to the fileable behaviour 
+
 Anahita 4.4.4
 =============================
 1. added: search near me functionality to the search component 

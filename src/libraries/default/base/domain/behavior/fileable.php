@@ -32,7 +32,7 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
                     'column' => 'filesize',
                     'type' => 'integer',
                 ),
-                'mimeType' => array(
+                'mimetype' => array(
                     'column' => 'mimetype',
                     'match' => '/\w+\/\w+/',
                 ),
@@ -60,7 +60,7 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
             'type' => mime_content_type($file->name),
         ));
 
-        $this->mimeType = $file->type;
+        $this->mimetype = $file->type;
         $this->filename = $file->name;
         $this->fileSize = strlen($data);
         $this->writeData($filename, $data, false);
@@ -99,6 +99,14 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
 	{
 		return $this->readData($this->filename, false);		
 	}
+    
+    public function getFileExtension()
+    {
+        $mimetypes = include(ANPATH_COMPONENTS . DS . 'com_documents' . DS . 'mimetypes.php');
+        $extension = array_search($this->mimetype, $mimetypes);
+        
+        return $extension;
+    }
     
     /**
 	 * Delete a photo image from the storage. 

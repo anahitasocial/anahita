@@ -1,9 +1,9 @@
 {
-    "name": "System - Anahita Framework",
-    "description": "Anahita Social Engine ™ system plugin",
+    "name": "System - Anahita",
+    "description": "Anahita system plugin",
     "type": "plugin",
     "group": "system",
-    "version": "4.3.3",
+    "version": "4.4.4",
     "license": "GPLv3",
     "homepage": "www.GetAnahita.com",
     "authors": [

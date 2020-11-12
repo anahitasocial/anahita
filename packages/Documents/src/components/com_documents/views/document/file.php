@@ -5,9 +5,12 @@ class ComDocumentsViewDocumentFile extends LibBaseViewFile
 	public function display()
 	{
 		$this->output   = $this->_state->getItem()->getFileContent();
-		$this->filename	= $this->_state->getItem()->filename;
+		$extension = $this->_state->getItem()->getFileExtension();
+		
+		$this->filename	= $this->_state->getItem()->alias . '.' . $extension;
+		
 		$this->mimetype = $this->_state->getItem()->mimetype;
-		$this->disposition = 'attachment';	
+		$this->disposition = 'inline';	
         	
 		return parent::display();		
 	}
