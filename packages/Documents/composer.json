@@ -1,0 +1,11 @@
+{
+    "type": "anahita-extension",
+    "name": "anahita/documents",
+    "keywords" : ["anahita extension"],
+    "description": "",
+    "extension-source" : "src",
+    "require": {
+        "php": ">=5.6",
+        "anahita/anahita": "*"
+    }
+}

@@ -1,27 +1,12 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.GetAnahita.com
- */
-
-/**
  * Fileable Behavior.
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @copyright  2008 - 2020 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.GetAnahita.com
@@ -39,15 +24,17 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
     {
         $config->append(array(
             'attributes' => array(
+                'filename' => array (
+                    'column' => 'filename',
+                    'type' => 'string',
+                ),
                 'filesize' => array(
                     'column' => 'filesize',
                     'type' => 'integer',
-                    'write' => 'private'
                 ),
-                'mimeType' => array(
-                    'column' => 'medium_mime_type',
+                'mimetype' => array(
+                    'column' => 'mimetype',
                     'match' => '/\w+\/\w+/',
-                    'write' => 'private'
                 ),
             ),
         ));
@@ -73,31 +60,61 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
             'type' => mime_content_type($file->name),
         ));
 
-        $this->mimeType = $file->type;
-        $this->setValue('file_name', $file->name);
+        $this->mimetype = $file->type;
+        $this->filename = $file->name;
         $this->fileSize = strlen($data);
         $this->writeData($filename, $data, false);
     }
-
+    
+    public function setFileContent($file)
+	{
+        if (! $this->validate() ) {
+			throw new KException('Something bad happened');
+		}
+        		
+		if (! $this->persisted()) {	
+            $settings = $this->getService('com:settings.config');
+            
+            $mimetypes = include(ANPATH_COMPONENTS . DS . 'com_documents' . DS . 'mimetypes.php');
+            $this->mimetype = $file['type'];
+            $extension = array_search($this->mimetype, $mimetypes);
+			$this->filename = hash('sha256', str_shuffle($settings->secret . microtime())) . '.' . $extension;
+			
+            
+            $data = file_get_contents($file['tmp_name']);
+            $this->filesize = strlen($data);
+            
+            $this->save();		
+            	
+			$this->writeData($this->filename, $data, false);
+		}
+	}
+    
     /**
-     * Return the file content;.
-     *
-     * @return string
-     */
-    public function getFileContent()
+	 * Return the file content;
+	 * 
+	 * @return string
+	 */
+	public function getFileContent()
+	{
+		return $this->readData($this->filename, false);		
+	}
+    
+    public function getFileExtension()
     {
-        $filename = md5($this->id);
-
-        return $this->readData($filename, false);
+        $mimetypes = include(ANPATH_COMPONENTS . DS . 'com_documents' . DS . 'mimetypes.php');
+        $extension = array_search($this->mimetype, $mimetypes);
+        
+        return $extension;
     }
-
+    
     /**
-     * Return the original file name.
-     *
-     * @return string
-     */
-    public function getFileName()
-    {
-        return $this->getValue('file_name');
-    }
+	 * Delete a photo image from the storage. 
+	 * 
+	 * @param AnCommandContext $context Context parameter
+	 */
+	protected function _beforeEntityDelete(AnCommandContext $context)
+	{
+		$this->deletePath($this->filename, false);
+	}
 }

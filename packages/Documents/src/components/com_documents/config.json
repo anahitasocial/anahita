@@ -1,0 +1,22 @@
+{
+    "fields": [
+        {
+            "option": [
+                {
+                    "value": "2",
+                    "text": "2MB"
+                },
+                {
+                    "value": "4",
+                    "text": "4MB"
+                }
+            ],
+
+            "name": "uploadlimit",
+            "type": "list",
+            "selected": "4",
+            "label": "Upload Limit (MB)", 
+            "description": "Sets the file size upload limit"
+        }
+    ]
+}

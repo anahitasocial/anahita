@@ -1,0 +1,18 @@
+{
+  "name": "Documents",
+  "description": "The Anahita document sharing app",
+  "type": "component",
+  "version": "4.4.4",
+  "homepage": "https://www.GetAnahita.com",
+  "license": "GPLv3",
+  "copyright": [
+      "Copyright 2020 rmdStudio Inc."
+  ],
+  "authors": [
+      {
+        "name": "Rastin Mehr",
+        "email": "rastin@anahitapolis.com",
+        "homepage": "https://www.rmdstudio.com"
+      }
+  ]
+}
