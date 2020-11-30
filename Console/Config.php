@@ -69,6 +69,11 @@ class Config
 
         $this->_key_map = $map;
         $this->_data = array(
+            'core_enabled' => 0,
+            'core_origin' => 'http://example.com',
+            'core_methods' => 'POST, GET, DELETE, PUT, PATCH, OPTIONS',
+            'core_headers' => 'Content-Type',
+            'core_credentials' => 1,
             'mailer' => 'mail',
             'mailfrom' => 'noreply@example.com',
             'fromname' => 'Anahita Website',
