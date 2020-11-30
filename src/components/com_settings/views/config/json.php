@@ -15,6 +15,8 @@ class ComSettingsViewConfigJson extends ComBaseViewJson
     {
         $data = $this->config->get('_attributes');
     
+        $data['cors_enabled'] = (bool) $data['cors_enabled'];
+        $data['cors_credentials'] = (bool) $data['cors_credentials'];
         $data['debug'] = (bool) $data['debug'];
         $data['sef_rewrite'] = (bool) $data['sef_rewrite'];
         $data['error_reporting'] = (int) $data['error_reporting'];

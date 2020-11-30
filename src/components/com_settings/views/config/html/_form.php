@@ -93,9 +93,10 @@
 
         <? //SEF Rewrite ?>
         <?
-          $options_sef_rewrite = array();
-          $options_sef_rewrite[] = array('name' => @text('LIB-AN-YES'), 'value' => 1);
-          $options_sef_rewrite[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
+          $options_sef_rewrite = array(
+              array('name' => @text('LIB-AN-YES'), 'value' => 1),
+              array('name' => @text('LIB-AN-NO'), 'value' => 0),
+          );
         ?>
         <?= @helper('ui.formfield_select', array(
           'label' => @text('COM-SETTINGS-CONFIGS-SEF-REWRITE'),
@@ -107,9 +108,10 @@
 
         <? //Debug Setting ?>
         <?
-          $options_debug = array();
-          $options_debug[] = array('name' => @text('LIB-AN-YES'), 'value' => 1);
-          $options_debug[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
+          $options_debug = array(
+              array('name' => @text('LIB-AN-YES'), 'value' => 1),
+              array('name' => @text('LIB-AN-NO'), 'value' => 0),
+          );
         ?>
         <?= @helper('ui.formfield_select', array(
           'label' => @text('COM-SETTINGS-CONFIGS-DEBUG'),
@@ -164,6 +166,64 @@
         'value' => $config->dbprefix,
         'id' => 'setting-dbprefix',
       )) ?>
+    </fieldset>
+    
+    <fieldset>
+      <legend><?= @text('COM-SETTINGS-CONFIGS-CORS-SETTINGS') ?></legend>
+      
+      <? //CORS Enabled ?>
+      <?
+        $options_cors_enabled = array(
+            array('name' => @text('LIB-AN-YES'), 'value' => 1),
+            array('name' => @text('LIB-AN-NO'), 'value' => 0),
+        );
+      ?>
+      <?= @helper('ui.formfield_select', array(
+        'label' => @text('COM-SETTINGS-CONFIGS-CORS-ENABLED'),
+        'name' => 'meta[cors_enabled]',
+        'selected' => (int) $config->cors_enabled,
+        'id' => 'setting-cors_enabled',
+        'options' => $options_cors_enabled,
+      )) ?>
+      
+      <?= @helper('ui.formfield_text', array(
+        'label' => @text('COM-SETTINGS-CONFIGS-CORS-ORIGIN'),
+        'name' => 'meta[cors_origin]',
+        'value' => $config->cors_origin,
+        'id' => 'setting-cors-origin',
+        'required' => false,
+      )) ?>
+      
+      <?= @helper('ui.formfield_text', array(
+        'label' => @text('COM-SETTINGS-CONFIGS-CORS-METHODS'),
+        'name' => 'meta[cors_methods]',
+        'value' => $config->cors_methods,
+        'id' => 'setting-cors-methods',
+        'required' => false,
+      )) ?>
+      
+      <?= @helper('ui.formfield_text', array(
+        'label' => @text('COM-SETTINGS-CONFIGS-CORS-HEADERS'),
+        'name' => 'meta[cors_headers]',
+        'value' => $config->cors_headers,
+        'id' => 'setting-cors-headers',
+        'required' => false,
+      )) ?>
+      
+      <?
+        $options_cors_credentials = array(
+            array('name' => @text('LIB-AN-YES'), 'value' => 1),
+            array('name' => @text('LIB-AN-NO'), 'value' => 0),
+        );
+      ?>
+      <?= @helper('ui.formfield_select', array(
+        'label' => @text('COM-SETTINGS-CONFIGS-CORS-CREDENTIALS'),
+        'name' => 'meta[cors_credentials]',
+        'selected' => (int) $config->cors_credentials,
+        'id' => 'setting-cors_credentials',
+        'options' => $options_cors_credentials,
+      )) ?>
+      
     </fieldset>
 
     <fieldset>
@@ -220,9 +280,10 @@
 
       <? //smtp auth ?>
       <?
-        $options_smtpauth = array();
-        $options_smtpauth[] = array('name' => @text('LIB-AN-YES'), 'value' => 1);
-        $options_smtpauth[] = array('name' => @text('LIB-AN-NO'), 'value' => 0);
+        $options_smtpauth = array(
+            array('name' => @text('LIB-AN-YES'), 'value' => 1),
+            array('name' => @text('LIB-AN-NO'), 'value' => 0),
+        );
       ?>
       <?= @helper('ui.formfield_select', array(
         'label' => @text('COM-SETTINGS-CONFIGS-SMTPAUTH'),

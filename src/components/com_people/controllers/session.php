@@ -203,6 +203,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $credentials));
 
         $this->getService('com:people.helper.person')->login($credentials);
+        $this->getState()->setItem($person);
+        $this->getResponse()->status = AnHttpResponse::CREATED;
 
         dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 

@@ -60,6 +60,13 @@ class ComSettingsDomainEntityConfig extends AnObject
               'mailfrom' => '',
               'fromname' => '',
               'sendmail' => '/usr/sbin/sendmail',
+              
+              // cors
+              'cors_enabled' => 0,
+              'cors_origin' => 'http://localhost:3000',
+              'cors_methods' => 'POST,GET,DELETE,PUT,PATCH,OPTIONS',
+              'cors_headers' => 'Content-Type',
+              'cors_credentials' => 1,
 
               //smtp mail
               'smtpauth' => 0,
@@ -166,6 +173,9 @@ class ComSettingsDomainEntityConfig extends AnObject
         if (array_key_exists($name, $this->_attributes)) {
 
             $strings = array(
+              'cors_origin',
+              'cors_methods',
+              'cors_headers',
               'sitename',
               'live_site',
               'log_path',
@@ -175,16 +185,17 @@ class ComSettingsDomainEntityConfig extends AnObject
               'smtpport',
               'smtpuser',
               'smtphost',
-              'db',
               'user',
-              'host'
+              'host',
             );
 
             $integers = array(
+              'cors_enabled',
+              'cors_credentials',
+              'debug',
               'error_reporting',
               'sef_rewrite',
-              'debug',
-              'smtpauth'
+              'smtpauth',
             );
 
             $cmds = array(
