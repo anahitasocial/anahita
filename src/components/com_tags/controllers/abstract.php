@@ -62,32 +62,34 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         
         $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-'.$pkg.'-TERM'), $name));
         
-        $entity = parent::_actionRead($context);
+        if ($entity = parent::_actionRead($context)) {
+            if ($this->scope) {
+                $entity->taggables->scope($this->scope);
+            }
+            
+            $alias = $entity
+            ->taggables
+            ->getRepository()
+            ->getResources()
+            ->main()
+            ->getAlias();
+            
+            if ($this->sort == 'top') {
+                $conditions = '(COALESCE(:alias.comment_count,0) + COALESCE(:alias.vote_up_count,0) + COALESCE(:alias.subscriber_count,0) + COALESCE(:alias.follower_count,0))';
+                $conditions = str_replace(':alias', $alias, $conditions);
+                $entity->taggables->order($conditions, 'DESC')->groupby('@col(taggable.id)');
+            } else {
+                $entity->taggables->order($alias.'.created_on', 'DESC');
+            }
+            
+            $entity->taggables->limit($this->limit, $this->start);
 
-        if ($this->scope) {
-            $entity->taggables->scope($this->scope);
+            // error_log(str_replace('#_', 'jos', $entity->taggables->getQuery()));
+
+            return $entity;
         }
-        
-        $alias = $entity
-        ->taggables
-        ->getRepository()
-        ->getResources()
-        ->main()
-        ->getAlias();
-        
-        if ($this->sort == 'top') {
-            $conditions = '(COALESCE(:alias.comment_count,0) + COALESCE(:alias.vote_up_count,0) + COALESCE(:alias.subscriber_count,0) + COALESCE(:alias.follower_count,0))';
-            $conditions = str_replace(':alias', $alias, $conditions);
-            $entity->taggables->order($conditions, 'DESC')->groupby('@col(taggable.id)');
-        } else {
-            $entity->taggables->order($alias.'.created_on', 'DESC');
-        }
-        
-        $entity->taggables->limit($this->limit, $this->start);
 
-        // error_log(str_replace('#_', 'jos', $entity->taggables->getQuery()));
-
-        return $entity;
+        return;
     }
 
     /**
