@@ -212,18 +212,15 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         ));
         
         if ($settings->cors_enabled) {
-            header('Access-Control-Allow-Origin: ' . $settings->cors_origin);
+            header('Access-Control-Allow-Origin: ' . $settings->client_domain);
             header('Access-Control-Allow-Methods: ' . $settings->cors_methods);
             header('Access-Control-Allow-Headers: ' . $settings->cors_headers);
             
-            $core_credentials = $settings->cors_credentials ? 'true' : 'false';
-            header('Access-Control-Allow-Credentials: ' . $core_credentials);
+            $cors_credentials = $settings->cors_credentials ? 'true' : 'false';
+            header('Access-Control-Allow-Credentials: ' . $cors_credentials);
         }
 
-        $error_reporting = $settings->error_reporting;
-
-        if ($error_reporting > 0) {
-            error_reporting($error_reporting);
+        if ($settings->error_reporting > 0) {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
         }
@@ -328,7 +325,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         if (! $location && $isHtml && !$isAjax) {
             $this->_render($context);
         }
-
+        
         $this->send($context);
     }
 

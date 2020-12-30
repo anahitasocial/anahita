@@ -16,6 +16,14 @@ class Config
      */
     protected $_site_path;
 
+    protected $_legacy_key_map = array(
+        'live_site' => 'server_domain',
+        'smtpauth' => 'smtp_auth',
+        'smtpuser' => 'smtp_user',
+        'smtppass' => 'smtp_pass',
+        'smtphost' => 'smtp_host',
+    );
+
     /**
      * Configuration key map
      *
@@ -28,10 +36,6 @@ class Config
         'database_password' => 'password',
         'database_name' => 'db',
         'database_prefix' => 'dbprefix',
-        'enable_debug' => 'debug',
-        'url_rewrite' => 'sef_rewrite',
-        'secret',
-        'error_reporting'
     );
 
     /**
@@ -68,20 +72,26 @@ class Config
         }
 
         $this->_key_map = $map;
+        
         $this->_data = array(
-            'core_enabled' => 0,
-            'core_origin' => 'http://example.com',
-            'core_methods' => 'POST, GET, DELETE, PUT, PATCH, OPTIONS',
-            'core_headers' => 'Content-Type',
-            'core_credentials' => 1,
+            // CORS Settings
+            'cors_enabled' => 0,
+            'cors_methods' => 'POST, GET, DELETE, PUT, PATCH, OPTIONS',
+            'cors_headers' => 'Content-Type',
+            'cors_credentials' => 1,
+            // Mailer Settings
             'mailer' => 'mail',
             'mailfrom' => 'noreply@example.com',
             'fromname' => 'Anahita Website',
             'sendmail' => '/usr/sbin/sendmail',
-            'smtpauth' => '0',
-            'smtpuser' => '',
-            'smtppass' => '',
-            'smtphost' => 'localhost',
+            // SMTP Settings
+            'smtp_auth' => '0',
+            'smtp_user' => '',
+            'smtp_pass' => '',
+            'smtp_host' => 'localhost',
+            'smtp_secure' => 'ssl',
+            'smtp_port' => 587,
+            // Server Settings
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
             'sitename' => 'Anahita',
@@ -90,10 +100,11 @@ class Config
 
         $this->set(array(
            'secret' => '',
-           'enable_debug' => 0,
+           'debug' => 0,
            'error_reporting' => 0,
-           'url_rewrite' => 0,
-           'live_site' => 'example.com'
+           'sef_rewrite' => 0,
+           'server_domain' => 'example.com',
+           'client_domain' => '',
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
@@ -110,7 +121,17 @@ class Config
 
             if (class_exists($classname)) {
                 $config = new $classname;
-                $this->_data = array_merge($this->_data, get_object_vars($config));
+                $config_vars = get_object_vars($config);
+                
+                // Replace legacy variables with the new ones
+                foreach($this->_legacy_key_map as $key => $value) {
+                    if (isset($config_vars[$key])) {
+                        $config_vars[$value] = $config_vars[$key];
+                        unset($config_vars[$key]);
+                    }
+                }
+                
+                $this->_data = array_merge($this->_data, $config_vars);
             }
         }
 
@@ -134,7 +155,7 @@ class Config
     {
         $this->set(array(
             'error_reporting' => E_ALL,
-            'enable_debug' => 1,
+            'debug' => 1,
         ));
     }
 
@@ -145,7 +166,7 @@ class Config
     {
         $this->set(array(
             'error_reporting' => 0,
-            'enable_debug' => 0,
+            'debug' => 0,
         ));
     }
 
@@ -280,14 +301,11 @@ class Config
         $file->fwrite("class AnSiteConfig {\n\n");
 
         $print_array = function($array) use (&$print_array) {
-
             if (is_array($array)) {
-
                 $values = array();
                 $hash   = !is_numeric(key($array));
 
                 foreach ($array as $key => $value) {
-
                     if ( !is_numeric($key) ) {
                         $key = "'".addslashes($key)."'";
                     }
@@ -304,9 +322,7 @@ class Config
         };
 
         $write = function($data) use($file, $print_array) {
-
             foreach($data as $key => $value) {
-
                 if (is_array($value)) {
                     $value = $print_array($value);
                 } elseif ( !is_numeric($value) ) {
@@ -318,21 +334,18 @@ class Config
         };
 
         $write_group = function($keys, $comment = null) use (&$data, $file, $write) {
-
             $values = array();
 
             foreach ($keys as $key) {
-
                 if (isset($data[$key])) {
                     $values[$key] = $data[$key];
                     unset($data[$key]);
                 }
             }
 
-            if (!empty($values)) {
-
-                if (!empty($comment)) {
-                    $file->fwrite("   /*$comment*/\n");
+            if (! empty($values)) {
+                if (! empty($comment)) {
+                    $file->fwrite("   /* $comment */\n");
                 }
 
                 $write($values);
@@ -340,12 +353,57 @@ class Config
             }
         };
 
-        $write_group(array('sitename'), 'Site Settings');
-        $write_group(array('dbtype', 'host', 'user', 'password', 'db', 'dbprefix'), 'Database Settings');
-        $write_group(array('sef_rewrite', 'live_site', 'secret', 'error_reporting', 'tmp_path', 'log_path', 'force_ssl'), 'Server Settings');
-        $write_group(array('mailer', 'mailfrom', 'fromname', 'sendmail', 'smtpauth', 'smtpuser', 'smtppass', 'smtphost'), 'Mail Settings');
-        $write_group(array('debug'), 'Debug Settings');
+        $write_group(array(
+            'sitename',
+            'server_domain',
+            'client_domain',
+            'template',
+            'language',
+            'log_path',
+            'tmp_path',
+            'secret',
+            'sef_rewrite',
+        ), 'Server Settings');
+        
+        $write_group(array(
+            'debug',
+            'error_reporting',
+        ), 'Debuging Settings');
+        
+        $write_group(array(
+            'dbtype', 
+            'host', 
+            'user', 
+            'password', 
+            'db', 
+            'dbprefix'
+        ), 'Database Settings');
+        
+        $write_group(array(
+            'cors_enabled',
+            'cors_methods', 
+            'cors_headers',
+            'cors_credentials',
+        ), 'CORS Settings');
+        
+        $write_group(array(
+            'mailer', 
+            'mailfrom', 
+            'fromname', 
+            'sendmail',
+        ), 'Mailer Settings');
+        
+        $write_group(array(
+            'smtp_auth', 
+            'smtp_user', 
+            'smtp_pass', 
+            'smtp_host',
+            'smtp_secure',
+            'smtp_port',
+        ), 'SMTP Settings');
+        
         $write_group(array_keys($data), 'Other configurations');
+        
         $file->fwrite("}");
 
         $this->_clearCache();

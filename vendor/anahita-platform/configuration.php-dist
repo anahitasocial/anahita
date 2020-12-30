@@ -26,10 +26,10 @@ class AnSiteConfig{
     var $mailfrom = 'noreply@example.com';
     var $fromname = 'Anahita Website';
     var $sendmail = '/usr/sbin/sendmail';
-    var $smtpauth = 0;
+    var $smtp_auth = 0;
     var $smtpsecure = 'none';
     var $smtpport = '';
-    var $smtpuser = '';
-    var $smtppass = '';
-    var $smtphost = 'localhost';
+    var $smtp_user = '';
+    var $smtp_pass = '';
+    var $smtp_host = 'localhost';
 }

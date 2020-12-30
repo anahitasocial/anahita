@@ -60,9 +60,8 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
         $base_url = AnRequest::base();
         $settings = $this->getService('com:settings.config');
 
-        if (PHP_SAPI == 'cli' && $settings->live_site != '') {
-            $scheme = is_ssl() ? 'https://' : 'http://';
-            $base_url = $scheme.$settings->live_site;
+        if (PHP_SAPI == 'cli') {
+            $base_url = $settings->server_domain;
         }
 
         $config->append(array(
@@ -111,9 +110,11 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
                 $directory = ANPATH_ROOT.$directory;
             }
 
+            $template = $this->getService('application')->getTemplate();
+
             $paths[] = $directory;
-            $paths[] = implode(DS, array(ANPATH_THEMES, $this->getService('application')->getTemplate(), 'emails', $identifier->type.'_'.$identifier->package));
-            $paths[] = implode(DS, array(ANPATH_THEMES, $this->getService('application')->getTemplate(), 'emails'));
+            $paths[] = implode(DS, array(ANPATH_THEMES, $template, 'emails', $identifier->type.'_'.$identifier->package));
+            $paths[] = implode(DS, array(ANPATH_THEMES, $template, 'emails'));
 
             $config = array(
                 'base_url' => $this->_base_url,

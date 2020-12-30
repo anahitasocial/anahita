@@ -11,17 +11,37 @@
 
 class ComSettingsViewConfigJson extends ComBaseViewJson
 {
+    const _OMMITTED_FIELDS = array(
+        'log_path',
+        'tmp_path',
+        'secret',
+        'debug',
+        'error_reporting',
+        'dbtype',
+        'host',
+        'user',
+        'password',
+        'db',
+        'dbprefix',
+        'cors_enabled',
+        'cors_methods',
+        'cors_headers',
+        'cors_credentials',
+        'sef_rewrite',
+    );
+    
     public function display()
     {
         $data = $this->config->get('_attributes');
     
-        $data['cors_enabled'] = (bool) $data['cors_enabled'];
-        $data['cors_credentials'] = (bool) $data['cors_credentials'];
-        $data['debug'] = (bool) $data['debug'];
-        $data['sef_rewrite'] = (bool) $data['sef_rewrite'];
-        $data['error_reporting'] = (int) $data['error_reporting'];
-        $data['smtpauth'] = (bool) $data['smtpauth'];
-        $data['smtpport'] = (int) $data['smtpport'];
+        foreach(self::_OMMITTED_FIELDS as $key) {
+            if (isset($data[$key])) {
+                unset($data[$key]);
+            }
+        } 
+
+        $data['smtp_auth'] = (bool) $data['smtp_auth'];
+        $data['smtp_port'] = (int) $data['smtp_port'];
         
         $this->output = json_encode($data);
         

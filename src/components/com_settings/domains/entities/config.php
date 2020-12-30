@@ -37,7 +37,8 @@ class ComSettingsDomainEntityConfig extends AnObject
 
               // site
               'sitename' => 'Anahita',
-              'live_site' => 'example.com',
+              'server_domain' => 'example.com',
+              'client_domain' => '',
               'debug' => 0,
               'sef_rewrite' => 0,
               'secret' => '',
@@ -55,26 +56,25 @@ class ComSettingsDomainEntityConfig extends AnObject
               'db' => '',
               'dbprefix' => '_an',
 
+              // cors
+              'cors_enabled' => 0,
+              'cors_methods' => 'POST,GET,DELETE,PUT,PATCH,OPTIONS',
+              'cors_headers' => 'Content-Type',
+              'cors_credentials' => 1,
+
               // mailer
               'mailer' => '',
               'mailfrom' => '',
               'fromname' => '',
               'sendmail' => '/usr/sbin/sendmail',
-              
-              // cors
-              'cors_enabled' => 0,
-              'cors_origin' => 'http://localhost:3000',
-              'cors_methods' => 'POST,GET,DELETE,PUT,PATCH,OPTIONS',
-              'cors_headers' => 'Content-Type',
-              'cors_credentials' => 1,
 
               //smtp mail
-              'smtpauth' => 0,
-              'smtpsecure' => '',
-              'smtpport' => '',
-              'smtpuser' => '',
-              'smtppass' => '',
-              'smtphost' => ''
+              'smtp_auth' => 0,
+              'smtp_secure' => '',
+              'smtp_port' => '',
+              'smtp_user' => '',
+              'smtp_pass' => '',
+              'smtp_host' => ''
             );
 
             $this->_config_file_path = ANPATH_CONFIGURATION.DS.'configuration.php';
@@ -97,6 +97,24 @@ class ComSettingsDomainEntityConfig extends AnObject
 
         return $this;
     }
+    
+    private function _formatGroup($keys, $comment = '')
+    {
+        $content = '';
+        
+        if ($comment) {
+            $content .= "    /* $comment */\n";
+        }
+        
+        foreach($keys as $key) {
+            $value = $this->_attributes[$key];
+            $content .= "    var \$$key = '$value';\n";
+        }
+        
+        $content .= "\n";
+        
+        return $content;
+    }
 
     /**
      * Save system setting attributes
@@ -110,12 +128,55 @@ class ComSettingsDomainEntityConfig extends AnObject
             chmod($this->_config_file_path, 0644);
 
             $content = "<?php\nclass AnSiteConfig{\n";
-
-            foreach($this->_attributes as $key=>$value) {
-              if(!is_array($value)){
-                $content .= "    var \$$key = '$value';\n";
-              }
-            }
+            
+            $content .= $this->_formatGroup(array(
+                'sitename',
+                'server_domain',
+                'client_domain',
+                'template',
+                'language',
+                'log_path',
+                'tmp_path',
+                'secret',
+                'sef_rewrite',
+            ), 'Server Settings');
+            
+            $content .= $this->_formatGroup(array(
+                'debug',
+                'error_reporting',
+            ), 'Debuging Settings');
+            
+            $content .= $this->_formatGroup(array(
+                'dbtype', 
+                'host', 
+                'user', 
+                'password', 
+                'db', 
+                'dbprefix'
+            ), 'Database Settings');
+            
+            $content .= $this->_formatGroup(array(
+                'cors_enabled', 
+                'cors_methods', 
+                'cors_headers',
+                'cors_credentials',
+            ), 'CORS Settings');
+            
+            $content .= $this->_formatGroup(array(
+                'mailer', 
+                'mailfrom', 
+                'fromname', 
+                'sendmail',
+            ), 'Mailer Settings');
+            
+            $content .= $this->_formatGroup(array(
+                'smtp_auth', 
+                'smtp_user', 
+                'smtp_pass', 
+                'smtp_host',
+                'smtp_secure',
+                'smtp_port',
+            ), 'SMTP Settings');
 
             $content .= "}\n";
 
@@ -173,18 +234,18 @@ class ComSettingsDomainEntityConfig extends AnObject
         if (array_key_exists($name, $this->_attributes)) {
 
             $strings = array(
-              'cors_origin',
               'cors_methods',
               'cors_headers',
               'sitename',
-              'live_site',
+              'server_domain',
+              'client_domain',
               'log_path',
               'tmp_path',
               'fromname',
               'sendmail',
-              'smtpport',
-              'smtpuser',
-              'smtphost',
+              'smtp_port',
+              'smtp_user',
+              'smtp_host',
               'user',
               'host',
             );
@@ -195,12 +256,12 @@ class ComSettingsDomainEntityConfig extends AnObject
               'debug',
               'error_reporting',
               'sef_rewrite',
-              'smtpauth',
+              'smtp_auth',
             );
 
             $cmds = array(
               'mailer',
-              'smtpsecure',
+              'smtp_secure',
               'template',
               'language'
             );

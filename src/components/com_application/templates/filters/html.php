@@ -91,7 +91,7 @@ class ComApplicationTemplateFilterHtml extends LibBaseTemplateFilterAbstract imp
         $document = $this->getService('anahita:document');
 
         $string = '';
-        $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
+        // $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
 
         $scripts = array_reverse($document->getScripts());
 
