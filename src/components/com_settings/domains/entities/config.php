@@ -69,7 +69,6 @@ class ComSettingsDomainEntityConfig extends AnObject
               'sendmail' => '/usr/sbin/sendmail',
 
               //smtp mail
-              'smtp_auth' => 0,
               'smtp_secure' => '',
               'smtp_port' => '',
               'smtp_user' => '',
@@ -170,7 +169,6 @@ class ComSettingsDomainEntityConfig extends AnObject
             ), 'Mailer Settings');
             
             $content .= $this->_formatGroup(array(
-                'smtp_auth', 
                 'smtp_user', 
                 'smtp_pass', 
                 'smtp_host',
@@ -256,7 +254,6 @@ class ComSettingsDomainEntityConfig extends AnObject
               'debug',
               'error_reporting',
               'sef_rewrite',
-              'smtp_auth',
             );
 
             $cmds = array(

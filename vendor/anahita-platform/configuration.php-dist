@@ -26,7 +26,6 @@ class AnSiteConfig{
     var $mailfrom = 'noreply@example.com';
     var $fromname = 'Anahita Website';
     var $sendmail = '/usr/sbin/sendmail';
-    var $smtp_auth = 0;
     var $smtp_secure = 'none';
     var $smtp_port = 25;
     var $smtp_user = '';
