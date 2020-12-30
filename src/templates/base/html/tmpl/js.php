@@ -1,5 +1,7 @@
 <? defined('ANAHITA') or die; ?>
 
+<?= AnService::get('com:base.template')->getHelper('javascript')->language('lib_anahita') ?>
+
 <? $document = AnService::get('anahita:document'); ?>
 <? $path = AnService::get('com:application')->getRouter()->getBaseUrl().'/media/lib_anahita/js/production/'; ?>
 

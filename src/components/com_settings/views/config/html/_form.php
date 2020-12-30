@@ -15,10 +15,17 @@
         )) ?>
 
         <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-CONFIGS-LIVE-SITE'),
-          'name' => 'meta[live_site]',
-          'value' => $config->live_site,
-          'id' => 'setting-live_site',
+          'label' => @text('COM-SETTINGS-CONFIGS-SERVER-DOMAIN'),
+          'name' => 'meta[server_domain]',
+          'value' => $config->server_domain,
+          'id' => 'setting-server_domain',
+        )) ?>
+        
+        <?= @helper('ui.formfield_text', array(
+          'label' => @text('COM-SETTINGS-CONFIGS-CLIENT-DOMAIN'),
+          'name' => 'meta[client_domain]',
+          'value' => $config->client_domain,
+          'id' => 'setting-client_domain',
         )) ?>
 
         <? //template ?>
@@ -62,6 +69,41 @@
           'disabled' => true
         )) ?>
 
+        <? //SEF Rewrite ?>
+        <?
+          $options_sef_rewrite = array(
+              array('name' => @text('LIB-AN-YES'), 'value' => 1),
+              array('name' => @text('LIB-AN-NO'), 'value' => 0),
+          );
+        ?>
+        <?= @helper('ui.formfield_select', array(
+          'label' => @text('COM-SETTINGS-CONFIGS-SEF-REWRITE'),
+          'name' => 'meta[sef_rewrite]',
+          'selected' => (int) $config->sef_rewrite,
+          'id' => 'setting-sef_rewrite',
+          'options' => $options_sef_rewrite,
+        )) ?>
+        
+    </fieldset>
+
+    <fieldset>
+        <legend><?= @text('COM-SETTINGS-CONFIGS-DEBUGGING-SETTINGS') ?></legend>
+
+        <? //Debug Setting ?>
+        <?
+          $options_debug = array(
+              array('name' => @text('LIB-AN-YES'), 'value' => 1),
+              array('name' => @text('LIB-AN-NO'), 'value' => 0),
+          );
+        ?>
+        <?= @helper('ui.formfield_select', array(
+          'label' => @text('COM-SETTINGS-CONFIGS-DEBUG'),
+          'name' => 'meta[debug]',
+          'selected' => (int) $config->debug,
+          'id' => 'setting-debug',
+          'options' => $options_debug,
+        )) ?>
+        
         <? //Error Reportin ?>
         <?
           $options_error_reporting = array(
@@ -89,36 +131,6 @@
           'selected' => (int) $config->error_reporting,
           'id' => 'setting-error_reporting',
           'options' => $options_error_reporting,
-        )) ?>
-
-        <? //SEF Rewrite ?>
-        <?
-          $options_sef_rewrite = array(
-              array('name' => @text('LIB-AN-YES'), 'value' => 1),
-              array('name' => @text('LIB-AN-NO'), 'value' => 0),
-          );
-        ?>
-        <?= @helper('ui.formfield_select', array(
-          'label' => @text('COM-SETTINGS-CONFIGS-SEF-REWRITE'),
-          'name' => 'meta[sef_rewrite]',
-          'selected' => (int) $config->sef_rewrite,
-          'id' => 'setting-sef_rewrite',
-          'options' => $options_sef_rewrite,
-        )) ?>
-
-        <? //Debug Setting ?>
-        <?
-          $options_debug = array(
-              array('name' => @text('LIB-AN-YES'), 'value' => 1),
-              array('name' => @text('LIB-AN-NO'), 'value' => 0),
-          );
-        ?>
-        <?= @helper('ui.formfield_select', array(
-          'label' => @text('COM-SETTINGS-CONFIGS-DEBUG'),
-          'name' => 'meta[debug]',
-          'selected' => (int) $config->debug,
-          'id' => 'setting-debug',
-          'options' => $options_debug,
         )) ?>
 
     </fieldset>
@@ -278,24 +290,28 @@
         'id' => 'setting-sendmail',
       )) ?>
 
-      <? //smtp auth ?>
+  </fieldset>
+      
+  <fieldset>
+      <legend><?= @text('COM-SETTINGS-CONFIGS-SMTP-SETTINGS') ?></legend>
+      
       <?
-        $options_smtpauth = array(
+        $options_smtp_auth = array(
             array('name' => @text('LIB-AN-YES'), 'value' => 1),
             array('name' => @text('LIB-AN-NO'), 'value' => 0),
         );
       ?>
       <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTPAUTH'),
-        'name' => 'meta[smtpauth]',
-        'selected' => (int) $config->smtpauth,
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-AUTH'),
+        'name' => 'meta[smtp_auth]',
+        'selected' => (int) $config->smtp_auth,
         'id' => 'setting-caching',
-        'options' => $options_smtpauth,
+        'options' => $options_smtp_auth,
       )) ?>
 
       <? //SMTP Security ?>
       <?
-        $options_smtpsecure = array(
+        $options_smtp_secure = array(
           0 => array(
             'name' => @text('LIB-AN-NONE'),
             'value' => 'none'
@@ -311,47 +327,47 @@
         );
       ?>
       <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTPSECURE'),
-        'name' => 'meta[smtpsecure]',
-        'selected' => $config->smtpsecure,
-        'id' => 'setting-smtpsecure',
-        'options' => $options_smtpsecure,
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-SECURE'),
+        'name' => 'meta[smtp_secure]',
+        'selected' => $config->smtp_secure,
+        'id' => 'setting-smtp_secure',
+        'options' => $options_smtp_secure,
       )) ?>
 
       <? //smtp port ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTPPORT'),
-        'name' => 'meta[smtpport]',
-        'value' => $config->smtpport,
-        'id' => 'setting-smtpport',
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-PORT'),
+        'name' => 'meta[smtp_port]',
+        'value' => $config->smtp_port,
+        'id' => 'setting-smtp_port',
         'required' => false,
       )) ?>
 
       <? //smtp user ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTPUSER'),
-        'name' => 'meta[smtpuser]',
-        'value' => $config->smtpuser,
-        'id' => 'setting-smtpuser',
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-USER'),
+        'name' => 'meta[smtp_user]',
+        'value' => $config->smtp_user,
+        'id' => 'setting-smtp_user',
         'required' => false,
       )) ?>
 
       <? //smtp pass ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTPPASS'),
-        'name' => 'meta[smtppass]',
-        'value' => $config->smtppass,
-        'id' => 'setting-smtppass',
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-PASS'),
+        'name' => 'meta[smtp_pass]',
+        'value' => $config->smtp_pass,
+        'id' => 'setting-smtp_pass',
         'type' => 'password',
         'required' => false,
       )) ?>
 
       <? //smtp host ?>
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTPHOST'),
-        'name' => 'meta[smtphost]',
-        'value' => $config->smtphost,
-        'id' => 'setting-smtphost',
+        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-HOST'),
+        'name' => 'meta[smtp_host]',
+        'value' => $config->smtp_host,
+        'id' => 'setting-smtp_host',
         'required' => false,
       )) ?>
 

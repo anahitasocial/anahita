@@ -78,10 +78,12 @@ class Config
             'mailfrom' => 'noreply@example.com',
             'fromname' => 'Anahita Website',
             'sendmail' => '/usr/sbin/sendmail',
-            'smtpauth' => '0',
-            'smtpuser' => '',
-            'smtppass' => '',
-            'smtphost' => 'localhost',
+            'smt_pauth' => '0',
+            'smtp_user' => '',
+            'smtp_pass' => '',
+            'smtp_host' => 'localhost',
+            'smtp_secure' => 'ssl',
+            'smtp_port' => 587,
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
             'sitename' => 'Anahita',
@@ -93,7 +95,8 @@ class Config
            'enable_debug' => 0,
            'error_reporting' => 0,
            'url_rewrite' => 0,
-           'live_site' => 'example.com'
+           'server_domain' => 'example.com',
+           'client_domain' => '',
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
@@ -318,21 +321,18 @@ class Config
         };
 
         $write_group = function($keys, $comment = null) use (&$data, $file, $write) {
-
             $values = array();
 
             foreach ($keys as $key) {
-
                 if (isset($data[$key])) {
                     $values[$key] = $data[$key];
                     unset($data[$key]);
                 }
             }
 
-            if (!empty($values)) {
-
-                if (!empty($comment)) {
-                    $file->fwrite("   /*$comment*/\n");
+            if (! empty($values)) {
+                if (! empty($comment)) {
+                    $file->fwrite("   /* $comment */\n");
                 }
 
                 $write($values);
@@ -340,12 +340,58 @@ class Config
             }
         };
 
-        $write_group(array('sitename'), 'Site Settings');
-        $write_group(array('dbtype', 'host', 'user', 'password', 'db', 'dbprefix'), 'Database Settings');
-        $write_group(array('sef_rewrite', 'live_site', 'secret', 'error_reporting', 'tmp_path', 'log_path', 'force_ssl'), 'Server Settings');
-        $write_group(array('mailer', 'mailfrom', 'fromname', 'sendmail', 'smtpauth', 'smtpuser', 'smtppass', 'smtphost'), 'Mail Settings');
-        $write_group(array('debug'), 'Debug Settings');
+        $write_group(array(
+            'sitename',
+            'server_domain',
+            'client_domain',
+            'template',
+            'language',
+            'log_path',
+            'tmp_path',
+            'secret',
+            'sef_rewrite',
+        ), 'Server Settings');
+        
+        $write_group(array(
+            'debug',
+            'error_reporting',
+        ), 'Debuging Settings');
+        
+        $write_group(array(
+            'dbtype', 
+            'host', 
+            'user', 
+            'password', 
+            'db', 
+            'dbprefix'
+        ), 'Database Settings');
+        
+        $write_group(array(
+            'cors_enabled', 
+            'cors_origin', 
+            'cors_methods', 
+            'cors_headers',
+            'core_credentials',
+        ), 'CORS Settings');
+        
+        $write_group(array(
+            'mailer', 
+            'mailfrom', 
+            'fromname', 
+            'sendmail',
+        ), 'Mailer Settings');
+        
+        $write_group(array(
+            'smtp_auth', 
+            'smtp_user', 
+            'smtp_pass', 
+            'smtp_host',
+            'smtp_secure',
+            'smtp_port',
+        ), 'SMTP Settings');
+        
         $write_group(array_keys($data), 'Other configurations');
+        
         $file->fwrite("}");
 
         $this->_clearCache();

@@ -220,10 +220,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
             header('Access-Control-Allow-Credentials: ' . $core_credentials);
         }
 
-        $error_reporting = $settings->error_reporting;
-
-        if ($error_reporting > 0) {
-            error_reporting($error_reporting);
+        if ($settings->error_reporting > 0) {
             ini_set('display_errors', 1);
             ini_set('display_startup_errors', 1);
         }
@@ -328,7 +325,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         if (! $location && $isHtml && !$isAjax) {
             $this->_render($context);
         }
-
+        
         $this->send($context);
     }
 

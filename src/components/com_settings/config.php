@@ -111,6 +111,14 @@
      */
      public function get($key = null, $default = null)
      {
+         if ($key === 'server_domain') {
+             return $this->_formatDomain($this->_configs->server_domain);
+         }
+         
+         if ($key === 'client_domain') {
+             return $this->_formatDomain($this->_configs->client_domain);
+         }
+         
          if (!empty($this->_configs->$key)) {
              return $this->_configs->$key;
          }
@@ -161,5 +169,19 @@
      public function path()
      {
          return $this->_path.DS.$this->_file;
+     }
+     
+     private function _formatDomain($domain)
+     {
+         if ($domain === '') {
+             return '';
+         }
+         
+         if (substr($domain, 0, 4) === 'http') {
+             return $domain;
+         }
+         
+         $scheme = is_ssl() ? 'https://' : 'http://';
+         return $scheme.$domain;
      }
  }

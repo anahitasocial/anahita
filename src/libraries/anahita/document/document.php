@@ -202,6 +202,18 @@ class AnDocument extends AnObject implements AnServiceInstantiatable
 
         return $container->get($config->service_identifier);
     }
+	
+	public function resetScripts()
+	{
+		$this->_scripts = array();
+		$this->_script = array();
+	}
+	
+	public function resetStylesheets()
+	{
+		$this->_styleSheets = array();
+		$this->_style = array();
+	}
 
     public function getStylesheets()
     {

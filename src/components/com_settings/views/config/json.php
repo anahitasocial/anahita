@@ -20,8 +20,8 @@ class ComSettingsViewConfigJson extends ComBaseViewJson
         $data['debug'] = (bool) $data['debug'];
         $data['sef_rewrite'] = (bool) $data['sef_rewrite'];
         $data['error_reporting'] = (int) $data['error_reporting'];
-        $data['smtpauth'] = (bool) $data['smtpauth'];
-        $data['smtpport'] = (int) $data['smtpport'];
+        $data['smtp_auth'] = (bool) $data['smtp_auth'];
+        $data['smtp_port'] = (int) $data['smtp_port'];
         
         $this->output = json_encode($data);
         
