@@ -349,7 +349,7 @@ class AnMail extends AnObject implements AnServiceInstantiatable
     protected function _getTransport()
     {
         if ($this->_mailer === 'smtp') {
-            $transport = Swift_SmtpTransport::newInstance($this->_site_settings->smtp_host, $this->_site_settings->smtpport)
+            $transport = Swift_SmtpTransport::newInstance($this->_site_settings->smtp_host, $this->_site_settings->smtp_port)
             ->setUsername($this->_site_settings->smtp_user)
             ->setPassword($this->_site_settings->smtp_pass);
         } elseif ($this->_mailer === 'sendmail') {
