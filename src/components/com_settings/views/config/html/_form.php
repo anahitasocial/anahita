@@ -287,20 +287,6 @@
   <fieldset>
       <legend><?= @text('COM-SETTINGS-CONFIGS-SMTP-SETTINGS') ?></legend>
       
-      <?
-        $options_smtp_auth = array(
-            array('name' => @text('LIB-AN-YES'), 'value' => 1),
-            array('name' => @text('LIB-AN-NO'), 'value' => 0),
-        );
-      ?>
-      <?= @helper('ui.formfield_select', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-SMTP-AUTH'),
-        'name' => 'meta[smtp_auth]',
-        'selected' => (int) $config->smtp_auth,
-        'id' => 'setting-caching',
-        'options' => $options_smtp_auth,
-      )) ?>
-
       <? //SMTP Security ?>
       <?
         $options_smtp_secure = array(

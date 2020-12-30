@@ -40,7 +40,6 @@ class ComSettingsViewConfigJson extends ComBaseViewJson
             }
         } 
 
-        $data['smtp_auth'] = (bool) $data['smtp_auth'];
         $data['smtp_port'] = (int) $data['smtp_port'];
         
         $this->output = json_encode($data);

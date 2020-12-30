@@ -18,7 +18,6 @@ class Config
 
     protected $_legacy_key_map = array(
         'live_site' => 'server_domain',
-        'smtpauth' => 'smtp_auth',
         'smtpuser' => 'smtp_user',
         'smtppass' => 'smtp_pass',
         'smtphost' => 'smtp_host',
@@ -86,7 +85,6 @@ class Config
             'fromname' => 'Anahita Website',
             'sendmail' => '/usr/sbin/sendmail',
             // SMTP Settings
-            'smtp_auth' => '0',
             'smtp_user' => '',
             'smtp_pass' => '',
             'smtp_host' => 'localhost',
@@ -395,7 +393,6 @@ class Config
         ), 'Mailer Settings');
         
         $write_group(array(
-            'smtp_auth', 
             'smtp_user', 
             'smtp_pass', 
             'smtp_host',
