@@ -402,7 +402,8 @@ class Config
             'smtp_port',
         ), 'SMTP Settings');
         
-        $write_group(array_keys($data), 'Other configurations');
+        // We really don't have other configurations.
+        // $write_group(array_keys($data), 'Other configurations');
         
         $file->fwrite("}");
 
