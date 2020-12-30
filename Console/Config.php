@@ -22,6 +22,7 @@ class Config
         'smtpuser' => 'smtp_user',
         'smtppass' => 'smtp_pass',
         'smtphost' => 'smtp_host',
+        'smtpport' => 'smtp_port',
     );
 
     /**
@@ -90,7 +91,7 @@ class Config
             'smtp_pass' => '',
             'smtp_host' => 'localhost',
             'smtp_secure' => 'ssl',
-            'smtp_port' => 587,
+            'smtp_port' => 25,
             // Server Settings
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
