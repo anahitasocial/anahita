@@ -212,12 +212,12 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         ));
         
         if ($settings->cors_enabled) {
-            header('Access-Control-Allow-Origin: ' . $settings->cors_origin);
+            header('Access-Control-Allow-Origin: ' . $settings->client_domain);
             header('Access-Control-Allow-Methods: ' . $settings->cors_methods);
             header('Access-Control-Allow-Headers: ' . $settings->cors_headers);
             
-            $core_credentials = $settings->cors_credentials ? 'true' : 'false';
-            header('Access-Control-Allow-Credentials: ' . $core_credentials);
+            $cors_credentials = $settings->cors_credentials ? 'true' : 'false';
+            header('Access-Control-Allow-Credentials: ' . $cors_credentials);
         }
 
         if ($settings->error_reporting > 0) {

@@ -16,6 +16,14 @@ class Config
      */
     protected $_site_path;
 
+    protected $_legacy_key_map = array(
+        'live_site' => 'server_domain',
+        'smtpauth' => 'smtp_auth',
+        'smtpuser' => 'smtp_user',
+        'smtppass' => 'smtp_pass',
+        'smtphost' => 'smtp_host',
+    );
+
     /**
      * Configuration key map
      *
@@ -68,22 +76,26 @@ class Config
         }
 
         $this->_key_map = $map;
+        
         $this->_data = array(
-            'core_enabled' => 0,
-            'core_origin' => 'http://example.com',
-            'core_methods' => 'POST, GET, DELETE, PUT, PATCH, OPTIONS',
-            'core_headers' => 'Content-Type',
-            'core_credentials' => 1,
+            // CORS Settings
+            'cors_enabled' => 0,
+            'cors_methods' => 'POST, GET, DELETE, PUT, PATCH, OPTIONS',
+            'cors_headers' => 'Content-Type',
+            'cors_credentials' => 1,
+            // Mailer Settings
             'mailer' => 'mail',
             'mailfrom' => 'noreply@example.com',
             'fromname' => 'Anahita Website',
             'sendmail' => '/usr/sbin/sendmail',
-            'smt_pauth' => '0',
+            // SMTP Settings
+            'smtp_auth' => '0',
             'smtp_user' => '',
             'smtp_pass' => '',
             'smtp_host' => 'localhost',
             'smtp_secure' => 'ssl',
             'smtp_port' => 587,
+            // Server Settings
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
             'sitename' => 'Anahita',
@@ -367,11 +379,10 @@ class Config
         ), 'Database Settings');
         
         $write_group(array(
-            'cors_enabled', 
-            'cors_origin', 
+            'cors_enabled',
             'cors_methods', 
             'cors_headers',
-            'core_credentials',
+            'cors_credentials',
         ), 'CORS Settings');
         
         $write_group(array(

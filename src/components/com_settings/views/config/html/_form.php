@@ -199,14 +199,6 @@
       )) ?>
       
       <?= @helper('ui.formfield_text', array(
-        'label' => @text('COM-SETTINGS-CONFIGS-CORS-ORIGIN'),
-        'name' => 'meta[cors_origin]',
-        'value' => $config->cors_origin,
-        'id' => 'setting-cors-origin',
-        'required' => false,
-      )) ?>
-      
-      <?= @helper('ui.formfield_text', array(
         'label' => @text('COM-SETTINGS-CONFIGS-CORS-METHODS'),
         'name' => 'meta[cors_methods]',
         'value' => $config->cors_methods,

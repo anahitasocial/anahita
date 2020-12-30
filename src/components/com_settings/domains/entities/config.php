@@ -58,7 +58,6 @@ class ComSettingsDomainEntityConfig extends AnObject
 
               // cors
               'cors_enabled' => 0,
-              'cors_origin' => 'http://localhost:3000',
               'cors_methods' => 'POST,GET,DELETE,PUT,PATCH,OPTIONS',
               'cors_headers' => 'Content-Type',
               'cors_credentials' => 1,
@@ -158,7 +157,6 @@ class ComSettingsDomainEntityConfig extends AnObject
             
             $content .= $this->_formatGroup(array(
                 'cors_enabled', 
-                'cors_origin', 
                 'cors_methods', 
                 'cors_headers',
                 'cors_credentials',
@@ -236,7 +234,6 @@ class ComSettingsDomainEntityConfig extends AnObject
         if (array_key_exists($name, $this->_attributes)) {
 
             $strings = array(
-              'cors_origin',
               'cors_methods',
               'cors_headers',
               'sitename',
