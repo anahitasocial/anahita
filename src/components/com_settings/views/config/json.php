@@ -35,7 +35,7 @@ class ComSettingsViewConfigJson extends ComBaseViewJson
         $data = $this->config->get('_attributes');
     
         foreach(self::_OMMITTED_FIELDS as $key) {
-            if (isset($data[$key])) {
+            if (array_key_exists($key, $data)) {
                 unset($data[$key]);
             }
         } 
