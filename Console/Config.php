@@ -36,10 +36,6 @@ class Config
         'database_password' => 'password',
         'database_name' => 'db',
         'database_prefix' => 'dbprefix',
-        'enable_debug' => 'debug',
-        'url_rewrite' => 'sef_rewrite',
-        'secret',
-        'error_reporting'
     );
 
     /**
@@ -104,9 +100,9 @@ class Config
 
         $this->set(array(
            'secret' => '',
-           'enable_debug' => 0,
+           'debug' => 0,
            'error_reporting' => 0,
-           'url_rewrite' => 0,
+           'sef_rewrite' => 0,
            'server_domain' => 'example.com',
            'client_domain' => '',
         ));
@@ -125,7 +121,17 @@ class Config
 
             if (class_exists($classname)) {
                 $config = new $classname;
-                $this->_data = array_merge($this->_data, get_object_vars($config));
+                $config_vars = get_object_vars($config);
+                
+                // Replace legacy variables with the new ones
+                foreach($this->_legacy_key_map as $key => $value) {
+                    if (isset($config_vars[$key])) {
+                        $config_vars[$value] = $config_vars[$key];
+                        unset($config_vars[$key]);
+                    }
+                }
+                
+                $this->_data = array_merge($this->_data, $config_vars);
             }
         }
 
@@ -149,7 +155,7 @@ class Config
     {
         $this->set(array(
             'error_reporting' => E_ALL,
-            'enable_debug' => 1,
+            'debug' => 1,
         ));
     }
 
@@ -160,7 +166,7 @@ class Config
     {
         $this->set(array(
             'error_reporting' => 0,
-            'enable_debug' => 0,
+            'debug' => 0,
         ));
     }
 
@@ -295,14 +301,11 @@ class Config
         $file->fwrite("class AnSiteConfig {\n\n");
 
         $print_array = function($array) use (&$print_array) {
-
             if (is_array($array)) {
-
                 $values = array();
                 $hash   = !is_numeric(key($array));
 
                 foreach ($array as $key => $value) {
-
                     if ( !is_numeric($key) ) {
                         $key = "'".addslashes($key)."'";
                     }
@@ -319,9 +322,7 @@ class Config
         };
 
         $write = function($data) use($file, $print_array) {
-
             foreach($data as $key => $value) {
-
                 if (is_array($value)) {
                     $value = $print_array($value);
                 } elseif ( !is_numeric($value) ) {
