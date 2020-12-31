@@ -2,33 +2,277 @@
 
 class AnSiteConfig{
 
-	/* Site Settings */
-	var $sitename = 'Anahita Website';
+	// 
+	//	Site Settings  
+	//
+	
+	/**
+	*	Brand name, name of the app.
+	*	Keep it short and sweet.  
+	*
+	*	@var string 
+	*/
+	var $sitename = 'Anahita';
+	
+	/**
+	*	Server side domain name
+	*	We recommend that you prefix the domain with http:// or https:// 
+	*	otherwise Anahita has to try to determine the value, 
+	*	and the result isn't reliable.  
+	*
+	*	If you are using Anahita as a back-end for a clientside app 
+	*	then use a subdomain for the server side for example: https://api.yourdomain.com
+	*
+	*	@var string domain address
+	*/
+	var $server_domain = 'http://api.yourdomain.com';
+	
+	/**
+	*	Client side domain name, if you are using a client side web application 
+	* 	that makes RESTful calls to Anahita API. 
+	*
+	*	@var string client app domain or empty or same as server domain
+	*/
+	var $client_domain = 'http://localhost:3000';
+	
+	/**
+	*	Current Template 
+	*
+	*	@var string	
+	*
+	*	Possible values:
+	*	shiraz - if you are using Anahita as a web app.
+	*	nohtml - if you are using Anahita as a back-end API. 
+	*   yourtemplatename - name of your custom template. 
+	*/
 	var $template = 'shiraz';
+	
+	/**
+	*	Default language which is en-GB. 
+	*
+	*	@var string
+	*/
 	var $language = 'en-GB';
+	
+	/**
+	*	Path to the log files directory.
+	*	This directory is not used for php error_log files. 
+	*
+	*	@var string
+	*/
 	var $log_path = '~/www/log';
+	
+	/**
+	*	Path to the tmp dierctory which is used for writing temporary files.
+	*
+	*	@var string
+	*/
     var $tmp_path = '~/www/tmp';
-    var $debug = 0;
-    var $sef_rewrite = 1;
+	
+	/**
+	*	alphanumeric string of characters used for salting.
+	*
+	*	@var string	unique value per Anahita installation
+	*/
     var $secret = '';
-    var $error_reporting = -1;
+	
+	/**
+	*	Search Engine Friendly URLs.
+	*	For example: 
+	*	- yourdomain.com/people/sjane instead of
+	*	- yourdomain.com?option=com_people&view=person&alias=sjane 
+	*
+	*	Recommended Value: 1
+	*
+	*	@var int 0 to turn off, 1 to turn on
+	*/
+    var $sef_rewrite = 1;
+	
+	
+	//
+	//	Debuggin Settings
+	//
+	
+	/**
+	*	Debuggin Mode.
+	*
+	*	@var int 0 to turn off, 1 to turn on
+	*/
+    var $debug = 0;
+	
+	/**
+	*	Different Error Reporting levels
+	*
+	*	@var int
+	*
+	*	Possile values:
+	*	-1		Default
+	*	0		Off
+	*	7		
+	*	30719	Maximum
+	*/
+	var $error_reporting = -1;
+	
+	
+	//
+	//	Database Settings
+	//
 
-	/* Database Settings */
+	/**
+	*	Database type 
+	*
+	*	@var string
+	*	The value is always mysqli until we support other databases too.
+	*/
     var $dbtype = 'mysqli';
+	
+	/**
+	*	Database host
+	*
+	*	@var string <IP>:<Port>
+	*/
     var $host = '127.0.0.1:3306';
-	var $db = '';
-    var $user = '';
-    var $password = '';
+	
+	/**
+	*	Database name
+	*
+	*	@var string
+	*/
+	var $db = 'anahita';
+	
+	/**
+	*	Database username
+	*
+	*	@var string
+	*/
+    var $user = 'anahita-user';
+	
+	/**
+	*	Database password
+	*
+	*	@var string
+	*/
+    var $password = 'AVerySecurePassword';
+	
+	/**
+	*	Database tables prefix
+	*
+	*	@var string characters followed by an underscore _
+	*/
 	var $dbprefix = 'an_';
-
-	/* Mailer */
+	
+	
+	//
+	//	CORS Settings
+	//
+	
+	/**
+	*	You can enable and use the CORS settings on your development machine.
+	*	YOU DON'T HAVE TO turn this on for your Staging or Production server.
+	*	INSTEAD cocnfigure CORS in your Apache or NGinx config files.
+	*/
+	
+	/**
+	*	Enables CORS 
+	*	
+	*	@var int 0 to disable, 1 to enable
+	*/
+	var $cors_enabled = 0;
+	
+	/**
+	*	Allowed request methods  
+	*	
+	*	@var string comma separated methods
+	*/
+    var $cors_methods = 'POST, GET, DELETE, OPTIONS';
+	
+	/**
+	*	CORS Header  
+	*	
+	*	@var string
+	*/
+    var $cors_headers = 'Content-Type';
+	
+	/**
+	*	CORS Credentials  
+	*	
+	*	@var string 0 to disable, 1 to enable
+	*/
+    var $cors_credentials = '1';
+	
+	
+	// 
+	// Mailer Settings
+	// 
+	
+	/**
+	*	Mailter type 
+	*
+	*	@var string
+	*	mail		PHP Mail Function
+	*	sendmail	Linux Send Mail
+	*	smtp		SMTP service on your machine or an external service
+	*/
     var $mailer = 'smtp';
+	
+	/**
+	*	Mail from email address
+	*
+	*	@var string
+	*/
     var $mailfrom = 'noreply@example.com';
+	
+	/**
+	*	Mail from name
+	*
+	*	@var string
+	*/
     var $fromname = 'Anahita Website';
+	
+	/**
+	*	Path to Linux send mail 
+	*
+	*	@var string
+	*/
     var $sendmail = '/usr/sbin/sendmail';
+	
+	
+	//
+	//	SMTP Settings
+	//
+	
+	/**
+	*	SMTP secure 
+	*
+	*	@var string none, ssl, tls
+	*/
     var $smtp_secure = 'none';
-    var $smtp_port = 25;
+	
+	/**
+	*	SMTP port 
+	*
+	*	@var int 587, 2525
+	*/
+    var $smtp_port = 587;
+	
+	/**
+	*	SMTP username 
+	*
+	*	@var string 
+	*/
     var $smtp_user = '';
+	
+	/**
+	*	SMTP password 
+	*
+	*	@var string 
+	*/
     var $smtp_pass = '';
+	
+	/**
+	*	SMTP host 
+	*
+	*	@var string
+	*/
     var $smtp_host = 'localhost';
 }
