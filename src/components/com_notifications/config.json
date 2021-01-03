@@ -15,6 +15,22 @@
             "name": "use_cron",
             "label": "Use Cron",
             "selected": 0
+        },
+        {
+            "option": [
+                {
+                    "value": "0",
+                    "text": "No"
+                },
+                {
+                    "value": "1",
+                    "text": "Yes"
+                }
+            ],
+            "type": "list",
+            "name": "mute_email",
+            "label": "Mute Email Notifications",
+            "selected": 0
         }
     ]
 }

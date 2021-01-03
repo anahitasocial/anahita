@@ -84,11 +84,14 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      */
     public function sendNotifications($notifications)
     {
-        $space = $this->getService('anahita:domain.space');
+        $space = $this->getService('anahita:domain.space');        
+        $muteEmail = (bool) get_config_value('notifications.mute_email');
 
         foreach ($notifications as $notification) {
             $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
-            $this->sendNotification($notification);
+            if (!$muteEmail) {
+                $this->sendNotification($notification);
+            }
         }
 
         //change the notification status
@@ -114,7 +117,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                          ->fetchSet();
 
         $settings = AnHelperArray::indexBy($settings, 'person.id');
-
+        
         $mails = $this->_renderMails(array(
                         'notification' => $notification,
                         'people' => $people,
@@ -140,7 +143,6 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $notification = $config->notification;
 
         foreach ($people as  $person) {
-
             $setting = $settings->{$person->id};
 
             if (! $ret = $notification->shouldNotify($person, $setting)) {

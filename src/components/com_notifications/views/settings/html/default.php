@@ -19,19 +19,22 @@ $actorbar->setActor($actor);
 	    </select>
 	</form>
 	<?php endif; ?>
-	<?php
-        $setting = @service('repos:notifications.setting')->findOrAddNew(array(
-                    'person' => $viewer,
-                    'actor' => $actor,
-        ))->reset();
-    ?>
-	<form action="<?= @route('option=com_notifications&view=setting&oid='.$actor->id)?>" method="post">
-		<label class="control-label"><?= @text('COM-NOTIFICATIONS-ACTOR-SEND-EMAIL')?></label>
-		<label class="checkbox">
-			<input class="autosubmit" name="email" <?= $setting->getValue('posts', 1) == 2 ? 'disabled="true"' : ''?> <?= $setting->sendEmail('posts', 1) && $setting->getValue('posts', 1) < 2 ? 'checked' : ''?> value="1" type="checkbox" />
-			<?= $viewer->email?>
-			<a href="<?=@route($viewer->getURL().'&get=settings&edit=account')?>" class="btn-mini"><?= @text('COM-NOTIFICATIONS-ACTOR-NOTIFICATION-CHANGE-EMAIL') ?></a>
-		</label>
-	</form>
+	<? $muteEmail = (bool) get_config_value('notifications.mute_email') ?>
+	<? if (!$muteEmail) : ?>
+		<?php
+	        $setting = @service('repos:notifications.setting')->findOrAddNew(array(
+	                    'person' => $viewer,
+	                    'actor' => $actor,
+	        ))->reset();
+	    ?>
+		<form action="<?= @route('option=com_notifications&view=setting&oid='.$actor->id)?>" method="post">
+			<label class="control-label"><?= @text('COM-NOTIFICATIONS-ACTOR-SEND-EMAIL')?></label>
+			<label class="checkbox">
+				<input class="autosubmit" name="email" <?= $setting->getValue('posts', 1) == 2 ? 'disabled="true"' : ''?> <?= $setting->sendEmail('posts', 1) && $setting->getValue('posts', 1) < 2 ? 'checked' : ''?> value="1" type="checkbox" />
+				<?= $viewer->email?>
+				<a href="<?=@route($viewer->getURL().'&get=settings&edit=account')?>" class="btn-mini"><?= @text('COM-NOTIFICATIONS-ACTOR-NOTIFICATION-CHANGE-EMAIL') ?></a>
+			</label>
+		</form>
+	<? endif ?>
 	</div>
 </div>
