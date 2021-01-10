@@ -21,7 +21,7 @@
 	<div class="control-group">
 		<div class="controls">
 			<label class="checkbox" for="private-flag">
-				<input id="private-flag" type="checkbox" name="private">
+				<input id="private-flag" type="checkbox" name="is_private">
 				<?=@text('COM-NOTES-COMPOSER-PRIVATE-FLAG')?>
 			</label>
 		</div>

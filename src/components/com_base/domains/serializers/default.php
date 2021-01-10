@@ -168,13 +168,13 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         }
 
         if ($entity->inherits('ComLocationsDomainEntityLocation')) {
-            $data['longitude'] = $entity->geoLongitude;
-            $data['latitude'] = $entity->geoLatitude;
-            $data['address'] = $entity->geoAddress;
-            $data['city'] = $entity->geoCity;
-            $data['province'] = $entity->geoStateProvince;
-            $data['country'] = $entity->geoCountry;
-            $data['postalcode'] = $entity->geoPostalcode; 
+            $data['longitude'] = $entity->longitude;
+            $data['latitude'] = $entity->latitude;
+            $data['address'] = (string) $entity->address;
+            $data['city'] = (string) $entity->city;
+            $data['state_province'] = (string) $entity->state_province;
+            $data['country'] = (string) $entity->country;
+            $data['postalcode'] = (string) $entity->postalcode; 
         }
         
         if ($entity->isAuthorizer()) {
