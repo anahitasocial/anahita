@@ -48,7 +48,7 @@ class ComNotesControllerNote extends ComMediumControllerDefault
 
         //if a private message then
         //set the privacy to subject/target
-        if ($data->private) {
+        if ($data->is_private) {
             $entity->setAccess(array($this->actor->id, get_viewer()->id));
         }
 
