@@ -31,7 +31,6 @@ class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
                     ),
                 ),
                 'body' => array(
-                    'required' => AnDomain::VALUE_NOT_EMPTY,
                     'length' => array(
                         'max' => 5000,
                     )
