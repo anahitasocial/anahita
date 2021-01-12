@@ -19,14 +19,14 @@ class ComTopicsDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setGadgets($actor, $gadgets, $mode)
     {
         if ($mode == 'profile') {
-            $gadgets->insert('topics-gadget', array(
+            $gadgets->insert('topics', array(
                     'title' => AnTranslator::_('COM-TOPICS-GADGET-ACTOR-PROFILE'),
                     'url' => 'option=com_topics&view=topics&layout=gadget&oid='.$actor->id,
                     'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                     'action_url' => 'option=com_topics&view=topics&oid='.$actor->id,
             ));
         } else {
-            $gadgets->insert('topics-gadget', array(
+            $gadgets->insert('topics', array(
                     'title' => AnTranslator::_('COM-TOPICS-GADGET-ACTOR-DASHBOARD'),
                     'url' => 'option=com_topics&view=topics&layout=gadget&filter=leaders',
                     'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
@@ -41,7 +41,7 @@ class ComTopicsDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setComposers($actor, $composers, $mode)
     {
         if ($actor->authorize('action', 'com_topics:topic:add')) {
-            $composers->insert('photos-composer', array(
+            $composers->insert('topics', array(
                     'title' => AnTranslator::_('COM-TOPICS-COMPOSER-TOPIC'),
                     'placeholder' => AnTranslator::_('COM-TOPICS-TOPIC-ADD'),
                     'url' => 'option=com_topics&view=topic&layout=composer&oid='.$actor->id,

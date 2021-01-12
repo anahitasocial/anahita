@@ -39,14 +39,14 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setGadgets($actor, $gadgets, $mode)
     {
         if ($mode == 'profile') {
-            $gadgets->insert('todos-gadget-profile-todos', array(
+            $gadgets->insert('todos', array(
                 'title' => AnTranslator::_('COM-TODOS-GADGET-ACTOR-TODOS'),
                 'url' => 'option=com_todos&view=todos&layout=gadget&oid='.$actor->id,
                 'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
                 'action_url' => 'option=com_todos&view=todos&oid='.$actor->id,
             ));
         } else {
-            $gadgets->insert('todos-gadget-profile-todos', array(
+            $gadgets->insert('todos', array(
                 'title' => AnTranslator::_('COM-TODOS-GADGET-DASHBOARD-TODOS'),
                 'url' => 'option=com_todos&view=todos&layout=gadget&filter=leaders',
                 'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
@@ -61,7 +61,7 @@ class ComTodosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setComposers($actor, $composers, $mode)
     {
         if ($actor->authorize('action', 'com_todos:todo:add')) {
-            $composers->insert('todos-composer', array(
+            $composers->insert('todos', array(
                 'title' => AnTranslator::_('COM-TODOS-COMPOSER-TODO'),
                 'placeholder' => AnTranslator::_('COM-TODOS-TODO-ADD'),
                 'url' => 'option=com_todos&view=todo&layout=composer&oid='.$actor->id,
