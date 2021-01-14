@@ -107,7 +107,8 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
         
         $content = json_encode(array(
             'id' => $component->id,
-            'name' => $component->component, 
+            'name' => $component->component,
+            'description' => $component->getProfileDescription(), 
             'enabled' => true, 
             'actions' => $actions,
        ));
