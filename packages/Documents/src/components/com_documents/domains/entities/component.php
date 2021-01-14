@@ -33,4 +33,18 @@ class ComDocumentsDomainEntityComponent extends ComMediumDomainEntityComponent
             ));
         }
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function _setComposers($actor, $composers, $mode)
+    {
+        if ($actor->authorize('action', 'com_documents:document:add')) {
+            $composers->insert('documents', array(
+                    'title' => AnTranslator::_('COM-DOCUMENTS-COMPOSER-DOCUMENT'),
+                    'placeholder' => AnTranslator::_('COM-DOCUMENTS-DOCUMENT-ADD'),
+                    'url' => 'option=com_documents&view=document&layout=composer&oid='.$actor->id,
+            ));
+        }
+    }
 }
