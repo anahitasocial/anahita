@@ -29,7 +29,7 @@ class ComPeopleViewSessionJson extends ComBaseViewJson
     {
         $data = array();
         $serializer = $this->getService('com:actors.domain.serializer.actor');
-        
+
         $data = $serializer->toSerializableArray($item);
 
         $data['username'] = $item->username;
@@ -38,6 +38,21 @@ class ComPeopleViewSessionJson extends ComBaseViewJson
         $data['email'] = $item->email;
         $data['usertype'] = $item->usertype;
         $data['gender'] = $item->gender;
+        
+        $context = new AnCommandContext();
+        $context->gadgets = new LibBaseTemplateObjectContainer();
+        $context->composers = new LibBaseTemplateObjectContainer();
+        $context->actor = $item;
+
+        $components = $this->getService('repos:components.component')->fetchSet();
+        $components->registerEventDispatcher($this->getService('anahita:event.dispatcher'));
+        
+        $this->getService('anahita:event.dispatcher')->dispatchEvent('onDashboardDisplay', $context);
+        
+        // error_log(print_r(array_keys($context->composers->getObjects()), true));
+        
+        $data['composers'] = array_keys($context->composers->getObjects());
+        $data['gadgets'] = array_keys($context->gadgets->getObjects());
 
         return $data;
     }

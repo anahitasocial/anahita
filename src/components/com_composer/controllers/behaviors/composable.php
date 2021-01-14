@@ -24,8 +24,10 @@ class ComComposerControllerBehaviorComposable extends AnControllerBehaviorAbstra
                             ->layout('list')
                             ->setItem($story);
 
-        //manually set the toolbar
         $controller->toolbar = $controller->getToolbar('story');
+        
+        $format = $this->_mixer->getRequest()->getFormat();
+        $controller->getRequest()->setFormat($format);
 
         return  $controller->getView()->display();
     }

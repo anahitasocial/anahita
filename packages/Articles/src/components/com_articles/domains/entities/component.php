@@ -74,7 +74,7 @@ class ComArticlesDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setComposers($actor, $composers, $mode)
     {
         if ($actor->authorize('action', 'com_articles:article:add')) {
-            $composers->insert('article-composer', array(
+            $composers->insert('articles', array(
                     'title' => AnTranslator::_('COM-ARTICLES-COMPOSER-ARTICLE'),
                     'placeholder' => AnTranslator::_('COM-ARTICLES-ARTICLE-ADD'),
                     'url' => 'option=com_articles&view=article&layout=composer&oid='.$actor->id,

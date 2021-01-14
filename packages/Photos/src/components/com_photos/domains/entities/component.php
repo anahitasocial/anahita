@@ -61,7 +61,7 @@ class ComPhotosDomainEntityComponent extends ComMediumDomainEntityComponent
     protected function _setComposers($actor, $composers, $mode)
     {
         if ($actor->authorize('action', 'com_photos:photo:add')) {
-            $composers->insert('photo-composer', array(
+            $composers->insert('photos', array(
                     'title' => AnTranslator::_('COM-PHOTOS-COMPOSER-PHOTO'),
                     'placeholder' => AnTranslator::_('COM-PHOTOS-PHOTO-ADD'),
                     'url' => 'option=com_photos&view=photo&layout=composer&oid='.$actor->id,

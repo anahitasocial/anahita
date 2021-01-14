@@ -48,21 +48,16 @@ class ComActorsViewActorJson extends ComBaseViewJson
 
             $this->getService('anahita:event.dispatcher')->dispatchEvent('onProfileDisplay', $context);
 
-            dispatch_plugin('profile.onDisplay', array('actor' => $this->_state->getItem(), 'profile' => $context->profile));
+            dispatch_plugin('profile.onDisplay', array(
+                'actor' => $this->_state->getItem(), 
+                'profile' => $context->profile,
+            ));
 
             $this->profile = $context->profile;
         }
 
-        $item['gadgets'] = array_map(function ($gadget) {
-                return $gadget->name;
-            },
-            $context['gadgets']->getObjects());
-
-        $item['composers'] = array_map(function ($gadget) {
-                return $gadget->name;
-            },
-            $context['composers']->getObjects());
-
+        $item['gadgets'] = array_keys($context->gadgets->getObjects());
+        $item['composers'] = array_keys($context->composers->getObjects());
         $item['information'] = $context['profile'];
 
         return $item;
