@@ -22,6 +22,28 @@ class ComNotesDomainEntityComponent extends ComMediumDomainEntityComponent
     {
         return -PHP_INT_MAX;
     }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function _setGadgets($actor, $gadgets, $mode)
+    {
+        if ($mode == 'profile') {
+            $gadgets->insert('notes', array(
+                    'title' => AnTranslator::_('COM-NOTES-GADGET-ACTOR-PROFILE'),
+                    'url' => 'option=com_notes&view=notes&layout=gadget&oid='.$actor->id,
+                    'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
+                    'action_url' => 'option=com_notes&view=notes&oid='.$actor->id,
+            ));
+        } else {
+            $gadgets->insert('notes', array(
+                    'title' => AnTranslator::_('COM-NOTES-GADGET-ACTOR-DASHBOARD'),
+                    'url' => 'option=com_notes&view=notes&layout=gadget&filter=leaders',
+                    'action' => AnTranslator::_('LIB-AN-GADGET-VIEW-ALL'),
+                    'action_url' => 'option=com_notes&view=notes&filter=leaders',
+            ));
+        }
+    }
 
     /**
      * {@inheritdoc}
