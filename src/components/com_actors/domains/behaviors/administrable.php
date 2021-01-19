@@ -142,4 +142,16 @@ class ComActorsDomainBehaviorAdministrable extends AnDomainBehaviorAbstract
 
         return $query->toEntitySet();
     }
+    
+    /**
+     * Return true if mixer is being administered by the person else return false.
+     *
+     * @param ComPeopleDomainEntityPeople $actor The actor to block
+     *
+     * @return bool
+     */
+    public function hasAdmin($person)
+    {
+        return $this->_mixer->administratorIds->offsetExists($person->id);
+    }
 }

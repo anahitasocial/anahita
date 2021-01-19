@@ -208,8 +208,12 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
         $this->removeNodeSubscriptions($leader, $follower);
 
-        if ($leader->isAdministrable()) {
-            $leader->removeAdministrator($follower);
+        if ($leader->isAdministrable() && $leader->hasAdmin($follower)) {
+            $result = $leader->administrators->extract($follower);
+            
+            if (!$result) {
+                $leader->resetStats(array($leader, $follower));
+            }
         }
 
         $this->getService('repos:actors.follow')
@@ -276,8 +280,12 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
         $this->removeNodeSubscriptions($leader, $follower);
 
-        if ($leader->isAdministrable()) {
-            $leader->removeAdministrator($follower);
+        if ($leader->isAdministrable() && $leader->hasAdmin($follower)) {
+            $result = $leader->administrators->extract($follower);
+            
+            if (!$result) {
+                $leader->resetStats(array($leader, $follower));
+            }
         }
 
         $this->getService('repos:actors.follow')
