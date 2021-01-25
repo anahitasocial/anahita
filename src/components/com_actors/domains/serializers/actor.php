@@ -19,6 +19,8 @@ class ComActorsDomainSerializerActor extends ComBaseDomainSerializerDefault
     {
         $data = parent::toSerializableArray($entity);
         $viewer = $this->getService('com:people.viewer');
+        
+        $data['enabled'] = (bool) $entity->enabled;
     
         if ($viewer && !$viewer->eql($entity)) {
             if ($entity->isFollowable()) {
