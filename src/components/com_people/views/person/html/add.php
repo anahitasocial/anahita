@@ -25,8 +25,8 @@
                             type="text"
                             id="person-given-name"
                             name="givenName"
-                            maxlength="30"
-                            minlength="3"
+                            maxlength="20"
+                            minlength="2"
                          />
                     </div>
                 </div>
@@ -42,8 +42,8 @@
                             type="text"
                             id="person-family-name"
                             name="familyName"
-                            maxlength="30"
-                            minlength="3"
+                            maxlength="20"
+                            minlength="2"
                          />
                     </div>
                 </div>

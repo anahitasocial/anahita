@@ -71,15 +71,15 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 'givenName' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'length' => array(
-                        'min' => 3,
-                        'max' => 30,
+                        'min' => 2,
+                        'max' => 20,
                     ),
                 ),
                 'familyName' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
                     'length' => array(
-                        'min' => 3,
-                        'max' => 30,
+                        'min' => 2,
+                        'max' => 20,
                     ),
                 ),
                 'email' => array(

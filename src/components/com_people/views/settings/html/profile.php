@@ -15,8 +15,8 @@
 				id="person-given-name"
 				name="givenName"
 				value="<?= $item->givenName ?>"
-				maxlength="30"
-	            minlength="3"
+				maxlength="20"
+				minlength="2"
 			 />
 		</div>
 	</div>
@@ -33,8 +33,8 @@
 				id="person-family-name"
 				name="familyName"
 				value="<?= $item->familyName ?>"
-				maxlength="30"
-	            minlength="3"
+				maxlength="20"
+				minlength="2"
 			 />
 		</div>
 	</div>
