@@ -150,6 +150,13 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                );
             }
         }
+        
+        if ($entity->save($context)) {
+            dispatch_plugin('profile.onSave', array(
+                'actor' => $entity,
+                'data' => $context->data,
+                ));
+        }
 
         return $entity;
     }
