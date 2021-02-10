@@ -46,7 +46,7 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                     'format' => 'string',
                     'read' => 'public',
                     'length' => array(
-                        'max' => 500,
+                        'max' => 1000,
                     ),
                 ),
                 'status' => array(
