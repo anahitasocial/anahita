@@ -14,7 +14,7 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComPeopleDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
+class ComPeopleDomainBehaviorPrivatable extends ComActorsDomainBehaviorPrivatable
 {
     /**
      * Initializes the default configuration for the object.
@@ -24,7 +24,7 @@ class ComPeopleDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
      * @param AnConfig $config An optional AnConfig object with configuration options.
      */
     protected function _initialize(AnConfig $config)
-    {
+    {    
         $config->append(array(
             'attributes' => array(
                 'access' => array(
