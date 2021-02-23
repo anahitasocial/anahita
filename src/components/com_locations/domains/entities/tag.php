@@ -32,7 +32,7 @@ final class ComLocationsDomainEntityTag extends ComTagsDomainEntityTag
                 ),
             ),
         ));
-
+        
         parent::_initialize($config);
     }
 

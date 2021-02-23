@@ -27,8 +27,12 @@ class ComTagsDomainEntityTag extends ComBaseDomainEntityEdge
                 'abstract' => $this->getIdentifier()->classname === __CLASS__
             ),
             'aliases' => array(
-                'tag' => 'nodeA',
                 'taggable' => 'nodeB',
+            ),
+            'relationships' => array(
+                'taggable' => array(
+                    'parent' => 'com:base.domain.entity.node',
+                ),
             ),
         ));
 

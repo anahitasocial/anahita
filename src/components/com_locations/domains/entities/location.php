@@ -118,14 +118,6 @@ final class ComLocationsDomainEntityLocation extends ComTagsDomainEntityNode
                 'authorizer',
                 'dictionariable'
             )),
-            'relationships' => array(
-                'taggables' => array(
-                    'through' => 'tag',
-                    'child_key' => 'location',
-                    'target' => 'com:base.domain.entity.node',
-                    'target_child_key' => 'taggable',
-                ),
-            ),
         ));
 
         parent::_initialize($config);
