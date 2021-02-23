@@ -22,6 +22,7 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
      */
     protected function _initialize(AnConfig $config)
     {
+
         $config->append(array(
             'attributes' => array(
                 'name' => array(
@@ -38,8 +39,16 @@ class ComTagsDomainEntityNode extends ComBaseDomainEntityNode
             'inheritance' => array(
                 'abstract' => $this->getIdentifier()->classname === __CLASS__
             ),
+            'relationships' => array(
+                'taggables' => array(
+                    'through' => 'com:' . $this->getIdentifier()->package . '.domain.entity.tag',
+                    'child_key' => $this->getIdentifier()->name,
+                    'target' => 'com:base.domain.entity.node',
+                    'target_child_key' => 'taggable',
+                ),
+            ),
         ));
-
+        
         parent::_initialize($config);
     }
 }

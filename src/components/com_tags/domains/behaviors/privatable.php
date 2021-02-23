@@ -23,7 +23,7 @@ class ComTagsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
         if ($viewer->admin()) {
             return;
         }
-
+ 
         $query = $context->query;
 
         $repository = $query->getRepository();
@@ -35,9 +35,17 @@ class ComTagsDomainBehaviorPrivatable extends LibBaseDomainBehaviorPrivatable
             'viewer' => $viewer,
             'graph_check' => true,
         ));
-
-        $query->getRepository()->addBehavior('ownable');
-
+        
+        $where = $this->buildCondition('@col(id)', $config, '@col(access)');
+        $query->where($where);
+        
+        $repository->addBehavior('ownable');
+        
+        // this is a hack
+        if ($query->columns) {
+            $query->columns[0] = 'node.name';
+        }
+        
         //do a left join operation just in case an owner is missing
         $query->link('owner', array('type' => 'weak', 'bind_type' => false));
 

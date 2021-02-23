@@ -47,14 +47,6 @@ final class ComHashtagsDomainEntityHashtag extends ComTagsDomainEntityNode
             'behaviors' => to_hash(array(
                 'modifiable',
             )),
-            'relationships' => array(
-                'taggables' => array(
-                    'through' => 'tag',
-                    'child_key' => 'hashtag',
-                    'target' => 'com:base.domain.entity.node',
-                    'target_child_key' => 'taggable',
-                ),
-            ),
         ));
 
         parent::_initialize($config);
