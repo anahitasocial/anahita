@@ -76,25 +76,29 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         $query = $context->query;
 
-        if ($this->filter) {
-            if ($this->filter['usertype'] && in_array($this->filter['usertype'], $this->_allowed_user_types)) {
-                $query->filterUsertype($this->getService('anahita:filter.cmd')
-                      ->sanitize($this->filter['usertype']));
-            }
+        if ($this->viewer->admin()) {
+            if ($this->filter {
+                if ($this->filter['usertype']) {
+                    $query->filterUsertype($this->getService('anahita:filter.cmd')
+                          ->sanitize($this->filter['usertype']));
+                }
 
-            if ($this->filter['disabled']) {
-                $query->filterDisabledAccounts(true);
+                if ($this->filter['disabled']) {
+                    $query->filterDisabledAccounts(true);
+                }
+            }
+            
+            if ($this->q) {
+                if ($this->getService('anahita:filter.email')->validate($this->q)) {
+                    $query->filterEmail($this->q);
+                }
             }
         }
-
-        if ($this->getService('anahita:filter.email')->validate($this->q)) {
-            $query->filterEmail($this->q);
-        }
-
+        
         if ($this->getService('com:people.filter.username')->validate($this->q)) {
             $query->filterUsername($this->q);
         }
-
+        
         if ($this->q) {
             $query->keyword = $this->getService('anahita:filter.term')->sanitize($this->q);
         }
