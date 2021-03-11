@@ -77,7 +77,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         $query = $context->query;
 
         if ($this->viewer->admin()) {
-            if ($this->filter {
+            if ($this->filter) {
                 if ($this->filter['usertype']) {
                     $query->filterUsertype($this->getService('anahita:filter.cmd')
                           ->sanitize($this->filter['usertype']));
