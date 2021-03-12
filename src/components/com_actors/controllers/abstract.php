@@ -171,6 +171,10 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _actionEdit(AnCommandContext $context)
     {
         $entity = parent::_actionEdit($context);
+        
+        if ($this->viewer->admin() && array_key_exists('enabled', $_POST)) {
+            AnRequest::get('post.enabled', 'boolean') ? $entity->enable() : $entity->disable();
+        }
 
         if ($entity->isPortraitable() && AnRequest::has('files.portrait')) {
             $file = AnRequest::get('files.portrait', 'raw');
