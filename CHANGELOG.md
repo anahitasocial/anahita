@@ -2,8 +2,37 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 
 Anahita 4.4.5
 =============================
+1. changed: improved RestFUL APIs in authentication, actors, actor settings, media, site settings, stories, comments, and likes.  
 1. added: Documents app to the list of packages
-2. added: method getFileExtension to the fileable behaviour 
+1. added: method getFileExtension to the fileable behaviour 
+1. added: notifications/clear RESTful endpoint to set all the unsent notifications in the system to sent.
+1. added: ability for site admins to set enabled to true or false when editing an actor.
+1. changed: only admins and super admins can filter people by usertype, disabled, and email.
+1. fixed: several privacy bugs in people, actors, and media browse views
+1. changed: increased actor body field to 1000 chars- changed: increased actor body field to 1000 chars
+1. added: profile plugin save method is now called when adding an actor.
+1. added: enabled field to json object
+1. changed: min char requirements to 2 in Person givenName and familyName. Some people have two character names.
+1. added: array of administrators to the actor json object
+1. removed: administratorIds from the actor json object
+1. fixed: a scenario in administrable and followable, which was causing a loop call of removeAdministrator() and removeFollower()
+1. added: notes gadgets for dashboard and profiles
+1. added: in Actor perrmissionable behaviour added description field to the single permission record.
+1. fixed: story is now rendered in the same format provided by the request format.
+1. changed: instead of parameter private we are now passing is_private in the post request.
+1. added: in Notifications app settings, added an option to mute email notifications.
+1. removed: json view of configuration.php file values. Editing this file from a client side application is a bad idea. It's better to edit this file directly on the server.
+1. added: server_domain and client_domain to the configuration.php-dist file
+1. changed: updated configuration.php-dist file with variables and documentation so people can use it as a reference.
+1. changed: improved smtp mail configuration implementation and it is now working with the Mailgun service
+1. added: nohtml template
+1. changed: config entity and console/config now write well formatted 
+variables
+1. changed: live_site to server_domain in the site config
+1. added: client_domain to the site config
+1. fixed: issue which was including lib_anahita js translation file in nohtml template
+1. fixed: issue causing add location to crash the app
+1. added: CORS settings to the site configs
 
 Anahita 4.4.4
 =============================
