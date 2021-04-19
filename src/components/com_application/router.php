@@ -79,10 +79,12 @@ class ComApplicationRouter extends AnObject
         }
 
         if (PHP_SAPI == 'cli') {
-            $base->scheme = extension_loaded('openssl') ? 'https' : 'http';
-            $settings = $this->getService('com:settings.config');
-            $base->host = AnRequest::get('server.HOSTNAME', 'url', $settings->server_domain);
-            $base->path = '';
+            $domain = get_public_domain();
+            
+            $base->scheme = parse_url($domain, PHP_URL_SCHEME);
+            $base->port = parse_url($domain, PHP_URL_PORT);
+            $base->host = AnRequest::get('server.HOSTNAME', 'url', parse_url($domain, PHP_URL_HOST));
+            $base->path = parse_url($domain, PHP_URL_PATH);
         }
 
         $config->append(array(

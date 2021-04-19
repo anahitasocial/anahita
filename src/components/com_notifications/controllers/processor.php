@@ -104,7 +104,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
      * @param ComNotificationsDomainEntityNotification $notification Notification
      */
     public function sendNotification($notification)
-    {
+    {    
         $subscriberIds = $notification->subscriberIds->toArray();
         $query = $this->getService('repos:people.person')
                        ->getQuery(true)

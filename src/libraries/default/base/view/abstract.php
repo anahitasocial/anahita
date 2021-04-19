@@ -346,11 +346,12 @@ abstract class LibBaseViewAbstract extends AnObject
         $parts = array_merge($route, $parts);
         $parts = http_build_query($parts);
         $route = $this->getService('com:application')->getRouter()->build($parts, $fqr);
-
-        //if ($fqr) {
-        //    $route->scheme = $this->getBaseUrl()->scheme;
-        //    $route->host = $this->getBaseUrl()->host;
-        //}
+        
+        if ($fqr) {
+            foreach (array('host', 'scheme', 'port', 'user', 'pass') as $part) {
+                $route->$part = $this->getBaseUrl()->$part;
+            }
+        }
 
         return $route;
     }
