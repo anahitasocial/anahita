@@ -61,7 +61,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
         $settings = $this->getService('com:settings.config');
 
         if (PHP_SAPI == 'cli') {
-            $base_url = $settings->server_domain;
+            $base_url = get_public_domain();
         }
 
         $config->append(array(
@@ -215,14 +215,9 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
         foreach($mails as $mail) {
             $to = ($this->_test_options->enabled) ? $this->_test_options->email : $mail['to'];
-            $subject = AnService::get('anahita:filter.string')->sanitize($mail['subject']);
-
-            if (isset($mail['body'])) {
-                $body = $mail['body'];
-            } else {
-                $body = $this->renderMail($mail);
-            }
-
+            $subject = AnService::get('anahita:filter.string')->sanitize($mail['subject']);            
+            $body = isset($mail['body']) ? $mail['body'] : $this->renderMail($mail);
+            
             $mailer->reset()
             ->setSubject($subject)
             ->setBody($body)
