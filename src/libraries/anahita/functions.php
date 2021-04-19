@@ -43,7 +43,7 @@ function route($route, $fqr = true)
  * Lots of cool functions.
  */
 function is_ssl()
-{
+{        
     if (isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) == 'on') {
         return true;
     }
@@ -65,6 +65,17 @@ function is_ssl()
     }
 
     return false;
+}
+
+function get_public_domain()
+{
+    $settings = AnService::get('com:settings.config');
+    
+    if ($settings->server_domain === $settings->client_domain) {
+        return $settings->server_domain;
+    }
+    
+    return $settings->client_domain;
 }
 
 /**
