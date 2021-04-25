@@ -28,7 +28,7 @@ Anahita 4.4.5
 1. added: nohtml template
 1. changed: config entity and console/config now write well formatted 
 variables
-1. changed: live_site to server_domain in the site config
+1. removed: live_site
 1. added: client_domain to the site config
 1. fixed: issue which was including lib_anahita js translation file in nohtml template
 1. fixed: issue causing add location to crash the app
