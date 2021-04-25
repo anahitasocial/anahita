@@ -67,17 +67,6 @@ function is_ssl()
     return false;
 }
 
-function get_public_domain()
-{
-    $settings = AnService::get('com:settings.config');
-    
-    if ($settings->server_domain === $settings->client_domain) {
-        return $settings->server_domain;
-    }
-    
-    return $settings->client_domain;
-}
-
 /**
  * Prints deprecated messages.
  *

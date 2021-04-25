@@ -17,7 +17,7 @@ class Config
     protected $_site_path;
 
     protected $_legacy_key_map = array(
-        'live_site' => 'server_domain',
+        'live_site' => 'client_domain',
         'smtpuser' => 'smtp_user',
         'smtppass' => 'smtp_pass',
         'smtphost' => 'smtp_host',
@@ -102,8 +102,7 @@ class Config
            'debug' => 0,
            'error_reporting' => 0,
            'sef_rewrite' => 0,
-           'server_domain' => 'example.com',
-           'client_domain' => '',
+           'client_domain' => 'example.com',
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
@@ -354,7 +353,6 @@ class Config
 
         $write_group(array(
             'sitename',
-            'server_domain',
             'client_domain',
             'template',
             'language',

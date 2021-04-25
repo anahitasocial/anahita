@@ -111,10 +111,6 @@
      */
      public function get($key = null, $default = null)
      {
-         if ($key === 'server_domain') {
-             return $this->_formatDomain($this->_configs->server_domain);
-         }
-         
          if ($key === 'client_domain') {
              return $this->_formatDomain($this->_configs->client_domain);
          }

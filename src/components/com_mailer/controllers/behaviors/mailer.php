@@ -61,7 +61,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
         $settings = $this->getService('com:settings.config');
 
         if (PHP_SAPI == 'cli') {
-            $base_url = get_public_domain();
+            $base_url = $settings->client_domain;
         }
 
         $config->append(array(
