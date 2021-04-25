@@ -13,13 +13,6 @@
           'value' => $config->sitename,
           'id' => 'setting-sitename',
         )) ?>
-
-        <?= @helper('ui.formfield_text', array(
-          'label' => @text('COM-SETTINGS-CONFIGS-SERVER-DOMAIN'),
-          'name' => 'meta[server_domain]',
-          'value' => $config->server_domain,
-          'id' => 'setting-server_domain',
-        )) ?>
         
         <?= @helper('ui.formfield_text', array(
           'label' => @text('COM-SETTINGS-CONFIGS-CLIENT-DOMAIN'),

@@ -44,37 +44,42 @@ class ComApplicationTemplateFilterHtml extends LibBaseTemplateFilterAbstract imp
     {
         $document = $this->getService('anahita:document');
         $html = '<base href="base://" />';
-        $html .= '<title>'.$document->getTitle().'</title>';
-        $html .= '<meta name="description" content="'.$document->getDescription().'" />';
-
-        /* Google+ Card*/
-        $html .= '<meta itemprop="name" content="'.$document->getTitle().'" />';
-        $html .= '<meta itemprop="description" content="'.$document->getDescription().'" />';
-
-        if ($document->getImage()) {
-            $html .= '<meta itemprop="image" content="'.$document->getImage().'" />';
+        
+        if ($document->getTitle()) {
+            $html .= '<title>'.$document->getTitle().'</title>';
         }
+        
+        $html .= '<meta name="description" content="'.$document->getDescription().'" />';
 
         /* Twitter Card */
         $twitter_card = ($document->getImage()) ? 'summary_large_image' : 'summary';
         $html .= '<meta name="twitter:card" value="'.$twitter_card.'">';
-        $html .= '<meta property="twitter:title" content="'.$document->getTitle().'" />';
-        $html .= '<meta property="twitter:description" content="'.$document->getDescription().'" />';
-        $html .= '<meta property="og:type" content="'.$document->getType().'" />';
-        $html .= '<meta property="twitter:site" content="'.$document->getLink().'" />';
+        
+        if ($document->getTitle()) {
+            $html .= '<meta property="twitter:title" content="'.$document->getTitle().'" />';
+            $html .= '<meta property="og:title" content="'.$document->getTitle().'" />';
+        }
+        
+        if ($document->getDescription()) {
+            $html .= '<meta property="twitter:description" content="'.$document->getDescription().'" />';
+            $html .= '<meta property="og:description" content="'.$document->getDescription().'" />';
+        }
+        
+        if ($document->getType()) {
+            $html .= '<meta property="og:type" content="'.$document->getType().'" />';
+            $html .= '<meta property="og:type" content="'.$document->getType().'" />';
+        }
+        
+        if ($document->getLink()) {
+            $settings = $this->getService('com:settings.config');
+            $path = parse_url($document->getLink(), PHP_URL_PATH);
 
+            $html .= '<meta property="twitter:site" content="'.$settings->client_domain.$path.'" />';
+            $html .= '<meta property="og:url" content="'.$settings->client_domain.$path.'" />';
+        }
+        
         if ($document->getImage()) {
             $html .= '<meta property="twitter:image:src" content="'.$document->getImage().'" />';
-        }
-
-
-        /* Generic Open Graph tags */
-        $html .= '<meta property="og:title" content="'.$document->getTitle().'" />';
-        $html .= '<meta property="og:description" content="'.$document->getDescription().'" />';
-        $html .= '<meta property="og:type" content="'.$document->getType().'" />';
-        $html .= '<meta property="og:url" content="'.$document->getLink().'" />';
-
-        if ($document->getImage()) {
             $html .= '<meta property="og:image" content="'.$document->getImage().'" />';
         }
 

@@ -79,7 +79,8 @@ class ComApplicationRouter extends AnObject
         }
 
         if (PHP_SAPI == 'cli') {
-            $domain = get_public_domain();
+            $settings = $this->getService('com:settings.config');
+            $domain = $settings->client_domain;
             
             $base->scheme = parse_url($domain, PHP_URL_SCHEME);
             $base->port = parse_url($domain, PHP_URL_PORT);

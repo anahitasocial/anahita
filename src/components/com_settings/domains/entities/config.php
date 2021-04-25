@@ -37,8 +37,7 @@ class ComSettingsDomainEntityConfig extends AnObject
 
               // site
               'sitename' => 'Anahita',
-              'server_domain' => 'example.com',
-              'client_domain' => '',
+              'client_domain' => 'example.com',
               'debug' => 0,
               'sef_rewrite' => 0,
               'secret' => '',
@@ -130,7 +129,6 @@ class ComSettingsDomainEntityConfig extends AnObject
             
             $content .= $this->_formatGroup(array(
                 'sitename',
-                'server_domain',
                 'client_domain',
                 'template',
                 'language',
@@ -235,7 +233,6 @@ class ComSettingsDomainEntityConfig extends AnObject
               'cors_methods',
               'cors_headers',
               'sitename',
-              'server_domain',
               'client_domain',
               'log_path',
               'tmp_path',
