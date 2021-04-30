@@ -1,6 +1,6 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
-Anahita 4.4.5
+Anahita 4.5.0
 =============================
 1. changed: improved RestFUL APIs in authentication, actors, actor settings, media, site settings, stories, comments, and likes.  
 1. added: Documents app to the list of packages
