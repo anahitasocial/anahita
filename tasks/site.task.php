@@ -148,7 +148,7 @@ class Create extends Command
                 'name'     => $prompt('database-name', 'Enter the name of the database? ', @$info['name'],'Please enter the database name'),
                 'user'     => $prompt('database-user', 'Enter the database user? ', @$info['user'], 'Please enter the database user'),
                 'password' => $prompt('database-password', 'Enter the database password? ', @$info['password'], 'Please enter the database password'),
-                'host'     => $prompt('database-host', 'Enter the database host address? ', '127.0.0.1', @$info['host']),
+                'host'     => $prompt('database-host', 'Enter the database host address? ', 'localhost', @$info['host']),
                 'port'     => $prompt('database-port', 'Enter the database port? ', '3306', @$info['port']),
                 'prefix'   => $prompt('database-prefix', 'Enter a prefix for the tables in the database? ', 'an_', @$info['prefix'])
             ));
