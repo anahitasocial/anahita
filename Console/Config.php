@@ -101,7 +101,7 @@ class Config
            'secret' => '',
            'debug' => 0,
            'error_reporting' => 0,
-           'sef_rewrite' => 0,
+           'sef_rewrite' => 1,
            'client_domain' => 'example.com',
         ));
 
