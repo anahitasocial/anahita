@@ -60,7 +60,7 @@ Before you start please make sure that your server meets the following requireme
 
 1. Linux or unix server
 1. Nginx or Apache 2.0+
-1. MySql 5.6+
+1. MySql 5.7
 1. php 5.6+ with OPcache and APCU. Use PHP version 7.0.0 to 7.3.* for best results. (**PLEASE NOTE:** Anahita isn't yet supported on **PHP 7.4**, because the [upgrade list](https://github.com/php/php-src/blob/PHP-7.4/UPGRADING) is long and we are still working on it).
 1. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
