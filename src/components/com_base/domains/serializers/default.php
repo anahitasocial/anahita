@@ -184,6 +184,10 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                 'delete' => $entity->authorize('delete'),
             );
         }
+        
+        if ($data['authorized']['edit'] && $entity->isPrivatable()) {
+            $data['access'] = $entity->access;
+        }
 
         return AnConfig::unbox($data);
     }
