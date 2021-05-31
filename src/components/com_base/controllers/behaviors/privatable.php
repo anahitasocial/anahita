@@ -44,6 +44,8 @@ class ComBaseControllerBehaviorPrivatable extends AnControllerBehaviorAbstract
         foreach ($names as $name) {
             $this->getItem()->setPermission($name, $data->$name);
         }
+        
+        $context->response->content = $this->_mixer->display();
     }
 
     /**
