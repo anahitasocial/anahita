@@ -49,7 +49,6 @@ class ComApplicationRegistry extends AnObject implements AnServiceInstantiatable
         }
 
         if (! isset(self::$_instances[$config->cache_prefix])) {
-
             $instance = clone self::$_clone;
             self::$_instances[$config->cache_prefix] = $instance;
 

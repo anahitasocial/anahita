@@ -62,7 +62,7 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'enabled' => AnRequest::format() != 'json' && $config->mixer->isDispatched(),
+            'enabled' => AnRequest::format() !== 'json' && $config->mixer->isDispatched(),
         ));
 
         parent::_initialize($config);
@@ -77,10 +77,8 @@ class ComApplicationControllerBehaviorMessage extends AnControllerBehaviorAbstra
     protected function _afterControllerGet(AnCommandContext $context)
     {
         $flash = $this->_mixer->getState()->flash;
-        $message = $flash->getMessage();
 
-        if ($message) {
-            $message['message'] = AnTranslator::_($message['message']);
+        if ($message = $flash->getMessage()) {
             $this->storeValue('message', $message, true);
         }
     }

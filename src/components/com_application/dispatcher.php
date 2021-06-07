@@ -109,7 +109,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
     public function getComponent()
     {
         if (! ($this->_controller instanceof LibBaseControllerAbstract)) {
-
             $this->_controller = $this->getController();
 
             if (! $this->_controller instanceof LibBaseControllerAbstract) {
@@ -134,7 +133,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
     public function setComponent($component, $config = array())
     {
         if (! ($component instanceof LibBaseControllerAbstract)) {
-
             if (is_string($component) && strpos($component, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->package = $component;
@@ -206,10 +204,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->_application = $this->getService('com:application', array('session' => $session));
 
         $settings = $this->getService('com:settings.config');
-
-        $this->getService('anahita:language', array(
-            'language' => $settings->language
-        ));
         
         if ($settings->cors_enabled) {
             header('Access-Control-Allow-Origin: ' . $settings->client_domain);

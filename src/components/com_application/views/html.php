@@ -43,7 +43,6 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
 
         $this->_params = new AnConfig();
         $this->setParams($config->params);
-        $this->getService('anahita:language')->load('tpl_'.$this->getIdentifier()->package);
         $this->getTemplate()->getFilter('alias')
              ->append(array('@render(\'' => '$this->renderHelper(\'render.'))
              ->append(array('base://' => $this->getBaseUrl().'/'), LibBaseTemplateFilter::MODE_WRITE);
@@ -92,7 +91,6 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
     public function display()
     {
         if ($this->content instanceof Exception) {
-
             $error = $this->content;
             $layout = $error->getCode();
 
@@ -105,7 +103,6 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
             $settings = $this->getService('com:settings.config');
 
             if ($settings->debug) {
-
                 $traces = array();
                 $traces[] = '<h4>Exception '.get_class($error).' with message "'.$error->getMessage().'"</h4>';
                 $traces[] = $error->getFile().':'.$error->getLine();
@@ -132,7 +129,9 @@ class ComApplicationViewHtml extends LibBaseViewTemplate
             }
         }
 
-        $this->output = $this->getTemplate()->loadTemplate($this->getLayout(), array('output' => $this->content))->render();
+        $this->output = $this->getTemplate()
+        ->loadTemplate($this->getLayout(), array('output' => $this->content))
+        ->render();
 
         return $this->output;
     }
