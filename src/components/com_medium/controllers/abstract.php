@@ -151,14 +151,14 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
             $data = $context->data;
             $name = $this->getIdentifier()->name.'_'.$context->action;
             $context->append(array(
-                    'story' => array(
-                            'component' => 'com_'.$this->getIdentifier()->package,
-                            'name' => $name,
-                            'owner' => $this->actor,
-                            'object' => $this->getItem(),
-                            'target' => $this->actor,
-                            'comment' => $this->isCommentable() ? $data->comment : null,
-                    ),
+                'story' => array(
+                    'component' => 'com_'.$this->getIdentifier()->package,
+                    'name' => $name,
+                    'owner' => $this->actor,
+                    'object' => $this->getItem(),
+                    'target' => $this->actor,
+                    'comment' => $this->isCommentable() ? $data->comment : null,
+                ),
             ));
             $story = $this->createStory(AnConfig::unbox($context->story));
             $data->story = $story;
