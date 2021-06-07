@@ -372,44 +372,6 @@ class ComBaseTemplateHelperUi extends LibBaseTemplateHelperAbstract
     }
 
     /**
-     * Renders an editor.
-     *
-     * @param array $options
-     *
-     * @return string
-     */
-    public function editor($config)
-    {
-        $config = new AnConfig($config);
-
-        $config->append(array(
-            'name' => 'description',
-            'content' => '',
-            'value' => '',
-        ));
-
-        $config->append(array(
-            'html' => array(
-                'id' => $config->name,
-                    'width' => '100%',
-                    'height' => '500',
-                    'cols' => '75',
-                    'rows' => '20',
-                ),
-        ));
-
-        if (!$config->content) {
-            $config->content = '';
-        }
-
-        $tags = $this->getService('com:base.template.helper.html');
-        $textarea = $tags->textarea($config->name, $config->content, AnConfig::unbox($config->html));
-        $textarea->set('data-behavior', 'Editor')->id(rand());
-
-        return  $textarea;
-    }
-
-    /**
      * Renders a privacy selector for a {@see LibBaseDomainBehaviorPrivatable} entity.
      *
      * @param array|AnDomainEntityAbstract A privatable entity

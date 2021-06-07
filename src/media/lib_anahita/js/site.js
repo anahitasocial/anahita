@@ -28,9 +28,6 @@
 //@depends vendors/bootstrap/bootstrap-popover.js
 //@depends vendors/bootstrap/bootstrap-transition.js
 //@depends vendors/bootstrap/bootstrap-typeahead.js
-
-//@depends vendors/editor/bootstrap-wysiwyg.js
-//@depends vendors/editor/jquery.hotkeys.js
 //@depends vendors/dropzone/dropzone.js
 
 //@depends anahita/input-alert.js
@@ -47,7 +44,6 @@
 //@depends anahita/readmore.js
 //@depends anahita/person.js
 //@depends anahita/token.js
-//@depends anahita/editor.js
 //@depends anahita/gist.js
 //@depends anahita/plyr.js
 //@depends anahita/cover.js
