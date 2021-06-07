@@ -29,17 +29,14 @@
                 <?= @text('LIB-AN-MEDIUM-BODY') ?>
             </label>
             <div class="controls">
-                <?= @editor(array(
-                    'name' => 'body',
-                    'content' => '',
-                    'html' => array(
-                        'maxlength' => '5000',
-                        'cols' => '5',
-                        'rows' => '5',
-                        'class' => 'input-block-level',
-                        'id' => 'topic-body',
-                    ),
-                )); ?>
+				<textarea 
+					maxlength="40000" 
+					class="input-block-level" 
+					name="body" 
+					cols="10" 
+					rows="5" 
+					id="topic-body"
+				></textarea>
             </div>
         </div>
 
