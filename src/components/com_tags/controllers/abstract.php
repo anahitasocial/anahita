@@ -46,8 +46,6 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         ));
 
         parent::_initialize($config);
-
-        $this->getService('anahita:language')->load('com_tags');
     }
 
     /**

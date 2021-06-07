@@ -21,18 +21,6 @@ class ComBaseControllerToolbarActorbar extends ComBaseControllerToolbarMenubar
     protected $_actor;
 
     /**
-     * Constructor.
-     *
-     * @param 	object 	An optional AnConfig object with configuration options
-     */
-    public function __construct(AnConfig $config)
-    {
-        parent::__construct($config);
-
-        $this->getService('anahita:language')->load('com_actors');
-    }
-
-    /**
      * Before Controller _actionRead is executed.
      *
      * @param AnEvent $event
