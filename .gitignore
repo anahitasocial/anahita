@@ -7,6 +7,8 @@ vendor/composer/*
 vendor/dg/*
 vendor/symfony/*
 vendor/swiftmailer/*
+vendor/league/*
+vendor/bin/*
 www/*
 node_modules/*
 .DS_Store
