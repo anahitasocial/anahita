@@ -23,10 +23,10 @@ class ComActorsViewActorsHtml extends ComBaseViewHtml
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'list_item_view' => AnInflector::singularize($this->getIdentifier()->package),
+            // 'list_item_view' => AnInflector::singularize($this->getIdentifier()->package),
             'template_paths' => array(
                 dirname(__FILE__).'/html',
-                ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/actors'
+                // ANPATH_THEMES.'/'.$this->getService('application')->getTemplate().'/html/com_actors/actors'
             ),
         ));
 

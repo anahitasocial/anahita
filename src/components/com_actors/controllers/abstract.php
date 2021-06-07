@@ -29,11 +29,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     {
         parent::__construct($config);
 
-        $this->registerCallback(array(
-            'after.delete',
-            'after.add',
-            ), array($this, 'redirect'));
-
         //set filter state
         $this->getState()->insert('filter');
 
@@ -243,50 +238,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 ));
 
         return $result;
-    }
-
-    /**
-     * Get a toolbar by identifier.
-     *
-     * @return AnControllerToolbarAbstract
-     */
-    public function getToolbar($toolbar, $config = array())
-    {
-        if (is_string($toolbar)) {
-            //if actorbar or menu alawys default to the base
-            if (in_array($toolbar, array('actorbar'))) {
-                $identifier = clone $this->getIdentifier();
-                $identifier->path = array('controller','toolbar');
-                $identifier->name = $toolbar;
-                register_default(array(
-                    'identifier' => $identifier,
-                    'default' => 'ComActorsControllerToolbar'.ucfirst($toolbar),
-                    ));
-                $toolbar = $identifier;
-            }
-        }
-
-        return parent::getToolbar($toolbar, $config);
-    }
-
-    /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url = null;
-
-        if ($context->action == 'delete') {
-            $url = 'option=com_'.$this->getIdentifier()->package.'&view='.AnInflector::pluralize($this->getIdentifier()->name);
-        } elseif ($context->action == 'add') {
-            $url = $context->result->getURL().'&get=settings';
-        }
-
-        if ($url) {
-            $context->response->setRedirect(route($url));
-        }
     }
 
     /**
