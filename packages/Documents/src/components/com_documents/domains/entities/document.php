@@ -30,11 +30,6 @@ class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
                         'max' => 100,
                     ),
                 ),
-                'body' => array(
-                    'length' => array(
-                        'max' => 5000,
-                    )
-                ),
             ),
             'behaviors' => array(
                 'fileable',

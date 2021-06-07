@@ -71,17 +71,14 @@
 			</label>
 
 			<div class="controls">
-				<?= @editor(array(
-                    'name' => 'description',
-                    'content' => @escape($article->description),
-                    'html' => array(
-                        'maxlength' => '40000',
-                        'cols' => '5',
-                        'rows' => '5',
-                        'class' => 'input-block-level',
-                        'id' => 'article-description',
-                        ),
-                )); ?>
+				<textarea 
+					maxlength="40000" 
+					class="input-block-level" 
+					name="description" 
+					cols="10" 
+					rows="5" 
+					id="article-description"
+				><?= @escape($article->description) ?></textarea>
 			</div>
 		</div>
 

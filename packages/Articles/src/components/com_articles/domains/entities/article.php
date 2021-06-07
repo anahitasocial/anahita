@@ -26,20 +26,17 @@ class ComArticlesDomainEntityArticle extends ComMediumDomainEntityMedium
             'attributes' => array(
                 'name' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
                     'length' => array(
                         'max' => 100,
                     )
                 ),
                 'excerpt' => array(
-                    'format' => 'string',
                     'length' => array(
                         'max' => 1000,
                     )
                 ),
                 'body' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'html',
                     'length' => array(
                         'max' => 40000,
                     )
