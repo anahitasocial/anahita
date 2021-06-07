@@ -155,6 +155,8 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         dispatch_plugin('user.onAfterEditPerson', array('person' => $person));
 
+        $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
+
         $edit = ($data->password && $data->username) ? 'account' : $this->_request->edit;
         $url = sprintf($person->getURL(false)."&get=settings&edit=%s", $edit);
         $context->response->setRedirect(route($url));
@@ -197,7 +199,9 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
          if ($person->admin()) {
              $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
          }
-
+         
+         $context->response->setRedirect(route('option=com_people&view=people'));
+         
          return $person;
      }
 
@@ -221,6 +225,30 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         dispatch_plugin('user.onAfterDeletePerson', array('id' => $person_id));
 
         return $person;
+    }
+
+    /**
+     * Set the necessary redirect.
+     *
+     * @param AnCommandContext $context
+     */
+    public function redirect(AnCommandContext $context)
+    {
+        $url = null;
+
+        if ($context->action === 'delete') {
+            $viewer = $this->getService('com:people.viewer');
+
+            if ($viewer->id == $this->getItem()->id) {
+                $url = 'index.php?';
+            } else {
+                $url = 'option=com_people&view=people';
+            }
+        }
+
+        if ($url) {
+            $context->response->setRedirect(route($url));
+        }
     }
 
     /**
