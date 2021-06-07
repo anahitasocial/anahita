@@ -11,6 +11,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComMediumControllerDefault extends ComMediumControllerAbstract
-{
-}
+class ComMediumControllerDefault extends ComMediumControllerAbstract {}
