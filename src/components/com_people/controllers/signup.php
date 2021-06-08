@@ -82,7 +82,6 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         } else {
             $this->registerCallback('after.add', array($this, 'mailActivationLink'));
             $context->response->setHeader('X-User-Activation-Required', true);
-            $this->setMessage(AnTranslator::sprintf('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT', $person->name), 'success');
         }
         
         $this->getResponse()->status = AnHttpResponse::OK;

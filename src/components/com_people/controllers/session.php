@@ -14,26 +14,6 @@
 class ComPeopleControllerSession extends ComBaseControllerResource
 {
     /**
-     * Constructor.
-     *
-     * @param AnConfig $config An optional AnConfig object with configuration options.
-     */
-    public function __construct(AnConfig $config)
-    {
-        parent::__construct($config);
-
-        $this->registerCallback(
-            'after.add',
-            array($this, 'redirect'),
-            array('url' => $config->redirect_to_after_login));
-
-        $this->registerCallback(
-            'after.delete',
-            array($this, 'redirect'),
-            array('url' => $config->redirect_to_after_logout));
-    }
-
-    /**
      * Initializes the default configuration for the object.
      *
      * you can set the redirect url for when a user is logged in
@@ -53,9 +33,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'redirect_to_after_login' => '',
-            'redirect_to_after_logout' => '',
-            //by default the format is json
             'request' => array(
                 'format' => 'json',
                 'isFirstPerson' => 0,
@@ -105,13 +82,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         dispatch_plugin('user.onBeforeLoginPerson', array('credentials' => $data));
 
-        if ($data->return) {
-            AnRequest::set('session.return', $data->return);
-            $context->url = base64UrlDecode($data->return);
-        } else {
-            AnRequest::set('session.return', '');
-        }
-
         $credentials = array(
             'username' => $data->username,
             'password' => $data->password
@@ -128,22 +98,9 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $person = $this->getService('com:people.helper.person')->login($credentials);
             $this->getState()->setItem($person);
             $this->getResponse()->status = AnHttpResponse::CREATED;
-            
-            if(! $context->url) {
-                $context->url = route(array(
-                    'option' => 'com_people',
-                    'view' => 'people',
-                    'uniqueAlias' => $person->username
-                ));
-            }
-
-            $this->getResponse()->setRedirect($context->url);
-            AnRequest::set('session.return', '');
         } else {
-            $this->setMessage(translate('COM-PEOPLE-AUTHENTICATION-FAILED'), 'error');
             throw new LibBaseControllerExceptionUnauthorized('Authentication Failed. Check username/password');
             $this->getResponse()->status = AnHttpResponse::FORBIDDEN;
-            $this->getResponse()->setRedirect(route('option=com_people&view=session'));
         }
     }
 
@@ -208,43 +165,8 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
 
-        if ($this->return) {
-            AnRequest::set('session.return', $this->return);
-            $returnUrl = base64UrlDecode($this->return);
-            $this->getResponse()->setRedirect($returnUrl);
-        } else {
-            unset($_SESSION['return']);
-            if ($this->_request->isFirstPerson) {
-                $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-WELCOME-SUPERADMIN'), $person->name));
-            } else {
-                $this->setMessage('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
-            }
-            $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
-        }
-
         $this->getResponse()->status = AnHttpResponse::ACCEPTED;
 
         return true;
-    }
-
-    /**
-     * Set the request information.
-     *
-     * @param array An associative array of request information
-     *
-     * @return LibBaseControllerAbstract
-     */
-    public function setRequest(array $request)
-    {
-        parent::setRequest($request);
-
-        if (isset($this->_request->return)) {
-            $return = $this->getService('com:people.filter.return')
-                           ->sanitize($this->_request->return);
-            $this->_request->return = $return;
-            $this->return = $return;
-        }
-
-        return $this;
     }
 }
