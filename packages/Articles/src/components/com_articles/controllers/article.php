@@ -34,19 +34,6 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
             ),
         ));
     }
-
-    /**
-     * Redirect after edit.
-     *
-     * (non-PHPdoc)
-     *
-     * @see ComBaseControllerService::_actionEdit()
-     */
-    protected function _actionEdit(AnCommandContext $context)
-    {
-        $result = parent::_actionEdit($context);
-        $this->registerCallback('after.edit', array($this, 'redirect'));
-    }
     
     /**
      * When a article is added, then create a notification.
@@ -66,19 +53,5 @@ class ComArticlesControllerArticle extends ComMediumControllerDefault
         }
 
         return $entity;
-    }
-
-    /**
-     * Article post action.
-     *
-     * @param AnCommandContext $context Context parameter
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        if ($context->action === 'edit' || $context->action === 'add') {
-            $context->response->setRedirect(route($this->getItem()->getURL().'&layout=edit'));
-        } else {
-            return parent::redirect($context);
-        }
     }
 }
