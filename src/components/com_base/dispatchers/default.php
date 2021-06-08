@@ -160,12 +160,8 @@ class ComBaseDispatcherDefault extends LibBaseDispatcherComponent
         $viewer = $this->getService('com:people.viewer');
 
         if ($viewer->guest() && $context->data instanceof LibBaseControllerExceptionUnauthorized) {
-            $this->getController()->setMessage('COM-PEOPLE-PLEASE-LOGIN-TO-SEE');
-            $return = base64_encode(AnRequest::url());
-            $context->response->setRedirect(route('option=com_people&view=session&return='.$return));
-            $context->response->send();
-            exit(0);
-
+            throw new AnErrorException(array('You must login first to see this resource!'), AnHttpResponse::UNAUTHORIZED);
+            return;
         } else {
             $this->getService('application.dispatcher')->execute('exception', $context);
         }

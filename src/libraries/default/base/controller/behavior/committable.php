@@ -61,13 +61,6 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
 
             $result = $this->commit();
 
-            $type = $result === false ? 'error' : 'success';
-            $message = $this->_makeStatusMessage($context->action, $type);
-
-            if ($message) {
-                $this->setMessage($message, $type);
-            }
-
             if ($result === false) {
                 if ($this->isIdentifiable() && $this->getItem()) {
                     if ($this->getItem()->getErrors()->count()) {
@@ -93,26 +86,6 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
         return $this->getRepository()
         ->getSpace()
         ->commitEntities($this->_failed_commits);
-    }
-
-    /**
-     * Render a message for an action.
-     *
-     * @param string $action The action name whose message is being built
-     * @param string $type   The type of the message. The type can be success, error or info
-     *
-     * @return string Return the built message
-     */
-    protected function _makeStatusMessage($action, $type = 'success')
-    {
-        $messages = array();
-        $messages[] = strtoupper('COM-'.$this->_mixer->getIdentifier()->package.'-PROMPT-'.$this->_mixer->getIdentifier()->name.'-'.$action.'-'.$type);
-        $messages[] = strtoupper('LIB-AN-MESSAGE-'.$this->_mixer->getIdentifier()->name.'-'.$action.'-'.$type);
-        $messages[] = strtoupper('LIB-AN-MESSAGE-'.$action.'-'.$type);
-        $messages[] = 'LIB-AN-PROMPT-COMMIT-'.strtoupper($type);
-        $message = translate($messages, false);
-
-        return $message;
     }
 
     /**
