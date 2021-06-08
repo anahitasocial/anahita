@@ -1,10 +1,11 @@
 .*
 !.gitignore
 composer.lock
-src/templates/shiraz/params.ini
 vendor/autoload.php
 vendor/composer/*
 vendor/dg/*
+vendor/bin/*
+vendor/league/*
 vendor/symfony/*
 vendor/swiftmailer/*
 vendor/league/*

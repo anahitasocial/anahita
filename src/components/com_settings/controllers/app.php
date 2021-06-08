@@ -33,24 +33,6 @@ class ComSettingsControllerApp extends ComBaseControllerService
         parent::_initialize($config);
     }
 
-    protected function _actionGet(AnCommandContext $context)
-    {
-        $title = AnTranslator::_('COM-SETTINGS-HEADER-APPS');
-
-        $this->getToolbar('menubar')->setTitle($title);
-
-        return parent::_actionGet($context);
-    }
-
-    protected function _actionEdit(AnCommandContext $context)
-    {
-        parent::_actionEdit($context);
-
-        if (!$context->getError()) {
-            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
-        }
-    }
-
     /**
     *   browse service
     *

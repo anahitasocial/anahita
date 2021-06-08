@@ -32,9 +32,8 @@ class ComTopicsDomainEntityTopic extends ComMediumDomainEntityMedium
                 ),
                 'body' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'html',
                     'length' => array(
-                        'max' => 5000,
+                        'max' => 40000,
                     )
                 ),
             ),

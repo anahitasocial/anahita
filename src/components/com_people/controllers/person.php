@@ -155,8 +155,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         dispatch_plugin('user.onAfterEditPerson', array('person' => $person));
 
-        $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
-
         $edit = ($data->password && $data->username) ? 'account' : $this->_request->edit;
         $url = sprintf($person->getURL(false)."&get=settings&edit=%s", $edit);
         $context->response->setRedirect(route($url));

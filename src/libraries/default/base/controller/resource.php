@@ -40,8 +40,6 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         if ($config->dispatch_events) {
             $this->mixin(new AnMixinToolbar($config->append(array('mixer' => $this))));
         }
-
-        $this->getService('anahita:language')->load($this->getIdentifier()->package);
     }
 
     /**

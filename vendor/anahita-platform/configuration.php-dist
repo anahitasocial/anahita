@@ -15,19 +15,6 @@ class AnSiteConfig{
 	var $sitename = 'Anahita';
 	
 	/**
-	*	Server side domain name
-	*	We recommend that you prefix the domain with http:// or https:// 
-	*	otherwise Anahita has to try to determine the value, 
-	*	and the result isn't reliable.  
-	*
-	*	If you are using Anahita as a back-end for a clientside app 
-	*	then use a subdomain for the server side for example: https://api.yourdomain.com
-	*
-	*	@var string domain address
-	*/
-	var $server_domain = 'http://api.yourdomain.com';
-	
-	/**
 	*	Client side domain name, if you are using a client side web application 
 	* 	that makes RESTful calls to Anahita API. 
 	*
@@ -131,7 +118,7 @@ class AnSiteConfig{
 	*
 	*	@var string <IP>:<Port>
 	*/
-    var $host = '127.0.0.1:3306';
+    var $host = 'localhost:3306';
 	
 	/**
 	*	Database name

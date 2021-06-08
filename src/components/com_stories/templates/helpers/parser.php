@@ -58,8 +58,6 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
 
         $this->_template->getFilter('alias')->append(AnConfig::unbox($config->alias));
 
-        $this->getService('anahita:language')->load('com_stories');
-
         $this->_template->addSearchPath(AnConfig::unbox($config->paths), true);
     }
 
@@ -102,8 +100,6 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
     public function parse($story, $actor = null)
     {
         $options = array();
-
-        $this->getService('anahita:language')->load($story->component);
 
         static $commands;
 

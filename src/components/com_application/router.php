@@ -127,7 +127,8 @@ class ComApplicationRouter extends AnObject
         $this->_fixUrlForParsing($url);
 
         if (empty($url->path) && !isset($url->query['option'])) {
-            $url->path = (get_viewer()->guest()) ? 'pages' : 'dashboard';
+            // $url->path = (get_viewer()->guest()) ? 'pages' : 'dashboard';
+            $url->path = 'search';
         }
 
         $segments = explode('/', trim($url->path, '/'));

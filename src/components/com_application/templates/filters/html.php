@@ -23,15 +23,11 @@ class ComApplicationTemplateFilterHtml extends LibBaseTemplateFilterAbstract imp
         $matches = array();
 
         if (strpos($text, '<html')) {
-
             //add language
-            $text = str_replace('<html', '<html lang="'.$this->getService('anahita:language')->getTag().'"', $text);
+            $text = str_replace('<html', '<html lang="en"', $text);
 
             //render the styles
-            $text = str_replace('</head>', $this->_renderHead().$this->_renderStyles().'</head>', $text);
-
-            //render the scripts
-            $text = str_replace('</body>', $this->_renderScripts().'</body>', $text);
+            $text = str_replace('</head>', $this->_renderHead() . '</head>', $text);
         }
     }
 
@@ -81,76 +77,6 @@ class ComApplicationTemplateFilterHtml extends LibBaseTemplateFilterAbstract imp
         if ($document->getImage()) {
             $html .= '<meta property="twitter:image:src" content="'.$document->getImage().'" />';
             $html .= '<meta property="og:image" content="'.$document->getImage().'" />';
-        }
-
-        return $html;
-    }
-
-    /**
-     * Return the document scripts.
-     *
-     * @return string
-     */
-    protected function _renderScripts()
-    {
-        $document = $this->getService('anahita:document');
-
-        $string = '';
-        // $string .= $this->_template->getHelper('javascript')->language('lib_anahita');
-
-        $scripts = array_reverse($document->getScripts());
-
-        foreach ($scripts as $src => $script) {
-
-            $type = $script['type'];
-
-            $attribs = '';
-            if (!empty($script['attribs'])) {
-                $attribs = implode($script['attribs'], ' ');
-            }
-
-            $string .= '<script type="'.$type.'" src="'.$src.'" '.$attribs.'></script>';
-        }
-
-        $script = $document->getScript();
-
-        foreach ($script as $type => $content) {
-            $string .= '<script type="'.$type.'">'.$content.'</script>';
-        }
-
-        return $string;
-    }
-
-    /**
-     * Return the document styles.
-     *
-     * @return string
-     */
-    protected function _renderStyles()
-    {
-        $document = $this->getService('anahita:document');
-        $html = '';
-
-        // Generate stylesheet links
-        foreach ($document->getStyleSheets() as $src => $attr) {
-
-            $rel = 'stylesheet';
-
-            if (strpos($src, '.less')) {
-                $rel .= '/less';
-            }
-
-            $html .= '<link rel="'.$rel.'" href="'.$src.'" type="'.$attr['mime'].'"';
-
-            if (isset($attr['media'])) {
-                $html .= ' media="'.$attr['media'].'" ';
-            }
-
-            $html .= '/>';
-        }
-
-        foreach ($document->getStyle() as $type => $content) {
-            $html .= '<style type="'.$type.'">'.$content.'</style>';
         }
 
         return $html;

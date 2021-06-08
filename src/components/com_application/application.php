@@ -146,7 +146,6 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
     public function getTemplate()
     {
         if (empty($this->_template)) {
-
             if (! AnService::get('application.registry')->offsetExists('application-template')) {
                 AnService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
             }
