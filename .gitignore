@@ -8,8 +8,8 @@ vendor/bin/*
 vendor/league/*
 vendor/symfony/*
 vendor/swiftmailer/*
-vendor/league/*
 vendor/bin/*
+vendor/league/*
 www/*
 node_modules/*
 .DS_Store

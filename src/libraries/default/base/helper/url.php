@@ -98,7 +98,7 @@ class LibBaseHelperUrl extends AnObject implements AnServiceInstantiatable
         }
 
         //unset html format since it's a default
-        if (isset($url['format']) && $url['format'] == 'html') {
+        if (isset($url['format']) && $url['format'] == 'json') {
             unset($url['format']);
         }
 

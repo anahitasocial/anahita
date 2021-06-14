@@ -311,41 +311,8 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->getComponent()->dispatch($context);
 
         dispatch_plugin('system.onAfterDispatch', array( $context ));
-
-        $location = $context->response->getHeader('Location');
-        $isHtml = $context->request->getFormat() == 'html';
-        $isAjax = $context->request->isAjax();
-
-        if (! $location && $isHtml && !$isAjax) {
-            $this->_render($context);
-        }
         
         $this->send($context);
-    }
-
-    /**
-    *   Outputs html content
-    *   @param AnCommandContext $context Command chain context
-    *
-    *   @return void
-    */
-    protected function _render(AnCommandContext $context)
-    {
-        dispatch_plugin('system.onBeforeRender', array( $context ));
-
-        $config = array(
-            'request' => $context->request,
-            'response' => $context->response,
-            'theme' => $this->_application->getTemplate(),
-        );
-
-        $layout = $this->_request->get('tmpl', 'default');
-
-        $this->getService('com:application.controller.default', $config)
-             ->layout($layout)
-             ->render();
-
-        dispatch_plugin('system.onAfterRender', array( $context ));
     }
 
     /**
@@ -399,11 +366,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
             'theme' => $this->_application->getTemplate()
         );
 
-        //if ajax or the format is not html
-        //then return the exception in json format
-        if ($context->request->isAjax() || $context->request->getFormat() != 'html') {
-            $context->request->setFormat('json');
-        }
+        $context->request->setFormat('json');
 
         $this->getService('com:application.controller.exception', $config)
         ->layout('error')

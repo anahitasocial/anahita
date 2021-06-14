@@ -15,32 +15,6 @@
 class LibBaseViewJson extends LibBaseViewAbstract
 {
     /**
-     * The padding for JSONP.
-     *
-     * @var string
-     */
-    protected $_padding;
-
-    /**
-     * Constructor.
-     *
-     * @param   object  An optional AnConfig object with configuration options
-     */
-    public function __construct(AnConfig $config)
-    {
-        parent::__construct($config);
-
-        //Padding can explicitly be turned off by setting to FALSE
-        if (empty($config->padding) && $config->padding !== false) {
-            if (isset($this->callback) && (strlen($this->callback) > 0)) {
-                $config->padding = $state->callback;
-            }
-        }
-
-        $this->_padding = $config->padding;
-    }
-
-    /**
      * Initializes the config for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -50,7 +24,6 @@ class LibBaseViewJson extends LibBaseViewAbstract
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'padding' => '',
             'version' => '1.0',
         ))->append(array(
             'mimetype' => 'application/json; version='.$config->version,
@@ -84,11 +57,6 @@ class LibBaseViewJson extends LibBaseViewAbstract
 
         if (!is_string($this->output)) {
             $this->output = json_encode($this->_toArray(AnConfig::unbox($this->output)));
-        }
-
-        //Handle JSONP
-        if (! empty($this->_padding)) {
-            $this->output = $this->_padding.'('.$this->output.');';
         }
 
         return $this->output;

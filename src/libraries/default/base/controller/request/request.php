@@ -55,7 +55,7 @@
       *
       * @return string
       */
-     public function getFormat($format = 'html')
+     public function getFormat($format = 'json')
      {
          return $this->get('format', $format);
      }
