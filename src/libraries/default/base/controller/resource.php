@@ -57,7 +57,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         $config->append(array(
             'behaviors' => array($permission),
-            'request' => array('format' => 'html'),
+            'request' => array('format' => 'json'),
         ))->append(array(
             'view' => $config->request->get ? $config->request->get : ($config->request->view ? $config->request->view : $this->getIdentifier()->name),
         ));

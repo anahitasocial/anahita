@@ -192,7 +192,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
             if (is_string($view) && strpos($view, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('view', $view);
-                $identifier->name = 'html';
+                $identifier->name = 'json';
             } else {
                 $identifier = $this->getIdentifier($view);
             }

@@ -131,18 +131,8 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
         $comment = $this->getCommentController()->add(array('body' => $data->body));
         $context->response->status = AnHttpResponse::CREATED;
         $context->comment = $comment;
-
-        if ($this->isDispatched()) {
-            $context->response->content = $this->getCommentController()->display();
-
-            if ($context->request->getFormat() == 'html') {
-                $offset = $this->getItem()->getCommentOffset($comment->id);
-                $start = (int) ($offset / $this->limit) * $this->limit;
-                $context->response->setRedirect(route($comment->parent->getURL().'&start='.$start).'#scroll='.$comment->id);
-            } else {
-                $context->response->setRedirect(route($comment->getURL()));
-            }
-        }
+        
+        $context->response->content = $this->getCommentController()->display();
 
         return $comment;
     }

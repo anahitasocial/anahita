@@ -26,19 +26,14 @@ class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
     {
         $this->commit();
 
-        if ($context->request->getFormat() == 'html') {
-            return $this->getView()->getTemplate()
-            ->renderHelper('ui.voters', $this->getItem(), array('avatars' => $this->avatars));
-        } else {
-            $voters = $this->getItem()->voteups->voter;
-            $controller = $this->getService('com:actors.controller.actor')
-                                ->view('actors')
-                                ->format($context->request->getFormat());
+        $voters = $this->getItem()->voteups->voter;
+        $controller = $this->getService('com:actors.controller.actor')
+                            ->view('actors')
+                            ->format($context->request->getFormat());
 
-            $controller->getState()->setList($voters);
+        $controller->getState()->setList($voters);
 
-            return $controller->getView()->display();
-        }
+        return $controller->getView()->display();
     }
 
     /**

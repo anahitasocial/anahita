@@ -28,8 +28,6 @@ class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implement
         '@template('    => '$this->loadIdentifier(',
         '@route('       => '$this->getView()->getRoute(',
         '@escape('      => '$this->getView()->escape(',
-        '@title(' => 'AnService::get(\'anahita:document\')->setTitle(',
-        '@description(' => 'AnService::get(\'anahita:document\')->setDescription(',
         '@controller(' => '$this->renderHelper(\'controller.getController\',',
         '@view(' => '$this->renderHelper(\'controller.getView\',',
         '@previous(' => '$this->getHelper(\'previous\')->load(',
