@@ -3,7 +3,9 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.5.1
 =============================
 1. changed: privacy update now returns the entity in json response
-2. added: access field in json response if viewer has permission to edit the node entity
+1. added: access field in json response if viewer has permission to edit the node entity
+1. fixed: issue with the missing base_url in the mailer. Now we are obtaining the base_url from com:application.router getBaseUrl
+1. removed: template filter aliases from com_people, because it was replicating thee one in the base class.
 
 Anahita 4.5.0
 =============================
