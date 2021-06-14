@@ -118,27 +118,6 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     }
 
     /**
-     * Set the default Actor View.
-     *
-     * @param AnCommandContext $context Context parameter
-     *
-     * @return ComActorsControllerDefault
-     */
-    public function setView($view)
-    {
-        parent::setView($view);
-
-        if (!$this->_view instanceof ComBaseViewAbstract) {
-            $name = AnInflector::isPlural($this->view) ? 'media' : 'medium';
-            $defaults[] = 'ComMediumView'.ucfirst($view).ucfirst($this->_view->name);
-            $defaults[] = 'ComMediumView'.ucfirst($name).ucfirst($this->_view->name);
-            register_default(array('identifier' => $this->_view, 'default' => $defaults));
-        }
-
-        return $this;
-    }
-
-    /**
      * Can be used as a cabllack to automatically create a story.
      *
      * @param AnCommandContext $context
