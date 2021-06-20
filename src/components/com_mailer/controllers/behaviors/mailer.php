@@ -57,15 +57,10 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
      */
     protected function _initialize(AnConfig $config)
     {
-        $base_url = AnRequest::base();
         $settings = $this->getService('com:settings.config');
 
-        if (PHP_SAPI == 'cli') {
-            $base_url = $settings->client_domain;
-        }
-
         $config->append(array(
-            'base_url' => $base_url,
+            'base_url' => $this->getService('com:application.router')->getBaseUrl(),
             'test_options' => array(
                 'enabled' => get_config_value('mailer.debug', false),
                 'email' => get_config_value('mailer.redirect_email'),
