@@ -79,9 +79,14 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         
         if ($isFirstUser) {
             $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
+            $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-WELCOME-SUPERADMIN'), $person->name));
         } else {
             $this->registerCallback('after.add', array($this, 'mailActivationLink'));
             $context->response->setHeader('X-User-Activation-Required', true);
+<<<<<<< HEAD
+=======
+            $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT'), $person->name, 'success'));
+>>>>>>> master
         }
         
         $this->getResponse()->status = AnHttpResponse::OK;
@@ -120,7 +125,7 @@ class ComPeopleControllerSignup extends ComBaseControllerService
     public function activateFirstAdmin(AnCommandContext $context)
     {
         $person = $context->result;
-        $url = route('option=com_people&view=session&isFirstPerson=1&token='.$person->activationCode);
+        $url = route('option=com_people&view=session&&token='.$person->activationCode);
         $context->response->setRedirect($url);
     }
 }

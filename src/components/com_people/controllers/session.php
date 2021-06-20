@@ -14,35 +14,6 @@
 class ComPeopleControllerSession extends ComBaseControllerResource
 {
     /**
-     * Initializes the default configuration for the object.
-     *
-     * you can set the redirect url for when a user is logged in
-     * as follow
-     *
-     * <code>
-     * AnService::setConfig('com:people.controller.session', array(
-     *  'redirect_to_after_login'  => 'mynewurl'
-     *  'redirect_to_after_logout' => 'mynewurl'
-     * ));
-     * </code>
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param AnConfig $config An optional AnConfig object with configuration options.
-     */
-    protected function _initialize(AnConfig $config)
-    {
-        $config->append(array(
-            'request' => array(
-                'format' => 'json',
-                'isFirstPerson' => 0,
-            ),
-        ));
-
-        parent::_initialize($config);
-    }
-
-    /**
      * Return the session.
      *
      * @param AnCommandContext $context Command chain context
