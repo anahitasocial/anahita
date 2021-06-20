@@ -1,5 +1,5 @@
 INSERT INTO `#__components` (`name`, `parent`, `option`, `ordering`, `iscore`, `meta`, `enabled`) VALUES
-('Dashboard', 0, 'com_dashboard', 0, 1, '', 1),
+-- ('Dashboard', 0, 'com_dashboard', 0, 1, '', 1),
 ('Search', 0, 'com_search', 0, 1, '', 1),
 ('People', 0, 'com_people', 0, 1, '', 1),
 ('Stories', 0, 'com_stories', 0, 1, '', 1),
@@ -16,16 +16,15 @@ INSERT INTO `#__plugins` (`name`, `element`, `folder`, `ordering`, `enabled`, `i
 ('Authentication', 'anahita', 'authentication', 1, 1, 1, ''),
 ('Anahita', 'anahita', 'user', 0, 1, 1, ''),
 ('Anahita', 'anahita', 'system', 1, 1, 1, ''),
-('Hyperlink', 'link', 'contentfilter', 0, 1, 1, ''),
-('Video', 'video', 'contentfilter', 0, 1, 1, ''),
 ('Local', 'local', 'storage', 0, 1, 1, '{"folder":"assets"}'),
-('Amazon S3', 's3', 'storage', 0, 0, 1, ''),
-('Hashtag', 'hashtag', 'contentfilter', 0, 1, 1, ''),
-('Mention', 'mention', 'contentfilter', 0, 1, 1, ''),
-('GithubGist', 'gist', 'contentfilter', 0, 0, 0, ''),
-('Medium', 'medium', 'contentfilter', 0, 1, 1, ''),
-('Location', 'location', 'contentfilter', 0, 1, 1, '');
-
+('Amazon S3', 's3', 'storage', 0, 0, 1, '');
+-- ('Hyperlink', 'link', 'contentfilter', 0, 1, 1, ''),
+-- ('Video', 'video', 'contentfilter', 0, 1, 1, ''),
+-- ('Hashtag', 'hashtag', 'contentfilter', 0, 1, 1, ''),
+-- ('Mention', 'mention', 'contentfilter', 0, 1, 1, ''),
+-- ('GithubGist', 'gist', 'contentfilter', 0, 0, 0, ''),
+-- ('Medium', 'medium', 'contentfilter', 0, 1, 1, ''),
+-- ('Location', 'location', 'contentfilter', 0, 1, 1, '');
 -- --------------------------------------------------------
 
 INSERT INTO `#__nodes` (`type`, `component`, `name`, `access`) VALUES ('ComComponentsDomainEntityAssignment,com:components.domain.entity.assignment', 'com_notes', 'com:people.domain.entity.person', 1);
