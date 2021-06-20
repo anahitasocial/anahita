@@ -420,13 +420,6 @@ class AnMail extends AnObject implements AnServiceInstantiatable
     {
         $mailer = Swift_Mailer::newInstance($this->_transport);
         $message = $this->_createMessage();
-        
-        try {
-            $mailer->send($message);
-        } catch (AnMailException $e) {
-            error_log(print_r($e->getMessage(), true));
-        }
-        
-        return;
+        return $mailer->send($message);
     }
 }

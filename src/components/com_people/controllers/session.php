@@ -55,11 +55,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
         $config->append(array(
             'redirect_to_after_login' => '',
             'redirect_to_after_logout' => '',
-            //by default the format is json
-            'request' => array(
-                'format' => 'json',
-                'isFirstPerson' => 0,
-            ),
         ));
 
         parent::_initialize($config);
@@ -214,9 +209,7 @@ class ComPeopleControllerSession extends ComBaseControllerResource
             $this->getResponse()->setRedirect($returnUrl);
         } else {
             unset($_SESSION['return']);
-            if ($this->_request->isFirstPerson) {
-                $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-WELCOME-SUPERADMIN'), $person->name));
-            } else {
+            if ($this->reset_password) {
                 $this->setMessage('COM-PEOPLE-PROMPT-UPDATE-PASSWORD');
             }
             $this->getResponse()->setRedirect(route($person->getURL().'&get=settings&edit=account'));
