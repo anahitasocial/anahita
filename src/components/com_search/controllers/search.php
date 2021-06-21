@@ -57,7 +57,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     {
         $config->append(array(
             'behaviors' => array('ownable'),
-            'toolbars' => array($this->getIdentifier()->name, 'menubar', 'actorbar'),
+            'toolbars' => array($this->getIdentifier()->name, 'menubar'),
             'request' => array(
                 'limit' => 20,
                 'sort' => 'relevant',
@@ -90,7 +90,6 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         $this->setView('searches');
 
         if ($this->actor) {
-            $this->getToolbar('actorbar')->setTitle($this->actor->name);
             $this->getService()->set('com:search.owner', $this->actor);
         }
 

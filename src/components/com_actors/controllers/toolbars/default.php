@@ -28,33 +28,6 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     protected $_update = true;
 
     /**
-     * Called after controller browse.
-     *
-     * @param AnEvent $event
-     */
-    public function onAfterControllerBrowse(AnEvent $event)
-    {
-        if ($this->getController()->canAdd()) {
-            $this->addCommand('new');
-        }
-    }
-
-    /**
-     * Called after controller Getgraph.
-     *
-     * @param AnEvent $event
-     */
-    public function onAfterControllerGetgraph(AnEvent $event)
-    {
-        $actor = $this->getController()->actor;
-        $type = $this->getController()->type;
-
-        if ($actor->authorize('lead') && $type == 'followers') {
-            $this->addCommand('AddFollowers', array('actor' => $actor));
-        }
-    }
-
-    /**
      * Called before list commands.
      */
     public function addListCommands()
@@ -128,31 +101,21 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         $this->addListCommands();
 
         if ($actor->authorize('administration')) {
-            $this->addCommand('edit-actor', array('label' => AnTranslator::_('LIB-AN-ACTION-EDIT'), 'entity' => $actor))
-            ->getCommand('edit-actor')
-            ->href($actor->getURL().'&get=settings');
+            $this->addCommand('edit-actor');
         }
 
         if (get_viewer()->admin()) {
             $action = ($actor->verified) ? 'unverify' : 'verify';
-            $this->addCommand($action.'-actor', array('label' => AnTranslator::_('COM-ACTORS-PROFILE-'.$action), 'entity' => $actor))
-            ->getCommand($action.'-actor')
-            ->href($actor->getURL().'&action='.$action)
-            ->dataTrigger('PostLink');
+            $this->addCommand($action.'-actor');
         }
 
         if ($actor->authorize('changeEnabled')) {
             $action = ($actor->enabled) ? 'disable' : 'enable';
-            $this->addCommand($action.'-actor', array('label' => AnTranslator::_('LIB-AN-ACTION-'.$action), 'entity' => $actor))
-            ->getCommand($action.'-actor')
-            ->href($actor->getURL().'&action='.$action)
-            ->dataTrigger('PostLink');
+            $this->addCommand($action.'-actor');
         }
 
         if ($actor->authorize('access') && !$viewer->eql($actor) && $viewer->following($actor)) {
-            $this->addCommand('notifications-settings', array('label' => AnTranslator::_('COM-ACTORS-NOTIFICATIONS-SETTING-EDIT')))
-            ->getCommand('notifications-settings')
-            ->href(route('option=notifications&view=settings&layout=modal&oid='.$actor->id));
+            $this->addCommand('notifications-settings');
         }
     }
 
@@ -263,87 +226,5 @@ class ComActorsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         }
 
         return $command;
-    }
-
-    /**
-     * New button toolbar.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandNew($command)
-    {
-        $name = $this->getController()->getIdentifier()->name;
-        $labels = array();
-        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
-        $labels[] = 'NEW';
-        $label = translate($labels);
-        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
-
-        $command->append(array('label' => $label))->href($url);
-    }
-
-    /**
-     * Add Followers button toolbar.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandAddFollowers($command)
-    {
-        $actor = $command->actor;
-        $labels = array();
-        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-socialgraph-toolbar-followers-add');
-        $labels[] = 'COM-ACTORS-SOCIALGRAPH-TOOLBAR-FOLLOWERS-ADD';
-        $label = translate($labels);
-        $url = $actor->getURL().'&get=graph&type=leadables';
-        $command->append(array('label' => $label))->href($url)->id('leadables-add');
-    }
-
-    /**
-     * Addleadable Command.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandLead($command)
-    {
-        $this->_buildCommand($command);
-    }
-
-    /**
-     * Follow Command.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandFollow($command)
-    {
-        $this->_buildCommand($command);
-    }
-
-    /**
-     * Block Command.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandBlock($command)
-    {
-        $this->_buildCommand($command);
-    }
-
-    /**
-     * Method to build a command.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _buildCommand($command)
-    {
-        $url = $command->receiver->getURL();
-
-        $command->setAttribute('data-action', $command->action);
-        $command->setAttribute('data-actor', $command->actor->id);
-
-        if (!$this->_use_post && $this->getController()->getRequest()->getFormat() != 'json') {
-            $url .= '&layout=list';
-        }
-
-        $command->href($url);
     }
 }

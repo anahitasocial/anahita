@@ -26,20 +26,6 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
     }
 
     /**
-     * Called after controller browse.
-     *
-     * @param AnEvent $event
-     */
-    public function onAfterControllerBrowse(AnEvent $event)
-    {
-        $filter = $this->getController()->filter;
-
-        if ($this->getController()->canAdd() && $filter != 'leaders') {
-            $this->addCommand('new');
-        }
-    }
-
-    /**
      * Set the toolbar commands.
      */
     public function addToolbarCommands()
@@ -103,56 +89,5 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
                 $this->addCommand('commentstatus');
             }
         }
-    }
-
-    /**
-     * Delete Command for an entity.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandDelete($command)
-    {
-        $entity = $this->getController()->getItem();
-
-        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
-        ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete');
-    }
-
-    /**
-     * New button toolbar.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandNew($command)
-    {
-        $actor = $this->getController()->actor;
-        $name = $this->getController()->getIdentifier()->name;
-        $labels = array();
-        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
-        $labels[] = 'New';
-        $label = translate($labels);
-        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&oid='.$actor->id.'&layout=add';
-
-        $command
-        ->append(array('label' => $label))
-        ->href(route($url));
-    }
-
-    /**
-     * Customize the sticky command.
-     *
-     * @param LibBaseTemplateObject $command Command Object
-     */
-    protected function _commandPin($command)
-    {
-        $entity = $this->getController()->getItem();
-
-        $label = ($entity->pinned) ? AnTranslator::_('LIB-AN-ACTION-UNPIN') : AnTranslator::_('LIB-AN-ACTION-PIN');
-
-        $command
-        ->append(array('label' => $label))
-        ->href($entity->getURL().'&action='.($entity->pinned ? 'unpin' : 'pin'))
-        ->setAttribute('data-trigger', 'PostLink');
     }
 }

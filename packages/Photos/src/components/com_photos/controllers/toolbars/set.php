@@ -14,25 +14,6 @@
 class ComPhotosControllerToolbarSet extends ComMediumControllerToolbarDefault
 {
     /**
-     * Called after controller browse.
-     *
-     * @param AnEvent $event
-     */
-    public function onAfterControllerBrowse(AnEvent $event)
-    {
-        $filter = $this->getController()->filter;
-        $actor = $this->getController()->actor;
-
-        if (
-              $this->getController()->canAdd() &&
-              $filter != 'leaders' &&
-              $actor->photos->getTotal() > 0
-        ) {
-            $this->addCommand('new');
-        }
-    }
-
-    /**
      * Set the toolbar commands.
      */
     public function addToolbarCommands()
@@ -44,13 +25,7 @@ class ComPhotosControllerToolbarSet extends ComMediumControllerToolbarDefault
         }
 
         if ($entity->owner->authorize('administration')) {
-            //organize photos
-            $this->addCommand('organize', AnTranslator::_('COM-PHOTOS-ACTION-SET-ORGANIZE'))
-                 ->getCommand('organize')
-                 ->dataTrigger('Organize')
-                 ->href(AnTranslator::_('option=com_photos&view=photos&layout=selector&oid='.$entity->owner->id.'&exclude_set='.$entity->id))
-                 ->class('visible-desktop');
-
+            $this->addCommand('organize');
             $this->addAdministrationCommands();
         }
 
