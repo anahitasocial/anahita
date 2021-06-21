@@ -28,11 +28,6 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
 
         //add medium related states
         $this->getState()->insert('filter')->insert('grid')->insert('order');
-
-        $this->registerCallback(array(
-            'after.delete',
-            'after.add', ),
-            array($this, 'redirect'));
     }
 
     /**
@@ -96,25 +91,6 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
         }
 
         return $entities;
-    }
-
-    /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
-        $url['option'] = $this->getIdentifier()->package;
-
-        if ($context->action == 'add') {
-            $url['id'] = $this->getItem()->id;
-        } elseif ($context->action == 'delete') {
-            $url['oid'] = $this->getItem()->owner->id;
-        }
-
-        $this->getResponse()->setRedirect(route($url));
     }
 
     /**

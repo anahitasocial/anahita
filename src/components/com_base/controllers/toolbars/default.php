@@ -51,10 +51,7 @@ class ComBaseControllerToolbarDefault extends ComBaseControllerToolbarAbstract
         $entity = $this->getController()->getItem();
 
         $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
-        ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', route('index.php?'))
-        ->class('action-delete');
+        ->setAttribute('data-action', 'delete');
     }
 
     /**

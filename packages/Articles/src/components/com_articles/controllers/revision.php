@@ -39,9 +39,6 @@ class ComArticlesControllerRevision extends ComMediumControllerDefault
         $revision = $this->getItem();
         $article = $revision->article;
         $article->restore($revision);
-
-        $msg = AnTranslator::sprintf('COM-ARTICLES-ARTICLE-REVISIONS-RESTORATION-CONFIRMATION', $revision->revisionNum);
-        $context->response->setRedirect($article->getURL().'&layout=edit', $msg);
     }
 
     /**

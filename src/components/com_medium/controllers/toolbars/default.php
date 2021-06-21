@@ -116,9 +116,7 @@ class ComMediumControllerToolbarDefault extends ComBaseControllerToolbarDefault
 
         $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
         ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', route($entity->owner->getURL()))
-        ->class('action-delete');
+        ->setAttribute('data-action', 'delete');
     }
 
     /**

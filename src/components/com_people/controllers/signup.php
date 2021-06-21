@@ -77,16 +77,11 @@ class ComPeopleControllerSignup extends ComBaseControllerService
 
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
         
-        if ($isFirstUser) {
-            $this->registerCallback('after.add', array($this, 'activateFirstAdmin'));
-            $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-WELCOME-SUPERADMIN'), $person->name));
+        if ($isFirstUser || true) {
+            $person->enable();
         } else {
             $this->registerCallback('after.add', array($this, 'mailActivationLink'));
             $context->response->setHeader('X-User-Activation-Required', true);
-<<<<<<< HEAD
-=======
-            $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT'), $person->name, 'success'));
->>>>>>> master
         }
         
         $this->getResponse()->status = AnHttpResponse::OK;
@@ -115,17 +110,5 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         );
 
         $this->mail($mails);
-    }
-    
-    /**
-     * Autologin the first user which is also the first super admin.
-     *
-     * @param AnCommandContext $context The context parameter
-     */
-    public function activateFirstAdmin(AnCommandContext $context)
-    {
-        $person = $context->result;
-        $url = route('option=com_people&view=session&&token='.$person->activationCode);
-        $context->response->setRedirect($url);
     }
 }

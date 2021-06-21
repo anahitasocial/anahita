@@ -46,27 +46,10 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     {
         if ($this->cid) {
             $context->response->content = $this->getCommentController()->id($this->cid)->display();
-
-            return false;
-        } elseif ($this->permalink && !$context->request->isAjax()) {
-            $cid = (int) preg_replace_callback('/[^\d]+/', function($matches) { return ''; }, $this->permalink);
-            $offset = $this->getItem()->getCommentOffset($cid);
-            $start = (int) ($offset / $this->limit) * $this->limit;
-            $url = AnRequest::url();
-            $query = $url->getQuery(true);
-
-            if ($this->start != $start) {
-                $query = array_merge($query, array('start' => $start));
-            }
-
-            unset($query['permalink']);
-
-            $url->setQuery($query);
-
-            $context->response->setRedirect($url.'#scroll='.$this->permalink);
-
             return false;
         }
+        
+        return true;
     }
 
     /**
