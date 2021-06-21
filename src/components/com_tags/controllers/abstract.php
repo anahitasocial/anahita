@@ -14,21 +14,6 @@
 abstract class ComTagsControllerAbstract extends ComBaseControllerService
 {
     /**
-     * Constructor.
-     *
-     * @param AnConfig $config An optional AnConfig object with configuration options.
-     */
-    public function __construct(AnConfig $config)
-    {
-        parent::__construct($config);
-
-        $this->registerCallback(array(
-            'after.delete',
-            'after.add', ),
-            array($this, 'redirect'));
-    }
-
-    /**
      * Initializes the options for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -57,8 +42,6 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
     {
         $pkg = $this->getIdentifier()->package;
         $name = $this->getIdentifier()->name;
-        
-        $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-'.$pkg.'-TERM'), $name));
         
         if ($entity = parent::_actionRead($context)) {
             $entity->taggables->getRepository()->addBehavior('com:tags.domain.behavior.privatable');
@@ -137,24 +120,6 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         }
 
         return $this;
-    }
-
-    /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url = array();
-        $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
-        $url['option'] = $this->getIdentifier()->package;
-
-        if ($context->action == 'add') {
-            $url['id'] = $this->getItem()->id;
-        }
-
-        $this->getResponse()->setRedirect(route($url));
     }
     
     /**

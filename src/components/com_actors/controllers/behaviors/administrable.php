@@ -128,13 +128,8 @@ class ComActorsControllerBehaviorAdministrable extends AnControllerBehaviorAbstr
     protected function _actionGetSettings(AnCommandContext $context)
     {
         $entity = $this->getItem();
-        $this->getToolbar('actorbar')->setActor($entity);
-        $this->getToolbar('actorbar')
-             ->setTitle(
-                 sprintf(AnTranslator::_('COM-ACTORS-PROFILE-HEADER-EDIT'),
-                 $entity->name));
-                 
         $dispatcher = $this->getService('anahita:event.dispatcher');
+        
         $entity->components->registerEventDispatcher($dispatcher);
         $dispatcher->addEventListener('onSettingDisplay', $this->_mixer);
     }

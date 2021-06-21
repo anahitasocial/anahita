@@ -97,10 +97,7 @@ class ComLocationsControllerToolbarDefault extends ComTagsControllerToolbarDefau
         $entity = $this->getController()->getItem();
 
         $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
-        ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', route('index.php?option=com_locations&view=locations'))
-        ->class('action-delete');
+        ->setAttribute('data-action', 'delete');
     }
 
     /**

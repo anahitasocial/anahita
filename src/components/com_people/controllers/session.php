@@ -22,7 +22,6 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         if (! $this->_state->viewer->guest()) {
             $this->_state->setItem($this->_state->viewer);
-            $this->getResponse()->setRedirect(route($this->_state->viewer->getURL()));
         }
 
         return $this->_state->viewer;
@@ -84,10 +83,12 @@ class ComPeopleControllerSession extends ComBaseControllerResource
     {
         $viewer = $this->_state->viewer;
         $person_id = $viewer->id;
+        
         dispatch_plugin('user.onBeforeLogoutPerson', array('person' => $viewer));
+        
         $this->getService('com:people.helper.person')->logout($viewer);
+        
         dispatch_plugin('user.onAfterLogoutPerson', array('id' => $person_id));
-        $context->response->setRedirect(route('index.php?'));
     }
 
     /**

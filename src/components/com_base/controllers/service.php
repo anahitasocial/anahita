@@ -61,7 +61,7 @@ class ComBaseControllerService extends ComBaseControllerResource
 
         $config->append(array(
             'behaviors' => to_hash('serviceable'),
-            'toolbars' => array($this->getIdentifier()->name, 'menubar', 'actorbar'),
+            'toolbars' => array($this->getIdentifier()->name),
             'request' => array(
                 'limit' => 20,
                 'start' => 0,

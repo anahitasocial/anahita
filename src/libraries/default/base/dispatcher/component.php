@@ -123,11 +123,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements An
             }
         }
 
-        if ($context->request->getFormat() == 'json' || $context->request->isAjax()) {
-            $this->registerCallback('after.post', array($this, 'forward'));
-        } else {
-            $context->response->setRedirect(AnRequest::get('server.HTTP_REFERER', 'url'));
-        }
+        $this->registerCallback('after.post', array($this, 'forward'));
 
         return $this->getController()->execute($action, $context);
     }
@@ -139,12 +135,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements An
      */
     protected function _actionDelete(AnCommandContext $context)
     {
-        //this wil not affect the json calls
-        $redirect = AnRequest::get('server.HTTP_REFERER', 'url');
-        $this->getController()->getResponse()->setRedirect($redirect);
-        $result = $this->getController()->execute('delete', $context);
-
-        return $result;
+        return $this->getController()->execute('delete', $context);
     }
 
     /**

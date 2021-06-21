@@ -28,18 +28,6 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
     }
 
     /**
-     * Called after controller browse.
-     *
-     * @param AnEvent $event
-     */
-    public function onBeforeControllerBrowse(AnEvent $event)
-    {
-        if ($this->getController()->canAdd()) {
-            $this->addCommand('new');
-        }
-    }
-
-    /**
      * Set the toolbar commands.
      */
     public function addToolbarCommands()
@@ -69,40 +57,5 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         if ($entity->authorize('delete')) {
             $this->addCommand('delete');
         }
-    }
-
-    /**
-     * Delete Command for an entity.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandDelete($command)
-    {
-        $entity = $this->getController()->getItem();
-
-        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
-        ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', route($entity->owner->getURL()))
-        ->class('action-delete');
-    }
-
-    /**
-     * New button toolbar.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandNew($command)
-    {
-        $name = $this->getController()->getIdentifier()->name;
-        $labels = array();
-        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
-        $labels[] = 'New';
-        $label = translate($labels);
-        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
-
-        $command
-        ->append(array('label' => $label))
-        ->href(route($url));
     }
 }

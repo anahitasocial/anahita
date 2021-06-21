@@ -39,7 +39,7 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
     {
         $config->append(array(
             'behaviors' => array('ownable'),
-            'toolbars' => array('actorbar', ' setting'),
+            'toolbars' => array('setting'),
         ));
 
         parent::_initialize($config);

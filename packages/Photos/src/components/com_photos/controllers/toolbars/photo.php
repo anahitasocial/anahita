@@ -25,11 +25,7 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
         }
 
         if ($entity->owner->authorize('administration')) {
-            $this->addCommand('OpenSetSelector', AnTranslator::_('COM-PHOTOS-ACTION-ADD-TO-SET'))
-                ->getCommand('OpenSetSelector')
-                ->href(route('option=com_photos&view=sets&layout=selector&oid='.$entity->owner->id.'&photo_id='.$entity->id))
-                ->class('visible-desktop');
-
+            $this->addCommand('OpenSetSelector');
             $this->addAdministrationCommands();
         }
 
@@ -58,9 +54,7 @@ class ComPhotosControllerToolbarPhoto extends ComMediumControllerToolbarDefault
         }
 
         if ($entity->authorize('edit')) {
-          $this->addCommand('view', AnTranslator::_('LIB-AN-MEDIUM-VIEW'))
-               ->getCommand('view')
-               ->href(route($entity->getURL()));
+          $this->addCommand('view');
         }
     }
 }

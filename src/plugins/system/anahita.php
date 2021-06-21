@@ -38,9 +38,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
             }
         }
 
-        // Check for suhosin
-        $this->_handleSuhosinCheck();
-
         //Safety Extender compatibility
         $this->_handleSafeexCheck();
 
@@ -126,10 +123,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     */
     private function _login($credentials) {
         $this->getService('com:people.helper.person')->login($credentials);
-        $this->getService('application.dispatcher')
-        ->getResponse()
-        ->setRedirect($this->_getCurrentUrl())
-        ->send();
     }
 
     /**
@@ -167,7 +160,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         if (! is_null($this->_viewer)) {
             if (! $this->_viewer->guest() && ! $this->_viewer->enabled) {
                 $this->getService('com:people.helper.person')->logout();
-                $this->getService('application.dispatcher')->getResponse()->setRedirect(route('index.php'));
             }
         }
 
@@ -185,30 +177,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         $url .= $_SERVER['REQUEST_URI'];
 
         return $url;
-    }
-
-    private function _handleSuhosinCheck()
-    {
-        if (in_array('suhosin', get_loaded_extensions())) {
-            //Attempt setting the whitelist value
-            @ini_set('suhosin.executor.include.whitelist', 'tmpl://, file://');
-
-            //Checking if the whitelist is ok
-            if (
-                  !@ini_get('suhosin.executor.include.whitelist') ||
-                  strpos(@ini_get('suhosin.executor.include.whitelist'), 'tmpl://') === false
-            ) {
-                $url = $this->getService('com:application')->getRouter()->getBaseUrl();
-                $url .= '/templates/system/error_suhosin.html';
-
-                AnService::get('application.dispatcher')
-                ->getResponse()
-                ->setRedirect($url)
-                ->send();
-            }
-        }
-
-        return;
     }
 
     private function _handleSafeexCheck()

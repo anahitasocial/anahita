@@ -108,6 +108,5 @@ class ComStoriesControllerStory extends ComBaseControllerService
     {
         $context->response->status = AnHttpResponse::NO_CONTENT;
         $this->getItem()->delete();
-        $context->response->setRedirect(route($this->getItem()->owner->getURL()));
     }
 }

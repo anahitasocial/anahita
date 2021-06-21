@@ -44,27 +44,6 @@ class ComBaseControllerResource extends LibBaseControllerResource
     }
 
     /**
-     * Get a toolbar by identifier.
-     *
-     * @return AnControllerToolbarAbstract
-     */
-    public function getToolbar($toolbar, $config = array())
-    {
-        if (is_string($toolbar)) {
-            //if actorbar or menu alawys default to the base
-            if (in_array($toolbar, array('actorbar', 'menubar'))) {
-                $identifier = clone $this->getIdentifier();
-                $identifier->path = array('controller','toolbar');
-                $identifier->name = $toolbar;
-                register_default(array('identifier' => $identifier, 'default' => 'ComBaseControllerToolbar'.ucfirst($toolbar)));
-                $toolbar = $identifier;
-            }
-        }
-
-        return parent::getToolbar($toolbar, $config);
-    }
-
-    /**
      * Sets the context response.
      *
      * @return AnCommandContext
