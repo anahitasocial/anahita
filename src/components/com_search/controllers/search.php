@@ -57,7 +57,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     {
         $config->append(array(
             'behaviors' => array('ownable'),
-            'toolbars' => array($this->getIdentifier()->name, 'menubar'),
+            'toolbars' => array($this->getIdentifier()->name),
             'request' => array(
                 'limit' => 20,
                 'sort' => 'relevant',
