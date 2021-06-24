@@ -12,7 +12,7 @@
 
     <div class="control-group">
         <div class="controls">
-            <input type="file" name="portrait" data-limit="<?= $uploadSizeLimit ?>" />
+            <input type="file" name="portrait" accept="image/*" data-limit="<?= $uploadSizeLimit ?>" />
         </div>
     </div>
 
