@@ -73,13 +73,13 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
 		}
         		
 		if (! $this->persisted()) {	
-            $settings = $this->getService('com:settings.config');
+            $settings = $this->getService('com:settings.config');          
             
-            $mimetypes = include(ANPATH_COMPONENTS . DS . 'com_documents' . DS . 'mimetypes.php');
+            $mimetypes = $this->_getMimeTypes();
             $this->mimetype = $file['type'];
+            
             $extension = array_search($this->mimetype, $mimetypes);
 			$this->filename = hash('sha256', str_shuffle($settings->secret . microtime())) . '.' . $extension;
-			
             
             $data = file_get_contents($file['tmp_name']);
             $this->filesize = strlen($data);
@@ -102,10 +102,18 @@ class LibBaseDomainBehaviorFileable extends LibBaseDomainBehaviorStorable
     
     public function getFileExtension()
     {
-        $mimetypes = include(ANPATH_COMPONENTS . DS . 'com_documents' . DS . 'mimetypes.php');
+        $mimetypes = $this->_getMimeTypes();
         $extension = array_search($this->mimetype, $mimetypes);
         
         return $extension;
+    }
+    
+    protected function _getMimeTypes()
+    {
+        $mimetypes_path = ANPATH_COMPONENTS . DS . 'com_' . $this->getIdentifier()->package . DS . 'mimetypes.php';            
+        $mimetypes = file_exists($mimetypes_path) ? include($mimetypes_path) : array();
+        
+        return $mimetypes;
     }
     
     /**
