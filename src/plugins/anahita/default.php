@@ -111,4 +111,20 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
 
   	    parent::_initialize($config);
   	}
+
+  	/**
+  	 * Loads the plugin language file
+  	 *
+  	 * @param	string 	$extension 	The extension for which a language file should be loaded
+  	 * @param	string 	$basePath  	The basepath to use
+  	 * @return	boolean	True, if the file has successfully loaded.
+  	 */
+  	public function loadLanguage($extension = '', $basePath = ANPATH_BASE)
+  	{
+  		if (empty($extension)) {
+  		    $extension = 'plg_'.$this->getIdentifier()->package.'_'.$this->getIdentifier()->name;
+  		}
+
+  		return AnService::get('anahita:language')->load( strtolower($extension), $basePath);
+  	}
 }

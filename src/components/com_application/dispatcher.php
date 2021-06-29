@@ -205,6 +205,10 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
 
         $settings = $this->getService('com:settings.config');
         
+        $this->getService('anahita:language', array(
+            'language' => $settings->language
+        ));
+        
         if ($settings->cors_enabled) {
             header('Access-Control-Allow-Origin: ' . $settings->client_domain);
             header('Access-Control-Allow-Methods: ' . $settings->cors_methods);
