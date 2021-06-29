@@ -1,5 +1,16 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.6.0
+=============================
+- removed: all html views
+
+Anahita 4.5.2
+=============================
+- changed: fileable behaviour now checks for a file containing list of mimetypes otherwise uses an empty array. 
+- removed: all the unsupported mimetypes from the com_documents
+- changed: improved signup workflow prompt messages
+
+
 Anahita 4.5.1
 =============================
 1. changed: privacy update now returns the entity in json response
