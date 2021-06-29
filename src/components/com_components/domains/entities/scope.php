@@ -86,6 +86,8 @@ class ComComponentsDomainEntityScope extends AnObject
         $this->ownable      = $config->ownable;
         $this->hashtaggable  = $config->hashtaggable;
         $this->geolocatable = $config->geolocatable;
+        
+        $this->getService('anahita:language')->load('com_'.$this->identifier->package);
     }
 
     /**
@@ -109,6 +111,14 @@ class ComComponentsDomainEntityScope extends AnObject
         }
 
         parent::_initialize($config);
+    }
+    
+    /**
+     * wakes up.
+     */
+    public function __wakeup()
+    {
+        $this->getService('anahita:language')->load('com_'.$this->identifier->package);
     }
 
     /**
