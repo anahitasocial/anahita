@@ -29,8 +29,6 @@ class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implement
      */
     protected function _initialize(AnConfig $config)
     {
-        $this->getService('anahita:language')->load('com_'.$this->getIdentifier()->package);
-        
         $config->append(array(
             'resources' => array('components'),
             'attributes' => array(

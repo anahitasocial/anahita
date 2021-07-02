@@ -10,8 +10,8 @@
 <data name="body">
 	<div class="entity-body">
 		<blockquote>
-	  <?= @helper('text.truncate', @content(nl2br($object->body), array('exclude' => 'gist')), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
-	</blockquote>
+	  	<?= @helper('text.truncate', nl2br($object->body), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
+		</blockquote>
 	</div>
 </data>
 

@@ -138,26 +138,29 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
         $config->append(array(
             'layout' => 'default',
+            'data' => array(),
         ));
 
-        $layout = $config->layout;
-        $data = $this->getState()->toArray();
+        if (method_exists($this->getState(), 'toArray')) {
+            $data = $this->getState()->toArray();
 
-        if ($this->getState()->getItem()) {
-            $data[$this->_mixer->getIdentifier()->name] = $this->getState()->getItem();
+            if ($this->getState()->getItem()) {
+                $data[$this->_mixer->getIdentifier()->name] = $this->getState()->getItem();
+            }
+
+            if ($this->getState()->getList()) {
+                $data[AnInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
+            }
+            
+            $config->append(array(
+                'data' => $data
+            ));
         }
-
-        if ($this->getState()->getList()) {
-            $data[AnInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
-        }
-
-        $config->append(array(
-            'data' => $data
-        ));
-
+        
         $template = $this->getEmailTemplateView()->getTemplate();
         $data = array_merge($config['data'], array('config' => $config));
-
+        $layout = $config->layout;
+        
         if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, $data)->render();
         } else {

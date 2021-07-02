@@ -119,11 +119,31 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             
             if (!is_person($entity)) {
                 if (isset($entity->author)) {
-                    $data['author'] = $entity->author->toSerializableArray();
+                    $author = $entity->author->toSerializableArray();
+                    $data['author'] = array(
+                        'id' => $author['id'],
+                        'objectType' => $author['objectType'],
+                        'name' => $author['name'],
+                        'alias' => $author['alias'],
+                        'givenName' => $author['givenName'],
+                        'familyName' => $author['familyName'],
+                        'username' => $author['username'],
+                        'imageURL' => $author['imageURL'],
+                    );
                 }
                 
                 if (isset($entity->editor)) {
-                    $data['editor'] = $entity->editor->toSerializableArray();
+                    $editor = $entity->author->toSerializableArray();
+                    $data['editor'] = array(
+                        'id' => $editor['id'],
+                        'objectType' => $editor['objectType'],
+                        'name' => $editor['name'],
+                        'alias' => $editor['alias'],
+                        'givenName' => $editor['givenName'],
+                        'familyName' => $editor['familyName'],
+                        'username' => $editor['username'],
+                        'imageURL' => $editor['imageURL'],
+                    );
                 }
             }
         }
@@ -159,7 +179,14 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         }
 
         if (!is_person($entity) && $entity->isOwnable()) {
-            $data['owner'] = $entity->owner->toSerializableArray();
+            $owner = $entity->owner->toSerializableArray();
+            $data['owner'] = array(
+                'id' => $owner['id'],
+                'objectType' => $owner['objectType'],
+                'name' => $owner['name'],
+                'alias' => $owner['alias'],
+                'imageURL' => $owner['imageURL'],
+            );
         }
         
         if ($entity->isGeolocatable()) {
