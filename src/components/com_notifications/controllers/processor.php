@@ -89,7 +89,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         foreach ($notifications as $notification) {
             $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
-            if (!$muteEmail) {
+            if (! $muteEmail) {
                 $this->sendNotification($notification);
             }
         }
@@ -141,7 +141,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $settings = $config->settings;
         $people = $config->people;
         $notification = $config->notification;
-
+        
+        $this->getService('anahita:language')->load($notification->component);
+        
         foreach ($people as  $person) {
             $setting = $settings->{$person->id};
 
@@ -155,14 +157,14 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             if ($ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL) {
                 continue;
             }
-
+            
             //since each owner revieces the mail, they are in fact the viewer
             //so we need to set the as viewer while processing the notification
             AnService::set('com:people.viewer', $person);
 
             $notification->owner = $person;
             $data = new AnConfig($this->_parser->parse($notification));
-
+            
             $data->append(array(
                 'email_subject' => $data->title,
                 'email_title' => pick($data->email_subject, $data->title),
@@ -185,7 +187,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                             'body' => $data->email_body
                         )
                     ));
-
+            
             if ($person->email != '' && filter_var($person->email, FILTER_VALIDATE_EMAIL)) {
                 $mails[] = array(
                       'subject' => $data->email_subject,

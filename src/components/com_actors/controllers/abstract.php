@@ -70,8 +70,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'coverable',
             )),
         ));
-        
-        $this->getService('anahita:language')->load('com_actors');
     }
 
     /**

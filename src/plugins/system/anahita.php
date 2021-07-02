@@ -41,9 +41,6 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         //Safety Extender compatibility
         $this->_handleSafeexCheck();
 
-        //load language overwrites
-        AnService::get('anahita:language')->load('overwrite', ANPATH_ROOT);
-
         parent::__construct($dispatcher, $config);
     }
 

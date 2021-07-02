@@ -101,8 +101,6 @@ class ComSearchControllerSearch extends ComBaseControllerResource
              ->insert('search_range')
              ->insert('search_leaders');
              
-        $this->getService('anahita:language')->load('com_actors');
-
         $this->keywords = array_filter(explode(' ', $this->term));
 
         $this->scopes = $this->getService('com:components.domain.entityset.scope');

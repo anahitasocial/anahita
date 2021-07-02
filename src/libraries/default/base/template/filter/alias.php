@@ -22,8 +22,6 @@ class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implement
     protected $_alias_read = array(
         '@helper('      => '$this->renderHelper(',
         '@service('     => '$this->getService(',
-        '@date('        => '$this->renderHelper(\'date.format\',',
-        '@overlay('     => '$this->renderHelper(\'behavior.overlay\', ',
         '@text('        => 'AnTranslator::_(',
         '@template('    => '$this->loadIdentifier(',
         '@route('       => '$this->getView()->getRoute(',
@@ -33,7 +31,6 @@ class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implement
         '@previous(' => '$this->getHelper(\'previous\')->load(',
         '@template(' => '$this->getView()->load(',
         '@route(' => '$this->getView()->getRoute(',
-        '@html(\'' => '$this->renderHelper(\'com:base.template.helper.html.',
     );
     
     /**

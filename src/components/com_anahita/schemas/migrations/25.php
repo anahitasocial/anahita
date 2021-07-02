@@ -22,6 +22,7 @@ class ComAnahitaSchemaMigration25 extends ComMigratorMigrationVersion
     {
         //add your migration here
         dbexec('DELETE FROM `#__plugins` WHERE `folder` = "contentfilter"');
+        dbexec('DELETE FROM `#__plugins` WHERE `element` IN ("connect", "invites", "subscriptions")');
         dbexec("DELETE FROM `#__components` WHERE `option` IN ('com_subscriptions', 'com_connect', 'com_invites', 'com_dashboard', 'com_pages')");
         dbexec("DELETE FROM `#__nodes` WHERE `type` LIKE '%com:components.domain.entity.assignment' AND `component` IN ('com_subscriptions', 'com_connect', 'com_invites', 'com_dashboard', 'com_pages')");
     

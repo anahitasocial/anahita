@@ -22,12 +22,10 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     {
         parent::__construct($config);
 
-        $this->registerCallback(array(
-            'after.add'),
-            array($this, 'createStoryCallback'));
+        $this->registerCallback(array('after.add'), array($this, 'createStoryCallback'));
 
         //add medium related states
-        $this->getState()->insert('filter')->insert('grid')->insert('order');
+        $this->getState()->insert('filter')->insert('order');
     }
 
     /**
