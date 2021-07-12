@@ -231,7 +231,7 @@ class Create extends Command
         $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $config->save();
         
-        $output->writeLn("<info>Creating the first person account:</info>"); 
+        $output->writeLn("<info>Use site:signup to create the first user account</info>"); 
     }
 }
 
