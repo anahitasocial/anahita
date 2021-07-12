@@ -61,7 +61,6 @@
          require_once $filepath;
 
          $this->_configs = new AnSiteConfig();
-         $this->_default_template = 'shiraz';
          $this->_default_language = 'en-GB';
      }
 

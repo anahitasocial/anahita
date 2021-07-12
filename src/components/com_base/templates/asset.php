@@ -11,21 +11,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComBaseTemplateAsset extends LibBaseTemplateAsset
-{
-    /**
-     * Initializes the default configuration for the object.
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param AnConfig $config An optional AnConfig object with configuration options.
-     */
-    protected function _initialize(AnConfig $config)
-    {
-        $config->append(array(
-            'asset_paths' => array(ANPATH_THEMES.'/'.AnService::get('application')->getTemplate().'/media'),
-        ));
-
-        parent::_initialize($config);
-    }
-}
+class ComBaseTemplateAsset extends LibBaseTemplateAsset {}

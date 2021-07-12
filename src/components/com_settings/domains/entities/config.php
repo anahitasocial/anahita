@@ -44,7 +44,6 @@ class ComSettingsDomainEntityConfig extends AnObject
               'error_reporting' => 0,
               'log_path' => '',
               'tmp_path' => '',
-              'template' => 'shiraz',
               'language' => 'en-GB',
 
               // database

@@ -23,18 +23,6 @@ class AnSiteConfig{
 	var $client_domain = 'http://localhost:3000';
 	
 	/**
-	*	Current Template 
-	*
-	*	@var string	
-	*
-	*	Possible values:
-	*	shiraz - if you are using Anahita as a web app.
-	*	nohtml - if you are using Anahita as a back-end API. 
-	*   yourtemplatename - name of your custom template. 
-	*/
-	var $template = 'shiraz';
-	
-	/**
 	*	Default language which is en-GB. 
 	*
 	*	@var string

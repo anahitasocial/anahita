@@ -105,11 +105,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
                 $directory = ANPATH_ROOT.$directory;
             }
 
-            $template = $this->getService('application')->getTemplate();
-
             $paths[] = $directory;
-            $paths[] = implode(DS, array(ANPATH_THEMES, $template, 'emails', $identifier->type.'_'.$identifier->package));
-            $paths[] = implode(DS, array(ANPATH_THEMES, $template, 'emails'));
 
             $config = array(
                 'base_url' => $this->_base_url,
