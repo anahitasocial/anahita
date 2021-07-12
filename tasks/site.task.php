@@ -328,7 +328,11 @@ class Signup extends Command
     }
 }
 
-$console->addCommands(array(new Signup()));
+$config = new Config(WWW_ROOT);
+
+if ($config->isConfigured()) {
+    $console->addCommands(array(new Signup()));
+}
 
 if (!$console->isInitialized()) {
     return;
