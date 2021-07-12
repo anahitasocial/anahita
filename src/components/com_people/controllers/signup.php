@@ -13,6 +13,17 @@
 class ComPeopleControllerSignup extends ComBaseControllerService
 {
     /**
+     * Constructor.
+     *
+     * @param AnConfig $config An optional AnConfig object with configuration options.
+     */
+    public function __construct(AnConfig $config)
+    {
+        parent::__construct($config);
+        $this->registerCallback('after.add', array($this, 'mailActivationLink'));
+    }
+    
+    /**
      * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.
@@ -55,20 +66,12 @@ class ComPeopleControllerSignup extends ComBaseControllerService
         $data = $context->data;
         
         dispatch_plugin('user.onBeforeAddPerson', array('data' => $context->data));
-
-        $isFirstUser = !(bool) $this->getService('repos:people.person')
-                                    ->getQuery(true)
-                                    ->fetchValue('id');
         
         $person = parent::_actionAdd($context);
 
+        $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
+        
         $person->requiresActivation();
-
-        if ($isFirstUser) {
-            $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR;
-        } else {
-            $person->usertype = ComPeopleDomainEntityPerson::USERTYPE_REGISTERED;
-        }
         
         if (! $person->validate()) {
             error_log(print_r($person->getErrors()->getMessage(), true));
@@ -77,13 +80,7 @@ class ComPeopleControllerSignup extends ComBaseControllerService
 
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
         
-        if ($isFirstUser || true) {
-            $person->enable();
-        } else {
-            $this->registerCallback('after.add', array($this, 'mailActivationLink'));
-            $context->response->setHeader('X-User-Activation-Required', true);
-        }
-        
+        $context->response->setHeader('X-User-Activation-Required', true);
         $this->getResponse()->status = AnHttpResponse::OK;
 
         return $person;
