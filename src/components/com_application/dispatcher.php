@@ -367,7 +367,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $config = array(
             'response' => $context->response,
             'request' => $context->request,
-            'theme' => $this->_application->getTemplate()
         );
 
         $context->request->setFormat('json');

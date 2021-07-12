@@ -1,1 +1,0 @@
-<? defined('ANAHITA') or die; ?>

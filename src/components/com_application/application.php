@@ -24,13 +24,6 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
     protected $_session = null;
 
     /**
-     * Template.
-     *
-     * @var string
-     */
-    protected $_template = "";
-
-    /**
      * Application Router.
      *
      * @var ComApplicationRouter
@@ -136,36 +129,6 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
     public function getSession()
     {
         return $this->_session;
-    }
-
-    /**
-     * Get the template.
-     *
-     * @return string The template name
-     */
-    public function getTemplate()
-    {
-        if (empty($this->_template)) {
-            if (! AnService::get('application.registry')->offsetExists('application-template')) {
-                AnService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
-            }
-
-            $template = AnService::get('application.registry')->offsetGet('application-template');
-            $this->setTemplate(pick($template, 'base'));
-        }
-
-        return $this->_template;
-    }
-
-    /**
-     * Overrides the default template that would be used.
-     *
-     * @param string $template The template name
-     */
-    public function setTemplate($template)
-    {
-        $this->_template = $template;
-        return $this;
     }
 
     /**

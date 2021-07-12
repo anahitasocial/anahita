@@ -32,6 +32,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $this->_parser = $this->getService($config->parser);
         
         $this->getService('anahita:language')->load('com_actors');
+        $this->getService('anahita:language')->load('com_stories');
     }
 
     /**

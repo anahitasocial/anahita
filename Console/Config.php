@@ -93,8 +93,7 @@ class Config
             // Server Settings
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
-            'sitename' => 'Anahita',
-            'template' => 'shiraz'
+            'sitename' => 'Anahita'
         );
 
         $this->set(array(
@@ -354,7 +353,6 @@ class Config
         $write_group(array(
             'sitename',
             'client_domain',
-            'template',
             'language',
             'log_path',
             'tmp_path',
