@@ -73,7 +73,7 @@ class Create extends Command
     protected function configure()
     {
         $this->setName('site:init')
-        ->setDescription('Initializes the site by linking necessary files, setting up the database and creating an admin user')
+        ->setDescription('Initializes the site by linking necessary files and setting up the database')
         ->setDefinition(array(
             new InputOption('database-dump',null, InputOption::VALUE_OPTIONAL,'Use a database dump to initilaize the data'),
             new InputOption('database-name',null, InputOption::VALUE_REQUIRED,'Database name'),
@@ -83,8 +83,6 @@ class Create extends Command
             new InputOption('database-port',null, InputOption::VALUE_OPTIONAL,'Database port'),
             new InputOption('database-prefix',null, InputOption::VALUE_OPTIONAL,'Database prefix'),
             new InputOption('drop-database',null, InputOption::VALUE_NONE,'Drop existing database. <error>Use this command with care, as it will wipe off all exsiting data</error>'),
-            new InputOption('admin-password',null, InputOption::VALUE_OPTIONAL,'The admin password. This is only done for the first time installation'),
-            new InputOption('admin-email',null, InputOption::VALUE_OPTIONAL,'The admin email. This is only done for the first time installation')
         ));
     }
 
@@ -226,7 +224,7 @@ class Create extends Command
             $output->writeLn("<info>Anahita installation completed</info>");
 
             if ($db_exists && !$dump_file) {
-                $output->writeLn("<info>The first person who registers for an account becomes the Super Administrator. Point your browser to http://yoursite/people/signup and create a new account.</info>");
+                $output->writeLn("<comment>Use site:signup to create the first user account</comment>");
             }
 
             $db->close();
@@ -234,7 +232,107 @@ class Create extends Command
 
         $config->secret = bin2hex(openssl_random_pseudo_bytes(32));
         $config->save();
+        
+        
     }
+}
+
+class Signup extends Command
+{
+    protected $_input;
+    protected $_output;
+    
+    protected function configure()
+    {
+        $this->setName('site:signup')
+        ->setDescription('Create the 1st person account as a Super Admin')
+        ->setDefinition(array(
+            new InputOption('admin-email',null, InputOption::VALUE_REQUIRED,'The first Super Admin email.'),
+            new InputOption('admin-username',null, InputOption::VALUE_REQUIRED, 'The first Super Admin username'),
+            new InputOption('admin-password',null, InputOption::VALUE_OPTIONAL, 'The first Super Admin password'),
+        ));
+    }
+    
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $dialog = $this->getHelperSet()->get('dialog');
+        $this->_input = $input; 
+        $this->_output = $output;
+        
+        $prompt = function($key, $text, $default = null, $error = null) use ($dialog, $output, $input)
+        {
+            $result = $input->getOption($key);
+
+            if (empty($result) && !$input->getOption('no-interaction')) {
+
+                if (!empty($default)) {
+                    $text .= '(default: '.$default.') ';
+                }
+
+                while(strlen($result = $dialog->ask($output,'<info>'.$text.'</info>', $default)) == 0);
+
+            } elseif (empty($result)) {
+
+                $result = $default;
+
+                if (empty($result)) {
+                    $output->writeLn('<error>'.$error.'</error>');
+                    exit(1);
+                }
+            }
+
+            return $result;
+        };
+        
+        $this->getApplication()->loadFramework();
+        
+        $isFirstUser = !(bool) \AnService::get('repos:people.person')->getQuery(true)->fetchValue('id');
+                                    
+        if (! $isFirstUser) {
+            $msg = 'There are already people accounts in the system. You can only create the first person account using this command!';
+            $output->writeLn('<error>' . $msg . '</error>');
+            exit(1);
+        }
+        
+        $password = random_password(16);
+        $data = array(
+            'usertype' => \ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR,
+            'givenName' => 'Super',
+            'familyName' => 'Admin',
+            'email' => $prompt('admin-email', 'Enter admin email: ', ''),
+            'username' => $prompt('admin-username', 'Enter admin username: ', 'superadmin'),
+            'password' => $prompt('admin-password', 'Enter admin password: ', $password),
+        );
+            
+        $person = \AnService::get('repos:people.person')->getEntity()->setData($data);
+
+        if (! $person->validate()) {
+            $errors = $person->getErrors();
+            foreach ($errors as $error) {
+                $output->writeLn('<error>'.$error->getMessage().'</error>');
+            }
+            exit(2);
+        }
+        
+        $person->enable();
+        
+        if ($person->save()) {
+            $output->writeLn('<info>Signed up the first person as Super Admin:</info>');
+            $output->writeLn('<info>USERNAME: ' . $data['username'] .  '</info>');
+            $output->writeLn('<info>PASSWORD: ' . $data['password'] .  '</info>');
+            $output->writeLn("<comment>Point your browser to your Anahita installation and login.</comment>");
+        } else {
+            $output->writeLn("Something went wrong and cound't signup the first person!");
+            exit(1);
+        }        
+        
+    }
+}
+
+$config = new Config(WWW_ROOT);
+
+if ($config->isConfigured()) {
+    $console->addCommands(array(new Signup()));
 }
 
 $console->addCommands(array(new Create()));
