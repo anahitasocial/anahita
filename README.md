@@ -119,9 +119,19 @@ In order to initiate the installation process run the following command and prov
 
 The Anahita installation is created in the _PATH-TO-YOUR-DIRECTORY/myproject/www_ directory. You need to configure your server to use this directory as the public directory.
 
-The first account that is created on this installation becomes the _Super Administrator_ account. Go to the _http://www.YOUR-DOMAIN-NAME.com/people/signup_ and create an account.
+Congratulations! You have installed Anahita successfully. Now you need to signup as a Super Administrator.
 
-Congratulations! You have installed Anahita successfully. Now you need to configure your installation and install some apps.
+## Signing Up The Super Administrator
+
+The first person that is signing up with Anahita is recognized as the _Super Administrator_. Use the following command to sign up the first person:
+
+`php anahita site:signup`
+
+Provide a valid _email_ and _username_. You can either provide a password or Anahita creates a strong password for you.
+
+**Congratulations!** You have created the first person and Super Admin account. Point your browser to your Anahita installation and login. 
+
+Next, you will configure your installation and install some apps.
 
 ## Configuring Your Anahita Installation
 
