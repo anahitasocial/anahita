@@ -51,19 +51,7 @@ class ComBaseDomainEntityNode extends AnDomainEntityDefault
                 ),
                 'verified' => array(
                     'default' => 0
-                ),
-                'comment_count' => array(
-                    'default' => 0
-                ) ,
-                'vote_up_count' => array(
-                    'default' => 0
-                ),
-                'subscriber_count' => array(
-                    'default' => 0
-                ),
-                'follower_count' => array(
-                    'default' => 0
-                ),
+                )
             ),
            'behaviors' => to_hash('node'),
         ));
