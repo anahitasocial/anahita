@@ -9,6 +9,7 @@ Anahita 4.5.2
 - removed: first user signup from the people signup controller
 - changed: updated installation instructions in the README file.
 - added: random_password method to the functions.php
+- changed: default trending days for tags to 30 days 
 
 Anahita 4.5.1
 =============================
