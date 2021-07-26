@@ -41,7 +41,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
             'request' => array(
                 'scope' => '',
                 'sort' => 'trending',
-                'days' => AnRequest::get('get.days', 'int', 7),
+                'days' => AnRequest::get('get.days', 'int', 30),
             ),
         ));
 
