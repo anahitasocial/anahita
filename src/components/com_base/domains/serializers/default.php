@@ -172,6 +172,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->isVotable()) {
             $data['voteUpCount'] = $entity->voteUpCount;
             $data['isVotedUp'] = $entity->votedUp($viewer);
+            $data['voteups'] = $entity->voteups->voter->toSerializableArray();
         }
         
         if ($entity->isParentable()) {
