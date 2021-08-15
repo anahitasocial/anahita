@@ -1,0 +1,18 @@
+{
+    "fields": [
+        {
+            "name": "owner_ids",
+            "type": "text",
+            "default": "42242, 10273",
+            "label": "Owner IDs",
+            "description": "Enter a comma seperated list of actor ids!"
+        },
+        {
+            "name": "created_by_ids",
+            "type": "text",
+            "default": "5",
+            "label": "Author IDs",
+            "description": "Enter a comma seperated list of person ids!"
+        }
+    ]
+}
