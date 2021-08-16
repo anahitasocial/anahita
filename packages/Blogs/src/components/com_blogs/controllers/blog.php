@@ -8,6 +8,7 @@ class ComBlogsControllerBlog extends ComBaseControllerResource
             'request' => array(
                 'start' => 0,
                 'limit' => 20,
+                'sort' => 'recent',
             ),
         ));
 
@@ -17,8 +18,6 @@ class ComBlogsControllerBlog extends ComBaseControllerResource
     protected function _actionGet($context)
     {
         $this->getService('repos:blogs.node')->addBehavior('privatable');
-        
-        $this->setView('blogs');
         
         $ownerIds = get_config_value('blogs.owner_ids');
         $ownerIds = explode(',', $ownerIds);
@@ -34,8 +33,18 @@ class ComBlogsControllerBlog extends ComBaseControllerResource
             'ComMediumDomainEntityMedium,ComNotesDomainEntityNote,com:notes.domain.entity.note',
             'ComMediumDomainEntityMedium,ComPhotosDomainEntityPhoto,com:photos.domain.entity.photo'
         ))
-        ->order('node.created_on', 'DESC')
         ->limit($this->limit, $this->start);
+        
+        switch ($this->sort) {
+            case 'updated':
+                $query->order('node.modified_on', 'DESC');
+            break;
+
+            case 'recent':
+            case 'newest':
+                $query->order('node.created_on', 'DESC');
+            break;
+        }
                       
         $entities = $query->toEntitySet();
 
