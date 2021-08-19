@@ -25,7 +25,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();
 
         $data['objectType'] = 'com.'.$entity->getIdentifier()->package.'.'.$entity->getIdentifier()->name;
-
+        
         if ($entity->isDescribable()) {
             $data['name'] = $entity->name;
             $data['body'] = $entity->body;
@@ -35,7 +35,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->inherits('ComBaseDomainEntityComment')) {
             $data['body'] = $entity->body;
         }
-
+        
         if ($entity->isPortraitable()) {
             $imageURL = array();
 
@@ -105,7 +105,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             
             $data['coverURL'] = (object) $coverURL;
         }
-
+        
         if ($entity->isModifiable()) {
             $data->append(array(
                 'author' => null,
@@ -133,7 +133,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                 }
                 
                 if (isset($entity->editor)) {
-                    $editor = $entity->author->toSerializableArray();
+                    $editor = $entity->editor->toSerializableArray();
                     $data['editor'] = array(
                         'id' => $editor['id'],
                         'objectType' => $editor['objectType'],
@@ -147,7 +147,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
                 }
             }
         }
-
+        
         if ($entity->isCommentable()) {
             $data['openToComment'] = (bool) $entity->openToComment;
             $data['numOfComments'] = $entity->numOfComments;
@@ -172,6 +172,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->isVotable()) {
             $data['voteUpCount'] = $entity->voteUpCount;
             $data['isVotedUp'] = $entity->votedUp($viewer);
+            $data['voteups'] = $entity->voteups->voter->toSerializableArray();
         }
         
         if ($entity->isParentable()) {
@@ -215,7 +216,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($data['authorized']['edit'] && $entity->isPrivatable()) {
             $data['access'] = $entity->access;
         }
-
+        
         return AnConfig::unbox($data);
     }
 }

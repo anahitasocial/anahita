@@ -43,7 +43,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $pkg = $this->getIdentifier()->package;
         $name = $this->getIdentifier()->name;
         
-        if ($entity = parent::_actionRead($context)) {
+        if ($entity = parent::_actionRead($context)) {            
             $entity->taggables->getRepository()->addBehavior('com:tags.domain.behavior.privatable');
             
             if ($this->scope) {
