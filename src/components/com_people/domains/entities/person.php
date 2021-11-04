@@ -67,6 +67,7 @@ final class ComPeopleDomainEntityPerson extends ComActorsDomainEntityActor
                 ),
                 'alias' => array(
                     'key' => true,
+                    'format' => 'username',
                 ),
                 'givenName' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
