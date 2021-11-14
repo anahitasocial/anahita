@@ -9,7 +9,7 @@
  * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       https://www.GetAnahita.com
+ * @link       https://www.Anahita.io
  */
 class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
 {

@@ -10,7 +10,7 @@
  * @copyright  Copyright (C) 2010 PeerGlobe Technology Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implements LibBaseTemplateFilterRead, LibBaseTemplateFilterWrite
 {

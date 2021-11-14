@@ -10,7 +10,7 @@ require_once ANPATH_VENDOR.'/swiftmailer/swiftmailer/lib/swift_required.php';
  * @copyright  2016 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class AnMail extends AnObject implements AnServiceInstantiatable
 {

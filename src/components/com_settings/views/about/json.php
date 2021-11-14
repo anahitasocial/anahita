@@ -6,7 +6,7 @@
  * @copyright  2008 - 2020 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.Json>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 class ComSettingsViewAboutJson extends ComBaseViewJson
@@ -16,14 +16,14 @@ class ComSettingsViewAboutJson extends ComBaseViewJson
         return array(
             'title' => 'Anahita Platform & Framework',
             'version' => Anahita::getVersion(),
-            'logo' => 'https://s3.amazonaws.com/anahitapolis.com/media/logos/round_logo.png',
+            'logo' => 'https://s3.amazonaws.com/production.anahita.io/media/logos/round_logo.png',
             'license' => array(
                 'name' => 'GPLv3',
                 'url' => 'https://www.gnu.org/licenses/gpl-3.0.en.html',
             ),
             'website' => array(
-                'name' => 'GetAnahita.com',
-                'url' => 'https://www.getanahita.com',
+                'name' => 'Anahita.io',
+                'url' => 'https://www.anahita.io',
             )
         );
     }

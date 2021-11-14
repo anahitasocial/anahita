@@ -3,10 +3,10 @@
   "description": "Default localization package",
   "tag": "en-GB",
   "version": "4.6",
-  "homepage": "https://www.getanahita.com",
+  "homepage": "https://www.anahita.io",
   "authors": [{
       "name": "Rastin mehr",
-      "email": "rastin@getanahita.com",
+      "email": "rastin@anahita.io",
       "homepage": "http://www.rmdstudio.com"
   }],
   "copyright": [

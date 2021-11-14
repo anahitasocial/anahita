@@ -3,7 +3,7 @@
     "name": "anahita/anahita",
     "license": "GPL-3.0-only",
     "keywords" : ["social", "networking", "knowledge", "platform", "framework", "restful", "graph", "learning"],
-    "homepage" : "https://www.GetAnahita.com",
+    "homepage" : "https://www.Anahita.io",
     "description": "Anahita Social Networking Platform",
     "bin": ["bin/anahita"],
      "require": {

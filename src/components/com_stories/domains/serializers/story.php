@@ -10,7 +10,7 @@
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       https://www.GetAnahita.com
+ * @link       https://www.Anahita.io
  */
 class ComStoriesDomainSerializerStory extends ComBaseDomainSerializerDefault
 {
