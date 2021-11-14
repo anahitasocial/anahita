@@ -16,7 +16,7 @@ class ComSettingsViewAboutJson extends ComBaseViewJson
         return array(
             'title' => 'Anahita Platform & Framework',
             'version' => Anahita::getVersion(),
-            'logo' => 'https://s3.amazonaws.com/production.anahita.io/media/logos/round_logo.png',
+            'logo' => 'https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/logos/homepage_logo.png',
             'license' => array(
                 'name' => 'GPLv3',
                 'url' => 'https://www.gnu.org/licenses/gpl-3.0.en.html',
