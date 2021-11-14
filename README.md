@@ -1,4 +1,4 @@
-![Anahita social networking platform and framework](https://s3.amazonaws.com/anahitapolis.com/media/logos/homepage_logo.png)
+![Anahita social networking platform and framework](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/logos/homepage_logo.png)
 
 # Anahita
 
@@ -75,7 +75,7 @@ Anahita is installed and managed via command line interface, because this is the
 
 ### Installing a stable package
 
-![Installing Anahita using the Birth release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-birth.gif)
+![Installing Anahita using the Birth release code](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-installation-birth.gif)
 
 Stable packages are called _Birth_ releases. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
@@ -89,7 +89,7 @@ Continue with [Initiating Installation] (#initiating-installation) from this poi
 
 ### Installing from the master branch
 
-![Installing Anahita using the Embryo release code](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-embryo.gif)
+![Installing Anahita using the Embryo release code](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-installation-embryo.gif)
 
 The master branch always contains the _Embryo_ release. Using the following command, clone the Anahita repository from the master branch:
 
@@ -107,7 +107,7 @@ Continue with *Initiating Installation* from this point.
 
 ## Initiating Installation
 
-![Initiating Anahita installation](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-installation-init.gif)
+![Initiating Anahita installation](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-installation-init.gif)
 
 If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. If the command didn't work, perhaps the symlink to the anahita command line tool isn't created. In this case run the following command to create a symlink. Otherwise move to the next step which is initiating the installation process.
 
@@ -158,7 +158,7 @@ There are many articles on the web to show you how to setup a cron job. Dependin
 
 ### Installing Social Apps
 
-![Installing Anahita social apps](http://anahitapolis.com.s3.amazonaws.com/media/gifs/installation/anahita-apps-install.gif)
+![Installing Anahita social apps](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-apps-install.gif)
 
 Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
 
