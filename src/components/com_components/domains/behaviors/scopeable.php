@@ -9,7 +9,7 @@
  * @copyright  2008 - 2014 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComComponentsDomainBehaviorScopeable extends LibBaseDomainBehaviorEnableable
 {

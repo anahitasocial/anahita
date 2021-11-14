@@ -5,7 +5,7 @@
  * @copyright   Copyright (C) 2018 Rastin Mehr.
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
  * @link        http://www.nooku.org
- * @link        https://www.getanahita.com
+ * @link        https://www.anahita.io
  */
 
 /**

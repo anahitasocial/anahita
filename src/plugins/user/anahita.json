@@ -5,10 +5,10 @@
 	"group": "user",
 	"version": "4.3",
 	"license": "GPLv3",
-	"homepage": "https://www.getanahita.com",
+	"homepage": "https://www.anahita.io",
 	"authors": [{
 		"name": "Rastin mehr",
-		"email": "rastin@getanahita.com",
+		"email": "rastin@anahita.io",
 		"homepage": "http://www.rmdstudio.com"
 	}],
 	"copyright": [

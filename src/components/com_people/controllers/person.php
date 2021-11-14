@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComPeopleControllerPerson extends ComActorsControllerDefault
 {

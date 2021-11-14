@@ -9,7 +9,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link       https://www.GetAnahita.com
+ * @link       https://www.Anahita.io
  */
 
 $settings = AnService::get('com:settings.config');

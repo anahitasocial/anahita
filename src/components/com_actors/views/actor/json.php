@@ -12,7 +12,7 @@
  *
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 /**
@@ -25,7 +25,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.Json>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComActorsViewActorJson extends ComBaseViewJson
 {

@@ -7,7 +7,7 @@
   * @copyright   Copyright (C) 2013 Arash Sanieyan <ash@anahitapolis.com>
   * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html>
   * @link        http://www.nooku.org
-  * @link        https://www.GetAnahita.com
+  * @link        https://www.Anahita.io
   */
   
 class AnFilterSlug extends AnFilterAbstract
