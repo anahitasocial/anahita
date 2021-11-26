@@ -1,0 +1,11 @@
+{
+    "type": "anahita-extension",
+    "name": "anahita/contact",
+    "keywords" : ["anahita extension", "metadata", "contact", "socal media"],
+    "description": "Plugin to store contact fields such as email, phone, website url, and contact page url",
+    "extension-source" : "src",
+    "require": {
+        "php": ">=5.6",
+        "anahita/anahita": "*"
+    }
+}
