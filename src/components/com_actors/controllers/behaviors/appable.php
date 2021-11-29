@@ -30,16 +30,18 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     protected function _actionGetApps(AnCommandContext $context)
     {
         $data = array();
+        $language = $this->getService('anahita:language');
         $components = $this->getService('com:actors.domain.entityset.component', array(
                 'actor' => $this->getItem(),
                 'can_enable' => true,
             ));
-            
+             
         foreach ($components as $component) {
+            $language->load($component->option);
             $data[] = array(
                 'id' => $component->option,
                 'name' => $component->getProfileName(),
-                'description' => $component->getProfileDescription(),
+                'description' => $language->_($component->getProfileDescription()),
                 'enabled' => $component->enabledForActor($this->getItem()),
             );
         }    

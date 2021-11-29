@@ -35,6 +35,7 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
     protected function _actionGetpermissions(AnCommandContext $context)
     {
         $data = array();
+        $language = $this->getService('anahita:language');
         $actor = $this->getItem();
         $components = $this->getItem()->components;
         
@@ -51,10 +52,12 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
             
             $actions = $this->_getActions($component);  
             
+            $language->load($component->component);
+            
             $data[] = array(
                 'id' => $component->id,
                 'name' => $component->component,
-                'description' => $component->getProfileDescription(), 
+                'description' => $language->_($component->getProfileDescription()), 
                 'enabled' => true, 
                 'actions' => $actions,
            );    
