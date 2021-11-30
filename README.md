@@ -205,7 +205,7 @@ There are so many ways that you can report us a bug:
 
 - open an issue here on our repository
 - start a topic on [Anahita Project](https://www.anahita.io/groups/42242-anahita-project) group
-- send us a [friendly email](https://www.anahita.io/html/about/contact) and tell us how to reproduce the bug
+- send us a [friendly email](https://www.anahita.io/pages/contact) and tell us how to reproduce the bug
 
 ## Contribute to Anahita
 
