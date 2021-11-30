@@ -48,6 +48,8 @@ The code in the master branch is called the **Embryo**. It is what we use to pow
 
 ## Upgrading
 
+If you are upgrading from 4.5.* to 4.6.* you will need a client side applications such as [Anahita React](https://github.com/anahitasocial/anahita-react) as your front end, since Anahita will only provide a RESTful JSON API and no html outputs.
+
 If you are upgrading from 4.3.* to 4.4.*, in `www/configuration.php` file, change `AnConfig` to `AnSiteConfig`.
 
 If you are using any previous 4.* versions of Anahita, [here is how to upgrade](https://www.anahita.io/articles/158983-updating-from-anahita-4-2-to-4-3)
@@ -211,7 +213,7 @@ Anahita could never be possible without the help of people in our tribe. We need
 
 ## Follow us, Like us
 
-Follow us on twitter [@anahitapolis](https://twitter.com/anahitapolis) and like our facebook page [Facebook.com/anahitasocial](https://www.facebook.com/anahitasocial)
+Follow us on twitter [@anahita_io](https://twitter.com/anahita_io) and like our facebook page [Facebook.com/anahita.io](https://www.facebook.com/anahita.io)
 
 ## Credits
 
