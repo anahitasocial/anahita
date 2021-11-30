@@ -15,7 +15,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
  
 class ComSearchControllerSearch extends ComBaseControllerResource
@@ -57,7 +57,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
     {
         $config->append(array(
             'behaviors' => array('ownable'),
-            'toolbars' => array($this->getIdentifier()->name, 'menubar', 'actorbar'),
+            'toolbars' => array($this->getIdentifier()->name),
             'request' => array(
                 'limit' => 20,
                 'sort' => 'relevant',
@@ -90,7 +90,6 @@ class ComSearchControllerSearch extends ComBaseControllerResource
         $this->setView('searches');
 
         if ($this->actor) {
-            $this->getToolbar('actorbar')->setTitle($this->actor->name);
             $this->getService()->set('com:search.owner', $this->actor);
         }
 
@@ -101,9 +100,7 @@ class ComSearchControllerSearch extends ComBaseControllerResource
              ->insert('search_distance')
              ->insert('search_range')
              ->insert('search_leaders');
-
-        $this->getService('anahita:language')->load('com_actors');
-
+             
         $this->keywords = array_filter(explode(' ', $this->term));
 
         $this->scopes = $this->getService('com:components.domain.entityset.scope');

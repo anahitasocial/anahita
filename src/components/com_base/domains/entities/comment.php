@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
 {
@@ -29,7 +29,6 @@ class ComBaseDomainEntityComment extends ComBaseDomainEntityNode
             'attributes' => array(
                 'body' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
                     'length' => array(
                         'max' => 5000,
                     ), 

@@ -3,7 +3,7 @@
     "name": "anahita/anahita",
     "license": "GPL-3.0-only",
     "keywords" : ["social", "networking", "knowledge", "platform", "framework", "restful", "graph", "learning"],
-    "homepage" : "https://www.GetAnahita.com",
+    "homepage" : "https://www.Anahita.io",
     "description": "Anahita Social Networking Platform",
     "bin": ["bin/anahita"],
      "require": {
@@ -11,6 +11,7 @@
         "symfony/console": "2.1.*",
         "dg/mysql-dump": "1.1.0",
         "swiftmailer/swiftmailer": "5.4.*",
-        "symfony/filesystem": "^3.3"
+        "symfony/filesystem": "^3.3",
+        "league/html-to-markdown": "^5.0"
     }
 }

@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class LibBaseControllerResource extends LibBaseControllerAbstract
 {
@@ -40,7 +40,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         if ($config->dispatch_events) {
             $this->mixin(new AnMixinToolbar($config->append(array('mixer' => $this))));
         }
-
+        
         $this->getService('anahita:language')->load($this->getIdentifier()->package);
     }
 
@@ -59,7 +59,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         $config->append(array(
             'behaviors' => array($permission),
-            'request' => array('format' => 'html'),
+            'request' => array('format' => 'json'),
         ))->append(array(
             'view' => $config->request->get ? $config->request->get : ($config->request->view ? $config->request->view : $this->getIdentifier()->name),
         ));

@@ -10,7 +10,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link       https://www.GetAnahita.com
+ * @link       https://www.Anahita.io
  */
 
 class ComApplication extends AnObject implements AnServiceInstantiatable
@@ -22,13 +22,6 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
      * @var LibSessions
      */
     protected $_session = null;
-
-    /**
-     * Template.
-     *
-     * @var string
-     */
-    protected $_template = "";
 
     /**
      * Application Router.
@@ -136,37 +129,6 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
     public function getSession()
     {
         return $this->_session;
-    }
-
-    /**
-     * Get the template.
-     *
-     * @return string The template name
-     */
-    public function getTemplate()
-    {
-        if (empty($this->_template)) {
-
-            if (! AnService::get('application.registry')->offsetExists('application-template')) {
-                AnService::get('application.registry')->offsetSet('application-template', $this->_site_settings->template);
-            }
-
-            $template = AnService::get('application.registry')->offsetGet('application-template');
-            $this->setTemplate(pick($template, 'base'));
-        }
-
-        return $this->_template;
-    }
-
-    /**
-     * Overrides the default template that would be used.
-     *
-     * @param string $template The template name
-     */
-    public function setTemplate($template)
-    {
-        $this->_template = $template;
-        return $this;
     }
 
     /**

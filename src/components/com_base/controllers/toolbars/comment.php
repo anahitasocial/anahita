@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComBaseControllerToolbarComment extends ComBaseControllerToolbarDefault
 {
@@ -25,23 +25,11 @@ class ComBaseControllerToolbarComment extends ComBaseControllerToolbarDefault
         }
 
         if ($comment->authorize('edit')) {
-            $url = $comment->getURL().'&comment[layout]=form';
-
-            if ($this->getController()->editor) {
-                $url = $url.'&comment[editor]=1';
-            }
-
-            $this->addCommand('editcomment', AnTranslator::_('LIB-AN-ACTION-EDIT'))
-                ->getCommand('editcomment')
-                ->href(route($url))
-                ->class('action-edit');
+            $this->addCommand('editcomment');
         }
 
         if ($comment->authorize('delete')) {
-            $this->addCommand('deletecomment', AnTranslator::_('LIB-AN-ACTION-DELETE'))
-                ->getCommand('deletecomment')
-                ->href(route($comment->getURL()))
-                ->class('action-delete');
+            $this->addCommand('deletecomment');
         }
     }
 }

@@ -11,7 +11,7 @@ define('PROCESSOR_PATH', ANPATH_BASE.'/components/com_notifications/process.php'
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDefault
 {
@@ -63,12 +63,13 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
     protected function _afterEntityInsert(AnCommandContext $context)
     {
         parent::_afterEntityInsert($context);
-
+        
         if ($this->_send_after_insert) {
             //run no more than 60 seconds
             $command = sprintf('php -d max_execution_time=60 %s/index.php %s id=%d >/dev/null 2>&1', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
             // $command = sprintf('php -d max_execution_time=60 %s/index.php %s id=%d', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
             // error_log($command);
+            // exec($command, $result);
             exec($command);
             // error_log(print_r($result, true));
         }

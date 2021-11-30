@@ -10,7 +10,7 @@
  * @copyright  Copyright (C) 2010 PeerGlobe Technology Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implements LibBaseTemplateFilterRead, LibBaseTemplateFilterWrite
 {
@@ -22,20 +22,15 @@ class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implement
     protected $_alias_read = array(
         '@helper('      => '$this->renderHelper(',
         '@service('     => '$this->getService(',
-        '@date('        => '$this->renderHelper(\'date.format\',',
-        '@overlay('     => '$this->renderHelper(\'behavior.overlay\', ',
         '@text('        => 'AnTranslator::_(',
         '@template('    => '$this->loadIdentifier(',
         '@route('       => '$this->getView()->getRoute(',
         '@escape('      => '$this->getView()->escape(',
-        '@title(' => 'AnService::get(\'anahita:document\')->setTitle(',
-        '@description(' => 'AnService::get(\'anahita:document\')->setDescription(',
         '@controller(' => '$this->renderHelper(\'controller.getController\',',
         '@view(' => '$this->renderHelper(\'controller.getView\',',
         '@previous(' => '$this->getHelper(\'previous\')->load(',
         '@template(' => '$this->getView()->load(',
         '@route(' => '$this->getView()->getRoute(',
-        '@html(\'' => '$this->renderHelper(\'com:base.template.helper.html.',
     );
     
     /**

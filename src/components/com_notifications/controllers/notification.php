@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComNotificationsControllerNotification extends ComBaseControllerService
 {
@@ -54,14 +54,6 @@ class ComNotificationsControllerNotification extends ComBaseControllerService
     protected function _actionBrowse($context)
     {
         $this->actor->resetNotifications();
-
-        if ($this->actor->eql(get_viewer())) {
-            $title = AnTranslator::_('COM-NOTIFICATIONS-ACTORBAR-YOUR-NOTIFICATIONS');
-        } else {
-            $title = sprintf(AnTranslator::_('COM-NOTIFICATIONS-ACTORBAR-ACTOR-NOTIFICATIONS'), $this->actor->name);
-        }
-
-        $this->getToolbar('actorbar')->setTitle($title);
 
         $entities = parent::_actionBrowse($context);
 

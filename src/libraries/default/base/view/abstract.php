@@ -13,7 +13,7 @@
  * @copyright  2008 - 2016 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class LibBaseViewAbstract extends AnObject
 {
@@ -337,7 +337,7 @@ abstract class LibBaseViewAbstract extends AnObject
 
             $route = array_merge($route, $data);
 
-            //Add the format information to the route only if it's not 'html'
+            //Add the format information to the route only if it's not 'json'
             if (!isset($parts['format'])) {
                 $route['format'] = $this->getIdentifier()->name;
             }

@@ -9,7 +9,7 @@
  * @copyright  2008 - 2015 rmd Studio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComLocationsControllerLocation extends ComTagsControllerDefault
 {
@@ -40,9 +40,7 @@ class ComLocationsControllerLocation extends ComTagsControllerDefault
     {
         if ($this->taggable) {
             if (in_array($this->getView()->getLayout(), array('selector', 'list_selector'))) {
-
                 $keyword = ($this->q) ? $this->getService('anahita:filter.term')->sanitize($this->q) : '';
-
                 $query = $this->getService('com:locations.domain.query.selector')
                               ->keyword($keyword)
                               ->excludeIds(AnHelperArray::collect($this->taggable->locations, 'id'))

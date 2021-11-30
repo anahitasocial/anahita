@@ -8,7 +8,7 @@
  * @author      Rastin Mehr <rastin@anahitapolis.com>
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link        http://www.GetAnahita.com
+ * @link        http://www.Anahita.io
  */
 
  class ComSettingsConfig extends AnObject implements AnServiceInstantiatable
@@ -61,7 +61,6 @@
          require_once $filepath;
 
          $this->_configs = new AnSiteConfig();
-         $this->_default_template = 'shiraz';
          $this->_default_language = 'en-GB';
      }
 

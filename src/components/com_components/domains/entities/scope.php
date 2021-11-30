@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComComponentsDomainEntityScope extends AnObject
 {
@@ -86,8 +86,6 @@ class ComComponentsDomainEntityScope extends AnObject
         $this->ownable      = $config->ownable;
         $this->hashtaggable  = $config->hashtaggable;
         $this->geolocatable = $config->geolocatable;
-
-        $this->getService('anahita:language')->load('com_'.$this->identifier->package);
     }
 
     /**
@@ -111,14 +109,6 @@ class ComComponentsDomainEntityScope extends AnObject
         }
 
         parent::_initialize($config);
-    }
-
-    /**
-     * wakes up.
-     */
-    public function __wakeup()
-    {
-        $this->getService('anahita:language')->load('com_'.$this->identifier->package);
     }
 
     /**

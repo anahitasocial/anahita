@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 {
@@ -105,11 +105,7 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
                 $directory = ANPATH_ROOT.$directory;
             }
 
-            $template = $this->getService('application')->getTemplate();
-
             $paths[] = $directory;
-            $paths[] = implode(DS, array(ANPATH_THEMES, $template, 'emails', $identifier->type.'_'.$identifier->package));
-            $paths[] = implode(DS, array(ANPATH_THEMES, $template, 'emails'));
 
             $config = array(
                 'base_url' => $this->_base_url,
@@ -138,26 +134,29 @@ class ComMailerControllerBehaviorMailer extends AnControllerBehaviorAbstract
 
         $config->append(array(
             'layout' => 'default',
+            'data' => array(),
         ));
 
-        $layout = $config->layout;
-        $data = $this->getState()->toArray();
+        if (method_exists($this->getState(), 'toArray')) {
+            $data = $this->getState()->toArray();
 
-        if ($this->getState()->getItem()) {
-            $data[$this->_mixer->getIdentifier()->name] = $this->getState()->getItem();
+            if ($this->getState()->getItem()) {
+                $data[$this->_mixer->getIdentifier()->name] = $this->getState()->getItem();
+            }
+
+            if ($this->getState()->getList()) {
+                $data[AnInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
+            }
+            
+            $config->append(array(
+                'data' => $data
+            ));
         }
-
-        if ($this->getState()->getList()) {
-            $data[AnInflector::pluralize($this->_mixer->getIdentifier()->name)] = $this->getState()->getList();
-        }
-
-        $config->append(array(
-            'data' => $data
-        ));
-
+        
         $template = $this->getEmailTemplateView()->getTemplate();
         $data = array_merge($config['data'], array('config' => $config));
-
+        $layout = $config->layout;
+        
         if ($layout && $template->findTemplate($layout)) {
             $output = $template->loadTemplate($layout, $data)->render();
         } else {

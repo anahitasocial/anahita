@@ -5,11 +5,10 @@
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class ComBaseControllerToolbarAbstract extends AnControllerToolbarAbstract
 {
@@ -24,37 +23,6 @@ abstract class ComBaseControllerToolbarAbstract extends AnControllerToolbarAbstr
 
         //commands is template objects container
         $this->_commands = new LibBaseTemplateObjectContainer();
-    }
-
-    /**
-     * The toolbar description.
-     *
-     * @var string
-     */
-    protected $_description = '';
-
-    /**
-     * Set the toolbar's description.
-     *
-     * @param string $description
-     *
-     * @return ComBaseControllerToolbarAbstract
-     */
-    public function setDescription($description)
-    {
-        $this->_description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get the toolbar's description.
-     *
-     * @return string Description
-     */
-    public function getDescription()
-    {
-        return $this->_description;
     }
 
     /**
@@ -97,27 +65,7 @@ abstract class ComBaseControllerToolbarAbstract extends AnControllerToolbarAbstr
     public function getCommand($name, $config = array())
     {
         if (!isset($this->_commands[$name])) {
-            if (!is_array($config)) {
-                $config = array('label' => $config);
-            }
-
-            //Create the config object
             $command = ComBaseControllerToolbarCommand::getInstance($name, $config);
-
-            //Find the command function to call
-            if (method_exists($this, '_command'.ucfirst($name))) {
-                $function = '_command'.ucfirst($name);
-                $this->$function($command);
-            } else {
-                //Don't set an action for GET commands
-                if (!isset($command->attribs->href)) {
-                    $command->append(array(
-                        'attribs' => array(
-                            'data-action' => $command->getName(),
-                        ),
-                    ));
-                }
-            }
         } else {
             $command = $this->_commands[$name];
         }

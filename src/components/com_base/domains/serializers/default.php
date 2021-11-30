@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
 {
@@ -25,7 +25,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         $data[$entity->getIdentityProperty()] = $entity->getIdentityId();
 
         $data['objectType'] = 'com.'.$entity->getIdentifier()->package.'.'.$entity->getIdentifier()->name;
-
+        
         if ($entity->isDescribable()) {
             $data['name'] = $entity->name;
             $data['body'] = $entity->body;
@@ -35,7 +35,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->inherits('ComBaseDomainEntityComment')) {
             $data['body'] = $entity->body;
         }
-
+        
         if ($entity->isPortraitable()) {
             $imageURL = array();
 
@@ -105,7 +105,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             
             $data['coverURL'] = (object) $coverURL;
         }
-
+        
         if ($entity->isModifiable()) {
             $data->append(array(
                 'author' => null,
@@ -119,15 +119,35 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             
             if (!is_person($entity)) {
                 if (isset($entity->author)) {
-                    $data['author'] = $entity->author->toSerializableArray();
+                    $author = $entity->author->toSerializableArray();
+                    $data['author'] = array(
+                        'id' => $author['id'],
+                        'objectType' => $author['objectType'],
+                        'name' => $author['name'],
+                        'alias' => $author['alias'],
+                        'givenName' => $author['givenName'],
+                        'familyName' => $author['familyName'],
+                        'username' => $author['username'],
+                        'imageURL' => $author['imageURL'],
+                    );
                 }
                 
                 if (isset($entity->editor)) {
-                    $data['editor'] = $entity->editor->toSerializableArray();
+                    $editor = $entity->editor->toSerializableArray();
+                    $data['editor'] = array(
+                        'id' => $editor['id'],
+                        'objectType' => $editor['objectType'],
+                        'name' => $editor['name'],
+                        'alias' => $editor['alias'],
+                        'givenName' => $editor['givenName'],
+                        'familyName' => $editor['familyName'],
+                        'username' => $editor['username'],
+                        'imageURL' => $editor['imageURL'],
+                    );
                 }
             }
         }
-
+        
         if ($entity->isCommentable()) {
             $data['openToComment'] = (bool) $entity->openToComment;
             $data['numOfComments'] = $entity->numOfComments;
@@ -152,6 +172,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($entity->isVotable()) {
             $data['voteUpCount'] = $entity->voteUpCount;
             $data['isVotedUp'] = $entity->votedUp($viewer);
+            $data['voteups'] = $entity->voteups->voter->toSerializableArray();
         }
         
         if ($entity->isParentable()) {
@@ -159,7 +180,14 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         }
 
         if (!is_person($entity) && $entity->isOwnable()) {
-            $data['owner'] = $entity->owner->toSerializableArray();
+            $owner = $entity->owner->toSerializableArray();
+            $data['owner'] = array(
+                'id' => $owner['id'],
+                'objectType' => $owner['objectType'],
+                'name' => $owner['name'],
+                'alias' => $owner['alias'],
+                'imageURL' => $owner['imageURL'],
+            );
         }
         
         if ($entity->isGeolocatable()) {
@@ -188,7 +216,7 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
         if ($data['authorized']['edit'] && $entity->isPrivatable()) {
             $data['access'] = $entity->access;
         }
-
+        
         return AnConfig::unbox($data);
     }
 }

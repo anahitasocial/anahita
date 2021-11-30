@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComPeopleControllerSignup extends ComBaseControllerService
 {
@@ -77,13 +77,9 @@ class ComPeopleControllerSignup extends ComBaseControllerService
             error_log(print_r($person->getErrors()->getMessage(), true));
             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
-        
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
         
-        $this->registerCallback('after.add', array($this, 'mailActivationLink'));
         $context->response->setHeader('X-User-Activation-Required', true);
-        $this->setMessage(sprintf(translate('COM-PEOPLE-PROMPT-ACTIVATION-LINK-SENT'), $person->name, 'success'));
-        
         $this->getResponse()->status = AnHttpResponse::OK;
 
         return $person;

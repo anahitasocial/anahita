@@ -9,7 +9,7 @@
  * @copyright  2008-2016 rmd Studio Inc.
  * @license    GNU GPLv3
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 class ComSettingsControllerApp extends ComBaseControllerService
@@ -31,24 +31,6 @@ class ComSettingsControllerApp extends ComBaseControllerService
         ));
 
         parent::_initialize($config);
-    }
-
-    protected function _actionGet(AnCommandContext $context)
-    {
-        $title = AnTranslator::_('COM-SETTINGS-HEADER-APPS');
-
-        $this->getToolbar('menubar')->setTitle($title);
-
-        return parent::_actionGet($context);
-    }
-
-    protected function _actionEdit(AnCommandContext $context)
-    {
-        parent::_actionEdit($context);
-
-        if (!$context->getError()) {
-            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
-        }
     }
 
     /**

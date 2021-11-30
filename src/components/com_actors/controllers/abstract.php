@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class ComActorsControllerAbstract extends ComBaseControllerService
 {
@@ -28,11 +28,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     public function __construct(AnConfig $config)
     {
         parent::__construct($config);
-
-        $this->registerCallback(array(
-            'after.delete',
-            'after.add',
-            ), array($this, 'redirect'));
 
         //set filter state
         $this->getState()->insert('filter');
@@ -75,8 +70,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 'coverable',
             )),
         ));
-
-        $this->getService('anahita:language')->load('com_actors');
     }
 
     /**
@@ -95,8 +88,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         $query = $context->query;
 
         if ($this->q) {
-            $query->keyword($this->getService('anahita:filter.term')
-                                 ->sanitize($this->q));
+            $query->keyword($this->getService('anahita:filter.term')->sanitize($this->q));
         }
 
         if ($this->ids) {
@@ -245,50 +237,6 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
                 ));
 
         return $result;
-    }
-
-    /**
-     * Get a toolbar by identifier.
-     *
-     * @return AnControllerToolbarAbstract
-     */
-    public function getToolbar($toolbar, $config = array())
-    {
-        if (is_string($toolbar)) {
-            //if actorbar or menu alawys default to the base
-            if (in_array($toolbar, array('actorbar'))) {
-                $identifier = clone $this->getIdentifier();
-                $identifier->path = array('controller','toolbar');
-                $identifier->name = $toolbar;
-                register_default(array(
-                    'identifier' => $identifier,
-                    'default' => 'ComActorsControllerToolbar'.ucfirst($toolbar),
-                    ));
-                $toolbar = $identifier;
-            }
-        }
-
-        return parent::getToolbar($toolbar, $config);
-    }
-
-    /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url = null;
-
-        if ($context->action == 'delete') {
-            $url = 'option=com_'.$this->getIdentifier()->package.'&view='.AnInflector::pluralize($this->getIdentifier()->name);
-        } elseif ($context->action == 'add') {
-            $url = $context->result->getURL().'&get=settings';
-        }
-
-        if ($url) {
-            $context->response->setRedirect(route($url));
-        }
     }
 
     /**

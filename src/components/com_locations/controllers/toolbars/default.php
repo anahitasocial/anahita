@@ -9,7 +9,7 @@
  * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComLocationsControllerToolbarDefault extends ComTagsControllerToolbarDefault
 {
@@ -75,7 +75,7 @@ class ComLocationsControllerToolbarDefault extends ComTagsControllerToolbarDefau
         $location = $this->getController()->getItem();
 
         if(!empty($this->_locatable)){
-            $this->addCommand('deleteLocation', array('locatable' => $this->_locatable));
+            $this->addCommand('deleteLocation');
         } else {
           if ($location->authorize('edit')) {
               $this->addCommand('edit');
@@ -85,38 +85,5 @@ class ComLocationsControllerToolbarDefault extends ComTagsControllerToolbarDefau
               $this->addCommand('delete');
           }
         }
-    }
-
-    /**
-     * Delete Command for an entity.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandDelete($command)
-    {
-        $entity = $this->getController()->getItem();
-
-        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
-        ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', route('index.php?option=com_locations&view=locations'))
-        ->class('action-delete');
-    }
-
-    /**
-     * Delete a location from a locatable entity
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandDeleteLocation($command)
-    {
-        $location = $this->getController()->getItem();
-        $locatable = $command->locatable;
-
-        $command->setAttribute('data-action', 'deleteLocation')
-        ->setAttribute('data-location', $location->id)
-        ->href($locatable->getURL());
-
-        $command->label = translate('LIB-AN-ACTION-DELETE');
     }
 }

@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComBaseControllerService extends ComBaseControllerResource
 {
@@ -61,7 +61,7 @@ class ComBaseControllerService extends ComBaseControllerResource
 
         $config->append(array(
             'behaviors' => to_hash('serviceable'),
-            'toolbars' => array($this->getIdentifier()->name, 'menubar', 'actorbar'),
+            'toolbars' => array($this->getIdentifier()->name),
             'request' => array(
                 'limit' => 20,
                 'start' => 0,

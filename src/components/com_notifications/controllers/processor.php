@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComNotificationsControllerProcessor extends ComBaseControllerResource
 {
@@ -30,8 +30,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         parent::__construct($config);
 
         $this->_parser = $this->getService($config->parser);
-
+        
         $this->getService('anahita:language')->load('com_actors');
+        $this->getService('anahita:language')->load('com_stories');
     }
 
     /**
@@ -89,7 +90,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
         foreach ($notifications as $notification) {
             $notification->status = ComNotificationsDomainEntityNotification::STATUS_SENT;
-            if (!$muteEmail) {
+            if (! $muteEmail) {
                 $this->sendNotification($notification);
             }
         }
@@ -141,7 +142,9 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
         $settings = $config->settings;
         $people = $config->people;
         $notification = $config->notification;
-
+        
+        $this->getService('anahita:language')->load($notification->component);
+        
         foreach ($people as  $person) {
             $setting = $settings->{$person->id};
 
@@ -155,14 +158,14 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
             if ($ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL) {
                 continue;
             }
-
+            
             //since each owner revieces the mail, they are in fact the viewer
             //so we need to set the as viewer while processing the notification
             AnService::set('com:people.viewer', $person);
 
             $notification->owner = $person;
             $data = new AnConfig($this->_parser->parse($notification));
-
+            
             $data->append(array(
                 'email_subject' => $data->title,
                 'email_title' => pick($data->email_subject, $data->title),
@@ -185,7 +188,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
                             'body' => $data->email_body
                         )
                     ));
-
+            
             if ($person->email != '' && filter_var($person->email, FILTER_VALIDATE_EMAIL)) {
                 $mails[] = array(
                       'subject' => $data->email_subject,

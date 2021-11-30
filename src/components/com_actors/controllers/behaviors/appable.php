@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
 {
@@ -30,16 +30,18 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     protected function _actionGetApps(AnCommandContext $context)
     {
         $data = array();
+        $language = $this->getService('anahita:language');
         $components = $this->getService('com:actors.domain.entityset.component', array(
                 'actor' => $this->getItem(),
                 'can_enable' => true,
             ));
-            
+             
         foreach ($components as $component) {
+            $language->load($component->option);
             $data[] = array(
                 'id' => $component->option,
                 'name' => $component->getProfileName(),
-                'description' => $component->getProfileDescription(),
+                'description' => $language->_($component->getProfileDescription()),
                 'enabled' => $component->enabledForActor($this->getItem()),
             );
         }    

@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implements AnEventSubscriberInterface
 {
@@ -29,8 +29,6 @@ class ComComponentsDomainEntityComponent extends AnDomainEntityDefault implement
      */
     protected function _initialize(AnConfig $config)
     {
-        $this->getService('anahita:language')->load('com_'.$this->getIdentifier()->package);
-
         $config->append(array(
             'resources' => array('components'),
             'attributes' => array(

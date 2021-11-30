@@ -12,7 +12,7 @@
  *
  * @version    SVN: $Id$
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 /**
@@ -24,7 +24,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
 {
@@ -57,8 +57,6 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
         }
 
         $this->_template->getFilter('alias')->append(AnConfig::unbox($config->alias));
-
-        $this->getService('anahita:language')->load('com_stories');
 
         $this->_template->addSearchPath(AnConfig::unbox($config->paths), true);
     }
@@ -102,8 +100,6 @@ class ComStoriesTemplateHelperParser extends LibBaseTemplateHelperAbstract
     public function parse($story, $actor = null)
     {
         $options = array();
-
-        $this->getService('anahita:language')->load($story->component);
 
         static $commands;
 

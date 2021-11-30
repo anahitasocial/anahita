@@ -10,7 +10,7 @@
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
- * @link       https://www.GetAnahita.com
+ * @link       https://www.Anahita.io
  */
 class ComApplicationControllerDefault extends LibBaseControllerResource implements AnServiceInstantiatable
 {
@@ -31,26 +31,6 @@ class ComApplicationControllerDefault extends LibBaseControllerResource implemen
         }
 
         return $container->get($config->service_identifier);
-    }
-
-    /**
-     * Initializes the default configuration for the object.
-     *
-     * Called from {@link __construct()} as a first step of object instantiation.
-     *
-     * @param AnConfig $config An optional AnConfig object with configuration options.
-     */
-    protected function _initialize(AnConfig $config)
-    {
-        $config->append(array(
-            'theme' => 'base'
-        ));
-
-        $config->append(array(
-            'view' => 'tmpl:'.$config->theme.'.view.'.$this->getIdentifier()->name.'.'.$config->request->getFormat(),
-        ));
-
-        parent::_initialize($config);
     }
 
     /**

@@ -9,7 +9,7 @@
  * @copyright  2008 - 2016 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnServiceInstantiatable
 {
@@ -109,7 +109,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
     public function getComponent()
     {
         if (! ($this->_controller instanceof LibBaseControllerAbstract)) {
-
             $this->_controller = $this->getController();
 
             if (! $this->_controller instanceof LibBaseControllerAbstract) {
@@ -134,7 +133,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
     public function setComponent($component, $config = array())
     {
         if (! ($component instanceof LibBaseControllerAbstract)) {
-
             if (is_string($component) && strpos($component, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->package = $component;
@@ -206,7 +204,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->_application = $this->getService('com:application', array('session' => $session));
 
         $settings = $this->getService('com:settings.config');
-
+        
         $this->getService('anahita:language', array(
             'language' => $settings->language
         ));
@@ -317,41 +315,8 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->getComponent()->dispatch($context);
 
         dispatch_plugin('system.onAfterDispatch', array( $context ));
-
-        $location = $context->response->getHeader('Location');
-        $isHtml = $context->request->getFormat() == 'html';
-        $isAjax = $context->request->isAjax();
-
-        if (! $location && $isHtml && !$isAjax) {
-            $this->_render($context);
-        }
         
         $this->send($context);
-    }
-
-    /**
-    *   Outputs html content
-    *   @param AnCommandContext $context Command chain context
-    *
-    *   @return void
-    */
-    protected function _render(AnCommandContext $context)
-    {
-        dispatch_plugin('system.onBeforeRender', array( $context ));
-
-        $config = array(
-            'request' => $context->request,
-            'response' => $context->response,
-            'theme' => $this->_application->getTemplate(),
-        );
-
-        $layout = $this->_request->get('tmpl', 'default');
-
-        $this->getService('com:application.controller.default', $config)
-             ->layout($layout)
-             ->render();
-
-        dispatch_plugin('system.onAfterRender', array( $context ));
     }
 
     /**
@@ -402,14 +367,9 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $config = array(
             'response' => $context->response,
             'request' => $context->request,
-            'theme' => $this->_application->getTemplate()
         );
 
-        //if ajax or the format is not html
-        //then return the exception in json format
-        if ($context->request->isAjax() || $context->request->getFormat() != 'html') {
-            $context->request->setFormat('json');
-        }
+        $context->request->setFormat('json');
 
         $this->getService('com:application.controller.exception', $config)
         ->layout('error')

@@ -8,7 +8,7 @@
  * @copyright  Copyright (C) 2018 rmd Studio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class LibBaseTemplateFilterAbstract extends AnObject implements LibBaseTemplateFilterInterface
 {

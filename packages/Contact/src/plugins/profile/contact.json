@@ -1,0 +1,22 @@
+{
+    "name": "Profile - Contact",
+    "description": "Plugin to store contact fields such as email, phone, website url, and contact page url",
+    "type": "plugin",
+    "group": "profile",
+    "version": "4.6.0",
+    "license": "GPLv3",
+    "homepage": "https://www.Anahita.io",
+    "authors": [
+      {
+        "name": "rmd Studio Inc.",
+        "email": "info@rmdstudio.com",
+        "homepage": "https://www.rmdstudio.com"
+      }
+    ],
+    "copyright": [
+        "rmd Studio Inc."
+    ],
+    "files": [
+        "contact.php"
+    ]
+}

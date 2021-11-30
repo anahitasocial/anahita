@@ -12,7 +12,7 @@
  *
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 /**
@@ -24,7 +24,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
 {
@@ -46,27 +46,10 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
     {
         if ($this->cid) {
             $context->response->content = $this->getCommentController()->id($this->cid)->display();
-
-            return false;
-        } elseif ($this->permalink && !$context->request->isAjax()) {
-            $cid = (int) preg_replace_callback('/[^\d]+/', function($matches) { return ''; }, $this->permalink);
-            $offset = $this->getItem()->getCommentOffset($cid);
-            $start = (int) ($offset / $this->limit) * $this->limit;
-            $url = AnRequest::url();
-            $query = $url->getQuery(true);
-
-            if ($this->start != $start) {
-                $query = array_merge($query, array('start' => $start));
-            }
-
-            unset($query['permalink']);
-
-            $url->setQuery($query);
-
-            $context->response->setRedirect($url.'#scroll='.$this->permalink);
-
             return false;
         }
+        
+        return true;
     }
 
     /**
@@ -131,18 +114,8 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
         $comment = $this->getCommentController()->add(array('body' => $data->body));
         $context->response->status = AnHttpResponse::CREATED;
         $context->comment = $comment;
-
-        if ($this->isDispatched()) {
-            $context->response->content = $this->getCommentController()->display();
-
-            if ($context->request->getFormat() == 'html') {
-                $offset = $this->getItem()->getCommentOffset($comment->id);
-                $start = (int) ($offset / $this->limit) * $this->limit;
-                $context->response->setRedirect(route($comment->parent->getURL().'&start='.$start).'#scroll='.$comment->id);
-            } else {
-                $context->response->setRedirect(route($comment->getURL()));
-            }
-        }
+        
+        $context->response->content = $this->getCommentController()->display();
 
         return $comment;
     }

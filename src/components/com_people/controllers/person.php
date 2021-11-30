@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComPeopleControllerPerson extends ComActorsControllerDefault
 {
@@ -155,12 +155,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
 
         dispatch_plugin('user.onAfterEditPerson', array('person' => $person));
 
-        $this->setMessage('LIB-AN-PROMPT-UPDATE-SUCCESS', 'success');
-
-        $edit = ($data->password && $data->username) ? 'account' : $this->_request->edit;
-        $url = sprintf($person->getURL(false)."&get=settings&edit=%s", $edit);
-        $context->response->setRedirect(route($url));
-
         return $person;
     }
 
@@ -200,8 +194,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
              $this->registerCallback('after.add', array($this, 'mailAdminsNewAdmin'));
          }
          
-         $context->response->setRedirect(route('option=com_people&view=people'));
-         
          return $person;
      }
 
@@ -218,6 +210,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         dispatch_plugin('user.onBeforeDeletePerson', array('data' => $context->data));
 
         $person = parent::_actionDelete($context);
+        
         $person_id = $person->id;
 
         $this->getService('repos:sessions.session')->destroy(array('nodeId' => $person->id));
@@ -225,30 +218,6 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         dispatch_plugin('user.onAfterDeletePerson', array('id' => $person_id));
 
         return $person;
-    }
-
-    /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url = null;
-
-        if ($context->action === 'delete') {
-            $viewer = $this->getService('com:people.viewer');
-
-            if ($viewer->id == $this->getItem()->id) {
-                $url = 'index.php?';
-            } else {
-                $url = 'option=com_people&view=people';
-            }
-        }
-
-        if ($url) {
-            $context->response->setRedirect(route($url));
-        }
     }
 
     /**

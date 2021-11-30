@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.6.0
+=============================
+- removed: all html views
+
 Anahita 4.5.2
 =============================
 - changed: fileable behaviour now checks for a file containing list of mimetypes otherwise uses an empty array. 

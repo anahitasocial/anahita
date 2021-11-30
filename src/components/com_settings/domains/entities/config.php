@@ -9,7 +9,7 @@
  * @copyright  2008-2016 rmd Studio Inc.
  * @license    GNU GPLv3
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComSettingsDomainEntityConfig extends AnObject
 {
@@ -44,7 +44,6 @@ class ComSettingsDomainEntityConfig extends AnObject
               'error_reporting' => 0,
               'log_path' => '',
               'tmp_path' => '',
-              'template' => 'shiraz',
               'language' => 'en-GB',
 
               // database

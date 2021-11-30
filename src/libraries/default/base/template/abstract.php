@@ -10,7 +10,7 @@
  * @copyright  Copyright (C) 2010 PeerGlobe Technology Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class LibBaseTemplateAbstract extends AnObject
 {
@@ -192,7 +192,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
             if (is_string($view) && strpos($view, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('view', $view);
-                $identifier->name = 'html';
+                $identifier->name = 'json';
             } else {
                 $identifier = $this->getIdentifier($view);
             }

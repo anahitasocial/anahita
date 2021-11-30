@@ -10,7 +10,7 @@
  * @copyright  2008 - 2016 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComApplicationRouter extends AnObject
 {
@@ -127,7 +127,8 @@ class ComApplicationRouter extends AnObject
         $this->_fixUrlForParsing($url);
 
         if (empty($url->path) && !isset($url->query['option'])) {
-            $url->path = (get_viewer()->guest()) ? 'pages' : 'dashboard';
+            // $url->path = (get_viewer()->guest()) ? 'pages' : 'dashboard';
+            $url->path = 'settings/about';
         }
 
         $segments = explode('/', trim($url->path, '/'));
@@ -182,8 +183,8 @@ class ComApplicationRouter extends AnObject
             $uri->format = $query['format'];
             unset($query['format']);
         }
-
-        if ($uri->format == 'html') {
+        
+        if ($uri->format == 'og') {
             $uri->format = null;
         }
 
@@ -263,7 +264,7 @@ class ComApplicationRouter extends AnObject
         $path = trim($path, '/');
 
         $url->path = $path;
-        $url->format = $url->format ? $url->format : pick(AnRequest::format(), 'html');
+        $url->format = $url->format ? $url->format : pick(AnRequest::format(), 'json');
 
         if (! empty($url->format)) {
             $url->query['format'] = $url->format;

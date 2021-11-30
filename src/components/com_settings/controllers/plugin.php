@@ -9,7 +9,7 @@
  * @copyright  2008-2016 rmd Studio Inc.
  * @license    GNU GPLv3
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 class ComSettingsControllerPlugin extends ComBaseControllerService
@@ -38,21 +38,6 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
     }
 
     /**
-    *   get service
-    *
-    *  @param AnCommandContext $context Context Parameter
-    *  @return object entity
-    */
-    protected function _actionGet(AnCommandContext $context)
-    {
-        $title = AnTranslator::_('COM-SETTINGS-HEADER-PLUGINS');
-
-        $this->getToolbar('menubar')->setTitle($title);
-
-        return parent::_actionGet($context);
-    }
-
-    /**
     *   browse service
     *
     *  @param AnCommandContext $context Context Parameter
@@ -71,22 +56,5 @@ class ComSettingsControllerPlugin extends ComBaseControllerService
         $entities->order($filter->sanitize($this->sort));
 
         return $entities;
-    }
-
-    /**
-    *   edit service
-    *
-    *  @param AnCommandContext $context Context Parameter
-    *  @return void
-    */
-    protected function _actionEdit(AnCommandContext $context)
-    {
-        $entity = parent::_actionEdit($context);
-
-        if (!$context->getError()) {
-            $this->setMessage('COM-SETTINGS-PROMPT-SUCCESS', 'success');
-        }
-
-        return $entity;
     }
 }

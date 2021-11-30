@@ -12,7 +12,7 @@ require_once ANPATH_LIBRARIES.'/anahita/translator.php';
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class anahita
 {
@@ -21,7 +21,7 @@ class anahita
      *
      * @var string
      */
-    protected static $_version = '4.5.2';
+    protected static $_version = '4.6.0';
 
     /**
      * Path to Anahita libraries.

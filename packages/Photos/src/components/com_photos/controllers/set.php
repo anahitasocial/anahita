@@ -102,8 +102,6 @@ class ComPhotosControllerSet extends ComMediumControllerDefault
     protected function _actionAddphoto($context)
     {
         $this->getItem()->addPhoto($this->photo);
-        $context->response->setRedirect(route($this->getItem()->getURL()));
-
         return $this->getItem();
     }
 

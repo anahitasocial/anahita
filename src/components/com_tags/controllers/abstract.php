@@ -9,25 +9,10 @@
  * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class ComTagsControllerAbstract extends ComBaseControllerService
 {
-    /**
-     * Constructor.
-     *
-     * @param AnConfig $config An optional AnConfig object with configuration options.
-     */
-    public function __construct(AnConfig $config)
-    {
-        parent::__construct($config);
-
-        $this->registerCallback(array(
-            'after.delete',
-            'after.add', ),
-            array($this, 'redirect'));
-    }
-
     /**
      * Initializes the options for the object.
      *
@@ -46,8 +31,6 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         ));
 
         parent::_initialize($config);
-
-        $this->getService('anahita:language')->load('com_tags');
     }
 
     /**
@@ -60,9 +43,7 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         $pkg = $this->getIdentifier()->package;
         $name = $this->getIdentifier()->name;
         
-        $this->getToolbar('menubar')->setTitle(sprintf(AnTranslator::_('COM-'.$pkg.'-TERM'), $name));
-        
-        if ($entity = parent::_actionRead($context)) {
+        if ($entity = parent::_actionRead($context)) {            
             $entity->taggables->getRepository()->addBehavior('com:tags.domain.behavior.privatable');
             
             if ($this->scope) {
@@ -139,24 +120,6 @@ abstract class ComTagsControllerAbstract extends ComBaseControllerService
         }
 
         return $this;
-    }
-
-    /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url = array();
-        $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
-        $url['option'] = $this->getIdentifier()->package;
-
-        if ($context->action == 'add') {
-            $url['id'] = $this->getItem()->id;
-        }
-
-        $this->getResponse()->setRedirect(route($url));
     }
     
     /**

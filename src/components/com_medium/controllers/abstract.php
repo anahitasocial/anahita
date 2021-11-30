@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 abstract class ComMediumControllerAbstract extends ComBaseControllerService
 {
@@ -22,17 +22,10 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     {
         parent::__construct($config);
 
-        $this->registerCallback(array(
-            'after.add'),
-            array($this, 'createStoryCallback'));
+        $this->registerCallback(array('after.add'), array($this, 'createStoryCallback'));
 
         //add medium related states
-        $this->getState()->insert('filter')->insert('grid')->insert('order');
-
-        $this->registerCallback(array(
-            'after.delete',
-            'after.add', ),
-            array($this, 'redirect'));
+        $this->getState()->insert('filter')->insert('order');
     }
 
     /**
@@ -99,46 +92,6 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
     }
 
     /**
-     * Set the necessary redirect.
-     *
-     * @param AnCommandContext $context
-     */
-    public function redirect(AnCommandContext $context)
-    {
-        $url['view'] = AnInflector::pluralize($this->getIdentifier()->name);
-        $url['option'] = $this->getIdentifier()->package;
-
-        if ($context->action == 'add') {
-            $url['id'] = $this->getItem()->id;
-        } elseif ($context->action == 'delete') {
-            $url['oid'] = $this->getItem()->owner->id;
-        }
-
-        $this->getResponse()->setRedirect(route($url));
-    }
-
-    /**
-     * Set the default Actor View.
-     *
-     * @param AnCommandContext $context Context parameter
-     *
-     * @return ComActorsControllerDefault
-     */
-    public function setView($view)
-    {
-        parent::setView($view);
-
-        if (!$this->_view instanceof ComBaseViewAbstract) {
-            $name = AnInflector::isPlural($this->view) ? 'media' : 'medium';
-            $defaults[] = 'ComMediumView'.ucfirst($view).ucfirst($this->_view->name);
-            $defaults[] = 'ComMediumView'.ucfirst($name).ucfirst($this->_view->name);
-            register_default(array('identifier' => $this->_view, 'default' => $defaults));
-        }
-
-        return $this;
-    }
-
-    /**
      * Can be used as a cabllack to automatically create a story.
      *
      * @param AnCommandContext $context
@@ -151,14 +104,14 @@ abstract class ComMediumControllerAbstract extends ComBaseControllerService
             $data = $context->data;
             $name = $this->getIdentifier()->name.'_'.$context->action;
             $context->append(array(
-                    'story' => array(
-                            'component' => 'com_'.$this->getIdentifier()->package,
-                            'name' => $name,
-                            'owner' => $this->actor,
-                            'object' => $this->getItem(),
-                            'target' => $this->actor,
-                            'comment' => $this->isCommentable() ? $data->comment : null,
-                    ),
+                'story' => array(
+                    'component' => 'com_'.$this->getIdentifier()->package,
+                    'name' => $name,
+                    'owner' => $this->actor,
+                    'object' => $this->getItem(),
+                    'target' => $this->actor,
+                    'comment' => $this->isCommentable() ? $data->comment : null,
+                ),
             ));
             $story = $this->createStory(AnConfig::unbox($context->story));
             $data->story = $story;

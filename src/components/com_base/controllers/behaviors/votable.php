@@ -10,7 +10,7 @@
  * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 
 class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
@@ -26,19 +26,14 @@ class ComBaseControllerBehaviorVotable extends AnControllerBehaviorAbstract
     {
         $this->commit();
 
-        if ($context->request->getFormat() == 'html') {
-            return $this->getView()->getTemplate()
-            ->renderHelper('ui.voters', $this->getItem(), array('avatars' => $this->avatars));
-        } else {
-            $voters = $this->getItem()->voteups->voter;
-            $controller = $this->getService('com:actors.controller.actor')
-                                ->view('actors')
-                                ->format($context->request->getFormat());
+        $voters = $this->getItem()->voteups->voter;
+        $controller = $this->getService('com:actors.controller.actor')
+                            ->view('actors')
+                            ->format($context->request->getFormat());
 
-            $controller->getState()->setList($voters);
+        $controller->getState()->setList($voters);
 
-            return $controller->getView()->display();
-        }
+        return $controller->getView()->display();
     }
 
     /**

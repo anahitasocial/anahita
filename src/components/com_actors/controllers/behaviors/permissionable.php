@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbstract
 {
@@ -35,6 +35,7 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
     protected function _actionGetpermissions(AnCommandContext $context)
     {
         $data = array();
+        $language = $this->getService('anahita:language');
         $actor = $this->getItem();
         $components = $this->getItem()->components;
         
@@ -51,10 +52,12 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
             
             $actions = $this->_getActions($component);  
             
+            $language->load($component->component);
+            
             $data[] = array(
                 'id' => $component->id,
                 'name' => $component->component,
-                'description' => $component->getProfileDescription(), 
+                'description' => $language->_($component->getProfileDescription()), 
                 'enabled' => true, 
                 'actions' => $actions,
            );    

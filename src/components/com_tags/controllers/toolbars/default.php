@@ -9,7 +9,7 @@
  * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 {
@@ -24,18 +24,6 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
 
         if ($this->getController()->getItem()) {
             $this->addToolbarCommands();
-        }
-    }
-
-    /**
-     * Called after controller browse.
-     *
-     * @param AnEvent $event
-     */
-    public function onBeforeControllerBrowse(AnEvent $event)
-    {
-        if ($this->getController()->canAdd()) {
-            $this->addCommand('new');
         }
     }
 
@@ -69,40 +57,5 @@ class ComTagsControllerToolbarDefault extends ComBaseControllerToolbarDefault
         if ($entity->authorize('delete')) {
             $this->addCommand('delete');
         }
-    }
-
-    /**
-     * Delete Command for an entity.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandDelete($command)
-    {
-        $entity = $this->getController()->getItem();
-
-        $command->append(array('label' => AnTranslator::_('LIB-AN-ACTION-DELETE')))
-        ->href(route($entity->getURL()))
-        ->setAttribute('data-action', 'delete')
-        ->setAttribute('data-redirect', route($entity->owner->getURL()))
-        ->class('action-delete');
-    }
-
-    /**
-     * New button toolbar.
-     *
-     * @param LibBaseTemplateObject $command The action object
-     */
-    protected function _commandNew($command)
-    {
-        $name = $this->getController()->getIdentifier()->name;
-        $labels = array();
-        $labels[] = strtoupper('com-'.$this->getIdentifier()->package.'-toolbar-'.$name.'-new');
-        $labels[] = 'New';
-        $label = translate($labels);
-        $url = 'option=com_'.$this->getIdentifier()->package.'&view='.$name.'&layout=add';
-
-        $command
-        ->append(array('label' => $label))
-        ->href(route($url));
     }
 }

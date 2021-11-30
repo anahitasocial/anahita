@@ -9,7 +9,7 @@
  * @author     Rastin Mehr <rastin@anahitapolis.com>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class ComBaseControllerResource extends LibBaseControllerResource
 {
@@ -43,27 +43,6 @@ class ComBaseControllerResource extends LibBaseControllerResource
         ));
 
         parent::_initialize($config);
-    }
-
-    /**
-     * Get a toolbar by identifier.
-     *
-     * @return AnControllerToolbarAbstract
-     */
-    public function getToolbar($toolbar, $config = array())
-    {
-        if (is_string($toolbar)) {
-            //if actorbar or menu alawys default to the base
-            if (in_array($toolbar, array('actorbar', 'menubar'))) {
-                $identifier = clone $this->getIdentifier();
-                $identifier->path = array('controller','toolbar');
-                $identifier->name = $toolbar;
-                register_default(array('identifier' => $identifier, 'default' => 'ComBaseControllerToolbar'.ucfirst($toolbar)));
-                $toolbar = $identifier;
-            }
-        }
-
-        return parent::getToolbar($toolbar, $config);
     }
 
     /**
