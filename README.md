@@ -48,7 +48,7 @@ The code in the master branch is called the **Embryo**. It is what we use to pow
 
 ## Upgrading
 
-If you are upgrading from 4.5.* to 4.6.* you will need a client side applications such as [Anahita React](https://github.com/anahitasocial/anahita-react) as your front end, since Anahita will only provide a RESTful JSON API and no html outputs.
+If you are upgrading from 4.5.* to 4.6.* you will need a client side applications such as [Anahita React](https://github.com/anahitasocial/anahita-react) as your front end, since Anahita will only provide a RESTful JSON API and no html outputs. If you need time to build a client app, you may point your installation to the _legacy_ branch for the time being.
 
 If you are upgrading from 4.3.* to 4.4.*, in `www/configuration.php` file, change `AnConfig` to `AnSiteConfig`.
 
