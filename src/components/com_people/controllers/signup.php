@@ -77,7 +77,6 @@ class ComPeopleControllerSignup extends ComBaseControllerService
             error_log(print_r($person->getErrors()->getMessage(), true));
             throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
         }
-
         dispatch_plugin('user.onAfterAddPerson', array('person' => $person));
         
         $context->response->setHeader('X-User-Activation-Required', true);

@@ -9,7 +9,11 @@ Anahita 4.5.2
 - changed: fileable behaviour now checks for a file containing list of mimetypes otherwise uses an empty array. 
 - removed: all the unsupported mimetypes from the com_documents
 - changed: improved signup workflow prompt messages
-
+- added: site:signup command to the cli tool 
+- removed: first user signup from the people signup controller
+- changed: updated installation instructions in the README file.
+- added: random_password method to the functions.php
+- changed: default trending days for tags to 30 days 
 
 Anahita 4.5.1
 =============================
