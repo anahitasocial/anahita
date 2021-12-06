@@ -82,15 +82,16 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     public function fetchApp(AnCommandContext $context) 
     {
         $data = $context->data;
-        
+        $language = $this->getService('anahita:language');
         $component = $this->getService('repos:components.component')->fetch(array(
             'component' => $data->app
         ));
+        $language->load($component->option);
         
         $content = json_encode(array(
             'id' => $component->option,
             'name' => $component->getProfileName(),
-            'description' => $component->getProfileDescription(),
+            'description' => $language->_($component->getProfileDescription()),
             'enabled' => $component->enabledForActor($this->getItem()),
         ));
         

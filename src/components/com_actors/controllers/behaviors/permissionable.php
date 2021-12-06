@@ -101,17 +101,19 @@ class ComActorsControllerBehaviorPermissionable extends AnControllerBehaviorAbst
     {
         $data = array();
         $actions = array();
+        $language = $this->getService('anahita:language');
         $actor = $this->getItem();
         $privacyNames = AnConfig::unbox($context->data->privacy_name);
 
         $package = explode(':', $privacyNames[0])[0];
         $component = $this->getItem()->components->find(array('component' => $package));
         $actions = $this->_getActions($component); 
+        $language->load($component->component);
         
         $content = json_encode(array(
             'id' => $component->id,
             'name' => $component->component,
-            'description' => $component->getProfileDescription(), 
+            'description' => $language->_($component->getProfileDescription()), 
             'enabled' => true, 
             'actions' => $actions,
        ));
