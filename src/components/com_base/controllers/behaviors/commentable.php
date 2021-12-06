@@ -62,6 +62,7 @@ class ComBaseControllerBehaviorCommentable extends AnControllerBehaviorAbstract
         $this->getCommentController()->getRequest()->remove('get');
 
         $this->getCommentController()
+        ->sort($this->getRequest()->get('sort'))
         ->limit($this->getRequest()->get('limit'))
         ->start($this->getRequest()->get('start'));
 
