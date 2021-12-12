@@ -44,14 +44,20 @@ class ComPeopleDomainAuthorizerPerson extends ComActorsDomainAuthorizerDefault
      */
     protected function _authorizeChangeUsertype(AnCommandContext $context)
     {
+        // viewer can't change their own usertype, yes even admins and superadmins
         if ($this->_entity->eql($this->_viewer)) {
             return false;
         }
 
+        // Super Admins can change other peopple's usertype
         if ($this->_viewer->superadmin()) {
             return true;
         }
 
+        /*
+        *   Admins can chnage other people's usertype, 
+        *   but thye can't change other superadmins usertypes
+        */
         if ($this->_viewer->admin() && !$this->_entity->superadmin()) {
             return true;
         }

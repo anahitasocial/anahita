@@ -124,6 +124,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
      */
     protected function _actionEdit(AnCommandContext $context)
     {
+        $viewer = $this->getService('com:people.viewer');
         $data = $context->data;
 
         dispatch_plugin('user.onBeforeEditPerson', array('data' => $context->data));
@@ -149,10 +150,14 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
         //now check to see if usertype can be set, otherwise the value is unchanged
         if (in_array($usertype, $this->_allowed_user_types) && $person->authorize('changeUsertype')) {
             $person->usertype = $usertype;
+            
+            if ($person->admin()) {
+                $this->registerCallback('after.edit', array($this, 'mailAdminsNewAdmin'));
+            }
         }
 
         $person->timestamp();
-
+        
         dispatch_plugin('user.onAfterEditPerson', array('person' => $person));
 
         return $person;

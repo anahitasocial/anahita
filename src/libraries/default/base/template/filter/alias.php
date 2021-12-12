@@ -26,11 +26,10 @@ class LibBaseTemplateFilterAlias extends LibBaseTemplateFilterAbstract implement
         '@template('    => '$this->loadIdentifier(',
         '@route('       => '$this->getView()->getRoute(',
         '@escape('      => '$this->getView()->escape(',
-        '@controller(' => '$this->renderHelper(\'controller.getController\',',
-        '@view(' => '$this->renderHelper(\'controller.getView\',',
-        '@previous(' => '$this->getHelper(\'previous\')->load(',
-        '@template(' => '$this->getView()->load(',
-        '@route(' => '$this->getView()->getRoute(',
+        '@controller('  => '$this->renderHelper(\'controller.getController\',',
+        '@view('        => '$this->renderHelper(\'controller.getView\',',
+        '@previous('    => '$this->getHelper(\'previous\')->load(',
+        '@template('    => '$this->getView()->load(',
     );
     
     /**
