@@ -1,4 +1,4 @@
 <?php defined('ANAHITA') or die; ?>
-
+<? $settings = AnService::get('com:settings.config'); ?>
 <?= sprintf(@text('COM-PEOPLE-MAIL-BODY-PASSWORD-RESET'), $person->name) ?> 
-<?= @route('option=com_people&view=session&reset_password=1&token='.$person->activationCode) ?>
+<?= sprintf('%s/token/%s/resetpassword/', $settings->client_domain, $person->activationCode) ?>

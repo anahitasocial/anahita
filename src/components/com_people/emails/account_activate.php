@@ -1,4 +1,4 @@
 <?php defined('ANAHITA') or die; ?>
-
-<?= sprintf(@text('COM-PEOPLE-MAIL-BODY-ACCOUNT-ACTIVATE'), $person->name)?> 
-<?= @route('option=com_people&view=session&token='.$person->activationCode) ?>
+<? $settings = AnService::get('com:settings.config'); ?>
+<?= sprintf(@text('COM-PEOPLE-MAIL-BODY-ACCOUNT-ACTIVATE'), $person->name)?>
+<?= sprintf('%s/token/%s/', $settings->client_domain, $person->activationCode) ?>

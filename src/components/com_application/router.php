@@ -78,7 +78,7 @@ class ComApplicationRouter extends AnObject
             $base->$part = AnRequest::url()->$part;
         }
 
-        if (PHP_SAPI == 'cli') {
+        // if (PHP_SAPI == 'cli') {
             $settings = $this->getService('com:settings.config');
             $domain = $settings->client_domain;
             
@@ -86,7 +86,7 @@ class ComApplicationRouter extends AnObject
             $base->port = parse_url($domain, PHP_URL_PORT);
             $base->host = AnRequest::get('server.HOSTNAME', 'url', parse_url($domain, PHP_URL_HOST));
             $base->path = parse_url($domain, PHP_URL_PATH);
-        }
+        // }
 
         $config->append(array(
             'base_url' => $base,
