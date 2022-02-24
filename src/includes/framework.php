@@ -55,12 +55,9 @@ AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.template
 AnService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
 AnService::setAlias('anahita:domain.space', 'com:base.domain.space');
 
-//make sure for the autoloader to be reigstered after nooku
-if (PHP_SAPI != 'cli') {
-  $autoloader = require_once ANPATH_VENDOR.'/autoload.php';
-  $autoloader->unregister();
-  $autoloader->register();
-}
+$autoloader = require_once ANPATH_VENDOR.'/autoload.php';
+$autoloader->unregister();
+$autoloader->register();
 
 AnLoader::getInstance()->loadIdentifier('com://site/application.aliases');
 AnService::get('com:settings.config');

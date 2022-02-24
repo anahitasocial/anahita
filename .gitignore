@@ -5,7 +5,10 @@ vendor/autoload.php
 vendor/composer/*
 vendor/dg/*
 vendor/bin/*
+vendor/doctrine/*
+vendor/egulias/*
 vendor/league/*
+vendor/psr/*
 vendor/symfony/*
 vendor/swiftmailer/*
 vendor/bin/*
