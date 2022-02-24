@@ -10,8 +10,8 @@
         "php": ">=5.6 <7.4",
         "symfony/console": "2.1.*",
         "dg/mysql-dump": "1.1.0",
-        "swiftmailer/swiftmailer": "5.4.*",
+        "league/html-to-markdown": "^5.0",
         "symfony/filesystem": "^3.3",
-        "league/html-to-markdown": "^5.0"
+        "symfony/mailer": "^5.4"
     }
 }
