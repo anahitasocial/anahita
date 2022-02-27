@@ -390,7 +390,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
 
         if (! in_array($value, $options)) {
             $entity->addError(array(
-                'message' => $property->getName().' must be one of the value of '.implode($options, ','),
+                'message' => $property->getName().' must be one of the value of '.implode(',', $options),
                 'code' => AnError::OUT_OF_SCOPE,
                 'key' => $property->getName(),
                 'scope' => $options,

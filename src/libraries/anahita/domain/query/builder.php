@@ -103,7 +103,7 @@ class AnDomainQueryBuilder extends AnObject
             }
         }
 
-        $clause = 'UPDATE '.implode($names, ', ').' SET '.$operation;
+        $clause = 'UPDATE '.implode(', ', $names).' SET '.$operation;
 
         return $clause;
     }

@@ -37,7 +37,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
             $this->registerCallback('after.load', array($this, 'updateLegacyPluginsParams'));
             $this->registerCallback('after.load', array($this, 'prepclienv'));
         }
-
+        
         $this->registerCallback('before.route',  array($this, 'load'));
     }
 

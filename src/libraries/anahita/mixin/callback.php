@@ -161,7 +161,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
                 $this->_params[$command][$index] = array_merge($this->_params[$command][$index], $params);
             }
         }
-
+                                    
         return $this->_mixer;
     }
 

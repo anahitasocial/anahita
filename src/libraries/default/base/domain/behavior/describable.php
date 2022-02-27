@@ -134,7 +134,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
                         $search_column[] = "IF(@col($property) IS NULL,\"\",@col($property))";
                     }
 
-                    $search_column = implode($search_column, ',');
+                    $search_column = implode(',', $search_column);
 
                     foreach ($keywords as $keyword) {
                         $clause->where('CONCAT('.$search_column.') LIKE @quote(%'.$keyword.'%)', $operation);
