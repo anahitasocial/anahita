@@ -34,7 +34,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->setComponent($config->component);
 
         if (PHP_SAPI == 'cli') {
-            $this->registerCallback('after.load', array($this, 'updateLegacyPluginsParams'));
             $this->registerCallback('after.load', array($this, 'prepclienv'));
         }
         
@@ -76,27 +75,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         }
 
         return $container->get($config->service_identifier);
-    }
-
-    /**
-    *  if the plugins table still has a legacy params field, rename it to meta
-    *  to be consistent with Anahita's convention
-    *  @todo remove this method in the future releases
-    */
-    public function updateLegacyPluginsParams()
-    {
-        //Renaming a legacy database table field otherwise cli would break
-        $db = AnService::get('anahita:domain.store.database');
-        $pluginColumns = $db->getColumns('plugins');
-
-        if (isset($pluginColumns['params'])) {
-           $db->execute('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
-           $db->execute('ALTER TABLE `#__plugins` CHANGE `published` `enabled` tinyint(3) NOT NULL DEFAULT 0');
-           $db->execute('DROP INDEX `idx_folder` ON `#__plugins`');
-           $db->execute('ALTER TABLE `#__plugins` ADD INDEX `idx_folder` (`enabled`, `folder`)');
-           print "Please run the previous command one more time!\n";
-           exit(0);
-        }
     }
 
     /**
