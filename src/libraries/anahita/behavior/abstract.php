@@ -156,14 +156,20 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
         $methods   = parent::getMixableMethods($mixer);
         $methods[] = 'is'.ucfirst($this->getIdentifier()->name);
           
-        foreach($this->getMethods() as $method)
-        {
-            if(substr($method, 0, 7) == '_action') {
+        foreach($this->getMethods() as $method) {
+            if (substr($method, 0, 7) == '_action') {
                 $methods[] = strtolower(substr($method, 7));
             }  
         }
      
-        return array_diff($methods, array('execute', 'getIdentifier', 'getPriority', 'getHandle', 'getService', 'getIdentifier'));
+        return array_diff($methods, array(
+			'execute', 
+			'getIdentifier', 
+			'getPriority', 
+			'getHandle', 
+			'getService', 
+			'getIdentifier'
+		));
     }
     
 	/**
@@ -178,15 +184,17 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	 */
 	final public function getService($identifier = null, array $config = array())
 	{
-	    if(!isset($this->__service_container)) {
+	    if(! isset($this->__service_container)) {
 	        throw new AnObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
 	    }
-	    if ( !isset($identifier) ) {
+		
+	    if (! isset($identifier)) {
 	    	$result =  $this->__service_container;
 	    }
 	    else {
 	    	$result =  $this->__service_container->get($identifier, $config);
 	    }
+		
 	    return $result;
 	}
 	
