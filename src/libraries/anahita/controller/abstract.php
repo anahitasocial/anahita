@@ -42,7 +42,7 @@ abstract class AnControllerAbstract extends AnObject
 	 *
 	 * @var array
 	 */
-	protected $_request = null;
+	protected $_request = array();
 
     /**
      * Constructor.
@@ -52,7 +52,9 @@ abstract class AnControllerAbstract extends AnObject
     public function __construct( AnConfig $config = null)
     {
         //If no config is passed create it
-        if(! isset($config)) $config = new AnConfig();
+        if (! isset($config)) {
+            $config = new AnConfig();    
+        }
 
         parent::__construct($config);
 
