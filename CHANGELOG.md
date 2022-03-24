@@ -3,6 +3,8 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.6.0
 =============================
 - removed: all html views
+- removed: swiftmailer
+- changed: using symfony/mailer
 
 Anahita 4.5.2
 =============================
