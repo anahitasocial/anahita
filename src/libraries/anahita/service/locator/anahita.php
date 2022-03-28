@@ -46,14 +46,14 @@ class AnServiceLocatorAnahita extends AnServiceLocatorAbstract
     {
         $classname = 'An'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
-        if (!class_exists($classname)) {
+        if (! class_exists($classname)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
-            if (!$classname) {
+            if (! $classname) {
                 // use default class instead
                 $classname = 'An'.ucfirst($identifier->package).AnInflector::implode($identifier->path).'Default';
 
-                if (!class_exists($classname)) {
+                if (! class_exists($classname)) {
                     $classname = false;
                 }
             }
@@ -73,11 +73,11 @@ class AnServiceLocatorAnahita extends AnServiceLocatorAbstract
     {
         $path = '';
 
-        if (!empty($identifier->path)) {
+        if (! empty($identifier->path)) {
             $path .= implode('/', $identifier->path);
         }
 
-        if (!empty($identifier->name)) {
+        if (! empty($identifier->name)) {
             $path .= '/'.$identifier->name;
         }
 

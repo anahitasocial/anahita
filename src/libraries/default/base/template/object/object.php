@@ -40,7 +40,7 @@ class LibBaseTemplateObject extends AnConfig implements LibBaseTemplateObjectInt
     {
         static $instance;
 
-        if (!$instance) {
+        if (! $instance) {
             $instance = new static();
         }
 
@@ -66,7 +66,6 @@ class LibBaseTemplateObject extends AnConfig implements LibBaseTemplateObjectInt
     public function setName($name)
     {
         $this->name = $name;
-
         return $this;
     }
 

@@ -209,7 +209,7 @@ class AnHelperString
         } else {
             foreach (array_keys($search) as $k) {
                 if (is_array($replace)) {
-                    if (array_key_exists($k, $replace)) {
+                    if (isset($replace[$k])) {
                         $str = AnHelperString::str_ireplace($search[$k], $replace[$k], $str, $count);
                     } else {
                         $str = AnHelperString::str_ireplace($search[$k], '', $str, $count);
@@ -261,6 +261,7 @@ class AnHelperString
     {
         $strX = AnHelperString::strtolower($strX);
         $strY = AnHelperString::strtolower($strY);
+        
         return strcmp($strX, $strY);
     }
 
@@ -383,9 +384,11 @@ class AnHelperString
     {
         preg_match_all('/./us', $str, $ar);
         preg_match_all('/./us', $repl, $rar);
+        
         if ($length === null) {
             $length = AnHelperString::strlen($str);
         }
+        
         array_splice($ar[0], $start, $length, $rar[0]);
         return join('', $ar[0]);
     }

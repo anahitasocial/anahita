@@ -42,9 +42,9 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
      */
     public function getValidator()
     {
-        if (!$this->_validator instanceof LibBaseControllerValidatorAbstract) {
+        if (! $this->_validator instanceof LibBaseControllerValidatorAbstract) {
             //Make sure we have a view identifier
-           if (!($this->_validator instanceof AnServiceIdentifier)) {
+           if (! ($this->_validator instanceof AnServiceIdentifier)) {
                $this->setValidator($this->_validator);
            }
 
@@ -65,7 +65,7 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
      */
     public function setValidator($validator)
     {
-        if (!($validator instanceof LibBaseControllerValidatorAbstract)) {
+        if (! ($validator instanceof LibBaseControllerValidatorAbstract)) {
             if (is_string($validator) && strpos($validator, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('controller', 'validator');
@@ -90,7 +90,7 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
      */
     protected function _beforeControllerValidate()
     {
-        if (!isset($this->_validator)) {
+        if (! isset($this->_validator)) {
             $this->setValidator($this->_mixer->getIdentifier()->name);
         }
     }

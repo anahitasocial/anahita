@@ -137,12 +137,10 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     {
         //omit anything that starts with underscore
         if (strpos($method, '_') === false) {
-
             if (count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions())) {
                 $this->{AnInflector::underscore($method)} = $args[0];
                 return $this;
             }
-
         } elseif (strpos($method, '_action') === 0) {
             //if the missing method is _action[Name] but
             //method exists, then that means the action

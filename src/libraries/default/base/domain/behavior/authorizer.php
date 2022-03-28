@@ -77,7 +77,7 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
      */
     public function addAuthorizer($authorizer)
     {
-        if (!$authorizer instanceof LibBaseDomainAuthorizerAbstract) {
+        if (! $authorizer instanceof LibBaseDomainAuthorizerAbstract) {
             if (is_string($authorizer) && strpos($authorizer, '.') === false) {
                 //create identifier
                 $identifier = clone $this->_repository->getIdentifier();
@@ -111,7 +111,6 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
         }
 
         $config = AnConfig::unbox($config);
-
         $context = $this->_mixer->getRepository()->getCommandContext();
 
         $context->append($config)->append(array(
@@ -136,7 +135,7 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
         if (method_exists($this->_mixer, $method)) {
             $ret = $this->_mixer->$method($context);
 
-            if (!is_null($ret)) {
+            if (! is_null($ret)) {
                 $context->authorization = $ret;
             }
         }

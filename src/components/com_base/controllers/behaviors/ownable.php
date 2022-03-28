@@ -78,7 +78,7 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
     public function execute($name, AnCommandContext $context)
     {
         $parts = explode('.', $name);
-
+        
         if ($parts[0] == 'before') {
             $this->_fetchOwner($context);
         }

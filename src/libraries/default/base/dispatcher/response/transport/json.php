@@ -42,7 +42,7 @@
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-                'padding' => '',
+            'padding' => '',
         ));
 
         parent::_initialize($config);
@@ -114,6 +114,7 @@
         //If not padding is set inspect the request query.
         if (empty($this->_padding)) {
             $request = $this->getResponse()->getRequest();
+            
             if ($request->has('callback')) {
                 $this->setCallback($request->get('callback'));
             }

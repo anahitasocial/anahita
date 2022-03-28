@@ -47,9 +47,7 @@ class LibBaseDomainBehaviorParentable extends AnDomainBehaviorAbstract
         if (isset($config['parent'])) {
             if (strpos($config['parent'], '.') === false) {
                 $identifier = clone $config->service_identifier;
-
                 $identifier->path = array('domain','entity');
-
                 $identifier->name = $config['parent'];
             } else {
                 $identifier = $this->getService($config['parent']);

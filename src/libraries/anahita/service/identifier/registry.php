@@ -70,7 +70,7 @@ class AnServiceIdentifierRegistry extends ArrayObject
      */
     public function offsetGet($offset)
     {
-        if (!parent::offsetExists($offset)) {
+        if (! parent::offsetExists($offset)) {
             if ($this->_cache) {
                 $result = unserialize(apc_fetch($this->_cache_prefix.'-'.$offset));
             } else {

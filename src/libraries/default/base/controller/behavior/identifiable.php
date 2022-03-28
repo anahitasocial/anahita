@@ -155,7 +155,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      */
     public function setRepository($repository)
     {
-        if (!$repository instanceof AnDomainRepositoryAbstract) {
+        if (! $repository instanceof AnDomainRepositoryAbstract) {
             $identifier = $repository;
 
             if (strpos($repository, '.') === false) {
@@ -179,8 +179,8 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      */
     public function getRepository()
     {
-        if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof AnServiceIdentifier) {
+        if (! $this->_repository instanceof AnDomainRepositoryAbstract) {
+            if (! $this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -205,9 +205,8 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
 
         if ($values = $this->$identifiable_key) {
             $scope = AnConfig::unbox($context->identity_scope);
-
             $values = AnConfig::unbox($values);
-
+            
             $scope[$identifiable_key] = $values;
 
             if (is_array($values)) {

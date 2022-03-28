@@ -109,7 +109,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $this->mixin(new AnMixinBehavior($config));
 
         //insert the reposiry with highest priority
-        $this->getCommandChain()->enqueue($this, -PHP_INT_MAX);
+        $this->getCommandChain()->enqueue($this, AnCommand::PRIORITY_HIGHEST);
     }
 
     /**

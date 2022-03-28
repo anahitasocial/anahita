@@ -137,7 +137,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      */
     public function offsetSet($name, $object)
     {
-        if (!$object instanceof LibBaseTemplateObjectInterface) {
+        if (! $object instanceof LibBaseTemplateObjectInterface) {
             if (empty($name)) {
                 throw new AnConfigException('Template object name must be unique and non empty');
             }
@@ -159,7 +159,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      */
     public function offsetExists($key)
     {
-        return array_key_exists($key, $this->_objects);
+        return isset($this->_objects[$key]);
     }
 
     /**

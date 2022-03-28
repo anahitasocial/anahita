@@ -31,12 +31,11 @@ class PlgStorageLocal extends PlgStorageAbstract
     /**
      * Constructor.
      *
-     * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional AnConfig object with configuration options.
      */
-    public function __construct($dispatcher = null,  AnConfig $config)
+    public function __construct(AnConfig $config)
     {
-        parent::__construct($dispatcher, $config);
+        parent::__construct($config);
 
         $this->_base_uri = $config->base_uri;
         $this->_root = $config->root;

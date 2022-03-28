@@ -61,7 +61,7 @@ abstract class LibBaseControllerPermissionAbstract extends AnControllerBehaviorA
             $action = $parts[1];
 
             //Check if the action exists
-            if (!in_array($action, $context->caller->getActions())) {
+            if (! in_array($action, $context->caller->getActions())) {
                 throw new LibBaseControllerExceptionNotImplemented(
                         'Action '.ucfirst($action).' Not Implemented');
             }

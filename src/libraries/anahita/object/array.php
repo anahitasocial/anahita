@@ -51,7 +51,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
-        if (!isset($config)) {
+        if (! isset($config)) {
             $config = new AnConfig();
         }
 
@@ -194,6 +194,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
         
         $result = null;
         $key = $this->__key($key);
+        
         if (isset($this->_data[$key])) {
             $result = $this->_data[$key];
         }
@@ -210,7 +211,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __set($key, $value)
     {
         // $this->_data[$key] = $value;
-        $this->_data[ $this->__key($key) ] = $value;
+        $this->_data[$this->__key($key)] = $value;
     }
 
     /**
@@ -223,7 +224,8 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __isset($key)
     {
         // return array_key_exists($key, $this->_data);
-        return array_key_exists($this->__key($key), $this->_data);
+        // return array_key_exists($this->__key($key), $this->_data);
+        return isset($this->_data[$this->__key($key)]);
     }
 
     /**
@@ -234,7 +236,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __unset($key)
     {
         // unset($this->_data[$key]);
-        unset($this->_data[ $this->__key($key) ]);
+        unset($this->_data[$this->__key($key)]);
     }
 
     /**

@@ -67,7 +67,7 @@ class LibBaseControllerBehaviorLoggable extends AnControllerBehaviorAbstract
      */
     public function log($entry, $level = LOG_LEVEL_INFO)
     {
-        if (!is_array($entry)) {
+        if (! is_array($entry)) {
             $entry = array('comment' => $entry, 'level' => $level);
         }
 

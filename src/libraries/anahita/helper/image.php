@@ -60,7 +60,7 @@ class AnHelperImage extends AnObject
      */
     public static function resize($image, $size)
     {
-        if (!$image) {
+        if (! $image) {
             return false;
         }
 

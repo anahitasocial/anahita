@@ -20,7 +20,7 @@ class AnMixinBehavior extends AnMixinAbstract
      *
      * @var	array
      */
-    protected $_behaviors = array();
+    protected $_behaviors;
 
     /**
      * Auto mixin behaviors
@@ -106,7 +106,7 @@ class AnMixinBehavior extends AnMixinAbstract
         $this->_behaviors[$behavior->getIdentifier()->name] = $behavior;
 
         //Enqueue the behavior
-        $this->getCommandChain()->enqueue($behavior);
+        $this->getCommandChain()->enqueue($behavior, AnCommand::PRIORITY_NORMAL);
 
         //Mixin the behavior
         if ($this->_auto_mixin) {

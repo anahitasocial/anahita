@@ -49,11 +49,12 @@ class AnObjectStack extends AnObject implements Countable
      */
     public function push($object)
     {
-        if (!$object instanceof AnObject) {
-            // throw new InvalidArgumentException('Object needs to extend from AnObject');
+        if (! $object instanceof AnObject) {
+            throw new InvalidArgumentException('Object needs to extend from AnObject');
         }
 
-        $this->_object_stack[] = $object;
+        array_push($this->_object_stack, $object);
+        
         return $this;
     }
 

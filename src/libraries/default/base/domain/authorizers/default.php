@@ -43,7 +43,7 @@ class LibBaseDomainAuthorizerDefault extends LibBaseDomainAuthorizerAbstract
             return false;
         }
 
-        if (!$entity->isSubscribable()) {
+        if (! $entity->isSubscribable()) {
             return false;
         }
 

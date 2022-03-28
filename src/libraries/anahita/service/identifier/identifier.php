@@ -305,25 +305,25 @@ class AnServiceIdentifier implements AnServiceIdentifierInterface
     public function __toString()
     {
         if ($this->_identifier == '') {
-            if (!empty($this->_type)) {
+            if (! empty($this->_type)) {
                 $this->_identifier .= $this->_type;
             }
 
-            if (!empty($this->_application)) {
+            if (! empty($this->_application)) {
                 $this->_identifier .= '://'.$this->_application.'/';
             } else {
                 $this->_identifier .= ':';
             }
 
-            if (!empty($this->_package)) {
+            if (! empty($this->_package)) {
                 $this->_identifier .= $this->_package;
             }
 
-            if (count($this->_path)) {
+            if (! empty($this->_path)) {
                 $this->_identifier .= '.'.implode('.', $this->_path);
             }
 
-            if (!empty($this->_name)) {
+            if (! empty($this->_name)) {
                 $this->_identifier .= '.'.$this->_name;
             }
         }

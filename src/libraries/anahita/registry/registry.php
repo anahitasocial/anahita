@@ -89,7 +89,7 @@ class AnRegistry extends ArrayObject
      */
     public function offsetGet($offset)
     {
-        if (!parent::offsetExists($offset)) {
+        if (! parent::offsetExists($offset)) {
             if ($this->_cache) {
                 $result = apcu_fetch($this->_cache_prefix.'-'.$offset);
             } else {

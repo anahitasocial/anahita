@@ -201,7 +201,7 @@ class LibBaseControllerState extends AnConfig
         //Get the unique states
         $states = $this->getData(true);
 
-        if (!empty($states)) {
+        if (! empty($states)) {
             $unique = true;
 
             //If a state contains multiple values the state is not unique

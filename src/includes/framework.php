@@ -55,7 +55,7 @@ AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.template
 AnService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
 AnService::setAlias('anahita:domain.space', 'com:base.domain.space');
 
-$autoloader = require_once ANPATH_VENDOR.'/autoload.php';
+$autoloader = require ANPATH_VENDOR.'/autoload.php';
 $autoloader->unregister();
 $autoloader->register();
 

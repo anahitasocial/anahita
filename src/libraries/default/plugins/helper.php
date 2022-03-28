@@ -81,14 +81,15 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
   	* @param string 	$plugin	The plugin element
   	* @return boolean True if success
   	*/
-    public function import($type, $element = null, $autocreate = true, $dispatcher = null)
+    public function import($type, $element = null, $autocreate = true)
     {
         $result = false;
+        
         $this->_load();
-
+        
         foreach ($this->_plugins as $plugin) {
             if ($plugin->type === $type && (is_null($element) || $plugin->element === $element)) {
-                $this->_import($plugin, $autocreate, $dispatcher);
+                $this->_import($plugin, $autocreate);
                 $result = true;
             }
         }
@@ -115,7 +116,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
   	 * @access protected
   	 * @return boolean True if success
   	 */
-    protected function _import($plugin, $autocreate = true, $dispatcher = null)
+    protected function _import($plugin, $autocreate = true)
     {
         $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
         $element  = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->element);
@@ -144,7 +145,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
                   'meta' => $plugin->meta
                 );
                 $config = new AnConfig($config);
-                $instance = new $className($dispatcher, $config);
+                $instance = new $className($config);
             }
         }
 
@@ -159,7 +160,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
     protected function _load()
     {
         if (empty($this->_plugins)) {
-            $this->_plugins = AnService::get('repos:settings.plugin')
+            $this->_plugins = $this->getService('repos:settings.plugin')
                               ->getQuery()
                               ->where('enabled', '=', 1)
                               ->toEntityset();

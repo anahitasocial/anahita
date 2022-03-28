@@ -31,7 +31,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
         parent::__construct($config);
 
         //inverse of exclude_actions
-        if (!empty($config->only)) {
+        if (! empty($config->only)) {
             $actions = (array) $config['only'];
 
             $exclude = array();
@@ -40,7 +40,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
                 if (strpos($method, '_action') === 0) {
                     $action = strtolower(substr($method, 7));
 
-                    if (!in_array($action, $actions)) {
+                    if (! in_array($action, $actions)) {
                         $exclude[] = $action;
                     }
                 }
@@ -116,7 +116,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      */
     protected function _actionBrowse(AnCommandContext $context)
     {
-        if (!$context->query) {
+        if (! $context->query) {
             $context->query = $this->getRepository()->getQuery();
         }
 

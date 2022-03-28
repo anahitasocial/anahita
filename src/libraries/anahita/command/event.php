@@ -53,7 +53,7 @@ class AnCommandEvent extends AnCommand
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'event_dispatcher'   => null
+            'event_dispatcher' => null
         ));
 
         parent::_initialize($config);

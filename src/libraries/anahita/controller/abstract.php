@@ -85,13 +85,13 @@ abstract class AnControllerAbstract extends AnObject
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'command_chain'     => $this->getService('anahita:command.chain'),
-            'dispatch_events'   => true,
-            'event_dispatcher'  => $this->getService('anahita:event.dispatcher'),
-            'enable_callbacks'  => true,
-            'dispatched'		=> false,
-            'request'		    => null,
-            'behaviors'         => array(),
+            'command_chain' => $this->getService('anahita:command.chain'),
+            'dispatch_events' => true,
+            'event_dispatcher' => $this->getService('anahita:event.dispatcher'),
+            'enable_callbacks' => true,
+            'dispatched' => false,
+            'request' => null,
+            'behaviors' => array(),
         ));
 
         parent::_initialize($config);
@@ -133,7 +133,6 @@ abstract class AnControllerAbstract extends AnObject
         //Execute the action
         if ($this->getCommandChain()->run('before.'.$command, $context) !== false) {
             $method = '_action'.ucfirst($command);
-
             if (! method_exists($this, $method)) {
                 if (isset($this->_mixed_methods[$command])) {
                     $context->result = $this->_mixed_methods[$command]->execute('action.'.$command, $context);
@@ -142,7 +141,7 @@ abstract class AnControllerAbstract extends AnObject
                 }
             }
             else  $context->result = $this->$method($context);
-
+            
             $this->getCommandChain()->run('after.'.$command, $context);
         }
 
@@ -163,8 +162,10 @@ abstract class AnControllerAbstract extends AnObject
                     $this->_actions[] = strtolower(substr($method, 7));
                 }
             }
-
-            $this->_actions = array_unique(array_merge($this->_actions, array_keys($this->_action_map)));
+            
+            $array_keys = array_keys($this->_action_map);
+            $array_actions = array_merge($this->_actions, $array_keys);
+            $this->_actions = array_unique($array_actions);
         }
 
         return parent::mixin($object, $config);
@@ -186,7 +187,9 @@ abstract class AnControllerAbstract extends AnObject
                 }
             }
 
-            $this->_actions = array_unique(array_merge($this->_actions, array_keys($this->_action_map)));
+            $action_map = array_keys($this->_action_map);
+            $actions = array_merge($this->_actions, $action_map);
+            $this->_actions = array_unique($actions);
         }
 
         return $this->_actions;
@@ -209,7 +212,9 @@ abstract class AnControllerAbstract extends AnObject
         }
 
         //Force reload of the actions
-        $this->_actions = array_unique(array_merge($this->_actions, array_keys($this->_action_map)));
+        $action_map = array_keys($this->_action_map);
+        $actions = array_merge($this->_actions, $action_map);
+        $this->_actions = array_unique($actions);
 
         return $this;
     }
@@ -235,7 +240,7 @@ abstract class AnControllerAbstract extends AnObject
             //Create a context object
             if(! ($data instanceof AnCommandContext)) {
                 $context = $this->getCommandContext();
-                $context->data   = $data;
+                $context->data = $data;
                 $context->result = false;
             }
             else $context = $data;

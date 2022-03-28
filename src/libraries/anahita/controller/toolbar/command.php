@@ -35,12 +35,12 @@ class AnControllerToolbarCommand extends AnConfig
         parent::__construct($config);
 
         $this->append(array(
-            'id'         => $name,
-            'label'      => ucfirst($name),
-            'disabled'   => false,
-            'title'		 => '',
-            'attribs'    => array(
-                'class'        => array(),
+            'id' => $name,
+            'label' => ucfirst($name),
+            'disabled' => false,
+            'title' => '',
+            'attribs' => array(
+                'class' => array(),
             )
         ));
 

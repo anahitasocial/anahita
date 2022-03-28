@@ -29,7 +29,7 @@ class AnServiceLocatorPlugin extends AnServiceLocatorAbstract
         $classname = 'Plg'.ucfirst($identifier->package).$classpath.ucfirst($identifier->name);
 
         //Don't allow the auto-loader to load plugin classes if they don't exists yet
-        if (!class_exists($classname)) {
+        if (! class_exists($classname)) {
             $classname = false;
         }
 
@@ -50,13 +50,13 @@ class AnServiceLocatorPlugin extends AnServiceLocatorAbstract
         $name  = array_shift($parts);
         $type  = $identifier->package;
 
-        if (!empty($identifier->name)) {
+        if (! empty($identifier->name)) {
             if (count($parts)) {
-                $path    = array_shift($parts).
-                $path   .= count($parts) ? '/'.implode('/', $parts) : '';
-                $path   .= DS.strtolower($identifier->name);
+                $path = array_shift($parts).
+                $path .= count($parts) ? '/'.implode('/', $parts) : '';
+                $path .= DS.strtolower($identifier->name);
             } else {
-                $path  = strtolower($identifier->name);
+                $path = strtolower($identifier->name);
             }
         }
 

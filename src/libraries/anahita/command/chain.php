@@ -40,9 +40,9 @@ class AnCommandChain extends AnObjectQueue
     /**
      * The chain stack
      *
-     * @var     AnObjectStack
+     * @var AnObjectStack
      */
-    protected $_stack;
+    protected $_stack = null;
 
     /**
      * Constructor
@@ -97,13 +97,14 @@ class AnCommandChain extends AnObjectQueue
      * @return AnCommandChain
      * @throws InvalidArgumentException if the object doesn't implement AnCommandInterface
      */
-    public function enqueue(AnObjectHandlable $command, $priority = null)
+    public function enqueue(AnObjectHandlable $command, $priority = AnCommand::PRIORITY_NORMAL)
     {
         if (! $command instanceof AnCommandInterface) {
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
         }
 
         $priority = is_int($priority) ? $priority : $command->getPriority();
+        
         return parent::enqueue($command, $priority);
     }
 
@@ -151,14 +152,46 @@ class AnCommandChain extends AnObjectQueue
     public function run($name, AnCommandContext $context)
     {
         if ($this->_enabled) {
-            $this->getStack()->push(clone $this);
-
-            foreach ($this->getStack()->top() as $command) {
+            $this->getStack()->push($this);
+            
+            $commands = $this->getStack()->top();
+            
+            foreach($commands as $command) {
+                // error_log(get_class($command));
                 if ($command->execute($name, $context) === $this->_break_condition) {
                     $this->getStack()->pop();
                     return $this->_break_condition;
                 }
             }
+            
+            
+            /*
+            error_log(get_class($commands));
+            error_log($commands->count());
+            
+            $commands->rewind();
+            
+            error_log($commands->valid() ? 'Valid' : 'Invalid');
+            
+            while($commands->valid()) {
+                $command = $commands->current();
+                
+                if ($command->execute($name, $context) === $this->_break_condition) {
+                    $this->getStack()->pop();
+                    return $this->_break_condition;
+                }
+                
+                $commands->next();
+            }
+            */
+            
+            /*
+            foreach ($this->getStack()->top() as $command) {
+                if ($command->execute($name, $context) === $this->_break_condition) {
+                    $this->getStack()->pop();
+                    return $this->_break_condition;
+                }
+            }*/
 
             $this->getStack()->pop();
         }
@@ -202,7 +235,7 @@ class AnCommandChain extends AnObjectQueue
             throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
         }
 
-        return parent::setPriority($cmd, $priority);
+        return parent::setPriority($command, $priority);
     }
     
     /**

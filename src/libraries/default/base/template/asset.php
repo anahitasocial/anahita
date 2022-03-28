@@ -151,7 +151,7 @@ class LibBaseTemplateAsset extends AnObject implements AnServiceInstantiatable
     {
         $paths = $this->_paths;
 
-        if (array_key_exists($url, $this->_urls)) {
+        if (isset($this->_urls[$url])) {
             return $this->_urls[$url];
         }
 

@@ -55,6 +55,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     {
         $permission = clone $this->getIdentifier();
         $permission->path = array($permission->path[0], 'permission');
+        
         register_default(array('identifier' => $permission, 'prefix' => $this));
 
         $config->append(array(

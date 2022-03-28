@@ -21,7 +21,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      *
      * @var object
      */
-    protected $_mixer;
+    protected $_mixer = null;
 
     /**
      * Class methods
@@ -35,7 +35,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      *
      * @var array
      */
-    private $__mixable_methods;
+    private $__mixable_methods = array();
 
     /**
      * Object constructor
@@ -44,7 +44,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      */
     public function __construct(AnConfig $config)
     {
-        if (!empty($config)) {
+        if (! empty($config)) {
             $this->_initialize($config);
         }
 
@@ -111,10 +111,10 @@ abstract class AnMixinAbstract implements AnMixinInterface
      */
     public function getMethods()
     {
-        if (! $this->__methods) {
+        if (empty($this->__methods)) {
             $methods = array();
-
             $reflection = new ReflectionClass($this);
+            
             foreach ($reflection->getMethods() as $method) {
                 $methods[] = $method->name;
             }
@@ -135,7 +135,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      */
     public function getMixableMethods(AnObject $mixer = null)
     {
-        if (! $this->__mixable_methods) {
+        if (empty($this->__mixable_methods)) {
             $methods = array();
 
             //Get all the public methods
@@ -217,7 +217,7 @@ abstract class AnMixinAbstract implements AnMixinInterface
      * @throws BadMethodCallException   If method could not be found
      * @return mixed The result of the function
      */
-    public function __call($method, $arguments)
+    public function __call(string $method, array $arguments)
     {
         //Make sure we don't end up in a recursive loop
         if (isset($this->_mixer) && !($this->_mixer instanceof $this)) {

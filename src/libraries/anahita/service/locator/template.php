@@ -46,10 +46,10 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
     {
         $classname = 'Tmpl'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
-        if (!$this->getService('anahita:loader')->loadClass($classname, $identifier->basepath)) {
+        if (! $this->getService('anahita:loader')->loadClass($classname, $identifier->basepath)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
-            if (!$classname) {
+            if (! $classname) {
                 //$path      = AnInflector::implode($identifier->path);
                 $classpath = $identifier->path;
                 $classtype = !empty($classpath) ? array_shift($classpath) : '';
@@ -98,8 +98,8 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
 
         $theme = strtolower($identifier->package);
 
-        if (!empty($identifier->name)) {
-            if (!empty($parts)) {
+        if (! empty($identifier->name)) {
+            if (! empty($parts)) {
                 if ($parts[0] != 'html') {
                     foreach ($parts as $key => $value) {
                         $parts[$key] = AnInflector::pluralize($value);

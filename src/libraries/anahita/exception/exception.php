@@ -26,7 +26,7 @@ class AnException extends Exception implements AnExceptionInterface
      */
     public function __construct($message = null, $code = AnHttpResponse::INTERNAL_SERVER_ERROR, Exception $previous = null)
     {
-        if (!$message) {
+        if (! $message) {
             throw new $this('Unknown '. get_class($this));
         }
 

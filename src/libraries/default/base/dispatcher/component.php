@@ -71,9 +71,9 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements An
         } else {
             $method = strtolower(AnRequest::method());
         }
-
+        
         $result = $this->execute($method, $context);
-
+        
         return $result;
     }
 
@@ -118,6 +118,7 @@ class LibBaseDispatcherComponent extends LibBaseDispatcherAbstract implements An
 
         if ($context->data['_action']) {
             $action = $context->data['_action'];
+            
             if (in_array($action, array('browse', 'read', 'display'))) {
                 throw new LibBaseControllerExceptionMethodNotAllowed('Action: '.$action.' not allowed');
             }

@@ -74,7 +74,7 @@ class AnServiceClass
         static $instance;
 
         if ($instance === null) {
-            if (!$config instanceof AnConfig) {
+            if (! $config instanceof AnConfig) {
                 $config = new AnConfig($config);
             }
 
@@ -103,7 +103,7 @@ class AnServiceClass
      */
     public static function registerDefault($config)
     {
-        if (!isset($config['identifier'])) {
+        if (! isset($config['identifier'])) {
             throw new AnException('identifier [AnServiceIdentifier] options is requied');
         }
 
@@ -154,10 +154,10 @@ class AnServiceClass
         $loader = AnService::get('anahita:loader');
         $classname = $classbase.ucfirst($identifier->name);
 
-        if (!class_exists($classname)) {
+        if (! class_exists($classname)) {
             $classname = $classbase.'Default';
 
-            if (!class_exists($classname)) {
+            if (! class_exists($classname)) {
                 $classname = false;
             }
         }
@@ -204,7 +204,7 @@ class AnServiceClass
  */
 function get_prefix($object, $config = array())
 {
-    if (!is_array($config) || is_numeric(key($config))) {
+    if (! is_array($config) || is_numeric(key($config))) {
         $config = array('append' => (array) $config);
     }
 

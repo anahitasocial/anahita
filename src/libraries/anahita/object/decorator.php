@@ -88,7 +88,7 @@ class AnObjectDecorator extends AnObject implements Iterator, ArrayAccess, Count
      */
     public function getMethods()
     {
-        if (!$this->__methods) {
+        if (empty($this->__methods)) {
             $methods = array();
             $object  = $this->getObject();
 
@@ -368,6 +368,7 @@ class AnObjectDecorator extends AnObject implements Iterator, ArrayAccess, Count
 
             //Allow for method chaining through the decorator
             $class = get_class($object);
+            
             if ($result instanceof $class) {
                 return $this;
             }

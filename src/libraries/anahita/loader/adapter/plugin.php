@@ -46,7 +46,7 @@ class AnLoaderAdapterPlugin extends AnLoaderAdapterAbstract
 
         if (array_shift($parts) == 'plg') {
             //Switch the basepath
-            if (!empty($basepath)) {
+            if (! empty($basepath)) {
                 $this->_basepath = $basepath;
             }
 

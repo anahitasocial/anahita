@@ -31,6 +31,7 @@ class AnConfig implements AnConfigInterface
         }
 
         $this->_data = array();
+        
         if (is_array($data)) {
             foreach ($data as $key => $value) {
                 $this->__set($key, $value);
@@ -48,6 +49,7 @@ class AnConfig implements AnConfigInterface
     public function get($name, $default = null)
     {
         $result = $default;
+        
         if (isset($this->_data[$name])) {
             $result = $this->_data[$name];
         }
@@ -81,10 +83,10 @@ class AnConfig implements AnConfigInterface
         $config = AnConfig::unbox($config);
 
         if (is_array($config)) {
-            if (!is_numeric(key($config))) {
+            if (! is_numeric(key($config))) {
                 foreach ($config as $key => $value) {
-                    if (array_key_exists($key, $this->_data)) {
-                        if (!empty($value) && ($this->_data[$key] instanceof AnConfig)) {
+                    if (isset($this->_data[$key])) {
+                        if (! empty($value) && ($this->_data[$key] instanceof AnConfig)) {
                             $this->_data[$key] = $this->_data[$key]->append($value);
                         }
                     } else {
@@ -93,7 +95,7 @@ class AnConfig implements AnConfigInterface
                 }
             } else {
                 foreach ($config as $value) {
-                    if (!in_array($value, $this->_data, true)) {
+                    if (! in_array($value, $this->_data, true)) {
                         $this->_data[] = $value;
                     }
                 }
@@ -198,6 +200,7 @@ class AnConfig implements AnConfigInterface
     public function offsetGet($offset)
     {
         $result = null;
+        
         if (isset($this->_data[$offset])) {
             $result = $this->_data[$offset];
             if ($result instanceof AnConfig) {

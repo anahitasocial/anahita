@@ -126,7 +126,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
                     $operation = 'AND';
                 }
 
-                if (!empty($operation)) {
+                if (! empty($operation)) {
                     $clause = $query->clause();
                     $search_column = array();
 

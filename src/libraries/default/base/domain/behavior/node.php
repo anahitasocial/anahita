@@ -90,7 +90,7 @@
       */
      protected function _getRepositoryForTable($table)
      {
-         if (!isset($this->_table_repositories[$table])) {
+         if (! isset($this->_table_repositories[$table])) {
              $identifier = clone $this->_mixer->getIdentifier();
              $identifier->type = 'repos';
              $identifier->name = uniqid();

@@ -48,7 +48,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
         $loader = $this->getService('anahita:loader');
         //Manually load the class to set the basepath
-        if (!$loader->loadClass($classname, $identifier->basepath)) {
+        if (! $loader->loadClass($classname, $identifier->basepath)) {
             //the default can be in either in the default folder
             //be a registered default class
             $classname = AnServiceClass::findDefaultClass($identifier);
@@ -95,6 +95,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $namespaces[] = 'An';
         $namespaces = array_unique($namespaces);
         $classes = array();
+        
         foreach ($namespaces as $namespace) {
             foreach ($paths as $path) {
                 $names = array();
@@ -128,7 +129,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
                 
         $component = 'com_'.strtolower($identifier->package);
             
-        if (!empty($identifier->name)) {
+        if (! empty($identifier->name)) {
             if (count($parts)) {
                 if ($parts[0] != 'view') {
                     foreach ($parts as $key => $value) {

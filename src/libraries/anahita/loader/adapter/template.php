@@ -59,10 +59,9 @@ class AnLoaderAdapterTemplate extends AnLoaderAdapterAbstract
 
             if (array_shift($parts) == 'tmpl') {
                 $name = array_shift($parts);
-
                 $file = array_pop($parts);
 
-                if (!empty($parts)) {
+                if (! empty($parts)) {
                     if ($parts[0] != 'view') {
                         foreach ($parts as $key => $value) {
                             $parts[$key] = AnInflector::pluralize($value);

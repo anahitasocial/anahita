@@ -219,6 +219,7 @@ class AnInflector
         foreach (self::$_rules['singularization'] as $regexp => $replacement) {
             $matches = null;
             $singular = preg_replace($regexp, $replacement, $word, -1, $matches);
+            
             if ($matches > 0) {
                 self::$_cache['singularized'][$word] = $singular;
                 return $singular;
@@ -244,6 +245,7 @@ class AnInflector
         foreach (self::$_rules['verbalization'] as $regexp => $replacement) {
             $matches = null;
             $verbal = preg_replace($regexp, $replacement, $word, -1, $matches);
+            
             if ($matches > 0) {
                 self::$_cache['verbalized'][$word] = $verbal;
                 return $verbal;
@@ -267,6 +269,7 @@ class AnInflector
     {
         $word = preg_replace('/[^a-zA-Z0-9\s]/', ' ', $word);
         $word = str_replace(' ', '', ucwords(strtolower(str_replace('_', ' ', $word))));
+        
         return $word;
     }
 
@@ -282,6 +285,7 @@ class AnInflector
     {
         $word = preg_replace('/(\s)+/', '_', $word);
         $word = strtolower(preg_replace('/(?<=\\w)([A-Z])/', '_\\1', $word));
+        
         return $word;
     }
 
@@ -342,9 +346,10 @@ class AnInflector
     {
         $result = self::underscore($className);
 
-        if (!self::isPlural($className)) {
+        if (! self::isPlural($className)) {
             $result = self::pluralize($result);
         }
+        
         return $result;
     }
 
@@ -378,6 +383,7 @@ class AnInflector
         $string = self::camelize(self::underscore($string));
         $result = strtolower(substr($string, 0, 1));
         $variable = preg_replace('/\\w/', $result, $string, 1);
+        
         return $variable;
     }
 

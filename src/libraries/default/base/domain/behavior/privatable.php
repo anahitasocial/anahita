@@ -210,17 +210,18 @@ class LibBaseDomainBehaviorPrivatable extends AnDomainBehaviorAbstract
         //an array of entities whose permission must return true
         $entities = array();
 
-        if (!empty($owner)) {
+        if (! empty($owner)) {
             $entities[] = $owner;
         }
 
-        if (!in_array($mixer, $entities)) {
+        if (! in_array($mixer, $entities)) {
             $entities[] = $mixer;
         }
 
         foreach ($entities as $entity) {
             $permissions = explode(',', $entity->getPermission($action, $default));
             $result = $this->checkPermissions($actor, $permissions, $owner);
+            
             if ($result === false) {
                 return false;
             }

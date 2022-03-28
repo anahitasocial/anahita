@@ -16,14 +16,14 @@ class AnCommandContext extends AnConfig
      *
      * @var string
      */
-    protected $_error;
+    protected $_error = '';
     
     /**
      * The command subject
      *
      * @var  object
      */
-    protected $_subject;
+    protected $_subject = null;
     
     /**
      * Set the error

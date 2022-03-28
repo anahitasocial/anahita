@@ -128,7 +128,6 @@ class LibBaseDomainBehaviorStorable extends AnDomainBehaviorAbstract
     public function deletePath($path = '', $public = true)
     {
         $path = $this->getStoragePath($path);
-
         return $this->_storage->delete($path, $public);
     }
 
@@ -143,7 +142,6 @@ class LibBaseDomainBehaviorStorable extends AnDomainBehaviorAbstract
     public function pathExists($path = '', $public = true)
     {
         $path = $this->getStoragePath($path);
-
         return $this->_storage->exists($path, $public);
     }
 
@@ -158,7 +156,6 @@ class LibBaseDomainBehaviorStorable extends AnDomainBehaviorAbstract
     public function getPathURL($path = '', $public = true)
     {
         $path = $this->getStoragePath($path);
-
         return $this->_storage->getUrl($path, $public);
     }
 

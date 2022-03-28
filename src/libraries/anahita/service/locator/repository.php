@@ -41,7 +41,7 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $identifier = self::_identifier($config->service_identifier);
             $instance = AnDomain::getRepository($identifier, $config->toArray());
             $container->set($config->service_identifier, $instance);
@@ -93,7 +93,7 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
     {
         $identifier = clone $identifier;
 
-        if (!$identifier->name) {
+        if (! $identifier->name) {
             $identifier->name = AnInflector::singularize($identifier->package);
         }
 

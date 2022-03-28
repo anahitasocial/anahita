@@ -38,7 +38,7 @@ class LibBaseDomainBehaviorPinnable extends AnDomainBehaviorAbstract
                     'type' => 'boolean',
                     'default' => false,
                     'required' => true,
-                    ),
+                ),
         ), ));
 
         parent::_initialize($config);

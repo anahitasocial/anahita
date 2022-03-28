@@ -82,7 +82,7 @@ class AnMixinEvent extends AnMixinAbstract
         $config->append(array(
             'event_dispatcher' => null,
             'event_subscribers'=> array(),
-            'event_listeners'  => array(),
+            'event_listeners' => array(),
         ));
         
         parent::_initialize($config);

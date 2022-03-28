@@ -33,11 +33,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
 
         $this->setComponent($config->component);
 
+        $this->registerCallback('before.route',  array($this, 'load'));
+        
         if (PHP_SAPI == 'cli') {
             $this->registerCallback('after.load', array($this, 'prepclienv'));
         }
-        
-        $this->registerCallback('before.route',  array($this, 'load'));
     }
 
     /**
@@ -135,6 +135,13 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
      */
     protected function _actionRoute(AnCommandContext $context)
     {
+        if (! isset($this->_application)) {
+            throw new AnException(
+                'Application object is not instantiated!',
+                AnHttpResponse::INTERNAL_SERVER_ERROR
+            );
+        }
+        
         //route the application
         $url = clone AnRequest::url();
         $url = $this->_application->getRouter()->parse($url);

@@ -20,6 +20,7 @@ class AnConfigState extends AnConfig
     public function get($name, $default = null)
     {
         $result = $default;
+        
         if (isset($this->_data[$name])) {
             $result = $this->_data[$name]->value;
         }

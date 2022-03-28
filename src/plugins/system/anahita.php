@@ -25,7 +25,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      * @param array $config  Array of configuration
      */
 
-    public function __construct($dispatcher, AnConfig $config)
+    public function __construct(AnConfig $config)
     {
         // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
@@ -41,7 +41,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
         //Safety Extender compatibility
         $this->_handleSafeexCheck();
 
-        parent::__construct($dispatcher, $config);
+        parent::__construct($config);
     }
 
     /**

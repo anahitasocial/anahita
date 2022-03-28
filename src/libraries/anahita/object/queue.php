@@ -15,14 +15,14 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      *
      * @var array
      */
-    protected $_object_list = null;
+    protected $_object_list = array();
 
     /**
      * Priority list
      *
      * @var array
      */
-    protected $_priority_list = null;
+    protected $_priority_list = array();
 
     /**
      * Constructor
@@ -33,14 +33,14 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
     public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
-        if (!isset($config)) {
+        if (! isset($config)) {
             $config = new AnConfig();
         }
 
         parent::__construct($config);
 
-        $this->_object_list   = new ArrayObject();
-        $this->_priority_list = new ArrayObject();
+        // $this->_object_list = new ArrayObject();
+        // $this->_priority_list = new ArrayObject();
     }
 
     /**
@@ -51,20 +51,26 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      * @return  boolean		TRUE on success FALSE on failure
      * @throws  InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
-    public function enqueue(AnObjectHandlable $object, $priority)
+    public function enqueue(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_NORMAL)
     {
-        $result = false;
+        // $result = false;
 
         if ($handle = $object->getHandle()) {
-            $this->_object_list->offsetSet($handle, $object);
+            
+            $this->_object_list[$handle] = $object;
+            //$this->_object_list->offsetSet($handle, $object);
+            
+            $this->_priority_list[$handle] = $priority;
+            // $this->_priority_list->offsetSet($handle, $priority);
+            asort($this->_priority_list);
+            // $this->_priority_list->asort();
 
-            $this->_priority_list->offsetSet($handle, $priority);
-            $this->_priority_list->asort();
-
-            $result = true;
+            return true;
+            // $result = true;
         }
 
-        return $result;
+        return false;
+        // return $result;
     }
 
     /**
@@ -76,18 +82,27 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function dequeue(AnObjectHandlable $object)
     {
-        $result = false;
+        // $result = false;
 
         if ($handle = $object->getHandle()) {
+            if (isset($this->_object_list[$handle])) {
+                unset($this->_object_list[$handle]);
+                unset($this->_priority_list[$handle]);
+                
+                return true;
+            }
+            
+            /*
             if ($this->_object_list->offsetExists($handle)) {
                 $this->_object_list->offsetUnset($handle);
                 $this->_priority_list->offsetUnSet($handle);
 
                 $result = true;
             }
+            */
         }
 
-        return $result;
+        return false;
     }
 
     /**
@@ -98,13 +113,19 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      * @return  AnCommandChain
      * @throws  InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
-    public function setPriority(AnObjectHandlable $object, $priority)
+    public function setPriority(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_NORMAL)
     {
         if ($handle = $object->getHandle()) {
+            if (isset($this->_priority_list[$handle])) {
+                $this->_priority_list[$handle] = $priority;
+                asort($this->_priority_list);
+            }
+            /*
             if ($this->_priority_list->offsetExists($handle)) {
                 $this->_priority_list->offsetSet($handle, $priority);
                 $this->_priority_list->asort();
             }
+            */
         }
 
         return $this;
@@ -119,15 +140,19 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function getPriority(AnObjectHandlable $object)
     {
-        $result = false;
+        // $result = false;
 
         if ($handle = $object->getHandle()) {
-            if ($this->_priority_list->offsetExists($handle)) {
-                $result = $this->_priority_list->offsetGet($handle);
+            // if ($this->_priority_list->offsetExists($handle)) {
+            //    $result = $this->_priority_list->offsetGet($handle);
+            // }
+            if (isset($this->_priority_list[$handle])) {
+                return $this->_priority_list[$handle];
             }
         }
 
-        return $result;
+        return false;
+        // return $result;
     }
 
     /**
@@ -138,8 +163,7 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function hasPriority($priority)
     {
-        $result = array_search($priority, $this->_priority_list);
-        return $result;
+        return array_search($priority, $this->_priority_list);
     }
 
     /**
@@ -151,13 +175,16 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function contains(AnObjectHandlable $object)
     {
-        $result = false;
+        // $result = false;
+        
+        $handle = $object->getHandle();
+        return isset($this->_object_list[$handle]);
 
-        if ($handle = $object->getHandle()) {
-            $result = $this->_object_list->offsetExists($handle);
-        }
+        // if ($handle = $object->getHandle()) {
+            // $result = $this->_object_list->offsetExists($handle);
+        // }
 
-        return $result;
+        // return $result;
     }
 
     /**
@@ -242,11 +269,11 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function top()
     {
-        $handles = array_keys((array)$this->_priority_list);
-
+        $handles = array_keys((array) $this->_priority_list);
         $object = null;
+        
         if (isset($handles[0])) {
-            $object  = $this->_object_list[$handles[0]];
+            $object = $this->_object_list[$handles[0]];
         }
 
         return $object;
@@ -267,11 +294,13 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      *
      * @return void
      */
+    /* 
     public function __clone()
     {
         parent::__clone();
 
-        $this->_object_list   = clone $this->_object_list;
+        $this->_object_list = clone $this->_object_list;
         $this->_priority_list = clone $this->_priority_list;
     }
+    */
 }

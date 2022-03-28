@@ -75,7 +75,7 @@ class AnLoaderAdapterDefault extends AnLoaderAdapterAbstract
             $path = $path.'/'.$path;
         }
 
-        if (!is_file($this->_basepath.'/'.$path.'.php')) {
+        if (! is_file($this->_basepath.'/'.$path.'.php')) {
             $path = $path.'/'.strtolower(array_pop($parts));
         }
 

@@ -147,7 +147,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
      */
     public function __destroy()
     {
-        if (!$this->getStack()->isEmpty()) {
+        if (! $this->getStack()->isEmpty()) {
             if ($error = error_get_last()) {
                 if ($error['type'] === E_ERROR || $error['type'] === E_PARSE || $error['type'] === E_COMPILE_ERROR) {
                     while (@ob_get_clean());
@@ -216,9 +216,9 @@ abstract class LibBaseTemplateAbstract extends AnObject
      */
     public function getView()
     {
-        if (!$this->_view instanceof LibBaseViewAbstract) {
+        if (! $this->_view instanceof LibBaseViewAbstract) {
             //Make sure we have a view identifier
-            if (!($this->_view instanceof AnServiceIdentifier)) {
+            if (! ($this->_view instanceof AnServiceIdentifier)) {
                 $this->setView($this->_view);
             }
 
@@ -274,7 +274,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
         $this->_data = array_merge((array) $this->_data, $data);
         
         // Process the data
-        if ($process == true) {
+        if ($process === true) {
             $this->__sandbox();
         }
     
@@ -314,7 +314,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
         $this->getStack()->push(clone $this);
 
         //Extract the data in local scope
-           extract($this->_data, EXTR_SKIP);
+        extract($this->_data, EXTR_SKIP);
            
            // Capturing output into a buffer
         ob_start();
@@ -347,7 +347,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
         //@TODO should we do that or just try load the template path
         $path = dirname($identifier->filepath);
 
-        if (!in_array($path, $this->_search_paths)) {
+        if (! in_array($path, $this->_search_paths)) {
             array_unshift($this->_search_paths, $path);
         }
 
@@ -400,7 +400,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
         $helper = $this->getHelper($helper);
 
         //Call the helper function
-        if (!is_callable(array($helper, $function))) {
+        if (! is_callable(array($helper, $function))) {
             throw new LibBaseTemplateHelperException(get_class($helper).'::'.$function.' not supported.');
         }
 
@@ -420,7 +420,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
     {
         $name = (string) $helper;
 
-        if (!isset($this->_helpers[$name])) {
+        if (! isset($this->_helpers[$name])) {
             if (is_string($helper) && strpos($helper, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('template','helper');
@@ -438,7 +438,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
             $helper = $this->getService($identifier, array_merge($config, array('template' => $this)));
             
             //Check the helper interface
-            if (!($helper instanceof LibBaseTemplateHelperInterface)) {
+            if (! ($helper instanceof LibBaseTemplateHelperInterface)) {
                 throw new LibBaseTemplateHelperException("Template helper $identifier does not implement LibBaseTemplateHelperInterface");
             }
 
@@ -470,7 +470,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
     public function findFile($file)
     {
         $result = false;
-        $path   = dirname($file);
+        $path = dirname($file);
         
         // is the path based on a stream?
         if (strpos($path, '://') === false) {
@@ -499,7 +499,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
      */
     public function findPath($filename)
     {
-        if (!isset($this->_paths[$filename])) {
+        if (! isset($this->_paths[$filename])) {
             foreach ($this->_search_paths as $path) {
                 $file = $path.'/'.$filename;
                 if ($this->findFile($file)) {
@@ -561,7 +561,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
     {
         $path = $this->_contents;
 
-        if (!isset($this->_parsed_data[$path])) {
+        if (! isset($this->_parsed_data[$path])) {
             $context = $this->getCommandContext();
             $context->data = $path;
             $this->getCommandChain()->run(LibBaseTemplateFilter::MODE_READ, $context);
@@ -593,12 +593,12 @@ abstract class LibBaseTemplateAbstract extends AnObject
         $filters = (array) AnConfig::unbox($filters);
 
         foreach ($filters as $filter) {
-            if (!($filter instanceof LibBaseTemplateFilterInterface)) {
+            if (! ($filter instanceof LibBaseTemplateFilterInterface)) {
                 $filter = $this->getFilter($filter);
             }
             
             //Enqueue the filter in the command chain
-            $this->getCommandChain()->enqueue($filter);
+            $this->getCommandChain()->enqueue($filter, AnCommand::PRIORITY_NORMAL);
             
             //Store the filter
             $this->_filters[$filter->getIdentifier()->name] = $filter;
@@ -623,7 +623,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
             $identifier = AnService::getIdentifier($filter);
         }
 
-        if (!isset($this->_filters[$filter])) {
+        if (! isset($this->_filters[$filter])) {
             register_default(array(
                 'identifier' => $identifier,
                 'prefix' => $this
@@ -631,7 +631,7 @@ abstract class LibBaseTemplateAbstract extends AnObject
             
             $filter = AnService::get($identifier);
 
-            if (!($filter instanceof LibBaseTemplateFilterInterface)) {
+            if (! ($filter instanceof LibBaseTemplateFilterInterface)) {
                 throw new LibBaseTemplateException("Template filter $identifier does not implement LibBaseTemplateFilterInterface");
             }
         } else {

@@ -65,9 +65,11 @@
      {
          if (! headers_sent()) {
              $response = $this->getResponse();
+             
              foreach ($response->getHeaders() as $name => $value) {
                  header($name.': '.$value, false);
              }
+             
              header('HTTP/1.1'.' '.$response->getStatusCode().' '.$response->getStatusMessage());
          }
 
@@ -96,6 +98,7 @@
 
         //Send headers and content
         $this->sendHeaders()->sendContent();
+        
         fastcgi_finish_request();
      }
  }
