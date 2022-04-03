@@ -159,7 +159,7 @@ class LibBaseTemplateObjectContainer implements IteratorAggregate, Countable, Ar
      */
     public function offsetExists($key)
     {
-        return isset($this->_objects[$key]);
+        return array_key_exists($key, $this->_objects);
     }
 
     /**

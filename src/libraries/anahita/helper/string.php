@@ -209,7 +209,7 @@ class AnHelperString
         } else {
             foreach (array_keys($search) as $k) {
                 if (is_array($replace)) {
-                    if (isset($replace[$k])) {
+                    if (array_key_exists($k, $replace)) {
                         $str = AnHelperString::str_ireplace($search[$k], $replace[$k], $str, $count);
                     } else {
                         $str = AnHelperString::str_ireplace($search[$k], '', $str, $count);

@@ -43,7 +43,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
     {
         $this->_set_query = null;
         $this->_loaded = false;
-        $this->_object_set = new ArrayObject();
+        $this->_object_set = array();
 
         return $this;
     }

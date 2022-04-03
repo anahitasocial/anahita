@@ -268,9 +268,9 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
         }
         
         if (! isset($identifier)) {
-            $result =  $this->__service_container;
+            $result = $this->__service_container;
         } else {
-            $result =  $this->__service_container->get($identifier, $config);
+            $result = $this->__service_container->get($identifier, $config);
         }
         
         return $result;

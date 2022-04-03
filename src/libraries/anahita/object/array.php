@@ -71,7 +71,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-             'data'  => array(),
+             'data' => array(),
          ));
 
         parent::_initialize($config);
@@ -224,8 +224,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __isset($key)
     {
         // return array_key_exists($key, $this->_data);
-        // return array_key_exists($this->__key($key), $this->_data);
-        return isset($this->_data[$this->__key($key)]);
+        return array_key_exists($this->__key($key), $this->_data);
     }
 
     /**

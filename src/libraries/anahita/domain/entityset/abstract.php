@@ -164,8 +164,8 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      */
     public function getRepository()
     {
-        if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof AnServiceIdentifier) {
+        if (! $this->_repository instanceof AnDomainRepositoryAbstract) {
+            if (! $this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -182,7 +182,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      */
     public function setRepository($repository)
     {
-        if (!$repository instanceof AnDomainRepositoryAbstract) {
+        if (! $repository instanceof AnDomainRepositoryAbstract) {
             if (is_string($repository) && strpos($repository, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->type = 'repos';
@@ -437,8 +437,8 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      */
     final protected function _loadData()
     {
-        if (!$this->isLoaded()) {
-            $this->_object_set = new ArrayObject();
+        if (! $this->isLoaded()) {
+            $this->_object_set = array();
             foreach ($this->_getData() as $object) {
                 $this->insert($object);
             }

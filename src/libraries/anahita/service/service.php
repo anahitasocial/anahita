@@ -364,7 +364,7 @@ class AnService implements AnServiceInterface
         //Load the class manually using the basepath
         if (self::get('anahita:loader')->loadClass($identifier->classname, $identifier->basepath)) {
             $serviceables = (array) class_implements($identifier->classname);
-            if (isset($serviceables['AnObjectServiceable'])) {
+            if (array_key_exists('AnObjectServiceable', $serviceables)) {
                 //Create the configuration object
                 $config = new AnConfig(array_merge(self::getConfig($identifier), $config));
 
@@ -374,7 +374,7 @@ class AnService implements AnServiceInterface
 
                 // If the class has an instantiate method call it
                 $instantiables = (array) class_implements($identifier->classname);
-                if (isset($instantiables['AnServiceInstantiatable'])) {
+                if (array_key_exists('AnServiceInstantiatable', $instantiables)) {
                     $result = call_user_func(array($identifier->classname, 'getInstance'), $config, self::getInstance());
                 } else {
                     $result = new $identifier->classname($config);
