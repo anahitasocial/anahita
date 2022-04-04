@@ -277,7 +277,6 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function valid()
     {
-        error_log(gettype($this->_object_set));
         return !is_null(key($this->_object_set));
     }
 
@@ -298,7 +297,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function current()
     {
-        return current($this->_object_set);
+        return $this->_object_set[$this->key()];
     }
 
     /**
