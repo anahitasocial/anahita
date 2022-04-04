@@ -68,8 +68,10 @@ class AnEventDispatcher extends AnObject
             $event = new AnEvent($event);
         }
         
-        $event->setName($name)->setDispatcher($this);
-             
+        $event->setName($name)->setDispatcher($this);  
+        
+        // error_log(print_r($this->_listeners, true)); 
+ 
         //Nofity the listeners
         if (isset($this->_listeners[$name])) {
             foreach ($this->_listeners[$name] as $listener) {

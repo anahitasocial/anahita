@@ -33,7 +33,7 @@ abstract class PlgStorageAbstract extends AnObject
      * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional AnConfig object with configuration options.
      */
-    public function __construct(AnConfig $config)
+    public function __construct($dispatcher = null, AnConfig $config)
     {
         $this->_params = $config->meta;
         

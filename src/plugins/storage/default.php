@@ -25,9 +25,9 @@ class PlgStorageDefault extends AnObject implements AnServiceInstantiatable
     {
         AnService::get('com:plugins.helper')->import('storage');
 
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
-            $instance = new PlgStorageLocal($config);
+            $instance = new PlgStorageLocal(null, $config);
             $container->set($config->service_identifier, $instance);
         }
 

@@ -243,4 +243,17 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
     {
         return !count($this->_object_list);
     }
+    
+    /**
+     * Preform a deep clone of the object
+     *
+     * @return void
+     */
+    public function __clone()
+    {
+        parent::__clone();
+
+        $this->_object_list = $this->_object_list;
+        $this->_priority_list = $this->_priority_list;
+    }
 }

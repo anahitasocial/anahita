@@ -79,9 +79,10 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
   	* @access public
   	* @param string 	$type 	The plugin type, relates to the sub-directory in the plugins directory
   	* @param string 	$plugin	The plugin element
+    * @param AnEventDispatcher $dispatcher object
   	* @return boolean True if success
   	*/
-    public function import($type, $element = null, $autocreate = true)
+    public function import($type, $element = null, $autocreate = true, $dispatcher = null)
     {
         $result = false;
         
@@ -89,7 +90,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
         
         foreach ($this->_plugins as $plugin) {
             if ($plugin->type === $type && (is_null($element) || $plugin->element === $element)) {
-                $this->_import($plugin, $autocreate);
+                $this->_import($plugin, $autocreate, $dispatcher);
                 $result = true;
             }
         }
@@ -116,7 +117,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
   	 * @access protected
   	 * @return boolean True if success
   	 */
-    protected function _import($plugin, $autocreate = true)
+    protected function _import($plugin, $autocreate = true, $dispatcher = null)
     {
         $type = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->type);
         $element  = preg_replace('/[^A-Z0-9_\.-]/i', '', $plugin->element);
@@ -145,7 +146,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
                   'meta' => $plugin->meta
                 );
                 $config = new AnConfig($config);
-                $instance = new $className($config);
+                $instance = new $className($dispatcher, $config);
             }
         }
 
