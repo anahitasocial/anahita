@@ -231,7 +231,7 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      */
     public function top()
     {
-        return isset($this->_priority_list[0]) ? $this->_object_list[0] : null;
+        return $this->_priority_list[0];
     }
 
     /**

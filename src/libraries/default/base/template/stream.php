@@ -84,6 +84,11 @@ class LibBaseTemplateStream
 
         return true;
     }
+    
+    public function stream_set_option($option, $arg1, $arg2)
+    {
+        return false;
+    }
 
     /**
      * Reads from the stream.

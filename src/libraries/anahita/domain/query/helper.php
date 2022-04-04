@@ -66,11 +66,18 @@ class AnDomainQueryHelper
         settype($columns, 'array');
         $array = array();
         foreach ($columns as $key => $column) {
-            $result = strpos($column, ' ') !== false ? null : self::parseColumn($query, $column);
+            
+            //
+            // @NOTE this dosn't even look right!
+            // $result = strpos($column, ' ') !== false ? null : self::parseColumn($query, $column);
+            //
+            
+            $result = self::parseColumn($query, $column);
+            
             $cols = $result['columns'];
-            if (!isset($result['property'])) {
+            if (! isset($result['property'])) {
                 $array[$key] = $column;
-            } elseif (!is_array($cols)) {
+            } elseif (! is_array($cols)) {
                 $array[$key] = $cols;
             } else {
                 $key = 10000;

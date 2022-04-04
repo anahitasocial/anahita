@@ -213,7 +213,11 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             );
         }
         
-        if ($data['authorized']['edit'] && $entity->isPrivatable()) {
+        if (
+            $data['authorized'] && 
+            $data['authorized']['edit'] && 
+            $entity->isPrivatable()
+        ) {
             $data['access'] = $entity->access;
         }
         

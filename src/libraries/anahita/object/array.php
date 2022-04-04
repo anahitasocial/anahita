@@ -1,34 +1,8 @@
 <?php
-
 /**
- * LICENSE: ##LICENSE##.
- *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.Anahita.io
- */
-
-/**
- * It's the same as {@link AnObjectArray} but it allows to use {@link AnObjectHandlable} as
- * keys.
- *
- * <code>
- * $array  = new AnObjectArray();
- * $object = new AnObject();
- * $array[$object] = 'Some Value';
- * </code>
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io

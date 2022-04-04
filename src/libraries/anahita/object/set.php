@@ -246,7 +246,8 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function top()
     {
-        return isset($this->_object_set[0]) ? $this->_object_set[0] : null;
+        return $this->_object_set[0];
+        // return end($this->_object_set);
     }
     
     /**
