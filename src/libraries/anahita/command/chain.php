@@ -157,41 +157,11 @@ class AnCommandChain extends AnObjectQueue
             $commands = $this->getStack()->top();
             
             foreach($commands as $command) {
-                // error_log(get_class($command));
                 if ($command->execute($name, $context) === $this->_break_condition) {
                     $this->getStack()->pop();
                     return $this->_break_condition;
                 }
             }
-            
-            
-            /*
-            error_log(get_class($commands));
-            error_log($commands->count());
-            
-            $commands->rewind();
-            
-            error_log($commands->valid() ? 'Valid' : 'Invalid');
-            
-            while($commands->valid()) {
-                $command = $commands->current();
-                
-                if ($command->execute($name, $context) === $this->_break_condition) {
-                    $this->getStack()->pop();
-                    return $this->_break_condition;
-                }
-                
-                $commands->next();
-            }
-            */
-            
-            /*
-            foreach ($this->getStack()->top() as $command) {
-                if ($command->execute($name, $context) === $this->_break_condition) {
-                    $this->getStack()->pop();
-                    return $this->_break_condition;
-                }
-            }*/
 
             $this->getStack()->pop();
         }

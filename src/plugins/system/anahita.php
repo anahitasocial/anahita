@@ -75,7 +75,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
         $credentials = $this->_getRememberMeCredentials();
 
-        if (!empty($credentials)) {
+        if (! empty($credentials)) {
             if ($this->_authenticate($credentials)) {
                 $this->_login($credentials);
             }
@@ -92,6 +92,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
         try {
             $response = $this->getService('com:people.authentication.response');
+            
             dispatch_plugin('authentication.onAuthenticate', array(
                                 'credentials' => $credentials,
                                 'response' => $response
