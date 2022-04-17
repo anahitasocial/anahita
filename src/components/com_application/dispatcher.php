@@ -184,7 +184,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->getService('anahita:loader')->loadIdentifier($identifier);
 
         //no need to create session when using CLI (command line interface)
-        $session = (PHP_SAPI == 'cli') ? false : true;
+        $session = (PHP_SAPI === 'cli') ? false : true;
 
         $this->_application = $this->getService('com:application', array('session' => $session));
 
@@ -333,7 +333,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         }
 
         //if cli just print the error and exit
-        if (PHP_SAPI == 'cli') {
+        if (PHP_SAPI === 'cli') {
             print "\n";
             print $exception."\n";
             print debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);

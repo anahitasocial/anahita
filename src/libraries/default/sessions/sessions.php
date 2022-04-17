@@ -124,7 +124,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
-			'storage' => 'database'
+			'storage' => 'database',
 		));
 
 		parent::_initialize($config);
@@ -239,7 +239,6 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		$stored = $this->get('session.token');
 
 		if ($stored !== $tokenCheck) {
-
 			if ($forceExpire) {
 				$this->_state = self::STATE_EXPIRED;
 			}
@@ -308,6 +307,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		foreach ($handlers as $handler) {
 			if (strpos($handler, '.php')) {
 				$name = substr($handler, 0, strrpos($handler, '.'));
+				
 				if ($this->getService('com:sessions.storage.'.$name)->test()){
 					$names[] = $name;
 				}
@@ -392,7 +392,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 	*/
 	public function has($name)
 	{
-		if($this->_state !== self::STATE_ACTIVE) {
+		if ($this->_state !== self::STATE_ACTIVE) {
 			throw new LibSessionsException("Session isn't active!\n");
 		}
 
@@ -546,7 +546,8 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		   $cookie['lifetime'],
 		   $cookie['path'],
 		   $cookie['domain'],
-		   $cookie['secure']
+		   $cookie['secure'],
+		   true,
 	   );
 	}
 
