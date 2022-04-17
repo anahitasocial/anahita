@@ -173,13 +173,15 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
 
   		if (empty($name)) {
   			$r = null;
+            
   			if (! preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
                 throw new AnErrorException(
                     "Can't get or parse the class name ",
                     AnHttpResponse::INTERNAL_SERVER_ERROR
                 );
   			}
-  			$name = strtolower($r[1]);
+  			
+            $name = strtolower($r[1]);
   		}
 
   		return $name;

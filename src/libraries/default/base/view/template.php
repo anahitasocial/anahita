@@ -52,7 +52,7 @@ class LibBaseViewTemplate extends LibBaseViewAbstract
         parent::__construct($config);
 
         //set the media url
-        if (!$config->media_url instanceof AnHttpUrl) {
+        if (! $config->media_url instanceof AnHttpUrl) {
             $this->_mediaurl = AnService::get('anahita:http.url', array('url' => $config->media_url));
         } else {
             $this->_mediaurl = $config->media_url;

@@ -338,7 +338,7 @@ abstract class LibBaseViewAbstract extends AnObject
             $route = array_merge($route, $data);
 
             //Add the format information to the route only if it's not 'json'
-            if (!isset($parts['format'])) {
+            if (! isset($parts['format'])) {
                 $route['format'] = $this->getIdentifier()->name;
             }
         }

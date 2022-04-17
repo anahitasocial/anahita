@@ -20,5 +20,5 @@ AnService::setAlias('application.registry', 'com:application.registry');
 AnService::setAlias('application', 'com:application');
 AnService::setConfig('application.registry', array(
     'cache_prefix' => $cache_prefix,
-    'cache_enabled' => $cache_enabled
+    'cache_enabled' => $cache_enabled,
 ));

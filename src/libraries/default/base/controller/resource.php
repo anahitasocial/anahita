@@ -97,7 +97,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         $view = $this->getView();
 
-        if (!$context->response->getContent()) {
+        if (! $context->response->getContent()) {
             if ($context->params) {
                 foreach ($context->params as $key => $value) {
                     $view->set($key, $value);
@@ -120,7 +120,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     public function getView()
     {
-        if (!$this->_view instanceof LibBaseViewAbstract) {
+        if (! $this->_view instanceof LibBaseViewAbstract) {
             //Make sure we have a view identifier
             if (!($this->_view instanceof AnServiceIdentifier)) {
                 $this->setView($this->_view);
@@ -155,7 +155,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     public function setView($view)
     {
-        if (!($view instanceof ComBaseViewAbstract)) {
+        if (! ($view instanceof ComBaseViewAbstract)) {
             if (is_string($view) && strpos($view, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('view', $view);

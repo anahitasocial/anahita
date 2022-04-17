@@ -22,7 +22,7 @@ class LibBaseTemplateStack extends AnObjectStack implements AnServiceInstantiata
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
         // Check if an instance with this identifier already exists or not
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             //Create the singleton
             $classname = $config->service_identifier->classname;
             $instance  = new $classname($config);

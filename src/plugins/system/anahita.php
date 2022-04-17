@@ -135,7 +135,11 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
         if (isset($_COOKIE[$remember]) && !empty($_COOKIE[$remember])) {
             $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
-            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
+            $config = array(
+                'key' => $key, 
+                'cipher' => 'AES-256-CBC',
+            );
+            $crypt = $this->getService('anahita:encrypter', $config);
             $cookie = $crypt->decrypt($_COOKIE[$remember]);
 
             try {

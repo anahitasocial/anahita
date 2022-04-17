@@ -27,12 +27,15 @@ class LibBaseTemplateHelperController extends LibBaseTemplateHelperAbstract
     {
         $view = $this->_template->getView();
         $toolbar = $view->getState()->toolbar;
-        if (!$toolbar) {
+        
+        if (! $toolbar) {
             $controller = $this->getController($view->getName());
             $toolbar = $controller->getIdentifier()->name;
+            
             if ($controller->hasToolbar($toolbar)) {
                 $toolbar = $controller->getToolbar($toolbar);
             }
+            
             $controller->toolbar = $toolbar;
         }
 
@@ -50,7 +53,7 @@ class LibBaseTemplateHelperController extends LibBaseTemplateHelperAbstract
     {
         $name = AnInflector::singularize($name);
 
-        if (!isset(self::$_controllers['controller.'.$name])) {
+        if (! isset(self::$_controllers['controller.'.$name])) {
             if (strpos($name, '.') == false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->name = $name;
@@ -75,7 +78,7 @@ class LibBaseTemplateHelperController extends LibBaseTemplateHelperAbstract
      */
     public function getView($name)
     {
-        if (!isset(self::$_controllers['view.'.$name])) {
+        if (! isset(self::$_controllers['view.'.$name])) {
             $view = $this->getController($name)->setView($name)->getView();
             self::$_controllers['view.'.$name] = $view;
         }

@@ -54,15 +54,15 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         $credentials = array(
             'username' => $data->username,
-            'password' => $data->password
+            'password' => $data->password,
         );
-
         $response = $this->getService('com:people.authentication.response');
-
-        dispatch_plugin('authentication.onAuthenticate', array(
-                            'credentials' => $credentials,
-                            'response' => $response
-                        ));
+        $config = array(
+            'credentials' => $credentials,
+            'response' => $response
+        );
+        
+        dispatch_plugin('authentication.onAuthenticate', $config);
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
             $person = $this->getService('com:people.helper.person')->login($credentials);

@@ -140,11 +140,11 @@
       */
      public function setStatus($status, $message = null)
      {
-         if (!$status) {
+         if (! $status) {
              throw new InvalidArgumentException('Response status is missing');
          }
 
-         if (!$message && !AnHttpResponse::getMessage($status)) {
+         if (! $message && !AnHttpResponse::getMessage($status)) {
              throw new InvalidArgumentException('Response message is missing');
          }
 

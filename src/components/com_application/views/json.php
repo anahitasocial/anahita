@@ -39,7 +39,7 @@ class ComApplicationViewJson extends LibBaseViewJson
                 $data['errors'] = $this->_toData($this->content->getErrors());
             }
            //Encode data
-            $this->output = json_encode($data);
+           $this->output = json_encode($data);
         }
 
         return $this->output;
@@ -58,7 +58,10 @@ class ComApplicationViewJson extends LibBaseViewJson
 
         foreach ($errors as $error) {
             if ($error instanceof Exception) {
-                $data[] = array('code' => $error->getCode(),'message' => $error->getMessage());
+                $data[] = array(
+                    'code' => $error->getCode(), 
+                    'message' => $error->getMessage(),
+                );
             } elseif ($error instanceof AnError) {
                 $data[] = $error->toArray();
             }
