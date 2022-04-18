@@ -24,7 +24,7 @@ class LibBaseDomainSpace extends AnDomainSpace implements AnServiceInstantiatabl
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -121,13 +121,23 @@ class LibBaseDomainSpace extends AnDomainSpace implements AnServiceInstantiatabl
                     ->disableChain()
                     ->where($cols)->fetchValues('id');
 
-        if (!empty($nids)) {
-            $story_ids = $this->getService('repos:stories.story')->getQuery()->disableChain()->where(array('object.id' => $nids))->fetchValues('id');
+        if (! empty($nids)) {
+            $story_ids = $this->getService('repos:stories.story')
+            ->getQuery()
+            ->disableChain()
+            ->where(array('object.id' => $nids))
+            ->fetchValues('id');
+            
             $nids = array_merge($nids, $story_ids);
 
             //if there are any medium nodes in the related nodes
             //check if they have any comments
-            $comment_ids = $this->getService('repos:base.comment')->getQuery()->disableChain()->where(array('parent.id' => $nids))->fetchValues('id');
+            $comment_ids = $this->getService('repos:base.comment')
+            ->getQuery()
+            ->disableChain()
+            ->where(array('parent.id' => $nids))
+            ->fetchValues('id');
+            
             $nids = array_merge($nids, $comment_ids);
         }
 
@@ -168,7 +178,7 @@ class LibBaseDomainSpace extends AnDomainSpace implements AnServiceInstantiatabl
     {
         $ids = array_merge($this->getRelatedNodeIds($ids), $ids);
 
-        if (!empty($ids)) {
+        if (! empty($ids)) {
             $repositories = $this->getNodeRepositories($ids);
 
             //delete all the nodes
