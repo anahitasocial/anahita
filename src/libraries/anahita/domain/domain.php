@@ -96,7 +96,7 @@ class AnDomain
     {
         $identifier = AnService::getIdentifier($identifier);
 
-        if (!$identifier->basepath) {
+        if (! $identifier->basepath) {
             $adapters = AnService::get('anahita:loader')->getAdapters();
             $basepath = pick($adapters[$identifier->type]->getBasePath(), ANPATH_BASE);
             $applications = array_flip(AnServiceIdentifier::getApplications());
@@ -125,11 +125,11 @@ class AnDomain
         } else {
             $strIdentifier = (string) $identifier;
 
-            if (!AnService::has($identifier)) {
+            if (! AnService::has($identifier)) {
                 $identifier = self::getEntityIdentifier($identifier);
             }
 
-            if (!AnService::has($identifier)) {
+            if (! AnService::has($identifier)) {
                 AnService::set($strIdentifier, AnService::get($identifier, $config));
             }
 
