@@ -46,7 +46,9 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
                 ),
             ),
             'behaviors' => array(
-                  'serializable' => array('serializer' => 'com:stories.domain.serializer.story'),
+                  'serializable' => array(
+                      'serializer' => 'com:stories.domain.serializer.story',
+                  ),
                   'dictionariable',
             ),
             'relationships' => array(
@@ -96,7 +98,10 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
                      'subscribers' => array($data->comment->author->id),
                 ));
 
-            } elseif ($data->object->isModifiable() && !is($data->object, 'ComActorsDomainEntityActor')) {
+            } elseif (
+                $data->object->isModifiable() && 
+                !is($data->object, 'ComActorsDomainEntityActor')
+            ) {
                 $data->append(array(
                     'subscribers' => array($data->object->author->id),
                 ));
