@@ -64,11 +64,20 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
                     'default' => 'date',
                     'required' => true
                 ),
-                'updateTime' => array('column' => 'modified_on', 'default' => 'date'),
+                'updateTime' => array(
+                    'column' => 'modified_on', 
+                    'default' => 'date',
+                ),
             ),
             'relationships' => array(
-                'author' => array('parent' => 'com:people.domain.entity.person', 'child_column' => 'created_by'),
-                'editor' => array('parent' => 'com:people.domain.entity.person', 'child_column' => 'modified_by'),
+                'author' => array(
+                    'parent' => 'com:people.domain.entity.person', 
+                    'child_column' => 'created_by',
+                ),
+                'editor' => array(
+                    'parent' => 'com:people.domain.entity.person', 
+                    'child_column' => 'modified_by',
+                ),
             ),
         ));
 
@@ -119,7 +128,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
     {
         $this->updateTime = AnDomainAttributeDate::getInstance();
 
-        if (!isset($this->creationTime)) {
+        if (! isset($this->creationTime)) {
             $this->creationTime = AnDomainAttributeDate::getInstance();
         }
     }
@@ -136,7 +145,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
         $modified = count(array_intersect($this->_modifiable_properties, $modified)) > 0;
 
         if ($modified && AnService::has('com:people.viewer')) {
-            $entity->editor = get_viewer();
+            $entity->editor = AnService::get('com:people.viewer');
         }
     }
 }
