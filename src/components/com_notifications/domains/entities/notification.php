@@ -89,24 +89,19 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         ));
 
         if ($data->object) {
-
             if (is($data->object, 'ComBaseDomainEntityComment')) {
-
                 $data->comment = $data->object;
                 $data->object = $data->comment->parent;
-
                 $data->append(array(
                      'subscribers' => array($data->comment->author->id),
                 ));
 
             } elseif ($data->object->isModifiable() && !is($data->object, 'ComActorsDomainEntityActor')) {
-
                 $data->append(array(
                     'subscribers' => array($data->object->author->id),
                 ));
 
             } elseif (is_person($data->object)) {
-
                 $data->append(array(
                     'subscribers' => array($data->object->id),
                 ));
@@ -171,7 +166,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
 
         $ids = array_unique($ids);
 
-        if (!empty($ids)) {
+        if (! empty($ids)) {
             $this->set('subscriberIds', AnDomainAttribute::getInstance('set')->setData($ids));
         } else {
             $this->delete();
@@ -223,12 +218,12 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
     public function shouldNotify($person, $setting)
     {
         //if a person is not notifiable then return false
-        if (!$person->isNotifiable()) {
+        if (! $person->isNotifiable()) {
             return false;
         }
 
         //check if the target allows access to the person
-        if (!$this->target->allows($person, 'access')) {
+        if (! $this->target->allows($person, 'access')) {
             return false;
         }
 
