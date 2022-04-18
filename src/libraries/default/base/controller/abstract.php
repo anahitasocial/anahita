@@ -178,7 +178,8 @@ class LibBaseControllerAbstract extends AnControllerAbstract
             $this->_response = $this->getService($this->_response);
 
             if (! $this->_response instanceof LibBaseControllerResponse) {
-                throw new UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');
+                $msg = 'Response must be an instanceof LibBaseControllerResponse';
+                throw new UnexpectedValueException($msg);
             }
         }
 
