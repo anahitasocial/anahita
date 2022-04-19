@@ -78,7 +78,7 @@ class AnMixinCommand extends AnMixinAbstract
             'dispatch_events' => true,
             'event_priority' => AnCommand::PRIORITY_LOWEST,
             'enable_callbacks' => false,
-            'callback_priority' => AnCommand::PRIORITY_HIGH,
+            'callback_priority' => AnCommand::PRIORITY_HIGHEST,
         ));
         
         parent::_initialize($config);
