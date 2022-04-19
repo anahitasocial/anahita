@@ -881,7 +881,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
             //to modify the query based on its state
             if (!$query->disable_chain) {
                 $chain = clone $this->getRepository()->getCommandChain();
-                $chain->enqueue($query, AnCommand::PRIORITY_HIGHEST);
+                $chain->enqueue($query, $this->getPriority());
                 $context = $this->getRepository()->getCommandContext();
                 $context->caller = $this;
                 $context->query = $query;
