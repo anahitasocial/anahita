@@ -106,7 +106,7 @@ class AnMixinBehavior extends AnMixinAbstract
         $this->_behaviors[$behavior->getIdentifier()->name] = $behavior;
 
         //Enqueue the behavior
-        $this->getCommandChain()->enqueue($behavior, AnCommand::PRIORITY_NORMAL);
+        $this->getCommandChain()->enqueue($behavior, AnCommand::PRIORITY_HIGHEST);
 
         //Mixin the behavior
         if ($this->_auto_mixin) {
