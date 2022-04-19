@@ -66,12 +66,12 @@ class AnDomainSpace extends AnObject
      */
     public function validateEntities(&$failed = null)
     {
-        $restult = true;
         $failed = new AnObjectSet();
         $entities = $this->getCommitables();
 
         foreach ($entities as $entity) {
             $restult = $entity->getRepository()->validate($entity);
+            
             if ($restult === false) {
                 $failed->insert($entity);
             }
@@ -93,7 +93,7 @@ class AnDomainSpace extends AnObject
     {
         $result = $this->validateEntities($failed);
 
-        if (!$result) {
+        if (! $result) {
             return false;
         }
 
@@ -101,6 +101,7 @@ class AnDomainSpace extends AnObject
 
         foreach ($entities as $entity) {
             $result = $entity->getRepository()->commit($entity);
+            
             if ($result === false) {
                 $failed->insert($entity);
             }

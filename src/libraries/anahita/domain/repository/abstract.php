@@ -222,9 +222,11 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //reset the error message
         $context = $this->getCommandContext();
         $context->entity = $entity;
+        
         if ($entity->isValidatable()) {
             $entity->resetErrors();
         }
+        
         $result = $this->getCommandChain()->run('on.validate', $context);
 
         return $result !== false;
