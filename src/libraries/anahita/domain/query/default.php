@@ -26,6 +26,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainQueryDefault extends AnDomainQuery
-{
-}
+class AnDomainQueryDefault extends AnDomainQuery {}

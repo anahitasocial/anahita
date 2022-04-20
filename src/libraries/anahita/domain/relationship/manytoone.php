@@ -46,12 +46,10 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         parent::setConfig($config);
 
         $this->_type_column = $config->type_column;
-
         $this->_child_column = $config->child_column;
-
         $this->_polymorphic = $config->polymorphic === true;
 
-        if (!isset($this->_parent)) {
+        if (! isset($this->_parent)) {
             $this->_polymorphic = true;
         }
     }
@@ -82,7 +80,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
      */
     public function serialize($entity)
     {
-        if (!is_null($entity) && is_scalar($entity)) {
+        if (! is_null($entity) && is_scalar($entity)) {
             throw new AnException($this->getName().' be an instnaceof '.$this->getParent());
         }
 
@@ -140,7 +138,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     {
         $config = new AnConfig($config);
 
-        if (!isset($this->_parent)) {
+        if (! isset($this->_parent)) {
             throw new AnException('Can not have an inverse relationship with a polymorphic parent');
         }
 
@@ -154,6 +152,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
 
         $name = $config->name;
         $cardinality = $config->cardinality;
+        
         unset($config['name']);
         unset($config['cardinality']);
 
@@ -162,8 +161,9 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         $config['type'] = 'has';
         $config['cardinality'] = $cardinality;
 
-        $this->getParentRepository()->getDescription()
-            ->setRelationship($name, AnConfig::unbox($config));
+        $this->getParentRepository()
+        ->getDescription()
+        ->setRelationship($name, AnConfig::unbox($config));
     }
 
     /**
@@ -175,6 +175,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
     {
         $columns = array();
         $columns[$this->_parent_key] = $this->_child_column;
+        
         if ($this->_polymorphic) {
             $columns['type'] = $this->_type_column;
         }
@@ -209,7 +210,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
             return;
         }
 
-        if (!$this->isMaterializable($data)) {
+        if (! $this->isMaterializable($data)) {
             throw new AnDomainExceptionMapping($this->getName().' Mapping Failed');
         }
 
@@ -224,9 +225,11 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         if ($this->_polymorphic) {
             $key = $this->_type_column->key();
             $parent = isset($data[$key]) ? $data[$key] : null;
+            
             if ($parent) {
                 $parent = AnService::getIdentifier($parent);
-                if (!$parent->application) {
+                
+                if (! $parent->application) {
                     $parent->application = $this->_child->application;
                 }
             }

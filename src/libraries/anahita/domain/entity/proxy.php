@@ -59,9 +59,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
         parent::__construct($config);
 
         $this->_value = $config->value;
-
         $this->_property = $config->property;
-
         $this->_relationship = $config->relationship;
 
         self::$_values[$this->getIdentifier().$this->_property][] = $this->_value;
@@ -74,7 +72,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
      */
     public function __isset($key)
     {
-        if (!isset($this->_object) && $key == $this->_property) {
+        if (! isset($this->_object) && $key == $this->_property) {
             return isset($this->_value);
         }
 
@@ -88,7 +86,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
      */
     public function __get($key)
     {
-        if (!isset($this->_object) && $key == $this->_property) {
+        if (! isset($this->_object) && $key == $this->_property) {
             return $this->_value;
         }
 
@@ -161,7 +159,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
      */
     public function get($key = null, $default = null)
     {
-        if (!isset($this->_object) && $key == $this->_property) {
+        if (! isset($this->_object) && $key == $this->_property) {
             return $this->_value;
         }
 
@@ -200,7 +198,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
     public function getObject()
     {
         //security check
-        if (!isset($this->_object)) {
+        if (! isset($this->_object)) {
             $condition = array($this->_property => $this->_value);
             $repository = AnDomain::getRepository($this->getIdentifier());
 
@@ -232,7 +230,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
             //doesn't exists in the databse
             $this->_object = $repository->find($condition, false);
 
-            if (!$this->_object) {
+            if (! $this->_object) {
                 //lets cache the null result to prevent re-fetching
                 //the same result
                 $query = $repository->getQuery()->where($condition)->limit(1);
@@ -271,6 +269,7 @@ class AnDomainEntityProxy extends AnObjectDecorator implements ArrayAccess
     public function __call($method,  $arguments)
     {
         $object = $this->getObject();
+        
         if ($object) {
             return call_object_method($object, $method, $arguments);
         }

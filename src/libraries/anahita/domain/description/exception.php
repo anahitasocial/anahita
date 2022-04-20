@@ -26,6 +26,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainDescriptionException extends AnException
-{
-}
+class AnDomainDescriptionException extends AnException {}

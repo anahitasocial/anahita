@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainEntityDefault extends AnDomainEntityAbstract
-{
-}
+class AnDomainEntityDefault extends AnDomainEntityAbstract {}

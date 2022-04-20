@@ -59,7 +59,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
      */
     public function getQuery($clone = false, $disable_chain = false)
     {
-        if (!isset($this->_set_query) || $clone) {
+        if (! isset($this->_set_query) || $clone) {
             if ($this->_query instanceof AnDomainQuery) {
                 $query = clone $this->_query;
             } else {
@@ -134,6 +134,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
         //forward a call to the query
         if (method_exists($this->getQuery(), $method) || !$this->_repository->entityMethodExists($method)) {
             $result = call_object_method($this->getQuery(), $method, $arguments);
+            
             if ($result instanceof AnDomainQuery) {
                 $result = $this;
             }

@@ -157,15 +157,6 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
      */
     public function __get($key)
     {
-        /*
-        $result = null;
-        if(isset($this->_data[$key])) {
-            $result = $this->_data[$key];
-        }
-
-        return $result;
-        */
-        
         $result = null;
         $key = $this->__key($key);
         
@@ -208,7 +199,6 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
      */
     public function __unset($key)
     {
-        // unset($this->_data[$key]);
         unset($this->_data[$this->__key($key)]);
     }
 

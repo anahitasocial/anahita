@@ -193,10 +193,8 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
         $type = $identifier->path;
         $type = array_pop($type);
-
         $parts = explode('.', $command);
         $method = '_'.($parts[0]).ucfirst($type).ucfirst($parts[1]);
-
         $result = null;
 
         if (method_exists($this, $method)) {
@@ -378,6 +376,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         if ($this->getCommandChain()->run('before.fetch', $context) !== false) {
             $result = $context->result ? $context['result'] : $this->_fetchResult($context->query, $mode);
             $context->result = $result;
+            
             switch ($mode) {
                 case AnDomain::FETCH_ENTITY     :
                     $context->data = $result ? $this->_createEntity($result) : $result;
@@ -439,6 +438,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //force data to be stored by real name
         foreach ($context->data as $key => $value) {
             $property = $this->getDescription()->getProperty($key);
+            
             if ($property) {
                 unset($context->data[$key]);
                 $context->data[$property->getName()] = $value;
@@ -624,13 +624,18 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //if not found an entity
         //or found one but it' either delete or destroyed
         //create a new entity
-        if (!$entity ||
-                 ($entity->getEntityState() & AnDomain::STATE_DELETED ||
-                  $entity->getEntityState() &  AnDomain::STATE_DESTROYED)) {
+        if (
+            !$entity ||
+            (
+                $entity->getEntityState() & AnDomain::STATE_DELETED ||
+                $entity->getEntityState() &  AnDomain::STATE_DESTROYED
+            )
+        ) {
             $config = new AnConfig($config);
             $config->append(array(
                 'data' => $data,
             ));
+            
             $entity = $this->getEntity($config);
         }
 
@@ -656,7 +661,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
      */
     public function entityInherits($interface)
     {
-        if (!is_string($interface)) {
+        if (! is_string($interface)) {
             $interface = get_class($interface);
         }
 
@@ -697,7 +702,6 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //create an instance with its unique keys first
         $keys = array();
         $description = $this->_description;
-
         $keys = $description->getIdentifyingValues($data);
 
         if (empty($keys)) {
@@ -833,12 +837,14 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
         //set the entity default valuees
         $attributes = $this->getDescription()->getAttributes();
+        
         foreach ($attributes as $attribute) {
             $entity->set($attribute->getName(), $attribute->getDefaultValue());
         }
 
         //materialize required one-to-one relationship
         $relationships = $this->getDescription()->getRelationships();
+        
         foreach ($relationships as $relation) {
             if ($relation->isOneToOne() && $relation->isRequired()) {
                 $property = $relation->getName();
@@ -864,6 +870,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $entity->set($id, $context->result);
 
         $relationships = $this->getDescription()->getRelationships();
+        
         //reset all the one to many and many to many relationships
         foreach ($relationships as $relation) {
             if ($relation->isOneToMany() && !$relation->isOneToOne()) {

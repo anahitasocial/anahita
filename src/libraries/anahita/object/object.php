@@ -93,6 +93,7 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
             foreach ($property as $k => $v) {
                 $this->set($k, $v);
             }
+            
         } else {
             if ('_' == substr($property, 0, 1)) {
                 throw new AnObjectException("Protected or private properties can't be set outside of object scope in ".get_class($this));

@@ -55,7 +55,6 @@ class AnDomainDescriptionInheritance
     public function __construct(array $tree, $identifier = null)
     {
         $this->_tree = $tree;
-
         $this->_identifier = $identifier;
     }
 

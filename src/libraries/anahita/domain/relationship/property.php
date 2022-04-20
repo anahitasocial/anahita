@@ -55,7 +55,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
             $this->_parent = AnService::getIdentifier($config->parent);
 
             //adopt the child application
-            if (!$this->_parent->application) {
+            if (! $this->_parent->application) {
                 $this->_parent->application = $identifier->application;
             }
         }
@@ -68,9 +68,11 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
                 $identifier->name = $config->child;
                 $config->child = $identifier;
             }
+            
             $this->_child = AnService::getIdentifier($config->child);
+            
             //adopt the parent application
-            if (!$this->_child->application) {
+            if (! $this->_child->application) {
                 $this->_child->application = $identifier->application;
             }
         }

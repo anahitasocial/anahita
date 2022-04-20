@@ -120,7 +120,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
 
             $method = '_sanitize'.ucfirst($validation);
 
-            if (!method_exists($this, $method)) {
+            if (! method_exists($this, $method)) {
                 continue;
             }
 
@@ -241,6 +241,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
     public function removeValidation($property, $validation)
     {
         $validations = $this->getValidations($property);
+        
         unset($validations[$validation]);
 
         return $this;
@@ -261,7 +262,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
 
         $name = $property->getName();
 
-        if (!$this->_validations->$name) {
+        if (! $this->_validations->$name) {
             $this->_validations->$name = new AnConfig();
         }
 
@@ -277,10 +278,10 @@ abstract class AnDomainValidatorAbstract extends AnObject
      */
     public function getFilter($filter)
     {
-        if (!$filter instanceof AnFilterAbstract) {
+        if (! $filter instanceof AnFilterAbstract) {
             $filter = (string) $filter;
 
-            if (!isset($this->_filters[$filter])) {
+            if (! isset($this->_filters[$filter])) {
                 if (is_string($filter) && strpos($filter, '.') === false) {
                     $identifier = clone $this->getIdentifier();
                     $identifier->path = array('filter');
@@ -311,14 +312,23 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $property = $config->property;
         $value = $config->value;
         $options = AnConfig::unbox($config->options);
+        
         //if a number is just passed then treat it as max
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = array('max' => $options);
         }
 
-        if ($property->isAttribute() && $property->isScalar() && isset($options['max'])) {
+        if (
+            $property->isAttribute() && 
+            $property->isScalar() && 
+            isset($options['max'])
+        ) {
             $helper = new LibBaseTemplateHelperText(new AnConfig());
-            $value = $helper->truncate($value, array('length' => $options['max'], 'consider_html' => true, 'ending' => ''));
+            $value = $helper->truncate($value, array(
+                'length' => $options['max'], 
+                'consider_html' => true, 
+                'ending' => '',
+            ));
         }
 
         return $value;
@@ -337,7 +347,11 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $value = $config->value;
         $filter = $config->options;
 
-        if (!empty($value) && $property->isAttribute() && $property->isScalar()) {
+        if (
+            !empty($value) && 
+            $property->isAttribute() && 
+            $property->isScalar()
+        ) {
             $value = $this->getFilter($filter)->sanitize($value);
         }
 
@@ -358,7 +372,11 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $entity = $config->entity;
         $filter = $config->options;
 
-        if (!empty($value) && $property->isAttribute() && $property->isScalar()) {
+        if (
+            !empty($value) && 
+            $property->isAttribute() && 
+            $property->isScalar()
+        ) {
             if ($this->getFilter($filter)->validate($value) === false) {
                 $entity->addError(array(
                     'message' => $property->getName().' must have the format of '.$filter,
@@ -432,7 +450,10 @@ abstract class AnDomainValidatorAbstract extends AnObject
             // if string and value can not be null
             // then return false if values are either empty strings
             // or just whitespace
-            if ($property->getType() === 'string' && $property->isRequired() === AnDomain::VALUE_NOT_EMPTY) {
+            if (
+                $property->getType() === 'string' && 
+                $property->isRequired() === AnDomain::VALUE_NOT_EMPTY
+            ) {
                 //strip out html tags before measuring the lenght
                 $value = strip_tags($value);
 
@@ -470,8 +491,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
                 $values = $property->serialize($value);
 
                 foreach ($values as $value) {
-
-                    if (!$value) {
+                    if (! $value) {
                         $present = false;
                         break;
                     }
@@ -479,7 +499,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
             }
         }
 
-        if (!$present) {
+        if (! $present) {
             $entity->addError(array(
                 'message' => sprintf(
                     AnTranslator::_('%s %s can not be empty!'),
@@ -511,7 +531,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $options = AnConfig::unbox($config->options);
 
         //if a number is just passed then treat it as max
-        if (!is_array($options)) {
+        if (! is_array($options)) {
             $options = array('max' => $options);
         }
 
@@ -607,6 +627,7 @@ abstract class AnDomainValidatorAbstract extends AnObject
 
         if (isset($options['scope'])) {
             $scope = (array) $options['scope'];
+            
             foreach ($scope as $key) {
                 $conditions[$key] = $entity->get($key);
             }

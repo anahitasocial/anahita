@@ -52,7 +52,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 
         $this->_type = $config->type;
 
-        if (!$this->isScalar()) {
+        if (! $this->isScalar()) {
             $this->_type = AnDomainAttribute::getClassname($this->_type);
         }
 
@@ -97,7 +97,6 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     public function setDefault($value)
     {
         $this->_default = $value;
-
         return $this;
     }
 

@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainExceptionValidation extends AnException
-{
-}
+class AnDomainExceptionValidation extends AnException {}

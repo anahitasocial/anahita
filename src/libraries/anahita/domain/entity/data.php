@@ -187,6 +187,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
         $this->_materialize($key);
 
         $result = null;
+        
         if (isset($this->_property[$key])) {
             $result = $this->_property[$key];
         }
@@ -273,6 +274,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
             $entities = $repository->getEntities();
             $query = $repository->getQuery();
             $keys = array();
+            
             foreach ($entities as $entity) {
                 if ($entity->persisted()) {
                     $data = $entity->getIdentifyingData();
@@ -291,6 +293,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
             foreach ($result as $data) {
                 $keys = $repository->getDescription()->getIdentifyingValues($data);
                 $entity = $repository->find($keys, false);
+                
                 if ($entity) {
                     $entity->setRowData($data);
                 }
@@ -310,12 +313,14 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
                 //prevents calling the block multiple time
                 //as it tries to instantiate the same property for
                 //all the entities
-                if (!self::_isLocked($repository)) {
+                if (! self::_isLocked($repository)) {
                     self::_lock($repository, true);
                     $entities = $repository->getEntities();
+                    
                     foreach ($entities as $entity) {
                         $entity->get($key);
                     }
+                    
                     self::_lock($repository, false);
                 }
             }

@@ -82,9 +82,8 @@ class AnDomainSpaceQueue extends AnObjectQueue
      */
     public function getRepositoryEntities($repository)
     {
-        if (!isset($this->_repository_entities[$repository])) {
-            $this->_repository_entities[$repository] =
-                $this->getService('anahita:domain.entityset', array('repository' => $this));
+        if (! isset($this->_repository_entities[$repository])) {
+            $this->_repository_entities[$repository] = $this->getService('anahita:domain.entityset', array('repository' => $this));
         }
 
         return $this->_repository_entities[$repository];

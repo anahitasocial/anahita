@@ -149,11 +149,13 @@ class AnDomainResourceSet extends AnObject implements IteratorAggregate, Countab
         if (strpos($name, '.') !== false) {
             $parts = explode('.', $name, 2);
             $name = $parts[1];
+            
             foreach ($this->_resources as $resource) {
                 if ($resource->getAlias() == $parts[0]) {
                     break;
                 }
             }
+            
             $resources = array($resource);
         } else {
             $resources = $this->_resources;

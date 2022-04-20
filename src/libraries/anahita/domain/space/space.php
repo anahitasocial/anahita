@@ -202,7 +202,7 @@ class AnDomainSpace extends AnObject
     {
         //check if an entity has already been added
         //if not then add it to the bottom
-        if (!$this->_entities->getPriority($entity)) {
+        if (! $this->_entities->getPriority($entity)) {
             $priority = count($this->_entities);
             $this->_entities->enqueue($entity, $priority);
         }
@@ -224,7 +224,7 @@ class AnDomainSpace extends AnObject
             $key = $entity->getIdentifier()->application.$key.$value;
 
             foreach ($classes as $class) {
-                if (!isset($this->_identity_map[$class])) {
+                if (! isset($this->_identity_map[$class])) {
                     $this->_identity_map[$class] = array();
                 }
 
@@ -261,14 +261,14 @@ class AnDomainSpace extends AnObject
                     $entity = $this->_identity_map[$class][$key];
 
                     //only return an entity if it's still within the space
-                    if (!$this->_entities->contains($entity)) {
+                    if (! $this->_entities->contains($entity)) {
                         return;
                     }
 
                     //if the description we are using is the parent of the found entity
                     //if not then we must have found a different entity with the common parent
                     //as the caller repository
-                    if (!is_a($entity, $description->getEntityIdentifier()->classname)) {
+                    if (! is_a($entity, $description->getEntityIdentifier()->classname)) {
                         return;
                     }
 

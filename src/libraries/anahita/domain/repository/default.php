@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainRepositoryDefault extends AnDomainRepositoryAbstract
-{
-}
+class AnDomainRepositoryDefault extends AnDomainRepositoryAbstract {}

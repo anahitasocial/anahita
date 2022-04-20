@@ -140,12 +140,14 @@ abstract class AnMixinAbstract implements AnMixinInterface
 
             //Get all the public methods
             $reflection = new ReflectionClass($this);
+            
             foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
                 $methods[$method->name] = $method->name;
             }
 
             //Remove the base class methods
             $reflection = new ReflectionClass(__CLASS__);
+            
             foreach ($reflection->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
                 if (isset($methods[$method->name])) {
                     unset($methods[$method->name]);

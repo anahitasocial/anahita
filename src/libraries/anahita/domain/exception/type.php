@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainExceptionType extends AnException
-{
-}
+class AnDomainExceptionType extends AnException {}

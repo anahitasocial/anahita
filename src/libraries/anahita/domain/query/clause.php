@@ -74,7 +74,7 @@ class AnDomainQueryClause extends AnObject implements IteratorAggregate, Countab
 
         $this->_internal_query->where($key, $constraint, $value, $condition);
 
-        if (!isset($this->_parent_query->where[$handle])) {
+        if (! isset($this->_parent_query->where[$handle])) {
             $this->_parent_query->where[$handle] = array('clause' => $this, 'condition' => $this->_condition);
         }
 
@@ -122,7 +122,6 @@ class AnDomainQueryClause extends AnObject implements IteratorAggregate, Countab
     public function bind($key, $value = null)
     {
         $this->_parent_query->bind($key, $value);
-
         return $this;
     }
 

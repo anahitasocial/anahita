@@ -26,6 +26,4 @@
  *
  * @link       http://www.Anahita.io
  */
-interface AnDomainAttributeInterface extends Serializable
-{
-}
+interface AnDomainAttributeInterface extends Serializable {}

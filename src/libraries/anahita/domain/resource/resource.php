@@ -78,7 +78,6 @@ class AnDomainResource extends AnObject
     public function __construct(AnConfig $config)
     {
         $this->_name = $config->name;
-
         $this->_store = $config->store;
 
         parent::__construct($config);

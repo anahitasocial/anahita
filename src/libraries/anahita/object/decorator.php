@@ -73,7 +73,7 @@ class AnObjectDecorator extends AnObject implements Iterator, ArrayAccess, Count
             $methods = array();
             $object  = $this->getObject();
 
-            if (!($object instanceof AnObject)) {
+            if (! ($object instanceof AnObject)) {
                 $reflection	= new ReflectionClass($object);
                 foreach ($reflection->getMethods() as $method) {
                     $methods[] = $method->name;

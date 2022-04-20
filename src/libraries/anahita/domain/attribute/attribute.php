@@ -36,12 +36,14 @@ class AnDomainAttribute
      */
     public static function getClassname($type)
     {
-        if (!isset(self::$__classnames[$type])) {
+        if (! isset(self::$__classnames[$type])) {
             $classname = 'AnDomainAttribute'.ucfirst($type);
             $classname = class_exists($classname) ?  $classname : $type;
-            if (!is($classname, 'AnDomainAttributeInterface')) {
+            
+            if (! is($classname, 'AnDomainAttributeInterface')) {
                 throw new AnDomainExceptionType($classname.' must implements AnDomainAttributeInterface');
             }
+            
             self::$__classnames[$type] = $classname;
         }
 
@@ -59,7 +61,7 @@ class AnDomainAttribute
     {
         $classname = self::getClassname($type);
 
-        if (!isset(self::$__instances[$classname])) {
+        if (! isset(self::$__instances[$classname])) {
             $instance = new $classname();
             self::$__instances[$classname] = $instance;
         }

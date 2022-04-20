@@ -26,6 +26,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainBehaviorDefault extends AnDomainBehaviorAbstract
-{
-}
+class AnDomainBehaviorDefault extends AnDomainBehaviorAbstract {}

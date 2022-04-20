@@ -98,7 +98,7 @@ class AnDomainProperty extends AnObject
     {
         $description = $config->description;
 
-        if (!$description) {
+        if (! $description) {
             throw new AnDomainPropertyException('description [AnDomainDescriptionAbstract] option is required');
         }
 
@@ -193,7 +193,10 @@ class AnDomainProperty extends AnObject
             $through_one_to_many = null;
 
             //if subscription is through a one-to-many relationship		
-            if (strpos($config->through, '.') === false && $through_one_to_many = $description->getProperty($config->through)) {
+            if (
+                strpos($config->through, '.') === false && 
+                $through_one_to_many = $description->getProperty($config->through)
+            ) {
                 unset($config->through);
 
                 $config->append(array(
@@ -212,7 +215,6 @@ class AnDomainProperty extends AnObject
             //in the link entity if it doesn't exists			
             if (! $relationship->getChildProperty()) {
                 $child_key = $relationship->getChildKey();
-
                 $belongs_to_options = array('parent' => $description->getEntityIdentifier(),'type' => 'belongs_to');
 
                 if ($config->child_column) {
@@ -300,7 +302,7 @@ class AnDomainProperty extends AnObject
             $config->child_column = $description->getRepository()->getResources()->getColumn($config->child_column);
         }
 
-        if (!$config->child_column) {
+        if (! $config->child_column) {
             throw new AnDomainPropertyException('The '.$config->name.' belongs to relationship is missing a child column');
         }
 

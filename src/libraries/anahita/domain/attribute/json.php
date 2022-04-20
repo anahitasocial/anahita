@@ -39,7 +39,7 @@ class AnDomainAttributeJson extends AnConfig implements AnDomainAttributeInterfa
     {
         $value = @json_decode($data, true);
         
-        if (!$value) {
+        if (! $value) {
             $value = array();
         }
 

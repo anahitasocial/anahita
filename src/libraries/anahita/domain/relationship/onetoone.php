@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainRelationshipOnetoone extends AnDomainRelationshipOnetomany
-{
-}
+class AnDomainRelationshipOnetoone extends AnDomainRelationshipOnetomany {}

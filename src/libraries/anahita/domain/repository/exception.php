@@ -26,6 +26,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainRepositoryException extends AnException
-{
-}
+class AnDomainRepositoryException extends AnException {}

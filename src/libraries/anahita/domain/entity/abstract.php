@@ -102,7 +102,6 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     protected function _initialize(AnConfig $config)
     {
         $identifier = clone $this->getIdentifier();
-
         $identifier->path = array('domain','repository');
 
         register_default(array('identifier' => $identifier, 'prefix' => $this));
@@ -392,7 +391,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             $modify = true;
             
             if ($property->isRelationship() && $property->isManyToOne() && $value) {
-                if (!is($value, 'AnDomainEntityAbstract', 'AnDomainEntityProxy')) {
+                if (! is($value, 'AnDomainEntityAbstract', 'AnDomainEntityProxy')) {
                     throw new AnDomainExceptionType('Value of '.$property->getName().' must be a AnDomainEntityAbstract');
                 }
 
@@ -408,10 +407,11 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             }
             
             //if value is not null do a composite type checking
-            if (!is_null($value)) {
+            if (! is_null($value)) {
                 if ($property->isAttribute() && !$property->isScalar()) {
-                    if (!is($value, $property->getType())) {
-                        throw new AnDomainEntityException('Value of '.$property->getName().' must be a '.$property->getType().'. a '.get_class($value).' is given.');
+                    if (! is($value, $property->getType())) {
+                        $msg = 'Value of '.$property->getName().' must be a '.$property->getType().'. a '.get_class($value).' is given.';
+                        throw new AnDomainEntityException($msg);
                     }
                 }
             }
@@ -461,7 +461,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
             if ($this->getEntityState() != AnDomain::STATE_NEW) {
                 //store the original value for future checking
-                if (!isset($this->_modified[$name])) {
+                if (! isset($this->_modified[$name])) {
                     $this->_modified[$name] = array('old' => $this->get($name));
                 }
 
@@ -575,7 +575,6 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     public function getAffectedRowData()
     {
         $data = array();
-
         $description = $this->getEntityDescription();
 
         switch ($this->getEntityState()) {
@@ -636,7 +635,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     {
         $data = $this->_data->getRowData();
 
-        if (!is_null($column)) {
+        if (! is_null($column)) {
             $data = isset($data[$column]) ? $data[$column] : null;
         }
 
@@ -659,6 +658,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
             foreach ($properties as $key => $value) {
                 $property = $description->getProperty($key);
+                
                 if ($property && $property->getWriteAccess() >= $access) {
                     //ignore any type related exceptions
                       try {
@@ -667,7 +667,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
                           print $e->getMessage();
                           die;
                       }
-                } elseif (!$property) {
+                } elseif (! $property) {
                     $this->$key = $value;
                 }
             }
@@ -678,7 +678,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             $description = $this->getEntityDescription();
             $property = $description->getProperty($property);
 
-            if (!$property instanceof AnDomainPropertyAbstract) {
+            if (! $property instanceof AnDomainPropertyAbstract) {
                 $this->set($name, $value);
 
                 return $this;
@@ -1040,7 +1040,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      */
     public function getRepository()
     {
-        if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
+        if (! $this->_repository instanceof AnDomainRepositoryAbstract) {
             $this->_repository = $this->getService($this->_repository);
         }
 
@@ -1228,7 +1228,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
     {
         $key = 'method.'.$method;
 
-        if (!self::_cache($this)->offsetExists($key)) {
+        if (! self::_cache($this)->offsetExists($key)) {
             $result = false;
 
             if (method_exists($this, $method)) {

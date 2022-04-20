@@ -412,13 +412,16 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
 
         if ($is_object) {
             $set = new self();
+            
             foreach ($results as $value) {
                 $set->insert($value);
             }
+            
             $results = $set;
         } elseif ($is_boolean) {
             $results = array_unique($results);
             $value = true;
+            
             foreach ($results as $result) {
                 $value = $value && $result;
             }

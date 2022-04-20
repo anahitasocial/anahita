@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainEntityset extends AnDomainEntitysetAbstract
-{
-}
+class AnDomainEntityset extends AnDomainEntitysetAbstract {}

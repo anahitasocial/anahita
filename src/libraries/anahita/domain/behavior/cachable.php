@@ -51,7 +51,7 @@ class AnDomainBehaviorCachable extends AnDomainBehaviorAbstract
     {
         parent::__construct($config);
 
-        if (!self::$_cache) {
+        if (! self::$_cache) {
             self::$_cache = new ArrayObject();
         }
 

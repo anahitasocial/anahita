@@ -11,6 +11,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainRelationshipException extends AnException
-{
-}
+class AnDomainRelationshipException extends AnException {}

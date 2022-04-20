@@ -71,7 +71,6 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
     protected function _initialize(AnConfig $config)
     {
         $child = clone $this->_parent;
-
         $child->name = AnInflector::singularize($config->name);
 
         $config->append(array(

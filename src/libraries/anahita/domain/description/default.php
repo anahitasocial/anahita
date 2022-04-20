@@ -12,6 +12,4 @@
  *
  * @link       http://www.Anahita.io
  */
-class AnDomainDescriptionDefault extends AnDomainDescriptionAbstract
-{
-}
+class AnDomainDescriptionDefault extends AnDomainDescriptionAbstract {}

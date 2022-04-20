@@ -24,7 +24,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
 
         $instance = $instance ? clone $instance : new self();
 
-        if (!$config) {
+        if (! $config) {
             $config = new AnConfig();
         }
 
@@ -44,7 +44,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
      */
     public function __construct($config = null)
     {
-        if (!$config) {
+        if (! $config) {
             $config = new AnConfig();
         }
 

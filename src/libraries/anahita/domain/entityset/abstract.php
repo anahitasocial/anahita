@@ -107,13 +107,17 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
         foreach ($this as $entity) {
             foreach ($needle as $key => $value) {
                 $v = AnHelperArray::getValue($entity, $key);
-                if (is($value, 'AnDomainEntityAbstract') ||
-                     is($value, 'AnDomainEntityProxy')) {
+                
+                if (
+                    is($value, 'AnDomainEntityAbstract') ||
+                    is($value, 'AnDomainEntityProxy')
+                ) {
                     $is_equal = $value->eql($v);
                 } else {
                     $is_equal = $value == $v;
                 }
-                if (!$is_equal) {
+                
+                if (! $is_equal) {
                     break;
                 }
             }
@@ -126,7 +130,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
             }
         }
 
-        if (!$set) {
+        if (! $set) {
             return;
         }
 
@@ -224,7 +228,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function contains(AnObjectHandlable $object)
     {
         $this->_loadData();
-
         return parent::contains($object);
     }
 
@@ -236,7 +239,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function extract(AnObjectHandlable $object)
     {
         $this->_loadData();
-
         return parent::extract($object);
     }
 
@@ -270,7 +272,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function top()
     {
         $this->_loadData();
-
         return parent::top();
     }
 
@@ -346,7 +347,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function rewind()
     {
         $this->_loadData();
-
         return parent::rewind();
     }
 
@@ -358,7 +358,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function valid()
     {
         $this->_loadData();
-
         return parent::valid();
     }
 
@@ -370,7 +369,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function key()
     {
         $this->_loadData();
-
         return parent::key();
     }
 
@@ -382,7 +380,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function current()
     {
         $this->_loadData();
-
         return parent::current();
     }
 
@@ -392,7 +389,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function next()
     {
         $this->_loadData();
-
         return parent::next();
     }
 
@@ -406,7 +402,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function offsetGet($offset)
     {
         $this->_loadData();
-
         return parent::offsetGet($offset);
     }
 
@@ -418,7 +413,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function getIterator()
     {
         $this->_loadData();
-
         return parent::getIterator();
     }
 
@@ -439,6 +433,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     {
         if (! $this->isLoaded()) {
             $this->_object_set = array();
+            
             foreach ($this->_getData() as $object) {
                 $this->insert($object);
             }
@@ -453,7 +448,6 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
     public function serialize()
     {
         $this->_loadData();
-
         return parent::serialize();
     }
 
