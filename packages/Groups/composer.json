@@ -5,7 +5,7 @@
     "description": "",
     "extension-source" : "src",
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "anahita/anahita": "*"
     }
 }

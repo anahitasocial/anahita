@@ -5,7 +5,7 @@
     "description": "Creates a feed of items from the Notes, Photos, and Articles apps",
     "extension-source" : "src",
     "require": {
-        "php": ">=5.6",
+        "php": ">=7.0",
         "anahita/anahita": "*"
     }
 }
