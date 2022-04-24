@@ -14,6 +14,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-function com_install($intaller)
-{
-}
+function com_install($intaller) {}

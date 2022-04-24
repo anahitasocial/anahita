@@ -15,6 +15,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-function com_uninstall()
-{
-}
+function com_uninstall() {}

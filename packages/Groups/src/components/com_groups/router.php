@@ -11,6 +11,4 @@
  *
  * @link       http://www.GetAnahita.com
  */
-class ComGroupsRouter extends ComActorsRouterDefault
-{
-}
+class ComGroupsRouter extends ComActorsRouterDefault {}
