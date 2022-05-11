@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -48,7 +48,7 @@ function anahita_20()
             '`alias` = ""',
             '`component` = "com_notes"',
     );
-    $set = implode($set, ',');
+    $set = implode(',', $set);
     $query = 'UPDATE #__anahita_nodes SET '.$set." where type like 'ComMediumDomainEntityMedium,ComStoriesDomainEntityStory,com:stories.domain.entity.story' and (name = 'story_add' or name = 'private_message')";
     dbexec($query);
 

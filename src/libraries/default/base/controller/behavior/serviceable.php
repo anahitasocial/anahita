@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -31,7 +31,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
         parent::__construct($config);
 
         //inverse of exclude_actions
-        if (!empty($config->only)) {
+        if (! empty($config->only)) {
             $actions = (array) $config['only'];
 
             $exclude = array();
@@ -40,7 +40,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
                 if (strpos($method, '_action') === 0) {
                     $action = strtolower(substr($method, 7));
 
-                    if (!in_array($action, $actions)) {
+                    if (! in_array($action, $actions)) {
                         $exclude[] = $action;
                     }
                 }
@@ -116,7 +116,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
      */
     protected function _actionBrowse(AnCommandContext $context)
     {
-        if (!$context->query) {
+        if (! $context->query) {
             $context->query = $this->getRepository()->getQuery();
         }
 
@@ -173,6 +173,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     {
         $context->response->status = AnHttpResponse::CREATED;
         $entity = $this->getRepository()->getEntity()->setData($context['data']);
+        
         $this->setItem($entity);
 
         return $this->getItem();
@@ -188,7 +189,6 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     protected function _actionEdit(AnCommandContext $context)
     {
         $context->response->status = AnHttpResponse::RESET_CONTENT;
-
         return $this->getItem()->setData($context['data']);
     }
 

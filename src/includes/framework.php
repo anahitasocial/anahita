@@ -4,7 +4,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -55,7 +55,7 @@ AnServiceIdentifier::addLocator(AnService::get('anahita:service.locator.template
 AnService::setAlias('anahita:domain.store.database', 'com:base.domain.store.database');
 AnService::setAlias('anahita:domain.space', 'com:base.domain.space');
 
-$autoloader = require_once ANPATH_VENDOR.'/autoload.php';
+$autoloader = require ANPATH_VENDOR.'/autoload.php';
 $autoloader->unregister();
 $autoloader->register();
 

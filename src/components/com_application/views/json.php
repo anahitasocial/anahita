@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -39,7 +39,7 @@ class ComApplicationViewJson extends LibBaseViewJson
                 $data['errors'] = $this->_toData($this->content->getErrors());
             }
            //Encode data
-            $this->output = json_encode($data);
+           $this->output = json_encode($data);
         }
 
         return $this->output;
@@ -58,7 +58,10 @@ class ComApplicationViewJson extends LibBaseViewJson
 
         foreach ($errors as $error) {
             if ($error instanceof Exception) {
-                $data[] = array('code' => $error->getCode(),'message' => $error->getMessage());
+                $data[] = array(
+                    'code' => $error->getCode(), 
+                    'message' => $error->getMessage(),
+                );
             } elseif ($error instanceof AnError) {
                 $data[] = $error->toArray();
             }

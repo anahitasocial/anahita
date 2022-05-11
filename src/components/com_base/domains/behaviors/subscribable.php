@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -26,11 +26,13 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
             'attributes' => array(
                 'subscriberCount' => array(
                     'default' => 0,
-                    'write' => 'private', ),
+                    'write' => 'private', 
+                ),
                 'subscriberIds' => array(
                     'type' => 'set',
                     'default' => 'set',
-                    'write' => 'private', ),
+                    'write' => 'private', 
+                ),
             ),
             'relationships' => array(
                 'subscriptions' => array(
@@ -106,10 +108,10 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
     public function removeSubscriber($person)
     {
         $mixer = $this->_mixer;
-        $subscription = $this->subscriptions
-                             ->find(array(
+        $subscription = $this->subscriptions->find(array(
                                 'subscriber' => $person,
-                                'subscribee' => $mixer, ));
+                                'subscribee' => $mixer, 
+                            ));
 
         if ($subscription) {
             $this->subscriptions->extract($subscription);

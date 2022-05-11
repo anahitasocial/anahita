@@ -9,7 +9,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2016 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -338,7 +338,7 @@ abstract class LibBaseViewAbstract extends AnObject
             $route = array_merge($route, $data);
 
             //Add the format information to the route only if it's not 'json'
-            if (!isset($parts['format'])) {
+            if (! isset($parts['format'])) {
                 $route['format'] = $this->getIdentifier()->name;
             }
         }

@@ -3,7 +3,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -13,7 +13,7 @@ class ComPeopleViewSessionJson extends ComBaseViewJson
 {
     public function display()
     {
-        if (!$this->_state->getItem()) {
+        if (! $this->_state->getItem()) {
             throw new LibBaseControllerExceptionUnauthorized('User is not logged in');
         } else {
             return parent::display();
@@ -29,7 +29,6 @@ class ComPeopleViewSessionJson extends ComBaseViewJson
     {
         $data = array();
         $serializer = $this->getService('com:actors.domain.serializer.actor');
-
         $data = $serializer->toSerializableArray($item);
 
         $data['username'] = $item->username;

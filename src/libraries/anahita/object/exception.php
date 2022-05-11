@@ -33,8 +33,8 @@ class AnObjectException extends AnException
             foreach ($traces as $trace) {
                 if ($trace['function'] != '__call') {
                     $this->message = "Call to undefined method : ".$trace['class'].$trace['type'].$trace['function'];
-                    $this->file    = $trace['file'];
-                    $this->line    = $trace['line'];
+                    $this->file = $trace['file'];
+                    $this->line = $trace['line'];
                     break;
                 }
             }

@@ -1,28 +1,9 @@
 <?php
 
 /**
- * LICENSE: ##LICENSE##.
- *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.Anahita.io
- */
-
-/**
- * It's the same as {@link AnObjectDecorator} but implements some of the PHP interfaces
- * and forward the calls to the object.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -88,11 +69,11 @@ class AnObjectDecorator extends AnObject implements Iterator, ArrayAccess, Count
      */
     public function getMethods()
     {
-        if (!$this->__methods) {
+        if (empty($this->__methods)) {
             $methods = array();
             $object  = $this->getObject();
 
-            if (!($object instanceof AnObject)) {
+            if (! ($object instanceof AnObject)) {
                 $reflection	= new ReflectionClass($object);
                 foreach ($reflection->getMethods() as $method) {
                     $methods[] = $method->name;
@@ -368,6 +349,7 @@ class AnObjectDecorator extends AnObject implements Iterator, ArrayAccess, Count
 
             //Allow for method chaining through the decorator
             $class = get_class($object);
+            
             if ($result instanceof $class) {
                 return $this;
             }

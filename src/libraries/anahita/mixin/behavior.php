@@ -20,7 +20,7 @@ class AnMixinBehavior extends AnMixinAbstract
      *
      * @var	array
      */
-    protected $_behaviors = array();
+    protected $_behaviors;
 
     /**
      * Auto mixin behaviors

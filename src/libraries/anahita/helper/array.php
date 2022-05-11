@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @author     Johan Janssens <johan@nooku.org>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
@@ -55,7 +55,7 @@ class AnHelperArray
         foreach ($items as $v) {
             if (is_array($key)) {
                 foreach ($key as $index => $k) {
-                    if (!isset($array[$k])) {
+                    if (! isset($array[$k])) {
                         $array[$k] = array();
                     }
                     $array[$k][] = self::getValue($v, $k);
@@ -82,7 +82,7 @@ class AnHelperArray
 
         foreach ($items as $item) {
             $value = self::getValue($item, $key);
-            if (!isset($array[$value])) {
+            if (! isset($array[$value])) {
                 $array[$value] = array();
             }
             $array[$value][] = $item;
@@ -101,8 +101,9 @@ class AnHelperArray
     public static function unique($array)
     {
         $unique = array();
+        
         foreach ($array as $item) {
-            if (!in_array($item, $unique, true)) {
+            if (! in_array($item, $unique, true)) {
                 $unique[] = $item;
             }
         }
@@ -124,6 +125,7 @@ class AnHelperArray
     {
         $values = (array) AnConfig::unbox($values);
         $array = (array) AnConfig::unbox($array);
+        
         if ($index === null) {
             foreach ($values as $value) {
                 array_push($array, $value);
@@ -150,7 +152,7 @@ class AnHelperArray
 
         foreach ($array as $index => $item) {
             foreach ($values as $value) {
-                if (!is_numeric($index)) {
+                if (! is_numeric($index)) {
                     $item = $index;
                 }
 
@@ -174,6 +176,7 @@ class AnHelperArray
     {
         settype($array, 'array');
         $values = array();
+        
         foreach ($array as $key => $value) {
             if (is_array($value)) {
                 $values = array_merge($values, self::getValues($value));
@@ -215,6 +218,7 @@ class AnHelperArray
     {
         $parts = explode('.', $key);
         $value = $item;
+        
         foreach ($parts as $part) {
             if ($value) {
                 if (is($value, 'AnObject')) {
@@ -237,7 +241,7 @@ class AnHelperArray
      */
     public static function getIterator($object)
     {
-        if (!self::isIterable($object)) {
+        if (! self::isIterable($object)) {
             $object = array($object);
         }
 

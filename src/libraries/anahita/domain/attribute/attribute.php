@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -36,12 +36,14 @@ class AnDomainAttribute
      */
     public static function getClassname($type)
     {
-        if (!isset(self::$__classnames[$type])) {
+        if (! isset(self::$__classnames[$type])) {
             $classname = 'AnDomainAttribute'.ucfirst($type);
             $classname = class_exists($classname) ?  $classname : $type;
-            if (!is($classname, 'AnDomainAttributeInterface')) {
+            
+            if (! is($classname, 'AnDomainAttributeInterface')) {
                 throw new AnDomainExceptionType($classname.' must implements AnDomainAttributeInterface');
             }
+            
             self::$__classnames[$type] = $classname;
         }
 
@@ -59,7 +61,7 @@ class AnDomainAttribute
     {
         $classname = self::getClassname($type);
 
-        if (!isset(self::$__instances[$classname])) {
+        if (! isset(self::$__instances[$classname])) {
             $instance = new $classname();
             self::$__instances[$classname] = $instance;
         }

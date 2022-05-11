@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -52,7 +52,7 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
 
         $this->_type = $config->type;
 
-        if (!$this->isScalar()) {
+        if (! $this->isScalar()) {
             $this->_type = AnDomainAttribute::getClassname($this->_type);
         }
 
@@ -97,7 +97,6 @@ class AnDomainAttributeProperty extends AnDomainPropertyAbstract implements AnDo
     public function setDefault($value)
     {
         $this->_default = $value;
-
         return $this;
     }
 

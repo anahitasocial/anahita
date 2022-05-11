@@ -22,7 +22,7 @@ class LibSessionsStorageAbstract extends AnObject implements SessionHandlerInter
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-		if (!$container->has($config->service_identifier)) {
+		if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance  = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -43,7 +43,7 @@ class LibSessionsStorageAbstract extends AnObject implements SessionHandlerInter
 			array($this, 'read'),
 			array($this, 'write'),
 			array($this, 'destroy'),
-			array($this, 'gc')
+			array($this, 'gc'),
 		);
 	}
 

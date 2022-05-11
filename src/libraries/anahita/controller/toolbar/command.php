@@ -10,7 +10,7 @@
  * Abstract Controller Toolbar Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @author      Rastin Mehr <rastin@anahitapolis.com> 
+ * @author      Rastin Mehr <rastin@anahita.io> 
  * @package     An_Controller
  * @subpackage 	Toolbar
  * @uses        AnInflector
@@ -35,12 +35,12 @@ class AnControllerToolbarCommand extends AnConfig
         parent::__construct($config);
 
         $this->append(array(
-            'id'         => $name,
-            'label'      => ucfirst($name),
-            'disabled'   => false,
-            'title'		 => '',
-            'attribs'    => array(
-                'class'        => array(),
+            'id' => $name,
+            'label' => ucfirst($name),
+            'disabled' => false,
+            'title' => '',
+            'attribs' => array(
+                'class' => array(),
             )
         ));
 

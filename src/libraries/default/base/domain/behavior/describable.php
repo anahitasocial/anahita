@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -126,7 +126,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
                     $operation = 'AND';
                 }
 
-                if (!empty($operation)) {
+                if (! empty($operation)) {
                     $clause = $query->clause();
                     $search_column = array();
 
@@ -134,7 +134,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
                         $search_column[] = "IF(@col($property) IS NULL,\"\",@col($property))";
                     }
 
-                    $search_column = implode($search_column, ',');
+                    $search_column = implode(',', $search_column);
 
                     foreach ($keywords as $keyword) {
                         $clause->where('CONCAT('.$search_column.') LIKE @quote(%'.$keyword.'%)', $operation);

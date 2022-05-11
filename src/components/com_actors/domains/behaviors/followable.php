@@ -26,7 +26,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -68,29 +68,45 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
 
             'attributes' => array(
                 'allowFollowRequest' => array('default' => false),
-                'followRequesterIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'followerCount' => array('default' => 0, 'write' => 'private'),
-                'followerIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'blockedIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
-                'blockerIds' => array('type' => 'set', 'default' => 'set', 'write' => 'private'),
+                'followRequesterIds' => array(
+                        'type' => 'set', 
+                        'default' => 'set', 
+                        'write' => 'private',
+                    ),
+                'followerCount' => array(
+                        'default' => 0, 
+                        'write' => 'private',
+                    ),
+                'followerIds' => array(
+                        'type' => 'set', 
+                        'default' => 'set', 
+                        'write' => 'private',
+                    ),
+                'blockedIds' => array(
+                        'type' => 'set', 
+                        'default' => 'set', 
+                        'write' => 'private',
+                    ),
+                'blockerIds' => array(
+                        'type' => 'set', 
+                        'default' => 'set', 
+                        'write' => 'private',
+                    ),
             ),
 
             'relationships' => array(
-
                 'requesters' => array(
                     'parent_delete' => 'ignore',
                     'through' => 'com:actors.domain.entity.request',
                     'target' => 'com:actors.domain.entity.actor',
                     'child_key' => 'requestee',
                 ),
-
                 'followers' => array(
                     'parent_delete' => 'ignore',
                     'through' => 'com:actors.domain.entity.follow',
                     'target' => 'com:actors.domain.entity.actor',
                     'child_key' => 'leader',
                 ),
-
                 'blockeds' => array(
                     'parent_delete' => 'ignore',
                     'through' => 'com:actors.domain.entity.block',
@@ -124,10 +140,11 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
             return false;
         }
 
-        $edge = $this->getService('repos:actors.request')->findOrAddNew(array(
-                'requester' => $requester,
-                'requestee' => $leader,
-            ));
+        $edge = $this->getService('repos:actors.request')
+                        ->findOrAddNew(array(
+                            'requester' => $requester,
+                            'requestee' => $leader,
+                        ));
 
         $edge->save();
 
@@ -142,14 +159,12 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
     public function removeRequester($requester)
     {
         $leader = $this->_mixer;
-
         $data = array(
             'requester' => $requester,
             'requestee' => $leader,
         );
 
         $this->getService('repos:actors.request')->destroy($data);
-
         $this->resetStats(array($leader, $requester));
     }
 
@@ -174,10 +189,11 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
             $leader->removeRequester($follower);
         }
 
-        $edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
-                    'leader' => $leader,
-                    'follower' => $follower,
-                ));
+        $edge = $this->getService('repos:actors.follow')
+                        ->findOrAddNew(array(
+                            'leader' => $leader,
+                            'follower' => $follower,
+                        ));
 
         $edge->save();
 
@@ -211,16 +227,16 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         if ($leader->isAdministrable() && $leader->hasAdmin($follower)) {
             $result = $leader->administrators->extract($follower);
             
-            if (!$result) {
+            if (! $result) {
                 $leader->resetStats(array($leader, $follower));
             }
         }
 
         $this->getService('repos:actors.follow')
-        ->destroy(array(
-            'follower' => $follower,
-            'leader' => $leader,
-        ));
+                ->destroy(array(
+                    'follower' => $follower,
+                    'leader' => $leader,
+                ));
 
         $this->resetStats(array($leader, $follower));
     }
@@ -246,10 +262,11 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
             $leader->removeRequester($follower);
         }
 
-        $edge = $this->getService('repos:actors.follow')->findOrAddNew(array(
-                    'leader' => $leader,
-                    'follower' => $follower,
-                ));
+        $edge = $this->getService('repos:actors.follow')
+                        ->findOrAddNew(array(
+                            'leader' => $leader,
+                            'follower' => $follower,
+                        ));
 
         $edge->save();
 
@@ -283,16 +300,16 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         if ($leader->isAdministrable() && $leader->hasAdmin($follower)) {
             $result = $leader->administrators->extract($follower);
             
-            if (!$result) {
+            if (! $result) {
                 $leader->resetStats(array($leader, $follower));
             }
         }
 
         $this->getService('repos:actors.follow')
-            ->destroy(array(
-                'follower' => $follower,
-                'leader' => $leader,
-            ));
+                ->destroy(array(
+                    'follower' => $follower,
+                    'leader' => $leader,
+                ));
 
         $this->resetStats(array($leader, $follower));
     }
@@ -313,20 +330,19 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         }
 
         $person->removeFollower($leader);
-
         $leader->removeFollower($person);
 
         //just in case
         $person->removeRequester($leader);
         $leader->removeRequester($person);
 
-        $edge = $this->getService('repos:actors.block')->findOrAddNew(array(
-                'blocker' => $leader,
-                'blocked' => $person,
-            ));
+        $edge = $this->getService('repos:actors.block')
+                        ->findOrAddNew(array(
+                            'blocker' => $leader,
+                            'blocked' => $person,
+                        ));
 
         $edge->save();
-
         $this->resetStats(array($leader, $person));
 
         return $edge;
@@ -347,7 +363,6 @@ class ComActorsDomainBehaviorFollowable extends AnDomainBehaviorAbstract
         );
 
         $this->getService('repos:actors.block')->destroy($data);
-
         $this->resetStats(array($leader, $person));
     }
 

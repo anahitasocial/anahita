@@ -27,12 +27,10 @@ class plgAuthenticationAnahita extends PlgAnahitaDefault
         ));
 
         if (! is_null($person)) {
-
             $success = false;
 
             //check for legacy password
             if (strpos($person->password, ':')) {
-
                 $credentials->username = $person->username;
                 $parts = explode(':', $person->password);
                 $crypt = $parts[0];

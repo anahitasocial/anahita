@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -71,7 +71,6 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
     protected function _initialize(AnConfig $config)
     {
         $child = clone $this->_parent;
-
         $child->name = AnInflector::singularize($config->name);
 
         $config->append(array(
@@ -194,7 +193,9 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
      */
     public function getChildProperty()
     {
-        return $this->getChildRepository()->getDescription()->getProperty($this->_child_key);
+        return $this->getChildRepository()
+            ->getDescription()
+            ->getProperty($this->_child_key);
     }
 
     /**

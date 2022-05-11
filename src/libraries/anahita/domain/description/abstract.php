@@ -8,7 +8,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -119,7 +119,8 @@ abstract class AnDomainDescriptionAbstract
         $this->_repository = $config->repository;
 
         if (! $this->_repository) {
-            throw new AnDomainDescriptionException('repository [AnDomainRepositoryAbstract] option is required');
+            $msg = 'repository [AnDomainRepositoryAbstract] option is required';
+            throw new AnDomainDescriptionException($msg);
         }
 
         if ($config->inheritance) {
@@ -238,7 +239,10 @@ abstract class AnDomainDescriptionAbstract
 
         //if property name is the same as the identity property
         //then set the identity property
-        if (is_string($this->_identity_property) && $property->getName() == $this->_identity_property) {
+        if (
+            is_string($this->_identity_property) && 
+            $property->getName() == $this->_identity_property
+        ) {
             $this->setIdentityProperty($property);
         }
 
@@ -294,7 +298,6 @@ abstract class AnDomainDescriptionAbstract
     public function setAlias($property, $alias)
     {
         $this->_alias[$alias] = $property;
-
         return $this;
     }
 
@@ -340,7 +343,6 @@ abstract class AnDomainDescriptionAbstract
     public function removeIdentifyingProperty($property)
     {
         unset($this->_identifying_properties[$property->getName()]);
-
         return $this;
     }
 
@@ -442,10 +444,12 @@ abstract class AnDomainDescriptionAbstract
             //in STI (single table inheritane) we don't store the
             //orginal enitty class
             array_shift($classes);
+            
             foreach ($classes as $key => $class) {
                 if (isset($this->_class_alias[$class])) {
                     $class = ucfirst($this->_class_alias[$class]);
                 }
+                
                 if (empty($class)) {
                     unset($classes[$key]);
                 } else {
@@ -456,8 +460,8 @@ abstract class AnDomainDescriptionAbstract
             //mak sure ther are no repeating classes. This could happen
             //if some of the entities are extending the default
             $classes = array_unique($classes);
-
             $identifier = clone $this->getEntityIdentifier();
+            
             $identifier->application = null;
             $this->_inheritance_column_value = new AnDomainDescriptionInheritance($classes, $this->_is_abstract ? null : $identifier);
         }
@@ -520,6 +524,7 @@ abstract class AnDomainDescriptionAbstract
     {
         $attributes = is_string($name) ? array($name => $config) : $name;
         $property = null;
+        
         foreach ($attributes as $name => $config) {
             if (is_numeric($name)) {
                 $name = $config;

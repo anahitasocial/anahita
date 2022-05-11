@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -93,7 +93,7 @@ class AnDomainSpaceState extends AnObject
     {
         $key = $current.'=>'.$new;
 
-        if (!isset($this->_machine[$key])) {
+        if (! isset($this->_machine[$key])) {
             return true;
         }
 
@@ -101,9 +101,11 @@ class AnDomainSpaceState extends AnObject
 
         foreach ($callbacks as $callback) {
             $result = $callback;
+            
             if (is_string($callback)) {
                 $result = $this->{'_'.$callback}($entity);
             }
+            
             if ($result === false) {
                 return false;
             }
@@ -184,15 +186,17 @@ class AnDomainSpaceState extends AnObject
                 continue;
             }
 
-            if ($relationship->getDeleteRule()    ==  AnDomain::DELETE_CASCADE
-                 || $relationship->getDeleteRule() ==  AnDomain::DELETE_DESTROY
+            if (
+                $relationship->getDeleteRule() ==  AnDomain::DELETE_CASCADE || 
+                $relationship->getDeleteRule() ==  AnDomain::DELETE_DESTROY
             ) {
                 $property = $relationship->getName();
                 $entities = $entity->getData($property);
 
-                if (!$entities) {
+                if (! $entities) {
                     continue;
                 }
+                
                 //someone else is responsible for deleteing the relations
                 //good for mass deletion. i.e. node and edges
                 if ($relationship->getDeleteRule() == AnDomain::DELETE_IGNORE) {
@@ -205,6 +209,7 @@ class AnDomainSpaceState extends AnObject
                     }
 
                     $relationship->getChildRepository()->destroy($query);
+                    
                     continue;
                 } else {
                     if ($relationship->isOneToOne()) {
@@ -214,7 +219,7 @@ class AnDomainSpaceState extends AnObject
                     foreach ($entities as $entity) {
                         //if the cascading fails for the related entities then
                         //nullify the property in the failed entity 
-                        if (!$entity->delete() && $entity->getObject()) {
+                        if (! $entity->delete() && $entity->getObject()) {
                             $entity->set($relationship->getChildKey(), null);
                         }
                     }
@@ -233,6 +238,7 @@ class AnDomainSpaceState extends AnObject
                 //then instantiating them
                 $entities = $entity->getData($relationship->getName())->fetchSet();
                 $property = $relationship->getChildKey();
+                
                 foreach ($entities as $entity) {
                     $entity->set($property, null);
                 }

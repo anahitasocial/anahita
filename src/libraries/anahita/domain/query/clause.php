@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -22,7 +22,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -74,8 +74,11 @@ class AnDomainQueryClause extends AnObject implements IteratorAggregate, Countab
 
         $this->_internal_query->where($key, $constraint, $value, $condition);
 
-        if (!isset($this->_parent_query->where[$handle])) {
-            $this->_parent_query->where[$handle] = array('clause' => $this, 'condition' => $this->_condition);
+        if (! isset($this->_parent_query->where[$handle])) {
+            $this->_parent_query->where[$handle] = array(
+                'clause' => $this, 
+                'condition' => $this->_condition,
+            );
         }
 
         return $this;
@@ -122,7 +125,6 @@ class AnDomainQueryClause extends AnObject implements IteratorAggregate, Countab
     public function bind($key, $value = null)
     {
         $this->_parent_query->bind($key, $value);
-
         return $this;
     }
 

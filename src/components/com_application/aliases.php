@@ -5,7 +5,7 @@
  * @package    com_application
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
@@ -20,5 +20,5 @@ AnService::setAlias('application.registry', 'com:application.registry');
 AnService::setAlias('application', 'com:application');
 AnService::setConfig('application.registry', array(
     'cache_prefix' => $cache_prefix,
-    'cache_enabled' => $cache_enabled
+    'cache_enabled' => $cache_enabled,
 ));

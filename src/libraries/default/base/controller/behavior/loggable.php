@@ -11,7 +11,7 @@ define('LOG_LEVEL_ERROR', 'ERROR');
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -67,7 +67,7 @@ class LibBaseControllerBehaviorLoggable extends AnControllerBehaviorAbstract
      */
     public function log($entry, $level = LOG_LEVEL_INFO)
     {
-        if (!is_array($entry)) {
+        if (! is_array($entry)) {
             $entry = array('comment' => $entry, 'level' => $level);
         }
 

@@ -10,7 +10,7 @@
  * Abstract Controller Toolbar Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @author      Rastin Mehr <rastin@anahitapolis.com> 
+ * @author      Rastin Mehr <rastin@anahita.io> 
  * @package     An_Controller
  * @subpackage 	Toolbar
  * @uses        AnInflector
@@ -32,12 +32,12 @@ abstract class AnControllerBehaviorAbstract extends AnBehaviorAbstract
 	{
 		$this->setMixer($context->caller);
 
-		$parts  = explode('.', $name);
-		if($parts[0] == 'action')
-		{
+		$parts = explode('.', $name);
+		
+		if ($parts[0] == 'action') {
 		    $method = '_action'.ucfirst($parts[1]);
 
-		    if(method_exists($this, $method)) {
+		    if (method_exists($this, $method)) {
 			    return $this->$method($context);
 		    }
 		}

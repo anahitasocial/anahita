@@ -93,6 +93,7 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
             foreach ($property as $k => $v) {
                 $this->set($k, $v);
             }
+            
         } else {
             if ('_' == substr($property, 0, 1)) {
                 throw new AnObjectException("Protected or private properties can't be set outside of object scope in ".get_class($this));
@@ -149,8 +150,8 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     public function mixin(AnMixinInterface $object, $config = array())
     {
-        if (!$object instanceof AnMixinInterface) {
-            if (!$object instanceof AnServiceIdentifier) {
+        if (! $object instanceof AnMixinInterface) {
+            if (! $object instanceof AnServiceIdentifier) {
                 //Create the complete identifier if a partial identifier was passed
                 if (is_string($object) && strpos($object, '.') === false) {
                     $identifier = clone $this->getIdentifier();
@@ -166,17 +167,20 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
             $config = new AnConfig($config);
             $config->mixer = $this;
             $object = new $identifier->classname($config);
-            if (!$object instanceof AnMixinInterface) {
+            
+            if (! $object instanceof AnMixinInterface) {
                 throw new \UnexpectedValueException(
                         'Mixin: '.get_class($mixin).' does not implement AnMixinInterface'
                 );
             }
         }
+        
         $methods = $object->getMixableMethods($this);
 
         foreach ($methods as $method) {
             $this->_mixed_methods[$method] = $object;
-            if (!empty($this->__methods) && !in_array($method, $this->__methods)) {
+            
+            if (! empty($this->__methods) && !in_array($method, $this->__methods)) {
                 $this->__methods[] = $method;
             }
         }
@@ -232,15 +236,17 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     public function getMethods()
     {
-        if (!$this->__methods) {
+        if (empty($this->__methods)) {
             $methods = array();
 
             $reflection = new ReflectionClass($this);
+            
             foreach ($reflection->getMethods() as $method) {
                 $methods[] = $method->name;
             }
-
-            $this->__methods = array_merge($methods, array_keys($this->_mixed_methods));
+            
+            $mixed_methods_keys = array_keys($this->_mixed_methods);
+            $this->__methods = array_merge($methods, $mixed_methods_keys);
         }
 
         return $this->__methods;
@@ -258,14 +264,16 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
      */
     final public function getService($identifier = null, array $config = array())
     {
-        if (!isset($this->__service_container)) {
+        if (! isset($this->__service_container)) {
             throw new AnObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
         }
-        if (!isset($identifier)) {
-            $result =  $this->__service_container;
+        
+        if (! isset($identifier)) {
+            $result = $this->__service_container;
         } else {
-            $result =  $this->__service_container->get($identifier, $config);
+            $result = $this->__service_container->get($identifier, $config);
         }
+        
         return $result;
     }
 
@@ -280,7 +288,7 @@ class AnObject implements AnObjectHandlable, AnObjectServiceable
     final public function getIdentifier($identifier = null)
     {
         if (isset($identifier)) {
-            if (!isset($this->__service_container)) {
+            if (! isset($this->__service_container)) {
                 throw new AnObjectException("Failed to call ".get_class($this)."::getIdentifier(). No service_container object defined.");
             }
 

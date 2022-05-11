@@ -2,7 +2,7 @@
 /**
  * @category   Anahita
  *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2015 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -132,7 +132,6 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
     public function getCoverURL($size = 'large')
     {
         $coverFilename = $this->_mixer->getCoverFile($size);
-
         $url = $this->getPathURL($coverFilename, true);
 
         return $url;
@@ -178,7 +177,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
         $config = new AnConfig($config);
 
         $config->append(array(
-                'mimetype' => 'image/jpeg',
+            'mimetype' => 'image/jpeg',
         ));
 
         if ($config->url) {
@@ -197,7 +196,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
 
         // force mimetype to jpeg if invalid
         // @TODO is this wise ?? No it isn't, but until we find a more reliable method to detect mimetypes
-        if (!isset($mimetypes[$config->mimetype])) {
+        if (! isset($mimetypes[$config->mimetype])) {
             $config->mimetype = 'image/jpeg';
         }
 
@@ -258,7 +257,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
         $originl_height = imagesy($image);
 
         foreach ($this->_sizes as $name => $size) {
-            if (!is_int($size)) {
+            if (! is_int($size)) {
                 list($width, $height) = AnHelperImage::parseSize($size);
                 if ($original_width < $width) {
                     $size = array($original_width, $originl_height);

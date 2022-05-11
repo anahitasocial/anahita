@@ -50,7 +50,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
         $this->_priority = $config->callback_priority;
 
         //Enque the command in the mixer's command chain
-        $config->command_chain->enqueue($this);
+        $config->command_chain->enqueue($this, $this->_priority);
     }
 
     /**
@@ -64,8 +64,8 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'command_chain'    => null,
-            'callback_priority'    => AnCommand::PRIORITY_HIGH
+            'command_chain' => null,
+            'callback_priority' => AnCommand::PRIORITY_HIGH,
         ));
 
         parent::_initialize($config);
@@ -74,14 +74,14 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
     /**
      * Command handler
      *
-     * @param string  The command name
-     * @param object  The command context
+     * @param string The command name
+     * @param object The command context
      *
      * @return boolean
      */
     public function execute($name, AnCommandContext $context)
     {
-        $result    = true;
+        $result = true;
 
         if (isset($this->_callbacks[$name])) {
             $callbacks = $this->_callbacks[$name];
@@ -109,8 +109,8 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
     /**
      * Get the registered callbacks for a command
      *
-     * @param  	string	The method to return the functions for
-     * @return  array	A list of registered functions
+     * @param string The method to return the functions for
+     * @return array A list of registered functions
      */
     public function getCallbacks($command)
     {
@@ -120,7 +120,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
         if (isset($this->_callbacks[$command])) {
             $result = $this->_callbacks[$command];
         }
-
+        
         return $result;
     }
 
@@ -133,10 +133,10 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
      * context of the command chain and passed along. If they are passed as an indexed array they
      * will be passed to the callback directly.
      *
-     * @param  	string|array	The command name to register the callback for or an array of command names
-     * @param 	callback		The callback function to register
-     * @param   array|object    An associative array of config parameters or a AnConfig object
-     * @return  AnObject	The mixer object
+     * @param  	string|array The command name to register the callback for or an array of command names
+     * @param 	callback The callback function to register
+     * @param   array|object An associative array of config parameters or a AnConfig object
+     * @return  AnObject The mixer object
      */
     public function registerCallback($commands, $callback, $params = array())
     {
@@ -152,7 +152,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
             }
 
             //Don't re-register commands.
-            $index = array_search($callback, $this->_callbacks[$command], true);
+            $index = array_search($callback, (array) $this->_callbacks[$command], true);
 
             if ($index === false) {
                 $this->_callbacks[$command][] = $callback;
@@ -161,20 +161,20 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
                 $this->_params[$command][$index] = array_merge($this->_params[$command][$index], $params);
             }
         }
-
+                                    
         return $this->_mixer;
     }
 
     /**
      * Unregister a callback function
      *
-     * @param  	string|array	The method name to unregister the callback from or an array of method names
-     * @param 	callback		The callback function to unregister
-     * @return  AnObject The mixer object
+     * @param string|array The method name to unregister the callback from or an array of method names
+     * @param callback The callback function to unregister
+     * @return AnObject The mixer object
      */
     public function unregisterCallback($commands, $callback = null)
     {
-        $commands  = (array) $commands;
+        $commands = (array) $commands;
 
         foreach ($commands as $command) {
             $command = strtolower($command);
@@ -182,6 +182,7 @@ class AnMixinCallback extends AnMixinAbstract implements AnCommandInterface
             if (isset($this->_callbacks[$command])) {
                 if ($callback) {
                     $key = array_search($callback, $this->_callbacks[$command], true);
+                    
                     if ($key !== false) {
                         unset($this->_callbacks[$command][$key]);
                         unset($this->_params[$command][$key]);

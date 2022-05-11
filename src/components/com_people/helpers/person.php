@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -28,30 +28,37 @@ class ComPeopleHelperPerson extends AnObject
             $uniqueAlias => $credentials['username'],
             'enabled' => 1
         ));
-
-        if (is_null($person)) {
-            $msg = "Did not find a user with username: ".$credentials['username'];
-            throw new AnErrorException($msg, AnHttpResponse::UNAUTHORIZED);
-        } else {
+        
+        if (! is_null($person)) {
             $person->visited();
             $this->_createSession($person);
 
             $results = dispatch_plugin('user.onAfterLoginPerson', array('person' => $person));
+            
             foreach ($results as $result) {
                 if ($result instanceof Exception || $result === false) {
                     return false;
                 }
             }
+            
+        } else {
+            $msg = "Did not find a user with username: ".$credentials['username'];
+            throw new AnErrorException($msg, AnHttpResponse::UNAUTHORIZED);
         }
 
         // create a remember cookie that contains the ecrypted username and password
         if ($remember) {
             $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
-            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
-            $cookie = $crypt->encrypt(serialize(array(
+            $config = array(
+                'key' => $key, 
+                'cipher' => 'AES-256-CBC',
+            );
+            $crypt = $this->getService('anahita:encrypter', $config);
+            $creds = array(
                 'username' => $credentials['username'],
                 'password' => $credentials['password'],
-            )));
+            );
+            $cookie = $crypt->encrypt(serialize($creds));
             $oneYear = 365 * 24 * 3600;
             $hash = get_hash('AN_LOGIN_REMEMBER');
             setcookie($hash, $cookie, time() + $oneYear, '/');

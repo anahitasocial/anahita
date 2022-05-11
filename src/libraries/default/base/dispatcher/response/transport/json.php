@@ -6,7 +6,7 @@
   * @category   Anahita
   *
   * @author     Arash Sanieyan <ash@anahitapolis.com>
-  * @author     Rastin Mehr <rastin@anahitapolis.com>
+  * @author     Rastin Mehr <rastin@anahita.io>
   * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
   * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
   *
@@ -42,7 +42,7 @@
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-                'padding' => '',
+            'padding' => '',
         ));
 
         parent::_initialize($config);
@@ -114,6 +114,7 @@
         //If not padding is set inspect the request query.
         if (empty($this->_padding)) {
             $request = $this->getResponse()->getRequest();
+            
             if ($request->has('callback')) {
                 $this->setCallback($request->get('callback'));
             }

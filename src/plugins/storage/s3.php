@@ -8,7 +8,7 @@ require_once 's3lib.php';
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -39,10 +39,9 @@ class PlgStorageS3 extends PlgStorageAbstract
     /**
      * Constructor.
      *
-     * @param mixed $dispatcher A dispatcher
      * @param array $config     An optional AnConfig object with configuration options.
      */
-    public function __construct($dispatcher = null,  AnConfig $config)
+    public function __construct($dispatcher = null, AnConfig $config)
     {
         parent::__construct($dispatcher, $config);
 

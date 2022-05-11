@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -49,19 +49,17 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
     public function setConfig(AnConfig $config)
     {
         $identifier = $config->description->getRepository()->getIdentifier();
-
         $config->child = $config->through;
 
         parent::setConfig($config);
 
         $this->_target = AnService::getIdentifier($config->target);
 
-        if (!$this->_target->application) {
+        if (! $this->_target->application) {
             $this->_target->application = $identifier->application;
         }
 
         $this->_target_child_key = $config->target_child_key;
-
         $this->_target_parent_key = $config->target_parent_key;
 
         //set the junction alias (the connecting table alias)
@@ -86,7 +84,7 @@ class AnDomainRelationshipManytomany extends AnDomainRelationshipOnetomany
             'target_parent_key' => 'id',
         ));
 
-        if (!$config->as) {
+        if (! $config->as) {
             //keep the as always the same for the two many to many relationship
             $names = array($config->parent->name, AnInflector::singularize($config->name));
             sort($names);

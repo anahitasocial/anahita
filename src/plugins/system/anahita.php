@@ -5,7 +5,7 @@
  *
  * @category   Anahita
  *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -25,7 +25,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
      * @param array $config  Array of configuration
      */
 
-    public function __construct($dispatcher, AnConfig $config)
+    public function __construct($dispatcher = null, AnConfig $config)
     {
         // Command line fixes for Anahita
         if (PHP_SAPI === 'cli') {
@@ -75,7 +75,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
         $credentials = $this->_getRememberMeCredentials();
 
-        if (!empty($credentials)) {
+        if (! empty($credentials)) {
             if ($this->_authenticate($credentials)) {
                 $this->_login($credentials);
             }
@@ -92,6 +92,7 @@ class PlgSystemAnahita extends PlgAnahitaDefault
     {
         try {
             $response = $this->getService('com:people.authentication.response');
+            
             dispatch_plugin('authentication.onAuthenticate', array(
                                 'credentials' => $credentials,
                                 'response' => $response
@@ -134,7 +135,11 @@ class PlgSystemAnahita extends PlgAnahitaDefault
 
         if (isset($_COOKIE[$remember]) && !empty($_COOKIE[$remember])) {
             $key = get_hash('AN_LOGIN_REMEMBER', 'md5');
-            $crypt = $this->getService('anahita:encrypter', array('key' => $key, 'cipher' => 'AES-256-CBC'));
+            $config = array(
+                'key' => $key, 
+                'cipher' => 'AES-256-CBC',
+            );
+            $crypt = $this->getService('anahita:encrypter', $config);
             $cookie = $crypt->decrypt($_COOKIE[$remember]);
 
             try {

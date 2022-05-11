@@ -1,34 +1,8 @@
 <?php
-
 /**
- * LICENSE: ##LICENSE##.
- *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id$
- *
- * @link       http://www.Anahita.io
- */
-
-/**
- * It's the same as {@link AnObjectArray} but it allows to use {@link AnObjectHandlable} as
- * keys.
- *
- * <code>
- * $array  = new AnObjectArray();
- * $object = new AnObject();
- * $array[$object] = 'Some Value';
- * </code>
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -51,7 +25,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
-        if (!isset($config)) {
+        if (! isset($config)) {
             $config = new AnConfig();
         }
 
@@ -71,7 +45,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-             'data'  => array(),
+             'data' => array(),
          ));
 
         parent::_initialize($config);
@@ -183,17 +157,9 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
      */
     public function __get($key)
     {
-        /*
-        $result = null;
-        if(isset($this->_data[$key])) {
-            $result = $this->_data[$key];
-        }
-
-        return $result;
-        */
-        
         $result = null;
         $key = $this->__key($key);
+        
         if (isset($this->_data[$key])) {
             $result = $this->_data[$key];
         }
@@ -210,7 +176,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
     public function __set($key, $value)
     {
         // $this->_data[$key] = $value;
-        $this->_data[ $this->__key($key) ] = $value;
+        $this->_data[$this->__key($key)] = $value;
     }
 
     /**
@@ -233,8 +199,7 @@ class AnObjectArray extends AnObject implements IteratorAggregate, ArrayAccess, 
      */
     public function __unset($key)
     {
-        // unset($this->_data[$key]);
-        unset($this->_data[ $this->__key($key) ]);
+        unset($this->_data[$this->__key($key)]);
     }
 
     /**

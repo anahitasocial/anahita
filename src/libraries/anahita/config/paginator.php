@@ -151,9 +151,9 @@ class AnConfigPaginator extends AnConfig
     protected function _offsets()
     {
         if ($display = $this->display) {
-            $start  = (int) max($this->current - $display, 1);
-            $start  = min($this->count, $start);
-            $stop   = (int) min($this->current + $display, $this->count);
+            $start = (int) max($this->current - $display, 1);
+            $start = min($this->count, $start);
+            $stop = (int) min($this->current + $display, $this->count);
         } else { // show all pages
             $start = 1;
             $stop = $this->count;

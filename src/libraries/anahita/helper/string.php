@@ -239,11 +239,13 @@ class AnHelperString
         }
 
         $len = AnHelperString::strlen($str);
+        
         if ($len <= $split_len) {
             return array($str);
         }
 
         preg_match_all('/.{'.$split_len.'}|[^\x00]{1,'.$split_len.'}$/us', $str, $ar);
+        
         return $ar[0];
     }
 
@@ -261,6 +263,7 @@ class AnHelperString
     {
         $strX = AnHelperString::strtolower($strX);
         $strY = AnHelperString::strtolower($strY);
+        
         return strcmp($strX, $strY);
     }
 
@@ -383,9 +386,11 @@ class AnHelperString
     {
         preg_match_all('/./us', $str, $ar);
         preg_match_all('/./us', $repl, $rar);
+        
         if ($length === null) {
             $length = AnHelperString::strlen($str);
         }
+        
         array_splice($ar[0], $start, $length, $rar[0]);
         return join('', $ar[0]);
     }

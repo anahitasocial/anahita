@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -74,7 +74,7 @@ class AnServiceClass
         static $instance;
 
         if ($instance === null) {
-            if (!$config instanceof AnConfig) {
+            if (! $config instanceof AnConfig) {
                 $config = new AnConfig($config);
             }
 
@@ -103,7 +103,7 @@ class AnServiceClass
      */
     public static function registerDefault($config)
     {
-        if (!isset($config['identifier'])) {
+        if (! isset($config['identifier'])) {
             throw new AnException('identifier [AnServiceIdentifier] options is requied');
         }
 
@@ -154,10 +154,10 @@ class AnServiceClass
         $loader = AnService::get('anahita:loader');
         $classname = $classbase.ucfirst($identifier->name);
 
-        if (!class_exists($classname)) {
+        if (! class_exists($classname)) {
             $classname = $classbase.'Default';
 
-            if (!class_exists($classname)) {
+            if (! class_exists($classname)) {
                 $classname = false;
             }
         }
@@ -204,7 +204,7 @@ class AnServiceClass
  */
 function get_prefix($object, $config = array())
 {
-    if (!is_array($config) || is_numeric(key($config))) {
+    if (! is_array($config) || is_numeric(key($config))) {
         $config = array('append' => (array) $config);
     }
 
@@ -243,11 +243,13 @@ function get_prefix($object, $config = array())
     if ($append) {
         $array = array();
         settype($append, 'array');
+        
         foreach ($classes as $key => $class) {
             foreach ($append as $word) {
                 $array[] = $class.$word;
             }
         }
+        
         $classes = $array;
     }
 

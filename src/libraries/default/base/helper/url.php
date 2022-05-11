@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -38,7 +38,7 @@ class LibBaseHelperUrl extends AnObject implements AnServiceInstantiatable
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -57,7 +57,7 @@ class LibBaseHelperUrl extends AnObject implements AnServiceInstantiatable
      */
     public function getRoute($url = '', $fqr = true)
     {
-        if (!is_array($url)) {
+        if (! is_array($url)) {
             if (strpos($url, 'http') === 0) {
                 return $url;
             }
@@ -74,22 +74,22 @@ class LibBaseHelperUrl extends AnObject implements AnServiceInstantiatable
 
         $parts = array();
 
-        if (!isset($url['option'])) {
+        if (! isset($url['option'])) {
             $parts['option'] = AnRequest::get('get.option', 'cmd');
         }
 
         //if not view is set the set
-        if (!isset($url['view'])) {
+        if (! isset($url['view'])) {
             $parts['view'] = AnRequest::get('get.view', 'cmd');
 
             //only try to set the layout if we are setting the view
-            if (!isset($url['layout']) && AnRequest::has('get.layout')) {
+            if (! isset($url['layout']) && AnRequest::has('get.layout')) {
                 $parts['layout'] = AnRequest::get('get.layout', 'cmd');
             }
         }
 
         //carry format
-        if (!isset($url['format']) && AnRequest::has('get.format')) {
+        if (! isset($url['format']) && AnRequest::has('get.format')) {
             $parts['format'] = AnRequest::get('get.format', 'cmd');
         }
 

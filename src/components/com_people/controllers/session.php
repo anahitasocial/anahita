@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -54,15 +54,15 @@ class ComPeopleControllerSession extends ComBaseControllerResource
 
         $credentials = array(
             'username' => $data->username,
-            'password' => $data->password
+            'password' => $data->password,
         );
-
         $response = $this->getService('com:people.authentication.response');
-
-        dispatch_plugin('authentication.onAuthenticate', array(
-                            'credentials' => $credentials,
-                            'response' => $response
-                        ));
+        $config = array(
+            'credentials' => $credentials,
+            'response' => $response
+        );
+        
+        dispatch_plugin('authentication.onAuthenticate', $config);
 
         if ($response->status === ComPeopleAuthentication::STATUS_SUCCESS) {
             $person = $this->getService('com:people.helper.person')->login($credentials);

@@ -48,7 +48,7 @@ class AnEventDispatcher extends AnObject
         parent::__construct($config);
         
         $this->_subscribers = array();
-        $this->_listeners   = array();
+        $this->_listeners = array();
     }
     
     /**
@@ -68,8 +68,10 @@ class AnEventDispatcher extends AnObject
             $event = new AnEvent($event);
         }
         
-        $event->setName($name)->setDispatcher($this);
-             
+        $event->setName($name)->setDispatcher($this);  
+        
+        // error_log(print_r($this->_listeners, true)); 
+ 
         //Nofity the listeners
         if (isset($this->_listeners[$name])) {
             foreach ($this->_listeners[$name] as $listener) {
@@ -191,6 +193,7 @@ class AnEventDispatcher extends AnObject
     public function getListeners($name)
     {
         $result = array();
+        
         if (isset($this->_listeners[$name])) {
             $result = $this->_listeners[$name];
         }
@@ -207,6 +210,7 @@ class AnEventDispatcher extends AnObject
     public function hasListeners($name)
     {
         $result = false;
+        
         if (isset($this->_listeners[$name])) {
             $result = !empty($this->_listeners[$name]);
         }

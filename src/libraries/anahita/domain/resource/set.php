@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -149,11 +149,13 @@ class AnDomainResourceSet extends AnObject implements IteratorAggregate, Countab
         if (strpos($name, '.') !== false) {
             $parts = explode('.', $name, 2);
             $name = $parts[1];
+            
             foreach ($this->_resources as $resource) {
                 if ($resource->getAlias() == $parts[0]) {
                     break;
                 }
             }
+            
             $resources = array($resource);
         } else {
             $resources = $this->_resources;

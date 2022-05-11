@@ -10,7 +10,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -70,8 +70,8 @@ class AnDomainBehaviorSerializable extends AnDomainBehaviorAbstract
      */
     public function getSerilizer()
     {
-        if (!$this->_serializer instanceof AnDomainSerializerAbstract) {
-            if (!$this->_serializer instanceof AnServiceIdentifier) {
+        if (! $this->_serializer instanceof AnDomainSerializerAbstract) {
+            if (! $this->_serializer instanceof AnServiceIdentifier) {
                 $this->setSerializer($this->_serializer);
             }
 
@@ -88,11 +88,12 @@ class AnDomainBehaviorSerializable extends AnDomainBehaviorAbstract
      */
     public function setSerializer($serializer)
     {
-        if (!$serializer instanceof AnDomainSerializerAbstract) {
+        if (! $serializer instanceof AnDomainSerializerAbstract) {
             if (is_string($serializer) && strpos($serializer, '.') === false) {
                 $identifier = clone $this->_repository->getIdentifier();
                 $identifier->path = array('domain','serializer');
                 $identifier->name = $serializer;
+                
                 register_default(array(
                     'identifier' => $identifier, 
                     'prefix' => $this->_repository->getClone()

@@ -10,7 +10,7 @@
  * Abstract Controller Toolbar Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @author      Rastin Mehr <rastin@anahitapolis.com>
+ * @author      Rastin Mehr <rastin@anahita.io>
  * @package     An_Controller
  * @subpackage 	Toolbar
  * @uses        AnInflector
@@ -46,11 +46,13 @@ abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract imp
     public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
-        if(!isset($config)) $config = new AnConfig();
+        if (! isset($config)) {
+            $config = new AnConfig();
+        }
 
         parent::__construct($config);
 
-        if(is_null($config->controller)) {
+        if (is_null($config->controller)) {
 			throw new AnMixinException('controller [AnController] option is required');
 		}
 
@@ -72,8 +74,8 @@ abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract imp
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'title'         => AnInflector::humanize(AnInflector::pluralize($this->getName())),
-            'controller'    => null,
+            'title' => AnInflector::humanize(AnInflector::pluralize($this->getName())),
+            'controller' => null,
         ));
 
         parent::_initialize($config);
@@ -141,11 +143,12 @@ abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract imp
      */
     public function addCommand($command, $config = array())
     {
-        if (! ($command instanceof  AnControllerToolbarCommand)) {
+        if (! ($command instanceof AnControllerToolbarCommand)) {
             $command = $this->getCommand($command, $config);
         }
 
         $this->_commands[$command->getName()] = $command;
+        
         return $this;
     }
 
@@ -164,14 +167,14 @@ abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract imp
 
             //Find the command function to call
             if (method_exists($this, '_command'.ucfirst($name))) {
-                $function =  '_command'.ucfirst($name);
+                $function = '_command'.ucfirst($name);
                 $this->$function($command);
             } else {
                 //Don't set an action for GET commands
                 if(! isset($command->attribs->href)) {
                     $command->append(array(
-         				'attribs'    => array(
-               				'data-action'  => $command->getName()
+         				'attribs' => array(
+               				'data-action' => $command->getName()
                         )
                     ));
                 }
@@ -214,10 +217,10 @@ abstract class AnControllerToolbarAbstract extends AnEventSubscriberAbstract imp
     {
 		$parts = AnInflector::explode($method);
 
-		if($parts[0] == 'add' && isset($parts[1]))
-		{
+		if ($parts[0] == 'add' && isset($parts[1])) {
 		    $config = isset($args[0]) ? $args[0] : array();
 		    $this->addCommand(strtolower($parts[1]), $config);
+            
 			return $this;
 		}
 

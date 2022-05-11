@@ -7,7 +7,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -116,7 +116,8 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
 
         $this->_entity->getRepository()->getCommandChain()->disable();
 
-        $query = $this->_entity->getRepository()->getQuery()
+        $query = $this->_entity->getRepository()
+                    ->getQuery()
                     ->columns($properties)
                     ->where($keys);
 
@@ -157,7 +158,6 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
     public function offsetExists($key)
     {
         $this->_materialize($key);
-
         return isset($this->_property[$key]);
     }
 
@@ -187,6 +187,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
         $this->_materialize($key);
 
         $result = null;
+        
         if (isset($this->_property[$key])) {
             $result = $this->_property[$key];
         }
@@ -207,7 +208,6 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
     public function offsetSet($key, $value)
     {
         $this->_setPropertyValue($key, $value);
-
         return $this;
     }
 
@@ -226,7 +226,6 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
     public function offsetUnset($key)
     {
         unset($this->_property[$key]);
-
         return $this;
     }
 
@@ -273,6 +272,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
             $entities = $repository->getEntities();
             $query = $repository->getQuery();
             $keys = array();
+            
             foreach ($entities as $entity) {
                 if ($entity->persisted()) {
                     $data = $entity->getIdentifyingData();
@@ -291,6 +291,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
             foreach ($result as $data) {
                 $keys = $repository->getDescription()->getIdentifyingValues($data);
                 $entity = $repository->find($keys, false);
+                
                 if ($entity) {
                     $entity->setRowData($data);
                 }
@@ -310,12 +311,15 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
                 //prevents calling the block multiple time
                 //as it tries to instantiate the same property for
                 //all the entities
-                if (!self::_isLocked($repository)) {
+                if (! self::_isLocked($repository)) {
                     self::_lock($repository, true);
+                    
                     $entities = $repository->getEntities();
+                    
                     foreach ($entities as $entity) {
                         $entity->get($key);
                     }
+                    
                     self::_lock($repository, false);
                 }
             }

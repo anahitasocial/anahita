@@ -35,10 +35,12 @@ class AnTranslator
 	{
 		$language = AnService::get('anahita:language');
 		$args = func_get_args();
-		if (!empty($args)) {
+		
+		if (! empty($args)) {
 			$args[0] = $language->_($args[0]);
 			return call_user_func_array('sprintf', $args);
 		}
+		
 		return '';
 	}
 
@@ -54,10 +56,12 @@ class AnTranslator
 	{
 		$language = AnService::get('anahita:language');
 		$args = func_get_args();
-		if (!empty($args)) {
+		
+		if (! empty($args)) {
 			$args[0] = $language->_($args[0]);
 			return call_user_func_array('printf', $args);
 		}
+		
 		return '';
 	}
 

@@ -7,7 +7,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -109,7 +109,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $this->mixin(new AnMixinBehavior($config));
 
         //insert the reposiry with highest priority
-        $this->getCommandChain()->enqueue($this, -PHP_INT_MAX);
+        $this->getCommandChain()->enqueue($this, AnCommand::PRIORITY_HIGHEST);
     }
 
     /**
@@ -193,12 +193,10 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
         $type = $identifier->path;
         $type = array_pop($type);
-
         $parts = explode('.', $command);
         $method = '_'.($parts[0]).ucfirst($type).ucfirst($parts[1]);
-
         $result = null;
-
+        
         if (method_exists($this, $method)) {
             $result = $this->$method($context);
         }
@@ -222,9 +220,11 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //reset the error message
         $context = $this->getCommandContext();
         $context->entity = $entity;
+        
         if ($entity->isValidatable()) {
             $entity->resetErrors();
         }
+        
         $result = $this->getCommandChain()->run('on.validate', $context);
 
         return $result !== false;
@@ -240,16 +240,16 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     public function commit($entity)
     {
         switch ($entity->getEntityState()) {
-            case AnDomain::STATE_NEW:
+            case AnDomain::STATE_NEW: // 4
                 $operation = AnDomain::OPERATION_INSERT;
                 $command = 'insert';
                 break;
-            case AnDomain::STATE_MODIFIED :
+            case AnDomain::STATE_MODIFIED : // 8
                 //get all the updated serializable property/value pairs
                 $operation = AnDomain::OPERATION_UPDATE;
                 $command = 'update';
                 break;
-            case  AnDomain::STATE_DELETED :
+            case  AnDomain::STATE_DELETED : // 16
                 $operation = AnDomain::OPERATION_DELETE;
                 $command = 'delete';
                 break;
@@ -277,7 +277,6 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
                 case(AnDomain::OPERATION_UPDATE) :
                 case(AnDomain::OPERATION_DELETE) :
-
                     $keys = $this->_description->getIdentityProperty()->serialize($entity->getIdentityId());
                     $keys = array($this->_description->getIdentityProperty()->getName() => $entity->getIdentityId());
 
@@ -286,8 +285,9 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
                     } else {
                         $context->result = $this->destroy($keys);
                     }
+                    break;
             }
-
+             
             $this->getCommandChain()->run('after.'.$command, $context);
         }
 
@@ -376,6 +376,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         if ($this->getCommandChain()->run('before.fetch', $context) !== false) {
             $result = $context->result ? $context['result'] : $this->_fetchResult($context->query, $mode);
             $context->result = $result;
+            
             switch ($mode) {
                 case AnDomain::FETCH_ENTITY     :
                     $context->data = $result ? $this->_createEntity($result) : $result;
@@ -437,13 +438,14 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //force data to be stored by real name
         foreach ($context->data as $key => $value) {
             $property = $this->getDescription()->getProperty($key);
+            
             if ($property) {
                 unset($context->data[$key]);
                 $context->data[$property->getName()] = $value;
             }
         }
 
-        $entity = clone $this->getClone();
+        $entity = $this->getClone();
         $context->entity = $entity;
         $this->getCommandChain()->run('after.instantiate', $context);
 
@@ -535,7 +537,10 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('domain','behavior');
                 $identifier->name = $behavior;
-                register_default(array('identifier' => $identifier, 'prefix' => $this->_prototype));
+                register_default(array(
+                    'identifier' => $identifier, 
+                    'prefix' => $this->_prototype,
+                ));
                 $behavior = $identifier;
             }
         }
@@ -622,13 +627,18 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //if not found an entity
         //or found one but it' either delete or destroyed
         //create a new entity
-        if (!$entity ||
-                 ($entity->getEntityState() & AnDomain::STATE_DELETED ||
-                  $entity->getEntityState() &  AnDomain::STATE_DESTROYED)) {
+        if (
+            !$entity ||
+            (
+                $entity->getEntityState() & AnDomain::STATE_DELETED ||
+                $entity->getEntityState() &  AnDomain::STATE_DESTROYED
+            )
+        ) {
             $config = new AnConfig($config);
             $config->append(array(
                 'data' => $data,
             ));
+            
             $entity = $this->getEntity($config);
         }
 
@@ -654,7 +664,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
      */
     public function entityInherits($interface)
     {
-        if (!is_string($interface)) {
+        if (! is_string($interface)) {
             $interface = get_class($interface);
         }
 
@@ -680,7 +690,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
      */
     public function getClone()
     {
-        return $this->_prototype;
+        return clone $this->_prototype;
     }
 
     /**
@@ -695,7 +705,6 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         //create an instance with its unique keys first
         $keys = array();
         $description = $this->_description;
-
         $keys = $description->getIdentifyingValues($data);
 
         if (empty($keys)) {
@@ -831,12 +840,14 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
         //set the entity default valuees
         $attributes = $this->getDescription()->getAttributes();
+        
         foreach ($attributes as $attribute) {
             $entity->set($attribute->getName(), $attribute->getDefaultValue());
         }
 
         //materialize required one-to-one relationship
         $relationships = $this->getDescription()->getRelationships();
+        
         foreach ($relationships as $relation) {
             if ($relation->isOneToOne() && $relation->isRequired()) {
                 $property = $relation->getName();
@@ -862,6 +873,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $entity->set($id, $context->result);
 
         $relationships = $this->getDescription()->getRelationships();
+        
         //reset all the one to many and many to many relationships
         foreach ($relationships as $relation) {
             if ($relation->isOneToMany() && !$relation->isOneToOne()) {

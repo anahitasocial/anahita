@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -25,9 +25,9 @@ class PlgStorageDefault extends AnObject implements AnServiceInstantiatable
     {
         AnService::get('com:plugins.helper')->import('storage');
 
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
-            $instance = new PlgStorageLocal($config);
+            $instance = new PlgStorageLocal(null, $config);
             $container->set($config->service_identifier, $instance);
         }
 

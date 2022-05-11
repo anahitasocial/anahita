@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -31,7 +31,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
      */
     public static function getInstance($repository, $conditions)
     {
-        if (!$conditions instanceof self) {
+        if (! $conditions instanceof self) {
             if ($repository instanceof self) {
                 $query = clone $repository;
                 $repository = $query->getRepository();
@@ -41,14 +41,19 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
 
             $identity_property = $repository->getDescription()->getIdentityProperty();
 
-            if (!empty($conditions)) {
+            if (! empty($conditions)) {
                 if (is_numeric($conditions)) {
                     $conditions = array($conditions);
                 }
 
                 //if conditions is number of an array of numbers
-                if (is_numeric($conditions) ||
-                        (is_array($conditions) && is_numeric(key($conditions)))) {
+                if (
+                    is_numeric($conditions) ||
+                    (
+                        is_array($conditions) && 
+                        is_numeric(key($conditions))
+                    )
+                ) {
                     $conditions = array($identity_property->getName() => $conditions);
                 }
 
@@ -184,9 +189,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         parent::__construct($config);
 
         $this->_repository = $config->repository;
-
         $this->operation = array('type' => self::QUERY_SELECT_DEFAULT, 'value' => '');
-
         $this->_prefix = $config->resource_prefix;
         $this->_state = $config->state;
 
@@ -228,7 +231,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
             $condition = $constraint;
             $constraint = null;
         } elseif (is_array($key)) {
-            if (!is_numeric(key($key))) {
+            if (! is_numeric(key($key))) {
                 foreach ($key as $k => $v) {
                     $this->where($k, '=', $v, 'AND');
                 }
@@ -243,7 +246,6 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         if (isset($constraint)) {
             $constraint = strtoupper($constraint);
             $condition = strtoupper($condition);
-
             $list = $value instanceof AnObjectSet || is_array($value);
 
             //fix the contstraint
@@ -260,7 +262,6 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         }
 
         $where['condition'] = !empty($this->where) ? $condition : '';
-
         $this->where[] = $where;
 
         return $this;
@@ -278,6 +279,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         if (empty($this->where)) {
             $condition = null;
         }
+        
         $clause = new AnDomainQueryClause($this, $condition);
 
         return $clause;
@@ -371,18 +373,21 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
                 AnDomainQueryHelper::addRelationship($this, $name);
                 $link = $this->getLink($name);
                 $config = new AnConfig($condition);
+                
                 $config->append(array(
                         'type' => $link->type,
                         'bind_type' => $link->bind_type,
                         'conditions' => array(),
                 ));
                 $link->offsetSet('type', $config->type)->offsetSet('bind_type', $config->bind_type);
+                
                 foreach ($config->conditions as $key => $value) {
                     if (is_string($value)) {
                         $value = AnDomainQueryBuilder::getInstance()->parseMethods($this, $value);
                     } elseif ($value instanceof AnDomainResourceColumn) {
                         $value = clone $value;
                     }
+                
                     $link->conditions[$key] = $value;
                 }
 
@@ -407,7 +412,9 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         if (!isset($this->link[$options->as])) {
             $options->resource->setAlias(AnInflector::underscore($options->as));
 
-            $destination = $query->getRepository()->getDescription()->getInheritanceColumn();
+            $destination = $query->getRepository()
+                                ->getDescription()
+                                ->getInheritanceColumn();
 
             $link = array(
                 'query' => $query,
@@ -449,8 +456,8 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
      */
     public function getRepository()
     {
-        if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof AnServiceIdentifier) {
+        if (! $this->_repository instanceof AnDomainRepositoryAbstract) {
+            if (! $this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -467,7 +474,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
      */
     public function setRepository($repository)
     {
-        if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
+        if (! $this->_repository instanceof AnDomainRepositoryAbstract) {
             if (is_string($repository) && strpos($repository, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->type = 'repos';
@@ -499,7 +506,13 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
             if (isset($where['property'])) {
                 $property = $where['property'];
                 $keys = $this->getRepository()->getDescription()->getIdentifyingProperties();
-                if (isset($keys[$property]) && isset($where['constraint']) && $where['constraint'] == '=' && !is_array($where['value'])) {
+                
+                if (
+                    isset($keys[$property]) && 
+                    isset($where['constraint']) && 
+                    $where['constraint'] == '=' && 
+                    !is_array($where['value'])
+                ) {
                     $key[$property] = $where['value'];
                 }
             }
@@ -577,8 +590,8 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
 
         foreach ($columns as $column) {
             $this->order[] = array(
-                    'column' => $column,
-                    'direction' => $direction,
+                'column' => $column,
+                'direction' => $direction,
             );
         }
 
@@ -636,7 +649,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
     {
         $data = $key;
 
-        if (!is_array($key)) {
+        if (! is_array($key)) {
             $data = array($key => $value);
         }
 
@@ -680,13 +693,15 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
             $condition = isset($arguments[2]) ? $arguments[2] : 'AND';
             $this->where($method, $constraint, $arguments[0], $condition);
         }
+        
         //if a method is format of fetch|select[Function Name](property). This will be translated in to
         //fetch('{Function Name}(property)'). For example fetchCount => fetchValue('COUNT({property}')
         elseif (preg_match('/(fetch|select)(\w+)/', $method, $match)) {
             deprecated('use '.$match[1].'(FUNC) instead');
             $column = isset($arguments[0]) ? $arguments[0] : '*';
-
-            $property = $this->getRepository()->getDescription()->getProperty($column);
+            $property = $this->getRepository()
+                            ->getDescription()
+                            ->getProperty($column);
 
             if ($property) {
                 $column = '@col('.$column.')';
@@ -754,7 +769,6 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
     public function fetch($condition = array())
     {
         $query = self::getInstance($this, $condition);
-
         return $this->getRepository()->fetch($query);
     }
 
@@ -768,7 +782,6 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
     public function fetchSet($condition = array())
     {
         $query = self::getInstance($this, $condition);
-
         return $this->getRepository()->fetch($query, AnDomain::FETCH_ENTITY_SET);
     }
 
@@ -879,12 +892,13 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
             //if the chain is not disabled then
             //allows the registered command chains
             //to modify the query based on its state
-            if (!$query->disable_chain) {
+            if (! $query->disable_chain) {
                 $chain = clone $this->getRepository()->getCommandChain();
-                $chain->enqueue($query);
+                $chain->enqueue($query, $this->getPriority());
                 $context = $this->getRepository()->getCommandContext();
                 $context->caller = $this;
                 $context->query = $query;
+                
                 switch ($this->operation['type']) {
                     case self::QUERY_UPDATE :
                        $command = 'update';break;
@@ -893,6 +907,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
                     default :
                        $command = 'select';break;
                 }
+                
                 $chain->run('before.'.$command, $context);
                 $context->result = $query->build();
                 $chain->run('after.'.$command, $context);
@@ -928,6 +943,7 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         $type = array_pop($type);
         $parts = explode('.', $command);
         $method = '_'.($parts[0]).ucfirst($type).ucfirst($parts[1]);
+        
         if (method_exists($this, $method)) {
             return $this->$method($context);
         }

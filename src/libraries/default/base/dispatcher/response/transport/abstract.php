@@ -6,7 +6,7 @@
   * @category   Anahita
   *
   * @author     Arash Sanieyan <ash@anahitapolis.com>
-  * @author     Rastin Mehr <rastin@anahitapolis.com>
+  * @author     Rastin Mehr <rastin@anahita.io>
   * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
   * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
   *
@@ -65,9 +65,11 @@
      {
          if (! headers_sent()) {
              $response = $this->getResponse();
+             
              foreach ($response->getHeaders() as $name => $value) {
                  header($name.': '.$value, false);
              }
+             
              header('HTTP/1.1'.' '.$response->getStatusCode().' '.$response->getStatusMessage());
          }
 
@@ -96,6 +98,7 @@
 
         //Send headers and content
         $this->sendHeaders()->sendContent();
+        
         fastcgi_finish_request();
      }
  }

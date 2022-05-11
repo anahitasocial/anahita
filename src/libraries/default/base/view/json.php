@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -26,7 +26,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
         $config->append(array(
             'version' => '1.0',
         ))->append(array(
-            'mimetype' => 'application/json; version='.$config->version,
+            'mimetype' => 'application/json; version=' . $config->version,
         ));
 
         parent::_initialize($config);
@@ -55,7 +55,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
         //if null then return empty string
         $this->output = pick($this->output, '');
 
-        if (!is_string($this->output)) {
+        if (! is_string($this->output)) {
             $this->output = json_encode($this->_toArray(AnConfig::unbox($this->output)));
         }
 
@@ -114,7 +114,7 @@ class LibBaseViewJson extends LibBaseViewAbstract
             $item = $this->_serializeToArray($item);
             $commands = $this->getToolbarCommands('toolbar');
             
-            if (!empty($commands)) {
+            if (! empty($commands)) {
                 $item['commands'] = $commands;
             }
         }

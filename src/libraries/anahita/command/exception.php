@@ -9,6 +9,4 @@
  * @package     AnCommand
  * @link        https://www.Anahita.io
  */
-class AnCommandException extends AnException
-{
-}
+class AnCommandException extends AnException {}

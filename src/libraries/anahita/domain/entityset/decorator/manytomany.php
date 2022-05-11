@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -50,7 +50,6 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
     public function __construct(AnConfig $config)
     {
         $this->_child = $config->child;
-
         $this->_target_property = $config->target_property;
 
         parent::__construct($config);
@@ -93,7 +92,7 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
     {
         $target = $this->getRepository()->find($data);
 
-        if (!$target) {
+        if (! $target) {
             $target = $this->addNew($data, $config);
         } else {
             $this->insert($target, $config);
@@ -139,6 +138,7 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
         if (AnHelperArray::isIterable($target)) {
             $targets = AnHelperArray::unique($target);
             $relations = new AnObjectSet();
+            
             foreach ($target as $target) {
                 $relations->insert($this->insert($target, $config));
             }
@@ -147,9 +147,9 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
         }
 
         $data = array(
-                $this->_property => $this->_root,
-                $this->_target_property => $target,
-            );
+            $this->_property => $this->_root,
+            $this->_target_property => $target,
+        );
 
         //shouldn't be able to add the same entity into  the same collection		
         $relation = $this->_child->findOrAddNew($data, $config);
@@ -165,9 +165,9 @@ class AnDomainEntitysetDecoratorManytomany extends AnDomainEntitysetDecoratorOne
     public function extract($target)
     {
         $relation = $this->_child->find(array(
-                $this->_property => $this->_root,
-                $this->_target_property => $target,
-            ));
+            $this->_property => $this->_root,
+            $this->_target_property => $target,
+        ));
 
         if ($relation) {
             $relation->delete();

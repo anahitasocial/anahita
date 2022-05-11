@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -155,7 +155,7 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      */
     public function setRepository($repository)
     {
-        if (!$repository instanceof AnDomainRepositoryAbstract) {
+        if (! $repository instanceof AnDomainRepositoryAbstract) {
             $identifier = $repository;
 
             if (strpos($repository, '.') === false) {
@@ -179,8 +179,8 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
      */
     public function getRepository()
     {
-        if (!$this->_repository instanceof AnDomainRepositoryAbstract) {
-            if (!$this->_repository instanceof AnServiceIdentifier) {
+        if (! $this->_repository instanceof AnDomainRepositoryAbstract) {
+            if (! $this->_repository instanceof AnServiceIdentifier) {
                 $this->setRepository($this->_repository);
             }
 
@@ -205,9 +205,8 @@ class LibBaseControllerBehaviorIdentifiable extends AnControllerBehaviorAbstract
 
         if ($values = $this->$identifiable_key) {
             $scope = AnConfig::unbox($context->identity_scope);
-
             $values = AnConfig::unbox($values);
-
+            
             $scope[$identifiable_key] = $values;
 
             if (is_array($values)) {

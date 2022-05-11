@@ -9,6 +9,4 @@
  * @link        https://www.Anahita.io
  * @package     AnMixin
  */
-class AnMixinException extends AnException
-{
-}
+class AnMixinException extends AnException {}

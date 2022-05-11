@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2011 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -42,15 +42,13 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
      */
     public function getValidator()
     {
-        if (!$this->_validator instanceof LibBaseControllerValidatorAbstract) {
+        if (! $this->_validator instanceof LibBaseControllerValidatorAbstract) {
             //Make sure we have a view identifier
-           if (!($this->_validator instanceof AnServiceIdentifier)) {
+            if (! ($this->_validator instanceof AnServiceIdentifier)) {
                $this->setValidator($this->_validator);
-           }
+            }
 
-            $config = array(
-                'controller' => $this->getMixer(),
-           );
+            $config = array('controller' => $this->getMixer());
 
             $this->_validator = $this->getService($this->_validator, $config);
         }
@@ -65,17 +63,19 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
      */
     public function setValidator($validator)
     {
-        if (!($validator instanceof LibBaseControllerValidatorAbstract)) {
+        if (! ($validator instanceof LibBaseControllerValidatorAbstract)) {
             if (is_string($validator) && strpos($validator, '.') === false) {
                 $identifier = clone $this->getIdentifier();
+                
                 $identifier->path = array('controller', 'validator');
                 $identifier->name = $validator;
+                
                 register_default(array('identifier' => $identifier, 'prefix' => $this));
             } else {
                 $identifier = $this->getIdentifier($validator);
             }
 
-            if ($identifier->path[1] != 'validator') {
+            if ($identifier->path[1] !== 'validator') {
                 throw new AnControllerBehaviorException('Identifier: '.$identifier.' is not a validator identifier');
             }
 
@@ -90,7 +90,7 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
      */
     protected function _beforeControllerValidate()
     {
-        if (!isset($this->_validator)) {
+        if (! isset($this->_validator)) {
             $this->setValidator($this->_mixer->getIdentifier()->name);
         }
     }

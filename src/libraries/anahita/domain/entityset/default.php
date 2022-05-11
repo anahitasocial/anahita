@@ -8,7 +8,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -43,7 +43,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
     {
         $this->_set_query = null;
         $this->_loaded = false;
-        $this->_object_set = new ArrayObject();
+        $this->_object_set = array();
 
         return $this;
     }
@@ -59,7 +59,7 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
      */
     public function getQuery($clone = false, $disable_chain = false)
     {
-        if (!isset($this->_set_query) || $clone) {
+        if (! isset($this->_set_query) || $clone) {
             if ($this->_query instanceof AnDomainQuery) {
                 $query = clone $this->_query;
             } else {
@@ -132,11 +132,16 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
         }
 
         //forward a call to the query
-        if (method_exists($this->getQuery(), $method) || !$this->_repository->entityMethodExists($method)) {
+        if (
+            method_exists($this->getQuery(), $method) || 
+            !$this->_repository->entityMethodExists($method)
+        ) {
             $result = call_object_method($this->getQuery(), $method, $arguments);
+            
             if ($result instanceof AnDomainQuery) {
                 $result = $this;
             }
+            
         } else {
             $result = parent::__call($method, $arguments);
         }
@@ -149,7 +154,8 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
      */
     protected function _getData()
     {
-        $data = $this->getRepository()->fetch($this->getQuery(), AnDomain::FETCH_ENTITY_LIST);
+        $data = $this->getRepository()
+        ->fetch($this->getQuery(), AnDomain::FETCH_ENTITY_LIST);
 
         return $data;
     }

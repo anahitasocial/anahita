@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -55,7 +55,7 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
             $this->_parent = AnService::getIdentifier($config->parent);
 
             //adopt the child application
-            if (!$this->_parent->application) {
+            if (! $this->_parent->application) {
                 $this->_parent->application = $identifier->application;
             }
         }
@@ -68,9 +68,11 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
                 $identifier->name = $config->child;
                 $config->child = $identifier;
             }
+            
             $this->_child = AnService::getIdentifier($config->child);
+            
             //adopt the parent application
-            if (!$this->_child->application) {
+            if (! $this->_child->application) {
                 $this->_child->application = $identifier->application;
             }
         }
@@ -118,7 +120,9 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
      */
     public function getParentProperty()
     {
-        return $this->getParentRepository()->getDescription()->getProperty($this->_parent_key);
+        return $this->getParentRepository()
+            ->getDescription()
+            ->getProperty($this->_parent_key);
     }
 
     /**

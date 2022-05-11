@@ -8,7 +8,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -186,8 +186,8 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
         $config = new AnConfig($config);
 
         $config->append(array(
-                'rotation' => 0,
-                'mimetype' => 'image/jpeg',
+            'rotation' => 0,
+            'mimetype' => 'image/jpeg',
         ));
 
         if ($config->url) {
@@ -203,7 +203,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
 
         //force mimetype to jpeg if invalid
         //@TODO is this wise ?? No it isn't, but until we find a more reliable method to detect mimetypes
-        if (!isset($mimetypes[$config->mimetype])) {
+        if (! isset($mimetypes[$config->mimetype])) {
             $config->mimetype = 'image/jpeg';
         }
 
@@ -286,7 +286,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
         $originl_height = imagesy($image);
 
         foreach ($this->_sizes as $name => $size) {
-            if (!is_int($size)) {
+            if (! is_int($size)) {
                 list($width, $height) = AnHelperImage::parseSize($size);
                 if ($original_width < $width) {
                     $size = array($original_width, $originl_height);

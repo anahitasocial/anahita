@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -64,11 +64,20 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
                     'default' => 'date',
                     'required' => true
                 ),
-                'updateTime' => array('column' => 'modified_on', 'default' => 'date'),
+                'updateTime' => array(
+                    'column' => 'modified_on', 
+                    'default' => 'date',
+                ),
             ),
             'relationships' => array(
-                'author' => array('parent' => 'com:people.domain.entity.person', 'child_column' => 'created_by'),
-                'editor' => array('parent' => 'com:people.domain.entity.person', 'child_column' => 'modified_by'),
+                'author' => array(
+                    'parent' => 'com:people.domain.entity.person', 
+                    'child_column' => 'created_by',
+                ),
+                'editor' => array(
+                    'parent' => 'com:people.domain.entity.person', 
+                    'child_column' => 'modified_by',
+                ),
             ),
         ));
 
@@ -94,11 +103,10 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
      *
      * @param ComPeopleDomainEntityPerson $author The author of the entity
      */
-    public function setAuthor($author)
+    public function setAuthor($person)
     {
-        $this->set('author',  $author);
+        $this->set('author', $person);
         $this->creationTime = AnDomainAttributeDate::getInstance();
-        $this->editor = $author;
     }
 
     /**
@@ -106,9 +114,9 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
      *
      * @param ComPeopleDomainEntityPerson $editor An editor
      */
-    public function setEditor($editor)
+    public function setEditor($person)
     {
-        $this->set('editor', $editor);
+        $this->set('editor', $person);
         $this->updateTime = AnDomainAttributeDate::getInstance();
     }
 
@@ -119,7 +127,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
     {
         $this->updateTime = AnDomainAttributeDate::getInstance();
 
-        if (!isset($this->creationTime)) {
+        if (! isset($this->creationTime)) {
             $this->creationTime = AnDomainAttributeDate::getInstance();
         }
     }
@@ -136,7 +144,7 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
         $modified = count(array_intersect($this->_modifiable_properties, $modified)) > 0;
 
         if ($modified && AnService::has('com:people.viewer')) {
-            $entity->editor = get_viewer();
+            $entity->editor = AnService::get('com:people.viewer');
         }
     }
 }

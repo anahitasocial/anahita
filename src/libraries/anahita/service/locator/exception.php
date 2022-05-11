@@ -8,6 +8,4 @@
  * @link        https://www.Anahita.io
  */
  
-class AnServiceLocatorException extends AnServiceException
-{
-}
+class AnServiceLocatorException extends AnServiceException {}

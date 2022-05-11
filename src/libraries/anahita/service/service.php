@@ -115,7 +115,7 @@ class AnService implements AnServiceInterface
         $objIdentifier = self::getIdentifier($identifier);
         $strIdentifier = (string) $objIdentifier;
 
-        if (!self::$_services->offsetExists($strIdentifier)) {
+        if (! self::$_services->offsetExists($strIdentifier)) {
             //Instantiate the identifier
             $instance = self::_instantiate($objIdentifier, $config);
 
@@ -181,7 +181,7 @@ class AnService implements AnServiceInterface
         $objIdentifier = self::getIdentifier($identifier);
         $strIdentifier = (string) $objIdentifier;
 
-        if (!isset(self::$_mixins[$strIdentifier])) {
+        if (! isset(self::$_mixins[$strIdentifier])) {
             self::$_mixins[$strIdentifier] = array();
         }
 
@@ -204,7 +204,6 @@ class AnService implements AnServiceInterface
     {
         $objIdentifier = self::getIdentfier($identifier);
         $strIdentifier = (string) $objIdentifier;
-
         $result = array();
 
         if (isset(self::$_mixins[$strIdentifier])) {
@@ -227,7 +226,7 @@ class AnService implements AnServiceInterface
      */
     public static function getIdentifier($identifier)
     {
-        if (!is_string($identifier)) {
+        if (! is_string($identifier)) {
             if ($identifier instanceof AnObjectServiceable) {
                 $identifier = $identifier->getIdentifier();
             }
@@ -235,11 +234,11 @@ class AnService implements AnServiceInterface
         
         $alias = (string) $identifier;
         
-        if (array_key_exists($alias, self::$_aliases)) {
+        if (isset(self::$_aliases[$alias])) {
             $identifier = self::$_aliases[$alias];
         }
 
-        if (!self::$_identifiers->offsetExists((string) $identifier)) {
+        if (! self::$_identifiers->offsetExists((string) $identifier)) {
             if (is_string($identifier)) {
                 $identifier = new AnServiceIdentifier($identifier);
             }
@@ -363,7 +362,9 @@ class AnService implements AnServiceInterface
 
         //Load the class manually using the basepath
         if (self::get('anahita:loader')->loadClass($identifier->classname, $identifier->basepath)) {
-            if (array_key_exists('AnObjectServiceable', class_implements($identifier->classname))) {
+            $serviceables = (array) class_implements($identifier->classname);
+            
+            if (array_key_exists('AnObjectServiceable', $serviceables)) {
                 //Create the configuration object
                 $config = new AnConfig(array_merge(self::getConfig($identifier), $config));
 
@@ -372,7 +373,8 @@ class AnService implements AnServiceInterface
                 $config->service_identifier = $identifier;
 
                 // If the class has an instantiate method call it
-                if (array_key_exists('AnServiceInstantiatable', class_implements($identifier->classname))) {
+                $instantiables = (array) class_implements($identifier->classname);
+                if (array_key_exists('AnServiceInstantiatable', $instantiables)) {
                     $result = call_user_func(array($identifier->classname, 'getInstance'), $config, self::getInstance());
                 } else {
                     $result = new $identifier->classname($config);
@@ -381,8 +383,8 @@ class AnService implements AnServiceInterface
         }
 
         //Thrown an error if no object was instantiated
-        if (!is_object($result)) {
-            throw new AnServiceException('Cannot instantiate object from identifier : '.$identifier);
+        if (! is_object($result)) {
+            throw new AnServiceException('Cannot instantiate object from identifier: '.$identifier);
         }
 
         return $result;

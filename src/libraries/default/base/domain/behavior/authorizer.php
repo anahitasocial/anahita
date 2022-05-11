@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -24,7 +24,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -77,7 +77,7 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
      */
     public function addAuthorizer($authorizer)
     {
-        if (!$authorizer instanceof LibBaseDomainAuthorizerAbstract) {
+        if (! $authorizer instanceof LibBaseDomainAuthorizerAbstract) {
             if (is_string($authorizer) && strpos($authorizer, '.') === false) {
                 //create identifier
                 $identifier = clone $this->_repository->getIdentifier();
@@ -111,7 +111,6 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
         }
 
         $config = AnConfig::unbox($config);
-
         $context = $this->_mixer->getRepository()->getCommandContext();
 
         $context->append($config)->append(array(
@@ -136,7 +135,7 @@ class LibBaseDomainBehaviorAuthorizer extends AnDomainBehaviorAbstract
         if (method_exists($this->_mixer, $method)) {
             $ret = $this->_mixer->$method($context);
 
-            if (!is_null($ret)) {
+            if (! is_null($ret)) {
                 $context->authorization = $ret;
             }
         }

@@ -142,7 +142,7 @@ abstract class AnFilterAbstract extends AnObject implements AnFilterInterface
      *
      * @return AnFilterAbstract
      */
-    public function addFilter(AnFilterInterface $filter, $priority = null)
+    public function addFilter(AnFilterInterface $filter, $priority = AnCommand::PRIORITY_NORMAL)
     {
         $this->_chain->enqueue($filter, $priority);
         return $this;

@@ -6,7 +6,7 @@
  * @package    com_application
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  * @copyright  2008 - 2017 rmdStudio Inc./Peerglobe Technology Inc
  *
@@ -173,13 +173,15 @@ class ComApplication extends AnObject implements AnServiceInstantiatable
 
   		if (empty($name)) {
   			$r = null;
+            
   			if (! preg_match( '/Com(.*)/i', get_class( $this ), $r)) {
                 throw new AnErrorException(
                     "Can't get or parse the class name ",
                     AnHttpResponse::INTERNAL_SERVER_ERROR
                 );
   			}
-  			$name = strtolower($r[1]);
+  			
+            $name = strtolower($r[1]);
   		}
 
   		return $name;

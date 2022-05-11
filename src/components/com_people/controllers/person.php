@@ -5,7 +5,7 @@
  *
  * @category   Anahita
  *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3
  *
  * @link       http://www.Anahita.io
@@ -189,7 +189,7 @@ class ComPeopleControllerPerson extends ComActorsControllerDefault
          $person->requiresActivation();
 
          if (! $person->validate()) {
-             error_log(print_r($person->getErrors()->getMessage(), true));
+             // error_log(print_r($person->getErrors()->getMessage(), true));
              throw new AnErrorException($person->getErrors(), AnHttpResponse::BAD_REQUEST);
          }
 

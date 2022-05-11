@@ -6,10 +6,10 @@
  * @category   Anahita
  *
  * @author     Nick Swinford <nick@nicholasjohn16.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 class plgSystemRecaptcha extends PlgAnahitaDefault
 {
@@ -26,9 +26,9 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     *
     *   @return void
     */
-    public function __construct($dispatcher = null,  AnConfig $config)
+    public function __construct(AnConfig $config)
     {
-        parent::__construct($dispatcher, $config);
+        parent::__construct($config);
 
         $this->_option = AnRequest::get('get.option', 'string', '');
         $this->_view = AnRequest::get('get.view', 'cmd', '');

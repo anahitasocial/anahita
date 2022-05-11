@@ -9,7 +9,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -96,7 +96,7 @@ class AnDomain
     {
         $identifier = AnService::getIdentifier($identifier);
 
-        if (!$identifier->basepath) {
+        if (! $identifier->basepath) {
             $adapters = AnService::get('anahita:loader')->getAdapters();
             $basepath = pick($adapters[$identifier->type]->getBasePath(), ANPATH_BASE);
             $applications = array_flip(AnServiceIdentifier::getApplications());
@@ -125,11 +125,11 @@ class AnDomain
         } else {
             $strIdentifier = (string) $identifier;
 
-            if (!AnService::has($identifier)) {
+            if (! AnService::has($identifier)) {
                 $identifier = self::getEntityIdentifier($identifier);
             }
 
-            if (!AnService::has($identifier)) {
+            if (! AnService::has($identifier)) {
                 AnService::set($strIdentifier, AnService::get($identifier, $config));
             }
 

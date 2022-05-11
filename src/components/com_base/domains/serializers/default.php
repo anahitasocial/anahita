@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -213,7 +213,11 @@ class ComBaseDomainSerializerDefault extends AnDomainSerializerDefault
             );
         }
         
-        if ($data['authorized']['edit'] && $entity->isPrivatable()) {
+        if (
+            $data['authorized'] && 
+            $data['authorized']['edit'] && 
+            $entity->isPrivatable()
+        ) {
             $data['access'] = $entity->access;
         }
         

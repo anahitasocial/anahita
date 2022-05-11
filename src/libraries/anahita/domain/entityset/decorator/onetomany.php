@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -23,7 +23,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -54,11 +54,11 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     public function __construct(AnConfig $config)
     {
         $this->_root = $config->root;
-
         $this->_property = $config->property;
-
-        $config->object = $config->service_container
-        ->get($config->repository->getEntityset(), $config->toArray());
+        $config->object = $config->service_container->get(
+            $config->repository->getEntityset(), 
+            $config->toArray()
+        );
 
         parent::__construct($config);
     }
@@ -76,7 +76,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     {
         $entity = $this->find($data);
 
-        if (!$entity) {
+        if (! $entity) {
             $entity = $this->addNew($data, $config);
         }
 
@@ -202,7 +202,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      */
     public function offsetExists($object)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -222,7 +222,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      */
     public function offsetGet($object)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -243,7 +243,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      */
     public function offsetSet($object, $data)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -265,7 +265,7 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
      */
     public function offsetUnset($object)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 

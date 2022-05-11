@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -21,8 +22,7 @@
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -46,13 +46,13 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
     public function __construct(AnConfig $config = null)
     {
         //If no config is passed create it
-        if (!isset($config)) {
+        if (! isset($config)) {
             $config = new AnConfig();
         }
 
         parent::__construct($config);
         
-        $this->_object_set = new ArrayObject();
+        $this->_object_set = array();
 
         if ($config->data) {
             foreach ($config->data as $object) {
@@ -69,14 +69,12 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function insert(AnObjectHandlable $object)
     {
-        $result = false;
-
         if ($handle = $object->getHandle()) {
-            $this->_object_set->offsetSet($handle, $object);
-            $result = true;
+            $this->_object_set[$handle] = $object;
+            return true;
         }
 
-        return $result;
+        return false;
     }
     
     /**
@@ -91,9 +89,9 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
     public function extract(AnObjectHandlable $object)
     {
         $handle = $object->getHandle();
-
-        if ($this->_object_set->offsetExists($handle)) {
-            $this->_object_set->offsetUnset($handle);
+        
+        if (isset($this->_object_set[$handle])) {
+            unset($this->_object_set[$handle]);
         }
 
         return $this;
@@ -107,7 +105,8 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function contains(AnObjectHandlable $object)
     {
-        return $this->_object_set->offsetExists($object->getHandle());
+        $handle = $object->getHandle();
+        return isset($this->_object_set[$handle]);
     }
     
     /**
@@ -136,7 +135,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetExists($object)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
@@ -154,11 +153,13 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetGet($object)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
-        return $this->_object_set->offsetGet($object->getHandle());
+        $handle = $object->getHandle();
+        
+        return $this->_object_set[$handle];
     }
     
     /**
@@ -173,11 +174,12 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetSet($object, $data)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
         $this->insert($object);
+        
         return $this;
     }
     
@@ -192,11 +194,12 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function offsetUnset($object)
     {
-        if (!$object instanceof AnObjectHandlable) {
+        if (! $object instanceof AnObjectHandlable) {
             throw new InvalidArgumentException('Object needs to implement AnObjectHandlable');
         }
 
         $this->extract($object);
+        
         return $this;
     }
     
@@ -221,7 +224,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function unserialize($serialized)
     {
-        $this->_object_set = unserialize($serialized);
+        $this->_object_set = (array) unserialize($serialized);
     }
     
     /**
@@ -233,7 +236,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function count()
     {
-        return $this->_object_set->count();
+        return count($this->_object_set);
     }
 
     /**
@@ -243,14 +246,8 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function top()
     {
-        $objects = array_values($this->_object_set->getArrayCopy());
-
-        $object = null;
-        if (isset($objects[0])) {
-            $object  = $objects[0];
-        }
-
-        return $object;
+        return $this->_object_set[0];
+        // return end($this->_object_set);
     }
     
     /**
@@ -260,13 +257,13 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function getIterator()
     {
-        return $this->_object_set->getIterator();
+        return new ArrayIterator($this->_object_set);
     }
 
     /**
      * Rewind the Iterator to the first element
      *
-     * @return  \AnObjectArray
+     * @return  array
      */
     public function rewind()
     {
@@ -301,7 +298,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function current()
     {
-        return current($this->_object_set);
+        return $this->_object_set[$this->key()];
     }
 
     /**
@@ -321,7 +318,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
      */
     public function toArray()
     {
-        return $this->_object_set->getArrayCopy();
+        return $this->_object_set;
     }
 
     /**
@@ -379,7 +376,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
     {
         parent::__clone();
 
-        $this->_object_set = clone $this->_object_set;
+        $this->_object_set = $this->_object_set;
     }
 
     /**
@@ -394,6 +391,7 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
         $results = array();
         $is_object = true;
         $is_boolean = true;
+        
         foreach ($this as $object) {
             if ($type == 'method') {
                 $value = call_object_method($object, $callable, $arguments);
@@ -405,11 +403,11 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
                 }
             }
 
-            if (!is_object($value)) {
+            if (! is_object($value)) {
                 $is_object = false;
             }
 
-            if (!is_bool($value)) {
+            if (! is_bool($value)) {
                 $is_boolean = false;
             }
 
@@ -426,13 +424,16 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
 
         if ($is_object) {
             $set = new self();
+            
             foreach ($results as $value) {
                 $set->insert($value);
             }
+            
             $results = $set;
         } elseif ($is_boolean) {
             $results = array_unique($results);
             $value = true;
+            
             foreach ($results as $result) {
                 $value = $value && $result;
             }

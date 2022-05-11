@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -38,7 +38,8 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         // Mixin the toolbar
         if ($config->dispatch_events) {
-            $this->mixin(new AnMixinToolbar($config->append(array('mixer' => $this))));
+            $toolbar = new AnMixinToolbar($config->append(array('mixer' => $this)));
+            $this->mixin($toolbar);
         }
         
         $this->getService('anahita:language')->load($this->getIdentifier()->package);
@@ -55,13 +56,23 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     {
         $permission = clone $this->getIdentifier();
         $permission->path = array($permission->path[0], 'permission');
-        register_default(array('identifier' => $permission, 'prefix' => $this));
+        
+        register_default(array(
+            'identifier' => $permission, 
+            'prefix' => $this,
+        ));
 
         $config->append(array(
             'behaviors' => array($permission),
             'request' => array('format' => 'json'),
         ))->append(array(
-            'view' => $config->request->get ? $config->request->get : ($config->request->view ? $config->request->view : $this->getIdentifier()->name),
+            'view' => $config->request->get ? 
+                $config->request->get : 
+                (
+                    $config->request->view ? 
+                    $config->request->view : 
+                    $this->getIdentifier()->name
+                ),
         ));
 
         parent::_initialize($config);
@@ -96,7 +107,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         $view = $this->getView();
 
-        if (!$context->response->getContent()) {
+        if (! $context->response->getContent()) {
             if ($context->params) {
                 foreach ($context->params as $key => $value) {
                     $view->set($key, $value);
@@ -119,9 +130,9 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     public function getView()
     {
-        if (!$this->_view instanceof LibBaseViewAbstract) {
+        if (! $this->_view instanceof LibBaseViewAbstract) {
             //Make sure we have a view identifier
-            if (!($this->_view instanceof AnServiceIdentifier)) {
+            if (! ($this->_view instanceof AnServiceIdentifier)) {
                 $this->setView($this->_view);
             }
 
@@ -154,7 +165,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
      */
     public function setView($view)
     {
-        if (!($view instanceof ComBaseViewAbstract)) {
+        if (! ($view instanceof ComBaseViewAbstract)) {
             if (is_string($view) && strpos($view, '.') === false) {
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('view', $view);
@@ -211,7 +222,10 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         try {
             return $this->display();
         } catch (Exception $e) {
-            trigger_error('Exception in '.get_class($this).' : '.$e->getMessage(), E_USER_WARNING);
+            trigger_error(
+                'Exception in '.get_class($this).' : '.$e->getMessage(), 
+                E_USER_WARNING
+            );
         }
     }
 

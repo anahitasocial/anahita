@@ -7,7 +7,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -47,11 +47,11 @@ abstract class AnDomainPropertyAbstract
                 $classname = 'AnDomain'.AnInflector::camelize($property);
                 self::$_instances[$property] = new $classname();
             }
+            
             $instance = clone self::$_instances[$property];
         }
 
         $instance->setConfig($config);
-
         $description->setProperty($instance);
 
         return $instance;
@@ -220,7 +220,6 @@ abstract class AnDomainPropertyAbstract
     public function setWriteAccess($access)
     {
         $this->_write_access = (int) $access;
-
         return $this;
     }
 
@@ -234,7 +233,6 @@ abstract class AnDomainPropertyAbstract
     public function setReadAccess($access)
     {
         $this->_read_access = (int) $access;
-
         return $this;
     }
 

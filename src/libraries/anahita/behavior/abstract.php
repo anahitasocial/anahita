@@ -10,7 +10,7 @@
  * Abstract Behavior Class
  *
  * @author		Johan Janssens <johan@nooku.org>
- * @author		Rastin Mehr <rastin@anahitapolis.com>
+ * @author		Rastin Mehr <rastin@anahita.io>
  * @package     Anahita_Behavior
  */
 abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorInterface
@@ -74,7 +74,7 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	protected function _initialize(AnConfig $config)
     {
     	$config->append(array(
-			'priority'   => AnCommand::PRIORITY_NORMAL,
+			'priority' => AnCommand::PRIORITY_NORMAL,
     	    'auto_mixin' => false
 	  	));
 	  	
@@ -105,12 +105,12 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	public function execute( $name, AnCommandContext $context) 
 	{
 		$identifier = clone $context->caller->getIdentifier();
-		$type       = array_pop($identifier->path);
+		$type = array_pop($identifier->path);
 	
-		$parts  = explode('.', $name);
+		$parts = explode('.', $name);
 		$method = '_'.$parts[0].ucfirst($type).ucfirst($parts[1]);
 		
-		if(method_exists($this, $method)) {
+		if (method_exists($this, $method)) {
 			return $this->$method($context);
 		}
 		
@@ -132,9 +132,8 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
     {
         $methods = $this->getMethods();
         
-        foreach($methods as $method) 
-        {
-            if(substr($method, 0, 7) == '_before' || substr($method, 0, 6) == '_after') {
+        foreach($methods as $method) {
+            if (substr($method, 0, 7) === '_before' || substr($method, 0, 6) === '_after') {
                 return parent::getHandle(); 
             }
         }
@@ -153,17 +152,23 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
      */
     public function getMixableMethods(AnObject $mixer = null)
     {
-        $methods   = parent::getMixableMethods($mixer);
+        $methods = parent::getMixableMethods($mixer);
         $methods[] = 'is'.ucfirst($this->getIdentifier()->name);
           
-        foreach($this->getMethods() as $method)
-        {
-            if(substr($method, 0, 7) == '_action') {
+        foreach ($this->getMethods() as $method) {
+            if (substr($method, 0, 7) == '_action') {
                 $methods[] = strtolower(substr($method, 7));
             }  
         }
      
-        return array_diff($methods, array('execute', 'getIdentifier', 'getPriority', 'getHandle', 'getService', 'getIdentifier'));
+        return array_diff($methods, array(
+			'execute', 
+			'getIdentifier', 
+			'getPriority', 
+			'getHandle', 
+			'getService', 
+			'getIdentifier'
+		));
     }
     
 	/**
@@ -178,15 +183,17 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	 */
 	final public function getService($identifier = null, array $config = array())
 	{
-	    if(!isset($this->__service_container)) {
+	    if (! isset($this->__service_container)) {
 	        throw new AnObjectException("Failed to call ".get_class($this)."::getService(). No service_container object defined.");
 	    }
-	    if ( !isset($identifier) ) {
-	    	$result =  $this->__service_container;
+		
+	    if (! isset($identifier)) {
+	    	$result = $this->__service_container;
 	    }
 	    else {
-	    	$result =  $this->__service_container->get($identifier, $config);
+	    	$result = $this->__service_container->get($identifier, $config);
 	    }
+		
 	    return $result;
 	}
 	
@@ -198,7 +205,7 @@ abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorI
 	 */
 	final public function getIdentifier($identifier = null)
 	{
-		if(isset($identifier)) {
+		if (isset($identifier)) {
 		    $result = $this->__service_container->getIdentifier($identifier);
 		} else {
 		    $result = $this->__service_identifier; 

@@ -55,7 +55,7 @@
 * </code>
 *
 * @author		Johan Janssens <johan@nooku.org>
-* @author       Rastin Mehr <rastin@anahitapolis.com
+* @author       Rastin Mehr <rastin@anahita.io
 * @package      anahita_Plugins
 * @subpackage   Anahita
 */
@@ -72,7 +72,7 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
     /**
   	 * Constructor
   	 */
-     public function __construct($dispatcher = null,  AnConfig $config)
+     public function __construct($dispatcher = null, AnConfig $config)
      {
 	    //Inject the identifier
 		$config->service_identifier = AnService::getIdentifier('plg:anahita.'.$config->name);
@@ -88,7 +88,7 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
         foreach ($config->event_publishers as $publisher) {
             AnService::setConfig($publisher, array('event_subscribers' => array($this)));
         }
-
+        
         if ($dispatcher instanceof AnEventDispatcher ) {
             $dispatcher->addEventSubscriber($this);
         }

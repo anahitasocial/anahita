@@ -73,11 +73,11 @@ class AnMixinCommand extends AnMixinAbstract
     protected function _initialize(AnConfig $config)
     {
         $config->append(array(
-            'command_chain'     => null,
-            'event_dispatcher'  => null,
-            'dispatch_events'   => true,
-            'event_priority'    => AnCommand::PRIORITY_LOWEST,
-            'enable_callbacks'  => false,
+            'command_chain' => null,
+            'event_dispatcher' => null,
+            'dispatch_events' => true,
+            'event_priority' => AnCommand::PRIORITY_LOWEST,
+            'enable_callbacks' => false,
             'callback_priority' => AnCommand::PRIORITY_HIGH,
         ));
         

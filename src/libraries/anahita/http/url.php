@@ -269,6 +269,7 @@ class AnHttpUrl extends AnObject
         //Add the username and password
         if (($parts & self::USER) && !empty($this->user)) {
             $url .= urlencode($this->user);
+            
             if (($parts & self::PASS) && !empty($this->pass)) {
                 $url .= ':' . urlencode($this->pass);
             }

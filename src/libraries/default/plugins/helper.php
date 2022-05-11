@@ -5,7 +5,7 @@
  * @category  Anahita
  * @package   libraries
  *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008-2016 rmd Studio Inc.
  * @license    GNU GPLv3
  *
@@ -79,13 +79,15 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
   	* @access public
   	* @param string 	$type 	The plugin type, relates to the sub-directory in the plugins directory
   	* @param string 	$plugin	The plugin element
+    * @param AnEventDispatcher $dispatcher object
   	* @return boolean True if success
   	*/
     public function import($type, $element = null, $autocreate = true, $dispatcher = null)
     {
         $result = false;
+        
         $this->_load();
-
+        
         foreach ($this->_plugins as $plugin) {
             if ($plugin->type === $type && (is_null($element) || $plugin->element === $element)) {
                 $this->_import($plugin, $autocreate, $dispatcher);
@@ -159,7 +161,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
     protected function _load()
     {
         if (empty($this->_plugins)) {
-            $this->_plugins = AnService::get('repos:settings.plugin')
+            $this->_plugins = $this->getService('repos:settings.plugin')
                               ->getQuery()
                               ->where('enabled', '=', 1)
                               ->toEntityset();

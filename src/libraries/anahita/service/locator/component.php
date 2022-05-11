@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -48,7 +48,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $classname = 'Com'.ucfirst($identifier->package).$path.ucfirst($identifier->name);
         $loader = $this->getService('anahita:loader');
         //Manually load the class to set the basepath
-        if (!$loader->loadClass($classname, $identifier->basepath)) {
+        if (! $loader->loadClass($classname, $identifier->basepath)) {
             //the default can be in either in the default folder
             //be a registered default class
             $classname = AnServiceClass::findDefaultClass($identifier);
@@ -56,7 +56,8 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
             if ($classname == 'AnDomainBehaviorDefault') {
                 $classname = null;
             }
-            if (!$classname) {
+            
+            if (! $classname) {
                 $classname = $this->_findClass($identifier);
             }
         }
@@ -80,6 +81,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $classtype = !empty($classpath) ? array_shift($classpath) : '';
         $paths = array();
         $paths[] = ucfirst($classtype).AnInflector::camelize(implode('_', $classpath));
+        
         if ($classtype == 'view') {
             $paths[] = ucfirst($classtype);
         }
@@ -95,14 +97,17 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $namespaces[] = 'An';
         $namespaces = array_unique($namespaces);
         $classes = array();
+        
         foreach ($namespaces as $namespace) {
             foreach ($paths as $path) {
                 $names = array();
                 $names[] = ucfirst($identifier->name);
                 $names[] = empty($path) ? ucfirst($identifier->name).'Default' : 'Default';
+                
                 foreach ($names as $name) {
                     $class = $namespace.$path.$name;
                     $classes[] = $class;
+                    
                     if ($loader->findPath($class, $identifier->basepath) &&
                          $loader->loadClass($class, $identifier->basepath)) {
                         $classname = $class;
@@ -128,7 +133,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
                 
         $component = 'com_'.strtolower($identifier->package);
             
-        if (!empty($identifier->name)) {
+        if (! empty($identifier->name)) {
             if (count($parts)) {
                 if ($parts[0] != 'view') {
                     foreach ($parts as $key => $value) {

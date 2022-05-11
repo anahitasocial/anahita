@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -24,7 +24,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
 
         $instance = $instance ? clone $instance : new self();
 
-        if (!$config) {
+        if (! $config) {
             $config = new AnConfig();
         }
 
@@ -44,7 +44,7 @@ class AnDomainAttributeDate extends AnDate implements AnDomainAttributeInterface
      */
     public function __construct($config = null)
     {
-        if (!$config) {
+        if (! $config) {
             $config = new AnConfig();
         }
 

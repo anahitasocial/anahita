@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -46,10 +46,10 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
     {
         $classname = 'Tmpl'.ucfirst($identifier->package).AnInflector::implode($identifier->path).ucfirst($identifier->name);
 
-        if (!$this->getService('anahita:loader')->loadClass($classname, $identifier->basepath)) {
+        if (! $this->getService('anahita:loader')->loadClass($classname, $identifier->basepath)) {
             $classname = AnServiceClass::findDefaultClass($identifier);
 
-            if (!$classname) {
+            if (! $classname) {
                 //$path      = AnInflector::implode($identifier->path);
                 $classpath = $identifier->path;
                 $classtype = !empty($classpath) ? array_shift($classpath) : '';
@@ -98,8 +98,8 @@ class AnServiceLocatorTemplate extends AnServiceLocatorAbstract
 
         $theme = strtolower($identifier->package);
 
-        if (!empty($identifier->name)) {
-            if (!empty($parts)) {
+        if (! empty($identifier->name)) {
+            if (! empty($parts)) {
                 if ($parts[0] != 'html') {
                     foreach ($parts as $key => $value) {
                         $parts[$key] = AnInflector::pluralize($value);

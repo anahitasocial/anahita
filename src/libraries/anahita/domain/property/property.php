@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -34,7 +34,9 @@ class AnDomainProperty extends AnObject
                 'column' => AnInflector::underscore($config->name),
             ));
 
-            $config->column = $description->getRepository()->getResources()->getColumn($config->column);
+            $config->column = $description->getRepository()
+                ->getResources()
+                ->getColumn($config->column);
 
             if ($config->column) {
                 $config->type = $config->column->type;
@@ -71,11 +73,18 @@ class AnDomainProperty extends AnObject
         ));
 
         if (is_string($config->column)) {
-            $config->column = $description->getRepository()->getResources()->getColumn($config->column);
+            $config->column = $description->getRepository()
+                                ->getResources()
+                                ->getColumn($config->column);
         }
 
         if (! $config->column) {
-            throw new AnDomainPropertyException('Property '.$config->name.' is mapped to an invalid column for entity '.$description->getEntityIdentifier());
+            $msg = sprintf(
+                'Property %s is mapped to an invalid column for entity %s', 
+                $config->name, 
+                $description->getEntityIdentifier()
+            );
+            throw new AnDomainPropertyException($msg);
         }
 
         $property = AnDomainPropertyAbstract::getInstance('attribute.property', $config);
@@ -98,8 +107,9 @@ class AnDomainProperty extends AnObject
     {
         $description = $config->description;
 
-        if (!$description) {
-            throw new AnDomainPropertyException('description [AnDomainDescriptionAbstract] option is required');
+        if (! $description) {
+            $msg = 'description [AnDomainDescriptionAbstract] option is required';
+            throw new AnDomainPropertyException($msg);
         }
 
         //determine the relationship type if not set
@@ -114,7 +124,8 @@ class AnDomainProperty extends AnObject
         }
 
         if ($config['type'] != 'has' && $config['type'] != 'belongs_to') {
-            throw new AnDomainPropertyException("Incorrect relationship type specified: {$config->type}");
+            $msg = sprintf("Incorrect relationship type specified: %s", $config->type);
+            throw new AnDomainPropertyException($msg);
         }
 
         //create the relationship based on its type        
@@ -161,7 +172,13 @@ class AnDomainProperty extends AnObject
             $property = $child_description->getProperty($relationship->getChildKey());
 
             if (! $property) {
-                $property = $child_description->setRelationship($relationship->getChildKey(), array('type' => 'belongs_to', 'parent' => $relationship->getParent()));
+                $property = $child_description->setRelationship(
+                    $relationship->getChildKey(), 
+                    array(
+                        'type' => 'belongs_to', 
+                        'parent' => $relationship->getParent(),
+                    )
+                );
             }
 
             if ($relationship->isRequired()) {
@@ -176,7 +193,10 @@ class AnDomainProperty extends AnObject
             //if not then lets create one for it automatically
             if (! $relationship->getChildProperty()) {
                 $child_key = $relationship->getChildKey();
-                $belongs_to_options = array('parent' => $description->getEntityIdentifier(),'type' => 'belongs_to');
+                $belongs_to_options = array(
+                    'parent' => $description->getEntityIdentifier(), 
+                    'type' => 'belongs_to',
+                );
 
                 if ($config->child_column) {
                     $belongs_to_options['child_column'] = $config->child_column;
@@ -186,14 +206,19 @@ class AnDomainProperty extends AnObject
                     $belongs_to_options['parent_key'] = $config->parent_key;
                 }
 
-                $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
+                $property = $relationship->getChildRepository()
+                                ->getDescription()
+                                ->setRelationship($child_key, $belongs_to_options);
             }
             
         } else {
             $through_one_to_many = null;
 
             //if subscription is through a one-to-many relationship		
-            if (strpos($config->through, '.') === false && $through_one_to_many = $description->getProperty($config->through)) {
+            if (
+                strpos($config->through, '.') === false && 
+                $through_one_to_many = $description->getProperty($config->through)
+            ) {
                 unset($config->through);
 
                 $config->append(array(
@@ -212,14 +237,15 @@ class AnDomainProperty extends AnObject
             //in the link entity if it doesn't exists			
             if (! $relationship->getChildProperty()) {
                 $child_key = $relationship->getChildKey();
-
                 $belongs_to_options = array('parent' => $description->getEntityIdentifier(),'type' => 'belongs_to');
 
                 if ($config->child_column) {
                     $belongs_to_options['child_column'] = $config->child_column;
                 }
 
-                $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
+                $property = $relationship->getChildRepository()
+                                ->getDescription()
+                                ->setRelationship($child_key, $belongs_to_options);
             }
 
             //lets create a child relationship for the target
@@ -227,13 +253,20 @@ class AnDomainProperty extends AnObject
             if (! $relationship->getTargetChildProperty()) {
                 $child_key = $relationship->getTargetChildKey();
 
-                $belongs_to_options = array('type' => 'belongs_to','parent' => $relationship->getTargetRepository()->getDescription()->getEntityIdentifier());
+                $belongs_to_options = array(
+                    'type' => 'belongs_to',
+                    'parent' => $relationship->getTargetRepository()
+                                    ->getDescription()
+                                    ->getEntityIdentifier(),
+                );
 
                 if ($config->target_child_column) {
                     $belongs_to_options['target_child_column'] = $config->child_column;
                 }
 
-                $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
+                $property = $relationship->getChildRepository()
+                                    ->getDescription()
+                                    ->setRelationship($child_key, $belongs_to_options);
             }
 
             //create has_many relationship for both the parent and the target
@@ -293,15 +326,20 @@ class AnDomainProperty extends AnObject
         ));
 
         if (is_string($config->type_column)) {
-            $config->type_column = $description->getRepository()->getResources()->getColumn($config->type_column);
+            $config->type_column = $description->getRepository()
+                                        ->getResources()
+                                        ->getColumn($config->type_column);
         }
 
         if (is_string($config->child_column)) {
-            $config->child_column = $description->getRepository()->getResources()->getColumn($config->child_column);
+            $config->child_column = $description->getRepository()
+                                        ->getResources()
+                                        ->getColumn($config->child_column);
         }
 
-        if (!$config->child_column) {
-            throw new AnDomainPropertyException('The '.$config->name.' belongs to relationship is missing a child column');
+        if (! $config->child_column) {
+            $msg = sprintf('The %s belongs to relationship is missing a child column', $config->name);
+            throw new AnDomainPropertyException($msg);
         }
 
         //if the relationship is not polymorphic the we need to set 

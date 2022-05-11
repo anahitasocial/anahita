@@ -5,7 +5,7 @@
  *
  * @category   Anahita
  *
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2016 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -33,12 +33,11 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
 
         $this->setComponent($config->component);
 
+        $this->registerCallback('before.route',  array($this, 'load'));
+        
         if (PHP_SAPI == 'cli') {
-            $this->registerCallback('after.load', array($this, 'updateLegacyPluginsParams'));
             $this->registerCallback('after.load', array($this, 'prepclienv'));
         }
-
-        $this->registerCallback('before.route',  array($this, 'load'));
     }
 
     /**
@@ -76,27 +75,6 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         }
 
         return $container->get($config->service_identifier);
-    }
-
-    /**
-    *  if the plugins table still has a legacy params field, rename it to meta
-    *  to be consistent with Anahita's convention
-    *  @todo remove this method in the future releases
-    */
-    public function updateLegacyPluginsParams()
-    {
-        //Renaming a legacy database table field otherwise cli would break
-        $db = AnService::get('anahita:domain.store.database');
-        $pluginColumns = $db->getColumns('plugins');
-
-        if (isset($pluginColumns['params'])) {
-           $db->execute('ALTER TABLE `#__plugins` CHANGE `params` `meta` text DEFAULT NULL');
-           $db->execute('ALTER TABLE `#__plugins` CHANGE `published` `enabled` tinyint(3) NOT NULL DEFAULT 0');
-           $db->execute('DROP INDEX `idx_folder` ON `#__plugins`');
-           $db->execute('ALTER TABLE `#__plugins` ADD INDEX `idx_folder` (`enabled`, `folder`)');
-           print "Please run the previous command one more time!\n";
-           exit(0);
-        }
     }
 
     /**
@@ -157,6 +135,13 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
      */
     protected function _actionRoute(AnCommandContext $context)
     {
+        if (! isset($this->_application)) {
+            throw new AnException(
+                'Application object is not instantiated!',
+                AnHttpResponse::INTERNAL_SERVER_ERROR
+            );
+        }
+        
         //route the application
         $url = clone AnRequest::url();
         $url = $this->_application->getRouter()->parse($url);
@@ -199,7 +184,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         $this->getService('anahita:loader')->loadIdentifier($identifier);
 
         //no need to create session when using CLI (command line interface)
-        $session = (PHP_SAPI == 'cli') ? false : true;
+        $session = (PHP_SAPI === 'cli') ? false : true;
 
         $this->_application = $this->getService('com:application', array('session' => $session));
 
@@ -348,7 +333,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
         }
 
         //if cli just print the error and exit
-        if (PHP_SAPI == 'cli') {
+        if (PHP_SAPI === 'cli') {
             print "\n";
             print $exception."\n";
             print debug_print_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS);

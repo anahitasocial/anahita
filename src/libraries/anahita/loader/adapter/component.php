@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -69,14 +69,15 @@ class AnLoaderAdapterComponent extends AnLoaderAdapterAbstract
 
         if (array_shift($parts) == 'com') {
             //Switch the basepath
-            if (!empty($basepath)) {
+            if (! empty($basepath)) {
                 $this->_basepath = $basepath;
             }
 
             $component = 'com_'.strtolower(array_shift($parts));
             $file = array_pop($parts);
             $path = null;
-            if (!empty($parts)) {
+            
+            if (! empty($parts)) {
                 if ($parts[0] != 'view') {
                     foreach ($parts as $key => $value) {
                         $parts[$key] = AnInflector::pluralize($value);
@@ -93,7 +94,7 @@ class AnLoaderAdapterComponent extends AnLoaderAdapterAbstract
             $basepath = $this->_basepath;
 
             if (array_value($parts, -1) == 'exceptions') {
-                if (!file_exists($basepath.$filepath)) {
+                if (! file_exists($basepath.$filepath)) {
                     $filepath = $path.'/default.php';
                 }
             }
@@ -101,7 +102,7 @@ class AnLoaderAdapterComponent extends AnLoaderAdapterAbstract
             if (count($parts) == 2 && $parts[0] == 'domains') {
                 if ($parts[1] == 'entities' && ANPATH_SITE != $this->_basepath) {
                     //set the basepath of entities to the site
-                    if (!file_exists($basepath.$filepath)) {
+                    if (! file_exists($basepath.$filepath)) {
                         $basepath = ANPATH_SITE;
                     }
                 }

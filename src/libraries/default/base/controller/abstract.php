@@ -7,7 +7,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -137,12 +137,15 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     {
         //omit anything that starts with underscore
         if (strpos($method, '_') === false) {
-
-            if (count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions())) {
+            if (
+                count($args) == 1 && 
+                !isset($this->_mixed_methods[$method]) && 
+                !in_array($method, $this->getActions())
+            ) {
                 $this->{AnInflector::underscore($method)} = $args[0];
+                
                 return $this;
             }
-
         } elseif (strpos($method, '_action') === 0) {
             //if the missing method is _action[Name] but
             //method exists, then that means the action
@@ -154,9 +157,12 @@ class LibBaseControllerAbstract extends AnControllerAbstract
             //method
             if (method_exists($this, $method)) {
                 $action = strtolower(substr($method, 7));
-
+                            
                 if (isset($this->_mixed_methods[$action])) {
-                    return $this->_mixed_methods[$action]->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
+                    return $this->_mixed_methods[$action]->execute(
+                        'action.'.$action, 
+                        isset($args[0]) ? $args[0] : null
+                    );
                 } else {
                     //we need to throw this
                     //because if it goes to parent::__call it will causes
@@ -180,7 +186,8 @@ class LibBaseControllerAbstract extends AnControllerAbstract
             $this->_response = $this->getService($this->_response);
 
             if (! $this->_response instanceof LibBaseControllerResponse) {
-                throw new UnexpectedValueException('Response must be an instanceof LibBaseControllerResponse');
+                $msg = 'Response must be an instanceof LibBaseControllerResponse';
+                throw new UnexpectedValueException($msg);
             }
         }
 

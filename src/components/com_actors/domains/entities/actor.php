@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -44,10 +44,10 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 ),
                 'alias' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
+                    'format' => 'slug',
                     'read' => 'public',
                     'length' => array(
-                        'max' => 100,
+                        'max' => 300,
                     ),
                 ),
                 'body' => array(
@@ -151,9 +151,11 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
     public function __get($name)
     {
         if ($name == 'components') {
-
-            if (!isset($this->_components)) {
-                $this->_components = $this->getService('com:actors.domain.entityset.component', array('actor' => $this));
+            if (! isset($this->_components)) {
+                $this->_components = $this->getService(
+                    'com:actors.domain.entityset.component', 
+                    array('actor' => $this)
+                );
             }
 
             return $this->_components;

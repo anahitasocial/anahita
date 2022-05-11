@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -40,11 +40,13 @@ class AnDomainQueryHelper
          foreach ($filters as $filter => $value) {
              $method = AnInflector::variablize($filter);
              $value = AnConfig::unbox($value);
-             if (!is_array($value) || !is_numeric(key($value))) {
+             
+             if (! is_array($value) || !is_numeric(key($value))) {
                  $args = array($value);
              } else {
                  $args = $value;
              }
+             
              call_object_method($query, $method, $args);
          }
      }
@@ -66,14 +68,22 @@ class AnDomainQueryHelper
         settype($columns, 'array');
         $array = array();
         foreach ($columns as $key => $column) {
-            $result = strpos($column, ' ') !== false ? null : self::parseColumn($query, $column);
+            
+            //
+            // @NOTE this dosn't even look right!
+            // $result = strpos($column, ' ') !== false ? null : self::parseColumn($query, $column);
+            //
+            
+            $result = self::parseColumn($query, $column);
+            
             $cols = $result['columns'];
-            if (!isset($result['property'])) {
+            if (! isset($result['property'])) {
                 $array[$key] = $column;
-            } elseif (!is_array($cols)) {
+            } elseif (! is_array($cols)) {
                 $array[$key] = $cols;
             } else {
                 $key = 10000;
+                
                 foreach ($cols as $col) {
                     $array[$key++] = $col;
                 }
@@ -98,6 +108,7 @@ class AnDomainQueryHelper
         $parts = explode('.', $column, 2);
         $attribute = isset($parts[1]) ? $parts[1] : null;
         $result = array('columns' => null, 'property' => null);
+        
         //don't check the parent properties
         if ($property = $description->getProperty($parts[0], false)) {
             if ($property->isAttribute()) {
@@ -108,6 +119,7 @@ class AnDomainQueryHelper
                     //join the query for the belongs to relationship
                     $result['columns'] = $columns = $property->getColumns();
                     $result['property'] = $property;
+                    
                     if ($attribute && isset($columns[$attribute])) {
                         $result['columns'] = $columns[$attribute];
                     } elseif ($attribute) {
@@ -115,7 +127,8 @@ class AnDomainQueryHelper
                     }
                 } elseif ($property->isManyToMany()) {
                     $result = self::_parseManyToMany($query, $property, $attribute);
-                    if (!$attribute) {
+                    
+                    if (! $attribute) {
                         $result['columns'] = array();
                     }
                 } elseif ($property->isOneToMany()) {
@@ -149,7 +162,6 @@ class AnDomainQueryHelper
                 return self::_parseManyToMany($query, $property);
             case $property->isOneToMany() :
                 return self::_parseOneToMany($query, $property);
-
         }
     }
 
@@ -160,11 +172,11 @@ class AnDomainQueryHelper
     {
         $columns = $relationship->getColumns();
 
-        if (!$name) {
+        if (! $name) {
             $name = $relationship->getName();
         }
 
-        if (!$relationship->getParent()) {
+        if (! $relationship->getParent()) {
             throw new AnDomainQueryException('Query Building Failed. Unkown Parent');
         } elseif ($relationship->isPolymorphic()) {
             reset($columns);
@@ -201,7 +213,7 @@ class AnDomainQueryHelper
         $columns = $child_belongs_to_property->getColumns();
         //if the relationship parent is not set then throw an error
         //if polymorphic with a base parent just use the id
-        if (!$child_belongs_to_property->getParent()) {
+        if (! $child_belongs_to_property->getParent()) {
             throw new AnDomainQueryException('Query Building Failed. Unkown Parent');
         } elseif ($child_belongs_to_property->isPolymorphic()) {
             $columnsKeys = array_keys($columns);
@@ -235,7 +247,7 @@ class AnDomainQueryHelper
         $columns = $child_belongs_to_property->getColumns();
         //if the relationship parent is not set then throw an error
         //if polymorphic with a base parent just use the id
-        if (!$child_belongs_to_property->getParent()) {
+        if (! $child_belongs_to_property->getParent()) {
             throw new AnDomainQueryException('Query Building Failed. Unkown Parent');
         } elseif ($child_belongs_to_property->isPolymorphic()) {
             $columnsKeys = array_keys($columns);

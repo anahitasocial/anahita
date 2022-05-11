@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -23,7 +23,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -44,7 +44,7 @@ class AnDomainQueryBuilder extends AnObject
      */
     public static function getInstance()
     {
-        if (!self::$_instance) {
+        if (! self::$_instance) {
             self::$_instance = new self(new AnConfig());
         }
 
@@ -79,7 +79,7 @@ class AnDomainQueryBuilder extends AnObject
         foreach ($resources as $resource) {
             $names[] = $query->getPrefix().$resource->getName().' AS '.$this->_store->quoteName($resource->getAlias());
             //only join update if there are no order			
-            if (!empty($query->order)) {
+            if (! empty($query->order)) {
                 break;
             }
         }
@@ -88,9 +88,11 @@ class AnDomainQueryBuilder extends AnObject
 
         if (is_array($query->operation['value'])) {
             $operation = array();
+            
             foreach ($query->operation['value'] as $key => $value) {
                 $operation[] = is_numeric($key) ? $value : '@col('.$key.')='.$this->_store->quoteValue($value);
             }
+            
             $operation = implode(',', $operation);
         }
 
@@ -103,7 +105,7 @@ class AnDomainQueryBuilder extends AnObject
             }
         }
 
-        $clause = 'UPDATE '.implode($names, ', ').' SET '.$operation;
+        $clause = 'UPDATE '.implode(', ', $names).' SET '.$operation;
 
         return $clause;
     }
@@ -149,9 +151,11 @@ class AnDomainQueryBuilder extends AnObject
         if ($query->operation['type'] & AnDomainQuery::QUERY_SELECT_DEFAULT) {
             $description = $query->getRepository()->getDescription();
             $columns = AnDomainQueryHelper::parseColumns($query, $query->columns);
+            
             foreach ($description->getProperty() as $name => $property) {
                 if (isset($columns[$name])) {
                     $result = AnDomainQueryHelper::parseColumn($query, $name);
+            
                     if ($result['columns'] instanceof AnDomainResourceColumn) {
                         $columns[] = $columns[$name].' AS '.$this->_store->quoteValue($result['columns']->key());
                         unset($columns[$name]);
@@ -176,7 +180,8 @@ class AnDomainQueryBuilder extends AnObject
                         $columns[$key] = (string) $column;
                     }
                 }
-                if (!is_numeric($key)) {
+                
+                if (! is_numeric($key)) {
                     $columns[$key] = $column.' AS '.$this->_store->quoteValue($key);
                 }
             }
@@ -198,12 +203,11 @@ class AnDomainQueryBuilder extends AnObject
     public function from($query)
     {
         $clause = '';
-
         $resource = $query->getRepository()->getResources()->main();
 
         $query->from($resource->getName().' AS '.$this->_store->quoteName($resource->getAlias()));
 
-        if (!empty($query->from)) {
+        if (! empty($query->from)) {
             $clause = ' FROM '.implode(' , ', $query->from);
         }
 
@@ -221,12 +225,19 @@ class AnDomainQueryBuilder extends AnObject
         $repository = $query->getRepository();
         $resources = $repository->getResources();
         $links = $resources->getLinks();
+        
         foreach ($links as $link) {
             $type = strtoupper($link->resource->getLinkType());
+        
             switch ($type) {
-                case 'STRONG' : $type = 'INNER';break;
-                case 'WEAK'   : $type = 'LEFT'; break;
+                case 'STRONG': 
+                    $type = 'INNER';
+                    break;
+                case 'WEAK': 
+                    $type = 'LEFT'; 
+                    break;
             }
+        
             $query->join($type, $link->resource->getName().' AS '.$this->_store->quoteName($link->resource->getAlias()), array(
                 $link->child.'='.$link->parent,
             ));
@@ -234,12 +245,13 @@ class AnDomainQueryBuilder extends AnObject
 
         $this->_links($query, $query->link);
 
-        if (!empty($query->join)) {
+        if (! empty($query->join)) {
             $joins = array();
+        
             foreach ($query->join as $join) {
                 $tmp = '';
 
-                if (!empty($join['type'])) {
+                if (! empty($join['type'])) {
                     $tmp .= $join['type'].' ';
                 }
 
@@ -282,7 +294,8 @@ class AnDomainQueryBuilder extends AnObject
 
             if ($link['bind_type']) {
                 $type = $this->_inheritanceTree($description);
-                if (!empty($type) && $type != '%') {
+                
+                if (! empty($type) && $type != '%') {
                     $operator = substr($this->_inheritanceTree($description), -1) == '%' ? 'LIKE' : '=';
                     $conditions[] = $link['bind_type']. ' ' . $operator . ' \'' .$this->_inheritanceTree($description).'\'';
                 }
@@ -290,13 +303,18 @@ class AnDomainQueryBuilder extends AnObject
 
             $name = $this->_store->quoteName($link['resource_name']);
             $type = strtoupper($link['type']);
+            
             switch ($type) {
-                case 'STRONG' : $type = 'INNER';break;
-                case 'WEAK'   : $type = 'LEFT';break;
+                case 'STRONG' : 
+                    $type = 'INNER';
+                    break;
+                case 'WEAK' : 
+                    $type = 'LEFT';
+                    break;
             }
-            //$name    = $this->_store->quoteName($resource->getName());
+            
+            //$name = $this->_store->quoteName($resource->getName());
             $query->join($type, $resource->getName().' AS '.$name, $conditions);
-
             $this->_links($query, $link->query->link);
         }
     }
@@ -309,10 +327,9 @@ class AnDomainQueryBuilder extends AnObject
     public function where($query)
     {
         $clauses = $this->_where($query);
-
         $clause = implode(' AND ', $clauses);
 
-        if (!empty($clause)) {
+        if (! empty($clause)) {
             $clause = 'WHERE '.$clause;
         }
 
@@ -336,12 +353,13 @@ class AnDomainQueryBuilder extends AnObject
 
         $description = $query->getRepository()->getDescription();
         $clauses = array();
+        
         if ($description->getInheritanceColumn() && $type_check) {
             $resource = $description->getInheritanceColumn()->resource->getAlias();
             //the table type column name
             $type_column_name = $resource.'.'.$description->getInheritanceColumn()->name;
-
             $scopes = AnConfig::unbox($query->instance_of);
+            
             if (empty($scopes)) {
                 $scopes = array($description);
             } else {
@@ -352,24 +370,28 @@ class AnDomainQueryBuilder extends AnObject
 
             foreach ($scopes as $index => $scope) {
                 $inheritance_type = $this->_inheritanceTree($scope);
-                if (!empty($inheritance_type) && $inheritance_type != '%') {
+                
+                if (! empty($inheritance_type) && $inheritance_type != '%') {
                     $operator = substr($inheritance_type, -1) == '%' ? 'LIKE' : '=';
                     $scopes[$index] = $type_column_name.' '.$operator.' \''.$inheritance_type.'\'';
                 } else {
                     unset($scopes[$index]);
                 }
             }
-            if (!empty($scopes)) {
+            
+            if (! empty($scopes)) {
                 $clauses[] = '('.implode(' OR ', $scopes).')';
             }
         }
 
-        if (!empty($query->where)) {
+        if (! empty($query->where)) {
             $clause = '';
+            
             foreach ($query->where as $where) {
                 $clause .= $this->_buildWhere($query, $where);
             }
-            if (!empty($clause)) {
+            
+            if (! empty($clause)) {
                 $clauses[] = '('.$clause.')';
             }
         }
@@ -404,9 +426,11 @@ class AnDomainQueryBuilder extends AnObject
             }
 
             $clause .= ' (';
+            
             foreach ($where['clause'] as $subwhere) {
                 $clause .= $this->_buildWhere($query, $subwhere);
             }
+            
             $clause .= ' )';
 
             return $clause;
@@ -425,15 +449,21 @@ class AnDomainQueryBuilder extends AnObject
                     $values = $value;
                     $keys = array();
                     $clauses = array();
+                    
                     foreach ($values as $value) {
                         $columns = $property->serialize($value);
+                        
                         foreach ($columns as $column => $value) {
                             $keys[$column][] = $value;
                         }
                     }
 
                     foreach ($keys as $key => $values) {
-                        $clauses[] = $this->_buildWhere($query, array('property' => $key, 'constraint' => $constraint, 'value' => $values));
+                        $clauses[] = $this->_buildWhere($query, array(
+                            'property' => $key, 
+                            'constraint' => $constraint, 
+                            'value' => $values,
+                        ));
                     }
 
                     $clause .= ' ('.implode(' AND ', $clauses).')';
@@ -444,7 +474,11 @@ class AnDomainQueryBuilder extends AnObject
 
                     $clauses = array();
                     foreach ($columns as $column => $value) {
-                        $clauses[] = $this->_buildWhere($query, array('property' => $column, 'constraint' => $constraint, 'value' => $value));
+                        $clauses[] = $this->_buildWhere($query, array(
+                            'property' => $column, 
+                            'constraint' => $constraint, 
+                            'value' => $value,
+                        ));
                     }
 
                     $clause .= ' ('.implode(' AND ', $clauses).')';
@@ -489,7 +523,7 @@ class AnDomainQueryBuilder extends AnObject
     {
         $clause = '';
 
-        if (!empty($query->group)) {
+        if (! empty($query->group)) {
             $columns = AnDomainQueryHelper::parseColumns($query, $query->group);
             $clause = ' GROUP BY '.implode(' , ', $columns);
         }
@@ -506,7 +540,7 @@ class AnDomainQueryBuilder extends AnObject
     {
         $clause = '';
 
-        if (!empty($query->having)) {
+        if (! empty($query->having)) {
             $clause = ' HAVING '.implode(' , ', $query->having);
         }
 
@@ -522,11 +556,13 @@ class AnDomainQueryBuilder extends AnObject
     {
         $clause = '';
 
-        if (!empty($query->order)) {
+        if (! empty($query->order)) {
             $clause = 'ORDER BY ';
             $list = array();
+            
             foreach ($query->order as $order) {
                 $columns = AnDomainQueryHelper::parseColumns($query, $order['column']);
+                
                 foreach ($columns as $column) {
                     $list[] = $column.' '.$order['direction'];
                 }
@@ -547,13 +583,13 @@ class AnDomainQueryBuilder extends AnObject
     {
         $clause = '';
 
-        if (!empty($query->limit)) {
+        if (! empty($query->limit)) {
             switch ($query->operation['type']) {
-                case AnDomainQuery::QUERY_SELECT_DEFAULT :
-                case AnDomainQuery::QUERY_SELECT  :
-                    $clause = ' LIMIT '.$query->offset.' , '.$query->limit;
+                case AnDomainQuery::QUERY_SELECT_DEFAULT:
+                case AnDomainQuery::QUERY_SELECT:
+                    $clause = ' LIMIT '.$query->offset.', '.$query->limit;
                     break;
-                case AnDomainQuery::QUERY_UPDATE :
+                case AnDomainQuery::QUERY_UPDATE:
                     if ((int) $query->limit > 0) {
                         $clause = ' LIMIT '.$query->limit;
                     }
@@ -578,6 +614,7 @@ class AnDomainQueryBuilder extends AnObject
         $parts = array();
         $this->_query = $query;
         $this->_store = $query->getRepository()->getStore();
+        
         switch ($query->operation['type']) {
             case AnDomainQuery::QUERY_SELECT_DEFAULT :
             case AnDomainQuery::QUERY_SELECT  :
@@ -610,7 +647,7 @@ class AnDomainQueryBuilder extends AnObject
         $string = str_replace('@MYSQL_JOIN_PLACEHOLDER', $this->join($query), $string);
         $string = $this->parseMethods($query, $string);
 
-        if (!empty($query->binds)) {
+        if (! empty($query->binds)) {
             foreach ($query->binds as $key => $value) {
                 $key = ':'.$key;
                 $value = $this->_store->quoteValue($value);
@@ -635,9 +672,14 @@ class AnDomainQueryBuilder extends AnObject
     {
         $inheritance = '';
 
-        if ($description instanceof AnServiceIdentifier ||
-                (is_string($description) && strpos($description, '.') && !strpos($description, ','))
-                ) {
+        if (
+            $description instanceof AnServiceIdentifier ||
+            (
+                is_string($description) && 
+                strpos($description, '.') && 
+                !strpos($description, ',')
+            )
+        ) {
             $description = AnService::get($description)->getRepository()->getDescription();
         } elseif ($description instanceof AnDomainRepositoryAbstract) {
             $description = $description->getDescription();
@@ -669,11 +711,14 @@ class AnDomainQueryBuilder extends AnObject
         //replaces any @col(\w+) pattern with the correct column name
         if (strpos($string, '@col(')) {
             $matches = array();
+            
             if (preg_match_all('/@col\((.*?)\)/', $string, $matches)) {
                 $description = $query->getRepository()->getDescription();
                 $replaces = array();
+                
                 foreach ($matches[1] as $match) {
                     $result = AnDomainQueryHelper::parseColumn($query, $match);
+                    
                     if (empty($result['columns'])) {
                         $replaces[] = $match;
                     } else {
@@ -688,10 +733,12 @@ class AnDomainQueryBuilder extends AnObject
         if (strpos($string, '@quote(')) {
             $matches = array();
             $replaces = array();
+            
             if (preg_match_all('/@quote\((.*?)\)/', $string, $matches)) {
                 foreach ($matches[1] as $match) {
                     $replaces[] = $this->_store->quoteValue($match);
                 }
+                
                 $string = str_replace($matches[0], $replaces, $string);
             }
         }
@@ -699,24 +746,33 @@ class AnDomainQueryBuilder extends AnObject
         if (strpos($string, '@instanceof(')) {
             $matches = array();
             $replaces = array();
+            
             if (preg_match_all('/\!?@instanceof\((.*?)\)/', $string, $matches)) {
                 foreach ($matches[1] as $i => $match) {
                     $operand = '';
+                    
                     if ($matches[0][$i][0] == '!') {
                         $operand = 'NOT ';
                     }
-                    $type_col = $query->getRepository()->getDescription()->getInheritanceColumn();
+                    
+                    $type_col = $query->getRepository()
+                                    ->getDescription()
+                                    ->getInheritanceColumn();
+                    
                     $classes = explode(',', $match);
                     $statements = array();
+                    
                     foreach ($classes as $class) {
                         $class = $this->_store->quoteValue($class);
                         $statements[] = $operand."FIND_IN_SET($class,$type_col)";
                     }
+                    
                     if ($operand == 'NOT ') {
                         $operand = ' AND ';
                     } else {
                         $operand = ' OR ';
                     }
+                    
                     if (count($statements) == 1) {
                         $statements = implode($operand, $statements);
                     } else {
@@ -732,6 +788,7 @@ class AnDomainQueryBuilder extends AnObject
         if (strpos($string, '@remove_from_set(')) {
             $matches = array();
             $replaces = array();
+            
             if (preg_match_all('/@remove_from_set\((.*?)\)/', $string, $matches)) {
                 foreach ($matches[1] as $i => $match) {
                     list($set, $item) = explode(',', $match);
@@ -747,10 +804,12 @@ class AnDomainQueryBuilder extends AnObject
         if (strpos($string, '@set_length(')) {
             $matches = array();
             $replaces = array();
+            
             if (preg_match_all('/@set_length\((.*?)\)/', $string, $matches)) {
                 foreach ($matches[1] as $i => $match) {
                     $replaces[] = "LENGTH($match) - LENGTH(REPLACE($match, ',', '')) + 1";
                 }
+                
                 $string = str_replace($matches[0], $replaces, $string);
             }
         }

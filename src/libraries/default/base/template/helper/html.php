@@ -3,7 +3,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -21,7 +21,7 @@ class LibBaseTemplateHelperHtml extends LibBaseTemplateHelperAbstract implements
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $classname = $config->service_identifier->classname;
             $instance = new $classname($config);
             $container->set($config->service_identifier, $instance);
@@ -102,7 +102,7 @@ class LibBaseTemplateHelperHtml extends LibBaseTemplateHelperAbstract implements
     {
         $attributes['name'] = $name;
 
-        if (!isset($attributes['id'])) {
+        if (! isset($attributes['id'])) {
             $attributes['id'] = str_replace(array('[', ']'), array('_', ''), $name);
         }
 
@@ -286,6 +286,7 @@ class LibBaseTemplateHelperHtml extends LibBaseTemplateHelperAbstract implements
     public function __call($method, $args)
     {
         $inflected = strtolower(AnInflector::variablize($method));
+        
         if (method_exists($this, $inflected)) {
             return call_user_func_array(array($this, $inflected), $args);
         }
@@ -293,6 +294,6 @@ class LibBaseTemplateHelperHtml extends LibBaseTemplateHelperAbstract implements
         $content = isset($args[0]) ? $args[0] : '';
         $attributes = isset($args[1]) ? $args[1] : array();
 
-        return    $this->tag($method, $content, $attributes);
+        return $this->tag($method, $content, $attributes);
     }
 }

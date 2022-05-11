@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -66,12 +66,12 @@ class AnDomainSpace extends AnObject
      */
     public function validateEntities(&$failed = null)
     {
-        $restult = true;
         $failed = new AnObjectSet();
         $entities = $this->getCommitables();
 
         foreach ($entities as $entity) {
             $restult = $entity->getRepository()->validate($entity);
+            
             if ($restult === false) {
                 $failed->insert($entity);
             }
@@ -93,14 +93,15 @@ class AnDomainSpace extends AnObject
     {
         $result = $this->validateEntities($failed);
 
-        if (!$result) {
+        if (! $result) {
             return false;
         }
 
         $entities = $this->getCommitables();
-
+        
         foreach ($entities as $entity) {
             $result = $entity->getRepository()->commit($entity);
+            
             if ($result === false) {
                 $failed->insert($entity);
             }
@@ -169,8 +170,8 @@ class AnDomainSpace extends AnObject
         //lower priority index means higher priority
         $higher_priority = min($this->_entities->getPriority($entity1), $this->_entities->getPriority($entity2));
 
-        $this->_entities->setPriority($entity1,  $higher_priority);
-        $this->_entities->setPriority($entity2,  $lower_priority);
+        $this->_entities->setPriority($entity1, $higher_priority);
+        $this->_entities->setPriority($entity2, $lower_priority);
     }
 
     /**
@@ -201,7 +202,7 @@ class AnDomainSpace extends AnObject
     {
         //check if an entity has already been added
         //if not then add it to the bottom
-        if (!$this->_entities->getPriority($entity)) {
+        if (! $this->_entities->getPriority($entity)) {
             $priority = count($this->_entities);
             $this->_entities->enqueue($entity, $priority);
         }
@@ -223,7 +224,7 @@ class AnDomainSpace extends AnObject
             $key = $entity->getIdentifier()->application.$key.$value;
 
             foreach ($classes as $class) {
-                if (!isset($this->_identity_map[$class])) {
+                if (! isset($this->_identity_map[$class])) {
                     $this->_identity_map[$class] = array();
                 }
 
@@ -260,14 +261,14 @@ class AnDomainSpace extends AnObject
                     $entity = $this->_identity_map[$class][$key];
 
                     //only return an entity if it's still within the space
-                    if (!$this->_entities->contains($entity)) {
+                    if (! $this->_entities->contains($entity)) {
                         return;
                     }
 
                     //if the description we are using is the parent of the found entity
                     //if not then we must have found a different entity with the common parent
                     //as the caller repository
-                    if (!is_a($entity, $description->getEntityIdentifier()->classname)) {
+                    if (! is_a($entity, $description->getEntityIdentifier()->classname)) {
                         return;
                     }
 

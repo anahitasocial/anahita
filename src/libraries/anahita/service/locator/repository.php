@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
@@ -24,7 +24,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -41,7 +41,7 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
      */
     public static function getInstance(AnConfigInterface $config, AnServiceInterface $container)
     {
-        if (!$container->has($config->service_identifier)) {
+        if (! $container->has($config->service_identifier)) {
             $identifier = self::_identifier($config->service_identifier);
             $instance = AnDomain::getRepository($identifier, $config->toArray());
             $container->set($config->service_identifier, $instance);
@@ -93,7 +93,7 @@ class AnServiceLocatorRepository extends AnServiceLocatorAbstract implements AnS
     {
         $identifier = clone $identifier;
 
-        if (!$identifier->name) {
+        if (! $identifier->name) {
             $identifier->name = AnInflector::singularize($identifier->package);
         }
 

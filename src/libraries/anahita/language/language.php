@@ -166,7 +166,7 @@ class AnLanguage extends AnObject implements AnServiceInstantiatable
 				if ( $this->_debug ) {
                     $caller = $this->_getCallerInfo();
 
-					if (!array_key_exists($key, $this->_used)) {
+					if (! array_key_exists($key, $this->_used)) {
 						$this->_used[$key] = array();
 					}
 
@@ -178,7 +178,7 @@ class AnLanguage extends AnObject implements AnServiceInstantiatable
                 $caller	= $this->_getCallerInfo();
 				$caller['string'] = $string;
 
-				if(!array_key_exists($key, $this->_orphans)) {
+				if(! array_key_exists($key, $this->_orphans)) {
 					$this->_orphans[$key] = array();
 				}
 

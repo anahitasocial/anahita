@@ -6,7 +6,7 @@
  * @category   Anahita
  *
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -76,7 +76,7 @@ class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
 
         $this->_adapter = $config->adapter;
 
-        if (!$this->_adapter) {
+        if (! $this->_adapter) {
             throw new AnDomainStoreException('adapter [AnDatabaseAdapterInterface] is required option');
         }
 
@@ -167,7 +167,8 @@ class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
             foreach ($data as $column => $val) {
                 $column = $resources->getColumn($column);
                 $key = $column->resource->getAlias();
-                if (!isset($vals[$key])) {
+                
+                if (! isset($vals[$key])) {
                     $vals[$key] = array();
                 }
 
@@ -267,7 +268,6 @@ class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
     public function execute($query)
     {
         $context = $this->getCommandContext();
-
         $context->query = $query;
 
         if ($this->getCommandChain()->run('before.execute', $context) !== false) {
@@ -289,15 +289,16 @@ class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
      */
     public function getColumns($table)
     {
-        if (!isset($this->_columns[$table])) {
+        if (! isset($this->_columns[$table])) {
             $fields = $this->_adapter->select('SHOW COLUMNS FROM #__'.$table, AnDatabase::FETCH_ARRAY_LIST);
 
-            static    $column;
+            static $column;
 
             $columns = array();
 
             foreach ($fields as $field) {
                 list($type, $length, $scope) = $this->_parseColumnType($field['Type']);
+                
                 $column = $column ? clone $column : new AnDomainResourceColumn();
                 $column->name = $field['Field'];
                 $column->type = isset($this->_typemap[$type]) ? $this->_typemap[$type] : 'string';
@@ -341,6 +342,7 @@ class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
 
         if (is_array($value)) {
             $values = array_unique($value);
+            
             foreach ($values as $key => $value) {
                 $values[$key] = $value === null ? 'NULL' : $this->_adapter->quoteValue($value);
             }
@@ -387,6 +389,7 @@ class AnDomainStoreDatabase extends AnObject implements AnDomainStoreInterface
 
         // find the parens, if any
         $pos = strpos($spec, '(');
+        
         if ($pos === false) {
             // no parens, so no size or scope
               $type = $spec;

@@ -10,7 +10,7 @@
  * Behavior Interface
  *
  * @author		Johan Janssens <johan@nooku.org>
- * @author		Rastin Mehr <rastin@anahitapolis.com>
+ * @author		Rastin Mehr <rastin@anahita.io>
  * @package     Anahita_Controller
  */
 interface AnBehaviorInterface extends AnCommandInterface, AnObjectServiceable {}
