@@ -10,7 +10,7 @@
  * Behavior Exception class
  *
  * @author		Johan Janssens <johan@nooku.org>
- * @author		Rastin Mehr <rastin@anahitapolis.com>
+ * @author		Rastin Mehr <rastin@anahita.io>
  * @package     Anahita_Behavior
  */
 class AnBehaviorException extends AnException {}

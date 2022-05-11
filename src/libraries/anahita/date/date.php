@@ -43,7 +43,7 @@ define('SECONDS_IN_DAY', 86400);
  * Pierre-Alain Joye Released under the New BSD license
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @author      Rastin Mehr <rastin@anahitapolis.com>
+ * @author      Rastin Mehr <rastin@anahita.io>
  * @package     Anahita_Date
  * @uses        AnObject
  */

@@ -12,7 +12,7 @@
  * Anahita Date Exception class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @author      Rastin Mehr <rastin@anahitapolis.com>
+ * @author      Rastin Mehr <rastin@anahita.io>
  * @package     Anahita_Inflector
  */
 class AnInflectorException extends AnException {}

@@ -4,7 +4,7 @@
  *
  * @author	   Johan Janssens <johan@nooku.org>
  * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahitapolis.com>
+ * @author     Rastin Mehr <rastin@anahita.io>
  * @copyright  Copyright (C) 2007 - 2012 Johan Janssens. All rights reserved.
  * @copyright  Copyright (C) 2018 rmd Studio Inc.
  * @copyright  Copyright (C) 2010 PeerGlobe Technology Inc.

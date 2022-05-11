@@ -12,7 +12,7 @@
  * AnInflector to pluralize and singularize English nouns.
  *
  * @author		Johan Janssens <johan@nooku.org>
- * @author		Rastin Mehr <rastin@anahitapolis.com>
+ * @author		Rastin Mehr <rastin@anahita.io>
  * @package		Anahita_Inflector
  * @static
  */

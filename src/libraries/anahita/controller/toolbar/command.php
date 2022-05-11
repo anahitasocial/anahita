@@ -10,7 +10,7 @@
  * Abstract Controller Toolbar Class
  *
  * @author      Johan Janssens <johan@nooku.org>
- * @author      Rastin Mehr <rastin@anahitapolis.com> 
+ * @author      Rastin Mehr <rastin@anahita.io> 
  * @package     An_Controller
  * @subpackage 	Toolbar
  * @uses        AnInflector

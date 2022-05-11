@@ -55,7 +55,7 @@
 * </code>
 *
 * @author		Johan Janssens <johan@nooku.org>
-* @author       Rastin Mehr <rastin@anahitapolis.com
+* @author       Rastin Mehr <rastin@anahita.io
 * @package      anahita_Plugins
 * @subpackage   Anahita
 */

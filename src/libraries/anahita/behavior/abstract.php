@@ -10,7 +10,7 @@
  * Abstract Behavior Class
  *
  * @author		Johan Janssens <johan@nooku.org>
- * @author		Rastin Mehr <rastin@anahitapolis.com>
+ * @author		Rastin Mehr <rastin@anahita.io>
  * @package     Anahita_Behavior
  */
 abstract class AnBehaviorAbstract extends AnMixinAbstract implements AnBehaviorInterface
