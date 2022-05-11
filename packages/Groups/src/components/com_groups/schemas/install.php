@@ -12,6 +12,6 @@
  *
  * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
  *
- * @link       http://www.GetAnahita.com
+ * @link       http://www.Anahita.io
  */
 function com_install($intaller) {}

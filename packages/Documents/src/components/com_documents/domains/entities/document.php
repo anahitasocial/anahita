@@ -8,7 +8,7 @@
  * @author     Rastin Mehr <rastin@anahita.io>
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
- * @link       https://www.GetAnahita.com
+ * @link       https://www.Anahita.io
  */
 class ComDocumentsDomainEntityDocument extends ComMediumDomainEntityMedium
 {
