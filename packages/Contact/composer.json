@@ -5,7 +5,7 @@
     "description": "Plugin to store contact fields such as email, phone, website url, and contact page url",
     "extension-source" : "src",
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.0 < 8.0",
         "anahita/anahita": "*"
     }
 }
