@@ -154,6 +154,7 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
         foreach ($this as $entity) {
             $data[] = $entity->inspect(false);
         }
+        
         if ($dump) {
             var_dump($data);
         } else {
@@ -489,7 +490,9 @@ abstract class AnDomainEntitysetAbstract extends AnObjectSet
      */
     public function save(&$failed = null)
     {
-        return $this->getRepository()->getSpace()->commitEntities($failed);
+        return $this->getRepository()
+            ->getSpace()
+            ->commitEntities($failed);
     }
 
     /**

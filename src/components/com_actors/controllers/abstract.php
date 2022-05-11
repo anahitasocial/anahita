@@ -130,7 +130,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
     protected function _actionAdd(AnCommandContext $context)
     {
         $entity = parent::_actionAdd($context);
-        
+    
         if ($entity->isPortraitable() && AnRequest::has('files.portrait')) {
             $file = AnRequest::get('files.portrait', 'raw');
 

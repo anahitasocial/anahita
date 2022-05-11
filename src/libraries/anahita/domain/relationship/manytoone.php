@@ -93,7 +93,10 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
                 $entity = $entity->getMixer();
             }
 
-            $data[(string) $this->_type_column] = $entity ? (string) $entity->getEntityDescription()->getInheritanceColumnValue()->getIdentifier() : null;
+            $identifier = (string) $entity->getEntityDescription()
+                ->getInheritanceColumnValue()
+                ->getIdentifier();
+            $data[(string) $this->_type_column] = $entity ? $identifier : null;
         }
 
         return $data;
@@ -248,8 +251,7 @@ class AnDomainRelationshipManytoone extends AnDomainRelationshipProperty impleme
         $config['relationship'] = $this;
         $config['value'] = $parent_value;
         $config['property'] = $this->_parent_key;
-        $config['service_identifier'] = AnDomain::getRepository($parent)
-                    ->getDescription()->getEntityIdentifier();
+        $config['service_identifier'] = AnDomain::getRepository($parent)->getDescription()->getEntityIdentifier();
 
         return new AnDomainEntityProxy(new AnConfig($config));
     }

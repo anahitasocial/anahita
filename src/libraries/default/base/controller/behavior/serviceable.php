@@ -173,6 +173,7 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     {
         $context->response->status = AnHttpResponse::CREATED;
         $entity = $this->getRepository()->getEntity()->setData($context['data']);
+        
         $this->setItem($entity);
 
         return $this->getItem();
@@ -188,7 +189,6 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     protected function _actionEdit(AnCommandContext $context)
     {
         $context->response->status = AnHttpResponse::RESET_CONTENT;
-
         return $this->getItem()->setData($context['data']);
     }
 

@@ -152,12 +152,14 @@ class AnCommandChain extends AnObjectQueue
     public function run($name, AnCommandContext $context)
     {
         if ($this->_enabled) {
-            $this->getStack()->push($this);
+            $this->getStack()->push(clone $this);
             
             $commands = $this->getStack()->top();
             
             foreach($commands as $command) {
-                if ($command->execute($name, $context) === $this->_break_condition) {
+                $result = $command->execute($name, $context);
+                
+                if ($result === $this->_break_condition) {
                     $this->getStack()->pop();
                     return $this->_break_condition;
                 }

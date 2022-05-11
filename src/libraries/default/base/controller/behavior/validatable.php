@@ -44,13 +44,11 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
     {
         if (! $this->_validator instanceof LibBaseControllerValidatorAbstract) {
             //Make sure we have a view identifier
-           if (! ($this->_validator instanceof AnServiceIdentifier)) {
+            if (! ($this->_validator instanceof AnServiceIdentifier)) {
                $this->setValidator($this->_validator);
-           }
+            }
 
-            $config = array(
-                'controller' => $this->getMixer(),
-           );
+            $config = array('controller' => $this->getMixer());
 
             $this->_validator = $this->getService($this->_validator, $config);
         }
@@ -68,14 +66,16 @@ class LibBaseControllerBehaviorValidatable extends AnControllerBehaviorAbstract
         if (! ($validator instanceof LibBaseControllerValidatorAbstract)) {
             if (is_string($validator) && strpos($validator, '.') === false) {
                 $identifier = clone $this->getIdentifier();
+                
                 $identifier->path = array('controller', 'validator');
                 $identifier->name = $validator;
+                
                 register_default(array('identifier' => $identifier, 'prefix' => $this));
             } else {
                 $identifier = $this->getIdentifier($validator);
             }
 
-            if ($identifier->path[1] != 'validator') {
+            if ($identifier->path[1] !== 'validator') {
                 throw new AnControllerBehaviorException('Identifier: '.$identifier.' is not a validator identifier');
             }
 

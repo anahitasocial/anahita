@@ -48,7 +48,7 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      * @return  boolean		TRUE on success FALSE on failure
      * @throws  InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
-    public function enqueue(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_NORMAL)
+    public function enqueue(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_LOWEST)
     {
         if ($handle = $object->getHandle()) {
             $this->_object_list[$handle] = $object;
@@ -90,7 +90,7 @@ class AnObjectQueue extends AnObject implements Iterator, Countable
      * @return  AnCommandChain
      * @throws  InvalidArgumentException if the object doesn't implement AnObjectHandlable
      */
-    public function setPriority(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_NORMAL)
+    public function setPriority(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_LOWEST)
     {
         if ($handle = $object->getHandle()) {
             if (array_key_exists($handle, $this->_priority_list)) {

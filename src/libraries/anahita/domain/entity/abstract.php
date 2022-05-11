@@ -224,7 +224,9 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      */
     public function save(&$failed = null)
     {
-        return $this->getRepository()->getSpace()->commitEntities($failed);
+        return $this->getRepository()
+        ->getSpace()
+        ->commitEntities($failed);
     }
 
     /**
@@ -277,7 +279,9 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      */
     public function getIdentityProperty()
     {
-        return $this->getEntityDescription()->getIdentityProperty()->getName();
+        return $this->getEntityDescription()
+        ->getIdentityProperty()
+        ->getName();
     }
 
     /**
@@ -337,7 +341,11 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         $name = $property->getName();
         $value = $this->_data->offsetGet($name);
 
-        if ($property->isRelationship() && $property->isOneToMany() && is_null($value)) {
+        if (
+            $property->isRelationship() && 
+            $property->isOneToMany() && 
+            is_null($value)
+        ) {
             //since it's an external relationship
             //lets instantitate a dummy relationship
             //this should happen for the one-to-one relationships
@@ -434,7 +442,10 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
             $this->_data[$property->getName()] = $value;
             
-        } elseif ($property->isRelationship() && ($property->isManyToMany() || $property->isOneToMany())) {
+        } elseif (
+            $property->isRelationship() && 
+            ($property->isManyToMany() || $property->isOneToMany())
+        ) {
             $current = $this->get($name);
 
             if ($current instanceof AnDomainDecoratorOnetomany) {
@@ -455,7 +466,11 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
 
         if ($modify) {
             //lets bring them back to their orignal type
-            if (! is_null($value) && $property->isAttribute() && $property->isScalar()) {
+            if (
+                !is_null($value) && 
+                $property->isAttribute() && 
+                $property->isScalar()
+            ) {
                 settype($value, $property->getType());
             }
 
@@ -650,7 +665,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      * @param mixd         $value    Property value
      */
     public function setData($property, $value = null)
-    {
+    {        
         if (is_array($property)) {
             $description = $this->getEntityDescription();
             $properties = $property;
@@ -664,9 +679,9 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
                       try {
                           $this->setData($property->getName(), $value);
                       } catch (AnDomainExceptionType $e) {
-                          print $e->getMessage();
-                          die;
+                          throw new AnException($e->getMessage());
                       }
+                      
                 } elseif (! $property) {
                     $this->$key = $value;
                 }
@@ -694,7 +709,7 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
                 if ($property->getWriteAccess() < AnDomain::ACCESS_PROTECTED) {
                     throw new AnException(get_class($this).'::$'.$name.' is write protected');
                 }
-
+                
                 $this->set($name, $value);
             }
 
@@ -913,7 +928,9 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      */
     public function delete()
     {
-        $this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_DELETED);
+        $this->getRepository()
+        ->getSpace()
+        ->setEntityState($this, AnDomain::STATE_DELETED);
 
         return $this;
     }
@@ -1192,7 +1209,10 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         $row = $this->_data->getRowData();
         $row = array_merge($row, $this->getAffectedRowData());
 
-        return serialize(array('row' => $row, 'identifier' => (string) $this->getIdentifier()));
+        return serialize(array(
+            'row' => $row, 
+            'identifier' => (string) $this->getIdentifier(),
+        ));
     }
 
     /**

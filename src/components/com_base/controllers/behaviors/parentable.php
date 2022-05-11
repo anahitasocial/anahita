@@ -85,7 +85,10 @@ class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
         $parts = explode('.', $name);
 
         if ($parts[0] == 'before') {
-            $value = pick($this->{$this->getIdentifiableKey()}, $context->data->{$this->getIdentifiableKey()});
+            $value = pick(
+                $this->{$this->getIdentifiableKey()}, 
+                $context->data->{$this->getIdentifiableKey()}
+            );
 
             if ($value) {
                 $parent = $this->getParentRepository()->fetch($value);
@@ -93,7 +96,11 @@ class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
                 $this->setParent($parent);
 
                 //set the entity owner as the context actor of the controller
-                if ($parent && $this->getRepository()->isOwnable() && $this->isOwnable()) {
+                if (
+                    $parent && 
+                    $this->getRepository()->isOwnable() && 
+                    $this->isOwnable()
+                ) {
                     $this->setActor($parent->owner);
                 }
 
@@ -112,7 +119,6 @@ class ComBaseControllerBehaviorParentable extends AnControllerBehaviorAbstract
     public function setParent($parent)
     {
         $this->_mixer->parent = $parent;
-
         return $this;
     }
 

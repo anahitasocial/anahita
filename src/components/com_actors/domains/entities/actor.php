@@ -44,10 +44,10 @@ class ComActorsDomainEntityActor extends ComBaseDomainEntityNode
                 ),
                 'alias' => array(
                     'required' => AnDomain::VALUE_NOT_EMPTY,
-                    'format' => 'string',
+                    'format' => 'slug',
                     'read' => 'public',
                     'length' => array(
-                        'max' => 100,
+                        'max' => 300,
                     ),
                 ),
                 'body' => array(

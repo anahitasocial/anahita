@@ -98,7 +98,7 @@ class AnDomainSpace extends AnObject
         }
 
         $entities = $this->getCommitables();
-
+        
         foreach ($entities as $entity) {
             $result = $entity->getRepository()->commit($entity);
             
@@ -170,8 +170,8 @@ class AnDomainSpace extends AnObject
         //lower priority index means higher priority
         $higher_priority = min($this->_entities->getPriority($entity1), $this->_entities->getPriority($entity2));
 
-        $this->_entities->setPriority($entity1,  $higher_priority);
-        $this->_entities->setPriority($entity2,  $lower_priority);
+        $this->_entities->setPriority($entity1, $higher_priority);
+        $this->_entities->setPriority($entity2, $lower_priority);
     }
 
     /**

@@ -196,7 +196,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
         $parts = explode('.', $command);
         $method = '_'.($parts[0]).ucfirst($type).ucfirst($parts[1]);
         $result = null;
-
+        
         if (method_exists($this, $method)) {
             $result = $this->$method($context);
         }
@@ -240,16 +240,16 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
     public function commit($entity)
     {
         switch ($entity->getEntityState()) {
-            case AnDomain::STATE_NEW:
+            case AnDomain::STATE_NEW: // 4
                 $operation = AnDomain::OPERATION_INSERT;
                 $command = 'insert';
                 break;
-            case AnDomain::STATE_MODIFIED :
+            case AnDomain::STATE_MODIFIED : // 8
                 //get all the updated serializable property/value pairs
                 $operation = AnDomain::OPERATION_UPDATE;
                 $command = 'update';
                 break;
-            case  AnDomain::STATE_DELETED :
+            case  AnDomain::STATE_DELETED : // 16
                 $operation = AnDomain::OPERATION_DELETE;
                 $command = 'delete';
                 break;
@@ -277,7 +277,6 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
 
                 case(AnDomain::OPERATION_UPDATE) :
                 case(AnDomain::OPERATION_DELETE) :
-
                     $keys = $this->_description->getIdentityProperty()->serialize($entity->getIdentityId());
                     $keys = array($this->_description->getIdentityProperty()->getName() => $entity->getIdentityId());
 
@@ -286,8 +285,9 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
                     } else {
                         $context->result = $this->destroy($keys);
                     }
+                    break;
             }
-
+             
             $this->getCommandChain()->run('after.'.$command, $context);
         }
 
@@ -445,7 +445,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
             }
         }
 
-        $entity = clone $this->getClone();
+        $entity = $this->getClone();
         $context->entity = $entity;
         $this->getCommandChain()->run('after.instantiate', $context);
 
@@ -687,7 +687,7 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
      */
     public function getClone()
     {
-        return $this->_prototype;
+        return clone $this->_prototype;
     }
 
     /**

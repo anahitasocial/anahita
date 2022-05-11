@@ -38,7 +38,8 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
 
         // Mixin the toolbar
         if ($config->dispatch_events) {
-            $this->mixin(new AnMixinToolbar($config->append(array('mixer' => $this))));
+            $toolbar = new AnMixinToolbar($config->append(array('mixer' => $this)));
+            $this->mixin($toolbar);
         }
         
         $this->getService('anahita:language')->load($this->getIdentifier()->package);
@@ -56,13 +57,22 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         $permission = clone $this->getIdentifier();
         $permission->path = array($permission->path[0], 'permission');
         
-        register_default(array('identifier' => $permission, 'prefix' => $this));
+        register_default(array(
+            'identifier' => $permission, 
+            'prefix' => $this,
+        ));
 
         $config->append(array(
             'behaviors' => array($permission),
             'request' => array('format' => 'json'),
         ))->append(array(
-            'view' => $config->request->get ? $config->request->get : ($config->request->view ? $config->request->view : $this->getIdentifier()->name),
+            'view' => $config->request->get ? 
+                $config->request->get : 
+                (
+                    $config->request->view ? 
+                    $config->request->view : 
+                    $this->getIdentifier()->name
+                ),
         ));
 
         parent::_initialize($config);
@@ -122,7 +132,7 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
     {
         if (! $this->_view instanceof LibBaseViewAbstract) {
             //Make sure we have a view identifier
-            if (!($this->_view instanceof AnServiceIdentifier)) {
+            if (! ($this->_view instanceof AnServiceIdentifier)) {
                 $this->setView($this->_view);
             }
 
@@ -212,7 +222,10 @@ class LibBaseControllerResource extends LibBaseControllerAbstract
         try {
             return $this->display();
         } catch (Exception $e) {
-            trigger_error('Exception in '.get_class($this).' : '.$e->getMessage(), E_USER_WARNING);
+            trigger_error(
+                'Exception in '.get_class($this).' : '.$e->getMessage(), 
+                E_USER_WARNING
+            );
         }
     }
 

@@ -96,7 +96,7 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
      */
     protected function _beforeControllerAdd(AnCommandContext $context)
     {
-        if (!$context->data['owner'] instanceof ComActorsDomainEntityActor) {
+        if (! $context->data['owner'] instanceof ComActorsDomainEntityActor) {
             if ($this->getRepository()->hasBehavior('ownable')) {
                 $context->data['owner'] = $this->actor;
             }
@@ -142,7 +142,7 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
         if ($value) {
             if ($value == 'viewer') {
                 $actor = get_viewer();
-            } elseif (!is_numeric($value)) {
+            } elseif (! is_numeric($value)) {
                 $actor = $this->getService('repos:people.person')->fetch(array('username' => $value));
             } else {
                 $actor = $this->getService('repos:actors.actor')->fetch((int) $value);
@@ -156,7 +156,7 @@ class ComBaseControllerBehaviorOwnable extends AnControllerBehaviorAbstract
             //set the data owner to actor.
             $context->data['owner'] = $actor;
 
-            if (!$actor) {
+            if (! $actor) {
                 throw new LibBaseControllerExceptionNotFound('Owner Not Found');
             }
         }

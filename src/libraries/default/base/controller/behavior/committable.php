@@ -53,7 +53,6 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
 
         //after an action save
         if ($parts[0] === 'after' && $parts[1] != 'cancel') {
-
             //skip if there are not any commitable
             if (count($this->getRepository()->getSpace()->getCommitables()) == 0) {
                 return;
@@ -64,12 +63,19 @@ class LibBaseControllerBehaviorCommittable extends AnControllerBehaviorAbstract
             if ($result === false) {
                 if ($this->isIdentifiable() && $this->getItem()) {
                     if ($this->getItem()->getErrors()->count()) {
-                        throw new AnErrorException($this->getItem()->getErrors(), AnHttpResponse::BAD_REQUEST);
+                        throw new AnErrorException(
+                            $this->getItem()->getErrors(), 
+                            AnHttpResponse::BAD_REQUEST
+                        );
                         return;
                     }
+                    
                 } else {
                     $errors = AnHelperArray::getValues($this->getCommitErrors());
-                    throw new AnErrorException($errors, AnHttpResponse::BAD_REQUEST);
+                    throw new AnErrorException(
+                        $errors, 
+                        AnHttpResponse::BAD_REQUEST
+                    );
                     return;
                 }
             }

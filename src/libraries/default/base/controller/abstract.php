@@ -137,8 +137,13 @@ class LibBaseControllerAbstract extends AnControllerAbstract
     {
         //omit anything that starts with underscore
         if (strpos($method, '_') === false) {
-            if (count($args) == 1 && !isset($this->_mixed_methods[$method]) && !in_array($method, $this->getActions())) {
+            if (
+                count($args) == 1 && 
+                !isset($this->_mixed_methods[$method]) && 
+                !in_array($method, $this->getActions())
+            ) {
                 $this->{AnInflector::underscore($method)} = $args[0];
+                
                 return $this;
             }
         } elseif (strpos($method, '_action') === 0) {
@@ -152,9 +157,12 @@ class LibBaseControllerAbstract extends AnControllerAbstract
             //method
             if (method_exists($this, $method)) {
                 $action = strtolower(substr($method, 7));
-
+                            
                 if (isset($this->_mixed_methods[$action])) {
-                    return $this->_mixed_methods[$action]->execute('action.'.$action, isset($args[0]) ? $args[0] : null);
+                    return $this->_mixed_methods[$action]->execute(
+                        'action.'.$action, 
+                        isset($args[0]) ? $args[0] : null
+                    );
                 } else {
                     //we need to throw this
                     //because if it goes to parent::__call it will causes

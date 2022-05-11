@@ -31,6 +31,6 @@ class ComComponentsDomainRepositoryComponent extends AnDomainRepositoryDefault
             'default' => array('ComComponentsDomainEntityComponent')
         ));
 
-        return clone AnDomain::getRepository($identifier)->getClone();
+        return AnDomain::getRepository($identifier)->getClone();
     }
 }

@@ -366,6 +366,18 @@ class AnObjectSet extends AnObject implements Iterator, ArrayAccess, Countable, 
 
         return $this->_forward('method', $method, $arguments);
     }
+    
+    /**
+     * Preform a deep clone of the object
+     *
+     * @retun void
+     */
+    public function __clone()
+    {
+        parent::__clone();
+
+        $this->_object_set = $this->_object_set;
+    }
 
     /**
      * Forward a request to all the objects in the object set.

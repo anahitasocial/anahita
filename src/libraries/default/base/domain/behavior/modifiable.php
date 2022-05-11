@@ -103,11 +103,10 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
      *
      * @param ComPeopleDomainEntityPerson $author The author of the entity
      */
-    public function setAuthor($author)
+    public function setAuthor($person)
     {
-        $this->set('author',  $author);
+        $this->set('author', $person);
         $this->creationTime = AnDomainAttributeDate::getInstance();
-        $this->editor = $author;
     }
 
     /**
@@ -115,9 +114,9 @@ class LibBaseDomainBehaviorModifiable extends AnDomainBehaviorAbstract
      *
      * @param ComPeopleDomainEntityPerson $editor An editor
      */
-    public function setEditor($editor)
+    public function setEditor($person)
     {
-        $this->set('editor', $editor);
+        $this->set('editor', $person);
         $this->updateTime = AnDomainAttributeDate::getInstance();
     }
 

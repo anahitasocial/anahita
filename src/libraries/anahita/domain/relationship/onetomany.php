@@ -193,7 +193,9 @@ class AnDomainRelationshipOnetomany extends AnDomainRelationshipProperty
      */
     public function getChildProperty()
     {
-        return $this->getChildRepository()->getDescription()->getProperty($this->_child_key);
+        return $this->getChildRepository()
+            ->getDescription()
+            ->getProperty($this->_child_key);
     }
 
     /**

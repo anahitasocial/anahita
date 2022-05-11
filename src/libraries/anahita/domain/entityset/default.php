@@ -132,12 +132,16 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
         }
 
         //forward a call to the query
-        if (method_exists($this->getQuery(), $method) || !$this->_repository->entityMethodExists($method)) {
+        if (
+            method_exists($this->getQuery(), $method) || 
+            !$this->_repository->entityMethodExists($method)
+        ) {
             $result = call_object_method($this->getQuery(), $method, $arguments);
             
             if ($result instanceof AnDomainQuery) {
                 $result = $this;
             }
+            
         } else {
             $result = parent::__call($method, $arguments);
         }
@@ -150,7 +154,8 @@ class AnDomainEntitysetDefault extends AnDomainEntityset
      */
     protected function _getData()
     {
-        $data = $this->getRepository()->fetch($this->getQuery(), AnDomain::FETCH_ENTITY_LIST);
+        $data = $this->getRepository()
+        ->fetch($this->getQuery(), AnDomain::FETCH_ENTITY_LIST);
 
         return $data;
     }

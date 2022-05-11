@@ -33,7 +33,7 @@ class ComBaseDomainEntityEdge extends AnDomainEntityDefault
                 array(
                     'name' => 'edges',
                     'alias' => $this->getIdentifier()->name,
-                    ),
+                ),
             ),
             'attributes' => array(
                 'id' => array('key' => true),

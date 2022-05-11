@@ -116,7 +116,8 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
 
         $this->_entity->getRepository()->getCommandChain()->disable();
 
-        $query = $this->_entity->getRepository()->getQuery()
+        $query = $this->_entity->getRepository()
+                    ->getQuery()
                     ->columns($properties)
                     ->where($keys);
 
@@ -315,6 +316,7 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
                 //all the entities
                 if (! self::_isLocked($repository)) {
                     self::_lock($repository, true);
+                    
                     $entities = $repository->getEntities();
                     
                     foreach ($entities as $entity) {

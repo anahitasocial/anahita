@@ -120,7 +120,9 @@ abstract class AnDomainRelationshipProperty extends AnDomainPropertyAbstract
      */
     public function getParentProperty()
     {
-        return $this->getParentRepository()->getDescription()->getProperty($this->_parent_key);
+        return $this->getParentRepository()
+            ->getDescription()
+            ->getProperty($this->_parent_key);
     }
 
     /**

@@ -55,8 +55,10 @@ class AnDomainEntitysetDecoratorOnetomany extends AnObjectDecorator
     {
         $this->_root = $config->root;
         $this->_property = $config->property;
-        $config->object = $config->service_container
-        ->get($config->repository->getEntityset(), $config->toArray());
+        $config->object = $config->service_container->get(
+            $config->repository->getEntityset(), 
+            $config->toArray()
+        );
 
         parent::__construct($config);
     }

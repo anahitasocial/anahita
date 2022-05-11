@@ -34,7 +34,9 @@ class AnDomainProperty extends AnObject
                 'column' => AnInflector::underscore($config->name),
             ));
 
-            $config->column = $description->getRepository()->getResources()->getColumn($config->column);
+            $config->column = $description->getRepository()
+                ->getResources()
+                ->getColumn($config->column);
 
             if ($config->column) {
                 $config->type = $config->column->type;
@@ -161,7 +163,13 @@ class AnDomainProperty extends AnObject
             $property = $child_description->getProperty($relationship->getChildKey());
 
             if (! $property) {
-                $property = $child_description->setRelationship($relationship->getChildKey(), array('type' => 'belongs_to', 'parent' => $relationship->getParent()));
+                $property = $child_description->setRelationship(
+                    $relationship->getChildKey(), 
+                    array(
+                        'type' => 'belongs_to', 
+                        'parent' => $relationship->getParent(),
+                    )
+                );
             }
 
             if ($relationship->isRequired()) {
@@ -176,7 +184,10 @@ class AnDomainProperty extends AnObject
             //if not then lets create one for it automatically
             if (! $relationship->getChildProperty()) {
                 $child_key = $relationship->getChildKey();
-                $belongs_to_options = array('parent' => $description->getEntityIdentifier(),'type' => 'belongs_to');
+                $belongs_to_options = array(
+                    'parent' => $description->getEntityIdentifier(), 
+                    'type' => 'belongs_to',
+                );
 
                 if ($config->child_column) {
                     $belongs_to_options['child_column'] = $config->child_column;
@@ -186,7 +197,9 @@ class AnDomainProperty extends AnObject
                     $belongs_to_options['parent_key'] = $config->parent_key;
                 }
 
-                $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
+                $property = $relationship->getChildRepository()
+                    ->getDescription()
+                    ->setRelationship($child_key, $belongs_to_options);
             }
             
         } else {
@@ -221,7 +234,9 @@ class AnDomainProperty extends AnObject
                     $belongs_to_options['child_column'] = $config->child_column;
                 }
 
-                $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
+                $property = $relationship->getChildRepository()
+                    ->getDescription()
+                    ->setRelationship($child_key, $belongs_to_options);
             }
 
             //lets create a child relationship for the target
@@ -229,13 +244,20 @@ class AnDomainProperty extends AnObject
             if (! $relationship->getTargetChildProperty()) {
                 $child_key = $relationship->getTargetChildKey();
 
-                $belongs_to_options = array('type' => 'belongs_to','parent' => $relationship->getTargetRepository()->getDescription()->getEntityIdentifier());
+                $belongs_to_options = array(
+                    'type' => 'belongs_to',
+                    'parent' => $relationship->getTargetRepository()
+                        ->getDescription()
+                        ->getEntityIdentifier(),
+                );
 
                 if ($config->target_child_column) {
                     $belongs_to_options['target_child_column'] = $config->child_column;
                 }
 
-                $property = $relationship->getChildRepository()->getDescription()->setRelationship($child_key, $belongs_to_options);
+                $property = $relationship->getChildRepository()
+                    ->getDescription()
+                    ->setRelationship($child_key, $belongs_to_options);
             }
 
             //create has_many relationship for both the parent and the target
@@ -295,11 +317,15 @@ class AnDomainProperty extends AnObject
         ));
 
         if (is_string($config->type_column)) {
-            $config->type_column = $description->getRepository()->getResources()->getColumn($config->type_column);
+            $config->type_column = $description->getRepository()
+                ->getResources()
+                ->getColumn($config->type_column);
         }
 
         if (is_string($config->child_column)) {
-            $config->child_column = $description->getRepository()->getResources()->getColumn($config->child_column);
+            $config->child_column = $description->getRepository()
+                ->getResources()
+                ->getColumn($config->child_column);
         }
 
         if (! $config->child_column) {
