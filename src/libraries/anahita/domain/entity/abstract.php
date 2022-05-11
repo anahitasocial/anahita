@@ -88,7 +88,8 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         $this->getService($config->repository, AnConfig::unbox($config));
 
         if (! $this->getEntityDescription()->getIdentityProperty()) {
-            throw new AnDomainDescriptionException('Entity '.$this->getIdentifier().' need an identity property');
+            $msg = sprintf('Entity %s need an identity property', $this->getIdentifier());
+            throw new AnDomainDescriptionException($msg);
         }
     }
 
@@ -104,7 +105,10 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         $identifier = clone $this->getIdentifier();
         $identifier->path = array('domain','repository');
 
-        register_default(array('identifier' => $identifier, 'prefix' => $this));
+        register_default(array(
+            'identifier' => $identifier, 
+            'prefix' => $this,
+        ));
 
         $config->append(array(
             'attributes' => array(),
@@ -246,7 +250,10 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
      */
     public function reset()
     {
-        $this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_CLEAN);
+        $this->getRepository()
+        ->getSpace()
+        ->setEntityState($this, AnDomain::STATE_CLEAN);
+        
         $this->_modified = array();
 
         return $this;
@@ -400,7 +407,8 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             
             if ($property->isRelationship() && $property->isManyToOne() && $value) {
                 if (! is($value, 'AnDomainEntityAbstract', 'AnDomainEntityProxy')) {
-                    throw new AnDomainExceptionType('Value of '.$property->getName().' must be a AnDomainEntityAbstract');
+                    $msg = sprintf('Value of %s must be a AnDomainEntityAbstract', $property->getName());
+                    throw new AnDomainExceptionType($msg);
                 }
 
                 //if a relationship is a belongs to then make sure the parent
@@ -418,7 +426,12 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             if (! is_null($value)) {
                 if ($property->isAttribute() && !$property->isScalar()) {
                     if (! is($value, $property->getType())) {
-                        $msg = 'Value of '.$property->getName().' must be a '.$property->getType().'. a '.get_class($value).' is given.';
+                        $msg = sprintf(
+                            'Value of %s must be a %s, instead a %s is given.', 
+                            $property->getName(), 
+                            $property->getType(), 
+                            get_class($value),
+                        );
                         throw new AnDomainEntityException($msg);
                     }
                 }
@@ -494,7 +507,9 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             }
 
             $this->_data[$property->getName()] = $value;
-            $this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_MODIFIED);
+            $this->getRepository()
+            ->getSpace()
+            ->setEntityState($this, AnDomain::STATE_MODIFIED);
 
             //only track modifications for the updated entities
             if ($this->getEntityState() !== AnDomain::STATE_MODIFIED) {
@@ -516,7 +531,8 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         $keys = $this->getIdentifyingData();
 
         if (empty($keys)) {
-            throw new AnDomainEntityException('Trying to load an entity without any identifying data');
+            $msg = 'Trying to load an entity without any identifying data';
+            throw new AnDomainEntityException($msg);
         }
 
         //prevent from creating two differne entities
@@ -572,7 +588,9 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             //can we assume then the data has been somehow deleted ?
             //if that's the case then we need to set the state to destroyed
             if ($this->persisted()) {
-                $this->getRepository()->getSpace()->setEntityState($this, AnDomain::STATE_DESTROYED);
+                $this->getRepository()
+                ->getSpace()
+                ->setEntityState($this, AnDomain::STATE_DESTROYED);
             } else {
                 $this->reset();
             }
@@ -707,7 +725,8 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
             } else {
                 //only set the property if it's not write proteced (write != private )
                 if ($property->getWriteAccess() < AnDomain::ACCESS_PROTECTED) {
-                    throw new AnException(get_class($this).'::$'.$name.' is write protected');
+                    $msg = sprintf('%s::$%s is write proteced!', et_class($this), $name);
+                    throw new AnException($msg);
                 }
                 
                 $this->set($name, $value);

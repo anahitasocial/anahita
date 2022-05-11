@@ -119,7 +119,8 @@ abstract class AnDomainDescriptionAbstract
         $this->_repository = $config->repository;
 
         if (! $this->_repository) {
-            throw new AnDomainDescriptionException('repository [AnDomainRepositoryAbstract] option is required');
+            $msg = 'repository [AnDomainRepositoryAbstract] option is required';
+            throw new AnDomainDescriptionException($msg);
         }
 
         if ($config->inheritance) {
@@ -297,7 +298,6 @@ abstract class AnDomainDescriptionAbstract
     public function setAlias($property, $alias)
     {
         $this->_alias[$alias] = $property;
-
         return $this;
     }
 
@@ -343,7 +343,6 @@ abstract class AnDomainDescriptionAbstract
     public function removeIdentifyingProperty($property)
     {
         unset($this->_identifying_properties[$property->getName()]);
-
         return $this;
     }
 

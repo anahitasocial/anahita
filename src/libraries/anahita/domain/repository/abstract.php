@@ -537,7 +537,10 @@ abstract class AnDomainRepositoryAbstract extends AnCommand
                 $identifier = clone $this->getIdentifier();
                 $identifier->path = array('domain','behavior');
                 $identifier->name = $behavior;
-                register_default(array('identifier' => $identifier, 'prefix' => $this->_prototype));
+                register_default(array(
+                    'identifier' => $identifier, 
+                    'prefix' => $this->_prototype,
+                ));
                 $behavior = $identifier;
             }
         }

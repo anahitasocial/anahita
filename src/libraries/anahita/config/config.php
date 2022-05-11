@@ -203,6 +203,7 @@ class AnConfig implements AnConfigInterface
         
         if (isset($this->_data[$offset])) {
             $result = $this->_data[$offset];
+            
             if ($result instanceof AnConfig) {
                 $result = $result->toArray();
             }

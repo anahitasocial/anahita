@@ -76,6 +76,7 @@ class AnLoaderAdapterComponent extends AnLoaderAdapterAbstract
             $component = 'com_'.strtolower(array_shift($parts));
             $file = array_pop($parts);
             $path = null;
+            
             if (! empty($parts)) {
                 if ($parts[0] != 'view') {
                     foreach ($parts as $key => $value) {

@@ -56,7 +56,8 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
             if ($classname == 'AnDomainBehaviorDefault') {
                 $classname = null;
             }
-            if (!$classname) {
+            
+            if (! $classname) {
                 $classname = $this->_findClass($identifier);
             }
         }
@@ -80,6 +81,7 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
         $classtype = !empty($classpath) ? array_shift($classpath) : '';
         $paths = array();
         $paths[] = ucfirst($classtype).AnInflector::camelize(implode('_', $classpath));
+        
         if ($classtype == 'view') {
             $paths[] = ucfirst($classtype);
         }
@@ -101,9 +103,11 @@ class AnServiceLocatorComponent extends AnServiceLocatorAbstract
                 $names = array();
                 $names[] = ucfirst($identifier->name);
                 $names[] = empty($path) ? ucfirst($identifier->name).'Default' : 'Default';
+                
                 foreach ($names as $name) {
                     $class = $namespace.$path.$name;
                     $classes[] = $class;
+                    
                     if ($loader->findPath($class, $identifier->basepath) &&
                          $loader->loadClass($class, $identifier->basepath)) {
                         $classname = $class;

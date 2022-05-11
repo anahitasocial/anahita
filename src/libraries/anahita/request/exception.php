@@ -9,6 +9,4 @@
  * @link        https://www.Anahita.io
  * @package     AnRequest
  */
-class AnRequestException extends AnException
-{
-}
+class AnRequestException extends AnException {}

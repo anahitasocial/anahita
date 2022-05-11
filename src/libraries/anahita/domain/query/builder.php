@@ -230,8 +230,12 @@ class AnDomainQueryBuilder extends AnObject
             $type = strtoupper($link->resource->getLinkType());
         
             switch ($type) {
-                case 'STRONG' : $type = 'INNER';break;
-                case 'WEAK'   : $type = 'LEFT'; break;
+                case 'STRONG': 
+                    $type = 'INNER';
+                    break;
+                case 'WEAK': 
+                    $type = 'LEFT'; 
+                    break;
             }
         
             $query->join($type, $link->resource->getName().' AS '.$this->_store->quoteName($link->resource->getAlias()), array(
@@ -581,11 +585,11 @@ class AnDomainQueryBuilder extends AnObject
 
         if (! empty($query->limit)) {
             switch ($query->operation['type']) {
-                case AnDomainQuery::QUERY_SELECT_DEFAULT :
-                case AnDomainQuery::QUERY_SELECT  :
-                    $clause = ' LIMIT '.$query->offset.' , '.$query->limit;
+                case AnDomainQuery::QUERY_SELECT_DEFAULT:
+                case AnDomainQuery::QUERY_SELECT:
+                    $clause = ' LIMIT '.$query->offset.', '.$query->limit;
                     break;
-                case AnDomainQuery::QUERY_UPDATE :
+                case AnDomainQuery::QUERY_UPDATE:
                     if ((int) $query->limit > 0) {
                         $clause = ' LIMIT '.$query->limit;
                     }
@@ -751,7 +755,10 @@ class AnDomainQueryBuilder extends AnObject
                         $operand = 'NOT ';
                     }
                     
-                    $type_col = $query->getRepository()->getDescription()->getInheritanceColumn();
+                    $type_col = $query->getRepository()
+                                    ->getDescription()
+                                    ->getInheritanceColumn();
+                    
                     $classes = explode(',', $match);
                     $statements = array();
                     

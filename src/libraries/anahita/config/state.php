@@ -125,7 +125,7 @@ class AnConfigState extends AnConfig
                 //Only filter if we have a value
                 if ($value !== null) {
                     if ($value !== '') {
-                        if (!($filter instanceof AnFilterInterface)) {
+                        if (! ($filter instanceof AnFilterInterface)) {
                             $filter = AnService::get('anahita:filter.factory')->instantiate($filter);
                         }
 
@@ -268,6 +268,7 @@ class AnConfigState extends AnConfig
         if (is_array($state->value)) {
             // The first element of the array can't be null or empty string.
             $first = array_slice($state->value, 0, 1);
+            
             if (empty($first) && !is_numeric($first)) {
                 return false;
             }

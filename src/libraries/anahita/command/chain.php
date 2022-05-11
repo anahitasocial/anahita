@@ -100,7 +100,8 @@ class AnCommandChain extends AnObjectQueue
     public function enqueue(AnObjectHandlable $command, $priority = AnCommand::PRIORITY_NORMAL)
     {
         if (! $command instanceof AnCommandInterface) {
-            throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
+            $msg = 'Command needs to implement AnCommandInterface';
+            throw new InvalidArgumentException($msg);
         }
 
         $priority = is_int($priority) ? $priority : $command->getPriority();
@@ -118,7 +119,8 @@ class AnCommandChain extends AnObjectQueue
     public function dequeue(AnObjectHandlable $command)
     {
         if (! $command instanceof AnCommandInterface) {
-            throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
+            $msg = 'Command needs to implement AnCommandInterface';
+            throw new InvalidArgumentException($msg);
         }
 
         return parent::dequeue($command);
@@ -134,7 +136,8 @@ class AnCommandChain extends AnObjectQueue
     public function contains(AnObjectHandlable $command)
     {
         if (! $command instanceof AnCommandInterface) {
-            throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
+            $msg = 'Command needs to implement AnCommandInterface';
+            throw new InvalidArgumentException($msg);
         }
 
         return parent::contains($command);
@@ -204,7 +207,8 @@ class AnCommandChain extends AnObjectQueue
     public function setPriority(AnObjectHandlable $command, $priority)
     {
         if (! $command instanceof AnCommandInterface) {
-            throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
+            $msg = 'Command needs to implement AnCommandInterface';
+            throw new InvalidArgumentException($msg);
         }
 
         return parent::setPriority($command, $priority);
@@ -220,7 +224,8 @@ class AnCommandChain extends AnObjectQueue
     public function getPriority(AnObjectHandlable $command)
     {
         if (! $command instanceof AnCommandInterface) {
-            throw new InvalidArgumentException('Command needs to implement AnCommandInterface');
+            $msg = 'Command needs to implement AnCommandInterface';
+            throw new InvalidArgumentException($msg);
         }
 
         return parent::getPriority($command);

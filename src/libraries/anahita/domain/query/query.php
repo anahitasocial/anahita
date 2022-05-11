@@ -412,7 +412,9 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         if (!isset($this->link[$options->as])) {
             $options->resource->setAlias(AnInflector::underscore($options->as));
 
-            $destination = $query->getRepository()->getDescription()->getInheritanceColumn();
+            $destination = $query->getRepository()
+                                ->getDescription()
+                                ->getInheritanceColumn();
 
             $link = array(
                 'query' => $query,
@@ -697,7 +699,9 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
         elseif (preg_match('/(fetch|select)(\w+)/', $method, $match)) {
             deprecated('use '.$match[1].'(FUNC) instead');
             $column = isset($arguments[0]) ? $arguments[0] : '*';
-            $property = $this->getRepository()->getDescription()->getProperty($column);
+            $property = $this->getRepository()
+                            ->getDescription()
+                            ->getProperty($column);
 
             if ($property) {
                 $column = '@col('.$column.')';
@@ -765,7 +769,6 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
     public function fetch($condition = array())
     {
         $query = self::getInstance($this, $condition);
-
         return $this->getRepository()->fetch($query);
     }
 
@@ -779,7 +782,6 @@ class AnDomainQuery extends AnObject implements AnCommandInterface
     public function fetchSet($condition = array())
     {
         $query = self::getInstance($this, $condition);
-
         return $this->getRepository()->fetch($query, AnDomain::FETCH_ENTITY_SET);
     }
 

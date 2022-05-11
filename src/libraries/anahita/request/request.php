@@ -153,8 +153,10 @@ class AnRequest
         list($hash, $keys) = self::_parseIdentifier($identifier);
 
         $result = null;
+        
         if (isset($GLOBALS['_'.$hash])) {
             $result = $GLOBALS['_'.$hash];
+            
             foreach ($keys as $key) {
                 if (array_key_exists($key, $result)) {
                     $result = $result[$key];
@@ -172,7 +174,7 @@ class AnRequest
         }
 
         // Handle magic quotes compatability
-        if (!in_array($hash, array('FILES', 'SESSION'))) {
+        if (! in_array($hash, array('FILES', 'SESSION'))) {
             $result = self::_stripSlashes($result);
         }
 
@@ -203,6 +205,7 @@ class AnRequest
             // rewrite the $keys as foo[bar][bar]
             $ckeys = $keys; // get a copy
             $name = array_shift($ckeys);
+            
             foreach ($ckeys as $ckey) {
                 $name .= '['.$ckey.']';
             }
@@ -411,7 +414,11 @@ class AnRequest
     {
         if (! isset(self::$_base)) {
             // Get the base request path
-            if (strpos(PHP_SAPI, 'cgi') !== false && !ini_get('cgi.fix_pathinfo')  && !empty($_SERVER['REQUEST_URI'])) {
+            if (
+                strpos(PHP_SAPI, 'cgi') !== false && 
+                !ini_get('cgi.fix_pathinfo')  && 
+                !empty($_SERVER['REQUEST_URI'])
+            ) {
                 // PHP-CGI on Apache with "cgi.fix_pathinfo = 0"
                 // We don't have user-supplied PATH_INFO in PHP_SELF
                 $path = $_SERVER['PHP_SELF'];

@@ -204,7 +204,6 @@ class AnService implements AnServiceInterface
     {
         $objIdentifier = self::getIdentfier($identifier);
         $strIdentifier = (string) $objIdentifier;
-
         $result = array();
 
         if (isset(self::$_mixins[$strIdentifier])) {
@@ -227,7 +226,7 @@ class AnService implements AnServiceInterface
      */
     public static function getIdentifier($identifier)
     {
-        if (!is_string($identifier)) {
+        if (! is_string($identifier)) {
             if ($identifier instanceof AnObjectServiceable) {
                 $identifier = $identifier->getIdentifier();
             }
@@ -364,6 +363,7 @@ class AnService implements AnServiceInterface
         //Load the class manually using the basepath
         if (self::get('anahita:loader')->loadClass($identifier->classname, $identifier->basepath)) {
             $serviceables = (array) class_implements($identifier->classname);
+            
             if (array_key_exists('AnObjectServiceable', $serviceables)) {
                 //Create the configuration object
                 $config = new AnConfig(array_merge(self::getConfig($identifier), $config));
@@ -384,7 +384,7 @@ class AnService implements AnServiceInterface
 
         //Thrown an error if no object was instantiated
         if (! is_object($result)) {
-            throw new AnServiceException('Cannot instantiate object from identifier : '.$identifier);
+            throw new AnServiceException('Cannot instantiate object from identifier: '.$identifier);
         }
 
         return $result;

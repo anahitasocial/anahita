@@ -158,7 +158,6 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
     public function offsetExists($key)
     {
         $this->_materialize($key);
-
         return isset($this->_property[$key]);
     }
 
@@ -209,7 +208,6 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
     public function offsetSet($key, $value)
     {
         $this->_setPropertyValue($key, $value);
-
         return $this;
     }
 
@@ -228,7 +226,6 @@ class AnDomainEntityData extends AnObject implements ArrayAccess
     public function offsetUnset($key)
     {
         unset($this->_property[$key]);
-
         return $this;
     }
 

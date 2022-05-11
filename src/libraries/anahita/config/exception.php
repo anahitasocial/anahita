@@ -8,6 +8,4 @@
  * @link        https://www.Anahita.io
  */
  
-class AnConfigException extends AnException
-{
-}
+class AnConfigException extends AnException {}

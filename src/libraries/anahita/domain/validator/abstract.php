@@ -407,8 +407,14 @@ abstract class AnDomainValidatorAbstract extends AnObject
         $options = AnConfig::unbox($config->options);
 
         if (! in_array($value, $options)) {
+            $msg = sprintf(
+                '%s must be one of the value of %s', 
+                $property->getName(), 
+                implode(',', $options),
+            );
+            
             $entity->addError(array(
-                'message' => $property->getName().' must be one of the value of '.implode(',', $options),
+                'message' => $msg,
                 'code' => AnError::OUT_OF_SCOPE,
                 'key' => $property->getName(),
                 'scope' => $options,

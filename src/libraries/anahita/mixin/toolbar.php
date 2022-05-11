@@ -123,7 +123,8 @@ class AnMixinToolbar extends AnMixinAbstract
 
            //Check the toolbar interface
            if (! ($toolbar instanceof AnControllerToolbarInterface)) {
-               throw new AnControllerToolbarException("Controller toolbar $identifier does not implement AnControllerToolbarInterface");
+               $msg = sprintf("Controller toolbar %s does not implement AnControllerToolbarInterface", $identifier);
+               throw new AnControllerToolbarException($msg);
            }
         } else {
             $toolbar = $this->_toolbars[$identifier->name];

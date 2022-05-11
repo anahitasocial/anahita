@@ -243,11 +243,13 @@ function get_prefix($object, $config = array())
     if ($append) {
         $array = array();
         settype($append, 'array');
+        
         foreach ($classes as $key => $class) {
             foreach ($append as $word) {
                 $array[] = $class.$word;
             }
         }
+        
         $classes = $array;
     }
 

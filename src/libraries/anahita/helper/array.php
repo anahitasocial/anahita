@@ -101,6 +101,7 @@ class AnHelperArray
     public static function unique($array)
     {
         $unique = array();
+        
         foreach ($array as $item) {
             if (! in_array($item, $unique, true)) {
                 $unique[] = $item;
@@ -124,6 +125,7 @@ class AnHelperArray
     {
         $values = (array) AnConfig::unbox($values);
         $array = (array) AnConfig::unbox($array);
+        
         if ($index === null) {
             foreach ($values as $value) {
                 array_push($array, $value);

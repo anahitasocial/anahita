@@ -239,11 +239,13 @@ class AnHelperString
         }
 
         $len = AnHelperString::strlen($str);
+        
         if ($len <= $split_len) {
             return array($str);
         }
 
         preg_match_all('/.{'.$split_len.'}|[^\x00]{1,'.$split_len.'}$/us', $str, $ar);
+        
         return $ar[0];
     }
 

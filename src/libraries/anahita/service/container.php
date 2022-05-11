@@ -8,6 +8,4 @@
  * @link        https://www.Anahita.io
  */
  
-class AnServiceContainer extends ArrayObject
-{
-}
+class AnServiceContainer extends ArrayObject {}
