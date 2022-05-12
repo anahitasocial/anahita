@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -26,9 +27,9 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     *
     *   @return void
     */
-    public function __construct(AnConfig $config)
+    public function __construct($dispatcher = null, AnConfig $config)
     {
-        parent::__construct($config);
+        parent::__construct(null, $config);
 
         $this->_option = AnRequest::get('get.option', 'string', '');
         $this->_view = AnRequest::get('get.view', 'cmd', '');
@@ -50,9 +51,17 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
             }
         }
     }
+    
+    /**
+     * onBeforeDispatch handler.
+     */
+    public function onBeforeDispatch(AnEvent $event)
+    {
+
+    }
 
     /**
-     * onAfterRender handler.
+     * onAfterDispatch handler.
      */
     public function onAfterDispatch(AnEvent $event)
     {
@@ -64,20 +73,7 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
      */
     public function onBeforeRender(AnEvent $event)
     {
-        if($this->_option == 'com_people' && $this->_viewer->guest()) {
-            if (in_array($this->_view, array('session', 'person'))) {
-                $this->_addScripts();
-            }
-        }
-
-        if (
-            $this->_option === 'com_groups' &&
-            $this->_view === 'group' &&
-            $this->_id === 0 &&
-            in_array($this->_layout, array('add', 'form'))
-        ) {
-            $this->_addScripts();
-        }
+        
     }
 
     /**
@@ -117,38 +113,6 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
         }
 
         return false;
-    }
-
-    /**
-    *   Adds required javascript code to the header.
-    *
-    *   @return void
-    */
-    private function _addScripts()
-    {
-        $api = 'https://www.google.com/recaptcha/api.js';
-        $base = AnService::get('com:application')->getRouter()->getBaseUrl();
-        $recaptcha = $base.'/media/plg_recaptcha/js/';
-        $recaptcha .= ANDEBUG ? 'recaptcha.js' : 'min/recaptcha.min.js';
-
-        $document = AnService::get('anahita:document');
-        $jsDeclaration = "
-            var recaptcha = null;
-            $(document).ready(function(){
-                if( $('form.recaptcha').length ) {
-                    recaptcha = $('form.recaptcha').recaptcha({
-                        siteKey: \"%s\"
-                    });
-                }
-            });
-            function recaptchaCallback(token) {
-                recaptcha.recaptcha('recaptchaCallback', token)
-            }
-        ";
-
-        $document->addScriptDeclaration(sprintf($jsDeclaration, $this->_params->get('site-key')));
-        $document->addScript($recaptcha);
-        $document->addScript($api, 'text/javascript', array('async', 'defer'));
     }
 
     /**
