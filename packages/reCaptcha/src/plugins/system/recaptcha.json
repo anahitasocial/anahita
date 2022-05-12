@@ -3,7 +3,7 @@
 	"description": "Adds Google invisible reCaptcha to login, registration, and add group forms",
 	"type": "plugin",
 	"group": "system",
-	"version": "4.3",
+	"version": "4.6",
 	"license": "GPLv3",
 	"homepage": "https://www.getanahita.com",
 	"authors": [{
@@ -16,7 +16,7 @@
 		"homepage": "https://www.Anahita.io"
 	}],
 	"copyright": [
-		"2017 rmd Studio Inc."
+		"2022 rmd Studio Inc."
 	],
 	"files": [
 		"recaptcha.php"
