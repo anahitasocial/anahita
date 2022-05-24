@@ -14,20 +14,20 @@ Anahita is a platform and framework for developing open science and knowledge sh
 
 Anahita provides a genuine nodes and graphs architecture as well as design patterns for building social networking apps.
 
-##### Table of Contents
-[System Requirements](./docs/system-requirements.md)
-[Installing on a development machine](./docs/installation-dev.md)
-[Building an AWS EC2 server and installing Anahita](./docs/installation-aws-ec2.md)
-[Settings](./docs/settings.md)
-[Concepts](./docs/concepts.md)
-[Upgrading](#upgrading)
-[Support](#support)
-[Reporting Bugs & Issues](#bugs)
-[Contribute to Anahita](#contribute)
-[Follow us, Like us](#socialmedia)
-[Credits](#credits)
+#### Table of Contents
+- [System Requirements](./docs/system-requirements.md)
+- [Installing on a development machine](./docs/installation-dev.md)
+- [Building an AWS EC2 server and installing Anahita](./docs/installation-aws-ec2.md)
+- [Settings](./docs/settings.md)
+- [Concepts](./docs/concepts.md)
+- [Upgrading](#upgrading)
+- [Support](#support)
+- [Reporting Bugs & Issues](#bugs)
+- [Contribute to Anahita](#contribute)
+- [Follow us, Like us](#socialmedia)
+- [Credits](#credits)
 
-<a name="upgrading"/>
+<a name="upgrading">
 ## Upgrading
 
 If you are upgrading from 4.5.* to 4.6.* you will need a client side applications such as [Anahita React](https://github.com/anahitasocial/anahita-react) as your front end, since Anahita will only provide a RESTful JSON API and no html outputs. If you need time to build a client app, you may point your installation to the _legacy_ branch for the time being.
