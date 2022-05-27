@@ -1,4 +1,4 @@
-# System Requirements
+# Anahita System Requirements
 
 Before you start please make sure that your server meets the following requirements:
 
