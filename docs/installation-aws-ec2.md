@@ -104,6 +104,10 @@ We need git to be able to clone and pull Anahita code from the Github repository
 
 `sudo cat /root/.ssh/id_ed25519.pub`
 
+## Setting up a mail server
+
+Anahita sends out a lot of email notifications. The best way is to use a reliable and heavy duty mail service such as [Mailgun](https://www.mailgun.com/) or [Amazon Simple Email Service (SES)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html) 
+
 ## Finally, installing and configuring Anahita
 
 You need to create a MySQL or MariaDB Amazon RDS instance. We don't cover the RDS creation and configuration in this document. Instead, you can read the AWS documentation: [Configuring an Amazon RDS DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_RDS_Configuring.html). Once you have your RDS instance ready, you need to have the following values:
