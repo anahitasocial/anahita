@@ -106,7 +106,12 @@ We need git to be able to clone and pull Anahita code from the Github repository
 
 ## Setting up a mail server
 
-Anahita sends out a lot of email notifications. The best way is to use a reliable and heavy duty mail service such as [Mailgun](https://www.mailgun.com/) or [Amazon Simple Email Service (SES)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html) 
+Anahita sends out a lot of email notifications. The best way is to use a reliable and heavy duty mail service such as [Mailgun](https://www.mailgun.com/) or [Amazon Simple Email Service (SES)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html). Once you setup your SMTP, you need to have the following values for configuring Anahita in the next step:
+
+- username
+- password
+- host
+- port
 
 ## Finally, installing and configuring Anahita
 
@@ -118,6 +123,12 @@ You need to create a MySQL or MariaDB Amazon RDS instance. We don't cover the RD
 - username
 - password 
 
+You can test the database connection from your server using the following command:
+
+`mysql -h <endpoint> -P <port> -u <username> -p`
+
+Enter password and then you can use standard MySQL commands to interact with the database. Once you managed to connect successfully, you can exit.
+
 Now, proceed with installing Anahita in the `var/www/` clone Anahita from your Anahita project repo, or the Anahita main repository:  
 
 `git clone git@github.com:<your-anahita-project-repo-on-github>/<your-anahita-project-name>.git`
@@ -127,13 +138,5 @@ Now, proceed with installing Anahita in the `var/www/` clone Anahita from your A
 `cd <your-anahita-project-name>`
 
 This is similar to [installing Anahita on a development machine](./installation-dev.md) start with the following command and follow the instructions to initiate an installation:
-
-`composer update`
-
-`php anahita site:init`
-
-
-
-
 
 
