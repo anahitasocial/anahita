@@ -99,7 +99,9 @@ We need git to be able to clone and pull Anahita code from the Github repository
 ### Setup SSH key for Gihub
 
 `ssh-keygen -t ed25519 -C "yourgithubaccountemail@example.com"`
+
 `~ssh-add ~/.ssh/id_ed25519`
+
 `sudo cat /root/.ssh/id_ed25519.pub`
 
 ## Finally, installing and configuring Anahita
