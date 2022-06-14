@@ -36,6 +36,72 @@ Now install a few addditional packages:
 
 `systemctl status nginx`
 
+### Configuring NGINX
+
+The following is an example of a configuration file you can use for your EC2 server: 
+
+```
+server {
+  listen 80;
+  server_name <your-anahita-project-server-name>;
+  root /var/www/<your-anahita-project-name>/www;
+  access_log /var/log/nginx/<your-anahita-project-name>_access.log;
+  error_log /var/log/nginx/<your-anahita-project-name>_error.log; 
+
+  location / {
+     default_type application/json;
+	   client_max_body_size 50M;
+	   index index.php index.html;
+     try_files $uri $uri/ /index.php?$args;
+  }
+  
+  charset utf-8;
+  gzip on;
+  gzip_comp_level 3;
+  gzip_disable "msie6";
+  gzip_min_length 1000;
+  gzip_proxied any;
+  gzip_types text/xml text/plain application/xml application/json;
+  
+  location ~ /\. {
+      access_log       off;
+      log_not_found    off;
+      deny             all;
+  }
+ 
+  location = /robots.txt {
+       allow all;
+       log_not_found off;
+       access_log off;
+  }
+  
+ location ~* /(?:uploads|files)/.*\.php$ {
+        deny all;
+ }
+
+  location ~ \.php$ {	  
+	      try_files                 $uri =404;
+        include                   /etc/nginx/fastcgi_params;
+        fastcgi_read_timeout      3600s;
+        fastcgi_buffer_size       128k;
+        fastcgi_buffers           4 128k;
+        fastcgi_param             SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_pass              unix:/run/php-fpm/www.sock;
+        fastcgi_index             index.php;
+
+	       client_max_body_size 50M;
+
+         add_header "Access-Control-Allow-Origin" "https://<your-anahita-project-url>" always;
+         add_header "Access-Control-Allow-Methods" "GET, POST, PUT, DELETE, HEAD" always;
+         add_header "Access-Control-Allow-Headers" "Accept,Authorization,Cache-Control,Content-Type,DNT,If-Modified-Since,Keep-Alive,Origin,User-Agent,X-Requested-With" always;
+         add_header "Access-Control-Allow-Credentials" "true" always;
+  }
+}
+```
+
+You can run the command `sudo nginx -s reload` every time that you edit the config file for the changes to be applied.
+
+
 ## Installing a firewall
 
 `sudo yum install firewalld`
@@ -129,14 +195,43 @@ You can test the database connection from your server using the following comman
 
 Enter password and then you can use standard MySQL commands to interact with the database. Once you managed to connect successfully, you can exit.
 
-Now, proceed with installing Anahita in the `var/www/` clone Anahita from your Anahita project repo, or the Anahita main repository:  
+Installing Anahita on an EC2 instance is similar to [installing Anahita on a development machine](./installation-dev.md) with some variations. On EC2, you can clone Anahita under the `var/www/` directory.
+
+From the main Anahita repository:
+
+`git clone git@github.com:anahitasocial/anahita.git <your-anahita-project-name>`
+
+Or from your custom Anahita project repository:
 
 `git clone git@github.com:<your-anahita-project-repo-on-github>/<your-anahita-project-name>.git`
 
+Now change the permissions of your anahita project directory:
+
 `sudo chown ec2-user:ec2-user <your-anahita-project-name> -R`
+
+Go in the directory and use composer to get all the required packages:
 
 `cd <your-anahita-project-name>`
 
-This is similar to [installing Anahita on a development machine](./installation-dev.md) start with the following command and follow the instructions to initiate an installation:
+`composer update`
+
+Now initiate Anahita; the initiation process asks you for a number of parameters such as database info, etc. Enter all the values that the prompt message asks you:
+
+`php anahita site:init`
+
+Now signup the first user. The first user has Super Admin privileges which is the highest within an Anahita installation:
+
+`php anahita site:signup`
+
+
+
+
+
+
+
+
+
+
+
 
 
