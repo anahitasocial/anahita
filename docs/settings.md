@@ -9,11 +9,9 @@ Now you need to make some configurations before you can use your Anahita for dev
 Here are the options on the Site Settings view:
 
 1. **About:** has basic information about your Anahita installation such as creators and software version.
-1. **System:** system settings such as site name, database, and mail configurations happen here.
 1. **Apps:** configure Anahita apps for the entire site.
 1. **Assignments:** configure which actors (People, Groups, etc.) can use what apps (Topics, Photos, etc.)
 1. **Plugins:** configure Anahita plugins for the entire site.
-1. **Templates:** configure Anahita templates. That is only if they are configurable.
 
 ### Notifications
 
@@ -22,8 +20,6 @@ Anahita emails out a lot of email notifications. In order for the notifications 
 There are many articles on the web to show you how to setup a cron job. Depending on your number of users and activity on your site, anywhere from 15 minute to 1 hour intervals will work. You will find the suitable interval after monitoring your Anahita installation for a while.  
 
 ### Installing Social Apps
-
-![Installing Anahita social apps](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-apps-install.gif)
 
 Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
 
