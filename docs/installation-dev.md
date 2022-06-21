@@ -2,8 +2,6 @@
 
 ## Installing a stable package
 
-![Installing Anahita using the Birth release code](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-installation-birth.gif)
-
 Stable packages are called _Birth_ releases. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
 `composer create-project anahita/project myproject`
@@ -15,8 +13,6 @@ Now go to the _myproject_ directory:
 Continue with [Initiating Installation] (#initiating-installation) from this point.
 
 ## Installing from the master branch
-
-![Installing Anahita using the Embryo release code](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-installation-embryo.gif)
 
 The master branch always contains the _Embryo_ release. Using the following command, clone the Anahita repository from the master branch:
 
@@ -33,8 +29,6 @@ Now run the composer command to obtain all the 3rd party libraries that Anahita 
 Continue with *Initiating Installation* from this point.
 
 ## Initiating Installation
-
-![Initiating Anahita installation](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/gifs/installation/anahita-installation-init.gif)
 
 If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. If the command didn't work, perhaps the symlink to the anahita command line tool isn't created. In this case run the following command to create a symlink. Otherwise move to the next step which is initiating the installation process.
 
