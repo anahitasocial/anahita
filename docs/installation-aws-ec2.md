@@ -179,7 +179,7 @@ Anahita sends out a lot of email notifications. The best way is to use a reliabl
 - host
 - port
 
-## Finally, installing and configuring Anahita
+## Installing and configuring Anahita
 
 You need to create a MySQL or MariaDB Amazon RDS instance. We don't cover the RDS creation and configuration in this document. Instead, you can read the AWS documentation: [Configuring an Amazon RDS DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_RDS_Configuring.html). Once you have your RDS instance ready, you need to have the following values:
 
@@ -222,6 +222,31 @@ Now initiate Anahita; the initiation process asks you for a number of parameters
 Now signup the first user. The first user has Super Admin privileges which is the highest within an Anahita installation:
 
 `php anahita site:signup`
+
+### Editing the Configuration file
+
+You can use a cli text editor to edit the configuration.php file in the root directory. There are a number of parameters that you need to set in this file:
+
+| Parameter | Value | Example | 
+| ------- | ----- | ----- |
+| $sitename | Website/app name | Anahita |
+| $client_domain | base url to your client side webapp | https://www.YourDomain.io |
+| $sef_rewrite | Set this to 1 | 1 |
+| $debug | If true, Anahita will operate in debugging mode | 0 |
+| $error_reporting | Use -1 to turn it off or 30719 to show all warnings | -1 |
+| $cors_enabled | Use 1 and set the other cors value. This is best if you are using Anahita on your development machine and want to test it with a clientside app. For a production server, set the CORS in the nginx config file, instead. | 0 |
+| $mailer | We recommend `smtp` and using an SMTP provider such as Mailgun or AWS SES  | smtp |
+| $mailfrom | The email address used in the reply to section of your email notifications | noreply@YourDomain.io |
+| $fromname | A name that indicates where the email notification came from. |  Anahita Platform |
+| $smtp_user | Your SMTP service username | postmaster@sandboxa2a4fc6fe.mailgun.org |
+| $smtp_pass| Your SMTP service password | strongpassword |
+| $smtp_host | path to the SMTP service host | smtp.mailgun.org |
+| $smtp_secure | Use `ssl` | ssl |
+| $smtp_port | SMTP service port | 587 |
+
+Write and quit the editor. Now you can setup an AWS Load Balancer to your installation and point it to for example https://api.YourDomain.io
+
+
 
 
 
