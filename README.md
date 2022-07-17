@@ -14,20 +14,55 @@ Anahita is a platform and framework for developing open science and knowledge sh
 
 Anahita provides a genuine nodes and graphs architecture as well as design patterns for building social networking apps.
 
+# Concepts
+
+## Nodes
+
+1. **actors:** people, groups, or build your own custom actor
+1. **media:** notes, topics, todos, photos, articles, or build your own custom media
+1. **hashtags:** all actors, media, and comments are `hashtaggable`  
+1. **locations:** all actors and media are `geolocatable`
+1. **stories:** updates created by actors for their followers
+
+## Graphs
+
+1. **social graph:** people and groups can be followed by other people.
+1. **hashtags:** for actors, media, and comments
+1. **mentions:** tag people in media and comments
+1. **locations:** tag locations in media and actors and search nearby nodes  
+1. **notifications:** a person receives an email notification whenever a comment is posted on an item they are subscribed to.
+1. **votes:** people can Like/Unlike media and comments
+
+## Stories
+
+- story feeds on dashboard and actor profiles
+- notifications
+
+## RAD Framework
+
+1. MVC rapid app development framework specialized for building social apps
+1. fully customizable theme and user interfaces
+1. extendable by social apps and components
+1. RESTful and JSON APIs (ideal to use Anahita as a back-end for mobile apps)
+1. Built using your favourite technologies such as PHP5, MySql, Bootstrap, JQuery, Grunt, Composer, LessCSS
+
+## Embryo and Birth releases
+
+The code in the master branch is called the **Embryo**. It is what we use to power our website [Anahita.io](https://www.anahita.io) and it is constantly changing and evolving. It may contain bugs that are being fixed. Experimental features may be added and removed. Whenever we reach a specific milestone and the codebase is stable, it is packaged as a **Birth** release.
+
 #### Table of Contents
 - [System Requirements](#system-requirements)
+- [Upgrading](#upgrading)
 - [Installation on a development machine](#installation-on-a-development-machine)
 - [Building an AWS EC2 server and installing Anahita](#building-an-aws-ec2-server-and-installing-anahita)
-- [Settings](./docs/settings.md)
-- [Concepts](./docs/concepts.md)
-- [Upgrading](#upgrading)
+- [Settings](#anahita-settings)
 - [Support](#support)
 - [Reporting Bugs & Issues](#reporting-bugs--issues)
 - [Contribute to Anahita](#contribute-to-anahita)
 - [Follow us, Like us](#follow-us-like-us)
 - [Credits](#credits)
 
-## System Requirements
+# System Requirements
 
 Before you start please make sure that your server meets the following requirements:
 
@@ -40,14 +75,13 @@ http://getcomposer.org/ or just run the following command:
 
 `curl -s http://getcomposer.org/installer | php`
 
-### Important Notes
+## Important Notes
 
 If you have the suhosin patch installed on your server you might get an error. Add this line to your php.ini file to fix it: `suhosin.executor.include.whitelist = tmpl://, file://`
 
 Anahita is installed and managed via command line interface, because this is the most reliable approach especially after you accumulate large amounts of data in your database.
 
-
-## Upgrading
+# Upgrading
 
 If you are upgrading from 4.5.* to 4.6.* you will need a client side applications such as [Anahita React](https://github.com/anahitasocial/anahita-react) as your front end, since Anahita will only provide a RESTful JSON API and no html outputs. If you need time to build a client app, you may point your installation to the _legacy_ branch for the time being.
 
@@ -55,9 +89,10 @@ If you are upgrading from 4.3.* to 4.4.*, in `www/configuration.php` file, chang
 
 If you are using any previous 4.* versions of Anahita, [here is how to upgrade](https://www.anahita.io/articles/158983-updating-from-anahita-4-2-to-4-3)
 
-## Installation on a development machine
 
-### Installing a stable package
+# Installation on a development machine
+
+## Installing a stable package
 
 Stable packages are called _Birth_ releases. Use the following command to create an Anahita project called _myproject_. This command automatically downloads all the required files from the [Anahita GitHub repository](https://github.com/anahitasocial):
 
@@ -69,7 +104,7 @@ Now go to the _myproject_ directory:
 
 Continue with [Initiating Installation] (#initiating-installation) from this point.
 
-### Installing from the master branch
+## Installing from the master branch
 
 The master branch always contains the _Embryo_ release. Using the following command, clone the Anahita repository from the master branch:
 
@@ -85,7 +120,7 @@ Now run the composer command to obtain all the 3rd party libraries that Anahita 
 
 Continue with *Initiating Installation* from this point.
 
-### Initiating Installation
+## Initiating Installation
 
 If you type _php anahita_ you get a list of all commands available to manage your Anahita installation. If the command didn't work, perhaps the symlink to the anahita command line tool isn't created. In this case run the following command to create a symlink. Otherwise move to the next step which is initiating the installation process.
 
@@ -99,7 +134,7 @@ The Anahita installation is created in the _PATH-TO-YOUR-DIRECTORY/myproject/www
 
 Congratulations! You have installed Anahita successfully. Now you need to signup as a Super Administrator.
 
-### Signing Up The Super Administrator
+## Signing Up The Super Administrator
 
 The first person that is signing up with Anahita is recognized as the _Super Administrator_. Use the following command to sign up the first person:
 
@@ -111,11 +146,11 @@ Provide a valid _email_ and _username_. You can either provide a password or Ana
 
 Next, you will configure your installation and install some apps.
 
-## Building an AWS EC2 server and installing Anahita
+# Building an AWS EC2 server and installing Anahita
 
 __Prerequisites:__ you need to be familiar with AWS services such as Route53, Load Balancers (ELB), EC2 Servers, Identity & Access Management (IAM), and Relational Database Service (RDS).
 
-### Installing PHP
+## Installing PHP
 
 Amazon Linux comes with PHP pre-installed. All you need to do is to enable it using the following commands.
 
@@ -137,7 +172,7 @@ Now install a few addditional packages:
 
 `sudo yum install php-xml`
 
-### Installing NGINX
+## Installing NGINX
 
 `sudo amazon-linux-extras enable nginx1`
 
@@ -149,7 +184,7 @@ Now install a few addditional packages:
 
 `systemctl status nginx`
 
-#### Configuring NGINX
+### Configuring NGINX
 
 The following is an example of a configuration file you can use for your EC2 server: 
 
@@ -215,7 +250,7 @@ server {
 You can run the command `sudo nginx -s reload` every time that you edit the config file for the changes to be applied.
 
 
-### Installing a firewall
+## Installing a firewall
 
 `sudo yum install firewalld`
 
@@ -231,7 +266,7 @@ You can run the command `sudo nginx -s reload` every time that you edit the conf
 
 `sudo firewall-cmd --list-all`
 
-### Configuring PHP FPM Service
+## Configuring PHP FPM Service
 
 Edit the `www.confi` file using vim: 
 
@@ -253,7 +288,7 @@ Write and quite vim, and the run the following commands:
 
 `systemctl status php-fpm`
 
-### Installing Composer
+## Installing PHP Composer
 
 [Composer](https://getcomposer.org/) is a dependancy manager for PHP. This is how you install composer globally on your server:
 
@@ -267,7 +302,7 @@ Write and quite vim, and the run the following commands:
 
 `sudo composer install`
 
-### Installing and configuring Git
+## Installing and configuring Git
 
 We need git to be able to clone and pull Anahita code from the Github repository.
 
@@ -275,7 +310,7 @@ We need git to be able to clone and pull Anahita code from the Github repository
 
 `git version`
 
-#### Setup SSH key for Gihub
+### Setup SSH key for Gihub
 
 `ssh-keygen -t ed25519 -C "yourgithubaccountemail@example.com"`
 
@@ -283,7 +318,7 @@ We need git to be able to clone and pull Anahita code from the Github repository
 
 `sudo cat /root/.ssh/id_ed25519.pub`
 
-### Setting up a mail server
+## Setting up a mail server
 
 Anahita sends out a lot of email notifications. The best way is to use a reliable and heavy duty mail service such as [Mailgun](https://www.mailgun.com/) or [Amazon Simple Email Service (SES)](https://docs.aws.amazon.com/ses/latest/dg/setting-up.html). Once you setup your SMTP, you need to have the following values for configuring Anahita in the next step:
 
@@ -292,7 +327,7 @@ Anahita sends out a lot of email notifications. The best way is to use a reliabl
 - host
 - port
 
-### Installing and configuring Anahita
+## Initiating and configuring Anahita
 
 You need to create a MySQL or MariaDB Amazon RDS instance. We don't cover the RDS creation and configuration in this document. Instead, you can read the AWS documentation: [Configuring an Amazon RDS DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_RDS_Configuring.html). Once you have your RDS instance ready, you need to have the following values:
 
@@ -336,7 +371,7 @@ Now signup the first user. The first user has Super Admin privileges which is th
 
 `php anahita site:signup`
 
-#### Editing the Configuration file
+### Editing the Configuration file
 
 You can use a cli text editor to edit the configuration.php file in the root directory. There are a number of parameters that you need to set in this file:
 
@@ -359,6 +394,60 @@ You can use a cli text editor to edit the configuration.php file in the root dir
 
 Write and quit the editor. Now you can setup an AWS Load Balancer to your installation and point it to for example https://api.YourDomain.io
 
+# Anahita Settings
+
+Now you need to make some configurations before you can use your Anahita for development or production server. To access the site settings:
+
+1. Login to your Anahita installation as a _Super Administrator_
+2. Click on your avatar on the top menubar
+3. Click on _Site Settings_. By default you will go to the _Site Settings_
+
+Here are the options on the Site Settings view:
+
+1. **About:** has basic information about your Anahita installation such as creators and software version.
+1. **Apps:** configure Anahita apps for the entire site.
+1. **Assignments:** configure which actors (People, Groups, etc.) can use what apps (Topics, Photos, etc.)
+1. **Plugins:** configure Anahita plugins for the entire site.
+
+## Notifications
+
+Anahita emails out a lot of email notifications. In order for the notifications to get sent out, you can setup a cron job on your server to the `yourdomain.com/components/com_notifications/process.php` file. Make sure to go to _Site Settings > Apps > Notifications_ and set **Use Cron** to _Yes_.
+
+There are many articles on the web to show you how to setup a cron job. Depending on your number of users and activity on your site, anywhere from 15 minute to 1 hour intervals will work. You will find the suitable interval after monitoring your Anahita installation for a while.  
+
+## Installing Social Apps
+
+Now it is time to extend your Anahita installation with some apps and components. Anahita comes with a list of social apps which you can use as they are or use them as blueprints for developing your own custom apps.
+
+To get a list of available apps simply type the following command:
+
+`php anahita package:list`
+
+Now in order to install an app, for example the Photos app, type the following command:
+
+`php anahita package:install photos`
+
+You can even provide a list of apps and components in one line. For example to install the Groups, Topics, and Connect apps use the following command:
+
+`php anahita package:install groups topics connect`
+
+Go to _Site Settings > Assignments_ to define whether an app should optionally or always be available on actor profiles (people, groups, etc.). If an app is optionally available, then on each actor profile the app can be enabled under the _Edit Profile > Apps_.
+
+Congratulations! You have just installed some apps and extensions on your Anahita installation.
+
+## Amazon S3 Storage
+
+Nearly in all cases you wouldn't want to store the uploaded files on your own server. They add up very quickly and that makes it very difficult to maintain or migrate your Anahita installation. Anahita provides a plugin which allows all the uploaded files to be stored in the AWS or [Amazon S3](https://aws.amazon.com/s3/) cloud.
+
+Go to _Site Settings > Plugins_ and then from the _type_ list select _Storage_. Edit and disable the _Storage - Local_ plugin by clicking on it's name. Edit the _Amazon S3_ plugin using the following settings:
+
+1. **Enabled:** set to _yes_
+1. **The folder to store the data:** use _assets_ as the default setting
+1. **Bucket:** enter the name of your Amazon S3 bucket
+1. **Access Key:** enter your AWS access key
+1. **Secret Key:** enter your AWS secret key
+
+Now click _Update_ to store the settings. Try uploading your avatar in the front-end and see if it gets uploaded properly. Check the image src to make sure it is an AWS url.
 
 # Support
 Anahita has an active and thriving tribe of hackers, entrepreneurs, and hackerpreneurs. They are helpful and friendly. So [Join Us](https://www.Anahita.io/join)
