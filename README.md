@@ -396,24 +396,19 @@ You can use a CLI text editor to edit the configuration.php file in the root dir
 
 Write and quit the editor. Now you can set up an AWS Load Balancer (ELB) for your installation and point it to, for example, https://api.YourDomain.io
 
-## Anahita Settings
+### Anahita Settings
 
-<!-- START - update this part for 4.6.0 -->
+Before using your Anahita for development or production server, you need to make some configurations. At this point, you need to connect to Anahita using a client-side app such as [Anahita React](https://github.com/anahitasocial/anahita-react). Once you have set up your client-side application, then you can access the _Settings_ as follows:
 
-Now you need to make some configurations before you can use your Anahita for development or production server. To access the site settings:
+1. Log in to your Anahita installation as a _Super Administrator_
+1. On the main menu, click on the _Settings_
 
-1. Login to your Anahita installation as a _Super Administrator_
-2. Click on your avatar on the top menubar
-3. Click on _Site Settings_. By default you will go to the _Site Settings_
+Here are the tabs under the Settings view:
 
-Here are the options on the Site Settings view:
-
-1. **About:** has basic information about your Anahita installation such as creators and software version.
-1. **Apps:** configure Anahita apps for the entire site.
+1. **About:** has basic information about your Anahita installation, such as creators and software version.
+1. **Apps:** configure installed Anahita apps for the entire site.
 1. **Assignments:** configure which actors (People, Groups, etc.) can use what apps (Topics, Photos, etc.)
 1. **Plugins:** configure Anahita plugins for the entire site.
-
-<!-- END - update this part for 4.6.0 -->
 
 ### Notifications
 
