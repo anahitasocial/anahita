@@ -3,7 +3,7 @@
     "description": "Allows a site admin to set a list of actors to be automatically followed by the new registered members",
     "type": "plugin",
     "group": "user",
-    "version": "4.3.0",
+    "version": "4.6.0",
     "license": "GPL3",
     "homepage": "www.Anahita.io",
     "authors": [
