@@ -230,7 +230,7 @@ class ComApplicationDispatcher extends LibBaseDispatcherAbstract implements AnSe
                 $file = array_shift($args);
             }
 
-            $args = explode('&-data&', implode($args, '&'));
+            $args = explode('&-data&', implode('&', $args));
             $args = array_filter($args, 'trim');
 
             foreach ($args as $i => $arg) {
