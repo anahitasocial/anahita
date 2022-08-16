@@ -5,6 +5,7 @@ Anahita 4.6.0
 - removed: all html views
 - removed: swiftmailer
 - changed: using symfony/mailer
+- changed: updated README file with new documentation that includes configuring an EC2 instance.
 
 Anahita 4.5.2
 =============================
