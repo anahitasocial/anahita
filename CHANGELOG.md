@@ -6,6 +6,7 @@ Anahita 4.6.0
 - removed: swiftmailer
 - changed: using symfony/mailer
 - changed: updated README file with new documentation that includes configuring an EC2 instance.
+- changed: codebase is now compatible with php 7.* and specifically php 7.4.* but not for php 8.* yet
 
 Anahita 4.5.2
 =============================
