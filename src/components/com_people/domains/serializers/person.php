@@ -30,7 +30,7 @@ class ComPeopleDomainSerializerPerson extends ComActorsDomainSerializerActor
             $data['email'] = $entity->email;
             $data['usertype'] = $entity->usertype;
             $data['gender'] = $entity->gender;
-            $data['lastVisitDate'] = $entity->lastVisitDate;
+            $data['lastVisitDate'] = $entity->lastVisitDate->getDate();
         }
 
         return $data;
