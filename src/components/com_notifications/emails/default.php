@@ -32,24 +32,24 @@ $well = <<<EOF
 EOF;
 ?>
 <table width="98%" cellspacing="0" cellpadding="40" border="0">
-<tbody>
-<tr>
-<td width="100%" bgcolor="#f7f7f7" style="font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;">
-	<table width="620" cellspacing="0" cellpadding="0" border="0">
-		<tbody>
-		   <tr>
-		      <td style="padding:20px 10px 20px 10px;background-color:#ffffff">
+  <tbody>
+    <tr>
+      <td width="100%" bgcolor="#f7f7f7" style="font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;">
+        <table width="620" cellspacing="0" cellpadding="0" border="0">
+          <tbody>
+            <tr>
+              <td style="padding:20px 10px 20px 10px;background-color:#ffffff">
                 <table cellspacing="0" cellpadding="0" border="0" style="">
-                     <tbody>
-                      <tr><?= $output ?></tr>
-                      </tbody>
+                  <tbody>
+                    <tr><?= $output ?></tr>
+                  </tbody>
                 </table>
-		      </td>
-		   </tr>
-		</tbody>
-	</table>
-</td>
-</tr>
-</tbody>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
