@@ -45,6 +45,25 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
         parent::_initialize($config);
     }
 
+    protected function _actionGet(AnCommandContext $context)
+    {
+        $viewer = get_viewer();
+        $muteEmail = (bool) get_config_value('notifications.mute_email');
+        $setting = $this->getService('repos:notifications.setting')->find(array(
+            'person' => $viewer,
+            'actor' => $this->actor,
+        ))->reset();
+
+        $content = $this->getView()
+        ->set('data', array(
+            'email_muted_globally' => $muteEmail,
+            'send_email' => $setting->sendEmail('posts', 1),
+        ))
+        ->display(); 
+        
+        $context->response->setContent($content);
+    }
+
     /**
      * Sets a notification setting.
      *
@@ -53,13 +72,13 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
     protected function _actionPost(AnCommandContext $context)
     {
         $data = $context->data;
-
         $viewer = get_viewer();
-
         $setting = $this->getService('repos:notifications.setting')->findOrAddNew(array(
             'person' => $viewer,
             'actor' => $this->actor,
         ));
+
+        error_log($data->email);
 
         $setting->setValue('posts', null, $data->email);
 
