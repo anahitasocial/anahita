@@ -1,27 +1,11 @@
 <?php
-
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahita.io>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.Anahita.io
- */
-
 /**
  * Notification Setting Controller.
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahita.io>
+ * @copyright  2008 - 2022 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -78,11 +62,17 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
             'actor' => $this->actor,
         ));
 
-        error_log($data->email);
+        /*
+        *   1: NOTIFY_WITH_EMAIL
+        *   2: NOTIFY
+        */
+        // error_log($data->email);
 
         $setting->setValue('posts', null, $data->email);
 
         $setting->save();
+
+        error_log($setting->getValue('posts'));
     }
 
     /**
