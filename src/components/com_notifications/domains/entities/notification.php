@@ -160,7 +160,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
         //flatten the array
         $subscribers = AnHelperArray::getValues(AnConfig::unbox($subscribers));
         $ids = array();
-
+        
         foreach ($subscribers as $subscriber) {
             if (is($subscriber, 'AnDomainEntityAbstract')) {
                 $ids[] = $subscriber->id;
@@ -168,7 +168,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
                 $ids[] = $subscriber;
             }
         }
-
+        
         $ids = array_unique($ids);
 
         if (! empty($ids)) {

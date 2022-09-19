@@ -86,7 +86,7 @@ EOF;
                 <small>
                 <? if (!empty($setting_command)) : ?>
                   <?= sprintf(@text('COM-NOTIFICATIONS-SETTING-URL'),
-                    @route('option=notifications&view=settings&oid='.$setting_command->actor->id),
+                    @route($setting_command->actor->getURL() . "/notifications"),
                     @route($setting_command->actor->getURL()),
                     $setting_command->actor->name) ?>
                 <? endif;?>

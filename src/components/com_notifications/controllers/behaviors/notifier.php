@@ -24,12 +24,12 @@ class ComNotificationsControllerBehaviorNotifier extends AnControllerBehaviorAbs
     {
         $data = new AnConfig($data);
         $viewer = $this->getService('com:people.viewer');
-
+        
         $data->append(array(
           'component' => 'com_'.$this->_mixer->getIdentifier()->package,
           'subject' => $viewer
         ));
-
+        
         $notification = $this->getService('repos:notifications.notification')->getEntity(array('data' => $data));
 
         $notification->removeSubscribers($viewer);

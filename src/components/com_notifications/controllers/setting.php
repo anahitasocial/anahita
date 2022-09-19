@@ -1,27 +1,11 @@
 <?php
-
-/**
- * LICENSE: ##LICENSE##.
- *
- * @category   Anahita
- *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
- * @author     Rastin Mehr <rastin@anahita.io>
- * @copyright  2008 - 2010 rmdStudio Inc./Peerglobe Technology Inc
- * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
- *
- * @version    SVN: $Id: resource.php 11985 2012-01-12 10:53:20Z asanieyan $
- *
- * @link       http://www.Anahita.io
- */
-
 /**
  * Notification Setting Controller.
  *
  * @category   Anahita
  *
- * @author     Arash Sanieyan <ash@anahitapolis.com>
  * @author     Rastin Mehr <rastin@anahita.io>
+ * @copyright  2008 - 2022 rmdStudio Inc.
  * @license    GNU GPLv3 <http://www.gnu.org/licenses/gpl-3.0.html>
  *
  * @link       http://www.Anahita.io
@@ -49,7 +33,7 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
     {
         $viewer = get_viewer();
         $muteEmail = (bool) get_config_value('notifications.mute_email');
-        $setting = $this->getService('repos:notifications.setting')->find(array(
+        $setting = $this->getService('repos:notifications.setting')->findOrAddNew(array(
             'person' => $viewer,
             'actor' => $this->actor,
         ))->reset();
@@ -57,7 +41,7 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
         $content = $this->getView()
         ->set('data', array(
             'email_muted_globally' => $muteEmail,
-            'send_email' => $setting->sendEmail('posts', 1),
+            'send_email' => $setting->sendEmail('posts'),
         ))
         ->display(); 
         
@@ -78,10 +62,13 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
             'actor' => $this->actor,
         ));
 
-        error_log($data->email);
+        /*
+        *   1: NOTIFY_WITH_EMAIL
+        *   2: NOTIFY
+        */
+        // error_log($data->email);
 
         $setting->setValue('posts', null, $data->email);
-
         $setting->save();
     }
 
