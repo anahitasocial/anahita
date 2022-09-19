@@ -636,7 +636,10 @@ abstract class AnDomainEntityAbstract extends AnObject implements ArrayAccess, S
         foreach ($data as $name) {
             $value = $this->get($name);
             $property = $description->getProperty($name);
-            $tmp = array_merge($tmp, $property->serialize($value));
+
+            if (!is_null($value)) {
+                $tmp = array_merge($tmp, $property->serialize($value));
+            }
         }
 
         $data = $tmp;

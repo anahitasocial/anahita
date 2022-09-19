@@ -84,20 +84,20 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
 
         if (!$this->getItem()->leading($this->actor)) {
             $this->getItem()->addFollower($this->actor);
-
+            
             $story = $this->createStory(array(
                 'name' => 'actor_follow',
                 'subject' => $this->actor,
                 'owner' => $this->actor,
                 'target' => $this->getItem(),
             ));
-
+            
             if ($this->getItem()->isAdministrable()) {
                 $subscribers = $this->getItem()->administratorIds->toArray();
             } else {
                 $subscribers = array($this->getItem()->id);
             }
-
+            
             $this->createNotification(array(
                 'name' => 'actor_follow',
                 'subject' => $this->actor,
