@@ -541,9 +541,12 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 
 	   $cookie = session_get_cookie_params();
 	   $cookie['secure'] = is_ssl();
+	   $settings = $this->getService('com:settings.config');
 	   
-	   // $samesite = "None";
-	   // $cookie['path'] = sprintf("/;SameSite=%s", $samesite);
+	   if ($settings->same_site_none) {
+			$samesite = "None";
+	   		$cookie['path'] = sprintf("/;SameSite=%s", $samesite);
+	   }
 
 	   session_set_cookie_params(
 		   $cookie['lifetime'],

@@ -72,12 +72,12 @@ class ComSettingsControllerAssignment extends ComBaseControllerResource
         
         if (count($this->_components)) {
             foreach($this->_components as $component) {
-              $identifiers = $component->getEntityIdentifiers('ComActorsDomainEntityActor');
-              
-              foreach ($identifiers as $identifier) {
-                  $identifier->application = null;
-                  $actors[] = $identifier;
-              }
+                $identifiers = $component->getEntityIdentifiers('ComActorsDomainEntityActor');
+                
+                foreach ($identifiers as $identifier) {
+                    $identifier->application = null;
+                    $actors[] = $identifier;
+                }
             }
         }
         

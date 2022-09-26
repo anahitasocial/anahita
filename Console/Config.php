@@ -93,7 +93,7 @@ class Config
             // Server Settings
             'log_path' => $site_path.'/log',
             'tmp_path' => $site_path.'/tmp',
-            'sitename' => 'Anahita'
+            'sitename' => 'Anahita',
         );
 
         $this->set(array(
@@ -102,6 +102,7 @@ class Config
            'error_reporting' => 0,
            'sef_rewrite' => 1,
            'client_domain' => 'example.com',
+           'same_site_none' => 0,
         ));
 
         $this->_configuration_file = $site_path.'/configuration.php';
@@ -358,6 +359,7 @@ class Config
             'tmp_path',
             'secret',
             'sef_rewrite',
+            'same_site_none',
         ), 'Server Settings');
         
         $write_group(array(

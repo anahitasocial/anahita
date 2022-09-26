@@ -53,7 +53,7 @@ class LibBaseDomainBehaviorDescribable extends AnDomainBehaviorAbstract
                 'body' => array(
                     'format' => 'string',
                     'length' => array(
-                        'max' => 5000,
+                        'max' => 10000,
                     ),
                 ),
                 'alias' => array(

@@ -45,6 +45,7 @@ class ComSettingsDomainEntityConfig extends AnObject
               'log_path' => '',
               'tmp_path' => '',
               'language' => 'en-GB',
+              'same_site_none' => 0,
 
               // database
               'dbtype' => 'mysqli',
@@ -135,6 +136,7 @@ class ComSettingsDomainEntityConfig extends AnObject
                 'tmp_path',
                 'secret',
                 'sef_rewrite',
+                'same_site_none',
             ), 'Server Settings');
             
             $content .= $this->_formatGroup(array(
@@ -250,6 +252,7 @@ class ComSettingsDomainEntityConfig extends AnObject
               'debug',
               'error_reporting',
               'sef_rewrite',
+              'same_site_none',
             );
 
             $cmds = array(

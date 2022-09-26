@@ -62,6 +62,13 @@ class AnSiteConfig{
 	*	@var int 0 to turn off, 1 to turn on
 	*/
     var $sef_rewrite = 1;
+
+	/**
+	*	Cookie SameSite=None attribute
+	*	0 if a requests are all coming from the same domain as the Anahita. Suitable for web applications.
+	*	1 if requests are coming from anywhere such as mobile, desktop, or web apps on different domains.
+	*/
+	var $same_site_none = 0;
 	
 	
 	//
