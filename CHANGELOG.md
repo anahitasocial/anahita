@@ -3,6 +3,7 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.6.1
 =============================
 - added: missing translations for the medium node views article, topic, todo, photo
+- added: `same_site_none` to global settings
 
 Anahita 4.6.0
 =============================
