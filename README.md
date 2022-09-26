@@ -380,6 +380,7 @@ You can use a CLI text editor to edit the configuration.php file in the root dir
 | Parameter | Value | Example | 
 | ------- | ----- | ----- |
 | $sitename | Website/app name | Anahita |
+| $same_site_none | Cookie same site none on/off | 0 |
 | $client_domain | base url to your client side webapp | https://www.YourDomain.io |
 | $sef_rewrite | Set this to 1 | 1 |
 | $debug | If true, Anahita will operate in debugging mode | 0 |
