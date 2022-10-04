@@ -106,7 +106,7 @@ class LibBaseDomainBehaviorPortraitable extends LibBaseDomainBehaviorStorable
             $this->_mixer->deletePath($file);
         }
 
-        $this->set('filename', null);
+        $this->set('filename', '');
     }
 
     /**

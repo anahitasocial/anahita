@@ -3,7 +3,15 @@ To view the detailed commits log go to https://github.com/anahitasocial/anahita/
 Anahita 4.6.1
 =============================
 - added: missing translations for the medium node views article, topic, todo, photo
-- added: `same_site_none` to global settings
+- fixed: error while following an actor
+- changed: made the COM-NOTIFICATIONS-SETTING-URL more clear
+- added: same_site_none to the global settings
+- fixed: delete cover db record by setting it to empty string instead of null
+- fixed: delete porrait db record by setting it to empty string instead of null
+- added: action Read to notifications settings
+- fixed: email notification html code syntax
+- added: getDate to person lastVisitDate
+- added: lastVisitDate in person json response for the admins to see
 
 Anahita 4.6.0
 =============================
