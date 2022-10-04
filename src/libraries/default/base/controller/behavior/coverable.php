@@ -73,4 +73,22 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
 
         return $entity;
     }
+
+    /**
+     * delete a cover.
+     *
+     * @param AnCommandContext $context Context parameter
+     *
+     * @return AnDomainEntityAbstract
+     */
+    public function deleteCover(AnCommandContext $context)
+    {
+        $entity = $this->getItem();
+        
+        if ($entity->isCoverable() && AnRequest::has('files.cover')) {
+            $entity->removeCoverImage();
+        }
+
+        return $entity;
+    }
 }

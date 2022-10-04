@@ -98,7 +98,7 @@ class LibBaseDomainBehaviorCoverable extends LibBaseDomainBehaviorStorable
             $this->_mixer->deletePath($file);
         }
 
-        $this->set('coverFilename', null);
+        $this->set('coverFilename', '');
     }
 
     /**
