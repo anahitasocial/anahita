@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.6.1 Embryo Release
+*Version:* 4.6.1 Birth Release
 
 Anahita is a platform and framework for developing open science and knowledge-sharing applications on a social networking foundation. Use Anahita to build:
 
