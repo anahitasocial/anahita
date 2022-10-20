@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.7.0
+=============================
+- changed: updated codebase for php8
+
 Anahita 4.6.2
 =============================
 - fixed: issue with entity not being persisted when behaviours' after.add methods are called. This was resulting into hashtags and mentions not being added when creating an entity.

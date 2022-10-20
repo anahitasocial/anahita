@@ -2,7 +2,7 @@
 
 # Anahita
 
-*Version:* 4.6.2 Embryo Release
+*Version:* 4.7.0 Embryo Release
 
 Anahita is a platform and framework for developing open science and knowledge-sharing applications on a social networking foundation. Use Anahita to build:
 
@@ -71,7 +71,7 @@ Before you start, please make sure that your server meets the following requirem
 1. Linux or Unix server
 1. Nginx or Apache 2.0+
 1. MySql 5.7
-1. Use PHP version 7.0.0 to 7.4.* for best results.
+1. Use PHP version 7.0.0 to 8.0.0 for best results.
 1. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
@@ -157,13 +157,13 @@ __Prerequisites:__ you need to be familiar with AWS services such as Route53, Lo
 
 Amazon Linux comes with PHP pre-installed. All you need to do is to enable it using the following commands.
 
-`sudo amazon-linux-extras enable php7.4`
+`sudo amazon-linux-extras enable php8.0`
 
 `sudo yum clean metadata`
 
 `sudo yum install php-cli php-pdo php-fpm php-json php-mysqlnd`
 
-Now check to see if the PHP 7.4 is installed and working:
+Now check to see if the PHP 8.0 is installed and working:
 
 `php -v`
 
