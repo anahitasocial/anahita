@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.6.2
+=============================
+- fixed: issue with entity not being persisted when behaviours' after.add methods are called. This was resulting into hashtags and mentions not being added when creating an entity.
+
 Anahita 4.6.1
 =============================
 - added: missing translations for the medium node views article, topic, todo, photo

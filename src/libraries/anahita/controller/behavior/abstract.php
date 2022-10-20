@@ -34,7 +34,7 @@ abstract class AnControllerBehaviorAbstract extends AnBehaviorAbstract
 
 		$parts = explode('.', $name);
 		
-		if ($parts[0] == 'action') {
+		if ($parts[0] === 'action') {
 		    $method = '_action'.ucfirst($parts[1]);
 
 		    if (method_exists($this, $method)) {
