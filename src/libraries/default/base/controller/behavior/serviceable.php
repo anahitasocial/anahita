@@ -173,7 +173,15 @@ class LibBaseControllerBehaviorServiceable extends AnControllerBehaviorAbstract
     {
         $context->response->status = AnHttpResponse::CREATED;
         $entity = $this->getRepository()->getEntity()->setData($context['data']);
-        
+
+        /*
+        *   Ideally the commit should do all the required saving, but
+        *   for after.add behaviour methods to work, we need the entity
+        *   to have an persisted and have an id. Until we have a cleaner
+        *   approach, we are going to call the save method here.
+        */
+        $entity->save();
+
         $this->setItem($entity);
 
         return $this->getItem();

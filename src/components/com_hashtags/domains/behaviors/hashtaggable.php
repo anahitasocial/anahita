@@ -51,11 +51,15 @@
         if (!is_string($term)) {
             return;
         }
+        
+        $hashtag = $this->getService('repos:hashtags.hashtag')
+                        ->findOrAddNew(array('name' => $term));
 
-        if ($hashtag = $this->getService('repos:hashtags.hashtag')->findOrAddNew(array('name' => $term))) {
-            $this->hashtags->insert($hashtag);
-
-            return $this;
+        if ($hashtag) {
+            if (! $this->hashtags->find($hashtag)) {
+                $this->hashtags->insert($hashtag);
+                return $this;
+            }
         }
 
         return;
@@ -75,11 +79,15 @@
             return;
         }
 
-        if ($hashtag = $this->getService('repos:hashtags.hashtag')->find(array('name' => $term))) {
+        $hashtag = $this->getService('repos:hashtags.hashtag')
+                        ->find(array('name' => $term));
+
+        if ($hashtag) {
             $this->hashtags->extract($hashtag);
+            return $this;
         }
 
-        return $this;
+        return;
     }
 
     /**
@@ -93,7 +101,6 @@
     public function getHashtags()
     {
         $this->get('hashtags')->getQuery()->select('name');
-
         return $this->get('hashtags');
     }
  }
