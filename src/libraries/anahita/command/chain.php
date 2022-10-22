@@ -204,7 +204,7 @@ class AnCommandChain extends AnObjectQueue
      * @return \AnCommandChain
      * @throws InvalidArgumentException if the object doesn't implement AnCommandInterface
      */
-    public function setPriority(AnObjectHandlable $command, $priority)
+    public function setPriority(AnObjectHandlable $command, $priority = AnCommand::PRIORITY_LOWEST)
     {
         if (! $command instanceof AnCommandInterface) {
             $msg = 'Command needs to implement AnCommandInterface';

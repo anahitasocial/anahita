@@ -41,9 +41,9 @@ class PlgStorageS3 extends PlgStorageAbstract
      *
      * @param array $config     An optional AnConfig object with configuration options.
      */
-    public function __construct($dispatcher = null, AnConfig $config)
+    public function __construct(AnConfig $config, $dispatcher = null)
     {
-        parent::__construct($dispatcher, $config);
+        parent::__construct($config, $dispatcher);
 
         $this->_bucket = $config->bucket;
         $this->_region = $config->region;

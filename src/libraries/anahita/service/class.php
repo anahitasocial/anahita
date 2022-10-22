@@ -58,9 +58,7 @@ class AnServiceClass
      *
      * Prevent creating clones of this class
      */
-    final private function __clone()
-    {
-    }
+    private function __clone() {}
 
     /**
      * Force creation of a singleton.

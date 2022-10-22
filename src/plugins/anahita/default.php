@@ -72,7 +72,7 @@ abstract class PlgAnahitaDefault extends AnEventSubscriberDefault
     /**
   	 * Constructor
   	 */
-     public function __construct($dispatcher = null, AnConfig $config)
+     public function __construct(AnConfig $config, $dispatcher = null)
      {
 	    //Inject the identifier
 		$config->service_identifier = AnService::getIdentifier('plg:anahita.'.$config->name);
