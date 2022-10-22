@@ -146,7 +146,7 @@ class LibPluginsHelper extends AnObject implements AnServiceInstantiatable
                   'meta' => $plugin->meta
                 );
                 $config = new AnConfig($config);
-                $instance = new $className($dispatcher, $config);
+                $instance = new $className($config, $dispatcher);
             }
         }
 

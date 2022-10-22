@@ -33,7 +33,7 @@ class ComBaseControllerBehaviorPrivatable extends AnControllerBehaviorAbstract
      *
      * @param AnCommandContext $context Context parameter
      */
-    protected function _actionSetprivacy($context)
+    protected function _actionSetprivacy(AnCommandContext $context)
     {
         $data = $context->data;
 

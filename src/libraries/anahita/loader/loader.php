@@ -68,9 +68,7 @@ class AnLoader
      *
      * Prevent creating clones of this class
      */
-    final private function __clone()
-    {
-    }
+    private function __clone() {}
 
     /**
      * Singleton instance

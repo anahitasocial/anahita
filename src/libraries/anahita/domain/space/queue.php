@@ -54,7 +54,7 @@ class AnDomainSpaceQueue extends AnObjectQueue
      *
      * @see AnObjectQueue::enqueue()
      */
-    public function enqueue(AnObjectHandlable $object, $priority)
+    public function enqueue(AnObjectHandlable $object, $priority = AnCommand::PRIORITY_LOWEST)
     {
         $this->getRepositoryEntities($object->getRepository())->insert($object);
 

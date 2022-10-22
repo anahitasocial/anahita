@@ -21,7 +21,7 @@ class anahita
      *
      * @var string
      */
-    protected static $_version = '4.6.2';
+    protected static $_version = '4.7.0';
 
     /**
      * Path to Anahita libraries.
@@ -35,9 +35,7 @@ class anahita
      *
      * Prevent creating clones of this class
      */
-    final private function __clone()
-    {
-    }
+    private function __clone() {}
 
     /**
      * Singleton instance.

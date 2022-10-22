@@ -27,9 +27,9 @@ class plgSystemRecaptcha extends PlgAnahitaDefault
     *
     *   @return void
     */
-    public function __construct($dispatcher = null, AnConfig $config)
+    public function __construct(AnConfig $config, $dispatcher = null)
     {
-        parent::__construct(null, $config);
+        parent::__construct($config);
 
         $this->_option = AnRequest::get('get.option', 'string', '');
         $this->_view = AnRequest::get('get.view', 'cmd', '');
