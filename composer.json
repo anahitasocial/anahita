@@ -7,7 +7,7 @@
     "description": "Anahita Social Networking Platform",
     "bin": ["bin/anahita"],
      "require": {
-        "php": ">=7.0",
+        "php": ">=7.4",
         "symfony/console": "2.1.*",
         "dg/mysql-dump": "1.1.0",
         "league/html-to-markdown": "^5.0",
