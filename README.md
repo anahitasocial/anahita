@@ -71,7 +71,7 @@ Before you start, please make sure that your server meets the following requirem
 1. Linux or Unix server
 1. Nginx or Apache 2.0+
 1. MySql 5.7
-1. Use PHP version 7.0.0 to 7.4.* for best results.
+1. Use PHP version 7.* to 8.0 for best results.
 1. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
@@ -82,15 +82,6 @@ http://getcomposer.org/ or just run the following command:
 If you have the Suhosin patch installed on your server, you might get an error. Add this line to your php.ini file to fix it: `suhosin.executor.include.whitelist = tmpl://, file://`
 
 Anahita is installed and managed via shell CLI because this is the most reliable approach, especially after you accumulate large amounts of data in your database.
-
-## Upgrading
-
-If you are upgrading from 4.5.* to 4.6.* you will need client-side applications such as [Anahita React](https://github.com/anahitasocial/anahita-react) as your front-end since Anahita will only provide a RESTful JSON API and no HTML outputs. If you need time to build a client app, you may point your installation to the _legacy_ branch for the time being.
-
-If you are upgrading from 4.3.* to 4.4.*, in `www/configuration.php` file, change `AnConfig` to `AnSiteConfig`.
-
-If you are using any previous 4.* versions of Anahita, [here is how to upgrade](https://www.anahita.io/articles/158983-updating-from-anahita-4-2-to-4-3)
-
 
 ## Installation on a development machine
 
@@ -157,13 +148,13 @@ __Prerequisites:__ you need to be familiar with AWS services such as Route53, Lo
 
 Amazon Linux comes with PHP pre-installed. All you need to do is to enable it using the following commands.
 
-`sudo amazon-linux-extras enable php7.4`
+`sudo amazon-linux-extras enable php8.0`
 
 `sudo yum clean metadata`
 
-`sudo yum install php-cli php-pdo php-fpm php-json php-mysqlnd`
+`sudo yum install php-{pear,cgi,pdo,common,curl,mbstring,gd,mysqlnd,gettext,bcmath,json,xml,fpm,intl,zip}`
 
-Now check to see if the PHP 7.4 is installed and working:
+Now check to see if the PHP 8.0 is installed and working:
 
 `php -v`
 
