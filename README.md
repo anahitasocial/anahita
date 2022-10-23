@@ -71,7 +71,7 @@ Before you start, please make sure that your server meets the following requirem
 1. Linux or Unix server
 1. Nginx or Apache 2.0+
 1. MySql 5.7
-1. Use PHP version 7.* to 8.0 for best results.
+1. Use PHP version 7.4 to 8.0 for best results.
 1. Composer package management. You can download it following the instructions on
 http://getcomposer.org/ or just run the following command:
 
