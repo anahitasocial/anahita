@@ -158,14 +158,6 @@ Now check to see if the PHP 8.0 is installed and working:
 
 `php -v`
 
-Now install a few additional packages:
-
-`sudo yum install php-mbstring`
-
-`sudo yum install php-gd`
-
-`sudo yum install php-xml`
-
 ### Installing NGINX
 
 `sudo amazon-linux-extras enable nginx1`
