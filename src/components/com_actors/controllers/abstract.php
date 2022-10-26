@@ -134,7 +134,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
         if ($entity->isPortraitable() && AnRequest::has('files.portrait')) {
             $file = AnRequest::get('files.portrait', 'raw');
 
-            if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
+            if ($file['size'] > 0 && $file['error'] == 0 && $this->bellowSizeLimit($file)) {
                 $entity->setPortrait(array(
                    'url' => $file['tmp_name'],
                    'mimetype' => $file['type'],
@@ -170,8 +170,8 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
 
         if ($entity->isPortraitable() && AnRequest::has('files.portrait')) {
             $file = AnRequest::get('files.portrait', 'raw');
-
-            if ($this->bellowSizeLimit($file) && $file['error'] == 0) {
+            
+            if ($file['size'] > 0 && $file['error'] == 0 && $this->bellowSizeLimit($file)) {
                 $this->getItem()->setPortrait(array(
                     'url' => $file['tmp_name'],
                     'mimetype' => $file['type']
@@ -248,7 +248,7 @@ abstract class ComActorsControllerAbstract extends ComBaseControllerService
      */
     public function bellowSizeLimit($file)
     {
-        $content = @file_get_contents($file['tmp_name']);
+        $content = file_get_contents($file['tmp_name']);
         $filesize = strlen($content);
         $uploadlimit = $this->_max_upload_limit * 1024 * 1024;
 

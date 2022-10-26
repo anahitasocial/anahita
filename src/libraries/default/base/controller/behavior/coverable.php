@@ -40,7 +40,7 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
         if ($entity->isCoverable() && AnRequest::has('files.cover')) {
             $file = AnRequest::get('files.cover', 'raw');
 
-            if ($this->_mixer->bellowSizeLimit($file) && $file['error'] == 0) {
+            if ($file['size'] > 0 && $file['error'] == 0 && $this->bellowSizeLimit($file)) {
                 $entity->setCover(array('url' => $file['tmp_name'], 'mimetype' => $file['type']));
             }
         }
@@ -61,7 +61,10 @@ class LibBaseControllerBehaviorCoverable extends AnControllerBehaviorAbstract
         
         if ($entity->isCoverable() && AnRequest::has('files.cover')) {
             $file = AnRequest::get('files.cover', 'raw');
-            if ($this->_mixer->bellowSizeLimit($file) && $file['error'] == 0) {
+
+            error_log(print_r($file, true));
+
+            if ($file['size'] > 0 && $file['error'] == 0 && $this->_mixer->bellowSizeLimit($file)) {
                 $this->getItem()->setCover(array(
                     'url' => $file['tmp_name'],
                     'mimetype' => $file['type']
