@@ -59,20 +59,19 @@ class ComNotificationsDomainEntitySetting extends ComBaseDomainEntityEdge
      *
      * @return ComNotificationsDomainEntitySetting
      */
-    public function setValue($type, $value, $send_email)
+    public function setValue($type, $value)
     {
         $filter = $this->getService('anahita:filter.cmd');
         $type = $filter->sanitize($type);
         $value = $filter->sanitize($value);
 
-        settype($send_email, 'boolean');
+        settype($value, 'boolean');
 
-        if (!in_range($type, 0, 2)) {
-            $type = 1;
+        if (!in_range($value, 0, ComNotificationsConstant::NOTIFY)) {
+            $value = ComNotificationsConstant::NOTIFY;
         }
 
-        $send_email = (bool) $send_email;
-        $this->__call('setValue', array($type, array('send_email' => $send_email)));
+        $this->__call('setValue', array($type, array('send_email' => $value)));
 
         return $this;
     }

@@ -38,6 +38,9 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
             'actor' => $this->actor,
         ))->reset();
 
+        // error_log($setting->sendEmail('posts'));
+        // error_log($setting->getValue('posts'));
+
         $content = $this->getView()
         ->set('data', array(
             'email_muted_globally' => $muteEmail,
@@ -68,7 +71,7 @@ class ComNotificationsControllerSetting extends ComBaseControllerResource
         */
         // error_log($data->email);
 
-        $setting->setValue('posts', null, $data->email);
+        $setting->setValue('posts', $data->email);
         $setting->save();
     }
 

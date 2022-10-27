@@ -42,7 +42,7 @@ class ComNotificationsDomainDelegateSettingPost extends ComNotificationsDomainDe
         // $should_notify = self::NOTIFY_WITH_EMAIL;
         $should_notify = parent::shouldNotify($person, $notification, $setting);
 
-        if ($setting && !$setting->sendEmail('posts', true)) {
+        if ($setting && !$setting->sendEmail('posts', false)) {
             $should_notify = self::NOTIFY;
         }
 
