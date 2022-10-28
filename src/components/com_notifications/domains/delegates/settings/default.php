@@ -39,6 +39,6 @@ class ComNotificationsDomainDelegateSettingDefault extends AnObject implements C
      */
     public function shouldNotify($person, $notification, $setting)
     {
-        return self::NOTIFY_WITH_EMAIL;
+        return ComNotificationsConstant::NOTIFY_WITH_EMAIL;
     }
 }

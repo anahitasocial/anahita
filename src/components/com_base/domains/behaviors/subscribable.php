@@ -38,7 +38,13 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
                 'subscriptions' => array(
                     'child' => 'com:base.domain.entity.subscription',
                     'child_key' => 'subscribee',
-                    'parent_delete' => 'ignore', ),
+                    'parent_delete' => 'ignore', 
+                ),
+                'settings' => array(
+                    'child' => 'com:notifications.domain.entity.setting',
+                    'child_key' => 'actor',
+                    'parent_delete' => 'ignore', 
+                ),
             ),
         ));
 
@@ -115,8 +121,18 @@ class ComBaseDomainBehaviorSubscribable extends AnDomainBehaviorAbstract
 
         if ($subscription) {
             $this->subscriptions->extract($subscription);
-            return $this->_mixer;
         }
+
+        $setting = $this->settings->find(array(
+                                'person' => $person,
+                                'actor' => $mixer, 
+                            ));
+
+        if ($setting) {
+            $this->settings->extract($setting);
+        }
+
+        return $this->_mixer;
     }
 
     /**

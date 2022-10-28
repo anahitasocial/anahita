@@ -240,7 +240,7 @@ class ComNotificationsDomainEntityNotification extends ComBaseDomainEntityNode
             $delegate = $this->getService('com:notifications.domain.delegate.setting.'.$this->type);
             return $delegate->shouldNotify($person, $this, $setting);
         } else {
-            return ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL;
+            return ComNotificationsConstant::NOTIFY_WITH_EMAIL;
         }
     }
 }
