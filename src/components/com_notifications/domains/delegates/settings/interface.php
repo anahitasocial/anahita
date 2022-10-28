@@ -29,12 +29,6 @@
 interface ComNotificationsDomainDelegateSettingInterface
 {
     /**
-     * Constant for mailing a notifiation.
-     */
-    const NOTIFY_WITH_EMAIL = 1;
-    const NOTIFY = 2;
-
-    /**
      * Checks with whether to notify a person or not.
      *
      * @param ComPeopleDomainEntityPerson              $person       Person that notification being sent to

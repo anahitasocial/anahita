@@ -155,7 +155,7 @@ class ComNotificationsControllerProcessor extends ComBaseControllerResource
 
             $person->addNotification($notification);
 
-            if ($ret !== ComNotificationsDomainDelegateSettingInterface::NOTIFY_WITH_EMAIL) {
+            if ($ret !== ComNotificationsConstant::NOTIFY_WITH_EMAIL) {
                 continue;
             }
             
