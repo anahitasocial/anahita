@@ -9,8 +9,7 @@
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
-        <? $body = @content($object->body, array('exclude' => 'gist')); ?>
-	    <?= @helper('text.truncate', $body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
+	    <?= @helper('text.truncate', $object->body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
 	</div>
 </data>
 <? if ($type === 'notification') :?>

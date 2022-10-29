@@ -19,8 +19,7 @@
 		<? if ($object->excerpt) : ?>
 	    <?= @helper('text.truncate', @escape($object->excerpt), array('length' => 200)); ?>
 		<? else : ?>
-		<? $body = @content($object->body, array('exclude' => 'gist')); ?>
-	    <?= @helper('text.truncate', $body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
+	    <?= @helper('text.truncate', $object->body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
 		<? endif; ?>
 	</div>
 </data>
