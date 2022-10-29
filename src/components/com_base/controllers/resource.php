@@ -24,7 +24,7 @@ class ComBaseControllerResource extends LibBaseControllerResource
 
         $this->getService('anahita:language')->load($config->language);
 
-        $this->_state->viewer = $config->viewer;
+        $this->getState()->viewer = $config->viewer;
     }
 
     /**
