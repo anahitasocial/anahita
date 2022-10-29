@@ -34,7 +34,7 @@
     	</a>
     </h4>
     <div class="entity-body">
-	    <?= @helper('text.truncate', @content(nl2br($object->body), array('exclude' => 'gist')), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
+	    <?= @helper('text.truncate', nl2br($object->body), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
 	</div>
 </data>
 <? endif; ?>

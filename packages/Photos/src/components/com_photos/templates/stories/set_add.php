@@ -15,7 +15,7 @@
 
 	<? if ($object->description): ?>
 	<div class="entity-description">
-	    <?= @content(nl2br($object->description), array('exclude' => 'gist')) ?>
+	    <?= nl2br($object->description) ?>
 	</div>
 	<? endif; ?>
 

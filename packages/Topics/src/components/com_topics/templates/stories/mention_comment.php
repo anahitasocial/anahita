@@ -9,11 +9,10 @@
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
-			<blockquote>
-        <? $body = @content($object->body, array('exclude' => 'gist')); ?>
-        <?= @helper('text.truncate', $body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
-			</blockquote>
-		</div>
+		<blockquote>
+        <?= @helper('text.truncate', $object->body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
+		</blockquote>
+	</div>
 </data>
 
 <? if ($type === 'notification') :?>
