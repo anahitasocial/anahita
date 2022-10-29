@@ -70,10 +70,12 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
             shell_exec($command);
             
             // Use this for testing only on OSX
-            // $phpPath = '/Applications/MAMP/bin/php/php7.4.12/bin/php';    
-            // $command = sprintf($phpPath . ' %s/index.php %s id=%d 2>&1', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
-            // error_log($command);
-            // error_log(shell_exec($command));
+            /*
+            $phpPath = '/Applications/MAMP/bin/php/php8.0.0/bin/php';    
+            $command = sprintf($phpPath . ' %s/index.php %s id=%d 2>&1', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
+            error_log($command);
+            error_log(shell_exec($command));
+            */
         }
     }
 }
