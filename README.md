@@ -1,12 +1,9 @@
 ![Anahita social networking platform and framework](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/logos/homepage_logo.png)
 
 
+### Women Life Freedom
 
-### Support Iranian women in their uprise against dictatorship!
-
-<div style="background-color: #3d3d3d; padding: 8px; margin: 8px 0; display: inline-block;">
-<font color="green">Women</font> <font color="white">Life</font> <font color="red">Freedom</font>
-</div>
+We stand in solidarity with the brave Iranian women!
 
 #MahsaAmini #WomenLifeFreedom #IranRevolution
 
