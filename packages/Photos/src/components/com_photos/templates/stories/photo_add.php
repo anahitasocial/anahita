@@ -24,7 +24,7 @@
 
 		<? if ($story->body) : ?>
 		<div class="entity-description">
-			<?= nl2br($story->body) ?>
+			<?= @body($story->body) ?>
 		</div>
 		<? endif;?>
 

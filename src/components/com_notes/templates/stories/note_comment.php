@@ -18,6 +18,6 @@
 <? if ($type == 'notification') : ?>
 <? $commands->insert('view-comment', array('label' => @text('LIB-AN-VIEW-COMMENT')))->href($object->getURL().'&permalink='.$comment->id); ?>
 <data name="email_body">
-    <?= $comment->body ?>
+    <?= @body($comment->body) ?>
 </data>
 <? endif; ?>

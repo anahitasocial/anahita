@@ -28,6 +28,7 @@
         "dg/mysql-dump": "^1.1",
         "league/html-to-markdown": "^5.0",
         "symfony/filesystem": "^3.3",
-        "symfony/mailer": "^5.4"
+        "symfony/mailer": "^5.4",
+        "league/commonmark": "^2.3"
     }
 }

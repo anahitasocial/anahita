@@ -22,7 +22,7 @@
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
-	    <?= $comment->body ?>
+	    <?= @body($comment->body) ?>
 	</div>
 </data>
 <? endif;?>

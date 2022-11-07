@@ -17,9 +17,9 @@
 	
     <div class="entity-body">
 		<? if ($object->excerpt) : ?>
-	    <?= @helper('text.truncate', @escape($object->excerpt), array('length' => 200)); ?>
+	    <?= @helper('text.truncate', @body($object->excerpt), array('length' => 200)); ?>
 		<? else : ?>
-	    <?= @helper('text.truncate', $object->body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
+	    <?= @helper('text.truncate', @body($object->body), array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
 		<? endif; ?>
 	</div>
 </data>

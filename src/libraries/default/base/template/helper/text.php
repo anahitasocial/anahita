@@ -244,18 +244,4 @@ class LibBaseTemplateHelperText extends LibBaseTemplateHelperAbstract implements
             return round($size / $tb, 2).' TB';
         }
     }
-
-    /**
-     * Return a sanitized version of a text which can be assigned to a javascript variable.
-     *
-     * @param string $text The text to sanitize
-     *
-     * @return string
-     */
-    public function script($text)
-    {
-        return htmlspecialchars(
-               $this->getService('anahita:filter.string')
-               ->sanitize(AnHelperString::str_ireplace(array("\r\n", "\n"), '', $text)), ENT_QUOTES);
-    }
 }

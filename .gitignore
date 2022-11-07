@@ -3,6 +3,7 @@
 composer.lock
 vendor/autoload.php
 vendor/composer/*
+vendor/dflydev/*
 vendor/dg/*
 vendor/bin/*
 vendor/doctrine/*
@@ -13,6 +14,7 @@ vendor/symfony/*
 vendor/swiftmailer/*
 vendor/bin/*
 vendor/league/*
+vendor/nette/*
 www/*
 node_modules/*
 .DS_Store

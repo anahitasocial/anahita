@@ -51,69 +51,6 @@ class LibBaseTemplateHelperDate extends LibBaseTemplateHelperAbstract implements
     }
 
     /**
-     * Date picker. Return a selcetor with all the date components.
-     *
-     * @param string $name
-     * @param AnDate  $date
-     * @param array  $options
-     */
-    public function picker($name, $options = array())
-    {
-        $options = new AnConfig($options);
-
-        $options->append(array(
-            'date' => new AnDate(),
-        ));
-
-        $date = $options->date;
-
-        $html = $this->getService('com:base.template.helper.html');
-
-        if (is_string($date)) {
-            $date = new AnDate(new AnConfig(array('date' => $date)));
-        }
-
-        $month = $date->month;
-        $year = $date->year;
-        $day = $date->day;
-
-        $months = array(
-            0 => 'Select Month',
-            1 => AnTranslator::_('JANUARY') ,
-            2 => AnTranslator::_('FEBRUARY') ,
-            3 => AnTranslator::_('MARCH')  ,
-            4 => AnTranslator::_('APRIL')  ,
-            5 => AnTranslator::_('MAY')    ,
-            6 => AnTranslator::_('JUNE')   ,
-            7 => AnTranslator::_('JULY')    ,
-            8 => AnTranslator::_('AUGUST') ,
-            9 => AnTranslator::_('SEPTEMBER') ,
-            10 => AnTranslator::_('OCTOBER') ,
-            11 => AnTranslator::_('NOVEMBER') ,
-            12 => AnTranslator::_('DECEMBER') ,
-        );
-
-        $days = array(0 => 'Select Day');
-        $years = array(0 => 'Select Year');
-
-        foreach (range(1, 31) as $i => $num) {
-            $days[$i + 1] = $num;
-        }
-
-        $current = new AnDate();
-
-        foreach (range(0, 100) as $i) {
-            $years[$current->year + $i] = $current->year + $i;
-        }
-
-        $year = $html->select($name.'[year]', array('options' => $years,  'selected' => $year))->class('input-medium');
-        $month = $html->select($name.'[month]', array('options' => $months, 'selected' => $month))->class('input-medium');
-        $day = $html->select($name.'[day]', array('options' => $days,   'selected' => $day))->class('input-small');
-
-        return $year.' '.$month.' '.$day;
-    }
-
-    /**
      * Return a human friendly format of the date.
      *
      * @param AnDate $date
