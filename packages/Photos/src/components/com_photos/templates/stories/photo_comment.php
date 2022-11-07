@@ -31,7 +31,7 @@
         		</a>
             </td>
             <td valign="top">
-                <?= nl2br($comment->body) ?>
+                <?= @body($comment->body) ?>
             </td>
     </table>
 </data>

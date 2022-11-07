@@ -11,9 +11,9 @@
     	</a>
     </h4>
     <div class="entity-body">
-			<blockquote>
-	    <?= @helper('text.truncate', nl2br($object->body), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
-			</blockquote>
+		<blockquote>
+	    	<?= @helper('text.truncate', @body($object->body), array('length' => 200, 'consider_html' => true, 'read_more' => true)); ?>
+		</blockquote>
 	</div>
 </data>
 
@@ -24,7 +24,7 @@
     	<?= @link($object)?>
     </h4>
     <div class="entity-body">
-	    <?= $comment->body ?>
+	    <?= @body($comment->body) ?>
 	</div>
 </data>
 <? endif;?>

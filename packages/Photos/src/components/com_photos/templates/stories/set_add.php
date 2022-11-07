@@ -15,7 +15,7 @@
 
 	<? if ($object->description): ?>
 	<div class="entity-description">
-	    <?= nl2br($object->description) ?>
+	    <?= @body($object->description) ?>
 	</div>
 	<? endif; ?>
 

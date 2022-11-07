@@ -15,7 +15,7 @@
 
 <? if ($type == 'notification') : ?>
 <data name="email_body">
-<div><?= $object->body ?></div>
+<div><?= @body($object->body) ?></div>
 <? $commands->insert('viewstory', array('label' => @text('LIB-AN-MEDIUM-VIEW')))->href($object->getURL()); ?>
 </data>
 <? endif; ?>

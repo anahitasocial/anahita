@@ -19,7 +19,7 @@
 		<? if ($object->excerpt) : ?>
 	    <?= @helper('text.truncate', @escape($object->excerpt), array('length' => 200)); ?>
 		<? else : ?>
-	    <?= @helper('text.truncate', $object->body, array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
+	    <?= @helper('text.truncate', @body($object->body), array('length' => 200, 'read_more' => true, 'consider_html' => true)); ?>
 		<? endif; ?>
 	</div>
 </data>
@@ -31,7 +31,7 @@
     	<?= @link($object) ?>
     </h4>
     <div class="entity-body">
-	    <?= nl2br($comment->body) ?>
+	    <?= @body($comment->body) ?>
 	</div>
 </data>
 <? endif;?>

@@ -66,16 +66,14 @@ class ComNotificationsDomainRepositoryNotification extends AnDomainRepositoryDef
         
         if ($this->_send_after_insert) {
             //run no more than 60 seconds
-            $command = sprintf('php -d max_execution_time=300 %s/index.php %s id=%d >/dev/null 2>&1', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
-            shell_exec($command);
+            // $command = sprintf('php -d max_execution_time=300 %s/index.php %s id=%d >/dev/null 2>&1', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
+            // shell_exec($command);
             
             // Use this for testing only on OSX
-            /*
             $phpPath = '/Applications/MAMP/bin/php/php8.0.0/bin/php';    
             $command = sprintf($phpPath . ' %s/index.php %s id=%d 2>&1', ANPATH_BASE, PROCESSOR_PATH, $context->entity->id);
             error_log($command);
             error_log(shell_exec($command));
-            */
         }
     }
 }

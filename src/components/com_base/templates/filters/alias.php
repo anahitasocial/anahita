@@ -27,6 +27,7 @@ class ComBaseTemplateFilterAlias extends LibBaseTemplateFilterAlias
             '@avatar(' => '$this->renderHelper(\'com:actors.template.helper.avatar\',',
             '@cover(' => '$this->renderHelper(\'com:actors.template.helper.cover\',',
             '@name(' => '$this->renderHelper(\'com:actors.template.helper.name\',',
+            '@body(' => '$this->renderHelper(\'html.markdownToHtml\',',
         ));
     }
 }

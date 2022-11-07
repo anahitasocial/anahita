@@ -1,4 +1,6 @@
 <?php
+use League\CommonMark\GithubFlavoredMarkdownConverter;
+
 /**
  * @category   Anahita
  *
@@ -28,6 +30,22 @@ class LibBaseTemplateHelperHtml extends LibBaseTemplateHelperAbstract implements
         }
 
         return $container->get($config->service_identifier);
+    }
+
+    /**
+     * converts markdown to safe html
+     * 
+     * @param string markdown
+     * 
+     * @return string html
+     */
+    public function markdownToHtml(string $text) {
+        $converter = new GithubFlavoredMarkdownConverter([
+            'html_input' => 'strip',
+            'allow_unsafe_links' => false,
+        ]);
+
+        return $converter->convert($text);
     }
 
     /**
