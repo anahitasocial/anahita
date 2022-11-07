@@ -120,6 +120,15 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function doRun(InputInterface $input, OutputInterface $output)
     {
+        /*
+        *   Support Iranian women
+        */
+        $output->writeLn("");
+        $output->writeLn("| <fg=green>Women</> <fg=white>Life</> <fg=red>Freedom</>");
+        $output->writeLn("| <comment>We stand in solidarity with Iranian women!</comment>");
+        $output->writeLn("| #MahsaAmini #WomenLifeFreedom #IranRevolution");
+        $output->writeLn("");
+        
         $name = $this->getCommandName($input);
         $result = true;
 
