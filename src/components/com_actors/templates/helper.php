@@ -100,7 +100,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
 
             $name = AnHelperString::ucwords($actor->name);
             $verified = ($actor->verified) ? 'verified' : '';
-            $img = '<img '.$width.' alt="'.$name.'" actorid="'.$actor->id.'" src="'.$src.'" id="actor-avatar-'.$actor->id.'" size="'.$size.'" class="actor-avatar actor-avatar-'.$actor->id.' '.$size.' '.$verified.'" />';
+            $img = '<img '.$width.' alt="'.$name.'" src="'.$src.'" id="actor-avatar-'.$actor->id.'" size="'.$size.'" class="actor-avatar actor-avatar-'.$actor->id.' '.$size.' '.$verified.'" />';
         } else {
             $img = '<img '.$width.' src="'.$defaultAvatar.'" id="actor-avatar-'.$size.'-'.$actor->id.'" size="'.$size.'" class="actor-avatar '.$size.'" />';
         }
@@ -142,7 +142,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
 
         if ($linked && $actor->authorize('access')) {
             $url = route($actor->getURL());
-            $img = '<a '.$this->_buildAttribute($attr).' data-actor="'.$actor->id.'" href="'.$url.'" >'.$img.'</a>';
+            $img = '<a '.$this->_buildAttribute($attr).' href="'.$url.'" >'.$img.'</a>';
         }
 
         return $img;
@@ -163,13 +163,14 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
             $linked = false;
             $name = '<span class="actor-name">'.AnTranslator::_('LIB-AN-UNKNOWN-PERSON').'</span>';
         } else {
-            $name = '<span class="actor-name" actorid="'.$actor->id.'">'.$actor->name.'</span>';
+            $name = '<span class="actor-name">'.$actor->name.'</span>';
+
             if($actor->verified){
               $name = $name.' <span class="icon icon-ok-sign"></span>';
             }
         }
 
-        if (!$linked || !$actor->authorize('access')) {
+        if (! $linked || !$actor->authorize('access')) {
             return (string) $name;
         }
 
@@ -179,7 +180,7 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
             $attr['title'] = '@'.$actor->alias;
         }
 
-        $name = '<a class="actor-name" '.$this->_buildAttribute($attr).' actorid="'.$actor->id.'" href="'.$url.'" >'.$name.'</a>';
+        $name = '<a class="actor-name" '.$this->_buildAttribute($attr).' href="'.$url.'" >'.$name.'</a>';
 
         return $name;
     }
@@ -206,40 +207,38 @@ class ComActorsTemplateHelper extends LibBaseTemplateHelperAbstract implements A
 
         switch (strtolower($type)) {
             case 'pronoune'   :
-                    if ($options['useyou']) {
-                        $value = 'LIB-AN-YOU';
-                    } else {
-                        $value = $gender == 'male'
-                                 ? 'LIB-AN-HE' : ($gender == 'female'
-                                 ? 'LIB-AN-SHE'
-                                 : 'LIB-AN-THEY');
-                    }
-                    break;
-
-            case 'possessive' :
-
-                    if ($options['useyou']) {
-                        $value = 'LIB-AN-YOUR';
-                        break;
-                    }
-
+                if ($options['useyou']) {
+                    $value = 'LIB-AN-YOU';
+                } else {
                     $value = $gender == 'male'
-                             ? 'LIB-AN-HIS' : ($gender == 'female'
-                             ? 'LIB-AN-HER'
-                             : 'LIB-AN-THEIR');
+                        ? 'LIB-AN-HE' : ($gender == 'female'
+                        ? 'LIB-AN-SHE'
+                        : 'LIB-AN-THEY');
+                }
+                break;
+            case 'possessive' :
+                if ($options['useyou']) {
+                    $value = 'LIB-AN-YOUR';
                     break;
+                }
+
+                $value = $gender == 'male'
+                    ? 'LIB-AN-HIS' : ($gender == 'female'
+                    ? 'LIB-AN-HER'
+                    : 'LIB-AN-THEIR');
+                break;
 
             case 'objective' :
-                    if ($options['useyou']) {
-                        $value = 'LIB-AN-YOU';
-                        break;
-                    }
-
-                    $value = $gender == 'male'
-                             ? 'LIB-AN-HIM' : ($gender == 'female'
-                             ? 'LIB-AN-HER'
-                             : 'LIB-AN-THEM');
+                if ($options['useyou']) {
+                    $value = 'LIB-AN-YOU';
                     break;
+                }
+
+                $value = $gender == 'male'
+                            ? 'LIB-AN-HIM' : ($gender == 'female'
+                            ? 'LIB-AN-HER'
+                            : 'LIB-AN-THEM');
+                break;
         }
 
         return $value;

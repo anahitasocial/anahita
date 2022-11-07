@@ -31,41 +31,4 @@ class ComPeopleTemplateHelper extends LibBaseTemplateHelperAbstract
 
         return $context->menuItems;
     }
-
-    /**
-     * Displays selector for person usertypes.
-     *
-     * @param array of options
-     *
-     * @return html select
-     */
-    public function usertypes($options = array())
-    {
-        $viewer = get_viewer();
-        $options = new AnConfig($options);
-
-        $options->append(array(
-            'id' => 'person-userType',
-            'selected' => 'registered',
-            'name' => 'usertype',
-            'class' => 'input-block-level',
-        ));
-
-        $selected = $options->selected;
-
-        unset($options->selected);
-
-        $usertypes = array(
-            ComPeopleDomainEntityPerson::USERTYPE_REGISTERED => AnTranslator::_('COM-PEOPLE-USERTYPE-REGISTERED'),
-            ComPeopleDomainEntityPerson::USERTYPE_ADMINISTRATOR => AnTranslator::_('COM-PEOPLE-USERTYPE-ADMINISTRATOR'),
-        );
-
-        if ($viewer->superadmin()) {
-            $usertypes[ComPeopleDomainEntityPerson::USERTYPE_SUPER_ADMINISTRATOR] = AnTranslator::_('COM-PEOPLE-USERTYPE-SUPER-ADMINISTRATOR');
-        }
-
-        $html = $this->getService('com:base.template.helper.html');
-
-        return $html->select($options->name, array('options' => $usertypes, 'selected' => $selected), AnConfig::unbox($options));
-    }
 }
