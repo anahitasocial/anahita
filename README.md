@@ -3,7 +3,7 @@
 
 ### Women Life Freedom
 
-We stand in solidarity with the brave Iranian women!
+We stand in solidarity with Iranian women!
 
 #MahsaAmini #WomenLifeFreedom #IranRevolution
 

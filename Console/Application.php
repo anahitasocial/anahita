@@ -124,11 +124,9 @@ class Application extends \Symfony\Component\Console\Application
         *   Support Iranian women
         */
         $output->writeLn("");
-        $output->writeLn("*");
-        $output->writeLn("* <comment>Support Iranian women in their uprise against dictatorship!</comment>");
-        $output->writeLn("* <fg=green>Women</> <fg=white>Life</> <fg=red>Freedom</>");
-        $output->writeLn("* <info>#MahsaAmini #WomenLifeFreedom #IranRevolution</info>");
-        $output->writeLn("* ");
+        $output->writeLn("| <fg=green>Women</> <fg=white>Life</> <fg=red>Freedom</>");
+        $output->writeLn("| <comment>We stand in solidarity with Iranian women!</comment>");
+        $output->writeLn("| #MahsaAmini #WomenLifeFreedom #IranRevolution");
         $output->writeLn("");
         
         $name = $this->getCommandName($input);
