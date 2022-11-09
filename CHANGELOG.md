@@ -4,6 +4,7 @@ Anahita 4.7.1
 =============================
 - added: markdownToHtml text conversion to all the email notification bodies
 - removed: some legacy code
+- fixed: issue with actor settings removeApp
 
 Anahita 4.7.0
 =============================
