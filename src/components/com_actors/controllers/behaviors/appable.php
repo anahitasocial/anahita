@@ -27,6 +27,11 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
         );
     }
     
+    /**
+     * Get Apps
+     * 
+     * @param AnCommandContext $context Context parameter
+     */
     protected function _actionGetApps(AnCommandContext $context)
     {
         $data = array();
@@ -58,7 +63,7 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     }
     
     /**
-     * Add App.
+     * Add App
      *
      * @param AnCommandContext $context Context parameter
      */
@@ -69,7 +74,7 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     }
 
     /**
-     * Remove App.
+     * Remove App
      *
      * @param AnCommandContext $context Context parameter
      */
@@ -77,8 +82,14 @@ class ComActorsControllerBehaviorAppable extends AnControllerBehaviorAbstract
     {
         $data = $context->data;
         $this->getItem()->components->extract($data->app);
+        $this->getItem()->save();
     }
     
+    /**
+     * Fetch App
+     * 
+     * @param AnCommandContext $context Context parameter
+     */
     public function fetchApp(AnCommandContext $context) 
     {
         $data = $context->data;
