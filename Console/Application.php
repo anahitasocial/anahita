@@ -27,9 +27,33 @@ class Application extends \Symfony\Component\Console\Application
     /**
      * Installable Anahtia extension package
      *
-     * @var Extension\Pacckages
+     * @var Extension\Packages
      */
     protected $_packages;
+
+    /**
+     * Anahita text logo
+     */
+    protected static $_logo = <<<LOGO
+    _                _     _ _        
+   / \   _ __   __ _| |__ (_) |_ __ _ 
+  / _ \ | '_ \ / _` | '_ \| | __/ _` |
+ / ___ \| | | | (_| | | | | | || (_| |
+/_/   \_\_| |_|\__,_|_| |_|_|\__\__,_|
+
+
+LOGO;
+
+    /**
+     * Slogan
+     */
+    protected static $_slogan = <<<LOGO
+| <fg=green>Women</> <fg=white>Life</> <fg=red>Freedom</>
+| <comment>We stand in solidarity with Iranian women!</comment>
+| #MahsaAmini #WomenLifeFreedom #IranRevolution        
+
+
+LOGO;
 
     /**
      * Provide task callbacks. $applicatio->registerBefore('task', function(){});
@@ -37,6 +61,11 @@ class Application extends \Symfony\Component\Console\Application
      * @var array
      */
     protected $_callbacks;
+
+    /**
+     * Anahita version number
+     */
+    protected $_version;
 
     /**
      * Constructor
@@ -59,6 +88,19 @@ class Application extends \Symfony\Component\Console\Application
         $this->_packages->addPackageFromComposerFiles(Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));
 
         parent::__construct();
+
+        $this->loadFramework();
+        require_once __DIR__.'/../src/libraries/anahita/anahita.php';
+        $this->version = \Anahita::getVersion();
+    }
+
+    /**
+     * @return string
+     */
+    public function getHelp()
+    {
+        $version = sprintf("v%s\n\n", $this->version);
+        return static::$_logo . $version . static::$_slogan . parent::getHelp();
     }
 
     /**
@@ -119,31 +161,7 @@ class Application extends \Symfony\Component\Console\Application
      * @see \Symfony\Component\Console\Application::doRun()
      */
     public function doRun(InputInterface $input, OutputInterface $output)
-    {
-        define('ANPATH_LIBRARIES', ANAHITA_ROOT . '/src/libraries');
-        require_once (ANPATH_LIBRARIES . '/anahita/anahita.php');
-
-$name = "
-    _                _     _ _        
-   / \   _ __   __ _| |__ (_) |_ __ _ 
-  / _ \ | '_ \ / _` | '_ \| | __/ _` |
- / ___ \| | | | (_| | | | | | || (_| |
-/_/   \_\_| |_|\__,_|_| |_|_|\__\__,_|
-";
-        $output->writeLn(sprintf('<info>%s</info>', $name));
-
-        $version = \Anahita::getVersion();
-        $output->writeLn(sprintf('<info>v%s</info>', $version));
-
-        /*
-        *   Support Iranian women
-        */
-        $output->writeLn("");
-        $output->writeLn("| <fg=green>Women</> <fg=white>Life</> <fg=red>Freedom</>");
-        $output->writeLn("| <comment>We stand in solidarity with Iranian women!</comment>");
-        $output->writeLn("| #MahsaAmini #WomenLifeFreedom #IranRevolution");
-        $output->writeLn("");
-        
+    {        
         $name = $this->getCommandName($input);
         $result = true;
 
