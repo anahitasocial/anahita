@@ -4,13 +4,7 @@
 	<?= sprintf(@text('COM-ARTICLES-STORY-ARTICLE-ADD'), @name($subject), @route($object->getURL())) ?>
 </data>
 
-<data name="body">
-	<? if ($object->hasCover()): ?>
-	<div class="entity-portrait-medium">
-		<?= @cover($object, 'medium') ?>
-	</div>
-	<? endif ?>
-	
+<data name="body">	
     <h4 class="entity-title">
     	<?= @link($object)?>
     </h4>
