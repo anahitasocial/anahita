@@ -63,11 +63,6 @@ LOGO;
     protected $_callbacks;
 
     /**
-     * Anahita version number
-     */
-    protected $_version;
-
-    /**
      * Constructor
      */
     public function __construct()
@@ -88,10 +83,6 @@ LOGO;
         $this->_packages->addPackageFromComposerFiles(Extension\Helper::getComposerFiles(ANAHITA_ROOT.'/packages'));
 
         parent::__construct();
-
-        $this->loadFramework();
-        require_once __DIR__.'/../src/libraries/anahita/anahita.php';
-        $this->version = \Anahita::getVersion();
     }
 
     /**
@@ -99,8 +90,7 @@ LOGO;
      */
     public function getHelp()
     {
-        $version = sprintf("v%s\n\n", $this->version);
-        return static::$_logo . $version . static::$_slogan . parent::getHelp();
+        return static::$_logo . static::$_slogan . parent::getHelp();
     }
 
     /**
