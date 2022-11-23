@@ -52,6 +52,10 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     protected function _afterEntityDelete(AnCommandContext $context)
     {
         $this->resetStats();
+
+        if (count($this->hashtag->taggables) === 0) {
+            $this->hashtag->delete();
+        }
     }
 
     /**
@@ -62,9 +66,5 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
     private function resetStats()
     {
         $this->hashtag->resetStats(array($this->hashtag));
-
-        if (count($this->hashtag->taggables) === 0) {
-            $this->hashtag->delete();
-        }
     }
 }

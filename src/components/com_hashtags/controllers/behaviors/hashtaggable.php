@@ -53,7 +53,7 @@ class ComHashtagsControllerBehaviorHashtaggable extends AnControllerBehaviorAbst
         
         if (is_array($terms)) {
             foreach ($entity->hashtags as $hashtag) {
-                if (!in_array($hashtag->name, array_map('strtolower', $terms))) {
+                if (!in_array(strtolower($hashtag->name), array_map('strtolower', $terms))) {
                     $entity->removeHashtag($hashtag->name);
                 }
             }
