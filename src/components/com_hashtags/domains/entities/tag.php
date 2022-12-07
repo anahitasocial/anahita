@@ -27,7 +27,8 @@ final class ComHashtagsDomainEntityTag extends ComTagsDomainEntityTag
                 'hashtag' => 'nodeA',
             ),
             'relationships' => array(
-                'hashtag' => array('parent' => 'com:hashtags.domain.entity.hashtag'),
+                'hashtag' => array(
+                    'parent' => 'com:hashtags.domain.entity.hashtag'),
             ),
         ));
 
