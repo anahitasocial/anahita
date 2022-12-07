@@ -5,12 +5,6 @@
 </data>
 
 <data name="body">
-	<? if ($object->hasCover()): ?>
-	<div class="entity-portrait-medium">
-		<?= @cover($object, 'medium') ?>
-	</div>
-	<? endif ?>
-	
     <h4 class="entity-title">
     	<?= @link($object) ?>
     </h4>

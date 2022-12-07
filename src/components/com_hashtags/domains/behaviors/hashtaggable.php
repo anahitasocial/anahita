@@ -27,7 +27,7 @@
             'relationships' => array(
                 'hashtags' => array(
                     'through' => 'com:hashtags.domain.entity.tag',
-                    'target' => str_replace('repository', 'entity', $identifier),
+                    'target' => $config->target ? $config->target : 'com:base.domain.entity.node',
                     'child_key' => 'taggable',
                     'target_child_key' => 'hashtag',
                     'inverse' => true,
