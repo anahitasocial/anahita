@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.7.2
+=============================
+- fixed: hot fixes
+
 Anahita 4.7.1
 =============================
 - added: markdownToHtml text conversion to all the email notification bodies
