@@ -1,5 +1,9 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.7.3
+=============================
+- fixed: issue with a medium node hashtags not updating/deleting properly
+
 Anahita 4.7.2
 =============================
 - fixed: hot fixes

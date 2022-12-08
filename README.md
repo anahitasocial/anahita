@@ -9,7 +9,7 @@ We stand in solidarity with Iranian women!
 
 # Anahita
 
-*Version:* 4.7.2 Birth Release
+*Version:* 4.7.3 Birth Release
 
 Anahita is a platform and framework for developing open science and knowledge-sharing applications on a social networking foundation. Use Anahita to build:
 
