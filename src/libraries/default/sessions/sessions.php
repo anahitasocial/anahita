@@ -124,7 +124,8 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
-			'storage' => 'database',
+			// 'storage' => 'database',
+			'storage' => 'redis'
 		));
 
 		parent::_initialize($config);
