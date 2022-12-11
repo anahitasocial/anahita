@@ -3,33 +3,47 @@
 class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 {
     /**
-    * @param hold session data
-    */
-    protected $_data = null;
-
-    /**
     * @param $session entity
     */
     protected $_session = null;
 
-    /**
-    * @param redis session repository
-    */
-    protected $_redis = null;
-
-    /**
-    * loads the session entity
-    *
-    * @param $id string session id
-    * @return session entity
-    */
-    private function _getSession($id)
+	/**
+     * Constructor.
+     *
+     * @param AnConfig $config An optional AnConfig object with configuration options.
+     */
+    public function __construct(AnConfig $config)
     {
-        if (is_null($this->_session)) {
-            $this->_session = $this->_redis->get($id);
-        }
+		$client = new Predis\Client($config->host);
+        $this->_session = new Predis\Session\Handler($client, array('gc_maxlifetime' => $config->max_lifetime));
+        
+        parent::__construct($config);
+    }
 
-        return $this->_session;
+	/**
+     * Initializes the options for the object
+     *
+     * Called from {@link __construct()} as a first step of object instantiation.
+     *
+     * @param 	object 	An optional AnConfig object with configuration options.
+     * @return  void
+     */
+	protected function _initialize(AnConfig $config)
+    {
+		$config->append(array(
+			'max_lifetime' => 15,
+			'host' => "tcp://127.0.0.1:6379",
+		));
+
+		parent::_initialize($config);
+	}
+
+    /**
+     * Registers this instance as the current session handler.
+     */
+    public function register()
+    {
+        $this->_session->register();
     }
 
     /**
@@ -41,13 +55,9 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	 * @param string $session_name  The name of the session.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	public function open($save_path, $session_name)
+	public function open($save_path, $session_id)
 	{
-        if ($this->_redis = new Predis\Client("tcp://127.0.0.1:6379")) {
-            return true;
-        }
-
-        return false;
+        return $this->_session->open($save_path, $session_id);
 	}
 
  	/**
@@ -60,17 +70,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
  	 */
 	public function read($id)
 	{
-        $this->_data = '';
-
-        if ($id === '') {
-            return $this->_data;
-        }
-
-        if ($session = $this->_getSession($id)) {
-            $this->_data = (string) $session;
-        }
-
-		return $this->_data;
+		return $this->_session->read($id);
 	}
 
 	/**
@@ -81,20 +81,9 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	 * @param string $session_data  The session data.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	public function write($id, $session_data)
+	public function write($session_id, $session_data)
 	{
-        if ($id === '' && $session_data === '') {
-            return false;
-        }
-
-        $result = false;
-
-        if ($result = $this->_redis->set($id, $session_data)) {
-            $this->_data = $session_data;
-            $result = true;
-        }
-
-		return $result;
+        return $this->_session->write($session_id, $session_data);
 	}
 
 	/**
@@ -102,16 +91,12 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	  * SessionHandler backend.
 	  *
 	  * @access public
-	  * @param string $id  The session identifier.
+	  * @param string $session_id  The session identifier.
 	  * @return boolean  True on success, false otherwise.
 	  */
-	public function destroy($id)
+	public function destroy($session_id)
 	{
-        if ($session = $this->_getSession($id)) {
-            return $this->_redis->del($id);
-        }
-
-        return false;
+        return $this->_session->destroy($session_id);
 	}
 
 	/**
@@ -123,6 +108,6 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	 */
 	public function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
 	{
-        // return $this->_redis->purge($lifetime);
+        return $this->_session->gc($lifetime);
 	}
 }

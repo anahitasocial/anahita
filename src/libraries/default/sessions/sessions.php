@@ -13,6 +13,13 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 	const STATE_ERROR = 'error';
 
 	/**
+    *   60 days in seconds = 60day * 24hour * 60min * 60sec
+    *
+    *   @var integer
+    */
+    const MAX_LIFETIME = 5184000;
+
+	/**
 	 * internal state
 	 *
 	 * @access protected
@@ -84,7 +91,9 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		//disable transparent sid support
 		ini_set('session.use_trans_sid', '0');
 
-		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage);
+		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage, array(
+			'max_lifetime' => $config->max_lifetime,
+		));
 
 		if (isset($config->name)) {
 			session_name(get_hash($config->name));
@@ -124,6 +133,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
+			'max_lifetime' => self::MAX_LIFETIME,
 			// 'storage' => 'database',
 			'storage' => 'redis'
 		));
