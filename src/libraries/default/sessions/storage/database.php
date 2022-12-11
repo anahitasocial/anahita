@@ -124,10 +124,10 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
 	 * Garbage collect stale sessions from the SessionHandler backend.
 	 *
 	 * @access public
-	 * @param integer $maxlifetime  The maximum age of a session. 60 days by default
+	 * @param integer $maxlifetime  The maximum age of a session.
 	 * @return boolean  True on success, false otherwise.
 	 */
-	public function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
+	public function gc($lifetime)
 	{
         return $this->_repository->purge($lifetime);
 	}

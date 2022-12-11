@@ -15,7 +15,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
     public function __construct(AnConfig $config)
     {
 		$client = new Predis\Client($config->host);
-        $this->_session = new Predis\Session\Handler($client, array('gc_maxlifetime' => $config->max_lifetime));
+        $this->_session = new Predis\Session\Handler($client, array('gc_maxlifetime' => $config->maxlifetime));
         
         parent::__construct($config);
     }
@@ -31,7 +31,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	protected function _initialize(AnConfig $config)
     {
 		$config->append(array(
-			'max_lifetime' => 15,
+			'maxlifetime' => 15,
 			'host' => "tcp://127.0.0.1:6379",
 		));
 
@@ -106,7 +106,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	 * @param integer $maxlifetime  The maximum age of a session. 60 days by default
 	 * @return boolean  True on success, false otherwise.
 	 */
-	public function gc($lifetime = LibSessionsDomainEntitySession::MAX_LIFETIME)
+	public function gc($lifetime)
 	{
         return $this->_session->gc($lifetime);
 	}

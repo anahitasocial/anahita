@@ -17,7 +17,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
     *
     *   @var integer
     */
-    const MAX_LIFETIME = 5184000;
+    const MAXLIFETIME = 5184000;
 
 	/**
 	 * internal state
@@ -92,7 +92,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		ini_set('session.use_trans_sid', '0');
 
 		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage, array(
-			'max_lifetime' => $config->max_lifetime,
+			'maxlifetime' => $config->maxlifetime,
 		));
 
 		if (isset($config->name)) {
@@ -104,17 +104,20 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		}
 
 		$this->_state =	$config->state;
-		$this->_expire = $config->expire;
+		$this->_expire = $config->maxlifetime;
 		$this->_security = explode(',', $config->security);
 		$this->_force_ssl = $config->force_ssl;
 		$this->_namespace = $config->namespace;
 
-		ini_set('session.gc_maxlifetime', $this->getExpire());
+		ini_set('session.gc_maxlifetime', $config->maxlifetime);
 
 		$this->_setCookieParams();
 		$this->_start();
 		$this->_setCounter();
 		$this->_setTimers();
+
+		// perform security checks
+		$this->_validate();
 	}
 
 	/**
@@ -129,13 +132,12 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
     {
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
-			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME + time(),
+			'maxlifetime' => self::MAXLIFETIME,
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
-			'max_lifetime' => self::MAX_LIFETIME,
-			// 'storage' => 'database',
-			'storage' => 'redis'
+			'storage' => 'database',
+			// 'storage' => 'redis' // @NOTE: obtain this from the site configs
 		));
 
 		parent::_initialize($config);
@@ -455,7 +457,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		// must also be unset. If a cookie is used to propagate the session id (default behavior),
 		// then the session cookie must be deleted.
 		if (isset($_COOKIE[session_name()])) {
-			setcookie(session_name(), '', time() - $this->_expire, '/');
+			setcookie(session_name(), '', time() - 42000, '/');
 		}
 
 		session_unset();
@@ -490,6 +492,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 
 		$this->_state = self::STATE_ACTIVE;
 
+		$this->_validate();
 		$this->_setCounter();
 
 		return true;
@@ -602,6 +605,32 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		$counter++;
 
 		$this->set('session.counter', $counter);
+
+		return true;
+	}
+
+	protected function _validate($restart = false) 
+	{
+		if($restart) {
+			$this->_state = self::STATE_ACTIVE;
+
+			$this->set('session.client.address', null);
+			$this->set('session.client.forwarded', null);
+			$this->set('session.client.browser', null);
+			$this->set('session.token', null);
+		}
+
+		// check if session has expired
+		if($this->_expire) {
+			$curTime = $this->get('session.timer.now', 0);
+			$maxTime = $this->get('session.timer.last', 0) + $this->_expire;
+
+			// empty session variables
+			if($maxTime < $curTime) {
+				$this->_state = self::STATE_EXPIRED;
+				return false;
+			}
+		}
 
 		return true;
 	}
