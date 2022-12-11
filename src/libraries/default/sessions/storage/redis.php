@@ -23,10 +23,10 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
     * @param $id string session id
     * @return session entity
     */
-    private function _getSession($sessionId)
+    private function _getSession($id)
     {
         if (is_null($this->_session)) {
-            $this->_session = $this->_redis->get($sessionId);
+            $this->_session = $this->_redis->get($id);
         }
 
         return $this->_session;
@@ -43,13 +43,11 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	 */
 	public function open($save_path, $session_name)
 	{
-        $this->_redis = new Predis\Client([
-            'scheme' => 'tcp',
-            'host'   => '127.0.0.1',
-            'port' => 6379,
-        ]);
+        if ($this->_redis = new Predis\Client("tcp://127.0.0.1:6379")) {
+            return true;
+        }
 
-        return true;
+        return false;
 	}
 
  	/**
@@ -69,7 +67,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
         }
 
         if ($session = $this->_getSession($id)) {
-            $this->_data = (string) $session->meta;
+            $this->_data = (string) $session;
         }
 
 		return $this->_data;
@@ -90,16 +88,10 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
         }
 
         $result = false;
-        $session = $this->_getSession($id);
 
-        if (isset($session)) {
-            $result = $session->set('meta', $session_data)->save();
-        } else {
-            $result = $this->_redis->set($id, $session_data);
-        }
-
-        if ($result) {
+        if ($result = $this->_redis->set($id, $session_data)) {
             $this->_data = $session_data;
+            $result = true;
         }
 
 		return $result;
@@ -116,7 +108,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	public function destroy($id)
 	{
         if ($session = $this->_getSession($id)) {
-            return $this->_redis->delete($id);
+            return $this->_redis->del($id);
         }
 
         return false;
