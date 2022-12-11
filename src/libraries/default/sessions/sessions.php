@@ -17,7 +17,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
     *
     *   @var integer
     */
-    const MAXLIFETIME = 5184000;
+    const EXPIRE = 5184000;
 
 	/**
 	 * internal state
@@ -92,7 +92,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		ini_set('session.use_trans_sid', '0');
 
 		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage, array(
-			'maxlifetime' => $config->maxlifetime,
+			'expire' => $config->expire,
 		));
 
 		if (isset($config->name)) {
@@ -104,12 +104,12 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		}
 
 		$this->_state =	$config->state;
-		$this->_expire = $config->maxlifetime;
+		$this->_expire = $config->expire;
 		$this->_security = explode(',', $config->security);
 		$this->_force_ssl = $config->force_ssl;
 		$this->_namespace = $config->namespace;
 
-		ini_set('session.gc_maxlifetime', $config->maxlifetime);
+		ini_set('session.gc_maxlifetime', $config->expire);
 
 		$this->_setCookieParams();
 		$this->_start();
@@ -132,12 +132,12 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
     {
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
-			'maxlifetime' => self::MAXLIFETIME,
+			'expire' => self::EXPIRE,
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
-			'storage' => 'database',
-			// 'storage' => 'redis' // @NOTE: obtain this from the site configs
+			// 'storage' => 'database',
+			'storage' => 'redis' // @NOTE: obtain this from the site configs
 		));
 
 		parent::_initialize($config);

@@ -15,7 +15,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
     public function __construct(AnConfig $config)
     {
 		$client = new Predis\Client($config->host);
-        $this->_session = new Predis\Session\Handler($client, array('gc_maxlifetime' => $config->maxlifetime));
+        $this->_session = new Predis\Session\Handler($client, array('gc_maxlifetime' => $config->expire));
         
         parent::__construct($config);
     }
@@ -31,7 +31,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	protected function _initialize(AnConfig $config)
     {
 		$config->append(array(
-			'maxlifetime' => 15,
+			'expire' => 15,
 			'host' => "tcp://127.0.0.1:6379",
 		));
 
