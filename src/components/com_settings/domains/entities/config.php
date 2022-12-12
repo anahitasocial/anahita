@@ -56,7 +56,7 @@ class ComSettingsDomainEntityConfig extends AnObject
               'dbprefix' => '_an',
 
               // redis
-              'redis_host' => '',
+              'redis_path' => '',
               'redis_password' => '',
 
               // cors
@@ -158,7 +158,7 @@ class ComSettingsDomainEntityConfig extends AnObject
             ), 'Database Settings');
 
             $content .= $this->_formatGroup(array(
-                'redis_host', 
+                'redis_path', 
                 'redis_password',
             ), 'Redis Settings');
             
@@ -253,7 +253,7 @@ class ComSettingsDomainEntityConfig extends AnObject
               'smtp_host',
               'user',
               'host',
-              'redis_host',
+              'redis_path',
               'redis_password',
             );
 

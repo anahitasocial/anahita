@@ -14,7 +14,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
      */
     public function __construct(AnConfig $config)
     {
-		$client = new Predis\Client($config->host, array(
+		$client = new Predis\Client($config->path, array(
 			'parameters' => array(
 				'password' => $config->password,
 			),
@@ -39,7 +39,7 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 		
 		$config->append(array(
 			'expire' => 15,
-			'host' => $settings->redis_host,
+			'path' => $settings->redis_path,
 			'password' => $settings->redis_password,
 		));
 

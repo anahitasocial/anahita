@@ -75,7 +75,7 @@ class Config
         
         $this->_data = array(
             // Redis Settings
-            'redis_host' => '',
+            'redis_path' => '',
             'redis_password' => '',
             // CORS Settings
             'cors_enabled' => 0,
@@ -380,7 +380,7 @@ class Config
         ), 'Database Settings');
 
         $write_group(array(
-            'redis_host', 
+            'redis_path', 
             'redis_password', 
         ), 'Redis Settings');
         

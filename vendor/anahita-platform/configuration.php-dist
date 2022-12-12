@@ -148,11 +148,11 @@ class AnSiteConfig{
 	//
 
 	/**
-	*	Redis database host path
+	*	Redis database path including all its parameters
 	*
-	*	@var string host:port
+	*	@var string
 	*/
-	var $redis_host = '';
+	var $redis_path = '';
 
 	/**
 	*	Redis password, if one is required

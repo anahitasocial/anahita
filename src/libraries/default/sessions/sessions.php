@@ -137,7 +137,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
     protected function _initialize(AnConfig $config)
     {
 		$settings = $this->getService('com:settings.config');
-		$storage = $settings->redis_host == '' ? self::STORAGE_DATABASE : self::STORAGE_REDIS;
+		$storage = $settings->redis_path == '' ? self::STORAGE_DATABASE : self::STORAGE_REDIS;
 
 		// error_log($storage);
 
