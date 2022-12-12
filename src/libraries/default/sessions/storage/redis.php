@@ -13,16 +13,20 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
      * @param AnConfig $config An optional AnConfig object with configuration options.
      */
     public function __construct(AnConfig $config)
-    {
-		$client = new Predis\Client($config->path, array(
+    {			
+		parent::__construct($config);
+
+		$client = new Predis\Client($config->redis_path, array(
 			'parameters' => array(
-				'password' => $config->password,
+				'password' => $config->redis_password,
 			),
 		));
-		
-        $this->_session = new Predis\Session\Handler($client, array('gc_maxlifetime' => $config->expire));
-        
-        parent::__construct($config);
+
+		$this->_session = new Predis\Session\Handler($client, array(
+			'gc_maxlifetime' => $config->expire,
+		));
+
+		$this->register();
     }
 
 	/**
@@ -36,11 +40,11 @@ class LibSessionsStorageRedis extends LibSessionsStorageAbstract
 	protected function _initialize(AnConfig $config)
     {
 		$settings = $this->getService('com:settings.config');
-		
+
 		$config->append(array(
 			'expire' => 15,
-			'path' => $settings->redis_path,
-			'password' => $settings->redis_password,
+			'redis_path' => $settings->redis_path,
+			'redis_password' => $settings->redis_password,
 		));
 
 		parent::_initialize($config);

@@ -18,6 +18,17 @@ class LibSessionsStorageDatabase extends LibSessionsStorageAbstract
     protected $_repository = null;
 
     /**
+     * Constructor.
+     *
+     * @param AnConfig $config An optional AnConfig object with configuration options.
+     */
+    public function __construct(AnConfig $config)
+    {
+		parent::__construct($config);
+		$this->register();
+	}
+
+    /**
     * loads the session entity
     *
     * @param $id string session id

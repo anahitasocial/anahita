@@ -10,7 +10,7 @@ class LibSessionsStorageAbstract extends AnObject implements SessionHandlerInter
     public function __construct(AnConfig $config)
     {
 		parent::__construct($config);
-		$this->register();
+		// $this->register();
 	}
 
 	/**
