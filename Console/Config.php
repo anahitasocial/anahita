@@ -74,6 +74,9 @@ class Config
         $this->_key_map = $map;
         
         $this->_data = array(
+            // Redis Settings
+            'redis_host' => '',
+            'redis_password' => '',
             // CORS Settings
             'cors_enabled' => 0,
             'cors_methods' => 'POST, GET, DELETE, PUT, PATCH, OPTIONS',
@@ -375,6 +378,11 @@ class Config
             'db', 
             'dbprefix'
         ), 'Database Settings');
+
+        $write_group(array(
+            'redis_host', 
+            'redis_password', 
+        ), 'Redis Settings');
         
         $write_group(array(
             'cors_enabled',

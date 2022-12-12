@@ -13,6 +13,12 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 	const STATE_ERROR = 'error';
 
 	/**
+	 * storage constants
+	 */
+	const STORAGE_DATABASE = 'database';
+	const STORAGE_REDIS = 'redis';
+
+	/**
     *   60 days in seconds = 60day * 24hour * 60min * 60sec
     *
     *   @var integer
@@ -130,14 +136,18 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
      */
     protected function _initialize(AnConfig $config)
     {
+		$settings = $this->getService('com:settings.config');
+		$storage = $settings->redis_host == '' ? self::STORAGE_DATABASE : self::STORAGE_REDIS;
+
+		// error_log($storage);
+
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
 			'expire' => self::EXPIRE,
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
-			'storage' => 'database',
-			// 'storage' => 'redis' // @NOTE: obtain this from the site configs
+			'storage' => $storage,
 		));
 
 		parent::_initialize($config);

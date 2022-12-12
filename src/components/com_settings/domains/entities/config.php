@@ -55,6 +55,10 @@ class ComSettingsDomainEntityConfig extends AnObject
               'db' => '',
               'dbprefix' => '_an',
 
+              // redis
+              'redis_host' => '',
+              'redis_password' => '',
+
               // cors
               'cors_enabled' => 0,
               'cors_methods' => 'POST,GET,DELETE,PUT,PATCH,OPTIONS',
@@ -152,6 +156,11 @@ class ComSettingsDomainEntityConfig extends AnObject
                 'db', 
                 'dbprefix'
             ), 'Database Settings');
+
+            $content .= $this->_formatGroup(array(
+                'redis_host', 
+                'redis_password',
+            ), 'Redis Settings');
             
             $content .= $this->_formatGroup(array(
                 'cors_enabled', 
@@ -244,6 +253,8 @@ class ComSettingsDomainEntityConfig extends AnObject
               'smtp_host',
               'user',
               'host',
+              'redis_host',
+              'redis_password',
             );
 
             $integers = array(
