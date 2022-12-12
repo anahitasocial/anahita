@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.8.0
+=============================
+- added: support for redis when storing sessions
+- added: validation checkpoints in the sessions class so it would more effectively cancel the cookie when a session is expired.
+
 Anahita 4.7.3
 =============================
 - fixed: issue with a medium node hashtags not updating/deleting properly
