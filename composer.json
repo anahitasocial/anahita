@@ -29,6 +29,7 @@
         "league/html-to-markdown": "^5.0",
         "symfony/filesystem": "^3.3",
         "symfony/mailer": "^5.4",
-        "league/commonmark": "^2.3"
+        "league/commonmark": "^2.3",
+        "predis/predis": "^2.0"
     }
 }

@@ -142,7 +142,24 @@ class AnSiteConfig{
 	*	@var string characters followed by an underscore _
 	*/
 	var $dbprefix = 'an_';
-	
+
+	//
+	//	Redis Settings
+	//
+
+	/**
+	*	Redis database path including all its parameters
+	*
+	*	@var string
+	*/
+	var $redis_path = '';
+
+	/**
+	*	Redis password, if one is required
+	*
+	*	@var string
+	*/
+	var $redis_password = '';
 	
 	//
 	//	CORS Settings

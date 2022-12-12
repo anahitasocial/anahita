@@ -13,6 +13,19 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 	const STATE_ERROR = 'error';
 
 	/**
+	 * storage constants
+	 */
+	const STORAGE_DATABASE = 'database';
+	const STORAGE_REDIS = 'redis';
+
+	/**
+    *   60 days in seconds = 60day * 24hour * 60min * 60sec
+    *
+    *   @var integer
+    */
+    const EXPIRE = 5184000;
+
+	/**
 	 * internal state
 	 *
 	 * @access protected
@@ -84,7 +97,9 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		//disable transparent sid support
 		ini_set('session.use_trans_sid', '0');
 
-		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage);
+		$this->_storage = $this->getService('com:sessions.storage.'.$config->storage, array(
+			'expire' => $config->expire,
+		));
 
 		if (isset($config->name)) {
 			session_name(get_hash($config->name));
@@ -100,12 +115,15 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		$this->_force_ssl = $config->force_ssl;
 		$this->_namespace = $config->namespace;
 
-		ini_set('session.gc_maxlifetime', $this->getExpire());
+		ini_set('session.gc_maxlifetime', $config->expire);
 
 		$this->_setCookieParams();
 		$this->_start();
 		$this->_setCounter();
 		$this->_setTimers();
+
+		// perform security checks
+		$this->_validate();
 	}
 
 	/**
@@ -118,13 +136,18 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
      */
     protected function _initialize(AnConfig $config)
     {
+		$settings = $this->getService('com:settings.config');
+		$storage = $settings->redis_path == '' ? self::STORAGE_DATABASE : self::STORAGE_REDIS;
+
+		// error_log($storage);
+
 		$config->append(array(
 			'state' => self::STATE_ACTIVE,
-			'expire' => LibSessionsDomainEntitySession::MAX_LIFETIME + time(),
+			'expire' => self::EXPIRE,
 			'security' => array('fix_browser'),
 			'force_ssl' => is_ssl(),
 			'namespace' => '__anahita',
-			'storage' => 'database',
+			'storage' => $storage,
 		));
 
 		parent::_initialize($config);
@@ -444,7 +467,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		// must also be unset. If a cookie is used to propagate the session id (default behavior),
 		// then the session cookie must be deleted.
 		if (isset($_COOKIE[session_name()])) {
-			setcookie(session_name(), '', time() - $this->_expire, '/');
+			setcookie(session_name(), '', time() - 42000, '/');
 		}
 
 		session_unset();
@@ -479,6 +502,7 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 
 		$this->_state = self::STATE_ACTIVE;
 
+		$this->_validate();
 		$this->_setCounter();
 
 		return true;
@@ -591,6 +615,32 @@ class LibSessions extends AnObject implements AnServiceInstantiatable
 		$counter++;
 
 		$this->set('session.counter', $counter);
+
+		return true;
+	}
+
+	protected function _validate($restart = false) 
+	{
+		if($restart) {
+			$this->_state = self::STATE_ACTIVE;
+
+			$this->set('session.client.address', null);
+			$this->set('session.client.forwarded', null);
+			$this->set('session.client.browser', null);
+			$this->set('session.token', null);
+		}
+
+		// check if session has expired
+		if($this->_expire) {
+			$curTime = $this->get('session.timer.now', 0);
+			$maxTime = $this->get('session.timer.last', 0) + $this->_expire;
+
+			// empty session variables
+			if($maxTime < $curTime) {
+				$this->_state = self::STATE_EXPIRED;
+				return false;
+			}
+		}
 
 		return true;
 	}

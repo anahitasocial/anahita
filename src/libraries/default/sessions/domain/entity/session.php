@@ -13,13 +13,6 @@
 class LibSessionsDomainEntitySession extends AnDomainEntityDefault
 {
     /**
-    *   60 days in seconds = 60day * 24hour * 60min * 60sec
-    *
-    *   @var integer
-    */
-    const MAX_LIFETIME = 5184000;
-
-    /**
      * Initializes the default configuration for the object.
      *
      * Called from {@link __construct()} as a first step of object instantiation.

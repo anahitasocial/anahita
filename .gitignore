@@ -15,6 +15,7 @@ vendor/swiftmailer/*
 vendor/bin/*
 vendor/league/*
 vendor/nette/*
+vendor/predis/*
 www/*
 node_modules/*
 .DS_Store
