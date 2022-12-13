@@ -461,7 +461,7 @@ Anahita could never be possible without the help of people in our tribe. We need
 
 ## Follow us, Like us
 
-Follow us on twitter [@anahita_io](https://twitter.com/anahita_io) and like our facebook page [Facebook.com/anahita.io](https://www.facebook.com/anahita.io)
+Follow us on Instagram [anahita.io](https://www.instagram.com/anahita.io) and like our facebook page [Facebook.com/anahita.io](https://www.facebook.com/anahita.io)
 
 ## Credits
 
