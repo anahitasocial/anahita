@@ -97,7 +97,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      *
      * @return bool
      */
-    public function canAddfollow()
+    public function canfollow()
     {
         if (!$this->actor) {
             return false;
@@ -108,6 +108,24 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
         }
 
         return $this->getItem()->authorize('follower', array('viewer' => $this->actor));
+    }
+
+     /**
+     * Authorize unfollowing the actor.
+     *
+     * @return bool
+     */
+    public function canUnfollow()
+    {
+        if (!$this->actor) {
+            return false;
+        }
+
+        if (!$this->getItem()) {
+            return false;
+        }
+
+        return $this->getItem()->authorize('unfollow', array('viewer' => $this->actor));
     }
 
     /**
@@ -129,11 +147,11 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
     }
 
     /**
-     * Authorize unfollowing the actor.
+     * Authorize removing a follower to the actor.
      *
      * @return bool
      */
-    public function canDeletefollow()
+    public function canRemovimgfollower()
     {
         if (!$this->actor) {
             return false;
@@ -143,7 +161,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
             return false;
         }
 
-        return $this->getItem()->authorize('unfollow', array('viewer' => $this->actor));
+        return $this->getItem()->authorize('leadable', array('viewer' => $this->actor));
     }
 
     /**
