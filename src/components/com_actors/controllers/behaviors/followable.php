@@ -25,8 +25,8 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
         $config->mixer->registerCallback(array(
             'before.unfollow',
             'before.follow',
-            'before.lead',
-            'before.unlead',
+            'before.addfollower',
+            'before.removefollower',
             'before.addrequest', 
             'before.deleterequest',
             'before.block', 
@@ -129,7 +129,7 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      *
      * @return ComActorsDomainEntityActor object
      */
-    protected function _actionLead(AnCommandContext $context)
+    protected function _actionAddfollower(AnCommandContext $context)
     {
         if ($this->getItem()->eql($this->actor)) {
             throw new LibBaseControllerExceptionForbidden('Forbidden');
@@ -137,15 +137,15 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
 
         $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
 
-        if (!$this->getItem()->following($this->actor)) {
-            $this->getItem()->addLeader($this->actor);
+        if (!$this->actor->following($this->getItem())) {
+            $this->actor->addLeader($this->getItem());
 
             $this->createStory(array(
                 'name' => 'actor_follower_add',
-                'owner' => $this->actor,
+                'owner' => $this->getItem(),
                 'subject' => $this->viewer,
-                'object' => $this->getItem(),
-                'target' => $this->actor,
+                'object' => $this->actor,
+                'target' => $this->getItem(),
             ));
 
             if ($this->actor->isAdministrable()) {
@@ -157,8 +157,8 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
             $this->createNotification(array(
                 'name' => 'actor_follower_add',
                 'subject' => $this->viewer,
-                'object' => $this->getItem(),
-                'target' => $this->actor,
+                'object' => $this->actor,
+                'target' => $this->getItem(),
                 'subscribers' => $subscribers,
             ));
         }
@@ -173,10 +173,10 @@ class ComActorsControllerBehaviorFollowable extends AnControllerBehaviorAbstract
      *
      * @return ComActorsDomainEntityActor object
      */
-    protected function _actionUnlead(AnCommandContext $context)
+    protected function _actionRemovefollower(AnCommandContext $context)
     {
         $this->getResponse()->status = AnHttpResponse::RESET_CONTENT;
-        $this->getItem()->removeLeader($this->actor);
+        $this->actor->removeLeader($this->getItem());
 
         return $this->getItem();
     }

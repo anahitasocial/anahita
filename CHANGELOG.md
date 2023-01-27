@@ -1,5 +1,11 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.8.1
+=============================
+- changed: followable `lead` and `unlead` to `addfollower` and `removefollower`
+- changed: followable `_actionLead` and `_actionUnlead` to `_actionAddfollower` and `_actionRemovefollower`
+- changed: actor permission `canAddfollow` to `canfollow`
+
 Anahita 4.8.0
 =============================
 - added: support for redis when storing sessions
