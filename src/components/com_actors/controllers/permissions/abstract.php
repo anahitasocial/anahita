@@ -151,7 +151,7 @@ abstract class ComActorsControllerPermissionAbstract extends LibBaseControllerPe
      *
      * @return bool
      */
-    public function canRemovimgfollower()
+    public function canRemoveFollower()
     {
         if (!$this->actor) {
             return false;
