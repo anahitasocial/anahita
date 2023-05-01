@@ -16,6 +16,7 @@ vendor/bin/*
 vendor/league/*
 vendor/nette/*
 vendor/predis/*
+vendor/michelf/*
 www/*
 node_modules/*
 .DS_Store

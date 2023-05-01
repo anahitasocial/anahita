@@ -94,6 +94,8 @@ class LibBaseViewOg extends LibBaseViewAbstract
         }
         
         $link = route($item->getURL());
+
+        error_log($link);
         
         if ($item->isPortraitable()) {
             $image = $item->getPortraitURL('large');
@@ -111,17 +113,11 @@ class LibBaseViewOg extends LibBaseViewAbstract
         
         $output .= '<meta name="description" content="'.$description.'" />';
 
-        /* Twitter Card */
-        $twitter_card = ($image) ? 'summary_large_image' : 'summary';
-        $output .= '<meta name="twitter:card" value="'.$twitter_card.'">';
-        
         if ($title) {
-            $output .= '<meta property="twitter:title" content="'.$title.'" />';
             $output .= '<meta property="og:title" content="'.$title.'" />';
         }
         
         if ($description) {
-            $output .= '<meta property="twitter:description" content="'.$description.'" />';
             $output .= '<meta property="og:description" content="'.$description.'" />';
         }
         
@@ -131,12 +127,10 @@ class LibBaseViewOg extends LibBaseViewAbstract
         }
         
         if ($link) {
-            $output .= '<meta property="twitter:site" content="'.$link.'" />';
             $output .= '<meta property="og:url" content="'.$link.'" />';
         }
         
         if ($image) {
-            $output .= '<meta property="twitter:image:src" content="'.$image.'" />';
             $output .= '<meta property="og:image" content="'.$image.'" />';
         }
 
@@ -145,10 +139,12 @@ class LibBaseViewOg extends LibBaseViewAbstract
     
     protected function _setDescription($description)
     {
+        $description = markdown_to_text($description);
+        
         $stripURLRegex = "/((?<!=\")(http|ftp)+(s)?:\/\/[^<>()\s]+)/i";
         $description = preg_replace($stripURLRegex, '', $description);
-        $description = strip_tags($description);
-        $description = htmlentities($description);
+        // $description = strip_tags($description);
+        // $description = htmlentities($description);
         $description = str_replace(array('#', '@'), '', $description);
         $description = AnService::get('com:base.template.helper.text')->truncate($description, array('length' => 160));
         $description = trim($description);
@@ -161,4 +157,8 @@ class LibBaseViewOg extends LibBaseViewAbstract
         $title = str_replace(array('#', '@'), '', $title);
         return $title;
 	}
+}
+
+function clean($string) {
+   return preg_replace('/[^A-Za-z0-9\-]/', ' ', $string); // Removes special chars.
 }
