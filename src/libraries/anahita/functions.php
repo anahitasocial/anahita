@@ -12,6 +12,8 @@
  * @link       http://www.Anahita.io
  */
 
+ use Michelf\Markdown;
+
  /**
   * Provides a secure hash based on a seed
   *
@@ -1049,4 +1051,23 @@ function random_password(int $length = 10) {
         $pass[] = $alphabet[$n];
     }
     return implode('', $pass); //turn the array into a string
+}
+
+/**
+ * Converts Markdown to plain text.
+ * @param string $markdown
+ * @return string
+ */
+function markdown_to_text($markdown) {
+    $html = Markdown::defaultTransform($markdown);
+    $html = preg_replace('/<[^>]*>/', ' ', $html);
+    $html = preg_replace('/\s+/', ' ', $html);
+
+    // replace many spaces with only one
+    $html = preg_replace('/\s+/', ' ', $html);
+
+    // replace tabs with one space
+    $html = preg_replace('/\t+/', ' ', $html);
+
+    return trim($html);
 }

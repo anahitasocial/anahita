@@ -1,5 +1,10 @@
 To view the detailed commits log go to https://github.com/anahitasocial/anahita/commits/master
 
+Anahita 4.8.2
+=============================
+- changed: converting Markdown to plain text for open group descriptions
+- added: method markdown_to_text to functions
+
 Anahita 4.8.1
 =============================
 - changed: followable `lead` and `unlead` to `addfollower` and `removefollower`

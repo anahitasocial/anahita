@@ -30,6 +30,7 @@
         "symfony/filesystem": "^3.3",
         "symfony/mailer": "^5.4",
         "league/commonmark": "^2.3",
-        "predis/predis": "^2.0"
+        "predis/predis": "^2.0",
+        "michelf/php-markdown": "^2.0"
     }
 }
