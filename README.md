@@ -1,15 +1,8 @@
 ![Anahita social networking platform and framework](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/logos/homepage_logo.png)
 
-
-### Women Life Freedom
-
-We stand in solidarity with Iranian women!
-
-#MahsaAmini #WomenLifeFreedom #IranRevolution
-
 # Anahita
 
-*Version:* 4.8.2 Birth Release
+*Version:* 4.8.3 Embryo Release
 
 Anahita is a platform and framework for developing open science and knowledge-sharing applications on a social networking foundation. Use Anahita to build:
 
