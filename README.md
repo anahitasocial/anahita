@@ -1,3 +1,6 @@
+> [!WARNING]
+> **This repository is no longer maintained.** The PHP version of Anahita is being retired and will be replaced by **Anahita Services**, a new microservices platform built in Go with Fediverse support (ActivityPub and the AT Protocol), rolling out by the end of 2026. The new web client is already public at [anahitasocial/anahita-web](https://github.com/anahitasocial/anahita-web).
+
 ![Anahita social networking platform and framework](https://s3.ca-central-1.amazonaws.com/production.anahita.io/media/logos/homepage_logo.png)
 
 # Anahita
